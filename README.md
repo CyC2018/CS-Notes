@@ -70,6 +70,18 @@
 
 File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 以及 NIO
 
+# 编码实践
+
+> [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
+
+> [编写可读代码的艺术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/编写可读代码的艺术.md)
+
+# 个人提升
+
+> [黑客与画家](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/黑客与画家.md)
+
+> [程序员的职业素养](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/程序员的职业素养.md)
+
 # 资料下载
 
 > [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F)
