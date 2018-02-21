@@ -2,7 +2,7 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》，主要整理了排序和树。
+整理自《算法 第四版》
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
@@ -20,7 +20,7 @@
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-整理自《计算机网络 第七版》
+整理自《计算机网络 第七版》，重点内容会在标题之后加 \*。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
