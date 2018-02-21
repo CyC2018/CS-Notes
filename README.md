@@ -90,4 +90,6 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 大部分笔记都是楼主一个字一个字打上去的，少数有摘抄其它文章的内容，这些文章都可以在参考链接中找到。笔记内容可随意使用，转载请注明出处，毕竟写了这么久没那么轻松~
 
-想要支持楼主的话，在 Github 仓库点个 Star 即可。:star:
+想要支持楼主的话，在 Github 仓库点个 Star 即可。
+
+:star: :star: :star:
