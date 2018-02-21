@@ -14,10 +14,6 @@
 
 目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
 
-> [2016 校招真题题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/2016%20校招真题题解.md)
-
-未完成
-
 # 网络
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
