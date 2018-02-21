@@ -74,13 +74,11 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
+重构是对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
+
 > [编写可读代码的艺术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/编写可读代码的艺术.md)
 
-# 个人提升
-
-> [黑客与画家](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/黑客与画家.md)
-
-> [程序员的职业素养](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/程序员的职业素养.md)
+编程有很大一部分时间是在阅读代码，可读性良好的代码能够大大提高编程效率。
 
 # 资料下载
 
