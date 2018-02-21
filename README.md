@@ -14,7 +14,7 @@
 
 目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
 
-很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 [Leetcode 题解](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md)，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
+很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
 
 # 网络
 
