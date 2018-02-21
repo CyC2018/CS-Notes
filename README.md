@@ -62,6 +62,10 @@
 
 整理自《深入理解 Java 虚拟机》，包括内存模型、垃圾回收和类加载机制。
 
+> [Java 集合](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20集合.md)
+
+集合的总结，包含集合源码的分析。
+
 > [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
 File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 以及 NIO
