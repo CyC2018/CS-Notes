@@ -28,31 +28,31 @@
 
 ## 1. List
 
-- ArrayList：使用数组方法，支持随机访问；
+- ArrayList：基于动态数组实现，支持随机访问；
 
-- LinkedList：使用链表实现，只能顺序访问，但是可以快速地在中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
+- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
 
 ## 2. Set
 
-- HashSet：使用 Hash 实现，支持快速查找，但是失去有序性；
+- HashSet：基于 Hash 实现，支持快速查找，但是失去有序性；
 
-- TreeSet：使用树实现，保持有序，但是查找效率不如 HashSet；
+- TreeSet：基于红黑树实现，保持有序，但是查找效率不如 HashSet；
 
 - LinkedListHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序，因此具有有序性。
 
 ## 3. Queue
 
-只有两个实现：LinkedList 和 PriorityQueue，其中 LinkedList 支持双向队列。
+只有两个实现：LinkedList 和 PriorityQueue，其中 LinkedList 支持双向队列，PriorityQueue 是基于堆结构实现。
 
 ## 4. Map
 
-- HashMap：使用 Hash 实现
+- HashMap：基于 Hash 实现
 
-- LinkedHashMap：保持有序，顺序为插入顺序或者最近最少使用（LRU）顺序
+- LinkedHashMap：使用链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序
 
 - TreeMap：基于红黑树实现
 
-- ConcurrentHashMap：线程安全 Map，不涉及同步加锁
+- ConcurrentHashMap：线程安全 Map，不涉及类似于 HashTable 的同步加锁
 
 ## 5. Java 1.0/1.1 容器
 
