@@ -132,7 +132,7 @@ public ArrayList() {
 }
 ```
 
-删除元素时调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高。
+删除元素时调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高，最好在创建时就指定大概的容量大小，减少复制操作的执行次数。
 
 ```java
 public E remove(int index) {
