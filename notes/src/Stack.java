@@ -1,50 +1,6 @@
-/*
- * Copyright (c) 1994, 2010, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
 
 package java.util;
 
-/**
- * The <code>Stack</code> class represents a last-in-first-out
- * (LIFO) stack of objects. It extends class <tt>Vector</tt> with five
- * operations that allow a vector to be treated as a stack. The usual
- * <tt>push</tt> and <tt>pop</tt> operations are provided, as well as a
- * method to <tt>peek</tt> at the top item on the stack, a method to test
- * for whether the stack is <tt>empty</tt>, and a method to <tt>search</tt>
- * the stack for an item and discover how far it is from the top.
- * <p>
- * When a stack is first created, it contains no items.
- *
- * <p>A more complete and consistent set of LIFO stack operations is
- * provided by the {@link Deque} interface and its implementations, which
- * should be used in preference to this class.  For example:
- * <pre>   {@code
- *   Deque<Integer> stack = new ArrayDeque<Integer>();}</pre>
- *
- * @author  Jonathan Payne
- * @since   JDK1.0
- */
 public
 class Stack<E> extends Vector<E> {
     /**
