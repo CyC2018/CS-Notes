@@ -107,7 +107,8 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
 ```java
-public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+public class ArrayList<E> extends AbstractList<E>
+    implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
 基于数组实现，保存元素的数组使用 transient 修饰，这是因为该数组不一定所有位置都占满元素，因此也就没必要全部都进行序列化。需要重写 writeObject() 和 readObject()。
