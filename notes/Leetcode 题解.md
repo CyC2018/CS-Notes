@@ -190,7 +190,7 @@ public int findContentChildren(int[] g, int[] s) {
 }
 ```
 
-**投飞镖刺气球**
+**投飞镖刺破气球**
 
 [Leetcode : 452. Minimum Number of Arrows to Burst Balloons (Medium)](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
@@ -202,7 +202,12 @@ Output:
 2
 ```
 
-题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直射向坐标轴，使得路径上的气球都会刺破，求解最小的投飞镖次数。
+题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直射向坐标轴，使得路径上的气球都会刺破。求解最小的投飞镖次数使所有气球都被刺破。
+
+从左往右投飞镖，并且在每次投飞镖时满足以下条件：
+
+1. 左边已经没有气球了；
+2. 本次投飞镖能够刺破最多的气球。
 
 ```java
 public int findMinArrowShots(int[][] points) {
