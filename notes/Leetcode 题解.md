@@ -12,7 +12,6 @@
         * [DFS](#dfs)
         * [Backtracking](#backtracking)
     * [分治](#分治)
-    * [递归](#递归)
     * [动态规划](#动态规划)
         * [分割整数](#分割整数)
         * [矩阵路径](#矩阵路径)
@@ -1639,13 +1638,9 @@ public List<Integer> diffWaysToCompute(String input) {
 }
 ```
 
-## 递归
-
-将原始问题分解成较小的问题来求解。
-
 ## 动态规划
 
-将原问题拆解成多个子问题，在求解子问题的时候保存子问题的解，使得子问题只求解一次。
+递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解。
 
 ### 分割整数
 
@@ -1765,8 +1760,6 @@ public int minPathSum(int[][] grid) {
 
 ### 斐波那契数列
 
-程序员代码面试指南第 4 章的方法将求斐波那契第 N 项问题转换为矩阵乘法运算，从而将时间复杂度缩小为 O(lgN)。
-
 **爬楼梯**
 
 [Leetcode : 70. Climbing Stairs (Easy)](https://leetcode.com/problems/climbing-stairs/description/)
@@ -1775,7 +1768,7 @@ public int minPathSum(int[][] grid) {
 
 定义一个数组 dp 存储上楼梯的方法数（为了方便讨论，数组下标从 1 开始），dp[i] 表示走到第 i 个楼梯的方法数目。第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<center>dp[i] = dp[i-1] + dp[i-2]</center>
+**dp[i] = dp[i-1] + dp[i-2]**
 
 dp[N] 即为所求。
 
@@ -1804,7 +1797,7 @@ public int climbStairs(int n) {
 
 第 i 年成熟的牛的数量为：
 
-<center>dp[i] = dp[i-1] + dp[i-3]</center>
+**dp[i] = dp[i-1] + dp[i-3]**
 
 **强盗抢劫**
 
@@ -1814,7 +1807,7 @@ public int climbStairs(int n) {
 
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 和 i - 3 的住户，所以
 
-![](http://latex.codecogs.com/gif.latex?\\\\dp[i]=max(dp[i-2],dp[i-3])+nums[i])
+**dp[i] = max(dp[i - 2], dp[i - 3]) + nums[i]**
 
 O(n) 空间复杂度实现方法：
 
@@ -1894,7 +1887,7 @@ private int rob(int[] nums, int s, int e) {
 
 综上所述，错误装信数量方式数量为：
 
-<center> dp[i] = (i-1) \* dp[i-2] + (i-1) \* dp[i-1] </center>
+![](http://latex.codecogs.com/gif.latex?\\\\dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1])
 
 dp[N] 即为所求。
 
