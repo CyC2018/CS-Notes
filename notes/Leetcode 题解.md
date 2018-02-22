@@ -658,12 +658,9 @@ public int findKthLargest(int[] nums, int k) {
 
 ### 桶排序
 
-
 **找出出现频率最多的 k 个数**
 
 [Leetcode : 347. Top K Frequent Elements (Medium)](https://leetcode.com/problems/top-k-frequent-elements/description/)
-
-桶排序
 
 ```java
 public List<Integer> topKFrequent(int[] nums, int k) {
@@ -710,7 +707,6 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 
 - 队列：用来存储每一轮遍历的节点
 - 标记：对于遍历过得节点，应该将它标记，防止重复遍历；
-
 
 **计算在网格中从原点到特定点的最短路径长度**
 
@@ -764,7 +760,6 @@ private class Position {
 
 - 栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。也可以使用递归栈。
 - 标记：和 BFS 一样同样需要对已经遍历过得节点进行标记。
-
 
 **查找最大的连通面积**
 
@@ -826,7 +821,6 @@ public int findCircleNum(int[][] M) {
             dfs(M, i, hasFind);
             ret++;
         }
-
     }
     return ret;
 }
@@ -938,7 +932,7 @@ X O X X
 
 题目描述：使得被 'X' 的 'O' 转换为 'X'。
 
-可以选择先填充最外侧，剩下的就是里侧了。
+先填充最外侧，剩下的就是里侧了。
 
 ```java
 private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
@@ -992,7 +986,7 @@ Return:
 [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (positions with parentheses in above matrix).
 ```
 
-题目描述：左边和上边是太平洋，右边和下边是大西洋，内部的数字代表海拔，海拔高的地方的水能够流到低的地方，求解水能够流到太平洋和大西洋的所有地方。
+题目描述：左边和上边是太平洋，右边和下边是大西洋，内部的数字代表海拔，海拔高的地方的水能够流到低的地方，求解水能够流到太平洋和大西洋的所有位置。
 
 ```java
 private int m, n;
@@ -1235,7 +1229,17 @@ private void doRestore(int k, String path, String s) {
 
 [Leetcode : 46. Permutations (Medium)](https://leetcode.com/problems/permutations/description/)
 
-题目描述：找出一组数的所有排列。
+```html
+[1,2,3] have the following permutations:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+```
 
 ```java
 public List<List<Integer>> permute(int[] nums) {
@@ -1263,7 +1267,7 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 }
 ```
 
-**不能重复的排列**
+**含有相同元素求排列**
 
 [Leetcode : 47. Permutations II (Medium)](https://leetcode.com/problems/permutations-ii/description/)
 
@@ -1271,6 +1275,8 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 [1,1,2] have the following unique permutations:
 [[1,1,2], [1,2,1], [2,1,1]]
 ```
+
+题目描述：数组元素可能含有相同的元素，进行排列时就有可能出先重复的排列，要求重复的排列只返回一个。
 
 在实现上，和 Permutations 不同的是要先排序，然后在添加一个元素时，判断这个元素是否等于前一个元素，如果等于，并且前一个元素还未访问，那么就跳过这个元素。
 
@@ -1306,7 +1312,17 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 
 [Leetcode : 77. Combinations (Medium)](https://leetcode.com/problems/combinations/description/)
 
-题目描述：找出从 1 \~ n 中取出 k 个元素的所有可能的组合。
+```html
+If n = 4 and k = 2, a solution is:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+```
 
 ```java
 public List<List<Integer>> combine(int n, int k) {
@@ -1341,7 +1357,6 @@ A solution set is:
 [[7],[2, 2, 3]]
 ```
 
-
 ```java
  private List<List<Integer>> ret;
 
@@ -1366,7 +1381,7 @@ A solution set is:
  }
 ```
 
-**不能重复的组合求和**
+**含有相同元素的求组合求和**
 
 [Leetcode : 40. Combination Sum II (Medium)](https://leetcode.com/problems/combination-sum-ii/description/)
 
@@ -1409,7 +1424,6 @@ private void doCombination(int[] candidates, int target, int start, List<Integer
 }
 ```
 
-
 **子集**
 
 [Leetcode : 78. Subsets (Medium)](https://leetcode.com/problems/subsets/description/)
@@ -1443,7 +1457,7 @@ private void backtracking(int startIdx, int size, int[] nums) {
 }
 ```
 
-**不能重复的子集**
+**含有相同元素求子集**
 
 [Leetcode : 90. Subsets II (Medium)](https://leetcode.com/problems/subsets-ii/description/)
 
