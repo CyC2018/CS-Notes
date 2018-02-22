@@ -389,7 +389,6 @@ public int[][] reconstructQueue(int[][] people) {
 }
 ```
 
-
 ## 双指针
 
 双指针主要用于遍历数组，两个指针指向不同的元素，从而协同完成任务。
@@ -414,16 +413,6 @@ public int[] twoSum(int[] numbers, int target) {
     return null;
 }
 ```
-
-此问题可扩展成三个元素和为 0 的问题：[程序员代码面试指南 P351](#)
-
-**数组中累加和为给定值的最长子数组长度**
-
-[程序员代码面试指南 P354/P355/P358](#)
-
-**在行和列都排好序的矩阵中查找元素**
-
-[程序员代码面试指南 P347](#)
 
 **反转字符串中的元音字符**
 
@@ -462,7 +451,7 @@ public String reverseVowels(String s) {
 
 [Leetcode : 633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
 
-判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
+题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
 
 ```java
 public boolean judgeSquareSum(int c) {
@@ -477,9 +466,11 @@ public boolean judgeSquareSum(int c) {
 }
 ```
 
-**字符串回文数（可删除一个字符）**
+**回文字符串**
 
 [Leetcode : 680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
+
+题目描述：字符串可以删除一个字符，判断是否能构成回文字符串。
 
 ```java
 public boolean validPalindrome(String s) {
@@ -509,7 +500,7 @@ private boolean isPalindrome(String s, int l, int r){
 
 [Leetcode : 88. Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/description/)
 
-把归并结果存到第一个数组上。
+题目描述：把归并结果存到第一个数组上
 
 ```java
 public void merge(int[] nums1, int m, int[] nums2, int n) {
@@ -556,6 +547,8 @@ s = "abpcplea", d = ["ale","apple","monkey","plea"]
 Output:
 "apple"
 ```
+
+题目描述：可以删除 s 中的一些字符，使得它成为字符串列表 d 中的一个字符串。要求在 d 中找到满足条件的最长字符串。
 
 ```java
 public String findLongestWord(String s, List<String> d) {
