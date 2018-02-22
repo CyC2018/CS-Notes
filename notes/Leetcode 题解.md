@@ -230,9 +230,9 @@ public int findMinArrowShots(int[][] points) {
 
 [Leetcode : 122. Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
-先买入股票，然后出售股票，从而获得差价带来的收益。
+题目描述：一次交易包含买入和卖出，多个交易之间不能交叉进行。
 
-对于一个交易 [a, b, c, d]，如果有 a <= b <= c <= d ，那么最大收益为 d - a = (d - c) + (c - b) + (b - a) 。当访问到一个 prices[i] 且  prices[i] - prices[i-1] ，那么就把 prices[i] - prices[i-1] 加到收益中，从而在局部最优的情况下也保证全局最优。
+对于 [a, b, c, d]，如果有 a <= b <= c <= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] > 0，那么就把 prices[i] - prices[i-1] 添加加到收益中，从而在局部最优的情况下也保证全局最优。
 
 ```java
 public int maxProfit(int[] prices) {
