@@ -1,0 +1,163 @@
+[TOC]
+
+# 正在完成...
+
+# 解题思路
+
+空间限制问题基本思路是拆分。如果一个数据很大，无法放在一台机器上，就用分布式的方法放到多台机器上；在程序运行时无法直接加载一个大文件，就分多次加载，并且每次运行结果都保存到一个小文件中。
+
+
+
+# 布隆过滤器
+
+**题目**
+
+不安全网页的黑名单包含 100 亿个黑名单网页，每个网页的 URL 最多占用 64B。现在想要实现一种网页过滤系统，可以根据网页的 URL 判断该网页是否在黑名单上，请设计该系统。
+
+**要求**
+
+1. 该系统允许有万分之一以下的判断失误率。
+2. 使用的额外空间不要超过 30GB。
+
+![](index_files/82fec0f5-2fdf-4e27-aea9-2e1b2a3cf9eb.jpg)
+
+[程序员代码面试指南 P303]()
+
+# 查找所有包含某一组词的文件
+
+> 给定数百万份文件，设计一个程序找出所有包含某一组词的文件，该程序会被多次调用。
+
+## 1. 预处理
+
+预处理每个文件，并创建一个散列表的索引。这个散列表会将词映射到含有这个
+词的一组文件。
+
+```html
+“books” -> {doc2, doc3, doc6, doc8}
+“many” -> {doc1, doc3, doc7, doc8, doc9}
+```
+
+若要查找“many books”，只需对“books”和“many”的值进行交集运算，于是得到结果{doc3, doc8}。
+
+## 2. 拆分
+
+若有数百万份文件，那么一台机器无法放下这么多文件，需要存放到多台机器上。并且散列表可能也会很大，一台机器可能无法放下整个散列表，因此需要将散列表拆分到多台机器上。
+
+拆分的方法有很多，例如根据键的散列值，或者根据键的范围。
+
+## 3. 查找
+
+例如查找“after builds boat amaze banana”，先划分成单词序列，然后每个单词都到存放该单词散列表的机器上去查找，最后将每个单词的查找结果做交集运算。
+
+# 大型社交网站计算两个人的好友关系
+
+> 你会如何设计诸如Facebook或LinkedIn的超大型社交网站？请设计一种算法，展示两个人之间的“连接关系”或“社交路径”（比如，我 → 鲍勃 → 苏珊 → 杰森 → 你）
+
+## 1. 好友关系的实现
+
+为每个用户保存好友 id 的列表，利用这个列表，可以构建一个图，每个用户看作一个结点，两个结点之间若有连线，则表示这两个用户为朋友。
+
+要找到两个人之间的连接，可以从其中一个人开始，直接进行广度优先搜索。为什么深度优先搜索效果不彰呢？因为它非常低效。两个用户可能只有一度之隔，却可能要在他们的“子树”中搜索几百万个结点后，才能找到这条非常简单而直接的连接。
+
+```java
+public class Person {
+    private ArrayList<Integer> friendIDs;
+}
+```
+
+## 2. 进行查找
+
+处理LinkedIn或Facebook这种规模的服务时，不可能将所有数据存放在一台机器上。这就意味着前面定义的简单数据结构Person并不管用，朋友的资料和我们的资料不一定在同一台机器上。
+
+1. 针对每个朋友ID，找出所在机器的位置：int machine_index = getMachineIDForUser(personID);
+2. 转到编号为#machine_index的机器。
+3. 在那台机器上，执行：Person friend = getPersonWithID(person_id);。
+
+下面的代码描绘了这一过程。我们定义了一个Server类，包含一份所有机器的列表，还有一个Machine类，代表一台单独的机器。这两个类都用了散列表，从而有效地查找数据。
+
+```java
+public class Server {
+    HashMap<Integer, Machine> machines = new HashMap<Integer, Machine>();
+    HashMap<Integer, Integer> personToMachineMap = new HashMap<Integer, Integer>();
+    
+    public Machine getMachineWithId(int machineID) {
+        return machines.get(machineID);
+    }
+    
+    public int getMachineIDForUser(int personID) {
+        Integer machineID = personToMachineMap.get(personID);
+        return machineID == null ? -1 : machineID;
+    }
+    
+    public Person getPersonWithID(int personID) {
+        Integer machineID = personToMachineMap.get(personID);
+        if (machineID == null) {
+            return null;
+        }
+        Machine machine = getMachineWithId(machineID);
+        if (machine == null) {
+            return null;
+        }
+        return machine.getPersonWithID(personID);
+    }
+}
+```
+
+```java
+public class Person {
+    private ArrayList<Integer> friends;
+    private int personID;
+    private String info;
+    
+    public String getInfo() { return info; }
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public int[] getFriends() {
+        int[] temp = new int[friends.size()];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = friends.get(i);
+        }
+        return temp;
+    }
+    public int getID() { return personID; }
+    public void addFriend(int id) { friends.add(id); }
+    
+    public Person(int id) {
+        this.personID = id;
+    }
+}
+```
+
+```java
+public class Machine {
+    public HashMap<Integer, Person> persons = new HashMap<Integer, Person>();
+    public int machineID;
+    
+    public Person getPersonWithID(int personID) {
+        return persons.get(personID);
+    }    
+}
+```
+
+## 3. 优化
+
+**减少机器间跳转的次数**
+
+从一台机器跳转到另一台机器的开销很昂贵。不要为了找到某个朋友就在机器之间任意跳转，而是试着批处理这些跳转动作。举例来说，如果有五个朋友都在同一台机器上，那就应该一次性找出来。
+
+**智能划分用户和机器**
+
+人们跟生活在同一国家的人成为朋友的可能性比较大。因此，不要随意将用户划分到不同机器上，而应该尽量按国家、城市、州等进行划分。这样一来，就可以减少跳转的次数。
+
+**广度优先搜索通常要求“标记”访问过的结点。在这种情况下你会怎么做？**
+
+在广度优先搜索中，通常我们会设定结点类的visited标志，以标记访问过的结点。但针对此题，我们并不想这么做。同一时间可能会执行很多搜索操作，因此直接编辑数据的做法并不妥当。反之，我们可以利用散列表模仿结点的标记动作，以查询结点id，看它是否访问过。
+
+## 4. 其它扩展问题
+
+1. 在真实世界中，服务器会出故障。这会对你造成什么影响？
+2. 你会如何利用缓存？
+3. 你会一直搜索，直到图的终点（无限）吗？该如何判断何时放弃？
+4. 在现实生活中，有些人比其他人拥有更多朋友的朋友，因此更容易在你和其他人之间构建一条路径。该如何利用该数据选择从哪里开始遍历？

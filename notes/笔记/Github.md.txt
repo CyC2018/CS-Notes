@@ -1,0 +1,143 @@
+[TOC]
+
+# 第 1 章 Github 课程介绍
+
+Git 是一个版本控制工具，由 Linux 之父 Linus 编写完成。相比于 CVS 和 SVN 等集中式版本管理工具，Git 分布式的特点给它带来了很大的优势：首先它不需要像集中式的版本管理工具一样只有连网才能进行操作，其次它的分布式特点使得每个项目合作者本地都有一个项目的完整版本，这避免了集中式版本管理工具会出现的因为中央服务器故障而导致的代码丢失的问题。需要注意的是，Git 也有一个中央服务器，只不过这个中央服务器是用来分发各个合作者的版本的中介，不像集中式那样起到所有版本的管理者的角色。
+
+Git 能够火起来有一个主要的原因是它体现了互联网的开源文化，GitHub 这个网站是基于 Git 而创建的，将这种开源文化发扬光大。GitHub 现在是全球最大的开源代码托管平台，它重新定义了软件开发的流程，因为很多软件功能都可以在 GitHub 上找到相应的源代码，而不需要重新编写，这大大减低了软件开发时间和成本。
+
+Git 是一个命令行的工具，GitHub 的图形化界面让 Git 的使用更简单，可以结合 GitHub 的桌面客户端和 GitHub 的网站来一起使用。
+
+# 第 2 章 浏览器中使用 Github
+
+**commit** ：GitHub 以一个 commit 作为一个版本。每当项目被修改后，需要进行一次 commit 操作。可以查看每个 commit 做的什么样的修改，包括修改时间，修改人，修改内容。一个 commit 在 GitHub 中 具有一个版本号，还有父版本号，父版本号是为了记录版本的历史线。
+
+![](index_files/25c861a6-e70e-47b7-9447-df17d74b75a1.jpg)
+
+![](index_files/d0bc7eca-bd58-4fab-b559-7ebdd508702f.jpg)
+
+# 第 3 章 GitHub 客户端的使用
+
+本地有更好用的编辑器和 IDE ，因此基本上需要在本地使用 GitHub。使用桌面客户端可以更简单方便地使用 GitHub，如果直接使用 Git 命令行工具，会暴露在复杂的概念面前，不容易掌握。
+
+在本地的仓库里面进行修改后，会在桌面客户端自动显示 change。
+
+![](index_files/02e1268b-4e4e-46d4-a437-61f586f8d939.jpg)
+
+一个 commit 需要有 Summary 和 Description，以便以后回头看这个 commit 能够知道进行了哪些修改。
+
+Publish 用于发布一个本地的 repostory 到 GitHub 上。发布之后，可以用 Sync 同步本地的 commit 到 GitHub 服务器上。
+
+客户端上的 Undo 只能是撤销还未同步的一个版本，而 Revert 才能撤销已经同步的版本，它本身也作为一个 commit 提交到服务器，抵消了上一次的 commit 做的修改。
+
+Roll Back to this Commit 可以回滚到选定的一个版本，也是作为一个 commit 提交到服务器进行操作。
+
+# 第 4 章 简单分支操作
+
+分支是用指针来实现的，master 分支的指针指向最新的一个版本。
+
+![](index_files/3f3d800e-7068-487c-a915-ec723d9c4d15.jpg)
+
+新建一个分支，没有复制各个版本，而是新建的一个指针和 master 指向同一个版本，在这个分支上的操作只是移动这个分支的指针。
+
+![](index_files/a25b5785-ce00-4703-8462-0cfa06d485e6.jpg)
+
+![](index_files/a6fa121a-6a48-4da9-8a7a-4b477c397630.jpg)
+
+新建分支的目的是为了完成一个新想法，而不去污染 master 分支。
+
+可以自由的切换分支，在不同分支上进行操作互不影响。
+
+要发布一个新分支发布到 GitHub 上也是用 Publish。
+
+删除一个分支：当前分支不可删除，需要切换到其它分支才可以删除。Unpublish 是不发布分支，也就是删除远程服务器上的分支，但是本地上的分支会保留；而 Delete 是直接删除本地分支，并且远程服务器上的分支也会被删除。
+
+master 是默认分支，不能被删除，可以通过在设置中修改默认分支为其它分支然后再删除 master 分支。需要到 Github 网站上的 setting 中设置默认分支。
+
+# 第 5 章 分支合并
+
+通过 merge 合并分支之后，会以一个 commit 的形式提交，称为融合版本，它有两个父版本号，并且 master 指针会指向这个 commit。
+
+![](index_files/e6124f92-51f5-4be7-8e03-aa9ea80db04d.jpg)
+
+在并行开发过程中，两个分支可能同时进行修改，如果对同一个文件进行了而修改，就会造成冲突。
+
+本地 master 和远程 master 可以看成两个分支，同样也可能出现冲突的情况，使用 Sync 就是一个合并本地 master 分支和远端 master 分支的操作。
+
+发生冲突的文件会自动添加冲突标识符，修改的时候也要把冲突标示符删除。
+
+![](index_files/b4fd1a14-ca5f-4916-b6dd-c5c2784d762e.jpg)
+
+# 第 6 章 团队协作流程
+
+通过 Github 网站的 Setting 中的 Collaborators 可以为一个仓库添加协作者，协作者对项目具有写权限。
+
+每个协作者可以直接对仓库进行修改，但是很容易产生冲突，只有在做一点小修改时才这么做。当开发新功能时，一般是新建一个新分支，然后在新分支上进行修改。新分支要合并到 master 分支上之前，先提交一个 pull request 来引发讨论和代码审核，之后再进行合并操作。
+
+新建分支之后，使用 Sync 就可以发布一个 pull request，而不是用 publish 该分支。
+
+**Github Flow**
+
+1. 新建话题分支
+![](index_files/ba69b54f-aa39-4b5c-a474-d89448803f91.jpg)
+
+2. 实现功能，做成一个个新版本
+![](index_files/ab9ad765-a7b5-427d-ba6b-df0c23721fa7.jpg)
+
+3. 发起 pull request，就是请求项目参与者 pull 该分支并进行审查和讨论。
+![](index_files/f201cd06-a6ce-44b3-919b-3a956d9bd977.jpg)
+
+4. 审查和讨论。该过程的讨论和论坛上类似，而且该过程也可以继续提交新的 commit，而不用再次发 pull request。
+![](index_files/1cdbd78d-0043-40c4-aad5-400d6a74ec69.jpg)
+![](index_files/a96896ee-f50c-4a32-947a-0cb949a5fc38.jpg)
+
+5. 最后协作者通过 merge pull request 来合并
+![](index_files/60f8eb23-f398-4987-9eb8-69c383d710d9.jpg)
+
+# 第 7 章 开源项目共享流程
+
+![](index_files/1ae45cb9-6540-40a4-9edb-02a71172259e.jpg)
+
+开源项目以陌生人为主，不可能每个人都成为 Collaborators。
+
+fork 之后相当于拷贝一份仓库到自己的 Github 上，类似于新建了一个分支。
+
+如果只是对某个文件进行修改，那么可以在 Github 网站上通过修改按钮进行修改，会自动创建一个 pull request，而不用先 fork。
+
+
+# 第 8 章 GitHub Issues
+
+Github 提供了三种辅助设施：GitHub Pages：搭建项目主页、Wiki：知识库、Issues：事务卡片。
+
+一个 Issues 相当于一个讨论区，可以 @ 某个人让他参与进来。每个 Issues 都有编号，用 #+ 编号 可以指定某个 Issues。当要回复前面某个评论时，可以用 > 引用前面的内容，然后再在下方写回复。> 是 markdown 的一个标记，其后面需要跟上引用内容。一个评论也有特定的链接，可以在新评论中插入该链接来快速定位。
+
+![](index_files/cfdf5e0c-8860-4901-beef-c3d6ccaf4c6a.jpg)
+
+Pull Request 会创建一个 Issues。
+
+在一个 commit 的 sumnary 内容后面加上 Issues 号，会自动在 Issues 后面新增这个 commit 内容。
+
+![](index_files/b7307f8a-52be-4c84-babe-1362e3069086.jpg)
+
+# 第 9 章 GitHub Pages
+
+可以搭建的网站分为用户和组织、项目。
+
+在项目中新建一个 gh-pages 分支，可以删除里面的其它文件，只放网页的文件，比如 index.html。域名为 用户名 .Github.io/ 项目名。
+
+可以使用 Jekyll 等前端框架。
+
+# 第 10 章 GitHub 的秘密机关
+
+在 Github 网站的项目主页上按 t 快捷键可以打开搜索项目文件的界面。
+
+![](index_files/454f65d3-d700-432e-9637-e7f7b8da44e6.jpg)
+
+# 第 11 章 Until Next Time，Goodbye
+
+GitLab 是一个开源免费的类似于 GitHub 的项目，可以用它来搭建私有仓库。
+
+# 资源
+
+- [ 课程地址 ](http://www.imooc.com/learn/390)
+- [ 课程的文档地址 ](http://book.haoduoshipin.com/Gitbeijing/)

@@ -1,0 +1,13 @@
+面试准备：主要准备的知识包括，C/C++、TCP/IP、HTTP、操作系统、数据结构和算法、熟悉Linux操作、熟悉Linux网络编程、数据库 
+（主要是MySql,Redis,Memcached）。
+
+C/C++必看书籍：C++ Primer、深度探索C++对象模型、STL源码剖析、还有其它一些经典书籍，比如effective系列，侯捷翻译的其它经典 
+TCP/IP必看书籍：TCP/IP详解 卷1：协议， 图解TCP/IP 
+HTTP必看书籍：图解HTTP，HTTP权威指南（这本书我就看了一点） 
+操作系统必看书籍：现代操作系统 
+数据结构和算法必看书籍：数据结构与算法分析C++描述 
+Linux知识必看书籍：鸟哥的Linux私房菜基础 
+Linux编程必看书籍：APUE，UNP。 
+数据库必看书籍：MySql入门很简单，高性能MySql
+
+链接：http://blog.csdn.net/linux_ever/article/details/53575251

@@ -1,0 +1,548 @@
+[TOC]
+
+# 第 1 章 作为命令行脚本
+
+第一行注释告诉 Linux/Unix 系统当执行程序的时候，它应该使用哪个解释器。
+
+```python
+#!/usr/bin/python
+# Filename : helloworld.py
+print 'Hello World'
+```
+
+需要先给脚本设置可执行的权限。
+
+```html
+$ chmod a+x helloworld.py
+$ ./helloworld.py
+Hello World
+```
+
+通过以下命令可以把一个文件夹下的脚本都添加到 PATH 目录下，则可以在任何地方运行该脚本。
+
+```html
+PATH=$PATH:/home/username/dir
+```
+
+print 函数会自动加换行符，可以在 print 之后加逗号 , 来取消换行。
+
+# 第 2 章 基本概念
+
+## 2.1 复数
+
+(2.3-4.6j)
+
+## 2.2 字符串
+
+单引号和双引号表示的字符串完全相同，三引号表示的字符串中间可以有单引号和双引号，并且可以换行。
+
+```html
+'''This is the first line.
+This is the second line.
+"What's your name?," I asked.
+He said "Bond, James Bond."
+'''
+```
+
+字符串行末的反斜杠表示下一行继续。
+
+```html
+"This is the first sentence.\
+This is the second sentence."
+```
+
+自然字符串用 r 作为前缀，当不想让字符串中的内容转义时使用，比如正则表达式。
+
+```html
+r"Newlines are indicated by \n"
+```
+
+Unicode 是书写国际文本的标准方法。在处理文本文件的时候应该使用 Unicode 字符串，特别是这个文件含有用非英语的语言写的文本时使用。
+
+```html
+u"This is a Unicode string."
+```
+
+## 2.3 对象
+
+Python 中用到的任何东西都被称为对象；
+
+## 2.4 逻辑行与物理行
+
+可以将多个逻辑行写在一个物理行中，需要用分号分割；可以将一个逻辑行写在多个物理行中，需要在行末加 \ 。
+
+## 2.5 缩进
+
+同一层次的语句必须拥有相同的缩进。
+
+# 第 3 章 运算符
+
+|  运算符 | 说明  |
+| --- | --- |
+|  ** | 幂  |
+|  // | 取整除  |
+|  % | 取模，不取整  |
+|  ~ | 按位翻转，-(x+1) |
+|  and | 与  |
+|  or | 或  |
+|  not | 非  |
+
+
+# 第 4 章 控制流
+
+## 4.1 条件语句
+
+Java 中的 else if 在 Python 中对应的语句为：elif。
+
+True False
+
+## 4.2 控制台输入
+
+从控制台中输入一行：
+
+```
+guess = int(raw_input('Enter an integer : '))
+```
+
+## 4.3 循环
+
+range(m, n, step)，返回一个从 m 到 n，步长为 stap 的序列，不包含 n 。
+
+for 后面的 else 语句在 break 退出的情况下不会执行：
+```
+for i in range(1, 5):
+      print i
+else:
+      print 'The for loop is over
+```
+
+len(str) 返回字符串的长度；
+
+# 第 5 章 函数
+
+```
+def sayHello():
+    print 'hello world!'
+
+sayHello()
+```
+
+global 用来声明全局变量。
+
+## 5.1 默认参数
+
+```
+def say(message, times = 1):
+    print message * times
+
+say('Hello')
+say('World', 5)
+```
+
+## 5.2 关键参数
+
+使用名字而不是位置来指定参数
+
+```
+def func(a, b=5, c=10):
+    print 'a is', a, 'and b is', b, 'and c is', c
+
+func(3, 7)
+func(25, c=24)
+func(c=50, a=100)
+```
+
+## 5.3 return
+
+没有 return 语句的函数默认 return None ，None 在 Python 中是指一个没有任何值的特殊类型。
+
+## 5.4 DocStrings
+
+使用函数的 \_\_doc\_\_ 属性可以返回函数中的文档字符串。
+
+```
+def printMax(x, y):
+'''Prints the maximum of two numbers.
+The two values must be integers.'''
+x = int(x)
+y = int(y)
+if x > y:
+    print x, 'is maximum'
+else:
+    print y, 'is maximum'
+
+printMax(3, 5)
+print printMax.__doc__
+```
+
+# 第 6 章 模块
+
+模块基本上就是一个包含定义函数和变量的文件，使用 import 语句导入一个模块；
+
+```
+import sys
+```
+
+.pyc 是字节文件，会比源文件快很多，而且与平台无关。
+
+使用 from sys import argv 之后可以直接在代码中使用 argv ，而不用 sys.argv。但是为了易读性，最好不要用这种方式。
+
+\_\_name\_\_ 属性为一个模块的名字。
+
+```
+if __name__ == '__main__':
+    print 'This program is being run by itself'
+else:
+    print 'I am being imported from another module
+```
+
+创建一个 python 文件之后，要使得另一个 python 文件可以使用它，需要把它放在这个文件的同目录下，或者把它放到 sys.path 目录下。
+
+使用 . 运算符来引用模块中的成员。
+
+dir() 函数可以列出一个模块的函数、变量和类。
+
+# 第 7 章 数据结构
+
+## 7.1 列表
+
+列表是处理一组有序的集合，并不说排好序了，而是有顺序。使用 [ ] 来定义一个列表。
+
+```python
+# This is my shopping list
+shoplist = ['apple', 'mango', 'carrot', 'banana']
+print 'I have', len(shoplist),'items to purchase.'
+print 'These items are:', # Notice the comma at end of the line
+for item in shoplist:
+     print item,
+shoplist.append('rice')
+shoplist.sort()
+del shoplist[0]
+```
+
+## 7.2 元组
+
+元组不可变。
+
+一个元组可以包含另一个元组。
+
+使用 ( ) 定义一个元组。
+
+```
+zoo = ('wolf', 'elephant', 'penguin')
+new_zoo = ('monkey', 'dolphin', zoo)
+print 'Last animal brought from old zoo is', new_zoo[2][2]
+```
+
+元组可以用在打印语句中。
+
+```
+age = 22
+name = 'Swaroop'
+print '%s is %d years old' % (name, age)
+print 'Why is %s playing with that python?' % name
+```
+
+## 7.3 字典
+
+必须使用不可变的对象作为键。
+
+d = {key1 : value1, key2 : value2 } 定义一个字典。
+
+items() 方法返回所有 key。
+
+has_key() 方法判断是否含有一个 key。
+
+## 7.4 序列
+
+字符串，元组和列表都是序列，序列主要具有索引和切片操作；
+
+简单复制语句不会创建拷贝，要拷贝一个序列时用切片操作
+
+```
+mylist = shoplist[:]
+```
+
+## 7.5 字符串
+
+startwith()
+
+in 操作符可以判断一个给定字符串是否在另一个字符串中。
+
+find() 查找一个字符串在另一个字符串中的位置，如果查找失败返回 -1。
+
+# 第 8 章 面向对象
+
+## 8.1 self
+
+self 类似于 java 中的 this 指针。
+
+## 8.2 类
+
+```
+class Person:
+    pass # An empty block
+
+p = Person()
+print p
+```
+
+## 8.3 对象的方法
+
+方法和函数最主要的区别是方法需要传入一个 self 变量。
+
+```
+class Person:
+    def sayHi(self):
+       print 'Are you OK？'
+
+leijun = Person()
+p.sayHi()
+```
+
+## 8.4 \_\_init\_\_()
+
+构造函数
+
+```
+class Person:
+  def __init__(self, name):
+    self.name = name
+  def sayHi(self):
+    print 'Hello, my name is', self.name
+
+p = Person('Swaroop')
+p.sayHi()
+```
+
+## 8.5 类与对象的方法
+
+成员名有双下划线前缀 \_\_ ，比如 \_\_init\_\_()，则为私有成员。如果自己定义的类中某个成员想定义为私有成员，则在该成员名前加单下划线 \_，虽然 Python 没有规定这样做可以把成员变成私有成员，但是可以作为一种编程约定来使用。
+
+## 8.6 \_\_del\_\_()
+
+析构函数
+
+## 8.7 继承
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+class Worker(Person):
+    def __init__(self, name, age, salary):
+        Person.__init__(self, name, age)
+        self.salary = salary
+```
+
+# 第 9 章 输入 / 输出
+
+## 9.1 文件
+
+```
+poem = '''\
+Programming is fun
+When the work is done
+if you wanna make your work also fun:
+use Python!
+'''
+f = file('poem.txt', 'w')
+f.write(poem)
+f.close()
+
+f = file('poem.txt')
+while True:
+    line = f.readline()
+    if len(line) == 0:
+        break
+    print line
+f.close()
+
+```
+
+## 9.2 序列化
+
+pickle 模块可以用于存取一个对象。
+
+cPickle 功能完全相同，但是用 c 语言编写的，速度快 1000 倍；
+
+```
+import cPickle as p
+
+shoplistfile = 'shoplist.data'
+shoplist = ['apple', 'mango', 'carrot']
+
+f = file(shoplistfile, 'w')
+p.dump(shoplist, f)
+f.close()
+
+del shoplist
+
+f = file(shoplistfile)
+storedlist = p.load(f)
+print storedlist
+
+```
+
+# 第 10 章 异常
+
+## 10.1 try-except
+
+可以跟上一个 else 从句，当没有异常发生时会执行；
+
+```
+import sys
+try:
+    s = raw_input('Enter something --> ')
+except EOFError:
+    print '\nWhy did you do an EOF on me?'
+    sys.exit() # exit the program
+except:
+    print '\nSome error/exception occurred.'
+# here, we are not exiting the program
+print 'Done'
+
+```
+
+## 10.2 引发异常
+
+raise 语句可以引发一个异常，引发的异常应该是 Error 或者 Exception 的类或者子类；
+
+```
+class MyException(Exception):
+    def __init__(self):
+        self.name = 'MyException'
+
+try:
+    raise MyException
+except MyException, e:
+    print e.name
+else:
+    print 'nothing'
+```
+
+## 10.3 finally
+
+finally 可以保证一个语句块无论如何都会执行。
+
+# 第 11 章 Python 标准库
+
+## 11.1 sys 模块
+
+sys.argv 参数列表。
+
+sys.stdin sys.stdout sys.stderr。
+
+## 11.2 os 模块
+
+该模块包含了普遍的操作系统功能，使程序能够与平台无关；
+
+os.name 字符串指示你正在使用的平台。比如对于 Windows，它是 'nt' ，而对于 Linux/Unix 用户，它是 'posix'。
+
+os.getcwd() 函数得到当前工作目录，即当前 Python 脚本工作的目录路径。
+
+os.getenv() 和 os.putenv() 函数分别用来读取和设置环境变量。
+
+os.listdir() 返回指定目录下的所有文件和目录名。
+
+os.remove() 函数用来删除一个文件。
+
+os.system() 函数用来运行 shell 命令。
+
+os.linesep 字符串给出当前平台使用的行终止符。例如，Windows 使用 '\r\n'，Linux 用 '\n' 而 Mac 使用 '\r'。
+
+os.path.split() 函数返回一个路径的目录名和文件名。
+
+```
+os.path.split('/home/swaroop/byte/code/poem.txt')
+('/home/swaroop/byte/code', 'poem.txt')
+```
+
+os.path.isfile() 和 os.path.isdir() 函数分别检验给出的路径是一个文件还是目录。类似地，os.path.exists() 函数用来检验给出的路径是否真地存在。
+
+# 第 12 章 更多 Python 的内容
+
+## 12.1 特殊的方法
+
+特殊的方法主要用于模仿某个行为。
+
+| 名称 | 说明 |
+| ------------ | ------------ |
+| __init__(self,...) | 这个方法在新建对象恰好要被返回使用之前被调用。 |
+| __del__(self) | 恰好在对象要被删除之前调用。 |
+| __str__(self) | 在我们对对象使用 print 语句或是使用 str() 的时候调用。 |
+| __lt__(self, other) | 当使用 小于 运算符（<）的时候调用。类似地，对于所有的运算符（+，> 等等）都有特殊的方法。 |
+| __getitem__(self, key) | 使用 x[key] 索引操作符的时候调用。 |
+| __len__(self) | 对序列对象使用内建的 len() 函数的时候调用。 |
+
+## 12.2 列表综合
+
+```
+listone = [2, 3, 4]
+listtwo = [2*i for i in listone if i > 2]
+print listtwo
+```
+
+## 12.3 在函数中接受元组和列表
+
+```
+def powersum(power, *args):
+  total = 0
+  for i in args:
+  total += pow(i, power)
+  return tota
+```
+
+由于在 args 变量前有 \* 前缀，所有多余的函数参数都会作为一个元组存储在 args 中。如果使用的是 \*\* 前缀，多余的参数则会被认为是一个字典的 键 / 值 对。
+
+## 12.4 lambada 形式
+
+lambda 语句被用来创建新的函数对象，并且在运行时返回它们。
+
+```
+def make_repeater(n):
+  return lambda s: s*n
+twice = make_repeater(2)
+print twice('word')
+print twice(5)
+
+wordword
+10
+```
+
+## 12.5 exec 和 eval()
+
+```
+exec 'print "Hello World"'
+eval('2*3')
+```
+
+## 12.6 assert 语句
+
+asser t 断言在非真时会引发一个 AssertionErro。
+
+```
+mylist = ['item']
+assert len(mylist) >= 1
+```
+
+## 12.7 repr() 函数
+
+repr() 函数和反引号用来获取对象的可打印的表示形式。
+
+可以通过定义类的\_\_repr\_\_() 方法来控制你的对象在被 repr 函数调用的时候返回的内容。
+
+```
+>>> i = []
+>>> i.append('item')
+>>> `i`
+"['item']"
+>>> repr(i)
+"['item']
+```
+
+# 参考资料
+
+1. 《简明 Python 教程》

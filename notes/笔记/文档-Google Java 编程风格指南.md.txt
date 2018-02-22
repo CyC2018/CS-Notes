@@ -1,0 +1,115 @@
+[TOC]
+
+# 地址
+
+[Google Java编程风格指南](http://www.hawstein.com/posts/google-java-style.html)
+
+# 命名约定
+
+在 Google 其它编程语言风格中使用的特殊前缀或后缀，如 name_ , mName ,  s_name 和 kName ，在 Java 编程风格中都不再使用。
+
+**1. 包名**
+
+包名全部小写，连续的单词只是简单地连接起来，不使用下划线。
+
+**2. 类名**
+
+类名都以 UpperCamelCase 风格编写。
+
+类名通常是名词或名词短语，接口名称有时可能是形容词或形容词短语。
+
+测试类的命名以它要测试的类的名称开始，以 Test 结束。
+
+**3. 方法名**
+
+方法名都以 lowerCamelCase 风格编写。
+
+方法名通常是动词或动词短语。
+
+下划线可能出现在JUnit测试方法名称中用以分隔名称的逻辑组件。一个典型的模式是： test&lt;MethodUnderTest>\_&lt;state> ，例如 testPop_emptyStack 。 并不存在唯一正确的方式来命名测试方法。
+
+**4. 常量名**
+
+常量名命名模式为 CONSTANT_CASE ，全部字母大写，用下划线分隔单词。
+
+每个常量都是一个静态final字段，但不是所有静态final字段都是常量。
+
+**5. 非常量字段名**
+
+非常量字段名以 lowerCamelCase 风格编写。
+
+**6. 参数名**
+
+参数名以 lowerCamelCase 风格编写。
+
+**7. 局部变量名**
+
+局部变量名以 lowerCamelCase 风格编写
+
+**8. 类型变量名**
+
+类型变量可用以下两种风格之一进行命名：
+
+- 单个的大写字母，后面可以跟一个数字(如：E, T, X, T2)。
+- 以类命名方式，后面加个大写的 T (如：RequestT, FooBarT)。
+
+**9. 驼峰式命名法**
+
+1. 把短语转换为纯 ASCII 码，并且移除任何单引号。例如："Müller’s algorithm" 将变成 "Muellers algorithm"。
+2. 把这个结果切分成单词，在空格或其它标点符号(通常是连字符)处分割开。
+3. 现在将所有字母都小写(包括缩写)，然后将单词的第一个字母大写。
+4. 最后将所有的单词连接起来得到一个标识符。
+
+```html
+Prose form                Correct               Incorrect
+------------------------------------------------------------------
+"XML HTTP request"        XmlHttpRequest        XMLHTTPRequest
+"new customer ID"         newCustomerId         newCustomerID
+"inner stopwatch"         innerStopwatch        innerStopWatch
+"supports IPv6 on iOS?"   supportsIpv6OnIos     supportsIPv6OnIOS
+"YouTube importer"        YouTubeImporter
+                          YoutubeImporter*
+```
+
+# 编程实践
+
+- 覆盖的方法加上 @Override 注释。
+
+- 异常不能忽视，否则需要在 catch 中注释说明。
+
+```
+try {
+  int i = Integer.parseInt(response);
+  return handleNumericResponse(i);
+} catch (NumberFormatException ok) {
+  // it's not numeric; that's fine, just continue
+}
+return handleTextResponse(response);
+```
+
+- 使用类调用静态成员
+
+```java
+Foo.aStaticMethod();
+```
+
+- 禁止使用 finalize()
+
+# Javadoc
+
+基本格式如下：
+
+```java
+/**
+ * Multiple lines of Javadoc text are written here,
+ * wrapped normally...
+ */
+```
+
+或者单行形式：
+```
+/** An especially short bit of Javadoc. */
+```
+
+标准的 Javadoc 标记按以下顺序出现：@param, @return, @throws, @deprecated，前面这4种标记如果出现，描述都不能为空。当描述无法在一行中容纳，连续行需要至少再缩进4个空格。
+

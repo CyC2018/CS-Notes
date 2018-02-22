@@ -1,0 +1,6 @@
+
+  HTTP缓存机制（cache-control、Expires之类的一系列请求与相应报头字段）
+
+HTTP1.0和HTTP1.1区别
+
+session和cookie的区别，禁用cookie后怎么办
