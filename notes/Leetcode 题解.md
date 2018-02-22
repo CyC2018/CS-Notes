@@ -578,21 +578,83 @@ public String findLongestWord(String s, List<String> d) {
 
 ### 堆排序
 
-堆排序用于求解 **TopK Elements** 问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。当然它也可以用于求解 Kth Element 问题，因为最后出堆的那个元素就是 Kth Element。快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于  Kth Element 的元素都是 TopK Elements。可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题，只是有可能需要间接求解。
+堆排序用于求解 **TopK Elements** 问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。当然它也可以用于求解 Kth Element 问题，因为最后出堆的那个元素就是 Kth Element。快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于  Kth Element 的元素都是 TopK Elements。可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
 
 **Kth Element**
 
 [Leetocde : 215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
-解题参考：[Solution explained](https://leetcode.com/problems/kth-largest-element-in-an-array/discuss/60294/Solution-explained)
+**排序**：时间复杂度 O(nlgn)，空间复杂度 O(1) 解法
 
-- 时间复杂度 O(nlgn)，空间复杂度 O(1) 解法：排序
-- 时间复杂度 O(nlgk)，空间复杂度 O(k) 解法：堆排序
-- 时间复杂度 O(n)，空间复杂度 O(1) 解法：QuickSelect
+```java
+public int findKthLargest(int[] nums, int k) {
+        int N = nums.length;
+        Arrays.sort(nums);
+        return nums[N - k];
+}
+```
 
-**ToK Elements**
+**堆排序**：时间复杂度 O(nlgk)，空间复杂度 O(k)
 
-[程序员代码面试指南 P336](#)
+```java
+public int findKthLargest(int[] nums, int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    for(int val : nums) {
+        pq.offer(val);
+        if(pq.size() > k) {
+            pq.poll();
+        }
+    }
+    return pq.peek();
+}
+```
+
+**快速选择**：时间复杂度 O(n)，空间复杂度 O(1)
+
+```java
+public int findKthLargest(int[] nums, int k) {
+        k = nums.length - k;
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo < hi) {
+            final int j = partition(nums, lo, hi);
+            if(j < k) {
+                lo = j + 1;
+            } else if (j > k) {
+                hi = j - 1;
+            } else {
+                break;
+            }
+        }
+        return nums[k];
+    }
+
+    private int partition(int[] a, int lo, int hi) {
+        int i = lo;
+        int j = hi + 1;
+        while(true) {
+            while(i < hi && less(a[++i], a[lo]));
+            while(j > lo && less(a[lo], a[--j]));
+            if(i >= j) {
+                break;
+            }
+            exch(a, i, j);
+        }
+        exch(a, lo, j);
+        return j;
+    }
+
+    private void exch(int[] a, int i, int j) {
+        final int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
+    private boolean less(int v, int w) {
+        return v < w;
+    }
+}
+```
 
 ### 桶排序
 
