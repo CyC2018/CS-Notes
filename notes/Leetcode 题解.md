@@ -1999,7 +1999,15 @@ public int wiggleMaxLength(int[] nums) {
 
 ×ÛÉÏ£¬×î³¤¹«¹²×ÓÏµÁĞµÄ×´Ì¬×ªÒÆ·½³ÌÎª£º
 
-![](http://latex.codecogs.com/gif.latex?\\\\dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right.)
+![](http://latex.codecogs.com/gif.latex?\\\\
+dp[i][j]=\left\{
+\begin{array}{rcl}
+dp[i-1][j-1]&&{S1_i==S2_j}\\
+max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}
+\end{array}\right.
+)
+
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/1dc481cc-99f6-4fa8-8f68-fbd563995bf5.png)
 
 ¶ÔÓÚ³¤¶ÈÎª N µÄĞòÁĞ S<sub>1</sub> ºÍ ³¤¶ÈÎª M µÄĞòÁĞ S<sub>2</sub>£¬dp[N][M] ¾ÍÊÇĞòÁĞ S<sub>1</sub> ºÍĞòÁĞ S<sub>2</sub> µÄ×î³¤¹«¹²×ÓĞòÁĞ³¤¶È¡£
 
@@ -2063,7 +2071,6 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 ![](http://latex.codecogs.com/gif.latex?\\\\dp[j]=max(dp[j],dp[j-w]+v))
 
 ÒòÎª dp[j-w] ±íÊ¾ dp[i-1][j-w]£¬Òò´Ë²»ÄÜÏÈÇó dp[i][j-w] ·ÀÖ¹½« dp[i-1][j-w] ¸²¸Ç¡£Ò²¾ÍÊÇËµÒªÏÈ¼ÆËã dp[i][j] ÔÙ¼ÆËã dp[i][j-w]£¬ÔÚ³ÌĞòÊµÏÖÊ±ĞèÒª°´µ¹ĞòÀ´Ñ­»·Çó½â¡£
-
 
 **ÎŞ·¨Ê¹ÓÃÌ°ĞÄËã·¨µÄ½âÊÍ**
 
@@ -2448,9 +2455,6 @@ public int minDistance(String word1, String word2) {
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
 
-**ĞŞ¸ÄÒ»¸ö×Ö·û´®Ê¹Ëü³ÉÎª»ØÎÄ×Ö·û´®**// TODO
-
-[³ÌĞòÔ±´úÂëÃæÊÔÖ¸ÄÏ-×Ö·û´®](#)
 
 ### ÆäËüÎÊÌâ
 
@@ -2850,12 +2854,6 @@ public int majorityElement(int[] nums) {
     return majority;
 }
 ```
-
-**Êı×éÖĞ³öÏÖ´ÎÊı¶àÓÚ n / k µÄÔªËØ**
-
-[³ÌĞòÔ±´úÂëÃæÊÔÖ¸ÄÏ P343](#)
-
-Ñ¡ k - 1 ¸öºòÑ¡
 
 ### ÆäËü
 
@@ -3427,14 +3425,6 @@ s1 ½øĞĞÑ­»·ÒÆÎ»µÄ½á¹ûÊÇ s1s1 µÄ×Ó×Ö·û´®£¬Òò´ËÖ»ÒªÅĞ¶Ï s2 ÊÇ·ñÊÇ s1s1 µÄ×Ó×Ö·û´®¼
 ½«Ã¿¸öµ¥´ÊÄæĞò£¬È»ºó½«Õû¸ö×Ö·û´®ÄæĞò¡£
 
 ## Êı×éÓë¾ØÕó
-
-**¾ØÕóĞı×ª** // TODO
-
-[³ÌĞòÔ±ÃæÊÔ½ğµä P114](#)
-
-**Ö®×ÖĞÍ´òÓ¡** //TODO
-
-[³ÌĞòÔ±´úÂëÃæÊÔÖ¸ÄÏ P335](#)
 
 **°ÑÊı×éÖĞµÄ 0 ÒÆµ½Ä©Î²**
 
@@ -4918,10 +4908,6 @@ public int getSum(int a, int b) {
     return b == 0 ? a : getSum((a ^ b), (a & b) << 1);
 }
 ```
-
-**ÊµÏÖÕûÊı³Ë·¨**
-
-[³ÌĞòÔ±´úÂëÃæÊÔÖ¸ÄÏ P319](#)
 
 **×Ö·û´®Êı×é×î´ó³Ë»ı**
 
