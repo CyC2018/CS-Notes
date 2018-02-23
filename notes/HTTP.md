@@ -10,7 +10,7 @@
     * [PUT：上传文件](#put上传文件)
     * [DELETE：删除文件](#delete删除文件)
     * [OPTIONS：查询支持的方法](#options查询支持的方法)
-    * [RACE：追踪路径](#race追踪路径)
+    * [TRACE：追踪路径](#trace追踪路径)
     * [CONNECT：要求用隧道协议连接代理](#connect要求用隧道协议连接代理)
 * [HTTP 状态码](#http-状态码)
     * [2XX 成功](#2xx-成功)
@@ -110,7 +110,7 @@ GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 是可见的，可能会泄
 
 会返回 Allow: GET, POST, HEAD, OPTIONS 这样的内容。
 
-## RACE：追踪路径
+## TRACE：追踪路径
 
 服务器会将通信路径返回给客户端。
 
