@@ -81,65 +81,7 @@
 
 ## 2. 实现 Singleton
 
-**经典实现**
-
-以下实现中，私有静态变量被延迟化实例化，这样做的好处是，如果没有用到该类，那么就不会创建该私有静态变量，从而节约资源。这个实现在多线程环境下是不安全的，因为多个线程能够同时进入 if(uniqueInstance == null) 内的语句块，那么就会多次实例化 uniqueInstance 私有静态变量。
-
-```java
-public class Singleton {
-    private static Singleton uniqueInstance;
-    private Singleton() {
-    }
-    public static Singleton getUniqueInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new Singleton();
-        }
-        return uniqueInstance;
-    }
-}
-```
-
-**线程不安全问题的解决方案一**
-
-只需要对 getUniqueInstance() 方法加锁，就能让该方法一次只能一个线程访问，从而避免了对 uniqueInstance 变量进行多次实例化的问题。但是这样有一个问题是一次只能一个线程进入，性能上会有一定的浪费。
-
-```java
-public static synchronized Singleton getUniqueInstance() {
-    if (uniqueInstance == null) {
-        uniqueInstance = new Singleton();
-    }
-    return uniqueInstance;
-}
-```
-**线程不安全问题的解决方案二**
-
-不用延迟实例化，采用直接实例化。
-
-```java
-private static Singleton uniqueInstance = new Singleton();
-```
-
-**线程不安全问题的解决方案三**
-
-考虑第一个解决方案，它是直接对 getUniqueInstance() 方法进行加锁，而实际上只需要对 uniqueInstance = new Singleton(); 这条语句加锁即可。使用两个条件语句来判断 uniqueInstance 是否已经实例化，如果没有实例化才需要加锁。
-
-```java
-public class Singleton {
-    private volatile static Singleton uniqueInstance;
-    private Singleton() {
-    }
-    public static synchronized Singleton getUniqueInstance() {
-        if (uniqueInstance == null) {
-            synchronized (Singleton.class) {
-                if (uniqueInstance == null) {
-                    uniqueInstance = new Singleton();
-                }
-            }
-        }
-        return uniqueInstance;
-    }
-}
-```
+[单例模式](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E7%AC%AC-5-%E7%AB%A0-%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F)
 
 ## 3. 数组中重复的数字
 
