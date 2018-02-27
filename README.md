@@ -122,3 +122,10 @@ Google 开源项目的代码风格规范。
 为了上传笔记到 Github 上，花了不少时间。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主写了一个小工具可以将普通的 Markdown 文档转换为 GFM 文档，有需要该工具的话可以在楼主的 Github 中找到。
 
 :star: :star: :star:
+
+<br><br>
+
+
+<div align="center">
+    <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="300"/>
+</div>
