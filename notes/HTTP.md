@@ -1,6 +1,6 @@
 <!-- GFM-TOC -->
 * [基础概念](#基础概念)
-    * [Web基础](#web基础)
+    * [Web 基础](#web-基础)
     * [URL](#url)
     * [请求和响应报文](#请求和响应报文)
 * [HTTP 方法](#http-方法)
@@ -42,7 +42,7 @@
 
 # 基础概念
 
-## Web基础
+## Web 基础
 
 HTTP（HyperText Transfer Protocol，超为本传输协议）。
 
