@@ -147,7 +147,11 @@ public boolean Find(int target, int [][] array) {
 
 **题目要求**
 
-以 O(1) 的空间复杂度来求解。
+以 O(1) 的空间复杂度和 O(n) 的空间复杂度来求解。
+
+**解题思路**
+
+从后向前改变字符串。
 
 ```java
 public String replaceSpace(StringBuffer str) {
@@ -184,6 +188,23 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         listNode = listNode.next;
     }
     Collections.reverse(ret);
+    return ret;
+}
+```
+
+使用 Stack
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    Stack<Integer> stack = new Stack<>();
+    while (listNode != null) {
+        stack.add(listNode.val);
+        listNode = listNode.next;
+    }
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (!stack.isEmpty()) {
+        ret.add(stack.pop());
+    }
     return ret;
 }
 ```
