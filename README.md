@@ -60,7 +60,7 @@
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
-整理自《深入理解 Java 虚拟机》，包括内存模型、垃圾回收和类加载机制。
+整理自《深入理解 Java 虚拟机》
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
@@ -96,11 +96,11 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 整理的笔记开源在 Github 上，包括数据结构与算法、网络、操作系统、面向对象。Github 仓库提供相关 PDF 书籍的下载，基本都是高清版本。
 
-如有笔误，直接在 Github 上进行编辑修改就行，楼主会及时 Merge。
+如果发现笔误，可以直接编辑修改，提交之后会自动生成一个 Pull Request，楼主会及时处理。如果您觉得哪部分内容写得好或者不好，都希望您能在 Issue 中进行反馈，您的反馈是楼主改进的方向。
 
-想要支持楼主的话，在 Github 仓库点个 Star 即可。
+想要支持楼主的话，在 Github 上点个 Star 即可。
 
-笔记基本是楼主一个字一个字打上去的，笔记内容可供个人随意使用，转载请注明出处，毕竟写了这么久没那么轻松~
+笔记内容基本是楼主一个字一个字打上去的，可供个人随意使用，转载请注明出处，毕竟写了很久没那么轻松~
 
 楼主作为一个轻度强迫症患者，笔记内容会尽量保证排版美观，可读性好。为了让笔记内容更整洁，前前后后做了很多次修改，也写了一个为中英混排文档进行排版的脚本，来提高笔记的可读性。
 
