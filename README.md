@@ -9,7 +9,7 @@
 <br><br>
 
 
-# 数据结构与算法
+# 算法
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
