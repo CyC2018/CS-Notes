@@ -87,7 +87,7 @@
 
 **题目描述**
 
-在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
+在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
 
 **解题思路**
 
@@ -95,6 +95,7 @@
 
 ```java
 public boolean duplicate(int numbers[], int length, int[] duplication) {
+    if(numbers == null || length <= 0) return false;
     for (int i = 0; i < length; i++) {
         while (numbers[i] != i && numbers[i] != numbers[numbers[i]]) {
             swap(numbers, i, numbers[i]);
@@ -119,6 +120,10 @@ private void swap(int[] numbers, int i, int j) {
 **题目描述**
 
 在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+
+**解题思路**
+
+从右上角开始查找。因为矩阵中的一个数，它左边的数都比它来的小，下面的数都比它来的大。因此，从右上角开始查找，就可以 target 和当前元素的大小关系来改变行和列的下标，从而缩小查找区间。
 
 ```java
 public boolean Find(int target, int [][] array) {
@@ -169,7 +174,7 @@ public String replaceSpace(StringBuffer str) {
 
 ## 6. 从尾到头打印链表
 
-正向遍历然后调用 Collections.reverse().
+正向遍历然后调用 Collections.reverse()。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
