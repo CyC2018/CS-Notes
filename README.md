@@ -98,7 +98,7 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 如果发现笔误，可以直接编辑修改，楼主会及时处理。
 
-如果您觉得哪部分内容写的好或者不好，都希望您能在 Issue 中进行反馈，您的反馈是楼主改进的方向。
+如果您觉得哪部分内容写的好或者不好，都希望您能在 Issues 中进行反馈，您的反馈是楼主改进的方向。
 
 想要支持楼主的话，在 Github 上点个 Star 即可。
 
