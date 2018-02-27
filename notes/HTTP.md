@@ -258,7 +258,7 @@ HTTP ±¨ÎÄ°üº¬ÁËÊ×²¿ºÍÖ÷ÌåÁ½²¿·Ö¡£ÓÐ 4 ÖÖÀàÐÍµÄÊ×²¿×Ö¶Î£ºÍ¨ÓÃÊ×²¿×Ö¶Î¡¢ÇëÇóÊ×²¿×Ö
 
 HTTP Ð­ÒéÊÇÎÞ×´Ì¬µÄ£¬Ö÷ÒªÊÇÎªÁËÈÃ HTTP Ð­Òé¾¡¿ÉÄÜ¼òµ¥£¬Ê¹µÃËüÄÜ¹»´¦Àí´óÁ¿ÊÂÎñ¡£HTTP/1.1 ÒýÈë Cookie À´±£´æ×´Ì¬ÐÅÏ¢¡£
 
-·þÎñÆ÷»á·¢ËÍµÄÏìÓ¦±¨ÎÄ°üº¬ Set-Cookie ×Ö¶Î£¬¿Í»§¶ËµÃµ½¸ÃÏàÓ¦ºó°Ñ Cookie ÄÚÈÝ±£´æµ½ä¯ÀÀÆ÷ÖÐ¡£ÏÂ´ÎÔÙ·¢ËÍÇëÇóÊ±£¬´Óä¯ÀÀÆ÷ÖÐ¶Á³ö Cookie Öµ£¬ÔÚÇëÇó±¨ÎÄÖÐ°üº¬ Cookie ×Ö¶Î£¬ÕâÑù·þÎñÆ÷¾ÍÖªµÀ¿Í»§¶ËµÄ×´Ì¬ÐÅÏ¢ÁË¡£Cookie ×´Ì¬ÐÅÏ¢±£´æÔÚ¿Í»§¶Ëä¯ÀÀÆ÷ÖÐ£¬¶ø²»ÊÇ·þÎñÆ÷ÉÏ¡£
+·þÎñÆ÷·¢ËÍµÄÏìÓ¦±¨ÎÄ°üº¬ Set-Cookie ×Ö¶Î£¬¿Í»§¶ËµÃµ½ÏìÓ¦±¨ÎÄºó°Ñ Cookie ÄÚÈÝ±£´æµ½ä¯ÀÀÆ÷ÖÐ¡£ÏÂ´ÎÔÙ·¢ËÍÇëÇóÊ±£¬´Óä¯ÀÀÆ÷ÖÐ¶Á³ö Cookie Öµ£¬ÔÚÇëÇó±¨ÎÄÖÐ°üº¬ Cookie ×Ö¶Î£¬ÕâÑù·þÎñÆ÷¾ÍÖªµÀ¿Í»§¶ËµÄ×´Ì¬ÐÅÏ¢ÁË¡£Cookie ×´Ì¬ÐÅÏ¢±£´æÔÚ¿Í»§¶Ëä¯ÀÀÆ÷ÖÐ£¬¶ø²»ÊÇ·þÎñÆ÷ÉÏ¡£
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/ff17c103-750a-4bb8-9afa-576327023af9.png)
 
@@ -275,7 +275,7 @@ Set-Cookie ×Ö¶ÎÓÐÒÔÏÂÊôÐÔ£º
 
 **Session ºÍ Cookie Çø±ð**
 
-Session ÊÇ·þÎñÆ÷ÓÃÀ´¸ú×ÙÓÃ»§µÄÒ»ÖÖÊÖ¶Î£¬Ã¿¸ö Session ¶¼ÓÐÒ»¸öÎ¨Ò»±êÊ¶£ºSession ID¡£µ±·þÎñÆ÷´´½¨ÁËÒ»¸ö Session Ê±£¬¸ø¿Í»§¶Ë·¢ËÍµÄÏìÓ¦±¨ÎÄ¾Í°üº¬ÁË Set-Cookie ×Ö¶Î£¬ÆäÖÐÓÐÒ»¸öÃûÎª sid µÄ¼üÖµ¶Ô£¬Õâ¸ö¼üÖµ¶Ô¾ÍÊÇ Session ID¡£¿Í»§¶ËÊÕµ½ºó¾Í°Ñ Cookie ±£´æÔÚä¯ÀÀÆ÷ÖÐ£¬²¢ÇÒÖ®ºó·¢ËÍµÄÇëÇó±¨ÎÄ¶¼°üº¬ Session ID¡£HTTP ¾ÍÊÇ Session ºÍ Cookie ÕâÁ½ÖÖ·½Ê½Ò»ÆðºÏ×÷À´ÊµÏÖ¸ú×ÙÓÃ»§×´Ì¬µÄ£¬¶ø Session ÓÃÓÚ·þÎñÆ÷¶Ë£¬Cookie ÓÃÓÚ¿Í»§¶Ë¡£
+Session ÊÇ·þÎñÆ÷ÓÃÀ´¸ú×ÙÓÃ»§µÄÒ»ÖÖÊÖ¶Î£¬Ã¿¸ö Session ¶¼ÓÐÒ»¸öÎ¨Ò»±êÊ¶£ºSession ID¡£µ±·þÎñÆ÷´´½¨ÁËÒ»¸ö Session Ê±£¬¸ø¿Í»§¶Ë·¢ËÍµÄÏìÓ¦±¨ÎÄ¾Í°üº¬ÁË Set-Cookie ×Ö¶Î£¬ÆäÖÐÓÐÒ»¸öÃûÎª sid µÄ¼üÖµ¶Ô£¬Õâ¸ö¼üÖµ¶Ô¾ÍÊÇ Session ID¡£¿Í»§¶ËÊÕµ½ºó¾Í°Ñ Cookie ±£´æÔÚä¯ÀÀÆ÷ÖÐ£¬²¢ÇÒÖ®ºó·¢ËÍµÄÇëÇó±¨ÎÄ¶¼°üº¬ Session ID¡£HTTP ¾ÍÊÇÍ¨¹ý Session ºÍ Cookie ÕâÁ½ÖÖ·½Ê½Ò»ÆðºÏ×÷À´ÊµÏÖ¸ú×ÙÓÃ»§×´Ì¬µÄ£¬Session ÓÃÓÚ·þÎñÆ÷¶Ë£¬Cookie ÓÃÓÚ¿Í»§¶Ë¡£
 
 **ä¯ÀÀÆ÷½ûÓÃ Cookie µÄÇé¿ö**
 
@@ -297,11 +297,11 @@ Expires ×Ö¶Î¿ÉÒÔÓÃÓÚ¸æÖª»º´æ·þÎñÆ÷¸Ã×ÊÔ´Ê²Ã´Ê±ºò»á¹ýÆÚ¡£µ±Ê×²¿×Ö¶Î Cache-Control
 
 ## ³Ö¾ÃÁ¬½Ó
 
-µ±ä¯ÀÀÆ÷·ÃÎÊÒ»¸ö°üº¬¶àÕÅÍ¼Æ¬µÄ HTML Ò³ÃæÊ±£¬³ýÁËÇëÇó·ÃÎÊ HTML Ò³Ãæ×ÊÔ´£¬»¹»áÇëÇóÍ¼Æ¬×ÊÔ´£¬Èç¹ûÃ¿½øÐÐÒ»´Î HTTP Í¨ÐÅ¾ÍÒª¶Ï¿ªÒ»´Î TCP Á¬½Ó£¬Á¬½Ó½¨Á¢ºÍ¶Ï¿ªµÄ¿ªÏú»áºÜ´ó¡£**³Ö¾ÃÁ¬½Ó** Ö»ÐèÒª½øÐÐÒ»´Î TCP Á¬½Ó¾ÍÄÜ½øÐÐ¶à´Î HTTP Í¨ÐÅ¡£HTTP/1.1¿ªÊ¼£¬ËùÓÐµÄÁ¬½ÓÄ¬ÈÏ¶¼ÊÇ³Ö¾ÃÁ¬½Ó¡£
+µ±ä¯ÀÀÆ÷·ÃÎÊÒ»¸ö°üº¬¶àÕÅÍ¼Æ¬µÄ HTML Ò³ÃæÊ±£¬³ýÁËÇëÇó·ÃÎÊ HTML Ò³Ãæ×ÊÔ´£¬»¹»áÇëÇóÍ¼Æ¬×ÊÔ´£¬Èç¹ûÃ¿½øÐÐÒ»´Î HTTP Í¨ÐÅ¾ÍÒª¶Ï¿ªÒ»´Î TCP Á¬½Ó£¬Á¬½Ó½¨Á¢ºÍ¶Ï¿ªµÄ¿ªÏú»áºÜ´ó¡£**³Ö¾ÃÁ¬½Ó** Ö»ÐèÒª½øÐÐÒ»´Î TCP Á¬½Ó¾ÍÄÜ½øÐÐ¶à´Î HTTP Í¨ÐÅ¡£HTTP/1.1 ¿ªÊ¼£¬ËùÓÐµÄÁ¬½ÓÄ¬ÈÏ¶¼ÊÇ³Ö¾ÃÁ¬½Ó¡£
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg)
 
-³Ö¾ÃÁ¬½ÓÐèÒªÊ¹ÓÃ Connection Ê×²¿×Ö¶Î½øÐÐ¹ÜÀí¡£HTTP/1.1 ¿ªÊ¼HTTP Ä¬ÈÏÊÇ³Ö¾Ã»¯Á¬½ÓµÄ£¬Èç¹ûÒª¶Ï¿ª TCP Á¬½Ó£¬ÐèÒªÓÉ¿Í»§¶Ë»òÕß·þÎñÆ÷¶ËÌá³ö¶Ï¿ª£¬Ê¹ÓÃ Connection: close £»¶øÔÚHTTP/1.1Ö®Ç°Ä¬ÈÏÊÇ·Ç³Ö¾Ã»¯Á¬½ÓµÄ£¬Èç¹ûÒªÎ¬³Ö³ÖÐøÁ¬½Ó£¬ÐèÒªÊ¹ÓÃ Keep-Alive¡£
+³Ö¾ÃÁ¬½ÓÐèÒªÊ¹ÓÃ Connection Ê×²¿×Ö¶Î½øÐÐ¹ÜÀí¡£HTTP/1.1 ¿ªÊ¼ HTTP Ä¬ÈÏÊÇ³Ö¾Ã»¯Á¬½ÓµÄ£¬Èç¹ûÒª¶Ï¿ª TCP Á¬½Ó£¬ÐèÒªÓÉ¿Í»§¶Ë»òÕß·þÎñÆ÷¶ËÌá³ö¶Ï¿ª£¬Ê¹ÓÃ Connection: close£»¶øÔÚ HTTP/1.1 Ö®Ç°Ä¬ÈÏÊÇ·Ç³Ö¾Ã»¯Á¬½ÓµÄ£¬Èç¹ûÒªÎ¬³Ö³ÖÐøÁ¬½Ó£¬ÐèÒªÊ¹ÓÃ Keep-Alive¡£
 
 ¹ÜÏß»¯·½Ê½¿ÉÒÔÍ¬Ê±·¢ËÍ¶à¸öÇëÇóºÍÏìÓ¦£¬¶ø²»ÐèÒª·¢ËÍÒ»¸öÇëÇóÈ»ºóµÈ´ýÏìÓ¦Ö®ºóÔÙ·¢ÏÂÒ»¸öÇëÇó¡£
 
@@ -327,7 +327,7 @@ Expires ×Ö¶Î¿ÉÒÔÓÃÓÚ¸æÖª»º´æ·þÎñÆ÷¸Ã×ÊÔ´Ê²Ã´Ê±ºò»á¹ýÆÚ¡£µ±Ê×²¿×Ö¶Î Cache-Control
 
 Èç¹ûÍøÂç³öÏÖÖÐ¶Ï£¬·þÎñÆ÷Ö»·¢ËÍÁËÒ»²¿·ÖÊý¾Ý£¬·¶Î§ÇëÇóÊ¹µÃ¿Í»§¶ËÄÜ¹»Ö»ÇëÇóÎ´·¢ËÍµÄÄÇ²¿·ÖÊý¾Ý£¬´Ó¶ø±ÜÃâ·þÎñÆ÷¶ËÖØÐÂ·¢ËÍËùÓÐÊý¾Ý¡£
 
-ÔÚÇëÇó±¨ÎÄÊ×²¿ÖÐÌí¼Ó Range ×Ö¶Î£¬È»ºóÖ¸¶¨ÇëÇóµÄ·¶Î§£¬ÀýÈç  Range : bytes = 5001-10000¡£ÇëÇó³É¹¦µÄ»°·þÎñÆ÷·¢ËÍ 206 Partial Content ×´Ì¬¡£
+ÔÚÇëÇó±¨ÎÄÊ×²¿ÖÐÌí¼Ó Range ×Ö¶Î£¬È»ºóÖ¸¶¨ÇëÇóµÄ·¶Î§£¬ÀýÈç Range : bytes = 5001-10000¡£ÇëÇó³É¹¦µÄ»°·þÎñÆ÷·¢ËÍ 206 Partial Content ×´Ì¬¡£
 
 ## ÄÚÈÝÐ­ÉÌ
 
@@ -351,7 +351,7 @@ Expires ×Ö¶Î¿ÉÒÔÓÃÓÚ¸æÖª»º´æ·þÎñÆ÷¸Ã×ÊÔ´Ê²Ã´Ê±ºò»á¹ýÆÚ¡£µ±Ê×²¿×Ö¶Î Cache-Control
 
 **Íø¹Ø**
 
-Óë´úÀí·þÎñÆ÷²»Í¬µÄÊÇ£¬Íø¹Ø·þÎñÆ÷»á½« HTTP ×ª»¯ÎªÆäËüÐ­Òé½øÐÐÍ¨ÐÅ£¬´Ó¶øÆäËü·Ç HTTP ·þÎñÆ÷µÄ·þÎñ¡£
+Óë´úÀí·þÎñÆ÷²»Í¬µÄÊÇ£¬Íø¹Ø·þÎñÆ÷»á½« HTTP ×ª»¯ÎªÆäËüÐ­Òé½øÐÐÍ¨ÐÅ£¬´Ó¶øÇëÇóÆäËü·Ç HTTP ·þÎñÆ÷µÄ·þÎñ¡£
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/81375888-6be1-476f-9521-42eea3e3154f.jpg)
 
@@ -385,14 +385,13 @@ HTTPs ²ÉÓÃ **»ìºÏµÄ¼ÓÃÜ»úÖÆ**£¬Ê¹ÓÃ¹«¿ªÃÜÔ¿¼ÓÃÜÓÃÓÚ´«Êä¶Ô³ÆÃÜÔ¿£¬Ö®ºóÊ¹ÓÃ¶Ô³ÆÃÜÔ
 
 Í¨¹ýÊ¹ÓÃ **Ö¤Êé** À´¶ÔÍ¨ÐÅ·½½øÐÐÈÏÖ¤¡£Ö¤ÊéÖÐÓÐ¹«¿ªÃÜÔ¿Êý¾Ý£¬Èç¹û¿ÉÒÔÑéÖ¤¹«¿ªÃÜÔ¿µÄÈ·ÊôÓÚÍ¨ÐÅ·½µÄ£¬ÄÇÃ´¾Í¿ÉÒÔÈ·¶¨Í¨ÐÅ·½ÊÇ¿É¿¿µÄ¡£
 
-Êý×ÖÖ¤ÊéÈÏÖ¤»ú¹¹£¨CA£¬Certificate
-Authority£©°ä·¢µÄ¹«¿ªÃÜÔ¿Ö¤Êé£¬¿ÉÒÔÍ¨¹ý CA ¶ÔÆä½øÐÐÑéÖ¤¡£
+Êý×ÖÖ¤ÊéÈÏÖ¤»ú¹¹£¨CA£¬Certificate Authority£©°ä·¢µÄ¹«¿ªÃÜÔ¿Ö¤Êé£¬¿ÉÒÔÍ¨¹ý CA ¶ÔÆä½øÐÐÑéÖ¤¡£
 
 ½øÐÐ HTTPs Í¨ÐÅÊ±£¬·þÎñÆ÷»á°ÑÖ¤Êé·¢ËÍ¸ø¿Í»§¶Ë£¬¿Í»§¶ËÈ¡µÃÆäÖÐµÄ¹«¿ªÃÜÔ¿Ö®ºó£¬¾Í¿ÉÒÔ¿ªÊ¼¼ÓÃÜ¹ý³Ì¡£
 
 Ê¹ÓÃ OpenSSL ÕâÌ×¿ªÔ´³ÌÐò£¬Ã¿¸öÈË¶¼¿ÉÒÔ¹¹½¨Ò»Ì×ÊôÓÚ×Ô¼ºµÄÈÏÖ¤»ú¹¹£¬´Ó¶ø×Ô¼º¸ø×Ô¼º°ä·¢·þÎñÆ÷Ö¤Êé¡£ä¯ÀÀÆ÷ÔÚ·ÃÎÊ¸Ã·þÎñÆ÷Ê±£¬»áÏÔÊ¾¡°ÎÞ·¨È·ÈÏÁ¬½Ó°²È«ÐÔ¡±»ò¡°¸ÃÍøÕ¾µÄ°²È«Ö¤Êé´æÔÚÎÊÌâ¡±µÈ¾¯¸æÏûÏ¢¡£
 
-¿Í»§¶ËÖ¤ÊéÐèÒªÓÃ»§×ÔÐÐ°²×°£¬Ö»ÓÐÔÚÒµÎñÐèÒª·Ç³£¸ß°²È«ÐÔÊ±²ÅÊ¹ÓÃ¿Í»§¶ËÖ¤Êé£¬ÀýÈçÍøÉÏÒøÐÐ¡£
+¿Í»§¶ËÖ¤ÊéÐèÒªÓÃ»§×ÔÐÐ°²×°£¬Ö»ÓÐÔÚÒµÎñÐèÒª·Ç³£¸ßµÄ°²È«ÐÔÊ±²ÅÊ¹ÓÃ¿Í»§¶ËÖ¤Êé£¬ÀýÈçÍøÉÏÒøÐÐ¡£
 
 ## ÍêÕûÐÔ
 
