@@ -254,16 +254,16 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
     return reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
 }
+
 private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, int inL, int inR) {
-    if(preL > preR || inL > inR) return null;
+    if (preL == preR) return new TreeNode(pre[preL]);
+    if (preL > preR || inL > inR) return null;
     TreeNode root = new TreeNode(pre[preL]);
-    if (preL != preR) {
-        int idx = inL;
-        while (idx <= inR && in[idx] != root.val) idx++;
-        int leftTreeLen = idx - inL;
-        root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeLen, in, inL, inL + leftTreeLen - 1);
-        root.right = reConstructBinaryTree(pre, preL + leftTreeLen + 1, preR, in, inL + leftTreeLen + 1, inR);
-    }
+    int midIdx = inL;
+    while (midIdx <= inR && in[midIdx] != root.val) midIdx++;
+    int leftTreeSize = midIdx - inL;
+    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, in, inL, inL + leftTreeSize - 1);
+    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, in, inL + leftTreeSize + 1, inR);
     return root;
 }
 ```
@@ -273,6 +273,13 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 **题目描述**
 
 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+**解题思路**
+
+- 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+- 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
+
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/6fec7f56-a685-4232-b03e-c92a8dfba486.png)
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
