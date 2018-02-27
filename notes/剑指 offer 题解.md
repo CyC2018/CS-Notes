@@ -519,7 +519,11 @@ private void initDigitSum(int rows, int cols) {
 
 把一根绳子剪成多段，并且使得每段的长度乘积最大。
 
-**解题思路**
+**动态规划解法**
+
+[分割整数](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
+
+**贪心解法**
 
 尽可能多得剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
