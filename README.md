@@ -8,7 +8,6 @@
 <br><br> -->
 
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="220"/>
-<br>
 
 # 数据结构与算法
 
