@@ -87,7 +87,7 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 重构是对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
 
-> [编写可读代码的艺术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/编写可读代码的艺术.md)
+> [代码可读性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码可读性.md)
 
 编程有很大一部分时间是在阅读代码，可读性良好的代码能够大大提高编程效率。
 
