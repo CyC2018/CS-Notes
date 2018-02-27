@@ -19,7 +19,7 @@
     * [15. 二进制中 1 的个数](#15-二进制中-1-的个数)
 * [第三章 高质量的代码](#第三章-高质量的代码)
     * [16. 数值的整数次方](#16-数值的整数次方)
-    * [18. 删除链表中重复的结点](#18-删除链表中重复的结点)
+    * [18.2 删除链表中重复的结点](#182-删除链表中重复的结点)
     * [19. 正则表达式匹配](#19-正则表达式匹配)
     * [20. 表示数值的字符串](#20-表示数值的字符串)
     * [21. 调整数组顺序使奇数位于偶数前面](#21-调整数组顺序使奇数位于偶数前面)
@@ -541,11 +541,15 @@ int maxProductAfterCuttin(int length) {
 
 ## 15. 二进制中 1 的个数
 
+使用库函数：
+
 ```java
 public int NumberOf1(int n) {
     return Integer.bitCount(n);
 }
 ```
+
+O(lgM) 时间复杂度解法，其中 M 表示 1 的个数：
 
 n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
 
@@ -558,7 +562,6 @@ public int NumberOf1(int n) {
     }
     return cnt;
 }
-
 ```
 
 # 第三章 高质量的代码
@@ -580,7 +583,7 @@ public double Power(double base, int exponent) {
 }
 ```
 
-## 18. 删除链表中重复的结点
+## 18.2 删除链表中重复的结点
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
@@ -641,6 +644,10 @@ public boolean isNumeric(char[] str) {
 
 ## 21. 调整数组顺序使奇数位于偶数前面
 
+**题目要求**
+
+保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
+
 时间复杂度 : O(n<sup>2</sup>)
 空间复杂度 : O(1)
 
@@ -694,8 +701,6 @@ public ListNode FindKthToTail(ListNode head, int k) {
     return slow;
 }
 ```
-
-
 
 ## 23. 链表中环的入口结点
 
@@ -1455,8 +1460,6 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 
 ## 53 数字在排序数组中出现的次数
 
-
-
 ```java
 public int GetNumberOfK(int[] array, int k) {
     int l = 0, h = array.length - 1;
@@ -1735,8 +1738,9 @@ public int maxProfit(int[] prices) {
 
 ```java
 public int Sum_Solution(int n) {
-    if(n == 0) return 0;
-    return n + Sum_Solution(n - 1);
+    int sum = n;
+    boolean b = (n > 0) && ((sum += Sum_Solution(n - 1)) > 0);
+    return sum;
 }
 ```
 
