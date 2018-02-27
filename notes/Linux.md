@@ -65,8 +65,8 @@
         * [2. bzip2](#2-bzip2)
         * [3. xz](#3-xz)
     * [打包](#打包)
-* [BASH](#bash)
-    * [Bash特性](#bash特性)
+* [Bash](#bash)
+    * [Bash 特性](#bash-特性)
     * [变量操作](#变量操作)
     * [指令搜索顺序](#指令搜索顺序)
     * [数据流重定向](#数据流重定向)
@@ -534,8 +534,8 @@ find 可以使用文件的属性和权限进行搜索。
 文件系统有以下三个结构：
 
 1. superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
-2. inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的数据所在的 block 号码；
-3. block：记录文件的内容，若文件太大时，会占用多个 block。
+2. inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 号码；
+3. block：记录文件的内容，文件太大时，会占用多个 block。
 
 当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
@@ -549,7 +549,7 @@ Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一
 
 Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 block 大小限制了单一文件的大小。而每个 inode 大小是固定为 128 bytes。
 
-inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用，使用用 block 来扩充大小，也就是让 block 来记录文件包含的 block。
+inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg)
 
@@ -566,21 +566,21 @@ inode 具体包含以下信息：
 
 ## 目录的 inode 与 block
 
-建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名，可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
+建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
 
 ## 实体链接与符号链接
 
 ```html
 # ln [-sf] source_filename dist_filename
 -s ：默认是 hard link，加 -s 为 symbolic link
--f ：如果目标5文件存在时，先删除目标文件
+-f ：如果目标文件存在时，先删除目标文件
 ```
 
 ### 1. 实体链接
 
 hard link 只是在某个目录下新增一个条目，使得新增的条目链接到文件的 inode 上。删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
-有以下限制：不能跨越 Filesystem；不能对目录进行链接。
+有以下限制：不能跨越 File System；不能对目录进行链接。
 
 ```html
 # ln /etc/crontab .
@@ -653,7 +653,7 @@ $ bzip2 [-cdkzv#] filename
 
 提供比 bzip2 更佳的压缩比。
 
-可以看到，gzip、bzip2、xz 的压缩比不断优化，不过要注意，压缩比越高，压缩的时间也越长。
+可以看到，gzip、bzip2、xz 的压缩比不断优化。不过要注意，压缩比越高，压缩的时间也越长。
 
 查看命令：xzcat、xzmore、xzless、xzgrep。
 
@@ -680,17 +680,18 @@ $ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
 -C 目录 ： 在特定目录解压缩。
 ```
 
-最常用的方式如下：
+| 使用方式 | 命令 |
+| --- | --- |
+| 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
+| 查 看 | tar -jtv -f filename.tar.bz2 |
+| 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
 
-打包压缩 ： tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称
-查 看&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;： tar -jtv -f filename.tar.bz2
-解压缩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：tar -jxv -f filename.tar.bz2 -C 要解压缩的目录
 
-# BASH
+# Bash
 
-可以通过 shell 请求内核提供服务，Bash 正是 shell 的一种。
+可以通过 Shell 请求内核提供服务，Bash 正是 Shell 的一种。
 
-## Bash特性
+## Bash 特性
 
 **1. 命令历史**
 
@@ -712,7 +713,9 @@ $ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
 
 ## 变量操作
 
-对一个变量赋值直接使用 = ，对变量取用需要在变量前加上 \$ ，也可以用 \${} 的形式，输出变量使用 echo 命令。
+- 对一个变量赋值直接使用 = ；
+- 对变量取用需要在变量前加上 \$ ，也可以用 \${} 的形式；
+- 输出变量使用 echo 命令。
 
 ```bash
 $ var=abc
@@ -720,7 +723,7 @@ $ echo $var
 $ echo ${var}
 ```
 
-变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \$LANG"，则var的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
+变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
 
 
 可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
@@ -756,13 +759,14 @@ $ echo ${array[1]}
 
 重定向就是使用文件代替标准输入、标准输出和标准错误输出。
 
-1. 标准输入 (stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
-2. 标准输出 (stdout)&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
+
+1. 标准输入(stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
+2. 标准输出(stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
 3. 标准错误输出(stderr)：代码为 2 ，使用 2> 或 2>> ；
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
-可以将不需要的标准输出以及标准错误输出重定向到 /dev/null ，相当于扔进垃圾箱。
+可以将不需要的标准输出以及标准错误输出重定向到 /dev/null，相当于扔进垃圾箱。
 
 如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2>&1 表示将标准错误输出转换为标准输出。
 
@@ -791,7 +795,7 @@ $ cut
 -c ：以字符为单位取出区间
 ```
 
-范例1：last 将显示的登入者的信息，要求仅显示用户名。
+范例 1：last 将显示的登入者的信息，要求仅显示用户名。
 
 ```html
 $ last
@@ -802,7 +806,7 @@ root pts/1 192.168.201.254 Thu Feb 5 22:37 - 23:53 (01:16)
 $ last | cut -d ' ' -f 1
 ```
 
-范例2：将 export 输出的讯息，取得第 12 字符以后的所有字符串。
+范例 2：将 export 输出的讯息，取得第 12 字符以后的所有字符串。
 
 ```html
 $ export
@@ -823,11 +827,11 @@ $ export | cut -c 12
 $ sort [-fbMnrtuk] [file or stdin]
 -f ：忽略大小写
 -b ：忽略最前面的空格
--M ：以月份的名字来排序，例如 JAN, DEC
+-M ：以月份的名字来排序，例如 JAN，DEC
 -n ：使用数字
 -r ：反向排序
--u ：相当于 unique ，重复内容只出现一次
--t ：分隔符，默认为tab
+-u ：相当于 unique，重复的内容只出现一次
+-t ：分隔符，默认为 tab
 -k ：指定排序的区间
 ```
 
@@ -959,8 +963,6 @@ $ grep -n 'the' regular_express.txt
 $ grep -n 'go\{2,5\}g' regular_express.txt
 ```
 
-其它正则表达式请参考 [正则表达式](https://github.com/00000H/notes/blob/master/notes/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md).
-
 ## printf
 
 用于格式化输出。
@@ -977,7 +979,7 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 ## awk
 
 ```html
-$ awk '条件类型 1{动作 1} 条件类型 2{动作 2} ...' filename
+$ awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
 ```
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
