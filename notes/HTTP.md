@@ -17,7 +17,7 @@
     * [3XX ÖØ¶¨Ïò](#3xx-ÖØ¶¨Ïò)
     * [4XX ¿Í»§¶Ë´íÎó](#4xx-¿Í»§¶Ë´íÎó)
     * [5XX ·þÎñÆ÷´íÎó](#5xx-·þÎñÆ÷´íÎó)
-* [HTTPÊ×²¿](#httpÊ×²¿)
+* [HTTP Ê×²¿](#http-Ê×²¿)
     * [Í¨ÓÃÊ×²¿×Ö¶Î](#Í¨ÓÃÊ×²¿×Ö¶Î)
     * [ÇëÇóÊ×²¿×Ö¶Î](#ÇëÇóÊ×²¿×Ö¶Î)
     * [ÏìÓ¦Ê×²¿×Ö¶Î](#ÏìÓ¦Ê×²¿×Ö¶Î)
@@ -123,8 +123,6 @@ TRACE Ò»°ã²»»áÊ¹ÓÃ£¬²¢ÇÒËüÈÝÒ×ÊÜµ½ XST ¹¥»÷£¨Cross-Site Tracing£¬¿çÕ¾×·×Ù£©£¬Òò´
 
 ## CONNECT£ºÒªÇóÓÃËíµÀÐ­ÒéÁ¬½Ó´úÀí
 
-ÓÃËíµÀÐ­Òé½øÐÐ TCP Í¨ÐÅ¡£
-
 Ö÷ÒªÊ¹ÓÃ SSL£¨Secure Sokets Layer£¬°²È«Ì×½Ó×Ö£©ºÍ TLS£¨Transport Layer Security£¬´«Êä²ã°²È«£©Ð­Òé°ÑÍ¨ÐÅÄÚÈÝ¼ÓÃÜºó¾­ÍøÂçËíµÀ´«Êä¡£
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/d8355d56-aa2b-4452-8001-8475cc095af1.jpg)
@@ -157,7 +155,7 @@ TRACE Ò»°ã²»»áÊ¹ÓÃ£¬²¢ÇÒËüÈÝÒ×ÊÜµ½ XST ¹¥»÷£¨Cross-Site Tracing£¬¿çÕ¾×·×Ù£©£¬Òò´
 
 **303 See Other**
 
-×¢£ºËäÈ» HTTP Ð­Òé¹æ¶¨ 301¡¢302 ×´Ì¬ÏÂÖØ¶¨ÏòÊ±²»ÔÊÐí°Ñ POST ·½·¨¸Ä³É GET ·½·¨£¬µ«ÊÇ´ó¶àÊýä¯ÀÀÆ÷¶¼»á°Ñ 301¡¢302 ºÍ 303 ×´Ì¬ÏÂµÄÖØ¶¨Ïò°Ñ POST ·½·¨¸Ä³É GET ·½·¨¡£
+×¢£ºËäÈ» HTTP Ð­Òé¹æ¶¨ 301¡¢302 ×´Ì¬ÏÂÖØ¶¨ÏòÊ±²»ÔÊÐí°Ñ POST ·½·¨¸Ä³É GET ·½·¨£¬µ«ÊÇ´ó¶àÊýä¯ÀÀÆ÷¶¼»á ÔÚ 301¡¢302 ºÍ 303 ×´Ì¬ÏÂµÄÖØ¶¨Ïò°Ñ POST ·½·¨¸Ä³É GET ·½·¨¡£
 
 **304 Not Modified**£ºÈç¹ûÇëÇó±¨ÎÄÊ×²¿°üº¬Ò»Ð©Ìõ¼þ£¬ÀýÈç£ºIf-Match£¬If-ModifiedSince£¬If-None-Match£¬If-Range£¬If-Unmodified-Since£¬µ«ÊÇ²»Âú×ãÌõ¼þ£¬Ôò·þÎñÆ÷»á·µ»Ø 304 ×´Ì¬Âë¡£
 
@@ -181,9 +179,9 @@ TRACE Ò»°ã²»»áÊ¹ÓÃ£¬²¢ÇÒËüÈÝÒ×ÊÜµ½ XST ¹¥»÷£¨Cross-Site Tracing£¬¿çÕ¾×·×Ù£©£¬Òò´
 
 **503 Service Unavilable**£º¸Ã×´Ì¬Âë±íÃ÷·þÎñÆ÷ÔÝÊ±´¦ÓÚ³¬¸ºÔØ»òÕýÔÚ½øÐÐÍ£»úÎ¬»¤£¬ÏÖÔÚÎÞ·¨´¦ÀíÇëÇó¡£
 
-# HTTPÊ×²¿
+# HTTP Ê×²¿
 
-HTTP ±¨ÎÄ°üº¬ÁËÊ×²¿ºÍÖ÷ÌåÁ½²¿·Ö¡£ÓÐ 4 ÖÖÀàÐÍµÄÊ×²¿×Ö¶Î£ºÍ¨ÓÃÊ×²¿×Ö¶Î¡¢ÇëÇóÊ×²¿×Ö¶Î¡¢ÏìÓ¦Ê×²¿×Ö¶ÎºÍÊµÌåÊ×²¿×Ö¶Î¡£¸÷ÖÖÊ×²¿×Ö¶Î¼°Æäº¬ÒåÈçÏÂ£¨²»ÐèÒªÈ«¼Ç£¬½ö¹©²éÔÄ£©£º
+ÓÐ 4 ÖÖÀàÐÍµÄÊ×²¿×Ö¶Î£ºÍ¨ÓÃÊ×²¿×Ö¶Î¡¢ÇëÇóÊ×²¿×Ö¶Î¡¢ÏìÓ¦Ê×²¿×Ö¶ÎºÍÊµÌåÊ×²¿×Ö¶Î¡£¸÷ÖÖÊ×²¿×Ö¶Î¼°Æäº¬ÒåÈçÏÂ£¨²»ÐèÒªÈ«¼Ç£¬½ö¹©²éÔÄ£©£º
 
 ## Í¨ÓÃÊ×²¿×Ö¶Î
 
