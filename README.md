@@ -7,6 +7,10 @@
 
 <br><br> -->
 
+<img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="300"/>
+
+<br><br>
+
 
 # 数据结构与算法
 
@@ -126,6 +130,6 @@ Google 开源项目的代码风格规范。
 <br><br>
 
 
-<div align="center">
+<!-- <div align="center">
     <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="300"/>
-</div>
+</div> -->
