@@ -8,7 +8,7 @@
 <br><br> -->
 
 
-# 算法
+# 数据结构与算法
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
