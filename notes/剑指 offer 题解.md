@@ -302,6 +302,10 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 ## 9. 用两个栈实现队列
 
+**解题思路**
+
+添加到栈中的序列顺序会被反转，如果进行两次反转，那么得到的序列依然是正向的。因此，添加的数据需要同时压入两个栈之后才能出栈，这样就能保证出栈的顺序为先进先出。
+
 ```java
 Stack<Integer> stack1 = new Stack<Integer>();
 Stack<Integer> stack2 = new Stack<Integer>();
@@ -381,12 +385,14 @@ public int RectCover(int target) {
 }
 ```
 
-
 ## 11. 旋转数组的最小数字
 
 **题目描述**
 
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。 NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
+
+
+O(N) 时间复杂度解法：
 
 ```java
 public int minNumberInRotateArray(int[] array) {
@@ -395,6 +401,23 @@ public int minNumberInRotateArray(int[] array) {
         if (array[i] > array[i + 1]) return array[i + 1];
     }
     return 0;
+}
+```
+
+O(lgN) 时间复杂度解法：
+
+```java
+public int minNumberInRotateArray(int[] array) {
+    if (array.length == 0) return 0;
+    int l = 0, r = array.length - 1;
+    int mid = -1;
+    while (array[l] >= array[r]) {
+        if (r - l == 1) return array[r];
+        mid = l + (r - l) / 2;
+        if (array[mid] >= array[l]) l = mid;
+        else if (array[mid] <= array[r]) r = mid;
+    }
+    return array[mid];
 }
 ```
 
