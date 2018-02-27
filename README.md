@@ -1,7 +1,7 @@
-<!-- <h1 align="center">Interview Notes</h1> -->
+<h1 align="center">计算机基础知识整理</h1>
 
 <div align="center">
-    <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="400"/>
+    <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="300"/>
 </div>
 
 
