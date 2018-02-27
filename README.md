@@ -10,6 +10,10 @@
 
 # 数据结构与算法
 
+> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+
+整理自《算法 第四版》
+
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
 对题目做了一个分类，并对每种题型的解题思想做了总结。
@@ -22,9 +26,6 @@
 
 很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
 
-> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
-
-整理自《算法 第四版》
 
 # 网络
 
@@ -112,8 +113,8 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 想要支持楼主的话，在 Github 上点个 Star 即可。
 
-楼主作为一个轻度强迫症患者，笔记内容会尽量保证排版美观，可读性好。为了让笔记内容更整洁，前前后后做了很多次修改，也写了一个为中英混排文档进行排版的脚本，来提高笔记的可读性。
+楼主作为一个轻度强迫症患者，笔记内容会尽量保证排版美观，可读性好。为了让笔记内容更整洁，前前后后做了很多次修改，甚至写了一个为中英混排文档进行排版的脚本，来提高笔记的可读性。
 
-为了上传笔记到 Github 上，花了不少时间。楼主使用的笔记软件是为知笔记，怎么把笔记内容提取成文本文档，并且提取笔记中的图片就是一个问题。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主实现了脚本解决了上述的问题，并且整个过程可以一键进行，包括 Git 同步到仓库中。有需要该工具的话可以在楼主的 Github 中找到。
+为了上传笔记到 Github 上，花了不少时间。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主写了一个小工具可以将普通的 Markdown 文档转换为 GFM 文档，有需要该工具的话可以在楼主的 Github 中找到。
 
 :star: :star: :star:
