@@ -1,5 +1,4 @@
-<h1 align="center">计算机基础知识整理</h1>
-
+<h1 align="center">IT Interview Notes</h1>
 <br><br>
 
 <div align="center">
