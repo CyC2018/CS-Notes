@@ -10,21 +10,21 @@
 
 # 数据结构与算法
 
-[算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-> 整理自《算法 第四版》
+整理自《算法 第四版》
 
-[Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
+> [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-> 对题目做了一个分类，并对每种题型的解题思想做了总结。
+对题目做了一个分类，并对每种题型的解题思想做了总结。
 
-> 已经整理了 300+ 的题目，基本涵盖所有经典题目，持续整理中。
+已经整理了 300+ 的题目，基本涵盖所有经典题目，持续整理中。
 
-[剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
+> [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
-> 目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
+目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
 
-> 很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
+很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
 
 
 # 网络
