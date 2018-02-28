@@ -10,16 +10,11 @@
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
-目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
-
-很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看原书，或者先看 Leetcode 题解。
+目录按《剑指 Offer 第二版》编排，在牛客网在线编程中出现的题目都已 AC。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-对题目做了一个分类，并对每种题型的解题思路做了总结。
-
-已经整理了 300+ 的题目，基本涵盖所有经典题目。
-
+对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
 # 网络
 
