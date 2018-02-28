@@ -10,7 +10,7 @@
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-做了一个分类，并对每种题型的解题思想做了总结。
+对题目做了一个分类，并对每种题型的解题思路做了总结。
 
 已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
