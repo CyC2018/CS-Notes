@@ -1,41 +1,41 @@
 <!-- GFM-TOC -->
-* [���ò����Լ�����](#���ò����Լ�����)
-    * [����](#����)
-    * [�ػ�](#�ػ�)
-    * [�鿴����](#�鿴����)
-    * [�鿴�˿�](#�鿴�˿�)
+* [常用操作以及概念](#常用操作以及概念)
+    * [求助](#求助)
+    * [关机](#关机)
+    * [查看进程](#查看进程)
+    * [查看端口](#查看端口)
     * [PATH](#path)
-    * [���еȼ�](#���еȼ�)
+    * [运行等级](#运行等级)
     * [sudo](#sudo)
     * [GNU](#gnu)
-    * [����������](#����������)
-    * [�������а汾](#�������а汾)
-* [����](#����)
-    * [���̵��ļ���](#���̵��ļ���)
-    * [������](#������)
+    * [包管理工具](#包管理工具)
+    * [常见发行版本](#常见发行版本)
+* [分区](#分区)
+    * [磁盘的文件名](#磁盘的文件名)
+    * [分区表](#分区表)
         * [1. MBR](#1-mbr)
         * [2. GPT](#2-gpt)
-    * [����������](#����������)
+    * [开机检测程序](#开机检测程序)
         * [1. BIOS](#1-bios)
         * [2. UEFI](#2-uefi)
-    * [����](#����)
-* [�ļ�Ȩ����Ŀ¼����](#�ļ�Ȩ����Ŀ¼����)
-    * [�ļ�Ȩ�޸���](#�ļ�Ȩ�޸���)
-    * [�ļ������Լ�Ȩ�޵��޸�](#�ļ������Լ�Ȩ�޵��޸�)
-        * [1. �޸��ļ�����Ⱥ��](#1-�޸��ļ�����Ⱥ��)
-        * [2. �޸��ļ�ӵ����](#2-�޸��ļ�ӵ����)
-        * [3. �޸�Ȩ��](#3-�޸�Ȩ��)
-    * [Ŀ¼��Ȩ��](#Ŀ¼��Ȩ��)
-    * [�ļ�Ĭ��Ȩ��](#�ļ�Ĭ��Ȩ��)
-    * [Ŀ¼����](#Ŀ¼����)
-* [�ļ���Ŀ¼](#�ļ���Ŀ¼)
-    * [�ļ�ʱ��](#�ļ�ʱ��)
-    * [�ļ���Ŀ¼�Ļ�������](#�ļ���Ŀ¼�Ļ�������)
+    * [挂载](#挂载)
+* [文件权限与目录配置](#文件权限与目录配置)
+    * [文件权限概念](#文件权限概念)
+    * [文件属性以及权限的修改](#文件属性以及权限的修改)
+        * [1. 修改文件所属群组](#1-修改文件所属群组)
+        * [2. 修改文件拥有者](#2-修改文件拥有者)
+        * [3. 修改权限](#3-修改权限)
+    * [目录的权限](#目录的权限)
+    * [文件默认权限](#文件默认权限)
+    * [目录配置](#目录配置)
+* [文件与目录](#文件与目录)
+    * [文件时间](#文件时间)
+    * [文件与目录的基本操作](#文件与目录的基本操作)
         * [1. ls](#1-ls)
         * [2. cp](#2-cp)
         * [3. rm](#3-rm)
         * [4. mv](#4-mv)
-    * [��ȡ�ļ�����](#��ȡ�ļ�����)
+    * [获取文件内容](#获取文件内容)
         * [1. cat](#1-cat)
         * [2. tac](#2-tac)
         * [3. more](#3-more)
@@ -44,97 +44,98 @@
         * [6. tail](#6-tail)
         * [7. od](#7-od)
         * [8. touch](#8-touch)
-    * [ָ�����ļ�����](#ָ�����ļ�����)
+    * [指令与文件搜索](#指令与文件搜索)
         * [1. which](#1-which)
         * [2. whereis](#2-whereis)
         * [3. locate](#3-locate)
         * [4. find](#4-find)
-            * [4.1 ��ʱ���йص�ѡ��](#41-��ʱ���йص�ѡ��)
-            * [4.2 ���ļ�ӵ���ߺ�����Ⱥ���йص�ѡ��](#42-���ļ�ӵ���ߺ�����Ⱥ���йص�ѡ��)
-            * [4.3 ���ļ�Ȩ�޺������йص�ѡ��](#43-���ļ�Ȩ�޺������йص�ѡ��)
-* [�������ļ�ϵͳ](#�������ļ�ϵͳ)
-    * [�ļ�ϵͳ�����](#�ļ�ϵͳ�����)
+            * [4.1 与时间有关的选项](#41-与时间有关的选项)
+            * [4.2 与文件拥有者和所属群组有关的选项](#42-与文件拥有者和所属群组有关的选项)
+            * [4.3 与文件权限和名称有关的选项](#43-与文件权限和名称有关的选项)
+* [磁盘与文件系统](#磁盘与文件系统)
+    * [文件系统的组成](#文件系统的组成)
     * [inode](#inode)
-    * [Ŀ¼�� inode �� block](#Ŀ¼��-inode-��-block)
-    * [ʵ���������������](#ʵ���������������)
-        * [1. ʵ������](#1-ʵ������)
-        * [2. ��������](#2-��������)
-* [ѹ������](#ѹ������)
-    * [ѹ��](#ѹ��)
+    * [目录的 inode 与 block](#目录的-inode-与-block)
+    * [实体链接与符号链接](#实体链接与符号链接)
+        * [1. 实体链接](#1-实体链接)
+        * [2. 符号链接](#2-符号链接)
+* [压缩与打包](#压缩与打包)
+    * [压缩](#压缩)
         * [1. gzip](#1-gzip)
         * [2. bzip2](#2-bzip2)
         * [3. xz](#3-xz)
-    * [���](#���)
+    * [打包](#打包)
 * [Bash](#bash)
-    * [Bash ����](#bash-����)
-    * [��������](#��������)
-    * [ָ������˳��](#ָ������˳��)
-    * [�������ض���](#�������ض���)
-    * [����ָ��](#����ָ��)
-        * [1. ��ȡָ�cut](#1-��ȡָ��cut)
-        * [2. �������sort��uniq](#2-��������sortuniq)
-        * [3. ˫������ض���tee](#3-˫������ض���tee)
-        * [4. �ַ�ת��ָ�tr��col��expand��join��paste](#4-�ַ�ת��ָ��trcolexpandjoinpaste)
-        * [5. ����ָ�split](#5-����ָ��split)
-* [�����ʾ�����ļ���ʽ������](#�����ʾ�����ļ���ʽ������)
+    * [Bash 特性](#bash-特性)
+    * [变量操作](#变量操作)
+    * [指令搜索顺序](#指令搜索顺序)
+    * [数据流重定向](#数据流重定向)
+    * [管线指令](#管线指令)
+        * [1. 提取指令：cut](#1-提取指令cut)
+        * [2. 排序命令：sort、uniq](#2-排序命令sortuniq)
+        * [3. 双向输出重定向：tee](#3-双向输出重定向tee)
+        * [4. 字符转换指令：tr、col、expand、join、paste](#4-字符转换指令trcolexpandjoinpaste)
+        * [5. 分区指令：split](#5-分区指令split)
+* [正规表示法与文件格式化处理](#正规表示法与文件格式化处理)
     * [grep](#grep)
     * [printf](#printf)
     * [awk](#awk)
-* [vim ����ģʽ](#vim-����ģʽ)
-* [�ο�����](#�ο�����)
+* [vim 三个模式](#vim-三个模式)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
-# ���ò����Լ�����
 
-## ����
+# 常用操作以及概念
+
+## 求助
 
 **1. --help**
 
-ָ��Ļ����÷���ѡ����ܡ�
+指令的基本用法与选项介绍。
 
 **2. man**
 
-man �� manual ����д����ָ��ľ�����Ϣ��ʾ������
+man 是 manual 的缩写，将指令的具体信息显示出来。
 
-��ִ�� man date ʱ���� DATE(1) ���֣����е����ִ���ָ������ͣ����õ����ּ����������£�
+当执行 man date 时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
 
-| ���� | ���� |
+| 代号 | 类型 |
 | -- | -- |
-| 1 | �û��� shell �����п��Բ�����ָ����߿�ִ���ļ� |
-| 5 | �����ļ� |
-| 8 | ϵͳ����Ա����ʹ�õĹ���ָ�� |
+| 1 | 用户在 shell 环境中可以操作的指令或者可执行文件 |
+| 5 | 配置文件 |
+| 8 | 系统管理员可以使用的管理指令 |
 
 **3. info**
 
-info �� man ���ƣ����� info ���ĵ��ֳ�һ����ҳ�棬ÿ��ҳ����Խ�����ת��
+info 与 man 类似，但是 info 将文档分成一个个页面，每个页面可以进行跳转。
 
-## �ػ�
+## 关机
 
 **1. sync**
 
-Ϊ�˼ӿ�Դ������ļ��Ķ�д�ٶȣ�λ���ڴ��е��ļ����ݲ�������ͬ���������ϣ���˹ػ�֮ǰ��Ҫ�Ƚ��� sync ͬ��������
+为了加快对磁盘上文件的读写速度，位于内存中的文件数据不会立即同步到磁盘上，因此关机之前需要先进行 sync 同步操作。
 
 **2. shutdown**
 
 ```html
-# /sbin/shutdown [-krhc] [ʱ��] [����ѶϢ]
--k �� ����ػ���ֻ�Ƿ��;���ѶϢ��֪ͨ�������ߵ��û�
--r �� ��ϵͳ�ķ���ͣ�������������
--h �� ��ϵͳ�ķ���ͣ����������ػ�
--c �� ȡ���Ѿ��ڽ��е� shutdown ָ������
+# /sbin/shutdown [-krhc] [时间] [警告讯息]
+-k ： 不会关机，只是发送警告讯息，通知所有在线的用户
+-r ： 将系统的服务停掉后就重新启动
+-h ： 将系统的服务停掉后就立即关机
+-c ： 取消已经在进行的 shutdown 指令内容
 ```
 
-**3. �����ػ�ָ��**
+**3. 其它关机指令**
 
-reboot��halt��poweroff��
+reboot、halt、poweroff。
 
-## �鿴����
+## 查看进程
 
 ```html
 ps aux | grep threadx
 ```
 
-## �鿴�˿�
+## 查看端口
 
 
 ```html
@@ -143,329 +144,329 @@ netstat -anp | grep 80
 
 ## PATH
 
-�����ڻ������� PATH ��������ִ���ļ���·����·��֮���� : �ָ���
+可以在环境变量 PATH 中声明可执行文件的路径，路径之间用 : 分隔。
 
 ```html
 /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/dmtsai/.local/bin:/home/dmtsai/bin
 ```
 
-## ���еȼ�
+## 运行等级
 
-- 0���ػ�ģʽ
-- 1�����û�ģʽ���������ƽ�root���룩
-- 2��������֧�ֵĶ��û�ģʽ
-- 3��������֧�ֵĶ��û�ģʽ���ı�ģʽ����������õ�ģʽ��
-- 4��������δʹ��
-- 5��������֧�ֵ� X-windows ���û�ģʽ�����棩
-- 6����������ϵͳ��������
+- 0：关机模式
+- 1：单用户模式（可用于破解root密码）
+- 2：无网络支持的多用户模式
+- 3：有网络支持的多用户模式（文本模式，工作中最常用的模式）
+- 4：保留，未使用
+- 5：有网络支持的 X-windows 多用户模式（桌面）
+- 6：重新引导系统，即重启
 
 ## sudo
 
-ʹ�� sudo ����һ���û�ʹ�� root ��ִ�е����ֻ���� /etc/sudoers �����ļ������ӵ��û�����ʹ�ø�ָ�
+使用 sudo 允许一般用户使用 root 可执行的命令，只有在 /etc/sudoers 配置文件中添加的用户才能使用该指令。
 
 ## GNU
 
-GNU �ƻ�������Ϊ��ū�ƻ�������Ŀ���Ǵ���һ����ȫ���ɵĲ���ϵͳ����Ϊ GNU��������������ȫ�� GPL ��ʽ���������� GPL ȫ��Ϊ GNU ͨ�ù�������Э�飬�������������ݣ�
+GNU 计划，又译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
 
-- ���κ�Ŀ�����д˳�������ɣ�
-- �ٸ��Ƶ����ɣ�
-- �Ľ��˳��򣬲����������Ľ������ɡ�
+- 以任何目的运行此程序的自由；
+- 再复制的自由；
+- 改进此程序，并公开发布改进的自由。
 
-## ����������
+## 包管理工具
 
-RPM �� DPKG Ϊ����������������������ߡ�RPM ȫ��Ϊ Redhat Package Manager�������� Red Hat ��˾�ƶ�ʵʩ����� GNU ��Դ����ϵͳ���ܲ���Ϊ�ܶ� Linux ϵͳ (RHEL) �ļȶ�������׼���� RPM ���о������ǻ��� Debian ����ϵͳ (UBUNTU) �� DEB �������������ߣ� DPKG��ȫ��Ϊ Debian Package�����ܷ����� RPM ���ơ�
+RPM 和 DPKG 为最常见的两类软件包管理工具。RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为很多 Linux 系统 (RHEL) 的既定软件标准。与 RPM 进行竞争的是基于 Debian 操作系统 (UBUNTU) 的 DEB 软件包管理工具－ DPKG，全称为 Debian Package，功能方面与 RPM 相似。
 
-YUM ���� RPM ���������ߣ����������������ܣ����������������Ĺ��ܡ�
+YUM 基于 RPM 包管理工具，具有依赖管理功能，并具有软件升级的功能。
 
-## �������а汾
+## 常见发行版本
 
-Linux ���а��� Linux �ں˼�����Ӧ�������ļ��ɰ汾��
+Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
-| ���ڵİ��������� | ��ҵ���а� | �������а� |
+| 基于的包管理工具 | 商业发行版 | 社区发行版 |
 | --- | --- | --- |
 | DPKG | Ubuntu | Debian |
 | RPM | Red Hat | Fedora / CentOS |
 
-# ����
+# 分区
 
-## ���̵��ļ���
+## 磁盘的文件名
 
-Linux ��ÿ��Ӳ����������һ���ļ���
+Linux 中每个硬件都被当做一个文件。
 
-�������̵��ļ�����
+常见磁盘的文件名：
 
-- SCSI/SATA/USB ���̣�/dev/sd[a-p]
-- IDE ���̣�/dev/hd[a-d]
+- SCSI/SATA/USB 磁盘：/dev/sd[a-p]
+- IDE 磁盘：/dev/hd[a-d]
 
-�����ļ����������ŵ�ȷ������̲����˳���йأ��������������Ĳ��λ���޹ء�
+其中文件名后面的序号的确定与磁盘插入的顺序有关，而与磁盘所插入的插槽位置无关。
 
-## ������
+## 分区表
 
-���̷�������Ҫ�����ָ�ʽ��һ�������ƽ϶�� MBR ��������һ���ǽ��������ƽ��ٵ� GPT ��������
+磁盘分区表主要有两种格式，一种是限制较多的 MBR 分区表，一种是较新且限制较少的 GPT 分区表。
 
 ### 1. MBR
 
-MBR �У���һ����������Ҫ�������У���Ҫ������¼��Master boot record, MBR������������partition table�������� MBR ռ 446 bytes��partition table ռ 64 bytes��
+MBR 中，第一个扇区最重要，里面有：主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
 
-������ֻ�� 64 bytes�����ֻ�ܴ洢 4 ���������� 4 ������Ϊ��������Primary������չ������Extended����������չ����ֻ��һ�������������ռ�������¼�����������Լ�¼����ķ��������ͨ����չ�������Էֳ��������֣���Щ������Ϊ�߼�������
+分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，可以记录更多的分区，因此通过扩展分区可以分出更多区分，这些分区称为逻辑分区。
 
-Linux Ҳ�ѷ��������ļ��������ļ���������ʽΪ�������ļ���+��ţ����� /dev/sda1��ע�⣬�߼������ı�Ŵ� 5 ��ʼ��
+Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名+编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
 
 ### 2. GPT
 
-��ͬ�Ĵ����в�ͬ��������С������ 512 bytes �����´��̵� 4k��GPT Ϊ�˼������д��̣��ڶ���������ʹ���߼������ַ��Logical Block Address, LBA����
+不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。
 
-GPT �� 1 �������¼�� MBR���������� 33 �������¼������Ϣ���������� 33 ���������ڶԷ�����Ϣ���б��ݡ�
+GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。
 
-GPT û����չ������������������������Է� 128 ��������
+GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/a5c25452-6fa5-49e7-9322-823077442775.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//a5c25452-6fa5-49e7-9322-823077442775.jpg)
 
-## ����������
+## 开机检测程序
 
 ### 1. BIOS
 
-BIOS �ǿ�����ʱ������ִ�еĵ�һ�������������֪�����Կ����Ĵ��̣�����ȡ���̵�һ�������� MBR���� MBR ִ�����еĿ��������������������������Ļ���ز���ϵͳ�ĺ����ļ���
+BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序的会加载操作系统的核心文件。
 
-MBR �еĿ������������ṩ���¹��ܣ�ѡ������������ļ��Լ�ת������������������ת��������ܿ�������ʵ���˶���������ֻ��Ҫ����һ������ϵͳ�Ŀ�����������װ���������������������ϣ������� MBR �еĿ�����������ʱ���Ϳ���ѡ��������ǰ�Ĳ���ϵͳ����ת��������������������Ӷ�������һ������ϵͳ��
+MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg)
 
-��װ��������������Ȱ�װ Windows �ٰ�װ Linux����Ϊ��װ Windows ʱ�Ḳ�ǵ� MBR���� Linux ����ѡ�񽫿�����������װ�� MBR ���������������������������ҿ������ÿ������������ѡ����
+安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
 ### 2. UEFI
 
-UEFI ����� BIOS ��˵���ܸ�Ϊȫ�棬Ҳ��Ϊ��ȫ��
+UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
-## ����
+## 挂载
 
-��������Ŀ¼��Ϊ�����Ľ���㣬Ҳ����˵������Ŀ¼֮��Ϳ��Զ�ȡ���������ݡ�
+挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/249f3bb1-feee-4805-a259-a72699d638ca.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg)
 
-# �ļ�Ȩ����Ŀ¼����
+# 文件权限与目录配置
 
-## �ļ�Ȩ�޸���
+## 文件权限概念
 
-���û���Ϊ���֣��ļ�ӵ���ߡ�Ⱥ���Լ������ˣ��Բ�ͬ���û��в�ͬ���ļ�Ȩ�ޡ�
+把用户分为三种：文件拥有者、群组以及其它人，对不同的用户有不同的文件权限。
 
-ʹ�� ls �鿴һ���ļ�ʱ������ʾһ���ļ�����Ϣ������ drwxr-xr-x. 3 root root 17 May 6 00:14 .config���������Ϣ�Ľ������£�
+使用 ls 查看一个文件时，会显示一个文件的信息，例如 drwxr-xr-x. 3 root root 17 May 6 00:14 .config，对这个信息的解释如下：
 
-- drwxr-xr-x���ļ������Լ�Ȩ�ޣ��� 1 λΪ�ļ������ֶΣ��� 9 λΪ�ļ�Ȩ���ֶΡ�
-- 3����������
-- root���ļ�ӵ���ߣ�
-- root������Ⱥ�飻
-- 17���ļ���С��
-- May 6 00:14���ļ�����޸ĵ�ʱ�䣻
-- .config���ļ�����
+- drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段。
+- 3：链接数；
+- root：文件拥有者；
+- root：所属群组；
+- 17：文件大小；
+- May 6 00:14：文件最后被修改的时间；
+- .config：文件名。
 
-�������ļ����ͼ��京���У�
+常见的文件类型及其含义有：
 
-- d��Ŀ¼��
-- -���ļ���
-- l�������ļ���
+- d：目录；
+- -：文件；
+- l：链接文件；
 
-9 λ���ļ�Ȩ���ֶ��У�ÿ 3 ��Ϊһ�飬�� 3 �飬ÿһ��ֱ�������ļ�ӵ���ߡ�����Ⱥ���Լ������˵��ļ�Ȩ�ޡ�һ��Ȩ���е� 3 λ�ֱ�Ϊ r��w��x Ȩ�ޣ���ʾ�ɶ�����д����ִ�С�
+9 位的文件权限字段中，每 3 个为一组，共 3 组，每一组分别代表对文件拥有者、所属群组以及其它人的文件权限。一组权限中的 3 位分别为 r、w、x 权限，表示可读、可写、可执行。
 
-## �ļ������Լ�Ȩ�޵��޸�
+## 文件属性以及权限的修改
 
-### 1. �޸��ļ�����Ⱥ��
+### 1. 修改文件所属群组
 
 ```html
 # chgrp [-R] groupname dirname/filename
--R���ݹ��޸�
+-R：递归修改
 ```
 
-### 2. �޸��ļ�ӵ����
+### 2. 修改文件拥有者
 
-���������޸��ļ�ӵ���ߣ�Ҳ�����޸��ļ�����Ⱥ�顣
+不仅可以修改文件拥有者，也可以修改文件所属群组。
 
 ```html
-# chown [-R] �û���:Ⱥ���� dirname/filename
+# chown [-R] 用户名:群组名 dirname/filename
 ```
 
-### 3. �޸�Ȩ��
+### 3. 修改权限
 
-���Խ�һ��Ȩ������������ʾ����ʱһ��Ȩ�޵� 3 ��λ�������������ֵ�λ��������ÿ��λ��ȨֵΪ 4��2��1����ÿ��Ȩ�޶�Ӧ������ȨֵΪ r��4��w��2��x��1��
+可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r：4、w：2、x：1。
 
 ```html
 # chmod [-R] xyz dirname/filename
 ```
 
-�������� .bashrc �ļ���Ȩ���޸�Ϊ -rwxr-xr--��
+范例：将 .bashrc 文件的权限修改为 -rwxr-xr--。
 
 ```html
 # chmod 754 .bashrc
 ```
 
-Ҳ����ʹ�÷������趨Ȩ�ޡ�
+也可以使用符号来设定权限。
 
 ```html
 # chmod [ugoa]  [+-=] [rwx] dirname/filename
-- u��ӵ����
-- g������Ⱥ��
-- o��������
-- a��������
-- +������Ȩ��
-- -���Ƴ�Ȩ��
-- =���趨Ȩ��
+- u：拥有者
+- g：所属群组
+- o：其他人
+- a：所有人
+- +：添加权限
+- -：移除权限
+- =：设定权限
 ```
 
-������Ϊ .bashrc �ļ��������û�����дȨ�ޡ�
+范例：为 .bashrc 文件的所有用户添加写权限。
 
 ```html
 # chmod a+w .bashrc
 ```
 
-## Ŀ¼��Ȩ��
+## 目录的权限
 
-�ļ������Ǵ洢��һ���ļ��������У����Ǵ洢��һ���ļ����ڵ�Ŀ¼�С���ˣ�ӵ���ļ��� w Ȩ�޲����ܶ��ļ��������޸ġ�
+文件名不是存储在一个文件的内容中，而是存储在一个文件所在的目录中。因此，拥有文件的 w 权限并不能对文件名进行修改。
 
-Ŀ¼�洢�ļ��б���һ��Ŀ¼��Ȩ��Ҳ���Ƕ����ļ��б���Ȩ�ޡ���ˣ�Ŀ¼�� r Ȩ�ޱ�ʾ���Զ�ȡ�ļ��б���w Ȩ�ޱ�ʾ�����޸��ļ��б���������˵����������ɾ���ļ������ļ��������޸ģ�x Ȩ�޿����ø�Ŀ¼��Ϊ����Ŀ¼��x Ȩ���� r �� w Ȩ�޵Ļ������������ʹһ��Ŀ¼��Ϊ����Ŀ¼��Ҳ��û�취��ȡ�ļ��б��Լ����ļ��б������޸��ˡ�
+目录存储文件列表，一个目录的权限也就是对其文件列表的权限。因此，目录的 r 权限表示可以读取文件列表；w 权限表示可以修改文件列表，具体来说，就是添加删除文件，对文件名进行修改；x 权限可以让该目录成为工作目录，x 权限是 r 和 w 权限的基础，如果不能使一个目录成为工作目录，也就没办法读取文件列表以及对文件列表进行修改了。
 
-## �ļ�Ĭ��Ȩ��
+## 文件默认权限
 
-�ļ�Ĭ��Ȩ�ޣ��ļ�Ĭ��û�п�ִ��Ȩ�ޣ����Ϊ 666��Ҳ���� -rw-rw-rw- ��
-Ŀ¼Ĭ��Ȩ�ޣ�Ŀ¼����Ҫ�ܹ����룬Ҳ���Ǳ���ӵ�п�ִ��Ȩ�ޣ����Ϊ 777 ��Ҳ���� drwxrwxrwx��
+文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
+目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
-����ͨ�� umask ���û��߲鿴�ļ���Ĭ��Ȩ�ޣ�ͨ�����������ʽ����ʾ������ 002 ��ʾ�����û���Ȩ��ȥ����һ�� 2 ��Ȩ�ޣ�Ҳ����дȨ�ޣ���˽������ļ�ʱĬ�ϵ�Ȩ��Ϊ -rw-rw-r-- ��
+可以通过 umask 设置或者查看文件的默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r-- 。
 
-## Ŀ¼����
+## 目录配置
 
-Ϊ��ʹ��ͬ Linux ���а汾��Ŀ¼�ṹ����һ���ԣ�Filesystem Hierarchy Standard (FHS) �涨�� Linux ��Ŀ¼�ṹ�������������Ŀ¼���£�
+为了使不同 Linux 发行版本的目录结构保持一致性，Filesystem Hierarchy Standard (FHS) 规定了 Linux 的目录结构。最基础的三个目录如下：
 
-- / (root, ��Ŀ¼)
-- /usr (unix software resource)������ϵͳĬ���������ᰲװ�����Ŀ¼��
-- /var (variable)�����ϵͳ��������й����е������ļ���
+- / (root, 根目录)
+- /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
+- /var (variable)：存放系统或程序运行过程中的数据文件。
 
-������Ŀ¼�����£�
+完整的目录树如下：
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/27ace615-558f-4dfb-8ad4-7ac769c10118.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//27ace615-558f-4dfb-8ad4-7ac769c10118.jpg)
 
-# �ļ���Ŀ¼
+# 文件与目录
 
-## �ļ�ʱ��
+## 文件时间
 
-1. modification time (mtime)���ļ������ݸ��¾ͻ���£�
-2. status time (ctime)���ļ���״̬��Ȩ�ޡ����ԣ����¾ͻ���£�
-3. access time (atime)����ȡ�ļ�ʱ�ͻ���¡�
+1. modification time (mtime)：文件的内容更新就会更新；
+2. status time (ctime)：文件的状态（权限、属性）更新就会更新；
+3. access time (atime)：读取文件时就会更新。
 
-## �ļ���Ŀ¼�Ļ�������
+## 文件与目录的基本操作
 
 ### 1. ls
 
-�г��ļ�����Ŀ¼����Ϣ��Ŀ¼����Ϣ�������а������ļ���
+列出文件或者目录的信息，目录的信息就是其中包含的文件。
 
 ```html
 # ls [-aAdfFhilnrRSt] file|dir
--a ���г�ȫ�����ļ�
--d �����г�Ŀ¼����
--l ���Գ����ݴ����г��������ļ���������Ȩ�޵ȵ�����
+-a ：列出全部的文件
+-d ：仅列出目录本身
+-l ：以长数据串行列出，包含文件的属性与权限等等数据
 ```
 
 ### 2. cp
 
-���Ʋ�����
+复制操作。
 
-���Դ�ļ����������ϣ���Ŀ���ļ�һ��Ҫ��Ŀ¼���С�
+如果源文件有两个以上，则目的文件一定要是目录才行。
 
 ```html
 cp [-adfilprsu] source destination
--a ���൱�� -dr --preserve=all ����˼������ dr ��ο�����˵��
--d ������Դ�ļ�Ϊ�����ļ������������ļ����Զ����ļ�����
--i ����Ŀ���ļ��Ѿ�����ʱ���ڸ���ǰ����ѯ��
--p ����ͬ�ļ�������һ���ƹ�ȥ
--r ���ݹ��������
--u ��destination �� source �ɲŸ��� destination���� destination �����ڵ�����²Ÿ���
---preserve=all ������ -p ��Ȩ����ز����⣬������ SELinux ������, links, xattr ��Ҳ������
+-a ：相当于 -dr --preserve=all 的意思，至于 dr 请参考下列说明
+-d ：若来源文件为链接文件，则复制链接文件属性而非文件本身
+-i ：若目标文件已经存在时，在覆盖前会先询问
+-p ：连同文件的属性一起复制过去
+-r ：递归持续复制
+-u ：destination 比 source 旧才更新 destination，或 destination 不存在的情况下才复制
+--preserve=all ：除了 -p 的权限相关参数外，还加入 SELinux 的属性, links, xattr 等也复制了
 ```
 
 ### 3. rm
 
-�Ƴ�������
+移除操作。
 
 ```html
-# rm [-fir] �ļ���Ŀ¼
--r ���ݹ�ɾ��
+# rm [-fir] 文件或目录
+-r ：递归删除
 ```
 
 ### 4. mv
 
-�ƶ�������
+移动操作。
 
 ```html
 # mv [-fiu] source destination
 # mv [options] source1 source2 source3 .... directory
--f �� force ǿ�Ƶ���˼�����Ŀ���ļ��Ѿ����ڣ�����ѯ�ʶ�ֱ�Ӹ���
+-f ： force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖
 ```
 
-## ��ȡ�ļ�����
+## 获取文件内容
 
 ### 1. cat
 
-ȡ���ļ����ݡ�
+取得文件内容。
 
 ```html
 # cat [-AbEnTv] filename
--n ����ӡ���кţ���ͬ�հ���Ҳ�����кţ�-b ����
+-n ：打印出行号，连同空白行也会有行号，-b 不会
 ```
 
 ### 2. tac
 
-�� cat �ķ�������������һ�п�ʼ��ӡ��
+是 cat 的反向操作，从最后一行开始打印。
 
 ### 3. more
 
-����һҳһҳ�鿴�ļ����ݣ����ı��༭�����ơ�
+可以一页一页查看文件内容，和文本编辑器类似。
 
 ### 4. less
 
-�� more ���ơ�
+和 more 类似。
 
 ### 5. head
 
-����ȡ���ļ�ǰ���С�
+可以取得文件前几行。
 
 ```html
 # head [-n number] filename
--n ����������֣�������ʾ���е���˼
+-n ：后面接数字，代表显示几行的意思
 ```
 
 ### 6. tail
 
-�� head �ķ��������ֻ��ȡ���Ǻ��С�
+是 head 的反向操作，只是取得是后几行。
 
 ### 7. od
 
-�������ַ�����ʮ�����Ƶ���ʽ��ʾ�������ļ���
+可以以字符或者十六进制的形式显示二进制文件。
 
 ### 8. touch
 
-�޸��ļ�ʱ����߽������ļ���
+修改文件时间或者建立新文件。
 
 ```html
 # touch [-acdmt] filename
--a �� ���� atime
--c �� ���� ctime�������ļ��������򲻽������ļ�
--m �� ���� mtime
--d �� ������Խ������µ����ڶ����õ�ǰ�����ڣ�Ҳ����ʹ�� --date="���ڻ�ʱ��"
--t ��������Խ������µ�ʱ������õ�ǰ��ʱ�䣬��ʽΪ[YYYYMMDDhhmm]
+-a ： 更新 atime
+-c ： 更新 ctime，若该文件不存在则不建立新文件
+-m ： 更新 mtime
+-d ： 后面可以接欲更新的日期而不用当前的日期，也可以使用 --date="日期或时间"
+-t ：后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
 ```
 
-## ָ�����ļ�����
+## 指令与文件搜索
 
 ### 1. which
 
-ָ��������
+指令搜索。
 
 ```html
 # which [-a] command
--a ��������ָ���г���������ֻ�е�һ��
+-a ：将所有指令列出，而不是只列第一个
 ```
 
 ### 2. whereis
 
-whereis �����ļ����ٶȱȽϿ죬��Ϊ��ֻ���������ض���Ŀ¼��
+whereis 搜索文件的速度比较快，因为它只搜索几个特定的目录。
 
 ```html
 # whereis [-bmsu] dirname/filename
@@ -473,114 +474,114 @@ whereis �����ļ����ٶȱȽϿ죬��Ϊ��ֻ���������ض���Ŀ¼��
 
 ### 3. locate
 
-locate �����ùؼ��ֻ����������ʽ����������
+locate 可以用关键字或者正则表达式进行搜索。
 
-locate ʹ�� /var/lib/mlocate/ ������ݿ����������������洢���ڴ��У�����ÿ�����һ�Σ������޷��� locate �����½����ļ�������ʹ�� updatedb �������������ݿ⡣
+locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内存中，并且每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
 
 ```html
 # locate [-ir] keyword
--r�����������ʽ
+-r：接正则表达式
 ```
 
 ### 4. find
 
-find ����ʹ���ļ������Ժ�Ȩ�޽���������
+find 可以使用文件的属性和权限进行搜索。
 
 ```html
 # find filename [option]
 ```
 
-#### 4.1 ��ʱ���йص�ѡ��
+#### 4.1 与时间有关的选项
 
 ```html
--mtime  n ���г��� n ��ǰ����һ���޸Ĺ����ݵ��ļ�
--mtime +n ���г��� n ��֮ǰ(���� n �챾��)�޸Ĺ����ݵ��ļ�
--mtime -n ���г��� n ��֮��(�� n �챾��)�޸Ĺ����ݵ��ļ�
--newer file �� �г��� file ���µ��ļ�
+-mtime  n ：列出在 n 天前的那一天修改过内容的文件
+-mtime +n ：列出在 n 天之前(不含 n 天本身)修改过内容的文件
+-mtime -n ：列出在 n 天之内(含 n 天本身)修改过内容的文件
+-newer file ： 列出比 file 更新的文件
 ```
 
-+4��4 �� -4 ��ָʾ��ʱ�䷶Χ���£�
++4、4 和 -4 的指示的时间范围如下：
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/658fc5e7-79c0-4247-9445-d69bf194c539.png)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//658fc5e7-79c0-4247-9445-d69bf194c539.png)
 
-#### 4.2 ���ļ�ӵ���ߺ�����Ⱥ���йص�ѡ��
+#### 4.2 与文件拥有者和所属群组有关的选项
 
 ```html
 -uid n
 -gid n
 -user name
 -group name
--nouser ������ӵ���߲����� /etc/passwd ���ļ�
--nogroup����������Ⱥ�鲻������ /etc/group ���ļ�
+-nouser ：搜索拥有者不存在 /etc/passwd 的文件
+-nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-#### 4.3 ���ļ�Ȩ�޺������йص�ѡ��
+#### 4.3 与文件权限和名称有关的选项
 
 ```html
 -name filename
--size [+-]SIZE����Ѱ�� SIZE ��Ҫ��(+)��С(-)���ļ������ SIZE �Ĺ���У�c: ���� byte��k: ���� 1024bytes�����ԣ�Ҫ�ұ� 50KB ��Ҫ����ļ������� -size +50k
+-size [+-]SIZE：搜寻比 SIZE 还要大(+)或小(-)的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
 -type TYPE
--perm mode  ������Ȩ�޵��� mode ���ļ�
--perm -mode ������Ȩ�ް��� mode ���ļ�
--perm /mode ������Ȩ�ް�����һ mode ���ļ�
+-perm mode  ：搜索权限等于 mode 的文件
+-perm -mode ：搜索权限包含 mode 的文件
+-perm /mode ：搜索权限包含任一 mode 的文件
 ```
 
-# �������ļ�ϵͳ
+# 磁盘与文件系统
 
-## �ļ�ϵͳ�����
+## 文件系统的组成
 
-�Է������и�ʽ����Ϊ���ڷ����Ͻ����ļ�ϵͳ��һ������ͨ��ֻ�ܸ�ʽ��Ϊһ���ļ�ϵͳ�����Ǵ������еȼ������Խ�һ��������ʽ��Ϊ����ļ�ϵͳ�����ֻ���ļ�ϵͳ�ܱ����أ����������ܱ����ء�
+对分区进行格式化是为了在分区上建立文件系统。一个分区通常只能格式化为一个文件系统，但是磁盘阵列等技术可以将一个分区格式化为多个文件系统，因此只有文件系统能被挂载，而分区不能被挂载。
 
-�ļ�ϵͳ�����������ṹ��
+文件系统有以下三个结构：
 
-1. superblock����¼�ļ�ϵͳ��������Ϣ������ inode �� block ��������ʹ������ʣ�������Լ��ļ�ϵͳ�ĸ�ʽ�������Ϣ�ȣ�
-2. inode��һ���ļ�ռ��һ�� inode����¼�ļ������ԣ�ͬʱ��¼���ļ����������ڵ� block ���룻
-3. block����¼�ļ������ݣ��ļ�̫��ʱ����ռ�ö�� block��
+1. superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
+2. inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 号码；
+3. block：记录文件的内容，文件太大时，会占用多个 block。
 
-��Ҫ��ȡһ���ļ�������ʱ������ inode ��ȥ�����ļ��������ڵ����� block��Ȼ������� block �����ݶ�������
+当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
-������Ƭ��ָһ���ļ��������ڵ� block ���ڷ�ɢ��
+磁盘碎片是指一个文件内容所在的 block 过于分散。
 
-Ext2 �ļ�ϵͳʹ�����������ļ��ṹ�����ڴ�֮�ϼ����� block Ⱥ��ĸ��Ҳ���ǽ�һ���ļ�ϵͳ����Ϊ��� block Ⱥ�飬���������
+Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一个文件系统划分为多个 block 群组，方便管理。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg)
 
 ## inode
 
-Ext2 �ļ�ϵͳ֧�ֵ� block ��С�� 1k��2k �� 4k ���֣���ͬ�� block ��С�����˵�һ�ļ��Ĵ�С����ÿ�� inode ��С�ǹ̶�Ϊ 128 bytes��
+Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 block 大小限制了单一文件的大小。而每个 inode 大小是固定为 128 bytes。
 
-inode �м�¼���ļ��������ڵ� block������ÿ�� block �ǳ�С��һ�����ļ���㶼��Ҫ��ʮ��� block����һ�� inode ��С���ޣ��޷�ֱ��������ô�� block����������˼�ӡ�˫��ӡ���������á����������ָ���� inode ��¼������ block �鵱�� inode ������¼������Ϣ��
+inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/89091427-7b2b-4923-aff6-44681319a8aa.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg)
 
-inode �������������Ϣ��
+inode 具体包含以下信息：
 
-- ���ļ��Ĵ�ȡģʽ(read/write/excute)��
-- ���ļ���ӵ������Ⱥ��(owner/group)��
-- ���ļ���������
-- ���ļ�������״̬�ı��ʱ��(ctime)��
-- ���һ�εĶ�ȡʱ��(atime)��
-- ����޸ĵ�ʱ��(mtime)��
-- �����ļ����Ե����(flag)���� SetUID...��
-- ���ļ��������ݵ�ָ�� (pointer)��
+- 该文件的存取模式(read/write/excute)；
+- 该文件的拥有者与群组(owner/group)；
+- 该文件的容量；
+- 该文件建立或状态改变的时间(ctime)；
+- 最近一次的读取时间(atime)；
+- 最近修改的时间(mtime)；
+- 定义文件特性的旗标(flag)，如 SetUID...；
+- 该文件真正内容的指向 (pointer)。
 
-## Ŀ¼�� inode �� block
+## 目录的 inode 与 block
 
-����һ��Ŀ¼ʱ�������һ�� inode ������һ�� block��block ��¼��������Ŀ¼�������ļ��� inode ����Լ��ļ��������Կ����ļ��� inode ��������¼�ļ������ļ�����¼��Ŀ¼�У���������ļ���ɾ���ļ��������ļ�����Щ������Ŀ¼�� w Ȩ���йء�
+建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
 
-## ʵ���������������
+## 实体链接与符号链接
 
 ```html
 # ln [-sf] source_filename dist_filename
--s ��Ĭ���� hard link���� -s Ϊ symbolic link
--f �����Ŀ���ļ�����ʱ����ɾ��Ŀ���ļ�
+-s ：默认是 hard link，加 -s 为 symbolic link
+-f ：如果目标文件存在时，先删除目标文件
 ```
 
-### 1. ʵ������
+### 1. 实体链接
 
-hard link ֻ����ĳ��Ŀ¼������һ����Ŀ��ʹ����������Ŀ���ӵ��ļ��� inode �ϡ�ɾ������һ����Ŀ���ļ����Ǵ��ڣ�ֻҪ����������Ϊ 0��
+hard link 只是在某个目录下新增一个条目，使得新增的条目链接到文件的 inode 上。删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
-���������ƣ����ܿ�Խ File System�����ܶ�Ŀ¼�������ӡ�
+有以下限制：不能跨越 File System；不能对目录进行链接。
 
 ```html
 # ln /etc/crontab .
@@ -589,11 +590,11 @@ hard link ֻ����ĳ��Ŀ¼������һ����Ŀ��ʹ����������Ŀ���ӵ��ļ��� inode �ϡ�ɾ�
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 /etc/crontab
 ```
 
-### 2. ��������
+### 2. 符号链接
 
-symbolic link ��������Ϊ Windows �Ŀ�ݷ�ʽ��ͨ������һ���������ļ�������ļ������ݵĶ�ȡָ�����ӵ��Ǹ��ļ�����Դ�ļ���ɾ���ˣ������ļ��ʹ򲻿��ˡ�
+symbolic link 可以理解为 Windows 的快捷方式，通过建立一个独立的文件，这个文件的数据的读取指向链接的那个文件。当源文件被删除了，链接文件就打不开了。
 
-symbolic link ����ΪĿ¼�������ӡ�
+symbolic link 可以为目录建立链接。
 
 ```html
 # ll -i /etc/crontab /root/crontab2
@@ -601,121 +602,121 @@ symbolic link ����ΪĿ¼�������ӡ�
 53745909 lrwxrwxrwx. 1 root root 12 Jun 23 22:31 /root/crontab2 -> /etc/crontab
 ```
 
-# ѹ������
+# 压缩与打包
 
-## ѹ��
+## 压缩
 
-Linux �����кܶ�ѹ���ļ�����չ�������������£�
+Linux 底下有很多压缩文件的扩展名，常见的如下：
 
-| ��չ�� | ѹ������ |
+| 扩展名 | 压缩程序 |
 | -- | -- |
 | \*.Z | compress |
 |\*.zip |  zip |
 |\*.gz  | gzip|
 |\*.bz2 |  bzip2 |
 |\*.xz  | xz |
-|\*.tar |  tar �����������ݣ�û�о���ѹ�� |
-|\*.tar.gz | tar ���������ļ������� gzip ��ѹ�� |
-|\*.tar.bz2 | tar ���������ļ������� bzip2 ��ѹ�� |
-|\*.tar.xz | tar ���������ļ������� xz ��ѹ�� |
+|\*.tar |  tar 程序打包的数据，没有经过压缩 |
+|\*.tar.gz | tar 程序打包的文件，经过 gzip 的压缩 |
+|\*.tar.bz2 | tar 程序打包的文件，经过 bzip2 的压缩 |
+|\*.tar.xz | tar 程序打包的文件，经过 xz 的压缩 |
 
 ### 1. gzip
 
-gzip �� Linux ʹ������ѹ��ָ����Խ⿪ compress��zip �� gzip ��ѹ�����ļ���
+gzip 是 Linux 使用最广的压缩指令，可以解开 compress、zip 与 gzip 所压缩的文件。
 
-���� gzip ѹ������Դ�ļ��Ͳ������ˡ�
+经过 gzip 压缩过，源文件就不存在了。
 
-�� 9 ����ͬ��ѹ���ȼ�����ʹ�á�
+有 9 个不同的压缩等级可以使用。
 
-����ʹ�� zcat��zmore��zless ����ȡѹ���ļ������ݡ�
+可以使用 zcat、zmore、zless 来读取压缩文件的内容。
 
 ```html
 $ gzip [-cdtv#] filename
--c ����ѹ���������������Ļ��
--d ����ѹ��
--t ������ѹ���ļ��Ƿ����
--v ����ʾѹ���ȵ���Ϣ
--# �� # Ϊ���ֵ���˼������ѹ���ȼ�������Խ��ѹ����Խ�ߣ�Ĭ��Ϊ6
+-c ：将压缩的数据输出到屏幕上
+-d ：解压缩
+-t ：检验压缩文件是否出错
+-v ：显示压缩比等信息
+-# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为6
 ```
 
 ### 2. bzip2
 
-�ṩ�� gzip ���ߵ�ѹ���ȡ�
+提供比 gzip 更高的压缩比。
 
-�鿴���bzcat��bzmore��bzless��bzgrep��
+查看命令：bzcat、bzmore、bzless、bzgrep。
 
 ```html
 $ bzip2 [-cdkzv#] filename
--k ������Դ�ļ�
+-k ：保留源文件
 ```
 
 ### 3. xz
 
-�ṩ�� bzip2 ���ѵ�ѹ���ȡ�
+提供比 bzip2 更佳的压缩比。
 
-���Կ�����gzip��bzip2��xz ��ѹ���Ȳ����Ż�������Ҫע�⣬ѹ����Խ�ߣ�ѹ����ʱ��ҲԽ����
+可以看到，gzip、bzip2、xz 的压缩比不断优化。不过要注意，压缩比越高，压缩的时间也越长。
 
-�鿴���xzcat��xzmore��xzless��xzgrep��
+查看命令：xzcat、xzmore、xzless、xzgrep。
 
 ```html
 $ xz [-dtlkc#] filename
 ```
 
-## ���
+## 打包
 
-ѹ��ָ��ֻ�ܶ�һ���ļ�����ѹ����������ܹ�������ļ������һ�����ļ���tar �����������ڴ����Ҳ����ʹ�� gip��bzip2��xz ������ļ�����ѹ����
+压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gip、bzip2、xz 将打包文件进行压缩。
 
 ```html
-$ tar [-z|-j|-J] [cv] [-f �½���tar�ļ�] filename...  ==���ѹ��
-$ tar [-z|-j|-J] [tv] [-f ���е�tar�ļ�]              ==�鿴
-$ tar [-z|-j|-J] [xv] [-f ���е�tar�ļ�] [-C Ŀ¼]    ==��ѹ��
--z ��ʹ��zip��
--j ��ʹ��bzip2��
--J ��ʹ��xz��
--c ���½�����ļ���
--t ���鿴����ļ���������Щ�ļ���
--x ���������ѹ���Ĺ��ܣ�
--v ����ѹ��/��ѹ���Ĺ����У���ʾ���ڴ������ļ�����
--f : filename��Ҫ�������ļ���
--C Ŀ¼ �� ���ض�Ŀ¼��ѹ����
+$ tar [-z|-j|-J] [cv] [-f 新建的tar文件] filename...  ==打包压缩
+$ tar [-z|-j|-J] [tv] [-f 已有的tar文件]              ==查看
+$ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
+-z ：使用zip；
+-j ：使用bzip2；
+-J ：使用xz；
+-c ：新建打包文件；
+-t ：查看打包文件里面有哪些文件；
+-x ：解打包或解压缩的功能；
+-v ：在压缩/解压缩的过程中，显示正在处理的文件名；
+-f : filename：要处理的文件；
+-C 目录 ： 在特定目录解压缩。
 ```
 
-| ʹ�÷�ʽ | ���� |
+| 使用方式 | 命令 |
 | --- | --- |
-| ���ѹ�� | tar -jcv -f filename.tar.bz2 Ҫ��ѹ�����ļ���Ŀ¼���� |
-| �� �� | tar -jtv -f filename.tar.bz2 |
-| ��ѹ�� | tar -jxv -f filename.tar.bz2 -C Ҫ��ѹ����Ŀ¼ |
+| 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
+| 查 看 | tar -jtv -f filename.tar.bz2 |
+| 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
 
 
 # Bash
 
-����ͨ�� Shell �����ں��ṩ����Bash ���� Shell ��һ�֡�
+可以通过 Shell 请求内核提供服务，Bash 正是 Shell 的一种。
 
-## Bash ����
+## Bash 特性
 
-**1. ������ʷ**
+**1. 命令历史**
 
-��¼ʹ�ù���������ε�¼��ִ�е��������ʱ��ŵ��ڴ��У� \~/.bash_history �ļ��м�¼����ǰһ�ε�¼��ִ�й������
+记录使用过的命令。本次登录所执行的命令都会暂时存放到内存中， \~/.bash_history 文件中记录的是前一次登录所执行过的命令。
 
-**2. �������ļ���ȫ**
+**2. 命令与文件补全**
 
-��ݼ���tab
+快捷键：tab
 
-**3. ��������**
+**3. 命名别名**
 
-���� lm �� ls -al �ı�����
+例如 lm 是 ls -al 的别名。
 
 **4. shell scripts**
 
-**5. ͨ���**
+**5. 通配符**
 
-���� ls -l /usr/bin/X\* �г� /usr/bin ���������� X ��ͷ���ļ���
+例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件。
 
-## ��������
+## 变量操作
 
-- ��һ��������ֱֵ��ʹ�� = ��
-- �Ա���ȡ����Ҫ�ڱ���ǰ���� \$ ��Ҳ������ \${} ����ʽ��
-- �������ʹ�� echo ���
+- 对一个变量赋值直接使用 = ；
+- 对变量取用需要在变量前加上 \<img src="https://latex.codecogs.com/gif.latex?，也可以用\"/>{} 的形式；
+- 输出变量使用 echo 命令。
 
 ```bash
 $ var=abc
@@ -723,24 +724,24 @@ $ echo $var
 $ echo ${var}
 ```
 
-������������пո���Ҫʹ��˫���Ż��ߵ����š�˫�����ڵ������ַ����Ա���ԭ�����ԣ�����var="lang is \$LANG"���� var ��ֵΪ lang is zh_TW.UTF-8�����������ڵ������ַ����������ַ����������� var='lang is \$LANG'���� var ��ֵΪ lang is \$LANG��
+变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \<img src="https://latex.codecogs.com/gif.latex?LANG"，则var的值为langiszh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如var='langis\"/>LANG'，则 var 的值为 lang is \$LANG。
 
 
-����ʹ�� \`ָ��\` ���� \$(ָ��) �ķ�ʽ��ָ���ִ�н����ֵ������������ version=\$(uname -r)���� version ��ֵΪ 3.10.0-229.el7.x86_64��
+可以使用 \`指令\` 或者 \<img src="https://latex.codecogs.com/gif.latex?(指令)的方式将指令的执行结果赋值给变量。例如version=\"/>(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
 
-����ʹ�� export ����Զ������ת�ɻ������������������������ӳ�����ʹ�ã���ν�ӳ�������ɵ�ǰ Bash ���������� Bash��
+可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
 
-Bash �ı�����������Ϊ������������֡�ע����������û�и����������������������Ĭ�����ַ������͡�����������ʹ�� declare ���
+Bash 的变量可以声明为数组和整数数字。注意数字类型没有浮点数。如果不进行声明，默认是字符串类型。变量的声明使用 declare 命令：
 
 ```html
 $ declare [-aixr] variable
--a �� ����Ϊ��������
--i �� ����Ϊ��������
--x �� ����Ϊ��������
--r �� ����Ϊreadonly����
+-a ： 定义为数组类型
+-i ： 定义为整数类型
+-x ： 定义为环境变量
+-r ： 定义为readonly类型
 ```
 
-ʹ�� [ ] ����������в�����
+使用 [ ] 来对数组进行操作：
 
 ```bash
 $ array[1]=a
@@ -748,54 +749,54 @@ $ array[2]=b
 $ echo ${array[1]}
 ```
 
-## ָ������˳��
+## 指令搜索顺序
 
-1. �Ծ��Ի����·����ִ��ָ����� /bin/ls ���� ./ls ��
-2. �ɱ����ҵ���ָ����ִ�У�
-3. �� Bash �ڽ���ָ����ִ�У�
-4. �� \$PATH ����ָ��������·����˳���ҵ���һ��ָ����ִ�С�
+1. 以绝对或相对路径来执行指令，例如 /bin/ls 或者 ./ls ；
+2. 由别名找到该指令来执行；
+3. 由 Bash 内建的指令来执行；
+4. 按 \$PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
 
-## �������ض���
+## 数据流重定向
 
-�ض������ʹ���ļ������׼���롢��׼����ͱ�׼���������
+重定向就是使用文件代替标准输入、标准输出和标准错误输出。
 
 
-1. ��׼����(stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;������Ϊ 0 ��ʹ�� < �� << ��
-2. ��׼���(stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;������Ϊ 1 ��ʹ�� > �� >> ��
-3. ��׼�������(stderr)������Ϊ 2 ��ʹ�� 2> �� 2>> ��
+1. 标准输入(stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
+2. 标准输出(stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
+3. 标准错误输出(stderr)：代码为 2 ，使用 2> 或 2>> ；
 
-���У���һ����ͷ�ı�ʾ�Ը��ǵķ�ʽ�ض��򣬶���������ͷ�ı�ʾ��׷�ӵķ�ʽ�ض���
+其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
-���Խ�����Ҫ�ı�׼����Լ���׼��������ض��� /dev/null���൱���ӽ������䡣
+可以将不需要的标准输出以及标准错误输出重定向到 /dev/null，相当于扔进垃圾箱。
 
-�����Ҫ����׼����Լ���׼�������ͬʱ�ض���һ���ļ�����Ҫ��ĳ�����ת��Ϊ��һ����������� 2>&1 ��ʾ����׼�������ת��Ϊ��׼�����
+如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2>&1 表示将标准错误输出转换为标准输出。
 
 ```bash
 $ find /home -name .bashrc > list 2>&1
 ```
 
-## ����ָ��
+## 管线指令
 
-�����ǽ�һ������ı�׼�����Ϊ��һ������ı�׼���룬��������Ҫ�����������Ĵ���֮����ܵõ�������Ҫ�ĸ�ʽʱ�Ϳ���ʹ�ù��ߡ�������֮��ʹ�� | �ָ������������
+管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的格式时就可以使用管线。在命令之间使用 | 分隔各个管线命令。
 
 ```bash
 $ ls -al /etc | less
 ```
 
-### 1. ��ȡָ�cut
+### 1. 提取指令：cut
 
-��ȡ����һ��һ�еؽ��С�
+提取过程一行一行地进行。
 
-cut �����ݽ����з֣�ȡ����Ҫ�Ĳ��֡�
+cut 对数据进行切分，取出想要的部分。
 
 ```html
 $ cut
--d ���ָ���
--f ������ -d �ָ���ʹ�� -f n ȡ���� n ������
--c �����ַ�Ϊ��λȡ������
+-d ：分隔符
+-f ：经过 -d 分隔后，使用 -f n 取出第 n 个区间
+-c ：以字符为单位取出区间
 ```
 
-���� 1��last ����ʾ�ĵ����ߵ���Ϣ��Ҫ�����ʾ�û�����
+范例 1：last 将显示的登入者的信息，要求仅显示用户名。
 
 ```html
 $ last
@@ -806,7 +807,7 @@ root pts/1 192.168.201.254 Thu Feb 5 22:37 - 23:53 (01:16)
 $ last | cut -d ' ' -f 1
 ```
 
-���� 2���� export �����ѶϢ��ȡ�õ� 12 �ַ��Ժ�������ַ�����
+范例 2：将 export 输出的讯息，取得第 12 字符以后的所有字符串。
 
 ```html
 $ export
@@ -814,28 +815,28 @@ declare -x HISTCONTROL="ignoredups"
 declare -x HISTSIZE="1000"
 declare -x HOME="/home/dmtsai"
 declare -x HOSTNAME="study.centos.vbird"
-.....(����ʡ��).....
+.....(其他省略).....
 
 $ export | cut -c 12
 ```
 
-### 2. �������sort��uniq
+### 2. 排序命令：sort、uniq
 
-**sort** ��������
+**sort** 进行排序。
 
 ```html
 $ sort [-fbMnrtuk] [file or stdin]
--f �����Դ�Сд
--b ��������ǰ��Ŀո�
--M �����·ݵ��������������� JAN��DEC
--n ��ʹ������
--r ����������
--u ���൱�� unique���ظ�������ֻ����һ��
--t ���ָ�����Ĭ��Ϊ tab
--k ��ָ�����������
+-f ：忽略大小写
+-b ：忽略最前面的空格
+-M ：以月份的名字来排序，例如 JAN，DEC
+-n ：使用数字
+-r ：反向排序
+-u ：相当于 unique，重复的内容只出现一次
+-t ：分隔符，默认为 tab
+-k ：指定排序的区间
 ```
 
-������/etc/passwd �������� : ���ָ��ģ��Ե�����������
+范例：/etc/passwd 内容是以 : 来分隔的，以第三栏来排序。
 
 ```html
 $ cat /etc/passwd | sort -t ':' -k 3
@@ -845,15 +846,15 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq** ���Խ��ظ�������ֻȡһ����
+**uniq** 可以将重复的数据只取一个。
 
 ```html
 $ uniq [-ic]
--i �����Դ�Сд
--c �����м���
+-i ：忽略大小写
+-c ：进行计数
 ```
 
-������ȡ��ÿ���˵ĵ�¼�ܴ���
+范例：取得每个人的登录总次数
 
 ```html
 $ last | cut -d ' ' -f 1 | sort | uniq -c
@@ -865,88 +866,88 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 1 wtmp
 ```
 
-### 3. ˫������ض���tee
+### 3. 双向输出重定向：tee
 
-����ض���Ὣ��������ض����ļ��У��� **tee** �����ܹ����������ܣ����ܱ�����Ļ�ϵ������Ҳ����˵��ʹ�� tee ָ�һ�������ͬʱ���͵��ļ�����Ļ�ϡ�
+输出重定向会将输出内容重定向到文件中，而 **tee** 不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```html
 $ tee [-a] file
 ```
 
-### 4. �ַ�ת��ָ�tr��col��expand��join��paste
+### 4. 字符转换指令：tr、col、expand、join、paste
 
- **tr** ����ɾ��һ���е��ַ������߶��ַ������滻��
+ **tr** 用来删除一行中的字符，或者对字符进行替换。
 
 ```html
 $ tr [-ds] SET1 ...
--d �� ɾ������ SET1 ����ַ���
+-d ： 删除行中 SET1 这个字符串
 ```
 
-�������� last �������Ϣ����Сдת��Ϊ��д��
+范例，将 last 输出的信息所有小写转换为大写。
 
 ```html
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
- **col** �� tab �ַ�תΪ�ո��ַ���
+ **col** 将 tab 字符转为空格字符。
 
 ```html
 $ col [-xb]
--x �� �� tab ��ת���ɶԵȵĿո��
+-x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand** �� tab ת��һ�������Ŀո�Ĭ���� 8 ����
+**expand** 将 tab 转换一定数量的空格，默认是 8 个。
 
 ```html
 $ expand [-t] file
--t ��tab תΪ�ո������
+-t ：tab 转为空格的数量
 ```
 
-**join** ������ͬ���ݵ���һ�кϲ���һ��
+**join** 将有相同数据的那一行合并在一起。
 
 ```html
 $ join [-ti12] file1 file2
--t ���ָ�����Ĭ��Ϊ�ո�
--i �����Դ�Сд�Ĳ���
--1 ����һ���ļ����õıȽ��ֶ�
--2 ���ڶ����ļ����õıȽ��ֶ�
+-t ：分隔符，默认为空格
+-i ：忽略大小写的差异
+-1 ：第一个文件所用的比较字段
+-2 ：第二个文件所用的比较字段
 ```
 
-**paste** ֱ�ӽ�����ճ����һ��
+**paste** 直接将两行粘贴在一起。
 
 ```html
 $ paste [-d] file1 file2
--d ���ָ�����Ĭ��Ϊ tab
+-d ：分隔符，默认为 tab
 ```
 
-### 5. ����ָ�split
+### 5. 分区指令：split
 
-**split** ��һ���ļ����ֳɶ���ļ���
+**split** 将一个文件划分成多个文件。
 
 ```html
 $ split [-bl] file PREFIX
--b ���Դ�С�����з������ɼӵ�λ������ b, k, m ��
--l �������������з�����
-- PREFIX �������ļ���ǰ������
+-b ：以大小来进行分区，可加单位，例如 b, k, m 等
+-l ：以行数来进行分区。
+- PREFIX ：分区文件的前导名称
 ```
 
-# �����ʾ�����ļ���ʽ������
+# 正规表示法与文件格式化处理
 
 ## grep
 
-ʹ�������ʾʽ��ƥ�������ȡ������
+使用正则表示式把匹配的行提取出来。
 
 ```html
-$ grep [-acinv] [--color=auto] ��Ѱ�ַ��� filename
--a �� �� binary �ļ��� text �ļ��ķ�ʽ������Ѱ
--c �� �����ҵ�����
--i �� ���Դ�Сд
--n �� ����к�
--v �� ����ѡ���༴��ʾ��û�� ��Ѱ�ַ��� ���ݵ���һ��
---color=auto ���ҵ��Ĺؼ��ּ���ɫ��ʾ
+$ grep [-acinv] [--color=auto] 搜寻字符串 filename
+-a ： 将 binary 文件以 text 文件的方式进行搜寻
+-c ： 计算找到个数
+-i ： 忽略大小写
+-n ： 输出行号
+-v ： 反向选择，亦即显示出没有 搜寻字符串 内容的那一行
+--color=auto ：找到的关键字加颜色显示
 ```
 
-�������Ѻ��� the �ַ���������ȡ������ע��Ĭ�ϻ��� --color=auto ѡ�������������� Linux ������ɫ��ʾ the �ַ�����
+范例：把含有 the 字符串的行提取出来（注意默认会有 --color=auto 选项，因此以下内容在 Linux 中有颜色显示 the 字符串）
 
 ```html
 $ grep -n 'the' regular_express.txt
@@ -957,7 +958,7 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-��Ϊ { �� } �ķ����� shell ������������ģ���˱���Ҫʹ��ʹ��ת���ַ�����ת�塣
+因为 { 与 } 的符号在 shell 是有特殊意义的，因此必须要使用使用转义字符进行转义。
 
 ```html
 $ grep -n 'go\{2,5\}g' regular_express.txt
@@ -965,9 +966,9 @@ $ grep -n 'go\{2,5\}g' regular_express.txt
 
 ## printf
 
-���ڸ�ʽ�������
+用于格式化输出。
 
-�������ڹܵ�����ڸ� printf ������ʱ��Ҫʹ�� $( ) ��ʽ��
+它不属于管道命令，在给 printf 传数据时需要使用 $( ) 形式。
 
 ```html
 $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
@@ -979,12 +980,12 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 ## awk
 
 ```html
-$ awk '��������1{����1} ��������2{����2} ...' filename
+$ awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
 ```
 
-awk ÿ�δ���һ�У���������С��λ���ֶΣ�ÿ���ֶε�������ʽΪ��\$n��n Ϊ�ֶκţ��� 1 ��ʼ��\$0 ��ʾһ���С�
+awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\<img src="https://latex.codecogs.com/gif.latex?n，n为字段号，从1开始，\"/>0 表示一整行。
 
-���� 1��ȡ����¼�û����û����� ip
+范例 1：取出登录用户的用户名和 ip
 
 ```html
 $ last -n 5
@@ -997,15 +998,15 @@ dmtsai tty1 Fri May 29 11:55 - 12:11 (00:15)
 $ last -n 5 | awk '{print $1 "\t" $3}
 ```
 
-awk ������
+awk 变量：
 
-| �������� | �������� |
+| 变量名称 | 代表意义 |
 | -- | -- |
-| NF | ÿһ��ӵ�е��ֶ����� |
-| NR | Ŀǰ���������ǵڼ������� |
-| FS | Ŀǰ�ķָ��ַ���Ĭ���ǿո�� |
+| NF | 每一行拥有的字段总数 |
+| NR | 目前所处理的是第几行数据 |
+| FS | 目前的分隔字符，默认是空格键 |
 
-���� 2��������ڴ������кţ�����ʾÿһ���ж����ֶ�
+范例 2：输出正在处理的行号，并显示每一行有多少字段
 
 ```html
 $ last -n 5 | awk '{print $1 "\t lines: " NR "\t columns: " NF}'
@@ -1016,9 +1017,9 @@ dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
 ```
 
-����ʹ�ô��ڵ����߼������е���ʹ�� ==��
+可以使用大于等于逻辑，其中等于使用 ==。
 
-���� 3��/etc/passwd �ļ��������ֶ�Ϊ UID���� UID С�� 10 �����ݽ��д�����
+范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
 ```text
 cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
@@ -1027,24 +1028,24 @@ bin 1
 daemon 2
 ```
 
-# vim ����ģʽ
+# vim 三个模式
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg)
 
-��ָ����ģʽ�£����������������뿪���ߴ洢�ļ���
+在指令列模式下，有以下命令用于离开或者存储文件。
 
-| ���� | ���� |
+| 命令 | 作用 |
 | -- | -- |
-| :w | д�����|
-| :w! | ���ļ�Ϊֻ��ʱ��ǿ��д����̡������ܲ���д�룬���û��Ը��ļ���Ȩ���й� |
-| :q | �뿪|
-| :q! | ǿ���뿪������|
-| :wq | д����̺��뿪|
-| :wq!|  ǿ��д����̺��뿪|
+| :w | 写入磁盘|
+| :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
+| :q | 离开|
+| :q! | 强制离开不保存|
+| :wq | 写入磁盘后离开|
+| :wq!|  强制写入磁盘后离开|
 
 
-# �ο�����
+# 参考资料
 
-- ���. �� �� �� Linux ˽ �� �� �� �� ƪ �� �� ��[J]. 2009.
-- [Linux ƽ̨�ϵ�����������](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
+- 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
+- [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 

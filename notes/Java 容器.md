@@ -1,78 +1,79 @@
 <!-- GFM-TOC -->
-* [¸ÅÀÀ](#¸ÅÀÀ)
+* [æ¦‚è§ˆ](#æ¦‚è§ˆ)
     * [1. List](#1-list)
     * [2. Set](#2-set)
     * [3. Queue](#3-queue)
     * [4. Map](#4-map)
-    * [5. Java 1.0/1.1 ÈİÆ÷](#5-java-1011-ÈİÆ÷)
-* [ÈİÆ÷ÖĞµÄÉè¼ÆÄ£Ê½](#ÈİÆ÷ÖĞµÄÉè¼ÆÄ£Ê½)
-    * [1. µü´úÆ÷Ä£Ê½](#1-µü´úÆ÷Ä£Ê½)
-    * [2. ÊÊÅäÆ÷Ä£Ê½](#2-ÊÊÅäÆ÷Ä£Ê½)
-* [É¢ÁĞ](#É¢ÁĞ)
-* [Ô´Âë·ÖÎö](#Ô´Âë·ÖÎö)
+    * [5. Java 1.0/1.1 å®¹å™¨](#5-java-1011-å®¹å™¨)
+* [å®¹å™¨ä¸­çš„è®¾è®¡æ¨¡å¼](#å®¹å™¨ä¸­çš„è®¾è®¡æ¨¡å¼)
+    * [1. è¿­ä»£å™¨æ¨¡å¼](#1-è¿­ä»£å™¨æ¨¡å¼)
+    * [2. é€‚é…å™¨æ¨¡å¼](#2-é€‚é…å™¨æ¨¡å¼)
+* [æ•£åˆ—](#æ•£åˆ—)
+* [æºç åˆ†æ](#æºç åˆ†æ)
     * [1. ArraList](#1-arralist)
-    * [2. Vector Óë Stack](#2-vector-Óë-stack)
+    * [2. Vector ä¸ Stack](#2-vector-ä¸-stack)
     * [3. LinkedList](#3-linkedlist)
     * [4. TreeMap](#4-treemap)
     * [5. HashMap](#5-hashmap)
     * [6. LinkedHashMap](#6-linkedhashmap)
     * [7. ConcurrentHashMap](#7-concurrenthashmap)
-* [²Î¿¼×ÊÁÏ](#²Î¿¼×ÊÁÏ)
+* [å‚è€ƒèµ„æ–™](#å‚è€ƒèµ„æ–™)
 <!-- GFM-TOC -->
 
-# ¸ÅÀÀ
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/ebf03f56-f957-4435-9f8f-0f605661484d.jpg)
+# æ¦‚è§ˆ
 
-ÈİÆ÷Ö÷Òª°üÀ¨ Collection ºÍ Map Á½ÖÖ£¬Collection ÓÖ°üº¬ÁË List¡¢Set ÒÔ¼° Queue¡£
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg)
+
+å®¹å™¨ä¸»è¦åŒ…æ‹¬ Collection å’Œ Map ä¸¤ç§ï¼ŒCollection åˆåŒ…å«äº† Listã€Set ä»¥åŠ Queueã€‚
 
 ## 1. List
 
-- ArrayList£º»ùÓÚ¶¯Ì¬Êı×éÊµÏÖ£¬Ö§³ÖËæ»ú·ÃÎÊ£»
+- ArrayListï¼šåŸºäºåŠ¨æ€æ•°ç»„å®ç°ï¼Œæ”¯æŒéšæœºè®¿é—®ï¼›
 
-- LinkedList£º»ùÓÚË«ÏòÑ­»·Á´±íÊµÏÖ£¬Ö»ÄÜË³Ğò·ÃÎÊ£¬µ«ÊÇ¿ÉÒÔ¿ìËÙµØÔÚÁ´±íÖĞ¼ä²åÈëºÍÉ¾³ıÔªËØ¡£²»½öÈç´Ë£¬LinkedList »¹¿ÉÒÔÓÃ×÷Õ»¡¢¶ÓÁĞºÍË«¶Ë¶ÓÁĞ¡£
+- LinkedListï¼šåŸºäºåŒå‘å¾ªç¯é“¾è¡¨å®ç°ï¼Œåªèƒ½é¡ºåºè®¿é—®ï¼Œä½†æ˜¯å¯ä»¥å¿«é€Ÿåœ°åœ¨é“¾è¡¨ä¸­é—´æ’å…¥å’Œåˆ é™¤å…ƒç´ ã€‚ä¸ä»…å¦‚æ­¤ï¼ŒLinkedList è¿˜å¯ä»¥ç”¨ä½œæ ˆã€é˜Ÿåˆ—å’ŒåŒç«¯é˜Ÿåˆ—ã€‚
 
 ## 2. Set
 
-- HashSet£º»ùÓÚ Hash ÊµÏÖ£¬Ö§³Ö¿ìËÙ²éÕÒ£¬µ«ÊÇÊ§È¥ÓĞĞòĞÔ£»
+- HashSetï¼šåŸºäº Hash å®ç°ï¼Œæ”¯æŒå¿«é€ŸæŸ¥æ‰¾ï¼Œä½†æ˜¯å¤±å»æœ‰åºæ€§ï¼›
 
-- TreeSet£º»ùÓÚºìºÚÊ÷ÊµÏÖ£¬±£³ÖÓĞĞò£¬µ«ÊÇ²éÕÒĞ§ÂÊ²»Èç HashSet£»
+- TreeSetï¼šåŸºäºçº¢é»‘æ ‘å®ç°ï¼Œä¿æŒæœ‰åºï¼Œä½†æ˜¯æŸ¥æ‰¾æ•ˆç‡ä¸å¦‚ HashSetï¼›
 
-- LinkedListHashSet£º¾ßÓĞ HashSet µÄ²éÕÒĞ§ÂÊ£¬ÇÒÄÚ²¿Ê¹ÓÃÁ´±íÎ¬»¤ÔªËØµÄ²åÈëË³Ğò£¬Òò´Ë¾ßÓĞÓĞĞòĞÔ¡£
+- LinkedListHashSetï¼šå…·æœ‰ HashSet çš„æŸ¥æ‰¾æ•ˆç‡ï¼Œä¸”å†…éƒ¨ä½¿ç”¨é“¾è¡¨ç»´æŠ¤å…ƒç´ çš„æ’å…¥é¡ºåºï¼Œå› æ­¤å…·æœ‰æœ‰åºæ€§ã€‚
 
 ## 3. Queue
 
-Ö»ÓĞÁ½¸öÊµÏÖ£ºLinkedList ºÍ PriorityQueue£¬ÆäÖĞ LinkedList Ö§³ÖË«Ïò¶ÓÁĞ£¬PriorityQueue ÊÇ»ùÓÚ¶Ñ½á¹¹ÊµÏÖ¡£
+åªæœ‰ä¸¤ä¸ªå®ç°ï¼šLinkedList å’Œ PriorityQueueï¼Œå…¶ä¸­ LinkedList æ”¯æŒåŒå‘é˜Ÿåˆ—ï¼ŒPriorityQueue æ˜¯åŸºäºå †ç»“æ„å®ç°ã€‚
 
 ## 4. Map
 
-- HashMap£º»ùÓÚ Hash ÊµÏÖ
+- HashMapï¼šåŸºäº Hash å®ç°
 
-- LinkedHashMap£ºÊ¹ÓÃÁ´±íÀ´Î¬»¤ÔªËØµÄË³Ğò£¬Ë³ĞòÎª²åÈëË³Ğò»òÕß×î½ü×îÉÙÊ¹ÓÃ£¨LRU£©Ë³Ğò
+- LinkedHashMapï¼šä½¿ç”¨é“¾è¡¨æ¥ç»´æŠ¤å…ƒç´ çš„é¡ºåºï¼Œé¡ºåºä¸ºæ’å…¥é¡ºåºæˆ–è€…æœ€è¿‘æœ€å°‘ä½¿ç”¨ï¼ˆLRUï¼‰é¡ºåº
 
-- TreeMap£º»ùÓÚºìºÚÊ÷ÊµÏÖ
+- TreeMapï¼šåŸºäºçº¢é»‘æ ‘å®ç°
 
-- ConcurrentHashMap£ºÏß³Ì°²È« Map£¬²»Éæ¼°ÀàËÆÓÚ HashTable µÄÍ¬²½¼ÓËø
+- ConcurrentHashMapï¼šçº¿ç¨‹å®‰å…¨ Mapï¼Œä¸æ¶‰åŠç±»ä¼¼äº HashTable çš„åŒæ­¥åŠ é”
 
-## 5. Java 1.0/1.1 ÈİÆ÷
+## 5. Java 1.0/1.1 å®¹å™¨
 
-¶ÔÓÚ¾ÉµÄÈİÆ÷£¬ÎÒÃÇ¾ö²»Ó¦¸ÃÊ¹ÓÃËüÃÇ£¬Ö»ĞèÒª¶ÔËüÃÇ½øĞĞÁË½â¡£
+å¯¹äºæ—§çš„å®¹å™¨ï¼Œæˆ‘ä»¬å†³ä¸åº”è¯¥ä½¿ç”¨å®ƒä»¬ï¼Œåªéœ€è¦å¯¹å®ƒä»¬è¿›è¡Œäº†è§£ã€‚
 
-- Vector£ººÍ ArrayList ÀàËÆ£¬µ«ËüÊÇÏß³Ì°²È«µÄ
+- Vectorï¼šå’Œ ArrayList ç±»ä¼¼ï¼Œä½†å®ƒæ˜¯çº¿ç¨‹å®‰å…¨çš„
 
-- HashTable£ººÍ HashMap ÀàËÆ£¬µ«ËüÊÇÏß³Ì°²È«µÄ
+- HashTableï¼šå’Œ HashMap ç±»ä¼¼ï¼Œä½†å®ƒæ˜¯çº¿ç¨‹å®‰å…¨çš„
 
-# ÈİÆ÷ÖĞµÄÉè¼ÆÄ£Ê½
+# å®¹å™¨ä¸­çš„è®¾è®¡æ¨¡å¼
 
-## 1. µü´úÆ÷Ä£Ê½
+## 1. è¿­ä»£å™¨æ¨¡å¼
 
-´Ó¸ÅÀÀÍ¼¿ÉÒÔ¿´µ½£¬Ã¿¸ö¼¯ºÏÀà¶¼ÓĞÒ»¸ö Iterator ¶ÔÏó£¬¿ÉÒÔÍ¨¹ıÕâ¸öµü´úÆ÷¶ÔÏóÀ´±éÀú¼¯ºÏÖĞµÄÔªËØ¡£
+ä»æ¦‚è§ˆå›¾å¯ä»¥çœ‹åˆ°ï¼Œæ¯ä¸ªé›†åˆç±»éƒ½æœ‰ä¸€ä¸ª Iterator å¯¹è±¡ï¼Œå¯ä»¥é€šè¿‡è¿™ä¸ªè¿­ä»£å™¨å¯¹è±¡æ¥éå†é›†åˆä¸­çš„å…ƒç´ ã€‚
 
-[Java ÖĞµÄµü´úÆ÷Ä£Ê½ ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#92-java-%E5%86%85%E7%BD%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8)
+[Java ä¸­çš„è¿­ä»£å™¨æ¨¡å¼ ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#92-java-%E5%86%85%E7%BD%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8)
 
-## 2. ÊÊÅäÆ÷Ä£Ê½
+## 2. é€‚é…å™¨æ¨¡å¼
 
-java.util.Arrays#asList() ¿ÉÒÔ°ÑÊı×éÀàĞÍ×ª»»Îª List ÀàĞÍ¡£
+java.util.Arrays#asList() å¯ä»¥æŠŠæ•°ç»„ç±»å‹è½¬æ¢ä¸º List ç±»å‹ã€‚
 
 ```java
  List list = Arrays.asList(1, 2, 3);
@@ -80,44 +81,44 @@ java.util.Arrays#asList() ¿ÉÒÔ°ÑÊı×éÀàĞÍ×ª»»Îª List ÀàĞÍ¡£
  list = Arrays.asList(arr);
 ```
 
-# É¢ÁĞ
+# æ•£åˆ—
 
-Ê¹ÓÃ hasCode() À´·µ»ØÉ¢ÁĞÖµ£¬Ê¹ÓÃµÄÊÇ¶ÔÏóµÄµØÖ·¡£
+ä½¿ç”¨ hasCode() æ¥è¿”å›æ•£åˆ—å€¼ï¼Œä½¿ç”¨çš„æ˜¯å¯¹è±¡çš„åœ°å€ã€‚
 
-¶ø equals() ÊÇÓÃÀ´ÅĞ¶ÏÁ½¸ö¶ÔÏóÊÇ·ñÏàµÈµÄ£¬ÏàµÈµÄÁ½¸ö¶ÔÏóÉ¢ÁĞÖµÒ»¶¨ÒªÏàÍ¬£¬µ«ÊÇÉ¢ÁĞÖµÏàÍ¬µÄÁ½¸ö¶ÔÏó²»Ò»¶¨ÏàµÈ¡£
+è€Œ equals() æ˜¯ç”¨æ¥åˆ¤æ–­ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ç›¸ç­‰çš„ï¼Œç›¸ç­‰çš„ä¸¤ä¸ªå¯¹è±¡æ•£åˆ—å€¼ä¸€å®šè¦ç›¸åŒï¼Œä½†æ˜¯æ•£åˆ—å€¼ç›¸åŒçš„ä¸¤ä¸ªå¯¹è±¡ä¸ä¸€å®šç›¸ç­‰ã€‚
 
-ÏàµÈ±ØĞëÂú×ãÒÔÏÂÎå¸öĞÔÖÊ£º
+ç›¸ç­‰å¿…é¡»æ»¡è¶³ä»¥ä¸‹äº”ä¸ªæ€§è´¨ï¼š
 
-1. ×Ô·´ĞÔ
-2. ¶Ô³ÆĞÔ
-3. ´«µİĞÔ
-4. Ò»ÖÂĞÔ£¨¶à´Îµ÷ÓÃ x.equals(y)£¬½á¹û²»±ä£©
-5. ¶ÔÈÎºÎ²»ÊÇ null µÄ¶ÔÏó x µ÷ÓÃ x.equals(nul) ½á¹û¶¼Îª false
+1. è‡ªåæ€§
+2. å¯¹ç§°æ€§
+3. ä¼ é€’æ€§
+4. ä¸€è‡´æ€§ï¼ˆå¤šæ¬¡è°ƒç”¨ x.equals(y)ï¼Œç»“æœä¸å˜ï¼‰
+5. å¯¹ä»»ä½•ä¸æ˜¯ null çš„å¯¹è±¡ x è°ƒç”¨ x.equals(nul) ç»“æœéƒ½ä¸º false
 
-# Ô´Âë·ÖÎö
+# æºç åˆ†æ
 
-½¨ÒéÏÈÔÄ¶Á [ Ëã·¨ - ²éÕÒ ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9F%A5%E6%89%BE) ²¿·Ö£¬¶Ô¼¯ºÏÀàÔ´ÂëµÄÀí½âÓĞºÜ´ó°ïÖú¡£
+å»ºè®®å…ˆé˜…è¯» [ ç®—æ³• - æŸ¥æ‰¾ ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9F%A5%E6%89%BE) éƒ¨åˆ†ï¼Œå¯¹é›†åˆç±»æºç çš„ç†è§£æœ‰å¾ˆå¤§å¸®åŠ©ã€‚
 
-Ô´ÂëÏÂÔØ£º[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
+æºç ä¸‹è½½ï¼š[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
 
 ## 1. ArraList
 
 [ArraList.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/ArrayList.java)
 
-ÊµÏÖÁË RandomAccess ½Ó¿Ú£¬Òò´ËÖ§³ÖËæ»ú·ÃÎÊ£¬ÕâÊÇÀíËùµ±È»µÄ£¬ÒòÎª ArrayList ÊÇ»ùÓÚÊı×éÊµÏÖµÄ¡£
+å®ç°äº† RandomAccess æ¥å£ï¼Œå› æ­¤æ”¯æŒéšæœºè®¿é—®ï¼Œè¿™æ˜¯ç†æ‰€å½“ç„¶çš„ï¼Œå› ä¸º ArrayList æ˜¯åŸºäºæ•°ç»„å®ç°çš„ã€‚
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-»ùÓÚÊı×éÊµÏÖ£¬±£´æÔªËØµÄÊı×éÊ¹ÓÃ transient ĞŞÊÎ£¬ÕâÊÇÒòÎª¸ÃÊı×é²»Ò»¶¨ËùÓĞÎ»ÖÃ¶¼Õ¼ÂúÔªËØ£¬Òò´ËÒ²¾ÍÃ»±ØÒªÈ«²¿¶¼½øĞĞĞòÁĞ»¯¡£ĞèÒªÖØĞ´ writeObject() ºÍ readObject()¡£
+åŸºäºæ•°ç»„å®ç°ï¼Œä¿å­˜å…ƒç´ çš„æ•°ç»„ä½¿ç”¨ transient ä¿®é¥°ï¼Œè¿™æ˜¯å› ä¸ºè¯¥æ•°ç»„ä¸ä¸€å®šæ‰€æœ‰ä½ç½®éƒ½å æ»¡å…ƒç´ ï¼Œå› æ­¤ä¹Ÿå°±æ²¡å¿…è¦å…¨éƒ¨éƒ½è¿›è¡Œåºåˆ—åŒ–ã€‚éœ€è¦é‡å†™ writeObject() å’Œ readObject()ã€‚
 
 ```java
 private transient Object[] elementData;
 ```
 
-Êı×éµÄÄ¬ÈÏ´óĞ¡Îª 10
+æ•°ç»„çš„é»˜è®¤å¤§å°ä¸º 10
 
 ```java
 public ArrayList(int initialCapacity) {
@@ -132,7 +133,7 @@ public ArrayList() {
 }
 ```
 
-É¾³ıÔªËØÊ±µ÷ÓÃ System.arraycopy() ¶ÔÔªËØ½øĞĞ¸´ÖÆ£¬Òò´ËÉ¾³ı²Ù×÷³É±¾ºÜ¸ß£¬×îºÃÔÚ´´½¨Ê±¾ÍÖ¸¶¨´ó¸ÅµÄÈİÁ¿´óĞ¡£¬¼õÉÙ¸´ÖÆ²Ù×÷µÄÖ´ĞĞ´ÎÊı¡£
+åˆ é™¤å…ƒç´ æ—¶è°ƒç”¨ System.arraycopy() å¯¹å…ƒç´ è¿›è¡Œå¤åˆ¶ï¼Œå› æ­¤åˆ é™¤æ“ä½œæˆæœ¬å¾ˆé«˜ï¼Œæœ€å¥½åœ¨åˆ›å»ºæ—¶å°±æŒ‡å®šå¤§æ¦‚çš„å®¹é‡å¤§å°ï¼Œå‡å°‘å¤åˆ¶æ“ä½œçš„æ‰§è¡Œæ¬¡æ•°ã€‚
 
 ```java
 public E remove(int index) {
@@ -150,9 +151,9 @@ public E remove(int index) {
 }
 ```
 
-Ìí¼ÓÔªËØÊ±Ê¹ÓÃ ensureCapacity() ·½·¨À´±£Ö¤ÈİÁ¿×ã¹»£¬Èç¹û²»¹»Ê±£¬ĞèÒª½øĞĞÀ©Èİ£¬Ê¹µÃĞÂÈİÁ¿Îª¾ÉÈİÁ¿µÄ 1.5 ±¶¡£
+æ·»åŠ å…ƒç´ æ—¶ä½¿ç”¨ ensureCapacity() æ–¹æ³•æ¥ä¿è¯å®¹é‡è¶³å¤Ÿï¼Œå¦‚æœä¸å¤Ÿæ—¶ï¼Œéœ€è¦è¿›è¡Œæ‰©å®¹ï¼Œä½¿å¾—æ–°å®¹é‡ä¸ºæ—§å®¹é‡çš„ 1.5 å€ã€‚
 
-modCount ÓÃÀ´¼ÇÂ¼ ArrayList ·¢Éú±ä»¯µÄ´ÎÊı£¬ÒòÎªÃ¿´ÎÔÚ½øĞĞ add() ºÍ addAll() Ê±¶¼ĞèÒªµ÷ÓÃ ensureCapacity()£¬Òò´ËÖ±½ÓÔÚ ensureCapacity() ÖĞ¶Ô modCount ½øĞĞĞŞ¸Ä¡£
+modCount ç”¨æ¥è®°å½• ArrayList å‘ç”Ÿå˜åŒ–çš„æ¬¡æ•°ï¼Œå› ä¸ºæ¯æ¬¡åœ¨è¿›è¡Œ add() å’Œ addAll() æ—¶éƒ½éœ€è¦è°ƒç”¨ ensureCapacity()ï¼Œå› æ­¤ç›´æ¥åœ¨ ensureCapacity() ä¸­å¯¹ modCount è¿›è¡Œä¿®æ”¹ã€‚
 
 ```java
 public void ensureCapacity(int minCapacity) {
@@ -190,7 +191,7 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
-ÔÚ½øĞĞĞòÁĞ»¯»òÕßµü´úµÈ²Ù×÷Ê±£¬ĞèÒª±È½Ï²Ù×÷Ç°ºó modCount ÊÇ·ñ¸Ä±ä£¬Èç¹û¸Ä±äÁËĞèÒªÅ×³ö ConcurrentModificationException¡£
+åœ¨è¿›è¡Œåºåˆ—åŒ–æˆ–è€…è¿­ä»£ç­‰æ“ä½œæ—¶ï¼Œéœ€è¦æ¯”è¾ƒæ“ä½œå‰å modCount æ˜¯å¦æ”¹å˜ï¼Œå¦‚æœæ”¹å˜äº†éœ€è¦æŠ›å‡º ConcurrentModificationExceptionã€‚
 
 ```java
 private void writeObject(java.io.ObjectOutputStream s)
@@ -213,20 +214,20 @@ private void writeObject(java.io.ObjectOutputStream s)
 }
 ```
 
-**ºÍ Vector µÄÇø±ğ**
+**å’Œ Vector çš„åŒºåˆ«**
 
-1.  Vector ºÍ ArrayList ¼¸ºõÊÇÍêÈ«ÏàÍ¬µÄ£¬Î¨Ò»µÄÇø±ğÔÚÓÚ Vector ÊÇÍ¬²½µÄ£¬Òò´Ë¿ªÏú¾Í±È ArrayList Òª´ó£¬·ÃÎÊÒªÂı¡£×îºÃÊ¹ÓÃ ArrayList ¶ø²»ÊÇ Vector£¬ÒòÎªÍ¬²½ÍêÈ«¿ÉÒÔÓÉ³ÌĞòÔ±×Ô¼ºÀ´¿ØÖÆ£»
-2.  Vector Ã¿´ÎÀ©ÈİÇëÇóÆä´óĞ¡µÄ 2 ±¶¿Õ¼ä£¬¶ø ArrayList ÊÇ 1.5 ±¶¡£
+1.  Vector å’Œ ArrayList å‡ ä¹æ˜¯å®Œå…¨ç›¸åŒçš„ï¼Œå”¯ä¸€çš„åŒºåˆ«åœ¨äº Vector æ˜¯åŒæ­¥çš„ï¼Œå› æ­¤å¼€é”€å°±æ¯” ArrayList è¦å¤§ï¼Œè®¿é—®è¦æ…¢ã€‚æœ€å¥½ä½¿ç”¨ ArrayList è€Œä¸æ˜¯ Vectorï¼Œå› ä¸ºåŒæ­¥å®Œå…¨å¯ä»¥ç”±ç¨‹åºå‘˜è‡ªå·±æ¥æ§åˆ¶ï¼›
+2.  Vector æ¯æ¬¡æ‰©å®¹è¯·æ±‚å…¶å¤§å°çš„ 2 å€ç©ºé—´ï¼Œè€Œ ArrayList æ˜¯ 1.5 å€ã€‚
 
-ÎªÁËÊ¹ÓÃÏß³Ì°²È«µÄ ArrayList£¬¿ÉÒÔÊ¹ÓÃ Collections.synchronizedList(new ArrayList<>()); ·µ»ØÒ»¸öÏß³Ì°²È«µÄ ArrayList£¬Ò²¿ÉÒÔÊ¹ÓÃ concurrent ²¢·¢°üÏÂµÄ CopyOnWriteArrayList Àà£»
+ä¸ºäº†ä½¿ç”¨çº¿ç¨‹å®‰å…¨çš„ ArrayListï¼Œå¯ä»¥ä½¿ç”¨ Collections.synchronizedList(new ArrayList<>()); è¿”å›ä¸€ä¸ªçº¿ç¨‹å®‰å…¨çš„ ArrayListï¼Œä¹Ÿå¯ä»¥ä½¿ç”¨ concurrent å¹¶å‘åŒ…ä¸‹çš„ CopyOnWriteArrayList ç±»ï¼›
 
-**ºÍ LinkedList µÄÇø±ğ**
+**å’Œ LinkedList çš„åŒºåˆ«**
 
-1.  ArrayList »ùÓÚ¶¯Ì¬Êı×éÊµÏÖ£¬LinkedList »ùÓÚË«ÏòÑ­»·Á´±íÊµÏÖ£»
-2. ArrayList Ö§³ÖËæ»ú·ÃÎÊ£¬LinkedList ²»Ö§³Ö£»
-3. LinkedList ÔÚÈÎÒâÎ»ÖÃÌí¼ÓÉ¾³ıÔªËØ¸ü¿ì¡£
+1.  ArrayList åŸºäºåŠ¨æ€æ•°ç»„å®ç°ï¼ŒLinkedList åŸºäºåŒå‘å¾ªç¯é“¾è¡¨å®ç°ï¼›
+2. ArrayList æ”¯æŒéšæœºè®¿é—®ï¼ŒLinkedList ä¸æ”¯æŒï¼›
+3. LinkedList åœ¨ä»»æ„ä½ç½®æ·»åŠ åˆ é™¤å…ƒç´ æ›´å¿«ã€‚
 
-## 2. Vector Óë Stack
+## 2. Vector ä¸ Stack
 
 [Vector.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/Vector.java)
 
@@ -242,13 +243,13 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 [HashMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/HashMap.java)
 
-Ê¹ÓÃÀ­Á´·¨À´½â¾ö³åÍ»¡£
+ä½¿ç”¨æ‹‰é“¾æ³•æ¥è§£å†³å†²çªã€‚
 
-Ä¬ÈÏÈİÁ¿ capacity Îª 16£¬ĞèÒª×¢ÒâµÄÊÇÈİÁ¿±ØĞë±£Ö¤Îª 2 µÄ´Î·½¡£ÈİÁ¿¾ÍÊÇ Entry[] table Êı×éµÄ³¤¶È£¬size ÊÇÊı×éµÄÊµ¼ÊÊ¹ÓÃÁ¿¡£
+é»˜è®¤å®¹é‡ capacity ä¸º 16ï¼Œéœ€è¦æ³¨æ„çš„æ˜¯å®¹é‡å¿…é¡»ä¿è¯ä¸º 2 çš„æ¬¡æ–¹ã€‚å®¹é‡å°±æ˜¯ Entry[] table æ•°ç»„çš„é•¿åº¦ï¼Œsize æ˜¯æ•°ç»„çš„å®é™…ä½¿ç”¨é‡ã€‚
 
-threshold ¹æ¶¨ÁËÒ»¸ö size µÄÁÙ½çÖµ£¬size ±ØĞëĞ¡ÓÚ threshold£¬Èç¹û´óÓÚµÈÓÚ£¬¾Í±ØĞë½øĞĞÀ©Èİ²Ù×÷¡£
+threshold è§„å®šäº†ä¸€ä¸ª size çš„ä¸´ç•Œå€¼ï¼Œsize å¿…é¡»å°äº thresholdï¼Œå¦‚æœå¤§äºç­‰äºï¼Œå°±å¿…é¡»è¿›è¡Œæ‰©å®¹æ“ä½œã€‚
 
-threshold = capacity * load_factor£¬ÆäÖĞ load_factor Îª table Êı×éÄÜ¹»Ê¹ÓÃµÄ±ÈÀı£¬load_factor ¹ı´ó»áµ¼ÖÂ¾Û´ØµÄ³öÏÖ£¬´Ó¶øÓ°Ïì²éÑ¯ºÍ²åÈëµÄĞ§ÂÊ£¬Ïê¼ûËã·¨±Ê¼Ç¡£
+threshold = capacity * load_factorï¼Œå…¶ä¸­ load_factor ä¸º table æ•°ç»„èƒ½å¤Ÿä½¿ç”¨çš„æ¯”ä¾‹ï¼Œload_factor è¿‡å¤§ä¼šå¯¼è‡´èšç°‡çš„å‡ºç°ï¼Œä»è€Œå½±å“æŸ¥è¯¢å’Œæ’å…¥çš„æ•ˆç‡ï¼Œè¯¦è§ç®—æ³•ç¬”è®°ã€‚
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -268,7 +269,7 @@ final float loadFactor;
 transient int modCount;
 ```
 
-´ÓÏÂÃæµÄÌí¼ÓÔªËØ´úÂëÖĞ¿ÉÒÔ¿´³ö£¬µ±ĞèÒªÀ©ÈİÊ±£¬Áî capacity ÎªÔ­À´µÄÁ½±¶¡£
+ä»ä¸‹é¢çš„æ·»åŠ å…ƒç´ ä»£ç ä¸­å¯ä»¥çœ‹å‡ºï¼Œå½“éœ€è¦æ‰©å®¹æ—¶ï¼Œä»¤ capacity ä¸ºåŸæ¥çš„ä¸¤å€ã€‚
 
 ```java
 void addEntry(int hash, K key, V value, int bucketIndex) {
@@ -279,7 +280,7 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 }
 ```
 
-Entry ÓÃÀ´±íÊ¾Ò»¸ö¼üÖµ¶ÔÔªËØ£¬ÆäÖĞµÄ next Ö¸ÕëÔÚĞòÁĞ»¯Ê±»áÊ¹ÓÃ¡£
+Entry ç”¨æ¥è¡¨ç¤ºä¸€ä¸ªé”®å€¼å¯¹å…ƒç´ ï¼Œå…¶ä¸­çš„ next æŒ‡é’ˆåœ¨åºåˆ—åŒ–æ—¶ä¼šä½¿ç”¨ã€‚
 
 ```java
 static class Entry<K,V> implements Map.Entry<K,V> {
@@ -290,7 +291,7 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-get() ²Ù×÷ĞèÒª·Ö³ÉÁ½ÖÖÇé¿ö£¬key Îª null ºÍ ²»Îª null£¬´ÓÖĞ¿ÉÒÔ¿´³ö HashMap ÔÊĞí²åÈë null ×÷Îª¼ü¡£
+get() æ“ä½œéœ€è¦åˆ†æˆä¸¤ç§æƒ…å†µï¼Œkey ä¸º null å’Œ ä¸ä¸º nullï¼Œä»ä¸­å¯ä»¥çœ‹å‡º HashMap å…è®¸æ’å…¥ null ä½œä¸ºé”®ã€‚
 
 ```java
 public V get(Object key) {
@@ -306,7 +307,7 @@ public V get(Object key) {
 }
 ```
 
-put() ²Ù×÷Ò²ĞèÒª¸ù¾İ key ÊÇ·ñÎª null ×ö²»Í¬µÄ´¦Àí£¬ĞèÒª×¢ÒâµÄÊÇÈç¹û±¾À´Ã»ÓĞ key Îª null µÄ¼üÖµ¶Ô£¬ĞÂ²åÈëÒ»¸ö key Îª null µÄ¼üÖµ¶ÔÊ±Ä¬ÈÏÊÇ·ÅÔÚÊı×éµÄ 0 Î»ÖÃ£¬ÕâÊÇÒòÎª null ²»ÄÜ¼ÆËã hash Öµ£¬Ò²¾ÍÎŞ·¨ÖªµÀÓ¦¸Ã·ÅÔÚÄÄ¸öÁ´±íÉÏ¡£
+put() æ“ä½œä¹Ÿéœ€è¦æ ¹æ® key æ˜¯å¦ä¸º null åšä¸åŒçš„å¤„ç†ï¼Œéœ€è¦æ³¨æ„çš„æ˜¯å¦‚æœæœ¬æ¥æ²¡æœ‰ key ä¸º null çš„é”®å€¼å¯¹ï¼Œæ–°æ’å…¥ä¸€ä¸ª key ä¸º null çš„é”®å€¼å¯¹æ—¶é»˜è®¤æ˜¯æ”¾åœ¨æ•°ç»„çš„ 0 ä½ç½®ï¼Œè¿™æ˜¯å› ä¸º null ä¸èƒ½è®¡ç®— hash å€¼ï¼Œä¹Ÿå°±æ— æ³•çŸ¥é“åº”è¯¥æ”¾åœ¨å“ªä¸ªé“¾è¡¨ä¸Šã€‚
 
 ```java
 public V put(K key, V value) {
@@ -354,8 +355,8 @@ private V putForNullKey(V value) {
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/HashMap.java)
 
-[ Ì½Ë÷ ConcurrentHashMap ¸ß²¢·¢ĞÔµÄÊµÏÖ»úÖÆ ](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
+[ æ¢ç´¢ ConcurrentHashMap é«˜å¹¶å‘æ€§çš„å®ç°æœºåˆ¶ ](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 
-# ²Î¿¼×ÊÁÏ
+# å‚è€ƒèµ„æ–™
 
-- Java ±à³ÌË¼Ïë
+- Java ç¼–ç¨‹æ€æƒ³

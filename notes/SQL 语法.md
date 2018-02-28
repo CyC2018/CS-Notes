@@ -1,52 +1,53 @@
 <!-- GFM-TOC -->
-* [����](#����)
-* [��ѯ](#��ѯ)
-* [����](#����)
-* [����](#����)
-* [ͨ���](#ͨ���)
-* [�����ֶ�](#�����ֶ�)
-* [����](#����)
-    * [�ı�����](#�ı�����)
-    * [���ں�ʱ�䴦��](#���ں�ʱ�䴦��)
-    * [��ֵ����](#��ֵ����)
-    * [����](#����)
-* [����](#����)
-* [�Ӳ�ѯ](#�Ӳ�ѯ)
-* [����](#����)
-    * [������](#������)
-    * [������](#������)
-    * [��Ȼ����](#��Ȼ����)
-    * [������](#������)
-* [��ϲ�ѯ](#��ϲ�ѯ)
-* [����](#����)
-* [����](#����)
-* [ɾ��](#ɾ��)
-* [������](#������)
-* [�޸ı�](#�޸ı�)
-* [��ͼ](#��ͼ)
-* [�洢����](#�洢����)
-* [�α�](#�α�)
-* [������](#������)
-* [������](#������)
-* [�ַ���](#�ַ���)
-* [Ȩ�޹���](#Ȩ�޹���)
+* [基础](#基础)
+* [查询](#查询)
+* [排序](#排序)
+* [过滤](#过滤)
+* [通配符](#通配符)
+* [计算字段](#计算字段)
+* [函数](#函数)
+    * [文本处理](#文本处理)
+    * [日期和时间处理](#日期和时间处理)
+    * [数值处理](#数值处理)
+    * [汇总](#汇总)
+* [分组](#分组)
+* [子查询](#子查询)
+* [连接](#连接)
+    * [内连接](#内连接)
+    * [自连接](#自连接)
+    * [自然连接](#自然连接)
+    * [外连接](#外连接)
+* [组合查询](#组合查询)
+* [插入](#插入)
+* [更新](#更新)
+* [删除](#删除)
+* [创建表](#创建表)
+* [修改表](#修改表)
+* [视图](#视图)
+* [存储过程](#存储过程)
+* [游标](#游标)
+* [触发器](#触发器)
+* [事务处理](#事务处理)
+* [字符集](#字符集)
+* [权限管理](#权限管理)
 <!-- GFM-TOC -->
 
-# ����
 
-ģʽ��������������δ洢���洢ʲô���������Լ�������ηֽ����Ϣ�����ݿ�ͱ�����ģʽ��
+# 基础
 
-������ֵ�������޸ģ�Ҳ���������ã�����ʹ���Ѿ�ɾ��������ֵ�����������е���������
+模式：定义了数据如何存储、存储什么样的数据以及数据如何分解等信息，数据库和表都有模式。
 
-SQL��Structured Query Language)����׼ SQL �� ANSI ��׼ίԱ��������Ӷ���Ϊ ANSI SQL������ DBMS �����Լ���ʵ�֣��� PL/SQL��Transact-SQL �ȡ�
+主键的值不允许修改，也不允许复用（不能使用已经删除的主键值赋给新数据行的主键）。
 
-# ��ѯ
+SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL，各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
 
-SQL ��䲻���ִ�Сд���������ݿ������������ֵ�Ƿ����������ھ���� DBMS �Լ����á�
+# 查询
+
+SQL 语句不区分大小写，但是数据库表名、列名和值是否区分依赖于具体的 DBMS 以及配置。
 
 **DISTINCT**
 
-��ֵֻͬ�����һ�Ρ��������������У�Ҳ����˵�����е�ֵ����ͬ������ͬ��
+相同值只会出现一次。它作用于所有列，也就是说所有列的值都相同才算相同。
 
 ```sql
 SELECT DISTINCT col1, col2
@@ -55,9 +56,9 @@ FROM mytable;
 
 **LIMIT**
 
-���Ʒ��ص�������������������������һ������Ϊ��ʼ�У��� 0 ��ʼ���ڶ�������Ϊ���ص���������
+限制返回的行数。可以有两个参数，第一个参数为起始行，从 0 开始；第二个参数为返回的总行数。
 
-����ǰ 5 �е� SQL��
+返回前 5 行的 SQL：
 
 ```sql
 SELECT *
@@ -71,7 +72,7 @@ FROM mytable
 LIMIT 0, 5;
 ```
 
-���ص� 3 \~ 5 �У�
+返回第 3 \~ 5 行：
 
 ```sql
 SELECT *
@@ -79,22 +80,22 @@ FROM mytable
 LIMIT 2, 3;
 ```
 
-**ע��**
+**注释**
 
 ```sql
-# ע��
+# 注释
 SELECT *
-FROM mytable -- ע��
-/* ע��1
-   ע��2 */
+FROM mytable -- 注释
+/* 注释1
+   注释2 */
 ```
 
-# ����
+# 排序
 
-**ASC**������Ĭ�ϣ�
-**DESC**������
+**ASC**：升序（默认）
+**DESC**：降序
 
-���԰�����н�������
+可以按多个列进行排序：
 
 ```sql
 SELECT *
@@ -102,9 +103,9 @@ FROM mytable
 ORDER BY col1 DESC, col2 ASC;
 ```
 
-# ����
+# 过滤
 
-��Ӧ�ò�Ҳ���Թ������ݣ����ǲ��ڷ������˽��й��˵����ݷǳ��󣬵���ͨ�����紫���˺ܶ��������ݣ��Ӷ��˷������������
+在应用层也可以过滤数据，但是不在服务器端进行过滤的数据非常大，导致通过网络传输了很多多余的数据，从而浪费了网络带宽。
 
 ```sql
 SELECT *
@@ -112,155 +113,155 @@ FROM mytable
 WHERE col IS NULL;
 ```
 
-�±���ʾ�� WHERE �Ӿ���õĲ�����
+下表显示了 WHERE 子句可用的操作符
 
-|  ������ | ˵��  |
+|  操作符 | 说明  |
 | ------------ | ------------ |
-| = <  >  | ���� С�� ���� |
-| <> !=  | ������  |
-| <= !> | С�ڵ��� |
-| >= !< | ���ڵ��� |
-| BETWEEN | ������ֵ֮�� |
-| IS NULL | ΪNULLֵ |
+| = <  >  | 等于 小于 大于 |
+| <> !=  | 不等于  |
+| <= !> | 小于等于 |
+| >= !< | 大于等于 |
+| BETWEEN | 在两个值之间 |
+| IS NULL | 为NULL值 |
 
-Ӧ��ע�⵽��NULL �� 0 �����ַ�������ͬ��
+应该注意到，NULL 与 0 、空字符串都不同。
 
-**AND OR** �������Ӷ���������������ȴ��� AND����˵�һ�����˱���ʽ�漰����� AND �� OR ʱ��Ӧ��ʹ�� () ���������ȼ���
+**AND OR** 用于连接多个过滤条件。优先处理 AND，因此当一个过滤表达式涉及到多个 AND 和 OR 时，应当使用 () 来决定优先级。
 
-**IN** ����������ƥ��һ��ֵ�����Ҳ���Խ�һ�� SELECT �Ӿ䣬�Ӷ�ƥ���Ӳ�ѯ�õ���һ��ֵ��
+**IN** 操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
 
-**NOT** ���������ڷ�һ��������
+**NOT** 操作符用于否定一个条件。
 
-# ͨ���
+# 通配符
 
-ͨ���Ҳ�����ڹ�������У�ֻ�������ı��ֶΡ�
+通配符也是用在过滤语句中，只能用于文本字段。
 
-- **%** ƥ�� >=0 �������ַ��������� \*��
+- **%** 匹配 >=0 个任意字符，类似于 \*；
 
-- **\_** ƥ�� ==1 �������ַ��������� \.��
+- **\_** 匹配 ==1 个任意字符，类似于 \.；
 
-- **[ ]** ����ƥ�伯���ڵ��ַ��������ַ� ^ ���Զ�����з�
+- **[ ]** 可以匹配集合内的字符，用脱字符 ^ 可以对其进行否定
 
-ʹ�� Like ������ͨ���ƥ�䡣
+使用 Like 来进行通配符匹配。
 
 ```sql
 SELECT *
 FROM mytable
-WHERE col LIKE '[^AB]%' -- ����AB��ͷ�������ı�
+WHERE col LIKE '[^AB]%' -- 不以AB开头的任意文本
 ```
 
-��Ҫ����ͨ�����ͨ���λ�ڿ�ͷ��ƥ���ǳ�����
+不要滥用通配符，通配符位于开头处匹配会非常慢。
 
-# �����ֶ�
+# 计算字段
 
-�����ݿ��������������ݵ�ת���͸�ʽ���Ĺ��������ȿͻ����Ͽ�ö࣬����ת���͸�ʽ��������������ٵĻ����Լ�������ͨ������
+在数据库服务器上完成数据的转换和格式化的工作往往比客户端上快得多，并且转换和格式化后的数据量更少的话可以减少网络通信量。
 
-�����ֶ�ͨ����Ҫʹ�� **AS** ��ȡ���������������ʱ���ֶ���Ϊ�������ʽ��
+计算字段通常需要使用 **AS** 来取别名，否则输出的时候字段名为计算表达式。
 
 ```sql
 SELECT col1*col2 AS alias
 FROM mytable
 ```
 
-**Concat()** �������������ֶΡ��������ݿ��ʹ�ÿո��һ��ֵ���Ϊ�п���������ӵĽ�������һЩ����Ҫ�Ŀո�ʹ�� **TRIM()** ����ȥ����β�ո�
+**Concat()** 用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
 
 ```sql
 SELECT Concat(TRIM(col1), ' (', TRIM(col2), ')')
 FROM mytable
 ```
 
-# ����
+# 函数
 
-���� DBMS �ĺ������ǲ���ͬ�ģ���˲�����ֲ��
+各个 DBMS 的函数都是不相同的，因此不可移植。
 
-## �ı�����
+## 文本处理
 
-| ����  | ˵��  |
+| 函数  | 说明  |
 | ------------ | ------------ |
-|  LEFT() RIGHT() |  ��߻����ұߵ��ַ� |
-|  LOWER() UPPER() |  ת��ΪСд���ߴ�д |
-| LTRIM() RTIM() | ȥ����߻����ұߵĿո� |
-| LENGTH() | ���� |
-| SUNDEX() | ת��Ϊ����ֵ |
+|  LEFT() RIGHT() |  左边或者右边的字符 |
+|  LOWER() UPPER() |  转换为小写或者大写 |
+| LTRIM() RTIM() | 去除左边或者右边的空格 |
+| LENGTH() | 长度 |
+| SUNDEX() | 转换为语音值 |
 
-���У�**SOUNDEX()** �ǽ�һ���ַ���ת��Ϊ������������ʾ����ĸ����ģʽ���㷨�����Ǹ��ݷ�����������ĸ�Ƚϡ�
+其中，**SOUNDEX()** 是将一个字符串转换为描述其语音表示的字母数字模式的算法，它是根据发音而不是字母比较。
 
 ```sql
 SELECT *
 FROM mytable
 WHERE SOUNDEX(col1) = SOUNDEX('apple')
 ```
-## ���ں�ʱ�䴦��
+## 日期和时间处理
 
-���ڸ�ʽ��YYYY-MM-DD
+日期格式：YYYY-MM-DD
 
-ʱ���ʽ��HH:MM:SS
+时间格式：HH:MM:SS
 
-|�� �� | ˵ ��|
+|函 数 | 说 明|
 | --- | --- |
-| AddDate() | ����һ�����ڣ��졢�ܵȣ�|
-| AddTime() | ����һ��ʱ�䣨ʱ���ֵȣ�|
-| CurDate() | ���ص�ǰ���� |
-| CurTime() | ���ص�ǰʱ�� |
-|Date() |��������ʱ������ڲ���|
-|DateDiff() |������������֮��|
-|Date_Add() |�߶������������㺯��|
-|Date_Format() |����һ����ʽ�������ڻ�ʱ�䴮|
-|Day()| ����һ�����ڵ���������|
-|DayOfWeek() |����һ�����ڣ����ض�Ӧ�����ڼ�|
-|Hour() |����һ��ʱ���Сʱ����|
-|Minute() |����һ��ʱ��ķ��Ӳ���|
-|Month() |����һ�����ڵ��·ݲ���|
-|Now() |���ص�ǰ���ں�ʱ��|
-|Second() |����һ��ʱ����벿��|
-|Time() |����һ������ʱ���ʱ�䲿��|
-|Year() |����һ�����ڵ���ݲ���|
+| AddDate() | 增加一个日期（天、周等）|
+| AddTime() | 增加一个时间（时、分等）|
+| CurDate() | 返回当前日期 |
+| CurTime() | 返回当前时间 |
+|Date() |返回日期时间的日期部分|
+|DateDiff() |计算两个日期之差|
+|Date_Add() |高度灵活的日期运算函数|
+|Date_Format() |返回一个格式化的日期或时间串|
+|Day()| 返回一个日期的天数部分|
+|DayOfWeek() |对于一个日期，返回对应的星期几|
+|Hour() |返回一个时间的小时部分|
+|Minute() |返回一个时间的分钟部分|
+|Month() |返回一个日期的月份部分|
+|Now() |返回当前日期和时间|
+|Second() |返回一个时间的秒部分|
+|Time() |返回一个日期时间的时间部分|
+|Year() |返回一个日期的年份部分|
 
 ```sql
 mysql> SELECT NOW();
         -> '2017-06-28 14:01:52'
 ```
 
-## ��ֵ����
+## 数值处理
 
-| ���� | ˵�� |
+| 函数 | 说明 |
 | --- | --- |
-| SIN() | ���� |
-|COS() | ���� |
-| TAN() | ���� |
-| ABS() | ����ֵ |
-| SQRT() | ƽ����|
-| MOD() | ����|
-| EXP() | ָ��|
-| PI() | Բ����|
-|RAND() | �����|
+| SIN() | 正弦 |
+|COS() | 余弦 |
+| TAN() | 正切 |
+| ABS() | 绝对值 |
+| SQRT() | 平方根|
+| MOD() | 余数|
+| EXP() | 指数|
+| PI() | 圆周率|
+|RAND() | 随机数|
 
-## ����
+## 汇总
 
-|�� �� |˵ ��|
+|函 数 |说 明|
 | --- | --- |
-|AVG() |����ĳ�е�ƽ��ֵ|
-|COUNT()| ����ĳ�е�����|
-|MAX()| ����ĳ�е����ֵ|
-|MIN()| ����ĳ�е���Сֵ|
-|SUM() |����ĳ��ֵ֮��|
+|AVG() |返回某列的平均值|
+|COUNT()| 返回某列的行数|
+|MAX()| 返回某列的最大值|
+|MIN()| 返回某列的最小值|
+|SUM() |返回某列值之和|
 
-AVG() ����� NULL �С�
+AVG() 会忽略 NULL 行。
 
-DISTINCT �ؼ��ֻ�ֻ���ܲ�ͬ��ֵ��
+DISTINCT 关键字会只汇总不同的值。
 
 ```sql
 SELECT AVG(DISTINCT col1) AS avg_col
 FROM mytable
 ```
 
-# ����
+# 分组
 
-������ǰ���ͬ�����ݷ���ͬһ���С�
+分组就是把相同的数据放在同一组中。
 
-���Զ�ÿ������ʹ�û��ܺ������д�����������ÿ������ƽ��ֵ�ȡ�
+可以对每组数据使用汇总函数进行处理，例如求每组数的平均值等。
 
-�� col ���򲢷������ݣ�
+按 col 排序并分组数据：
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -268,7 +269,7 @@ FROM mytable
 GROUP BY col;
 ```
 
-WHERE �����У�HAVING ���˷��飬�й���Ӧ�����������ˣ�
+WHERE 过滤行，HAVING 过滤分组，行过滤应当先与分组过滤；
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -278,7 +279,7 @@ GROUP BY col
 HAVING COUNT(*) >= 2;
 ```
 
-GROUP BY ��������Ϊ�����ֶΣ��� ORDER BY Ҳ�����Ծۼ��ֶ�����������
+GROUP BY 的排序结果为分组字段，而 ORDER BY 也可以以聚集字段来进行排序。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -287,18 +288,18 @@ GROUP BY col
 ORDER BY num;
 ```
 
-����涨��
+分组规定：
 
-1. GROUP BY �Ӿ������ WHERE �Ӿ�֮��ORDER BY �Ӿ�֮ǰ��
-2. ���˻��ܼ������֮�⣬SELECT ����е�ÿһ�ж������� GROUP BY �Ӿ��и�����
-3. NULL ���лᵥ����Ϊһ�飻
-4. ����� SQL ʵ�ֲ�֧�� GROUP BY �о��пɱ䳤�ȵ��������͡�
+1. GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
+2. 除了汇总计算语句之外，SELECT 语句中的每一列都必须在 GROUP BY 子句中给出；
+3. NULL 的行会单独分为一组；
+4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
-# �Ӳ�ѯ
+# 子查询
 
-�Ӳ�ѯ��ֻ�ܷ���һ���С�
+子查询中只能返回一个列。
 
-���Խ��Ӳ�ѯ�Ľ����Ϊ WHRER ���Ĺ���������
+可以将子查询的结果作为 WHRER 语句的过滤条件：
 
 ```
 SELECT *
@@ -307,7 +308,7 @@ WHERE col1 IN (SELECT col2
                  FROM mytable2);
 ```
 
-����������Լ������ͻ��Ķ����������Ӳ�ѯ����Լ�������ÿ���ͻ�ִ��һ�Σ�
+下面的语句可以检索出客户的订单数量。子查询语句会对检索出的每个客户执行一次：
 
 ```sql
 SELECT cust_name, (SELECT COUNT(*)
@@ -318,17 +319,17 @@ FROM Customers
 ORDER BY cust_name;
 ```
 
-# ����
+# 连接
 
-�����������Ӷ������ʹ�� JOIN �ؼ��֣������������ʹ�� ON��
+连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON。
 
-���ӿ����滻�Ӳ�ѯ�����ұ��Ӳ�ѯ��Ч��һ�����졣
+连接可以替换子查询，并且比子查询的效率一般会更快。
 
-������ AS �������������ֶκͱ���ȡ������������ȡ������Ϊ�˼� SQL ����Լ�������ͬ����
+可以用 AS 给列名、计算字段和表名取别名，给表名取别名是为了简化 SQL 语句以及连接相同表。
 
-## ������
+## 内连接
 
-�������ֳƵ�ֵ���ӣ�ʹ�� INNER JOIN �ؼ��֡�
+内连接又称等值连接，使用 INNER JOIN 关键字。
 
 ```
 select a, b, c
@@ -336,7 +337,7 @@ from A inner join B
 on A.key = B.key
 ```
 
-���Բ���ȷʹ�� INNER JOIN����ʹ����ͨ��ѯ���� WHERE �н���������Ҫ���ӵ����õ�ֵ��������������
+可以不明确使用 INNER JOIN，而使用普通查询并在 WHERE 中将两个表中要连接的列用等值方法连接起来。
 
 ```
 select a, b, c
@@ -344,15 +345,15 @@ from A, B
 where A.key = B.key
 ```
 
-��û��������������·��صѿ�������
+在没有条件语句的情况下返回笛卡尔积。
 
-## ������
+## 自连接
 
-�����ӿ��Կ��������ӵ�һ�֣�ֻ�����ӵı����������ѡ�
+自连接可以看成内连接的一种，只是连接的表是自身而已。
 
-һ��Ա����������Ա��������Ա���������ţ�Ҫ�ҳ��� Jim ����ͬһ���ŵ�����Ա��������
+一张员工表，包含员工姓名和员工所属部门，要找出与 Jim 处在同一部门的所有员工姓名。
 
-**�Ӳ�ѯ�汾**
+**子查询版本**
 
 ```
 select name
@@ -363,7 +364,7 @@ where department = (
       where name = "Jim");
 ```
 
-**�����Ӱ汾**
+**自连接版本**
 
 ```
 select name
@@ -372,24 +373,24 @@ where e1.department = e2.department
       and e1.name = "Jim";
 ```
 
-����һ����Ӳ�ѯ��Ч�ʸߡ�
+连接一般比子查询的效率高。
 
-## ��Ȼ����
+## 自然连接
 
-��Ȼ�����ǰ�ͬ����ͨ����ֵ�������������ģ�ͬ���п����ж����
+自然连接是把同名列通过等值测试连接起来的，同名列可以有多个。
 
-�����Ӻ���Ȼ���ӵ������������ṩ���ӵ��У�����Ȼ�����Զ���������ͬ���У�������������Ȼ���ӡ�
+内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列；内连接属于自然连接。
 
 ```
 select *
 from employee natural join department;
 ```
 
-## ������
+## 外连接
 
-�����ӱ�����û�й�������Щ�С���Ϊ�������ӣ����������Լ�ȫ�����ӣ��������Ӿ��Ǳ�������������С�
+外连接保留了没有关联的那些行。分为左外连接，右外连接以及全外连接，左外连接就是保留左表的所有行。
 
-�������й˿͵Ķ�����Ϣ��������û�ж�����Ϣ�Ĺ˿͡�
+检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```
 select Customers.cust_id, Orders.order_num
@@ -397,7 +398,7 @@ select Customers.cust_id, Orders.order_num
    on Customers.cust_id = Orders.curt_id
 ```
 
-�����Ҫͳ�ƹ˿͵Ķ�������ʹ�þۼ�������
+如果需要统计顾客的订单数，使用聚集函数。
 
 ```
 select Customers.cust_id,
@@ -407,13 +408,13 @@ on Customers.cust_id = Orders.curt_id
 group by Customers.cust_id
 ```
 
-# ��ϲ�ѯ
+# 组合查询
 
-ʹ�� **UNION** ������������ѯ��ÿ����ѯ���������ͬ���С�����ʽ���߾ۼ�������
+使用 **UNION** 来连接两个查询，每个查询必须包含相同的列、表达式或者聚集函数。
 
-Ĭ�ϻ�ȥ����ͬ�У������Ҫ������ͬ�У�ʹ�� UNION ALL ��
+默认会去除相同行，如果需要保留相同行，使用 UNION ALL 。
 
-ֻ�ܰ���һ�� ORDER BY �Ӿ䣬���ұ���λ���������
+只能包含一个 ORDER BY 子句，并且必须位于语句的最后。
 
 ```sql
 SELECT col
@@ -425,16 +426,16 @@ FROM mytable
 WHERE col =2;
 ```
 
-# ����
+# 插入
 
-**��ͨ����**
+**普通插入**
 
 ```sql
 INSERT INTO mytable(col1, col2)
 VALUES(val1, val2);
 ```
 
-**�����������������**
+**插入检索出来的数据**
 
 ```sql
 INSERT INTO mytable1(col1, col2)
@@ -442,14 +443,14 @@ SELECT col1, col2
 FROM mytable2;
 ```
 
-**��һ���������ݸ��Ƶ�һ���±�**
+**将一个表的内容复制到一个新表**
 
 ```sql
 CREATE TABLE newtable AS
 SELECT * FROM mytable;
 ```
 
-# ����
+# 更新
 
 ```sql
 UPDATE mytable
@@ -457,18 +458,18 @@ SET col = val
 WHERE id = 1;
 ```
 
-# ɾ��
+# 删除
 
 ```sql
 DELETE FROM mytable
 WHERE id = 1;
 ```
 
-**TRUNCATE TABLE** ������ձ���Ҳ����ɾ�������С�
+**TRUNCATE TABLE** 可以清空表，也就是删除所有行。
 
-ʹ�ø��º�ɾ������ʱһ��Ҫ�� WHERE �Ӿ䣬��Ȼ������ű������ݶ��ƻ����������� SELECT �����в��ԣ���ֹ����ɾ����
+使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
 
-# ������
+# 创建表
 
 ```sql
 CREATE TABLE mytable (
@@ -479,38 +480,38 @@ CREATE TABLE mytable (
   PRIMARY KEY (`id`));
 ```
 
-# �޸ı�
+# 修改表
 
-**������**
+**添加列**
 
 ```sql
 ALTER TABLE mytable
 ADD col CHAR(20);
 ```
 
-**ɾ����**
+**删除列**
 
 ```sql
 ALTER TABLE mytable
 DROP COLUMN col;
 ```
 
-**ɾ����**
+**删除表**
 
 ```sql
 DROP TABLE mytable;
 ```
 
-# ��ͼ
+# 视图
 
-��ͼ������ı����������������ݣ�Ҳ�Ͳ��ܶ��������������������ͼ�Ĳ����Ͷ���ͨ���Ĳ���һ����
+视图是虚拟的表，本身不包含数据，也就不能对其进行索引操作。对视图的操作和对普通表的操作一样。
 
-��ͼ�������ºô���
+视图具有如下好处：
 
-1. �򻯸��ӵ� SQL ���������縴�ӵ����᣻
-2. ֻʹ��ʵ�ʱ���һ�������ݣ�
-3. ͨ��ֻ���û�������ͼ��Ȩ�ޣ���֤���ݵİ�ȫ�ԣ�
-4. �������ݸ�ʽ�ͱ�ʾ��
+1. 简化复杂的 SQL 操作，比如复杂的联结；
+2. 只使用实际表的一部分数据；
+3. 通过只给用户访问视图的权限，保证数据的安全性；
+4. 更改数据格式和表示。
 
 ```sql
 CREATE VIEW myview AS
@@ -519,25 +520,25 @@ FROM mytable
 WHERE col5 = val;
 ```
 
-# �洢����
+# 存储过程
 
-�洢���̿��Կ����Ƕ�һϵ�� SQL ��������������
+存储过程可以看成是对一系列 SQL 操作的批处理；
 
-**ʹ�ô洢���̵ĺô�**
+**使用存储过程的好处**
 
-1. ��ʵ�ַ�װ���˴洢�����У������򵥣�Ҳ��֤�˰�ȫ�ԣ�
-2. ���Ը��ô��룻
-3. ������Ԥ�ȱ��룬��˾��кܸߵ����ܡ�
+1. 把实现封装在了存储过程中，不仅简单，也保证了安全性；
+2. 可以复用代码；
+3. 由于是预先编译，因此具有很高的性能。
 
-**�����洢����**
+**创建存储过程**
 
-�������д����洢������Ҫ�Զ���ָ�������Ϊ���������� ; Ϊ�����������洢������Ҳ�����˷ֺţ���˻������ⲿ�ַֺŵ����ǽ�����������﷨����
+命令行中创建存储过程需要自定义分隔符，因为命令行是以 ; 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。
 
-���� in��out �� inout ���ֲ�����
+包含 in、out 和 inout 三种参数。
 
-��������ֵ����Ҫ�� select into ��䡣
+给变量赋值都需要用 select into 语句。
 
-ÿ��ֻ�ܸ�һ��������ֵ����֧�ּ��ϵĲ�����
+每次只能给一个变量赋值，不支持集合的操作。
 
 ```sql
 delimiter //
@@ -558,18 +559,18 @@ call myprocedure(@ret);
 select @ret;
 ```
 
-# �α�
+# 游标
 
-�ڴ洢������ʹ���α���Զ�һ������������ƶ�������
+在存储过程中使用游标可以对一个结果集进行移动遍历。
 
-�α���Ҫ���ڽ���ʽӦ�ã������û���Ҫ�����ݼ��е������н���������޸ġ�
+游标主要用于交互式应用，其中用户需要对数据集中的任意行进行浏览和修改。
 
-**ʹ���α���ĸ����裺**
+**使用游标的四个步骤：**
 
-1. �����α꣬�������û��ʵ�ʼ��������ݣ�
-2. ���αꣻ
-3. ȡ�����ݣ�
-4. �ر��αꣻ
+1. 声明游标，这个过程没有实际检索出数据；
+2. 打开游标；
+3. 取出数据；
+4. 关闭游标；
 
 ```sql
 delimiter //
@@ -579,7 +580,7 @@ create procedure myprocedure(out ret int)
 
         declare mycursor cursor for
         select col1 from mytable;
-        # ������һ��continue handler���� sqlstate '02000' �����������ʱ����ִ�� set done = 1
+        # 定义了一个continue handler，当 sqlstate '02000' 这个条件出现时，会执行 set done = 1
         declare continue handler for sqlstate '02000' set done = 1;
 
         open mycursor;
@@ -594,43 +595,43 @@ create procedure myprocedure(out ret int)
  delimiter ;
 ```
 
-# ������
+# 触发器
 
-����������ĳ����ִ���������ʱ���Զ�ִ�У�DELETE��INSERT��UPDATE
+触发器会在某个表执行以下语句时而自动执行：DELETE、INSERT、UPDATE
 
-����������ָ�������ִ��֮ǰ����֮���Զ�ִ�У�֮ǰִ��ʹ�� BEFORE �ؼ��֣�֮��ִ��ʹ�� AFTER �ؼ��֡�BEFORE ����������֤�;�����
+触发器必须指定在语句执行之前还是之后自动执行，之前执行使用 BEFORE 关键字，之后执行使用 AFTER 关键字。BEFORE 用于数据验证和净化。
 
-INSERT ����������һ����Ϊ NEW ���������
+INSERT 触发器包含一个名为 NEW 的虚拟表。
 
 ```sql
 CREATE TRIGGER mytrigger AFTER INSERT ON mytable
 FOR EACH ROW SELECT NEW.col;
 ```
 
-DELETE ����������һ����Ϊ OLD ���������������ֻ���ġ�
+DELETE 触发器包含一个名为 OLD 的虚拟表，并且是只读的。
 
-UPDATE ����������һ����Ϊ NEW ��һ����Ϊ OLD ������������� NEW �ǿ��Ա��޸ĵأ��� OLD ��ֻ���ġ�
+UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中 NEW 是可以被修改地，而 OLD 是只读的。
 
-����ʹ�ô�������������Ƹ��٣����޸ļ�¼������һ�ű��С�
+可以使用触发器来进行审计跟踪，把修改记录到另外一张表中。
 
-MySQL �������ڴ�������ʹ�� CALL ��� ��Ҳ���ǲ��ܵ��ô洢���̡�
+MySQL 不允许在触发器中使用 CALL 语句 ，也就是不能调用存储过程。
 
-# ������
+# 事务处理
 
-**��������**
+**基本术语**
 
-1. ����transaction��ָһ�� SQL ��䣻
-2. ���ˣ�rollback��ָ����ָ�� SQL ���Ĺ��̣�
-3. �ύ��commit��ָ��δ�洢�� SQL �����д�����ݿ����
-4. �����㣨savepoint��ָ�����������õ���ʱռλ����placeholder��������Զ����������ˣ������������������ͬ����
+1. 事务（transaction）指一组 SQL 语句；
+2. 回退（rollback）指撤销指定 SQL 语句的过程；
+3. 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
+4. 保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退（与回退整个事务处理不同）。
 
-���ܻ��� SELECT ��䣬���� SELECT ���Ҳû���壻Ҳ���ܻ��� CRETE �� DROP ��䡣
+不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CRETE 和 DROP 语句。
 
-MySQL �������ύĬ������ʽ�ύ��Ҳ����ÿִ��һ�����ͻ��ύһ�Ρ������� START TRANSACTION ���ʱ����ر���ʽ�ύ���� COMMIT �� ROLLBACK ���ִ�к�������Զ��رգ����»ָ���ʽ�ύ��
+MySQL 的事务提交默认是隐式提交，也就是每执行一条语句就会提交一次。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
-ͨ������ autocommit Ϊ 0 ����ȡ���Զ��ύ��ֱ�� autocommit ������Ϊ 1 �Ż��ύ��autocommit ��������ÿ�����Ӷ�������Է������ġ�
+通过设置 autocommit 为 0 可以取消自动提交，直到 autocommit 被设置为 1 才会提交；autocommit 标记是针对每个连接而不是针对服务器的。
 
-���û�����ñ����㣬ROLLBACK ����˵� START TRANSACTION ��䴦����������˱����㣬������ ROLLBACK ��ָ���ñ����㣬�����˵��ñ����㡣
+如果没有设置保留点，ROLLBACK 会回退到 START TRANSACTION 语句处；如果设置了保留点，并且在 ROLLBACK 中指定该保留点，则会回退到该保留点。
 
 ```sql
 START TRANSACTION
@@ -642,15 +643,15 @@ ROLLBACK TO delete1
 COMMIT
 ```
 
-# �ַ���
+# 字符集
 
-**��������**
+**基本术语**
 
-1. �ַ���Ϊ��ĸ�ͷ��ŵļ��ϣ�
-2. ����Ϊĳ���ַ�����Ա���ڲ���ʾ��
-3. У���ַ�ָ����αȽϣ���Ҫ��������ͷ��顣
+1. 字符集为字母和符号的集合；
+2. 编码为某个字符集成员的内部表示；
+3. 校对字符指定如何比较，主要用于排序和分组。
 
-���˸���ָ���ַ�����У���⣬Ҳ���Ը���ָ����
+除了给表指定字符集和校对外，也可以给列指定：
 
 ```sql
 CREATE TABLE mytable
@@ -658,7 +659,7 @@ CREATE TABLE mytable
 DEFAULT CHARACTER SET hebrew COLLATE hebrew_general_ci;
 ```
 
-���������򡢷���ʱָ��У�ԣ�
+可以在排序、分组时指定校对：
 
 ```sql
 SELECT *
@@ -666,67 +667,67 @@ FROM mytable
 ORDER BY col COLLATE latin1_general_ci;
 ```
 
-# Ȩ�޹���
+# 权限管理
 
-MySQL ���˻���Ϣ������ mysql ������ݿ��С�
+MySQL 的账户信息保存在 mysql 这个数据库中。
 
 ```sql
 USE mysql;
 SELECT user FROM user;
 ```
 
-**�����˻�**
+**创建账户**
 
 ```sql
 CREATE USER myuser IDENTIFIED BY 'mypassword';
 ```
 
-�´������˻�û���κ�Ȩ�ޡ�
+新创建的账户没有任何权限。
 
-**�޸��˻���**
+**修改账户名**
 
 ```sql
 RENAME myuser TO newuser;
 ```
 
-**ɾ���˻�**
+**删除账户**
 
 ```sql
 DROP USER myuser;
 ```
 
-**�鿴Ȩ��**
+**查看权限**
 
 ```sql
 SHOW GRANTS FOR myuser;
 ```
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/c73aa08e-a987-43c9-92be-adea4a884c25.png)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png)
 
-�˻��� username@host ����ʽ���壬username@% ʹ�õ���Ĭ����������
+账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
-**����Ȩ��**
+**授予权限**
 
 ```sql
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-**ɾ��Ȩ��**
+**删除权限**
 
 ```sql
 REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 ```
 
-GRANT �� REVOKE ���ڼ�������Ͽ��Ʒ���Ȩ�ޣ�
+GRANT 和 REVOKE 可在几个层次上控制访问权限：
 
-- ������������ʹ�� GRANT ALL�� REVOKE ALL��
-- �������ݿ⣬ʹ�� ON database.\*��
-- �ض��ı���ʹ�� ON database.table��
-- �ض����У�
-- �ض��Ĵ洢���̡�
+- 整个服务器，使用 GRANT ALL和 REVOKE ALL；
+- 整个数据库，使用 ON database.\*；
+- 特定的表，使用 ON database.table；
+- 特定的列；
+- 特定的存储过程。
 
-**��������**
+**更改密码**
 
-����ʹ�� Password() ����
+必须使用 Password() 函数
 
 ```sql
 SET PASSWROD FOR myuser = Password('newpassword');
