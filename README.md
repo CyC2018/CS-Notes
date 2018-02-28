@@ -1,11 +1,3 @@
-<!-- <h1 align="center">IT Interview Notes</h1>
-<br><br>
-
-<div align="center">
-    <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="300"/>
-</div>
-
-<br><br> -->
 <br>
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="250"/>
 <br>
@@ -14,20 +6,19 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》
+整理自《算法 第四版》，主要整理面试常问的排序和查找算法。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-对题目做了一个分类，并对每种题型的解题思想做了总结。
+做了一个分类，并对每种题型的解题思想做了总结。
 
-已经整理了 300+ 的题目，基本涵盖所有经典题目，持续整理中。
+已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
 目录按《剑指 Offer 第二版》编排，在牛客网的在线编程中出现的题目都已经 AC。
 
-很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解，看完 Leetcode 题解再看剑指 Offer 会觉得很容易。
-
+很多题目都在 Leetcode 中出现过，所以一些解题思路就不在这里重复写了。想要看解题思路的话，可以看《剑指 Offer》原书，或者先看 Leetcode 题解。
 
 # 网络
 
@@ -43,7 +34,7 @@
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
-整理自《现代操作系统》
+整理自《现代操作系统》和《计算机操作系统》
 
 > [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
 
@@ -53,27 +44,27 @@
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
-整理自《Head First 设计模式》，这本书内容废话太多，笔记内容提取了重点部分。
+整理自《Head First 设计模式》
 
 > [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
 
-一些面向对象思想和原则
+一些面向对象思想和原则。
 
 # 数据库
 
 > [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
 
-整理自《SQL 必知必会》，原书内容不多，笔记内容会更简洁。
+整理自《SQL 必知必会》
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-整理自《高性能 MySQL》，重点整理。
+整理自《高性能 MySQL》，只是简单整理了一些重点内容。
 
 # Java
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
-整理自《深入理解 Java 虚拟机》
+整理自《深入理解 Java 虚拟机》，主要涉及内存模型、垃圾回收以及类加载机制。
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
