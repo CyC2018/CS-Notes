@@ -2002,8 +2002,6 @@ public int wiggleMaxLength(int[] nums) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//1dc481cc-99f6-4fa8-8f68-fbd563995bf5.png)
-
 对于长度为 N 的序列 S<sub>1</sub> 和 长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
 
 与最长递增子序列相比，最长公共子序列有以下不同点：
