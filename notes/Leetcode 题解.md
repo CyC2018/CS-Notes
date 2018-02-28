@@ -1771,6 +1771,7 @@ public int minPathSum(int[][] grid) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div>
 
+
 dp[N] 即为所求。
 
 考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2] 即可，使得原来的 O(n) 空间复杂度优化为 O(1) 复杂度。
@@ -1800,6 +1801,7 @@ public int climbStairs(int n) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div>
 
+
 **强盗抢劫**
 
 [Leetcode : 198. House Robber (Easy)](https://leetcode.com/problems/house-robber/description/)
@@ -1809,6 +1811,7 @@ public int climbStairs(int n) {
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 和 i - 3 的住户，所以
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div>
+
 
 O(n) 空间复杂度实现方法：
 
@@ -1890,6 +1893,7 @@ private int rob(int[] nums, int s, int e) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div>
 
+
 dp[N] 即为所求。
 
 和上楼梯问题一样，dp[i] 只与 dp[i-1] 和 dp[i-2] 有关，因此也可以只用两个变量来存储 dp[i-1] 和 dp[i-2]。
@@ -1905,6 +1909,7 @@ dp[N] 即为所求。
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，因此需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div>
+
 
 对于一个长度为 N 的序列，最长子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，即 max{ dp[i] | 1 <= i <= N} 即为所求。
 
@@ -2047,6 +2052,7 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div>
 
+
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
     int[][] dp = new int[N][W];
@@ -2070,6 +2076,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅由前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div>
+
 
 因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w] 防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
