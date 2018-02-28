@@ -72,7 +72,7 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
-重点整理了一些常见考点。
+整理了一些常见考点。
 
 # 编码实践
 
