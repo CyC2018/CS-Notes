@@ -1,5 +1,5 @@
 <br>
-<img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="275"/>
+<img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/>
 <br>
 
 # 数据结构与算法
