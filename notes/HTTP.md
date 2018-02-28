@@ -143,47 +143,49 @@ TRACE Ò»°ã²»»áÊ¹ÓÃ£¬²¢ÇÒËüÈÝÒ×ÊÜµ½ XST ¹¥»÷£¨Cross-Site Tracing£¬¿çÕ¾×·×Ù£©£¬Òò´
 
 ## 2XX ³É¹¦
 
-**200 OK**
+- **200 OK**
 
-**204 No Content**£ºÇëÇóÒÑ¾­³É¹¦´¦Àí£¬µ«ÊÇ·µ»ØµÄÏìÓ¦±¨ÎÄ²»°üº¬ÊµÌåµÄÖ÷Ìå²¿·Ö¡£Ò»°ãÔÚÖ»ÐèÒª´Ó¿Í»§¶ËÍù·þÎñÆ÷·¢ËÍÐÅÏ¢£¬¶ø²»ÐèÒª·µ»ØÊý¾ÝÊ±Ê¹ÓÃ¡£
+- **204 No Content**£ºÇëÇóÒÑ¾­³É¹¦´¦Àí£¬µ«ÊÇ·µ»ØµÄÏìÓ¦±¨ÎÄ²»°üº¬ÊµÌåµÄÖ÷Ìå²¿·Ö¡£Ò»°ãÔÚÖ»ÐèÒª´Ó¿Í»§¶ËÍù·þÎñÆ÷·¢ËÍÐÅÏ¢£¬¶ø²»ÐèÒª·µ»ØÊý¾ÝÊ±Ê¹ÓÃ¡£
 
-**206 Partial Content**
+- **206 Partial Content**
 
 ## 3XX ÖØ¶¨Ïò
 
-**301 Moved Permanently**£ºÓÀ¾ÃÐÔÖØ¶¨Ïò
+- **301 Moved Permanently**£ºÓÀ¾ÃÐÔÖØ¶¨Ïò
 
-**302 Found**£ºÁÙÊ±ÐÔÖØ¶¨Ïò
+- **302 Found**£ºÁÙÊ±ÐÔÖØ¶¨Ïò
 
-**303 See Other**
+- **303 See Other**
 
-×¢£ºËäÈ» HTTP Ð­Òé¹æ¶¨ 301¡¢302 ×´Ì¬ÏÂÖØ¶¨ÏòÊ±²»ÔÊÐí°Ñ POST ·½·¨¸Ä³É GET ·½·¨£¬µ«ÊÇ´ó¶àÊýä¯ÀÀÆ÷¶¼»á ÔÚ 301¡¢302 ºÍ 303 ×´Ì¬ÏÂµÄÖØ¶¨Ïò°Ñ POST ·½·¨¸Ä³É GET ·½·¨¡£
+- ×¢£ºËäÈ» HTTP Ð­Òé¹æ¶¨ 301¡¢302 ×´Ì¬ÏÂÖØ¶¨ÏòÊ±²»ÔÊÐí°Ñ POST ·½·¨¸Ä³É GET ·½·¨£¬µ«ÊÇ´ó¶àÊýä¯ÀÀÆ÷¶¼»á ÔÚ 301¡¢302 ºÍ 303 ×´Ì¬ÏÂµÄÖØ¶¨Ïò°Ñ POST ·½·¨¸Ä³É GET ·½·¨¡£
 
-**304 Not Modified**£ºÈç¹ûÇëÇó±¨ÎÄÊ×²¿°üº¬Ò»Ð©Ìõ¼þ£¬ÀýÈç£ºIf-Match£¬If-ModifiedSince£¬If-None-Match£¬If-Range£¬If-Unmodified-Since£¬µ«ÊÇ²»Âú×ãÌõ¼þ£¬Ôò·þÎñÆ÷»á·µ»Ø 304 ×´Ì¬Âë¡£
+- **304 Not Modified**£ºÈç¹ûÇëÇó±¨ÎÄÊ×²¿°üº¬Ò»Ð©Ìõ¼þ£¬ÀýÈç£ºIf-Match£¬If-ModifiedSince£¬If-None-Match£¬If-Range£¬If-Unmodified-Since£¬µ«ÊÇ²»Âú×ãÌõ¼þ£¬Ôò·þÎñÆ÷»á·µ»Ø 304 ×´Ì¬Âë¡£
 
-**307 Temporary Redirect**£ºÁÙÊ±ÖØ¶¨Ïò£¬Óë 302 µÄº¬ÒåÀàËÆ£¬µ«ÊÇ 307 ÒªÇóä¯ÀÀÆ÷²»»á°ÑÖØ¶¨ÏòÇëÇóµÄ POST ·½·¨¸Ä³É GET ·½·¨¡£
+- **307 Temporary Redirect**£ºÁÙÊ±ÖØ¶¨Ïò£¬Óë 302 µÄº¬ÒåÀàËÆ£¬µ«ÊÇ 307 ÒªÇóä¯ÀÀÆ÷²»»á°ÑÖØ¶¨ÏòÇëÇóµÄ POST ·½·¨¸Ä³É GET ·½·¨¡£
 
 ## 4XX ¿Í»§¶Ë´íÎó
 
-**400 Bad Request**£ºÇëÇó±¨ÎÄÖÐ´æÔÚÓï·¨´íÎó
+- **400 Bad Request**£ºÇëÇó±¨ÎÄÖÐ´æÔÚÓï·¨´íÎó
 
-**401 Unauthorized**£º¸Ã×´Ì¬Âë±íÊ¾·¢ËÍµÄÇëÇóÐèÒªÓÐÍ¨¹ý HTTP ÈÏÖ¤£¨BASIC ÈÏÖ¤¡¢DIGEST ÈÏÖ¤£©µÄÈÏÖ¤ÐÅÏ¢¡£Èç¹ûÖ®Ç°ÒÑ½øÐÐ¹ýÒ»´ÎÇëÇó£¬Ôò±íÊ¾ÓÃ»§ÈÏÖ¤Ê§°Ü¡£
+- **401 Unauthorized**£º¸Ã×´Ì¬Âë±íÊ¾·¢ËÍµÄÇëÇóÐèÒªÓÐÍ¨¹ý HTTP ÈÏÖ¤£¨BASIC ÈÏÖ¤¡¢DIGEST ÈÏÖ¤£©µÄÈÏÖ¤ÐÅÏ¢¡£Èç¹ûÖ®Ç°ÒÑ½øÐÐ¹ýÒ»´ÎÇëÇó£¬Ôò±íÊ¾ÓÃ»§ÈÏÖ¤Ê§°Ü¡£
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics/b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg)
 
-**403 Forbidden**£ºÇëÇó±»¾Ü¾ø£¬·þÎñÆ÷¶ËÃ»ÓÐ±ØÒª¸ø³ö¾Ü¾øµÄÏêÏ¸ÀíÓÉ¡£
+- **403 Forbidden**£ºÇëÇó±»¾Ü¾ø£¬·þÎñÆ÷¶ËÃ»ÓÐ±ØÒª¸ø³ö¾Ü¾øµÄÏêÏ¸ÀíÓÉ¡£
 
-**404 Not Found**
+- **404 Not Found**
 
 ## 5XX ·þÎñÆ÷´íÎó
 
-**500 Internal Server Error**£º·þÎñÆ÷ÕýÔÚÖ´ÐÐÇëÇóÊ±·¢Éú´íÎó
+- **500 Internal Server Error**£º·þÎñÆ÷ÕýÔÚÖ´ÐÐÇëÇóÊ±·¢Éú´íÎó
 
-**503 Service Unavilable**£º¸Ã×´Ì¬Âë±íÃ÷·þÎñÆ÷ÔÝÊ±´¦ÓÚ³¬¸ºÔØ»òÕýÔÚ½øÐÐÍ£»úÎ¬»¤£¬ÏÖÔÚÎÞ·¨´¦ÀíÇëÇó¡£
+- **503 Service Unavilable**£º¸Ã×´Ì¬Âë±íÃ÷·þÎñÆ÷ÔÝÊ±´¦ÓÚ³¬¸ºÔØ»òÕýÔÚ½øÐÐÍ£»úÎ¬»¤£¬ÏÖÔÚÎÞ·¨´¦ÀíÇëÇó¡£
 
 # HTTP Ê×²¿
 
-ÓÐ 4 ÖÖÀàÐÍµÄÊ×²¿×Ö¶Î£ºÍ¨ÓÃÊ×²¿×Ö¶Î¡¢ÇëÇóÊ×²¿×Ö¶Î¡¢ÏìÓ¦Ê×²¿×Ö¶ÎºÍÊµÌåÊ×²¿×Ö¶Î¡£¸÷ÖÖÊ×²¿×Ö¶Î¼°Æäº¬ÒåÈçÏÂ£¨²»ÐèÒªÈ«¼Ç£¬½ö¹©²éÔÄ£©£º
+ÓÐ 4 ÖÖÀàÐÍµÄÊ×²¿×Ö¶Î£ºÍ¨ÓÃÊ×²¿×Ö¶Î¡¢ÇëÇóÊ×²¿×Ö¶Î¡¢ÏìÓ¦Ê×²¿×Ö¶ÎºÍÊµÌåÊ×²¿×Ö¶Î¡£
+
+¸÷ÖÖÊ×²¿×Ö¶Î¼°Æäº¬ÒåÈçÏÂ£¨²»ÐèÒªÈ«¼Ç£¬½ö¹©²éÔÄ£©£º
 
 ## Í¨ÓÃÊ×²¿×Ö¶Î
 
