@@ -19,7 +19,7 @@
     * [1. String, StringBuffer and StringBuilder](#1-string,-stringbuffer-and-stringbuilder)
     * [2. String 不可变的原因](#2-string-不可变的原因)
     * [3. String.intern()](#3-stringintern)
-    * [基本类型与运算](#基本类型与运算)
+* [基本类型与运算](#基本类型与运算)
     * [1. 包装类型](#1-包装类型)
     * [2. switch](#2-switch)
 * [反射](#反射)
@@ -314,7 +314,7 @@ String 不可变性天生具备线程安全，可以在多个线程中使用。
 
 更详细的内容：[揭开 String.intern() 那神秘的面纱](https://www.jianshu.com/p/95f516cb75ef)
 
-## 基本类型与运算
+# 基本类型与运算
 
 ## 1. 包装类型
 

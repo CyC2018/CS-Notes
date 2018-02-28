@@ -70,6 +70,10 @@
 
 File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 以及 NIO
 
+> [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
+
+一些引用的英文就不翻译了，各位就当培养英语阅读能力吧~
+
 # 编码实践
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
