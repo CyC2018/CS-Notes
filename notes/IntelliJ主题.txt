@@ -1,0 +1,2 @@
+下载地址： http://color-themes.com/?view=index
+之后通过Import Setting，然后重启一下IDE就可以使用了
