@@ -1,1 +1,0 @@
-Editor->Appearance->Show line numbers
