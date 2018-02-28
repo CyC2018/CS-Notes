@@ -6,7 +6,7 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》，主要整理面试常问的排序和查找算法。
+整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
@@ -58,13 +58,13 @@
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-整理自《高性能 MySQL》，只是简单整理了一些重点内容。
+整理自《高性能 MySQL》，整理了一些重点内容。
 
 # Java
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
-整理自《深入理解 Java 虚拟机》，主要涉及内存模型、垃圾回收以及类加载机制。
+整理自《深入理解 Java 虚拟机》，主要整理了内存模型、垃圾回收以及类加载机制。
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
