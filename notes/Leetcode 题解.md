@@ -2000,13 +2000,7 @@ public int wiggleMaxLength(int[] nums) {
 
 综上，最长公共子系列的状态转移方程为：
 
-$$
-dp[i][j]=\left\{
-\begin{array}{rcl}
-dp[i-1][j-1]  &&  { S1_i==S2_j }\\
-max(dp[i-1][j], dp[i][j-1])  &&{ S1_i <> S2_j }
-\end{array} \right.
-$$
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//1dc481cc-99f6-4fa8-8f68-fbd563995bf5.png)
 
