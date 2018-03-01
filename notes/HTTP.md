@@ -63,11 +63,11 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 **请求报文**
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//9dbb5fc2-936b-4c6d-b3a7-9617aae45080.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//22b39f77-ac47-4978-91ed-84aaf457644c.jpg)
 
 **响应报文**
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//c634b5ed-a14b-4302-b40e-3ee387dd3c8a.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//00d8d345-cd4a-48af-919e-209d2788eca7.jpg)
 
 # HTTP 方法
 
