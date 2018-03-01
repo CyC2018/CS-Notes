@@ -120,13 +120,13 @@ GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 U
 
 TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪），因此更不会去使用它。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//ca711108-e937-4d7d-99aa-61b325c61f1a.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg)
 
 ## CONNECT：要求用隧道协议连接代理
 
 主要使用 SSL（Secure Sokets Layer，安全套接字）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//d8355d56-aa2b-4452-8001-8475cc095af1.jpg)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg)
 
 # HTTP 状态码
 
@@ -322,7 +322,7 @@ Expires 字段可以用于告知缓存服务器该资源什么时候会过期。
 
 例如，上传多个表单时可以使用如下方式：
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//decb0936-e83c-4a55-840a-fe8aa101ac61.png)
+![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//2279cc60-9714-4e0e-aac9-4c348e0c2165.png)
 
 ## 范围请求
 
