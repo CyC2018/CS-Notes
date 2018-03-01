@@ -1410,17 +1410,15 @@ public int NumberOf1Between1AndN_Solution(int n) {
 
 ```java
 int digitAtIndex(int index) {
-    if (index >= 0) {
-        int digit = 1;
-        while (true) {
-            int amount = getAmountOfDigit(digit);
-            int totalAmount = amount * digit;
-            if (index < totalAmount) return digitAtIndex(index, digit);
-            index -= totalAmount;
-            digit++;
-        }
+    if (index < 0) return -1;
+    int digit = 1;
+    while (true) {
+        int amount = getAmountOfDigit(digit);
+        int totalAmount = amount * digit;
+        if (index < totalAmount) return digitAtIndex(index, digit);
+        index -= totalAmount;
+        digit++;
     }
-    return -1;
 }
 
 private int getAmountOfDigit(int digit) {
@@ -1437,6 +1435,11 @@ private int digitAtIndex(int index, int digits) {
 private int beginNumber(int digits) {
     if (digits == 1) return 0;
     return (int) Math.pow(10, digits - 1);
+}
+
+public static void main(String[] args) {
+    Solution solution = new Solution();
+    System.out.println(solution.digitAtIndex(1001));
 }
 ```
 
