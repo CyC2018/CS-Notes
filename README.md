@@ -2,20 +2,6 @@
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/>
 <br>
 
-# 数据结构与算法 :pencil2:
-
-> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
-
-整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
-
-> [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
-
-《剑指 Offer 第二版》的最优解，在牛客网在线编程中出现的题目都已 AC。
-
-> [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
-
-对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
-
 # 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
@@ -35,6 +21,20 @@
 > [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
 
 整理自《鸟哥的 Linux 私房菜》
+
+# 数据结构与算法 :pencil2:
+
+> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+
+整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
+
+> [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
+
+《剑指 Offer 第二版》的最优解，在牛客网在线编程中出现的题目都已 AC。
+
+> [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
+
+对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
 # 面向对象 :couple:
 
