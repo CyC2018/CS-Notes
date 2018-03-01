@@ -53,6 +53,7 @@
     * [41.2 字符流中第一个不重复的字符](#412-字符流中第一个不重复的字符)
     * [42. 连续子数组的最大和](#42-连续子数组的最大和)
     * [43. 从 1 到 n 整数中 1 出现的次数](#43-从-1-到-n-整数中-1-出现的次数)
+    * [44. 数字序列中的某一位数字](#44-数字序列中的某一位数字)
     * [45. 把数组排成最小的数](#45-把数组排成最小的数)
     * [49. 丑数](#49-丑数)
     * [50. 第一个只出现一次的字符位置](#50-第一个只出现一次的字符位置)
@@ -1398,6 +1399,44 @@ public int NumberOf1Between1AndN_Solution(int n) {
         cnt += (a + 8) / 10 * m + (a % 10 == 1 ? b + 1 : 0);
     }
     return cnt;
+}
+```
+
+## 44. 数字序列中的某一位数字
+
+**题目描述**
+
+数字以 0123456789101112131415... 的格式序列化到一个字符串中，求这个字符串的第 index 位。
+
+```java
+int digitAtIndex(int index) {
+    if (index >= 0) {
+        int digit = 1;
+        while (true) {
+            int amount = getAmountOfDigit(digit);
+            int totalAmount = amount * digit;
+            if (index < totalAmount) return digitAtIndex(index, digit);
+            index -= totalAmount;
+            digit++;
+        }
+    }
+    return -1;
+}
+
+private int getAmountOfDigit(int digit) {
+    if (digit == 1) return 10;
+    return (int) Math.pow(10, digit - 1);
+}
+
+private int digitAtIndex(int index, int digits) {
+    int number = beginNumber(digits) + index / digits;
+    int remain = index % digits;
+    return (number + "").charAt(remain) - '0';
+}
+
+private int beginNumber(int digits) {
+    if (digits == 1) return 0;
+    return (int) Math.pow(10, digits - 1);
 }
 ```
 
