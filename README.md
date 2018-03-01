@@ -2,7 +2,7 @@
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/>
 <br>
 
-# 数据结构与算法
+# 数据结构与算法 :pencil2:
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
@@ -16,7 +16,7 @@
 
 对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
-# 网络
+# 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
@@ -26,7 +26,7 @@
 
 整理自《图解 HTTP》
 
-# 操作系统
+# 操作系统 :computer:
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
@@ -36,7 +36,7 @@
 
 整理自《鸟哥的 Linux 私房菜》
 
-# 面向对象
+# 面向对象 :couple:
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
@@ -46,7 +46,7 @@
 
 一些面向对象思想和原则。
 
-# 数据库
+# 数据库 :floppy_disk:
 
 > [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
 
@@ -56,7 +56,7 @@
 
 整理自《高性能 MySQL》，整理了一些重点内容。
 
-# Java
+# Java :coffee:
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
@@ -74,7 +74,7 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 整理了一些常见考点。
 
-# 编码实践
+# 编码实践 :hammer:
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
@@ -88,17 +88,15 @@ File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 
 
 Google 开源项目的代码风格规范。
 
-# 资料下载
+# 资料下载 :arrow_down:
 
 > [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F)
 
 一些 PDF 书籍
 
-# 后记
+# 后记 :memo:
 
 原文发表在 [牛客网：计算机基础知识整理](https://www.nowcoder.com/discuss/66985)
-
-:star: :star: :star:
 
 牛客网上有很多优质面经，面经往往会给出一些面试需要准备的知识列表，但是这些知识列表都很零散，不适合系统地进行学习。为此，楼主选取了一些计算机经典书籍和材料，对面试相关的计算机基础知识做了比较系统的整理，希望对大家有所帮助。
 
@@ -114,5 +112,4 @@ Google 开源项目的代码风格规范。
 
 为了上传笔记到 Github 上，花了不少时间。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主写了一个小工具可以将普通的 Markdown 文档转换为 GFM 文档，有需要该工具的话可以在楼主的 Github 中找到。
 
-:star: :star: :star:
 
