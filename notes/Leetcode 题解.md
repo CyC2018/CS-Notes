@@ -2391,6 +2391,20 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
+空间复杂度可以优化成 O(1) 空间复杂度
+
+```java
+public int maxSubArray(int[] nums) {
+    int max = nums[0];
+    int oldsum = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        oldsum = (oldsum > 0 ? oldsum: 0) + nums[i];
+        max = Math.max(max, oldsum);
+    }
+    return max;
+}
+```
+
 **数组中等差递增子区间的个数**
 
 [Leetcode : 413. Arithmetic Slices (Medium)](https://leetcode.com/problems/arithmetic-slices/description/)
