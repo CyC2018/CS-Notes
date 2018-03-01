@@ -103,7 +103,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 ## 1. ArraList
 
-[ArraList.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/ArrayList.java)
+[ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
@@ -229,19 +229,19 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 ## 2. Vector 与 Stack
 
-[Vector.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/Vector.java)
+[Vector.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/Vector.java)
 
 ## 3. LinkedList
 
-[LinkedList.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/LinkedList.java)
+[LinkedList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/LinkedList.java)
 
 ## 4. TreeMap
 
-[TreeMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/TreeMap.java)
+[TreeMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/TreeMap.java)
 
 ## 5. HashMap
 
-[HashMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/HashMap.java)
+[HashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
 使用拉链法来解决冲突。
 
@@ -349,11 +349,11 @@ private V putForNullKey(V value) {
 
 ## 6. LinkedHashMap
 
-[LinkedHashMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/HashMap.java)
+[LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
 ## 7. ConcurrentHashMap
 
-[ConcurrentHashMap.java](https://github.com/CyC2018/InterviewNotes/blob/master/notes/src/HashMap.java)
+[ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
 [ 探索 ConcurrentHashMap 高并发性的实现机制 ](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 
