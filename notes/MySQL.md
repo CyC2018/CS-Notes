@@ -98,7 +98,7 @@ MyISAM 支持全文索引，地理空间索引；
 
 ## 1. 整型
 
-TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 64 位存储空间，一般情况下越小的列越好。
+TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 32, 64 位存储空间，一般情况下越小的列越好。
 
 INT(11) 中的数字只是规定了交互工具显示字符的个数，对于存储和计算来说是没有意义的。
 
