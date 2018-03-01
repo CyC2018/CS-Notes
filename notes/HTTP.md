@@ -46,7 +46,7 @@
 ## Web 基础
 
 - HTTP（HyperText Transfer Protocol，超文本传输协议）。
-- WWW（Word Wide Web）的三种技术：HTML、HTTP、URL。
+- WWW（World Wide Web）的三种技术：HTML、HTTP、URL。
 - RFC（Request for Comments，征求修正意见书），互联网的设计文档。
 
 ## URL
