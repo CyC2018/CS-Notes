@@ -94,7 +94,7 @@ Google 开源项目的代码风格规范。
 
 一些 PDF 书籍
 
-# 后记 :star:
+# 后记 :memo:
 
 原文发表在 [牛客网：计算机基础知识整理](https://www.nowcoder.com/discuss/66985)
 
