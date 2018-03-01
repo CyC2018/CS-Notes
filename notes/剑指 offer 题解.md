@@ -57,6 +57,7 @@
     * [45. 把数组排成最小的数](#45-把数组排成最小的数)
     * [46. 把数字翻译成字符串](#46-把数字翻译成字符串)
     * [47. 礼物的最大价值](#47-礼物的最大价值)
+    * [48. 最长不含重复字符的子字符串](#48-最长不含重复字符的子字符串)
     * [49. 丑数](#49-丑数)
     * [50. 第一个只出现一次的字符位置](#50-第一个只出现一次的字符位置)
     * [51. 数组中的逆序对](#51-数组中的逆序对)
@@ -1518,6 +1519,32 @@ public int getMaxValue(int[][] values) {
         }
     }
     return dp[n - 1];
+}
+```
+
+## 48. 最长不含重复字符的子字符串
+
+**题目描述**
+
+输入一个字符串（只包含 a\~z 的字符），求其最长不含重复字符的子字符串的长度。例如对于 arabcacfr，最长不含重复字符的子字符串为 acfr，长度为 4。
+
+```java
+public int longestSubStringWithoutDuplication(String str) {
+    int curLen = 0;
+    int maxLen = 0;
+    int[] position = new int[26];
+    for (int i = 0; i < str.length(); i++) {
+        int c = str.charAt(i) - 'a';
+        int preIndex = position[c];
+        if (preIndex == -1 || i - preIndex > curLen) curLen++;
+        else {
+            maxLen = Math.max(maxLen, curLen);
+            curLen = i - preIndex;
+        }
+        position[c] = i;
+    }
+    maxLen = Math.max(maxLen, curLen);
+    return maxLen;
 }
 ```
 
