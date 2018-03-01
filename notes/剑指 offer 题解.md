@@ -20,6 +20,7 @@
 * [第三章 高质量的代码](#第三章-高质量的代码)
     * [16. 数值的整数次方](#16-数值的整数次方)
     * [17. 打印从 1 到最大的 n 位数](#17-打印从-1-到最大的-n-位数)
+    * [18.1 在 O(1) 时间内删除链表节点](#181-在-o1-时间内删除链表节点)
     * [18.2 删除链表中重复的结点](#182-删除链表中重复的结点)
     * [19. 正则表达式匹配](#19-正则表达式匹配)
     * [20. 表示数值的字符串](#20-表示数值的字符串)
@@ -612,6 +613,25 @@ private void printNumber(char[] number) {
         if(!isBeginWith0) System.out.print(c);
     }
     System.out.println();
+}
+```
+
+## 18.1 在 O(1) 时间内删除链表节点
+
+```java
+public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
+    if (head == null || head.next == null || tobeDelete == null) return null;
+    if (tobeDelete.next != null) {
+        // 要删除的节点不是尾节点
+        ListNode next = tobeDelete.next;
+        tobeDelete.val = next.val;
+        tobeDelete.next = next.next;
+    } else {
+        ListNode cur = head;
+        while (cur.next != tobeDelete) cur = cur.next;
+        cur.next = null;
+    }
+    return head;
 }
 ```
 
