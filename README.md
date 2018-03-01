@@ -10,7 +10,7 @@
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
-目录按《剑指 Offer 第二版》编排，在牛客网在线编程中出现的题目都已 AC，并且都是最优解。
+《剑指 Offer 第二版》的最优解，在牛客网在线编程中出现的题目都已 AC。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
