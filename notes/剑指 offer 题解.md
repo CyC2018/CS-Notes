@@ -69,6 +69,7 @@
     * [58.1 翻转单词顺序列](#581-翻转单词顺序列)
     * [58.2 左旋转字符串](#582-左旋转字符串)
     * [59. 滑动窗口的最大值](#59-滑动窗口的最大值)
+* [60. n 个骰子的点数](#60-n-个骰子的点数)
     * [61. 扑克牌顺子](#61-扑克牌顺子)
     * [62. 圆圈中最后剩下的数](#62-圆圈中最后剩下的数)
     * [63. 股票的最大利润](#63-股票的最大利润)
@@ -1761,6 +1762,65 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
         ret.add(heap.peek());
     }
     return ret;
+}
+```
+
+# 60. n 个骰子的点数
+
+**题目描述**
+
+把 n 个骰子仍在地上，求点数和为 s 的概率。
+
+最直观的动态规划解法，O(n<sup>2</sup>) 的空间复杂度。
+
+```java
+private static int face = 6;
+
+public double countProbability(int n, int s) {
+    if (n < 1 || s < n) return 0.0;
+    int pointNum = face * n;
+    int[][] dp = new int[n][pointNum];
+    for (int i = 0; i < face; i++) {
+        dp[0][i] = 1;
+    }
+    for (int i = 1; i < n; i++) {
+        for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face; k++) {
+                if (j - k < 0) continue;
+                dp[i][j] += dp[i - 1][j - k];
+            }
+        }
+    }
+
+    int totalNum = (int) Math.pow(6, n);
+    return (double)dp[n - 1][s - 1] / totalNum;
+}
+```
+
+使用旋转数组将空间复杂度降低为 O(n)
+
+```java
+private static int face = 6;
+
+public double countProbability(int n, int s) {
+    if (n < 1 || s < n) return 0.0;
+    int pointNum = face * n;
+    int[][] dp = new int[2][pointNum];
+    for (int i = 0; i < face; i++) {
+        dp[0][i] = 1;
+    }
+    int flag = 1;
+    for (int i = 1; i < n; i++) {
+        for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face; k++) {
+                if (j - k < 0) continue;
+                dp[flag][j] += dp[1 - flag][j - k];
+            }
+        }
+    }
+
+    int totalNum = (int) Math.pow(6, n);
+    return (double) dp[n - 1][s - 1] / totalNum;
 }
 ```
 
