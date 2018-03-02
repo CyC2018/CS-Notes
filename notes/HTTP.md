@@ -79,7 +79,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 POST 主要目的不是获取资源，而是传输实体主体数据。
 
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL中，而 POST 的参数存储在实体主体部分。
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体部分。
 
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
@@ -208,7 +208,7 @@ TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing
 | Accept-Charset | 优先的字符集 |
 | Accept-Encoding | 优先的内容编码 |
 | Accept-Language | 优先的语言（自然语言） |
-| Authorization | Web认证信息 |
+| Authorization | Web 认证信息 |
 | Expect | 期待服务器的特定行为 |
 | From | 用户的电子邮箱地址 |
 | Host | 请求资源所在服务器 |
@@ -216,7 +216,7 @@ TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing
 | If-Modified-Since | 比较资源的更新时间 |
 | If-None-Match | 比较实体标记（与 If-Match 相反） |
 | If-Range | 资源未更新时发送实体 Byte 的范围请求 |
-| If-Unmodified-Since | 比较资源的更新时间（与If-Modified-Since相反） |
+| If-Unmodified-Since | 比较资源的更新时间（与 If-Modified-Since 相反） |
 | Max-Forwards | 最大传输逐跳数 |
 | Proxy-Authorization | 代理服务器要求客户端的认证信息 |
 | Range | 实体的字节范围请求 |
@@ -231,10 +231,10 @@ TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing
 | Accept-Ranges | 是否接受字节范围请求 |
 | Age | 推算资源创建经过时间 |
 | ETag | 资源的匹配信息 |
-| Location | 令客户端重定向至指定URI |
+| Location | 令客户端重定向至指定 URI |
 | Proxy-Authenticate | 代理服务器对客户端的认证信息 |
 | Retry-After | 对再次发起请求的时机要求 |
-| Server | HTTP服务器的安装信息 |
+| Server | HTTP 服务器的安装信息 |
 | Vary | 代理服务器缓存的管理信息 |
 | WWW-Authenticate | 服务器对客户端的认证信息 |
 
@@ -242,11 +242,11 @@ TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing
 
 | 首部字段名 | 说明 |
 | -- | -- |
-| Allow | 资源可支持的HTTP方法 |
+| Allow | 资源可支持的 HTTP 方法 |
 | Content-Encoding | 实体主体适用的编码方式 |
 | Content-Language | 实体主体的自然语言 |
 | Content-Length | 实体主体的大小（单位： 字节） |
-| Content-Location | 替代对应资源的URI |
+| Content-Location | 替代对应资源的 URI |
 | Content-MD5 | 实体主体的报文摘要 |
 | Content-Range | 实体主体的位置范围 |
 | Content-Type | 实体主体的媒体类型 |
@@ -270,7 +270,7 @@ Set-Cookie 字段有以下属性：
 | NAME=VALUE | 赋予 Cookie 的名称和其值（必需项） |
 | expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
 | path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
-| domain=域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
+| domain= 域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
 | Secure | 仅在 HTTPS 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
