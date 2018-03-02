@@ -2,6 +2,8 @@
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/>
 <br>
 
+![](https://img.shields.io/badge/update-every%20day-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)
+
 # 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
