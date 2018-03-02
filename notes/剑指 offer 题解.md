@@ -102,7 +102,7 @@
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
 
 ```java
-public boolean duplicate(int numbers[], int length, int[] duplication) {
+public boolean duplicate(int[] numbers, int length, int[] duplication) {
     if(numbers == null || length <= 0) return false;
     for (int i = 0; i < length; i++) {
         while (numbers[i] != i && numbers[i] != numbers[numbers[i]]) {
