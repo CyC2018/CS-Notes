@@ -5,8 +5,6 @@
 
 ![](https://img.shields.io/badge/update-every%20day-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg)
 
-正在修复多出的空行问题！！！
-
 # 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
@@ -117,10 +115,9 @@ Google 开源项目的代码风格规范。
 
 为了上传笔记到 Github 上，花了不少时间。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主写了一个小工具可以将普通的 Markdown 文档转换为 GFM 文档，有需要该工具的话可以在楼主的 Github 中找到。
 
+---
 
-<<<<<<< HEAD
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
 
-本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-=======
->>>>>>> parent of 8962d2d... Update README.md
+本作品采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。
+
