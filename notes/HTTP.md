@@ -57,7 +57,7 @@
 
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg)
+<center>![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg)</center>
 
 ## 请求和响应报文
 
