@@ -701,7 +701,7 @@ DROP USER myuser;
 ```sql
 SHOW GRANTS FOR myuser;
 ```
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div>
 
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 

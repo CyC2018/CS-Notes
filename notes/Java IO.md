@@ -48,7 +48,7 @@ File 类可以用于表示文件和目录，但是它只用于表示文件的信
 
 # 字节操作
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//8143787f-12eb-46ea-9bc3-c66d22d35285.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"/> </div>
 
 Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
@@ -140,7 +140,7 @@ is.close();
 
 Socket 通信模型
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div>
 
 - ServerSocket：服务器端类
 - Socket：客户端类
@@ -208,23 +208,23 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 1\. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit == capacity == 9。capacity 变量不会改变，下面的讨论会忽略它。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div>
 
 2\. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//4628274c-25b6-4053-97cf-d1239b44c43d.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div>
 
 3\. 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div>
 
 4\. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div>
 
 5\. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div>
 
 ## 4. 读写文件实例
 
@@ -283,7 +283,7 @@ buffer.clear();
 
 阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回，每个客户端连接过来后，服务端都会启动一个线程去处理该客户端的请求。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//edc23f99-c46c-4200-b64e-07516828720d.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div>
 
 ### 5.2 非阻塞式 I/O
 
@@ -293,7 +293,7 @@ buffer.clear();
 
 线程通信：线程之间通过 wait()、notify() 等方式通信，保证每次上下文切换都是有意义的，减少无谓的线程切换。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div>
 
 ## 6. 套接字实例
 

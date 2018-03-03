@@ -131,13 +131,13 @@ public InitialOrderTest() {
 
 引用类型引用的是同一个对象，clone() 方法默认就是浅拷贝实现。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//d990c0e7-64d1-4ba3-8356-111bc91e53c5.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"/> </div>
 
 **深拷贝**
 
 可以使用序列化实现。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//2e5620c4-b558-46fe-8f12-00c9dd597a61.png)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//2e5620c4-b558-46fe-8f12-00c9dd597a61.png"/> </div>
 
 > [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
 
@@ -235,7 +235,7 @@ StringBuilder 不是线程安全的；StringBuffer 是线程安全的，使用 s
 
 如果 String 已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"/> </div>
 
 **安全性**
 
@@ -381,7 +381,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 Exception 分为两种：**受检异常** 和 **非受检异常**。受检异常需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；非受检异常是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
-![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg)
+<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div>
 
 更详细的内容：
 - [Java 入门之异常处理 ](https://www.tianmaying.com/tutorial/Java-Exception)
