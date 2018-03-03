@@ -5,8 +5,6 @@
 
 ![](https://img.shields.io/badge/update-every%20day-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg)
 
-正在修复多出的空行问题！！！
-
 # 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
