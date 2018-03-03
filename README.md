@@ -2,7 +2,7 @@
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/>
 <br>
 
-![](https://img.shields.io/badge/update-every%20day-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)
+![](https://img.shields.io/badge/update-every%20day-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg)
 
 # 网络 :cloud:
 
