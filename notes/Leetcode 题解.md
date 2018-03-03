@@ -59,7 +59,7 @@
 1. 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
 
 2. 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。
-解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1, 2, 3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
 
 3. l 的赋值一般都为 l = mid + 1。
 
@@ -196,7 +196,7 @@ public int findContentChildren(int[] g, int[] s) {
 
 ```
 Input:
-[[10,16], [2,8], [1,6], [7,12]]
+[[10, 16], [2, 8], [1, 6], [7, 12]]
 
 Output:
 2
@@ -212,7 +212,7 @@ Output:
 ```java
 public int findMinArrowShots(int[][] points) {
     if(points.length == 0) return 0;
-    Arrays.sort(points,(a,b) -> (a[1] - b[1]));
+    Arrays.sort(points,(a, b) -> (a[1] - b[1]));
     int curPos = points[0][1];
     int ret = 1;
     for (int i = 1; i < points.length; i++) {
@@ -249,7 +249,7 @@ public int maxProfit(int[] prices) {
 [Leetcode : 605. Can Place Flowers (Easy)](https://leetcode.com/problems/can-place-flowers/description/)
 
 ```html
-Input: flowerbed = [1,0,0,0,1], n = 1
+Input: flowerbed = [1, 0, 0, 0, 1], n = 1
 Output: True
 ```
 
@@ -318,7 +318,7 @@ public boolean isSubsequence(String s, String t) {
 
 ```java
 Input: S = "ababcbacadefegdehijhklij"
-Output: [9,7,8]
+Output: [9, 7, 8]
 Explanation:
 The partition is "ababcbaca", "defegde", "hijhklij".
 This is a partition so that each letter appears in at most one part.
@@ -351,10 +351,10 @@ public List<Integer> partitionLabels(String S) {
 
 ```html
 Input:
-[[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+[[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]
 
 Output:
-[[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
+[[5, 0], [7, 0], [5, 2], [6, 1], [4, 4], [7, 1]]
 ```
 
 题目描述：一个学生用两个分量 (h, k) 描述，h 表示身高，k 表示排在前面的有 k 个学生的身高比他高或者和他一样高。
@@ -373,13 +373,13 @@ public int[][] reconstructQueue(int[][] people) {
            return b[0] - a[0];
        }
     });
-    
+
     int n = people.length;
     List<int[]> tmp = new ArrayList<>();
     for(int i = 0; i < n; i++) {
         tmp.add(people[i][1], new int[]{people[i][0], people[i][1]});
     }
-    
+
     int[][] ret = new int[n][2];
     for(int i = 0; i < n; i++) {
         ret[i][0] = tmp.get(i)[0];
@@ -677,7 +677,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
         }
         bucket[frequency].add(key);
     }
-    
+
     for(int i = bucket.length - 1; i >= 0 && ret.size() < k; i--) {
         if(bucket[i] != null) {
             ret.addAll(bucket[i]);
@@ -711,10 +711,10 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 **计算在网格中从原点到特定点的最短路径长度**
 
 ```html
-[[1,1,0,1],
-[1,0,1,0],
-[1,1,1,1],
-[1,0,1,1]]
+[[1, 1, 0, 1],
+[1, 0, 1, 0],
+[1, 1, 1, 1],
+[1, 0, 1, 1]]
 ```
 
 ```java
@@ -766,14 +766,14 @@ private class Position {
 [Leetcode : 695. Max Area of Island (Easy)](https://leetcode.com/problems/max-area-of-island/description/)
 
 ```html
-[[0,0,1,0,0,0,0,1,0,0,0,0,0],
-[0,0,0,0,0,0,0,1,1,1,0,0,0],
-[0,1,1,0,1,0,0,0,0,0,0,0,0],
-[0,1,0,0,1,1,0,0,1,0,1,0,0],
-[0,1,0,0,1,1,0,0,1,1,1,0,0],
-[0,0,0,0,0,0,0,0,0,0,1,0,0],
-[0,0,0,0,0,0,0,1,1,1,0,0,0],
-[0,0,0,0,0,0,0,1,1,0,0,0,0]]
+[[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+[0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+[0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+[0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]
 ```
 
 ```java
@@ -803,9 +803,9 @@ private int dfs(int[][] grid, int i, int j){
 
 ```html
 Input:
-[[1,1,0],
- [1,1,0],
- [0,0,1]]
+[[1, 1, 0],
+ [1, 1, 0],
+ [0, 0, 1]]
 Output: 2
 Explanation:The 0th and 1st students are direct friends, so they are in a friend circle.
 The 2nd student himself is in a friend circle. So return 2.
@@ -974,7 +974,7 @@ private void dfs(char[][] board, int r, int c) {
 ```html
 Given the following 5x5 matrix:
 
-  Pacific ~   ~   ~   ~   ~ 
+  Pacific ~   ~   ~   ~   ~
        ~  1   2   2   3  (5) *
        ~  3   2   3  (4) (4) *
        ~  2   4  (5)  3   1  *
@@ -1042,11 +1042,11 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
 
-45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
+45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg)
 
-135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
+135 度对角线标记数组的维度也是 2\*n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg)
 
@@ -1230,14 +1230,14 @@ private void doRestore(int k, String path, String s) {
 [Leetcode : 46. Permutations (Medium)](https://leetcode.com/problems/permutations/description/)
 
 ```html
-[1,2,3] have the following permutations:
+[1, 2, 3] have the following permutations:
 [
-  [1,2,3],
-  [1,3,2],
-  [2,1,3],
-  [2,3,1],
-  [3,1,2],
-  [3,2,1]
+  [1, 2, 3],
+  [1, 3, 2],
+  [2, 1, 3],
+  [2, 3, 1],
+  [3, 1, 2],
+  [3, 2, 1]
 ]
 ```
 
@@ -1272,8 +1272,8 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 [Leetcode : 47. Permutations II (Medium)](https://leetcode.com/problems/permutations-ii/description/)
 
 ```html
-[1,1,2] have the following unique permutations:
-[[1,1,2], [1,2,1], [2,1,1]]
+[1, 1, 2] have the following unique permutations:
+[[1, 1, 2], [1, 2, 1], [2, 1, 1]]
 ```
 
 题目描述：数组元素可能含有相同的元素，进行排列时就有可能出先重复的排列，要求重复的排列只返回一个。
@@ -1315,12 +1315,12 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 ```html
 If n = 4 and k = 2, a solution is:
 [
-  [2,4],
-  [3,4],
-  [2,3],
-  [1,2],
-  [1,3],
-  [1,4],
+  [2, 4],
+  [3, 4],
+  [2, 3],
+  [1, 2],
+  [1, 3],
+  [1, 4],
 ]
 ```
 
@@ -1337,7 +1337,7 @@ private void backtracking(int start, int n, int k, List<Integer> combineList, Li
         ret.add(new ArrayList(combineList)); // 这里要重新构造一个 List
         return;
     }
-    
+
     for(int i = start; i <= n - k + 1; i++){ // 剪枝
 
         combineList.add(i);                        // 把 i 标记为已访问
@@ -1386,8 +1386,8 @@ A solution set is:
 [Leetcode : 40. Combination Sum II (Medium)](https://leetcode.com/problems/combination-sum-ii/description/)
 
 ```html
-For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8, 
-A solution set is: 
+For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,
+A solution set is:
 [
   [1, 7],
   [1, 2, 5],
@@ -1463,14 +1463,14 @@ private void backtracking(int startIdx, int size, int[] nums) {
 
 ```html
 For example,
-If nums = [1,2,2], a solution is:
+If nums = [1, 2, 2], a solution is:
 
 [
   [2],
   [1],
-  [1,2,2],
-  [2,2],
-  [1,2],
+  [1, 2, 2],
+  [2, 2],
+  [1, 2],
   []
 ]
 ```
@@ -1792,7 +1792,7 @@ public int climbStairs(int n) {
 
 **母牛生产**
 
-[程序员代码面试指南-P181](#)
+[ 程序员代码面试指南 -P181](#)
 
 题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
@@ -1896,11 +1896,11 @@ dp[N] 即为所求。
 
 ### 最长递增子序列
 
-已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>} ，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个**子序列**。
+已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,..., S<sub>n</sub>} ，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个**子序列**。
 
 如果在子序列中，当下标 ix > iy 时，S<sub>ix</sub> > S<sub>iy</sub>，称子序列为原序列的一个**递增子序列**。
 
-定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub> ，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
+定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub> ，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，因此需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
@@ -1931,7 +1931,7 @@ public int lengthOfLIS(int[] nums) {
 }
 ```
 
-以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlog<sub>n</sub>)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
+以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlog<sub>n</sub>)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4, 5, 6, 3]，有
 
 ```html
 len = 1  :      [4], [5], [6], [3]  => tails[0] = 3
@@ -2150,9 +2150,9 @@ public boolean wordBreak(String s, List<String> wordDict) {
 [Leetcode : 494. Target Sum (Medium)](https://leetcode.com/problems/target-sum/description/)
 
 ```html
-Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Input: nums is [1, 1, 1, 1, 1], S is 3.
 Output: 5
-Explanation: 
+Explanation:
 
 -1+1+1+1+1 = 3
 +1-1+1+1+1 = 3
@@ -2199,7 +2199,7 @@ private int subsetSum(int[] nums, int targetSum) {
 }
 ```
 
-**01字符构成最多的字符串**
+**01 字符构成最多的字符串**
 
 [Leetcode : 474. Ones and Zeroes (Medium)](https://leetcode.com/problems/ones-and-zeroes/description/)
 
@@ -2242,7 +2242,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-这是一个完全背包问题，完全背包问题和 0-1背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
+这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
 
 ```java
 public int coinChange(int[] coins, int amount) {
@@ -2356,15 +2356,15 @@ public int maxProfit(int k, int[] prices) {
 
 ```java
 class NumArray {
-    
+
     int[] nums;
-    
+
     public NumArray(int[] nums) {
         for(int i = 1; i < nums.length; i++)
             nums[i] += nums[i - 1];
         this.nums = nums;
     }
-    
+
     public int sumRange(int i, int j) {
         return i == 0 ? nums[j] : nums[j] - nums[i - 1];
     }
@@ -2415,7 +2415,7 @@ A = [1, 2, 3, 4]
 return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 ```
 
-对于 (1,2,3,4)，它有三种组成递增子区间的方式，而对于 (1,2,3,4,5)，它组成递增子区间的方式除了 (1,2,3,4) 的三种外还多了一种，即 (1,2,3,4,5)，因此 dp[i] = dp[i - 1] + 1。
+对于 (1, 2, 3, 4)，它有三种组成递增子区间的方式，而对于 (1, 2, 3, 4, 5)，它组成递增子区间的方式除了 (1, 2, 3, 4) 的三种外还多了一种，即 (1, 2, 3, 4, 5)，因此 dp[i] = dp[i - 1] + 1。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
@@ -2538,7 +2538,7 @@ public int findLongestChain(int[][] pairs) {
             }
         }
     }
-    
+
     int ret = 0;
     for(int num : dp) {
         ret = Math.max(ret, num);
@@ -2614,9 +2614,9 @@ public int minSteps(int n) {
 
 如果 x 整除 y（y mod x == 0），则对于所有 i，mi <= ni。
 
-x 和 y 的 **最大公约数** 为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
+x 和 y 的 **最大公约数** 为：gcd(x, y) =  2<sup>min(m0, n0)</sup> \* 3<sup>min(m1, n1)</sup> \* 5<sup>min(m2, n2)</sup> \* ...
 
-x 和 y 的 **最小公倍数** 为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
+x 和 y 的 **最小公倍数** 为：lcm(x, y) =  2<sup>max(m0, n0)</sup> \* 3<sup>max(m1, n1)</sup> \* 5<sup>max(m2, n2)</sup> \* ...
 
 **生成素数序列**
 
@@ -2868,8 +2868,8 @@ public int majorityElement(int[] nums) {
 
 [Leetcode : 367. Valid Perfect Square (Easy)](https://leetcode.com/problems/valid-perfect-square/description/)
 
-平方序列：1,4,9,16,..
-间隔：3,5,7,...
+平方序列：1, 4, 9, 16,..
+间隔：3, 5, 7,...
 
 间隔为等差数列，使用这个特性可以得到从 1 开始的平方序列。
 
@@ -2992,7 +2992,7 @@ class  MyQueue {
 class  MyQueue {
     private Stack<Integer> in = new Stack();
     private Stack<Integer> out = new Stack();
-  
+
     public void push(int x) {
         in.push(x);
     }
@@ -3006,7 +3006,7 @@ class  MyQueue {
         in2out();
         return out.peek();
     }
-    
+
     private void in2out(){
         if(out.isEmpty()){
             while(!in.isEmpty()){
@@ -3027,28 +3027,28 @@ class  MyQueue {
 
 ```java
 class MyStack {
-    
+
     private Queue<Integer> queue;
 
     public MyStack() {
         queue = new LinkedList<>();
     }
-    
+
     public void push(int x) {
         queue.add(x);
         for(int i = 1; i < queue.size(); i++){ // 翻转
             queue.add(queue.remove());
         }
     }
-    
+
     public int pop() {
         return queue.remove();
     }
-    
+
     public int top() {
         return queue.peek();
     }
-    
+
     public boolean empty() {
         return queue.isEmpty();
     }
@@ -3063,7 +3063,7 @@ class MyStack {
 
 ```java
 class MinStack {
-    
+
     private Stack<Integer> dataStack;
     private Stack<Integer> minStack;
     private int min;
@@ -3073,7 +3073,7 @@ class MinStack {
         minStack = new Stack<>();
         min = Integer.MAX_VALUE;
     }
-    
+
     public void push(int x) {
         dataStack.add(x);
         if(x < min) {
@@ -3081,7 +3081,7 @@ class MinStack {
         }
         minStack.add(min);
     }
-    
+
     public void pop() {
         dataStack.pop();
         minStack.pop();
@@ -3091,11 +3091,11 @@ class MinStack {
             min = Integer.MAX_VALUE;
         }
     }
-    
+
     public int top() {
         return dataStack.peek();
     }
-    
+
     public int getMin() {
         return min;
     }
@@ -3166,8 +3166,8 @@ public int[] dailyTemperatures(int[] temperatures) {
 [Leetcode : 496. Next Greater Element I (Easy)](https://leetcode.com/problems/next-greater-element-i/description/)
 
 ```html
-Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
-Output: [-1,3,-1]
+Input: nums1 = [4, 1, 2], nums2 = [1, 3, 4, 2].
+Output: [-1, 3,-1]
 ```
 
 在遍历数组时用 Stack 把数组中的数存起来，如果当前遍历的数比栈顶元素来的大，说明栈顶元素的下一个比它大的数就是当前元素。
@@ -3421,11 +3421,11 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 例如 abcd123 向右移动 3 位 得到 123abcd
 
-将 abcd123 中的 abcd 和 123 单独逆序，得到 dcba321，然后对整个字符串进行逆序，得到123abcd。
+将 abcd123 中的 abcd 和 123 单独逆序，得到 dcba321，然后对整个字符串进行逆序，得到 123abcd。
 
 **字符串中单词的翻转**
 
-[程序员代码面试指南](#)
+[ 程序员代码面试指南 ](#)
 
 例如将 "I am a student" 翻转成 "student a am I"
 
@@ -3470,11 +3470,11 @@ public int[] findErrorNums(int[] nums) {
     for(int i = 0; i < nums.length; i++){
         while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) swap(nums, i, nums[i] - 1);
     }
-    
+
     for(int i = 0; i < nums.length; i++){
         if(i + 1 != nums[i]) return new int[]{nums[i], i + 1};
     }
-    
+
     return null;
 }
 
@@ -3766,7 +3766,7 @@ private boolean isEqual(ListNode l1, ListNode l2){
 
 **从链表中删除节点**
 
-[编程之美：3.4]()
+[ 编程之美：3.4]()
 
 ![](https://github.com/CyC2018/InterviewNotes/blob/master/pics//2c968ec5-0967-49ce-ac06-f8f5c9ab33bc.jpg)
 
@@ -4022,7 +4022,7 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
       / \
       4  5
 
-Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
+Return 3, which is the length of the path [4, 2, 1, 3] or [5, 2, 1, 3].
 ```
 
 ```java
@@ -4494,24 +4494,24 @@ Trie，又称前缀树或字典树，用于判断字符串是否存在或者是�
 
 ```java
 class Trie {
-    
+
     private class Node{
         Node[] childs = new Node[26];
         boolean isLeaf;
     }
-    
+
     private Node root = new Node();
-    
+
     /** Initialize your data structure here. */
     public Trie() {
     }
-    
+
     /** Inserts a word into the trie. */
     public void insert(String word) {
         int idx = word.charAt(0) - 'a';
         insert(word, root);
     }
-    
+
     private void insert(String word, Node node){
         int idx = word.charAt(0) - 'a';
         if(node.childs[idx] == null){
@@ -4520,12 +4520,12 @@ class Trie {
         if(word.length() == 1) node.childs[idx].isLeaf = true;
         else insert(word.substring(1), node.childs[idx]);
     }
-    
+
     /** Returns if the word is in the trie. */
     public boolean search(String word) {
-        return search(word, root); 
+        return search(word, root);
     }
-    
+
     private boolean search(String word, Node node){
         if(node == null) return false;
         int idx = word.charAt(0) - 'a';
@@ -4533,12 +4533,12 @@ class Trie {
         if(word.length() == 1) return node.childs[idx].isLeaf;
         return search(word.substring(1), node.childs[idx]);
     }
-    
+
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
         return startWith(prefix, root);
     }
-    
+
     private boolean startWith(String prefix, Node node){
         if(node == null) return false;
         if(prefix.length() == 0) return true;
@@ -4558,18 +4558,18 @@ class MapSum {
         int val;
         Map<Character, Trie> childs;
         boolean isWord;
-        
+
         Trie() {
             childs = new HashMap<>();
         }
     }
-    
+
     private Trie root;
 
     public MapSum() {
         root = new Trie();
     }
-    
+
     public void insert(String key, int val) {
         Trie cur = root;
         for(char c : key.toCharArray()) {
@@ -4582,7 +4582,7 @@ class MapSum {
         cur.val = val;
         cur.isWord = true;
     }
-    
+
     public int sum(String prefix) {
         Trie cur = root;
         for(char c : prefix.toCharArray()) {
@@ -4591,7 +4591,7 @@ class MapSum {
         }
         return dfs(cur);
     }
-    
+
     private int dfs(Trie cur) {
         int sum = 0;
         if(cur.isWord) {
@@ -4745,7 +4745,7 @@ public int reverseBits(int n) {
 
 **不用额外变量交换两个整数**
 
-[程序员代码面试指南 ：P317](#)
+[ 程序员代码面试指南 ：P317](#)
 
 ```java
 a = a ^ b;
@@ -4949,9 +4949,9 @@ public int maxProduct(String[] words) {
 # 参考资料
 
 - [Leetcode](https://leetcode.com/problemset/algorithms/?status=Todo)
-- Weiss M A, 冯舜玺. 数据结构与算法分析——C 语言描述[J]. 2004.
+- Weiss M A, 冯舜玺 . 数据结构与算法分析——C 语言描述 [J]. 2004.
 - Sedgewick R. Algorithms[M]. Pearson Education India, 1988.
-- 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
-- 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
-- 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
+- 何海涛 , 软件工程师 . 剑指 Offer: 名企面试官精讲典型编程题 [M]. 电子工业出版社 , 2014.
+- 《编程之美》小组 . 编程之美 [M]. 电子工业出版社 , 2008.
+- 左程云 . 程序员代码面试指南 [M]. 电子工业出版社 , 2015.
 

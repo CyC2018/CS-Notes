@@ -1328,7 +1328,7 @@ private int cnt = 0;
 
 public void Insert(Integer num) {
     // 插入要保证两个堆存于平衡状态
-    if(cnt % 2 == 0) { 
+    if(cnt % 2 == 0) {
         // 为偶数的情况下插入到最小堆，先经过最大堆筛选，这样就能保证最大堆中的元素都小于最小堆中的元素
         maxHeap.add(num);
         minHeep.add(maxHeap.poll());
