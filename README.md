@@ -9,7 +9,7 @@
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-整理自《计算机网络 第七版》，重点内容会在标题之后加 \*。
+整理自《计算机网络 第七版》，重点内容会在标题后面加 \*。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
@@ -71,7 +71,7 @@
 
 > [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
-File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 以及 NIO
+File、InputStream OutputStream、Reader Writer、Serializable、Socket、NIO
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
@@ -99,21 +99,15 @@ Google 开源项目的代码风格规范。
 
 # 后记 :memo:
 
-原文发表在 [牛客网：计算机基础知识整理](https://www.nowcoder.com/discuss/66985)
+网络和操作系统作为计算机的理论基础，是每个互联网从业人员都应该了解的内容，并且这部分内容也是技术面试的重点。
 
-牛客网上有很多优质面经，面经往往会给出一些面试需要准备的知识列表，但是这些知识列表都很零散，不适合系统地进行学习。为此，楼主选取了一些计算机经典书籍和材料，对面试相关的计算机基础知识做了比较系统的整理，希望对大家有所帮助。
+网上有很多相关的资料，但是这些资料都比较零散。本仓库的笔记是从经典的书籍和材料中整理而来，在整理出重点的同时会尽可能保证知识的系统性，因此比较适合作为应对面试的学习资料。笔记内容不是简单的对网上的材料进行复制粘贴，而是一个字一个字从书上整理而来。当然也有小部分内容参考了网上的材料，但是也有对这部分内容的语言逻辑以及排版进行修改。
 
-整理的笔记开源在 Github 上，包括数据结构与算法、网络、操作系统、面向对象。Github 仓库提供相关 PDF 书籍的下载，都是楼主找了很久的高清版本。
+笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，并且为了让笔记更容易理解，前前后后做了很多次地修改。
 
-笔记内容基本是楼主一个字一个字打上去的，可供个人随意使用，转载请注明出处，毕竟写了很久没那么轻松~
+在上传笔记到 Github 的过程中遇到了一些难题。由于 Github 使用的是 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。并且为了让图片显示效果更好，笔记内容基本使用了 &lt;center> 标记来让图片居中显示，但是 GFM 却不支持 &lt;center> 标记。如果您也遇到了以上问题，可以到这里下载本人实现的 GFM 文档转换小工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-如果发现笔误，可以直接编辑修改，楼主会及时处理。
-
-想要支持楼主的话，在 Github 上点个 Star 即可。
-
-楼主作为一个轻度强迫症患者，笔记内容会尽量保证排版美观，可读性好。为了让笔记内容更整洁，前前后后做了很多次修改，甚至写了一个为中英混排文档进行排版的脚本，来提高笔记的可读性。
-
-为了上传笔记到 Github 上，花了不少时间。Github 使用的是 GFM 来渲染 md 文档，和普通的 Markdown 不太一样，例如 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。楼主写了一个小工具可以将普通的 Markdown 文档转换为 GFM 文档，有需要该工具的话可以在楼主的 Github 中找到。
+如有笔误，可以直接编辑修改。想要发表反馈意见的话，可以到 [原贴](https://www.nowcoder.com/discuss/66985) 的评论区去进行留言。或者您只是想要表达一点小小的支持，那么在 Github 上点个 Star 即可 ~
 
 ---
 
