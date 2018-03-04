@@ -98,7 +98,7 @@ MyISAM 支持全文索引，地理空间索引；
 
 ## 1. 整型
 
-TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 32,, 64 位存储空间，一般情况下越小的列越好。
+TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 32, 64 位存储空间，一般情况下越小的列越好。
 
 INT(11) 中的数字只是规定了交互工具显示字符的个数，对于存储和计算来说是没有意义的。
 
@@ -238,7 +238,7 @@ customer_id_selectivity: 0.0373
 
 ### 3.5 聚簇索引
 
-<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//b9e9ae8c-e216-4c01-b267-a50dbeb98fa4.jpg"/> </div><br>
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//b9e9ae8c-e216-4c01-b267-a50dbeb98fa4.jpg"/> </div><br>
 
 聚簇索引并不是一种索引类型，而是一种数据存储方式。
 
@@ -267,7 +267,7 @@ customer_id_selectivity: 0.0373
 
 ### 4. 1 B-Tree
 
-<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//5ed71283-a070-4b21-85ae-f2cbfd6ba6e1.jpg"/> </div><br>
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//5ed71283-a070-4b21-85ae-f2cbfd6ba6e1.jpg"/> </div><br>
 
 为了描述 B-Tree，首先定义一条数据记录为一个二元组 [key, data]，key 为记录的键，data 为数据记录除 key 外的数据。
 
@@ -283,7 +283,7 @@ B-Tree 是满足下列条件的数据结构：
 
 ### 4.2 B+Tree
 
-<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//63cd5b50-d6d8-4df6-8912-ef4a1dd5ba13.jpg"/> </div><br>
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//63cd5b50-d6d8-4df6-8912-ef4a1dd5ba13.jpg"/> </div><br>
 
 与 B-Tree 相比，B+Tree 有以下不同点：
 
@@ -292,7 +292,7 @@ B-Tree 是满足下列条件的数据结构：
 
 ### 4.3 带有顺序访问指针的 B+Tree
 
-<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//1ee5f0a5-b8df-43b9-95ab-c516c54ec797.jpg"/> </div><br>
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//1ee5f0a5-b8df-43b9-95ab-c516c54ec797.jpg"/> </div><br>
 
 一般在数据库系统或文件系统中使用的 B+Tree 结构都在经典 B+Tree 基础上进行了优化，在叶子节点增加了顺序访问指针，做这个优化的目的是为了提高区间访问的性能。
 
@@ -405,7 +405,7 @@ do {
 
 通过代理，可以路由流量到可以使用的服务器上。
 
-<div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//fabd5fa0-b75e-48d0-9e2c-31471945ceb9.jpg"/> </div><br>
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//fabd5fa0-b75e-48d0-9e2c-31471945ceb9.jpg"/> </div><br>
 
 **1.4 在应用中处理故障转移**
 
