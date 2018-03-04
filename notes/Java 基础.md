@@ -70,24 +70,24 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 静态数据优先于其它数据的初始化，静态变量和静态语句块哪个先运行取决于它们在代码中的顺序。
 
 ```java
-public static String staticField = " 静态变量 ";
+public static String staticField = "静态变量";
 ```
 
 ```java
 static {
-    System.out.println(" 静态初始化块 ");
+    System.out.println("静态初始化块");
 }
 ```
 
 实例变量和普通语句块的初始化在静态变量和静态语句块初始化结束之后。
 
 ```java
-public String field = " 变量 ";
+public String field = "变量";
 ```
 
 ```java
 {
-    System.out.println(" 初始化块 ");
+    System.out.println("初始化块");
 }
 ```
 
@@ -95,7 +95,7 @@ public String field = " 变量 ";
 
 ```java
 public InitialOrderTest() {
-    System.out.println(" 构造器 ");
+    System.out.println("构造器");
 }
 ```
 
