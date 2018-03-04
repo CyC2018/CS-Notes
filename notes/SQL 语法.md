@@ -190,11 +190,11 @@ SELECT *
 FROM mytable
 WHERE SOUNDEX(col1) = SOUNDEX('apple')
 ```
+
 ## 日期和时间处理
 
-日期格式：YYYY-MM-DD
-
-时间格式：HH:MM:SS
+- 日期格式：YYYY-MM-DD
+- 时间格式：HH:MM:SS
 
 |函 数 | 说 明|
 | --- | --- |
@@ -202,19 +202,19 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 | AddTime() | 增加一个时间（时、分等）|
 | CurDate() | 返回当前日期 |
 | CurTime() | 返回当前时间 |
-|Date() |返回日期时间的日期部分|
-|DateDiff() |计算两个日期之差|
-|Date_Add() |高度灵活的日期运算函数|
-|Date_Format() |返回一个格式化的日期或时间串|
-|Day()| 返回一个日期的天数部分|
-|DayOfWeek() |对于一个日期，返回对应的星期几|
-|Hour() |返回一个时间的小时部分|
-|Minute() |返回一个时间的分钟部分|
-|Month() |返回一个日期的月份部分|
-|Now() |返回当前日期和时间|
-|Second() |返回一个时间的秒部分|
-|Time() |返回一个日期时间的时间部分|
-|Year() |返回一个日期的年份部分|
+| Date() |返回日期时间的日期部分|
+| DateDiff() |计算两个日期之差|
+| Date_Add() |高度灵活的日期运算函数|
+| Date_Format() |返回一个格式化的日期或时间串|
+| Day()| 返回一个日期的天数部分|
+| DayOfWeek() |对于一个日期，返回对应的星期几|
+| Hour() |返回一个时间的小时部分|
+| Minute() |返回一个时间的分钟部分|
+| Month() |返回一个日期的月份部分|
+| Now() |返回当前日期和时间|
+| Second() |返回一个时间的秒部分|
+| Time() |返回一个日期时间的时间部分|
+| Year() |返回一个日期的年份部分|
 
 ```sql
 mysql> SELECT NOW();
@@ -226,28 +226,28 @@ mysql> SELECT NOW();
 | 函数 | 说明 |
 | --- | --- |
 | SIN() | 正弦 |
-|COS() | 余弦 |
+| COS() | 余弦 |
 | TAN() | 正切 |
 | ABS() | 绝对值 |
-| SQRT() | 平方根|
-| MOD() | 余数|
-| EXP() | 指数|
-| PI() | 圆周率|
-|RAND() | 随机数|
+| SQRT() | 平方根 |
+| MOD() | 余数 |
+| EXP() | 指数 |
+| PI() | 圆周率 |
+| RAND() | 随机数 |
 
 ## 汇总
 
 |函 数 |说 明|
 | --- | --- |
-|AVG() |返回某列的平均值|
-|COUNT()| 返回某列的行数|
-|MAX()| 返回某列的最大值|
-|MIN()| 返回某列的最小值|
-|SUM() |返回某列值之和|
+| AVG() | 返回某列的平均值 |
+| COUNT() | 返回某列的行数 |
+| MAX() | 返回某列的最大值 |
+| MIN() | 返回某列的最小值 |
+| SUM() |返回某列值之和 |
 
 AVG() 会忽略 NULL 行。
 
-DISTINCT 关键字会只汇总不同的值。
+使用 DISTINCT 可以汇总函数值汇总不同的值。
 
 ```sql
 SELECT AVG(DISTINCT col1) AS avg_col
@@ -256,11 +256,11 @@ FROM mytable
 
 # 分组
 
-分组就是把相同的数据放在同一组中。
+分组就是把具有相同的数据值的行放在同一组中。
 
-可以对每组数据使用汇总函数进行处理，例如求每组数的平均值等。
+可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
-按 col 排序并分组数据：
+指定的分组字段除了能让数组按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -268,7 +268,7 @@ FROM mytable
 GROUP BY col;
 ```
 
-WHERE 过滤行，HAVING 过滤分组，行过滤应当先与分组过滤；
+WHERE 过滤行，HAVING 过滤分组。行过滤应当先与分组过滤；
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -290,13 +290,13 @@ ORDER BY num;
 分组规定：
 
 1. GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
-2. 除了汇总计算语句之外，SELECT 语句中的每一列都必须在 GROUP BY 子句中给出；
+2. 除了汇总计算语句的字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
 3. NULL 的行会单独分为一组；
 4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
 # 子查询
 
-子查询中只能返回一个列。
+子查询中只能返回一个字段的数据。
 
 可以将子查询的结果作为 WHRER 语句的过滤条件：
 
@@ -307,7 +307,7 @@ WHERE col1 IN (SELECT col2
                  FROM mytable2);
 ```
 
-下面的语句可以检索出客户的订单数量。子查询语句会对检索出的每个客户执行一次：
+下面的语句可以检索出客户的订单数量，子查询语句会对第一个查询检索出的每个客户执行一次：
 
 ```sql
 SELECT cust_name, (SELECT COUNT(*)
