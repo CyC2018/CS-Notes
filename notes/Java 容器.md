@@ -39,7 +39,7 @@
 
 - TreeSet：基于红黑树实现，保持有序，但是查找效率不如 HashSet；
 
-- LinkedListHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序，因此具有有序性。
+- LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序，因此具有有序性。
 
 ## 3. Queue
 
