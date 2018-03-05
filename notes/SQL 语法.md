@@ -43,6 +43,8 @@ SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，�
 
 SQL 语句不区分大小写，但是数据库表名、列名和值是否区分依赖于具体的 DBMS 以及配置。
 
+SQL 支持以下三种注释：
+
 ```sql
 # 注释
 SELECT *
@@ -502,8 +504,6 @@ FROM mytable
 WHERE col =2;
 ```
 
-
-
 # 视图
 
 视图是虚拟的表，本身不包含数据，也就不能对其进行索引操作。对视图的操作和对普通表的操作一样。
@@ -528,8 +528,8 @@ WHERE col5 = val;
 
 **使用存储过程的好处**
 
-1. 把实现封装在了存储过程中，不仅简单，也保证了安全性；
-2. 可以复用代码；
+1. 代码封装，保证了一定的安全性；
+2. 代码复用；
 3. 由于是预先编译，因此具有很高的性能。
 
 **创建存储过程**
@@ -629,7 +629,7 @@ MySQL 不允许在触发器中使用 CALL 语句 ，也就是不能调用存储�
 
 不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CRETE 和 DROP 语句。
 
-MySQL 的事务提交默认是隐式提交，也就是每执行一条语句就会提交一次。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
+MySQL 的事务提交默认是隐式提交，也就是每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
 通过设置 autocommit 为 0 可以取消自动提交，直到 autocommit 被设置为 1 才会提交；autocommit 标记是针对每个连接而不是针对服务器的。
 
@@ -703,15 +703,16 @@ DROP USER myuser;
 ```sql
 SHOW GRANTS FOR myuser;
 ```
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
-
-账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
 **授予权限**
 
 ```sql
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
+
+<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
+
+账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
 **删除权限**
 
@@ -721,7 +722,7 @@ REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 
 GRANT 和 REVOKE 可在几个层次上控制访问权限：
 
-- 整个服务器，使用 GRANT ALL和 REVOKE ALL；
+- 整个服务器，使用 GRANT ALL 和 REVOKE ALL；
 - 整个数据库，使用 ON database.\*；
 - 特定的表，使用 ON database.table；
 - 特定的列；
