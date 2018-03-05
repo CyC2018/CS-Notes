@@ -105,7 +105,9 @@ Google 开源项目的代码风格规范。
 
 由于 Github 使用的 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为了把本地的 Markdown 文档转换为 GFM 支持的格式，需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。并且为了让图片显示效果更好，笔记内容基本使用了 &lt;center> 标记来让图片居中显示，但是 GFM 却不支持 &lt;center> 标记，因此也需要进行一定的转换。这里提供了本人实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-如有笔误，可以直接编辑修改。想要发表反馈意见的话，可以到 [原贴](https://www.nowcoder.com/discuss/66985) 的评论区去进行留言。或者您只是想要表达一点小小的支持，那么在 Github 上点个 Star 即可~
+因为大部分内容是一个字一个字打上去的，难免会有一些笔误，如果发现，可以直接在相应的文档上编辑修改，谢谢！
+
+想要发表反馈意见的话，可以到 [原贴](https://www.nowcoder.com/discuss/66985) 的评论区进行留言。
 
 ---
 
