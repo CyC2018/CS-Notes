@@ -1,5 +1,10 @@
 <!-- GFM-TOC -->
 * [基础](#基础)
+* [创建表](#创建表)
+* [插入](#插入)
+* [更新](#更新)
+* [删除](#删除)
+* [修改表](#修改表)
 * [查询](#查询)
 * [排序](#排序)
 * [过滤](#过滤)
@@ -18,11 +23,6 @@
     * [自然连接](#自然连接)
     * [外连接](#外连接)
 * [组合查询](#组合查询)
-* [插入](#插入)
-* [更新](#更新)
-* [删除](#删除)
-* [创建表](#创建表)
-* [修改表](#修改表)
 * [视图](#视图)
 * [存储过程](#存储过程)
 * [游标](#游标)
@@ -42,6 +42,90 @@
 SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
 
 SQL 语句不区分大小写，但是数据库表名、列名和值是否区分依赖于具体的 DBMS 以及配置。
+
+```sql
+# 注释
+SELECT *
+FROM mytable; -- 注释
+/* 注释1
+   注释2 */
+```
+
+# 创建表
+
+```sql
+CREATE TABLE mytable (
+  id INT NOT NULL AUTO_INCREMENT,
+  col1 INT NOT NULL DEFAULT 1,
+  col2 VARCHAR(45) NULL,
+  col3 DATE NULL,
+  PRIMARY KEY (`id`));
+```
+
+# 插入
+
+**普通插入**
+
+```sql
+INSERT INTO mytable(col1, col2)
+VALUES(val1, val2);
+```
+
+**插入检索出来的数据**
+
+```sql
+INSERT INTO mytable1(col1, col2)
+SELECT col1, col2
+FROM mytable2;
+```
+
+**将一个表的内容复制到一个新表**
+
+```sql
+CREATE TABLE newtable AS
+SELECT * FROM mytable;
+```
+
+# 更新
+
+```sql
+UPDATE mytable
+SET col = val
+WHERE id = 1;
+```
+
+# 删除
+
+```sql
+DELETE FROM mytable
+WHERE id = 1;
+```
+
+**TRUNCATE TABLE** 可以清空表，也就是删除所有行。
+
+使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
+
+# 修改表
+
+**添加列**
+
+```sql
+ALTER TABLE mytable
+ADD col CHAR(20);
+```
+
+**删除列**
+
+```sql
+ALTER TABLE mytable
+DROP COLUMN col;
+```
+
+**删除表**
+
+```sql
+DROP TABLE mytable;
+```
 
 # 查询
 
@@ -80,15 +164,6 @@ FROM mytable
 LIMIT 2, 3;
 ```
 
-**注释**
-
-```sql
-# 注释
-SELECT *
-FROM mytable; -- 注释
-/* 注释1
-   注释2 */
-```
 
 # 排序
 
@@ -320,7 +395,7 @@ ORDER BY cust_name;
 
 # 连接
 
-连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON。
+连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 Where。
 
 连接可以替换子查询，并且比子查询的效率一般会更快。
 
@@ -378,7 +453,7 @@ where e1.department = e2.department
 
 自然连接是把同名列通过等值测试连接起来的，同名列可以有多个。
 
-内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列；内连接属于自然连接。
+内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列。
 
 ```
 select *
@@ -387,14 +462,14 @@ from employee natural join department;
 
 ## 外连接
 
-外连接保留了没有关联的那些行。分为左外连接，右外连接以及全外连接，左外连接就是保留左表的所有行。
+外连接保留了没有关联的那些行。分为左外连接，右外连接以及全外连接，左外连接就是保留左表没有关联的行。
 
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```
 select Customers.cust_id, Orders.order_num
    from Customers left outer join Orders
-   on Customers.cust_id = Orders.curt_id
+   on Customers.cust_id = Orders.curt_id;
 ```
 
 如果需要统计顾客的订单数，使用聚集函数。
@@ -404,14 +479,16 @@ select Customers.cust_id,
        COUNT(Orders.order_num) as num_ord
 from Customers left outer join Orders
 on Customers.cust_id = Orders.curt_id
-group by Customers.cust_id
+group by Customers.cust_id;
 ```
 
 # 组合查询
 
-使用 **UNION** 来连接两个查询，每个查询必须包含相同的列、表达式或者聚集函数。
+使用 **UNION** 来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果为 M+N 行。
 
-默认会去除相同行，如果需要保留相同行，使用 UNION ALL 。
+每个查询必须包含相同的列、表达式或者聚集函数。
+
+默认会去除相同行，如果需要保留相同行，使用 UNION ALL。
 
 只能包含一个 ORDER BY 子句，并且必须位于语句的最后。
 
@@ -425,81 +502,7 @@ FROM mytable
 WHERE col =2;
 ```
 
-# 插入
 
-**普通插入**
-
-```sql
-INSERT INTO mytable(col1, col2)
-VALUES(val1, val2);
-```
-
-**插入检索出来的数据**
-
-```sql
-INSERT INTO mytable1(col1, col2)
-SELECT col1, col2
-FROM mytable2;
-```
-
-**将一个表的内容复制到一个新表**
-
-```sql
-CREATE TABLE newtable AS
-SELECT * FROM mytable;
-```
-
-# 更新
-
-```sql
-UPDATE mytable
-SET col = val
-WHERE id = 1;
-```
-
-# 删除
-
-```sql
-DELETE FROM mytable
-WHERE id = 1;
-```
-
-**TRUNCATE TABLE** 可以清空表，也就是删除所有行。
-
-使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
-
-# 创建表
-
-```sql
-CREATE TABLE mytable (
-  id INT NOT NULL AUTO_INCREMENT,
-  col1 INT NOT NULL DEFAULT 1,
-  col2 VARCHAR(45) NULL,
-  col3 DATE NULL,
-  PRIMARY KEY (`id`));
-```
-
-# 修改表
-
-**添加列**
-
-```sql
-ALTER TABLE mytable
-ADD col CHAR(20);
-```
-
-**删除列**
-
-```sql
-ALTER TABLE mytable
-DROP COLUMN col;
-```
-
-**删除表**
-
-```sql
-DROP TABLE mytable;
-```
 
 # 视图
 
