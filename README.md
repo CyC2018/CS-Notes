@@ -65,6 +65,10 @@
 
 整理自《深入理解 Java 虚拟机》，主要整理了内存模型、垃圾回收以及类加载机制。
 
+> [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
+
+只整理了一些比较基础的概念，之后会继续添加更多内容。
+
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
 容器的一些总结，包含容器源码的分析。
