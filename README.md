@@ -8,7 +8,9 @@
 
 <!-- <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/> -->
 
-![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg)
+<!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg) -->
+
+![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-brightgreen.svg)
 
 ## 网络 :cloud:
 
