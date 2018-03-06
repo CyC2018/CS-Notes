@@ -12,7 +12,7 @@
 
 <!-- ![](https://img.shields.io/badge/gitbook-making-green.svg) ![](https://img.shields.io/badge/update-today-blue.svg)  -->
 
-![](https://img.shields.io/badge/update-today-red.svg) ![](https://img.shields.io/badge/gitbook-making-brightgreen.svg) 
+![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg) 
 
 ## 网络 :cloud:
 
