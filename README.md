@@ -10,7 +10,9 @@
 
 <!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg) -->
 
-![](https://img.shields.io/badge/gitbook-making-green.svg) ![](https://img.shields.io/badge/update-today-blue.svg) 
+<!-- ![](https://img.shields.io/badge/gitbook-making-green.svg) ![](https://img.shields.io/badge/update-today-blue.svg)  -->
+
+![](https://img.shields.io/badge/update-today-red.svg) ![](https://img.shields.io/badge/gitbook-making-brightgreen.svg) 
 
 ## 网络 :cloud:
 
