@@ -214,14 +214,14 @@ private void writeObject(java.io.ObjectOutputStream s)
 }
 ```
 
-**和 Vector 的区别**
+**和 Vector 的区别** 
 
 1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问要慢。最好使用 ArrayList 而不是 Vector，因为同步完全可以由程序员自己来控制；
 2.  Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
 为了使用线程安全的 ArrayList，可以使用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
 
-**和 LinkedList 的区别**
+**和 LinkedList 的区别** 
 
 1.  ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
 2. ArrayList 支持随机访问，LinkedList 不支持；

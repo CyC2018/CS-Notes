@@ -371,13 +371,13 @@ Region 不可能是孤立的，一个对象分配在某个 Region 中，可以�
 
 | 收集器 | 串行、并行 or 并发 | 新生代 / 老年代 | 算法 | 目标 | 适用场景 |
 | --- | --- | --- | --- | --- | --- |
-| **Serial** | 串行 | 新生代 | 复制算法 | 响应速度优先 | 单 CPU 环境下的 Client 模式 |
-| **Serial Old** | 串行 | 老年代 | 标记 - 整理 | 响应速度优先 | 单 CPU 环境下的 Client 模式、CMS 的后备预案 |
-| **ParNew** | 并行 | 新生代 | 复制算法 | 响应速度优先 | 多 CPU 环境时在 Server 模式下与 CMS 配合 |
-| **Parallel Scavenge** | 并行 | 新生代 | 复制算法 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
-| **Parallel Old** | 并行 | 老年代 | 标记 - 整理 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
-| **CMS** | 并发 | 老年代 | 标记 - 清除 | 响应速度优先 | 集中在互联网站或 B/S 系统服务端上的 Java 应用 |
-| **G1** | 并发 | both | 标记 - 整理 + 复制算法 | 响应速度优先 | 面向服务端应用，将来替换 CMS |
+|  **Serial**  | 串行 | 新生代 | 复制算法 | 响应速度优先 | 单 CPU 环境下的 Client 模式 |
+|  **Serial Old**  | 串行 | 老年代 | 标记 - 整理 | 响应速度优先 | 单 CPU 环境下的 Client 模式、CMS 的后备预案 |
+|  **ParNew**  | 并行 | 新生代 | 复制算法 | 响应速度优先 | 多 CPU 环境时在 Server 模式下与 CMS 配合 |
+|  **Parallel Scavenge**  | 并行 | 新生代 | 复制算法 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
+|  **Parallel Old**  | 并行 | 老年代 | 标记 - 整理 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
+|  **CMS**  | 并发 | 老年代 | 标记 - 清除 | 响应速度优先 | 集中在互联网站或 B/S 系统服务端上的 Java 应用 |
+|  **G1**  | 并发 | both | 标记 - 整理 + 复制算法 | 响应速度优先 | 面向服务端应用，将来替换 CMS |
 
 ## 4. 内存分配与回收策略
 
@@ -437,11 +437,11 @@ JVM 为对象定义年龄计数器，经过 Minor GC 依然存活且被 Survivor
 
 包括以下 7 个阶段：
 
-- **加载（Loading）**
-- **验证（Verification）**
-- **准备（Preparation）**
-- **解析（Resolution）**
-- **初始化（Initialization）**
+-  **加载（Loading）** 
+-  **验证（Verification）** 
+-  **准备（Preparation）** 
+-  **解析（Resolution）** 
+-  **初始化（Initialization）** 
 - 使用（Using）
 - 卸载（Unloading）
 
@@ -612,15 +612,15 @@ public static void main(String[] args) {
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//2cdc3ce2-fa82-4c22-baaa-000c07d10473.jpg"/> </div><br>
 
-**工作过程**
+**工作过程** 
 
 如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载，而是把这个请求委派给父类加载器，每一个层次的加载器都是如此，依次递归，因此所有的加载请求最终都应该传送到顶层的启动类加载器中，只有当父加载器反馈自己无法完成此加载请求（它搜索范围中没有找到所需类）时，子加载器才会尝试自己加载。
 
-**好处**
+**好处** 
 
 使用双亲委派模型来组织类加载器之间的关系，使得 Java 类随着它的类加载器一起具备了一种带有优先级的层次关系。例如类 java.lang.Object，它存放再 rt.jar 中，无论哪个类加载器要加载这个类，最终都是委派给处于模型最顶端的启动类加载器进行加载，因此 Object 类在程序的各种类加载器环境中都是同一个类。相反，如果没有双亲委派模型，由各个类加载器自行加载的话，如果用户编写了一个称为｀java.lang.Object 的类，并放在程序的 ClassPath 中，那系统中将会出现多个不同的 Object 类，程序将变得一片混乱。如果开发者尝试编写一个与 rt.jar 类库中已有类重名的 Java 类，将会发现可以正常编译，但是永远无法被加载运行。
 
-**实现**
+**实现** 
 
 ```java
 protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException{

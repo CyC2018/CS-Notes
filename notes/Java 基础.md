@@ -33,39 +33,39 @@
 
 ## 1. final
 
-**数据**
+**数据** 
 
 声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。
 
 对于基本类型，final 使数值不变；对于引用对象，final 使引用不变，也就不能引用其它对象，但是被引用的对象本身是可以修改的。
 
-**方法**
+**方法** 
 
 声明方法不能被子类覆盖。
 
 private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是覆盖基类方法，而是重载了。
 
-**类**
+**类** 
 
 声明类不允许被继承。
 
 ## 2. static
 
-**变量**
+**变量** 
 
 静态变量在内存中只存在一份，只在类第一次实例化时初始化一次，同时类所有的实例都共享静态变量，可以直接通过类名来访问它。
 
 但是实例变量则不同，它是伴随着实例的，每创建一个实例就会产生一个实例变量，它与该实例同生共死。
 
-**方法**
+**方法** 
 
 静态方法在类加载的时候就存在了，它不依赖于任何实例，所以 static 方法必须实现，也就是说他不能是抽象方法 abstract。
 
-**静态语句块**
+**静态语句块** 
 
 静态语句块和静态变量一样在类第一次实例化时运行一次。
 
-**初始化顺序**
+**初始化顺序** 
 
 静态数据优先于其它数据的初始化，静态变量和静态语句块哪个先运行取决于它们在代码中的顺序。
 
@@ -127,13 +127,13 @@ public InitialOrderTest() {
 
 ## 2. clone()
 
-**浅拷贝**
+**浅拷贝** 
 
 引用类型引用的是同一个对象，clone() 方法默认就是浅拷贝实现。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"/> </div><br>
 
-**深拷贝**
+**深拷贝** 
 
 可以使用序列化实现。
 
@@ -213,11 +213,11 @@ public class Subclass extends Superclass {
 
 ## 1. String, StringBuffer and StringBuilder
 
-**是否可变**
+**是否可变** 
 
 String 不可变，StringBuffer 和 StringBuilder 可变。
 
-**是否线程安全**
+**是否线程安全** 
 
 String 不可变，因此是线程安全的。
 
@@ -227,21 +227,21 @@ StringBuilder 不是线程安全的；StringBuffer 是线程安全的，使用 s
 
 ## 2. String 不可变的原因
 
-**可以缓存 hash 值**
+**可以缓存 hash 值** 
 
 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等。不可变的特性可以使得 hash 值也不可变，因此就只需要进行一次计算。
 
-**String Pool 的需要**
+**String Pool 的需要** 
 
 如果 String 已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"/> </div><br>
 
-**安全性**
+**安全性** 
 
 String 经常作为参数，例如网络连接参数等，在作为网络连接参数的情况下，如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。String 不可变性可以保证参数不可变。
 
-**线程安全**
+**线程安全** 
 
 String 不可变性天生具备线程安全，可以在多个线程中使用。
 
@@ -363,13 +363,13 @@ public static void main(java.lang.String[]);
 
 # 反射
 
-每个类都有一个 **Class** 对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
+每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
 类加载相当于 Class 对象的加载。类在第一次使用时才动态加载到 JVM 中，可以使用 Class.forName('com.mysql.jdbc.Driver.class') 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
 反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。
 
-Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库包含了 **Field**、**Method** 以及 **Constructor** 类。可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段，可以使用 invoke() 方法调用与 Method 对象关联的方法，可以用 Constructor 创建新的对象。
+Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库包含了  **Field** 、**Method** 以及 **Constructor** 类。可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段，可以使用 invoke() 方法调用与 Method 对象关联的方法，可以用 Constructor 创建新的对象。
 
 IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
 
@@ -377,9 +377,9 @@ IDE 使用反射机制获取类的信息，在使用一个类的对象时，能�
 
 # 异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：**Error** 和 **Exception**，其中 Error 用来表示编译时系统错误。
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示编译时系统错误。
 
-Exception 分为两种：**受检异常** 和 **非受检异常**。受检异常需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；非受检异常是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
+Exception 分为两种： **受检异常**  和 **非受检异常**。受检异常需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；非受检异常是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div><br>
 

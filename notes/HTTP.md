@@ -61,11 +61,11 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 ## 请求和响应报文
 
-**请求报文**
+**请求报文** 
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//22b39f77-ac47-4978-91ed-84aaf457644c.jpg"/> </div><br>
 
-**响应报文**
+**响应报文** 
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//00d8d345-cd4a-48af-919e-209d2788eca7.jpg"/> </div><br>
 
@@ -142,43 +142,43 @@ TRACE 一般不会使用，并且它容易受到 XST 攻击（Cross-Site Tracing
 
 ## 2XX 成功
 
-- **200 OK**
+-  **200 OK** 
 
-- **204 No Content**：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
+-  **204 No Content** ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
 
-- **206 Partial Content**
+-  **206 Partial Content** 
 
 ## 3XX 重定向
 
-- **301 Moved Permanently**：永久性重定向
+-  **301 Moved Permanently** ：永久性重定向
 
-- **302 Found**：临时性重定向
+-  **302 Found** ：临时性重定向
 
-- **303 See Other**
+-  **303 See Other** 
 
 - 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会 在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
 
-- **304 Not Modified**：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，但是不满足条件，则服务器会返回 304 状态码。
+-  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，但是不满足条件，则服务器会返回 304 状态码。
 
-- **307 Temporary Redirect**：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
+-  **307 Temporary Redirect** ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
 
 ## 4XX 客户端错误
 
-- **400 Bad Request**：请求报文中存在语法错误
+-  **400 Bad Request** ：请求报文中存在语法错误
 
-- **401 Unauthorized**：该状态码表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证）的认证信息。如果之前已进行过一次请求，则表示用户认证失败。
+-  **401 Unauthorized** ：该状态码表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证）的认证信息。如果之前已进行过一次请求，则表示用户认证失败。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
 
-- **403 Forbidden**：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
+-  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
 
-- **404 Not Found**
+-  **404 Not Found** 
 
 ## 5XX 服务器错误
 
-- **500 Internal Server Error**：服务器正在执行请求时发生错误
+-  **500 Internal Server Error** ：服务器正在执行请求时发生错误
 
-- **503 Service Unavilable**：该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+-  **503 Service Unavilable** ：该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
 
 # HTTP 首部
 
@@ -274,15 +274,15 @@ Set-Cookie 字段有以下属性：
 | Secure | 仅在 HTTPS 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
-**Session 和 Cookie 区别**
+**Session 和 Cookie 区别** 
 
 Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文就包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
 
-**浏览器禁用 Cookie 的情况**
+**浏览器禁用 Cookie 的情况** 
 
 会使用 URL 重写技术，在 URL 后面加上 sid=xxx 。
 
-**使用 Cookie 实现用户名和密码的自动填写**
+**使用 Cookie 实现用户名和密码的自动填写** 
 
 网站脚本会自动从 Cookie 中读取用户名和密码，从而实现自动填写。
 
@@ -296,7 +296,7 @@ Expires 字段可以用于告知缓存服务器该资源什么时候会过期。
 
 ## 持久连接
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。**持久连接** 只需要进行一次 TCP 连接就能进行多次 HTTP 通信。HTTP/1.1 开始，所有的连接默认都是持久连接。
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。 **持久连接**  只需要进行一次 TCP 连接就能进行多次 HTTP 通信。HTTP/1.1 开始，所有的连接默认都是持久连接。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg"/> </div><br>
 
@@ -340,7 +340,7 @@ Expires 字段可以用于告知缓存服务器该资源什么时候会过期。
 
 ## 通信数据转发
 
-**代理**
+**代理** 
 
 代理服务器接受客户端的请求，并且转发给其它服务器。
 
@@ -350,13 +350,13 @@ Expires 字段可以用于告知缓存服务器该资源什么时候会过期。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c07035c3-a9ba-4508-8e3c-d8ae4c6ee9ee.jpg"/> </div><br>
 
-**网关**
+**网关** 
 
 与代理服务器不同的是，网关服务器会将 HTTP 转化为其它协议进行通信，从而请求其它非 HTTP 服务器的服务。
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//81375888-6be1-476f-9521-42eea3e3154f.jpg"/> </div><br>
 
-**隧道**
+**隧道** 
 
 使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。
 
@@ -378,13 +378,13 @@ HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信
 
 对称密钥加密的缺点：无法安全传输密钥；公开密钥加密的缺点：相对来说更耗时。
 
-HTTPs 采用 **混合的加密机制**，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中，共享密钥即对称密钥）
+HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中，共享密钥即对称密钥）
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//110b1a9b-87cd-45c3-a21d-824623715b33.jpg"/> </div><br>
 
 ## 认证
 
-通过使用 **证书** 来对通信方进行认证。证书中有公开密钥数据，如果可以验证公开密钥的确属于通信方的，那么就可以确定通信方是可靠的。
+通过使用  **证书**  来对通信方进行认证。证书中有公开密钥数据，如果可以验证公开密钥的确属于通信方的，那么就可以确定通信方是可靠的。
 
 数字证书认证机构（CA，Certificate Authority）可以对其颁发的公开密钥证书对其进行验证。
 

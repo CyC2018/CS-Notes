@@ -122,7 +122,7 @@ for(int i = 0; i < 5; i++) {
 
 ## 1. sleep()
 
-**Thread.sleep(millisec)** 方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
+**Thread.sleep(millisec)**  方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
 
 sleep() 可能会抛出 InterruptedException。因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
 
@@ -140,7 +140,7 @@ public void run() {
 
 ## 2. yield()
 
-对静态方法 **Thread.yield()** 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
+对静态方法  **Thread.yield()**  的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
 
 ```java
 public void run() {
@@ -151,13 +151,13 @@ public void run() {
 
 ## 3. join()
 
-在线程中调用另一个线程的 **join()** 方法，会将当前线程挂起，直到目标线程结束。
+在线程中调用另一个线程的  **join()**  方法，会将当前线程挂起，直到目标线程结束。
 
 可以加一个超时参数。
 
 ## 4. deamon
 
-后台线程（**deamon**）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
+后台线程（ **deamon** ）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
 
 当所有非后台线程结束时，程序也就终止，同时会杀死所有后台线程。
 
@@ -167,14 +167,14 @@ main() 属于非后台线程。
 
 # 线程之间的协作
 
-- **线程通信**：保证线程以一定的顺序执行；
-- **线程同步**：保证线程对临界资源的互斥访问。
+-  **线程通信** ：保证线程以一定的顺序执行；
+-  **线程同步** ：保证线程对临界资源的互斥访问。
 
 线程通信往往是基于线程同步的基础上完成的，因此很多线程通信问题也是线程同步问题。
 
 ## 1. 线程通信
 
-**wait()、notify() 和 notifyAll()** 三者实现了线程之间的通信。
+**wait()、notify() 和 notifyAll()**  三者实现了线程之间的通信。
 
 wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。
 
@@ -198,7 +198,7 @@ public synchronized void before() {
 }
 ```
 
-**wait() 和 sleep() 的区别**
+**wait() 和 sleep() 的区别** 
 
 1. wait() 是 Object 类的方法，而 sleep() 是 Thread 的静态方法；
 2. wait() 会放弃锁，而 sleep() 不会。
@@ -209,7 +209,7 @@ public synchronized void before() {
 
 ### 2.1 synchronized
 
-**同步一个方法**
+**同步一个方法** 
 
 使多个线程不能同时访问该方法。
 
@@ -219,7 +219,7 @@ public synchronized void func(String name) {
 }
 ```
 
-**同步一个代码块**
+**同步一个代码块** 
 
 ```java
 public void func(String name) {
@@ -246,12 +246,12 @@ public int func(int value) {
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
-- **FIFO 队列**：LinkedBlockingQueue、ArrayListBlockingQueue（固定长度）
-- **优先级队列**：PriorityBlockingQueue
+-  **FIFO 队列** ：LinkedBlockingQueue、ArrayListBlockingQueue（固定长度）
+-  **优先级队列** ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将一直阻塞到队列中有内容，如果队列为满  put() 将阻塞到队列有空闲位置。它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
 
-**使用 BlockingQueue 实现生产者消费者问题**
+**使用 BlockingQueue 实现生产者消费者问题** 
 
 ```java
 // 生产者
@@ -340,12 +340,12 @@ Producer4 is consuming product made by Consumer4...
 
 JDK 从 1.5 开始在 Thread 类中增添了 State 枚举，包含以下六种状态：
 
-1. **NEW**（新建）
-2. **RUNNABLE**（当线程正在运行或者已经就绪正等待 CPU 时间片）
-3. **BLOCKED**（阻塞，线程在等待获取对象同步锁）
-4. **Waiting**（调用不带超时的 wait() 或 join()）
-5. **TIMED_WAITING**（调用 sleep()、带超时的 wait() 或者 join()）
-6. **TERMINATED**（死亡）
+1.  **NEW** （新建）
+2.  **RUNNABLE** （当线程正在运行或者已经就绪正等待 CPU 时间片）
+3.  **BLOCKED** （阻塞，线程在等待获取对象同步锁）
+4.  **Waiting** （调用不带超时的 wait() 或 join()）
+5.  **TIMED_WAITING** （调用 sleep()、带超时的 wait() 或者 join()）
+6.  **TERMINATED** （死亡）
 
 <br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//19f2c9ef-6739-4a95-8e9d-aa3f7654e028.jpg"/> </div><br>
 
@@ -364,21 +364,21 @@ JDK 从 1.5 开始在 Thread 类中增添了 State 枚举，包含以下六种�
 
 使用中断机制即可终止阻塞的线程。
 
-使用 **interrupt()** 方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
+使用  **interrupt()**  方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
 
 应当捕获这个 InterruptedException 异常，从而做一些清理资源的操作。
 
-**不可中断的阻塞**
+**不可中断的阻塞** 
 
 不能中断 I/O 阻塞和 synchronized 锁阻塞。
 
-**Executor 的中断操作**
+**Executor 的中断操作** 
 
 Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断所有它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
 
 如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
 
-**检查中断**
+**检查中断** 
 
 通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
 
@@ -390,9 +390,9 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 
 对于除 long 和 double 之外的基本类型变量的读写，可以看成是具有原子性的，以不可分割的步骤操作内存。
 
-JVM 将 64 位变量（long 和 double）的读写当做两个分离的 32 位操作来执行，在两个操作之间可能会发生上下文切换，因此不具有原子性。可以使用 **volatile** 关键字来定义 long 和 double 变量，从而获得原子性。
+JVM 将 64 位变量（long 和 double）的读写当做两个分离的 32 位操作来执行，在两个操作之间可能会发生上下文切换，因此不具有原子性。可以使用  **volatile**  关键字来定义 long 和 double 变量，从而获得原子性。
 
-**AtomicInteger、AtomicLong、AtomicReference** 等特殊的原子性变量类提供了下面形式的原子性条件更新语句，使得比较和更新这两个操作能够不可分割地执行。
+**AtomicInteger、AtomicLong、AtomicReference**  等特殊的原子性变量类提供了下面形式的原子性条件更新语句，使得比较和更新这两个操作能够不可分割地执行。
 
 ```java
 boolean compareAndSet(expectedValue, updateValue);
