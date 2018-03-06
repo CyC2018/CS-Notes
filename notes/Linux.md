@@ -716,7 +716,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
 ## 变量操作
 
 - 对一个变量赋值直接使用 = ；
-- 对变量取用需要在变量前加上 \<img src="https://latex.codecogs.com/gif.latex?，也可以用\"/>{} 的形式；
+- 对变量取用需要在变量前加上 \$ ，也可以用 \${} 的形式；
 - 输出变量使用 echo 命令。
 
 ```bash
@@ -725,10 +725,10 @@ $ echo $var
 $ echo ${var}
 ```
 
-变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \<img src="https://latex.codecogs.com/gif.latex?LANG"，则var的值为langiszh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如var='langis\"/>LANG'，则 var 的值为 lang is \$LANG。
+变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
 
 
-可以使用 \`指令\` 或者 \<img src="https://latex.codecogs.com/gif.latex?(指令)的方式将指令的执行结果赋值给变量。例如version=\"/>(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
+可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
 
 可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
 
@@ -984,7 +984,7 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 $ awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
 ```
 
-awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\<img src="https://latex.codecogs.com/gif.latex?n，n为字段号，从1开始，\"/>0 表示一整行。
+awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
 范例 1：取出登录用户的用户名和 ip
 
