@@ -14,7 +14,7 @@
 
 ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg) 
 
-# 网络 :cloud:
+## 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
@@ -24,7 +24,7 @@
 
 整理自《图解 HTTP》
 
-# 操作系统 :computer:
+## 操作系统 :computer:
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
@@ -34,7 +34,7 @@
 
 整理自《鸟哥的 Linux 私房菜》
 
-# 数据结构与算法 :pencil2:
+## 数据结构与算法 :pencil2:
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
@@ -48,7 +48,7 @@
 
 对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
-# 面向对象 :couple:
+## 面向对象 :couple:
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
@@ -58,7 +58,7 @@
 
 一些面向对象思想和原则。
 
-# 数据库 :floppy_disk:
+## 数据库 :floppy_disk:
 
 > [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
 
@@ -68,7 +68,7 @@
 
 整理自《高性能 MySQL》，整理了一些重点内容。
 
-# Java :coffee:
+## Java :coffee:
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
@@ -90,7 +90,7 @@ File、InputStream OutputStream、Reader Writer、Serializable、Socket、NIO
 
 整理了一些常见考点。
 
-# 编码实践 :hammer:
+## 编码实践 :hammer:
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
@@ -104,13 +104,13 @@ File、InputStream OutputStream、Reader Writer、Serializable、Socket、NIO
 
 Google 开源项目的代码风格规范。
 
-# 资料下载 :arrow_down:
+## 资料下载 :arrow_down:
 
 > [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F)
 
 一些 PDF 书籍
 
-# 后记 :memo:
+## 后记 :memo:
 
 网上有很多相关的资料，但是这些资料都比较零散。本仓库的笔记是从经典的书籍和材料中整理而来，在整理出重点的同时会尽可能保证知识的系统性，因此比较适合作为应对面试的学习资料。
 
