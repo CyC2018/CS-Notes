@@ -31,7 +31,9 @@
 * [字符集](#字符集)
 * [权限管理](#权限管理)
 <!-- GFM-TOC -->
-
+```sql
+select * from table inner join person on table.id=person.id where table.id='5'
+```
 
 # 基础
 
