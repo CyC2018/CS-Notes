@@ -710,7 +710,7 @@ SHOW GRANTS FOR myuser;
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-<div align="center"> <img src="../pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div>
+<div align="center"> <img src="../pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
 
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
