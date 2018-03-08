@@ -153,7 +153,9 @@ public E remove(int index) {
 
 添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要进行扩容，使得新容量为旧容量的 1.5 倍。
 
-modCount 用来记录 ArrayList 发生变化的次数，因为每次在进行 add() 和 addAll() 时都需要调用 ensureCapacity()，因此直接在 ensureCapacity() 中对 modCount 进行修改。
+modCount 用来记录 ArrayList 结构发生变化的次数，因为每次在进行 add() 和 addAll() 时都需要调用 ensureCapacity()，因此直接在 ensureCapacity() 中对 modCount 进行修改。
+
+结构发生变化：添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
 ```java
 public void ensureCapacity(int minCapacity) {
