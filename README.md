@@ -114,13 +114,13 @@ Google 开源项目的代码风格规范。
 
 网上有很多相关的资料，但是这些资料都比较零散。本仓库的笔记是从经典的书籍和材料中整理而来，在整理出重点的同时会尽可能保证知识的系统性，因此比较适合作为应对面试的学习资料。
 
-笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了本人实现的 Markdown 排版工具的下载：[Markdown-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了本人实现的 Markdown 文档排版工具的下载：[Markdown-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
 由于 Github 使用的 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为了把本地的 Markdown 文档转换为 GFM 支持的格式，需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。并且为了让图片显示效果更好，笔记内容基本使用了 &lt;center> 标记来让图片居中显示，但是 GFM 却不支持 &lt;center> 标记，因此也需要进行一定的转换。这里提供了本人实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 因为大部分内容是一个字一个字打上去的，难免会有一些笔误，如果发现，可以直接在相应的文档上编辑修改。
 
-想要发表反馈意见的话，可以到 [原贴](https://www.nowcoder.com/discuss/66985) 的评论区进行留言。
+如果觉得内容不够完善或者有写的不好的地方，您可以在 Issues 中发表反馈意见。
 
 ---
 
