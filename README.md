@@ -60,6 +60,10 @@
 
 ## 数据库 :floppy_disk:
 
+> [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
+
+整理自《数据库系统概论 第四版》
+
 > [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
 
 整理自《SQL 必知必会》
