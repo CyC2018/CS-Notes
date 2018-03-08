@@ -347,7 +347,7 @@ JDK 从 1.5 开始在 Thread 类中增添了 State 枚举，包含以下六种�
 5.  **TIMED_WAITING** （调用 sleep()、带超时的 wait() 或者 join()）
 6.  **TERMINATED** （死亡）
 
-<br><div align="center"> <img src="../pics//19f2c9ef-6739-4a95-8e9d-aa3f7654e028.jpg"/> </div><br>
+<div align="center"> <img src="../pics//19f2c9ef-6739-4a95-8e9d-aa3f7654e028.jpg"/> </div>
 
 # 结束线程
 

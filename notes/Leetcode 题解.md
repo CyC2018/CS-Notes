@@ -693,7 +693,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 
 ### BFS
 
-<br><div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
+<div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div>
 
 广度优先搜索的搜索过程有点像一层一层地进行遍历：从节点 0 出发，遍历到 6、2、1 和 5 这四个新节点。
 
@@ -750,7 +750,7 @@ private class Position {
 
 ### DFS
 
-<br><div align="center"> <img src="../pics//f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
+<div align="center"> <img src="../pics//f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div>
 
 广度优先搜索一层一层遍历，每一层遍历到的所有新节点，要用队列先存储起来以备下一层遍历的时候再遍历；而深度优先搜索在遍历到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
@@ -1036,7 +1036,7 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 [Leetcode : 51. N-Queens (Hard)](https://leetcode.com/problems/n-queens/description/)
 
-<br><div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
+<div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div>
 
 题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，要求解所有的 n 皇后解。
 
@@ -1044,11 +1044,11 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
 
-<br><div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
+<div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div>
 
 135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
-<br><div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
+<div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div>
 
 ```java
 private List<List<String>> ret;
@@ -1105,7 +1105,7 @@ private void backstracking(int row) {
 
 [Leetcode : 17. Letter Combinations of a Phone Number (Medium)](https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/)
 
-<br><div align="center"> <img src="../pics//a3f34241-bb80-4879-8ec9-dff2d81b514e.jpg"/> </div><br>
+<div align="center"> <img src="../pics//a3f34241-bb80-4879-8ec9-dff2d81b514e.jpg"/> </div>
 
 ```html
 Input:Digit string "23"
@@ -1547,7 +1547,7 @@ private boolean isPalindrome(String s, int begin, int end) {
 
 [Leetcode : 37. Sudoku Solver (Hard)](https://leetcode.com/problems/sudoku-solver/description/)
 
-<br><div align="center"> <img src="../pics//1ca52246-c443-48ae-b1f8-1cafc09ec75c.png"/> </div><br>
+<div align="center"> <img src="../pics//1ca52246-c443-48ae-b1f8-1cafc09ec75c.png"/> </div>
 
 ```java
 private boolean[][] rowsUsed = new boolean[9][10];
@@ -2471,7 +2471,7 @@ public int minDistance(String word1, String word2) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<br><div align="center"> <img src="../pics//ac9b31ec-cef1-4880-a875-fc4571ca10e1.png"/> </div><br>
+<div align="center"> <img src="../pics//ac9b31ec-cef1-4880-a875-fc4571ca10e1.png"/> </div>
 
 ```html
 s0[i] = max(s0[i - 1], s2[i - 1]); // Stay at s0, or rest from s2
@@ -3768,7 +3768,7 @@ private boolean isEqual(ListNode l1, ListNode l2){
 
 [编程之美：3.4]()
 
-<br><div align="center"> <img src="../pics//2c968ec5-0967-49ce-ac06-f8f5c9ab33bc.jpg"/> </div><br>
+<div align="center"> <img src="../pics//2c968ec5-0967-49ce-ac06-f8f5c9ab33bc.jpg"/> </div>
 
 ```java
 B.val = C.val;
@@ -4484,7 +4484,7 @@ private void inorder(TreeNode node, int k) {
 
 ### Trie
 
-<br><div align="center"> <img src="../pics//5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
+<div align="center"> <img src="../pics//5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div>
 
 Trie，又称前缀树或字典树，用于判断字符串是否存在或者是否具有某种字符串前缀。
 

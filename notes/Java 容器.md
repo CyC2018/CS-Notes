@@ -23,7 +23,7 @@
 
 # 概览
 
-<br><div align="center"> <img src="../pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div><br>
+<div align="center"> <img src="../pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div>
 
 容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。
 
