@@ -155,7 +155,11 @@ public E remove(int index) {
 
 modCount 用来记录 ArrayList 结构发生变化的次数，因为每次在进行 add() 和 addAll() 时都需要调用 ensureCapacity()，因此直接在 ensureCapacity() 中对 modCount 进行修改。
 
+<<<<<<< HEAD
 结构发生变化：添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+=======
+> 结构发生变化：添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+>>>>>>> 8edf14c884be4eb62ef6054ae129f9794f62e7d2
 
 ```java
 public void ensureCapacity(int minCapacity) {
