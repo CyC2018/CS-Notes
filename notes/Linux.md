@@ -137,7 +137,6 @@ ps aux | grep threadx
 
 ## 查看端口
 
-
 ```html
 netstat -anp | grep 80
 ```
@@ -153,7 +152,7 @@ netstat -anp | grep 80
 ## 运行等级
 
 - 0：关机模式
-- 1：单用户模式（可用于破解root密码）
+- 1：单用户模式（可用于破解 root 密码）
 - 2：无网络支持的多用户模式
 - 3：有网络支持的多用户模式（文本模式，工作中最常用的模式）
 - 4：保留，未使用
@@ -163,7 +162,6 @@ netstat -anp | grep 80
 ## sudo
 
 使用 sudo 允许一般用户使用 root 可执行的命令，只有在 /etc/sudoers 配置文件中添加的用户才能使用该指令。
-
 
 ## GNU
 
@@ -207,15 +205,15 @@ Linux 中每个硬件都被当做一个文件。
 
 ### 1. MBR
 
-MBR 中，第一个扇区最重要，里面有：主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
+MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
 
-分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，可以记录更多的分区，因此通过扩展分区可以分出更多区分，这些分区称为逻辑分区。
+分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，因此通过扩展分区可以分出更多区分，这些分区称为逻辑分区。
 
-Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名+编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
+Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名 + 编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
 
 ### 2. GPT
 
-不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。
+不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。
 
 GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。
 
@@ -288,7 +286,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 ### 3. 修改权限
 
-可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r：4、w：2、x：1。
+可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r : 4、w : 2、x : 1。
 
 ```html
 # chmod [-R] xyz dirname/filename
@@ -451,7 +449,7 @@ cp [-adfilprsu] source destination
 -c ： 更新 ctime，若该文件不存在则不建立新文件
 -m ： 更新 mtime
 -d ： 后面可以接欲更新的日期而不用当前的日期，也可以使用 --date="日期或时间"
--t ：后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
+-t ： 后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
 ```
 
 ## 指令与文件搜索
@@ -496,8 +494,8 @@ find 可以使用文件的属性和权限进行搜索。
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
--mtime +n ：列出在 n 天之前(不含 n 天本身)修改过内容的文件
--mtime -n ：列出在 n 天之内(含 n 天本身)修改过内容的文件
+-mtime +n ：列出在 n 天之前 (不含 n 天本身) 修改过内容的文件
+-mtime -n ：列出在 n 天之内 (含 n 天本身) 修改过内容的文件
 -newer file ： 列出比 file 更新的文件
 ```
 
@@ -520,7 +518,7 @@ find 可以使用文件的属性和权限进行搜索。
 
 ```html
 -name filename
--size [+-]SIZE：搜寻比 SIZE 还要大(+)或小(-)的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
+-size [+-]SIZE：搜寻比 SIZE 还要大 (+) 或小 (-) 的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
 -type TYPE
 -perm mode  ：搜索权限等于 mode 的文件
 -perm -mode ：搜索权限包含 mode 的文件
@@ -557,13 +555,13 @@ inode 中记录了文件内容所在的 block，但是每个 block 非常小，�
 
 inode 具体包含以下信息：
 
-- 该文件的存取模式(read/write/excute)；
-- 该文件的拥有者与群组(owner/group)；
+- 该文件的存取模式 (read/write/excute)；
+- 该文件的拥有者与群组 (owner/group)；
 - 该文件的容量；
-- 该文件建立或状态改变的时间(ctime)；
-- 最近一次的读取时间(atime)；
-- 最近修改的时间(mtime)；
-- 定义文件特性的旗标(flag)，如 SetUID...；
+- 该文件建立或状态改变的时间 (ctime)；
+- 最近一次的读取时间 (atime)；
+- 最近修改的时间 (mtime)；
+- 定义文件特性的旗标 (flag)，如 SetUID...；
 - 该文件真正内容的指向 (pointer)。
 
 ## 目录的 inode 与 block
@@ -637,7 +635,7 @@ $ gzip [-cdtv#] filename
 -d ：解压缩
 -t ：检验压缩文件是否出错
 -v ：显示压缩比等信息
--# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为6
+-# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为 6
 ```
 
 ### 2. bzip2
@@ -668,12 +666,12 @@ $ xz [-dtlkc#] filename
 压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gip、bzip2、xz 将打包文件进行压缩。
 
 ```html
-$ tar [-z|-j|-J] [cv] [-f 新建的tar文件] filename...  ==打包压缩
-$ tar [-z|-j|-J] [tv] [-f 已有的tar文件]              ==查看
-$ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
--z ：使用zip；
--j ：使用bzip2；
--J ：使用xz；
+$ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
+$ tar [-z|-j|-J] [tv] [-f 已有的 tar 文件]              ==查看
+$ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
+-z ：使用 zip；
+-j ：使用 bzip2；
+-J ：使用 xz；
 -c ：新建打包文件；
 -t ：查看打包文件里面有哪些文件；
 -x ：解打包或解压缩的功能；
@@ -687,7 +685,6 @@ $ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
 | 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
 | 查 看 | tar -jtv -f filename.tar.bz2 |
 | 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
-
 
 # Bash
 
@@ -725,8 +722,7 @@ $ echo $var
 $ echo ${var}
 ```
 
-变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
-
+变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如 var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
 
 可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
 
@@ -739,7 +735,7 @@ $ declare [-aixr] variable
 -a ： 定义为数组类型
 -i ： 定义为整数类型
 -x ： 定义为环境变量
--r ： 定义为readonly类型
+-r ： 定义为 readonly 类型
 ```
 
 使用 [ ] 来对数组进行操作：
@@ -761,10 +757,9 @@ $ echo ${array[1]}
 
 重定向就是使用文件代替标准输入、标准输出和标准错误输出。
 
-
-1. 标准输入(stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
-2. 标准输出(stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
-3. 标准错误输出(stderr)：代码为 2 ，使用 2> 或 2>> ；
+1. 标准输入 (stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
+2. 标准输出 (stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
+3. 标准错误输出 (stderr)：代码为 2 ，使用 2> 或 2>> ；
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
@@ -981,7 +976,7 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 ## awk
 
 ```html
-$ awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
+$ awk ' 条件类型 1{动作 1} 条件类型 2{动作 2} ...' filename
 ```
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
@@ -1044,9 +1039,7 @@ daemon 2
 | :wq | 写入磁盘后离开|
 | :wq!|  强制写入磁盘后离开|
 
-
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
-
