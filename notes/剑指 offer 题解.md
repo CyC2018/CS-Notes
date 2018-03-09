@@ -38,7 +38,7 @@
     * [30. 包含 min 函数的栈](#30-包含-min-函数的栈)
     * [31. 栈的压入、弹出序列](#31-栈的压入弹出序列)
     * [32.1 从上往下打印二叉树](#321-从上往下打印二叉树)
-    * [32.3  把二叉树打印成多行](#323--把二叉树打印成多行)
+    * [32.2 把二叉树打印成多行](#322-把二叉树打印成多行)
     * [32.3 按之字形顺序打印二叉树](#323-按之字形顺序打印二叉树)
     * [33. 二叉搜索树的后序遍历序列](#33-二叉搜索树的后序遍历序列)
     * [34. 二叉树中和为某一值的路径](#34-二叉树中和为某一值的路径)
@@ -365,7 +365,7 @@ public class Solution {
 
 **题目描述** 
 
-一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
 ```java
 public int JumpFloor(int target) {
@@ -384,7 +384,7 @@ public int JumpFloor(int target) {
 
 **题目描述** 
 
-一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
 ```java
 public int JumpFloorII(int target) {
@@ -417,7 +417,6 @@ public int RectCover(int target) {
 **题目描述** 
 
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
-
 
 O(N) 时间复杂度解法：
 
@@ -493,7 +492,6 @@ private boolean backtracking(char[][] matrix, char[] str, boolean[][] used, int 
 }
 ```
 
-
 ## 13. 机器人的运动范围
 
 **题目描述** 
@@ -548,7 +546,7 @@ private void initDigitSum(int rows, int cols) {
 
 **动态规划解法** 
 
-[ 分割整数 ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
+[分割整数](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
 
 **贪心解法** 
 
@@ -556,7 +554,7 @@ private void initDigitSum(int rows, int cols) {
 
 ```java
 int maxProductAfterCuttin(int length) {
-    if (length < 2) return 0;
+    if (length < 2)  return 0;
     if (length == 2) return 1;
     if (length == 3) return 2;
     int timesOf3 = length / 3;
@@ -568,7 +566,11 @@ int maxProductAfterCuttin(int length) {
 
 ## 15. 二进制中 1 的个数
 
-使用库函数：
+**题目描述** 
+
+输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示
+
+**使用库函数** 
 
 ```java
 public int NumberOf1(int n) {
@@ -576,7 +578,7 @@ public int NumberOf1(int n) {
 }
 ```
 
-O(lgM) 时间复杂度解法，其中 M 表示 1 的个数：
+**O(lgM) 时间复杂度解法，其中 M 表示 1 的个数** 
 
 n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
 
@@ -724,8 +726,8 @@ public boolean isNumeric(char[] str) {
 
 保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
-时间复杂度 : O(n<sup>2</sup>)
-空间复杂度 : O(1)
+- 时间复杂度 : O(n<sup>2</sup>)
+- 空间复杂度 : O(1)
 
 ```java
 public void reOrderArray(int[] array) {
@@ -745,8 +747,8 @@ public void reOrderArray(int[] array) {
 }
 ```
 
-时间复杂度 : O(n)
-空间复杂度 : O(n)
+- 时间复杂度 : O(n)
+- 空间复杂度 : O(n)
 
 ```java
 public void reOrderArray(int[] array) {
@@ -951,6 +953,10 @@ public int min() {
 
 ## 31. 栈的压入、弹出序列
 
+**题目描述** 
+
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4，5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
+
 ```java
 public boolean IsPopOrder(int[] pushA, int[] popA) {
     int n = pushA.length;
@@ -967,6 +973,10 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 ```
 
 ## 32.1 从上往下打印二叉树
+
+**题目描述** 
+
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
 
 ```java
 public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
@@ -987,7 +997,7 @@ public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
 }
 ```
 
-## 32.3  把二叉树打印成多行
+## 32.2 把二叉树打印成多行
 
 ```java
 ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
@@ -1011,6 +1021,10 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 ```
 
 ## 32.3 按之字形顺序打印二叉树
+
+**题目描述** 
+
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
 
 ```java
 public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
@@ -1040,8 +1054,11 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 }
 ```
 
-
 ## 33. 二叉搜索树的后序遍历序列
+
+**题目描述** 
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
@@ -1065,6 +1082,10 @@ private boolean verify(int[] sequence, int start, int end) {
 ```
 
 ## 34. 二叉树中和为某一值的路径
+
+**题目描述** 
+
+输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
 
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
@@ -1105,7 +1126,6 @@ private void dfs(TreeNode node, int target, int curSum, ArrayList<Integer> path)
 第三步，拆分。
 
 <div align="center"> <img src="../pics//b2b6253c-c701-4b30-aff4-bc3c713542a7.jpg"/> </div><br>
-
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
@@ -1165,6 +1185,10 @@ private void inOrder(TreeNode node) {
 ```
 
 ## 37. 序列化二叉树
+
+**题目描述** 
+
+请实现两个函数，分别用来序列化和反序列化二叉树。
 
 ```java
 private String serizeString = "";
@@ -1252,10 +1276,9 @@ public int MoreThanHalfNum_Solution(int[] array) {
 }
 ```
 
-
 ## 40. 最小的 K 个数
 
-构建大小为 k 的小顶堆。
+**构建大小为 k 的小顶堆** 
 
 时间复杂度：O(nlgk)
 空间复杂度：O(k)
@@ -1275,7 +1298,7 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
 }
 ```
 
-利用快速选择
+**利用快速选择** 
 
 时间复杂度：O(n)
 空间复杂度：O(1)
@@ -1335,7 +1358,6 @@ private boolean less(int v, int w) {
 
 ## 41.1 数据流中的中位数
 
-
 **题目描述** 
 
 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
@@ -1393,8 +1415,11 @@ public char FirstAppearingOnce() {
 }
 ```
 
-
 ## 42. 连续子数组的最大和
+
+**题目描述** 
+
+{6,-3,-2,7,-15,1,2,2}，连续子向量的最大和为 8（从第 0 个开始,到第 3 个为止）
 
 ```java
 public int FindGreatestSumOfSubArray(int[] array) {
@@ -1604,6 +1629,10 @@ public int FirstNotRepeatingChar(String str) {
 ```
 
 ## 51. 数组中的逆序对
+
+**题目描述** 
+
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数 P。
 
 ```java
 private long cnt = 0;
