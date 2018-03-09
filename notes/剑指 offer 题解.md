@@ -341,23 +341,31 @@ public int pop() {
 
 ## 10.1 斐波那契数列
 
+**题目描述** 
+
+以 O(1) 的时间复杂度求菲波那切数列。
+
 ```java
-private int[] fib = new int[40];
-
-public Solution() {
-    fib[1] = 1;
-    fib[2] = 2;
-    for (int i = 2; i < fib.length; i++) {
-        fib[i] = fib[i - 1] + fib[i - 2];
+public class Solution {
+    private int[] fib = new int[40];
+    public Solution() {
+        fib[1] = 1;
+        fib[2] = 2;
+        for(int i = 2; i < fib.length; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
     }
-}
-
-public int Fibonacci(int n) {
-    return fib[n];
+    public int Fibonacci(int n) {
+        return fib[n];
+    }
 }
 ```
 
 ## 10.2 跳台阶
+
+**题目描述** 
+
+一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
 
 ```java
 public int JumpFloor(int target) {
@@ -373,6 +381,10 @@ public int JumpFloor(int target) {
 ```
 
 ## 10.3 变态跳台阶
+
+**题目描述** 
+
+一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
 
 ```java
 public int JumpFloorII(int target) {
