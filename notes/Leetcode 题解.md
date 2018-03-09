@@ -55,31 +55,41 @@
 
 ## 二分查找
 
-二分查找思想简单，但是在实现时有一些需要注意的细节：
-
-1. 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
-
-2. 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。
-解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
-
-3. l 的赋值一般都为 l = mid + 1。
-
 ```java
-public int search(int key, int[] arr) {
-    int l = 0, h = arr.length - 1;
+public int search(int key, int[] array) {
+    int l = 0, h = array.length - 1;
     while (l <= h) {
         int mid = l + (h - l) / 2;
-        if (key == arr[mid]) return mid;
-        if (key < arr[mid]) h = mid - 1;
+        if (key == array[mid]) return mid;
+        if (key < array[mid])  h = mid - 1;
         else l = mid + 1;
     }
     return -1;
 }
 ```
 
+二分查找思想简单，但是在实现时有一些需要注意的细节：
+
+1. 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
+
+2. 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。
+
+ 解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+
+3. l 的赋值一般都为 l = mid + 1。
+
 **求开方** 
 
 [Leetcode : 69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
+
+```html
+Input: 4
+Output: 2
+
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
+```
 
 一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt 。可以利用二分查找在 0 \~ x 之间查找 sqrt。
 
@@ -104,13 +114,11 @@ public int mySqrt(int x) {
 
 ```html
 n = 8
-
 The coins can form the following rows:
 ¤
 ¤ ¤
 ¤ ¤ ¤
 ¤ ¤
-
 Because the 4th row is incomplete, we return 3.
 ```
 
@@ -149,6 +157,11 @@ public int arrangeCoins(int n) {
 
 [Leetcode : 540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
+```html
+Input: [1,1,2,3,3,4,4,8,8]
+Output: 2
+```
+
 题目描述：一个有序数组只有一个数不出现两次，找出这个数。
 
 ```java
@@ -171,6 +184,15 @@ public int singleNonDuplicate(int[] nums) {
 **分配饼干** 
 
 [Leetcode : 455. Assign Cookies (Easy)](https://leetcode.com/problems/assign-cookies/description/)
+
+```html
+Input: [1,2], [1,2,3]
+Output: 2
+
+Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2. 
+You have 3 cookies and their sizes are big enough to gratify all of the children, 
+You need to output 2.
+```
 
 题目描述：每个孩子都有一个满足度，每个饼干都有一个大小，只有饼干的大小大于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
 
@@ -276,6 +298,12 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 
 [Leetcode : 665. Non-decreasing Array (Easy)](https://leetcode.com/problems/non-decreasing-array/description/)
 
+```html
+Input: [4,2,3]
+Output: True
+Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
+```
+
 题目描述：判断一个数组能不能只修改一个数就成为非递减数组。
 
 在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，那么就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，只修改 nums[i - 1] = nums[i] 不能令数组成为非递减，只能通过修改 nums[i] = nums[i - 1] 才行。
@@ -317,7 +345,7 @@ public boolean isSubsequence(String s, String t) {
 
 [Leetcode : 763. Partition Labels (Medium)](https://leetcode.com/problems/partition-labels/description/)
 
-```java
+```html
 Input: S = "ababcbacadefegdehijhklij"
 Output: [9,7,8]
 Explanation:
@@ -398,6 +426,11 @@ public int[][] reconstructQueue(int[][] people) {
 
 [Leetcode ：167. Two Sum II - Input array is sorted (Easy)](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 
+```html
+Input: numbers={2, 7, 11, 15}, target=9
+Output: index1=1, index2=2
+```
+
 使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
 
 如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
@@ -418,6 +451,10 @@ public int[] twoSum(int[] numbers, int target) {
 **反转字符串中的元音字符** 
 
 [Leetcode : 345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+
+```html
+Given s = "leetcode", return "leotcede".
+```
 
 使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
 
@@ -452,6 +489,12 @@ public String reverseVowels(String s) {
 
 [Leetcode : 633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
 
+```html
+Input: 5
+Output: True
+Explanation: 1 * 1 + 2 * 2 = 5
+```
+
 题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
 
 ```java
@@ -470,6 +513,12 @@ public boolean judgeSquareSum(int c) {
 **回文字符串** 
 
 [Leetcode : 680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
+
+```html
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+```
 
 题目描述：字符串可以删除一个字符，判断是否能构成回文字符串。
 
@@ -662,6 +711,10 @@ public int findKthLargest(int[] nums, int k) {
 **找出出现频率最多的 k 个数** 
 
 [Leetcode : 347. Top K Frequent Elements (Medium)](https://leetcode.com/problems/top-k-frequent-elements/description/)
+
+```html
+Given [1,1,1,2,2,3] and k = 2, return [1,2].
+```
 
 ```java
 public List<Integer> topKFrequent(int[] nums, int k) {
@@ -2652,7 +2705,7 @@ int lcm(int a, int b){
 }
 ```
 
-对于最大公约数问题，因为需要计算 a % b ，而这个操作是比较耗时的，可以使用 [ 编程之美：2.7]() 的方法，利用减法和移位操作来替换它。
+对于最大公约数问题，因为需要计算 a % b ，而这个操作是比较耗时的，可以使用 [编程之美：2.7]() 的方法，利用减法和移位操作来替换它。
 
 对于 a 和 b 的最大公约数 f(a, b)，有：
 
@@ -2716,13 +2769,19 @@ public int trailingZeroes(int n) {
 }
 ```
 
-如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 [ 编程之美：2.2](#) 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
+如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 [编程之美：2.2](#) 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
 
 ### 字符串加法减法
 
 **二进制加法** 
 
 [Leetcode : 67. Add Binary (Easy)](https://leetcode.com/problems/add-binary/description/)
+
+```html
+a = "11"
+b = "1"
+Return "100".
+```
 
 ```java
 public String addBinary(String a, String b) {
@@ -2743,7 +2802,7 @@ public String addBinary(String a, String b) {
 
 [Leetcode : 415. Add Strings (Easy)](https://leetcode.com/problems/add-strings/description/)
 
-题目描述：字符串的值为非负整数
+字符串的值为非负整数
 
 ```java
 public String addStrings(String num1, String num2) {
@@ -2765,7 +2824,20 @@ public String addStrings(String num1, String num2) {
 
 [Leetcode : 462. Minimum Moves to Equal Array Elements II (Medium)](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/)
 
-题目描述：每次可以对一个数组元素加一或者减一，求最小的改变次数。
+```html
+Input:
+[1,2,3]
+
+Output:
+2
+
+Explanation:
+Only two moves are needed (remember each move increments or decrements one element):
+
+[1,2,3]  =>  [2,2,3]  =>  [2,2,2]
+```
+
+每次可以对一个数组元素加一或者减一，求最小的改变次数。
 
 这是个典型的相遇问题，移动距离最小的方式是所有元素都移动到中位数。理由如下：
 
@@ -2840,7 +2912,7 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不想等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目多于 (n - i) / 2，因此继续查找就能找出 majority。
+可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不想等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int majorityElement(int[] nums) {
@@ -2862,6 +2934,11 @@ public int majorityElement(int[] nums) {
 **平方数** 
 
 [Leetcode : 367. Valid Perfect Square (Easy)](https://leetcode.com/problems/valid-perfect-square/description/)
+
+```html
+Input: 16
+Returns: True
+```
 
 平方序列：1,4,9,16,..
 间隔：3,5,7,...
@@ -2893,6 +2970,11 @@ public boolean isPowerOfThree(int n) {
 
 [Leetcode : 628. Maximum Product of Three Numbers (Easy)](https://leetcode.com/problems/maximum-product-of-three-numbers/description/)
 
+```html
+Input: [1,2,3,4]
+Output: 24
+```
+
 ```java
 public int maximumProduct(int[] nums) {
     int max1 = Integer.MIN_VALUE, max2 = Integer.MIN_VALUE, max3 = Integer.MIN_VALUE, min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
@@ -2922,6 +3004,10 @@ public int maximumProduct(int[] nums) {
 **乘积数组** 
 
 [Leetcode : 238. Product of Array Except Self (Medium)](https://leetcode.com/problems/product-of-array-except-self/description/)
+
+```html
+For example, given [1,2,3,4], return [24,12,8,6].
+```
 
 题目描述：给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
 
