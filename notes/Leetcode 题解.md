@@ -373,13 +373,13 @@ public int[][] reconstructQueue(int[][] people) {
            return b[0] - a[0];
        }
     });
-    
+
     int n = people.length;
     List<int[]> tmp = new ArrayList<>();
     for(int i = 0; i < n; i++) {
         tmp.add(people[i][1], new int[]{people[i][0], people[i][1]});
     }
-    
+
     int[][] ret = new int[n][2];
     for(int i = 0; i < n; i++) {
         ret[i][0] = tmp.get(i)[0];
@@ -677,7 +677,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
         }
         bucket[frequency].add(key);
     }
-    
+
     for(int i = bucket.length - 1; i >= 0 && ret.size() < k; i--) {
         if(bucket[i] != null) {
             ret.addAll(bucket[i]);
@@ -746,7 +746,6 @@ private class Position {
     }
 }
 ```
-
 
 ### DFS
 
@@ -974,7 +973,7 @@ private void dfs(char[][] board, int r, int c) {
 ```html
 Given the following 5x5 matrix:
 
-  Pacific ~   ~   ~   ~   ~ 
+  Pacific ~   ~   ~   ~   ~
        ~  1   2   2   3  (5) *
        ~  3   2   3  (4) (4) *
        ~  2   4  (5)  3   1  *
@@ -1337,7 +1336,7 @@ private void backtracking(int start, int n, int k, List<Integer> combineList, Li
         ret.add(new ArrayList(combineList)); // 这里要重新构造一个 List
         return;
     }
-    
+
     for(int i = start; i <= n - k + 1; i++){ // 剪枝
 
         combineList.add(i);                        // 把 i 标记为已访问
@@ -1386,8 +1385,8 @@ A solution set is:
 [Leetcode : 40. Combination Sum II (Medium)](https://leetcode.com/problems/combination-sum-ii/description/)
 
 ```html
-For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8, 
-A solution set is: 
+For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,
+A solution set is:
 [
   [1, 7],
   [1, 2, 5],
@@ -1875,7 +1874,6 @@ private int rob(int[] nums, int s, int e) {
 }
 ```
 
-
 **信件错排** 
 
 题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信的方式数量。
@@ -2150,9 +2148,9 @@ public boolean wordBreak(String s, List<String> wordDict) {
 [Leetcode : 494. Target Sum (Medium)](https://leetcode.com/problems/target-sum/description/)
 
 ```html
-Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Input: nums is [1, 1, 1, 1, 1], S is 3.
 Output: 5
-Explanation: 
+Explanation:
 
 -1+1+1+1+1 = 3
 +1-1+1+1+1 = 3
@@ -2199,7 +2197,7 @@ private int subsetSum(int[] nums, int targetSum) {
 }
 ```
 
-**01字符构成最多的字符串** 
+**01 字符构成最多的字符串** 
 
 [Leetcode : 474. Ones and Zeroes (Medium)](https://leetcode.com/problems/ones-and-zeroes/description/)
 
@@ -2242,7 +2240,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-这是一个完全背包问题，完全背包问题和 0-1背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
+这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
 
 ```java
 public int coinChange(int[] coins, int amount) {
@@ -2356,15 +2354,15 @@ public int maxProfit(int k, int[] prices) {
 
 ```java
 class NumArray {
-    
+
     int[] nums;
-    
+
     public NumArray(int[] nums) {
         for(int i = 1; i < nums.length; i++)
             nums[i] += nums[i - 1];
         this.nums = nums;
     }
-    
+
     public int sumRange(int i, int j) {
         return i == 0 ? nums[j] : nums[j] - nums[i - 1];
     }
@@ -2457,11 +2455,9 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-
 **修改一个字符串称为另一个字符串**  // TODO
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
-
 
 ### 其它问题
 
@@ -2478,7 +2474,6 @@ s0[i] = max(s0[i - 1], s2[i - 1]); // Stay at s0, or rest from s2
 s1[i] = max(s1[i - 1], s0[i - 1] - prices[i]); // Stay at s1, or buy from s0
 s2[i] = s1[i - 1] + prices[i]; // Only one way from s1
 ```
-
 
 ```java
 public int maxProfit(int[] prices) {
@@ -2498,7 +2493,6 @@ public int maxProfit(int[] prices) {
     return Math.max(s0[n - 1], s2[n - 1]);
 }
 ```
-
 
 **统计从 0 \~ n 每个数的二进制表示中 1 的个数** 
 
@@ -2538,7 +2532,7 @@ public int findLongestChain(int[][] pairs) {
             }
         }
     }
-    
+
     int ret = 0;
     for(int num : dp) {
         ret = Math.max(ret, num);
@@ -2955,6 +2949,8 @@ public int[] productExceptSelf(int[] nums) {
 
 **用栈实现队列** 
 
+[Leetcode : 232. Implement Queue using Stacks (Easy)](https://leetcode.com/problems/implement-queue-using-stacks/description/)
+
 一个栈实现：
 
 ```java
@@ -2992,7 +2988,7 @@ class  MyQueue {
 class  MyQueue {
     private Stack<Integer> in = new Stack();
     private Stack<Integer> out = new Stack();
-  
+
     public void push(int x) {
         in.push(x);
     }
@@ -3006,7 +3002,7 @@ class  MyQueue {
         in2out();
         return out.peek();
     }
-    
+
     private void in2out(){
         if(out.isEmpty()){
             while(!in.isEmpty()){
@@ -3027,28 +3023,28 @@ class  MyQueue {
 
 ```java
 class MyStack {
-    
+
     private Queue<Integer> queue;
 
     public MyStack() {
         queue = new LinkedList<>();
     }
-    
+
     public void push(int x) {
         queue.add(x);
         for(int i = 1; i < queue.size(); i++){ // 翻转
             queue.add(queue.remove());
         }
     }
-    
+
     public int pop() {
         return queue.remove();
     }
-    
+
     public int top() {
         return queue.peek();
     }
-    
+
     public boolean empty() {
         return queue.isEmpty();
     }
@@ -3063,7 +3059,7 @@ class MyStack {
 
 ```java
 class MinStack {
-    
+
     private Stack<Integer> dataStack;
     private Stack<Integer> minStack;
     private int min;
@@ -3073,7 +3069,7 @@ class MinStack {
         minStack = new Stack<>();
         min = Integer.MAX_VALUE;
     }
-    
+
     public void push(int x) {
         dataStack.add(x);
         if(x < min) {
@@ -3081,7 +3077,7 @@ class MinStack {
         }
         minStack.add(min);
     }
-    
+
     public void pop() {
         dataStack.pop();
         minStack.pop();
@@ -3091,11 +3087,11 @@ class MinStack {
             min = Integer.MAX_VALUE;
         }
     }
-    
+
     public int top() {
         return dataStack.peek();
     }
-    
+
     public int getMin() {
         return min;
     }
@@ -3134,7 +3130,7 @@ public boolean isValid(String s) {
 }
 ```
 
-**数组中比当前元素大的下一个数组元素的距离** 
+**数组中元素与下一个比它大的元素之间的距离** 
 
 ```html
 Input: [73, 74, 75, 71, 69, 72, 76, 73]
@@ -3143,7 +3139,7 @@ Output: [1, 1, 4, 2, 1, 1, 0, 0]
 
 [Leetcode : 739. Daily Temperatures (Medium)](https://leetcode.com/problems/daily-temperatures/description/)
 
-使用栈来存储还未计算的元素。可以保证从栈顶向下元素递增，否则上面有一个比下面某个元素大的元素进入栈中，下面那个元素已经找到比它大的元素，因此会出栈。
+在遍历数组时用 Stack 把数组中的数存起来，如果当前遍历的数比栈顶元素来的大，说明栈顶元素的下一个比它大的数就是当前元素。
 
 ```java
 public int[] dailyTemperatures(int[] temperatures) {
@@ -3161,7 +3157,7 @@ public int[] dailyTemperatures(int[] temperatures) {
 }
 ```
 
-**数组中下一个比当前数大的数** 
+**在另一个数组中比当前元素大的下一个元素** 
 
 [Leetcode : 496. Next Greater Element I (Easy)](https://leetcode.com/problems/next-greater-element-i/description/)
 
@@ -3169,8 +3165,6 @@ public int[] dailyTemperatures(int[] temperatures) {
 Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
 Output: [-1,3,-1]
 ```
-
-在遍历数组时用 Stack 把数组中的数存起来，如果当前遍历的数比栈顶元素来的大，说明栈顶元素的下一个比它大的数就是当前元素。
 
 ```java
 public int[] nextGreaterElement(int[] nums1, int[] nums2) {
@@ -3191,7 +3185,7 @@ public int[] nextGreaterElement(int[] nums1, int[] nums2) {
 }
 ```
 
-**循环数组中下一个比当前元素大的数** 
+**循环数组中比当前元素大的下一个元素** 
 
 [Leetcode : 503. Next Greater Element II (Medium)](https://leetcode.com/problems/next-greater-element-ii/description/)
 
@@ -3210,7 +3204,6 @@ public int[] nextGreaterElements(int[] nums) {
 }
 ```
 
-
 ## 哈希表
 
 利用 Hash Table 可以快速查找一个元素是否存在等问题，但是需要一定的空间来存储。在优先考虑时间复杂度的情况下，可以利用 Hash Table 这种空间换取时间的做法。
@@ -3224,7 +3217,6 @@ Java 中的  **HashMap**  主要用于映射关系，从而把两个元素联系
 在对一个内容进行压缩或者其它转换时，利用 HashMap 可以把原始内容和转换后的内容联系起来。例如在一个简化 url 的系统中（[Leetcdoe : 535. Encode and Decode TinyURL (Medium)](https://leetcode.com/problems/encode-and-decode-tinyurl/description/)），利用 HashMap 就可以存储精简后的 url 到原始 url 的映射，使得不仅可以显示简化的 url，也可以根据简化的 url 得到原始 url 从而定位到正确的资源。
 
 HashMap 也可以用来对元素进行计数统计，此时键为元素，值为计数。和 HashSet 类似，如果元素有穷并且范围不大，可以用整型数组来进行统计。
-
 
 **数组中的两个数和为给定值** 
 
@@ -3421,7 +3413,7 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 例如 abcd123 向右移动 3 位 得到 123abcd
 
-将 abcd123 中的 abcd 和 123 单独逆序，得到 dcba321，然后对整个字符串进行逆序，得到123abcd。
+将 abcd123 中的 abcd 和 123 单独逆序，得到 dcba321，然后对整个字符串进行逆序，得到 123abcd。
 
 **字符串中单词的翻转** 
 
@@ -3470,11 +3462,11 @@ public int[] findErrorNums(int[] nums) {
     for(int i = 0; i < nums.length; i++){
         while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) swap(nums, i, nums[i] - 1);
     }
-    
+
     for(int i = 0; i < nums.length; i++){
         if(i + 1 != nums[i]) return new int[]{nums[i], i + 1};
     }
-    
+
     return null;
 }
 
@@ -3657,8 +3649,6 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 ```
 
 如果只是判断是否存在交点，那么就是另一个问题，即 编程之美：3.6 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较第一个链表最后一个节点和第二个链表最后一个节点是否相同。
-
-
 
 **链表反转** 
 
@@ -4481,7 +4471,6 @@ private void inorder(TreeNode node, int k) {
 }
 ```
 
-
 ### Trie
 
 <div align="center"> <img src="../pics//5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
@@ -4494,24 +4483,24 @@ Trie，又称前缀树或字典树，用于判断字符串是否存在或者是�
 
 ```java
 class Trie {
-    
+
     private class Node{
         Node[] childs = new Node[26];
         boolean isLeaf;
     }
-    
+
     private Node root = new Node();
-    
+
     /** Initialize your data structure here. */
     public Trie() {
     }
-    
+
     /** Inserts a word into the trie. */
     public void insert(String word) {
         int idx = word.charAt(0) - 'a';
         insert(word, root);
     }
-    
+
     private void insert(String word, Node node){
         int idx = word.charAt(0) - 'a';
         if(node.childs[idx] == null){
@@ -4520,12 +4509,12 @@ class Trie {
         if(word.length() == 1) node.childs[idx].isLeaf = true;
         else insert(word.substring(1), node.childs[idx]);
     }
-    
+
     /** Returns if the word is in the trie. */
     public boolean search(String word) {
-        return search(word, root); 
+        return search(word, root);
     }
-    
+
     private boolean search(String word, Node node){
         if(node == null) return false;
         int idx = word.charAt(0) - 'a';
@@ -4533,12 +4522,12 @@ class Trie {
         if(word.length() == 1) return node.childs[idx].isLeaf;
         return search(word.substring(1), node.childs[idx]);
     }
-    
+
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
         return startWith(prefix, root);
     }
-    
+
     private boolean startWith(String prefix, Node node){
         if(node == null) return false;
         if(prefix.length() == 0) return true;
@@ -4558,18 +4547,18 @@ class MapSum {
         int val;
         Map<Character, Trie> childs;
         boolean isWord;
-        
+
         Trie() {
             childs = new HashMap<>();
         }
     }
-    
+
     private Trie root;
 
     public MapSum() {
         root = new Trie();
     }
-    
+
     public void insert(String key, int val) {
         Trie cur = root;
         for(char c : key.toCharArray()) {
@@ -4582,7 +4571,7 @@ class MapSum {
         cur.val = val;
         cur.isWord = true;
     }
-    
+
     public int sum(String prefix) {
         Trie cur = root;
         for(char c : prefix.toCharArray()) {
@@ -4591,7 +4580,7 @@ class MapSum {
         }
         return dfs(cur);
     }
-    
+
     private int dfs(Trie cur) {
         int sum = 0;
         if(cur.isWord) {
@@ -4826,7 +4815,6 @@ public int singleNumber(int[] nums) {
 
 diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
 
-
 ```java
 public int[] singleNumber(int[] nums) {
     int diff = 0;
@@ -4954,4 +4942,3 @@ public int maxProduct(String[] words) {
 - 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
 - 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
 - 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
-
