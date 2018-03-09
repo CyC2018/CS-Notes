@@ -68,7 +68,7 @@ public int search(int key, int[] array) {
 }
 ```
 
-在实现时需要注意以下细节：
+实现时需要注意以下细节：
 
 1. 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
 
