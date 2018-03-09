@@ -4260,16 +4260,16 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
-**最大相同节点值的路径长度** 
+**相同节点值的最大路径长度** 
 
-[Leetcode : 687. Longest Univalue Path (Easy)](https://pomotodo.com/app/)
+[Leetcode : 687. Longest Univalue Path (Easy)](https://leetcode.com/problems/longest-univalue-path/)
 
 ```html
-              1
+             1
             / \
-            4  5
-          / \  \
-          4  4  5
+           4   5
+          / \   \
+         4  4    5
 
 Output : 2
 ```
@@ -4296,6 +4296,15 @@ private int dfs(TreeNode root){
 
 [Leetcode : 337. House Robber III (Medium)](https://leetcode.com/problems/house-robber-iii/description/)
 
+```html
+     3
+    / \
+   2   3
+    \   \ 
+     3   1
+Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
+```
+
 ```java
 public int rob(TreeNode root) {
     if (root == null) return 0;
@@ -4313,9 +4322,9 @@ public int rob(TreeNode root) {
 
 ### 层次遍历
 
-使用 BFS，不需要使用两个队列来分别存储当前层的节点和下一层的节点， 因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
+使用 BFS 进行层次遍历。不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
 
-**计算一棵树每层节点的平均数** 
+**一棵树每层节点的平均数** 
 
 [637. Average of Levels in Binary Tree (Easy)](https://leetcode.com/problems/average-of-levels-in-binary-tree/description/)
 
@@ -4343,6 +4352,21 @@ public List<Double> averageOfLevels(TreeNode root) {
 **得到左下角的节点** 
 
 [Leetcode : 513. Find Bottom Left Tree Value (Easy)](https://leetcode.com/problems/find-bottom-left-tree-value/description/)
+
+```html
+Input:
+
+        1
+       / \
+      2   3
+     /   / \
+    4   5   6
+       /
+      7
+
+Output:
+7
+```
 
 ```java
 public int findBottomLeftValue(TreeNode root) {
@@ -4426,9 +4450,9 @@ public List<Integer> preorderTraversal(TreeNode root) {
 }
 ```
 
-**非递归实现二叉树的后续遍历** 
+**非递归实现二叉树的后序遍历** 
 
-[Leetcode : ### 145. Binary Tree Postorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-postorder-traversal/description/)
+[Leetcode : 145. Binary Tree Postorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-postorder-traversal/description/)
 
 前序遍历为 root -> left -> right，后序遍历为 left -> right -> root，可以修改前序遍历成为 root -> right -> left，那么这个顺序就和后序遍历正好相反。
 
@@ -4471,15 +4495,26 @@ public List<Integer> inorderTraversal(TreeNode root) {
 }
 ```
 
-**使用中序遍历和前序遍历序列重建二叉树**  //TODO
-
 ### BST
 
 主要利用 BST 中序遍历有序的特点。
 
-**在 BST 中寻找两个节点，使它们的和为一个给定值。** 
+**在 BST 中寻找两个节点，使它们的和为一个给定值** 
 
-[653. Two Sum IV - Input is a BST](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/)
+[653. Two Sum IV - Input is a BST (Easy)](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/)
+
+```html
+Input: 
+    5
+   / \
+  3   6
+ / \   \
+2   4   7
+
+Target = 9
+
+Output: True
+```
 
 使用中序遍历得到有序数组之后，再利用双指针对数组进行查找。
 
@@ -4507,9 +4542,21 @@ private void inOrder(TreeNode root, List<Integer> nums){
 }
 ```
 
-**在 BST 中查找最小的两个节点之差的绝对值** 
+**在 BST 中查找两个节点之差的最小绝对值** 
 
 [Leetcode : 530. Minimum Absolute Difference in BST (Easy)](https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/)
+
+```html
+Input:
+   1
+    \
+     3
+    /
+   2
+
+Output:
+1
+```
 
 利用 BST 的中序遍历为有序的性质，计算中序遍历中临近的两个节点之差的绝对值，取最小值。
 
@@ -4534,6 +4581,18 @@ private void inorder(TreeNode node){
 **把 BST 每个节点的值都加上比它大的节点的值** 
 
 [Leetcode : Convert BST to Greater Tree (Easy)](https://leetcode.com/problems/convert-bst-to-greater-tree/description/)
+
+```html
+Input: The root of a Binary Search Tree like this:
+              5
+            /   \
+           2     13
+
+Output: The root of a Greater Tree like this:
+             18
+            /   \
+          20     13
+```
 
 先遍历右子树。
 
@@ -4561,6 +4620,17 @@ private void traver(TreeNode root) {
 ```
 
 **寻找 BST 中出现次数最多的节点** 
+
+[Leetcode : 501. Find Mode in Binary Search Tree (Easy)](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/)
+
+```html
+   1
+    \
+     2
+    /
+   2
+return [2].
+```
 
 ```java
 private int cnt = 1;
@@ -4710,6 +4780,13 @@ class Trie {
 **实现一个 Trie，用来求前缀和** 
 
 [Leetcode : 677. Map Sum Pairs (Medium)](https://leetcode.com/problems/map-sum-pairs/description/)
+
+```html
+Input: insert("apple", 3), Output: Null
+Input: sum("ap"), Output: 3
+Input: insert("app", 2), Output: Null
+Input: sum("ap"), Output: 5
+```
 
 ```java
 class MapSum {
