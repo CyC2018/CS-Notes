@@ -126,6 +126,8 @@ Google 开源项目的代码风格规范。
 
 如果觉得内容不够完善或者有写的不好的地方，您可以在 Issues 中发表反馈意见。
 
+笔记内容可供个人随意使用，转载或者引用请注明出处，毕竟写了很长时间没那么轻松~
+
 ---
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
