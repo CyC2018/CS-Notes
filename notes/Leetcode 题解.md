@@ -36,6 +36,7 @@
     * [哈希表](#哈希表)
     * [字符串](#字符串)
     * [数组与矩阵](#数组与矩阵)
+        * [1\~n 分布](#1\~n-分布)
         * [有序矩阵](#有序矩阵)
     * [链表](#链表)
     * [树](#树)
@@ -3391,15 +3392,15 @@ private void extendSubstrings(String s, int start, int end) {
 }
 ```
 
-**统计二进制字符串中连续 1 和 连续 0 数量相同的子字符串个数** 
+**统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数** 
+
+[Leetcode : 696. Count Binary Substrings (Easy)](https://leetcode.com/problems/count-binary-substrings/description/)
 
 ```html
 Input: "00110011"
 Output: 6
 Explanation: There are 6 substrings that have equal number of consecutive 1's and 0's: "0011", "01", "1100", "10", "0011", and "01".
 ```
-
-[Leetcode : 696. Count Binary Substrings (Easy)](https://leetcode.com/problems/count-binary-substrings/description/)
 
 ```java
 public int countBinarySubstrings(String s) {
@@ -3421,12 +3422,12 @@ public int countBinarySubstrings(String s) {
 
 [ 编程之美：3.1](#)
 
-给定两个字符串 s1 和 s2 ，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
-
 ```html
 s1 = AABCD, s2 = CDAA
 Return : true
 ```
+
+给定两个字符串 s1 和 s2 ，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
 
 s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。
 
@@ -3454,26 +3455,37 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 [Leetcode : 283. Move Zeroes (Easy)](https://leetcode.com/problems/move-zeroes/description/)
 
-```java
-    public void moveZeroes(int[] nums) {
-        int n = nums.length;
-        int idx = 0;
-        for(int i = 0; i < n; i++){
-            if(nums[i] != 0) nums[idx++] = nums[i];
-        }
-        while(idx < n){
-            nums[idx++] = 0;
-        }
-    }
+```html
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
 ```
+
+```java
+public void moveZeroes(int[] nums) {
+    int n = nums.length;
+    int idx = 0;
+    for(int i = 0; i < n; i++){
+        if(nums[i] != 0) nums[idx++] = nums[i];
+    }
+    while(idx < n){
+        nums[idx++] = 0;
+    }
+}
+```
+
+### 1\~n 分布
 
 **一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
 
 [Leetcode : 645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
 
-最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlog<sub>n</sub>)，本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
+```html
+Input: nums = [1,2,2,4]
+Output: [2,3]
+```
 
-主要思想是让通过交换数组元素，使得数组上的元素在正确的位置上。
+最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlog<sub>n</sub>).本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
+
+主要思想是让通过交换数组元素，使得数组上的元素在正确的位置上
 
 遍历数组，如果第 i 位上的元素不是 i + 1 ，那么就交换第 i 位 和 nums[i] - 1 位上的元素，使得 num[i] - 1 的元素为 nums[i] ，也就是该位的元素是正确的。交换操作需要循环进行，因为一次交换没办法使得第 i 位上的元素是正确的。但是要交换的两个元素可能就是重复元素，那么循环就可能永远进行下去，终止循环的方法是加上 nums[i] != nums[nums[i] - 1 条件。
 
@@ -3485,11 +3497,15 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 ```java
 public int[] findErrorNums(int[] nums) {
     for(int i = 0; i < nums.length; i++){
-        while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) swap(nums, i, nums[i] - 1);
+        while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) {
+            swap(nums, i, nums[i] - 1);
+        }
     }
 
     for(int i = 0; i < nums.length; i++){
-        if(i + 1 != nums[i]) return new int[]{nums[i], i + 1};
+        if(i + 1 != nums[i]) {
+            return new int[]{nums[i], i + 1};
+        }
     }
 
     return null;
@@ -3545,9 +3561,7 @@ public int findDuplicate(int[] nums) {
 
 ### 有序矩阵
 
-有序矩阵指的是行和列分别有序的矩阵。
-
-一般可以利用有序性使用二分查找方法。
+有序矩阵指的是行和列分别有序的矩阵。一般可以利用有序性使用二分查找方法。
 
 ```html
 [
@@ -3645,7 +3659,7 @@ class Tuple implements Comparable<Tuple> {
 
 **判断两个链表的交点** 
 
-[Leetcode : 160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
+[Leetcode : 160. Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
 
 ```html
 A:          a1 → a2
@@ -3673,17 +3687,17 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ```
 
-如果只是判断是否存在交点，那么就是另一个问题，即 编程之美：3.6 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较第一个链表最后一个节点和第二个链表最后一个节点是否相同。
+如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美：3.6]() 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较第一个链表最后一个节点和第二个链表最后一个节点是否相同。
 
 **链表反转** 
 
-[Leetcode : 206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
+[Leetcode : 206. Reverse Linked List (Easy)](https://leetcode.com/problems/reverse-linked-list/description/)
 
 头插法能够按逆序构建链表。
 
 ```java
 public ListNode reverseList(ListNode head) {
-    ListNode newHead = null; // 设为 null ，作为新链表的结尾
+    ListNode newHead = null; // 设为 null，作为新链表的结尾
     while(head != null){
         ListNode nextNode = head.next;
         head.next = newHead;
@@ -3696,9 +3710,9 @@ public ListNode reverseList(ListNode head) {
 
 **归并两个有序的链表** 
 
-[Leetcode : 21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/description/)
+[Leetcode : 21. Merge Two Sorted Lists (Easy)](https://leetcode.com/problems/merge-two-sorted-lists/description/)
 
-链表和树一样，可以用递归方式来定义：链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
+链表和树一样，可以用递归方式来定义：链表是空节点，或者有一个值和一个指向下一个链表的指针。因此很多链表问题可以用递归来处理。
 
 ```java
 public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -3779,20 +3793,15 @@ private boolean isEqual(ListNode l1, ListNode l2){
 }
 ```
 
-**从链表中删除节点** 
-
-[编程之美：3.4]()
-
-<div align="center"> <img src="../pics//2c968ec5-0967-49ce-ac06-f8f5c9ab33bc.jpg"/> </div><br>
-
-```java
-B.val = C.val;
-B.next = C.next;
-```
-
 **链表元素按奇偶聚集** 
 
 [Leetcode : 328. Odd Even Linked List (Medium)](https://leetcode.com/problems/odd-even-linked-list/description/)
+
+```html
+Example:
+Given 1->2->3->4->5->NULL,
+return 1->3->5->2->4->NULL.
+```
 
 ```java
 public ListNode oddEvenList(ListNode head) {

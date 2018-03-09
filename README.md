@@ -108,11 +108,11 @@ File、InputStream OutputStream、Reader Writer、Serializable、Socket、NIO
 
 Google 开源项目的代码风格规范。
 
-<!-- ## 资料下载 :arrow_down:
+## 资料下载 :arrow_down:
 
 > [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F)
 
-一些 PDF 书籍 -->
+一些 PDF 书籍
 
 ## 后记 :memo:
 
