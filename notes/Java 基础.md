@@ -8,8 +8,9 @@
     * [3. equals()](#3-equals)
 * [继承](#继承)
     * [1. 访问权限](#1-访问权限)
-    * [2. 抽象类与接口的区别](#2-抽象类与接口的区别)
+    * [2. 抽象类与接口](#2-抽象类与接口)
     * [3. super](#3-super)
+    * [4. 重载与重写](#4-重载与重写)
 * [String](#string)
     * [1. String, StringBuffer and StringBuilder](#1-string,-stringbuffer-and-stringbuilder)
     * [2. String 不可变的原因](#2-string-不可变的原因)
@@ -109,7 +110,6 @@ public InitialOrderTest() {
 5. 子类（实例变量、普通语句块）
 6. 子类（构造函数）
 
-
 # Object 通用方法
 
 ## 1. 概览
@@ -173,7 +173,7 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 
 更详细的内容：[浅析 Java 中的访问权限控制](http://www.importnew.com/18097.html)
 
-## 2. 抽象类与接口的区别
+## 2. 抽象类与接口
 
 抽象类至少包含一个抽象方法，该抽象方法必须在子类中实现。由于抽象类没有抽象方法的具体实现，因此不能对抽象类进行实例化。
 
@@ -181,7 +181,7 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 public abstract class GenericServlet implements Servlet, ServletConfig, Serializable {
     // abstract method
     abstract void service(ServletRequest req, ServletResponse res);
- 
+
     void init() {
         // Its implementation
     }
@@ -225,7 +225,7 @@ public class Subclass extends Superclass {
     }
     public static void main(String[] args) {
         Subclass s = new Subclass();
-        s.printMethod();    
+        s.printMethod();
     }
 }
 ```
@@ -238,10 +238,15 @@ public class Subclass extends Superclass {
 public MountainBike(int startHeight, int startCadence, int startSpeed, int startGear) {
     super(startCadence, startSpeed, startGear);
     seatHeight = startHeight;
-}  
+}
 ```
 
 > [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
+
+## 4. 重载与重写
+
+- 重写存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
+- 重载即存在于继承体系中，也存在于同一个类中，指一个方法与已经存在的方法或者父类的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
 # String
 
@@ -273,7 +278,7 @@ StringBuilder 不是线程安全的；StringBuffer 是线程安全的，使用 s
 
 **安全性** 
 
-String 经常作为参数，例如网络连接参数等，在作为网络连接参数的情况下，如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。String 不可变性可以保证参数不可变。
+String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
 
 **线程安全** 
 
@@ -285,7 +290,7 @@ String 不可变性天生具备线程安全，可以在多个线程中使用。
 
 使用 String.intern() 可以保证所有相同内容的字符串变量引用相同的内存对象。
 
-更详细的内容：[ 揭开 String.intern() 那神秘的面纱 ](https://www.jianshu.com/p/95f516cb75ef)
+更详细的内容：[揭开 String.intern() 那神秘的面纱](https://www.jianshu.com/p/95f516cb75ef)
 
 # 基本类型与运算
 
@@ -304,17 +309,13 @@ new Integer(123) 与 Integer.valueOf(123) 的区别在于，Integer.valueOf(123)
 
 ```java
 public static void main(String[] args) {
-
      Integer a = new Integer(1);
      Integer b = new Integer(1);
-
      System.out.println("a==b? " + (a==b));
 
      Integer c = Integer.valueOf(1);
      Integer d = Integer.valueOf(1);
-
      System.out.println("c==d? " + (c==d));
-
  }
 ```
 
@@ -356,7 +357,7 @@ System.out.println(c==d); // true
 
 ## 2. switch
 
-A switch works with the byte, short, char, and int primitive data types. It also works with enumerated types (discussed in Classes and Inheritance) and a few special classes that "wrap" certain primitive types: Character, Byte, Short, and Integer (discussed in Simple Data Objects).
+A switch works with the byte, short, char, and int primitive data types. It also works with enumerated types and a few special classes that "wrap" certain primitive types: Character, Byte, Short, and Integer.
 
 In the JDK 7 release, you can use a String object in the expression of a switch statement.
 
@@ -390,11 +391,6 @@ public static void main(java.lang.String[]);
 
 > [How does Java's switch work under the hood?](https://stackoverflow.com/questions/12020048/how-does-javas-switch-work-under-the-hood)
 
-
-
-
-
-
 # 反射
 
 每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
@@ -407,7 +403,7 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
 
-更详细的内容：[ 深入解析 Java 反射（1）- 基础 ](http://www.sczyh30.com/posts/Java/java-reflection-1/)
+更详细的内容：[深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
 # 异常
 
@@ -418,12 +414,10 @@ Exception 分为两种： **受检异常**  和 **非受检异常**。受检异�
 <div align="center"> <img src="../pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div><br>
 
 更详细的内容：
-- [Java 入门之异常处理 ](https://www.tianmaying.com/tutorial/Java-Exception)
+- [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
 - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 泛型
-
-泛型提供了编译时的类型检测机制，该机制允许程序员在编译时检测到非法的类型。泛型是 Java 中一个非常重要的知识点，在 Java 集合类框架中泛型被广泛应用。
 
 ```java
 public class Box<T> {
@@ -436,14 +430,14 @@ public class Box<T> {
 
 更详细的内容：
 
-- [Java 泛型详解 ](https://www.ziwenxie.site/2017/03/01/java-generic/)
-- [10 道 Java 泛型面试题 ](https://cloud.tencent.com/developer/article/1033693)
+- [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)
+- [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 特性
 
 ## 1. 三大特性
 
-[ 封装、继承、多态 ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3.md#%E5%B0%81%E8%A3%85%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81)
+[封装、继承、多态](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3.md#%E5%B0%81%E8%A3%85%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81)
 
 ## 2. Java 各版本的新特性
 
