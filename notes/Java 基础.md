@@ -9,7 +9,7 @@
 * [继承](#继承)
     * [1. 访问权限](#1-访问权限)
     * [2. 抽象类与接口的区别](#2-抽象类与接口的区别)
-    * [3. super()](#3-super)
+    * [3. super](#3-super)
 * [String](#string)
     * [1. String, StringBuffer and StringBuilder](#1-string,-stringbuffer-and-stringbuilder)
     * [2. String 不可变的原因](#2-string-不可变的原因)
@@ -114,23 +114,35 @@ public InitialOrderTest() {
 
 ## 1. 概览
 
-- public final native Class<?> getClass()
-- public native int hashCode()
-- public boolean equals(Object obj)
-- protected native Object clone() throws CloneNotSupportedException
-- public String toString()
-- public final native void notify()
-- public final native void notifyAll()
-- public final native void wait(long timeout) throws InterruptedException
-- public final void wait(long timeout, int nanos) throws InterruptedException
-- public final void wait() throws InterruptedException
-- protected void finalize() throws Throwable { }
+```java
+public final native Class<?> getClass()
+
+public native int hashCode()
+
+public boolean equals(Object obj)
+
+protected native Object clone() throws CloneNotSupportedException
+
+public String toString()
+
+public final native void notify()
+
+public final native void notifyAll()
+
+public final native void wait(long timeout) throws InterruptedException
+
+public final void wait(long timeout, int nanos) throws InterruptedException
+
+public final void wait() throws InterruptedException
+
+protected void finalize() throws Throwable {}
+```
 
 ## 2. clone()
 
 **浅拷贝** 
 
-引用类型引用的是同一个对象，clone() 方法默认就是浅拷贝实现。
+引用类型引用同一个对象。clone() 方法默认就是浅拷贝实现。
 
 <div align="center"> <img src="../pics//d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"/> </div><br>
 
@@ -147,7 +159,7 @@ public InitialOrderTest() {
 - 对于基本类型，== 就是判断两个值是否相等；
 - 对于引用类型，== 是判断两个引用是否引用同一个对象，而 equals() 是判断引用的对象是否等价。
 
-等价性：[ 散列 ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E6%95%A3%E5%88%97)
+等价性：[散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E6%95%A3%E5%88%97)
 
 # 继承
 
@@ -155,11 +167,11 @@ public InitialOrderTest() {
 
 Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见。
 
-可以对类或类中的成员（字段以及方法）加上访问修饰符。成员可见表示其它类可以用成员所在类的对象访问到该成员；类可见表示其它类可以用这个类创建对象，可以把类当做包中的一个成员，然后包表示一个类，这样就好理解了。
+可以对类或类中的成员（字段以及方法）加上访问修饰符。成员可见表示其它类可以用成员所在类的对象访问到该成员；类可见表示其它类可以用这个类创建对象。在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
 
 protected 用于修饰成员，表示在继承体系中成员对于子类可见。但是这个访问修饰符对于类没有意义，因为包没有继承体系。
 
-更详细的内容：[ 浅析 Java 中的访问权限控制 ](http://www.importnew.com/18097.html)
+更详细的内容：[浅析 Java 中的访问权限控制](http://www.importnew.com/18097.html)
 
 ## 2. 抽象类与接口的区别
 
@@ -177,7 +189,7 @@ public abstract class GenericServlet implements Servlet, ServletConfig, Serializ
 }
 ```
 
-接口定义了一组方法，但是接口都没有方法的实现，也就是说这些方法都是抽象方法。
+接口定义了一组方法，但是接口都没有方法的实现，可以理解为这些方法都是抽象方法。
 
 ```java
 public interface Externalizable extends Serializable {
@@ -188,24 +200,45 @@ public interface Externalizable extends Serializable {
 }
 ```
 
-更详细的内容：[Java 抽象类与接口的区别 ](http://www.importnew.com/12399.html)
+更详细的内容：[Java 抽象类与接口的区别](http://www.importnew.com/12399.html)
 
-## 3. super()
+## 3. super
 
-用来访问父类的构造函数父类的方法，第二种情况中，子类需要重载父类的方法。
+**访问父类的成员** 
+
+如果子类覆盖了父类的中某个方法的实现，那么就可以通过使用 super 关键字来引用父类的方法实现。
+
+```java
+public class Superclass {
+    public void printMethod() {
+        System.out.println("Printed in Superclass.");
+    }
+}
+```
 
 ```java
 public class Subclass extends Superclass {
-    // overrides printMethod in Superclass
+    // Overrides printMethod in Superclass
     public void printMethod() {
         super.printMethod();
         System.out.println("Printed in Subclass");
     }
     public static void main(String[] args) {
         Subclass s = new Subclass();
-        s.printMethod();
+        s.printMethod();    
     }
 }
+```
+
+**访问父类的构造函数** 
+
+可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
+
+```java
+public MountainBike(int startHeight, int startCadence, int startSpeed, int startGear) {
+    super(startCadence, startSpeed, startGear);
+    seatHeight = startHeight;
+}  
 ```
 
 > [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
