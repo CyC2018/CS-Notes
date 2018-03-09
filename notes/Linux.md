@@ -549,7 +549,7 @@ Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block
 
 Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 block 大小限制了单一文件的大小。而每个 inode 大小是固定为 128 bytes。
 
-inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
+inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
 <div align="center"> <img src="../pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
 
