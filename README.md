@@ -6,7 +6,7 @@
 </div>
 <br> -->
 
-<!-- <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics/handbook.png" alt="" width="225"/> -->
+<!-- <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics+/handbook.png" alt="" width="225"/> -->
 
 <!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-yellow.svg) -->
 
@@ -128,7 +128,11 @@ Google 开源项目的代码风格规范。
 
 笔记内容可供个人随意使用，转载或者引用请注明出处，毕竟写了很长时间没那么轻松~
 
----
+## Donate
+
+[Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/pics/alipay.jpg)
+
+## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
 
