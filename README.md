@@ -12,8 +12,6 @@
 
 <img src="https://github.com/CyC2018/InterviewNotes/blob/master/other/handbook.png" alt="" width="175"/>
 
-<br>
-
 ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg) 
 
 ## 网络 :cloud:
