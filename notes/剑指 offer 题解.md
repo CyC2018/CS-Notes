@@ -319,23 +319,23 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 **解题思路** 
 
-添加到栈中的序列顺序会被反转，如果进行两次反转，那么得到的序列依然是正向的。因此，添加的数据需要同时压入两个栈之后才能出栈，这样就能保证出栈的顺序为先进先出。
+使用两个栈，in 栈用来处理 push 操作，out 栈用来处理 pop 操作。一个元素进过 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 pop 栈才能出栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，也就是先进先出，这就是队列的顺序。
 
 ```java
-Stack<Integer> stack1 = new Stack<Integer>();
-Stack<Integer> stack2 = new Stack<Integer>();
+Stack<Integer> in = new Stack<Integer>();
+Stack<Integer> out = new Stack<Integer>();
 
 public void push(int node) {
-    stack1.push(node);
+    in.push(node);
 }
 
 public int pop() {
-    if (stack2.isEmpty()) {
-        while (!stack1.isEmpty()) {
-            stack2.push(stack1.pop());
+    if (out.isEmpty()) {
+        while (!in.isEmpty()) {
+            out.push(in.pop());
         }
     }
-    return stack2.pop();
+    return out.pop();
 }
 ```
 
