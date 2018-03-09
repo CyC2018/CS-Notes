@@ -156,10 +156,15 @@ protected void finalize() throws Throwable {}
 
 ## 3. equals()
 
+**== 与 equals() 区别** 
+
 - 对于基本类型，== 就是判断两个值是否相等；
+
 - 对于引用类型，== 是判断两个引用是否引用同一个对象，而 equals() 是判断引用的对象是否等价。
 
-等价性：[散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E6%95%A3%E5%88%97)
+**等价性** 
+
+[散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E6%95%A3%E5%88%97)
 
 # 继承
 
@@ -200,7 +205,19 @@ public interface Externalizable extends Serializable {
 }
 ```
 
-更详细的内容：[Java 抽象类与接口的区别](http://www.importnew.com/12399.html)
+|  **参数**  | **抽象类** | **接口** |
+| --- | --- | --- |
+| 默认的方法实现 | 它可以有默认的方法实现 | 接口完全是抽象的。它根本不存在方法的实现 |
+| 实现 | 子类使用 extends 关键字来继承抽象类。如果子类不是抽象类的话，它需要提供抽象类中所有声明的方法的实现。 | 子类使用关键字 implements 来实现接口。它需要提供接口中所有声明的方法的实现 |
+| 构造器 | 抽象类可以有构造器 | 接口不能有构造器 |
+| 与正常 Java 类的区别 | 除了你不能实例化抽象类之外，它和普通 Java 类没有任何区别 | 接口是完全不同的类型 |
+| 访问修饰符 | 抽象方法可以有 public、protected 和 default 这些修饰符 | 接口方法默认修饰符是 **public** 。你不可以使用其它修饰符。 |
+| main 方法 | 抽象方法可以有 main 方法并且我们可以运行它 | 接口没有 main 方法，因此我们不能运行它。 |
+| 多继承 | 抽象方法可以继承一个类和实现多个接口 | 接口只可以继承一个或多个其它接口 |
+| 速度 | 它比接口速度要快 | 接口是稍微有点慢的，因为它需要时间去寻找在类中实现的方法。 |
+| 添加新方法 | 如果你往抽象类中添加新的方法，你可以给它提供默认的实现。因此你不需要改变你现在的代码。 | 如果你往接口中添加方法，那么你必须改变实现该接口的类。 |
+
+> [Java 抽象类与接口的区别](http://www.importnew.com/12399.html)
 
 ## 3. super
 
@@ -246,6 +263,7 @@ public MountainBike(int startHeight, int startCadence, int startSpeed, int start
 ## 4. 重载与重写
 
 - 重写存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
+
 - 重载即存在于继承体系中，也存在于同一个类中，指一个方法与已经存在的方法或者父类的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
 # String
