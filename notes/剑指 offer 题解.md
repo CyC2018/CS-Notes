@@ -89,7 +89,7 @@
 
 ## 2. 实现 Singleton
 
-[ 单例模式 ](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F)
+[单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F)
 
 ## 3. 数组中重复的数字
 
@@ -117,9 +117,7 @@ public boolean duplicate(int[] numbers, int length, int[] duplication) {
 }
 
 private void swap(int[] numbers, int i, int j) {
-    int t = numbers[i];
-    numbers[i] = numbers[j];
-    numbers[j] = t;
+    int t = numbers[i]; numbers[i] = numbers[j]; numbers[j] = t;
 }
 ```
 
@@ -128,6 +126,14 @@ private void swap(int[] numbers, int i, int j) {
 **题目描述** 
 
 在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+
+```html
+[
+   [ 1,  5,  9],
+   [10, 11, 13],
+   [12, 13, 15]
+]
+```
 
 **解题思路** 
 
@@ -165,9 +171,10 @@ public boolean Find(int target, int [][] array) {
 public String replaceSpace(StringBuffer str) {
     int n = str.length();
     for (int i = 0; i < n; i++) {
-        if (str.charAt(i) == ' ') str.append("  "); // 尾部填充两个
+        if (str.charAt(i) == ' ') {
+            str.append("  "); // 尾部填充两个
+        }
     }
-
     int idxOfOriginal = n - 1;
     int idxOfNew = str.length() - 1;
     while (idxOfOriginal >= 0 && idxOfNew > idxOfOriginal) {
