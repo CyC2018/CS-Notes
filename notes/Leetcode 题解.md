@@ -3239,9 +3239,15 @@ public int[] twoSum(int[] nums, int target) {
 
 **最长和谐序列** 
 
-和谐序列中最大数和最小数只差正好为 1
-
 [Leetcode : 594. Longest Harmonious Subsequence (Easy)](https://leetcode.com/problems/longest-harmonious-subsequence/description/)
+
+```html
+Input: [1,3,2,2,5,2,3,7]
+Output: 5
+Explanation: The longest harmonious subsequence is [3,2,2,2,3].
+```
+
+和谐序列中最大数和最小数只差正好为 1。
 
 ```java
 public int findLHS(int[] nums) {
@@ -3261,13 +3267,16 @@ public int findLHS(int[] nums) {
 
 ## 字符串
 
-**两个字符串的包含的字符是否完全相同** 
+**两个字符串包含的字符是否完全相同** 
 
 [Leetcode : 242. Valid Anagram (Easy)](https://leetcode.com/problems/valid-anagram/description/)
 
-字符串只包含小写字符，总共有 26 个小写字符。可以用 Hash Table 来映射字符与出现次数，因为键值范围很小，因此可以用数组来进行映射。
+```html
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false.
+```
 
-使用长度为 26 的整型数组对字符串出现的字符进行统计，比较两个字符串出现的字符数量是否相同。
+字符串只包含小写字符，总共有 26 个小写字符。可以用 Hash Table 来映射字符与出现次数，因为键值范围很小，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，比较两个字符串出现的字符数量是否相同。
 
 ```java
 public boolean isAnagram(String s, String t) {
@@ -3283,7 +3292,11 @@ public boolean isAnagram(String s, String t) {
 
 [Leetcode : 205. Isomorphic Strings (Easy)](https://leetcode.com/problems/isomorphic-strings/description/)
 
-例如 "egg" 和 "add" 就属于同构字符串。
+```html
+Given "egg", "add", return true.
+Given "foo", "bar", return false.
+Given "paper", "title", return true.
+```
 
 记录一个字符上次出现的位置，如果两个字符串中某个字符上次出现的位置一样，那么就属于同构。
 
@@ -3304,7 +3317,13 @@ public boolean isIsomorphic(String s, String t) {
 
 **计算一组字符集合可以组成的回文字符串的最大长度** 
 
-[Leetcode : 409. Longest Palindrome](https://leetcode.com/problems/longest-palindrome/description/)
+[Leetcode : 409. Longest Palindrome (Easy)](https://leetcode.com/problems/longest-palindrome/description/)
+
+```html
+Input : "abccccdd"
+Output : 7
+Explanation : One longest palindrome that can be built is "dccaccd", whose length is 7.
+```
 
 使用长度为 128 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
 
@@ -3314,7 +3333,7 @@ public int longestPalindrome(String s) {
     for(char c : s.toCharArray()) cnts[c]++;
     int ret = 0;
     for(int cnt : cnts)  ret += (cnt / 2) * 2;
-    if(ret < s.length()) ret ++; // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
+    if(ret < s.length()) ret++; // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
     return ret;
 }
 ```
@@ -3344,6 +3363,12 @@ public boolean isPalindrome(int x) {
 **回文子字符串** 
 
 [Leetcode : 647. Palindromic Substrings (Medium)](https://leetcode.com/problems/palindromic-substrings/description/)
+
+```html
+Input: "aaa"
+Output: 6
+Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+```
 
 解决方案是从字符串的某一位开始，尝试着去扩展子字符串。
 
