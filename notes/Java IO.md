@@ -50,7 +50,9 @@ File 类可以用于表示文件和目录，但是它只用于表示文件的信
 
 <div align="center"> <img src="../pics//8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"/> </div><br>
 
-Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
+Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
+
+实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
 ```java
 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
@@ -58,7 +60,7 @@ BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 
 DataInputStream 装饰者提供了对更多数据类型进行输入的操作，比如 int、double 等基本类型。
 
-批量读入文件中的内容到字节数组中
+批量读入文件内容到字节数组：
 
 ```java
 byte[] buf = new byte[20*1024];
@@ -71,9 +73,9 @@ while((bytes = in.read(buf, 0 , buf.length)) != -1) {
 
 # 字符操作
 
-不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符，所以 I/O 操作的都是字节而不是字符。但是在程序中操作的数据通常是字符形式，因此需要提供对字符进行操作的方法。
+不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符，所以 I/O 操作的都是字节而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
-InputStreamReader 实现从文本文件的字节流解码成字符流；OutputStreamWriter 实现字符流编码成为文本文件的字节流。它们都继承自 Reader 和 Writer。
+InputStreamReader 实现从文本文件的字节流解码成字符流；OutputStreamWriter 实现字符流编码成为文本文件的字节流。它们继承自 Reader 和 Writer。
 
 编码就是把字符转换为字节，而解码是把字节重新组合成字符。
 
@@ -115,7 +117,12 @@ Java 中的网络支持：
 
 ## 1. InetAddress
 
-没有公有构造函数，只能通过静态方法来创建实例，比如 InetAddress.getByName(String host)、InetAddress.getByAddress(byte[] addr)。
+没有公有构造函数，只能通过静态方法来创建实例。
+
+```java
+InetAddress.getByName(String host);
+InetAddress.getByAddress(byte[] addr);
+```
 
 ## 2. URL
 
@@ -123,8 +130,8 @@ Java 中的网络支持：
 
 ```java
 URL url = new URL("http://www.baidu.com");
-InputStream is = url.openStream(); // 字节流
-InputStreamReader isr = new InputStreamReader(is, "utf-8");                              // 字符流
+InputStream is = url.openStream();                           // 字节流
+InputStreamReader isr = new InputStreamReader(is, "utf-8");  // 字符流
 BufferedReader br = new BufferedReader(isr);
 String line = br.readLine();
 while (line != null) {
@@ -138,14 +145,11 @@ is.close();
 
 ## 3. Sockets
 
-Socket 通信模型
-
-<div align="center"> <img src="../pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div><br>
-
 - ServerSocket：服务器端类
 - Socket：客户端类
+- 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
+<div align="center"> <img src="../pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div><br>
 
 ## 4. Datagram
 
