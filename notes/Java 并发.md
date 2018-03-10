@@ -719,7 +719,7 @@ Thread printThread = new Thread(new Runnable() {
 
 这段 20 个线程自增 10000 次的代码使用了 AtomicInteger 之后程序输出了正确结果，一切都要归功于 incrementAndGet() 方法的原子性。
 
-代码清单 Atomic 的原子自增运算
+代码清单：Atomic 的原子自增运算
 
 ```java
 /**
@@ -765,7 +765,7 @@ public class AtomicTest {
 
 incrementAndGet() 的实现其实非常简单。
 
-代码清单 incrementAndGet() 方法的 JDK 源码
+代码清单：incrementAndGet() 方法的 JDK 源码
 
 ```java
 /**
@@ -814,7 +814,32 @@ Java 语言中，如果一个变量要被多线程访问，可以使用 volatile
 
 ## 2. 锁消除
 
+锁消除是指虚拟机即时编译器在运行时，对一些代码上要求同步，但是被检测到不可能存在共享数据竞争的锁进行消除。锁消除的主要判定依据来源于逃逸分析的数据支持，如果判定在一段代码中，堆上的所有数据都不会逃逸出去从而被其他线程访问到，那就可以把他们当做栈上数据对待，认为它们是线程私有的，同步加锁自然就无须进行。
 
+也许读者会有疑问，变量是否逃逸，对于虚拟机来说需要使用数据流分析来确定，但是程序自己应该是很清楚的，怎么会在明知道不存在数据争用的情况下要求同步呢？答案是有许多同步措施并不是程序员自己加入的。同步的代码在 Java 程序中的普遍程度也许超过了大部分读者的想象。下面段非常简单的代码仅仅是输出 3 个字符串相加的结果，无论是源码字面上还是程序语义上都没有同步。
+
+代码清单：一段看起来没有同步的代码
+
+```java
+public static String concatString(String s1, String s2, String s3) {
+    return s1 + s2 + s3;
+}
+```
+
+我们也知道，由于 String 是一个不可变的类，对字符串的连接操作总是通过生成新的 String 对象来进行的，因此 Javac 编译器会对 String 连接做自动优化。在 JDK 1.5 之前，会转化为 StringBuffer 对象的连续 append() 操作，在 JDK 1.5 及以后的版本中，会转化为 StringBuilder 对象的连续 append() 操作，即上面的代码可能会变成下面的样子：
+
+代码清单：Javac 转化后的字符串连接操作
+
+```java
+public static String concatString(String s1, String s2, String s3) {
+    StringBuffer sb = new StringBuffer();
+    sb.append(s1);
+    sb.append(s2);
+    sb.append(s3);
+    return sb.toString();
+}
+```
+每个 StringBuffer.append() 方法中都有一个同步块，锁就是 sb 对象。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 concatString() 方法内部。也就是说，sb 的所有引用永远不会 “逃逸” 到 concatString() 方法之外，其他线程无法访问到它，因此，虽然这里有锁，但是可以被安全地消除掉，在即时编译之后，这段代码就会忽略掉所有的同步而直接执行了。
 
 # 多线程开发良好的实践
 
