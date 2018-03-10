@@ -16,10 +16,10 @@
         * [2.1 synchronized](#21-synchronized)
         * [2.2 Lock](#22-lock)
         * [2.3 BlockingQueue](#23-blockingqueue)
-* [线程状态转换](#线程状态转换)
 * [结束线程](#结束线程)
     * [1. 阻塞](#1-阻塞)
     * [2. 中断](#2-中断)
+* [线程状态转换](#线程状态转换)
 * [Java 内存模型与线程](#java-内存模型与线程)
     * [1. 硬件的效率与一致性](#1-硬件的效率与一致性)
     * [2. Java 内存模型](#2-java-内存模型)
@@ -341,32 +341,6 @@ Producer3 is consuming product made by Consumer3...
 Producer4 is consuming product made by Consumer4...
 ```
 
-# 线程状态转换
-
-<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
-
-1. NEW（新建）：创建后尚未启动的线程。
-2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
-3. BLOCKED（阻塞）：阻塞与等待的区别是，阻塞在等待着获取到一个排它锁，这个时间将在另一个线程放弃这个锁的时候发生；而等待则是在等待一段时间，或者唤醒动作的发生。在程序等待进入同步区域的时候，线程将进入这种状态。
-4. Waiting（无限期等待）：处于这种状态的进行不会被分配 CPU 执行时间，它们要等待其它线程显示地唤醒。以下方法会让线程进入这种状态：
-5. TIMED_WAITING（限期等待）：处于这种状态的线程也不会被分配 CPU 执行时间，不过无序等待其它线程显示地唤醒，在一定时间之后它们会由系统自动唤醒。
-6. TERMINATED（死亡）
-
-以下方法会让线程陷入无限期的等待状态：
-
-- 没有设置 Timeout 参数的 Object.wait() 方法
-- 没有设置 Timeout 参数的 Thread.join() 方法
-- LockSupport.park() 方法
-
-以下方法会让线程进入限期等待状体：
-
-- Thread.sleep()
-- 设置了 Timeout 参数的 Object.wait() 方法
-- 设置了 Timeout 参数的 Thread.join() 方法
-- LockSupport.parkNanos() 方法
-- LockSupport.parkUntil() 方法
-
-
 # 结束线程
 
 ## 1. 阻塞
@@ -403,6 +377,31 @@ Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方�
 interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
 
 interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
+
+# 线程状态转换
+
+<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
+
+1. NEW（新建）：创建后尚未启动的线程。
+2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
+3. BLOCKED（阻塞）：阻塞与等待的区别是，阻塞在等待着获取到一个排它锁，这个时间将在另一个线程放弃这个锁的时候发生；而等待则是在等待一段时间，或者唤醒动作的发生。在程序等待进入同步区域的时候，线程将进入这种状态。
+4. Waiting（无限期等待）：处于这种状态的进行不会被分配 CPU 执行时间，它们要等待其它线程显示地唤醒。以下方法会让线程进入这种状态：
+5. TIMED_WAITING（限期等待）：处于这种状态的线程也不会被分配 CPU 执行时间，不过无序等待其它线程显示地唤醒，在一定时间之后它们会由系统自动唤醒。
+6. TERMINATED（死亡）
+
+以下方法会让线程陷入无限期的等待状态：
+
+- 没有设置 Timeout 参数的 Object.wait() 方法
+- 没有设置 Timeout 参数的 Thread.join() 方法
+- LockSupport.park() 方法
+
+以下方法会让线程进入限期等待状体：
+
+- Thread.sleep()
+- 设置了 Timeout 参数的 Object.wait() 方法
+- 设置了 Timeout 参数的 Thread.join() 方法
+- LockSupport.parkNanos() 方法
+- LockSupport.parkUntil() 方法
 
 # Java 内存模型与线程
 
