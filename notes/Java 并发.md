@@ -625,7 +625,7 @@ at java.lang.Thread.run（Thread.java：662）
 
 很明显，尽管这里使用到的 Vector 的 get()、remove() 和 size() 方法都是同步的，但是在多线程的环境中，如果不在方法调用端做额外的同步措施的话，使用这段代码仍然是不安全的，因为如果另一个线程恰好在错误的时间里删除了一个元素，导致序号 i 已经不再可用的话，再用 i 访问数组就会抛出一个 ArrayIndexOutOfBoundsException。如果要保证这段代码能正确执行下去，我们不得不把 removeThread 和 printThread 的定义改成如下所示的样子：
 
-```
+```java
  Thread removeThread = new Thread(new Runnable() {
     @Override
     public void run() {
