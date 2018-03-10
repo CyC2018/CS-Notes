@@ -407,7 +407,7 @@ ORDER BY cust_name;
 
 内连接又称等值连接，使用 INNER JOIN 关键字。
 
-```
+```sql
 select a, b, c
 from A inner join B
 on A.key = B.key
@@ -415,7 +415,7 @@ on A.key = B.key
 
 可以不明确使用 INNER JOIN，而使用普通查询并在 WHERE 中将两个表中要连接的列用等值方法连接起来。
 
-```
+```sql
 select a, b, c
 from A, B
 where A.key = B.key
@@ -431,7 +431,7 @@ where A.key = B.key
 
 **子查询版本** 
 
-```
+```sql
 select name
 from employee
 where department = (
@@ -442,7 +442,7 @@ where department = (
 
 **自连接版本** 
 
-```
+```sql
 select name
 from employee as e1, employee as e2
 where e1.department = e2.department
@@ -457,7 +457,7 @@ where e1.department = e2.department
 
 内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列。
 
-```
+```sql
 select *
 from employee natural join department;
 ```
@@ -468,7 +468,7 @@ from employee natural join department;
 
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
-```
+```sql
 select Customers.cust_id, Orders.order_num
    from Customers left outer join Orders
    on Customers.cust_id = Orders.curt_id;
@@ -476,7 +476,7 @@ select Customers.cust_id, Orders.order_num
 
 如果需要统计顾客的订单数，使用聚集函数。
 
-```
+```sql
 select Customers.cust_id,
        COUNT(Orders.order_num) as num_ord
 from Customers left outer join Orders
