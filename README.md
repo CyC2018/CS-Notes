@@ -125,7 +125,9 @@ Google 开源项目的代码风格规范。
 
 ## Donate
 
-[Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md)
+<!--  [Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md) -->
+
+<img src="alipay.png" alt="" width="200"/>
 
 ## License
 
