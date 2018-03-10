@@ -123,11 +123,11 @@ Google 开源项目的代码风格规范。
 
 笔记内容可供个人随意使用，转载或者引用请注明出处，毕竟写了很长时间没那么轻松~
 
-## Donate
+<!-- ## Donate
 
-<!--  [Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md) -->
+ [Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md) 
 
-<img src="./other/alipay.png" alt="" width="150"/>
+<img src="./other/alipay.png" alt="" width="150"/> -->
 
 ## License
 
