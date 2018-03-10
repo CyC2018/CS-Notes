@@ -2,7 +2,7 @@
 * [使用线程](#使用线程)
     * [1. 实现 Runnable 接口](#1-实现-runnable-接口)
     * [2. 实现 Callable 接口](#2-实现-callable-接口)
-    * [3. 继承 Tread 类](#3-继承-tread-类)
+    * [3. 继承 Thread 类](#3-继承-thread-类)
     * [4. 实现接口 vs 继承 Thread](#4-实现接口-vs-继承-thread)
 * [Executor](#executor)
 * [基础线程机制](#基础线程机制)
@@ -36,7 +36,7 @@
 
 1. 实现 Runnable 接口；
 2. 实现 Callable 接口；
-3. 继承 Tread 类；
+3. 继承 Thread 类；
 
 实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
 
@@ -79,7 +79,7 @@ public  class  MyCallable  implements  Callable<Integer> {
 }
 ```
 
-## 3. 继承 Tread 类
+## 3. 继承 Thread 类
 
 同样也是需要实现 run() 方法，并且最后也是调用 start() 方法来启动线程。
 
