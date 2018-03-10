@@ -127,7 +127,7 @@ Google 开源项目的代码风格规范。
 
 <!--  [Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md) -->
 
-<img src="./other/alipay.png" alt="" width="130"/>
+<img src="./other/alipay.png" alt="" width="150"/>
 
 ## License
 
