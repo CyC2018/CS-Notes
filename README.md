@@ -83,7 +83,7 @@
 
 > [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
-File、InputStream OutputStream、Reader Writer、Serializable、Socket、NIO
+File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
