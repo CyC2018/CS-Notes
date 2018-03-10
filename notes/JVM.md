@@ -392,16 +392,17 @@ Region 不可能是孤立的，一个对象分配在某个 Region 中，可以�
 
 ### 4.2 大对象直接进入老年代
 
+大对象是指需要连续内存空间的对象，最典型的大对象是那种很长的字符串以及数组。经常出现大对象会提前触发垃圾收集以获取足够的连续空间分配给大对象。
+
 提供 -XX:PretenureSizeThreshold 参数，大于此值的对象直接在老年代分配，避免在 Eden 区和 Survivor 区之间的大量内存复制；
 
 ### 4.3 长期存活的对象进入老年代
 
-JVM 为对象定义年龄计数器，经过 Minor GC 依然存活且被 Survivor 区容纳的，移动到 Survivor 区，年龄加 1，每经历一次 Minor GC 不被清理则年龄加 1，增加到一定年龄则移动到老年区（默认 15 岁，通过 -XX:MaxTenuringThreshold 设置）；
-
+JVM 为对象定义年龄计数器，经过 Minor GC 依然存活，并且能被 Survivor 区容纳的，移被移到 Survivor 区，年龄就增加 1 岁，增加到一定年龄则移动到老年代中（默认 15 岁，通过 -XX:MaxTenuringThreshold 设置）；
 
 ### 4.4 动态对象年龄判定
 
-若 Survivor 区中同年龄所有对象大小总和大于 Survivor 空间一半，则年龄大于等于该年龄的对象可以直接进入老年代；
+JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无序等待 MaxTenuringThreshold 中要求的年龄。
 
 ### 4.5 空间分配担保
 
