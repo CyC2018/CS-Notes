@@ -15,11 +15,11 @@
         * [2.1 通道](#21-通道)
         * [2.2 缓冲区](#22-缓冲区)
     * [3. 缓冲区状态变量](#3-缓冲区状态变量)
-    * [4. 读写文件实例](#4-读写文件实例)
+    * [4. 文件 NIO 实例](#4-文件-nio-实例)
     * [5. 阻塞与非阻塞](#5-阻塞与非阻塞)
         * [5.1 阻塞式 I/O](#51-阻塞式-io)
         * [5.2 非阻塞式 I/O](#52-非阻塞式-io)
-    * [6. 套接字实例](#6-套接字实例)
+    * [6. 套接字 NIO 实例](#6-套接字-nio-实例)
         * [6.1 ServerSocketChannel](#61-serversocketchannel)
         * [6.2 Selectors](#62-selectors)
         * [6.3 主循环](#63-主循环)
@@ -176,7 +176,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 通道 Channel 是对原 I/O 包中的流的模拟，可以通过它读取和写入数据。
 
-通道与流的不同之处在于，流只能在一个方向上移动，(一个流必须是 InputStream 或者 OutputStream 的子类)， 而通道是双向的，可以用于读、写或者同时用于读写。
+通道与流的不同之处在于，流只能在一个方向上移动，(一个流必须是 InputStream 或者 OutputStream 的子类)，而通道是双向的，可以用于读、写或者同时用于读写。
 
 通道包括以下类型：
 
@@ -187,7 +187,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 ### 2.2 缓冲区
 
-发送给一个通道的所有对象都必须首先放到缓冲区中；同样地，从通道中读取的任何数据都要读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是先经过缓冲区。
+发送给一个通道的所有对象都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
 
 缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
 
@@ -201,7 +201,6 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - FloatBuffer
 - DoubleBuffer
 
-
 ## 3. 缓冲区状态变量
 
 - capacity：最大容量；
@@ -210,27 +209,22 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 状态变量的改变过程：
 
-1\. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit == capacity == 9。capacity 变量不会改变，下面的讨论会忽略它。
-
+1. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 9。capacity 变量不会改变，下面的讨论会忽略它。
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-2\. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
-
+2. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
 <div align="center"> <img src="../pics//4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div><br>
 
-3\. 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
-
+3. 以下图例为已经从输入通道读取了 5 个字节数据写入缓冲区中。在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
 <div align="center"> <img src="../pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
 
-4\. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
-
+4. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
 <div align="center"> <img src="../pics//b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
 
-5\. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
-
+5. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
 <div align="center"> <img src="../pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
 
-## 4. 读写文件实例
+## 4. 文件 NIO 实例
 
 1\. 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；
 
@@ -239,13 +233,13 @@ FileInputStream fin = new FileInputStream("readandshow.txt");
 FileChannel fic = fin.getChannel();
 ```
 
-2\. 创建一个容量为 1024 的 Buffer
+2\. 创建一个容量为 1024 的 Buffer；
 
 ```java
 ByteBuffer buffer = ByteBuffer.allocate(1024);
 ```
 
-3\. 将数据从输入 FileChannel 写入到 Buffer 中，如果没有数据的话， read() 方法会返回 -1
+3\. 将数据从输入 FileChannel 写入到 Buffer 中，如果没有数据的话， read() 方法会返回 -1；
 
 ```java
 int r = fcin.read(buffer);
@@ -285,7 +279,9 @@ buffer.clear();
 
 ### 5.1 阻塞式 I/O
 
-阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回，每个客户端连接过来后，服务端都会启动一个线程去处理该客户端的请求。
+阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回。
+
+服务端都会为每个连接的客户端创建一个线程来处理读写请求，阻塞式的特点会造成服务器会创建大量线程，并且大部分线程处于阻塞的状态，因此对服务器的性能会有很大的影响。
 
 <div align="center"> <img src="../pics//edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div><br>
 
@@ -293,17 +289,17 @@ buffer.clear();
 
 由一个专门的线程来处理所有的 I/O 事件，并负责分发。
 
-事件驱动机制：事件到的时候触发，而不是同步的去监视事件。
+事件驱动机制：事件到的时候触发，而不是同步地监视事件。
 
 线程通信：线程之间通过 wait()、notify() 等方式通信，保证每次上下文切换都是有意义的，减少无谓的线程切换。
 
 <div align="center"> <img src="../pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div><br>
 
-## 6. 套接字实例
+## 6. 套接字 NIO 实例
 
 ### 6.1 ServerSocketChannel
 
-每一个端口都需要有一个 ServerSocketChannel 用来监听连接。
+每一个监听端口都需要有一个 ServerSocketChannel 用来监听连接。
 
 ```java
 ServerSocketChannel ssc = ServerSocketChannel.open();
@@ -318,7 +314,7 @@ ss.bind(address); // 绑定端口号
 
 异步 I/O 通过 Selector 注册对特定 I/O 事件的兴趣 ― 可读的数据的到达、新的套接字连接等等，在发生这样的事件时，系统将会发送通知。
 
-创建 Selectors 之后，就可以对不同的通道对象调用 register() 方法。register() 的第一个参数总是这个 Selector。第二个参数是 OP_ACCEPT，这里它指定我们想要监听 accept 事件，也就是在新的连接建立时所发生的事件。
+创建 Selectors 之后，就可以对不同的通道对象调用 register() 方法。register() 的第一个参数总是这个 Selector。第二个参数是 OP_ACCEPT，这里它指定我们想要监听 ACCEPT 事件，也就是在新的连接建立时所发生的事件。
 
 SelectionKey 代表这个通道在此 Selector 上的这个注册。当某个 Selector 通知您某个传入事件时，它是通过提供对应于该事件的 SelectionKey 来进行的。SelectionKey 还可以用于取消通道的注册。
 
@@ -329,18 +325,18 @@ SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
 
 ### 6.3 主循环
 
-首先，我们调用 Selector 的 select() 方法。这个方法会阻塞，直到至少有一个已注册的事件发生。当一个或者更多的事件发生时， select() 方法将返回所发生的事件的数量。
+首先，我们调用 Selector 的 select() 方法。这个方法会阻塞，直到至少有一个已注册的事件发生。当一个或者更多的事件发生时，select() 方法将返回所发生的事件的数量。
 
-接下来，我们调用 Selector 的 selectedKeys() 方法，它返回发生了事件的 SelectionKey 对象的一个 集合 。
+接下来，我们调用 Selector 的 selectedKeys() 方法，它返回发生了事件的 SelectionKey 对象的一个集合 。
 
 我们通过迭代 SelectionKeys 并依次处理每个 SelectionKey 来处理事件。对于每一个 SelectionKey，您必须确定发生的是什么 I/O 事件，以及这个事件影响哪些 I/O 对象。
 
 ```java
 int num = selector.select();
- 
+
 Set selectedKeys = selector.selectedKeys();
 Iterator it = selectedKeys.iterator();
- 
+
 while (it.hasNext()) {
      SelectionKey key = (SelectionKey)it.next();
      // ... deal with I/O event ...
@@ -359,7 +355,7 @@ if ((key.readyOps() & SelectionKey.OP_ACCEPT)
 }
 ```
 
-可以肯定地说， readOps() 方法告诉我们该事件是新的连接。
+可以肯定地说，readOps() 方法告诉我们该事件是新的连接。
 
 ### 6.5 接受新的连接
 
@@ -370,14 +366,14 @@ ServerSocketChannel ssc = (ServerSocketChannel)key.channel();
 SocketChannel sc = ssc.accept();
 ```
 
-下一步是将新连接的 SocketChannel 配置为非阻塞的。而且由于接受这个连接的目的是为了读取来自套接字的数据，所以我们还必须将 SocketChannel 注册到 Selector上，如下所示：
+下一步是将新连接的 SocketChannel 配置为非阻塞的。而且由于接受这个连接的目的是为了读取来自套接字的数据，所以我们还必须将 SocketChannel 注册到 Selector 上，如下所示：
 
 ```java
-sc.configureBlocking( false );
-SelectionKey newKey = sc.register( selector, SelectionKey.OP_READ );
+sc.configureBlocking(false);
+SelectionKey newKey = sc.register(selector, SelectionKey.OP_READ);
 ```
 
-注意我们使用 register() 的 OP_READ 参数，将 SocketChannel 注册用于 读取 而不是 接受 新连接。
+注意我们使用 register() 的 OP_READ 参数，将 SocketChannel 注册用于读取而不是接受新连接。
 
 ### 6.6 删除处理过的 SelectionKey
 
@@ -387,7 +383,7 @@ SelectionKey newKey = sc.register( selector, SelectionKey.OP_READ );
 it.remove();
 ```
 
-现在我们可以返回主循环并接受从一个套接字中传入的数据(或者一个传入的 I/O 事件)了。
+现在我们可以返回主循环并接受从一个套接字中传入的数据 (或者一个传入的 I/O 事件) 了。
 
 ### 6.7 传入的 I/O
 
@@ -401,7 +397,6 @@ it.remove();
      // ...
 }
 ```
-
 
 # 参考资料
 
