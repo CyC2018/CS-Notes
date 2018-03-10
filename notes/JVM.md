@@ -38,12 +38,12 @@
         * [4.3 长期存活的对象进入老年代](#43-长期存活的对象进入老年代)
         * [4.4 动态对象年龄判定](#44-动态对象年龄判定)
         * [4.5 空间分配担保](#45-空间分配担保)
-    * [4.6 Full GC 的触发条件](#46-full-gc-的触发条件)
-        * [4.6.1 调用 System.gc()](#461-调用-systemgc)
-        * [4.6.2 老年代空间不足](#462-老年代空间不足)
-        * [4.6.3 空间分配担保失败](#463-空间分配担保失败)
-        * [4.6.4 JDK 1.7 及以前的永久代空间不足](#464-jdk-17-及以前的永久代空间不足)
-        * [4.6.5 Concurrent Mode Failure](#465-concurrent-mode-failure)
+    * [5. Full GC 的触发条件](#5-full-gc-的触发条件)
+        * [5.1 调用 System.gc()](#51-调用-systemgc)
+        * [5.2 老年代空间不足](#52-老年代空间不足)
+        * [5.3 空间分配担保失败](#53-空间分配担保失败)
+        * [5.4 JDK 1.7 及以前的永久代空间不足](#54-jdk-17-及以前的永久代空间不足)
+        * [5.5 Concurrent Mode Failure](#55-concurrent-mode-failure)
 * [类加载机制](#类加载机制)
     * [1 类的生命周期](#1-类的生命周期)
     * [2. 类初始化时机](#2-类初始化时机)
@@ -406,31 +406,29 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 ### 4.5 空间分配担保
 
-在发生 Minor GC 之前，JVM 先检查老年代最大可用连续空间是否大于新生代所有对象总空间，成立的话 Minor GC 确认是安全的；否则继续检查老年代最大可用连续空间是否大于历次晋升到老年代对象的平均大小，大于的话进行 Minor GC，小于的话进行 Full GC。
+在发生 Minor GC 之前，JVM 先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的；如果不成立的话 JVM 会查看 HandlePromotionFailure 设置值是否允许担保失败，如果允许那么就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次 Minor GC，尽管这次 Minor GC 是有风险的；如果小于，或者 HandlePromotionFailure 设置不允许冒险，那这时也要改为进行一次 Full GC。
 
-## 4.6 Full GC 的触发条件
+## 5. Full GC 的触发条件
 
 对于 Minor GC，其触发条件非常简单，当 Eden 区空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
 
-### 4.6.1 调用 System.gc()
+### 5.1 调用 System.gc()
 
-此方法的调用是建议 JVM 进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存，可通过 -XX:+ DisableExplicitGC 来禁止 RMI 调用 System.gc()。
+此方法的调用是建议 JVM 进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存。可通过 -XX:+ DisableExplicitGC 来禁止 RMI 调用 System.gc()。
 
-### 4.6.2 老年代空间不足
+### 5.2 老年代空间不足
 
-老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出如下错误： Java.lang.OutOfMemoryError: Java heap space 为避免以上两种状况引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在新生代多存活一段时间及不要创建过大的对象及数组。
+老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 Java.lang.OutOfMemoryError。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在新生代多存活一段时间以及不要创建过大的对象及数组。
 
-### 4.6.3 空间分配担保失败
+### 5.3 空间分配担保失败
 
 使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 HandlePromotionFailure 担保失败，则会触发 Full GC。
 
-### 4.6.4 JDK 1.7 及以前的永久代空间不足
+### 5.4 JDK 1.7 及以前的永久代空间不足
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，Permanet Generation 可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出如下错误信息：java.lang.OutOfMemoryError: PermGen space 为避免 PermGen 占满造成 Full GC 现象，可采用的方法为增大 PermGen 空间或转为使用 CMS GC。
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 
-在 JDK 1.8 中用元空间替换了永久代作为方法区的实现，元空间是本地内存，因此减少了一种 Full GC 触发的可能性。
-
-### 4.6.5 Concurrent Mode Failure
+### 5.5 Concurrent Mode Failure
 
 执行 CMS GC 的过程中同时有对象要放入老年代，而此时老年代空间不足（有时候“空间不足”是 CMS GC 时当前的浮动垃圾过多导致暂时性的空间不足触发 Full GC），便会报 Concurrent Mode Failure 错误，并触发 Full GC。
 
