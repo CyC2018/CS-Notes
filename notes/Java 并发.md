@@ -47,9 +47,9 @@
 
 ## 1. 实现 Runnable 接口
 
-需要实现 run() 方法
+需要实现 run() 方法。
 
-通过 Thread 调用 start() 方法来启动线程
+通过 Thread 调用 start() 方法来启动线程。
 
 ```java
 public class MyRunnable implements Runnable {
@@ -343,6 +343,8 @@ Producer4 is consuming product made by Consumer4...
 
 # 线程状态转换
 
+<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
+
 1. NEW（新建）：创建后尚未启动的线程。
 2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
 3. BLOCKED（阻塞）：阻塞与等待的区别是，阻塞在等待着获取到一个排它锁，这个时间将在另一个线程放弃这个锁的时候发生；而等待则是在等待一段时间，或者唤醒动作的发生。在程序等待进入同步区域的时候，线程将进入这种状态。
@@ -364,7 +366,6 @@ Producer4 is consuming product made by Consumer4...
 - LockSupport.parkNanos() 方法
 - LockSupport.parkUntil() 方法
 
-<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
 
 # 结束线程
 
