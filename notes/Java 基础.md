@@ -21,6 +21,7 @@
 * [反射](#反射)
 * [异常](#异常)
 * [泛型](#泛型)
+* [注解](#注解)
 * [特性](#特性)
     * [1. 三大特性](#1-三大特性)
     * [2. Java 各版本的新特性](#2-java-各版本的新特性)
@@ -423,6 +424,24 @@ IDE 使用反射机制获取类的信息，在使用一个类的对象时，能�
 
 更详细的内容：[深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
+
+**Advantages of Using Reflection:** 
+
+-  **Extensibility Features**  : An application may make use of external, user-defined classes by creating instances of extensibility objects using their fully-qualified names.
+-  **Class Browsers and Visual Development Environments**  :  A class browser needs to be able to enumerate the members of classes. Visual development environments can benefit from making use of type information available in reflection to aid the developer in writing correct code.
+-  **Debuggers and Test Tools**  : Debuggers need to be able to examine private members on classes. Test harnesses can make use of reflection to systematically call a discoverable set APIs defined on a class, to insure a high level of code coverage in a test suite.
+
+**Drawbacks of Reflection** 
+
+Reflection is powerful, but should not be used indiscriminately. If it is possible to perform an operation without using reflection, then it is preferable to avoid using it. The following concerns should be kept in mind when accessing code via reflection.
+
+-  **Performance Overhead**  : Because reflection involves types that are dynamically resolved, certain Java virtual machine optimizations can not be performed. Consequently, reflective operations have slower performance than their non-reflective counterparts, and should be avoided in sections of code which are called frequently in performance-sensitive applications.
+-  **Security Restrictions**  : Reflection requires a runtime permission which may not be present when running under a security manager. This is in an important consideration for code which has to run in a restricted security context, such as in an Applet.
+-  **Exposure of Internals**  :Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
+
+> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
+
+
 # 异常
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示编译时系统错误。
@@ -450,6 +469,12 @@ public class Box<T> {
 
 - [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)
 - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
+
+# 注解
+
+Java注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。
+
+更多详细内容：[注解Annotation实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
 # 特性
 

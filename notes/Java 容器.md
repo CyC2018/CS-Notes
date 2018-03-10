@@ -10,7 +10,7 @@
     * [2. 适配器模式](#2-适配器模式)
 * [散列](#散列)
 * [源码分析](#源码分析)
-    * [1. ArraList](#1-arralist)
+    * [1. ArrayList](#1-arraylist)
     * [2. Vector 与 Stack](#2-vector-与-stack)
     * [3. LinkedList](#3-linkedlist)
     * [4. TreeMap](#4-treemap)
@@ -103,7 +103,8 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 ## 1. ArrayList
 
-[ArrayList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
+[ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
+
 
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
