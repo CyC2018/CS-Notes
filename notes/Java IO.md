@@ -27,6 +27,7 @@
         * [6.5 接受新的连接](#65-接受新的连接)
         * [6.6 删除处理过的 SelectionKey](#66-删除处理过的-selectionkey)
         * [6.7 传入的 I/O](#67-传入的-io)
+    * [7. 内存映射文件](#7-内存映射文件)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -327,7 +328,7 @@ SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
 
 首先，我们调用 Selector 的 select() 方法。这个方法会阻塞，直到至少有一个已注册的事件发生。当一个或者更多的事件发生时，select() 方法将返回所发生的事件的数量。
 
-接下来，我们调用 Selector 的 selectedKeys() 方法，它返回发生了事件的 SelectionKey 对象的一个集合 。
+接下来，我们调用 Selector 的 selectedKeys() 方法，它返回发生了事件的 SelectionKey 对象的一个集合。
 
 我们通过迭代 SelectionKeys 并依次处理每个 SelectionKey 来处理事件。对于每一个 SelectionKey，您必须确定发生的是什么 I/O 事件，以及这个事件影响哪些 I/O 对象。
 
@@ -396,6 +397,22 @@ it.remove();
      SocketChannel sc = (SocketChannel)key.channel();
      // ...
 }
+```
+
+## 7. 内存映射文件
+
+内存映射文件 I/O 是一种读和写文件数据的方法，它可以比常规的基于流或者基于通道的 I/O 快得多。
+
+只有文件中实际读取或者写入的部分才会映射到内存中。
+
+现代操作系统一般根据需要将文件的部分映射为内存的部分，从而实现文件系统。Java 内存映射机制不过是在底层操作系统中可以采用这种机制时，提供了对该机制的访问。
+
+向内存映射文件写入可能是危险的，仅只是改变数组的单个元素这样的简单操作，就可能会直接修改磁盘上的文件。修改数据与将数据保存到磁盘是没有分开的。
+
+下面代码行将文件的前 1024 个字节映射到内存中，map() 方法返回一个 MappedByteBuffer，它是 ByteBuffer 的子类。因此，您可以像使用其他任何 ByteBuffer 一样使用新映射的缓冲区，操作系统会在需要时负责执行行映射。
+
+```java
+MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 ```
 
 # 参考资料
