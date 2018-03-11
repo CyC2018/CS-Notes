@@ -261,7 +261,7 @@ transient Entry[] table;
 
 ### 拉链法的工作原理
 
-使用默认构造函数新建一个 HashMap，默认大小为 16。Entry的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
+使用默认构造函数新建一个 HashMap，默认大小为 16。Entry 的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
 
 <div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg"/> </div><br>
 
@@ -406,11 +406,11 @@ private V putForNullKey(V value) {
 
 ### 与 HashTable 的区别
 
-- HashMap几乎可以等价于Hashtable，除了HashMap是非synchronized的，并可以接受null(HashMap可以接受为null的键值(key)和值(value)，而Hashtable则不行)。
-- HashMap是非synchronized，而Hashtable是synchronized，这意味着Hashtable是线程安全的，多个线程可以共享一个Hashtable；而如果没有正确的同步的话，多个线程是不能共享HashMap的。Java 5提供了ConcurrentHashMap，它是HashTable的替代，比HashTable的扩展性更好。
-- 另一个区别是HashMap的迭代器(Iterator)是fail-fast迭代器，而Hashtable的enumerator迭代器不是fail-fast的。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。
-- 由于Hashtable是线程安全的也是synchronized，所以在单线程环境下它比HashMap要慢。如果你不需要同步，只需要单一线程，那么使用HashMap性能要好过Hashtable。
-- HashMap不能保证随着时间的推移Map中的元素次序是不变的。
+- HashMap 几乎可以等价于 Hashtable，除了 HashMap 是非 synchronized 的，并可以接受 null(HashMap 可以接受为 null 的键值 (key) 和值 (value)，而 Hashtable 则不行)。
+- HashMap 是非 synchronized，而 Hashtable 是 synchronized，这意味着 Hashtable 是线程安全的，多个线程可以共享一个 Hashtable；而如果没有正确的同步的话，多个线程是不能共享 HashMap 的。Java 5 提供了 ConcurrentHashMap，它是 HashTable 的替代，比 HashTable 的扩展性更好。
+- 另一个区别是 HashMap 的迭代器 (Iterator) 是 fail-fast 迭代器，而 Hashtable 的 enumerator 迭代器不是 fail-fast 的。所以当有其它线程改变了 HashMap 的结构（增加或者移除元素），将会抛出 ConcurrentModificationException，但迭代器本身的 remove() 方法移除元素则不会抛出 ConcurrentModificationException 异常。但这并不是一个一定发生的行为，要看 JVM。这条同样也是 Enumeration 和 Iterator 的区别。
+- 由于 Hashtable 是线程安全的也是 synchronized，所以在单线程环境下它比 HashMap 要慢。如果你不需要同步，只需要单一线程，那么使用 HashMap 性能要好过 Hashtable。
+- HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
 > [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
 
