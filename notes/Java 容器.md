@@ -19,11 +19,11 @@
     * [3. LinkedList](#3-linkedlist)
     * [4. TreeMap](#4-treemap)
     * [5. HashMap](#5-hashmap)
-        * [5.1 基本数据结构](#51-基本数据结构)
-        * [5.2 拉链法的工作原理](#52-拉链法的工作原理)
-        * [5.3 扩容](#53-扩容)
-        * [5.4 null 值](#54-null-值)
-        * [5.5 与 HashTable 的区别](#55-与-hashtable-的区别)
+        * [基本数据结构](#基本数据结构)
+        * [拉链法的工作原理](#拉链法的工作原理)
+        * [扩容](#扩容)
+        * [null 值](#null-值)
+        * [与 HashTable 的区别](#与-hashtable-的区别)
     * [6. LinkedHashMap](#6-linkedhashmap)
     * [7. ConcurrentHashMap](#7-concurrenthashmap)
 * [参考资料](#参考资料)
@@ -247,7 +247,7 @@ private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOExceptio
 
 [HashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-### 5.1 基本数据结构
+### 基本数据结构
 
 使用拉链法来解决冲突，内部包含了一个 Entry 类型的数组 table，数组中的每个位置被当成一个桶。
 
@@ -259,7 +259,7 @@ transient Entry[] table;
 
 <div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
 
-### 5.2 拉链法的工作原理
+### 拉链法的工作原理
 
 使用默认构造函数新建一个 HashMap，默认大小为 16。Entry的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
 
@@ -267,7 +267,7 @@ transient Entry[] table;
 
 当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此这一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
-### 5.3 扩容
+### 扩容
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
 
@@ -346,7 +346,7 @@ void transfer(Entry[] newTable) {
 }
 ```
 
-### 5.4 null 值
+### null 值
 
 get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
 
@@ -404,7 +404,7 @@ private V putForNullKey(V value) {
 }
 ```
 
-### 5.5 与 HashTable 的区别
+### 与 HashTable 的区别
 
 - HashMap几乎可以等价于Hashtable，除了HashMap是非synchronized的，并可以接受null(HashMap可以接受为null的键值(key)和值(value)，而Hashtable则不行)。
 - HashMap是非synchronized，而Hashtable是synchronized，这意味着Hashtable是线程安全的，多个线程可以共享一个Hashtable；而如果没有正确的同步的话，多个线程是不能共享HashMap的。Java 5提供了ConcurrentHashMap，它是HashTable的替代，比HashTable的扩展性更好。
