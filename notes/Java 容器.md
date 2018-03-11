@@ -11,10 +11,19 @@
 * [散列](#散列)
 * [源码分析](#源码分析)
     * [1. ArrayList](#1-arraylist)
+        * [概览](#概览)
+        * [Fail-Fast](#fail-fast)
+        * [和 Vector 的区别](#和-vector-的区别)
+        * [和 LinkedList 的区别](#和-linkedlist-的区别)
     * [2. Vector 与 Stack](#2-vector-与-stack)
     * [3. LinkedList](#3-linkedlist)
     * [4. TreeMap](#4-treemap)
     * [5. HashMap](#5-hashmap)
+        * [5.1 基本数据结构](#51-基本数据结构)
+        * [5.2 拉链法的工作原理](#52-拉链法的工作原理)
+        * [5.3 扩容](#53-扩容)
+        * [5.4 null 值](#54-null-值)
+        * [5.5 与 HashTable 的区别](#55-与-hashtable-的区别)
     * [6. LinkedHashMap](#6-linkedhashmap)
     * [7. ConcurrentHashMap](#7-concurrenthashmap)
 * [参考资料](#参考资料)
@@ -105,6 +114,8 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 [ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
+### 概览
+
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
 ```java
@@ -182,6 +193,8 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
+### Fail-Fast
+
 modCount 用来记录 ArrayList 结构发生变化的次数，结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
@@ -205,14 +218,14 @@ private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOExceptio
 }
 ```
 
-**和 Vector 的区别** 
+### 和 Vector 的区别
 
 1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 2.  Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
 为了获得线程安全的 ArrayList，可以调用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
 
-**和 LinkedList 的区别** 
+### 和 LinkedList 的区别
 
 1. ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
 2. ArrayList 支持随机访问，LinkedList 不支持；
@@ -234,13 +247,39 @@ private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOExceptio
 
 [HashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-使用拉链法来解决冲突。
+### 5.1 基本数据结构
 
-默认容量 capacity 为 16，需要注意的是容量必须保证为 2 的次方。容量就是 Entry[] table 数组的长度，size 是数组的实际使用量。
+使用拉链法来解决冲突，内部包含了一个 Entry 类型的数组 table，数组中的每个位置被当成一个桶。
+
+```java
+transient Entry[] table;
+```
+
+其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
+
+<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
+
+### 5.2 拉链法的工作原理
+
+使用默认构造函数新建一个 HashMap，默认大小为 16。Entry的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
+
+<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg"/> </div><br>
+
+当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此这一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+
+### 5.3 扩容
+
+设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
+
+为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，可就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
+
+和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
+
+capacity 表示 table 的容量大小，默认为 16，需要注意的是容量必须保证为 2 的次方。容量就是 table 数组的长度，size 是数组的实际使用量。
 
 threshold 规定了一个 size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。
 
-threshold = capacity * load_factor，其中 load_factor 为 table 数组能够使用的比例，load_factor 过大会导致聚簇的出现，从而影响查询和插入的效率，详见算法笔记。
+threshold = capacity * load_factor，其中 load_factor 为 table 数组能够使用的比例，load_factor 过大会导致聚簇的出现，从而影响查询和插入的效率，聚簇解释见底下的扩容操作。
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -271,18 +310,45 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 }
 ```
 
-Entry 用来表示一个键值对元素，其中的 next 指针在序列化时会使用。
+扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把旧 table 的所有键值对重新插入新的 table 中，因此这一步是很费时的。但是从均摊分析的角度来考虑，HashMap 的查找速度依然在常数级别。
 
 ```java
-static class Entry<K,V> implements Map.Entry<K,V> {
-    final K key;
-    V value;
-    Entry<K,V> next;
-    final int hash;
+void resize(int newCapacity) {
+    Entry[] oldTable = table;
+    int oldCapacity = oldTable.length;
+    if (oldCapacity == MAXIMUM_CAPACITY) {
+        threshold = Integer.MAX_VALUE;
+        return;
+    }
+
+    Entry[] newTable = new Entry[newCapacity];
+    transfer(newTable);
+    table = newTable;
+    threshold = (int)(newCapacity * loadFactor);
+}
+
+void transfer(Entry[] newTable) {
+    Entry[] src = table;
+    int newCapacity = newTable.length;
+    for (int j = 0; j < src.length; j++) {
+        Entry<K,V> e = src[j];
+        if (e != null) {
+            src[j] = null;
+            do {
+                Entry<K,V> next = e.next;
+                int i = indexFor(e.hash, newCapacity);
+                e.next = newTable[i];
+                newTable[i] = e;
+                e = next;
+            } while (e != null);
+        }
+    }
 }
 ```
 
-get() 操作需要分成两种情况，key 为 null 和 不为 null，从中可以看出 HashMap 允许插入 null 作为键。
+### 5.4 null 值
+
+get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
 
 ```java
 public V get(Object key) {
@@ -338,6 +404,16 @@ private V putForNullKey(V value) {
 }
 ```
 
+### 5.5 与 HashTable 的区别
+
+- HashMap几乎可以等价于Hashtable，除了HashMap是非synchronized的，并可以接受null(HashMap可以接受为null的键值(key)和值(value)，而Hashtable则不行)。
+- HashMap是非synchronized，而Hashtable是synchronized，这意味着Hashtable是线程安全的，多个线程可以共享一个Hashtable；而如果没有正确的同步的话，多个线程是不能共享HashMap的。Java 5提供了ConcurrentHashMap，它是HashTable的替代，比HashTable的扩展性更好。
+- 另一个区别是HashMap的迭代器(Iterator)是fail-fast迭代器，而Hashtable的enumerator迭代器不是fail-fast的。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。
+- 由于Hashtable是线程安全的也是synchronized，所以在单线程环境下它比HashMap要慢。如果你不需要同步，只需要单一线程，那么使用HashMap性能要好过Hashtable。
+- HashMap不能保证随着时间的推移Map中的元素次序是不变的。
+
+> [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
+
 ## 6. LinkedHashMap
 
 [LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
@@ -346,7 +422,7 @@ private V putForNullKey(V value) {
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-[ 探索 ConcurrentHashMap 高并发性的实现机制 ](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
+[探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 
 # 参考资料
 
