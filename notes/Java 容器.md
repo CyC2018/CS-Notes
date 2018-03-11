@@ -97,7 +97,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 # 源码分析
 
-建议先阅读 [ 算法 - 查找 ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9F%A5%E6%89%BE) 部分，对集合类源码的理解有很大帮助。
+建议先阅读 [算法 - 查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对集合类源码的理解有很大帮助。
 
 源码下载：[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
 
