@@ -105,7 +105,6 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 [ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
-
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
 ```java
@@ -113,13 +112,13 @@ public class ArrayList<E> extends AbstractList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，这是因为该数组不一定所有位置都占满元素，因此也就没必要全部都进行序列化。需要重写 writeObject() 和 readObject()。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明该数组默认不会被序列化。这是因为该数组不是所有位置都占满元素，因此也就没必要全部都进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
 
 ```java
 private transient Object[] elementData;
 ```
 
-数组的默认大小为 10
+数组的默认大小为 10。
 
 ```java
 public ArrayList(int initialCapacity) {
@@ -134,7 +133,7 @@ public ArrayList() {
 }
 ```
 
-删除元素时调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高，最好在创建时就指定大概的容量大小，减少复制操作的执行次数。
+删除元素时调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高。
 
 ```java
 public E remove(int index) {
@@ -152,7 +151,36 @@ public E remove(int index) {
 }
 ```
 
-添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要进行扩容，使得新容量为旧容量的 1.5 倍。
+添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，使得新容量为旧容量的 1.5 倍。扩容操作需要把原数组整个复制到新数组中，因此最好在创建 ArrayList 时就指定大概的容量大小，减少扩容操作的次数。
+
+```java
+private void ensureCapacityInternal(int minCapacity) {
+    modCount++;
+    // overflow-conscious code
+    if (minCapacity - elementData.length > 0)
+        grow(minCapacity);
+}
+
+private void grow(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
+        newCapacity = hugeCapacity(minCapacity);
+    // minCapacity is usually close to size, so this is a win:
+    elementData = Arrays.copyOf(elementData, newCapacity);
+}
+
+private static int hugeCapacity(int minCapacity) {
+    if (minCapacity < 0) // overflow
+        throw new OutOfMemoryError();
+    return (minCapacity > MAX_ARRAY_SIZE) ?
+        Integer.MAX_VALUE :
+        MAX_ARRAY_SIZE;
+}
+```
 
 modCount 用来记录 ArrayList 结构发生变化的次数，因为每次在进行 add() 和 addAll() 时都需要调用 ensureCapacity()，因此直接在 ensureCapacity() 中对 modCount 进行修改。
 
