@@ -279,7 +279,7 @@ capacity 表示 table 的容量大小，默认为 16，需要注意的是容量�
 
 threshold 规定了一个 size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。
 
-threshold = capacity * load_factor，其中 load_factor 为 table 数组能够使用的比例，load_factor 过大会导致聚簇的出现，从而影响查询和插入的效率，聚簇解释见底下的扩容操作。
+threshold = capacity * load_factor，其中 load_factor 为 table 数组能够使用的比例。
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
