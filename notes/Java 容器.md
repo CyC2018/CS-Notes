@@ -182,51 +182,12 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
-modCount 用来记录 ArrayList 结构发生变化的次数，因为每次在进行 add() 和 addAll() 时都需要调用 ensureCapacity()，因此直接在 ensureCapacity() 中对 modCount 进行修改。
-
-结构发生变化：添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
-
-```java
-public void ensureCapacity(int minCapacity) {
-    if (minCapacity > 0)
-        ensureCapacityInternal(minCapacity);
-}
-
-private void ensureCapacityInternal(int minCapacity) {
-    modCount++;
-    // overflow-conscious code
-    if (minCapacity - elementData.length > 0)
-        grow(minCapacity);
-}
-
-private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
-private void grow(int minCapacity) {
-    // overflow-conscious code
-    int oldCapacity = elementData.length;
-    int newCapacity = oldCapacity + (oldCapacity >> 1);
-    if (newCapacity - minCapacity < 0)
-        newCapacity = minCapacity;
-    if (newCapacity - MAX_ARRAY_SIZE > 0)
-        newCapacity = hugeCapacity(minCapacity);
-    // minCapacity is usually close to size, so this is a win:
-    elementData = Arrays.copyOf(elementData, newCapacity);
-}
-
-private static int hugeCapacity(int minCapacity) {
-    if (minCapacity < 0) // overflow
-        throw new OutOfMemoryError();
-    return (minCapacity > MAX_ARRAY_SIZE) ?
-        Integer.MAX_VALUE :
-        MAX_ARRAY_SIZE;
-}
-```
+modCount 用来记录 ArrayList 结构发生变化的次数，结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
 
 ```java
-private void writeObject(java.io.ObjectOutputStream s)
-    throws java.io.IOException{
+private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException{
     // Write out element count, and any hidden stuff
     int expectedModCount = modCount;
     s.defaultWriteObject();
@@ -235,26 +196,25 @@ private void writeObject(java.io.ObjectOutputStream s)
     s.writeInt(elementData.length);
 
     // Write out all elements in the proper order.
-    for (int i=0; i<size; i++)
+    for (int i = 0; i < size; i++)
         s.writeObject(elementData[i]);
 
     if (modCount != expectedModCount) {
         throw new ConcurrentModificationException();
     }
-
 }
 ```
 
 **和 Vector 的区别** 
 
-1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问要慢。最好使用 ArrayList 而不是 Vector，因为同步完全可以由程序员自己来控制；
+1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 2.  Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
-为了使用线程安全的 ArrayList，可以使用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
+为了获得线程安全的 ArrayList，可以调用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
 
 **和 LinkedList 的区别** 
 
-1.  ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
+1. ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
 2. ArrayList 支持随机访问，LinkedList 不支持；
 3. LinkedList 在任意位置添加删除元素更快。
 
