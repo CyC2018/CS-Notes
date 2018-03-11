@@ -47,21 +47,21 @@
 
 ## 4. Map
 
-- HashMap：基于 Hash 实现
+- HashMap：基于 Hash 实现。
 
-- LinkedHashMap：使用链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序
+- LinkedHashMap：使用链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
-- TreeMap：基于红黑树实现
+- TreeMap：基于红黑树实现。
 
-- ConcurrentHashMap：线程安全 Map，不涉及类似于 HashTable 的同步加锁
+- ConcurrentHashMap：线程安全 Map，不涉及类似于 HashTable 的同步加锁。
 
 ## 5. Java 1.0/1.1 容器
 
 对于旧的容器，我们决不应该使用它们，只需要对它们进行了解。
 
-- Vector：和 ArrayList 类似，但它是线程安全的
+- Vector：和 ArrayList 类似，但它是线程安全的。
 
-- HashTable：和 HashMap 类似，但它是线程安全的
+- HashTable：和 HashMap 类似，但它是线程安全的。
 
 # 容器中的设计模式
 
@@ -69,7 +69,7 @@
 
 从概览图可以看到，每个集合类都有一个 Iterator 对象，可以通过这个迭代器对象来遍历集合中的元素。
 
-[Java 中的迭代器模式 ](https://github.com/CyC2018/InterviewNotes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#92-java-%E5%86%85%E7%BD%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8)
+[Java 中的迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#1-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
 ## 2. 适配器模式
 
