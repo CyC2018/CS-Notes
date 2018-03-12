@@ -6,7 +6,7 @@
 
 # 操作系统
 
-<a href="https://pan.baidu.com/s/1C-MgvslLKd1buwmebti6Qg"> <img src="s1650904.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1OoyVI90fK1Q9eixzH9jnpQ"> <img src="s4510534.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/12mTkrpLsb7tz11cGn_KZ4w"> <img src="s3895413.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1Qm2G4rghPorQeH5J9fDHTg"> <img src="s4399937.jpg" width="150"/> </a> 
+<a href="https://pan.baidu.com/s/1C-MgvslLKd1buwmebti6Qg"> <img src="s1650904.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1OoyVI90fK1Q9eixzH9jnpQ"> <img src="s4510534.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1Qm2G4rghPorQeH5J9fDHTg"> <img src="s4399937.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/12mTkrpLsb7tz11cGn_KZ4w"> <img src="s3895413.jpg" width="150"/> </a> 
 
 # 算法
 
