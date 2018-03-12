@@ -616,7 +616,7 @@ public double Power(double base, int exponent) {
 
 **题目描述** 
 
-输入数字n，按顺序打印出从1最大的n位十进制数。比如输入3，则打印出1、2、3 一直到最大的3位数即999。
+输入数字 n，按顺序打印出从 1 最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数即 999。
 
 **解题思路** 
 
@@ -907,7 +907,6 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 **题目描述** 
 
 <div align="center"> <img src="../pics//7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
-
 
 ```java
 public void Mirror(TreeNode root) {
@@ -1470,7 +1469,6 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
     return ret;
 }
 ```
-
 
 ## 41.1 数据流中的中位数
 
