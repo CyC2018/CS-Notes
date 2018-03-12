@@ -1278,30 +1278,11 @@ public int MoreThanHalfNum_Solution(int[] array) {
 
 ## 40. 最小的 K 个数
 
-**构建大小为 k 的小顶堆** 
-
-时间复杂度：O(nlgk)
-空间复杂度：O(k)
-
-```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
-    if (k > input.length || k <= 0) return new ArrayList<>();
-    PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> o2 - o1);
-    for (int num : input) {
-        pq.add(num);
-        if (pq.size() > k) {
-            pq.poll();
-        }
-    }
-    ArrayList<Integer> ret = new ArrayList<>(pq);
-    return ret;
-}
-```
-
 **利用快速选择** 
 
-时间复杂度：O(n)
-空间复杂度：O(1)
+- 时间复杂度：O(N)
+- 空间复杂度：O(1)
+- 只有当可以修改数组元素时才可以使用
 
 ```java
 public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
@@ -1355,6 +1336,33 @@ private boolean less(int v, int w) {
     return v < w;
 }
 ```
+
+
+**大小为 K 的最小堆** 
+
+- 时间复杂度：O(NlgK)
+- 空间复杂度：O(K)
+- 特别适合处理海量数据
+
+应该注意的是，应该使用大顶堆来维护最小堆，而不能直接创建一个小顶堆并设置一个大小，企图让小顶堆中的元素都是最小元素。
+
+维护一个大小为 K 的最小堆过程如下：先添加一个元素，添加完之后如果大顶堆的大小大于 K，那么需要将大顶堆的堆顶元素去除。
+
+```java
+public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+    if (k > input.length || k <= 0) return new ArrayList<>();
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    for (int num : input) {
+        maxHeap.add(num);
+        if (maxHeap.size() > k) {
+            maxHeap.poll();
+        }
+    }
+    ArrayList<Integer> ret = new ArrayList<>(maxHeap);
+    return ret;
+}
+```
+
 
 ## 41.1 数据流中的中位数
 
