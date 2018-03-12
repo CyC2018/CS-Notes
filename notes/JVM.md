@@ -403,7 +403,7 @@ JVM 为对象定义年龄计数器，经过 Minor GC 依然存活，并且能被
 
 ### 4.4 动态对象年龄判定
 
-JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无序等待 MaxTenuringThreshold 中要求的年龄。
+JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无须等待 MaxTenuringThreshold 中要求的年龄。
 
 ### 4.5 空间分配担保
 

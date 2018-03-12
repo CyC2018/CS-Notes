@@ -259,9 +259,16 @@ public void func(String name) {
 private Lock lock;
 public int func(int value) {
    try {
+<<<<<<< HEAD
        lock.lock();
        // ...
    } finally {
+=======
+      lock.lock();
+      // ...
+
+   }finally {
+>>>>>>> 6e667d6a7af72718164794fb07861d35654de294
       lock.unlock();
    }
 }
