@@ -27,9 +27,7 @@
 
 # Java
 
-<a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s27243455.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw"> <img src="s27458236.jpg" width="150"/> </a>
-
-https://pan.baidu.com/s/1LkPVPrT_3BYFkfxieBkeVw
+<a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s27243455.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw"> <img src="s27458236.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1LkPVPrT_3BYFkfxieBkeVw"> <img src="s27458236.jpg" width="150"/> </a>
 
 # C++
 
