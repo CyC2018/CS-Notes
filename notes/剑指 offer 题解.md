@@ -1457,37 +1457,45 @@ public int NumberOf1Between1AndN_Solution(int n) {
 数字以 0123456789101112131415... 的格式序列化到一个字符串中，求这个字符串的第 index 位。
 
 ```java
-int digitAtIndex(int index) {
+public int digitAtIndex(int index) {
     if (index < 0) return -1;
     int digit = 1;
     while (true) {
         int amount = getAmountOfDigit(digit);
         int totalAmount = amount * digit;
-        if (index < totalAmount) return digitAtIndex(index, digit);
+        if (index < totalAmount) {
+            return digitAtIndex(index, digit);
+        }
         index -= totalAmount;
         digit++;
     }
 }
 
+/**
+ * digit 位数的数字组成的字符串长度
+ * 例如 digit = 2， return 90
+ */
 private int getAmountOfDigit(int digit) {
     if (digit == 1) return 10;
-    return (int) Math.pow(10, digit - 1);
+    return (int) Math.pow(10, digit - 1) * 9;
 }
 
-private int digitAtIndex(int index, int digits) {
-    int number = beginNumber(digits) + index / digits;
-    int remain = index % digits;
+/**
+ * 在 digit 位数组成的字符串中，第 index 为的数
+ */
+private int digitAtIndex(int index, int digit) {
+    int number = beginNumber(digit) + index / digit;
+    int remain = index % digit;
     return (number + "").charAt(remain) - '0';
 }
 
-private int beginNumber(int digits) {
-    if (digits == 1) return 0;
-    return (int) Math.pow(10, digits - 1);
-}
-
-public static void main(String[] args) {
-    Solution solution = new Solution();
-    System.out.println(solution.digitAtIndex(1001));
+/**
+ * digit 位数的起始数字
+ * 例如 digit = 2 return 10
+ */
+private int beginNumber(int digit) {
+    if (digit == 1) return 0;
+    return (int) Math.pow(10, digit - 1);
 }
 ```
 
@@ -1496,6 +1504,10 @@ public static void main(String[] args) {
 **题目描述** 
 
 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组 {3，32，321}，则打印出这三个数字能排成的最小数字为 321323。
+
+**解题思路** 
+
+可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 >= S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
 
 ```java
 public String PrintMinNumber(int[] numbers) {
