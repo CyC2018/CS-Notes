@@ -1115,28 +1115,34 @@ private void dfs(TreeNode node, int target, int curSum, ArrayList<Integer> path)
 
 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
 
+<div align="center"> <img src="../pics//4f67aa74-5bf5-4ea4-9a6e-2e07d8f5fa86.png"/> </div><br>
+
+**解题思路** 
+
 第一步，在每个节点的后面插入复制的节点。
 
-<div align="center"> <img src="../pics//f8b12555-967b-423d-a84e-bc9eff104b8b.jpg"/> </div><br>
+<div align="center"> <img src="../pics//52726d32-e97a-49dd-8419-04d30a9f9050.png"/> </div><br>
 
 第二步，对复制节点的 random 链接进行赋值。
 
-<div align="center"> <img src="../pics//7b877a2a-8fd1-40d8-a34c-c445827300b8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//c5409a64-81fc-48c1-9790-ffa0afdb7bf5.png"/> </div><br>
 
 第三步，拆分。
 
-<div align="center"> <img src="../pics//b2b6253c-c701-4b30-aff4-bc3c713542a7.jpg"/> </div><br>
+<div align="center"> <img src="../pics//15e1edf0-8908-4815-af5e-a74e456da23b.png"/> </div><br>
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
-    if (pHead == null) return null;
+    if (pHead == null) {
+        return null;
+    }
     // 插入新节点
     RandomListNode cur = pHead;
     while (cur != null) {
-        RandomListNode node = new RandomListNode(cur.label);
-        node.next = cur.next;
-        cur.next = node;
-        cur = node.next;
+        RandomListNode clone = new RandomListNode(cur.label);
+        clone.next = cur.next;
+        cur.next = clone;
+        cur = clone.next;
     }
     // 建立 random 链接
     cur = pHead;
@@ -1148,12 +1154,12 @@ public RandomListNode Clone(RandomListNode pHead) {
         cur = clone.next;
     }
     // 拆分
-    RandomListNode pCloneHead = pHead.next;
     cur = pHead;
+    RandomListNode pCloneHead = pHead.next;
     while (cur.next != null) {
-        RandomListNode t = cur.next;
-        cur.next = t.next;
-        cur = t;
+        RandomListNode next = cur.next;
+        cur.next = next.next;
+        cur = next;
     }
     return pCloneHead;
 }
@@ -1164,6 +1170,8 @@ public RandomListNode Clone(RandomListNode pHead) {
 **题目描述** 
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+
+<div align="center"> <img src="../pics//9cd97f41-fd9c-405c-aca1-9c82d24e20dc.png"/> </div><br>
 
 ```java
 private TreeNode pre = null;
