@@ -1060,6 +1060,8 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 
+<div align="center"> <img src="../pics//8bc990c1-a2bb-4885-afd7-db0f1ea87451.png"/> </div><br>
+
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
     if (sequence.length == 0) return false;
@@ -1086,6 +1088,8 @@ private boolean verify(int[] sequence, int start, int end) {
 **题目描述** 
 
 输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+
+<div align="center"> <img src="../pics//488b2127-9ea9-48f3-a3b6-800f1684be12.png"/> </div><br>
 
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
