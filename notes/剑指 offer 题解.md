@@ -25,7 +25,7 @@
     * [19. 正则表达式匹配](#19-正则表达式匹配)
     * [20. 表示数值的字符串](#20-表示数值的字符串)
     * [21. 调整数组顺序使奇数位于偶数前面](#21-调整数组顺序使奇数位于偶数前面)
-    * [22. 链表中倒数第 k 个结点](#22-链表中倒数第-k-个结点)
+    * [22. 链表中倒数第 K 个结点](#22-链表中倒数第-k-个结点)
     * [23. 链表中环的入口结点](#23-链表中环的入口结点)
     * [24. 反转链表](#24-反转链表)
     * [25. 合并两个排序的链表](#25-合并两个排序的链表)
@@ -763,20 +763,26 @@ public void reOrderArray(int[] array) {
 }
 ```
 
-## 22. 链表中倒数第 k 个结点
+## 22. 链表中倒数第 K 个结点
+
+**解题思路** 
+
+设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
+
+<div align="center"> <img src="../pics//40d96c0d-156f-4eee-a183-2d597344f1cd.png"/> </div><br>
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k) {
     if (head == null) return null;
-    ListNode fast, slow;
-    fast = slow = head;
-    while (fast != null && k-- > 0) fast = fast.next;
+    ListNode P1, P2;
+    P1 = P2 = head;
+    while (P1 != null && k-- > 0) P1 = P1.next;
     if (k > 0) return null;
-    while (fast != null) {
-        fast = fast.next;
-        slow = slow.next;
+    while (P1 != null) {
+        P1 = P1.next;
+        P2 = P2.next;
     }
-    return slow;
+    return P2;
 }
 ```
 
@@ -784,11 +790,11 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 **解题思路** 
 
-使用双指针，一个指针 fast 每次走两步，一个指针 slow 每次都一步。因为存在环，所以两个指针必定相遇在环中的某个节点上。此时 fast 走的路径长度为 x+2y+z，slow 走的路径长度为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
+使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
 
-在相遇点，slow 要到环的入口点还需要走 z 长度，如果让 fast 重新从头开始走，并且速度变为每次走一步，那么它走到环入口点还需要走 x 长度。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
+在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="../pics//52bb87e0-983e-4dd0-8e71-46dd2f72c97c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//e7d7dc0d-fc22-4f95-8768-b8a216168792.jpg"/> </div><br>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
