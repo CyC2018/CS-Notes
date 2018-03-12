@@ -1363,28 +1363,35 @@ private boolean less(int v, int w) {
 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
 
 ```java
-private PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2-o1); // 实现左边部分
-private PriorityQueue<Integer> minHeep = new PriorityQueue<>(); // 实现右边部分，右边部分所有元素大于左边部分
-private int cnt = 0;
+public class Solution {
+    // 大顶堆，存储左半边元素
+    private PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    // 小顶堆，存储右半边元素，并且右半边元素都大于左半边
+    private PriorityQueue<Integer> right = new PriorityQueue<>();
+    // 当前数据流读入的元素个数
+    private int N = 0;
 
-public void Insert(Integer num) {
-    // 插入要保证两个堆存于平衡状态
-    if(cnt % 2 == 0) {
-        // 为偶数的情况下插入到最小堆，先经过最大堆筛选，这样就能保证最大堆中的元素都小于最小堆中的元素
-        maxHeap.add(num);
-        minHeep.add(maxHeap.poll());
-    } else {
-        minHeep.add(num);
-        maxHeap.add(minHeep.poll());
+    public void Insert(Integer num) {
+        // 插入要保证两个堆存于平衡状态
+        if (N % 2 == 0) {
+            // N 为偶数的情况下插入到右半边。
+            // 因为右半边元素都要大于左半边，但是新插入的元素不一定比左半边元素来的大，
+            // 因此需要先将元素插入左半边，然后利用左半边为大顶堆的特点，取出堆顶元素即为最大元素，此时插入右半边
+            left.add(num);
+            right.add(left.poll());
+        } else {
+            right.add(num);
+            left.add(right.poll());
+        }
+        N++;
     }
-    cnt++;
-}
 
-public Double GetMedian() {
-    if(cnt % 2 == 0) {
-        return (maxHeap.peek() + minHeep.peek()) / 2.0;
-    } else {
-        return (double) minHeep.peek();
+    public Double GetMedian() {
+        if (N % 2 == 0) {
+            return (left.peek() + right.peek()) / 2.0;
+        } else {
+            return (double) right.peek();
+        }
     }
 }
 ```
@@ -1400,7 +1407,6 @@ public class Solution {
     private int[] cnts = new int[256];
     private Queue<Character> queue = new LinkedList<>();
 
-    //Insert one char from stringstream
     public void Insert(char ch) {
         cnts[ch]++;
         queue.add(ch);
@@ -1409,7 +1415,6 @@ public class Solution {
         }
     }
 
-    //return the first appearence once char in current stringstream
     public char FirstAppearingOnce() {
         if (queue.isEmpty()) return '#';
         return queue.peek();
