@@ -1396,22 +1396,24 @@ public Double GetMedian() {
 请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符 "go" 时，第一个只出现一次的字符是 "g"。当从该字符流中读出前六个字符“google" 时，第一个只出现一次的字符是 "l"。
 
 ```java
-//Insert one char from stringstream
-private int[] cnts = new int[256];
-private Queue<Character> queue = new LinkedList<>();
+public class Solution {
+    private int[] cnts = new int[256];
+    private Queue<Character> queue = new LinkedList<>();
 
-public void Insert(char ch) {
-    cnts[ch]++;
-    queue.add(ch);
-    while (!queue.isEmpty() && cnts[queue.peek()] > 1) {
-        queue.poll();
+    //Insert one char from stringstream
+    public void Insert(char ch) {
+        cnts[ch]++;
+        queue.add(ch);
+        while (!queue.isEmpty() && cnts[queue.peek()] > 1) {
+            queue.poll();
+        }
     }
-}
 
-//return the first appearence once char in current stringstream
-public char FirstAppearingOnce() {
-    if (queue.isEmpty()) return '#';
-    return queue.peek();
+    //return the first appearence once char in current stringstream
+    public char FirstAppearingOnce() {
+        if (queue.isEmpty()) return '#';
+        return queue.peek();
+    }
 }
 ```
 
@@ -1422,12 +1424,12 @@ public char FirstAppearingOnce() {
 {6,-3,-2,7,-15,1,2,2}，连续子向量的最大和为 8（从第 0 个开始,到第 3 个为止）
 
 ```java
-public int FindGreatestSumOfSubArray(int[] array) {
-    if(array.length == 0) return 0;
+public int FindGreatestSumOfSubArray(int[] nums) {
+    if (nums.length == 0) return 0;
     int ret = Integer.MIN_VALUE;
     int sum = 0;
-    for(int num : array) {
-        if(sum <= 0) sum = num;
+    for (int num : nums) {
+        if (sum <= 0) sum = num;
         else sum += num;
         ret = Math.max(ret, sum);
     }
