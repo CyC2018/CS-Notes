@@ -1535,7 +1535,7 @@ public int getTranslationCount(String number) {
 
 **题目描述** 
 
-在一个 m * n 的棋盘的每一个格都放有一个礼物，每个礼物都有一定价值（大于 0）。从左上角开始拿礼物，每次向右或向下移动一格，直到右下角结束。给定一个棋盘，求拿到礼物的最大价值。例如，对于如下棋盘
+在一个 m\*n 的棋盘的每一个格都放有一个礼物，每个礼物都有一定价值（大于 0）。从左上角开始拿礼物，每次向右或向下移动一格，直到右下角结束。给定一个棋盘，求拿到礼物的最大价值。例如，对于如下棋盘
 
 ```
 1    10   3    8
@@ -1576,16 +1576,16 @@ public int getMaxValue(int[][] values) {
 public int longestSubStringWithoutDuplication(String str) {
     int curLen = 0;
     int maxLen = 0;
-    int[] position = new int[26];
+    int[] indexs = new int[26];
     for (int i = 0; i < str.length(); i++) {
         int c = str.charAt(i) - 'a';
-        int preIndex = position[c];
+        int preIndex = indexs[c];
         if (preIndex == -1 || i - preIndex > curLen) curLen++;
         else {
             maxLen = Math.max(maxLen, curLen);
             curLen = i - preIndex;
         }
-        position[c] = i;
+        indexs[c] = i;
     }
     maxLen = Math.max(maxLen, curLen);
     return maxLen;
@@ -1599,21 +1599,21 @@ public int longestSubStringWithoutDuplication(String str) {
 把只包含因子 2、3 和 5 的数称作丑数（Ugly Number）。例如 6、8 都是丑数，但 14 不是，因为它包含因子 7。 习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
 
 ```java
-public int GetUglyNumber_Solution(int index) {
-    if (index <= 6) return index;
+public int GetUglyNumber_Solution(int N) {
+    if (N <= 6) return N;
     int i2 = 0, i3 = 0, i5 = 0;
     int cnt = 1;
-    int[] dp = new int[index];
+    int[] dp = new int[N];
     dp[0] = 1;
-    while (cnt < index) {
+    while (cnt < N) {
         int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
-        int tmp = Math.min(n2, Math.min(n3, n5));
-        dp[cnt++] = tmp;
-        if (tmp == n2) i2++;
-        if (tmp == n3) i3++;
-        if (tmp == n5) i5++;
+        int min = Math.min(n2, Math.min(n3, n5));
+        dp[cnt++] = min;
+        if (min == n2) i2++;
+        if (min == n3) i3++;
+        if (min == n5) i5++;
     }
-    return dp[index - 1];
+    return dp[N - 1];
 }
 ```
 
@@ -1632,40 +1632,40 @@ public int FirstNotRepeatingChar(String str) {
 
 **题目描述** 
 
-在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数 P。
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数 P。
 
 ```java
 private long cnt = 0;
+private int[] tmp; // 在这里创建辅助数组，而不是在 merge() 递归函数中创建
 
-public int InversePairs(int[] array) {
-    mergeSortUp2Down(array, 0, array.length - 1);
+public int InversePairs(int[] nums) {
+    tmp = new int[nums.length];
+    mergeSortUp2Down(nums, 0, nums.length - 1);
     return (int) (cnt % 1000000007);
 }
 
-private void mergeSortUp2Down(int[] a, int start, int end) {
+private void mergeSortUp2Down(int[] nums, int start, int end) {
     if (end - start < 1) return;
     int mid = start + (end - start) / 2;
-    mergeSortUp2Down(a, start, mid);
-    mergeSortUp2Down(a, mid + 1, end);
-    merge(a, start, mid, end);
+    mergeSortUp2Down(nums, start, mid);
+    mergeSortUp2Down(nums, mid + 1, end);
+    merge(nums, start, mid, end);
 }
 
-private void merge(int[] a, int start, int mid, int end) {
-    int[] tmp = new int[end - start + 1];
-    int i = start, j = mid + 1, k = 0;
+private void merge(int[] nums, int start, int mid, int end) {
+    int i = start, j = mid + 1, k = start;
     while (i <= mid || j <= end) {
-        if (i > mid) tmp[k] = a[j++];
-        else if (j > end) tmp[k] = a[i++];
-        else if (a[i] < a[j]) tmp[k] = a[i++];
+        if (i > mid) tmp[k] = nums[j++];
+        else if (j > end) tmp[k] = nums[i++];
+        else if (nums[i] < nums[j]) tmp[k] = nums[i++];
         else {
-            tmp[k] = a[j++];
-            this.cnt += mid - i + 1; // a[i] > a[j] ，说明 a[i...mid] 都大于 a[j]
+            tmp[k] = nums[j++];
+            this.cnt += mid - i + 1; // a[i] > a[j]，说明 a[i...mid] 都大于 a[j]
         }
         k++;
     }
-
-    for (k = 0; k < tmp.length; k++) {
-        a[start + k] = tmp[k];
+    for (k = start; k <= end; k++) {
+        nums[k] = tmp[k];
     }
 }
 ```
