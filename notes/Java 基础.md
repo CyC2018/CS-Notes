@@ -181,7 +181,7 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 
 ## 2. 抽象类与接口
 
-抽象类至少包含一个抽象方法，该抽象方法必须在子类中实现。由于抽象类没有抽象方法的具体实现，因此不能对抽象类进行实例化。
+抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，但是少数情况下可以不包含，例如 HttpServlet 类，但是抽象方法一定位于抽象类中。抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
 
 ```java
 public abstract class GenericServlet implements Servlet, ServletConfig, Serializable {
