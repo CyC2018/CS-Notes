@@ -1920,12 +1920,12 @@ public double countProbability(int n, int s) {
     for (int i = 1; i < n; i++) {
         for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
             for (int k = 1; k <= face; k++) {
-                if (j - k < 0) continue;
-                dp[i][j] += dp[i - 1][j - k];
+                if (j - k >= 0) {
+                    dp[i][j] += dp[i - 1][j - k];
+                }
             }
         }
     }
-
     int totalNum = (int) Math.pow(6, n);
     return (double) dp[n - 1][s - 1] / totalNum;
 }
@@ -1947,12 +1947,13 @@ public double countProbability(int n, int s) {
     for (int i = 1; i < n; i++) {
         for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
             for (int k = 1; k <= face; k++) {
-                if (j - k < 0) continue;
-                dp[flag][j] += dp[1 - flag][j - k];
+                if (j - k >= 0) {
+                    dp[flag][j] += dp[1 - flag][j - k];
+                }
             }
         }
+        flag = 1 - flag;
     }
-
     int totalNum = (int) Math.pow(6, n);
     return (double) dp[n - 1][s - 1] / totalNum;
 }
@@ -1965,16 +1966,16 @@ public double countProbability(int n, int s) {
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断是否能组成顺子。
 
 ```java
-public boolean isContinuous(int[] numbers) {
-    if (numbers.length < 5) return false;
+public boolean isContinuous(int [] numbers) {
+    if(numbers.length < 5) return false;
     Arrays.sort(numbers);
     int cnt = 0;
-    for (int num : numbers) if (num == 0) cnt++;
-    for (int i = cnt; i < numbers.length - 1; i++) {
-        if (numbers[i + 1] == numbers[i]) return false;
-        int cut = numbers[i + 1] - numbers[i] - 1;
-        if (cut > cnt) return false;
-        cnt -= cut;
+    for(int num : numbers) if(num == 0) cnt++;
+    for(int i = cnt; i < numbers.length - 1; i++) {
+        if(numbers[i + 1] == numbers[i]) return false;
+        int interval = numbers[i + 1] - numbers[i] - 1;
+        if(interval > cnt) return false;
+        cnt -= interval;
     }
     return true;
 }
