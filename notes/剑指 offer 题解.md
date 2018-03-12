@@ -782,6 +782,14 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ## 23. 链表中环的入口结点
 
+**解题思路** 
+
+使用双指针，一个指针 fast 每次走两步，一个指针 slow 每次都一步。因为存在环，所以两个指针必定相遇在环中的某个节点上。此时 fast 走的路径长度为 x+2y+z，slow 走的路径长度为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
+
+在相遇点，slow 要到环的入口点还需要走 z 长度，如果让 fast 重新从头开始走，并且速度变为每次走一步，那么它走到环入口点还需要走 x 长度。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
+
+<div align="center"> <img src="../pics//52bb87e0-983e-4dd0-8e71-46dd2f72c97c.jpg"/> </div><br>
+
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
     if (pHead == null) return null;
@@ -804,6 +812,10 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 
 ## 24. 反转链表
 
+**解题思路** 
+
+头插法
+
 ```java
 public ListNode ReverseList(ListNode head) {
     ListNode newList = new ListNode(-1);
@@ -818,6 +830,10 @@ public ListNode ReverseList(ListNode head) {
 ```
 
 ## 25. 合并两个排序的链表
+
+**题目描述** 
+
+<div align="center"> <img src="../pics//79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
 
 ```java
 public ListNode Merge(ListNode list1, ListNode list2) {
@@ -841,6 +857,10 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 ## 26. 树的子结构
 
+**题目描述** 
+
+<div align="center"> <img src="../pics//26223561-eea4-463c-8ddb-3bb456c76267.png"/> </div><br>
+
 ```java
 public boolean HasSubtree(TreeNode root1, TreeNode root2) {
     if (root1 == null || root2 == null) return false;
@@ -860,6 +880,11 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 
 ## 27. 二叉树的镜像
 
+**题目描述** 
+
+<div align="center"> <img src="../pics//7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
+
+
 ```java
 public void Mirror(TreeNode root) {
     if (root == null) return;
@@ -872,6 +897,16 @@ public void Mirror(TreeNode root) {
 ```
 
 ## 28.1 对称的二叉树
+
+**题目描述** 
+
+```html
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+```
 
 ```java
 boolean isSymmetrical(TreeNode pRoot) {
@@ -888,6 +923,18 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 ```
 
 ## 28.2 平衡二叉树
+
+**题目描述** 
+
+```html
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+平衡二叉树左右子树高度差不超过 1。
 
 ```java
 private boolean isBalanced = true;
@@ -907,6 +954,12 @@ private int height(TreeNode root) {
 ```
 
 ## 29. 顺时针打印矩阵
+
+**题目描述** 
+
+下图的矩阵顺时针打印结果为：1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10
+
+<div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
 ```java
 public ArrayList<Integer> printMatrix(int[][] matrix) {
@@ -955,7 +1008,7 @@ public int min() {
 
 **题目描述** 
 
-输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4，5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
 
 ```java
 public boolean IsPopOrder(int[] pushA, int[] popA) {
@@ -978,6 +1031,16 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 
 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
 
+例如，以下二叉树层次遍历的结果为 8, 6, 10, 5, 7, 9, 11
+
+<div align="center"> <img src="../pics//c8cdfa3d-d610-4731-9d89-564252378e7d.png"/> </div><br>
+
+**解题思路** 
+
+使用队列来进行层次遍历。
+
+不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
+
 ```java
 public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
@@ -998,6 +1061,10 @@ public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
 ```
 
 ## 32.2 把二叉树打印成多行
+
+**题目描述** 
+
+和上题几乎一样。
 
 ```java
 ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
@@ -1060,7 +1127,9 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 
-<div align="center"> <img src="../pics//8bc990c1-a2bb-4885-afd7-db0f1ea87451.png"/> </div><br>
+例如，下图中后序遍历序列 5, 7, 6, 9, 11, 10, 8 所对应的二叉搜索树。
+
+<div align="center"> <img src="../pics//b5af9ee6-97e6-446b-9551-6dfe96770d1a.png"/> </div><br>
 
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
@@ -1068,18 +1137,15 @@ public boolean VerifySquenceOfBST(int[] sequence) {
     return verify(sequence, 0, sequence.length - 1);
 }
 
-private boolean verify(int[] sequence, int start, int end) {
-    if (end - start <= 1) return true;
-    int rootVal = sequence[end];
-    int cutIdx = start;
-    while (cutIdx < end) {
-        if (sequence[cutIdx] > rootVal) break;
-        cutIdx++;
-    }
-    for (int i = cutIdx + 1; i < end; i++) {
+private boolean verify(int[] sequence, int first, int last) {
+    if (last - first <= 1) return true;
+    int rootVal = sequence[last];
+    int cutIndex = first;
+    while (cutIndex < last && sequence[cutIndex] <= rootVal) cutIndex++;
+    for (int i = cutIndex + 1; i < last; i++) {
         if (sequence[i] < rootVal) return false;
     }
-    return verify(sequence, start, cutIdx - 1) && verify(sequence, cutIdx, end - 1);
+    return verify(sequence, first, cutIndex - 1) && verify(sequence, cutIndex, last - 1);
 }
 ```
 
@@ -1089,7 +1155,9 @@ private boolean verify(int[] sequence, int start, int end) {
 
 输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
 
-<div align="center"> <img src="../pics//488b2127-9ea9-48f3-a3b6-800f1684be12.png"/> </div><br>
+下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
+
+<div align="center"> <img src="../pics//a1ced733-02f5-4091-8f5a-ab9b4e5a3525.png"/> </div><br>
 
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
