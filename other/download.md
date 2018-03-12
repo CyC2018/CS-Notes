@@ -20,6 +20,10 @@
 
 <a href="https://pan.baidu.com/s/1xhYsZUi2fugLf9jxSWA0pQ"> <img src="s2359163.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1aXRWznphuiEc4XRXpM1qLA"> <img src="s4141593.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/182JK19-rvbISYAv4aLk7xg"> <img src="s5968156.jpg" width="150"/> </a>
 
+# Redis
+
+<a href="https://pan.baidu.com/s/1XovYaApdsVsd97pLCwAvpA"> <img src="s27297117.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1bfbiPjoBEaNUs6qLWVEIJw"> <img src="s28296984.jpg" width="150"/> </a>
+
 # Java
 
 <a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s27243455.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw"> <img src="s27458236.jpg" width="150"/> </a>
