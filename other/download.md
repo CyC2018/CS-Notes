@@ -1,8 +1,3 @@
-# 打包
-
-有些文件很大，最好不要一次性下载。
-
-> [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F&parentPath=%2F)
 
 # 网络
 
@@ -33,4 +28,10 @@
 
 <a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s27243455.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw"> <img src="s27458236.jpg" width="150"/> </a>
 
+# 编码实践
 
+<a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s1495029.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1pWGwRRVxtpSmlsK7B1uU7Q"> <img src="s4157180.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1HGHeahqtscz7iczhK7ps-Q"> <img src="s1671095.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1MaNeNsoqlTMn2uuT1QrsHQ"> <img src="s1086045.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="150"/> </a>
+
+# 打包
+
+> [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F&parentPath=%2F)
