@@ -578,11 +578,7 @@ inode 具体包含以下信息：
 
 ### 1. 实体链接
 
-实体链接文件指向源文件的 inode 上。
-
-下图中，1 和 2 表示的是目录的 inode，这两个目录的 block 中都有一个指向 real 的链接文件。
-
-<div align="center"> <img src="../pics//054d8d16-a3f9-460d-a365-834ba9940e3b.jpg"/> </div><br>
+它和普通文件类似，实体链接文件的 inode 都指向源文件所在的 block 上，也就是说读取文件直接从源文件的 block 上读取。
 
 删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
@@ -597,17 +593,11 @@ inode 具体包含以下信息：
 
 ### 2. 符号链接
 
-符号链接指向源文件所在的目录的 inode 上，从而通过目录获取源文件 inode。
-
-下图中，源文件位于目录 2，在目录 1 中建立符号链接文件，该符号链接会指向目录 2 的 inode，
-
-<div align="center"> <img src="../pics//5ce4bdad-5ba1-4f60-81c3-874659412a5c.jpg"/> </div><br>
-
-symbolic link 可以理解为 Windows 的快捷方式。
+符号链接文件保存着源文件所在的绝对路径，在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
 
 当源文件被删除了，链接文件就打不开了。
 
-symbolic link 可以为目录建立链接。
+可以为目录建立链接。
 
 ```html
 # ll -i /etc/crontab /root/crontab2
