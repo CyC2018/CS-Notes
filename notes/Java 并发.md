@@ -258,9 +258,13 @@ public void func(String name) {
 ```java
 private Lock lock;
 public int func(int value) {
-    lock.lock();
-    // ...
-    lock.unlock();
+   try {
+      lock.lock();
+      // ...
+
+   }finally {
+      lock.unlock();
+   }
 }
 ```
 
