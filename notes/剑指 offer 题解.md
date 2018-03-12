@@ -2052,21 +2052,12 @@ public int Add(int num1, int num2) {
 ```java
 public int[] multiply(int[] A) {
     int n = A.length;
-    int[][] dp = new int[n][n];
-    for (int i = 0; i < n; i++) {
-        dp[i][i] = A[i];
-    }
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            dp[i][j] = dp[i][j - 1] * A[j];
-        }
-    }
-
     int[] B = new int[n];
-    Arrays.fill(B, 1);
-    for (int i = 0; i < n; i++) {
-        if (i != 0) B[i] *= dp[0][i - 1];
-        if (i != n - 1) B[i] *= dp[i + 1][n - 1];
+    for (int i = 0, product = 1; i < n; product *= A[i], i++) {
+        B[i] = product;
+    }
+    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--) {
+        B[i] *= product;
     }
     return B;
 }
