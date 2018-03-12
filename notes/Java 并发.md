@@ -258,9 +258,12 @@ public void func(String name) {
 ```java
 private Lock lock;
 public int func(int value) {
-    lock.lock();
-    // ...
-    lock.unlock();
+   try {
+       lock.lock();
+       // ...
+   } finally {
+      lock.unlock();
+   }
 }
 ```
 
@@ -383,7 +386,7 @@ Consumer4 is consuming product made by Consumer4...
 
 **Executor 的中断操作** 
 
-Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断所有它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
+Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
 
 如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
 
