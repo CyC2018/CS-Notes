@@ -1822,6 +1822,10 @@ public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
 
 输出："student. a am I"
 
+**解题思路** 
+
+题目应该有一个隐含条件，就是不能用额外的空间。虽然 Java 的题目输入参数为 String 类型，需要先创建一个字符数组使得空间复杂度为 O(n)，但是正确的参数类型应该和原书一样，为字符数组，并且只能使用该字符数组的空间。任何使用了额外空间的解法在面试时都会大打折扣，包括递归解法。正确的解法应该是和书上一样，先旋转每个单词，再旋转整个字符串。
+
 ```java
 public String ReverseSentence(String str) {
     if (str.length() == 0) return str;
@@ -1887,6 +1891,7 @@ private void reverse(char[] c, int i, int j) {
 public ArrayList<Integer> maxInWindows(int[] num, int size) {
     ArrayList<Integer> ret = new ArrayList<>();
     if (size > num.length || size < 1) return ret;
+    // 构建最大堆，即堆顶元素是堆的最大值。
     PriorityQueue<Integer> heap = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
     for (int i = 0; i < size; i++) heap.add(num[i]);
     ret.add(heap.peek());
