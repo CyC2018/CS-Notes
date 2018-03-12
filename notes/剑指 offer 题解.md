@@ -546,7 +546,7 @@ private void initDigitSum(int rows, int cols) {
 
 **动态规划解法** 
 
-[分割整数](https://github.com/CyC2018/InterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
+[分割整数](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
 
 **贪心解法** 
 
@@ -613,6 +613,16 @@ public double Power(double base, int exponent) {
 ```
 
 ## 17. 打印从 1 到最大的 n 位数
+
+**题目描述** 
+
+输入数字n，按顺序打印出从1最大的n位十进制数。比如输入3，则打印出1、2、3 一直到最大的3位数即999。
+
+**解题思路** 
+
+由于 n 可能会非常大，因此不能直接用 int 存储数，而是用 char 数组进行存储。
+
+使用回溯法得到所有的数。
 
 ```java
 public void print1ToMaxOfNDigits(int n) {
@@ -684,22 +694,28 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 **题目描述** 
 
-请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配
+请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配.
 
 ```java
-public boolean match(char[] str, char[] pattern) {
-    int n = str.length, m = pattern.length;
+public boolean match(char[] s, char[] p) {
+    int n = s.length, m = p.length;
     boolean[][] dp = new boolean[n + 1][m + 1];
     dp[0][0] = true;
     for (int i = 1; i <= m; i++) {
-        if (pattern[i - 1] == '*') dp[0][i] = dp[0][i - 2];
+        if (p[i - 1] == '*') {
+            dp[0][i] = dp[0][i - 2];
+        }
     }
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') dp[i][j] = dp[i - 1][j - 1];
-            else if (pattern[j - 1] == '*') {
-                if (pattern[j - 2] != str[i - 1] && pattern[j - 2] != '.') dp[i][j] = dp[i][j - 2];
-                else dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
+            if (s[i - 1] == p[j - 1] || p[j - 1] == '.') {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else if (p[j - 1] == '*') {
+                if (p[j - 2] == s[i - 1] || p[j - 2] == '.') {
+                    dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i][j - 2];
+                }
             }
         }
     }
@@ -725,6 +741,8 @@ public boolean isNumeric(char[] str) {
 **题目要求** 
 
 保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
+
+**解题思路** 
 
 - 时间复杂度 : O(n<sup>2</sup>)
 - 空间复杂度 : O(1)
