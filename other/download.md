@@ -3,7 +3,6 @@
 
 <a href="https://pan.baidu.com/s/1EXaJbNckzuQMOCyamzjL_Q"> <img src="s3296854.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A"> <img src="s27283822.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1y0P-VFlWKdOPW7YB60OWlw"> <img src="s26676928.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1oBbA9LOevcJ_reg8y5kOvw"> <img src="s28845534.jpg" width="150"/> </a>
 
-
 # 操作系统
 
 <a href="https://pan.baidu.com/s/1C-MgvslLKd1buwmebti6Qg"> <img src="s1650904.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1Qm2G4rghPorQeH5J9fDHTg"> <img src="s4399937.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1OoyVI90fK1Q9eixzH9jnpQ"> <img src="s4510534.jpg" width="150"/> </a>  <a href="https://pan.baidu.com/s/12mTkrpLsb7tz11cGn_KZ4w"> <img src="s3895413.jpg" width="150"/> </a> 
@@ -15,7 +14,6 @@
 # 设计模式
 
 <a href="https://pan.baidu.com/s/1JOO4M3c6EGB5xHz_-aGtDQ"> <img src="s2686916.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1n41aEgGuRg9hQ-9iwOxc5A"> <img src="s1074361.jpg" width="150"/> </a>
-
 
 # 数据库
 
@@ -31,9 +29,7 @@
 
 # C++
 
-<a href="https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ"> <img src="s27023182.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ"> <img src="s4436543.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ"> <img src="s1613283.jpg" width="150"/> </a>
-
-
+<a href="https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ"> <img src="s27023182.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/1K6xm3YlV53trCxyGR0j_gQ"> <img src="s4436543.jpg" width="150"/> </a> <a href="https://pan.baidu.com/s/10iFqDOHSveJC3VC7dl1vMw"> <img src="s1613283.jpg" width="150"/> </a>
 
 # 编码实践
 
