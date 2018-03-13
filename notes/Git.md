@@ -16,21 +16,10 @@
 
 # 学习资料
 
-> [git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
-
-简洁明了。
-
-> [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
-
-图文式简介。
-
-> [廖雪峰 : Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
-
-比较系统的对 git 进行介绍，很适合学习。
-
-> [Learn Git Branching](https://learngitbranching.js.org/)
-
-交互式学习。
+- [Git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
+- [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
+- [廖雪峰 : Git 教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+- [Learn Git Branching](https://learngitbranching.js.org/)
 
 # 集中式与分布式
 
