@@ -171,7 +171,7 @@ Object obj = new Object();
 
 ```java
 Object obj = new Object();
-WeakReference<Object> wf = new WeakReference<Object>(obj);
+SoftReference<Object> sf = new SoftReference<Object>(obj);
 ```
 
 #### 1.3.3 弱引用
@@ -689,3 +689,5 @@ protected synchronized Class<?> loadClass(String name, boolean resolve) throws C
 ```java
 java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar java-application.jar
 ```
+
+
