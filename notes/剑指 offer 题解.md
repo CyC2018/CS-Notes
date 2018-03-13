@@ -616,7 +616,7 @@ public int NumberOf1(int n) {
 - 当 x 为偶数时，x<sup>N</sup> = (x \* x)<sup>N / 2</sup>；
 - 当 x 为奇数时，x<sup>N</sup> = x \* (x \* x)<sup>N / 2</sup>；
 
-因为 (x \* x)<sup>e / 2</sup> 可以通过递归求解，并且每递归一次，N 都减小一半，因此整个算法的时间复杂度为 logN。
+因为 (x \* x)<sup>N / 2</sup> 可以通过递归求解，并且每递归一次，N 都减小一半，因此整个算法的时间复杂度为 logN。
 
 ```java
 public double Power(double base, int exponent) {
