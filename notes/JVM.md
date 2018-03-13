@@ -171,7 +171,7 @@ Object obj = new Object();
 
 ```java
 Object obj = new Object();
-WeakReference<Object> wf = new WeakReference<Object>(obj);
+SoftReference<Object> sf = new SoftReference<Object>(obj);
 ```
 
 #### 1.3.3 弱引用
