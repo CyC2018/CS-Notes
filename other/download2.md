@@ -1,4 +1,3 @@
-
 # 网络
 
 - [计算机网络.pdf](https://pan.baidu.com/s/1EXaJbNckzuQMOCyamzjL_Q)
@@ -8,35 +7,52 @@
 
 # 操作系统
 
-<a href="https://pan.baidu.com/s/1C-MgvslLKd1buwmebti6Qg"> <img src="s1650904.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1Qm2G4rghPorQeH5J9fDHTg"> <img src="s4399937.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1OoyVI90fK1Q9eixzH9jnpQ"> <img src="s4510534.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/12mTkrpLsb7tz11cGn_KZ4w"> <img src="s3895413.jpg" width="130"/> </a> 
+- [计算机操作系统.pdf](https://pan.baidu.com/s/1C-MgvslLKd1buwmebti6Qg)
+- [鸟哥的 Linux 私房菜](https://pan.baidu.com/s/1Qm2G4rghPorQeH5J9fDHTg)
+- [深入理解计算机系统.pdf](https://pan.baidu.com/s/1OoyVI90fK1Q9eixzH9jnpQ)
+- [现代操作系统.pdf](https://pan.baidu.com/s/12mTkrpLsb7tz11cGn_KZ4w)
 
 # 算法
 
-<a href="https://pan.baidu.com/s/1Va1R66d13ynmita8nfkRPg"> <img src="s28322244.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1HmGwXvTcHDrQnUAL1wWE3g"> <img src="s7038106.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1SZGUbvKpKOomM-iYxe_GGw"> <img src="s2992671.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/10EoXyW33MnYJUX5YeD5pPg"> <img src="s28313721.jpg" width="130"/> </a>
+- [算法.pdf](https://pan.baidu.com/s/1Va1R66d13ynmita8nfkRPg)
+- [剑指 Offer.pdf](https://pan.baidu.com/s/1HmGwXvTcHDrQnUAL1wWE3g)
+- [编程之美.pdf](https://pan.baidu.com/s/1SZGUbvKpKOomM-iYxe_GGw)
+- [程序员代码面试指南.pdf](https://pan.baidu.com/s/10EoXyW33MnYJUX5YeD5pPg)
 
 # 设计模式
 
-<a href="https://pan.baidu.com/s/1JOO4M3c6EGB5xHz_-aGtDQ"> <img src="s2686916.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1n41aEgGuRg9hQ-9iwOxc5A"> <img src="s1074361.jpg" width="130"/> </a>
+- [Head First 设计模式.pdf](https://pan.baidu.com/s/1JOO4M3c6EGB5xHz_-aGtDQ)
+- [设计模式 可复用面试对象软件的基础.pdf](https://pan.baidu.com/s/1n41aEgGuRg9hQ-9iwOxc5A)
 
 # 数据库
 
-<a href="https://pan.baidu.com/s/1xhYsZUi2fugLf9jxSWA0pQ"> <img src="s2359163.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1aXRWznphuiEc4XRXpM1qLA"> <img src="s4141593.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/182JK19-rvbISYAv4aLk7xg"> <img src="s5968156.jpg" width="130"/> </a>
+- [数据库系统概论.pdf](https://pan.baidu.com/s/1xhYsZUi2fugLf9jxSWA0pQ)
+- [高性能 MySQL.pdf](https://pan.baidu.com/s/1aXRWznphuiEc4XRXpM1qLA)
+- [MySQL 必知必会.pdf](https://pan.baidu.com/s/182JK19-rvbISYAv4aLk7xg)
 
 # Redis
 
-<a href="https://pan.baidu.com/s/1XovYaApdsVsd97pLCwAvpA"> <img src="s27297117.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1bfbiPjoBEaNUs6qLWVEIJw"> <img src="s28296984.jpg" width="130"/> </a>
+- [Redis 设计与实现.pdf](https://pan.baidu.com/s/1XovYaApdsVsd97pLCwAvpA)
+- [Reids 实战.pdf](https://pan.baidu.com/s/1bfbiPjoBEaNUs6qLWVEIJw)
 
 # Java
 
-<a href="https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ"> <img src="s27243455.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw"> <img src="s27458236.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1LkPVPrT_3BYFkfxieBkeVw"> <img src="s7663093.jpg" width="130"/> </a>
+- [Java 编程思想.pdf](https://pan.baidu.com/s/1iNBkY9ANUcmeSp4VjBGhRQ)
+- [深入理解 Java 虚拟机.pdf](https://pan.baidu.com/s/1zdATX8Qs-RMk6DN7iqECYw)
+- [Java 并发编程实战.pdf](https://pan.baidu.com/s/1LkPVPrT_3BYFkfxieBkeVw)
 
 # C++
 
-<a href="https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ"> <img src="s27023182.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1u3-QrdnkHo5ScUK84v7C5w"> <img src="s2996168.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1K6xm3YlV53trCxyGR0j_gQ"> <img src="s4436543.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/10iFqDOHSveJC3VC7dl1vMw"> <img src="s1613283.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1o-hgLJ4XvXAHeFhWAuuiFQ"> <img src="s4647091.jpg" width="130"/> </a> 
+- [C++ Promer 第五版.pdf](https://pan.baidu.com/s/1VhhqN7oVcrv0KhF32CXRLQ)
+- [C 和指针.pdf](https://pan.baidu.com/s/1u3-QrdnkHo5ScUK84v7C5w)
+- [Unix 环境高级编程.pdf](https://pan.baidu.com/s/1K6xm3YlV53trCxyGR0j_gQ)
+- [Unix 网络编程.pdf](https://pan.baidu.com/s/10iFqDOHSveJC3VC7dl1vMw)
+- [Effective C++.pdf](https://pan.baidu.com/s/1o-hgLJ4XvXAHeFhWAuuiFQ)
 
 # 工具
 
-<a href="https://pan.baidu.com/s/1zYoS3lB1yCCT-So1YeoRuA"> <img src="s4245786.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1ybA1qvjx4p844Pd8zDlx7Q"> <img src="s2794811.jpg" width="130"/> </a>
+- [Pro Git.pdf](https://pan.baidu.com/s/1zYoS3lB1yCCT-So1YeoRuA)
+- [正则表达式必知必会.pdf](https://pan.baidu.com/s/1ybA1qvjx4p844Pd8zDlx7Q)
 
 # 编码实践
 
