@@ -1,3 +1,7 @@
+# 关于
+
+计算机经典书籍 PDF 下载
+
 # 网络
 
 - [计算机网络.pdf](https://pan.baidu.com/s/1EXaJbNckzuQMOCyamzjL_Q)
@@ -56,12 +60,17 @@
 
 # 编码实践
 
-<a href="https://pan.baidu.com/s/1H1ilY54BISk7oDaKYpcrwA"> <img src="s1495029.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1pWGwRRVxtpSmlsK7B1uU7Q"> <img src="s4157180.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1HGHeahqtscz7iczhK7ps-Q"> <img src="s1671095.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/14uxNIdeXKLOnUJ6LMRndPg"> <img src="s10328621.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/17sIRZxCf_uJMZNnqAHEDkA"> <img src="s11194203.jpg" width="130"/> </a>  &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1MaNeNsoqlTMn2uuT1QrsHQ"> <img src="s1086045.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="130"/> </a>
+- [代码大全.pdf](https://pan.baidu.com/s/1H1ilY54BISk7oDaKYpcrwA)
+- [重构.pdf](https://pan.baidu.com/s/1pWGwRRVxtpSmlsK7B1uU7Q)
+- [敏捷软件开发.pdf](https://pan.baidu.com/s/1HGHeahqtscz7iczhK7ps-Q)
+- [编写可读代码的艺术.pdf](https://pan.baidu.com/s/14uxNIdeXKLOnUJ6LMRndPg)
+- [程序员的职业素养.pdf](https://pan.baidu.com/s/1MaNeNsoqlTMn2uuT1QrsHQ)
+- [人月神话.pdf](https://pan.baidu.com/s/17sIRZxCf_uJMZNnqAHEDkA)
+- [黑客与画家.pdf](https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA)
 
 # 科普
 
-<a href="https://pan.baidu.com/s/1fKo7ntvQUettvjaTQqyCEw"> <img src="s1113106.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1dNFZcBdDhA80-pWT1qcQSg"> <img src="s9114855.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1fII84UPuo8aIxDkOakvUVg"> <img src="s4379914.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1XarJowXrxoBtKdmVCGcm1w"> <img src="s4687321.jpg" width="130"/> </a> 
-
-# 打包
-
-> [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F&parentPath=%2F)
+- [计算机程序的构造与解释.pdf](https://pan.baidu.com/s/1fKo7ntvQUettvjaTQqyCEw)
+- [数学之美.pdf](https://pan.baidu.com/s/1dNFZcBdDhA80-pWT1qcQSg)
+- [编码.pdf](https://pan.baidu.com/s/1fII84UPuo8aIxDkOakvUVg)
+- [编程珠玑.pdf](https://pan.baidu.com/s/1XarJowXrxoBtKdmVCGcm1w)
