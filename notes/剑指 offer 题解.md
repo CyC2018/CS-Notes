@@ -1903,24 +1903,43 @@ Output:
 
 **解题思路** 
 
-可以用二分查找找出 num 在数组的最左端和最右端。
+可以用二分查找找出数字在数组的最左端和最右端。
 
 ```java
-public int GetNumberOfK(int[] array, int num) {
-    int l = 0, h = array.length - 1;
+public int GetNumberOfK(int[] nums, int K) {
+    int first = getFirstK(nums, K);
+    int last = getLastK(nums, K);
+    return first == -1 || last == -1 ? 0 : last - first + 1;
+}
 
+private int getFirstK(int[] nums, int K) {
+    int l = 0, h = nums.length - 1;
     while (l <= h) {
         int m = l + (h - l) / 2;
-        if (array[m] >= num) h = m - 1;
+        if (nums[m] >= K) h = m - 1;
         else l = m + 1;
     }
-    int cnt = 0;
-    while (l < array.length && array[l++] == num) cnt++;
-    return cnt;
+    if (l > nums.length - 1 || nums[l] != K) return -1;
+    return l;
+}
+
+private int getLastK(int[] nums, int K) {
+    int l = 0, h = nums.length - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] > K) h = m - 1;
+        else l = m + 1;
+    }
+    if (h < 0 || nums[h] != K) return -1;
+    return h;
 }
 ```
 
 ## 54. 二叉搜索树的第 k 个结点
+
+**解题思路** 
+
+利用二叉搜索数中序遍历有序的特点。
 
 ```java
 TreeNode ret;
@@ -1981,6 +2000,12 @@ public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
 **题目描述** 
 
 输入一个递增排序的数组和一个数字 S，在数组中查找两个数，是的他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
+
+**解题思路** 
+
+使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
+
+如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
 
 ```java
 public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
