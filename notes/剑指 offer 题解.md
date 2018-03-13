@@ -193,21 +193,13 @@ public String replaceSpace(StringBuffer str) {
 
 ## 6. 从尾到头打印链表
 
-正向遍历然后调用 Collections.reverse()。
+**题目描述** 
 
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (listNode != null) {
-        ret.add(listNode.val);
-        listNode = listNode.next;
-    }
-    Collections.reverse(ret);
-    return ret;
-}
-```
+输入链表的第一个节点，从尾到头反过来打印出每个结点的值。
 
-使用 Stack
+**解题思路** 
+
+栈
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -237,7 +229,23 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-不使用库函数，并且不使用递归的迭代实现，利用链表的头插法为逆序的特性。
+正向遍历然后调用 Collections.reverse()。
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (listNode != null) {
+        ret.add(listNode.val);
+        listNode = listNode.next;
+    }
+    Collections.reverse(ret);
+    return ret;
+}
+```
+
+不使用库函数，并且不使用递归。利用链表头插法为逆序的特点。
+
+头结点和第一个节点的区别：头结点是在头插法中使用的一个额外节点，这个节点不存储值；第一个节点就是链表的第一个真正存储值的节点。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
