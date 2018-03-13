@@ -675,6 +675,19 @@ private void printNumber(char[] number) {
 
 ## 18.1 在 O(1) 时间内删除链表节点
 
+**解题思路** 
+
+- 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
+
+<div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
+
+
+- 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
+
+<div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
+
+- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。那么增长数量级为 (2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
     if (head == null || head.next == null || tobeDelete == null) return null;
@@ -691,6 +704,8 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
     return head;
 }
 ```
+
+
 
 ## 18.2 删除链表中重复的结点
 
