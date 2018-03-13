@@ -193,6 +193,14 @@ public String replaceSpace(StringBuffer str) {
 
 ## 6. 从尾到头打印链表
 
+**题目描述** 
+
+输入一个链表的头结点，从尾到头反过来打印出每个结点的值。
+
+**解题思路** 
+
+典型的"后进先出"，可使用栈或者递归。
+
 正向遍历然后调用 Collections.reverse()。
 
 ```java
