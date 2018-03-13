@@ -1,4 +1,4 @@
-<div align="center"> <img src="../pics//0f6fe85a-b680-47ea-af67-21ab98a62f8c.jpg"/> </div><br>
+<img src="index_files/0f6fe85a-b680-47ea-af67-21ab98a62f8c.jpg" width="100%"/>
 
 <!-- GFM-TOC -->
 * [学习资料](#学习资料)
