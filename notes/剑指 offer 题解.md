@@ -705,9 +705,18 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 }
 ```
 
-
-
 ## 18.2 删除链表中重复的结点
+
+**题目描述** 
+
+```html
+Input : 1->2->3->3->4->4->5
+Output : 1->2->5
+```
+
+**解题描述** 
+
+递归。
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
@@ -1016,7 +1025,7 @@ private int height(TreeNode root) {
 
 **题目描述** 
 
-下图的矩阵顺时针打印结果为：1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10
+下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
 <div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
@@ -1036,6 +1045,10 @@ public ArrayList<Integer> printMatrix(int[][] matrix) {
 ```
 
 ## 30. 包含 min 函数的栈
+
+**题目描述** 
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的 min 函数。
 
 ```java
 private Stack<Integer> stack = new Stack<>();
@@ -1396,6 +1409,12 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 # 第五章 优化时间和空间效率
 
 ## 39. 数组中出现次数超过一半的数字
+
+**解题思路** 
+
+多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。
+
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不想等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums) {
@@ -1841,6 +1860,8 @@ private void merge(int[] nums, int start, int mid, int end) {
 
 ## 52. 两个链表的第一个公共结点
 
+**题目描述** 
+
 ```html
 A:          a1 → a2
                   ↘
@@ -1848,6 +1869,8 @@ A:          a1 → a2
                   ↗
 B:    b1 → b2 → b3
 ```
+
+**解题思路** 
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
@@ -1868,10 +1891,24 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 
 ## 53 数字在排序数组中出现的次数
 
+**题目描述** 
+
+```html
+Input:
+1, 2, 3, 3, 3, 3, 4, 6
+3
+Output:
+4
+````
+
+**解题思路** 
+
+可以用二分查找找出 num 在数组的最左端和最右端。
+
 ```java
 public int GetNumberOfK(int[] array, int num) {
     int l = 0, h = array.length - 1;
-    // 先找出 num 在数组最左端的位置，可以控制二分查找结束时 l 指向该位置
+
     while (l <= h) {
         int m = l + (h - l) / 2;
         if (array[m] >= num) h = m - 1;
