@@ -18,10 +18,6 @@
 
 # 学习资料
 
-> [Github : my-git](https://github.com/xirong/my-git)
-
-汇总式的资料收集和简介，下面的很多资料都是从这里找到的。
-
 > [git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
 
 简洁明了。
