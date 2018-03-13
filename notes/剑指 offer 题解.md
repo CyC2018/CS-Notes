@@ -605,6 +605,19 @@ public int NumberOf1(int n) {
 
 ## 16. 数值的整数次方
 
+**题目描述** 
+
+给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方。
+
+**解题思路** 
+
+下面的讨论中 x 代表 base，N 代表 exponent。
+
+- 当 x 为偶数时，x<sup>N</sup> = (x \* x)<sup>N / 2</sup>；
+- 当 x 为奇数时，x<sup>N</sup> = x \* (x \* x)<sup>N / 2</sup>；
+
+因为 (x \* x)<sup>e / 2</sup> 可以通过递归求解，并且每递归一次，N 都减小一半，因此整个算法的时间复杂度为 logN。
+
 ```java
 public double Power(double base, int exponent) {
     if (exponent == 0) return 1;
