@@ -1,5 +1,4 @@
 <!-- GFM-TOC -->
-* [学习资源](#学习资源)
 * [基础概念](#基础概念)
     * [Web 基础](#web-基础)
     * [URL](#url)
@@ -42,13 +41,9 @@
 * [各版本比较](#各版本比较)
     * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
     * [HTTP/1.1 与 HTTP/2.0 的区别](#http11-与-http20-的区别)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
-
-# 学习资源
-
-- [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
-- [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 
 # 基础概念
 
@@ -470,3 +465,8 @@ HTTP1.1 的首部带有大量信息，而且每次都要重复发送，HTTP/2.0 
 **二进制格式** 
 
 HTTP1.1 的解析是基于文本的，而 HTTP2.0 采用二进制格式。
+
+# 参考资料
+
+- [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
+- [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
