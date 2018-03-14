@@ -1,6 +1,11 @@
 <!-- GFM-TOC -->
 * [Redis 是什么](#redis-是什么)
 * [Redis 的五种基本类型](#redis-的五种基本类型)
+    * [Strings](#strings)
+    * [Lists](#lists)
+    * [Sets](#sets)
+    * [Hashs](#hashs)
+    * [Sorted Sets](#sorted-sets)
 * [键的过期时间](#键的过期时间)
 * [发布与订阅](#发布与订阅)
 * [事务](#事务)
@@ -21,23 +26,164 @@
 
 # Redis 是什么
 
-Redis 是速度非常快的非关系型（nosql）内存键值数据库，可以存储键和五种不同类型的值之间的映射。
+Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。
 
 五种类型数据类型为：字符串、列表、集合、有序集合、散列表。
 
-Redis 支持很多特性，例如可以将内存中的数据持久化到硬盘中，可以使用复制来扩展读性能，可以使用分片来扩展写性能。
+Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，使用复制来扩展读性能，使用分片来扩展写性能。
 
 # Redis 的五种基本类型
 
 | 数据类型 | 可以存储的值 | 操作 |
 | -- | -- | -- |
-| STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作；</br> 对整数和浮点数执行自增或者自减操作 |
-| LIST | 链表 | 从两端压入或者弹出元素；</br> 读取单个或者多个元素；</br> 进行修剪，只保留一个范围内的元素。 |
-| SET | 无序集合 | 添加、获取、移除单个元素；</br> 检查一个元素是否存在于集合中；</br> 计算交集、并集、差集；</br> 从集合里面随机获取元素。 |
-| HASH | 包含键值对的无序散列表 | 添加、获取、移除单个键值对；</br> 获取所有键值对；</br> 检查某个键是否存在。|
-| ZSET | 有序集合 <sup>1</sup> | 添加、获取、删除元素个元素；</br> 根据分值范围或者成员来获取元素；</br> 计算一个键的排名。 |
+| Strings | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作</br> 对整数和浮点数执行自增或者自减操作 |
+| Lists | 链表 | 从两端压入或者弹出元素</br> 读取单个或者多个元素</br> 进行修剪，只保留一个范围内的元素 |
+| Sets | 无序集合 | 添加、获取、移除单个元素</br> 检查一个元素是否存在于集合中</br> 计算交集、并集、差集</br> 从集合里面随机获取元素 |
+| Hashs | 包含键值对的无序散列表 | 添加、获取、移除单个键值对</br> 获取所有键值对</br> 检查某个键是否存在|
+| Sorted Sets | 有序集合 | 添加、获取、删除元素个元素</br> 根据分值范围或者成员来获取元素</br> 计算一个键的排名 |
 
-注 1：有序集合的每个集合元素都对应一个分值，根据这个分值的大小来对集合元素进行排序。有因此有序集合相当于是有序的散列表，键是集合元素，值为元素对应的分值。
+> [What Redis data structures look like](https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/)
+
+## Strings
+
+<div align="center"> <img src="../pics//6019b2db-bc3e-4408-b6d8-96025f4481d6.png" width="400"/> </div><br>
+
+```html
+> set hello world
+OK
+> get hello
+"world"
+> del hello
+(integer) 1
+> get hello
+(nil)
+```
+
+## Lists
+
+<div align="center"> <img src="../pics//fb327611-7e2b-4f2f-9f5b-38592d408f07.png" width="400"/> </div><br>
+
+```html
+> rpush list-key item
+(integer) 1
+> rpush list-key item2
+(integer) 2
+> rpush list-key item
+(integer) 3
+
+> lrange list-key 0 -1
+1) "item"
+2) "item2"
+3) "item"
+
+> lindex list-key 1
+"item2"
+
+> lpop list-key
+"item"
+
+> lrange list-key 0 -1
+1) "item2"
+2) "item"
+```
+
+## Sets
+
+<div align="center"> <img src="../pics//cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png" width="400"/> </div><br>
+
+```html
+> sadd set-key item
+(integer) 1
+> sadd set-key item2
+(integer) 1
+> sadd set-key item3
+(integer) 1
+> sadd set-key item
+(integer) 0
+
+> smembers set-key
+1) "item"
+2) "item2"
+3) "item3"
+
+> sismember set-key item4
+(integer) 0
+> sismember set-key item
+(integer) 1
+
+> srem set-key item2
+(integer) 1
+> srem set-key item2
+(integer) 0
+
+> smembers set-key
+1) "item"
+2) "item3"
+```
+
+## Hashs
+
+<div align="center"> <img src="../pics//7bd202a7-93d4-4f3a-a878-af68ae25539a.png" width="400"/> </div><br>
+
+```html
+> hset hash-key sub-key1 value1
+(integer) 1
+> hset hash-key sub-key2 value2
+(integer) 1
+> hset hash-key sub-key1 value1
+(integer) 0
+
+> hgetall hash-key
+1) "sub-key1"
+2) "value1"
+3) "sub-key2"
+4) "value2"
+
+> hdel hash-key sub-key2
+(integer) 1
+> hdel hash-key sub-key2
+(integer) 0
+
+> hget hash-key sub-key1
+"value1"
+
+> hgetall hash-key
+1) "sub-key1"
+2) "value1"
+```
+
+## Sorted Sets
+
+
+<div align="center"> <img src="../pics//1202b2d6-9469-4251-bd47-ca6034fb6116.png" width="400"/> </div><br>
+
+```html
+> zadd zset-key 728 member1
+(integer) 1
+> zadd zset-key 982 member0
+(integer) 1
+> zadd zset-key 982 member0
+(integer) 0
+
+> zrange zset-key 0 -1 withscores
+1) "member1"
+2) "728"
+3) "member0"
+4) "982"
+
+> zrangebyscore zset-key 0 800 withscores
+1) "member1"
+2) "728"
+
+> zrem zset-key member1
+(integer) 1
+> zrem zset-key member1
+(integer) 0
+
+> zrange zset-key 0 -1 withscores
+1) "member0"
+2) "982"
+```
 
 # 键的过期时间
 
@@ -106,7 +252,7 @@ always 选项会严重减低服务器的性能；everysec 选项比较合适，�
 
 随着负载不断上升，主服务器可能无法很快地更新所有从服务器，或者重新连接和重新同步从服务器而导致系统超载。为了解决这个问题，可以创建一个中间层来分担主服务器的复制工作。中间层的服务器是最上层服务器的从服务器，又是最下层服务器的主服务器。
 
-<div align="center"> <img src="../pics//b242fafc-5945-42a8-805e-6e3f1f2f89b4.jpg"/> </div><br>
+<div align="center"> <img src="index_files/b242fafc-5945-42a8-805e-6e3f1f2f89b4.jpg"/> </div><br>
 
 # 处理故障
 
@@ -192,7 +338,7 @@ def main():
 
 事件处理的角度下服务器运行流程如下：
 
-<div align="center"> <img src="../pics//73b73189-9e95-47e5-91d0-9378b8462e15.png"/> </div><br>
+<div align="center"> <img src="index_files/73b73189-9e95-47e5-91d0-9378b8462e15.png"/> </div><br>
 
 # Redis 与 Memcached 的区别
 
@@ -265,7 +411,7 @@ Redis 这种内存数据库才能支持计数器的频繁读写操作。
 
 Redis 没有表的概念将同类型的数据存放在一起，而是使用命名空间的方式来实现这一功能。键名的前面部分存储命名空间，后面部分的内容存储 ID，通常使用 : 来进行分隔。例如下面的 HASH 的键名为 article:92617，其中 article 为命名空间，ID 为 92617。
 
-<div align="center"> <img src="../pics//2d078e08-3a49-46d0-b784-df780b7e4bc3.jpg"/> </div><br>
+<div align="center"> <img src="index_files/2d078e08-3a49-46d0-b784-df780b7e4bc3.jpg"/> </div><br>
 
 **2. 点赞功能** 
 
@@ -273,18 +419,19 @@ Redis 没有表的概念将同类型的数据存放在一起，而是使用命�
 
 为了节约内存，规定一篇文章发布满一周之后，就不能再对它进行投票，而文章的已投票集合也会被删除，可以为文章的已投票集合设置一个一周的过期时间就能实现这个规定。
 
-<div align="center"> <img src="../pics//0e4c8a7f-f84c-4c4e-9544-49cd40167af8.png"/> </div><br>
+<div align="center"> <img src="index_files/0e4c8a7f-f84c-4c4e-9544-49cd40167af8.png"/> </div><br>
 
 **3. 对文章进行排序** 
 
 为了按发布时间和点赞数进行排序，可以建立一个文章发布时间的有序集合和一个文章点赞数的有序集合。（下图中的 score 就是这里所说的点赞数；下面所示的有序集合分值并不直接是时间和点赞数，而是根据它们间接计算出来的）
 
-<div align="center"> <img src="../pics//ea5e434a-a218-44b5-aa72-4cd08991abcf.jpg"/> </div><br>
+<div align="center"> <img src="index_files/ea5e434a-a218-44b5-aa72-4cd08991abcf.jpg"/> </div><br>
 
 # 参考资料
 
-1. Redis 实战
-2. Reids 设计与实现
-3. [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
-4. [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
-5. [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
+- Redis 实战
+- Reids 设计与实现
+- [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
+- [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
+- [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
+- [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
