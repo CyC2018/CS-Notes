@@ -79,9 +79,9 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 ## POST：传输实体主体
 
-POST 主要目的不是获取资源，而是传输实体主体数据。
+POST 主要目的不是获取资源，而是传输存储在内容实体中的数据。
 
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体部分。
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
 
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
