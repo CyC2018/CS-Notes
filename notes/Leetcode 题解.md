@@ -745,7 +745,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 
 ### BFS
 
-<div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
+<div align="center"> <img src="index_files/4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
 
 广度优先搜索的搜索过程有点像一层一层地进行遍历：从节点 0 出发，遍历到 6、2、1 和 5 这四个新节点。
 
@@ -801,7 +801,7 @@ private class Position {
 
 ### DFS
 
-<div align="center"> <img src="../pics//f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
+<div align="center"> <img src="index_files/f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
 
 广度优先搜索一层一层遍历，每一层遍历到的所有新节点，要用队列先存储起来以备下一层遍历的时候再遍历；而深度优先搜索在遍历到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
@@ -1087,7 +1087,7 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 [Leetcode : 51. N-Queens (Hard)](https://leetcode.com/problems/n-queens/description/)
 
-<div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
+<div align="center"> <img src="index_files/1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
 
 题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，要求解所有的 n 皇后解。
 
@@ -1095,11 +1095,11 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
 
-<div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
+<div align="center"> <img src="index_files/85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
 
 135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
-<div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
+<div align="center"> <img src="index_files/9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
 
 ```java
 private List<List<String>> ret;
@@ -1156,7 +1156,7 @@ private void backstracking(int row) {
 
 [Leetcode : 17. Letter Combinations of a Phone Number (Medium)](https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/)
 
-<div align="center"> <img src="../pics//a3f34241-bb80-4879-8ec9-dff2d81b514e.jpg"/> </div><br>
+<div align="center"> <img src="index_files/a3f34241-bb80-4879-8ec9-dff2d81b514e.jpg"/> </div><br>
 
 ```html
 Input:Digit string "23"
@@ -1598,7 +1598,7 @@ private boolean isPalindrome(String s, int begin, int end) {
 
 [Leetcode : 37. Sudoku Solver (Hard)](https://leetcode.com/problems/sudoku-solver/description/)
 
-<div align="center"> <img src="../pics//1ca52246-c443-48ae-b1f8-1cafc09ec75c.png"/> </div><br>
+<div align="center"> <img src="index_files/1ca52246-c443-48ae-b1f8-1cafc09ec75c.png"/> </div><br>
 
 ```java
 private boolean[][] rowsUsed = new boolean[9][10];
@@ -1820,7 +1820,7 @@ public int minPathSum(int[][] grid) {
 
 定义一个数组 dp 存储上楼梯的方法数（为了方便讨论，数组下标从 1 开始），dp[i] 表示走到第 i 个楼梯的方法数目。第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br> </div><br>
 
 dp[N] 即为所求。
 
@@ -1849,7 +1849,7 @@ public int climbStairs(int n) {
 
 第 i 年成熟的牛的数量为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br> </div><br>
 
 **强盗抢劫** 
 
@@ -1859,7 +1859,7 @@ public int climbStairs(int n) {
 
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 和 i - 3 的住户，所以
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br> </div><br>
 
 O(n) 空间复杂度实现方法：
 
@@ -1938,7 +1938,7 @@ private int rob(int[] nums, int s, int e) {
 
 综上所述，错误装信数量方式数量为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br> </div><br>
 
 dp[N] 即为所求。
 
@@ -1954,7 +1954,7 @@ dp[N] 即为所求。
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，因此需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br> </div><br>
 
 对于一个长度为 N 的序列，最长子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，即 max{ dp[i] | 1 <= i <= N} 即为所求。
 
@@ -2050,7 +2050,7 @@ public int wiggleMaxLength(int[] nums) {
 
 综上，最长公共子系列的状态转移方程为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br> </div><br>
 
 对于长度为 N 的序列 S<sub>1</sub> 和 长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
 
@@ -2087,7 +2087,7 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 综上，0-1 背包的状态转移方程为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br> </div><br>
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
@@ -2111,7 +2111,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅由前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>
+<div align="center"> <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br> </div><br>
 
 因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w] 防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
@@ -2519,7 +2519,7 @@ public int minDistance(String word1, String word2) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="../pics//ac9b31ec-cef1-4880-a875-fc4571ca10e1.png"/> </div><br>
+<div align="center"> <img src="index_files/ac9b31ec-cef1-4880-a875-fc4571ca10e1.png"/> </div><br>
 
 ```html
 s0[i] = max(s0[i - 1], s2[i - 1]); // Stay at s0, or rest from s2
@@ -4797,7 +4797,7 @@ private void inorder(TreeNode node, int k) {
 
 ### Trie
 
-<div align="center"> <img src="../pics//5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
+<div align="center"> <img src="index_files/5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
 
 Trie，又称前缀树或字典树，用于判断字符串是否存在或者是否具有某种字符串前缀。
 

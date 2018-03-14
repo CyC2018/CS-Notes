@@ -161,7 +161,7 @@ public boolean Find(int target, int [][] array) {
 
 **题目要求** 
 
-以 O(1) 的空间复杂度和 O(n) 的空间复杂度来求解。
+以 O(1) 的空间复杂度和 O(n) 的时间复杂度来求解。
 
 **解题思路** 
 
@@ -302,7 +302,7 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 - 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 - 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="../pics//6fec7f56-a685-4232-b03e-c92a8dfba486.png"/> </div><br>
+<div align="center"> <img src="index_files/6fec7f56-a685-4232-b03e-c92a8dfba486.png"/> </div><br>
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
@@ -679,14 +679,14 @@ private void printNumber(char[] number) {
 
 - 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
+<div align="center"> <img src="index_files/72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
 
 
 - 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
 
-<div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
+<div align="center"> <img src="index_files/2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
 
-- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。那么增长数量级为 (2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -832,7 +832,7 @@ public void reOrderArray(int[] array) {
 
 设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
 
-<div align="center"> <img src="../pics//40d96c0d-156f-4eee-a183-2d597344f1cd.png"/> </div><br>
+<div align="center"> <img src="index_files/40d96c0d-156f-4eee-a183-2d597344f1cd.png"/> </div><br>
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k) {
@@ -857,7 +857,7 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="../pics//e7d7dc0d-fc22-4f95-8768-b8a216168792.jpg"/> </div><br>
+<div align="center"> <img src="index_files/e7d7dc0d-fc22-4f95-8768-b8a216168792.jpg"/> </div><br>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
@@ -902,7 +902,7 @@ public ListNode ReverseList(ListNode head) {
 
 **题目描述** 
 
-<div align="center"> <img src="../pics//79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
+<div align="center"> <img src="index_files/79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
 
 ```java
 public ListNode Merge(ListNode list1, ListNode list2) {
@@ -928,7 +928,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 **题目描述** 
 
-<div align="center"> <img src="../pics//26223561-eea4-463c-8ddb-3bb456c76267.png"/> </div><br>
+<div align="center"> <img src="index_files/26223561-eea4-463c-8ddb-3bb456c76267.png"/> </div><br>
 
 ```java
 public boolean HasSubtree(TreeNode root1, TreeNode root2) {
@@ -951,7 +951,7 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 
 **题目描述** 
 
-<div align="center"> <img src="../pics//7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
+<div align="center"> <img src="index_files/7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
 
 ```java
 public void Mirror(TreeNode root) {
@@ -1027,7 +1027,7 @@ private int height(TreeNode root) {
 
 下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
-<div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
+<div align="center"> <img src="index_files/8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
 ```java
 public ArrayList<Integer> printMatrix(int[][] matrix) {
@@ -1105,7 +1105,7 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 
 例如，以下二叉树层次遍历的结果为 8, 6, 10, 5, 7, 9, 11
 
-<div align="center"> <img src="../pics//c8cdfa3d-d610-4731-9d89-564252378e7d.png"/> </div><br>
+<div align="center"> <img src="index_files/c8cdfa3d-d610-4731-9d89-564252378e7d.png"/> </div><br>
 
 **解题思路** 
 
@@ -1201,7 +1201,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 例如，下图中后序遍历序列 5, 7, 6, 9, 11, 10, 8 所对应的二叉搜索树。
 
-<div align="center"> <img src="../pics//b5af9ee6-97e6-446b-9551-6dfe96770d1a.png"/> </div><br>
+<div align="center"> <img src="index_files/b5af9ee6-97e6-446b-9551-6dfe96770d1a.png"/> </div><br>
 
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
@@ -1229,7 +1229,7 @@ private boolean verify(int[] sequence, int first, int last) {
 
 下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
 
-<div align="center"> <img src="../pics//a1ced733-02f5-4091-8f5a-ab9b4e5a3525.png"/> </div><br>
+<div align="center"> <img src="index_files/a1ced733-02f5-4091-8f5a-ab9b4e5a3525.png"/> </div><br>
 
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
@@ -1259,21 +1259,21 @@ private void dfs(TreeNode node, int target, int curSum, ArrayList<Integer> path)
 
 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
 
-<div align="center"> <img src="../pics//4f67aa74-5bf5-4ea4-9a6e-2e07d8f5fa86.png"/> </div><br>
+<div align="center"> <img src="index_files/4f67aa74-5bf5-4ea4-9a6e-2e07d8f5fa86.png"/> </div><br>
 
 **解题思路** 
 
 第一步，在每个节点的后面插入复制的节点。
 
-<div align="center"> <img src="../pics//52726d32-e97a-49dd-8419-04d30a9f9050.png"/> </div><br>
+<div align="center"> <img src="index_files/52726d32-e97a-49dd-8419-04d30a9f9050.png"/> </div><br>
 
 第二步，对复制节点的 random 链接进行赋值。
 
-<div align="center"> <img src="../pics//c5409a64-81fc-48c1-9790-ffa0afdb7bf5.png"/> </div><br>
+<div align="center"> <img src="index_files/c5409a64-81fc-48c1-9790-ffa0afdb7bf5.png"/> </div><br>
 
 第三步，拆分。
 
-<div align="center"> <img src="../pics//15e1edf0-8908-4815-af5e-a74e456da23b.png"/> </div><br>
+<div align="center"> <img src="index_files/15e1edf0-8908-4815-af5e-a74e456da23b.png"/> </div><br>
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
@@ -1315,7 +1315,7 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 
-<div align="center"> <img src="../pics//9cd97f41-fd9c-405c-aca1-9c82d24e20dc.png"/> </div><br>
+<div align="center"> <img src="index_files/9cd97f41-fd9c-405c-aca1-9c82d24e20dc.png"/> </div><br>
 
 ```java
 private TreeNode pre = null;

@@ -49,7 +49,7 @@ File 类可以用于表示文件和目录，但是它只用于表示文件的信
 
 # 字节操作
 
-<div align="center"> <img src="../pics//8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"/> </div><br>
+<div align="center"> <img src="index_files/8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"/> </div><br>
 
 Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
@@ -150,7 +150,7 @@ is.close();
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="../pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div><br>
+<div align="center"> <img src="index_files/fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div><br>
 
 ## 4. Datagram
 
@@ -211,19 +211,19 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 状态变量的改变过程：
 
 1. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 9。capacity 变量不会改变，下面的讨论会忽略它。
-<div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
+<div align="center"> <img src="index_files/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
 2. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
-<div align="center"> <img src="../pics//4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div><br>
+<div align="center"> <img src="index_files/4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div><br>
 
 3. 以下图例为已经从输入通道读取了 5 个字节数据写入缓冲区中。在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
-<div align="center"> <img src="../pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
+<div align="center"> <img src="index_files/952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
 
 4. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
-<div align="center"> <img src="../pics//b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
+<div align="center"> <img src="index_files/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
 
 5. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
-<div align="center"> <img src="../pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
+<div align="center"> <img src="index_files/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
 
 ## 4. 文件 NIO 实例
 
@@ -284,7 +284,7 @@ buffer.clear();
 
 服务端都会为每个连接的客户端创建一个线程来处理读写请求，阻塞式的特点会造成服务器会创建大量线程，并且大部分线程处于阻塞的状态，因此对服务器的性能会有很大的影响。
 
-<div align="center"> <img src="../pics//edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div><br>
+<div align="center"> <img src="index_files/edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div><br>
 
 ### 5.2 非阻塞式 I/O
 
@@ -294,7 +294,7 @@ buffer.clear();
 
 线程通信：线程之间通过 wait()、notify() 等方式通信，保证每次上下文切换都是有意义的，减少无谓的线程切换。
 
-<div align="center"> <img src="../pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div><br>
+<div align="center"> <img src="index_files/7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div><br>
 
 ## 6. 套接字 NIO 实例
 

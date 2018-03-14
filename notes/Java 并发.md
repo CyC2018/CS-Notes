@@ -403,7 +403,7 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 
 # 线程状态转换
 
-<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
+<div align="center"> <img src="index_files/38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
 
 1. NEW（新建）：创建后尚未启动的线程。
 2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
@@ -454,7 +454,7 @@ volatile 关键字通过添加内存屏障的方式来进制指令重排，即�
 
 每个处理器都有一个高速缓存，但是所有处理器共用一个主内存，因此高速缓存引入了一个新问题：缓存一致性。当多个处理器的运算都涉及同一块主内存区域时，将可能导致各自的缓存数据不一致。缓存不一致问题通常需要使用一些协议来解决。
 
-<div align="center"> <img src="../pics//352dd00d-d1bb-4134-845d-16a75bcb0e02.jpg"/> </div><br>
+<div align="center"> <img src="index_files/352dd00d-d1bb-4134-845d-16a75bcb0e02.jpg"/> </div><br>
 
 除了增加高速缓存之外，为了使得处理器内部的运算单元能尽量被充分利用，处理器可能会对输入代码进行乱序执行（Out-Of-Order Execution）优化，处理器会在计算之后将乱序执行的结果重组，保证该结果与顺序执行的结果是一致的，但并不保证程序中各个语句计算的先后顺序与输入代码中的顺序一致，因此，如果存在一个计算任务依赖另外一个计算任务的中间结果，那么其顺序性并不能靠代码的先后顺序来保证。与处理器的乱序执行优化类似，Java 虚拟机的即时编译器中也有类似的指令重排序（Instruction Reorder）优化。
 
@@ -468,7 +468,7 @@ Java 内存模型的主要目标是定义程序中各个变量的访问规则，
 
 Java 内存模型规定了所有的变量都存储在主内存（Main Memory）中。每条线程还有自己的工作内存，线程的工作内存中保存了被该线程使用到的变量的主内存副本拷贝，线程对变量的所有操作（读取、赋值等）都必须在工作内存中进行，而不能直接读写主内存中的变量。不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递均需要通过主内存来完成，线程、主内存、工作内存三者的交互关系如图所示。
 
-<div align="center"> <img src="../pics//b02a5492-5dcf-4a69-9b5b-c2298b2cb81c.jpg"/> </div><br>
+<div align="center"> <img src="index_files/b02a5492-5dcf-4a69-9b5b-c2298b2cb81c.jpg"/> </div><br>
 
 ## 4. 内存间交互操作
 
@@ -718,10 +718,10 @@ Thread printThread = new Thread(new Runnable() {
 
 如果需要使用上述功能，选用 ReentrantLock 是一个很好的选择，那如果是基于性能考虑呢？关于 synchronized 和 ReentrantLock 的性能问题，Brian Goetz 对这两种锁在 JDK 1.5 与单核处理器，以及 JDK 1.5 与双 Xeon 处理器环境下做了一组吞吐量对比的实验，实验结果如图 13-1 和图 13-2 所示。
 
-<div align="center"> <img src="../pics//d4a05b9c-f423-4137-9510-b6851f089edb.jpg"/> </div><br>
+<div align="center"> <img src="index_files/d4a05b9c-f423-4137-9510-b6851f089edb.jpg"/> </div><br>
 <div align="center">   JDK 1.5、单核处理器下两种锁的吞吐量对比  </div><br>
 
-<div align="center"> <img src="../pics//acc42b0f-10ba-4fa2-8694-cf2aab1fb434.jpg"/> </div><br>
+<div align="center"> <img src="index_files/acc42b0f-10ba-4fa2-8694-cf2aab1fb434.jpg"/> </div><br>
 <div align="center"> JDK 1.5、双 Xeon 处理器下两种锁的吞吐量对比  </div><br>
 
 多线程环境下 synchronized 的吞吐量下降得非常严重，而 ReentrantLock 则能基本保持在同一个比较稳定的水平上。与其说 ReentrantLock 性能好，还不如说 synchronized 还有非常大的优化余地。后续的技术发展也证明了这一点，JDK 1.6 中加入了很多针对锁的优化措施，JDK 1.6 发布之后，人们就发现 synchronized 与 ReentrantLock 的性能基本上是完全持平了。因此，如果读者的程序是使用 JDK 1.6 或以上部署的话，性能因素就不再是选择 ReentrantLock 的理由了，虚拟机在未来的性能改进中肯定也会更加偏向于原生的 synchronized，所以还是提倡在 synchronized 能实现需求的情况下，优先考虑使用 synchronized 来进行同步。
@@ -886,15 +886,15 @@ public static String concatString(String s1, String s2, String s3) {
 
 对象头信息是与对象自身定义的数据无关的额外存储成本，考虑到虚拟机的空间效率，Mark Work 被设计成一个非固定的数据结构以便在极小的空间内存储尽量多的信息，它会根据对象的状态复用自己的存储空间。例如，在 32 位的 HotSpot 虚拟机中对象未被锁定的状态下，Mark Word 的 32bit 空间中的 25bit 用于存储对象哈希码（HashCode），4bit 用于存储对象分代年龄，2bit 用于存储锁标志位，1bit 固定为 0，在其他状态（轻量级锁定、重量级锁定、GC 标记、可偏向）下对象的存储内容见表 13-1。
 
-<div align="center"> <img src="../pics//30edea19-3507-423c-bbb0-5184292692d7.png"/> </div><br>
+<div align="center"> <img src="index_files/30edea19-3507-423c-bbb0-5184292692d7.png"/> </div><br>
 
 简单地介绍了对象的内存布局后，我们把话题返回到轻量级锁的执行过程上。在代码进入同步块的时候，如果此同步对象没有被锁定（锁标志位为 “01” 状态）虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的 Mark Word 的拷贝（官方把这份拷贝加上了一个 Displaced 前缀，即 Displaced Mark Word），这时候线程堆栈与对象头的状态如图 13-3 所示。
 
-<div align="center"> <img src="../pics//643a2587-08ae-4d92-94fb-d9a1c448cd13.png"/> </div><br>
+<div align="center"> <img src="index_files/643a2587-08ae-4d92-94fb-d9a1c448cd13.png"/> </div><br>
 
 然后，虚拟机将使用 CAS 操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针。如果这个更新动作成功了，那么这个线程就拥有了该对象的锁，并且对象 Mark Word 的锁标志位 （Mark Word 的最后 2bit）将转变为 “00”，即表示此对象处于轻量级锁定状态，这时候线程堆栈与对象头的状态如图 12-4 所示。
 
-<div align="center"> <img src="../pics//0126ff14-d52d-4a6e-b8ca-e429881e23b7.png"/> </div><br>
+<div align="center"> <img src="index_files/0126ff14-d52d-4a6e-b8ca-e429881e23b7.png"/> </div><br>
 
 如果这个更新操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的栈帧，如果只说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行，否则说明这个锁对象以及被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁，所标志的状态变为 “10”，Mark Word 中存储的就是指向重量级锁（互斥量）的指针，后面等待锁的线程也要进入阻塞状态。
 
@@ -912,7 +912,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 当有另外一个线程去尝试获取这个锁时，偏向模式就宣告结束。根据锁对象目前是否处于被锁定的状态，撤销偏向（Revoke Bias）后恢复到未锁定（标志位为 “01”）或轻量级锁定（标志位为 “00”）的状态，后续的同步操作就如上面介绍的轻量级锁那样执行。偏向锁、轻量级锁的状态转换及对象 Mark Word 的关系如图 13-5 所示。
 
-<div align="center"> <img src="../pics//b202eeb9-5e84-4dfb-a6a1-4f4b7ed5d3e4.jpg"/> </div><br>
+<div align="center"> <img src="index_files/b202eeb9-5e84-4dfb-a6a1-4f4b7ed5d3e4.jpg"/> </div><br>
 
 偏向锁可以提高带有同步但无竞争的程序性能。它同样是一个带有效益权衡（Trade Off）性质的优化，也就是说，它并不一定总是对程序运行有利，如果程序中大多数的锁总是被多个不同的线程访问，那偏向模式就是多余的。在具体问题具体分析的前提下，有时候使用参数 -XX:-UseBiasedLocking 来禁止偏向锁优化反而可以提升性能。
 

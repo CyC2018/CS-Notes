@@ -32,7 +32,7 @@
 
 # 概览
 
-<div align="center"> <img src="../pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div><br>
+<div align="center"> <img src="index_files/ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div><br>
 
 容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。
 
@@ -257,13 +257,13 @@ transient Entry[] table;
 
 其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
 
-<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
+<div align="center"> <img src="index_files/ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
 
 ### 拉链法的工作原理
 
 使用默认构造函数新建一个 HashMap，默认大小为 16。Entry 的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
 
-<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg"/> </div><br>
+<div align="center"> <img src="index_files/b9a39d2a-618c-468b-86db-2e851f1a0057.jpg"/> </div><br>
 
 当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此这一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 

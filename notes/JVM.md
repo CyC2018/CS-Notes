@@ -65,7 +65,7 @@
 
 # 内存模型
 
-<div align="center"> <img src="../pics//dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"/> </div><br>
+<div align="center"> <img src="index_files/dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"/> </div><br>
 
 注：白色区域为线程私有的，蓝色区域为线程共享的。
 
@@ -224,7 +224,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2.1 标记-清除算法
 
-<div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg"/> </div><br>
+<div align="center"> <img src="index_files/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg"/> </div><br>
 
 将需要回收的对象进行标记，然后清除。
 
@@ -237,7 +237,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2.2 复制算法
 
-<div align="center"> <img src="../pics//e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg"/> </div><br>
+<div align="center"> <img src="index_files/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg"/> </div><br>
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
@@ -247,7 +247,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2.3 标记-整理算法
 
-<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg"/> </div><br>
+<div align="center"> <img src="index_files/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg"/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
@@ -262,13 +262,13 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ## 3. 垃圾收集器
 
-<div align="center"> <img src="../pics//c625baa0-dde6-449e-93df-c3a67f2f430f.jpg"/> </div><br>
+<div align="center"> <img src="index_files/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg"/> </div><br>
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
 ### 3.1 Serial 收集器
 
-<div align="center"> <img src="../pics//22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg"/> </div><br>
+<div align="center"> <img src="index_files/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg"/> </div><br>
 
 它是单线程的收集器，不仅意味着只会使用一个线程进行垃圾收集工作，更重要的是它在进行垃圾收集时，必须暂停所有其他工作线程，往往造成过长的等待时间。
 
@@ -278,7 +278,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 3.2 ParNew 收集器
 
-<div align="center"> <img src="../pics//81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg"/> </div><br>
+<div align="center"> <img src="index_files/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg"/> </div><br>
 
 它是 Serial 收集器的多线程版本。
 
@@ -300,7 +300,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 3.4 Serial Old 收集器
 
-<div align="center"> <img src="../pics//08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg"/> </div><br>
+<div align="center"> <img src="index_files/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg"/> </div><br>
 
 Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下的虚拟机使用。如果用在 Server 模式下，它有两大用途：
 
@@ -309,7 +309,7 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 ### 3.5 Parallel Old 收集器
 
-<div align="center"> <img src="../pics//278fe431-af88-4a95-a895-9c3b80117de3.jpg"/> </div><br>
+<div align="center"> <img src="index_files/278fe431-af88-4a95-a895-9c3b80117de3.jpg"/> </div><br>
 
 是 Parallel Scavenge 收集器的老年代版本。
 
@@ -317,7 +317,7 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 ### 3.6 CMS 收集器
 
-<div align="center"> <img src="../pics//62e77997-6957-4b68-8d12-bfd609bb2c68.jpg"/> </div><br>
+<div align="center"> <img src="index_files/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg"/> </div><br>
 
 CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记-清除算法实现的。
 
@@ -342,7 +342,7 @@ CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记-�
 
 ### 3.7 G1 收集器
 
-<div align="center"> <img src="../pics//f99ee771-c56f-47fb-9148-c0036695b5fe.jpg"/> </div><br>
+<div align="center"> <img src="index_files/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg"/> </div><br>
 
 G1（Garbage-First）收集器是当今收集器技术发展最前沿的成果之一，它是一款面向服务端应用的垃圾收集器，HotSpot 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 JDK 1.5 中发布的 CMS 收集器。
 
@@ -439,7 +439,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 ## 1 类的生命周期
 
-<div align="center"> <img src="../pics//32b8374a-e822-4720-af0b-c0f485095ea2.jpg"/> </div><br>
+<div align="center"> <img src="index_files/32b8374a-e822-4720-af0b-c0f485095ea2.jpg"/> </div><br>
 
 包括以下 7 个阶段：
 
@@ -627,7 +627,7 @@ public static void main(String[] args) {
 
 应用程序都是由三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器，这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
 
-<div align="center"> <img src="../pics//2cdc3ce2-fa82-4c22-baaa-000c07d10473.jpg"/> </div><br>
+<div align="center"> <img src="index_files/2cdc3ce2-fa82-4c22-baaa-000c07d10473.jpg"/> </div><br>
 
 **工作过程** 
 
