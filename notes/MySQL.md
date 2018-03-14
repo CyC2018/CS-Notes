@@ -221,11 +221,11 @@ SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5;
 
 ### 3.3 多列索引
 
-在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id 和 file_id 设置为多列索引。
+在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id 和 film_id 设置为多列索引。
 
 ```sql
-SELECT file_id, actor_ id FROM sakila.film_actor
-WhERE actor_id = 1 OR film_id = 1;
+SELECT film_id, actor_ id FROM sakila.film_actor
+WhERE actor_id = 1 AND film_id = 1;
 ```
 
 ### 3.4 索引列的顺序
