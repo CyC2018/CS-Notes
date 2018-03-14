@@ -69,6 +69,8 @@
 
 > [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
 
+整理自《Redis 设计与实现》和《Redis 实战》
+
 ## Java :coffee:
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
