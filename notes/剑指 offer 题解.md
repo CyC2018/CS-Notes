@@ -161,7 +161,7 @@ public boolean Find(int target, int [][] array) {
 
 **题目要求** 
 
-以 O(1) 的空间复杂度和 O(n) 的空间复杂度来求解。
+以 O(1) 的空间复杂度和 O(n) 的时间复杂度来求解。
 
 **解题思路** 
 
@@ -195,27 +195,11 @@ public String replaceSpace(StringBuffer str) {
 
 **题目描述** 
 
-输入一个链表的头结点，从尾到头反过来打印出每个结点的值。
+输入链表的第一个节点，从尾到头反过来打印出每个结点的值。
 
 **解题思路** 
 
-典型的"后进先出"，可使用栈或者递归。
-
-正向遍历然后调用 Collections.reverse()。
-
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (listNode != null) {
-        ret.add(listNode.val);
-        listNode = listNode.next;
-    }
-    Collections.reverse(ret);
-    return ret;
-}
-```
-
-使用 Stack
+栈
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -245,7 +229,23 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-不使用库函数，并且不使用递归的迭代实现，利用链表的头插法为逆序的特性。
+正向遍历然后调用 Collections.reverse()。
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (listNode != null) {
+        ret.add(listNode.val);
+        listNode = listNode.next;
+    }
+    Collections.reverse(ret);
+    return ret;
+}
+```
+
+不使用库函数，并且不使用递归。利用链表头插法为逆序的特点。
+
+头结点和第一个节点的区别：头结点是在头插法中使用的一个额外节点，这个节点不存储值；第一个节点就是链表的第一个真正存储值的节点。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -605,6 +605,19 @@ public int NumberOf1(int n) {
 
 ## 16. 数值的整数次方
 
+**题目描述** 
+
+给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方。
+
+**解题思路** 
+
+下面的讨论中 x 代表 base，N 代表 exponent。
+
+- 当 x 为偶数时，x<sup>N</sup> = (x \* x)<sup>N / 2</sup>；
+- 当 x 为奇数时，x<sup>N</sup> = x \* (x \* x)<sup>N / 2</sup>；
+
+因为 (x \* x)<sup>N / 2</sup> 可以通过递归求解，并且每递归一次，N 都减小一半，因此整个算法的时间复杂度为 logN。
+
 ```java
 public double Power(double base, int exponent) {
     if (exponent == 0) return 1;
@@ -662,6 +675,19 @@ private void printNumber(char[] number) {
 
 ## 18.1 在 O(1) 时间内删除链表节点
 
+**解题思路** 
+
+- 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
+
+<div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
+
+
+- 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
+
+<div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
+
+- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
     if (head == null || head.next == null || tobeDelete == null) return null;
@@ -680,6 +706,17 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 ```
 
 ## 18.2 删除链表中重复的结点
+
+**题目描述** 
+
+```html
+Input : 1->2->3->3->4->4->5
+Output : 1->2->5
+```
+
+**解题描述** 
+
+递归。
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
@@ -988,7 +1025,7 @@ private int height(TreeNode root) {
 
 **题目描述** 
 
-下图的矩阵顺时针打印结果为：1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10
+下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
 <div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
@@ -1008,6 +1045,10 @@ public ArrayList<Integer> printMatrix(int[][] matrix) {
 ```
 
 ## 30. 包含 min 函数的栈
+
+**题目描述** 
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的 min 函数。
 
 ```java
 private Stack<Integer> stack = new Stack<>();
@@ -1368,6 +1409,12 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 # 第五章 优化时间和空间效率
 
 ## 39. 数组中出现次数超过一半的数字
+
+**解题思路** 
+
+多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。
+
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不想等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums) {
@@ -1813,6 +1860,8 @@ private void merge(int[] nums, int start, int mid, int end) {
 
 ## 52. 两个链表的第一个公共结点
 
+**题目描述** 
+
 ```html
 A:          a1 → a2
                   ↘
@@ -1820,6 +1869,8 @@ A:          a1 → a2
                   ↗
 B:    b1 → b2 → b3
 ```
+
+**解题思路** 
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
@@ -1840,22 +1891,55 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 
 ## 53 数字在排序数组中出现的次数
 
+**题目描述** 
+
+```html
+Input:
+1, 2, 3, 3, 3, 3, 4, 6
+3
+Output:
+4
+````
+
+**解题思路** 
+
+可以用二分查找找出数字在数组的最左端和最右端。
+
 ```java
-public int GetNumberOfK(int[] array, int num) {
-    int l = 0, h = array.length - 1;
-    // 先找出 num 在数组最左端的位置，可以控制二分查找结束时 l 指向该位置
+public int GetNumberOfK(int[] nums, int K) {
+    int first = getFirstK(nums, K);
+    int last = getLastK(nums, K);
+    return first == -1 || last == -1 ? 0 : last - first + 1;
+}
+
+private int getFirstK(int[] nums, int K) {
+    int l = 0, h = nums.length - 1;
     while (l <= h) {
         int m = l + (h - l) / 2;
-        if (array[m] >= num) h = m - 1;
+        if (nums[m] >= K) h = m - 1;
         else l = m + 1;
     }
-    int cnt = 0;
-    while (l < array.length && array[l++] == num) cnt++;
-    return cnt;
+    if (l > nums.length - 1 || nums[l] != K) return -1;
+    return l;
+}
+
+private int getLastK(int[] nums, int K) {
+    int l = 0, h = nums.length - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] > K) h = m - 1;
+        else l = m + 1;
+    }
+    if (h < 0 || nums[h] != K) return -1;
+    return h;
 }
 ```
 
 ## 54. 二叉搜索树的第 k 个结点
+
+**解题思路** 
+
+利用二叉搜索数中序遍历有序的特点。
 
 ```java
 TreeNode ret;
@@ -1916,6 +2000,12 @@ public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
 **题目描述** 
 
 输入一个递增排序的数组和一个数字 S，在数组中查找两个数，是的他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
+
+**解题思路** 
+
+使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
+
+如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
 
 ```java
 public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
