@@ -353,8 +353,6 @@ Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一
 1. 让代理服务器进行缓存；
 2. 让客户端浏览器进行缓存。
 
-<div align="center"> <img src="../pics//e84dd187-779f-4ffc-8ccc-40d8c03f5324.jpg"/> </div><br>
-
 **Cache-Control** 
 
 该字段用于控制缓存的行为。Cache-Contro : no-cache 有两种含义：
