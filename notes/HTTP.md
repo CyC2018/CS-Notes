@@ -75,7 +75,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 # HTTP 方法
 
-客户端发送的请求报文第一行为请求行，包含了方法字段。
+客户端发送的  **请求报文**  第一行为请求行，包含了方法字段。
 
 ## GET：获取资源
 
@@ -164,11 +164,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 <div align="center"> <img src="../pics//c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg"/> </div><br>
 
-
-
 # HTTP 状态码
 
-服务器返回的响应报文中第一行为状态行，包含了状态码以及原因短语，来告知客户端请求的结果。
+服务器返回的  **响应报文**  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
 | 状态码 | 类别 | 原因短语 |
 | --- | --- | --- |
@@ -184,7 +182,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **204 No Content** ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
 
--  **206 Partial Content** 
+-  **206 Partial Content** ：表示客户端进行了范围请求。响应报文包含由 Content-Range 指定范围的实体内容。
 
 ## 3XX 重定向
 
@@ -192,7 +190,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **302 Found** ：临时性重定向
 
--  **303 See Other** 
+-  **303 See Other** ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
 
 - 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会 在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
 
@@ -202,9 +200,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 4XX 客户端错误
 
--  **400 Bad Request** ：请求报文中存在语法错误
+-  **400 Bad Request** ：请求报文中存在语法错误。
 
--  **401 Unauthorized** ：该状态码表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证）的认证信息。如果之前已进行过一次请求，则表示用户认证失败。
+-  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
 
 <div align="center"> <img src="../pics//b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
 
@@ -214,9 +212,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 5XX 服务器错误
 
--  **500 Internal Server Error** ：服务器正在执行请求时发生错误
+-  **500 Internal Server Error** ：服务器正在执行请求时发生错误。
 
--  **503 Service Unavilable** ：该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+-  **503 Service Unavilable** ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
 
 # HTTP 首部
 
