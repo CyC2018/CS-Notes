@@ -161,7 +161,7 @@ public boolean Find(int target, int [][] array) {
 
 **题目要求** 
 
-以 O(1) 的空间复杂度和 O(n) 的空间复杂度来求解。
+以 O(1) 的空间复杂度和 O(n) 的时间复杂度来求解。
 
 **解题思路** 
 
@@ -686,7 +686,7 @@ private void printNumber(char[] number) {
 
 <div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
 
-- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。那么增长数量级为 (2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
