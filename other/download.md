@@ -1,6 +1,3 @@
-# 科普
-
-<a href="https://pan.baidu.com/s/1fKo7ntvQUettvjaTQqyCEw"> <img src="s1113106.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1dNFZcBdDhA80-pWT1qcQSg"> <img src="s9114855.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1fII84UPuo8aIxDkOakvUVg"> <img src="s4379914.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1YTp7vDp0VG2Ckz5_I91FIg"> <img src="s4687321.jpg" width="130"/> </a> 
 
 # 网络
 
@@ -40,8 +37,9 @@
 
 # 编码实践
 
-<a href="https://pan.baidu.com/s/1H1ilY54BISk7oDaKYpcrwA"> <img src="s1495029.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1pWGwRRVxtpSmlsK7B1uU7Q"> <img src="s4157180.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1HGHeahqtscz7iczhK7ps-Q"> <img src="s1671095.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/14uxNIdeXKLOnUJ6LMRndPg"> <img src="s10328621.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/17sIRZxCf_uJMZNnqAHEDkA"> <img src="s11194203.jpg" width="130"/> </a>  &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1MaNeNsoqlTMn2uuT1QrsHQ"> <img src="s1086045.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="130"/> </a>
+<a href="https://pan.baidu.com/s/1H1ilY54BISk7oDaKYpcrwA"> <img src="s1495029.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1pWGwRRVxtpSmlsK7B1uU7Q"> <img src="s4157180.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1HGHeahqtscz7iczhK7ps-Q"> <img src="s1671095.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/14uxNIdeXKLOnUJ6LMRndPg"> <img src="s10328621.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/17sIRZxCf_uJMZNnqAHEDkA"> <img src="s11194203.jpg" width="130"/> </a>  &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1MaNeNsoqlTMn2uuT1QrsHQ"> <img src="s1086045.jpg" width="130"/> </a> &nbsp;&nbsp; 
 
-# 打包
+# 科普
 
-> [百度网盘](https://pan.baidu.com/s/1o9oD1s2#list/path=%2F&parentPath=%2F)
+<a href="https://pan.baidu.com/s/1fKo7ntvQUettvjaTQqyCEw"> <img src="s1113106.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1dNFZcBdDhA80-pWT1qcQSg"> <img src="s9114855.jpg" width="130"/> </a> &nbsp;&nbsp;  &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1fII84UPuo8aIxDkOakvUVg"> <img src="s4379914.jpg" width="130"/> </a> &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1XarJowXrxoBtKdmVCGcm1w"> <img src="s4687321.jpg" width="130"/> </a>  &nbsp;&nbsp; <a href="https://pan.baidu.com/s/1s0vhcWxN_36PpZeJoOHrKA"> <img src="s4669554.jpg" width="130"/> </a>
+

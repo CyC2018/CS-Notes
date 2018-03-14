@@ -89,7 +89,17 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 整理了一些常见考点。
 
-## 编码实践 :hammer:
+## 工具 :hammer:
+
+> [Git](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md)
+
+整理一些 Git 的使用和概念。
+
+> [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
+
+整理自《正则表达式必知必会》
+
+## 编码实践 :speak_no_evil:
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
