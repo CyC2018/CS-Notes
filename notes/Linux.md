@@ -89,11 +89,11 @@
 
 ## 求助
 
-**1. --help**
+**1. --help** 
 
 指令的基本用法与选项介绍。
 
-**2. man**
+**2. man** 
 
 man 是 manual 的缩写，将指令的具体信息显示出来。
 
@@ -105,17 +105,17 @@ man 是 manual 的缩写，将指令的具体信息显示出来。
 | 5 | 配置文件 |
 | 8 | 系统管理员可以使用的管理指令 |
 
-**3. info**
+**3. info** 
 
 info 与 man 类似，但是 info 将文档分成一个个页面，每个页面可以进行跳转。
 
 ## 关机
 
-**1. sync**
+**1. sync** 
 
 为了加快对磁盘上文件的读写速度，位于内存中的文件数据不会立即同步到磁盘上，因此关机之前需要先进行 sync 同步操作。
 
-**2. shutdown**
+**2. shutdown** 
 
 ```html
 # /sbin/shutdown [-krhc] [时间] [警告讯息]
@@ -125,7 +125,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 -c ： 取消已经在进行的 shutdown 指令内容
 ```
 
-**3. 其它关机指令**
+**3. 其它关机指令** 
 
 reboot、halt、poweroff。
 
@@ -136,7 +136,6 @@ ps aux | grep threadx
 ```
 
 ## 查看端口
-
 
 ```html
 netstat -anp | grep 80
@@ -153,7 +152,7 @@ netstat -anp | grep 80
 ## 运行等级
 
 - 0：关机模式
-- 1：单用户模式（可用于破解root密码）
+- 1：单用户模式（可用于破解 root 密码）
 - 2：无网络支持的多用户模式
 - 3：有网络支持的多用户模式（文本模式，工作中最常用的模式）
 - 4：保留，未使用
@@ -206,31 +205,31 @@ Linux 中每个硬件都被当做一个文件。
 
 ### 1. MBR
 
-MBR 中，第一个扇区最重要，里面有：主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
+MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
 
-分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，可以记录更多的分区，因此通过扩展分区可以分出更多区分，这些分区称为逻辑分区。
+分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
 
-Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名+编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
+Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名 + 编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
 
 ### 2. GPT
 
-不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。
+不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA）。
 
 GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。
 
 GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//a5c25452-6fa5-49e7-9322-823077442775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg"/> </div><br>
 
 ## 开机检测程序
 
 ### 1. BIOS
 
-BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序的会加载操作系统的核心文件。
+BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
 MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg"/> </div><br>
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
@@ -242,7 +241,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg"/> </div><br>
+<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg"/> </div><br>
 
 # 文件权限与目录配置
 
@@ -287,7 +286,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 ### 3. 修改权限
 
-可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r：4、w：2、x：1。
+可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r : 4、w : 2、x : 1。
 
 ```html
 # chmod [-R] xyz dirname/filename
@@ -341,7 +340,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 完整的目录树如下：
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"/> </div><br>
+<div align="center"> <img src="../pics//27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"/> </div><br>
 
 # 文件与目录
 
@@ -450,7 +449,7 @@ cp [-adfilprsu] source destination
 -c ： 更新 ctime，若该文件不存在则不建立新文件
 -m ： 更新 mtime
 -d ： 后面可以接欲更新的日期而不用当前的日期，也可以使用 --date="日期或时间"
--t ：后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
+-t ： 后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
 ```
 
 ## 指令与文件搜索
@@ -495,14 +494,14 @@ find 可以使用文件的属性和权限进行搜索。
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
--mtime +n ：列出在 n 天之前(不含 n 天本身)修改过内容的文件
--mtime -n ：列出在 n 天之内(含 n 天本身)修改过内容的文件
+-mtime +n ：列出在 n 天之前 (不含 n 天本身) 修改过内容的文件
+-mtime -n ：列出在 n 天之内 (含 n 天本身) 修改过内容的文件
 -newer file ： 列出比 file 更新的文件
 ```
 
 +4、4 和 -4 的指示的时间范围如下：
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
+<div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
 
 #### 4.2 与文件拥有者和所属群组有关的选项
 
@@ -519,7 +518,7 @@ find 可以使用文件的属性和权限进行搜索。
 
 ```html
 -name filename
--size [+-]SIZE：搜寻比 SIZE 还要大(+)或小(-)的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
+-size [+-]SIZE：搜寻比 SIZE 还要大 (+) 或小 (-) 的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
 -type TYPE
 -perm mode  ：搜索权限等于 mode 的文件
 -perm -mode ：搜索权限包含 mode 的文件
@@ -544,25 +543,25 @@ find 可以使用文件的属性和权限进行搜索。
 
 Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一个文件系统划分为多个 block 群组，方便管理。
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"/> </div><br>
+<div align="center"> <img src="../pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"/> </div><br>
 
 ## inode
 
 Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 block 大小限制了单一文件的大小。而每个 inode 大小是固定为 128 bytes。
 
-inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block，而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
+inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
+<div align="center"> <img src="../pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
 
 inode 具体包含以下信息：
 
-- 该文件的存取模式(read/write/excute)；
-- 该文件的拥有者与群组(owner/group)；
+- 该文件的存取模式 (read/write/excute)；
+- 该文件的拥有者与群组 (owner/group)；
 - 该文件的容量；
-- 该文件建立或状态改变的时间(ctime)；
-- 最近一次的读取时间(atime)；
-- 最近修改的时间(mtime)；
-- 定义文件特性的旗标(flag)，如 SetUID...；
+- 该文件建立或状态改变的时间 (ctime)；
+- 最近一次的读取时间 (atime)；
+- 最近修改的时间 (mtime)；
+- 定义文件特性的旗标 (flag)，如 SetUID...；
 - 该文件真正内容的指向 (pointer)。
 
 ## 目录的 inode 与 block
@@ -579,7 +578,9 @@ inode 具体包含以下信息：
 
 ### 1. 实体链接
 
-hard link 只是在某个目录下新增一个条目，使得新增的条目链接到文件的 inode 上。删除任意一个条目，文件还是存在，只要引用数量不为 0。
+它和普通文件类似，实体链接文件的 inode 都指向源文件所在的 block 上，也就是说读取文件直接从源文件的 block 上读取。
+
+删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
 有以下限制：不能跨越 File System；不能对目录进行链接。
 
@@ -592,9 +593,11 @@ hard link 只是在某个目录下新增一个条目，使得新增的条目链�
 
 ### 2. 符号链接
 
-symbolic link 可以理解为 Windows 的快捷方式，通过建立一个独立的文件，这个文件的数据的读取指向链接的那个文件。当源文件被删除了，链接文件就打不开了。
+符号链接文件保存着源文件所在的绝对路径，在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
 
-symbolic link 可以为目录建立链接。
+当源文件被删除了，链接文件就打不开了。
+
+可以为目录建立链接。
 
 ```html
 # ll -i /etc/crontab /root/crontab2
@@ -636,7 +639,7 @@ $ gzip [-cdtv#] filename
 -d ：解压缩
 -t ：检验压缩文件是否出错
 -v ：显示压缩比等信息
--# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为6
+-# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为 6
 ```
 
 ### 2. bzip2
@@ -667,12 +670,12 @@ $ xz [-dtlkc#] filename
 压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gip、bzip2、xz 将打包文件进行压缩。
 
 ```html
-$ tar [-z|-j|-J] [cv] [-f 新建的tar文件] filename...  ==打包压缩
-$ tar [-z|-j|-J] [tv] [-f 已有的tar文件]              ==查看
-$ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
--z ：使用zip；
--j ：使用bzip2；
--J ：使用xz；
+$ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
+$ tar [-z|-j|-J] [tv] [-f 已有的 tar 文件]              ==查看
+$ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
+-z ：使用 zip；
+-j ：使用 bzip2；
+-J ：使用 xz；
 -c ：新建打包文件；
 -t ：查看打包文件里面有哪些文件；
 -x ：解打包或解压缩的功能；
@@ -687,35 +690,34 @@ $ tar [-z|-j|-J] [xv] [-f 已有的tar文件] [-C 目录]    ==解压缩
 | 查 看 | tar -jtv -f filename.tar.bz2 |
 | 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
 
-
 # Bash
 
 可以通过 Shell 请求内核提供服务，Bash 正是 Shell 的一种。
 
 ## Bash 特性
 
-**1. 命令历史**
+**1. 命令历史** 
 
 记录使用过的命令。本次登录所执行的命令都会暂时存放到内存中， \~/.bash_history 文件中记录的是前一次登录所执行过的命令。
 
-**2. 命令与文件补全**
+**2. 命令与文件补全** 
 
 快捷键：tab
 
-**3. 命名别名**
+**3. 命名别名** 
 
 例如 lm 是 ls -al 的别名。
 
-**4. shell scripts**
+**4. shell scripts** 
 
-**5. 通配符**
+**5. 通配符** 
 
 例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件。
 
 ## 变量操作
 
 - 对一个变量赋值直接使用 = ；
-- 对变量取用需要在变量前加上 \<img src="https://latex.codecogs.com/gif.latex?，也可以用\"/>{} 的形式；
+- 对变量取用需要在变量前加上 \$ ，也可以用 \${} 的形式；
 - 输出变量使用 echo 命令。
 
 ```bash
@@ -724,10 +726,9 @@ $ echo $var
 $ echo ${var}
 ```
 
-变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如var="lang is \<img src="https://latex.codecogs.com/gif.latex?LANG"，则var的值为langiszh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如var='langis\"/>LANG'，则 var 的值为 lang is \$LANG。
+变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如 var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
 
-
-可以使用 \`指令\` 或者 \<img src="https://latex.codecogs.com/gif.latex?(指令)的方式将指令的执行结果赋值给变量。例如version=\"/>(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
+可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
 
 可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
 
@@ -738,10 +739,10 @@ $ declare [-aixr] variable
 -a ： 定义为数组类型
 -i ： 定义为整数类型
 -x ： 定义为环境变量
--r ： 定义为readonly类型
+-r ： 定义为 readonly 类型
 ```
 
-使用 [ ] 来对数组进行操作：
+使用 [ ] 来对数组进行索引操作：
 
 ```bash
 $ array[1]=a
@@ -760,10 +761,9 @@ $ echo ${array[1]}
 
 重定向就是使用文件代替标准输入、标准输出和标准错误输出。
 
-
-1. 标准输入(stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
-2. 标准输出(stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
-3. 标准错误输出(stderr)：代码为 2 ，使用 2> 或 2>> ；
+1. 标准输入 (stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
+2. 标准输出 (stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
+3. 标准错误输出 (stderr)：代码为 2 ，使用 2> 或 2>> ；
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
@@ -777,7 +777,7 @@ $ find /home -name .bashrc > list 2>&1
 
 ## 管线指令
 
-管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的格式时就可以使用管线。在命令之间使用 | 分隔各个管线命令。
+管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。在命令之间使用 | 分隔各个管线命令。
 
 ```bash
 $ ls -al /etc | less
@@ -785,9 +785,7 @@ $ ls -al /etc | less
 
 ### 1. 提取指令：cut
 
-提取过程一行一行地进行。
-
-cut 对数据进行切分，取出想要的部分。
+cut 对数据进行切分，取出想要的部分。提取过程一行一行地进行。
 
 ```html
 $ cut
@@ -822,7 +820,7 @@ $ export | cut -c 12
 
 ### 2. 排序命令：sort、uniq
 
-**sort** 进行排序。
+**sort**  进行排序。
 
 ```html
 $ sort [-fbMnrtuk] [file or stdin]
@@ -846,7 +844,7 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq** 可以将重复的数据只取一个。
+**uniq**  可以将重复的数据只取一个。
 
 ```html
 $ uniq [-ic]
@@ -868,7 +866,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 ### 3. 双向输出重定向：tee
 
-输出重定向会将输出内容重定向到文件中，而 **tee** 不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
+输出重定向会将输出内容重定向到文件中，而  **tee**  不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```html
 $ tee [-a] file
@@ -876,7 +874,7 @@ $ tee [-a] file
 
 ### 4. 字符转换指令：tr、col、expand、join、paste
 
- **tr** 用来删除一行中的字符，或者对字符进行替换。
+**tr**  用来删除一行中的字符，或者对字符进行替换。
 
 ```html
 $ tr [-ds] SET1 ...
@@ -889,21 +887,21 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
- **col** 将 tab 字符转为空格字符。
+  **col**  将 tab 字符转为空格字符。
 
 ```html
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand** 将 tab 转换一定数量的空格，默认是 8 个。
+**expand**  将 tab 转换一定数量的空格，默认是 8 个。
 
 ```html
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
-**join** 将有相同数据的那一行合并在一起。
+**join**  将有相同数据的那一行合并在一起。
 
 ```html
 $ join [-ti12] file1 file2
@@ -913,7 +911,7 @@ $ join [-ti12] file1 file2
 -2 ：第二个文件所用的比较字段
 ```
 
-**paste** 直接将两行粘贴在一起。
+**paste**  直接将两行粘贴在一起。
 
 ```html
 $ paste [-d] file1 file2
@@ -922,7 +920,7 @@ $ paste [-d] file1 file2
 
 ### 5. 分区指令：split
 
-**split** 将一个文件划分成多个文件。
+**split**  将一个文件划分成多个文件。
 
 ```html
 $ split [-bl] file PREFIX
@@ -979,11 +977,13 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 ## awk
 
+可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
+
 ```html
-$ awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
+$ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 ```
 
-awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\<img src="https://latex.codecogs.com/gif.latex?n，n为字段号，从1开始，\"/>0 表示一整行。
+awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
 范例 1：取出登录用户的用户名和 ip
 
@@ -1017,7 +1017,7 @@ dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
 ```
 
-可以使用大于等于逻辑，其中等于使用 ==。
+可以使用条件，其中等于使用 ==。
 
 范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
@@ -1030,7 +1030,7 @@ daemon 2
 
 # vim 三个模式
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg"/> </div><br>
 
 在指令列模式下，有以下命令用于离开或者存储文件。
 
@@ -1038,14 +1038,12 @@ daemon 2
 | -- | -- |
 | :w | 写入磁盘|
 | :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
-| :q | 离开|
-| :q! | 强制离开不保存|
-| :wq | 写入磁盘后离开|
-| :wq!|  强制写入磁盘后离开|
-
+| :q | 离开 |
+| :q! | 强制离开不保存 |
+| :wq | 写入磁盘后离开 |
+| :wq!|  强制写入磁盘后离开 |
 
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
-
