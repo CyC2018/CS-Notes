@@ -353,16 +353,33 @@ Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一
 1. 让代理服务器进行缓存；
 2. 让客户端浏览器进行缓存。
 
-**Cache-Control** 
+**Cache-Control 字段** 
 
-该字段用于控制缓存的行为。Cache-Contro : no-cache 有两种含义：
+HTTP 通过 Cache-Control 首部字段来控制缓存。
 
-1. 如果是客户端向缓存服务器发送的请求报文中含有该指令，表示客户端不想要缓存的资源；
-2. 如果是源服务器向缓存服务器发送的响应报文中含有该指令，表示缓存服务器不能对资源进行缓存。
+```html
+Cache-Control: private, max-age=0, no-cache
+```
 
-**过期时间** 
+**no-cache 指令** 
 
-Expires 字段可以用于告知缓存服务器该资源什么时候会过期。当首部字段 Cache-Control 有指定 max-age 指令时，比起 Expires 字段，会优先处理 max-age 指令。
+该指令出现在请求报文的 Cache-Control 字段中，表示缓存服务器需要先向原服务器验证缓存资源是否过期；
+
+该指令出现在响应报文的 Cache-Control 字段中，表示缓存服务器在进行缓存之前需要先验证缓存资源的有效性。
+
+**no-store 指令** 
+
+该指令表示缓存服务器不能对请求或响应的任何一部分进行缓存。
+
+no-cache 不表示不缓存，而是缓存之前需要先进行验证，no-store 才是不进行缓存。
+
+**max-age 指令** 
+
+该指令出现在请求报文的 Cache-Control 字段中，如果缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
+
+该指令出现在响应报文的 Cache-Control 字段中，表示缓存资源在缓存服务器中保存的时间。
+
+Expires 字段也可以用于告知缓存服务器该资源什么时候会过期。在 HTTP/1.1 中，会优先处理 Cache-Control : max-age 指令；而在 HTTP/1.0 中，Cache-Control : max-age 指令会被忽略掉。
 
 ## 持久连接
 
@@ -404,7 +421,6 @@ Content-Type: text/plain
 ... contents of file1.txt ...
 --AaB03x--
 ```
-
 
 ## 范围请求
 
