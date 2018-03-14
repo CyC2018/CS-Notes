@@ -295,18 +295,37 @@ CONNECT www.example.com:443 HTTP/1.1
 
 HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
 
-服务器发送的响应报文包含 Set-Cookie 字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。下次再发送请求时，从浏览器中读出 Cookie 值，在请求报文中包含 Cookie 字段，这样服务器就知道客户端的状态信息了。Cookie 状态信息保存在客户端浏览器中，而不是服务器上。
+Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且在下一次发送请求时包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
 
-<div align="center"> <img src="../pics//ff17c103-750a-4bb8-9afa-576327023af9.png"/> </div><br>
+**创建过程** 
 
-Set-Cookie 字段有以下属性：
+服务器发送的响应报文包含 Set-Cookie 字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。
+
+```html
+HTTP/1.0 200 OK
+Content-type: text/html
+Set-Cookie: yummy_cookie=choco
+Set-Cookie: tasty_cookie=strawberry
+
+[page content]
+```
+
+客户端之后发送请求时，会从浏览器中读出 Cookie 值，在请求报文中包含 Cookie 字段。
+
+```html
+GET /sample_page.html HTTP/1.1
+Host: www.example.org
+Cookie: yummy_cookie=choco; tasty_cookie=strawberry
+```
+
+**Set-Cookie** 
 
 | 属性 | 说明 |
 | -- | -- |
 | NAME=VALUE | 赋予 Cookie 的名称和其值（必需项） |
 | expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
 | path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
-| domain= 域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
+| domain=域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
 | Secure | 仅在 HTTPS 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
@@ -320,7 +339,7 @@ Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一
 
 **使用 Cookie 实现用户名和密码的自动填写** 
 
-网站脚本会自动从 Cookie 中读取用户名和密码，从而实现自动填写。
+网站脚本会自动从保存在浏览器中的 Cookie 读取用户名和密码，从而实现自动填写。
 
 ## 缓存
 
