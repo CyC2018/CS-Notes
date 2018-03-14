@@ -67,6 +67,8 @@
 
 整理自《高性能 MySQL》，整理了一些重点内容。
 
+> [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
+
 ## Java :coffee:
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
