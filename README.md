@@ -59,7 +59,7 @@
 
 整理自《数据库系统概论 第四版》
 
-> [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
+> [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
 
 整理自《SQL 必知必会》
 
