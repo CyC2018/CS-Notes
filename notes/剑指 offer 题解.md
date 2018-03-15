@@ -89,7 +89,7 @@
 
 ## 2. 实现 Singleton
 
-[单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F)
+[单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F)
 
 ## 3. 数组中重复的数字
 
