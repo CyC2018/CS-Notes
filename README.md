@@ -93,6 +93,12 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 整理了一些常见考点。
 
+## 分布式 :sweat_drops:
+
+> [分布式基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式基础.md)
+
+整理自《大规模分布式存储系统》
+
 ## 工具 :hammer:
 
 > [Git](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md)
