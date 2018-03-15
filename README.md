@@ -101,7 +101,7 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 > [一致性协议](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性协议.md)
 
-二阶段提交、Paxos、Raft、拜占庭将军问题。
+两阶段提交、Paxos、Raft、拜占庭将军问题。
 
 ## 工具 :hammer:
 
