@@ -101,23 +101,36 @@
 
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
 
+以 (2, 3, 1, 0, 2, 5) 为例，以下代码的运行过程为：
+
+```html
+position-0 : (2,3,1,0,2,5) // 2 <-> 1
+             (1,3,2,0,2,5) // 1 <-> 2
+             (3,1,1,0,2,5) // 3 <-> 0
+             (0,1,1,3,2,5) // already in position
+position-1 : (0,1,1,3,2,5) // already in position
+position-2 : (0,1,1,3,2,5) // nums[i] == nums[nums[i]], exit
+```
+
+遍历到位置 2 时，该位置上的数为 1，但是第 1 个位置上已经有一个 1 的值了，因此可以知道 1 重复。
+
 ```java
-public boolean duplicate(int[] numbers, int length, int[] duplication) {
-    if(numbers == null || length <= 0) return false;
+public boolean duplicate(int[] nums, int length, int[] duplication) {
+    if (nums == null || length <= 0) return false;
     for (int i = 0; i < length; i++) {
-        while (numbers[i] != i && numbers[i] != numbers[numbers[i]]) {
-            swap(numbers, i, numbers[i]);
+        while (nums[i] != i && nums[i] != nums[nums[i]]) {
+            swap(nums, i, nums[i]);
         }
-        if (numbers[i] != i && numbers[i] == numbers[numbers[i]]) {
-            duplication[0] = numbers[i];
+        if (nums[i] != i && nums[i] == nums[nums[i]]) {
+            duplication[0] = nums[i];
             return true;
         }
     }
     return false;
 }
 
-private void swap(int[] numbers, int i, int j) {
-    int t = numbers[i]; numbers[i] = numbers[j]; numbers[j] = t;
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i]; nums[i] = nums[j]; nums[j] = t;
 }
 ```
 
