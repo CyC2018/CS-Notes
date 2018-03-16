@@ -61,17 +61,17 @@
 
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-<div align="center"> <img src="index_files/4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg"/> </div><br>
+<div align="center"> <img src="../pics//4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg"/> </div><br>
 
 ## 请求和响应报文
 
 **请求报文** 
 
-<div align="center"> <img src="index_files/22b39f77-ac47-4978-91ed-84aaf457644c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//22b39f77-ac47-4978-91ed-84aaf457644c.jpg"/> </div><br>
 
 **响应报文** 
 
-<div align="center"> <img src="index_files/00d8d345-cd4a-48af-919e-209d2788eca7.jpg"/> </div><br>
+<div align="center"> <img src="../pics//00d8d345-cd4a-48af-919e-209d2788eca7.jpg"/> </div><br>
 
 # HTTP 方法
 
@@ -152,7 +152,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="index_files/5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg"/> </div><br>
 
 ## TRACE：追踪路径
 
@@ -162,7 +162,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪），因此更不会去使用它。
 
-<div align="center"> <img src="index_files/c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg"/> </div><br>
+<div align="center"> <img src="../pics//c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg"/> </div><br>
 
 # HTTP 状态码
 
@@ -204,7 +204,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
 
-<div align="center"> <img src="index_files/b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
+<div align="center"> <img src="../pics//b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
 
 -  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
 
@@ -385,13 +385,13 @@ Expires 字段也可以用于告知缓存服务器该资源什么时候会过期
 
 当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。持久连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
-<div align="center"> <img src="index_files/c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg"/> </div><br>
 
 持久连接需要使用 Connection 首部字段进行管理。HTTP/1.1 开始 HTTP 默认是持久化连接的，如果要断开 TCP 连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是非持久化连接的，如果要维持持续连接，需要使用 Connection : Keep-Alive。
 
 **管线化方式**  可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
 
-<div align="center"> <img src="index_files/6943e2af-5a70-4004-8bee-b33d60f39da3.jpg"/> </div><br>
+<div align="center"> <img src="../pics//6943e2af-5a70-4004-8bee-b33d60f39da3.jpg"/> </div><br>
 
 ## 编码
 
@@ -448,7 +448,7 @@ Content-Length: 1024
 
 涉及以下首部字段：Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Language。
 
-<div align="center"> <img src="index_files/39a27cca-c9af-482a-8a87-5522557a309e.jpg"/> </div><br>
+<div align="center"> <img src="../pics//39a27cca-c9af-482a-8a87-5522557a309e.jpg"/> </div><br>
 
 ## 虚拟主机
 
@@ -464,19 +464,19 @@ Content-Length: 1024
 
 使用代理的主要目的是：缓存、网络访问控制以及访问日志记录。
 
-<div align="center"> <img src="index_files/c07035c3-a9ba-4508-8e3c-d8ae4c6ee9ee.jpg"/> </div><br>
+<div align="center"> <img src="../pics//c07035c3-a9ba-4508-8e3c-d8ae4c6ee9ee.jpg"/> </div><br>
 
 **网关** 
 
 与代理服务器不同的是，网关服务器会将 HTTP 转化为其它协议进行通信，从而请求其它非 HTTP 服务器的服务。
 
-<div align="center"> <img src="index_files/81375888-6be1-476f-9521-42eea3e3154f.jpg"/> </div><br>
+<div align="center"> <img src="../pics//81375888-6be1-476f-9521-42eea3e3154f.jpg"/> </div><br>
 
 **隧道** 
 
 使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。
 
-<div align="center"> <img src="index_files/64b95403-d976-421a-8b45-bac89c0b5185.jpg"/> </div><br>
+<div align="center"> <img src="../pics//64b95403-d976-421a-8b45-bac89c0b5185.jpg"/> </div><br>
 
 # HTTPs
 
@@ -496,7 +496,7 @@ HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信
 
 HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中，共享密钥即对称密钥）
 
-<div align="center"> <img src="index_files/110b1a9b-87cd-45c3-a21d-824623715b33.jpg"/> </div><br>
+<div align="center"> <img src="../pics//110b1a9b-87cd-45c3-a21d-824623715b33.jpg"/> </div><br>
 
 ## 认证
 

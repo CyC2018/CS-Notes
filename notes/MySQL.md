@@ -247,7 +247,7 @@ customer_id_selectivity: 0.0373
 
 ### 3.5 聚簇索引
 
-<div align="center"> <img src="index_files/b9e9ae8c-e216-4c01-b267-a50dbeb98fa4.jpg"/> </div><br>
+<div align="center"> <img src="../pics//b9e9ae8c-e216-4c01-b267-a50dbeb98fa4.jpg"/> </div><br>
 
 聚簇索引并不是一种索引类型，而是一种数据存储方式。
 
@@ -282,7 +282,7 @@ customer_id_selectivity: 0.0373
 
 ### 4. 1 B-Tree
 
-<div align="center"> <img src="index_files/5ed71283-a070-4b21-85ae-f2cbfd6ba6e1.jpg"/> </div><br>
+<div align="center"> <img src="../pics//5ed71283-a070-4b21-85ae-f2cbfd6ba6e1.jpg"/> </div><br>
 
 为了描述 B-Tree，首先定义一条数据记录为一个二元组 [key, data]，key 为记录的键，data 为数据记录除 key 外的数据。
 
@@ -298,7 +298,7 @@ B-Tree 是满足下列条件的数据结构：
 
 ### 4.2 B+Tree
 
-<div align="center"> <img src="index_files/63cd5b50-d6d8-4df6-8912-ef4a1dd5ba13.jpg"/> </div><br>
+<div align="center"> <img src="../pics//63cd5b50-d6d8-4df6-8912-ef4a1dd5ba13.jpg"/> </div><br>
 
 与 B-Tree 相比，B+Tree 有以下不同点：
 
@@ -307,7 +307,7 @@ B-Tree 是满足下列条件的数据结构：
 
 ### 4.3 带有顺序访问指针的 B+Tree
 
-<div align="center"> <img src="index_files/1ee5f0a5-b8df-43b9-95ab-c516c54ec797.jpg"/> </div><br>
+<div align="center"> <img src="../pics//1ee5f0a5-b8df-43b9-95ab-c516c54ec797.jpg"/> </div><br>
 
 一般在数据库系统或文件系统中使用的 B+Tree 结构都在经典 B+Tree 基础上进行了优化，在叶子节点增加了顺序访问指针，做这个优化的目的是为了提高区间访问的性能。
 
@@ -343,7 +343,7 @@ B+Tree 更适合外存索引，原因和内节点出度 d 有关。由于 B+Tree
 
 最好使用 LIMIT 语句来取出想要的那些行。
 
-还可以建立索引来减少条件语句的全表扫描。例如对于下面的语句，不适用索引的情况下需要进行全表扫描，而使用索引只需要扫描几行记录即可，使用 Explain 语句可以通过观察 rows 字段来看出这种差异。
+还可以建立索引来减少条件语句的全表扫描。例如对于下面的语句，不使用索引的情况下需要进行全表扫描，而使用索引只需要扫描几行记录即可，使用 Explain 语句可以通过观察 rows 字段来看出这种差异。
 
 ```sql
 SELECT * FROM sakila.film_actor WHERE film_id = 1;
@@ -406,7 +406,7 @@ do {
 
 ## 5. 分表与分区的不同
 
-分表，就是讲一张表分成多个小表，这些小表拥有不同的表名；而分区是将一张表的数据分为多个区块，这些区块可以存储在同一个磁盘上，也可以存储在不同的磁盘上，这种方式下表仍然只有一个。
+分表，就是将一张表分成多个小表，这些小表拥有不同的表名；而分区是将一张表的数据分为多个区块，这些区块可以存储在同一个磁盘上，也可以存储在不同的磁盘上，这种方式下表仍然只有一个。
 
 # 故障转移和故障恢复
 
@@ -424,7 +424,7 @@ do {
 
 通过代理，可以路由流量到可以使用的服务器上。
 
-<div align="center"> <img src="index_files/fabd5fa0-b75e-48d0-9e2c-31471945ceb9.jpg"/> </div><br>
+<div align="center"> <img src="../pics//fabd5fa0-b75e-48d0-9e2c-31471945ceb9.jpg"/> </div><br>
 
 **在应用中处理故障转移** 
 
