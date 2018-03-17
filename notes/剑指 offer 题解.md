@@ -461,6 +461,8 @@ public class Solution {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
+## 解题思路
+
 ```java
 public int JumpFloor(int n) {
     if (n == 1) return 1;
@@ -480,6 +482,8 @@ public int JumpFloor(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
+## 解题思路
+
 ```java
 public int JumpFloorII(int n) {
     int[] dp = new int[n];
@@ -498,6 +502,8 @@ public int JumpFloorII(int n) {
 ## 题目描述
 
 我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
+
+## 解题思路
 
 ```java
 public int RectCover(int n) {
@@ -685,7 +691,7 @@ int maxProductAfterCuttin(int length) {
 
 输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示
 
-**使用库函数** 
+### Integer.bitCount()
 
 ```java
 public int NumberOf1(int n) {
@@ -693,9 +699,11 @@ public int NumberOf1(int n) {
 }
 ```
 
-**O(logM) 时间复杂度解法，其中 M 表示 1 的个数** 
+### n&(n-1)
 
-n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
+O(logM) 时间复杂度解法，其中 M 表示 1 的个数。
+
+该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
 
 ```java
 public int NumberOf1(int n) {
@@ -782,16 +790,16 @@ private void printNumber(char[] number) {
 
 ## 解题思路
 
-- 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
+① 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
 <div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
 
 
-- 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
+② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
 
 <div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
 
-- 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+③ 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -819,9 +827,8 @@ Input : 1->2->3->3->4->4->5
 Output : 1->2->5
 ```
 
-**解题描述** 
+## 解题描述
 
-递归。
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
@@ -844,7 +851,9 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 题目描述
 
-请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配.
+请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配。
+
+## 解题思路
 
 ```java
 public boolean match(char[] s, char[] p) {
@@ -879,6 +888,8 @@ public boolean match(char[] s, char[] p) {
 
 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串 "+100","5e2","-123","3.1416" 和 "-1E-16" 都表示数值。 但是 "12e","1a3.14","1.2.3","+-5" 和 "12e+4.3" 都不是。
 
+## 解题思路
+
 ```java
 public boolean isNumeric(char[] str) {
     String string = String.valueOf(str);
@@ -888,14 +899,13 @@ public boolean isNumeric(char[] str) {
 
 # 21. 调整数组顺序使奇数位于偶数前面
 
-**题目要求** 
+## 题目描述
 
 保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
 ## 解题思路
 
-- 时间复杂度 : O(n<sup>2</sup>)
-- 空间复杂度 : O(1)
+复杂度：O(n<sup>2</sup>) + O(1)
 
 ```java
 public void reOrderArray(int[] array) {
@@ -915,8 +925,7 @@ public void reOrderArray(int[] array) {
 }
 ```
 
-- 时间复杂度 : O(n)
-- 空间复杂度 : O(n)
+复杂度：O(n) + O(n)
 
 ```java
 public void reOrderArray(int[] array) {
@@ -936,6 +945,8 @@ public void reOrderArray(int[] array) {
 ## 解题思路
 
 设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
+
+## 解题思路
 
 <div align="center"> <img src="../pics//40d96c0d-156f-4eee-a183-2d597344f1cd.png"/> </div><br>
 
@@ -988,8 +999,6 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 
 ## 解题思路
 
-头插法
-
 ```java
 public ListNode ReverseList(ListNode head) {
     ListNode newList = new ListNode(-1);
@@ -1008,6 +1017,8 @@ public ListNode ReverseList(ListNode head) {
 ## 题目描述
 
 <div align="center"> <img src="../pics//79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
+
+## 解题思路
 
 ```java
 public ListNode Merge(ListNode list1, ListNode list2) {
@@ -1035,6 +1046,8 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 <div align="center"> <img src="../pics//26223561-eea4-463c-8ddb-3bb456c76267.png"/> </div><br>
 
+## 解题思路
+
 ```java
 public boolean HasSubtree(TreeNode root1, TreeNode root2) {
     if (root1 == null || root2 == null) return false;
@@ -1055,6 +1068,8 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 ## 题目描述
 
 <div align="center"> <img src="../pics//7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
+
+## 解题思路
 
 ```java
 public void Mirror(TreeNode root) {
@@ -1078,6 +1093,8 @@ public void Mirror(TreeNode root) {
  / \ / \
 3  4 4  3
 ```
+
+## 解题思路
 
 ```java
 boolean isSymmetrical(TreeNode pRoot) {
@@ -1107,6 +1124,8 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 
 平衡二叉树左右子树高度差不超过 1。
 
+## 解题思路
+
 ```java
 private boolean isBalanced = true;
 
@@ -1132,6 +1151,8 @@ private int height(TreeNode root) {
 
 <div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
+## 解题思路
+
 ```java
 public ArrayList<Integer> printMatrix(int[][] matrix) {
     ArrayList<Integer> ret = new ArrayList<>();
@@ -1152,6 +1173,8 @@ public ArrayList<Integer> printMatrix(int[][] matrix) {
 ## 题目描述
 
 定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的 min 函数。
+
+## 解题思路
 
 ```java
 private Stack<Integer> stack = new Stack<>();
@@ -1184,6 +1207,8 @@ public int min() {
 ## 题目描述
 
 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
+
+## 解题思路
 
 ```java
 public boolean IsPopOrder(int[] pushA, int[] popA) {
@@ -1241,6 +1266,8 @@ public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
 
 和上题几乎一样。
 
+## 解题思路
+
 ```java
 ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
@@ -1267,6 +1294,8 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 ## 题目描述
 
 请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+## 解题思路
 
 ```java
 public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
@@ -1306,6 +1335,8 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 <div align="center"> <img src="../pics//b5af9ee6-97e6-446b-9551-6dfe96770d1a.png"/> </div><br>
 
+## 解题思路
+
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
     if (sequence.length == 0) return false;
@@ -1333,6 +1364,8 @@ private boolean verify(int[] sequence, int first, int last) {
 下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
 
 <div align="center"> <img src="../pics//a1ced733-02f5-4091-8f5a-ab9b4e5a3525.png"/> </div><br>
+
+## 解题思路
 
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
@@ -1420,6 +1453,8 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 <div align="center"> <img src="../pics//9cd97f41-fd9c-405c-aca1-9c82d24e20dc.png"/> </div><br>
 
+## 解题思路
+
 ```java
 private TreeNode pre = null;
 public TreeNode Convert(TreeNode pRootOfTree) {
@@ -1444,6 +1479,8 @@ private void inOrder(TreeNode node) {
 ## 题目描述
 
 请实现两个函数，分别用来序列化和反序列化二叉树。
+
+## 解题思路
 
 ```java
 public class Solution {
@@ -1480,6 +1517,8 @@ public class Solution {
 ## 题目描述
 
 输入一个字符串 , 按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc, 则打印出由字符 a, b, c 所能排列出来的所有字符串 abc, acb, bac, bca, cab 和 cba。
+
+## 解题思路
 
 ```java
 private ArrayList<String> ret = new ArrayList<>();
@@ -1538,10 +1577,11 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 
 # 40. 最小的 K 个数
 
-**快速选择** 
+## 解题思路
 
-- 时间复杂度：O(N)
-- 空间复杂度：O(1)
+### 快速选择
+
+- 复杂度：O(N) + O(1)
 - 只有当可以修改数组元素时才可以使用
 
 快速排序的 partition() 方法，会返回一个整数 j 使得 a[lo..j-1] 小于等于 a[j]，且 a[j+1..hi] 大于等于 a[j]，此时 a[j] 就是数组的第 j 大元素，可以利用这个特性找出数组的第 K 个元素，这种找第 K 个元素的算法称为快速选择算法。
@@ -1601,10 +1641,9 @@ private boolean less(int v, int w) {
 }
 ```
 
-**大小为 K 的最小堆** 
+### 大小为 K 的最小堆
 
-- 时间复杂度：O(NlogK)
-- 空间复杂度：O(K)
+- 复杂度：O(NlogK) + O(K)
 - 特别适合处理海量数据
 
 应该注意的是，应该使用大顶堆来维护最小堆，而不能直接创建一个小顶堆并设置一个大小，企图让小顶堆中的元素都是最小元素。
@@ -1631,6 +1670,8 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
 ## 题目描述
 
 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
+
+## 解题思路
 
 ```java
 public class Solution {
@@ -1672,6 +1713,8 @@ public class Solution {
 
 请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符 "go" 时，第一个只出现一次的字符是 "g"。当从该字符流中读出前六个字符“google" 时，第一个只出现一次的字符是 "l"。
 
+## 解题思路
+
 ```java
 public class Solution {
     private int[] cnts = new int[256];
@@ -1696,7 +1739,9 @@ public class Solution {
 
 ## 题目描述
 
-{6,-3,-2,7,-15,1,2,2}，连续子向量的最大和为 8（从第 0 个开始,到第 3 个为止）
+{6,-3,-2,7,-15,1,2,2}，连续子向量的最大和为 8（从第 0 个开始，到第 3 个为止）。
+
+## 解题思路
 
 ```java
 public int FindGreatestSumOfSubArray(int[] nums) {
@@ -1732,6 +1777,8 @@ public int NumberOf1Between1AndN_Solution(int n) {
 ## 题目描述
 
 数字以 0123456789101112131415... 的格式序列化到一个字符串中，求这个字符串的第 index 位。
+
+## 解题思路
 
 ```java
 public int digitAtIndex(int index) {
@@ -1804,6 +1851,8 @@ public String PrintMinNumber(int[] numbers) {
 
 给定一个数字，按照如下规则翻译成字符串：0 翻译成“a”，1 翻译成“b”...25 翻译成“z”。一个数字有多种翻译可能，例如 12258 一共有 5 种，分别是 bccfi，bwfi，bczi，mcfi，mzi。实现一个函数，用来计算一个数字有多少种不同的翻译方法。
 
+## 解题思路
+
 ```java
 public int getTranslationCount(String number) {
     int n = number.length();
@@ -1861,6 +1910,8 @@ public int getMaxValue(int[][] values) {
 
 输入一个字符串（只包含 a\~z 的字符），求其最长不含重复字符的子字符串的长度。例如对于 arabcacfr，最长不含重复字符的子字符串为 acfr，长度为 4。
 
+## 解题思路
+
 ```java
 public int longestSubStringWithoutDuplication(String str) {
     int curLen = 0;
@@ -1886,6 +1937,8 @@ public int longestSubStringWithoutDuplication(String str) {
 ## 题目描述
 
 把只包含因子 2、3 和 5 的数称作丑数（Ugly Number）。例如 6、8 都是丑数，但 14 不是，因为它包含因子 7。 习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
+
+## 解题思路
 
 ```java
 public int GetUglyNumber_Solution(int N) {
@@ -1922,6 +1975,8 @@ public int FirstNotRepeatingChar(String str) {
 ## 题目描述
 
 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数 P。
+
+## 解题思路
 
 ```java
 private long cnt = 0;
@@ -2123,7 +2178,9 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 
 ## 题目描述
 
-和为 100 的连续序列有 18, 19, 20, 21, 22
+和为 100 的连续序列有 18, 19, 20, 21, 22。
+
+## 解题思路
 
 ```java
 public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
@@ -2200,6 +2257,8 @@ private void reverse(char[] c, int start, int end) {
 
 对于一个给定的字符序列 S，请你把其循环左移 K 位后的序列输出。例如，字符序列 S=”abcXYZdef”, 要求输出循环左移 3 位后的结果，即“XYZdefabc”。
 
+## 解题思路
+
 ```java
 public String LeftRotateString(String str, int k) {
     if (str.length() == 0) return "";
@@ -2225,7 +2284,9 @@ private void reverse(char[] c, int i, int j) {
 
 ## 题目描述
 
-给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组 {2, 3, 4, 2, 6, 2, 5, 1} 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 {4, 4, 6, 6, 6, 5}；
+给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组 {2, 3, 4, 2, 6, 2, 5, 1} 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 {4, 4, 6, 6, 6, 5}。
+
+## 解题思路
 
 ```java
 public ArrayList<Integer> maxInWindows(int[] num, int size) {
@@ -2250,7 +2311,11 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 把 n 个骰子仍在地上，求点数和为 s 的概率。
 
-最直观的动态规划解法，O(n<sup>2</sup>) 的空间复杂度。
+## 解题思路
+
+### 动态规划解法
+
+空间复杂度：O(n<sup>2</sup>)
 
 ```java
 private static int face = 6;
@@ -2276,7 +2341,9 @@ public double countProbability(int n, int s) {
 }
 ```
 
-使用旋转数组将空间复杂度降低为 O(n)
+### 动态规划解法 + 旋转数组
+
+空间复杂度：O(n)
 
 ```java
 private static int face = 6;
@@ -2309,6 +2376,8 @@ public double countProbability(int n, int s) {
 ## 题目描述
 
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断是否能组成顺子。
+
+## 解题思路
 
 ```java
 public boolean isContinuous(int [] numbers) {
@@ -2350,6 +2419,8 @@ public int LastRemaining_Solution(int n, int m) {
 
 可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
+## 解题思路
+
 ```java
 public int maxProfit(int[] prices) {
     int n = prices.length;
@@ -2368,7 +2439,9 @@ public int maxProfit(int[] prices) {
 
 ## 题目描述
 
-求 1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句（A?B:C）
+求 1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句（A?B:C）。
+
+## 解题思路
 
 ```java
 public int Sum_Solution(int n) {
@@ -2394,6 +2467,8 @@ public int Add(int num1, int num2) {
 ## 题目描述
 
 给定一个数组 A[0, 1,..., n-1], 请构建一个数组 B[0, 1,..., n-1], 其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。不能使用除法。
+
+## 解题思路
 
 ```java
 public int[] multiply(int[] A) {
