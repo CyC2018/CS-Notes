@@ -525,19 +525,28 @@ public int RectCover(int n) {
 
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
 
-O(N) 时间复杂度解法：
+**解题思路** 
+
+分治
+
+复杂度：O(log<sub>n</sub>) + O(1)，其实空间复杂度不止 O(1)，因为分治使用了递归栈，用到了额外的空间，如果对空间有要求就不能用这种方法。
 
 ```java
-public int minNumberInRotateArray(int[] array) {
-    if (array.length == 0) return 0;
-    for (int i = 0; i < array.length - 1; i++) {
-        if (array[i] > array[i + 1]) return array[i + 1];
-    }
-    return 0;
+public int minNumberInRotateArray(int[] nums) {
+    return minNumberInRotateArray(nums, 0, nums.length - 1);
+}
+
+private int minNumberInRotateArray(int[] nums, int first, int last) {
+    if (nums[first] < nums[last]) return nums[first];
+    if (first == last) return nums[first];
+    int mid = first + (last - first) / 2;
+    return Math.min(minNumberInRotateArray(nums, first, mid), minNumberInRotateArray(nums, mid + 1, last));
 }
 ```
 
-O(lgN) 时间复杂度解法：
+双指针
+
+复杂度：O(log<sub>n</sub>) + O(1)
 
 ```java
 public int minNumberInRotateArray(int[] array) {
@@ -685,7 +694,7 @@ public int NumberOf1(int n) {
 }
 ```
 
-**O(lgM) 时间复杂度解法，其中 M 表示 1 的个数** 
+**O(logM) 时间复杂度解法，其中 M 表示 1 的个数** 
 
 n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
 
@@ -1601,7 +1610,7 @@ private boolean less(int v, int w) {
 
 **大小为 K 的最小堆** 
 
-- 时间复杂度：O(NlgK)
+- 时间复杂度：O(NlogK)
 - 空间复杂度：O(K)
 - 特别适合处理海量数据
 
