@@ -96,7 +96,7 @@
 - first, last 表示闭区间：[first, last]；
 - begin, end 表示左闭右开区间：[begin, end)；
 - l, h 表示二分查找的闭区间：[l, h]；
-- ret 表示和结果相关的变量；
+- ret 表示结果相关的变量；
 
 **复杂度简写说明** 
 
@@ -368,7 +368,12 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 **解题思路** 
 
 - 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+
+<div align="center"> <img src="../pics//931e112e-97d3-4a47-ac64-a86d70844e58.png" width="200"/> </div><br>
+
 - 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
+
+<div align="center"> <img src="../pics//350048d6-20f5-4ca9-8452-3957a09ef3af.png" width="200"/> </div><br>
 
 ```java
 public class TreeLinkNode {
