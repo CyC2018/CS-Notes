@@ -390,17 +390,15 @@ public class TreeLinkNode {
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
-    if (pNode == null) return null;
     if (pNode.right != null) {
-        pNode = pNode.right;
-        while (pNode.left != null) pNode = pNode.left;
-        return pNode;
+        TreeLinkNode node = pNode.right;
+        while (node.left != null) node = node.left;
+        return node;
     } else {
-        TreeLinkNode parent = pNode.next;
-        while (parent != null) {
+        while (pNode.next != null) {
+            TreeLinkNode parent = pNode.next;
             if (parent.left == pNode) return parent;
             pNode = pNode.next;
-            parent = pNode.next;
         }
     }
     return null;
@@ -411,7 +409,7 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 **解题思路** 
 
-使用两个栈，in 栈用来处理 push 操作，out 栈用来处理 pop 操作。一个元素进过 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 pop 栈才能出栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，也就是先进先出，这就是队列的顺序。
+in 栈用来处理 push 操作，out 栈用来处理 pop 操作。一个元素进过 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 pop 栈才能出栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，也就是先进先出，这就是队列的顺序。
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
