@@ -1,38 +1,38 @@
 <!-- GFM-TOC -->
-* [概览](#概览)
-* [磁盘操作](#磁盘操作)
-* [字节操作](#字节操作)
-* [字符操作](#字符操作)
-* [对象操作](#对象操作)
-* [网络操作](#网络操作)
-    * [1. InetAddress](#1-inetaddress)
-    * [2. URL](#2-url)
-    * [3. Sockets](#3-sockets)
-    * [4. Datagram](#4-datagram)
-* [NIO](#nio)
-    * [1. 流与块](#1-流与块)
-    * [2. 通道与缓冲区](#2-通道与缓冲区)
-        * [2.1 通道](#21-通道)
-        * [2.2 缓冲区](#22-缓冲区)
-    * [3. 缓冲区状态变量](#3-缓冲区状态变量)
-    * [4. 文件 NIO 实例](#4-文件-nio-实例)
-    * [5. 阻塞与非阻塞](#5-阻塞与非阻塞)
-        * [5.1 阻塞式 I/O](#51-阻塞式-io)
-        * [5.2 非阻塞式 I/O](#52-非阻塞式-io)
-    * [6. 套接字 NIO 实例](#6-套接字-nio-实例)
-        * [6.1 ServerSocketChannel](#61-serversocketchannel)
-        * [6.2 Selectors](#62-selectors)
-        * [6.3 主循环](#63-主循环)
-        * [6.4 监听新连接](#64-监听新连接)
-        * [6.5 接受新的连接](#65-接受新的连接)
-        * [6.6 删除处理过的 SelectionKey](#66-删除处理过的-selectionkey)
-        * [6.7 传入的 I/O](#67-传入的-io)
-    * [7. 内存映射文件](#7-内存映射文件)
-* [参考资料](#参考资料)
+* [一、概览](#一概览)
+* [二、磁盘操作](#二磁盘操作)
+* [三、字节操作](#三字节操作)
+* [四、字符操作](#四字符操作)
+* [五、对象操作](#五对象操作)
+* [六、网络操作](#六网络操作)
+    * [InetAddress](#inetaddress)
+    * [URL](#url)
+    * [Sockets](#sockets)
+    * [Datagram](#datagram)
+* [七、NIO](#七nio)
+    * [流与块](#流与块)
+    * [通道与缓冲区](#通道与缓冲区)
+        * [1. 通道](#1-通道)
+        * [2. 缓冲区](#2-缓冲区)
+    * [缓冲区状态变量](#缓冲区状态变量)
+    * [文件 NIO 实例](#文件-nio-实例)
+    * [阻塞与非阻塞](#阻塞与非阻塞)
+        * [1. 阻塞式 I/O](#1-阻塞式-io)
+        * [2. 非阻塞式 I/O](#2-非阻塞式-io)
+    * [套接字 NIO 实例](#套接字-nio-实例)
+        * [1. ServerSocketChannel](#1-serversocketchannel)
+        * [2. Selectors](#2-selectors)
+        * [3. 主循环](#3-主循环)
+        * [4. 监听新连接](#4-监听新连接)
+        * [5. 接受新的连接](#5-接受新的连接)
+        * [6. 删除处理过的 SelectionKey](#6-删除处理过的-selectionkey)
+        * [7. 传入的 I/O](#7-传入的-io)
+    * [内存映射文件](#内存映射文件)
+* [八、参考资料](#八参考资料)
 <!-- GFM-TOC -->
 
 
-# 概览
+# 一、概览
 
 Java 的 I/O 大概可以分成以下几类
 
@@ -43,11 +43,11 @@ Java 的 I/O 大概可以分成以下几类
 5. 网络操作：Socket
 6. 新的输入/输出：NIO
 
-# 磁盘操作
+# 二、磁盘操作
 
 File 类可以用于表示文件和目录，但是它只用于表示文件的信息，而不表示文件的内容。
 
-# 字节操作
+# 三、字节操作
 
 <div align="center"> <img src="../pics//8143787f-12eb-46ea-9bc3-c66d22d35285.jpg"/> </div><br>
 
@@ -72,7 +72,7 @@ while((bytes = in.read(buf, 0 , buf.length)) != -1) {
 }
 ```
 
-# 字符操作
+# 四、字符操作
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符，所以 I/O 操作的都是字节而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
@@ -89,7 +89,7 @@ GBK 编码中，中文占 2 个字节，英文占 1 个字节；UTF-8 编码中�
 
 如果编码和解码过程使用不同的编码方式那么就出现了乱码。
 
-# 对象操作
+# 五、对象操作
 
 序列化就是将一个对象转换成字节序列，方便存储和传输。
 
@@ -107,7 +107,7 @@ transient 关键字可以使一些属性不会被序列化。
 private transient Object[] elementData;
 ```
 
-# 网络操作
+# 六、网络操作
 
 Java 中的网络支持：
 
@@ -116,7 +116,7 @@ Java 中的网络支持：
 3. Sockets：使用 TCP 协议实现网络通信；
 4. Datagram：使用 UDP 协议实现网络通信。
 
-## 1. InetAddress
+## InetAddress
 
 没有公有构造函数，只能通过静态方法来创建实例。
 
@@ -125,7 +125,7 @@ InetAddress.getByName(String host);
 InetAddress.getByAddress(byte[] addr);
 ```
 
-## 2. URL
+## URL
 
 可以直接从 URL 中读取字节流数据
 
@@ -144,7 +144,7 @@ isr.close();
 is.close();
 ```
 
-## 3. Sockets
+## Sockets
 
 - ServerSocket：服务器端类
 - Socket：客户端类
@@ -152,16 +152,16 @@ is.close();
 
 <div align="center"> <img src="../pics//fa4101d7-19ce-4a69-a84f-20bbe64320e5.jpg"/> </div><br>
 
-## 4. Datagram
+## Datagram
 
 - DatagramPacket：数据包类
 - DatagramSocket：通信类
 
-# NIO
+# 七、NIO
 
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的。NIO 弥补了原来的 I/O 的不足，它在标准 Java 代码中提供了高速的、面向块的 I/O。
 
-## 1. 流与块
+## 流与块
 
 I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。
 
@@ -171,9 +171,9 @@ I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的�
 
 I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如， java.io.\* 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
-## 2. 通道与缓冲区
+## 通道与缓冲区
 
-### 2.1 通道
+### 1. 通道
 
 通道 Channel 是对原 I/O 包中的流的模拟，可以通过它读取和写入数据。
 
@@ -186,7 +186,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - SocketChannel：通过 TCP 读写网络中数据；
 - ServerSocketChannel：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
 
-### 2.2 缓冲区
+### 2. 缓冲区
 
 发送给一个通道的所有对象都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
 
@@ -202,7 +202,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - FloatBuffer
 - DoubleBuffer
 
-## 3. 缓冲区状态变量
+## 缓冲区状态变量
 
 - capacity：最大容量；
 - position：当前已经读写的字节数；
@@ -225,7 +225,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 5. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
 <div align="center"> <img src="../pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
 
-## 4. 文件 NIO 实例
+## 文件 NIO 实例
 
 1\. 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；
 
@@ -274,11 +274,11 @@ foc.write(buffer);
 buffer.clear();
 ```
 
-## 5. 阻塞与非阻塞
+## 阻塞与非阻塞
 
 应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。
 
-### 5.1 阻塞式 I/O
+### 1. 阻塞式 I/O
 
 阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回。
 
@@ -286,7 +286,7 @@ buffer.clear();
 
 <div align="center"> <img src="../pics//edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div><br>
 
-### 5.2 非阻塞式 I/O
+### 2. 非阻塞式 I/O
 
 由一个专门的线程来处理所有的 I/O 事件，并负责分发。
 
@@ -296,9 +296,9 @@ buffer.clear();
 
 <div align="center"> <img src="../pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div><br>
 
-## 6. 套接字 NIO 实例
+## 套接字 NIO 实例
 
-### 6.1 ServerSocketChannel
+### 1. ServerSocketChannel
 
 每一个监听端口都需要有一个 ServerSocketChannel 用来监听连接。
 
@@ -311,7 +311,7 @@ InetSocketAddress address = new InetSocketAddress(ports[i]);
 ss.bind(address); // 绑定端口号
 ```
 
-### 6.2 Selectors
+### 2. Selectors
 
 异步 I/O 通过 Selector 注册对特定 I/O 事件的兴趣 ― 可读的数据的到达、新的套接字连接等等，在发生这样的事件时，系统将会发送通知。
 
@@ -324,7 +324,7 @@ Selector selector = Selector.open();
 SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
 ```
 
-### 6.3 主循环
+### 3. 主循环
 
 首先，我们调用 Selector 的 select() 方法。这个方法会阻塞，直到至少有一个已注册的事件发生。当一个或者更多的事件发生时，select() 方法将返回所发生的事件的数量。
 
@@ -344,7 +344,7 @@ while (it.hasNext()) {
 }
 ```
 
-### 6.4 监听新连接
+### 4. 监听新连接
 
 程序执行到这里，我们仅注册了 ServerSocketChannel，并且仅注册它们“接收”事件。为确认这一点，我们对 SelectionKey 调用 readyOps() 方法，并检查发生了什么类型的事件：
 
@@ -358,7 +358,7 @@ if ((key.readyOps() & SelectionKey.OP_ACCEPT)
 
 可以肯定地说，readOps() 方法告诉我们该事件是新的连接。
 
-### 6.5 接受新的连接
+### 5. 接受新的连接
 
 因为我们知道这个服务器套接字上有一个传入连接在等待，所以可以安全地接受它；也就是说，不用担心 accept() 操作会阻塞：
 
@@ -376,7 +376,7 @@ SelectionKey newKey = sc.register(selector, SelectionKey.OP_READ);
 
 注意我们使用 register() 的 OP_READ 参数，将 SocketChannel 注册用于读取而不是接受新连接。
 
-### 6.6 删除处理过的 SelectionKey
+### 6. 删除处理过的 SelectionKey
 
 在处理 SelectionKey 之后，我们几乎可以返回主循环了。但是我们必须首先将处理过的 SelectionKey 从选定的键集合中删除。如果我们没有删除处理过的键，那么它仍然会在主集合中以一个激活的键出现，这会导致我们尝试再次处理它。我们调用迭代器的 remove() 方法来删除处理过的 SelectionKey：
 
@@ -386,7 +386,7 @@ it.remove();
 
 现在我们可以返回主循环并接受从一个套接字中传入的数据 (或者一个传入的 I/O 事件) 了。
 
-### 6.7 传入的 I/O
+### 7. 传入的 I/O
 
 当来自一个套接字的数据到达时，它会触发一个 I/O 事件。这会导致在主循环中调用 Selector.select()，并返回一个或者多个 I/O 事件。这一次， SelectionKey 将被标记为 OP_READ 事件，如下所示：
 
@@ -399,7 +399,7 @@ it.remove();
 }
 ```
 
-## 7. 内存映射文件
+## 内存映射文件
 
 内存映射文件 I/O 是一种读和写文件数据的方法，它可以比常规的基于流或者基于通道的 I/O 快得多。
 
@@ -415,7 +415,7 @@ it.remove();
 MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 ```
 
-# 参考资料
+# 八、参考资料
 
 - Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
