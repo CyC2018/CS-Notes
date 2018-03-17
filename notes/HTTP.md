@@ -448,8 +448,6 @@ Content-Length: 1024
 
 涉及以下首部字段：Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Language。
 
-<div align="center"> <img src="../pics//39a27cca-c9af-482a-8a87-5522557a309e.jpg"/> </div><br>
-
 ## 虚拟主机
 
 使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
