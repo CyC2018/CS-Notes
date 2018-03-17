@@ -97,6 +97,7 @@
 - begin, end 表示左闭右开区间：[begin, end)；
 - l, h 表示二分查找的闭区间：[l, h]；
 - ret 表示结果相关的变量；
+- dp 表示动态规划保存子问题的数组；
 
 **复杂度简写说明** 
 
@@ -434,6 +435,16 @@ public int pop() {
 **题目描述** 
 
 以 O(1) 的时间复杂度求菲波那切数列。
+
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br>
+
+**解题思路** 
+
+如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
+
+<div align="center"> <img src="../pics//080f488c-75ef-49a8-a49d-78fa372ad422.png"/> </div><br>
+
+递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
 ```java
 public class Solution {
