@@ -335,7 +335,7 @@ Return the following binary tree:
 
 **解题思路** 
 
-中序遍历的第一个值为树根节点的值，使用这个值将前序遍历结果分成两部分，左部分为树的左子树前序遍历结果，右部分为树的右子树前序遍历的结果。
+前序遍历的第一个值为树根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
 ```java
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
