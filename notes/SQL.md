@@ -1,10 +1,10 @@
 <!-- GFM-TOC -->
 * [一、基础](#一基础)
 * [二、创建表](#二创建表)
-* [三、插入](#三插入)
-* [四、更新](#四更新)
-* [五、删除](#五删除)
-* [六、修改表](#六修改表)
+* [三、修改表](#三修改表)
+* [四、插入](#四插入)
+* [五、更新](#五更新)
+* [六、删除](#六删除)
 * [七、查询](#七查询)
 * [八、排序](#八排序)
 * [九、过滤](#九过滤)
@@ -56,50 +56,7 @@ CREATE TABLE mytable (
   PRIMARY KEY (`id`));
 ```
 
-# 三、插入
-
-普通插入
-
-```sql
-INSERT INTO mytable(col1, col2)
-VALUES(val1, val2);
-```
-
-插入检索出来的数据
-
-```sql
-INSERT INTO mytable1(col1, col2)
-SELECT col1, col2
-FROM mytable2;
-```
-
-将一个表的内容复制到一个新表
-
-```sql
-CREATE TABLE newtable AS
-SELECT * FROM mytable;
-```
-
-# 四、更新
-
-```sql
-UPDATE mytable
-SET col = val
-WHERE id = 1;
-```
-
-# 五、删除
-
-```sql
-DELETE FROM mytable
-WHERE id = 1;
-```
-
-**TRUNCATE TABLE**  可以清空表，也就是删除所有行。
-
-使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
-
-# 六、修改表
+# 三、修改表
 
 添加列
 
@@ -120,6 +77,49 @@ DROP COLUMN col;
 ```sql
 DROP TABLE mytable;
 ```
+
+# 四、插入
+
+普通插入
+
+```sql
+INSERT INTO mytable(col1, col2)
+VALUES(val1, val2);
+```
+
+插入检索出来的数据
+
+```sql
+INSERT INTO mytable1(col1, col2)
+SELECT col1, col2
+FROM mytable2;
+```
+
+将一个表的内容插入到一个新表
+
+```sql
+CREATE TABLE newtable AS
+SELECT * FROM mytable;
+```
+
+# 五、更新
+
+```sql
+UPDATE mytable
+SET col = val
+WHERE id = 1;
+```
+
+# 六、删除
+
+```sql
+DELETE FROM mytable
+WHERE id = 1;
+```
+
+**TRUNCATE TABLE**  可以清空表，也就是删除所有行。
+
+使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
 
 # 七、查询
 
