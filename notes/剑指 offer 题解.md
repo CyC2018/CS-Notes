@@ -338,7 +338,12 @@ Return the following binary tree:
 前序遍历的第一个值为树根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
 ```java
+private Map<Integer, Integer> inOrderNumsIdx = new HashMap<>(); // 缓存中序遍历数组的每个值对应的索引
+
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
+    for (int i = 0; i < in.length; i++) {
+        inOrderNumsIdx.put(in[i], i);
+    }
     return reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
 }
 
@@ -346,9 +351,8 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
     if (preL == preR) return new TreeNode(pre[preL]);
     if (preL > preR || inL > inR) return null;
     TreeNode root = new TreeNode(pre[preL]);
-    int midIdx = inL;
-    while (midIdx <= inR && in[midIdx] != root.val) midIdx++;
-    int leftTreeSize = midIdx - inL;
+    int inIdx = inOrderNumsIdx.get(root.val);
+    int leftTreeSize = inIdx - inL;
     root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, in, inL, inL + leftTreeSize - 1);
     root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, in, inL + leftTreeSize + 1, inR);
     return root;
@@ -366,7 +370,18 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 - 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 - 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="../pics//6fec7f56-a685-4232-b03e-c92a8dfba486.png"/> </div><br>
+```java
+public class TreeLinkNode {
+    int val;
+    TreeLinkNode left = null;
+    TreeLinkNode right = null;
+    TreeLinkNode next = null;
+
+    TreeLinkNode(int val) {
+        this.val = val;
+    }
+}
+```
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
