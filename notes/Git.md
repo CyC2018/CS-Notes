@@ -1,3 +1,6 @@
+<div align="center"> <img src="../pics//98fb8a54-e916-440e-ab4f-73b2955838c9.jpg" width="100%"/> </div><br>
+
+
 <!-- GFM-TOC -->
 * [学习资料](#学习资料)
 * [集中式与分布式](#集中式与分布式)
