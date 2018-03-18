@@ -93,7 +93,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 2. 对称性
 3. 传递性
 4. 一致性（多次调用 x.equals(y)，结果不变）
-5. 对任何不是 null 的对象 x 调用 x.equals(nul) 结果都为 false
+5. 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
 
 # 四、源码分析
 
