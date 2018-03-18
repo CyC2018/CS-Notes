@@ -122,9 +122,9 @@ javax.swing.Action
 为语言创建解释器，通常由语言的语法和语法分析来定义。
 
 ```java
-- java.util.Pattern
-- java.text.Normalizer
-- java.text.Format
+java.util.Pattern
+java.text.Normalizer
+java.text.Format
 ```
 
 ## 4. 迭代器
