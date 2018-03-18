@@ -20,6 +20,9 @@
     * [1. 阻塞](#1-阻塞)
     * [2. 中断](#2-中断)
 * [线程状态转换](#线程状态转换)
+* [volatile](#volatile)
+    * [1. 内存可见性](#1-内存可见性)
+    * [2. 禁止指令重排](#2-禁止指令重排)
 * [内存模型](#内存模型)
     * [1. 硬件的效率与一致性](#1-硬件的效率与一致性)
     * [2. Java 内存模型](#2-java-内存模型)
@@ -127,7 +130,8 @@ class MyThread extends Thread {
 
 Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
 
-主要有三种 Excutor：
+主要有三种 Executor：
+
 
 1. CachedTreadPool：一个任务创建一个线程；
 2. FixedThreadPool：所有任务只能使用固定大小的线程；
@@ -258,9 +262,12 @@ public void func(String name) {
 ```java
 private Lock lock;
 public int func(int value) {
-    lock.lock();
-    // ...
-    lock.unlock();
+   try {
+       lock.lock();
+       // ...
+   } finally {
+      lock.unlock();
+   }
 }
 ```
 
@@ -331,14 +338,14 @@ public class Client {
     public static void main(String[] args) {
         BlockingQueue<String> queue = new LinkedBlockingQueue<>(5);
         for (int i = 0; i < 2; i++) {
-            new Thread(new Consumer(queue), "Producer" + i).start();
+            new Thread(new Consumer(queue), "Consumer" + i).start();
         }
         for (int i = 0; i < 5; i++) {
             // 只有两个 Product，因此只能消费两个，其它三个消费者被阻塞
-            new Thread(new Producer(queue), "Consumer" + i).start();
+            new Thread(new Producer(queue), "Producer" + i).start();
         }
         for (int i = 2; i < 5; i++) {
-            new Thread(new Consumer(queue), "Producer" + i).start();
+            new Thread(new Consumer(queue), "Consumer" + i).start();
         }
     }
 }
@@ -346,16 +353,16 @@ public class Client {
 
 ```html
 // 运行结果
-Consumer0 is making product...
-Producer0 is consuming product made by Consumer0...
-Consumer1 is making product...
-Producer1 is consuming product made by Consumer1...
-Consumer2 is making product...
-Consumer3 is making product...
-Consumer4 is making product...
-Producer2 is consuming product made by Consumer2...
-Producer3 is consuming product made by Consumer3...
-Producer4 is consuming product made by Consumer4...
+Producer0 is making product...
+Consumer0 is consuming product made by Consumer0...
+Producer1 is making product...
+Consumer1 is consuming product made by Consumer1...
+Producer2 is making product...
+Producer3 is making product...
+Producer4 is making product...
+Consumer2 is consuming product made by Consumer2...
+Consumer3 is consuming product made by Consumer3...
+Consumer4 is consuming product made by Consumer4...
 ```
 
 # 结束线程
@@ -383,7 +390,7 @@ Producer4 is consuming product made by Consumer4...
 
 **Executor 的中断操作** 
 
-Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断所有它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
+Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
 
 如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
 
@@ -419,6 +426,26 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 - 设置了 Timeout 参数的 Thread.join() 方法
 - LockSupport.parkNanos() 方法
 - LockSupport.parkUntil() 方法
+
+# volatile
+
+保证了内存可见性和禁止指令重排，没法保证原子性。
+
+## 1. 内存可见性
+
+普通共享变量被修改之后，什么时候被写入主存是不确定的。
+
+volatile 关键字会保证每次修改共享变量之后该值会立即更新到内存中，并且在读取时会从内存中读取值。
+
+synchronized 和 Lock 也能够保证内存可见性。它们能保证同一时刻只有一个线程获取锁然后执行同步代码，并且在释放锁之前会将对变量的修改刷新到主存当中。不过只有对共享变量的 set() 和 get() 方法都加上 synchronized 才能保证可见性，如果只有 set() 方法加了 synchronized，那么 get() 方法并不能保证会从内存中读取最新的数据。
+
+## 2. 禁止指令重排
+
+在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+
+volatile 关键字通过添加内存屏障的方式来进制指令重排，即重排序时不能把后面的指令放到内存屏障之前。
+
+可以通过 synchronized 和 Lock 来保证有序性，它们保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码，自然就保证了有序性。
 
 # 内存模型
 

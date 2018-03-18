@@ -1,48 +1,39 @@
 <!-- GFM-TOC -->
-* [概览](#概览)
-    * [1. List](#1-list)
-    * [2. Set](#2-set)
-    * [3. Queue](#3-queue)
-    * [4. Map](#4-map)
-    * [5. Java 1.0/1.1 容器](#5-java-1011-容器)
-* [容器中的设计模式](#容器中的设计模式)
-    * [1. 迭代器模式](#1-迭代器模式)
-    * [2. 适配器模式](#2-适配器模式)
-* [散列](#散列)
-* [源码分析](#源码分析)
-    * [1. ArrayList](#1-arraylist)
-        * [概览](#概览)
-        * [Fail-Fast](#fail-fast)
-        * [和 Vector 的区别](#和-vector-的区别)
-        * [和 LinkedList 的区别](#和-linkedlist-的区别)
-    * [2. Vector 与 Stack](#2-vector-与-stack)
-    * [3. LinkedList](#3-linkedlist)
-    * [4. TreeMap](#4-treemap)
-    * [5. HashMap](#5-hashmap)
-        * [基本数据结构](#基本数据结构)
-        * [拉链法的工作原理](#拉链法的工作原理)
-        * [扩容](#扩容)
-        * [null 值](#null-值)
-        * [与 HashTable 的区别](#与-hashtable-的区别)
-    * [6. LinkedHashMap](#6-linkedhashmap)
-    * [7. ConcurrentHashMap](#7-concurrenthashmap)
-* [参考资料](#参考资料)
+* [一、概览](#一概览)
+    * [List](#list)
+    * [Set](#set)
+    * [Queue](#queue)
+    * [Map](#map)
+    * [Java 1.0/1.1 容器](#java-1011-容器)
+* [二、容器中的设计模式](#二容器中的设计模式)
+    * [迭代器模式](#迭代器模式)
+    * [适配器模式](#适配器模式)
+* [三、散列](#三散列)
+* [四、源码分析](#四源码分析)
+    * [ArrayList](#arraylist)
+    * [Vector 与 Stack](#vector-与-stack)
+    * [LinkedList](#linkedlist)
+    * [TreeMap](#treemap)
+    * [HashMap](#hashmap)
+    * [LinkedHashMap](#linkedhashmap)
+    * [ConcurrentHashMap](#concurrenthashmap)
+* [五、参考资料](#五参考资料)
 <!-- GFM-TOC -->
 
 
-# 概览
+# 一、概览
 
 <div align="center"> <img src="../pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div><br>
 
 容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。
 
-## 1. List
+## List
 
 - ArrayList：基于动态数组实现，支持随机访问；
 
 - LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
 
-## 2. Set
+## Set
 
 - HashSet：基于 Hash 实现，支持快速查找，但是失去有序性；
 
@@ -50,11 +41,11 @@
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序，因此具有有序性。
 
-## 3. Queue
+## Queue
 
 只有两个实现：LinkedList 和 PriorityQueue，其中 LinkedList 支持双向队列，PriorityQueue 是基于堆结构实现。
 
-## 4. Map
+## Map
 
 - HashMap：基于 Hash 实现。
 
@@ -64,7 +55,7 @@
 
 - ConcurrentHashMap：线程安全 Map，不涉及类似于 HashTable 的同步加锁。
 
-## 5. Java 1.0/1.1 容器
+## Java 1.0/1.1 容器
 
 对于旧的容器，我们决不应该使用它们，只需要对它们进行了解。
 
@@ -72,15 +63,15 @@
 
 - HashTable：和 HashMap 类似，但它是线程安全的。
 
-# 容器中的设计模式
+# 二、容器中的设计模式
 
-## 1. 迭代器模式
+## 迭代器模式
 
 从概览图可以看到，每个集合类都有一个 Iterator 对象，可以通过这个迭代器对象来遍历集合中的元素。
 
 [Java 中的迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#1-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
-## 2. 适配器模式
+## 适配器模式
 
 java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
@@ -90,7 +81,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
  list = Arrays.asList(arr);
 ```
 
-# 散列
+# 三、散列
 
 使用 hasCode() 来返回散列值，使用的是对象的地址。
 
@@ -102,19 +93,19 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 2. 对称性
 3. 传递性
 4. 一致性（多次调用 x.equals(y)，结果不变）
-5. 对任何不是 null 的对象 x 调用 x.equals(nul) 结果都为 false
+5. 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
 
-# 源码分析
+# 四、源码分析
 
-建议先阅读 [算法 - 查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对集合类源码的理解有很大帮助。
+建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对集合类源码的理解有很大帮助。
 
 源码下载：[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
 
-## 1. ArrayList
+## ArrayList
 
 [ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
-### 概览
+### 1. 概览
 
 实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
 
@@ -193,7 +184,7 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
-### Fail-Fast
+### 2. Fail-Fast
 
 modCount 用来记录 ArrayList 结构发生变化的次数，结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
@@ -218,36 +209,36 @@ private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOExceptio
 }
 ```
 
-### 和 Vector 的区别
+### 3. 和 Vector 的区别
 
 1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 2.  Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
 为了获得线程安全的 ArrayList，可以调用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
 
-### 和 LinkedList 的区别
+### 4. 和 LinkedList 的区别
 
 1. ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
 2. ArrayList 支持随机访问，LinkedList 不支持；
 3. LinkedList 在任意位置添加删除元素更快。
 
-## 2. Vector 与 Stack
+## Vector 与 Stack
 
 [Vector.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/Vector.java)
 
-## 3. LinkedList
+## LinkedList
 
 [LinkedList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/LinkedList.java)
 
-## 4. TreeMap
+## TreeMap
 
 [TreeMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/TreeMap.java)
 
-## 5. HashMap
+## HashMap
 
 [HashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-### 基本数据结构
+### 1. 基本数据结构
 
 使用拉链法来解决冲突，内部包含了一个 Entry 类型的数组 table，数组中的每个位置被当成一个桶。
 
@@ -259,7 +250,7 @@ transient Entry[] table;
 
 <div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
 
-### 拉链法的工作原理
+### 2. 拉链法的工作原理
 
 使用默认构造函数新建一个 HashMap，默认大小为 16。Entry 的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
 
@@ -267,7 +258,7 @@ transient Entry[] table;
 
 当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此这一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
-### 扩容
+### 3. 扩容
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
 
@@ -346,7 +337,7 @@ void transfer(Entry[] newTable) {
 }
 ```
 
-### null 值
+### 4. null 值
 
 get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
 
@@ -404,7 +395,7 @@ private V putForNullKey(V value) {
 }
 ```
 
-### 与 HashTable 的区别
+### 5. 与 HashTable 的区别
 
 - HashMap 几乎可以等价于 Hashtable，除了 HashMap 是非 synchronized 的，并可以接受 null(HashMap 可以接受为 null 的键值 (key) 和值 (value)，而 Hashtable 则不行)。
 - HashMap 是非 synchronized，而 Hashtable 是 synchronized，这意味着 Hashtable 是线程安全的，多个线程可以共享一个 Hashtable；而如果没有正确的同步的话，多个线程是不能共享 HashMap 的。Java 5 提供了 ConcurrentHashMap，它是 HashTable 的替代，比 HashTable 的扩展性更好。
@@ -414,16 +405,16 @@ private V putForNullKey(V value) {
 
 > [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
 
-## 6. LinkedHashMap
+## LinkedHashMap
 
 [LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-## 7. ConcurrentHashMap
+## ConcurrentHashMap
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
 [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 
-# 参考资料
+# 五、参考资料
 
 - Java 编程思想
