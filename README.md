@@ -33,7 +33,7 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》
+整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
@@ -69,7 +69,7 @@
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-整理自《高性能 MySQL》
+整理自《高性能 MySQL》，整理了一些重点内容。
 
 > [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
 
@@ -79,7 +79,7 @@
 
 > [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
 
-整理自《深入理解 Java 虚拟机》
+整理自《深入理解 Java 虚拟机》，主要整理了内存模型、垃圾回收以及类加载机制。
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
