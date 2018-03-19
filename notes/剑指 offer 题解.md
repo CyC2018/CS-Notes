@@ -870,22 +870,24 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 解题思路
 
+应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而它当成重复前面字符一次。
+
 ```java
-public boolean match(char[] s, char[] p) {
-    int n = s.length, m = p.length;
-    boolean[][] dp = new boolean[n + 1][m + 1];
+public boolean match(char[] str, char[] pattern) {
+    int m = str.length, n = pattern.length;
+    boolean[][] dp = new boolean[m + 1][n + 1];
     dp[0][0] = true;
-    for (int i = 1; i <= m; i++) {
-        if (p[i - 1] == '*') {
+    for (int i = 1; i <= n; i++) {
+        if (pattern[i - 1] == '*') {
             dp[0][i] = dp[0][i - 2];
         }
     }
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            if (s[i - 1] == p[j - 1] || p[j - 1] == '.') {
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
                 dp[i][j] = dp[i - 1][j - 1];
-            } else if (p[j - 1] == '*') {
-                if (p[j - 2] == s[i - 1] || p[j - 2] == '.') {
+            } else if (pattern[j - 1] == '*') {
+                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.') {
                     dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
                 } else {
                     dp[i][j] = dp[i][j - 2];
@@ -893,7 +895,7 @@ public boolean match(char[] s, char[] p) {
             }
         }
     }
-    return dp[n][m];
+    return dp[m][n];
 }
 ```
 
