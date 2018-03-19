@@ -87,8 +87,8 @@
 - n 表示数组长度、字符串长度、树节点个数，以及其它具有一维性质的数据结构的元素个数；
 - m, n 表示矩阵的行数和列数；
 - first, last 表示闭区间：[first, last]；
+- l, h 也表示闭区间：[l, h]；
 - begin, end 表示左闭右开区间：[begin, end)；
-- l, h 表示二分查找的闭区间：[l, h]；
 - ret 表示结果相关的变量；
 - dp 表示动态规划保存子问题的数组；
 
@@ -548,17 +548,16 @@ private int minNumberInRotateArray(int[] nums, int first, int last) {
 复杂度：O(log<sub>n</sub>) + O(1)
 
 ```java
-public int minNumberInRotateArray(int[] array) {
-    if (array.length == 0) return 0;
-    int l = 0, r = array.length - 1;
-    int mid = -1;
-    while (array[l] >= array[r]) {
-        if (r - l == 1) return array[r];
-        mid = l + (r - l) / 2;
-        if (array[mid] >= array[l]) l = mid;
-        else if (array[mid] <= array[r]) r = mid;
+public int minNumberInRotateArray(int[] nums) {
+    if (nums.length == 0) return 0;
+    int l = 0, h = nums.length - 1;
+    while (nums[l] >= nums[h]) {
+        if (h - l == 1) return nums[h];
+        int mid = l + (h - l) / 2;
+        if (nums[mid] >= nums[l]) l = mid;
+        else if (nums[mid] <= nums[h]) h = mid;
     }
-    return array[mid];
+    return nums[l];
 }
 ```
 
