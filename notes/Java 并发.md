@@ -93,11 +93,7 @@ public class MyCallable implements Callable<Integer> {
     public Integer call() {
         // ...
     }
-<<<<<<< HEAD
     public static void main(String[]  args) {
-=======
-    public static void main(String[] args) {
->>>>>>> 2faeffa23889c3e88b59ddf56845d2cf3db83f76
         MyCallable mc = new MyCallable();
         FutureTask<Integer> ft = new FutureTask<>(mc);
         Thread thread = new Thread(ft);
@@ -423,7 +419,7 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 - 没有设置 Timeout 参数的 Thread.join() 方法
 - LockSupport.park() 方法
 
-以下方法会让线程进入限期等待状态：
+以下方法会让线程进入限期等待状体：
 
 - Thread.sleep()
 - 设置了 Timeout 参数的 Object.wait() 方法
