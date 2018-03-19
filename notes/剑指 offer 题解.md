@@ -783,7 +783,7 @@ public double Power(double base, int exponent) {
 
 ## 解题思路
 
-由于 n 可能会非常大，因此不能直接用 int 存储数，而是用 char 数组进行存储。
+由于 n 可能会非常大，因此不能直接用 int 表示数字，而是用 char 数组进行存储。
 
 使用回溯法得到所有的数。
 
@@ -794,24 +794,15 @@ public void print1ToMaxOfNDigits(int n) {
     print1ToMaxOfNDigits(number, -1);
 }
 
-private void print1ToMaxOfNDigits(char[] number, int idx) {
-    if (idx == number.length - 1) {
+private void print1ToMaxOfNDigits(char[] number, int digit) {
+    if (digit == number.length - 1) {
         printNumber(number);
         return;
     }
     for (int i = 0; i < 10; i++) {
-        number[idx + 1] = (char) (i + '0');
-        print1ToMaxOfNDigits(number, idx + 1);
+        number[digit + 1] = (char) (i + '0');
+        print1ToMaxOfNDigits(number, digit + 1);
     }
-}
-
-private void printNumber(char[] number) {
-    boolean isBeginWith0 = true;
-    for (char c : number) {
-        if (isBeginWith0 && c != '0') isBeginWith0 = false;
-        if(!isBeginWith0) System.out.print(c);
-    }
-    System.out.println();
 }
 ```
 
@@ -819,16 +810,15 @@ private void printNumber(char[] number) {
 
 ## 解题思路
 
-① 如果链表不是尾节点，那么可以直接将下一个节点的值赋给节点，令节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
+① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，令该节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
 <div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
 
-
-② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向节点的下一个节点，时间复杂度为 O(N)。
+② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
 <div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
 
-③ 综上，如果进行 N 次操作，那么大约需要移动节点的次数为 N-1+N=2N-1，其中 N-1 表示不是链表尾节点情况下的移动次数，N 表示是尾节点情况下的移动次数。(2N-1)/N \~ 2，因此该算法的时间复杂度为 O(1)。
+综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个为节点以 O(n) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -858,21 +848,17 @@ Output : 1->2->5
 
 ## 解题描述
 
-
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
     if (pHead == null) return null;
-    if (pHead.next == null) return pHead;
-    if (pHead.val == pHead.next.val) {
-        ListNode next = pHead.next;
-        while (next != null && pHead.val == next.val) {
-            next = next.next;
-        }
+    ListNode next = pHead.next;
+    if (next == null) return pHead;
+    if (pHead.val == next.val) {
+        while (next != null && pHead.val == next.val) next = next.next;
         return deleteDuplication(next);
-    } else {
-        pHead.next = deleteDuplication(pHead.next);
-        return pHead;
     }
+    pHead.next = deleteDuplication(pHead.next);
+    return pHead;
 }
 ```
 
