@@ -23,7 +23,7 @@
 
 # 一、概览
 
-Java 的 I/O 大概可以分成以下几类
+Java 的 I/O 大概可以分成以下几类：
 
 1. 磁盘操作：File
 2. 字节操作：InputStream 和 OutputStream
@@ -92,7 +92,7 @@ transient 关键字可以使一些属性不会被序列化。
 
 **ArrayList 序列化和反序列化的实现** ：ArrayList 中存储数据的数组是用 transient 修饰的，因为这个数组是动态扩展的，并不是所有的空间都被使用，因此就不需要所有的内容都被序列化。通过重写序列化和反序列化方法，使得可以只序列化数组中有内容的那部分数据。
 
-```
+```java
 private transient Object[] elementData;
 ```
 
