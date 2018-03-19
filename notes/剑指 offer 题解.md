@@ -1134,11 +1134,15 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 ```java
 public void Mirror(TreeNode root) {
     if (root == null) return;
+    swap(root);
+    Mirror(root.left);
+    Mirror(root.right);
+}
+
+private void swap(TreeNode root) {
     TreeNode t = root.left;
     root.left = root.right;
     root.right = t;
-    Mirror(root.left);
-    Mirror(root.right);
 }
 ```
 
@@ -1211,6 +1215,8 @@ private int height(TreeNode root) {
 
 <div align="center"> <img src="../pics//8615d9f7-bd1d-4240-8bb4-02b941d54a6f.png"/> </div><br>
 
+<div align="center"> <img src="../pics//6afa9796-af1a-4495-9f02-63349ab68a19.png"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -1274,11 +1280,11 @@ public int min() {
 public boolean IsPopOrder(int[] pushA, int[] popA) {
     int n = pushA.length;
     Stack<Integer> stack = new Stack<>();
-    for (int i = 0, j = 0; i < n; i++) {
-        stack.push(pushA[i]);
-        while (j < n && stack.peek() == popA[j]) {
+    for (int pushIndex = 0, popIndex = 0; pushIndex < n; pushIndex++) {
+        stack.push(pushA[pushIndex]);
+        while (popIndex < n && stack.peek() == popA[popIndex]) {
             stack.pop();
-            j++;
+            popIndex++;
         }
     }
     return stack.isEmpty();
@@ -1299,7 +1305,7 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 
 使用队列来进行层次遍历。
 
-不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
+不需要使用两个队列分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
 
 ```java
 public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
@@ -1373,12 +1379,8 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
             if (node.left != null) queue.add(node.left);
             if (node.right != null) queue.add(node.right);
         }
-        if (reverse) {
-            Collections.reverse(list);
-            reverse = false;
-        } else {
-            reverse = true;
-        }
+        if (reverse) Collections.reverse(list);
+        reverse = !reverse;
         ret.add(list);
     }
     return ret;
@@ -1399,7 +1401,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
-    if (sequence.length == 0) return false;
+    if (sequence == null || sequence.length == 0) return false;
     return verify(sequence, 0, sequence.length - 1);
 }
 
@@ -1431,19 +1433,19 @@ private boolean verify(int[] sequence, int first, int last) {
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
 
 public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
-    dfs(root, target, 0, new ArrayList<>());
+    dfs(root, target, new ArrayList<>());
     return ret;
 }
 
-private void dfs(TreeNode node, int target, int curSum, ArrayList<Integer> path) {
+private void dfs(TreeNode node, int target, ArrayList<Integer> path) {
     if (node == null) return;
-    curSum += node.val;
     path.add(node.val);
-    if (curSum == target && node.left == null && node.right == null) {
+    target -= node.val;
+    if (target == 0 && node.left == null && node.right == null) {
         ret.add(new ArrayList(path));
     } else {
-        dfs(node.left, target, curSum, path);
-        dfs(node.right, target, curSum, path);
+        dfs(node.left, target, path);
+        dfs(node.right, target, path);
     }
     path.remove(path.size() - 1);
 }
