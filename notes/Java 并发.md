@@ -61,7 +61,7 @@
 
 1. 实现 Runnable 接口；
 2. 实现 Callable 接口；
-3. 继承 Thread 类；
+3. 继承 Thread 类。
 
 实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
 
@@ -89,11 +89,11 @@ public class MyRunnable implements Runnable {
 与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
 
 ```java
-public  class  MyCallable  implements  Callable<Integer> {
+public class MyCallable implements Callable<Integer> {
     public Integer call() {
         // ...
     }
-    public  static  void  main(String[]  args) {
+    public static void main(String[]  args) {
         MyCallable mc = new MyCallable();
         FutureTask<Integer> ft = new FutureTask<>(mc);
         Thread thread = new Thread(ft);
@@ -108,11 +108,11 @@ public  class  MyCallable  implements  Callable<Integer> {
 同样也是需要实现 run() 方法，并且最后也是调用 start() 方法来启动线程。
 
 ```java
-class MyThread extends Thread {
+public class MyThread extends Thread {
     public void run() {
         // ...
     }
-    public  static  void  main(String[]  args) {
+    public static void main(String[] args) {
         MyThread mt = new MyThread();
         mt.start();
     }
@@ -123,7 +123,7 @@ class MyThread extends Thread {
 
 实现接口会更好一些，因为：
 
-1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口。
+1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
 2. 类可能只要求可执行即可，继承整个 Thread 类开销会过大。
 
 # Executor
@@ -158,7 +158,7 @@ public void run() {
         // ...
         Thread.sleep(1000);
         // ...
-    } catch(InterruptedException e) {
+    } catch (InterruptedException e) {
         System.err.println(e);
     }
 }
@@ -310,7 +310,7 @@ public class Producer implements Runnable {
 // 消费者
 import java.util.concurrent.BlockingQueue;
 
-public class Consumer implements Runnable{
+public class Consumer implements Runnable {
     private BlockingQueue<String> queue;
 
     public Consumer(BlockingQueue<String> queue) {
@@ -461,7 +461,7 @@ volatile 关键字通过添加内存屏障的方式来进制指令重排，即�
 
 ## 2. Java 内存模型
 
-Java 虚拟机规范中试图定义一种 Java 内存模型来屏蔽掉各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。在此之前，主流程序语言（如 C/C++等）直接使用物理硬件和操作系统的内存模型，因此，会由于不同平台上内存模型的差异，有可能导致程序在一套平台上并发完全正常，而在另外一套平台上并发访问却经常出错，因此在某些场景就必须针对不同的平台来编写程序。
+Java 虚拟机规范中试图定义一种 Java 内存模型来屏蔽掉各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。在此之前，主流程序语言（如 C/C++等）直接使用物理硬件和操作系统的内存模型，但由于不同平台上内存模型的差异，有可能导致程序在一套平台上并发完全正常，而在另外一套平台上并发访问却经常出错，因此在某些场景就必须针对不同的平台来编写程序。
 
 ## 3. 主内存与工作内存
 
@@ -639,7 +639,7 @@ public static void main(String[] args) {
         removeThread.start();
         printThread.start();
 
-        //不要同时产生过多的线程，否则会导致操作系统假死
+        // 不要同时产生过多的线程，否则会导致操作系统假死
         while (Thread.activeCount() > 20);
     }
 }
