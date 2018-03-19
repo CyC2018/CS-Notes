@@ -878,9 +878,9 @@ p.charAt(j) == '.'          :  dp[i][j] = dp[i-1][j-1];
 p.charAt(j) == '*'          :
    p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  // in this case, a* only counts as empty
    p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.':
-           dp[i][j] = dp[i-1][j]   // in this case, a* counts as multiple a
-        or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
-        or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+            dp[i][j] = dp[i-1][j]   // in this case, a* counts as multiple a
+         or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+         or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
 ```
 
 ```java
@@ -920,8 +920,7 @@ public boolean match(char[] str, char[] pattern) {
 
 ```java
 public boolean isNumeric(char[] str) {
-    String string = String.valueOf(str);
-    return string.matches("[\\+-]?[0-9]*(\\.[0-9]*)?([eE][\\+-]?[0-9]+)?");
+    return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
 }
 ```
 
