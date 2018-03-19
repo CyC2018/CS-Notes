@@ -678,20 +678,33 @@ private void initDigitSum() {
 
 ### 动态规划解法
 
-[分割整数](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E5%88%86%E5%89%B2%E6%95%B4%E6%95%B0)
+```java
+public int maxProductAfterCutting(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        for (int j = 1; j < i; j++) {
+            dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
+        }
+    }
+    return dp[n];
+}
+```
 
 ### 贪心解法
 
 尽可能多得剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
+证明：当 n >= 5 时，3(n - 3) - 2(n - 2) = n - 5 >= 0。因此把长度大于 5 的绳子切成两段，令其中一段长度为 3 可以使得两段的乘积最大。
+
 ```java
-int maxProductAfterCuttin(int length) {
-    if (length < 2)  return 0;
-    if (length == 2) return 1;
-    if (length == 3) return 2;
-    int timesOf3 = length / 3;
-    if (length - timesOf3 * 3 == 1) timesOf3--;
-    int timesOf2 = (length - timesOf3 * 3) / 2;
+public int maxProductAfterCutting(int n) {
+    if (n < 2) return 0;
+    if (n == 2) return 1;
+    if (n == 3) return 2;
+    int timesOf3 = n / 3;
+    if (n - timesOf3 * 3 == 1) timesOf3--;
+    int timesOf2 = (n - timesOf3 * 3) / 2;
     return (int) (Math.pow(3, timesOf3)) * (int) (Math.pow(2, timesOf2));
 }
 ```
@@ -700,7 +713,7 @@ int maxProductAfterCuttin(int length) {
 
 ## 题目描述
 
-输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示
+输入一个整数，输出该数二进制表示中 1 的个数。
 
 ### Integer.bitCount()
 
@@ -712,9 +725,15 @@ public int NumberOf1(int n) {
 
 ### n&(n-1)
 
-O(logM) 时间复杂度解法，其中 M 表示 1 的个数。
+O(logM) 时间复杂度解法，其中 m 表示 1 的个数。
 
-该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
+该位运算是去除 n 的位级表示中最低的那一位。
+
+```
+n       : 10110100
+n-1     : 10110011
+n&(n-1) : 10110000
+```
 
 ```java
 public int NumberOf1(int n) {
@@ -735,12 +754,11 @@ public int NumberOf1(int n) {
 
 ## 解题思路
 
-下面的讨论中 x 代表 base，N 代表 exponent。
+下面的讨论中 x 代表 base，n 代表 exponent。
 
-- 当 x 为偶数时，x<sup>N</sup> = (x \* x)<sup>N / 2</sup>；
-- 当 x 为奇数时，x<sup>N</sup> = x \* (x \* x)<sup>N / 2</sup>；
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right."/></div> <br>
 
-因为 (x \* x)<sup>N / 2</sup> 可以通过递归求解，并且每递归一次，N 都减小一半，因此整个算法的时间复杂度为 logN。
+因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每递归一次，n 都减小一半，因此整个算法的时间复杂度为 O(logn)。
 
 ```java
 public double Power(double base, int exponent) {
