@@ -2021,6 +2021,12 @@ public int GetUglyNumber_Solution(int N) {
 
 # 50. 第一个只出现一次的字符位置
 
+## 题目描述
+
+在一个字符串 (1<=字符串长度 <=10000，全部由字母组成) 中找到第一个只出现一次的字符，并返回它的位置。
+
+## 解题思路
+
 ```java
 public int FirstNotRepeatingChar(String str) {
     int[] cnts = new int[256];
