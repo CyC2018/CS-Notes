@@ -57,6 +57,7 @@
 * [48. 最长不含重复字符的子字符串](#48-最长不含重复字符的子字符串)
 * [49. 丑数](#49-丑数)
 * [50. 第一个只出现一次的字符位置](#50-第一个只出现一次的字符位置)
+* [51. 数组中的逆序对](#51-数组中的逆序对)
 * [52. 两个链表的第一个公共结点](#52-两个链表的第一个公共结点)
 * [53 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
 * [54. 二叉搜索树的第 k 个结点](#54-二叉搜索树的第-k-个结点)
@@ -1455,7 +1456,7 @@ private void dfs(TreeNode node, int target, ArrayList<Integer> path) {
 
 ## 题目描述
 
-输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
 
 <div align="center"> <img src="../pics//4f67aa74-5bf5-4ea4-9a6e-2e07d8f5fa86.png"/> </div><br>
 
@@ -1519,19 +1520,21 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 ```java
 private TreeNode pre = null;
-public TreeNode Convert(TreeNode pRootOfTree) {
-    if(pRootOfTree == null) return null;
-    inOrder(pRootOfTree);
-    while(pRootOfTree.left != null) pRootOfTree = pRootOfTree.left;
-    return pRootOfTree;
+private TreeNode head = null;
+
+public TreeNode Convert(TreeNode root) {
+    if (root == null) return null;
+    inOrder(root);
+    return head;
 }
 
 private void inOrder(TreeNode node) {
-    if(node == null) return;
+    if (node == null) return;
     inOrder(node.left);
     node.left = pre;
-    if(pre != null) pre.right = node;
+    if (pre != null) pre.right = node;
     pre = node;
+    if (head == null) head = node;
     inOrder(node.right);
 }
 ```
@@ -1578,7 +1581,7 @@ public class Solution {
 
 ## 题目描述
 
-输入一个字符串 , 按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc, 则打印出由字符 a, b, c 所能排列出来的所有字符串 abc, acb, bac, bca, cab 和 cba。
+输入一个字符串，按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc，则打印出由字符 a, b, c 所能排列出来的所有字符串 abc, acb, bac, bca, cab 和 cba。
 
 ## 解题思路
 
@@ -1616,24 +1619,21 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 
 多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。
 
-使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不想等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums) {
-    int cnt = 1, num = nums[0];
-    for (int i = 1; i < nums.length; i++) {
-        if (nums[i] == num) cnt++;
-        else cnt--;
+    int majority = nums[0];
+    for (int i = 1, cnt = 1; i < nums.length; i++) {
+        cnt = nums[i] == majority ? cnt + 1 : cnt - 1;
         if (cnt == 0) {
-            num = nums[i];
+            majority = nums[i];
             cnt = 1;
         }
     }
-    cnt = 0;
-    for (int i = 0; i < nums.length; i++) {
-        if (num == nums[i]) cnt++;
-    }
-    return cnt > nums.length / 2 ? num : 0;
+    int cnt = 0;
+    for (int val : nums) if (val == majority) cnt++;
+    return cnt > nums.length / 2 ? majority : 0;
 }
 ```
 
@@ -1644,32 +1644,32 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 ### 快速选择
 
 - 复杂度：O(N) + O(1)
-- 只有当可以修改数组元素时才可以使用
+- 只有当允许修改数组元素时才可以使用
 
-快速排序的 partition() 方法，会返回一个整数 j 使得 a[lo..j-1] 小于等于 a[j]，且 a[j+1..hi] 大于等于 a[j]，此时 a[j] 就是数组的第 j 大元素，可以利用这个特性找出数组的第 K 个元素，这种找第 K 个元素的算法称为快速选择算法。
+快速排序的 partition() 方法，会返回一个整数 j 使得 a[l..j-1] 小于等于 a[j]，且 a[j+1..h] 大于等于 a[j]，此时 a[j] 就是数组的第 j 大元素。可以利用这个特性找出数组的第 K 个元素，这种找第 K 个元素的算法称为快速选择算法。
 
-找到第 K 个元素之后，就可以再遍历一次数组，所有小于等于该元素的数组元素都在最小的 K 个数中。
+找到第 K 个元素之后，就可以再遍历一次数组，所有小于等于该元素的数组元素都是最小的 K 个数。
 
 ```java
 public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     if (k > nums.length || k <= 0) return new ArrayList<>();
     int kthSmallest = findKthSmallest(nums, k - 1);
     ArrayList<Integer> ret = new ArrayList<>();
-    for (int num : nums) {
-        if (num <= kthSmallest && ret.size() < k) ret.add(num);
+    for (int val : nums) {
+        if (val <= kthSmallest && ret.size() < k) ret.add(val);
     }
     return ret;
 }
 
 public int findKthSmallest(int[] nums, int k) {
-    int lo = 0;
-    int hi = nums.length - 1;
-    while (lo < hi) {
-        int j = partition(nums, lo, hi);
+    int l = 0;
+    int h = nums.length - 1;
+    while (l < h) {
+        int j = partition(nums, l, h);
         if (j < k) {
-            lo = j + 1;
+            l = j + 1;
         } else if (j > k) {
-            hi = j - 1;
+            h = j - 1;
         } else {
             break;
         }
@@ -1677,29 +1677,25 @@ public int findKthSmallest(int[] nums, int k) {
     return nums[k];
 }
 
-private int partition(int[] nums, int lo, int hi) {
-    int i = lo;
-    int j = hi + 1;
+private int partition(int[] nums, int l, int h) {
+    int i = l;
+    int j = h + 1;
     while (true) {
-        while (i < hi && less(nums[++i], nums[lo])) ;
-        while (j > lo && less(nums[lo], nums[--j])) ;
+        while (i < h && nums[++i] < nums[l]) ;
+        while (j > l && nums[l] < nums[--j]) ;
         if (i >= j) {
             break;
         }
-        exch(nums, i, j);
+        swap(nums, i, j);
     }
-    exch(nums, lo, j);
+    swap(nums, l, j);
     return j;
 }
 
-private void exch(int[] nums, int i, int j) {
-    final int tmp = nums[i];
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
     nums[i] = nums[j];
-    nums[j] = tmp;
-}
-
-private boolean less(int v, int w) {
-    return v < w;
+    nums[j] = t;
 }
 ```
 
@@ -1708,15 +1704,15 @@ private boolean less(int v, int w) {
 - 复杂度：O(NlogK) + O(K)
 - 特别适合处理海量数据
 
-应该注意的是，应该使用大顶堆来维护最小堆，而不能直接创建一个小顶堆并设置一个大小，企图让小顶堆中的元素都是最小元素。
+应该使用大顶堆来维护最小堆，而不能直接创建一个小顶堆并设置一个大小，企图让小顶堆中的元素都是最小元素。
 
-维护一个大小为 K 的最小堆过程如下：先添加一个元素，添加完之后如果大顶堆的大小大于 K，那么需要将大顶堆的堆顶元素去除。
+维护一个大小为 K 的最小堆过程如下：在添加一个元素之后，如果大顶堆的大小大于 K，那么需要将大顶堆的堆顶元素去除。
 
 ```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
-    if (k > input.length || k <= 0) return new ArrayList<>();
+public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
+    if (k > nums.length || k <= 0) return new ArrayList<>();
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
-    for (int num : input) {
+    for (int num : nums) {
         maxHeap.add(num);
         if (maxHeap.size() > k) {
             maxHeap.poll();
@@ -1744,16 +1740,16 @@ public class Solution {
     // 当前数据流读入的元素个数
     private int N = 0;
 
-    public void Insert(Integer num) {
+    public void Insert(Integer val) {
         // 插入要保证两个堆存于平衡状态
         if (N % 2 == 0) {
             // N 为偶数的情况下插入到右半边。
             // 因为右半边元素都要大于左半边，但是新插入的元素不一定比左半边元素来的大，
             // 因此需要先将元素插入左半边，然后利用左半边为大顶堆的特点，取出堆顶元素即为最大元素，此时插入右半边
-            left.add(num);
+            left.add(val);
             right.add(left.poll());
         } else {
-            right.add(num);
+            right.add(val);
             left.add(right.poll());
         }
         N++;
@@ -1801,7 +1797,7 @@ public class Solution {
 
 ## 题目描述
 
-{6,-3,-2,7,-15,1,2,2}，连续子向量的最大和为 8（从第 0 个开始，到第 3 个为止）。
+{6,-3,-2,7,-15,1,2,2}，连续子数组的最大和为 8（从第 0 个开始，到第 3 个为止）。
 
 ## 解题思路
 
@@ -1810,9 +1806,9 @@ public int FindGreatestSumOfSubArray(int[] nums) {
     if (nums.length == 0) return 0;
     int ret = Integer.MIN_VALUE;
     int sum = 0;
-    for (int num : nums) {
-        if (sum <= 0) sum = num;
-        else sum += num;
+    for (int val : nums) {
+        if (sum <= 0) sum = val;
+        else sum += val;
         ret = Math.max(ret, sum);
     }
     return ret;
@@ -1821,7 +1817,9 @@ public int FindGreatestSumOfSubArray(int[] nums) {
 
 # 43. 从 1 到 n 整数中 1 出现的次数
 
-解题参考：[Leetcode : 233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/discuss/64381/4+-lines-O(log-n)-C++JavaPython)
+## 解题思路
+
+> [Leetcode : 233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/discuss/64381/4+-lines-O(log-n)-C++JavaPython)
 
 ```java
 public int NumberOf1Between1AndN_Solution(int n) {
@@ -1859,7 +1857,7 @@ public int digitAtIndex(int index) {
 
 /**
  * digit 位数的数字组成的字符串长度
- * 例如 digit = 2， return 90
+ * 例如 digit = 2，return 90
  */
 private int getAmountOfDigit(int digit) {
     if (digit == 1) return 10;
@@ -1893,7 +1891,7 @@ private int beginNumber(int digit) {
 
 ## 解题思路
 
-可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 >= S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
+可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 < S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
 
 ```java
 public String PrintMinNumber(int[] numbers) {
@@ -1911,7 +1909,7 @@ public String PrintMinNumber(int[] numbers) {
 
 ## 题目描述
 
-给定一个数字，按照如下规则翻译成字符串：0 翻译成“a”，1 翻译成“b”...25 翻译成“z”。一个数字有多种翻译可能，例如 12258 一共有 5 种，分别是 bccfi，bwfi，bczi，mcfi，mzi。实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+给定一个数字，按照如下规则翻译成字符串：0 翻译成“a”，1 翻译成“b”... 25 翻译成“z”。一个数字有多种翻译可能，例如 12258 一共有 5 种，分别是 bccfi，bwfi，bczi，mcfi，mzi。实现一个函数，用来计算一个数字有多少种不同的翻译方法。
 
 ## 解题思路
 
@@ -2032,7 +2030,7 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-## 51. 数组中的逆序对
+# 51. 数组中的逆序对
 
 ## 题目描述
 
@@ -2050,19 +2048,19 @@ public int InversePairs(int[] nums) {
     return (int) (cnt % 1000000007);
 }
 
-private void mergeSortUp2Down(int[] nums, int start, int end) {
-    if (end - start < 1) return;
-    int mid = start + (end - start) / 2;
-    mergeSortUp2Down(nums, start, mid);
-    mergeSortUp2Down(nums, mid + 1, end);
-    merge(nums, start, mid, end);
+private void mergeSortUp2Down(int[] nums, int first, int last) {
+    if (last - first < 1) return;
+    int mid = first + (last - first) / 2;
+    mergeSortUp2Down(nums, first, mid);
+    mergeSortUp2Down(nums, mid + 1, last);
+    merge(nums, first, mid, last);
 }
 
-private void merge(int[] nums, int start, int mid, int end) {
-    int i = start, j = mid + 1, k = start;
-    while (i <= mid || j <= end) {
+private void merge(int[] nums, int first, int mid, int last) {
+    int i = first, j = mid + 1, k = first;
+    while (i <= mid || j <= last) {
         if (i > mid) tmp[k] = nums[j++];
-        else if (j > end) tmp[k] = nums[i++];
+        else if (j > last) tmp[k] = nums[i++];
         else if (nums[i] < nums[j]) tmp[k] = nums[i++];
         else {
             tmp[k] = nums[j++];
@@ -2070,7 +2068,7 @@ private void merge(int[] nums, int start, int mid, int end) {
         }
         k++;
     }
-    for (k = start; k <= end; k++) {
+    for (k = first; k <= last; k++) {
         nums[k] = tmp[k];
     }
 }
@@ -2115,7 +2113,7 @@ Input:
 3
 Output:
 4
-````
+```
 
 ## 解题思路
 
@@ -2158,16 +2156,17 @@ private int getLastK(int[] nums, int K) {
 利用二叉搜索数中序遍历有序的特点。
 
 ```java
-TreeNode ret;
-int cnt = 0;
+private TreeNode ret;
+private int cnt = 0;
 
-TreeNode KthNode(TreeNode pRoot, int k) {
+public TreeNode KthNode(TreeNode pRoot, int k) {
     inOrder(pRoot, k);
     return ret;
 }
 
 private void inOrder(TreeNode root, int k) {
-    if (root == null || cnt > k) return;
+    if (root == null) return;
+    if (cnt > k) return;
     inOrder(root.left, k);
     cnt++;
     if (cnt == k) ret = root;
