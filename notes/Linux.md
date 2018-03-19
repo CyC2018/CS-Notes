@@ -142,7 +142,7 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ## VIM 三个模式
 
-<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg"/> </div><br>
+<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
 
 - 一般指令模式：进入 VIM 的默认模式，可以用于移动游标查看内容；
 - 编辑模式：按下 "i" 等按键之后进入，可以对文本进行编辑；
@@ -157,15 +157,13 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 | :q | 离开 |
 | :q! | 强制离开不保存 |
 | :wq | 写入磁盘后离开 |
-| :wq!|  强制写入磁盘后离开 |
+| :wq!| 强制写入磁盘后离开 |
 
 # 二、分区
 
 ## 磁盘的文件名
 
-Linux 中每个硬件都被当做一个文件。
-
-常见磁盘的文件名：
+Linux 中每个硬件都被当做一个文件，包括磁盘。常见磁盘的文件名如下：
 
 - SCSI/SATA/USB 磁盘：/dev/sd[a-p]
 - IDE 磁盘：/dev/hd[a-d]
@@ -178,7 +176,7 @@ Linux 中每个硬件都被当做一个文件。
 
 ### 1. MBR
 
-MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
+MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，分区表占 64 bytes。
 
 分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
 
@@ -192,7 +190,7 @@ GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息�
 
 GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg" width="400"/> </div><br>
 
 ## 开机检测程序
 
@@ -202,7 +200,7 @@ BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可
 
 MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
-<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
@@ -214,7 +212,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。
 
-<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg"/> </div><br>
+<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg" width="500"/> </div><br>
 
 # 三、文件权限与目录配置
 
@@ -222,7 +220,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 把用户分为三种：文件拥有者、群组以及其它人，对不同的用户有不同的文件权限。
 
-使用 ls 查看一个文件时，会显示一个文件的信息，例如 drwxr-xr-x. 3 root root 17 May 6 00:14 .config，对这个信息的解释如下：
+使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x. 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
 
 - drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段。
 - 3：链接数；
@@ -298,8 +296,8 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 ## 文件默认权限
 
-文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
-目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
+- 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
+- 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
 可以通过 umask 设置或者查看文件的默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r-- 。
 
@@ -311,9 +309,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-完整的目录树如下：
-
-<div align="center"> <img src="../pics//27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"/> </div><br>
+<div align="center"> <img src="../pics//linux-filesystem.png"/> </div><br>
 
 # 四、文件与目录
 
