@@ -872,6 +872,17 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而它当成重复前面字符一次。
 
+```html
+p.charAt(j) == s.charAt(i)  :  dp[i][j] = dp[i-1][j-1];
+p.charAt(j) == '.'          :  dp[i][j] = dp[i-1][j-1];
+p.charAt(j) == '*'          :
+   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  // in this case, a* only counts as empty
+   p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.':
+                              dp[i][j] = dp[i-1][j]   // in this case, a* counts as multiple a
+                           or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+                           or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+```
+
 ```java
 public boolean match(char[] str, char[] pattern) {
     int m = str.length, n = pattern.length;
