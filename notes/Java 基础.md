@@ -468,9 +468,8 @@ Exception 分为两种： **受检异常**  和 **非受检异常**。受检异�
 
 <div align="center"> <img src="../pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div><br>
 
-更详细的内容：
-- [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-- [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+> [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
+> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 九、泛型
 
