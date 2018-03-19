@@ -169,7 +169,7 @@ CONNECT www.example.com:443 HTTP/1.1
 服务器返回的  **响应报文**  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
 | 状态码 | 类别 | 原因短语 |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | 1XX | Informational（信息性状态码） | 接收的请求正在处理 |
 | 2XX | Success（成功状态码） | 请求正常处理完毕 |
 | 3XX | Redirection（重定向状态码） | 需要进行附加操作以完成请求 |
@@ -225,9 +225,9 @@ CONNECT www.example.com:443 HTTP/1.1
 ## 通用首部字段
 
 | 首部字段名 | 说明 |
-| -- | -- |
+| :--: | :--: |
 | Cache-Control | 控制缓存的行为 |
-| Connection | 控制不再转发给代理的首部字段；管理持久连接|
+| Connection | 控制不再转发给代理的首部字段、管理持久连接|
 | Date | 创建报文的日期时间 |
 | Pragma | 报文指令 |
 | Trailer | 报文末端的首部一览 |
@@ -239,7 +239,7 @@ CONNECT www.example.com:443 HTTP/1.1
 ## 请求首部字段
 
 | 首部字段名 | 说明 |
-| -- | -- |
+| :--: | :--: |
 | Accept | 用户代理可处理的媒体类型 |
 | Accept-Charset | 优先的字符集 |
 | Accept-Encoding | 优先的内容编码 |
@@ -263,7 +263,7 @@ CONNECT www.example.com:443 HTTP/1.1
 ## 响应首部字段
 
 | 首部字段名 | 说明 |
-| -- | -- |
+| :--: | :--: |
 | Accept-Ranges | 是否接受字节范围请求 |
 | Age | 推算资源创建经过时间 |
 | ETag | 资源的匹配信息 |
@@ -277,11 +277,11 @@ CONNECT www.example.com:443 HTTP/1.1
 ## 实体首部字段
 
 | 首部字段名 | 说明 |
-| -- | -- |
+| :--: | :--: |
 | Allow | 资源可支持的 HTTP 方法 |
 | Content-Encoding | 实体主体适用的编码方式 |
 | Content-Language | 实体主体的自然语言 |
-| Content-Length | 实体主体的大小（单位：字节） |
+| Content-Length | 实体主体的大小 |
 | Content-Location | 替代对应资源的 URI |
 | Content-MD5 | 实体主体的报文摘要 |
 | Content-Range | 实体主体的位置范围 |
@@ -321,7 +321,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ### 2. Set-Cookie
 
 | 属性 | 说明 |
-| -- | -- |
+| :--: | -- |
 | NAME=VALUE | 赋予 Cookie 的名称和其值（必需项） |
 | expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
 | path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
