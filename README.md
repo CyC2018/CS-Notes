@@ -9,7 +9,7 @@
 
 [:cloud:](#网络-cloud) [:computer:](#操作系统-computer) [:pencil2:](#数据结构与算法-pencil2) [:couple:](#面向对象-couple) [:floppy_disk:](#数据库-floppy_disk) [:coffee:](#java-coffee) [:sweat_drops:](#分布式-sweat_drops) [:hammer:](#工具-hammer) [:speak_no_evil:](#编码实践-speak_no_evil) [:arrow_down:](#资料下载-arrow_down) [:memo:](#后记-memo)
 
-![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg) 
+<!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)  -->
 
 
 ## 网络 :cloud:
