@@ -83,11 +83,11 @@
 
 ## 变量命名规范
 
-- nums 表示数组，matrix 表示矩阵；
+- nums 表示数字数组，arryay 表示通用数组，matrix 表示矩阵；
 - n 表示数组长度、字符串长度、树节点个数，以及其它具有一维性质的数据结构的元素个数；
 - m, n 表示矩阵的行数和列数；
-- first, last 表示闭区间：[first, last]；
-- l, h 也表示闭区间：[l, h]；
+- first, last 表示闭区间，在需要作为函数参数时使用：[first, last]；
+- l, h 也表示闭区间，在只作为局部变量时使用：[l, h]；
 - begin, end 表示左闭右开区间：[begin, end)；
 - ret 表示结果相关的变量；
 - dp 表示动态规划保存子问题的数组；
@@ -574,37 +574,42 @@ private int[][] next = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 private int rows;
 private int cols;
 
-public boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+public boolean hasPath(char[] array, int rows, int cols, char[] str) {
     if (rows == 0 || cols == 0) return false;
     this.rows = rows;
     this.cols = cols;
-    // 一维数组重建二维矩阵
-    char[][] newMatrix = new char[rows][cols];
-    for (int i = 0, idx = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            newMatrix[i][j] = matrix[idx++];
-        }
-    }
+    boolean[][] hasUsed = new boolean[rows][cols];
+    char[][] matrix = buildMatrix(array);
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (backtracking(newMatrix, str, new boolean[rows][cols], 0, i, j)) return true;
+            if (backtracking(matrix, str, hasUsed, 0, i, j)) return true;
         }
     }
     return false;
 }
 
-private boolean backtracking(char[][] matrix, char[] str, boolean[][] used, int pathLen, int curR, int curC) {
+private boolean backtracking(char[][] matrix, char[] str, boolean[][] hasUsed, int pathLen, int row, int col) {
     if (pathLen == str.length) return true;
-    if (curR < 0 || curR >= rows || curC < 0 || curC >= cols) return false;
-    if (matrix[curR][curC] != str[pathLen]) return false;
-    if (used[curR][curC]) return false;
-    used[curR][curC] = true;
+    if (row < 0 || row >= rows || col < 0 || col >= cols) return false;
+    if (matrix[row][col] != str[pathLen]) return false;
+    if (hasUsed[row][col]) return false;
+    hasUsed[row][col] = true;
     for (int i = 0; i < next.length; i++) {
-        if (backtracking(matrix, str, used, pathLen + 1, curR + next[i][0], curC + next[i][1]))
+        if (backtracking(matrix, str, hasUsed, pathLen + 1, row + next[i][0], col + next[i][1]))
             return true;
     }
-    used[curR][curC] = false;
+    hasUsed[row][col] = false;
     return false;
+}
+
+private char[][] buildMatrix(char[] array) {
+    char[][] matrix = new char[rows][cols];
+    for (int i = 0, idx = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = array[idx++];
+        }
+    }
+    return matrix;
 }
 ```
 
