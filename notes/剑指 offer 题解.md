@@ -935,18 +935,18 @@ public boolean isNumeric(char[] str) {
 复杂度：O(n<sup>2</sup>) + O(1)
 
 ```java
-public void reOrderArray(int[] array) {
-    int n = array.length;
+public void reOrderArray(int[] nums) {
+    int n = nums.length;
     for (int i = 0; i < n; i++) {
-        if (array[i] % 2 == 0) {
+        if (nums[i] % 2 == 0) {
             int nextOddIdx = i + 1;
-            while (nextOddIdx < n && array[nextOddIdx] % 2 == 0) nextOddIdx++;
+            while (nextOddIdx < n && nums[nextOddIdx] % 2 == 0) nextOddIdx++;
             if (nextOddIdx == n) break;
-            int nextOddVal = array[nextOddIdx];
+            int nextOddVal = nums[nextOddIdx];
             for (int j = nextOddIdx; j > i; j--) {
-                array[j] = array[j - 1];
+                nums[j] = nums[j - 1];
             }
-            array[i] = nextOddVal;
+            nums[i] = nextOddVal;
         }
     }
 }
@@ -955,14 +955,14 @@ public void reOrderArray(int[] array) {
 复杂度：O(n) + O(n)
 
 ```java
-public void reOrderArray(int[] array) {
+public void reOrderArray(int[] nums) {
     int oddCnt = 0;
-    for (int num : array) if (num % 2 == 1) oddCnt++;
-    int[] copy = array.clone();
+    for (int val : nums) if (val % 2 == 1) oddCnt++;
+    int[] copy = nums.clone();
     int i = 0, j = oddCnt;
     for (int num : copy) {
-        if (num % 2 == 1) array[i++] = num;
-        else array[j++] = num;
+        if (num % 2 == 1) nums[i++] = num;
+        else nums[j++] = num;
     }
 }
 ```
@@ -1026,6 +1026,21 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 
 ## 解题思路
 
+### 递归
+
+```java
+public ListNode ReverseList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode next = head.next;
+    head.next = null;
+    ListNode newHead = ReverseList(next);
+    next.next = head;
+    return newHead;
+}
+```
+
+### 迭代
+
 ```java
 public ListNode ReverseList(ListNode head) {
     ListNode newList = new ListNode(-1);
@@ -1046,6 +1061,24 @@ public ListNode ReverseList(ListNode head) {
 <div align="center"> <img src="../pics//79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
 
 ## 解题思路
+
+### 递归
+
+```java
+public ListNode Merge(ListNode list1, ListNode list2) {
+    if (list1 == null) return list2;
+    if (list2 == null) return list1;
+    if (list1.val <= list2.val) {
+        list1.next = Merge(list1.next, list2);
+        return list1;
+    } else {
+        list2.next = Merge(list1, list2.next);
+        return list2;
+    }
+}
+```
+
+### 迭代
 
 ```java
 public ListNode Merge(ListNode list1, ListNode list2) {
