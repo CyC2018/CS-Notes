@@ -1,16 +1,6 @@
-[:cloud:](#网络-cloud) [:computer:](#操作系统-computer) [:pencil2:](#数据结构与算法-pencil2) [:couple:](#面向对象-couple) [:floppy_disk:](#数据库-floppy_disk)  [:coffee:](#java-coffee)  [:sweat_drops:](#分布式-sweat_drops)  [:hammer:](#工具-hammer)  [:speak_no_evil:](#编码实践-speak_no_evil) [:arrow_down:](#资料下载-arrow_down)  [:memo:](#后记-memo) </br></br>
 
-- [网络](#网络-cloud)
-- [操作系统](#操作系统-computer)
-- [数据结构与算法](#数据结构与算法-pencil2)
-- [面向对象](#面向对象-couple)
-- [数据库](#数据库-floppy_disk)
-- [Java](#java-coffee)
-- [分布式](#分布式-sweat_drops)
-- [工具](#工具-hammer)
-- [编码实践](#编码实践-speak_no_evil)
-- [资料下载](#资料下载-arrow_down)
-- [后记](#后记-memo)
+
+[:cloud:](#网络-cloud) [:computer:](#操作系统-computer) [:pencil2:](#数据结构与算法-pencil2) [:couple:](#面向对象-couple) [:floppy_disk:](#数据库-floppy_disk)  [:coffee:](#java-coffee)  [:sweat_drops:](#分布式-sweat_drops)  [:hammer:](#工具-hammer)  [:speak_no_evil:](#编码实践-speak_no_evil) [:arrow_down:](#资料下载-arrow_down)  [:memo:](#后记-memo) </br></br>
 
 ## 网络 :cloud:
 
