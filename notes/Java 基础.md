@@ -214,7 +214,7 @@ public interface Externalizable extends Serializable {
 
 <font size=4>  **3. 比较**  </font> </br>
 
-| |  ** 抽象类**  | ** 接口** |
+| |  **抽象类**  | **接口** |
 | --- | --- | --- |
 | 1 |  An abstract class can extend only one class or one abstract class at a time |  An interface can extend any number of interfaces at a time |
 | 2 |   An abstract class can extend another concrete (regular) class or abstract class |  An interface can only extend another interface |
