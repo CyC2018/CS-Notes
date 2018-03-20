@@ -50,7 +50,10 @@
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
     * [查看端口](#查看端口)
-* [十、IO 多路复用](#十io-多路复用)
+* [十、I/O 多路复用](#十io-多路复用)
+    * [概念理解](#概念理解)
+    * [I/O 模型](#io-模型)
+    * [select() poll() epoll()](#select-poll-epoll)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1010,10 +1013,88 @@ ps aux | grep threadx
 netstat -anp | grep 80
 ```
 
-# 十、IO 多路复用
+# 十、I/O 多路复用
 
+## 概念理解
+
+I/O Multiplexing 又被称为 Event Driven I/O，它可以使用单个进程来处理多个 I/O 事件。它的基本原理是，先挂起进程，通过不断轮询监听的 I/O 事件，在一个或多个 I/O 事件发生后才将控制权返回给进程。
+
+## I/O 模型
+
+- 阻塞（Blocking）
+- 非阻塞（Non-blocking）
+- 同步（Synchronous）
+- 异步（Asynchronous）
+
+阻塞非阻塞是等待数据的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
+
+同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
+
+<div align="center"> <img src="../pics//00eda100-dba1-4ec2-9140-5fe5f3855951.jpg"/> </div><br>
+
+### 1. 同步-阻塞
+
+这是最常见的一种模型，用户程序在使用 read() 时会执行系统调用从而陷入内核，之后就被阻塞直到系统调用完成。
+
+应该注意到，在阻塞的过程中，其他程序还可以执行，因此阻塞不意味着整个操作系统都被阻塞。因为其他程序还可以执行，因此不消耗 CPU 时间，这种模型的执行效率会比较高。
+
+<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png"/> </div><br>
+
+### 2. 同步-非阻塞
+
+非阻塞意味着用户程序在执行系统调用后还可以执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
+
+由于 CPU 要处理更多的用户程序的询问，因此这种模型的效率是比较低的。
+
+<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png"/> </div><br>
+
+### 3. 异步-阻塞
+
+这是 I/O 多路复用使用的一种模式，通过使用 slect()，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+
+<div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
+
+### 4. 异步-非阻塞
+
+该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后完成 I/O 事务。
+
+<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg"/> </div><br>
+
+## select() poll() epoll()
+
+这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。可以说，新出现的实现是为了修复旧实现的不足。
+
+### 1. select()
+
+```c
+int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+```
+
+其中 fd 表示时间描述符，select() 函数包含了三个描述符参数：writefds、readfds、exceptfds，它们都是数组形式，因此可以同时监听多个描述符。
+
+select() 采取轮询描述符的方式来找到 I/O 完成的描述符。
+
+### 2. poll()
+
+```c
+int poll (struct pollfd *fds, unsigned int nfds, int timeout);
+```
+
+```c
+struct pollfd {
+    int fd;       //文件描述符
+    short events; //监视的请求事件
+    short revents; //已发生的事件
+};
+```
+
+它和 select() 功能基本相同。
+
+未完待续。。
 
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
+- [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
+- [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
