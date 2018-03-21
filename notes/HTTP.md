@@ -4,15 +4,15 @@
     * [URL](#url)
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
-    * [GET：获取资源](#get获取资源)
-    * [POST：传输实体主体](#post传输实体主体)
-    * [HEAD：获取报文首部](#head获取报文首部)
-    * [PUT：上传文件](#put上传文件)
-    * [PATCH：对资源进行部分修改](#patch对资源进行部分修改)
-    * [DELETE：删除文件](#delete删除文件)
-    * [OPTIONS：查询支持的方法](#options查询支持的方法)
-    * [CONNECT：要求用隧道协议连接代理](#connect要求用隧道协议连接代理)
-    * [TRACE：追踪路径](#trace追踪路径)
+    * [GET](#get)
+    * [POST](#post)
+    * [HEAD](#head)
+    * [PUT](#put)
+    * [PATCH](#patch)
+    * [DELETE](#delete)
+    * [OPTIONS](#options)
+    * [CONNECT](#connect)
+    * [TRACE](#trace)
 * [三、HTTP 状态码](#三http-状态码)
     * [2XX 成功](#2xx-成功)
     * [3XX 重定向](#3xx-重定向)
@@ -77,9 +77,13 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 客户端发送的  **请求报文**  第一行为请求行，包含了方法字段。
 
-## GET：获取资源
+## GET
 
-## POST：传输实体主体
+> 获取资源
+
+## POST
+
+> 传输实体主体
 
 POST 主要目的不是获取资源，而是传输存储在内容实体中的数据。
 
@@ -97,13 +101,17 @@ name1=value1&name2=value2
 
 GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
 
-## HEAD：获取报文首部
+## HEAD
+
+> 获取报文首部
 
 和 GET 方法一样，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
 
-## PUT：上传文件
+## PUT
+
+> 上传文件
 
 由于自身不带验证机制，任何人都可以上传文件，因此存在安全性问题，一般不使用该方法。
 
@@ -116,7 +124,9 @@ Content-length: 16
 <p>New File</p>
 ```
 
-## PATCH：对资源进行部分修改
+## PATCH
+
+> 对资源进行部分修改
 
 PUT 也可以用于修改资源，但是只能完全替代原始资源，PATCH 允许部分修改。
 
@@ -130,7 +140,9 @@ Content-Length: 100
 [description of changes]
 ```
 
-## DELETE：删除文件
+## DELETE
+
+> 删除文件
 
 与 PUT 功能相反，并且同样不带验证机制。
 
@@ -138,13 +150,17 @@ Content-Length: 100
 DELETE /file.html HTTP/1.1
 ```
 
-## OPTIONS：查询支持的方法
+## OPTIONS
+
+> 查询支持的方法
 
 查询指定的 URL 能够支持的方法。
 
 会返回 Allow: GET, POST, HEAD, OPTIONS 这样的内容。
 
-## CONNECT：要求用隧道协议连接代理
+## CONNECT
+
+> 要求用隧道协议连接代理
 
 要求在于代理服务器通信时建立隧道，使用 SSL（Secure Sokets Layer，安全套接字）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
@@ -154,7 +170,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 <div align="center"> <img src="../pics//5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg"/> </div><br>
 
-## TRACE：追踪路径
+## TRACE
+
+> 追踪路径
 
 服务器会将通信路径返回给客户端。
 
