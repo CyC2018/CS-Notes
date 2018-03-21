@@ -551,19 +551,34 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ### 1. 概念
 
-Cross-Site Scripting, XSS，入侵者（Perpertrator）通过存在安全漏洞的 Web 网站，
-
-<div align="center"> <img src="../pics//xss-attack.png" width="600"/> </div><br>
+（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包含 HTML 和 JavaScript。通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
 
 ### 2. 危害
 
-**（一）伪造虚假的输入表单骗取个人信息** 
+- 伪造虚假的输入表单骗取个人信息
+- 窃取用户的 Cookie 值
+- 显示伪造的文章或者图片
 
+### 3. 防范手段
 
-**（二）窃取用户的 Cookie 值** 
+**（一）过滤特殊字符** 
 
+许多语言都提供了对 HTML 的过滤：
 
-**（三）显示伪造的文章或者图片** 
+- PHP 的 htmlentities() 或是 htmlspecialchars()。
+- Python 的 cgi.escape()。
+- Java 的 xssprotect (Open Source Library)。
+- Node.js 的 node-validator。
+
+**（二）指定 HTTP 的 Content-Type** 
+
+通过这种方式，可以避免内容被当成 HTML 解析，比如 PHP 语言可以使用以下代码：
+
+```php
+<?php
+   header('Content-Type: text/javascript; charset=utf-8');
+?>
+```
 
 # 八、各版本比较
 
@@ -599,3 +614,4 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 
 - [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
