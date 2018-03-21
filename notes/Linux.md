@@ -50,10 +50,12 @@
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
     * [查看端口](#查看端口)
-* [十、I/O 多路复用](#十io-多路复用)
+* [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
     * [select() poll() epoll()](#select-poll-epoll)
+    * [select() 和 poll() 比较](#select-和-poll-比较)
+    * [eopll() 工作模式](#eopll-工作模式)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1013,11 +1015,17 @@ ps aux | grep threadx
 netstat -anp | grep 80
 ```
 
-# 十、I/O 多路复用
+# 十、I/O 复用
 
 ## 概念理解
 
-I/O Multiplexing 又被称为 Event Driven I/O，它可以使用单个进程来处理多个 I/O 事件。它的基本原理是，先挂起进程，通过不断轮询监听的 I/O 事件，在一个或多个 I/O 事件发生后才将控制权返回给进程。
+I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有处理多个 I/O 事件的能力。
+
+当某个 I/O 事件条件满足时，进程会收到通知。
+
+HTTP 服务器即要处理监听套接字，又要处理已连接的套接字，此时就需要使用 I/O 多路复用。
+
+相比于多进程和多线程技术，I/O 多路复用的最大优势是系统开销小。
 
 ## I/O 模型
 
@@ -1026,7 +1034,7 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以使用单个进程来�
 - 同步（Synchronous）
 - 异步（Asynchronous）
 
-阻塞非阻塞是等待数据的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
+阻塞非阻塞是等待 I/O 完成的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
 
 同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
 
@@ -1050,7 +1058,7 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以使用单个进程来�
 
 ### 3. 异步-阻塞
 
-这是 I/O 多路复用使用的一种模式，通过使用 slect()，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+这是 I/O 复用使用的一种模式，通过使用 slect()，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
 
 <div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
 
@@ -1070,9 +1078,9 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以使用单个进程来�
 int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 ```
 
-其中 fd 表示时间描述符，select() 函数包含了三个描述符参数：writefds、readfds、exceptfds，它们都是数组形式，因此可以同时监听多个描述符。
-
-select() 采取轮询描述符的方式来找到 I/O 完成的描述符。
+- fd_set 表示描述符集合；
+- readset、writeset 和 exceptset 这三个参数指定让内核测试读、写和异常条件的描述符；
+- timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间。
 
 ### 2. poll()
 
@@ -1090,7 +1098,34 @@ struct pollfd {
 
 它和 select() 功能基本相同。
 
-未完待续。。
+### 3. epoll()
+
+```c
+int epoll_create(int size);
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
+int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
+```
+
+它是 select() 和 poll() 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
+
+## select() 和 poll() 比较
+
+
+
+## eopll() 工作模式
+
+epoll() 对文件描述符的操作有两种模式：LT（level trigger）和 ET（edge trigger）。
+
+- LT 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。
+- ET 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。
+
+### 1. LT
+
+是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
+
+### 2. ET
+
+很大程度上减少了 epoll() 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
 
 # 参考资料
 
@@ -1098,3 +1133,4 @@ struct pollfd {
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 - [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
+- [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
