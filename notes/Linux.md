@@ -53,9 +53,9 @@
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
-    * [select() poll() epoll()](#select-poll-epoll)
-    * [select() 和 poll() 比较](#select-和-poll-比较)
-    * [eopll() 工作模式](#eopll-工作模式)
+    * [select poll epoll](#select-poll-epoll)
+    * [select 和 poll 比较](#select-和-poll-比较)
+    * [eopll 工作模式](#eopll-工作模式)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1058,7 +1058,7 @@ HTTP 服务器即要处理监听套接字，又要处理已连接的套接字，
 
 ### 3. 异步-阻塞
 
-这是 I/O 复用使用的一种模式，通过使用 slect()，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
 
 <div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
 
@@ -1068,11 +1068,11 @@ HTTP 服务器即要处理监听套接字，又要处理已连接的套接字，
 
 <div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg"/> </div><br>
 
-## select() poll() epoll()
+## select poll epoll
 
 这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。可以说，新出现的实现是为了修复旧实现的不足。
 
-### 1. select()
+### 1. select
 
 ```c
 int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
@@ -1082,7 +1082,7 @@ int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct 
 - readset、writeset 和 exceptset 这三个参数指定让内核测试读、写和异常条件的描述符；
 - timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间。
 
-### 2. poll()
+### 2. poll
 
 ```c
 int poll (struct pollfd *fds, unsigned int nfds, int timeout);
@@ -1096,9 +1096,9 @@ struct pollfd {
 };
 ```
 
-它和 select() 功能基本相同。
+它和 select 功能基本相同。
 
-### 3. epoll()
+### 3. epoll
 
 ```c
 int epoll_create(int size);
@@ -1106,15 +1106,34 @@ int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
 int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
 ```
 
-它是 select() 和 poll() 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
+它是 select 和 poll 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
 
-## select() 和 poll() 比较
+select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
 
+## select 和 poll 比较
 
+### 1. 功能
 
-## eopll() 工作模式
+它们提供了几乎相同的功能，但是在一些细节上有所不同：
 
-epoll() 对文件描述符的操作有两种模式：LT（level trigger）和 ET（edge trigger）。
+- select 会修改 fd_set 参数，而 poll 不会；
+- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
+- poll 提供了跟多的事件类型。
+
+### 2. 速度
+
+poll 和 select 在速度上都很慢。
+
+- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
+- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
+
+### 3. 可移植性
+
+几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
+
+## eopll 工作模式
+
+epoll 对文件描述符的操作有两种模式：LT（level trigger）和 ET（edge trigger）。
 
 - LT 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。
 - ET 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。
@@ -1125,7 +1144,7 @@ epoll() 对文件描述符的操作有两种模式：LT（level trigger）和 ET
 
 ### 2. ET
 
-很大程度上减少了 epoll() 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
 
 # 参考资料
 
@@ -1134,3 +1153,4 @@ epoll() 对文件描述符的操作有两种模式：LT（level trigger）和 ET
 - [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
 - [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
+- [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
