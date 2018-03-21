@@ -41,6 +41,7 @@
 * [七、Web 攻击技术](#七web-攻击技术)
     * [攻击模式](#攻击模式)
     * [跨站脚本攻击](#跨站脚本攻击)
+    * [SQL 注入攻击](#sql-注入攻击)
 * [八、各版本比较](#八各版本比较)
     * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
     * [HTTP/1.1 与 HTTP/2.0 的区别](#http11-与-http20-的区别)
@@ -580,6 +581,54 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 ?>
 ```
 
+## SQL 注入攻击
+
+### 1. 概念
+
+服务器上的数据库运行非法的 SQL 语句。
+
+例如一个网站登录验证的 SQL 查询代码为：
+
+```sql
+strSQL = "SELECT * FROM users WHERE (name = '" + userName + "') and (pw = '"+ passWord +"');"
+```
+
+如果填入以下内容：
+
+```sql
+userName = "1' OR '1'='1";
+passWord = "1' OR '1'='1";
+```
+
+那么 SQL 查询字符串为：
+
+```sql
+strSQL = "SELECT * FROM users WHERE (name = '1' OR '1'='1') and (pw = '1' OR '1'='1');"
+```
+
+此时无需验证通过就能执行以下查询：
+
+```sql
+strSQL = "SELECT * FROM users;"
+```
+
+### 2. 危害
+
+- 数据表中的数据外泄，例如个人机密数据，账户数据，密码等。
+- 数据结构被黑客探知，得以做进一步攻击（例如 SELECT * FROM sys.tables）。
+- 数据库服务器被攻击，系统管理员账户被窜改（例如 ALTER LOGIN sa WITH PASSWORD='xxxxxx'）。
+- 获取系统较高权限后，有可能得以在网页加入恶意链接、恶意代码以及 XSS 等。
+- 经由数据库服务器提供的操作系统支持，让黑客得以修改或控制操作系统（例如 xp_cmdshell "net stop iisadmin" 可停止服务器的 IIS 服务）。
+- 破坏硬盘数据，瘫痪全系统（例如 xp_cmdshell "FORMAT C:"）。
+
+### 3. 防范手段
+
+- 在设计应用程序时，完全使用参数化查询（Parameterized Query）来设计数据访问功能。
+- 在组合 SQL 字符串时，先针对所传入的参数作字符取代（将单引号字符取代为连续 2 个单引号字符）。
+- 如果使用 PHP 开发网页程序的话，亦可打开 PHP 的魔术引号（Magic quote）功能（自动将所有的网页传入参数，将单引号字符取代为连续 2 个单引号字符）。
+- 其他，使用其他更安全的方式连接 SQL 数据库。例如已修正过 SQL 注入问题的数据库连接组件，例如 ASP.NET 的 SqlDataSource 对象或是 LINQ to SQL。
+- 使用 SQL 防注入系统。
+
 # 八、各版本比较
 
 ## HTTP/1.0 与 HTTP/1.1 的区别
@@ -615,3 +664,4 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 - [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
+- [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
