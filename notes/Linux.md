@@ -49,7 +49,8 @@
     * [awk](#awk)
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
-    * [查看端口](#查看端口)
+    * [进程状态](#进程状态)
+    * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
@@ -995,7 +996,7 @@ dmtsai lines: 5 columns: 9
 范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
 ```text
-cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
+$ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
 daemon 2
@@ -1005,15 +1006,79 @@ daemon 2
 
 ## 查看进程
 
-```html
-ps aux | grep threadx
+### 1. ps
+
+查看某个时间点的进程信息
+
+示例一：查看自己的进程
+
+```
+# ps -l
 ```
 
-## 查看端口
+示例二：查看系统所有进程
+
+```
+# ps aux
+```
+
+示例三：查看特定的进程
 
 ```html
-netstat -anp | grep 80
+# ps aux | grep threadx
 ```
+
+### 2. top
+
+实时显示进程信息
+
+示例：两秒钟刷新一次
+
+```
+# top -d 2
+```
+
+### 3. pstree
+
+查看进程树
+
+示例：查看所有进程树
+
+```
+# pstree -A
+```
+
+### 4. netstat
+
+查看占用端口的进程
+
+```
+# netstat -anp | grep port
+```
+
+## 进程状态
+
+<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png"/> </div><br>
+
+<div align="center"> <img src="../pics//flow.png"/> </div><br>
+
+## 孤儿进程和僵死进程
+
+### 1. 孤儿进程
+
+一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+
+由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
+
+### 2. 僵死进程
+
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait 或 waitpid 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait 或 waitpid，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+
+僵死进程通过 ps 命令显示出来的状态为 Z。
+
+系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+
+要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
 
 # 十、I/O 复用
 
@@ -1154,3 +1219,5 @@ epoll 对文件描述符的操作有两种模式：LT（level trigger）和 ET�
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
 - [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
+- [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+- [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
