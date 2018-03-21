@@ -50,6 +50,7 @@
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
     * [进程状态](#进程状态)
+    * [SIGCHILD](#sigchild)
     * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
@@ -1058,7 +1059,22 @@ daemon 2
 
 ## 进程状态
 
+| 状态 | 说明 |
+| :---: | --- |
+| R | running or runnable (on run queue) |
+| D |  uninterruptible sleep (usually IO) |
+| S | interruptible sleep (waiting for an event to complete) |
+| Z | defunct/zombie, terminated but not reaped by its parent |
+| T | stopped, either by a job control signal or because it is being traced|
+
 <div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png"/> </div><br>
+
+## SIGCHILD
+
+当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
+
+- 得到 SIGCHLD 信号；
+- 阻塞的 waitpid(2)（或者 wait）调用会返回。
 
 <div align="center"> <img src="../pics//flow.png"/> </div><br>
 
