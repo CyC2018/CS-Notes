@@ -1348,7 +1348,7 @@ epoll_event有两种触发模式，LT模式和ET模式
 
 - select 会修改 fd_set 参数，而 poll 不会；
 - select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
-- poll 提供了更多多的事件类型。
+- poll 提供了更多的事件类型。
 
 ### 2. 速度
 
