@@ -59,9 +59,6 @@
     * [select 和 poll 比较](#select-和-poll-比较)
     * [eopll 工作模式](#eopll-工作模式)
     * [select poll epoll 应用场景](#select-poll-epoll-应用场景)
-    * [2. poll 应用场景](#2-poll-应用场景)
-    * [3. epoll 应用场景](#3-epoll-应用场景)
-    * [4. 性能对比](#4-性能对比)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1169,27 +1166,27 @@ int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct 
 ```c
 fd_set fd_in, fd_out;
 struct timeval tv;
- 
+
 // Reset the sets
 FD_ZERO( &fd_in );
 FD_ZERO( &fd_out );
- 
+
 // Monitor sock1 for input events
 FD_SET( sock1, &fd_in );
- 
+
 // Monitor sock2 for output events
 FD_SET( sock2, &fd_out );
- 
+
 // Find out which socket has the largest numeric value as select requires it
 int largest_sock = sock1 > sock2 ? sock1 : sock2;
- 
+
 // Wait up to 10 seconds
 tv.tv_sec = 10;
 tv.tv_usec = 0;
- 
+
 // Call the select
 int ret = select( largest_sock + 1, &fd_in, &fd_out, NULL, &tv );
- 
+
 // Check if select actually succeed
 if ( ret == -1 )
     // report error and abort
@@ -1199,7 +1196,7 @@ else
 {
     if ( FD_ISSET( sock1, &fd_in ) )
         // input event on sock1
- 
+
     if ( FD_ISSET( sock2, &fd_out ) )
         // output event on sock2
 }
@@ -1228,15 +1225,15 @@ struct pollfd {
 ```c
 // The structure for two events
 struct pollfd fds[2];
- 
+
 // Monitor sock1 for input
 fds[0].fd = sock1;
 fds[0].events = POLLIN;
- 
+
 // Monitor sock2 for output
 fds[1].fd = sock2;
 fds[1].events = POLLOUT;
- 
+
 // Wait 10 seconds
 int ret = poll( &fds, 2, 10000 );
 // Check if poll actually succeed
@@ -1272,7 +1269,7 @@ int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout
 ```c
 // Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
 // The function argument is ignored (it was not before, but now it is), so put your favorite number here
-int pollingfd = epoll_create( 0xCAFE ); 
+int pollingfd = epoll_create( 0xCAFE );
 
 if ( pollingfd < 0 )
  // report error
@@ -1286,7 +1283,7 @@ ev.data.ptr = pConnection1;
 
 // Monitor for input, and do not automatically rearm the descriptor after the event
 ev.events = EPOLLIN | EPOLLONESHOT;
-// Add the descriptor into the monitoring list. We can do it even if another thread is 
+// Add the descriptor into the monitoring list. We can do it even if another thread is
 // waiting in epoll_wait - the descriptor will be properly added
 if ( epoll_ctl( epollfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 )
     // report error
@@ -1328,7 +1325,7 @@ epoll_ct() 执行一次系统调用，用于向内核注册新的描述符或者
 
 epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select/poll 对注册的所有描述符遍历一遍。
 
-epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。 
+epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
 
 ## select 和 poll 比较
 
@@ -1373,7 +1370,7 @@ select() poll() epoll_wait() 都有一个 timeout 参数，在 select() 中 time
 
 select 历史更加悠久，它的可移植性更好，几乎被所有主流平台所支持。
 
-## 2. poll 应用场景
+### 2. poll 应用场景
 
 poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
 
@@ -1381,11 +1378,11 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 
 需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。epoll 的描述符存储在内核，不容易调试。
 
-## 3. epoll 应用场景
+### 3. epoll 应用场景
 
 程序只需要运行在 Linux 平台上，有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
 
-## 4. 性能对比
+### 4. 性能对比
 
 > [epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
 
