@@ -49,11 +49,14 @@
     * [awk](#awk)
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
-    * [查看端口](#查看端口)
+    * [进程状态](#进程状态)
+    * [SIGCHILD](#sigchild)
+    * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
     * [select() poll() epoll](#select-poll-epoll)
+    * [select 和 poll 比较](#select-和-poll-比较)
     * [select() poll() epoll 应用场景](#select-poll-epoll-应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -994,7 +997,7 @@ dmtsai lines: 5 columns: 9
 范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
 ```text
-cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
+$ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
 daemon 2
@@ -1004,15 +1007,94 @@ daemon 2
 
 ## 查看进程
 
-```html
-ps aux | grep threadx
+### 1. ps
+
+查看某个时间点的进程信息
+
+示例一：查看自己的进程
+
+```
+# ps -l
 ```
 
-## 查看端口
+示例二：查看系统所有进程
+
+```
+# ps aux
+```
+
+示例三：查看特定的进程
 
 ```html
-netstat -anp | grep 80
+# ps aux | grep threadx
 ```
+
+### 2. top
+
+实时显示进程信息
+
+示例：两秒钟刷新一次
+
+```
+# top -d 2
+```
+
+### 3. pstree
+
+查看进程树
+
+示例：查看所有进程树
+
+```
+# pstree -A
+```
+
+### 4. netstat
+
+查看占用端口的进程
+
+```
+# netstat -anp | grep port
+```
+
+## 进程状态
+
+| 状态 | 说明 |
+| :---: | --- |
+| R | running or runnable (on run queue) |
+| D |  uninterruptible sleep (usually IO) |
+| S | interruptible sleep (waiting for an event to complete) |
+| Z | defunct/zombie, terminated but not reaped by its parent |
+| T | stopped, either by a job control signal or because it is being traced|
+
+<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png"/> </div><br>
+
+## SIGCHILD
+
+当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
+
+- 得到 SIGCHLD 信号；
+- 阻塞的 waitpid(2)（或者 wait）调用会返回。
+
+<div align="center"> <img src="../pics//flow.png"/> </div><br>
+
+## 孤儿进程和僵死进程
+
+### 1. 孤儿进程
+
+一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+
+由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
+
+### 2. 僵死进程
+
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait 或 waitpid 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait 或 waitpid，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+
+僵死进程通过 ps 命令显示出来的状态为 Z。
+
+系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+
+要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
 
 # 十、I/O 复用
 
@@ -1057,7 +1139,7 @@ HTTP 服务器即要处理监听套接字，又要处理已连接的套接字，
 
 ### 3. 异步-阻塞
 
-这是 I/O 复用使用的一种模式，通过使用 slect()，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
 
 <div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
 
@@ -1129,7 +1211,7 @@ else
 
 在 Linux 中 select 最多支持 1024 个 fd_set 同时轮询，其中 1024 由 Linux 内核的 FD_SETSIZE 决定。如果需要打破该限制可以修改 FD_SETSIZE，然后重新编译内核。
 
-### 2. poll()
+### 2. poll
 
 ```c
 int poll (struct pollfd *fds, unsigned int nfds, int timeout);
@@ -1245,13 +1327,39 @@ epoll_ctl 执行一次系统调用，用于向内核注册新的描述符或者�
 epoll_wait 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select() poll() 对注册的所有描述符遍历一遍。
 
 epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select() poll() 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
+它是 select 和 poll 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
 
-epoll() 对文件描述符的操作有两种模式：LT（level trigger）和 ET（edge trigger）。
+select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
+
+#### eopll 工作模式
+
+epoll 对文件描述符的操作有两种模式：LT（level trigger）和 ET（edge trigger）。
 
 epoll_event有两种触发模式，LT模式和ET模式
 
 - LT 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
 - ET 模式：当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+
+## select 和 poll 比较
+
+### 1. 功能
+
+它们提供了几乎相同的功能，但是在一些细节上有所不同：
+
+- select 会修改 fd_set 参数，而 poll 不会；
+- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
+- poll 提供了更多多的事件类型。
+
+### 2. 速度
+
+poll 和 select 在速度上都很慢。
+
+- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
+- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
+
+### 3. 可移植性
+
+几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
 
 ## select() poll() epoll 应用场景
 
@@ -1285,3 +1393,6 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
 - [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
 - [select / poll / epoll: practical difference for system architects](https://www.ulduzsoft.com/2014/01/select-poll-epoll-practical-difference-for-system-architects/)
+- [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
+- [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+- [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
