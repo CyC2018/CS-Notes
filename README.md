@@ -82,7 +82,7 @@
 
 容器的一些总结，包含容器源码的分析。
 
-> [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
+> [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
 File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
