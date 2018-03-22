@@ -1,5 +1,5 @@
 <!-- GFM-TOC -->
-* [一、内存模型](#一内存模型)
+* [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
     * [Java 虚拟机栈](#java-虚拟机栈)
     * [本地方法栈](#本地方法栈)
@@ -46,12 +46,13 @@
 * [四、JVM 参数](#四jvm-参数)
     * [GC 优化配置](#gc-优化配置)
     * [GC 类型设置](#gc-类型设置)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-# 一、内存模型
+# 一、运行时数据区域
 
-<div align="center"> <img src="../pics//dc695f48-4189-4fc7-b950-ed25f6c80f82.jpg"/> </div><br>
+<div align="center"> <img src="../pics//dc695f48-4189-4fc7-b950-ed25f6c1521708518830.jpg"/> </div><br>
 
 注：白色区域为线程私有，蓝色区域为线程共享。
 
@@ -76,9 +77,27 @@
 
 所有对象实例都在这里分配内存。
 
-这块区域是垃圾收集器管理的主要区域（"GC 堆 "）。现在收集器基本都是采用分代收集算法，因此 Java 堆还可以分成：新生代和老年代，新生代还可以分成 Eden 空间、From Survivor 空间、To Survivor 空间等。
+这块区域是垃圾收集器管理的主要区域（"GC 堆 "）。现在收集器基本都是采用分代收集算法，该算法的思想是针对不同的对象采取不同的回收算法，因此虚拟机把 Java 堆分成以下三块：
 
-不需要连续内存，并且可以通过 -Xmx 和 -Xms 来控制动态扩展内存大小，如果动态扩展失败会抛出 OutOfMemoryError 异常。
+- 新生代（Young Generation）
+- 老年代（Old Generation）
+- 永久代（Permanent Generation）
+
+当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
+
+- Eden 空间
+- From 空间
+- To 空间
+
+<div align="center"> <img src="../pics//ppt_img.gif"/> </div><br>
+
+Java 堆不需要连续内存，并且可以通过动态增加其内存，增加失败会会抛出 OutOfMemoryError 异常。
+
+可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内容大小，第一个参数设置最小值，第二个参数设置最大值。
+
+```java
+java -Xms=1M -XmX=2M HackTheJava
+```
 
 ## 方法区
 
@@ -674,3 +693,8 @@ protected synchronized Class<?> loadClass(String name, boolean resolve) throws C
 ```java
 java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar java-application.jar
 ```
+
+# 参考资料
+
+- 深入理解 Java 虚拟机
+- [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
