@@ -15,9 +15,9 @@
         * [4. 方法区的回收](#4-方法区的回收)
         * [5. finalize()](#5-finalize)
     * [垃圾收集算法](#垃圾收集算法)
-        * [1. 标记-清除](#1-标记-清除)
+        * [1. 标记 - 清除](#1-标记---清除)
         * [2. 复制](#2-复制)
-        * [3. 标记-整理](#3-标记-整理)
+        * [3. 标记 - 整理](#3-标记---整理)
         * [4. 分代收集](#4-分代收集)
     * [垃圾收集器](#垃圾收集器)
         * [1. Serial 收集器](#1-serial-收集器)
@@ -103,9 +103,9 @@ java -Xss=512M HackTheJava
 
 当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
 
-- Eden 空间
-- From 空间
-- To 空间
+- Eden
+- From Survivor
+- To Survivor
 
 <div align="center"> <img src="../pics//ppt_img.gif"/> </div><br>
 
@@ -244,7 +244,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ## 垃圾收集算法
 
-### 1. 标记-清除
+### 1. 标记 - 清除
 
 <div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg"/> </div><br>
 
@@ -253,7 +253,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 不足：
 
 1. 标记和清除过程效率都不高
-2. 会产生大量碎片
+2. 会产生大量碎片，内存碎片过多可能导致无法给大对象分配内存
 
 之后的算法都是基于该算法进行改进。
 
@@ -267,7 +267,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survior 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和 使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90 %。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间。
 
-### 3. 标记-整理
+### 3. 标记 - 整理
 
 <div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg"/> </div><br>
 
@@ -280,7 +280,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 一般将 Java 堆分为新生代和老年代。
 
 1. 新生代使用：复制算法
-2. 老年代使用：标记-清理 或者 标记-整理 算法。
+2. 老年代使用：标记 - 清理 或者 标记 - 整理 算法
 
 ## 垃圾收集器
 
@@ -341,7 +341,7 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 <div align="center"> <img src="../pics//62e77997-6957-4b68-8d12-bfd609bb2c68.jpg"/> </div><br>
 
-CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记-清除算法实现的。
+CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记 - 清除算法实现的。
 
 特点：并发收集、低停顿。
 
@@ -360,7 +360,7 @@ CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记-�
 
 2. 无法处理浮动垃圾。由于并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生。这一部分垃圾出现在标记过程之后，CMS 无法在当次收集中处理掉它们，只好留到下一次 GC 时再清理掉，这一部分垃圾就被称为“浮动垃圾”。也是由于在垃圾收集阶段用户线程还需要运行，那也就还需要预留有足够的内存空间给用户线程使用，因此它不能像其他收集器那样等到老年代几乎完全被填满了再进行收集，需要预留一部分空间提供并发收集时的程序运作使用。可以使用 -XX:CMSInitiatingOccupancyFraction 的值来改变触发收集器工作的内存占用百分比，JDK 1.5 默认设置下该值为 68，也就是当老年代使用了 68% 的空间之后会触发收集器工作。如果该值设置的太高，导致浮动垃圾无法保存，那么就会出现 Concurrent Mode Failure，此时虚拟机将启动后备预案：临时启用 Serial Old 收集器来重新进行老年代的垃圾收集。
 
-3. 标记-清除算法导致的空间碎片，给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
+3. 标记 - 清除算法导致的空间碎片，给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
 
 ### 7. G1 收集器
 
@@ -391,7 +391,7 @@ Region 不可能是孤立的，一个对象分配在某个 Region 中，可以�
 ### 8. 七种垃圾收集器的比较
 
 | 收集器 | 串行、并行 or 并发 | 新生代 / 老年代 | 算法 | 目标 | 适用场景 |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 |  **Serial**  | 串行 | 新生代 | 复制算法 | 响应速度优先 | 单 CPU 环境下的 Client 模式 |
 |  **Serial Old**  | 串行 | 老年代 | 标记-整理 | 响应速度优先 | 单 CPU 环境下的 Client 模式、CMS 的后备预案 |
 |  **ParNew**  | 并行 | 新生代 | 复制算法 | 响应速度优先 | 多 CPU 环境时在 Server 模式下与 CMS 配合 |
@@ -602,18 +602,18 @@ public class Test {
 
 ```java
 static class Parent {
-        public static int A = 1;
-        static {
-            A = 2;
-        }
+    public static int A = 1;
+    static {
+        A = 2;
+    }
 }
 
 static class Sub extends Parent {
-        public static int B = A;
+    public static int B = A;
 }
 
 public static void main(String[] args) {
-        System.out.println(Sub.B);  // 输出结果是父类中的静态变量 A 的值 ，也就是 2。
+     System.out.println(Sub.B);  // 输出结果是父类中的静态变量 A 的值 ，也就是 2。
 }
 ```
 
@@ -635,13 +635,15 @@ public static void main(String[] args) {
 
 从 Java 虚拟机的角度来讲，只存在以下两种不同的类加载器：
 
-一种是启动类加载器（Bootstrap ClassLoader），这个类加载器用 C++ 实现，是虚拟机自身的一部分；另一种就是所有其他类的加载器，这些类由 Java 实现，独立于虚拟机外部，并且全都继承自抽象类 java.lang.ClassLoader。
+- 启动类加载器（Bootstrap ClassLoader），这个类加载器用 C++ 实现，是虚拟机自身的一部分；
+
+- 所有其他类的加载器，这些类由 Java 实现，独立于虚拟机外部，并且全都继承自抽象类 java.lang.ClassLoader。
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
-- 启动类加载器（Bootstrap ClassLoader） 此类加载器负责将存放在 <JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+- 启动类加载器（Bootstrap ClassLoader） 此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
 
-- 扩展类加载器（Extension ClassLoader） 这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 <Java_Home>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+- 扩展类加载器（Extension ClassLoader） 这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
 
 - 应用程序类加载器（Application ClassLoader） 这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
