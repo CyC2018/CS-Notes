@@ -70,7 +70,7 @@
 
 ## Java :coffee:
 
-> [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
+> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
 整理自《深入理解 Java 虚拟机》
 
