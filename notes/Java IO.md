@@ -14,9 +14,9 @@
     * [通道与缓冲区](#通道与缓冲区)
     * [缓冲区状态变量](#缓冲区状态变量)
     * [文件 NIO 实例](#文件-nio-实例)
-    * [阻塞与非阻塞](#阻塞与非阻塞)
     * [套接字 NIO 实例](#套接字-nio-实例)
     * [内存映射文件](#内存映射文件)
+    * [对比](#对比)
 * [八、参考资料](#八参考资料)
 <!-- GFM-TOC -->
 
@@ -158,7 +158,7 @@ I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的�
 
 一个面向块的 I/O 系统以块的形式处理数据，一次处理数据块。按块处理数据比按流处理数据要快得多。但是面向块的 I/O 缺少一些面向流的 I/O 所具有的优雅性和简单性。
 
-I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如， java.io.\* 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
+I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，java.io.\* 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
 ## 通道与缓冲区
 
@@ -197,39 +197,44 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - position：当前已经读写的字节数；
 - limit：还可以读写的字节数。
 
-状态变量的改变过程：
+状态变量的改变过程举例：
 
-1. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 9。capacity 变量不会改变，下面的讨论会忽略它。
+① 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 9。capacity 变量不会改变，下面的讨论会忽略它。
+
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-2. 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
+② 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
+
 <div align="center"> <img src="../pics//4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div><br>
 
-3. 以下图例为已经从输入通道读取了 5 个字节数据写入缓冲区中。在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
+③ 以下图例为已经从输入通道读取了 5 个字节数据写入缓冲区中。在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
+
 <div align="center"> <img src="../pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
 
-4. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
+④ 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
+
 <div align="center"> <img src="../pics//b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
 
-5. 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
+⑤ 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
+
 <div align="center"> <img src="../pics//67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
 
 ## 文件 NIO 实例
 
-1\. 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；
+① 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；
 
 ```java
 FileInputStream fin = new FileInputStream("readandshow.txt");
 FileChannel fic = fin.getChannel();
 ```
 
-2\. 创建一个容量为 1024 的 Buffer；
+② 创建一个容量为 1024 的 Buffer；
 
 ```java
 ByteBuffer buffer = ByteBuffer.allocate(1024);
 ```
 
-3\. 将数据从输入 FileChannel 写入到 Buffer 中，如果没有数据的话， read() 方法会返回 -1；
+③ 将数据从输入 FileChannel 写入到 Buffer 中，如果没有数据的话，read() 方法会返回 -1；
 
 ```java
 int r = fcin.read(buffer);
@@ -238,52 +243,30 @@ if (r == -1) {
 }
 ```
 
-4\. 为要写入的文件创建 FileOutputStream，之后通过 FileOutputStream 获取输出 FileChannel
+④ 为要写入的文件创建 FileOutputStream，之后通过 FileOutputStream 获取输出 FileChannel
 
 ```java
 FileOutputStream fout = new FileOutputStream("writesomebytes.txt");
 FileChannel foc = fout.getChannel();
 ```
 
-5\. 调用 flip() 切换读写
+⑤ 调用 flip() 切换读写
 
 ```java
 buffer.flip();
 ```
 
-6\. 把 Buffer 中的数据读取到输出 FileChannel 中
+⑥ 把 Buffer 中的数据读取到输出 FileChannel 中
 
 ```java
 foc.write(buffer);
 ```
 
-7\. 最后调用 clear() 重置缓冲区
+⑦ 最后调用 clear() 重置缓冲区
 
 ```java
 buffer.clear();
 ```
-
-## 阻塞与非阻塞
-
-应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。
-
-### 1. 阻塞式 I/O
-
-阻塞式 I/O 在调用 InputStream.read() 方法时会一直等到数据到来时（或超时）才会返回，在调用 ServerSocket.accept() 方法时，也会一直阻塞到有客户端连接才会返回。
-
-服务端都会为每个连接的客户端创建一个线程来处理读写请求，阻塞式的特点会造成服务器会创建大量线程，并且大部分线程处于阻塞的状态，因此对服务器的性能会有很大的影响。
-
-<div align="center"> <img src="../pics//edc23f99-c46c-4200-b64e-07516828720d.jpg"/> </div><br>
-
-### 2. 非阻塞式 I/O
-
-由一个专门的线程来处理所有的 I/O 事件，并负责分发。
-
-事件驱动机制：事件到的时候触发，而不是同步地监视事件。
-
-线程通信：线程之间通过 wait()、notify() 等方式通信，保证每次上下文切换都是有意义的，减少无谓的线程切换。
-
-<div align="center"> <img src="../pics//7fcb2fb0-2cd9-4396-bc2d-282becf963c3.jpg"/> </div><br>
 
 ## 套接字 NIO 实例
 
@@ -394,15 +377,22 @@ it.remove();
 
 只有文件中实际读取或者写入的部分才会映射到内存中。
 
-现代操作系统一般根据需要将文件的部分映射为内存的部分，从而实现文件系统。Java 内存映射机制不过是在底层操作系统中可以采用这种机制时，提供了对该机制的访问。
+现代操作系统一般会根据需要将文件的部分映射为内存的部分，从而实现文件系统。Java 内存映射机制只不过是在底层操作系统中可以采用这种机制时，提供了对该机制的访问。
 
 向内存映射文件写入可能是危险的，仅只是改变数组的单个元素这样的简单操作，就可能会直接修改磁盘上的文件。修改数据与将数据保存到磁盘是没有分开的。
 
-下面代码行将文件的前 1024 个字节映射到内存中，map() 方法返回一个 MappedByteBuffer，它是 ByteBuffer 的子类。因此，您可以像使用其他任何 ByteBuffer 一样使用新映射的缓冲区，操作系统会在需要时负责执行行映射。
+下面代码行将文件的前 1024 个字节映射到内存中，map() 方法返回一个 MappedByteBuffer，它是 ByteBuffer 的子类。因此，您可以像使用其他任何 ByteBuffer 一样使用新映射的缓冲区，操作系统会在需要时负责执行映射。
 
 ```java
 MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 ```
+
+## 对比
+
+NIO 与普通 I/O 的区别主要有以下两点：
+
+- NIO 是非阻塞的。应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。
+- NIO 面向流，I/O 面向块。
 
 # 八、参考资料
 
