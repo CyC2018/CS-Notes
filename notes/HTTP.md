@@ -86,6 +86,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 ## GET
 
 > 获取资源
+
 当前网络请求中，绝大部分使用的是 GET 方法。
 
 ## POST
@@ -94,7 +95,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 POST 主要目的不是获取资源，而是传输存储在内容实体中的数据。
 
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。另外，GET 方法浏览器会把 HTTP Header 和 Data 一并发送出去，服务器响应200（OK）并返回数据。对于 POST，浏览器先发送 Header，服务器响应100（Continue），浏览器再发送 Dta，服务器响应200（OK）并返回数据。
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
 
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
@@ -107,6 +108,8 @@ name1=value1&name2=value2
 ```
 
 GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
+
+GET 和 POST 的另一个区别是，使用 GET 方法，浏览器会把 HTTP Header 和 Data 一并发送出去，服务器响应 200（OK）并返回数据。而使用 POST 方法，浏览器先发送 Header，服务器响应 100（Continue）之后，浏览器再发送 Data，最后服务器响应 200（OK）并返回数据。
 
 ## HEAD
 
