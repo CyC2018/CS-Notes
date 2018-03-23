@@ -927,3 +927,4 @@ public static String concatString(String s1, String s2, String s3) {
 - [线程通信](http://ifeve.com/thread-signaling/#missed_signal)
 - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
 - [BlockingQueue](http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html)
+- [thread state java](https://stackoverflow.com/questions/11265289/thread-state-java)

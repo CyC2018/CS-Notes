@@ -1,8 +1,6 @@
 <!-- GFM-TOC -->
 * [一、概览](#一概览)
-    * [List](#list)
-    * [Set](#set)
-    * [Queue](#queue)
+    * [Collection](#collection)
     * [Map](#map)
     * [Java 1.0/1.1 容器](#java-1011-容器)
 * [二、容器中的设计模式](#二容器中的设计模式)
@@ -23,17 +21,13 @@
 
 # 一、概览
 
-<div align="center"> <img src="../pics//ebf03f56-f957-4435-9f8f-0f605661484d.jpg"/> </div><br>
-
 容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。
 
-## List
+## Collection
 
-- ArrayList：基于动态数组实现，支持随机访问；
+<div align="center"> <img src="../pics//java-collections.png"/> </div><br>
 
-- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
-
-## Set
+### 1. Set
 
 - HashSet：基于 Hash 实现，支持快速查找，但是失去有序性；
 
@@ -41,11 +35,21 @@
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序，因此具有有序性。
 
-## Queue
+### 2. List
 
-只有两个实现：LinkedList 和 PriorityQueue，其中 LinkedList 支持双向队列，PriorityQueue 是基于堆结构实现。
+- ArrayList：基于动态数组实现，支持随机访问；
+
+- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
+
+### 3. Queue
+
+- LinkedList：可以用它来支持双向队列；
+
+- PriorityQueue 是基于堆结构实现。
 
 ## Map
+
+<div align="center"> <img src="../pics//java-collections1.png"/> </div><br>
 
 - HashMap：基于 Hash 实现。
 
@@ -418,3 +422,4 @@ private V putForNullKey(V value) {
 # 五、参考资料
 
 - Java 编程思想
+- [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
