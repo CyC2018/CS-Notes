@@ -27,6 +27,7 @@
     * [Java 各版本的新特性](#java-各版本的新特性)
     * [Java 与 C++ 的区别](#java-与-c++-的区别)
     * [JRE or JDK](#jre-or-jdk)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -34,41 +35,55 @@
 
 ## final
 
-<font size=4>  **1. 数据**  </font> </br>
+**1. 数据** 
 
 声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。
 
 - 对于基本类型，final 使数值不变；
 - 对于引用类型，final 使引用不变，也就不能引用其它对象，但是被引用的对象本身是可以修改的。
 
-<font size=4>  **2. 方法**  </font> </br>
+```java
+final int x = 1;
+x = 2;  // cannot assign value to final variable 'x'
+final A y = new A();
+y.a = 1;
+```
+
+**2. 方法**  </font> </br>
 
 声明方法不能被子类覆盖。
 
 private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是覆盖基类方法，而是重载了。
 
-<font size=4>  **3. 类**  </font> </br>
+**3. 类** 
 
 声明类不允许被继承。
 
 ## static
 
-<font size=4>  **1. 静态变量**  </font> </br>
+**1. 静态变量** 
 
 静态变量在内存中只存在一份，只在类第一次实例化时初始化一次。
 
-- 静态变量： 类所有的实例都共享静态变量，可以直接通过类名来访问它；
+- 静态变量：类所有的实例都共享静态变量，可以直接通过类名来访问它；
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
 
-<font size=4>  **2. 静态方法**  </font> </br>
+```java
+public class A {
+    private int x;        // 实例变量
+    public static int y;  // 静态变量
+}
+```
+
+**2. 静态方法** 
 
 静态方法在类加载的时候就存在了，它不依赖于任何实例，所以 static 方法必须实现，也就是说它不能是抽象方法（abstract）。
 
-<font size=4>  **3. 静态语句块**  </font> </br>
+**3. 静态语句块** 
 
 静态语句块和静态变量一样在类第一次实例化时运行一次。
 
-<font size=4>  **4. 初始化顺序**  </font> </br>
+**4. 初始化顺序** 
 
 静态数据优先于其它数据的初始化，静态变量和静态语句块哪个先运行取决于它们在代码中的顺序。
 
@@ -141,19 +156,64 @@ protected void finalize() throws Throwable {}
 
 ## clone()
 
-<font size=4>  **1. 浅拷贝**  </font> </br>
+**1. cloneable** 
 
-引用类型引用同一个对象。clone() 方法默认就是浅拷贝实现。
+clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去重载 clone() 就没有这个方法。
 
-<div align="center"> <img src="../pics//d990c0e7-64d1-4ba3-8356-111bc91e53c5.png"/> </div><br>
+```java
+public class CloneTest {
+    private int a;
+    private int b;
+}
+```
 
-<font size=4>  **2. 深拷贝**  </font> </br>
+```java
+CloneTest x = new CloneTest();
+CloneTest y = x.clone(); // 'clone()' has protected access in 'java.lang.Object'
+```
+
+接下来重载 Object 的 clone() 得到以下实现：
+
+```java
+public class CloneTest{
+    private int a;
+    private int b;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+```
+
+```java
+CloneTest x = new CloneTest();
+try {
+    CloneTest y = (CloneTest) x.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+```
+
+```html
+java.lang.CloneNotSupportedException: CloneTest
+```
+
+以上跑出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protect 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+
+**2. 深拷贝与浅拷贝** 
+
 
 可以使用序列化实现。
 
 <div align="center"> <img src="../pics//2e5620c4-b558-46fe-8f12-00c9dd597a61.png"/> </div><br>
 
 > [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
+
+- 浅拷贝：引用类型引用同一个对象。
+- 深拷贝：引用类型引用新的对象。
+
+<div align="center"> <img src="../pics//CLone_20_281_29.png" width="800"/> </div><br>
 
 ## equals()
 
@@ -551,3 +611,8 @@ Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Obje
 
 - JRE is the JVM program, Java application need to run on JRE.
 - JDK is a superset of JRE, JRE + tools for developing java programs. e.g, it provides the compiler "javac"
+
+# 参考资料
+
+- Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
+- Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
