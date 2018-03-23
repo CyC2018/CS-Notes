@@ -45,7 +45,7 @@
 
 - LinkedList：可以用它来支持双向队列；
 
-- PriorityQueue 是基于堆结构实现。
+- PriorityQueue 是基于堆结构实现，可以用它来实现优先级队列。
 
 ## Map
 
@@ -56,8 +56,6 @@
 - LinkedHashMap：使用链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
 - TreeMap：基于红黑树实现。
-
-- ConcurrentHashMap：线程安全 Map，不涉及类似于 HashTable 的同步加锁。
 
 ## Java 1.0/1.1 容器
 
@@ -71,9 +69,22 @@
 
 ## 迭代器模式
 
-从概览图可以看到，每个集合类都有一个 Iterator 对象，可以通过这个迭代器对象来遍历集合中的元素。
+<div align="center"> <img src="../pics//Iterator-1.jpg"/> </div><br>
 
-[Java 中的迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#1-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
+Collection 实现了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
+
+从 JDK 5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。
+
+```java
+List<String> list = new ArrayList<>();
+list.add("a");
+list.add("b");
+for (String item : list) {
+    System.out.println(item);
+}
+```
+
+> [迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E4%BA%8C%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
 ## 适配器模式
 
@@ -85,19 +96,51 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
  list = Arrays.asList(arr);
 ```
 
+> [适配器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F)
+
 # 三、散列
 
-使用 hasCode() 来返回散列值，使用的是对象的地址。
+hasCode() 返回散列值，使用的是对象的地址。
 
 而 equals() 是用来判断两个对象是否相等的，相等的两个对象散列值一定要相同，但是散列值相同的两个对象不一定相等。
 
 相等必须满足以下五个性质：
 
-1. 自反性
-2. 对称性
-3. 传递性
-4. 一致性（多次调用 x.equals(y)，结果不变）
-5. 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+**1. 自反性** 
+
+```java
+x.equals(x); // true
+```
+
+**2. 对称性** 
+
+```java
+x.equals(y) == y.equals(x) // true
+```
+
+**3. 传递性** 
+
+```java
+if x.equals(y) && y.equals(z) {
+    x.equals(z); // true;
+}
+```
+
+**4. 一致性** 
+
+多次调用 equals() 方法结果不变
+
+```java
+x.equals(y) == x.equals(y) == x.equals(y) == x.equals(y); // true
+```
+
+**5. 与 null 的比较** 
+
+对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+
+```java
+x.euqals(null); // false;
+```
 
 # 四、源码分析
 
@@ -423,3 +466,4 @@ private V putForNullKey(V value) {
 
 - Java 编程思想
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
+- [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
