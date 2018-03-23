@@ -396,26 +396,12 @@ Consumer4 is consuming product made by Consumer4...
 
 <div align="center"> <img src="../pics//n2U3N.png" width="800"/> </div><br>
 
-1. NEW（新建）：创建后尚未启动的线程。
-2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
-3. BLOCKED（阻塞）：阻塞与等待的区别是，阻塞在等待着获取到一个排它锁，这个时间将在另一个线程放弃这个锁的时候发生；而等待则是在等待一段时间，或者唤醒动作的发生。在程序等待进入同步区域的时候，线程将进入这种状态。
-4. Waiting（无限期等待）：处于这种状态的进行不会被分配 CPU 执行时间，它们要等待其它线程显示地唤醒。以下方法会让线程进入这种状态：
-5. TIMED_WAITING（限期等待）：处于这种状态的线程也不会被分配 CPU 执行时间，不过无序等待其它线程显示地唤醒，在一定时间之后它们会由系统自动唤醒。
-6. TERMINATED（死亡）
-
-以下方法会让线程陷入无限期的等待状态：
-
-- 没有设置 Timeout 参数的 Object.wait() 方法
-- 没有设置 Timeout 参数的 Thread.join() 方法
-- LockSupport.park() 方法
-
-以下方法会让线程进入限期等待状体：
-
-- Thread.sleep()
-- 设置了 Timeout 参数的 Object.wait() 方法
-- 设置了 Timeout 参数的 Thread.join() 方法
-- LockSupport.parkNanos() 方法
-- LockSupport.parkUntil() 方法
+1. 新建（New）：创建后尚未启动；
+2. 可运行（Runnale）：可能正在运行，也可能正在等待 CPU 时间片；
+3. 无限期等待（Waiting）：等待其它线程显示地唤醒，否则不会被分配 CPU 时间片；
+4. 限期等待（Timed Waiting）：无序等待其它线程显示地唤醒，在一定时间之后会被系统自动唤醒；
+5. 阻塞（Blocking）：等待获取一个排它锁，如果其线程释放了锁就会结束此状态；
+6. 死亡（Terminated）
 
 # 六、Executor
 
