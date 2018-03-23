@@ -9,17 +9,19 @@
     * [yield()](#yield)
     * [join()](#join)
     * [deamon](#deamon)
-* [三、线程之间的协作](#三线程之间的协作)
-    * [线程通信](#线程通信)
+* [三、结束线程](#三结束线程)
+    * [阻塞](#阻塞)
+    * [中断](#中断)
+* [四、线程之间的协作](#四线程之间的协作)
+    * [同步与通信的概念理解](#同步与通信的概念理解)
     * [线程同步](#线程同步)
         * [1. synchronized](#1-synchronized)
         * [2. Lock](#2-lock)
-        * [3. BlockingQueue](#3-blockingqueue)
-* [五、结束线程](#五结束线程)
-    * [阻塞](#阻塞)
-    * [中断](#中断)
-* [六、线程状态转换](#六线程状态转换)
-* [二、Executor](#二executor)
+    * [线程通信](#线程通信)
+        * [1. wait()、notify() notifyAll()](#1-waitnotify-notifyall)
+        * [2. BlockingQueue](#2-blockingqueue)
+* [五、线程状态转换](#五线程状态转换)
+* [六、Executor](#六executor)
 * [七、volatile](#七volatile)
     * [保证内存可见性](#保证内存可见性)
     * [禁止指令重排](#禁止指令重排)
@@ -174,42 +176,67 @@ main() 属于非后台线程。
 
 使用 setDaemon() 方法将一个线程设置为后台线程。
 
-# 三、线程之间的协作
+# 三、结束线程
 
-## 线程通信
+## 阻塞
 
-**wait()、notify() 和 notifyAll()**  三者实现了线程之间的通信。
+一个线程进入阻塞状态可能有以下原因：
 
-wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。
+1. 调用 Thread.sleep() 方法进入休眠状态；
+2. 通过 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
+3. 等待某个 I/O 的完成；
+4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
 
-sleep() 和 yield() 并没有释放锁，但是 wait() 会释放锁。实际上，只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
+## 中断
 
-这几个方法属于基类的一部分，而不属于 Thread。
+使用中断机制即可终止阻塞的线程。
 
-```java
-private boolean flag = false;
+使用  **interrupt()**  方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
 
-public synchronized void after() {
-    while(flag == false) {
-        wait();
-        // ...
-    }
-}
+应当捕获这个 InterruptedException 异常，从而做一些清理资源的操作。
 
-public synchronized void before() {
-    flag = true;
-    notifyAll();
-}
-```
+**1. 不可中断的阻塞** 
 
-**wait() 和 sleep() 的区别** 
+不能中断 I/O 阻塞和 synchronized 锁阻塞。
 
-1. wait() 是 Object 类的方法，而 sleep() 是 Thread 的静态方法；
-2. wait() 会放弃锁，而 sleep() 不会。
+**2. Executor 的中断操作** 
+
+Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
+
+如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
+
+**3. 检查中断** 
+
+通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
+
+interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
+
+interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
+
+# 四、线程之间的协作
+
+## 同步与通信的概念理解
+
+在操作系统中，有三个概念用来描述进程间的协作关系：
+
+1. 互斥：多个进程在同一时刻只有一个进程能进入临界区；
+2. 同步：多个进程按一定顺序执行；
+3. 通信：多个进程间的信息传递。
+
+互斥是对临界资源访问的一种约束条件，它防止多个进程同时对临界资源进行访问。
+
+通信是一种手段，它可以用来实现同步。也就是说，通过在多个进程间传递信息，可以控制多个进程以一定顺序执行。
+
+进程和线程在一定程度上类似，也可以用这些概念来描述。
+
+在 Java 语言中，这些概念描述有些差别：
+
+1. 同步：可以和操作系统的互斥等同；
+2. 通信：可以和操作系统的同步等同。
 
 ## 线程同步
 
-给定一个进程内的所有线程，都共享同一存储空间，这样有好处又有坏处。这些线程就可以共享数据，非常有用。不过，在两个线程同时修改某一资源时，这也会造成一些问题。Java 提供了同步机制，以控制对共享资源的互斥访问。
+给定一个进程内的所有线程，都共享同一存储空间，这样有好处又有坏处。这些线程就可以共享数据，非常有用。不过，在两个线程同时修改某一资源时，这也会造成一些问题。Java 提供了同步机制，以控制对共享资源的互斥访问。 b
 
 ### 1. synchronized
 
@@ -235,7 +262,7 @@ public void func(String name) {
 
 ### 2. Lock
 
-若要实现更细粒度的控制，我们可以使用锁（lock）。
+实现更细粒度的控制。
 
 ```java
 private Lock lock;
@@ -249,7 +276,40 @@ public int func(int value) {
 }
 ```
 
-### 3. BlockingQueue
+## 线程通信
+
+### 1. wait()、notify() notifyAll()
+
+它们都属于 Object 的一部分，而不属于 Thread。
+
+wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。
+
+sleep() 和 yield() 并没有释放锁，但是 wait() 会释放锁。
+
+实际上，只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
+
+```java
+private boolean flag = false;
+
+public synchronized void after() {
+    while(flag == false) {
+        wait();
+        // ...
+    }
+}
+
+public synchronized void before() {
+    flag = true;
+    notifyAll();
+}
+```
+
+**wait() 和 sleep() 的区别** 
+
+1. wait() 是 Object 类的方法，而 sleep() 是 Thread 的静态方法；
+2. wait() 会放弃锁，而 sleep() 不会。
+
+### 2. BlockingQueue
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
@@ -257,6 +317,8 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 -  **优先级队列** ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将一直阻塞到队列中有内容，如果队列为满  put() 将阻塞到队列有空闲位置。它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
+
+阻塞队列的 take() 和 put() 方法是线程安全的。
 
 **使用 BlockingQueue 实现生产者消费者问题** 
 
@@ -343,44 +405,8 @@ Consumer3 is consuming product made by Consumer3...
 Consumer4 is consuming product made by Consumer4...
 ```
 
-# 五、结束线程
 
-## 阻塞
-
-一个线程进入阻塞状态可能有以下原因：
-
-1. 调用 Thread.sleep() 方法进入休眠状态；
-2. 通过 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
-3. 等待某个 I/O 的完成；
-4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
-
-## 中断
-
-使用中断机制即可终止阻塞的线程。
-
-使用  **interrupt()**  方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
-
-应当捕获这个 InterruptedException 异常，从而做一些清理资源的操作。
-
-**不可中断的阻塞** 
-
-不能中断 I/O 阻塞和 synchronized 锁阻塞。
-
-**Executor 的中断操作** 
-
-Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
-
-如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
-
-**检查中断** 
-
-通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
-
-interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
-
-interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
-
-# 六、线程状态转换
+# 五、线程状态转换
 
 <div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
 
@@ -405,7 +431,7 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 - LockSupport.parkNanos() 方法
 - LockSupport.parkUntil() 方法
 
-# 二、Executor
+# 六、Executor
 
 Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
 
@@ -926,4 +952,6 @@ public static String concatString(String s1, String s2, String s3) {
 
 - Java 编程思想
 - 深入理解 Java 虚拟机
+- [线程通信](http://ifeve.com/thread-signaling/#missed_signal)
 - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
+- [BlockingQueue](http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html)
