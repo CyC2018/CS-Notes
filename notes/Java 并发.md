@@ -4,13 +4,12 @@
     * [实现 Callable 接口](#实现-callable-接口)
     * [继承 Thread 类](#继承-thread-类)
     * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
-* [二、Executor](#二executor)
-* [三、基础线程机制](#三基础线程机制)
+* [二、基础线程机制](#二基础线程机制)
     * [sleep()](#sleep)
     * [yield()](#yield)
     * [join()](#join)
     * [deamon](#deamon)
-* [四、线程之间的协作](#四线程之间的协作)
+* [三、线程之间的协作](#三线程之间的协作)
     * [线程通信](#线程通信)
     * [线程同步](#线程同步)
         * [1. synchronized](#1-synchronized)
@@ -20,6 +19,7 @@
     * [阻塞](#阻塞)
     * [中断](#中断)
 * [六、线程状态转换](#六线程状态转换)
+* [二、Executor](#二executor)
 * [七、volatile](#七volatile)
     * [保证内存可见性](#保证内存可见性)
     * [禁止指令重排](#禁止指令重排)
@@ -126,29 +126,12 @@ public class MyThread extends Thread {
 1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
 2. 类可能只要求可执行即可，继承整个 Thread 类开销会过大。
 
-# 二、Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
-
-主要有三种 Executor：
-
-
-1. CachedTreadPool：一个任务创建一个线程；
-2. FixedThreadPool：所有任务只能使用固定大小的线程；
-3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
-
-```java
-ExecutorService exec = Executors.newCachedThreadPool();
-for(int i = 0; i < 5; i++) {
-    exec.execute(new MyRunnable());
-}
-```
-
-# 三、基础线程机制
+# 二、基础线程机制
 
 ## sleep()
 
-**Thread.sleep(millisec)**  方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
+Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
 
 sleep() 可能会抛出 InterruptedException。因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
 
@@ -166,7 +149,7 @@ public void run() {
 
 ## yield()
 
-对静态方法  **Thread.yield()**  的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
+对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
 
 ```java
 public void run() {
@@ -177,13 +160,13 @@ public void run() {
 
 ## join()
 
-在线程中调用另一个线程的  **join()**  方法，会将当前线程挂起，直到目标线程结束。
+在线程中调用另一个线程的 join() 方法，会将当前线程挂起，直到目标线程结束。
 
 可以加一个超时参数。
 
 ## deamon
 
-后台线程（ **deamon** ）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
+守护线程（deamon）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
 
 当所有非后台线程结束时，程序也就终止，同时会杀死所有后台线程。
 
@@ -191,10 +174,7 @@ main() 属于非后台线程。
 
 使用 setDaemon() 方法将一个线程设置为后台线程。
 
-# 四、线程之间的协作
-
--  **线程通信** ：保证线程以一定的顺序执行；
--  **线程同步** ：保证线程对临界资源的互斥访问。
+# 三、线程之间的协作
 
 线程通信往往是基于线程同步的基础上完成的，因此很多线程通信问题也是线程同步问题。
 
@@ -426,6 +406,23 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 - 设置了 Timeout 参数的 Thread.join() 方法
 - LockSupport.parkNanos() 方法
 - LockSupport.parkUntil() 方法
+
+# 二、Executor
+
+Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
+
+主要有三种 Executor：
+
+1. CachedTreadPool：一个任务创建一个线程；
+2. FixedThreadPool：所有任务只能使用固定大小的线程；
+3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
+
+```java
+ExecutorService exec = Executors.newCachedThreadPool();
+for(int i = 0; i < 5; i++) {
+    exec.execute(new MyRunnable());
+}
+```
 
 # 七、volatile
 
