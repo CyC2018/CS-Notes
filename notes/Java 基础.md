@@ -199,21 +199,17 @@ try {
 java.lang.CloneNotSupportedException: CloneTest
 ```
 
-以上跑出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protect 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protect 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 **2. 深拷贝与浅拷贝** 
 
+<div align="center"> <img src="../pics//CLone_20_281_29.png" width="800"/> </div><br>
 
-可以使用序列化实现。
-
-<div align="center"> <img src="../pics//2e5620c4-b558-46fe-8f12-00c9dd597a61.png"/> </div><br>
+- 浅拷贝：拷贝对象和原对象的引用类型引用同一个对象；
+- 深拷贝：引用不同对象。
 
 > [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
 
-- 浅拷贝：引用类型引用同一个对象。
-- 深拷贝：引用类型引用新的对象。
-
-<div align="center"> <img src="../pics//CLone_20_281_29.png" width="800"/> </div><br>
 
 ## equals()
 
