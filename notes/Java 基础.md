@@ -208,20 +208,24 @@ java.lang.CloneNotSupportedException: CloneTest
 - 浅拷贝：拷贝对象和原对象的引用类型引用同一个对象；
 - 深拷贝：引用不同对象。
 
-> [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
+实现深拷贝的方法：
 
+- [Defensive copying](http://www.javapractices.com/topic/TopicAction.do?Id=15)
+- [copy constructors](http://www.javapractices.com/topic/TopicAction.do?Id=12)
+- [static factory methods](http://www.javapractices.com/topic/TopicAction.do?Id=21).
+
+> [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
 
 ## equals()
 
-<font size=4>  **1. == 与 equals() 区别**  </font> </br>
+**1. == 与 equals() 区别** 
 
-- 对于基本类型，== 判断两个值是否相等；
-
+- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
 - 对于引用类型，== 判断两个引用是否引用同一个对象，而 equals() 判断引用的对象是否等价。
 
-<font size=4>  **2. 等价性**  </font> </br>
+**2. 等价性** 
 
-> [散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E6%95%A3%E5%88%97)
+> [散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E4%B8%89%E6%95%A3%E5%88%977)
 
 # 四、继承
 
@@ -229,7 +233,12 @@ java.lang.CloneNotSupportedException: CloneTest
 
 Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见。
 
-可以对类或类中的成员（字段以及方法）加上访问修饰符。成员可见表示其它类可以用成员所在类的对象访问到该成员；类可见表示其它类可以用这个类创建对象。在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
+可以对类或类中的成员（字段以及方法）加上访问修饰符。
+
+- 成员可见表示其它类可以用成员所在类的对象访问到该成员；
+- 类可见表示其它类可以用这个类创建对象。
+
+在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
 
 protected 用于修饰成员，表示在继承体系中成员对于子类可见。但是这个访问修饰符对于类没有意义，因为包没有继承体系。
 
@@ -237,9 +246,9 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 
 ## 抽象类与接口
 
-<font size=4>  **1. 抽象类**  </font> </br>
+**1. 抽象类** 
 
-抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，但是少数情况下可以不包含，例如 HttpServlet 类，但是抽象方法一定位于抽象类中。抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
+抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
 
 ```java
 public abstract class GenericServlet implements Servlet, ServletConfig, Serializable {
@@ -255,9 +264,9 @@ public abstract class GenericServlet implements Servlet, ServletConfig, Serializ
 
 > [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 
-<font size=4>  **2. 接口**  </font> </br>
+**2. 接口** 
 
-接口是抽象类的延伸，Java 为了安全性而不支持多重继承，一个类只能有一个父类。但是接口不同，一个类可以同时实现多个接口，不管这些接口之间有没有关系，所以接口弥补不支持多重继承的缺陷。从 Java 8 开始，接口也可以拥有默认的方法实现。
+接口是抽象类的延伸。Java 为了安全性而不支持多重继承，一个类只能有一个父类。但是接口不同，一个类可以同时实现多个接口，不管这些接口之间有没有关系，所以接口弥补不支持多重继承的缺陷。
 
 ```java
 public interface Externalizable extends Serializable {
@@ -268,20 +277,22 @@ public interface Externalizable extends Serializable {
 }
 ```
 
-<font size=4>  **3. 比较**  </font> </br>
+从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
 
-| |  **抽象类**  | **接口** |
-| --- | --- | --- |
-| 1 |  An abstract class can extend only one class or one abstract class at a time |  An interface can extend any number of interfaces at a time |
-| 2 |   An abstract class can extend another concrete (regular) class or abstract class |  An interface can only extend another interface |
-| 3 |  An abstract class can have both abstract and concrete methods |  An interface can have only abstract methods |
-| 4 |  In abstract class keyword "abstract" is mandatory to declare a method as an abstract |  In an interface keyword "abstract" is optional to declare a method as an abstract |
-| 5 |  An abstract class can have protected and public abstract methods |  An interface can have only have public abstract methods |
-| 6 |  An abstract class can have static, final or static final variable with any access specifier |  interface can only have public static final (constant) variable |
+```java
+public interface InterfaceDefaultTest {
+    default void func() {
+        System.out.println("default method in interface!");
+    }
+}
+```
 
-> [Difference Between Abstract Class and Interface in Java](https://beginnersbook.com/2013/05/abstract-class-vs-interface-in-java/)
+**3. 比较** 
 
-<font size=4>  **4. 使用选择**  </font> </br>
+- 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求子类和父类具有 IS-A 关系；
+- 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
+
+**4. 使用选择** 
 
 使用抽象类：
 
@@ -298,9 +309,9 @@ public interface Externalizable extends Serializable {
 
 ## super
 
-<font size=4>  **1. 访问父类的成员**  </font> </br>
+**1. 访问父类的成员** 
 
-如果子类覆盖了父类的中某个方法的实现，那么就可以通过使用 super 关键字来引用父类的方法实现。
+如果子类覆盖了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
 public class Superclass {
@@ -317,6 +328,7 @@ public class Subclass extends Superclass {
         super.printMethod();
         System.out.println("Printed in Subclass");
     }
+
     public static void main(String[] args) {
         Subclass s = new Subclass();
         s.printMethod();
@@ -324,7 +336,7 @@ public class Subclass extends Superclass {
 }
 ```
 
-<font size=4>  **2. 访问父类的构造函数**  </font> </br>
+**2. 访问父类的构造函数** 
 
 可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
 
@@ -347,35 +359,36 @@ public MountainBike(int startHeight, int startCadence, int startSpeed, int start
 
 ## String, StringBuffer and StringBuilder
 
-<font size=4>  **1. 是否可变**  </font> </br>
+**1. 是否可变** 
 
-String 不可变，StringBuffer 和 StringBuilder 可变。
+- String 不可变
+- StringBuffer 和 StringBuilder 可变
 
-<font size=4>  **2. 是否线程安全**  </font> </br>
+**2. 是否线程安全** 
 
-String 不可变，因此是线程安全的。
-
-StringBuilder 不是线程安全的；StringBuffer 是线程安全的，使用 synchronized 来同步。
+- String 不可变，因此是线程安全的
+- StringBuilder 不是线程安全的
+- StringBuffer 是线程安全的，内部使用 synchronized 来同步
 
 > [String, StringBuffer, and StringBuilder](https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder)
 
 ## String 不可变的原因
 
-<font size=4>  **1. 可以缓存 hash 值**  </font> </br>
+**1. 可以缓存 hash 值** 
 
-因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等。不可变的特性可以使得 hash 值也不可变，因此就只需要进行一次计算。
+因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等情况。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
 
-<font size=4>  **2. String Pool 的需要**  </font> </br>
+**2. String Pool 的需要** 
 
-如果 String 已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
+如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
 <div align="center"> <img src="../pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"/> </div><br>
 
-<font size=4>  **3. 安全性**  </font> </br>
+**3. 安全性** 
 
 String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
 
-<font size=4>  **4. 线程安全**  </font> </br>
+**4. 线程安全** 
 
 String 不可变性天生具备线程安全，可以在多个线程中使用。
 
@@ -391,9 +404,9 @@ String 不可变性天生具备线程安全，可以在多个线程中使用。
 
 ## 包装类型
 
-八个基本类型：boolean 1 byte 8 char 16 short 16 int 32 float 32 long 64 double 64
+八个基本类型：boolean/1 byte/8 char/16 short/16 int/32 float/32 long/64 double/64
 
-基本类型都有对应的包装类型，它们之间的赋值使用自动装箱与拆箱完成。
+基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
 ```java
 Integer x = 2;     // 装箱
@@ -406,12 +419,12 @@ new Integer(123) 与 Integer.valueOf(123) 的区别在于，Integer.valueOf(123)
 public static void main(String[] args) {
      Integer a = new Integer(1);
      Integer b = new Integer(1);
-     System.out.println("a==b? " + (a==b));
+     System.out.println("a==b? " + (a == b));
 
      Integer c = Integer.valueOf(1);
      Integer d = Integer.valueOf(1);
-     System.out.println("c==d? " + (c==d));
- }
+     System.out.println("c==d? " + (c == d));
+}
 ```
 
 ```html
@@ -424,14 +437,14 @@ valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中�
 ```java
 public static Integer valueOf(int i) {
     final int offset = 128;
-    if (i >= -128 && i <= 127) { // must cache
+    if (i >= -128 && i <= 127) {
         return IntegerCache.cache[i + offset];
     }
     return new Integer(i);
 }
 ```
 
-The following is the list of primitives stored as immutable objects:
+基本类型中可以使用缓存池的值如下：
 
 - boolean values true and false
 - all byte values
@@ -439,12 +452,12 @@ The following is the list of primitives stored as immutable objects:
 - int values between -128 and 127
 - char in the range \u0000 to \u007F
 
-自动装箱过程编译器会调用 valueOf() 方法，因此多个 Integer 对象使用装箱来创建并且值相同，那么就会引用相同的对象，这样做很显然是为了节省内存开销。
+自动装箱过程编译器会调用 valueOf() 方法，因此多个 Integer 对象使用装箱来创建并且值相同，那么就会引用相同的对象。这样做很显然是为了节省内存开销。
 
 ```java
 Integer x = 1;
 Integer y = 1;
-System.out.println(c==d); // true
+System.out.println(c == d); // true
 ```
 
 > [Differences between new Integer(123), Integer.valueOf(123) and just 123
@@ -456,7 +469,7 @@ A switch works with the byte, short, char, and int primitive data types. It also
 
 In the JDK 7 release, you can use a String object in the expression of a switch statement.
 
-switch 不支持 long，是因为 swicth 的设计初衷是为那些只需要对少数几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
+switch 不支持 long，是因为 swicth 的设计初衷是为那些只需要对少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
 > [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
 
@@ -494,19 +507,23 @@ public static void main(java.lang.String[]);
 
 反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。
 
-Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库包含了  **Field** 、**Method** 以及 **Constructor** 类。可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段，可以使用 invoke() 方法调用与 Method 对象关联的方法，可以用 Constructor 创建新的对象。
+Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
+
+1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字；
+2.  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
+3.  **Constructor** ：可以用 Constructor 创建新的对象。
 
 IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
 
 > [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
-<font size=4>  **Advantages of Using Reflection:**  </font> </br>
+**Advantages of Using Reflection:** 
 
 -  **Extensibility Features**  : An application may make use of external, user-defined classes by creating instances of extensibility objects using their fully-qualified names.
 -  **Class Browsers and Visual Development Environments**  :  A class browser needs to be able to enumerate the members of classes. Visual development environments can benefit from making use of type information available in reflection to aid the developer in writing correct code.
 -  **Debuggers and Test Tools**  : Debuggers need to be able to examine private members on classes. Test harnesses can make use of reflection to systematically call a discoverable set APIs defined on a class, to insure a high level of code coverage in a test suite.
 
-<font size=4>  **Drawbacks of Reflection:**  </font> </br>
+**Drawbacks of Reflection:** 
 
 Reflection is powerful, but should not be used indiscriminately. If it is possible to perform an operation without using reflection, then it is preferable to avoid using it. The following concerns should be kept in mind when accessing code via reflection.
 
@@ -520,12 +537,15 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示编译时系统错误。
 
-Exception 分为两种： **受检异常**  和 **非受检异常**。受检异常需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；非受检异常是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
+Exception 分为两种：
+
+1.  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
+2.  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
 <div align="center"> <img src="../pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div><br>
 
-> [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+> - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
+> - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 九、泛型
 
@@ -538,8 +558,8 @@ public class Box<T> {
 }
 ```
 
-> [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)
-> [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
+> - [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)
+> - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 十、注解
 
@@ -555,7 +575,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ## Java 各版本的新特性
 
-New highlights in Java SE 8
+**New highlights in Java SE 8** 
 
 1. Lambda Expressions
 2. Pipelines and Streams
@@ -567,7 +587,7 @@ New highlights in Java SE 8
 8. Parallel operations
 9. PermGen Error Removed
 
-New highlights in Java SE 7
+**New highlights in Java SE 7** 
 
 1. Strings in Switch Statement
 2. Type Inference for Generic Instance Creation
@@ -578,14 +598,12 @@ New highlights in Java SE 7
 7. Binary Literals, Underscore in literals
 8. Diamond Syntax
 
-> [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
-> [Java 8 特性 ](http://www.importnew.com/19345.html)
+> - [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
+> - [Java 8 特性 ](http://www.importnew.com/19345.html)
 
 ## Java 与 C++ 的区别
 
 Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
-
-比较详细的内容：
 
 | Java | C++ |
 | -- | -- |
