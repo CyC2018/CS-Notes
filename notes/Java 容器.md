@@ -9,7 +9,7 @@
 * [三、散列](#三散列)
 * [四、源码分析](#四源码分析)
     * [ArrayList](#arraylist)
-    * [Vector 与 Stack](#vector-与-stack)
+    * [Vector](#vector)
     * [LinkedList](#linkedlist)
     * [TreeMap](#treemap)
     * [HashMap](#hashmap)
@@ -144,7 +144,7 @@ x.euqals(null); // false;
 
 # 四、源码分析
 
-建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对集合类源码的理解有很大帮助。
+建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对容器类源码的理解有很大帮助。
 
 源码下载：[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
 
@@ -161,7 +161,7 @@ public class ArrayList<E> extends AbstractList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明该数组默认不会被序列化。这是因为该数组不是所有位置都占满元素，因此也就没必要全部都进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
 
 ```java
 private transient Object[] elementData;
@@ -200,7 +200,7 @@ public E remove(int index) {
 }
 ```
 
-添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，使得新容量为旧容量的 1.5 倍。扩容操作需要把原数组整个复制到新数组中，因此最好在创建 ArrayList 时就指定大概的容量大小，减少扩容操作的次数。
+添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，使得新容量为旧容量的 1.5 倍（oldCapacity + (oldCapacity >> 1))。扩容操作需要把原数组整个复制到新数组中，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
 
 ```java
 private void ensureCapacityInternal(int minCapacity) {
@@ -233,12 +233,12 @@ private static int hugeCapacity(int minCapacity) {
 
 ### 2. Fail-Fast
 
-modCount 用来记录 ArrayList 结构发生变化的次数，结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
 
 ```java
-private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException{
+private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
     // Write out element count, and any hidden stuff
     int expectedModCount = modCount;
     s.defaultWriteObject();
@@ -258,18 +258,18 @@ private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOExceptio
 
 ### 3. 和 Vector 的区别
 
-1.  Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
-2.  Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
+- Vector 和 ArrayList 几乎是完全相同的，唯一的区别在于 Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
+- Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
 为了获得线程安全的 ArrayList，可以调用 Collections.synchronizedList(new ArrayList<>()); 返回一个线程安全的 ArrayList，也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类；
 
 ### 4. 和 LinkedList 的区别
 
-1. ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
-2. ArrayList 支持随机访问，LinkedList 不支持；
-3. LinkedList 在任意位置添加删除元素更快。
+- ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
+- ArrayList 支持随机访问，LinkedList 不支持；
+- LinkedList 在任意位置添加删除元素更快。
 
-## Vector 与 Stack
+## Vector
 
 [Vector.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/Vector.java)
 
@@ -295,15 +295,23 @@ transient Entry[] table;
 
 其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
 
-<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png"/> </div><br>
+<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png" width="500"/> </div><br>
 
 ### 2. 拉链法的工作原理
 
-使用默认构造函数新建一个 HashMap，默认大小为 16。Entry 的类型为 &lt;String, Integer>。先后插入三个元素：("sachin", 30), ("vishal", 20) 和 ("vaibhav", 20)。计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上，因此需要把  ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
+```java
+HashMap<String, Integer> map = new HashMap<>(); // 默认大小为 16
+map.put("sachin", 30);
+map.put("vishal", 20);
+map.put("vaibhav", 20);
+```
 
-<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg"/> </div><br>
+- 计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。
+- 同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上。("vishal", 20) 先放入， ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
 
-当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此这一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg" width="600"/> </div><br>
+
+当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此第一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
 ### 3. 扩容
 
@@ -313,11 +321,12 @@ transient Entry[] table;
 
 和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
 
-capacity 表示 table 的容量大小，默认为 16，需要注意的是容量必须保证为 2 的次方。容量就是 table 数组的长度，size 是数组的实际使用量。
-
-threshold 规定了一个 size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。
-
-threshold = capacity * load_factor，其中 load_factor 为 table 数组能够使用的比例。
+| 参数 | 含义 |
+| :--: | :-- |
+| capacity | table 的容量大小，默认为 16，需要注意的是 capacity 必须保证为 2 的次方。|
+| size | table 的实际使用量。 |
+| threshold | size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。 |
+| load_factor | table 能够使用的比例，threshold = capacity * load_factor。|
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -348,7 +357,7 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 }
 ```
 
-扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把旧 table 的所有键值对重新插入新的 table 中，因此这一步是很费时的。但是从均摊分析的角度来考虑，HashMap 的查找速度依然在常数级别。
+扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把旧 table 的所有键值对重新插入新的 table 中，因此这一步是很费时的。
 
 ```java
 void resize(int newCapacity) {
@@ -384,7 +393,42 @@ void transfer(Entry[] newTable) {
 }
 ```
 
-### 4. null 值
+### 4. capacity 保证为 2 的幂次方
+
+令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
+
+```
+x   : 00010000
+x-1 : 00001111
+```
+
+令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
+
+```
+y       : 10110010
+x-1     : 00001111
+y&(x-1) : 00000010
+```
+
+这个性质和 y 对 x 取模式一样的：
+
+```
+x   : 00010000
+y   : 10110010
+y%x : 00000010
+```
+
+我们知道，位运算的代价比求模运算小的多，因此在进行这种计算时能用位运算的话能带来更高的性能。
+
+拉链法需要使用除留余数法来得到桶下标，也就是需要进行以下计算：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换位位运算。
+
+```java
+static int indexFor(int h, int length) {
+    return h & (length-1);
+}
+```
+
+### 5. null 值
 
 get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
 
@@ -442,7 +486,7 @@ private V putForNullKey(V value) {
 }
 ```
 
-### 5. 与 HashTable 的区别
+### 6. 与 HashTable 的区别
 
 - HashMap 几乎可以等价于 Hashtable，除了 HashMap 是非 synchronized 的，并可以接受 null(HashMap 可以接受为 null 的键值 (key) 和值 (value)，而 Hashtable 则不行)。
 - HashMap 是非 synchronized，而 Hashtable 是 synchronized，这意味着 Hashtable 是线程安全的，多个线程可以共享一个 Hashtable；而如果没有正确的同步的话，多个线程是不能共享 HashMap 的。Java 5 提供了 ConcurrentHashMap，它是 HashTable 的替代，比 HashTable 的扩展性更好。
@@ -450,7 +494,6 @@ private V putForNullKey(V value) {
 - 由于 Hashtable 是线程安全的也是 synchronized，所以在单线程环境下它比 HashMap 要慢。如果你不需要同步，只需要单一线程，那么使用 HashMap 性能要好过 Hashtable。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
-> [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
 
 ## LinkedHashMap
 
@@ -467,3 +510,4 @@ private V putForNullKey(V value) {
 - Java 编程思想
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
+> [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
