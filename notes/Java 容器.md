@@ -460,7 +460,7 @@ x   : 00010000
 x-1 : 00001111
 ```
 
-令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
+令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位及以上数：
 
 ```
 y       : 10110010
@@ -468,7 +468,7 @@ x-1     : 00001111
 y&(x-1) : 00000010
 ```
 
-这个性质和 y 对 x 取模式一样的：
+这个性质和 y 对 x 取模效果是一样的：
 
 ```
 x   : 00010000
@@ -490,61 +490,7 @@ static int indexFor(int h, int length) {
 
 ### 6. null 值
 
-get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
-
-```java
-public V get(Object key) {
-    if (key == null)
-        return getForNullKey();
-    int hash = hash(key.hashCode());
-    for (Entry<K,V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
-        Object k;
-        if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
-            return e.value;
-    }
-    return null;
-}
-```
-
-put() 操作也需要根据 key 是否为 null 做不同的处理，需要注意的是如果本来没有 key 为 null 的键值对，新插入一个 key 为 null 的键值对时默认是放在数组的 0 位置，这是因为 null 不能计算 hash 值，也就无法知道应该放在哪个链表上。
-
-```java
-public V put(K key, V value) {
-    if (key == null)
-        return putForNullKey(value);
-    int hash = hash(key.hashCode());
-    int i = indexFor(hash, table.length);
-    for (Entry<K,V> e = table[i]; e != null; e = e.next) {
-        Object k;
-        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
-            V oldValue = e.value;
-            e.value = value;
-            e.recordAccess(this);
-            return oldValue;
-        }
-    }
-
-    modCount++;
-    addEntry(hash, key, value, i);
-    return null;
-}
-```
-
-```java
-private V putForNullKey(V value) {
-    for (Entry<K,V> e = table[0]; e != null; e = e.next) {
-        if (e.key == null) {
-            V oldValue = e.value;
-            e.value = value;
-            e.recordAccess(this);
-            return oldValue;
-        }
-    }
-    modCount++;
-    addEntry(0, null, value, 0);
-    return null;
-}
-```
+HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 个桶的位置，因为这个 Key 无法计算 hashCode()，因此只能规定一个桶让它存放。
 
 ### 7. 与 HashTable 的区别
 
@@ -571,4 +517,5 @@ private V putForNullKey(V value) {
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)
 - [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
+- [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
 
