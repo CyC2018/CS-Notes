@@ -137,7 +137,7 @@ Google 开源项目的代码风格规范。
 
 ## 后记 :memo:
 
-> [Download](https://github.com/CyC2018/Interview-Notebook/blob/master/other/postface.md)
+> [Postface](https://github.com/CyC2018/Interview-Notebook/blob/master/other/postface.md)
 
 <!-- ## Donate
 
