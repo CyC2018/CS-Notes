@@ -154,3 +154,5 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 <div align="center"> <img src="../pics//7a29acce-f243-4914-9f00-f2988c528412.jpg"/> </div><br>
 
 比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
+
+

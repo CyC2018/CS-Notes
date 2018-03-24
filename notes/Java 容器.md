@@ -146,7 +146,7 @@ x.euqals(null); // false;
 
 建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对容器类源码的理解有很大帮助。
 
-源码下载：[OpenJDK 1.7](http://download.java.net/openjdk/jdk7)
+以下源码属于 JDK 8，下载地址：[JDK-Source-Code](https://github.com/CyC2018/JDK-Source-Code)。
 
 ## ArrayList
 
@@ -158,31 +158,22 @@ x.euqals(null); // false;
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
-    implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
 基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
 
 ```java
-private transient Object[] elementData;
+transient Object[] elementData; // non-private to simplify nested class access
 ```
 
 数组的默认大小为 10。
 
 ```java
-public ArrayList(int initialCapacity) {
-    super();
-    if (initialCapacity < 0)
-        throw new IllegalArgumentException("Illegal Capacity: "+ initialCapacity);
-    this.elementData = new Object[initialCapacity];
-}
-
-public ArrayList() {
-    this(10);
-}
+private static final int DEFAULT_CAPACITY = 10;
 ```
 
-删除元素时调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高。
+删除元素时需要调用 System.arraycopy() 对元素进行复制，因此删除操作成本很高。
 
 ```java
 public E remove(int index) {
@@ -194,7 +185,7 @@ public E remove(int index) {
     int numMoved = size - index - 1;
     if (numMoved > 0)
         System.arraycopy(elementData, index+1, elementData, index, numMoved);
-    elementData[--size] = null; // Let gc do its work
+    elementData[--size] = null; // clear to let GC do its work
 
     return oldValue;
 }
@@ -203,8 +194,9 @@ public E remove(int index) {
 添加元素时使用 ensureCapacity() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，使得新容量为旧容量的 1.5 倍（oldCapacity + (oldCapacity >> 1))。扩容操作需要把原数组整个复制到新数组中，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
 
 ```java
-private void ensureCapacityInternal(int minCapacity) {
+private void ensureExplicitCapacity(int minCapacity) {
     modCount++;
+
     // overflow-conscious code
     if (minCapacity - elementData.length > 0)
         grow(minCapacity);
@@ -221,14 +213,6 @@ private void grow(int minCapacity) {
     // minCapacity is usually close to size, so this is a win:
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
-
-private static int hugeCapacity(int minCapacity) {
-    if (minCapacity < 0) // overflow
-        throw new OutOfMemoryError();
-    return (minCapacity > MAX_ARRAY_SIZE) ?
-        Integer.MAX_VALUE :
-        MAX_ARRAY_SIZE;
-}
 ```
 
 ### 2. Fail-Fast
@@ -238,17 +222,19 @@ modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
 
 ```java
-private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
+private void writeObject(java.io.ObjectOutputStream s)
+    throws java.io.IOException{
     // Write out element count, and any hidden stuff
     int expectedModCount = modCount;
     s.defaultWriteObject();
 
-    // Write out array length
-    s.writeInt(elementData.length);
+    // Write out size as capacity for behavioural compatibility with clone()
+    s.writeInt(size);
 
     // Write out all elements in the proper order.
-    for (int i = 0; i < size; i++)
+    for (int i=0; i<size; i++) {
         s.writeObject(elementData[i]);
+    }
 
     if (modCount != expectedModCount) {
         throw new ConcurrentModificationException();
