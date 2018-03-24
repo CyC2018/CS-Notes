@@ -13,7 +13,8 @@
     * [TreeMap](#treemap)
     * [HashMap](#hashmap)
     * [LinkedHashMap](#linkedhashmap)
-    * [ConcurrentHashMap](#concurrenthashmap)
+    * [ConcurrentHashMap - JDK 1.7](#concurrenthashmap---jdk-17)
+    * [ConcurrentHashMap - JDK 1.8](#concurrenthashmap---jdk-18)
 * [五、参考资料](#五参考资料)
 <!-- GFM-TOC -->
 
@@ -68,7 +69,7 @@
 
 Collection 实现了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
-从 JDK 5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。
+从 JDK 1.5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。
 
 ```java
 List<String> list = new ArrayList<>();
@@ -141,7 +142,9 @@ x.euqals(null); // false;
 
 建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对容器类源码的理解有很大帮助。
 
-以下源码属于 JDK 8，下载地址：[JDK-Source-Code](https://github.com/CyC2018/JDK-Source-Code)。
+至于 ConcurrentHashMap 的理解，需要有并发方面的知识，建议先阅读：[Java 并发](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md)
+
+以下源码从 JDK 1.8 提取而来，下载地址：[JDK-Source-Code](https://github.com/CyC2018/JDK-Source-Code)。
 
 ## ArrayList
 
@@ -278,7 +281,9 @@ transient Entry[] table;
 
 <div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png" width="500"/> </div><br>
 
-Java 8 使用 Node 类型存储一个键值对，它依然继承自 Entry，因此可以按照上面的存储结构来理解。
+JDK 1.8 使用 Node 类型存储一个键值对，它依然继承自 Entry，因此可以按照上面的存储结构来理解。
+
+需要注意的是，Key 类型为 final，这意味着它不可改变，因此每个桶的链表采用头插法实现，也就是说新节点需要只能在链表头部插入。
 
 ```java
 static class Node<K,V> implements Map.Entry<K,V> {
@@ -340,13 +345,13 @@ map.put("vaibhav", 20);
 
 ### 3. 链表转红黑树
 
-应该注意到，从 Java 8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+应该注意到，从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
 
 <div align="center"> <img src="../pics//061c29ce-e2ed-425a-911e-56fbba1efce3.jpg" width="500"/> </div><br>
 
 ### 4. 扩容
 
-因为从 Java 8 开始引入了红黑树，因此扩容操作较为复杂，为了便于理解，以下内容使用 Java 7 的内容。
+因为从 JDK 1.8 开始引入了红黑树，因此扩容操作较为复杂，为了便于理解，以下内容使用 JDK 1.7 的内容。
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
 
@@ -501,6 +506,32 @@ new capacity : 00100000
 
 对于一个 Key，它的 hashCode 如果在第 6 位上为 0，那么除留余数得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 + 8。
 
+### 7. 扩容-计算数组容量
+
+先考虑如何求一个数的补码，对于 10100000，它的补码为 11111111，可以使用以下方法得到：
+
+```
+mask |= mask >> 1    11000000
+mask |= mask >> 2    11110000
+mask |= mask >> 4    11111111
+```
+
+如果最后令 mask+1，得到就是大于原始数字的最小的 2 次方。
+
+以下是 HashMap 中计算一个大小所需要的数组容量的代码：
+
+```java
+static final int tableSizeFor(int cap) {
+    int n = cap - 1;
+    n |= n >>> 1;
+    n |= n >>> 2;
+    n |= n >>> 4;
+    n |= n >>> 8;
+    n |= n >>> 16;
+    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+}
+```
+
 ### 7. null 值
 
 HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 个桶的位置，因为这个 Key 无法计算 hashCode()，因此只能规定一个桶让它存放。
@@ -517,11 +548,198 @@ HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 �
 
 [LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-## ConcurrentHashMap
+## ConcurrentHashMap - JDK 1.7
 
-[ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
+[ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/1.7/ConcurrentHashMap.java)
 
-[探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
+ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶。
+
+相比于 HashTable 和用同步包装器包装的 HashMap（Collections.synchronizedMap(new HashMap())），ConcurrentHashMap 拥有更高的并发性。在 HashTable 和由同步包装器包装的 HashMap 中，使用一个全局的锁来同步不同线程间的并发访问。同一时间点，只能有一个线程持有锁，也就是说在同一时间点，只能有一个线程能访问容器。这虽然保证多线程间的安全并发访问，但同时也导致对容器的访问变成串行化的了。
+
+### 1. 存储结构
+
+和 HashMap 类似。
+
+```java
+static final class HashEntry<K,V> {
+    final int hash;
+    final K key;
+    volatile V value;
+    volatile HashEntry<K,V> next;
+}
+```
+
+继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
+
+```java
+static final class Segment<K,V> extends ReentrantLock implements Serializable {
+
+    private static final long serialVersionUID = 2249069246763182397L;
+
+    static final int MAX_SCAN_RETRIES =
+        Runtime.getRuntime().availableProcessors() > 1 ? 64 : 1;
+
+    transient volatile HashEntry<K,V>[] table;
+
+    transient int count;
+
+    transient int modCount;
+
+    transient int threshold;
+
+    final float loadFactor;
+}
+```
+
+```java
+final Segment<K,V>[] segments;
+```
+
+默认的并发级别为 16，也就是说默认创建 16 个 Segment。
+
+```java
+static final int DEFAULT_CONCURRENCY_LEVEL = 16;
+```
+
+<div align="center"> <img src="../pics//image005.jpg"/> </div><br>
+
+### 2. HashEntery 的不可变性
+
+HashEntry 中的 key，hash，next 都声明为 final 型。这意味着，不能把节点添加到链接的中间和尾部，也不能在链接的中间和尾部删除节点。这个特性可以保证：在访问某个节点时，这个节点之后的链接不会被改变。这个特性可以大大降低处理链表时的复杂性。
+
+同时，HashEntry 类的 value 域被声明为 Volatile 型，Java 的内存模型可以保证：某个写线程对 value 域的写入马上可以被后续的某个读线程 “看” 到。在 ConcurrentHashMap 中，不允许用 null 作为键和值，当读线程读到某个 HashEntry 的 value 域的值为 null 时，便知道产生了冲突——发生了重排序现象，需要加锁后重新读入这个 value 值。这些特性互相配合，使得读线程即使在不加锁状态下，也能正确访问 ConcurrentHashMap。
+
+```java
+final V remove(Object key, int hash, Object value) {
+   if (!tryLock())
+        scanAndLock(key, hash);
+    V oldValue = null;
+    try {
+        HashEntry<K,V>[] tab = table;
+        int index = (tab.length - 1) & hash;
+        HashEntry<K,V> e = entryAt(tab, index);
+        HashEntry<K,V> pred = null;
+        while (e != null) {
+            K k;
+            HashEntry<K,V> next = e.next;
+            if ((k = e.key) == key ||
+                (e.hash == hash && key.equals(k))) {
+                V v = e.value;
+                if (value == null || value == v || value.equals(v)) {
+                    if (pred == null)
+                        setEntryAt(tab, index, next);
+                    else
+                        pred.setNext(next);
+                    ++modCount;
+                    --count;
+                    oldValue = v;
+                }
+                break;
+            }
+            pred = e;
+            e = next;
+        }
+    } finally {
+        unlock();
+    }
+    return oldValue;
+}
+```
+
+在以下链表中删除 C 节点，C 节点之后的所有节点都原样保留，C 节点之前的所有节点都没克隆到新的链表中，并且顺序被反转。可以注意到，在执行 remove 操作时，原始链表并没有被修改，也就是说，读线程不会受到执行 remove 操作的并发写线程的干扰。
+
+<div align="center"> <img src="../pics//image007.jpg"/> </div><br>
+
+<div align="center"> <img src="../pics//image008.jpg"/> </div><br>
+
+除了 remove 操作，其它操作也类似。可以得出一个结论：写线程对某个链表的结构性修改不会影响其他的并发读线程对这个链表的遍历访问。
+
+### 3. Volatile 变量
+
+```java
+static final class HashEntry<K,V> {
+    final int hash;
+    final K key;
+    volatile V value;
+    volatile HashEntry<K,V> next;
+}
+```
+
+由于内存可见性问题，未正确同步的情况下，写线程写入的值可能并不为后续的读线程可见。
+
+下面以写线程 M 和读线程 N 来说明 ConcurrentHashMap 如何协调读 / 写线程间的内存可见性问题。
+
+<div align="center"> <img src="../pics//image009.jpg"/> </div><br>
+
+假设线程 M 在写入了 volatile 型变量 count 后，线程 N 读取了这个 volatile 型变量 count。
+
+根据 happens-before 关系法则中的程序次序法则，A appens-before 于 B，C happens-before D。
+
+根据 Volatile 变量法则，B happens-before C。
+
+根据传递性，连接上面三个 happens-before 关系得到：A appens-before 于 B； B appens-before C；C happens-before D。也就是说：写线程 M 对链表做的结构性修改，在读线程 N 读取了同一个 volatile 变量后，对线程 N 也是可见的了。
+
+虽然线程 N 是在未加锁的情况下访问链表。Java 的内存模型可以保证：只要之前对链表做结构性修改操作的写线程 M 在退出写方法前写 volatile 型变量 count，读线程 N 在读取这个 volatile 型变量 count 后，就一定能 “看到” 这些修改。
+
+ConcurrentHashMap 中，每个 Segment 都有一个变量 count。它用来统计 Segment 中的 HashEntry 的个数。这个变量被声明为 volatile。
+
+```java
+transient volatile int count;
+```
+
+所有不加锁读方法，在进入读方法时，首先都会去读这个 count 变量。比如下面的 get 方法：
+
+```java
+V get(Object key, int hash) {
+   if(count != 0) {       // 首先读 count 变量
+       HashEntry<K,V> e = getFirst(hash);
+       while(e != null) {
+           if(e.hash == hash && key.equals(e.key)) {
+               V v = e.value;
+               if(v != null)
+                   return v;
+               // 如果读到 value 域为 null，说明发生了重排序，加锁后重新读取
+               return readValueUnderLock(e);
+           }
+           e = e.next;
+       }
+   }
+   return null;
+}
+```
+
+在 ConcurrentHashMap 中，所有执行写操作的方法（put, remove, clear），在对链表做结构性修改之后，在退出写方法前都会去写这个 count 变量。所有未加锁的读操作（get, contains, containsKey）在读方法中，都会首先去读取这个 count 变量。
+
+根据 Java 内存模型，对 同一个 volatile 变量的写 / 读操作可以确保：写线程写入的值，能够被之后未加锁的读线程 “看到”。
+
+这个特性和前面介绍的 HashEntry 对象的不变性相结合，使得在 ConcurrentHashMap 中，读线程在读取散列表时，基本不需要加锁就能成功获得需要的值。这两个特性相配合，不仅减少了请求同一个锁的频率（读操作一般不需要加锁就能够成功获得值），也减少了持有同一个锁的时间（只有读到 value 域的值为 null 时 ，读线程才需要加锁后重读）。
+
+### 4. 小结
+
+ConcurrentHashMap 的高并发性主要来自于三个方面：
+
+- 用分离锁实现多个线程间的更深层次的共享访问。
+- 用 HashEntery 对象的不变性来降低执行读操作的线程在遍历链表期间对加锁的需求。
+- 通过对同一个 Volatile 变量的写 / 读访问，协调不同线程间读 / 写操作的内存可见性。
+
+## ConcurrentHashMap - JDK 1.8
+
+[ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/ConcurrentHashMap.java)
+
+<div align="center"> <img src="../pics//7779232-1e8ed39548081a1f.png"/> </div><br>
+
+
+JDK 1.7 分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock。
+
+<div align="center"> <img src="../pics//7779232-96822582feb08651.png"/> </div><br>
+
+JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。而是使用了内置锁 synchronized，主要是出于以下考虑：
+
+1. synchronized 的锁粒度更低；
+2. synchronized 优化空间更大；
+3. 在大量数据操作的情况下，ReentrantLock 会开销更多的内存。
+
+并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
 
 # 五、参考资料
 
@@ -531,4 +749,7 @@ HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 �
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)
 - [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
 - [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
+- [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
+- [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
+- [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
 
