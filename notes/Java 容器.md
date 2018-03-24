@@ -266,7 +266,7 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 [HashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
-### 1. 基本数据结构
+### 1. 存储结构
 
 使用拉链法来解决冲突，内部包含了一个 Entry 类型的数组 table，数组中的每个位置被当成一个桶。
 
@@ -277,6 +277,50 @@ transient Entry[] table;
 其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
 
 <div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png" width="500"/> </div><br>
+
+Java 8 使用 Node 类型存储一个键值对，它依然继承自 Entry，因此可以按照上面的存储结构来理解。
+
+```java
+static class Node<K,V> implements Map.Entry<K,V> {
+    final int hash;
+    final K key;
+    V value;
+    Node<K,V> next;
+
+    Node(int hash, K key, V value, Node<K,V> next) {
+        this.hash = hash;
+        this.key = key;
+        this.value = value;
+        this.next = next;
+    }
+
+    public final K getKey()        { return key; }
+    public final V getValue()      { return value; }
+    public final String toString() { return key + "=" + value; }
+
+    public final int hashCode() {
+        return Objects.hashCode(key) ^ Objects.hashCode(value);
+    }
+
+    public final V setValue(V newValue) {
+        V oldValue = value;
+        value = newValue;
+        return oldValue;
+    }
+
+    public final boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (o instanceof Map.Entry) {
+            Map.Entry<?,?> e = (Map.Entry<?,?>)o;
+            if (Objects.equals(key, e.getKey()) &&
+                Objects.equals(value, e.getValue()))
+                return true;
+        }
+        return false;
+    }
+}
+```
 
 ### 2. 拉链法的工作原理
 
@@ -294,7 +338,15 @@ map.put("vaibhav", 20);
 
 当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此第一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
-### 3. 扩容
+### 3. 链表转红黑树
+
+应该注意到，从 Java 8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+
+<div align="center"> <img src="../pics//061c29ce-e2ed-425a-911e-56fbba1efce3.jpg" width="500"/> </div><br>
+
+### 4. 扩容
+
+因为从 Java 8 开始引入了红黑树，因此扩容操作较为复杂，为了便于理解，以下内容使用 Java 7 的内容。
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
 
@@ -374,7 +426,32 @@ void transfer(Entry[] newTable) {
 }
 ```
 
-### 4. capacity 保证为 2 的幂次方
+### 5. 确定桶下标
+
+需要三步操作：计算 Key 的 hashCode、高位运算、除留余数法取模。
+
+<div align="center"> <img src="../pics//hashMap_u54C8_u5E0C_u7B97_u6CD5_u4F8B_u56FE.png" width="800"/> </div><br>
+
+**（一）hashcode()** 
+
+```java
+public final int hashCode() {
+    return Objects.hashCode(key) ^ Objects.hashCode(value);
+}
+```
+
+**（二）高位运算** 
+
+通过 hashCode() 的高 16 位异或低 16 位，使得数组比较小时，也能保证高低位都参与到了哈希计算中。
+
+```java
+static final int hash(Object key) {
+    int h;
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+```
+
+**（三）除留余数** 
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
@@ -403,13 +480,15 @@ y%x : 00000010
 
 拉链法需要使用除留余数法来得到桶下标，也就是需要进行以下计算：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换位位运算。
 
+以下操作在 Java 8 中没有，但是原理上相同。
+
 ```java
 static int indexFor(int h, int length) {
     return h & (length-1);
 }
 ```
 
-### 5. null 值
+### 6. null 值
 
 get() 操作需要分成两种情况，key 为 null 和不为 null，从中可以看出 HashMap 允许插入 null 作为键。
 
@@ -467,7 +546,7 @@ private V putForNullKey(V value) {
 }
 ```
 
-### 6. 与 HashTable 的区别
+### 7. 与 HashTable 的区别
 
 - HashTable 是同步的，它使用了 synchronized 来进行同步。它也是线程安全的，多个线程可以共享同一个 HashTable。HashMap 不是同步的，但是可以使用 ConcurrentHashMap，它是 HashTable 的替代，而且比 HashTable 可扩展性更好。
 - HashMap 可以插入键为 null 的 Entry。
