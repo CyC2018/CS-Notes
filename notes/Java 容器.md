@@ -121,7 +121,7 @@ x.equals(y) == y.equals(x) // true
 **3. 传递性** 
 
 ```java
-if x.equals(y) && y.equals(z) {
+if(x.equals(y) && y.equals(z)) {
     x.equals(z); // true;
 }
 ```
@@ -496,3 +496,4 @@ private V putForNullKey(V value) {
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
+
