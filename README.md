@@ -133,8 +133,6 @@ Google 开源项目的代码风格规范。
 
 > [Download](https://github.com/CyC2018/Interview-Notebook/blob/master/other/download.md)
 
-一些 PDF 书籍
-
 ## 后记 :memo:
 
 > [Postface](https://github.com/CyC2018/Interview-Notebook/blob/master/other/postface.md)
