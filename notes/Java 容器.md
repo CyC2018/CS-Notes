@@ -509,4 +509,4 @@ private V putForNullKey(V value) {
 - Java 编程思想
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
-> [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
+- [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
