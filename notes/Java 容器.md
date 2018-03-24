@@ -488,11 +488,24 @@ static int indexFor(int h, int length) {
 }
 ```
 
-### 6. null 值
+### 6. 扩容-重新计算桶下标
+
+在进行扩容时，需要把 Node 重新放到对应的桶上。HashMap 使用了一个特殊的机制，可以降低重新计算桶下标的操作。
+
+假设原数组长度 capacity 为 8，扩容之后 new capacity 为 16：
+
+```html
+capacity     : 00010000
+new capacity : 00100000
+```
+
+对于一个 Key，它的 hashCode 如果在第 6 位上为 0，那么除留余数得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 + 8。
+
+### 7. null 值
 
 HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 个桶的位置，因为这个 Key 无法计算 hashCode()，因此只能规定一个桶让它存放。
 
-### 7. 与 HashTable 的区别
+### 8. 与 HashTable 的区别
 
 - HashTable 是同步的，它使用了 synchronized 来进行同步。它也是线程安全的，多个线程可以共享同一个 HashTable。HashMap 不是同步的，但是可以使用 ConcurrentHashMap，它是 HashTable 的替代，而且比 HashTable 可扩展性更好。
 - HashMap 可以插入键为 null 的 Entry。
