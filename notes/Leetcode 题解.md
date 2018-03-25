@@ -188,7 +188,7 @@ Input: [1,2], [1,2,3]
 Output: 2
 
 Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2. 
-You have 3 cookies and their sizes are big enough to gratify all of the children, 
+You have 3 cookies and their sizes are big enough to gratify all of the children,
 You need to output 2.
 ```
 
@@ -1099,74 +1099,11 @@ private void dfs(int r, int c, boolean[][] canReach) {
 }
 ```
 
-**N 皇后** 
-
-[Leetcode : 51. N-Queens (Hard)](https://leetcode.com/problems/n-queens/description/)
-
-<div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
-
-题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，要求解所有的 n 皇后解。
-
-一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
-
-45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
-
-<div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
-
-135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
-
-<div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
-
-```java
-private List<List<String>> ret;
-private char[][] nQueens;
-private boolean[] colUsed;
-private boolean[] diagonals45Used;
-private boolean[] diagonals135Used;
-private int n;
-
-public List<List<String>> solveNQueens(int n) {
-    ret = new ArrayList<>();
-    nQueens = new char[n][n];
-    Arrays.fill(nQueens, '.');
-    colUsed = new boolean[n];
-    diagonals45Used = new boolean[2 * n - 1];
-    diagonals135Used = new boolean[2 * n - 1];
-    this.n = n;
-    backstracking(0);
-    return ret;
-}
-
-private void backstracking(int row) {
-    if (row == n) {
-        List<String> list = new ArrayList<>();
-        for (char[] chars : nQueens) {
-            list.add(new String(chars));
-        }
-        ret.add(list);
-        return;
-    }
-
-    for (int col = 0; col < n; col++) {
-        int diagonals45Idx = row + col;
-        int diagonals135Idx = n - 1 - (row - col);
-        if (colUsed[col] || diagonals45Used[diagonals45Idx] || diagonals135Used[diagonals135Idx]) {
-            continue;
-        }
-        nQueens[row][col] = 'Q';
-        colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = true;
-        backstracking(row + 1);
-        colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = false;
-        nQueens[row][col] = '.';
-    }
-}
-```
-
 ### Backtracking
 
 回溯是 DFS 的一种，它不是用在遍历图的节点上，而是用于求解  **排列组合**  问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串。
 
-在程序实现时，回溯需要注意对元素进行标记的问题。使用递归实现的回溯，在访问一个新元素进入新的递归调用，此时需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；但是在递归返回时，需要将该元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，而在不同的递归链是可以访问已经访问过但是不在当前递归链中的元素。
+在程序实现时，回溯需要注意对元素进行标记的问题。使用递归实现的回溯，在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；但是在递归返回时，需要将该元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
 
 **数字键盘组合** 
 
@@ -1343,7 +1280,7 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 [[1,1,2], [1,2,1], [2,1,1]]
 ```
 
-题目描述：数组元素可能含有相同的元素，进行排列时就有可能出先重复的排列，要求重复的排列只返回一个。
+题目描述：数组元素可能含有相同的元素，进行排列时就有可能出现 重复的排列，要求重复的排列只返回一个。
 
 在实现上，和 Permutations 不同的是要先排序，然后在添加一个元素时，判断这个元素是否等于前一个元素，如果等于，并且前一个元素还未访问，那么就跳过这个元素。
 
@@ -1405,8 +1342,7 @@ private void backtracking(int start, int n, int k, List<Integer> combineList, Li
         return;
     }
 
-    for(int i = start; i <= n - k + 1; i++){ // 剪枝
-
+    for(int i = start; i <= n - k + 1; i++) {      // 剪枝
         combineList.add(i);                        // 把 i 标记为已访问
         backtracking(i + 1, n, k - 1, combineList, ret);
         combineList.remove(combineList.size() - 1); // 把 i 标记为未访问
@@ -1518,7 +1454,7 @@ private void backtracking(int startIdx, int size, int[] nums) {
 
     for (int i = startIdx; i < nums.length; i++) {
         subsetList.add(nums[i]);
-        backtracking(i + 1, size, nums); // startIdx 设为下一个元素，使 subset 中的元素都递增排序
+        backtracking(i + 1, size, nums);
         subsetList.remove(subsetList.size() - 1);
     }
 }
@@ -1575,9 +1511,19 @@ private void backtracking(int startIdx, int size, int[] nums) {
 }
 ```
 
-**分割字符串使得每部分都是回文数** 
+**分割字符串使得每个部分都是回文数** 
 
 [Leetcode : 131. Palindrome Partitioning (Medium)](https://leetcode.com/problems/palindrome-partitioning/description/)
+
+```html
+For example, given s = "aab",
+Return
+
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+```
 
 ```java
 private List<List<String>> ret;
@@ -1663,6 +1609,69 @@ private int cubeNum(int i, int j) {
     int r = i / 3;
     int c = j / 3;
     return r * 3 + c;
+}
+```
+
+**N 皇后** 
+
+[Leetcode : 51. N-Queens (Hard)](https://leetcode.com/problems/n-queens/description/)
+
+<div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
+
+题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，要求解所有的 n 皇后解。
+
+一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
+
+45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
+
+<div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
+
+135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
+
+<div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
+
+```java
+private List<List<String>> ret;
+private char[][] nQueens;
+private boolean[] colUsed;
+private boolean[] diagonals45Used;
+private boolean[] diagonals135Used;
+private int n;
+
+public List<List<String>> solveNQueens(int n) {
+    ret = new ArrayList<>();
+    nQueens = new char[n][n];
+    Arrays.fill(nQueens, '.');
+    colUsed = new boolean[n];
+    diagonals45Used = new boolean[2 * n - 1];
+    diagonals135Used = new boolean[2 * n - 1];
+    this.n = n;
+    backstracking(0);
+    return ret;
+}
+
+private void backstracking(int row) {
+    if (row == n) {
+        List<String> list = new ArrayList<>();
+        for (char[] chars : nQueens) {
+            list.add(new String(chars));
+        }
+        ret.add(list);
+        return;
+    }
+
+    for (int col = 0; col < n; col++) {
+        int diagonals45Idx = row + col;
+        int diagonals135Idx = n - 1 - (row - col);
+        if (colUsed[col] || diagonals45Used[diagonals45Idx] || diagonals135Used[diagonals135Idx]) {
+            continue;
+        }
+        nQueens[row][col] = 'Q';
+        colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = true;
+        backstracking(row + 1);
+        colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = false;
+        nQueens[row][col] = '.';
+    }
 }
 ```
 
@@ -4947,7 +4956,7 @@ class MapSum {
 
 **1. 基本原理** 
 
-0s 表示 一串 0 ，1s 表示一串 1。
+0s 表示一串 0 ，1s 表示一串 1。
 
 ```
 x ^ 0s = x      x & 0s = 0      x | 0s = x
@@ -4957,7 +4966,7 @@ x ^ x = 0       x & x = x       x | x = x
 
 ① 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数；
 ② 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask ：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位；
-③ 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设置操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1 。
+③ 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1 。
 
 \>\> n 为算术右移，相当于除以 2<sup>n</sup>；
 \>\>\> n 为无符号右移，左边会补上 0。
@@ -4965,7 +4974,7 @@ x ^ x = 0       x & x = x       x | x = x
 
 n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110 **100** ，减去 1 得到 10110**011**，这两个数相与得到 10110**000**。
 
-n-n&(\~n+1) 概运算是去除 n 的位级表示中最高的那一位。
+n-n&(\~n+1) 运算是去除 n 的位级表示中最高的那一位。
 
 n&(-n) 该运算得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110 **100** ，-n 得到 01001**100**，相与得到 00000**100**
 
@@ -5032,9 +5041,9 @@ num & (~((1 << (i+1)) - 1));
 **4. Java 中的位操作** 
 
 ```html
-static int Integer.bitCount()            // 统计 1 的数量
-static int Integer.highestOneBit()       // 获得最高位
-static String toBinaryString(int i)      // 转换位二进制表示的字符串
+static int Integer.bitCount();           // 统计 1 的数量
+static int Integer.highestOneBit();      // 获得最高位
+static String toBinaryString(int i);     // 转换为二进制表示的字符串
 ```
 
 **统计两个数的二进制表示有多少位不同** 
@@ -5089,13 +5098,13 @@ b = a ^ b;
 a = a ^ b;
 ```
 
-将 c = a ^ b，那么 b ^ c = b ^ b ^ a = a，a ^ c = a ^ a ^ b = b。
+令 c = a ^ b，那么 b ^ c = b ^ b ^ a = a，a ^ c = a ^ a ^ b = b。
 
 **判断一个数是不是 4 的 n 次方** 
 
 [Leetcode : 342. Power of Four (Easy)](https://leetcode.com/problems/power-of-four/)
 
-该数二进制表示有且只有一个奇数位为 1 ，其余的都为 0 ，例如 16 ： 10000。可以每次把 1 向左移动 2 位，就能构造出这种数字，然后比较构造出来的数与要判断的数是否相同。
+该数二进制表示有且只有一个奇数位为 1 ，其余的都为 0 ，例如 16 ：10000。可以每次把 1 向左移动 2 位，就能构造出这种数字，然后比较构造出来的数与要判断的数是否相同。
 
 ```java
 public boolean isPowerOfFour(int num) {
@@ -5105,14 +5114,6 @@ public boolean isPowerOfFour(int num) {
         i = i << 2;
     }
     return false;
-}
-```
-
-也可以用 Java 的 Integer.toString() 方法将该数转换为 4 进制形式的字符串，然后判断字符串是否以 1 开头。
-
-```java
-public boolean isPowerOfFour(int num) {
-    return Integer.toString(num, 4).matches("10*");
 }
 ```
 
