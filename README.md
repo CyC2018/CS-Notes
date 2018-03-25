@@ -147,21 +147,21 @@ Google 开源项目的代码风格规范。
 
 笔者能力有限，很多内容还不够完善。如果您希望和笔者一起完善这个仓库，可以在发表一个 Issue，表明您想要添加的内容，笔者会及时查看。
 
-因为不打算将这个仓库做成一个大而全的面试宝典，因此只希望添加一些比较通用的基础知识，或者是和 Java 与分布式相关的内容，但是不添加 Java Web 相关的内容。
+因为不打算将这个仓库做成一个大而全的面试宝典，只希望添加一些比较通用的基础知识，或者是与 Java 和分布式相关的内容，但是不添加 Java Web 相关的内容。
 
-您也可以在 Issues 中发表一些关于改进本仓库的反馈意见。
+您也可以在 Issues 中发表关于改进本仓库的建议。
 
 **关于上传**
 
 笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
 
-进行 Markdown 文档转换的原因是 Github 使用的 GFM 不支持 MathJax 公式，也不支持 TOC 标记，因此需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。这里提供了笔者实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
+进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。这里提供了笔者实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 **关于排版**
 
-笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了笔者实现的中英混排文档在线工具：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)，目前实现了加空格的功能，之后打算实现对英文专有名词提示首字母大写的功能。
+笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了笔者实现的中英混排文档在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)，目前实现了加空格的功能，之后打算实现对英文专有名词提示首字母大写的功能。
 
-不使用 `![]()` 这种方式来引用图片的原因是为了能够控制图片以合适的大小显示，并且在 GFM 中无法使用 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到此目的。
+不使用 `![]()` 这种方式来引用图片是为了能够控制图片以合适的大小显示。而且 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` ，所以只能使用 img 标签来引用图片。
 
 **关于转载**
 
