@@ -1,13 +1,7 @@
-
-<!-- <br>
-<div align="center"> 
-    <img src="https://github.com/CyC2018/InterviewNotes/blob/master/other/handbook.png" alt="" width="175"/>
-    <img src="https://img.shields.io/badge/update-today-blue.svg"/> <img src="https://img.shields.io/badge/gitbook-making-yellow.svg"/>
-</div>
-<br> -->
-
-
-![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg) 
+<!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)</br> -->
+| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ | Ⅺ |
+| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:| :-------:|
+|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 资料下载[:arrow_down:](#资料下载-arrow_down)| 后记[:memo:](#后记-memo) |
 
 ## 网络 :cloud:
 
@@ -33,7 +27,7 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
+整理自《算法 第四版》
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
@@ -41,7 +35,7 @@
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
+对题目做了一个分类，并对每种题型的解题思路做了总结。
 
 ## 面向对象 :couple:
 
@@ -51,7 +45,7 @@
 
 > [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
 
-一些面向对象思想和原则。
+一些面向对象思想和设计原则。
 
 ## 数据库 :floppy_disk:
 
@@ -65,7 +59,7 @@
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-整理自《高性能 MySQL》，整理了一些重点内容。
+整理自《高性能 MySQL》
 
 > [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
 
@@ -73,9 +67,9 @@
 
 ## Java :coffee:
 
-> [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
+> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
-整理自《深入理解 Java 虚拟机》，主要整理了内存模型、垃圾回收以及类加载机制。
+整理自《深入理解 Java 虚拟机》
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
@@ -85,13 +79,31 @@
 
 容器的一些总结，包含容器源码的分析。
 
-> [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
+> [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
 File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
 整理了一些常见考点。
+
+> [JDK 中的设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JDK%20中的设计模式.md)
+
+对每种设计模式做了一个总结，并给出在 JDK 中的使用实例。
+
+## 分布式 :sweat_drops:
+
+> [分布式基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式基础.md)
+
+整理自《大规模分布式存储系统》
+
+> [一致性协议](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性协议.md)
+
+两阶段提交、Paxos、Raft、拜占庭将军问题。
+
+> [分布式问题分析](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
+
+分布式事务、复杂均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。
 
 ## 工具 :hammer:
 
@@ -121,21 +133,9 @@ Google 开源项目的代码风格规范。
 
 > [Download](https://github.com/CyC2018/Interview-Notebook/blob/master/other/download.md)
 
-一些 PDF 书籍
-
 ## 后记 :memo:
 
-网上有很多相关的资料，但是这些资料都比较零散。本仓库的笔记是从经典的书籍和材料中整理而来，在整理出重点的同时会尽可能保证知识的系统性，因此比较适合作为应对面试的学习资料。
-
-笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了本人实现的文档排版工具的下载：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
-
-由于 Github 使用的 GFM 不支持 MathJax 公式，也不支持 TOC 标记，为了把本地的 Markdown 文档转换为 GFM 支持的格式，需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。并且为了让图片显示效果更好，笔记内容基本使用了 &lt;center> 标记来让图片居中显示，但是 GFM 却不支持 &lt;center> 标记，因此也需要进行一定的转换。这里提供了本人实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
-
-因为大部分内容是一个字一个字打上去的，难免会有一些笔误，如果发现，可以直接在相应的文档上编辑修改。
-
-如果觉得内容不够完善或者有写的不好的地方，您可以在 Issues 中发表反馈意见。
-
-笔记内容可供个人随意使用，转载或者引用请注明出处，毕竟写了很长时间没那么轻松~
+> [Postface](https://github.com/CyC2018/Interview-Notebook/blob/master/other/postface.md)
 
 <!-- ## Donate
 
