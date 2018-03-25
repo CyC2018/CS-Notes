@@ -3592,9 +3592,9 @@ Input: nums = [1,2,2,4]
 Output: [2,3]
 ```
 
-最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlog<sub>n</sub>).本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
+最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlogn)。本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
 
-主要思想是让通过交换数组元素，使得数组上的元素在正确的位置上
+主要思想是让通过交换数组元素，使得数组上的元素在正确的位置上。
 
 遍历数组，如果第 i 位上的元素不是 i + 1 ，那么就交换第 i 位 和 nums[i] - 1 位上的元素，使得 num[i] - 1 的元素为 nums[i] ，也就是该位的元素是正确的。交换操作需要循环进行，因为一次交换没办法使得第 i 位上的元素是正确的。但是要交换的两个元素可能就是重复元素，那么循环就可能永远进行下去，终止循环的方法是加上 nums[i] != nums[nums[i] - 1 条件。
 
@@ -4260,9 +4260,10 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 
 **两节点的最长路径** 
 
+[Leetcode : 543. Diameter of Binary Tree (Easy)](https://leetcode.com/problems/diameter-of-binary-tree/description/)
+
 ```html
 Input:
-
          1
         / \
        2  3
@@ -4271,8 +4272,6 @@ Input:
 
 Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
 ```
-
-[Leetcode : 543. Diameter of Binary Tree (Easy)](https://leetcode.com/problems/diameter-of-binary-tree/description/)
 
 ```java
 private int max = 0;
