@@ -1,71 +1,58 @@
 <!-- GFM-TOC -->
-* [使用线程](#使用线程)
-    * [1. 实现 Runnable 接口](#1-实现-runnable-接口)
-    * [2. 实现 Callable 接口](#2-实现-callable-接口)
-    * [3. 继承 Thread 类](#3-继承-thread-类)
-    * [4. 实现接口 vs 继承 Thread](#4-实现接口-vs-继承-thread)
-* [Executor](#executor)
-* [基础线程机制](#基础线程机制)
-    * [1. sleep()](#1-sleep)
-    * [2. yield()](#2-yield)
-    * [3. join()](#3-join)
-    * [4. deamon](#4-deamon)
-* [线程之间的协作](#线程之间的协作)
-    * [1. 线程通信](#1-线程通信)
-    * [2. 线程同步](#2-线程同步)
-        * [2.1 synchronized](#21-synchronized)
-        * [2.2 Lock](#22-lock)
-        * [2.3 BlockingQueue](#23-blockingqueue)
-* [结束线程](#结束线程)
-    * [1. 阻塞](#1-阻塞)
-    * [2. 中断](#2-中断)
-* [线程状态转换](#线程状态转换)
-* [volatile](#volatile)
-    * [1. 内存可见性](#1-内存可见性)
-    * [2. 禁止指令重排](#2-禁止指令重排)
-* [内存模型](#内存模型)
+* [一、使用线程](#一使用线程)
+    * [实现 Runnable 接口](#实现-runnable-接口)
+    * [实现 Callable 接口](#实现-callable-接口)
+    * [继承 Thread 类](#继承-thread-类)
+    * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
+* [二、基础线程机制](#二基础线程机制)
+    * [sleep()](#sleep)
+    * [yield()](#yield)
+    * [join()](#join)
+    * [deamon](#deamon)
+* [三、结束线程](#三结束线程)
+    * [阻塞](#阻塞)
+    * [中断](#中断)
+* [四、线程之间的协作](#四线程之间的协作)
+    * [同步与通信的概念理解](#同步与通信的概念理解)
+    * [线程同步](#线程同步)
+    * [线程通信](#线程通信)
+* [五、线程状态转换](#五线程状态转换)
+* [六、Executor](#六executor)
+* [七、volatile](#七volatile)
+    * [保证内存可见性](#保证内存可见性)
+    * [禁止指令重排](#禁止指令重排)
+* [八、内存模型](#八内存模型)
     * [1. 硬件的效率与一致性](#1-硬件的效率与一致性)
     * [2. Java 内存模型](#2-java-内存模型)
     * [3. 主内存与工作内存](#3-主内存与工作内存)
     * [4. 内存间交互操作](#4-内存间交互操作)
     * [5. 内存模型三大特性](#5-内存模型三大特性)
-        * [5.1 原子性](#51-原子性)
-        * [5.2 可见性](#52-可见性)
-        * [5.3 有序性](#53-有序性)
     * [6. 先行发生原则](#6-先行发生原则)
-* [线程安全](#线程安全)
+* [九、线程安全](#九线程安全)
     * [1. Java 语言中的线程安全](#1-java-语言中的线程安全)
-        * [1.1 不可变](#11-不可变)
-        * [1.2 绝对线程安全](#12-绝对线程安全)
-        * [1.3 相对线程安全](#13-相对线程安全)
-        * [1.4 线程兼容](#14-线程兼容)
-        * [1.5 线程对立](#15-线程对立)
     * [2. 线程安全的实现方法](#2-线程安全的实现方法)
-        * [2.1 互斥同步](#21-互斥同步)
-        * [2.2 非阻塞同步](#22-非阻塞同步)
-        * [2.3 无同步方案](#23-无同步方案)
-* [锁优化](#锁优化)
+* [十、锁优化](#十锁优化)
     * [1. 自旋锁与自适应自旋](#1-自旋锁与自适应自旋)
     * [2. 锁消除](#2-锁消除)
     * [3. 锁粗化](#3-锁粗化)
     * [4. 轻量级锁](#4-轻量级锁)
     * [5. 偏向锁](#5-偏向锁)
-* [多线程开发良好的实践](#多线程开发良好的实践)
+* [十一、多线程开发良好的实践](#十一多线程开发良好的实践)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-# 使用线程
+# 一、使用线程
 
 有三种使用线程的方法：
 
 1. 实现 Runnable 接口；
 2. 实现 Callable 接口；
-3. 继承 Thread 类；
+3. 继承 Thread 类。
 
 实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
 
-## 1. 实现 Runnable 接口
+## 实现 Runnable 接口
 
 需要实现 run() 方法。
 
@@ -84,16 +71,16 @@ public class MyRunnable implements Runnable {
 }
 ```
 
-## 2. 实现 Callable 接口
+## 实现 Callable 接口
 
 与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
 
 ```java
-public  class  MyCallable  implements  Callable<Integer> {
+public class MyCallable implements Callable<Integer> {
     public Integer call() {
         // ...
     }
-    public  static  void  main(String[]  args) {
+    public static void main(String[]  args) {
         MyCallable mc = new MyCallable();
         FutureTask<Integer> ft = new FutureTask<>(mc);
         Thread thread = new Thread(ft);
@@ -103,52 +90,35 @@ public  class  MyCallable  implements  Callable<Integer> {
 }
 ```
 
-## 3. 继承 Thread 类
+## 继承 Thread 类
 
 同样也是需要实现 run() 方法，并且最后也是调用 start() 方法来启动线程。
 
 ```java
-class MyThread extends Thread {
+public class MyThread extends Thread {
     public void run() {
         // ...
     }
-    public  static  void  main(String[]  args) {
+    public static void main(String[] args) {
         MyThread mt = new MyThread();
         mt.start();
     }
 }
 ```
 
-## 4. 实现接口 vs 继承 Thread
+## 实现接口 VS 继承 Thread
 
 实现接口会更好一些，因为：
 
-1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口。
+1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
 2. 类可能只要求可执行即可，继承整个 Thread 类开销会过大。
 
-# Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
+# 二、基础线程机制
 
-主要有三种 Executor：
+## sleep()
 
-
-1. CachedTreadPool：一个任务创建一个线程；
-2. FixedThreadPool：所有任务只能使用固定大小的线程；
-3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
-
-```java
-ExecutorService exec = Executors.newCachedThreadPool();
-for(int i = 0; i < 5; i++) {
-    exec.execute(new MyRunnable());
-}
-```
-
-# 基础线程机制
-
-## 1. sleep()
-
-**Thread.sleep(millisec)**  方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
+Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
 
 sleep() 可能会抛出 InterruptedException。因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
 
@@ -158,15 +128,15 @@ public void run() {
         // ...
         Thread.sleep(1000);
         // ...
-    } catch(InterruptedException e) {
+    } catch (InterruptedException e) {
         System.err.println(e);
     }
 }
 ```
 
-## 2. yield()
+## yield()
 
-对静态方法  **Thread.yield()**  的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
+对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
 
 ```java
 public void run() {
@@ -175,15 +145,15 @@ public void run() {
 }
 ```
 
-## 3. join()
+## join()
 
-在线程中调用另一个线程的  **join()**  方法，会将当前线程挂起，直到目标线程结束。
+在线程中调用另一个线程的 join() 方法，会将当前线程挂起，直到目标线程结束。
 
 可以加一个超时参数。
 
-## 4. deamon
+## deamon
 
-后台线程（ **deamon** ）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
+守护线程（deamon）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
 
 当所有非后台线程结束时，程序也就终止，同时会杀死所有后台线程。
 
@@ -191,22 +161,119 @@ main() 属于非后台线程。
 
 使用 setDaemon() 方法将一个线程设置为后台线程。
 
-# 线程之间的协作
+# 三、结束线程
 
--  **线程通信** ：保证线程以一定的顺序执行；
--  **线程同步** ：保证线程对临界资源的互斥访问。
+## 阻塞
 
-线程通信往往是基于线程同步的基础上完成的，因此很多线程通信问题也是线程同步问题。
+一个线程进入阻塞状态可能有以下原因：
 
-## 1. 线程通信
+1. 调用 Thread.sleep() 方法进入休眠状态；
+2. 通过 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
+3. 等待某个 I/O 的完成；
+4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
 
-**wait()、notify() 和 notifyAll()**  三者实现了线程之间的通信。
+## 中断
+
+使用中断机制即可终止阻塞的线程。
+
+使用  **interrupt()**  方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
+
+应当捕获这个 InterruptedException 异常，从而做一些清理资源的操作。
+
+**1. 不可中断的阻塞** 
+
+不能中断 I/O 阻塞和 synchronized 锁阻塞。
+
+**2. Executor 的中断操作** 
+
+Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
+
+如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
+
+**3. 检查中断** 
+
+通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
+
+interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
+
+interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
+
+# 四、线程之间的协作
+
+## 同步与通信的概念理解
+
+在操作系统中，有三个概念用来描述进程间的协作关系：
+
+1. 互斥：多个进程在同一时刻只有一个进程能进入临界区；
+2. 同步：多个进程按一定顺序执行；
+3. 通信：多个进程间的信息传递。
+
+通信是一种手段，它可以用来实现同步。也就是说，通过在多个进程间传递信息，可以控制多个进程以一定顺序执行。
+
+而同步又可以保证互斥。即进程按一定顺序执行，可以保证在同一时刻只有一个进程能访问临界资源。但是同步不止用来实现互斥，例如生成者消费者问题，生产者和消费者进程之间的同步不是用来控制对临界资源的访问。
+
+总结起来就是：通信 --> 同步 --> 互斥。
+
+进程和线程在一定程度上类似，也可以用这些概念来描述。
+
+在 Java 语言中，这些概念描述有些差别：
+
+1. 同步：可以和操作系统的互斥等同；
+2. 通信：可以和操作系统的同步等同。
+
+## 线程同步
+
+给定一个进程内的所有线程，都共享同一存储空间，这样有好处又有坏处。这些线程就可以共享数据，非常有用。不过，在两个线程同时修改某一资源时，这也会造成一些问题。Java 提供了同步机制，以控制对共享资源的互斥访问。
+
+### 1. synchronized
+
+**同步一个方法** 
+
+使多个线程不能同时访问该方法。
+
+```java
+public synchronized void func(String name) {
+    // ...
+}
+```
+
+**同步一个代码块** 
+
+```java
+public void func(String name) {
+    synchronized(this) {
+        // ...
+    }
+}
+```
+
+### 2. Lock
+
+实现更细粒度的控制。
+
+```java
+private Lock lock;
+public int func(int value) {
+   try {
+       lock.lock();
+       // ...
+   } finally {
+      lock.unlock();
+   }
+}
+```
+
+## 线程通信
+
+### 1. wait() notify() notifyAll()
+
+它们都属于 Object 的一部分，而不属于 Thread。
 
 wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。
 
-sleep() 和 yield() 并没有释放锁，但是 wait() 会释放锁。实际上，只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
+sleep() 和 yield() 并没有释放锁，但是 wait() 会释放锁。
 
-这几个方法属于基类的一部分，而不属于 Thread。
+实际上，只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
 
 ```java
 private boolean flag = false;
@@ -229,49 +296,7 @@ public synchronized void before() {
 1. wait() 是 Object 类的方法，而 sleep() 是 Thread 的静态方法；
 2. wait() 会放弃锁，而 sleep() 不会。
 
-## 2. 线程同步
-
-给定一个进程内的所有线程，都共享同一存储空间，这样有好处又有坏处。这些线程就可以共享数据，非常有用。不过，在两个线程同时修改某一资源时，这也会造成一些问题。Java 提供了同步机制，以控制对共享资源的互斥访问。
-
-### 2.1 synchronized
-
-**同步一个方法** 
-
-使多个线程不能同时访问该方法。
-
-```java
-public synchronized void func(String name) {
-    // ...
-}
-```
-
-**同步一个代码块** 
-
-```java
-public void func(String name) {
-    synchronized(this) {
-        // ...
-    }
-}
-```
-
-### 2.2 Lock
-
-若要实现更细粒度的控制，我们可以使用锁（lock）。
-
-```java
-private Lock lock;
-public int func(int value) {
-   try {
-       lock.lock();
-       // ...
-   } finally {
-      lock.unlock();
-   }
-}
-```
-
-### 2.3 BlockingQueue
+### 2. BlockingQueue
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
@@ -279,6 +304,8 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 -  **优先级队列** ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将一直阻塞到队列中有内容，如果队列为满  put() 将阻塞到队列有空闲位置。它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
+
+阻塞队列的 take() 和 put() 方法是线程安全的。
 
 **使用 BlockingQueue 实现生产者消费者问题** 
 
@@ -310,7 +337,7 @@ public class Producer implements Runnable {
 // 消费者
 import java.util.concurrent.BlockingQueue;
 
-public class Consumer implements Runnable{
+public class Consumer implements Runnable {
     private BlockingQueue<String> queue;
 
     public Consumer(BlockingQueue<String> queue) {
@@ -365,73 +392,39 @@ Consumer3 is consuming product made by Consumer3...
 Consumer4 is consuming product made by Consumer4...
 ```
 
-# 结束线程
+# 五、线程状态转换
 
-## 1. 阻塞
+<div align="center"> <img src="../pics//n2U3N.png" width="800"/> </div><br>
 
-一个线程进入阻塞状态可能有以下原因：
+1. 新建（New）：创建后尚未启动；
+2. 可运行（Runnale）：可能正在运行，也可能正在等待 CPU 时间片；
+3. 无限期等待（Waiting）：等待其它线程显示地唤醒，否则不会被分配 CPU 时间片；
+4. 限期等待（Timed Waiting）：无序等待其它线程显示地唤醒，在一定时间之后会被系统自动唤醒；
+5. 阻塞（Blocking）：等待获取一个排它锁，如果其线程释放了锁就会结束此状态；
+6. 死亡（Terminated）
 
-1. 调用 Thread.sleep() 方法进入休眠状态；
-2. 通过 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
-3. 等待某个 I/O 的完成；
-4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
+# 六、Executor
 
-## 2. 中断
+Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
 
-使用中断机制即可终止阻塞的线程。
+主要有三种 Executor：
 
-使用  **interrupt()**  方法来中断某个线程，它会设置线程的中断状态。Object.wait(), Thread.join() 和 Thread.sleep() 三种方法在收到中断请求的时候会清除中断状态，并抛出 InterruptedException。
+1. CachedTreadPool：一个任务创建一个线程；
+2. FixedThreadPool：所有任务只能使用固定大小的线程；
+3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
 
-应当捕获这个 InterruptedException 异常，从而做一些清理资源的操作。
+```java
+ExecutorService exec = Executors.newCachedThreadPool();
+for(int i = 0; i < 5; i++) {
+    exec.execute(new MyRunnable());
+}
+```
 
-**不可中断的阻塞** 
-
-不能中断 I/O 阻塞和 synchronized 锁阻塞。
-
-**Executor 的中断操作** 
-
-Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
-
-如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
-
-**检查中断** 
-
-通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
-
-interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
-
-interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
-
-# 线程状态转换
-
-<div align="center"> <img src="../pics//38b894a7-525e-4204-80de-ecc1acc52c46.jpg"/> </div><br>
-
-1. NEW（新建）：创建后尚未启动的线程。
-2. RUNNABLE（运行）：处于此状态的线程有可能正在执行，也有可能正在等待着 CPU 为它分配执行时间。
-3. BLOCKED（阻塞）：阻塞与等待的区别是，阻塞在等待着获取到一个排它锁，这个时间将在另一个线程放弃这个锁的时候发生；而等待则是在等待一段时间，或者唤醒动作的发生。在程序等待进入同步区域的时候，线程将进入这种状态。
-4. Waiting（无限期等待）：处于这种状态的进行不会被分配 CPU 执行时间，它们要等待其它线程显示地唤醒。以下方法会让线程进入这种状态：
-5. TIMED_WAITING（限期等待）：处于这种状态的线程也不会被分配 CPU 执行时间，不过无序等待其它线程显示地唤醒，在一定时间之后它们会由系统自动唤醒。
-6. TERMINATED（死亡）
-
-以下方法会让线程陷入无限期的等待状态：
-
-- 没有设置 Timeout 参数的 Object.wait() 方法
-- 没有设置 Timeout 参数的 Thread.join() 方法
-- LockSupport.park() 方法
-
-以下方法会让线程进入限期等待状体：
-
-- Thread.sleep()
-- 设置了 Timeout 参数的 Object.wait() 方法
-- 设置了 Timeout 参数的 Thread.join() 方法
-- LockSupport.parkNanos() 方法
-- LockSupport.parkUntil() 方法
-
-# volatile
+# 七、volatile
 
 保证了内存可见性和禁止指令重排，没法保证原子性。
 
-## 1. 内存可见性
+## 保证内存可见性
 
 普通共享变量被修改之后，什么时候被写入主存是不确定的。
 
@@ -439,7 +432,7 @@ volatile 关键字会保证每次修改共享变量之后该值会立即更新�
 
 synchronized 和 Lock 也能够保证内存可见性。它们能保证同一时刻只有一个线程获取锁然后执行同步代码，并且在释放锁之前会将对变量的修改刷新到主存当中。不过只有对共享变量的 set() 和 get() 方法都加上 synchronized 才能保证可见性，如果只有 set() 方法加了 synchronized，那么 get() 方法并不能保证会从内存中读取最新的数据。
 
-## 2. 禁止指令重排
+## 禁止指令重排
 
 在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
@@ -447,7 +440,7 @@ volatile 关键字通过添加内存屏障的方式来进制指令重排，即�
 
 可以通过 synchronized 和 Lock 来保证有序性，它们保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码，自然就保证了有序性。
 
-# 内存模型
+# 八、内存模型
 
 ## 1. 硬件的效率与一致性
 
@@ -461,7 +454,7 @@ volatile 关键字通过添加内存屏障的方式来进制指令重排，即�
 
 ## 2. Java 内存模型
 
-Java 虚拟机规范中试图定义一种 Java 内存模型来屏蔽掉各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。在此之前，主流程序语言（如 C/C++等）直接使用物理硬件和操作系统的内存模型，因此，会由于不同平台上内存模型的差异，有可能导致程序在一套平台上并发完全正常，而在另外一套平台上并发访问却经常出错，因此在某些场景就必须针对不同的平台来编写程序。
+Java 虚拟机规范中试图定义一种 Java 内存模型来屏蔽掉各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。在此之前，主流程序语言（如 C/C++等）直接使用物理硬件和操作系统的内存模型，但由于不同平台上内存模型的差异，有可能导致程序在一套平台上并发完全正常，而在另外一套平台上并发访问却经常出错，因此在某些场景就必须针对不同的平台来编写程序。
 
 ## 3. 主内存与工作内存
 
@@ -581,7 +574,7 @@ int j = 2;
 
 上面两个例子综合起来证明了一个结论：时间先后顺序与先行发生原则之间基本没有太大的关系，所以我们衡量并发安全问题的时候不要受到时间顺序的干扰，一切必须以先行发生原则为准。
 
-# 线程安全
+# 九、线程安全
 
 《Java Concurrency In Practice》的作者 Brian Goetz 对“线程安全”有一个比较恰当的定义：“当多个线程访问一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替执行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获得正确的结果，那这个对象是线程安全的”。
 
@@ -639,7 +632,7 @@ public static void main(String[] args) {
         removeThread.start();
         printThread.start();
 
-        //不要同时产生过多的线程，否则会导致操作系统假死
+        // 不要同时产生过多的线程，否则会导致操作系统假死
         while (Thread.activeCount() > 20);
     }
 }
@@ -830,7 +823,7 @@ incrementAndGet() 方法在一个无限循环中，不断尝试将一个比当�
 
 Java 语言中，如果一个变量要被多线程访问，可以使用 volatile 关键字声明它为“易变的”；如果一个变量要被某个线程独享，Java 中就没有类似 C++中 \_\_declspec（thread）这样的关键字，不过还是可以通过 java.lang.ThreadLocal 类来实现线程本地存储的功能。每一个线程的 Thread 对象中都有一个 ThreadLocalMap 对象，这个对象存储了一组以 ThreadLocal.threadLocalHashCode 为键，以本地线程变量为值的 K-V 值对，ThreadLocal 对象就是当前线程的 ThreadLocalMap 的访问入口，每一个 ThreadLocal 对象都包含了一个独一无二的 threadLocalHashCode 值，使用这个值就可以在线程 K-V 值对中找回对应的本地线程变量。
 
-# 锁优化
+# 十、锁优化
 
 高效并发是从 JDK 1.5 到 JDK 1.6 的一个重要改进，HotSpot 虚拟机开发团队在这个版本上花费了大量的精力去实现各种锁优化技术，如适应性自旋（Adaptive Spinning）、锁消除（Lock Elimination）、锁粗化（Lock Coarsening）、轻量级锁（Lightweight Locking）和偏向锁（Biased Locking）等。这些技术都是为了在线程之间更高效地共享数据，以及解决竞争问题，从而提高程序的执行效率。
 
@@ -840,7 +833,7 @@ Java 语言中，如果一个变量要被多线程访问，可以使用 volatile
 
 自旋锁在 JDK 1.4.2 中就已经引入，只不过默认是关闭的，可以使用 -XX:+UseSpinning 参数来开启，在 JDK 1.6 就已经改为默认开启了。自旋等待不能代替阻塞，且先不说对处理器数量的要求，自旋等待本身虽然避免了线程切换的开销，但它是要占用处理器时间的，因此，如果锁被占用的时间很短，自旋等待的效果就会非常好，反之，如果锁被占用的时候很长，那么自旋的线程只会白白消耗处理器资源，而不会做任何有用的工作，反而会带来性能上的浪费。因此，自旋等待的时间必须要有一定的限度，如果自旋超过了限定的次数仍然没有成功获得锁，就应当使用传统的方式去挂起线程了。自旋次数的默认值是 10 次，用户可以使用参数 -XX:PreBlockSpin 来更改。
 
-自旋锁在 JDK 1.4.2 中就已经引入，只不过默认是关闭的，可以使用 -XX:+UseSpinning 参数来开启，在 JDK 1.6 就已经改为默认开启了。自旋等待不能代替阻塞，且先不说对处理器数量的要求，自旋等待本身虽然避免了线程切换的开销，但它是要占用处理器时间的，因此，如果锁被占用的时间很短，自旋等待的效果就会非常好，反之，如果锁被占用的时候很长，那么自旋的线程只会白白消耗处理器资源，而不会做任何有用的工作，反而会带来性能上的浪费。因此，自旋等待的时间必须要有一定的限度，如果自旋超过了限定的次数仍然没有成功获得锁，就应当使用传统的方式去挂起线程了。自旋次数的默认值是 10 次，用户可以使用参数 -XX:PreBlockSpin 来更改。
+在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的时间不再固定了，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也很有可能再次成功，进而它将允许自旋等待持续相对更长的时间，比如 100 个循环。另外，如果对于某个锁，自旋很少成功获得过，那在以后要获取这个锁时将可能省略掉自旋过程，以避免浪费处理器资源。有了自适应自旋，随着程序运行和性能监控信息的不断完善，虚拟机对程序锁的状况预测就会越来越准确，虚拟机就会变得越来越 “聪明” 了。
 
 ## 2. 锁消除
 
@@ -917,7 +910,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 偏向锁可以提高带有同步但无竞争的程序性能。它同样是一个带有效益权衡（Trade Off）性质的优化，也就是说，它并不一定总是对程序运行有利，如果程序中大多数的锁总是被多个不同的线程访问，那偏向模式就是多余的。在具体问题具体分析的前提下，有时候使用参数 -XX:-UseBiasedLocking 来禁止偏向锁优化反而可以提升性能。
 
-# 多线程开发良好的实践
+# 十一、多线程开发良好的实践
 
 - 给线程命名。
 - 最小化同步范围。
@@ -931,4 +924,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 - Java 编程思想
 - 深入理解 Java 虚拟机
+- [线程通信](http://ifeve.com/thread-signaling/#missed_signal)
 - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
+- [BlockingQueue](http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html)
+- [thread state java](https://stackoverflow.com/questions/11265289/thread-state-java)
