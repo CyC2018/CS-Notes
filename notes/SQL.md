@@ -1,39 +1,31 @@
 <!-- GFM-TOC -->
-* [基础](#基础)
-* [创建表](#创建表)
-* [插入](#插入)
-* [更新](#更新)
-* [删除](#删除)
-* [修改表](#修改表)
-* [查询](#查询)
-* [排序](#排序)
-* [过滤](#过滤)
-* [通配符](#通配符)
-* [计算字段](#计算字段)
-* [函数](#函数)
-    * [文本处理](#文本处理)
-    * [日期和时间处理](#日期和时间处理)
-    * [数值处理](#数值处理)
-    * [汇总](#汇总)
-* [分组](#分组)
-* [子查询](#子查询)
-* [连接](#连接)
-    * [内连接](#内连接)
-    * [自连接](#自连接)
-    * [自然连接](#自然连接)
-    * [外连接](#外连接)
-* [组合查询](#组合查询)
-* [视图](#视图)
-* [存储过程](#存储过程)
-* [游标](#游标)
-* [触发器](#触发器)
-* [事务处理](#事务处理)
-* [字符集](#字符集)
-* [权限管理](#权限管理)
+* [一、基础](#一基础)
+* [二、创建表](#二创建表)
+* [三、修改表](#三修改表)
+* [四、插入](#四插入)
+* [五、更新](#五更新)
+* [六、删除](#六删除)
+* [七、查询](#七查询)
+* [八、排序](#八排序)
+* [九、过滤](#九过滤)
+* [十、通配符](#十通配符)
+* [十一、计算字段](#十一计算字段)
+* [十二、函数](#十二函数)
+* [十三、分组](#十三分组)
+* [十四、子查询](#十四子查询)
+* [十五、连接](#十五连接)
+* [十六、组合查询](#十六组合查询)
+* [十七、视图](#十七视图)
+* [十八、存储过程](#十八存储过程)
+* [十九、游标](#十九游标)
+* [二十、触发器](#二十触发器)
+* [二十一、事务处理](#二十一事务处理)
+* [二十二、字符集](#二十二字符集)
+* [二十三、权限管理](#二十三权限管理)
 <!-- GFM-TOC -->
 
 
-# 基础
+# 一、基础
 
 模式定义了数据如何存储、存储什么样的数据以及数据如何分解等信息，数据库和表都有模式。
 
@@ -53,7 +45,7 @@ FROM mytable; -- 注释
    注释2 */
 ```
 
-# 创建表
+# 二、创建表
 
 ```sql
 CREATE TABLE mytable (
@@ -64,16 +56,38 @@ CREATE TABLE mytable (
   PRIMARY KEY (`id`));
 ```
 
-# 插入
+# 三、修改表
 
-**普通插入**
+添加列
+
+```sql
+ALTER TABLE mytable
+ADD col CHAR(20);
+```
+
+删除列
+
+```sql
+ALTER TABLE mytable
+DROP COLUMN col;
+```
+
+删除表
+
+```sql
+DROP TABLE mytable;
+```
+
+# 四、插入
+
+普通插入
 
 ```sql
 INSERT INTO mytable(col1, col2)
 VALUES(val1, val2);
 ```
 
-**插入检索出来的数据**
+插入检索出来的数据
 
 ```sql
 INSERT INTO mytable1(col1, col2)
@@ -81,14 +95,14 @@ SELECT col1, col2
 FROM mytable2;
 ```
 
-**将一个表的内容复制到一个新表**
+将一个表的内容插入到一个新表
 
 ```sql
 CREATE TABLE newtable AS
 SELECT * FROM mytable;
 ```
 
-# 更新
+# 五、更新
 
 ```sql
 UPDATE mytable
@@ -96,42 +110,20 @@ SET col = val
 WHERE id = 1;
 ```
 
-# 删除
+# 六、删除
 
 ```sql
 DELETE FROM mytable
 WHERE id = 1;
 ```
 
-**TRUNCATE TABLE** 可以清空表，也就是删除所有行。
+**TRUNCATE TABLE**  可以清空表，也就是删除所有行。
 
 使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
 
-# 修改表
+# 七、查询
 
-**添加列**
-
-```sql
-ALTER TABLE mytable
-ADD col CHAR(20);
-```
-
-**删除列**
-
-```sql
-ALTER TABLE mytable
-DROP COLUMN col;
-```
-
-**删除表**
-
-```sql
-DROP TABLE mytable;
-```
-
-# 查询
-
-**DISTINCT**
+## DISTINCT
 
 相同值只会出现一次。它作用于所有列，也就是说所有列的值都相同才算相同。
 
@@ -140,7 +132,7 @@ SELECT DISTINCT col1, col2
 FROM mytable;
 ```
 
-**LIMIT**
+## LIMIT
 
 限制返回的行数。可以有两个参数，第一个参数为起始行，从 0 开始；第二个参数为返回的总行数。
 
@@ -167,10 +159,10 @@ LIMIT 2, 3;
 ```
 
 
-# 排序
+# 八、排序
 
-- **ASC**：升序（默认）
-- **DESC**：降序
+-  **ASC** ：升序（默认）
+-  **DESC** ：降序
 
 可以按多个列进行排序，并且为每个列指定不同的排序方式：
 
@@ -180,7 +172,7 @@ FROM mytable
 ORDER BY col1 DESC, col2 ASC;
 ```
 
-# 过滤
+# 九、过滤
 
 不进行过滤的数据非常大，导致通过网络传输了很多多余的数据，从而浪费了网络带宽。因此尽量使用 SQL 语句来过滤不必要的数据，而不是传输所有的数据到客户端中然后由客户端进行过滤。
 
@@ -203,21 +195,21 @@ WHERE col IS NULL;
 
 应该注意到，NULL 与 0 、空字符串都不同。
 
-**AND OR** 用于连接多个过滤条件。优先处理 AND，因此当一个过滤表达式涉及到多个 AND 和 OR 时，应当使用 () 来决定优先级。
+**AND OR**  用于连接多个过滤条件。优先处理 AND，因此当一个过滤表达式涉及到多个 AND 和 OR 时，应当使用 () 来决定优先级。
 
-**IN** 操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
+**IN**  操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
 
-**NOT** 操作符用于否定一个条件。
+**NOT**  操作符用于否定一个条件。
 
-# 通配符
+# 十、通配符
 
 通配符也是用在过滤语句中，但它只能用于文本字段。
 
-- **%** 匹配 >=0 个任意字符，类似于 \*；
+-  **%**  匹配 >=0 个任意字符，类似于 \*；
 
-- **\_** 匹配 ==1 个任意字符，类似于 \.；
+-  **\_**  匹配 ==1 个任意字符，类似于 \.；
 
-- **[ ]** 可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。
+-  **[ ]**  可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。
 
 使用 Like 来进行通配符匹配。
 
@@ -228,25 +220,25 @@ WHERE col LIKE '[^AB]%' -- 不以 A 和 B 开头的任意文本
 ```
 不要滥用通配符，通配符位于开头处匹配会非常慢。
 
-# 计算字段
+# 十一、计算字段
 
 在数据库服务器上完成数据的转换和格式化的工作往往比客户端上快得多，并且转换和格式化后的数据量更少的话可以减少网络通信量。
 
-计算字段通常需要使用 **AS** 来取别名，否则输出的时候字段名为计算表达式。
+计算字段通常需要使用  **AS**  来取别名，否则输出的时候字段名为计算表达式。
 
 ```sql
 SELECT col1*col2 AS alias
 FROM mytable
 ```
 
-**Concat()** 用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
+**CONCAT()**  用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
 
 ```sql
-SELECT Concat(TRIM(col1), ' (', TRIM(col2), ')')
+SELECT CONCAT(TRIM(col1), ' (', TRIM(col2), ')')
 FROM mytable
 ```
 
-# 函数
+# 十二、函数
 
 各个 DBMS 的函数都是不相同的，因此不可移植。
 
@@ -260,7 +252,7 @@ FROM mytable
 | LENGTH() | 长度 |
 | SUNDEX() | 转换为语音值 |
 
-其中，**SOUNDEX()** 是将一个字符串转换为描述其语音表示的字母数字模式的算法，它是根据发音而不是字母比较。
+其中， **SOUNDEX()**  是将一个字符串转换为描述其语音表示的字母数字模式的算法，它是根据发音而不是字母比较。
 
 ```sql
 SELECT *
@@ -331,7 +323,7 @@ SELECT AVG(DISTINCT col1) AS avg_col
 FROM mytable
 ```
 
-# 分组
+# 十三、分组
 
 分组就是把具有相同的数据值的行放在同一组中。
 
@@ -371,7 +363,7 @@ ORDER BY num;
 3. NULL 的行会单独分为一组；
 4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
-# 子查询
+# 十四、子查询
 
 子查询中只能返回一个字段的数据。
 
@@ -395,7 +387,7 @@ FROM Customers
 ORDER BY cust_name;
 ```
 
-# 连接
+# 十五、连接
 
 连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 Where。
 
@@ -407,7 +399,7 @@ ORDER BY cust_name;
 
 内连接又称等值连接，使用 INNER JOIN 关键字。
 
-```
+```sql
 select a, b, c
 from A inner join B
 on A.key = B.key
@@ -415,7 +407,7 @@ on A.key = B.key
 
 可以不明确使用 INNER JOIN，而使用普通查询并在 WHERE 中将两个表中要连接的列用等值方法连接起来。
 
-```
+```sql
 select a, b, c
 from A, B
 where A.key = B.key
@@ -429,9 +421,9 @@ where A.key = B.key
 
 一张员工表，包含员工姓名和员工所属部门，要找出与 Jim 处在同一部门的所有员工姓名。
 
-**子查询版本**
+子查询版本
 
-```
+```sql
 select name
 from employee
 where department = (
@@ -440,9 +432,9 @@ where department = (
       where name = "Jim");
 ```
 
-**自连接版本**
+自连接版本
 
-```
+```sql
 select name
 from employee as e1, employee as e2
 where e1.department = e2.department
@@ -457,7 +449,7 @@ where e1.department = e2.department
 
 内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列。
 
-```
+```sql
 select *
 from employee natural join department;
 ```
@@ -468,7 +460,7 @@ from employee natural join department;
 
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
-```
+```sql
 select Customers.cust_id, Orders.order_num
    from Customers left outer join Orders
    on Customers.cust_id = Orders.curt_id;
@@ -476,7 +468,7 @@ select Customers.cust_id, Orders.order_num
 
 如果需要统计顾客的订单数，使用聚集函数。
 
-```
+```sql
 select Customers.cust_id,
        COUNT(Orders.order_num) as num_ord
 from Customers left outer join Orders
@@ -484,9 +476,9 @@ on Customers.cust_id = Orders.curt_id
 group by Customers.cust_id;
 ```
 
-# 组合查询
+# 十六、组合查询
 
-使用 **UNION** 来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果为 M+N 行。
+使用  **UNION**  来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果为 M+N 行。
 
 每个查询必须包含相同的列、表达式或者聚集函数。
 
@@ -504,7 +496,7 @@ FROM mytable
 WHERE col =2;
 ```
 
-# 视图
+# 十七、视图
 
 视图是虚拟的表，本身不包含数据，也就不能对其进行索引操作。对视图的操作和对普通表的操作一样。
 
@@ -522,17 +514,19 @@ FROM mytable
 WHERE col5 = val;
 ```
 
-# 存储过程
+# 十八、存储过程
 
 存储过程可以看成是对一系列 SQL 操作的批处理；
 
-**使用存储过程的好处**
+## 使用存储过程的好处
 
 1. 代码封装，保证了一定的安全性；
+
 2. 代码复用；
+
 3. 由于是预先编译，因此具有很高的性能。
 
-**创建存储过程**
+## 创建存储过程
 
 命令行中创建存储过程需要自定义分隔符，因为命令行是以 ; 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。
 
@@ -561,13 +555,13 @@ call myprocedure(@ret);
 select @ret;
 ```
 
-# 游标
+# 十九、游标
 
 在存储过程中使用游标可以对一个结果集进行移动遍历。
 
 游标主要用于交互式应用，其中用户需要对数据集中的任意行进行浏览和修改。
 
-**使用游标的四个步骤：**
+使用游标的四个步骤：
 
 1. 声明游标，这个过程没有实际检索出数据；
 2. 打开游标；
@@ -597,7 +591,7 @@ create procedure myprocedure(out ret int)
  delimiter ;
 ```
 
-# 触发器
+# 二十、触发器
 
 触发器会在某个表执行以下语句时而自动执行：DELETE、INSERT、UPDATE
 
@@ -618,9 +612,9 @@ UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中
 
 MySQL 不允许在触发器中使用 CALL 语句 ，也就是不能调用存储过程。
 
-# 事务处理
+# 二十一、事务处理
 
-**基本术语**
+基本术语：
 
 1. 事务（transaction）指一组 SQL 语句；
 2. 回退（rollback）指撤销指定 SQL 语句的过程；
@@ -645,9 +639,9 @@ ROLLBACK TO delete1
 COMMIT
 ```
 
-# 字符集
+# 二十二、字符集
 
-**基本术语**
+基本术语：
 
 1. 字符集为字母和符号的集合；
 2. 编码为某个字符集成员的内部表示；
@@ -669,7 +663,7 @@ FROM mytable
 ORDER BY col COLLATE latin1_general_ci;
 ```
 
-# 权限管理
+# 二十三、权限管理
 
 MySQL 的账户信息保存在 mysql 这个数据库中。
 
@@ -678,7 +672,7 @@ USE mysql;
 SELECT user FROM user;
 ```
 
-**创建账户**
+## 创建账户
 
 ```sql
 CREATE USER myuser IDENTIFIED BY 'mypassword';
@@ -686,35 +680,35 @@ CREATE USER myuser IDENTIFIED BY 'mypassword';
 
 新创建的账户没有任何权限。
 
-**修改账户名**
+## 修改账户名
 
 ```sql
 RENAME myuser TO newuser;
 ```
 
-**删除账户**
+## 删除账户
 
 ```sql
 DROP USER myuser;
 ```
 
-**查看权限**
+## 查看权限
 
 ```sql
 SHOW GRANTS FOR myuser;
 ```
 
-**授予权限**
+## 授予权限
 
 ```sql
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-<br><div align="center"> <img src="https://github.com/CyC2018/InterviewNotes/blob/master/pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
+<div align="center"> <img src="../pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
 
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
-**删除权限**
+## 删除权限
 
 ```sql
 REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
@@ -728,7 +722,7 @@ GRANT 和 REVOKE 可在几个层次上控制访问权限：
 - 特定的列；
 - 特定的存储过程。
 
-**更改密码**
+## 更改密码
 
 必须使用 Password() 函数
 
