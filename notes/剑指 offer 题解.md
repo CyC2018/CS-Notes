@@ -2460,15 +2460,15 @@ public double countProbability(int n, int s) {
 ## 解题思路
 
 ```java
-public boolean isContinuous(int [] numbers) {
-    if(numbers.length < 5) return false;
-    Arrays.sort(numbers);
+public boolean isContinuous(int[] nums) {
+    if (nums.length < 5) return false;
+    Arrays.sort(nums);
     int cnt = 0;
-    for(int num : numbers) if(num == 0) cnt++;
-    for(int i = cnt; i < numbers.length - 1; i++) {
-        if(numbers[i + 1] == numbers[i]) return false;
-        int interval = numbers[i + 1] - numbers[i] - 1;
-        if(interval > cnt) return false;
+    for (int num : nums) if (num == 0) cnt++;
+    for (int i = cnt; i < nums.length - 1; i++) {
+        if (nums[i + 1] == nums[i]) return false;
+        int interval = nums[i + 1] - nums[i] - 1;
+        if (interval > cnt) return false;
         cnt -= interval;
     }
     return true;
@@ -2583,12 +2583,45 @@ public int StrToInt(String str) {
 
 # 68. 树中两个节点的最低公共祖先
 
-树是二叉查找树的最低公共祖先问题：
+## 二叉查找树
+
+```html
+        _______6______
+       /              \
+    ___2__          ___8__
+   /      \        /      \
+   0      _4       7       9
+         /  \
+         3   5
+For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
+```
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
     if(root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
     return root;
+}
+```
+
+## 普通二叉树
+
+```html
+       _______3______
+       /              \
+    ___5__          ___1__
+   /      \        /      \
+   6      _2       0       8
+         /  \
+         7   4
+For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+```
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null || root == p || root == q) return root;
+    TreeNode left = lowestCommonAncestor(root.left, p, q);
+    TreeNode right = lowestCommonAncestor(root.right, p, q);
+    return left == null ? right : right == null ? left : root;
 }
 ```
