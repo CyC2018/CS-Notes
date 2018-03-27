@@ -420,8 +420,6 @@ for(int i = 0; i < 5; i++) {
 }
 ```
 
-> [JAVA 线程池的分析和使用](http://www.infoq.com/cn/articles/java-threadPool/)
-
 # 七、volatile
 
 保证了内存可见性和禁止指令重排，没法保证原子性。
