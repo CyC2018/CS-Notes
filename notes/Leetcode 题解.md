@@ -2466,7 +2466,7 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
-空间复杂度可以优化成 O(1) 空间复杂度
+空间复杂度可以优化为 O(1)
 
 ```java
 public int maxSubArray(int[] nums) {
@@ -2486,11 +2486,12 @@ public int maxSubArray(int[] nums) {
 
 ```html
 A = [1, 2, 3, 4]
-
 return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 ```
 
-对于 (1,2,3,4)，它有三种组成递增子区间的方式，而对于 (1,2,3,4,5)，它组成递增子区间的方式除了 (1,2,3,4) 的三种外还多了一种，即 (1,2,3,4,5)，因此 dp[i] = dp[i - 1] + 1。
+dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
+
+如果 A[i] - A[i - 1] == A[i - 1] - A[i - 2]，表示 [A[i - 2], A[i - 1], A[i]] 是一个等差递增子区间。如果 [A[i - 3], A[i - 2], A[i - 1]] 是一个等差递增子区间，那么 [A[i - 3], A[i - 2], A[i - 1], A[i]] 也是。因此在这个条件下，dp[i] = dp[i-1] + 1。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
