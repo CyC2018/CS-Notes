@@ -30,8 +30,7 @@
 * [25. 合并两个排序的链表](#25-合并两个排序的链表)
 * [26. 树的子结构](#26-树的子结构)
 * [27. 二叉树的镜像](#27-二叉树的镜像)
-* [28.1 对称的二叉树](#281-对称的二叉树)
-* [28.2 平衡二叉树](#282-平衡二叉树)
+* [28 对称的二叉树](#28-对称的二叉树)
 * [29. 顺时针打印矩阵](#29-顺时针打印矩阵)
 * [30. 包含 min 函数的栈](#30-包含-min-函数的栈)
 * [31. 栈的压入、弹出序列](#31-栈的压入弹出序列)
@@ -61,7 +60,8 @@
 * [52. 两个链表的第一个公共结点](#52-两个链表的第一个公共结点)
 * [53 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
 * [54. 二叉搜索树的第 K 个结点](#54-二叉搜索树的第-k-个结点)
-* [55 二叉树的深度](#55-二叉树的深度)
+* [55.1 二叉树的深度](#551-二叉树的深度)
+* [55.2 平衡二叉树](#552-平衡二叉树)
 * [56. 数组中只出现一次的数字](#56-数组中只出现一次的数字)
 * [57.1 和为 S 的两个数字](#571-和为-s-的两个数字)
 * [57.2 和为 S 的连续正数序列](#572-和为-s-的连续正数序列)
@@ -544,7 +544,7 @@ private int minNumberInRotateArray(int[] nums, int first, int last) {
 }
 ```
 
-### 双指针
+### 二分查找
 
 复杂度：O(log<sub>n</sub>) + O(1)
 
@@ -556,7 +556,7 @@ public int minNumberInRotateArray(int[] nums) {
         if (h - l == 1) return nums[h];
         int mid = l + (h - l) / 2;
         if (nums[mid] >= nums[l]) l = mid;
-        else if (nums[mid] <= nums[h]) h = mid;
+        else h = mid;
     }
     return nums[l];
 }
@@ -694,7 +694,7 @@ public int maxProductAfterCutting(int n) {
 
 ### 贪心解法
 
-尽可能多得剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
+尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
 证明：当 n >= 5 时，3(n - 3) - 2(n - 2) = n - 5 >= 0。因此把长度大于 5 的绳子切成两段，令其中一段长度为 3 可以使得两段的乘积最大。
 
@@ -726,7 +726,7 @@ public int NumberOf1(int n) {
 
 ### n&(n-1)
 
-O(logM) 时间复杂度解法，其中 m 表示 1 的个数。
+O(logM) 时间复杂度解法，其中 M 表示 1 的个数。
 
 该位运算是去除 n 的位级表示中最低的那一位。
 
@@ -772,7 +772,7 @@ public double Power(double base, int exponent) {
     }
     double pow = Power(base * base, exponent / 2);
     if (exponent % 2 != 0) pow = pow * base;
-    return isNegative ? 1 / pow : pow;
+    return isNegative ? (1 / pow) : pow;
 }
 ```
 
@@ -804,6 +804,13 @@ private void print1ToMaxOfNDigits(char[] number, int digit) {
         number[digit + 1] = (char) (i + '0');
         print1ToMaxOfNDigits(number, digit + 1);
     }
+}
+
+private void printNumber(char[] number) {
+    int index = 0;
+    while (index < number.length && number[index] == '0') index++;
+    while (index < number.length) System.out.print(number[index++]);
+    System.out.println();
 }
 ```
 
@@ -871,7 +878,7 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 解题思路
 
-应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而它当成重复前面字符一次。
+应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
 
 ```html
 p.charAt(j) == s.charAt(i)  :  dp[i][j] = dp[i-1][j-1];
@@ -1147,7 +1154,7 @@ private void swap(TreeNode root) {
 }
 ```
 
-# 28.1 对称的二叉树
+# 28 对称的二叉树
 
 ## 题目描述
 
@@ -1172,39 +1179,6 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
     if (t1 == null || t2 == null) return false;
     if (t1.val != t2.val) return false;
     return isSymmetrical(t1.left, t2.right) && isSymmetrical(t1.right, t2.left);
-}
-```
-
-# 28.2 平衡二叉树
-
-## 题目描述
-
-```html
-    3
-   / \
-  9  20
-    /  \
-   15   7
-```
-
-平衡二叉树左右子树高度差不超过 1。
-
-## 解题思路
-
-```java
-private boolean isBalanced = true;
-
-public boolean IsBalanced_Solution(TreeNode root) {
-    height(root);
-    return isBalanced;
-}
-
-private int height(TreeNode root) {
-    if (root == null) return 0;
-    int left = height(root.left);
-    int right = height(root.right);
-    if (Math.abs(left - right) > 1) isBalanced = false;
-    return 1 + Math.max(left, right);
 }
 ```
 
@@ -2200,7 +2174,13 @@ private void inOrder(TreeNode root, int k) {
 }
 ```
 
-# 55 二叉树的深度
+# 55.1 二叉树的深度
+
+## 题目描述
+
+从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+
+## 解题思路
 
 ```java
 public int TreeDepth(TreeNode root) {
@@ -2208,6 +2188,40 @@ public int TreeDepth(TreeNode root) {
     return 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
 }
 ```
+
+# 55.2 平衡二叉树
+
+## 题目描述
+
+```html
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+平衡二叉树左右子树高度差不超过 1。
+
+## 解题思路
+
+```java
+private boolean isBalanced = true;
+
+public boolean IsBalanced_Solution(TreeNode root) {
+    height(root);
+    return isBalanced;
+}
+
+private int height(TreeNode root) {
+    if (root == null) return 0;
+    int left = height(root.left);
+    int right = height(root.right);
+    if (Math.abs(left - right) > 1) isBalanced = false;
+    return 1 + Math.max(left, right);
+}
+```
+
 
 # 56. 数组中只出现一次的数字
 
