@@ -912,13 +912,13 @@ public static String concatString(String s1, String s2, String s3) {
 
 # 十一、多线程开发良好的实践
 
-- 给线程命名。
-- 最小化同步范围。
-- 优先使用 volatile。
-- 尽可能使用更高层次的并发工具而非 wait 和 notify() 来实现线程通信，如 BlockingQueue, Semeaphore。
-- 多用并发容器，少用同步容器，并发容器比同步容器的可扩展性更好。
-- 考虑使用线程池。
-- 最低限度的使用同步和锁，缩小临界区。因此相对于同步方法，同步块会更好。
+1. 给线程起个有意义的名字，这样可以方便找 Bug；
+
+2. 因为锁花费的代价很高，应该尽可能减小同步范围；
+
+3. 多用同步类少用 wait 和 notify。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait 和 notify 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+
+4. 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashttable。
 
 # 参考资料
 
