@@ -2038,25 +2038,19 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-以上的空间复杂度还不是最优的。考虑到最需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
+以上的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
 
 ```java
 public int FirstNotRepeatingChar(String str) {
     BitSet bs1 = new BitSet(256);
     BitSet bs2 = new BitSet(256);
-    for (int i = 0; i < str.length(); i++) {
-        char c = str.charAt(i);
-        if (!bs1.get(c) && !bs2.get(c)) {       // 0 0
-            bs1.set(c);
-        } else if (bs1.get(c) && !bs2.get(c)) { // 0 1
-            bs2.set(c);
-        }
+    for (char c : str.toCharArray()) {
+        if (!bs1.get(c) && !bs2.get(c)) bs1.set(c);     // 0 0
+        else if (bs1.get(c) && !bs2.get(c)) bs2.set(c); // 0 1
     }
     for (int i = 0; i < str.length(); i++) {
         char c = str.charAt(i);
-        if (bs1.get(c) && !bs2.get(c)) {
-            return i;
-        }
+        if (bs1.get(c) && !bs2.get(c)) return i;
     }
     return -1;
 }
