@@ -369,7 +369,7 @@ ORDER BY num;
 
 可以将子查询的结果作为 WHRER 语句的过滤条件：
 
-```
+```sql
 SELECT *
 FROM mytable1
 WHERE col1 IN (SELECT col2
