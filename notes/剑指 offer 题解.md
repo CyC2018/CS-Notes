@@ -2272,25 +2272,25 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 ```java
 public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    int start = 1, end = 2;
+    int first = 1, last = 2;
     int curSum = 3;
-    while (start <= sum / 2 && end < sum) {
+    while (first <= sum / 2 && last < sum) {
         if (curSum > sum) {
-            curSum -= start;
-            start++;
+            curSum -= first;
+            first++;
         } else if (curSum < sum) {
-            end++;
-            curSum += end;
+            last++;
+            curSum += last;
         } else {
             ArrayList<Integer> list = new ArrayList<>();
-            for (int i = start; i <= end; i++) {
+            for (int i = first; i <= last; i++) {
                 list.add(i);
             }
             ret.add(list);
-            curSum -= start;
-            start++;
-            end++;
-            curSum += end;
+            curSum -= first;
+            first++;
+            last++;
+            curSum += last;
         }
     }
     return ret;
@@ -2447,7 +2447,7 @@ public double countProbability(int n, int s) {
         flag = 1 - flag;
     }
     int totalNum = (int) Math.pow(6, n);
-    return (double) dp[n - 1][s - 1] / totalNum;
+    return (double) dp[flag][s - 1] / totalNum;
 }
 ```
 
