@@ -199,7 +199,7 @@ try {
 java.lang.CloneNotSupportedException: CloneTest
 ```
 
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protect 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 **2. 深拷贝与浅拷贝** 
 
@@ -235,7 +235,7 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 可以对类或类中的成员（字段以及方法）加上访问修饰符。
 
-- 成员可见表示其它类可以用成员所在类的对象访问到该成员；
+- 成员可见表示其它类可该类的对象访问到该成员；
 - 类可见表示其它类可以用这个类创建对象。
 
 在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
@@ -509,7 +509,7 @@ public static void main(java.lang.String[]);
 
 Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
 
-1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字；
+1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
 2.  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
 3.  **Constructor** ：可以用 Constructor 创建新的对象。
 

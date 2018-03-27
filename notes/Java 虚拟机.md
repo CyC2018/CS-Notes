@@ -79,7 +79,7 @@ Java 堆不需要连续内存，并且可以通过动态增加其内存，增加
 可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置最小值，第二个参数设置最大值。
 
 ```java
-java -Xms=1M -XmX=2M HackTheJava
+java -Xms=1M -Xmx=2M HackTheJava
 ```
 
 ## 方法区
