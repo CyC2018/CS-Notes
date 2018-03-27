@@ -60,7 +60,7 @@
 * [51. 数组中的逆序对](#51-数组中的逆序对)
 * [52. 两个链表的第一个公共结点](#52-两个链表的第一个公共结点)
 * [53 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
-* [54. 二叉搜索树的第 k 个结点](#54-二叉搜索树的第-k-个结点)
+* [54. 二叉搜索树的第 K 个结点](#54-二叉搜索树的第-k-个结点)
 * [55 二叉树的深度](#55-二叉树的深度)
 * [56. 数组中只出现一次的数字](#56-数组中只出现一次的数字)
 * [57.1 和为 S 的两个数字](#571-和为-s-的两个数字)
@@ -2090,7 +2090,7 @@ private void merge(int[] nums, int first, int mid, int last) {
         else if (nums[i] < nums[j]) tmp[k] = nums[i++];
         else {
             tmp[k] = nums[j++];
-            this.cnt += mid - i + 1; // a[i] > a[j]，说明 a[i...mid] 都大于 a[j]
+            this.cnt += mid - i + 1; // nums[i] > nums[j]，说明 nums[i...mid] 都大于 nums[j]
         }
         k++;
     }
@@ -2116,7 +2116,7 @@ B:    b1 → b2 → b3
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
-当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
+当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部重新开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部重新开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
 
 ```java
 public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
@@ -2175,7 +2175,7 @@ private int getLastK(int[] nums, int K) {
 }
 ```
 
-# 54. 二叉搜索树的第 k 个结点
+# 54. 二叉搜索树的第 K 个结点
 
 ## 解题思路
 
@@ -2240,7 +2240,7 @@ public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
 
 ## 题目描述
 
-输入一个递增排序的数组和一个数字 S，在数组中查找两个数，是的他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
+输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
 
 ## 解题思路
 
@@ -2273,9 +2273,8 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
     int start = 1, end = 2;
-    int mid = sum / 2;
     int curSum = 3;
-    while (start <= mid && end < sum) {
+    while (start <= sum / 2 && end < sum) {
         if (curSum > sum) {
             curSum -= start;
             start++;
@@ -2315,25 +2314,22 @@ public String ReverseSentence(String str) {
     if (str.length() == 0) return str;
     int n = str.length();
     char[] chars = str.toCharArray();
-    int start = 0, end = 0;
-    while (end <= n) {
-        if (end == n || chars[end] == ' ') {
-            reverse(chars, start, end - 1);
-            start = end + 1;
+    int i = 0, j = 0;
+    while (j <= n) {
+        if (j == n || chars[j] == ' ') {
+            reverse(chars, i, j - 1);
+            i = j + 1;
         }
-        end++;
+        j++;
     }
     reverse(chars, 0, n - 1);
     return new String(chars);
 }
 
-private void reverse(char[] c, int start, int end) {
-    while (start < end) {
-        char t = c[start];
-        c[start] = c[end];
-        c[end] = t;
-        start++;
-        end--;
+private void reverse(char[] c, int i, int j) {
+    while(i < j) {
+        char t = c[i]; c[i] = c[j]; c[j] = t;
+        i++; j--;
     }
 }
 ```
@@ -2347,22 +2343,19 @@ private void reverse(char[] c, int start, int end) {
 ## 解题思路
 
 ```java
-public String LeftRotateString(String str, int k) {
-    if (str.length() == 0) return "";
+public String LeftRotateString(String str,int n) {
+    if(str.length() == 0) return "";
     char[] c = str.toCharArray();
-    reverse(c, 0, k - 1);
-    reverse(c, k, c.length - 1);
+    reverse(c, 0, n - 1);
+    reverse(c, n, c.length - 1);
     reverse(c, 0, c.length - 1);
     return new String(c);
 }
 
 private void reverse(char[] c, int i, int j) {
-    while (i < j) {
-        char t = c[i];
-        c[i] = c[j];
-        c[j] = t;
-        i++;
-        j--;
+    while(i < j) {
+        char t = c[i]; c[i] = c[j]; c[j] = t;
+        i++; j--;
     }
 }
 ```
