@@ -2588,11 +2588,11 @@ public int StrToInt(String str) {
 ```html
         _______6______
        /              \
-    ___2__          ___8__
-   /      \        /      \
-   0      _4       7       9
-         /  \
-         3   5
+   ___2__           ___8__
+  /      \         /      \
+ 0        4       7        9
+         / \
+        3   5
 For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 ```
 
@@ -2608,12 +2608,12 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ```html
        _______3______
-       /              \
-    ___5__          ___1__
-   /      \        /      \
-   6      _2       0       8
-         /  \
-         7   4
+      /              \
+  ___5__           ___1__
+ /      \         /      \
+ 6       2       0        8
+        / \
+       7   4
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ```
 
