@@ -3,8 +3,8 @@
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
 |网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
 </br>
-:loudspeaker: 声明：本仓库的内容不涉及商业行为，不向读者收取任何费用。</br>
-:loudspeaker: Statement: This repository is not involving commercial activities, and does not charge readers any fee.
+:loudspeaker: 本仓库的内容不涉及商业行为，不向读者收取任何费用。</br>
+:loudspeaker: This repository is not involving commercial activities, and does not charge readers any fee.
 </br></br>
 
 ## 网络 :cloud:
