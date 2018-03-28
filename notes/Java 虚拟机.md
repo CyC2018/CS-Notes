@@ -56,7 +56,7 @@ java -Xss=512M HackTheJava
 
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-<div align="center"> <img src="../pics//JNIFigure1.gif" width=""/> </div><br>
+<div align="center"> <img src="../pics//JNIFigure1.gif" width="400"/> </div><br>
 
 ## Java 堆
 
