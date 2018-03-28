@@ -922,8 +922,8 @@ public static String concatString(String s1, String s2, String s3) {
 
 # 参考资料
 
-- Java 编程思想
-- 深入理解 Java 虚拟机
+- BruceEckel. Java 编程思想: 第 4 版 [M]. 机械工业出版社, 2007.
+- 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [线程通信](http://ifeve.com/thread-signaling/#missed_signal)
 - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
 - [BlockingQueue](http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html)

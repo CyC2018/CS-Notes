@@ -2423,6 +2423,12 @@ public int numberOfArithmeticSlices(int[] A) {
 
 [Leetcode : 583. Delete Operation for Two Strings (Medium)](https://leetcode.com/problems/delete-operation-for-two-strings/description/)
 
+```html
+Input: "sea", "eat"
+Output: 2
+Explanation: You need one step to make "sea" to "ea" and another step to make "eat" to "ea".
+```
+
 可以转换为求两个字符串的最长公共子序列问题。
 
 ```java
@@ -2432,8 +2438,8 @@ public int minDistance(String word1, String word2) {
     for (int i = 0; i <= m; i++) {
         for (int j = 0; j <= n; j++) {
             if (i == 0 || j == 0) continue;
-            dp[i][j] = word1.charAt(i - 1) == word2.charAt(j - 1) ? dp[i - 1][j - 1] + 1
-                    : Math.max(dp[i][j - 1], dp[i - 1][j]);
+            dp[i][j] = word1.charAt(i - 1) == word2.charAt(j - 1) ?
+                    dp[i - 1][j - 1] + 1 : Math.max(dp[i][j - 1], dp[i - 1][j]);
         }
     }
     return m + n - 2 * dp[m][n];
@@ -2610,25 +2616,15 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-**统计从 0 \~ n 每个数的二进制表示中 1 的个数** 
-
-[Leetcode : 338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
-
-对于数字 6(110)，它可以看成是数字 2(10) 前面加上一个 1 ，因此 dp[i] = dp[i&(i-1)] + 1;
-
-```java
-    public int[] countBits(int num) {
-        int[] ret = new int[num + 1];
-        for(int i = 1; i <= num; i++){
-            ret[i] = ret[i&(i-1)] + 1;
-        }
-        return ret;
-    }
-```
-
 **一组整数对能够构成的最长链** 
 
 [Leetcode : 646. Maximum Length of Pair Chain (Medium)](https://leetcode.com/problems/maximum-length-of-pair-chain/description/)
+
+```html
+Input: [[1,2], [2,3], [3,4]]
+Output: 2
+Explanation: The longest chain is [1,2] -> [3,4]
+```
 
 对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
 
@@ -3087,6 +3083,22 @@ public int[] productExceptSelf(int[] nums) {
     for(int i = n - 1; i >= 0; i--) {
         ret[i] *= right;
         right *= nums[i];
+    }
+    return ret;
+}
+```
+
+**统计从 0 \~ n 每个数的二进制表示中 1 的个数** 
+
+[Leetcode : 338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
+
+对于数字 6(110)，它可以看成是数字 (10) 前面加上一个 1 ，因此 dp[i] = dp[i&(i-1)] + 1;
+
+```java
+public int[] countBits(int num) {
+    int[] ret = new int[num + 1];
+    for(int i = 1; i <= num; i++){
+        ret[i] = ret[i&(i-1)] + 1;
     }
     return ret;
 }

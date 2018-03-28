@@ -681,6 +681,6 @@ java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC
 
 # 参考资料
 
-- 深入理解 Java 虚拟机
+- 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)

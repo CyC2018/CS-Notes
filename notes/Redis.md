@@ -452,8 +452,8 @@ Redis 没有关系型数据库中的表这一概念来将同类型的数据存�
 
 # 参考资料
 
-- Redis 实战
-- Reids 设计与实现
+- Carlson J L. Redis in Action[J]. Media.johnwiley.com.au, 2013.
+- 黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.
 - [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
 - [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
