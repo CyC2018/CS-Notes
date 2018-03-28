@@ -2339,21 +2339,29 @@ public int maxProfit(int k, int[] prices) {
 
 [Leetcode : 303. Range Sum Query - Immutable (Easy)](https://leetcode.com/problems/range-sum-query-immutable/description/)
 
-求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ j 的和。
+```html
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
 
 ```java
 class NumArray {
-
-    int[] nums;
+    private int[] sums;
 
     public NumArray(int[] nums) {
-        for(int i = 1; i < nums.length; i++)
-            nums[i] += nums[i - 1];
-        this.nums = nums;
+        sums = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sums[i] = i == 0 ? nums[0] : sums[i - 1] + nums[i];
+        }
     }
 
     public int sumRange(int i, int j) {
-        return i == 0 ? nums[j] : nums[j] - nums[i - 1];
+        return i == 0 ? sums[j] : sums[j] - sums[i - 1];
     }
 }
 ```
@@ -2362,33 +2370,21 @@ class NumArray {
 
 [Leetcode : 53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
 
-令 sum[i] 为以 num[i] 为结尾的子数组最大的和，可以由 sum[i-1] 得到 sum[i] 的值，如果 sum[i-1] 小于 0，那么以 num[i] 为结尾的子数组不能包含前面的内容，因为加上前面的部分，那么和一定会比 num[i] 还小。
-
-```java
-public int maxSubArray(int[] nums) {
-    int n = nums.length;
-    int[] sum = new int[n];
-    sum[0] = nums[0];
-    int max = sum[0];
-    for(int i = 1; i < n; i++){
-        sum[i] = (sum[i-1] > 0 ? sum[i-1] : 0) + nums[i];
-        max = Math.max(max, sum[i]);
-    }
-    return max;
-}
+```html
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 ```
 
-空间复杂度可以优化为 O(1)
-
 ```java
 public int maxSubArray(int[] nums) {
-    int max = nums[0];
-    int oldsum = nums[0];
+    if (nums == null || nums.length == 0) return 0;
+    int preSum = nums[0];
+    int maxSum = preSum;
     for (int i = 1; i < nums.length; i++) {
-        oldsum = (oldsum > 0 ? oldsum: 0) + nums[i];
-        max = Math.max(max, oldsum);
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        maxSum = Math.max(maxSum, preSum);
     }
-    return max;
+    return maxSum;
 }
 ```
 
@@ -2407,17 +2403,16 @@ dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
+    if (A == null || A.length == 0) return 0;
     int n = A.length;
     int[] dp = new int[n];
-    for(int i = 2; i < n; i++) {
-        if(A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+    for (int i = 2; i < n; i++) {
+        if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
             dp[i] = dp[i - 1] + 1;
         }
     }
     int ret = 0;
-    for(int cnt : dp) {
-        ret += cnt;
-    }
+    for (int cnt : dp) ret += cnt;
     return ret;
 }
 ```
