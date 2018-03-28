@@ -13,14 +13,14 @@
         * [Backtracking](#backtracking)
     * [分治](#分治)
     * [动态规划](#动态规划)
-        * [分割整数](#分割整数)
-        * [矩阵路径](#矩阵路径)
         * [斐波那契数列](#斐波那契数列)
         * [最长递增子序列](#最长递增子序列)
         * [最长公共子系列](#最长公共子系列)
         * [0-1 背包](#0-1-背包)
         * [数组区间](#数组区间)
         * [字符串编辑](#字符串编辑)
+        * [分割整数](#分割整数)
+        * [矩阵路径](#矩阵路径)
         * [其它问题](#其它问题)
     * [数学](#数学)
         * [素数](#素数)
@@ -1719,130 +1719,6 @@ public List<Integer> diffWaysToCompute(String input) {
 
 递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解。
 
-### 分割整数
-
-**分割整数的最大乘积** 
-
-[Leetcode : 343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
-
-题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
-
-```java
-public int integerBreak(int n) {
-    int[] dp = new int[n + 1];
-    dp[1] = 1;
-    for(int i = 2; i <= n; i++) {
-        for(int j = 1; j <= i - 1; j++) {
-            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
-        }
-    }
-    return dp[n];
-}
-```
-
-**按平方数来分割整数** 
-
-[Leetcode : 279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
-
-题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
-
-```java
-public int numSquares(int n) {
-    List<Integer> squareList = generateSquareList(n);
-    int[] dp = new int[n + 1];
-    for (int i = 1; i <= n; i++) {
-        int max = Integer.MAX_VALUE;
-        for (int square : squareList) {
-            if (square > i) break;
-            max = Math.min(max, dp[i - square] + 1);
-        }
-        dp[i] = max;
-    }
-    return dp[n];
-}
-
-private List<Integer> generateSquareList(int n) {
-    List<Integer> squareList = new ArrayList<>();
-    int diff = 3;
-    int square = 1;
-    while (square <= n) {
-        squareList.add(square);
-        square += diff;
-        diff += 2;
-    }
-    return squareList;
-}
-```
-
-**分割整数构成字母字符串** 
-
-[Leetcode : 91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
-
-题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
-
-```java
-public int numDecodings(String s) {
-    if(s == null || s.length() == 0) return 0;
-    int n = s.length();
-    int[] dp = new int[n + 1];
-    dp[0] = 1;
-    dp[1] = s.charAt(0) == '0' ? 0 : 1;
-    for(int i = 2; i <= n; i++) {
-        int one = Integer.valueOf(s.substring(i - 1, i));
-        if(one != 0) dp[i] += dp[i - 1];
-        if(s.charAt(i - 2) == '0') continue;
-        int two = Integer.valueOf(s.substring(i - 2, i));
-        if(two <= 26) dp[i] += dp[i - 2];
-    }
-    return dp[n];
-}
-```
-
-### 矩阵路径
-
-**矩阵的总路径数** 
-
-[Leetcode : 62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
-
-题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
-
-<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
-
-```java
-public int uniquePaths(int m, int n) {
-    int[] dp = new int[n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if(i == 0) dp[j] = 1;
-            else if(j != 0) dp[j] = dp[j] + dp[j - 1];
-        }
-    }
-    return dp[n - 1];
-}
-```
-
-**矩阵的最小路径和** 
-
-[Leetcode : 64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
-
-题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向左和向下移动。
-
-```java
-public int minPathSum(int[][] grid) {
-    if(grid.length == 0 || grid[0].length == 0) return 0;
-    int m = grid.length, n = grid[0].length;
-    int[] dp = new int[n];
-    for(int i = 0; i < m; i++) {
-        for(int j = 0; j < n; j++) {
-            if(j == 0) dp[0] = dp[0] + grid[i][0];
-            else if(i == 0) dp[j] = dp[j - 1] + grid[0][j];
-            else dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
-        }
-    }
-    return dp[n - 1];
-}
-```
-
 ### 斐波那契数列
 
 **爬楼梯** 
@@ -1863,7 +1739,6 @@ dp[N] 即为所求。
 public int climbStairs(int n) {
     if(n == 1) return 1;
     if(n == 2) return 2;
-    // 前一个楼梯、后一个楼梯
     int pre1 = 2, pre2 = 1;
     for(int i = 2; i < n; i++){
         int cur = pre1 + pre2;
@@ -1937,31 +1812,32 @@ public int rob(int[] nums) {
 [Leetcode : 213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
+private int[] dp;
+
 public int rob(int[] nums) {
-    if(nums == null || nums.length == 0) return 0;
+    if (nums == null || nums.length == 0) return 0;
     int n = nums.length;
-    if(n == 1) return nums[0];
+    if (n == 1) return nums[0];
+    dp = new int[n];
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int s, int e) {
-    int n = nums.length;
-    if(e - s == 0) return nums[s];
-    if(e - s == 1) return Math.max(nums[s], nums[s + 1]);
-    int[] dp = new int[n];
-    dp[s] = nums[s];
-    dp[s + 1] = nums[s + 1];
-    dp[s + 2] = nums[s] + nums[s + 2];
-    for (int i = s + 3; i <= e; i++) {
+private int rob(int[] nums, int first, int last) {
+    if (last - first == 0) return nums[first];
+    if (last - first == 1) return Math.max(nums[first], nums[first + 1]);
+    dp[first] = nums[first];
+    dp[first + 1] = nums[first + 1];
+    dp[first + 2] = nums[first] + nums[first + 2];
+    for (int i = first + 3; i <= last; i++) {
         dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i];
     }
-    return Math.max(dp[e], dp[e - 1]);
+    return Math.max(dp[last], dp[last - 1]);
 }
 ```
 
 **信件错排** 
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信的方式数量。
+题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -2544,6 +2420,137 @@ public int minDistance(String word1, String word2) {
 **修改一个字符串称为另一个字符串**  // TODO
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
+
+### 分割整数
+
+**分割整数的最大乘积** 
+
+[Leetcode : 343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
+
+题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for(int i = 2; i <= n; i++) {
+        for(int j = 1; j <= i - 1; j++) {
+            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
+        }
+    }
+    return dp[n];
+}
+```
+
+**按平方数来分割整数** 
+
+[Leetcode : 279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
+
+题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+
+```java
+public int numSquares(int n) {
+    List<Integer> squareList = generateSquareList(n);
+    int[] dp = new int[n + 1];
+    for (int i = 1; i <= n; i++) {
+        int max = Integer.MAX_VALUE;
+        for (int square : squareList) {
+            if (square > i) break;
+            max = Math.min(max, dp[i - square] + 1);
+        }
+        dp[i] = max;
+    }
+    return dp[n];
+}
+
+private List<Integer> generateSquareList(int n) {
+    List<Integer> squareList = new ArrayList<>();
+    int diff = 3;
+    int square = 1;
+    while (square <= n) {
+        squareList.add(square);
+        square += diff;
+        diff += 2;
+    }
+    return squareList;
+}
+```
+
+**分割整数构成字母字符串** 
+
+[Leetcode : 91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
+
+题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+```java
+public int numDecodings(String s) {
+    if(s == null || s.length() == 0) return 0;
+    int n = s.length();
+    int[] dp = new int[n + 1];
+    dp[0] = 1;
+    dp[1] = s.charAt(0) == '0' ? 0 : 1;
+    for(int i = 2; i <= n; i++) {
+        int one = Integer.valueOf(s.substring(i - 1, i));
+        if(one != 0) dp[i] += dp[i - 1];
+        if(s.charAt(i - 2) == '0') continue;
+        int two = Integer.valueOf(s.substring(i - 2, i));
+        if(two <= 26) dp[i] += dp[i - 2];
+    }
+    return dp[n];
+}
+```
+
+### 矩阵路径
+
+**矩阵的总路径数** 
+
+[Leetcode : 62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
+
+题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
+
+<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
+
+```java
+public int uniquePaths(int m, int n) {
+    int[] dp = new int[n];
+    Arrays.fill(dp, 1);
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[j] = dp[j] + dp[j - 1];
+        }
+    }
+    return dp[n - 1];
+}
+```
+
+**矩阵的最小路径和** 
+
+[Leetcode : 64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
+
+```html
+[[1,3,1],
+ [1,5,1],
+ [4,2,1]]
+Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes the sum.
+```
+
+题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向左和向下移动。
+
+```java
+public int minPathSum(int[][] grid) {
+    if (grid.length == 0 || grid[0].length == 0) return 0;
+    int m = grid.length, n = grid[0].length;
+    int[] dp = new int[n];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (j == 0) dp[0] = dp[0] + grid[i][0];           // 只能从上侧走到该位置
+            else if (i == 0) dp[j] = dp[j - 1] + grid[0][j];  // 只能从右侧走到该位置
+            else dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+        }
+    }
+    return dp[n - 1];
+}
+```
 
 ### 其它问题
 
