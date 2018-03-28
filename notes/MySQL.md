@@ -63,6 +63,9 @@ MyISAM 设计简单，数据以紧密格式存储，所以在某些场景下性�
 3. 崩溃恢复：MyISAM 崩溃后发生损坏的概率比 InnoDB 高很多，而且恢复的速度也更慢。
 4. 并发：MyISAM 只支持表级锁，而 InnoDB 还支持行级锁。
 5. 其它特性：MyISAM 支持全文索引，地理空间索引。
+6. InnoDB支持外键。
+7. InnoDB支持MVCC。
+8. Select count(*)时Myisam更快，因为维护了一个count。
 
 # 二、数据类型
 
