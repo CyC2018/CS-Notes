@@ -67,17 +67,17 @@
 
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-<div align="center"> <img src="../pics//4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg"/> </div><br>
+<div align="center"> <img src="../pics//url_diagram.png" width=""/> </div><br>
 
 ## 请求和响应报文
 
 ### 1. 请求报文
 
-<div align="center"> <img src="../pics//22b39f77-ac47-4978-91ed-84aaf457644c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//HTTP_RequestMessageExample.png" width=""/> </div><br>
 
 ### 2. 响应报文
 
-<div align="center"> <img src="../pics//00d8d345-cd4a-48af-919e-209d2788eca7.jpg"/> </div><br>
+<div align="center"> <img src="../pics//HTTP_ResponseMessageExample.png" width=""/> </div><br>
 
 # 二、HTTP 方法
 
@@ -178,7 +178,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="../pics//5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
 
 ## TRACE
 
@@ -189,8 +189,6 @@ CONNECT www.example.com:443 HTTP/1.1
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪），因此更不会去使用它。
-
-<div align="center"> <img src="../pics//c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg"/> </div><br>
 
 # 三、HTTP 状态码
 
@@ -220,9 +218,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **303 See Other** ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
 
-- 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会 在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
+- 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
 
--  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，但是不满足条件，则服务器会返回 304 状态码。
+-  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回 304 状态码。
 
 -  **307 Temporary Redirect** ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
 
@@ -231,8 +229,6 @@ CONNECT www.example.com:443 HTTP/1.1
 -  **400 Bad Request** ：请求报文中存在语法错误。
 
 -  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
-
-<div align="center"> <img src="../pics//b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
 
 -  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
 
@@ -323,7 +319,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
 
-Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且在下一次发送请求时包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
+Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且客户端的下一次请求报文会包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
 
 ### 1. 创建过程
 
@@ -354,12 +350,12 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 | expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
 | path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
 | domain=域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
-| Secure | 仅在 HTTPS 安全通信时才会发送 Cookie |
+| Secure | 仅在 HTTPs 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
 ### 3. Session 和 Cookie 区别
 
-Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文就包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
+Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
 
 ### 4. 浏览器禁用 Cookie 的情况
 
@@ -413,13 +409,11 @@ Expires 字段也可以用于告知缓存服务器该资源什么时候会过期
 
 当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。持久连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
-<div align="center"> <img src="../pics//c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//450px-HTTP_persistent_connection.svg.png" width=""/> </div><br>
 
 持久连接需要使用 Connection 首部字段进行管理。HTTP/1.1 开始 HTTP 默认是持久化连接的，如果要断开 TCP 连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是非持久化连接的，如果要维持持续连接，需要使用 Connection : Keep-Alive。
 
 **管线化方式**  可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
-
-<div align="center"> <img src="../pics//6943e2af-5a70-4004-8bee-b33d60f39da3.jpg"/> </div><br>
 
 ## 编码
 
@@ -486,23 +480,21 @@ Content-Length: 1024
 
 代理服务器接受客户端的请求，并且转发给其它服务器。
 
-代理服务器一般是透明的，不会改变 URL。
-
 使用代理的主要目的是：缓存、网络访问控制以及访问日志记录。
 
-<div align="center"> <img src="../pics//c07035c3-a9ba-4508-8e3c-d8ae4c6ee9ee.jpg"/> </div><br>
+代理服务器分为正向代理和反向代理两种，用户察觉得到正向代理的存在，而反向代理一般位于内部网络中，用户察觉不到。
+
+<div align="center"> <img src="../pics//a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
+
+<div align="center"> <img src="../pics//2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
 
 ### 2. 网关
 
 与代理服务器不同的是，网关服务器会将 HTTP 转化为其它协议进行通信，从而请求其它非 HTTP 服务器的服务。
 
-<div align="center"> <img src="../pics//81375888-6be1-476f-9521-42eea3e3154f.jpg"/> </div><br>
-
 ### 3. 隧道
 
 使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。
-
-<div align="center"> <img src="../pics//64b95403-d976-421a-8b45-bac89c0b5185.jpg"/> </div><br>
 
 # 六、HTTPs
 
@@ -514,25 +506,43 @@ HTTP 有以下安全性问题：
 
 HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信，再由 SSL 和 TCP 通信。通过使用 SSL，HTTPs 提供了加密、认证和完整性保护。
 
+<div align="center"> <img src="../pics//ssl-offloading.jpg" width=""/> </div><br>
+
 ## 加密
 
-有两种加密方式：对称密钥加密和公开密钥加密。对称密钥加密的加密和解密使用同一密钥，而公开密钥加密使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+### 1. 对称密钥
 
-对称密钥加密的缺点：无法安全传输密钥；公开密钥加密的缺点：相对来说更耗时。
+（Symmetric-Key Encryption），加密的加密和解密使用同一密钥。
 
-HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中，共享密钥即对称密钥）
+- 优点：运算速度快；
+- 缺点：密钥容易被获取。
 
-<div align="center"> <img src="../pics//110b1a9b-87cd-45c3-a21d-824623715b33.jpg"/> </div><br>
+<div align="center"> <img src="../pics//scrypt.gif" width=""/> </div><br>
+
+### 2. 公开密钥
+
+（Public-Key Encryption）而公开密钥加密使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+
+- 优点：更为安全；
+- 缺点：运算速度慢；
+
+<div align="center"> <img src="../pics//pcrypt.gif" width=""/> </div><br>
+
+### 3. HTTPs 采用的加密方式
+
+HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。
+
+<div align="center"> <img src="../pics//How-HTTPS-Works.png" width="600"/> </div><br>
 
 ## 认证
 
 通过使用  **证书**  来对通信方进行认证。
 
+<div align="center"> <img src="../pics//mutualssl_small.png" width=""/> </div><br>
+
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
 
 进行 HTTPs 通信时，服务器会把证书发送给客户端，客户端取得其中的公开密钥之后，先进行验证，如果验证通过，就可以开始通信。
-
-除了上诉提到的服务器端证书之外，还有客户端证书，客户端证书的目的就是让服务器对客户端进行验证。客户端证书需要用户自行安装，只有在业务需要非常高的安全性时才使用客户端证书，例如网上银行。
 
 使用 OpenSSL 这套开源程序，每个人都可以构建一套属于自己的认证机构，从而自己给自己颁发服务器证书。浏览器在访问该服务器时，会显示“无法确认连接安全性”或“该网站的安全证书存在问题”等警告消息。
 
@@ -541,8 +551,6 @@ HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输�
 SSL 提供摘要功能来验证完整性。
 
 # 七、Web 攻击技术
-
-Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ## 攻击模式
 
@@ -558,7 +566,7 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ### 1. 概念
 
-（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包含 HTML 和 JavaScript。通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
+（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包括 HTML 和 JavaScript。利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
 
 ### 2. 危害
 
@@ -568,7 +576,7 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ### 3. 防范手段
 
-**（一）过滤特殊字符** 
+（一）过滤特殊字符
 
 许多语言都提供了对 HTML 的过滤：
 
@@ -577,7 +585,7 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 - Java 的 xssprotect (Open Source Library)。
 - Node.js 的 node-validator。
 
-**（二）指定 HTTP 的 Content-Type** 
+（二）指定 HTTP 的 Content-Type
 
 通过这种方式，可以避免内容被当成 HTML 解析，比如 PHP 语言可以使用以下代码：
 
@@ -645,9 +653,9 @@ strSQL = "SELECT * FROM users;"
 
 XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。
 
-假如一家银行用以执行转账操作的 URL 地址如下：`http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName`。
+假如一家银行用以执行转账操作的 URL 地址如下：http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
 
-<div align="center"> 那么，一个恶意攻击者可以在另一个网站上放置如下代码：`<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">`。 </div><br>
+那么，一个恶意攻击者可以在另一个网站上放置如下代码：&lt;img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
 
 如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
 
@@ -657,13 +665,13 @@ XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用�
 
 ### 2. 防范手段
 
-**（一）检查 Referer 字段** 
+（一）检查 Referer 字段
 
 HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
 
 这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
 
-**（二）添加校验 Token** 
+（二）添加校验 Token
 
 由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 token 的值为空或者错误，拒绝这个可疑请求。
 
@@ -709,8 +717,18 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 
 # 参考资料
 
-- [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
+- 上野宣. 图解 HTTP[M]. Ren min you dian chu ban she, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
+- [HTTP (HyperText Transfer Protocol)](https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
+- [Web-VPN: Secure Proxies with SPDY & Chrome](https://www.igvita.com/2011/12/01/web-vpn-secure-proxies-with-spdy-chrome/)
+- [File:HTTP persistent connection.svg](http://en.wikipedia.org/wiki/File:HTTP_persistent_connection.svg)
+- [Proxy server](https://en.wikipedia.org/wiki/Proxy_server)
+- [What Is This HTTPS/SSL Thing And Why Should You Care?](https://www.x-cart.com/blog/what-is-https-and-ssl.html)
+- [What is SSL Offloading?](https://securebox.comodo.com/ssl-sniffing/ssl-offloading/)
+- [Sun Directory Server Enterprise Edition 7.0 Reference - Key Encryption](https://docs.oracle.com/cd/E19424-01/820-4811/6ng8i26bn/index.html)
+- [An Introduction to Mutual SSL Authentication](https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
+- [The Difference Between URLs and URIs](https://danielmiessler.com/study/url-uri/)
 - [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
 - [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
 - [维基百科：跨站点请求伪造](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
