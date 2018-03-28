@@ -1748,23 +1748,29 @@ public int integerBreak(int n) {
 
 ```java
 public int numSquares(int n) {
-    List<Integer> squares = new ArrayList<>(); // 存储小于 n 的平方数
-    int diff = 3;
-    while(square <= n) {
-        squares.add(square);
-        square += diff;
-        diff += 2;
-    }
+    List<Integer> squareList = generateSquareList(n);
     int[] dp = new int[n + 1];
-    for(int i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++) {
         int max = Integer.MAX_VALUE;
-        for(int s : squares) {
-            if(s > i) break;
-            max = Math.min(max, dp[i - s] + 1);
+        for (int square : squareList) {
+            if (square > i) break;
+            max = Math.min(max, dp[i - square] + 1);
         }
         dp[i] = max;
     }
     return dp[n];
+}
+
+private List<Integer> generateSquareList(int n) {
+    List<Integer> squareList = new ArrayList<>();
+    int diff = 3;
+    int square = 1;
+    while (square <= n) {
+        squareList.add(square);
+        square += diff;
+        diff += 2;
+    }
+    return squareList;
 }
 ```
 
@@ -1798,7 +1804,9 @@ public int numDecodings(String s) {
 
 [Leetcode : 62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
 
-题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向左和向下移动。
+题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
+
+<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
 
 ```java
 public int uniquePaths(int m, int n) {
