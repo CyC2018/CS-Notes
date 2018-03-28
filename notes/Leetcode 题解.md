@@ -1890,12 +1890,12 @@ public int lengthOfLIS(int[] nums) {
 }
 ```
 
-以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlog<sub>n</sub>)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
+以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlogn)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
 
 ```html
 len = 1  :      [4], [5], [6], [3]  => tails[0] = 3
 len = 2  :      [4, 5], [5, 6]      => tails[1] = 5
-len = 3  :      [4, 5, 6]            => tails[2] = 6
+len = 3  :      [4, 5, 6]           => tails[2] = 6
 ```
 
 对于一个元素 x，如果它大于 tails 数组所有的值，那么把它添加到 tails 后面；如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x 。
@@ -1907,28 +1907,41 @@ public int lengthOfLIS(int[] nums) {
     int n = nums.length;
     int[] tails = new int[n];
     int size = 0;
-    for(int i = 0; i < n; i++){
-        int idx = binarySearch(tails, 0, size, nums[i]);
-        tails[idx] = nums[i];
-        if(idx == size) size++;
+    for (int i = 0; i < n; i++) {
+        int index = binarySearch(tails, 0, size, nums[i]);
+        tails[index] = nums[i];
+        if (index == size) size++;
     }
     return size;
 }
 
-private int binarySearch(int[] nums, int sIdx, int eIdx, int key){
-    while(sIdx < eIdx){
-        int mIdx = sIdx + (eIdx - sIdx) / 2;
-        if(nums[mIdx] == key) return mIdx;
-        else if(nums[mIdx] > key) eIdx = mIdx;
-        else sIdx = mIdx + 1;
+private int binarySearch(int[] nums, int first, int last, int key) {
+    while (first < last) {
+        int mid = first + (last - first) / 2;
+        if (nums[mid] == key) return mid;
+        else if (nums[mid] > key) last = mid;
+        else first = mid + 1;
     }
-    return sIdx;
+    return first;
 }
 ```
 
 **最长摆动子序列** 
 
 [Leetcode : 376. Wiggle Subsequence (Medium)](https://leetcode.com/problems/wiggle-subsequence/description/)
+
+```html
+Input: [1,7,4,9,2,5]
+Output: 6
+The entire sequence is a wiggle sequence.
+
+Input: [1,17,5,10,13,15,10,5,16,8]
+Output: 7
+There are several subsequences that achieve this length. One is [1,17,10,13,10,16,8].
+
+Input: [1,2,3,4,5,6,7,8,9]
+Output: 2
+```
 
 要求：使用 O(n) 时间复杂度求解。
 
@@ -2008,7 +2021,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
         for (int j = W - 1; j >= weights[i]; j--) {
             dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weights[i]] + values[i]);
         }
-        for (int j = weights[i - 1] - 1; j >= 0; j--) {
+        for (int j = weights[i] - 1; j >= 0; j--) {
             dp[i][j] = dp[i - 1][j];
         }
     }
@@ -2048,6 +2061,14 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 [Leetcode : 416. Partition Equal Subset Sum (Medium)](https://leetcode.com/problems/partition-equal-subset-sum/description/)
 
+```html
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+
 可以看成一个背包大小为 sum/2 的 0-1 背包问题，但是也有不同的地方，这里没有价值属性，并且背包必须被填满。
 
 以下实现使用了空间优化。
@@ -2063,16 +2084,16 @@ public boolean canPartition(int[] nums) {
     }
     int W = sum / 2;
     boolean[] dp = new boolean[W + 1];
-    int n = nums.length;
-    for(int i = 0; i <= W; i++) {
-        if(nums[0] == i) dp[i] = true;
+    for (int i = 0; i <= W; i++) {
+        if (nums[0] == i) {
+            dp[i] = true;
+        }
     }
-    for(int i = 1; i < n; i++) {
-        for(int j = W; j >= nums[i]; j--) {
+    for (int i = 1; i < nums.length; i++) {
+        for (int j = W; j >= nums[i]; j--) {
             dp[j] = dp[j] || dp[j - nums[i]];
         }
     }
-
     return dp[W];
 }
 ```
@@ -2094,8 +2115,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
     dp[0] = true;
     for (int i = 1; i <= n; i++) {
         for (String word : wordDict) {
-            if (word.length() <= i
-                    && word.equals(s.substring(i - word.length(), i))) {
+            if (word.length() <= i && word.equals(s.substring(i - word.length(), i))) {
                 dp[i] = dp[i] || dp[i - word.length()];
             }
         }
@@ -2174,9 +2194,8 @@ Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3
 ```java
 public int findMaxForm(String[] strs, int m, int n) {
     if (strs == null || strs.length == 0) return 0;
-    int l = strs.length;
     int[][] dp = new int[m + 1][n + 1];
-    for (int i = 0; i < l; i++) {
+    for (int i = 0; i < strs.length; i++) {
         String s = strs[i];
         int ones = 0, zeros = 0;
         for (char c : s.toCharArray()) {
@@ -2185,9 +2204,7 @@ public int findMaxForm(String[] strs, int m, int n) {
         }
         for (int j = m; j >= zeros; j--) {
             for (int k = n; k >= ones; k--) {
-                if (zeros <= j && ones <= k) {
-                    dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
-                }
+                dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
             }
         }
     }
@@ -2199,20 +2216,30 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 [Leetcode : 322. Coin Change (Medium)](https://leetcode.com/problems/coin-change/description/)
 
+```html
+Example 1:
+coins = [1, 2, 5], amount = 11
+return 3 (11 = 5 + 5 + 1)
+
+Example 2:
+coins = [2], amount = 3
+return -1.
+```
+
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
 这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
 
 ```java
 public int coinChange(int[] coins, int amount) {
+    if (coins == null || coins.length == 0) return 0;
+    Arrays.sort(coins);
     int[] dp = new int[amount + 1];
     Arrays.fill(dp, amount + 1);
     dp[0] = 0;
     for (int i = 1; i <= amount; i++) {
-        for (int j = 0; j < coins.length; j++) {
-            if (coins[j] <= i) {
-                dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-            }
+        for (int j = 0; j < coins.length && coins[j] <= i; j++) {
+            dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
         }
     }
     return dp[amount] > amount ? -1 : dp[amount];
@@ -2243,11 +2270,12 @@ Therefore the output is 7.
 
 ```java
 public int combinationSum4(int[] nums, int target) {
+    if (nums == null || nums.length == 0) return 0;
     int[] dp = new int[target + 1];
     dp[0] = 1;
     for (int i = 1; i <= target; i++) {
         for (int j = 0; j < nums.length; j++) {
-            if(nums[j] <= i) {
+            if (nums[j] <= i) {
                 dp[i] += dp[i - nums[j]];
             }
         }
@@ -2285,7 +2313,7 @@ dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range o
 ```java
 public int maxProfit(int k, int[] prices) {
     int n = prices.length;
-    if (k >= n/2) {
+    if (k >= n/2) { // 这种情况下该问题退化为普通的股票交易问题
         int maxPro = 0;
         for (int i = 1; i < n; i++) {
             if (prices[i] > prices[i-1])
