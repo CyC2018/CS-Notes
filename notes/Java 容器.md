@@ -755,7 +755,7 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 
 # 五、参考资料
 
-- Java 编程思想
+- Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)
