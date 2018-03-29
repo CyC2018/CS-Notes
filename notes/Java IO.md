@@ -392,7 +392,7 @@ MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 NIO 与普通 I/O 的区别主要有以下两点：
 
 - NIO 是非阻塞的。应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。
-- NIO 面向流，I/O 面向块。
+- NIO 面向块，I/O 面向流。
 
 # 八、参考资料
 
