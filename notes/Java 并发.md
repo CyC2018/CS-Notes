@@ -111,7 +111,7 @@ public class MyThread extends Thread {
 实现接口会更好一些，因为：
 
 1. Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
-2. 类可能只要求可执行即可，继承整个 Thread 类开销会过大。
+2. 类可能只要求可执行就行，继承整个 Thread 类开销会过大。
 
 
 # 二、基础线程机制
@@ -167,10 +167,16 @@ main() 属于非后台线程。
 
 一个线程进入阻塞状态可能有以下原因：
 
-1. 调用 Thread.sleep() 方法进入休眠状态；
-2. 通过 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
+1. 调用 Thread.sleep() 使线程睡眠；
+2. 调用 wait() 使线程挂起，直到线程得到 notify() 或 notifyAll() 消息（或者 java.util.concurrent 类库中等价的 signal() 或 signalAll() 消息；
 3. 等待某个 I/O 的完成；
 4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
+
+**阻塞 睡眠 挂起** 
+
+阻塞是一种状态，而睡眠和挂起是一种手段，通过睡眠和挂起可以让一个线程进入阻塞状态。
+
+睡眠和挂起这两种手段的区别是，一个使用睡眠方式阻塞的线程在一个指定的时间之后（Thread.sleep(millisec) 的 millisec 参数指定）会退出阻塞状态，而一个使用挂起方式阻塞的线程必须等到其它线程给它发消息它才能退出阻塞状态。
 
 ## 中断
 
@@ -186,7 +192,7 @@ main() 属于非后台线程。
 
 **2. Executor 的中断操作** 
 
-Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方法必须持有 Thread 对象。Executor 使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
+Executor 避免对 Thread 对象的直接操作，使用 shutdownNow() 方法来中断它里面的所有线程，shutdownNow() 方法会发送 interrupt() 调用给所有线程。
 
 如果只想中断一个线程，那么使用 Executor 的 submit() 而不是 executor() 来启动线程，就可以持有线程的上下文。submit() 将返回一个泛型 Futrue，可以在它之上调用 cancel()，如果将 true 传递给 cancel()，那么它将会发送 interrupt() 调用给特定的线程。
 
@@ -194,7 +200,7 @@ Executor 避免对 Thread 对象的直接操作，但是使用 interrupt() 方�
 
 通过中断的方法来终止线程，需要线程进入阻塞状态才能终止。如果编写的 run() 方法循环条件为 true，但是该线程不发生阻塞，那么线程就永远无法终止。
 
-interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状，从而判断一个线程是否已经被中断。
+interrupt() 方法会设置中断状态，可以通过 interrupted() 方法来检查中断状态，从而判断一个线程是否已经被中断。
 
 interrupted() 方法在检查完中断状态之后会清除中断状态，这样做是为了确保一次中断操作只会产生一次影响。
 
@@ -220,6 +226,8 @@ interrupted() 方法在检查完中断状态之后会清除中断状态，这样
 
 1. 同步：可以和操作系统的互斥等同；
 2. 通信：可以和操作系统的同步等同。
+
+很多时候这三个概念都会混在一起用，不同的文章有不同的解释，不能说哪个是对的哪个是错的，只要自己能理解就行。
 
 ## 线程同步
 
@@ -269,11 +277,11 @@ public int func(int value) {
 
 它们都属于 Object 的一部分，而不属于 Thread。
 
-wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。
+wait() 会在等待时将线程挂起，而不是忙等待，并且只有在 notify() 或者 notifyAll() 到达时才唤醒。可以通过这种机制让一个线程阻塞，直到某种特定条件满足。
 
 sleep() 和 yield() 并没有释放锁，但是 wait() 会释放锁。
 
-实际上，只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
+只有在同步控制方法或同步控制块里才能调用 wait() 、notify() 和 notifyAll()。
 
 ```java
 private boolean flag = false;
@@ -293,8 +301,11 @@ public synchronized void before() {
 
 **wait() 和 sleep() 的区别** 
 
+这两种方法都能将线程阻塞，一种是使用挂起的方式，一种使用睡眠的方式。
+
 1. wait() 是 Object 类的方法，而 sleep() 是 Thread 的静态方法；
-2. wait() 会放弃锁，而 sleep() 不会。
+2. 挂起会释放锁，睡眠不会。
+3. 挂起必须等待其它线程的通知才能结束阻塞状态，而睡眠会在一定的时间之后自动结束。
 
 ### 2. BlockingQueue
 
@@ -303,16 +314,16 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 -  **FIFO 队列** ：LinkedBlockingQueue、ArrayListBlockingQueue（固定长度）
 -  **优先级队列** ：PriorityBlockingQueue
 
-提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将一直阻塞到队列中有内容，如果队列为满  put() 将阻塞到队列有空闲位置。它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
+提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，指到队列有空闲位置。
 
-阻塞队列的 take() 和 put() 方法是线程安全的。
+它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
+
+是线程安全的。
 
 **使用 BlockingQueue 实现生产者消费者问题** 
 
 ```java
 // 生产者
-import java.util.concurrent.BlockingQueue;
-
 public class Producer implements Runnable {
     private BlockingQueue<String> queue;
 
@@ -322,8 +333,8 @@ public class Producer implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + " is making product...");
-        String product = "made by " + Thread.currentThread().getName();
+        System.out.println(Thread.currentThread().getName() + " is making product.");
+        String product = "Made By " + Thread.currentThread().getName();
         try {
             queue.put(product);
         } catch (InterruptedException e) {
@@ -335,8 +346,6 @@ public class Producer implements Runnable {
 
 ```java
 // 消费者
-import java.util.concurrent.BlockingQueue;
-
 public class Consumer implements Runnable {
     private BlockingQueue<String> queue;
 
@@ -347,8 +356,8 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            String  product = queue.take();
-            System.out.println(Thread.currentThread().getName() + " is consuming product " + product + "...");
+            String product = queue.take();
+            System.out.println(Thread.currentThread().getName() + " is consuming product." + "( " + product + " )");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -358,21 +367,18 @@ public class Consumer implements Runnable {
 
 ```java
 // 客户端
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 public class Client {
     public static void main(String[] args) {
         BlockingQueue<String> queue = new LinkedBlockingQueue<>(5);
         for (int i = 0; i < 2; i++) {
-            new Thread(new Consumer(queue), "Consumer" + i).start();
+            new Thread(new Consumer(queue), "Consumer-" + i).start();
         }
         for (int i = 0; i < 5; i++) {
             // 只有两个 Product，因此只能消费两个，其它三个消费者被阻塞
-            new Thread(new Producer(queue), "Producer" + i).start();
+            new Thread(new Producer(queue), "Producer-" + i).start();
         }
         for (int i = 2; i < 5; i++) {
-            new Thread(new Consumer(queue), "Consumer" + i).start();
+            new Thread(new Consumer(queue), "Consumer-" + i).start();
         }
     }
 }
@@ -380,16 +386,16 @@ public class Client {
 
 ```html
 // 运行结果
-Producer0 is making product...
-Consumer0 is consuming product made by Consumer0...
-Producer1 is making product...
-Consumer1 is consuming product made by Consumer1...
-Producer2 is making product...
-Producer3 is making product...
-Producer4 is making product...
-Consumer2 is consuming product made by Consumer2...
-Consumer3 is consuming product made by Consumer3...
-Consumer4 is consuming product made by Consumer4...
+Producer-0 is making product.
+Consumer-0 is consuming product.( Made By Producer-0 )
+Producer-1 is making product.
+Consumer-1 is consuming product.( Made By Producer-1 )
+Producer-2 is making product.
+Producer-3 is making product.
+Producer-4 is making product.
+Consumer-2 is consuming product.( Made By Producer-2 )
+Consumer-3 is consuming product.( Made By Producer-3 )
+Consumer-4 is consuming product.( Made By Producer-4 )
 ```
 
 # 五、线程状态转换
