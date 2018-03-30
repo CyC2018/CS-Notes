@@ -125,7 +125,7 @@ objB.instance = objA;
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是都是可用的，不可达的对象可被回收。
 
-<div align="center"> <img src="../pics//0635cbe8.png"/> </div><br>
+<div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
 
 GC Roots 一般包含以下内容：
 
@@ -620,7 +620,7 @@ public static void main(String[] args) {
 
 应用程序都是由三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器，这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
 
-<div align="center"> <img src="../pics//2cdc3ce2-fa82-4c22-baaa-000c07d10473.jpg" width=""/> </div><br>
+<div align="center"> <img src="../pics//class_loader_hierarchy.png" width="600"/> </div><br>
 
 **（一）工作过程** 
 
@@ -688,3 +688,8 @@ java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
+- [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
+- [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)
+- [深入理解 JVM(2)——GC 算法与内存分配策略](https://crowhawk.github.io/2017/08/10/jvm_2/)
+- [深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm_3/)
+- [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)
