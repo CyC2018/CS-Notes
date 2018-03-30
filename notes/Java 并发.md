@@ -692,10 +692,7 @@ ABA ：如果一个变量 V 初次读取的时候是 A 值，它的值被改成�
 
 Java 语言中，如果一个变量要被多线程访问，可以使用 volatile 关键字声明它为“易变的”；如果一个变量要被某个线程独享，Java 中就没有类似 C++中 \_\_declspec（thread）这样的关键字，不过还是可以通过 java.lang.ThreadLocal 类来实现线程本地存储的功能。每一个线程的 Thread 对象中都有一个 ThreadLocalMap 对象，这个对象存储了一组以 ThreadLocal.threadLocalHashCode 为键，以本地线程变量为值的 K-V 值对，ThreadLocal 对象就是当前线程的 ThreadLocalMap 的访问入口，每一个 ThreadLocal 对象都包含了一个独一无二的 threadLocalHashCode 值，使用这个值就可以在线程 K-V 值对中找回对应的本地线程变量。
 
-- ThreadLocal注意事项
-    - `ThreadLocal`从理论上讲并不是用来解决多线程并发问题的,因为根本不存在多线程竞争。
-    - 尽可能在每次使用`ThreadLocal`后手动调用`remove()`,以避免出现`ThreadLocal`经典的内存泄漏甚至是造成自身业务混乱的风险。
-        - 在一些场景(尤其是使用线程池)下,由于`ThreadLocal.ThreadLocalMap`的底层数据结构导致ThreadLocal有内存泄漏的情况 
+ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下, 由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
 ## 锁优化
 
