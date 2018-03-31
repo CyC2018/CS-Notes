@@ -217,6 +217,8 @@ public String replaceSpace(StringBuffer str) {
 
 输入链表的第一个节点，从尾到头反过来打印出每个结点的值。
 
+<div align="center"> <img src="../pics//d99dc9e2-197c-4085-813d-7195da1c6762.png"/> </div><br>
+
 ## 解题思路
 
 ### 使用栈
@@ -795,11 +797,11 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，令该节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="../pics//72f9bc11-06a9-40b4-8939-14f72e5cb4c3.png"/> </div><br>
+<div align="center"> <img src="../pics//004edd56-1546-4052-a7f9-a9f7895ccec5.png"/> </div><br>
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
-<div align="center"> <img src="../pics//2a398239-ee47-4ea1-b2d8-0ced638839ef.png"/> </div><br>
+<div align="center"> <img src="../pics//c47f333d-75d1-4ff8-8e82-4533a4ba6a6c.png"/> </div><br>
 
 综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个为节点以 O(n) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
