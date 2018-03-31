@@ -801,7 +801,7 @@ private void printNumber(char[] number) {
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
-<div align="center"> <img src="../pics//c47f333d-75d1-4ff8-8e82-4533a4ba6a6c.png"/> </div><br>
+<div align="center"> <img src="../pics//db4921d4-184b-48ba-a3cf-1d1141e3ba2d.png"/> </div><br>
 
 综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个为节点以 O(n) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
@@ -826,10 +826,7 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ## 题目描述
 
-```html
-Input : 1->2->3->3->4->4->5
-Output : 1->2->5
-```
+<div align="center"> <img src="../pics//8433fbb2-c35c-45ef-831d-e3ca42aebd51.png"/> </div><br>
 
 ## 解题描述
 
