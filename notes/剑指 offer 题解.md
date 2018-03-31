@@ -185,8 +185,6 @@ public boolean Find(int target, int[][] matrix) {
 
 复杂度：O(N) + O(1)
 
-<div align="center"> <img src="../pics//35b0caf8-6f34-49db-93ed-d505e9eb3d99.png"/> </div><br>
-
 ```java
 public String replaceSpace(StringBuffer str) {
     int oldLen = str.length();
@@ -303,7 +301,7 @@ preorder = [3,9,20,15,7]
 inorder =  [9,3,15,20,7]
 ```
 
-<div align="center"> <img src="../pics//ed2eae1b-7361-43d1-a575-87966a18d021.png"/> </div><br>
+<div align="center"> <img src="../pics//8a4c6ad4-a816-47d1-b93f-7ca4f78ab67a.png"/> </div><br>
 
 ## 解题思路
 
@@ -341,11 +339,11 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="../pics//c7491e97-610a-447f-948b-120b60801c37.png"/> </div><br>
+<div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="../pics//44c37c4c-3f7c-4d59-af8d-65cbd2ab3784.png"/> </div><br>
+<div align="center"> <img src="../pics//e143f6da-d114-4ba4-8712-f65299047fa2.png"/> </div><br>
 
 ```java
 public class TreeLinkNode {
@@ -413,7 +411,7 @@ public int pop() {
 
 如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//8908e2dc-2345-47bd-8cde-ae02f84e811e.png"/> </div><br>
+<div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
@@ -1086,7 +1084,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//0c335593-5767-4eaa-841d-9e0b7620be6c.png"/> </div><br>
+<div align="center"> <img src="../pics//4583e24f-424b-4d50-8a14-2c38a1827d4a.png"/> </div><br>
 
 ## 解题思路
 
@@ -1109,7 +1107,7 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//c96f9710-3043-4684-a329-91ffcbe4d7b2.png"/> </div><br>
+<div align="center"> <img src="../pics//a2d13178-f1ef-4811-a240-1fe95b55b1eb.png"/> </div><br>
 
 ## 解题思路
 
@@ -1132,7 +1130,7 @@ private void swap(TreeNode root) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//5bf9a063-8810-4bb7-b242-c7a79c3fc6ec.png"/> </div><br>
+<div align="center"> <img src="../pics//f42443e0-208d-41ea-be44-c7fd97d2e3bf.png"/> </div><br>
 
 ## 解题思路
 
@@ -1242,7 +1240,7 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 
 例如，以下二叉树层次遍历的结果为：1,2,3,4,5,6,7
 
-<div align="center"> <img src="../pics//40067796-5fdd-4067-9420-9aea4cbf3d53.png"/> </div><br>
+<div align="center"> <img src="../pics//348bc2db-582e-4aca-9f88-38c40e9a0e69.png"/> </div><br>
 
 ## 解题思路
 
@@ -1338,7 +1336,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
 
-<div align="center"> <img src="../pics//789c6abd-7798-42e8-8410-dc90ed5ae691.png"/> </div><br>
+<div align="center"> <img src="../pics//836a4eaf-4798-4e48-b52a-a3dab9435ace.png"/> </div><br>
 
 ## 解题思路
 
@@ -1368,7 +1366,7 @@ private boolean verify(int[] sequence, int first, int last) {
 
 下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
 
-<div align="center"> <img src="../pics//01276bfd-933f-4f69-953b-6ac7250eebd7.png"/> </div><br>
+<div align="center"> <img src="../pics//f5477abd-c246-4851-89ab-6b1cde2549b1.png"/> </div><br>
 
 ## 解题思路
 
@@ -1456,7 +1454,7 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 
-<div align="center"> <img src="../pics//3179fd1d-617c-476c-8bb2-6270c0715e3d.png"/> </div><br>
+<div align="center"> <img src="../pics//79b12431-6d9d-4a7d-985b-1b79bc5bf5fb.png"/> </div><br>
 
 ## 解题思路
 
@@ -2142,7 +2140,7 @@ private void inOrder(TreeNode root, int k) {
 
 从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
 
-<div align="center"> <img src="../pics//5d21b6dc-4b53-47ad-889b-906fcde3e5d4.png"/> </div><br>
+<div align="center"> <img src="../pics//b29f8971-9cb8-480d-b986-0e60c2ece069.png"/> </div><br>
 
 ## 解题思路
 
@@ -2159,7 +2157,7 @@ public int TreeDepth(TreeNode root) {
 
 平衡二叉树左右子树高度差不超过 1。
 
-<div align="center"> <img src="../pics//cbae4c5b-b5eb-4d83-b9de-2622dee46884.png"/> </div><br>
+<div align="center"> <img src="../pics//e026c24d-00fa-4e7c-97a8-95a98cdc383a.png"/> </div><br>
 
 ## 解题思路
 
@@ -2559,7 +2557,7 @@ public int StrToInt(String str) {
 
 ### 二叉查找树
 
-<div align="center"> <img src="../pics//9405e9a3-1655-4534-a578-56cb4d7be943.png"/> </div><br>
+<div align="center"> <img src="../pics//293d2af9-de1d-403e-bed0-85d029383528.png"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -2571,7 +2569,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 普通二叉树
 
-<div align="center"> <img src="../pics//755949fa-447f-4bcb-9b97-02df0cfc6838.png"/> </div><br>
+<div align="center"> <img src="../pics//37a72755-4890-4b42-9eab-b0084e0c54d9.png"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
