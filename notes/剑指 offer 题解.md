@@ -1,5 +1,4 @@
 <!-- GFM-TOC -->
-* [前言](#前言)
 * [2. 实现 Singleton](#2-实现-singleton)
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
@@ -77,29 +76,13 @@
 * [66. 构建乘积数组](#66-构建乘积数组)
 * [67. 把字符串转换成整数](#67-把字符串转换成整数)
 * [68. 树中两个节点的最低公共祖先](#68-树中两个节点的最低公共祖先)
+* [参考文献](#参考文献)
 <!-- GFM-TOC -->
 
 
-# 前言
-
-## 变量命名约定
-
-- nums 表示数字数组，array 表示通用数组，matrix 表示矩阵；
-- n 表示数组长度、字符串长度、树节点个数，以及其它具有一维性质的数据结构的元素个数；
-- m, n 表示矩阵的行数和列数；
-- first, last 表示闭区间，在需要作为函数参数时使用：[first, last]；
-- l, h 也表示闭区间，在只作为局部变量时使用：[l, h]；
-- begin, end 表示左闭右开区间：[begin, end)；
-- ret 表示结果相关的变量；
-- dp 表示动态规划保存子问题的数组；
-
-## 复杂度简写说明
-
-O(nlog<sub>n</sub>) + O(n<sup>2</sup>)，第一个指时间复杂度，第二个指空间复杂度。
-
 # 2. 实现 Singleton
 
-> [单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%85%AB%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
+> [单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
 
 # 3. 数组中重复的数字
 
@@ -111,7 +94,7 @@ O(nlog<sub>n</sub>) + O(n<sup>2</sup>)，第一个指时间复杂度，第二个
 
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
 
-以 (2, 3, 1, 0, 2, 5) 为例，以下代码的运行过程为：
+以 (2, 3, 1, 0, 2, 5) 为例：
 
 ```html
 position-0 : (2,3,1,0,2,5) // 2 <-> 1
@@ -124,7 +107,7 @@ position-2 : (0,1,1,3,2,5) // nums[i] == nums[nums[i]], exit
 
 遍历到位置 2 时，该位置上的数为 1，但是第 1 个位置上已经有一个 1 的值了，因此可以知道 1 重复。
 
-复杂度：O(n) + O(1)
+复杂度：O(N) + O(1)
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
@@ -170,7 +153,7 @@ Given target = 20, return false.
 
 从右上角开始查找。因为矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
 
-复杂度：O(m + n) + O(1)
+复杂度：O(M+N) + O(1)
 
 ```java
 public boolean Find(int target, int[][] matrix) {
@@ -436,7 +419,7 @@ public int pop() {
 
 如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//080f488c-75ef-49a8-a49d-78fa372ad422.png"/> </div><br>
+<div align="center"> <img src="../pics//2cd88bfc-5598-4784-aa0e-479e3c1e8f02.png"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
@@ -529,7 +512,7 @@ public int RectCover(int n) {
 
 ### 分治
 
-复杂度：O(log<sub>n</sub>) + O(1)，其实空间复杂度不止 O(1)，因为分治使用了递归栈，用到了额外的空间，如果对空间有要求就不能用这种方法。
+复杂度：O(logN) + O(1)，其实空间复杂度不止 O(1)，因为分治使用了递归栈，用到了额外的空间，如果对空间有要求就不能用这种方法。
 
 ```java
 public int minNumberInRotateArray(int[] nums) {
@@ -546,7 +529,7 @@ private int minNumberInRotateArray(int[] nums, int first, int last) {
 
 ### 二分查找
 
-复杂度：O(log<sub>n</sub>) + O(1)
+复杂度：O(logN) + O(1)
 
 ```java
 public int minNumberInRotateArray(int[] nums) {
@@ -2639,3 +2622,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     return left == null ? right : right == null ? left : root;
 }
 ```
+
+# 参考文献
+
+- 何海涛. 剑指 Offer[M]. 电子工业出版社, 2012.
