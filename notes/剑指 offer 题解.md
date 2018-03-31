@@ -1040,7 +1040,7 @@ public ListNode ReverseList(ListNode head) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//79f28233-f5cb-492a-9dc4-696cb714d434.png"/> </div><br>
+<div align="center"> <img src="../pics//43f2cafa-3568-4a89-a895-4725666b94a6.png"/> </div><br>
 
 ## 解题思路
 
@@ -1400,21 +1400,21 @@ private void dfs(TreeNode node, int target, ArrayList<Integer> path) {
 
 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
 
-<div align="center"> <img src="../pics//4f67aa74-5bf5-4ea4-9a6e-2e07d8f5fa86.png"/> </div><br>
+<div align="center"> <img src="../pics//a01d1516-8168-461a-a24b-620b9cfc40f4.png"/> </div><br>
 
 ## 解题思路
 
 第一步，在每个节点的后面插入复制的节点。
 
-<div align="center"> <img src="../pics//52726d32-e97a-49dd-8419-04d30a9f9050.png"/> </div><br>
+<div align="center"> <img src="../pics//2e6c72f5-3b8e-4e32-b87b-9491322628fe.png"/> </div><br>
 
 第二步，对复制节点的 random 链接进行赋值。
 
-<div align="center"> <img src="../pics//c5409a64-81fc-48c1-9790-ffa0afdb7bf5.png"/> </div><br>
+<div align="center"> <img src="../pics//323ffd6c-8b54-4f3e-b361-555a6c8bf218.png"/> </div><br>
 
 第三步，拆分。
 
-<div align="center"> <img src="../pics//15e1edf0-8908-4815-af5e-a74e456da23b.png"/> </div><br>
+<div align="center"> <img src="../pics//8f3b9519-d705-48fe-87ad-2e4052fc81d2.png"/> </div><br>
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
@@ -1456,7 +1456,7 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 
-<div align="center"> <img src="../pics//9cd97f41-fd9c-405c-aca1-9c82d24e20dc.png"/> </div><br>
+<div align="center"> <img src="../pics//3179fd1d-617c-476c-8bb2-6270c0715e3d.png"/> </div><br>
 
 ## 解题思路
 
@@ -2046,13 +2046,7 @@ private void merge(int[] nums, int first, int mid, int last) {
 
 ## 题目描述
 
-```html
-A:          a1 → a2
-                  ↘
-                    c1 → c2 → c3
-                  ↗
-B:    b1 → b2 → b3
-```
+<div align="center"> <img src="../pics//8f6f9dc9-9ecd-47c8-b50e-2814f0219056.png"/> </div><br>
 
 ## 解题思路
 
@@ -2148,6 +2142,8 @@ private void inOrder(TreeNode root, int k) {
 
 从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
 
+<div align="center"> <img src="../pics//5d21b6dc-4b53-47ad-889b-906fcde3e5d4.png"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -2161,9 +2157,9 @@ public int TreeDepth(TreeNode root) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//cbae4c5b-b5eb-4d83-b9de-2622dee46884.png"/> </div><br>
-
 平衡二叉树左右子树高度差不超过 1。
+
+<div align="center"> <img src="../pics//cbae4c5b-b5eb-4d83-b9de-2622dee46884.png"/> </div><br>
 
 ## 解题思路
 
@@ -2559,18 +2555,11 @@ public int StrToInt(String str) {
 
 # 68. 树中两个节点的最低公共祖先
 
-## 二叉查找树
+## 解题思路
 
-```html
-        _______6______
-       /              \
-   ___2__           ___8__
-  /      \         /      \
- 0        4       7        9
-         / \
-        3   5
-For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
-```
+### 二叉查找树
+
+<div align="center"> <img src="../pics//9405e9a3-1655-4534-a578-56cb4d7be943.png"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -2580,18 +2569,9 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
-## 普通二叉树
+### 普通二叉树
 
-```html
-       _______3______
-      /              \
-  ___5__           ___1__
- /      \         /      \
- 6       2       0        8
-        / \
-       7   4
-For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
-```
+<div align="center"> <img src="../pics//755949fa-447f-4bcb-9b97-02df0cfc6838.png"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
