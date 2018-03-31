@@ -297,19 +297,11 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。
 
 ```html
-For example, given
-
 preorder = [3,9,20,15,7]
 inorder =  [9,3,15,20,7]
-
-Return the following binary tree:
-
-    3
-   / \
-  9  20
-    /  \
-   15   7
 ```
+
+<div align="center"> <img src="../pics//ed2eae1b-7361-43d1-a575-87966a18d021.png"/> </div><br>
 
 ## 解题思路
 
@@ -347,11 +339,11 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="../pics//931e112e-97d3-4a47-ac64-a86d70844e58.png" width="200"/> </div><br>
+<div align="center"> <img src="../pics//40fcc7ec-5d49-4eae-9937-9b07ba5eaa42.png"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="../pics//350048d6-20f5-4ca9-8452-3957a09ef3af.png" width="200"/> </div><br>
+<div align="center"> <img src="../pics//48a7245a-dc45-4028-839b-fcf150828ae3.png"/> </div><br>
 
 ```java
 public class TreeLinkNode {
@@ -1095,7 +1087,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//26223561-eea4-463c-8ddb-3bb456c76267.png"/> </div><br>
+<div align="center"> <img src="../pics//0c335593-5767-4eaa-841d-9e0b7620be6c.png"/> </div><br>
 
 ## 解题思路
 
@@ -1118,7 +1110,7 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 
 ## 题目描述
 
-<div align="center"> <img src="../pics//7cfcfdf7-63a7-4111-a677-2eca29fbcf24.png"/> </div><br>
+<div align="center"> <img src="../pics//c96f9710-3043-4684-a329-91ffcbe4d7b2.png"/> </div><br>
 
 ## 解题思路
 
@@ -1141,13 +1133,7 @@ private void swap(TreeNode root) {
 
 ## 题目描述
 
-```html
-    1
-   / \
-  2   2
- / \ / \
-3  4 4  3
-```
+<div align="center"> <img src="../pics//5bf9a063-8810-4bb7-b242-c7a79c3fc6ec.png"/> </div><br>
 
 ## 解题思路
 
@@ -1255,9 +1241,9 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 
 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
 
-例如，以下二叉树层次遍历的结果为 8, 6, 10, 5, 7, 9, 11
+例如，以下二叉树层次遍历的结果为：1,2,3,4,5,6,7
 
-<div align="center"> <img src="../pics//c8cdfa3d-d610-4731-9d89-564252378e7d.png"/> </div><br>
+<div align="center"> <img src="../pics//40067796-5fdd-4067-9420-9aea4cbf3d53.png"/> </div><br>
 
 ## 解题思路
 
@@ -1351,9 +1337,9 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 
-例如，下图中后序遍历序列 5, 7, 6, 9, 11, 10, 8 所对应的二叉搜索树。
+例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
 
-<div align="center"> <img src="../pics//b5af9ee6-97e6-446b-9551-6dfe96770d1a.png"/> </div><br>
+<div align="center"> <img src="../pics//789c6abd-7798-42e8-8410-dc90ed5ae691.png"/> </div><br>
 
 ## 解题思路
 
@@ -1383,7 +1369,7 @@ private boolean verify(int[] sequence, int first, int last) {
 
 下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
 
-<div align="center"> <img src="../pics//a1ced733-02f5-4091-8f5a-ab9b4e5a3525.png"/> </div><br>
+<div align="center"> <img src="../pics//01276bfd-933f-4f69-953b-6ac7250eebd7.png"/> </div><br>
 
 ## 解题思路
 
@@ -2176,13 +2162,7 @@ public int TreeDepth(TreeNode root) {
 
 ## 题目描述
 
-```html
-    3
-   / \
-  9  20
-    /  \
-   15   7
-```
+<div align="center"> <img src="../pics//cbae4c5b-b5eb-4d83-b9de-2622dee46884.png"/> </div><br>
 
 平衡二叉树左右子树高度差不超过 1。
 
