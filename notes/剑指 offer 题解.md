@@ -183,7 +183,7 @@ public boolean Find(int target, int[][] matrix) {
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
-复杂度：O(n) + O(1)
+复杂度：O(N) + O(1)
 
 <div align="center"> <img src="../pics//35b0caf8-6f34-49db-93ed-d505e9eb3d99.png"/> </div><br>
 
@@ -413,7 +413,7 @@ public int pop() {
 
 如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//2cd88bfc-5598-4784-aa0e-479e3c1e8f02.png"/> </div><br>
+<div align="center"> <img src="../pics//8908e2dc-2345-47bd-8cde-ae02f84e811e.png"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
