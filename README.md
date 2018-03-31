@@ -1,7 +1,13 @@
 <!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)</br> -->
-| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ | Ⅺ |
-| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:| :-------:|
-|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 资料下载[:arrow_down:](#资料下载-arrow_down)| 后记[:memo:](#后记-memo) |
+| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
+| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
+|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+</br>
+
+:loudspeaker: 本仓库的内容不涉及商业行为，不向读者收取任何费用。
+
+:loudspeaker: This repository is not involving commercial activities, and does not charge readers any fee.
+</br></br>
 
 ## 网络 :cloud:
 
@@ -129,12 +135,6 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 Google 开源项目的代码风格规范。
 
-## 资料下载 :arrow_down:
-
-> [Download](https://github.com/CyC2018/Interview-Notebook/blob/master/other/download.md)
-
-一些 PDF 书籍。
-
 ## 后记 :memo:
 
 **关于仓库**
@@ -167,9 +167,8 @@ Google 开源项目的代码风格规范。
 
 本仓库内容使用到的资料都会在最后面的参考资料中给出引用链接，希望您在使用本仓库的内容时也能给出相应的引用链接。
 
-## License
+**鸣谢**
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
+[TeeKee](https://github.com/linw7)
 
-本作品采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。
 

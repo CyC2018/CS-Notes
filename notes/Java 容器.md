@@ -171,7 +171,7 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
@@ -755,7 +755,7 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 
 # 五、参考资料
 
-- Java 编程思想
+- Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)

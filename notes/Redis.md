@@ -53,12 +53,12 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 # 二、五种基本类型
 
 | 数据类型 | 可以存储的值 | 操作 |
-| -- | -- | -- |
+| :--: | :--: | :--: |
 | STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作</br> 对整数和浮点数执行自增或者自减操作 |
 | LIST | 链表 | 从两端压入或者弹出元素</br> 读取单个或者多个元素</br> 进行修剪，只保留一个范围内的元素 |
 | SET | 无序集合 | 添加、获取、移除单个元素</br> 检查一个元素是否存在于集合中</br> 计算交集、并集、差集</br> 从集合里面随机获取元素 |
 | HASH | 包含键值对的无序散列表 | 添加、获取、移除单个键值对</br> 获取所有键值对</br> 检查某个键是否存在|
-| ZSET | 有序集合 | 添加、获取、删除元素个元素</br> 根据分值范围或者成员来获取元素</br> 计算一个键的排名 |
+| ZSET | 有序集合 | 添加、获取、删除元素</br> 根据分值范围或者成员来获取元素</br> 计算一个键的排名 |
 
 > [What Redis data structures look like](https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/)
 
@@ -244,7 +244,7 @@ AOF 持久化将写命令添加到 AOF 文件（Append Only File）的末尾。
 对硬盘的文件进行写入时，写入的内容首先会被存储到缓冲区，然后由操作系统决定什么时候将该内容同步到硬盘，用户可以调用 file.flush() 方法请求操作系统尽快将缓冲区存储的数据同步到硬盘。因此将写命令添加到 AOF 文件时，要根据需求来保证何时将添加的数据同步到硬盘上，有以下同步选项：
 
 | 选项 | 同步频率 |
-| -- | -- |
+| :--: | :--: |
 | always | 每个写命令都同步 |
 | everysec | 每秒同步一次 |
 | no | 让操作系统来决定何时同步 |
@@ -391,7 +391,7 @@ Memcached 将内存分割成特定长度的块来存储数据，以完全解决�
 
 ## 缓存
 
-适用 Redis 作为缓存，将热点数据放到内存中。
+s使用 Redis 作为缓存，将热点数据放到内存中。
 
 ## 消息队列
 
@@ -452,8 +452,8 @@ Redis 没有关系型数据库中的表这一概念来将同类型的数据存�
 
 # 参考资料
 
-- Redis 实战
-- Reids 设计与实现
+- Carlson J L. Redis in Action[J]. Media.johnwiley.com.au, 2013.
+- 黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.
 - [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
 - [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)

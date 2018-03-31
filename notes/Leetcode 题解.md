@@ -13,14 +13,14 @@
         * [Backtracking](#backtracking)
     * [分治](#分治)
     * [动态规划](#动态规划)
-        * [分割整数](#分割整数)
-        * [矩阵路径](#矩阵路径)
         * [斐波那契数列](#斐波那契数列)
         * [最长递增子序列](#最长递增子序列)
         * [最长公共子系列](#最长公共子系列)
         * [0-1 背包](#0-1-背包)
         * [数组区间](#数组区间)
         * [字符串编辑](#字符串编辑)
+        * [分割整数](#分割整数)
+        * [矩阵路径](#矩阵路径)
         * [其它问题](#其它问题)
     * [数学](#数学)
         * [素数](#素数)
@@ -1719,122 +1719,6 @@ public List<Integer> diffWaysToCompute(String input) {
 
 递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解。
 
-### 分割整数
-
-**分割整数的最大乘积** 
-
-[Leetcode : 343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
-
-题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
-
-```java
-public int integerBreak(int n) {
-    int[] dp = new int[n + 1];
-    dp[1] = 1;
-    for(int i = 2; i <= n; i++) {
-        for(int j = 1; j <= i - 1; j++) {
-            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
-        }
-    }
-    return dp[n];
-}
-```
-
-**按平方数来分割整数** 
-
-[Leetcode : 279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
-
-题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
-
-```java
-public int numSquares(int n) {
-    List<Integer> squares = new ArrayList<>(); // 存储小于 n 的平方数
-    int diff = 3;
-    while(square <= n) {
-        squares.add(square);
-        square += diff;
-        diff += 2;
-    }
-    int[] dp = new int[n + 1];
-    for(int i = 1; i <= n; i++) {
-        int max = Integer.MAX_VALUE;
-        for(int s : squares) {
-            if(s > i) break;
-            max = Math.min(max, dp[i - s] + 1);
-        }
-        dp[i] = max;
-    }
-    return dp[n];
-}
-```
-
-**分割整数构成字母字符串** 
-
-[Leetcode : 91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
-
-题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
-
-```java
-public int numDecodings(String s) {
-    if(s == null || s.length() == 0) return 0;
-    int n = s.length();
-    int[] dp = new int[n + 1];
-    dp[0] = 1;
-    dp[1] = s.charAt(0) == '0' ? 0 : 1;
-    for(int i = 2; i <= n; i++) {
-        int one = Integer.valueOf(s.substring(i - 1, i));
-        if(one != 0) dp[i] += dp[i - 1];
-        if(s.charAt(i - 2) == '0') continue;
-        int two = Integer.valueOf(s.substring(i - 2, i));
-        if(two <= 26) dp[i] += dp[i - 2];
-    }
-    return dp[n];
-}
-```
-
-### 矩阵路径
-
-**矩阵的总路径数** 
-
-[Leetcode : 62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
-
-题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向左和向下移动。
-
-```java
-public int uniquePaths(int m, int n) {
-    int[] dp = new int[n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if(i == 0) dp[j] = 1;
-            else if(j != 0) dp[j] = dp[j] + dp[j - 1];
-        }
-    }
-    return dp[n - 1];
-}
-```
-
-**矩阵的最小路径和** 
-
-[Leetcode : 64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
-
-题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向左和向下移动。
-
-```java
-public int minPathSum(int[][] grid) {
-    if(grid.length == 0 || grid[0].length == 0) return 0;
-    int m = grid.length, n = grid[0].length;
-    int[] dp = new int[n];
-    for(int i = 0; i < m; i++) {
-        for(int j = 0; j < n; j++) {
-            if(j == 0) dp[0] = dp[0] + grid[i][0];
-            else if(i == 0) dp[j] = dp[j - 1] + grid[0][j];
-            else dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
-        }
-    }
-    return dp[n - 1];
-}
-```
-
 ### 斐波那契数列
 
 **爬楼梯** 
@@ -1855,7 +1739,6 @@ dp[N] 即为所求。
 public int climbStairs(int n) {
     if(n == 1) return 1;
     if(n == 2) return 2;
-    // 前一个楼梯、后一个楼梯
     int pre1 = 2, pre2 = 1;
     for(int i = 2; i < n; i++){
         int cur = pre1 + pre2;
@@ -1929,31 +1812,32 @@ public int rob(int[] nums) {
 [Leetcode : 213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
+private int[] dp;
+
 public int rob(int[] nums) {
-    if(nums == null || nums.length == 0) return 0;
+    if (nums == null || nums.length == 0) return 0;
     int n = nums.length;
-    if(n == 1) return nums[0];
+    if (n == 1) return nums[0];
+    dp = new int[n];
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int s, int e) {
-    int n = nums.length;
-    if(e - s == 0) return nums[s];
-    if(e - s == 1) return Math.max(nums[s], nums[s + 1]);
-    int[] dp = new int[n];
-    dp[s] = nums[s];
-    dp[s + 1] = nums[s + 1];
-    dp[s + 2] = nums[s] + nums[s + 2];
-    for (int i = s + 3; i <= e; i++) {
+private int rob(int[] nums, int first, int last) {
+    if (last - first == 0) return nums[first];
+    if (last - first == 1) return Math.max(nums[first], nums[first + 1]);
+    dp[first] = nums[first];
+    dp[first + 1] = nums[first + 1];
+    dp[first + 2] = nums[first] + nums[first + 2];
+    for (int i = first + 3; i <= last; i++) {
         dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i];
     }
-    return Math.max(dp[e], dp[e - 1]);
+    return Math.max(dp[last], dp[last - 1]);
 }
 ```
 
 **信件错排** 
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信的方式数量。
+题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -2006,12 +1890,12 @@ public int lengthOfLIS(int[] nums) {
 }
 ```
 
-以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlog<sub>n</sub>)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
+以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlogn)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
 
 ```html
 len = 1  :      [4], [5], [6], [3]  => tails[0] = 3
 len = 2  :      [4, 5], [5, 6]      => tails[1] = 5
-len = 3  :      [4, 5, 6]            => tails[2] = 6
+len = 3  :      [4, 5, 6]           => tails[2] = 6
 ```
 
 对于一个元素 x，如果它大于 tails 数组所有的值，那么把它添加到 tails 后面；如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x 。
@@ -2023,28 +1907,41 @@ public int lengthOfLIS(int[] nums) {
     int n = nums.length;
     int[] tails = new int[n];
     int size = 0;
-    for(int i = 0; i < n; i++){
-        int idx = binarySearch(tails, 0, size, nums[i]);
-        tails[idx] = nums[i];
-        if(idx == size) size++;
+    for (int i = 0; i < n; i++) {
+        int index = binarySearch(tails, 0, size, nums[i]);
+        tails[index] = nums[i];
+        if (index == size) size++;
     }
     return size;
 }
 
-private int binarySearch(int[] nums, int sIdx, int eIdx, int key){
-    while(sIdx < eIdx){
-        int mIdx = sIdx + (eIdx - sIdx) / 2;
-        if(nums[mIdx] == key) return mIdx;
-        else if(nums[mIdx] > key) eIdx = mIdx;
-        else sIdx = mIdx + 1;
+private int binarySearch(int[] nums, int first, int last, int key) {
+    while (first < last) {
+        int mid = first + (last - first) / 2;
+        if (nums[mid] == key) return mid;
+        else if (nums[mid] > key) last = mid;
+        else first = mid + 1;
     }
-    return sIdx;
+    return first;
 }
 ```
 
 **最长摆动子序列** 
 
 [Leetcode : 376. Wiggle Subsequence (Medium)](https://leetcode.com/problems/wiggle-subsequence/description/)
+
+```html
+Input: [1,7,4,9,2,5]
+Output: 6
+The entire sequence is a wiggle sequence.
+
+Input: [1,17,5,10,13,15,10,5,16,8]
+Output: 7
+There are several subsequences that achieve this length. One is [1,17,10,13,10,16,8].
+
+Input: [1,2,3,4,5,6,7,8,9]
+Output: 2
+```
 
 要求：使用 O(n) 时间复杂度求解。
 
@@ -2124,7 +2021,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
         for (int j = W - 1; j >= weights[i]; j--) {
             dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weights[i]] + values[i]);
         }
-        for (int j = weights[i - 1] - 1; j >= 0; j--) {
+        for (int j = weights[i] - 1; j >= 0; j--) {
             dp[i][j] = dp[i - 1][j];
         }
     }
@@ -2164,6 +2061,14 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 [Leetcode : 416. Partition Equal Subset Sum (Medium)](https://leetcode.com/problems/partition-equal-subset-sum/description/)
 
+```html
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+
 可以看成一个背包大小为 sum/2 的 0-1 背包问题，但是也有不同的地方，这里没有价值属性，并且背包必须被填满。
 
 以下实现使用了空间优化。
@@ -2179,16 +2084,16 @@ public boolean canPartition(int[] nums) {
     }
     int W = sum / 2;
     boolean[] dp = new boolean[W + 1];
-    int n = nums.length;
-    for(int i = 0; i <= W; i++) {
-        if(nums[0] == i) dp[i] = true;
+    for (int i = 0; i <= W; i++) {
+        if (nums[0] == i) {
+            dp[i] = true;
+        }
     }
-    for(int i = 1; i < n; i++) {
-        for(int j = W; j >= nums[i]; j--) {
+    for (int i = 1; i < nums.length; i++) {
+        for (int j = W; j >= nums[i]; j--) {
             dp[j] = dp[j] || dp[j - nums[i]];
         }
     }
-
     return dp[W];
 }
 ```
@@ -2210,8 +2115,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
     dp[0] = true;
     for (int i = 1; i <= n; i++) {
         for (String word : wordDict) {
-            if (word.length() <= i
-                    && word.equals(s.substring(i - word.length(), i))) {
+            if (word.length() <= i && word.equals(s.substring(i - word.length(), i))) {
                 dp[i] = dp[i] || dp[i - word.length()];
             }
         }
@@ -2290,9 +2194,8 @@ Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3
 ```java
 public int findMaxForm(String[] strs, int m, int n) {
     if (strs == null || strs.length == 0) return 0;
-    int l = strs.length;
     int[][] dp = new int[m + 1][n + 1];
-    for (int i = 0; i < l; i++) {
+    for (int i = 0; i < strs.length; i++) {
         String s = strs[i];
         int ones = 0, zeros = 0;
         for (char c : s.toCharArray()) {
@@ -2301,9 +2204,7 @@ public int findMaxForm(String[] strs, int m, int n) {
         }
         for (int j = m; j >= zeros; j--) {
             for (int k = n; k >= ones; k--) {
-                if (zeros <= j && ones <= k) {
-                    dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
-                }
+                dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
             }
         }
     }
@@ -2315,20 +2216,30 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 [Leetcode : 322. Coin Change (Medium)](https://leetcode.com/problems/coin-change/description/)
 
+```html
+Example 1:
+coins = [1, 2, 5], amount = 11
+return 3 (11 = 5 + 5 + 1)
+
+Example 2:
+coins = [2], amount = 3
+return -1.
+```
+
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
 这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
 
 ```java
 public int coinChange(int[] coins, int amount) {
+    if (coins == null || coins.length == 0) return 0;
+    Arrays.sort(coins);
     int[] dp = new int[amount + 1];
     Arrays.fill(dp, amount + 1);
     dp[0] = 0;
     for (int i = 1; i <= amount; i++) {
-        for (int j = 0; j < coins.length; j++) {
-            if (coins[j] <= i) {
-                dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-            }
+        for (int j = 0; j < coins.length && coins[j] <= i; j++) {
+            dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
         }
     }
     return dp[amount] > amount ? -1 : dp[amount];
@@ -2359,11 +2270,12 @@ Therefore the output is 7.
 
 ```java
 public int combinationSum4(int[] nums, int target) {
+    if (nums == null || nums.length == 0) return 0;
     int[] dp = new int[target + 1];
     dp[0] = 1;
     for (int i = 1; i <= target; i++) {
         for (int j = 0; j < nums.length; j++) {
-            if(nums[j] <= i) {
+            if (nums[j] <= i) {
                 dp[i] += dp[i - nums[j]];
             }
         }
@@ -2401,7 +2313,7 @@ dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range o
 ```java
 public int maxProfit(int k, int[] prices) {
     int n = prices.length;
-    if (k >= n/2) {
+    if (k >= n/2) { // 这种情况下该问题退化为普通的股票交易问题
         int maxPro = 0;
         for (int i = 1; i < n; i++) {
             if (prices[i] > prices[i-1])
@@ -2427,21 +2339,29 @@ public int maxProfit(int k, int[] prices) {
 
 [Leetcode : 303. Range Sum Query - Immutable (Easy)](https://leetcode.com/problems/range-sum-query-immutable/description/)
 
-求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ j 的和。
+```html
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
 
 ```java
 class NumArray {
-
-    int[] nums;
+    private int[] sums;
 
     public NumArray(int[] nums) {
-        for(int i = 1; i < nums.length; i++)
-            nums[i] += nums[i - 1];
-        this.nums = nums;
+        sums = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sums[i] = i == 0 ? nums[0] : sums[i - 1] + nums[i];
+        }
     }
 
     public int sumRange(int i, int j) {
-        return i == 0 ? nums[j] : nums[j] - nums[i - 1];
+        return i == 0 ? sums[j] : sums[j] - sums[i - 1];
     }
 }
 ```
@@ -2450,33 +2370,21 @@ class NumArray {
 
 [Leetcode : 53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
 
-令 sum[i] 为以 num[i] 为结尾的子数组最大的和，可以由 sum[i-1] 得到 sum[i] 的值，如果 sum[i-1] 小于 0，那么以 num[i] 为结尾的子数组不能包含前面的内容，因为加上前面的部分，那么和一定会比 num[i] 还小。
-
-```java
-public int maxSubArray(int[] nums) {
-    int n = nums.length;
-    int[] sum = new int[n];
-    sum[0] = nums[0];
-    int max = sum[0];
-    for(int i = 1; i < n; i++){
-        sum[i] = (sum[i-1] > 0 ? sum[i-1] : 0) + nums[i];
-        max = Math.max(max, sum[i]);
-    }
-    return max;
-}
+```html
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 ```
 
-空间复杂度可以优化成 O(1) 空间复杂度
-
 ```java
 public int maxSubArray(int[] nums) {
-    int max = nums[0];
-    int oldsum = nums[0];
+    if (nums == null || nums.length == 0) return 0;
+    int preSum = nums[0];
+    int maxSum = preSum;
     for (int i = 1; i < nums.length; i++) {
-        oldsum = (oldsum > 0 ? oldsum: 0) + nums[i];
-        max = Math.max(max, oldsum);
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        maxSum = Math.max(maxSum, preSum);
     }
-    return max;
+    return maxSum;
 }
 ```
 
@@ -2486,25 +2394,25 @@ public int maxSubArray(int[] nums) {
 
 ```html
 A = [1, 2, 3, 4]
-
 return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 ```
 
-对于 (1,2,3,4)，它有三种组成递增子区间的方式，而对于 (1,2,3,4,5)，它组成递增子区间的方式除了 (1,2,3,4) 的三种外还多了一种，即 (1,2,3,4,5)，因此 dp[i] = dp[i - 1] + 1。
+dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
+
+如果 A[i] - A[i - 1] == A[i - 1] - A[i - 2]，表示 [A[i - 2], A[i - 1], A[i]] 是一个等差递增子区间。如果 [A[i - 3], A[i - 2], A[i - 1]] 是一个等差递增子区间，那么 [A[i - 3], A[i - 2], A[i - 1], A[i]] 也是。因此在这个条件下，dp[i] = dp[i-1] + 1。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
+    if (A == null || A.length == 0) return 0;
     int n = A.length;
     int[] dp = new int[n];
-    for(int i = 2; i < n; i++) {
-        if(A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+    for (int i = 2; i < n; i++) {
+        if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
             dp[i] = dp[i - 1] + 1;
         }
     }
     int ret = 0;
-    for(int cnt : dp) {
-        ret += cnt;
-    }
+    for (int cnt : dp) ret += cnt;
     return ret;
 }
 ```
@@ -2515,6 +2423,12 @@ public int numberOfArithmeticSlices(int[] A) {
 
 [Leetcode : 583. Delete Operation for Two Strings (Medium)](https://leetcode.com/problems/delete-operation-for-two-strings/description/)
 
+```html
+Input: "sea", "eat"
+Output: 2
+Explanation: You need one step to make "sea" to "ea" and another step to make "eat" to "ea".
+```
+
 可以转换为求两个字符串的最长公共子序列问题。
 
 ```java
@@ -2524,8 +2438,8 @@ public int minDistance(String word1, String word2) {
     for (int i = 0; i <= m; i++) {
         for (int j = 0; j <= n; j++) {
             if (i == 0 || j == 0) continue;
-            dp[i][j] = word1.charAt(i - 1) == word2.charAt(j - 1) ? dp[i - 1][j - 1] + 1
-                    : Math.max(dp[i][j - 1], dp[i - 1][j]);
+            dp[i][j] = word1.charAt(i - 1) == word2.charAt(j - 1) ?
+                    dp[i - 1][j - 1] + 1 : Math.max(dp[i][j - 1], dp[i - 1][j]);
         }
     }
     return m + n - 2 * dp[m][n];
@@ -2535,6 +2449,137 @@ public int minDistance(String word1, String word2) {
 **修改一个字符串称为另一个字符串**  // TODO
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
+
+### 分割整数
+
+**分割整数的最大乘积** 
+
+[Leetcode : 343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
+
+题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for(int i = 2; i <= n; i++) {
+        for(int j = 1; j <= i - 1; j++) {
+            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
+        }
+    }
+    return dp[n];
+}
+```
+
+**按平方数来分割整数** 
+
+[Leetcode : 279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
+
+题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+
+```java
+public int numSquares(int n) {
+    List<Integer> squareList = generateSquareList(n);
+    int[] dp = new int[n + 1];
+    for (int i = 1; i <= n; i++) {
+        int max = Integer.MAX_VALUE;
+        for (int square : squareList) {
+            if (square > i) break;
+            max = Math.min(max, dp[i - square] + 1);
+        }
+        dp[i] = max;
+    }
+    return dp[n];
+}
+
+private List<Integer> generateSquareList(int n) {
+    List<Integer> squareList = new ArrayList<>();
+    int diff = 3;
+    int square = 1;
+    while (square <= n) {
+        squareList.add(square);
+        square += diff;
+        diff += 2;
+    }
+    return squareList;
+}
+```
+
+**分割整数构成字母字符串** 
+
+[Leetcode : 91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
+
+题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+```java
+public int numDecodings(String s) {
+    if(s == null || s.length() == 0) return 0;
+    int n = s.length();
+    int[] dp = new int[n + 1];
+    dp[0] = 1;
+    dp[1] = s.charAt(0) == '0' ? 0 : 1;
+    for(int i = 2; i <= n; i++) {
+        int one = Integer.valueOf(s.substring(i - 1, i));
+        if(one != 0) dp[i] += dp[i - 1];
+        if(s.charAt(i - 2) == '0') continue;
+        int two = Integer.valueOf(s.substring(i - 2, i));
+        if(two <= 26) dp[i] += dp[i - 2];
+    }
+    return dp[n];
+}
+```
+
+### 矩阵路径
+
+**矩阵的总路径数** 
+
+[Leetcode : 62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
+
+题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
+
+<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
+
+```java
+public int uniquePaths(int m, int n) {
+    int[] dp = new int[n];
+    Arrays.fill(dp, 1);
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[j] = dp[j] + dp[j - 1];
+        }
+    }
+    return dp[n - 1];
+}
+```
+
+**矩阵的最小路径和** 
+
+[Leetcode : 64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
+
+```html
+[[1,3,1],
+ [1,5,1],
+ [4,2,1]]
+Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes the sum.
+```
+
+题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向左和向下移动。
+
+```java
+public int minPathSum(int[][] grid) {
+    if (grid.length == 0 || grid[0].length == 0) return 0;
+    int m = grid.length, n = grid[0].length;
+    int[] dp = new int[n];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (j == 0) dp[0] = dp[0] + grid[i][0];           // 只能从上侧走到该位置
+            else if (i == 0) dp[j] = dp[j - 1] + grid[0][j];  // 只能从右侧走到该位置
+            else dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+        }
+    }
+    return dp[n - 1];
+}
+```
 
 ### 其它问题
 
@@ -2571,25 +2616,15 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-**统计从 0 \~ n 每个数的二进制表示中 1 的个数** 
-
-[Leetcode : 338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
-
-对于数字 6(110)，它可以看成是数字 2(10) 前面加上一个 1 ，因此 dp[i] = dp[i&(i-1)] + 1;
-
-```java
-    public int[] countBits(int num) {
-        int[] ret = new int[num + 1];
-        for(int i = 1; i <= num; i++){
-            ret[i] = ret[i&(i-1)] + 1;
-        }
-        return ret;
-    }
-```
-
 **一组整数对能够构成的最长链** 
 
 [Leetcode : 646. Maximum Length of Pair Chain (Medium)](https://leetcode.com/problems/maximum-length-of-pair-chain/description/)
+
+```html
+Input: [[1,2], [2,3], [3,4]]
+Output: 2
+Explanation: The longest chain is [1,2] -> [3,4]
+```
 
 对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
 
@@ -3048,6 +3083,22 @@ public int[] productExceptSelf(int[] nums) {
     for(int i = n - 1; i >= 0; i--) {
         ret[i] *= right;
         right *= nums[i];
+    }
+    return ret;
+}
+```
+
+**统计从 0 \~ n 每个数的二进制表示中 1 的个数** 
+
+[Leetcode : 338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
+
+对于数字 6(110)，它可以看成是数字 (10) 前面加上一个 1 ，因此 dp[i] = dp[i&(i-1)] + 1;
+
+```java
+public int[] countBits(int num) {
+    int[] ret = new int[num + 1];
+    for(int i = 1; i <= num; i++){
+        ret[i] = ret[i&(i-1)] + 1;
     }
     return ret;
 }
