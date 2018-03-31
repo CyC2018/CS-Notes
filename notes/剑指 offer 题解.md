@@ -341,11 +341,11 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="../pics//40fcc7ec-5d49-4eae-9937-9b07ba5eaa42.png"/> </div><br>
+<div align="center"> <img src="../pics//c7491e97-610a-447f-948b-120b60801c37.png"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="../pics//48a7245a-dc45-4028-839b-fcf150828ae3.png"/> </div><br>
+<div align="center"> <img src="../pics//44c37c4c-3f7c-4d59-af8d-65cbd2ab3784.png"/> </div><br>
 
 ```java
 public class TreeLinkNode {
@@ -914,7 +914,7 @@ public boolean isNumeric(char[] str) {
 
 ## 解题思路
 
-复杂度：O(n<sup>2</sup>) + O(1)
+复杂度：O(N<sup>2</sup>) + O(1)
 
 ```java
 public void reOrderArray(int[] nums) {
@@ -934,7 +934,7 @@ public void reOrderArray(int[] nums) {
 }
 ```
 
-复杂度：O(n) + O(n)
+复杂度：O(N) + O(N)
 
 ```java
 public void reOrderArray(int[] nums) {
@@ -957,7 +957,7 @@ public void reOrderArray(int[] nums) {
 
 ## 解题思路
 
-<div align="center"> <img src="../pics//40d96c0d-156f-4eee-a183-2d597344f1cd.png"/> </div><br>
+<div align="center"> <img src="../pics//207c1801-2335-4b1b-b65c-126a0ba966cb.png"/> </div><br>
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k) {
