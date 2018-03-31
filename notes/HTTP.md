@@ -172,7 +172,7 @@ DELETE /file.html HTTP/1.1
 
 > 要求用隧道协议连接代理
 
-要求在于代理服务器通信时建立隧道，使用 SSL（Secure Sokets Layer，安全套接字）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
+要求在于代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
 ```html
 CONNECT www.example.com:443 HTTP/1.1
