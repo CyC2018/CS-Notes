@@ -1,121 +1,99 @@
 <!-- GFM-TOC -->
-* [常用操作以及概念](#常用操作以及概念)
+* [一、常用操作以及概念](#一常用操作以及概念)
     * [求助](#求助)
     * [关机](#关机)
-    * [查看进程](#查看进程)
-    * [查看端口](#查看端口)
     * [PATH](#path)
     * [运行等级](#运行等级)
     * [sudo](#sudo)
     * [GNU](#gnu)
     * [包管理工具](#包管理工具)
-    * [常见发行版本](#常见发行版本)
-* [分区](#分区)
+    * [发行版](#发行版)
+    * [VIM 三个模式](#vim-三个模式)
+* [二、分区](#二分区)
     * [磁盘的文件名](#磁盘的文件名)
     * [分区表](#分区表)
-        * [1. MBR](#1-mbr)
-        * [2. GPT](#2-gpt)
     * [开机检测程序](#开机检测程序)
-        * [1. BIOS](#1-bios)
-        * [2. UEFI](#2-uefi)
     * [挂载](#挂载)
-* [文件权限与目录配置](#文件权限与目录配置)
+* [三、文件](#三文件)
     * [文件权限概念](#文件权限概念)
     * [文件属性以及权限的修改](#文件属性以及权限的修改)
-        * [1. 修改文件所属群组](#1-修改文件所属群组)
-        * [2. 修改文件拥有者](#2-修改文件拥有者)
-        * [3. 修改权限](#3-修改权限)
     * [目录的权限](#目录的权限)
     * [文件默认权限](#文件默认权限)
     * [目录配置](#目录配置)
-* [文件与目录](#文件与目录)
     * [文件时间](#文件时间)
     * [文件与目录的基本操作](#文件与目录的基本操作)
-        * [1. ls](#1-ls)
-        * [2. cp](#2-cp)
-        * [3. rm](#3-rm)
-        * [4. mv](#4-mv)
     * [获取文件内容](#获取文件内容)
-        * [1. cat](#1-cat)
-        * [2. tac](#2-tac)
-        * [3. more](#3-more)
-        * [4. less](#4-less)
-        * [5. head](#5-head)
-        * [6. tail](#6-tail)
-        * [7. od](#7-od)
-        * [8. touch](#8-touch)
     * [指令与文件搜索](#指令与文件搜索)
-        * [1. which](#1-which)
-        * [2. whereis](#2-whereis)
-        * [3. locate](#3-locate)
-        * [4. find](#4-find)
-            * [4.1 与时间有关的选项](#41-与时间有关的选项)
-            * [4.2 与文件拥有者和所属群组有关的选项](#42-与文件拥有者和所属群组有关的选项)
-            * [4.3 与文件权限和名称有关的选项](#43-与文件权限和名称有关的选项)
-* [磁盘与文件系统](#磁盘与文件系统)
+* [四、磁盘与文件系统](#四磁盘与文件系统)
     * [文件系统的组成](#文件系统的组成)
     * [inode](#inode)
     * [目录的 inode 与 block](#目录的-inode-与-block)
     * [实体链接与符号链接](#实体链接与符号链接)
-        * [1. 实体链接](#1-实体链接)
-        * [2. 符号链接](#2-符号链接)
-* [压缩与打包](#压缩与打包)
+* [五、压缩与打包](#五压缩与打包)
     * [压缩](#压缩)
-        * [1. gzip](#1-gzip)
-        * [2. bzip2](#2-bzip2)
-        * [3. xz](#3-xz)
     * [打包](#打包)
-* [Bash](#bash)
-    * [Bash 特性](#bash-特性)
+* [六、Bash](#六bash)
+    * [特性](#特性)
     * [变量操作](#变量操作)
     * [指令搜索顺序](#指令搜索顺序)
     * [数据流重定向](#数据流重定向)
-    * [管线指令](#管线指令)
-        * [1. 提取指令：cut](#1-提取指令cut)
-        * [2. 排序命令：sort、uniq](#2-排序命令sortuniq)
-        * [3. 双向输出重定向：tee](#3-双向输出重定向tee)
-        * [4. 字符转换指令：tr、col、expand、join、paste](#4-字符转换指令trcolexpandjoinpaste)
-        * [5. 分区指令：split](#5-分区指令split)
-* [正规表示法与文件格式化处理](#正规表示法与文件格式化处理)
+* [七、管线指令](#七管线指令)
+    * [提取指令](#提取指令)
+    * [排序指令](#排序指令)
+    * [双向输出重定向](#双向输出重定向)
+    * [字符转换指令](#字符转换指令)
+    * [分区指令](#分区指令)
+* [八、正则表达式](#八正则表达式)
     * [grep](#grep)
     * [printf](#printf)
     * [awk](#awk)
-* [vim 三个模式](#vim-三个模式)
+* [九、进程管理](#九进程管理)
+    * [查看进程](#查看进程)
+    * [进程状态](#进程状态)
+    * [SIGCHILD](#sigchild)
+    * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
+* [十、I/O 复用](#十io-复用)
+    * [概念理解](#概念理解)
+    * [I/O 模型](#io-模型)
+    * [select poll epoll](#select-poll-epoll)
+    * [select 和 poll 比较](#select-和-poll-比较)
+    * [eopll 工作模式](#eopll-工作模式)
+    * [select poll epoll 应用场景](#select-poll-epoll-应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-# 常用操作以及概念
+# 一、常用操作以及概念
 
 ## 求助
 
-**1. --help** 
+### 1. --help
 
 指令的基本用法与选项介绍。
 
-**2. man** 
+### 2. man
 
 man 是 manual 的缩写，将指令的具体信息显示出来。
 
 当执行 man date 时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
 
 | 代号 | 类型 |
-| -- | -- |
+| :--: | -- |
 | 1 | 用户在 shell 环境中可以操作的指令或者可执行文件 |
 | 5 | 配置文件 |
 | 8 | 系统管理员可以使用的管理指令 |
 
-**3. info** 
+### 3. info
 
 info 与 man 类似，但是 info 将文档分成一个个页面，每个页面可以进行跳转。
 
 ## 关机
 
-**1. sync** 
+### 1. sync
 
-为了加快对磁盘上文件的读写速度，位于内存中的文件数据不会立即同步到磁盘上，因此关机之前需要先进行 sync 同步操作。
+为了加快对磁盘文件的读写速度，位于内存中的文件数据不会立即同步到磁盘上，因此关机之前需要先进行 sync 同步操作。
 
-**2. shutdown** 
+### 2. shutdown
 
 ```html
 # /sbin/shutdown [-krhc] [时间] [警告讯息]
@@ -125,21 +103,9 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 -c ： 取消已经在进行的 shutdown 指令内容
 ```
 
-**3. 其它关机指令** 
+### 3. 其它关机指令
 
 reboot、halt、poweroff。
-
-## 查看进程
-
-```html
-ps aux | grep threadx
-```
-
-## 查看端口
-
-```html
-netstat -anp | grep 80
-```
 
 ## PATH
 
@@ -165,7 +131,7 @@ netstat -anp | grep 80
 
 ## GNU
 
-GNU 计划，又译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
+GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
 
 - 以任何目的运行此程序的自由；
 - 再复制的自由；
@@ -177,7 +143,7 @@ RPM 和 DPKG 为最常见的两类软件包管理工具。RPM 全称为 Redhat P
 
 YUM 基于 RPM 包管理工具，具有依赖管理功能，并具有软件升级的功能。
 
-## 常见发行版本
+## 发行版
 
 Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
@@ -186,13 +152,30 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 | DPKG | Ubuntu | Debian |
 | RPM | Red Hat | Fedora / CentOS |
 
-# 分区
+## VIM 三个模式
+
+<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
+
+- 一般指令模式：进入 VIM 的默认模式，可以用于移动游标查看内容；
+- 编辑模式：按下 "i" 等按键之后进入，可以对文本进行编辑；
+- 指令列模式：按下 ":" 按键之后进入，用于保存退出等操作。
+
+在指令列模式下，有以下命令用于离开或者保存文件。
+
+| 命令 | 作用 |
+| -- | -- |
+| :w | 写入磁盘|
+| :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
+| :q | 离开 |
+| :q! | 强制离开不保存 |
+| :wq | 写入磁盘后离开 |
+| :wq!| 强制写入磁盘后离开 |
+
+# 二、分区
 
 ## 磁盘的文件名
 
-Linux 中每个硬件都被当做一个文件。
-
-常见磁盘的文件名：
+Linux 中每个硬件都被当做一个文件，包括磁盘。常见磁盘的文件名如下：
 
 - SCSI/SATA/USB 磁盘：/dev/sd[a-p]
 - IDE 磁盘：/dev/hd[a-d]
@@ -205,9 +188,9 @@ Linux 中每个硬件都被当做一个文件。
 
 ### 1. MBR
 
-MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，partition table 占 64 bytes。
+MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，分区表占 64 bytes。
 
-分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，因此通过扩展分区可以分出更多区分，这些分区称为逻辑分区。
+分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它空间用来记录分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
 
 Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名 + 编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
 
@@ -219,19 +202,19 @@ GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息�
 
 GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg" width="400"/> </div><br>
 
 ## 开机检测程序
 
 ### 1. BIOS
 
-BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序的会加载操作系统的核心文件。
+BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
 MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
-<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg"/> </div><br>
-
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
+
+<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
 
 ### 2. UEFI
 
@@ -241,15 +224,15 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。
 
-<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg"/> </div><br>
+<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg" width="500"/> </div><br>
 
-# 文件权限与目录配置
+# 三、文件
 
 ## 文件权限概念
 
 把用户分为三种：文件拥有者、群组以及其它人，对不同的用户有不同的文件权限。
 
-使用 ls 查看一个文件时，会显示一个文件的信息，例如 drwxr-xr-x. 3 root root 17 May 6 00:14 .config，对这个信息的解释如下：
+使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x. 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
 
 - drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段。
 - 3：链接数；
@@ -325,8 +308,8 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 ## 文件默认权限
 
-文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
-目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
+- 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
+- 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
 可以通过 umask 设置或者查看文件的默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r-- 。
 
@@ -338,11 +321,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-完整的目录树如下：
-
-<div align="center"> <img src="../pics//27ace615-558f-4dfb-8ad4-7ac769c10118.jpg"/> </div><br>
-
-# 文件与目录
+<div align="center"> <img src="../pics//linux-filesystem.png"/> </div><br>
 
 ## 文件时间
 
@@ -448,8 +427,8 @@ cp [-adfilprsu] source destination
 -a ： 更新 atime
 -c ： 更新 ctime，若该文件不存在则不建立新文件
 -m ： 更新 mtime
--d ： 后面可以接欲更新的日期而不用当前的日期，也可以使用 --date="日期或时间"
--t ： 后面可以接欲更新的时间而不用当前的时间，格式为[YYYYMMDDhhmm]
+-d ： 后面可以接更新日期而不使用当前日期，也可以使用 --date="日期或时间"
+-t ： 后面可以接更新时间而不使用当前时间，格式为[YYYYMMDDhhmm]
 ```
 
 ## 指令与文件搜索
@@ -490,7 +469,7 @@ find 可以使用文件的属性和权限进行搜索。
 # find filename [option]
 ```
 
-#### 4.1 与时间有关的选项
+**（一）与时间有关的选项** 
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -503,7 +482,7 @@ find 可以使用文件的属性和权限进行搜索。
 
 <div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
 
-#### 4.2 与文件拥有者和所属群组有关的选项
+**（二）与文件拥有者和所属群组有关的选项** 
 
 ```html
 -uid n
@@ -514,7 +493,7 @@ find 可以使用文件的属性和权限进行搜索。
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-#### 4.3 与文件权限和名称有关的选项
+**（三）与文件权限和名称有关的选项** 
 
 ```html
 -name filename
@@ -525,7 +504,7 @@ find 可以使用文件的属性和权限进行搜索。
 -perm /mode ：搜索权限包含任一 mode 的文件
 ```
 
-# 磁盘与文件系统
+# 四、磁盘与文件系统
 
 ## 文件系统的组成
 
@@ -578,7 +557,9 @@ inode 具体包含以下信息：
 
 ### 1. 实体链接
 
-hard link 只是在某个目录下新增一个条目，使得新增的条目链接到文件的 inode 上。删除任意一个条目，文件还是存在，只要引用数量不为 0。
+它和普通文件类似，实体链接文件的 inode 都指向源文件所在的 block 上，也就是说读取文件直接从源文件的 block 上读取。
+
+删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
 有以下限制：不能跨越 File System；不能对目录进行链接。
 
@@ -591,9 +572,11 @@ hard link 只是在某个目录下新增一个条目，使得新增的条目链�
 
 ### 2. 符号链接
 
-symbolic link 可以理解为 Windows 的快捷方式，通过建立一个独立的文件，这个文件的数据的读取指向链接的那个文件。当源文件被删除了，链接文件就打不开了。
+符号链接文件保存着源文件所在的绝对路径，在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
 
-symbolic link 可以为目录建立链接。
+当源文件被删除了，链接文件就打不开了。
+
+可以为目录建立链接。
 
 ```html
 # ll -i /etc/crontab /root/crontab2
@@ -601,7 +584,7 @@ symbolic link 可以为目录建立链接。
 53745909 lrwxrwxrwx. 1 root root 12 Jun 23 22:31 /root/crontab2 -> /etc/crontab
 ```
 
-# 压缩与打包
+# 五、压缩与打包
 
 ## 压缩
 
@@ -686,29 +669,21 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 | 查 看 | tar -jtv -f filename.tar.bz2 |
 | 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
 
-# Bash
+# 六、Bash
 
 可以通过 Shell 请求内核提供服务，Bash 正是 Shell 的一种。
 
-## Bash 特性
+## 特性
 
-**1. 命令历史** 
+1. 命令历史：记录使用过的命令。本次登录所执行的命令都会暂时存放到内存中，\~/.bash_history 文件中记录的是前一次登录所执行过的命令。
 
-记录使用过的命令。本次登录所执行的命令都会暂时存放到内存中， \~/.bash_history 文件中记录的是前一次登录所执行过的命令。
+2. 命令与文件补全：快捷键：tab。
 
-**2. 命令与文件补全** 
+3. 命名别名：例如 lm 是 ls -al 的别名。
 
-快捷键：tab
+4. shell scripts。
 
-**3. 命名别名** 
-
-例如 lm 是 ls -al 的别名。
-
-**4. shell scripts** 
-
-**5. 通配符** 
-
-例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件。
+5. 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件。
 
 ## 变量操作
 
@@ -722,7 +697,10 @@ $ echo $var
 $ echo ${var}
 ```
 
-变量内容如果有空格，需要使用双引号或者单引号。双引号内的特殊字符可以保留原本特性，例如 var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；而单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
+变量内容如果有空格，必须需要使用双引号或者单引号。
+
+- 双引号内的特殊字符可以保留原本特性，例如 var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；
+- 单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
 
 可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
 
@@ -755,11 +733,13 @@ $ echo ${array[1]}
 
 ## 数据流重定向
 
-重定向就是使用文件代替标准输入、标准输出和标准错误输出。
+重定向指的是使用文件代替标准输入、标准输出和标准错误输出。
 
-1. 标准输入 (stdin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 0 ，使用 < 或 << ；
-2. 标准输出 (stdout)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：代码为 1 ，使用 > 或 >> ；
-3. 标准错误输出 (stderr)：代码为 2 ，使用 2> 或 2>> ；
+| 1 | 代码 | 运算符 |
+| :---: | :---: | :---:|
+| 标准输入 (stdin)  | 0 | < 或 << |
+| 标准输出 (stdout) | 1 | > 或 >> |
+| 标准错误输出 (stderr) | 2 | 2> 或 2>> |
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
@@ -771,7 +751,7 @@ $ echo ${array[1]}
 $ find /home -name .bashrc > list 2>&1
 ```
 
-## 管线指令
+# 七、管线指令
 
 管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。在命令之间使用 | 分隔各个管线命令。
 
@@ -779,7 +759,7 @@ $ find /home -name .bashrc > list 2>&1
 $ ls -al /etc | less
 ```
 
-### 1. 提取指令：cut
+## 提取指令
 
 cut 对数据进行切分，取出想要的部分。提取过程一行一行地进行。
 
@@ -814,7 +794,7 @@ declare -x HOSTNAME="study.centos.vbird"
 $ export | cut -c 12
 ```
 
-### 2. 排序命令：sort、uniq
+## 排序指令
 
 **sort**  进行排序。
 
@@ -860,7 +840,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 1 wtmp
 ```
 
-### 3. 双向输出重定向：tee
+## 双向输出重定向
 
 输出重定向会将输出内容重定向到文件中，而  **tee**  不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
@@ -868,7 +848,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 $ tee [-a] file
 ```
 
-### 4. 字符转换指令：tr、col、expand、join、paste
+## 字符转换指令
 
 **tr**  用来删除一行中的字符，或者对字符进行替换。
 
@@ -914,7 +894,7 @@ $ paste [-d] file1 file2
 -d ：分隔符，默认为 tab
 ```
 
-### 5. 分区指令：split
+## 分区指令
 
 **split**  将一个文件划分成多个文件。
 
@@ -925,7 +905,7 @@ $ split [-bl] file PREFIX
 - PREFIX ：分区文件的前导名称
 ```
 
-# 正规表示法与文件格式化处理
+# 八、正则表达式
 
 ## grep
 
@@ -952,7 +932,7 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-因为 { 与 } 的符号在 shell 是有特殊意义的，因此必须要使用使用转义字符进行转义。
+因为 { 与 } 的符号在 shell 是有特殊意义的，因此必须要使用转义字符进行转义。
 
 ```html
 $ grep -n 'go\{2,5\}g' regular_express.txt
@@ -973,8 +953,10 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 ## awk
 
+可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
+
 ```html
-$ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
+$ awk ' 条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 ```
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
@@ -1016,28 +998,401 @@ dmtsai lines: 5 columns: 9
 范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
 ```text
-cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
+$ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
 daemon 2
 ```
 
-# vim 三个模式
+# 九、进程管理
 
-<div align="center"> <img src="../pics//341c632a-1fc1-4068-9b9f-bf7ef68ebb4c.jpg"/> </div><br>
+## 查看进程
 
-在指令列模式下，有以下命令用于离开或者存储文件。
+### 1. ps
 
-| 命令 | 作用 |
-| -- | -- |
-| :w | 写入磁盘|
-| :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
-| :q | 离开 |
-| :q! | 强制离开不保存 |
-| :wq | 写入磁盘后离开 |
-| :wq!|  强制写入磁盘后离开 |
+查看某个时间点的进程信息
+
+示例一：查看自己的进程
+
+```
+# ps -l
+```
+
+示例二：查看系统所有进程
+
+```
+# ps aux
+```
+
+示例三：查看特定的进程
+
+```html
+# ps aux | grep threadx
+```
+
+### 2. top
+
+实时显示进程信息
+
+示例：两秒钟刷新一次
+
+```
+# top -d 2
+```
+
+### 3. pstree
+
+查看进程树
+
+示例：查看所有进程树
+
+```
+# pstree -A
+```
+
+### 4. netstat
+
+查看占用端口的进程
+
+```
+# netstat -anp | grep port
+```
+
+## 进程状态
+
+| 状态 | 说明 |
+| :---: | --- |
+| R | running or runnable (on run queue) |
+| D |  uninterruptible sleep (usually IO) |
+| S | interruptible sleep (waiting for an event to complete) |
+| Z | defunct/zombie, terminated but not reaped by its parent |
+| T | stopped, either by a job control signal or because it is being traced|
+
+<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png"/> </div><br>
+
+## SIGCHILD
+
+当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
+
+- 得到 SIGCHLD 信号；
+- 阻塞的 waitpid(2)（或者 wait）调用会返回。
+
+<div align="center"> <img src="../pics//flow.png"/> </div><br>
+
+## 孤儿进程和僵死进程
+
+### 1. 孤儿进程
+
+一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+
+由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
+
+### 2. 僵死进程
+
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait 或 waitpid 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait 或 waitpid，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+
+僵死进程通过 ps 命令显示出来的状态为 Z。
+
+系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+
+要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
+
+# 十、I/O 复用
+
+## 概念理解
+
+I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有处理多个 I/O 事件的能力。
+
+当某个 I/O 事件条件满足时，进程会收到通知。
+
+如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时连接几万个连接，那么就需要创建相同数量的线程。并且相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
+
+## I/O 模型
+
+- 阻塞（Blocking）
+- 非阻塞（Non-blocking）
+- 同步（Synchronous）
+- 异步（Asynchronous）
+
+阻塞非阻塞是等待 I/O 完成的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
+
+同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
+
+<div align="center"> <img src="../pics//00eda100-dba1-4ec2-9140-5fe5f3855951.jpg"/> </div><br>
+
+### 1. 同步-阻塞
+
+这是最常见的一种模型，用户程序在使用 read() 时会执行系统调用从而陷入内核，之后就被阻塞直到系统调用完成。
+
+应该注意到，在阻塞的过程中，其他程序还可以执行，因此阻塞不意味着整个操作系统都被阻塞。因为其他程序还可以执行，因此不消耗 CPU 时间，这种模型的执行效率会比较高。
+
+<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png"/> </div><br>
+
+### 2. 同步-非阻塞
+
+非阻塞意味着用户程序在执行系统调用后还可以执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
+
+由于 CPU 要处理更多的用户程序的询问，因此这种模型的效率是比较低的。
+
+<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png"/> </div><br>
+
+### 3. 异步-阻塞
+
+这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+
+<div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
+
+### 4. 异步-非阻塞
+
+该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后完成 I/O 事务。
+
+<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg"/> </div><br>
+
+## select poll epoll
+
+这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。可以说，新出现的实现是为了修复旧实现的不足。
+
+### 1. select
+
+```c
+int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+```
+
+- fd_set 表示描述符集合；
+- readset、writeset 和 exceptset 这三个参数指定让操作系统内核测试读、写和异常条件的描述符；
+- timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间；
+- 成功调用返回结果大于 0；出错返回结果为 -1；超时返回结果为 0。
+
+```c
+fd_set fd_in, fd_out;
+struct timeval tv;
+
+// Reset the sets
+FD_ZERO( &fd_in );
+FD_ZERO( &fd_out );
+
+// Monitor sock1 for input events
+FD_SET( sock1, &fd_in );
+
+// Monitor sock2 for output events
+FD_SET( sock2, &fd_out );
+
+// Find out which socket has the largest numeric value as select requires it
+int largest_sock = sock1 > sock2 ? sock1 : sock2;
+
+// Wait up to 10 seconds
+tv.tv_sec = 10;
+tv.tv_usec = 0;
+
+// Call the select
+int ret = select( largest_sock + 1, &fd_in, &fd_out, NULL, &tv );
+
+// Check if select actually succeed
+if ( ret == -1 )
+    // report error and abort
+else if ( ret == 0 )
+    // timeout; no event detected
+else
+{
+    if ( FD_ISSET( sock1, &fd_in ) )
+        // input event on sock1
+
+    if ( FD_ISSET( sock2, &fd_out ) )
+        // output event on sock2
+}
+```
+
+每次调用 select() 都需要将 fd_set \*readfds, fd_set \*writefds, fd_set \*exceptfds 链表内容全部从用户进程内存中复制到操作系统内核中，内核需要将所有 fd_set 遍历一遍，这个过程非常低效。
+
+返回结果中内核并没有声明哪些 fd_set 已经准备好了，所以如果返回值大于 0 时，程序需要遍历所有的 fd_set 判断哪个 I/O 已经准备好。
+
+在 Linux 中 select 最多支持 1024 个 fd_set 同时轮询，其中 1024 由 Linux 内核的 FD_SETSIZE 决定。如果需要打破该限制可以修改 FD_SETSIZE，然后重新编译内核。
+
+### 2. poll
+
+```c
+int poll (struct pollfd *fds, unsigned int nfds, int timeout);
+```
+
+```c
+struct pollfd {
+    int fd;       //文件描述符
+    short events; //监视的请求事件
+    short revents; //已发生的事件
+};
+```
+
+```c
+// The structure for two events
+struct pollfd fds[2];
+
+// Monitor sock1 for input
+fds[0].fd = sock1;
+fds[0].events = POLLIN;
+
+// Monitor sock2 for output
+fds[1].fd = sock2;
+fds[1].events = POLLOUT;
+
+// Wait 10 seconds
+int ret = poll( &fds, 2, 10000 );
+// Check if poll actually succeed
+if ( ret == -1 )
+    // report error and abort
+else if ( ret == 0 )
+    // timeout; no event detected
+else
+{
+    // If we detect the event, zero it out so we can reuse the structure
+    if ( pfd[0].revents & POLLIN )
+        pfd[0].revents = 0;
+        // input event on sock1
+
+    if ( pfd[1].revents & POLLOUT )
+        pfd[1].revents = 0;
+        // output event on sock2
+}
+```
+
+它和 select() 功能基本相同。同样需要每次将 struct pollfd \*fds 复制到内核，返回后同样需要进行轮询每一个 pollfd 是否已经 I/O 准备好。poll() 取消了 1024 个描述符数量上限，但是数量太大以后不能保证执行效率，因为复制大量内存到内核十分低效，所需时间与描述符数量成正比。poll() 在 pollfd 的重复利用上比 select() 的 fd_set 会更好。
+
+如果在多线程下，如果一个线程对某个描述符调用了 poll() 系统调用，但是另一个线程关闭了该描述符，会导致 poll() 调用结果不确定，该问题同样出现在 select() 中。
+
+### 3. epoll
+
+```c
+int epoll_create(int size);
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
+int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
+```
+
+```c
+// Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
+// The function argument is ignored (it was not before, but now it is), so put your favorite number here
+int pollingfd = epoll_create( 0xCAFE );
+
+if ( pollingfd < 0 )
+ // report error
+
+// Initialize the epoll structure in case more members are added in future
+struct epoll_event ev = { 0 };
+
+// Associate the connection class instance with the event. You can associate anything
+// you want, epoll does not use this information. We store a connection class pointer, pConnection1
+ev.data.ptr = pConnection1;
+
+// Monitor for input, and do not automatically rearm the descriptor after the event
+ev.events = EPOLLIN | EPOLLONESHOT;
+// Add the descriptor into the monitoring list. We can do it even if another thread is
+// waiting in epoll_wait - the descriptor will be properly added
+if ( epoll_ctl( epollfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 )
+    // report error
+
+// Wait for up to 20 events (assuming we have added maybe 200 sockets before that it may happen)
+struct epoll_event pevents[ 20 ];
+
+// Wait for 10 seconds, and retrieve less than 20 epoll_event and store them into epoll_event array
+int ready = epoll_wait( pollingfd, pevents, 20, 10000 );
+// Check if epoll actually succeed
+if ( ret == -1 )
+    // report error and abort
+else if ( ret == 0 )
+    // timeout; no event detected
+else
+{
+    // Check if any events detected
+    for ( int i = 0; i < ret; i++ )
+    {
+        if ( pevents[i].events & EPOLLIN )
+        {
+            // Get back our connection pointer
+            Connection * c = (Connection*) pevents[i].data.ptr;
+            c->handleReadEvent();
+         }
+    }
+}
+```
+
+epoll 仅仅适用于 Linux OS。
+
+它是 select 和 poll 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
+
+select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
+
+新版本的 epoll_create(int size) 参数 size 不起任何作用，在旧版本的 epoll 中如果描述符的数量大于 size，不保证服务质量。
+
+epoll_ct() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
+
+epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select/poll 对注册的所有描述符遍历一遍。
+
+epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
+
+## select 和 poll 比较
+
+### 1. 功能
+
+它们提供了几乎相同的功能，但是在一些细节上有所不同：
+
+- select 会修改 fd_set 参数，而 poll 不会；
+- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
+- poll 提供了更多的事件类型。
+
+### 2. 速度
+
+poll 和 select 在速度上都很慢。
+
+- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
+- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
+
+### 3. 可移植性
+
+几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
+
+## eopll 工作模式
+
+epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
+
+### 1. LT 模式
+
+当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
+
+### 2. ET 模式
+
+当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+
+## select poll epoll 应用场景
+
+很容易产生一种错觉认为只要用 epoll 就可以了，select poll 都是历史遗留问题，并没有什么应用场景，其实并不是这样的。
+
+### 1. select 应用场景
+
+select() poll() epoll_wait() 都有一个 timeout 参数，在 select() 中 timeout 的精确度为 1ns，而 poll() 和 epoll_wait() 中则为 1ms。所以 select 更加适用于实时要求更高的场景，比如核反应堆的控制。
+
+select 历史更加悠久，它的可移植性更好，几乎被所有主流平台所支持。
+
+### 2. poll 应用场景
+
+poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
+
+需要同时监控小于 1000 个描述符。那么也没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
+
+需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。epoll 的描述符存储在内核，不容易调试。
+
+### 3. epoll 应用场景
+
+程序只需要运行在 Linux 平台上，有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
+
+### 4. 性能对比
+
+> [epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
 
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
+- [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
+- [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
+- [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
+- [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
+- [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+- [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
