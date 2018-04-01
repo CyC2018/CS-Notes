@@ -5,8 +5,8 @@
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
     * [GET](#get)
-    * [POST](#post)
     * [HEAD](#head)
+    * [POST](#post)
     * [PUT](#put)
     * [PATCH](#patch)
     * [DELETE](#delete)
@@ -27,6 +27,7 @@
     * [Cookie](#cookie)
     * [缓存](#缓存)
     * [持久连接](#持久连接)
+    * [管线化处理](#管线化处理)
     * [编码](#编码)
     * [分块传输编码](#分块传输编码)
     * [多部分对象集合](#多部分对象集合)
@@ -44,7 +45,13 @@
     * [跨站点请求伪造](#跨站点请求伪造)
     * [SQL 注入攻击](#sql-注入攻击)
     * [拒绝服务攻击](#拒绝服务攻击)
-* [八、各版本比较](#八各版本比较)
+* [八、GET 和 POST 的区别](#八get-和-post-的区别)
+    * [参数](#参数)
+    * [安全](#安全)
+    * [幂等性](#幂等性)
+    * [可缓存](#可缓存)
+    * [XMLHttpRequest](#xmlhttprequest)
+* [九、各版本比较](#九各版本比较)
     * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
     * [HTTP/1.1 与 HTTP/2.0 的区别](#http11-与-http20-的区别)
 * [参考资料](#参考资料)
@@ -89,77 +96,6 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 当前网络请求中，绝大部分使用的是 GET 方法。
 
-## POST
-
-> 传输实体主体
-
-### 1. 参数
-
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
-
-GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
-
-```
-GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
-```
-
-```
-POST /test/demo_form.asp HTTP/1.1
-Host: w3schools.com
-name1=value1&name2=value2
-```
-
-### 2. 安全
-
-安全的 HTTP 方法不会改变服务器状态，也就是说它只是可读的。
-
-GET 方法是安全的，而 POST 却不是。
-
-安全的方法除了 GET 之外还有：HEAD、OPTIONS。
-
-不安全的方法除了 POST 之外还有 PUT、DELETE。
-
-### 3. 幂等性
-
-幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。在正确实现的条件下，GET，HEAD，PUT和 DELETE 等方法都是幂等的，而 POST 方法不是。所有的安全方法也都是幂等的。
-
-GET /pageX HTTP/1.1是幂等的。连续调用多次，客户端接收到的结果都是一样的：
-
-```
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
-```
-
-POST /add_row HTTP/1.1不是幂等的。如果调用多次，就会增加多行记录：
-
-```
-POST /add_row HTTP/1.1
-POST /add_row HTTP/1.1   -> Adds a 2nd row
-POST /add_row HTTP/1.1   -> Adds a 3rd row
-```
-
-DELETE /idX/delete HTTP/1.1是幂等的，即便是不同请求之间接收到的状态码不一样：
-
-```
-DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
-DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
-DELETE /idX/delete HTTP/1.1   -> Returns 404
-```
-
-### 4. 可缓存
-
-
-
-### 5. XMLHttpRequest
-
-为了阐述 POST 和 GET 的另一个区别，需要先了解 XMLHttpRequest：
-
-> XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
-
-在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
-
 ## HEAD
 
 > 获取报文首部
@@ -167,6 +103,14 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 和 GET 方法一样，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
+
+## POST
+
+> 传输实体主体
+
+POST 主要用来传输数据，而 GET 主要用来获取资源。
+
+更多 POST 与 GET 的比较请见第八章。
 
 ## PUT
 
@@ -250,6 +194,10 @@ CONNECT www.example.com:443 HTTP/1.1
 | 3XX | Redirection（重定向状态码） | 需要进行附加操作以完成请求 |
 | 4XX | Client Error（客户端错误状态码） | 服务器无法处理请求 |
 | 5XX | Server Error（服务器错误状态码） | 服务器处理请求出错 |
+
+### 1XX 信息
+
+-  **100 Continue** ：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
 
 ## 2XX 成功
 
@@ -473,7 +421,9 @@ Expires 字段也可以用于告知缓存服务器该资源什么时候会过期
 
 持久连接需要使用 Connection 首部字段进行管理。HTTP/1.1 开始 HTTP 默认是持久化连接的，如果要断开 TCP 连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是非持久化连接的，如果要维持持续连接，需要使用 Connection : Keep-Alive。
 
-**管线化方式**  可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
+## 管线化处理
+
+HTTP/1.1 支持管线化处理，可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
 
 ## 编码
 
@@ -532,7 +482,9 @@ Content-Length: 1024
 
 ## 虚拟主机
 
-使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
+HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
+
+使用 Host 首部字段进行处理。
 
 ## 通信数据转发
 
@@ -769,33 +721,91 @@ strSQL = "SELECT * FROM users;"
 
 > [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
 
-# 八、各版本比较
+# 八、GET 和 POST 的区别
+
+## 参数
+
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
+
+GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
+
+```
+GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
+```
+
+```
+POST /test/demo_form.asp HTTP/1.1
+Host: w3schools.com
+name1=value1&name2=value2
+```
+
+## 安全
+
+安全的 HTTP 方法不会改变服务器状态，也就是说它只是可读的。
+
+GET 方法是安全的，而 POST 却不是。
+
+安全的方法除了 GET 之外还有：HEAD、OPTIONS。
+
+不安全的方法除了 POST 之外还有 PUT、DELETE。
+
+## 幂等性
+
+幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。在正确实现的条件下，GET，HEAD，PUT和 DELETE 等方法都是幂等的，而 POST 方法不是。所有的安全方法也都是幂等的。
+
+GET /pageX HTTP/1.1是幂等的。连续调用多次，客户端接收到的结果都是一样的：
+
+```
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+```
+
+POST /add_row HTTP/1.1不是幂等的。如果调用多次，就会增加多行记录：
+
+```
+POST /add_row HTTP/1.1
+POST /add_row HTTP/1.1   -> Adds a 2nd row
+POST /add_row HTTP/1.1   -> Adds a 3rd row
+```
+
+DELETE /idX/delete HTTP/1.1是幂等的，即便是不同请求之间接收到的状态码不一样：
+
+```
+DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
+DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
+DELETE /idX/delete HTTP/1.1   -> Returns 404
+```
+
+## 可缓存
+
+如果要对响应进行缓存，需要满足以下条件：
+
+1. 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
+2. 响应报文的 状态码是可缓存的，包括： 200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501。
+3. 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
+
+## XMLHttpRequest
+
+为了阐述 POST 和 GET 的另一个区别，需要先了解 XMLHttpRequest：
+
+> XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
+
+在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
+
+# 九、各版本比较
 
 ## HTTP/1.0 与 HTTP/1.1 的区别
 
-### 1. 长连接（PersistentConnection）
-HTTP/1.0 规定浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个 TCP 连接，服务器完成请求处理后立即断开 TCP 连接，服务器不跟踪每个客户也不记录过去的请求。 HTTP/1.1 支持持久连接, 并且默认使用该方式，但也需要增加新的请求头来帮助实现。例如，请求头的值为 Keep-Alive 时，客户端通知服务器返回本次请求结果后保持连接；请求头的值为 close 时，客户端通知服务器返回本次请求结果后关闭连接。
+1. 持久连接
+2. 管线化处理
+3. 虚拟主机
+4. 状态码 100
+5. 分块传输编码
+6. 缓存处理字段
 
-### 2. 请求的流水线（Pipelining）处理
-
-在一个 TCP 连接上可以传送多个 HTTP 请求和响应，减少建立和关闭连接的消耗和延迟。例如，一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输，但每个单独的网页文件的请求和应答仍然需要使用各自的连接。
-HTTP/1.1 允许客户端不用等待上一次请求结果返回，就可以发出下一次请求，但服务器端必须按照接收到客户端请求的先后顺序依次回送响应结果，以保证客户端能够区分出每次请求的响应内容。
-
-### 3. Host 字段
-
-HTTP/1.0 中认为每台服务器都绑定一个唯一的 IP 地址，因此，请求消息中的 URL 并没有传递主机名（Hostname）。 但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个 IP 地址。 HTTP/1.1 的请求消息和响应消息都应支持 Host 头域，且请求消息中如果没有 Host 头域会报告一个错误（400 Bad Request）。此外，服务器应该接受以绝对路径标记的资源请求。
-
-### 4. 状态码 100（Continue）
-
-客户端事先发送一个只带头域的请求，如果服务器因为权限拒绝了请求，就返回响应码 401（Unauthorized）；如果服务器接收此请求就回送响应码 100，客户端就可以继续发送带实体的完整请求了。 优点：允许客户端在发送完整请求前先用请求头试探服务器，确认服务器是否接收，再决定要不要继续发。（节约带宽）
-
-### 5. 分块传输编码
-
-发送方将消息分割成若干个任意大小的数据块，每个数据块在发送时都会附上块的长度，最后用一个零长度的块作为消息结束的标志。这种方法允许发送方只缓冲消息的一个片段，避免缓冲整个消息带来的过载。
-
-### 6. 缓存处理字段
-
-HTTP/1.1 在 1.0 的基础上加入了一些 Cache 的新特性，当缓存对象的 Age 超过 Expire 时变为 stale 对象，Cache 不需要直接抛弃 stale 对象，而是与源服务器进行重新激活（revalidation）。
+具体内容见上文
 
 ## HTTP/1.1 与 HTTP/2.0 的区别
 
