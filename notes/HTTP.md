@@ -633,13 +633,13 @@ XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用�
 
 假如一家银行用以执行转账操作的 URL 地址如下：
 
-```html
+```
 http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
 ```
 
 那么，一个恶意攻击者可以在另一个网站上放置如下代码：
 
-```html
+```
 <img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
 ```
 
