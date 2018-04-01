@@ -535,7 +535,7 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 # 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示编译时系统错误。
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示 JVM 无法处理的错误（比如 java.lang.OutOfMemoryError）。
 
 Exception 分为两种：
 

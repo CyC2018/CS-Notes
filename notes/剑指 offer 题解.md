@@ -797,13 +797,13 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，令该节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="../pics//004edd56-1546-4052-a7f9-a9f7895ccec5.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//41392d76-dd1d-4712-85d9-e8bb46b04a2d.png" width="600"/> </div><br>
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
 <div align="center"> <img src="../pics//db4921d4-184b-48ba-a3cf-1d1141e3ba2d.png" width="600"/> </div><br>
 
-综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个为节点以 O(n) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
+综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个尾节点以 O(N) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -852,17 +852,17 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 解题思路
 
-应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
+应该注意到，'.' 是用来当做一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
 
 ```html
 p.charAt(j) == s.charAt(i)  :  dp[i][j] = dp[i-1][j-1];
 p.charAt(j) == '.'          :  dp[i][j] = dp[i-1][j-1];
 p.charAt(j) == '*'          :
-   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  // in this case, a* only counts as empty
+   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //a* only counts as empty
    p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.':
-            dp[i][j] = dp[i-1][j]   // in this case, a* counts as multiple a
-         or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
-         or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+            dp[i][j] = dp[i-1][j]   // a* counts as multiple a
+         or dp[i][j] = dp[i][j-1]   // a* counts as single a
+         or dp[i][j] = dp[i][j-2]   // a* counts as empty
 ```
 
 ```java
@@ -1217,6 +1217,8 @@ public int min() {
 
 ## 解题思路
 
+使用一个栈来模拟压入弹出操作。
+
 ```java
 public boolean IsPopOrder(int[] pushA, int[] popA) {
     int n = pushA.length;
@@ -1494,7 +1496,7 @@ public class Solution {
 
     public String Serialize(TreeNode root) {
         if (root == null) return "#";
-        return root.val + " " + Serialize(root.left) + " " + Serialize(root.right);
+        return root.val + " " + Serialize(root.left) + " " + Serialize(root.right); 
     }
 
     public TreeNode Deserialize(String str) {
@@ -1557,7 +1559,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 
 ## 解题思路
 
-多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。
+多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。
 
 使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
@@ -1978,7 +1980,7 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-以上的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
+以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
 
 ```java
 public int FirstNotRepeatingChar(String str) {
@@ -2077,7 +2079,10 @@ Output:
 
 ## 解题思路
 
-可以用二分查找找出数字在数组的最左端和最右端。
+可以用二分查找找出数字在数组的最左端和最右端，找最左端和最右端在方法实现上的区别主要在于对 nums[m] == K 的处理：
+
+- 找最左端令 h = m - 1
+- 找最右端令 l = m + 1
 
 ```java
 public int GetNumberOfK(int[] nums, int K) {
@@ -2313,7 +2318,7 @@ private void reverse(char[] c, int i, int j) {
 ## 解题思路
 
 ```java
-public String LeftRotateString(String str,int n) {
+public String LeftRotateString(String str, int n) {
     if(str.length() == 0) return "";
     char[] c = str.toCharArray();
     reverse(c, 0, n - 1);
@@ -2365,7 +2370,7 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 ### 动态规划解法
 
-空间复杂度：O(n<sup>2</sup>)
+空间复杂度：O(N<sup>2</sup>)
 
 ```java
 private static int face = 6;
@@ -2393,7 +2398,7 @@ public double countProbability(int n, int s) {
 
 ### 动态规划解法 + 旋转数组
 
-空间复杂度：O(n)
+空间复杂度：O(N)
 
 ```java
 private static int face = 6;
@@ -2449,11 +2454,11 @@ public boolean isContinuous(int[] nums) {
 
 ## 题目描述
 
-让小朋友们围成一个大圈。然后 , 他随机指定一个数 m, 让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌 , 然后可以在礼品箱中任意的挑选礼物 , 并且不再回到圈中 , 从他的下一个小朋友开始 , 继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友 , 可以不用表演。
+让小朋友们围成一个大圈。然后，他随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
 
 ## 解题思路
 
-约瑟夫环
+约瑟夫环，圆圈长度为 n 的解可以看成长度为 n-1 的解再加上报数的长度 m。因为是圆圈，所以最后需要对 n 取余。
 
 ```java
 public int LastRemaining_Solution(int n, int m) {
@@ -2470,6 +2475,8 @@ public int LastRemaining_Solution(int n, int m) {
 可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
 ## 解题思路
+
+使用贪心策略，假设第 i 轮进行卖出操作，买入操作价格应该是 i 之前并且价格最低。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -2503,7 +2510,11 @@ public int Sum_Solution(int n) {
 
 # 65. 不用加减乘除做加法
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+## 解题思路
+
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
+
+递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
 public int Add(int num1, int num2) {
@@ -2536,6 +2547,8 @@ public int[] multiply(int[] A) {
 
 # 67. 把字符串转换成整数
 
+## 解题思路
+
 ```java
 public int StrToInt(String str) {
     if (str.length() == 0) return 0;
@@ -2544,7 +2557,7 @@ public int StrToInt(String str) {
     int ret = 0;
     for (int i = 0; i < chars.length; i++) {
         if (i == 0 && (chars[i] == '+' || chars[i] == '-')) continue;
-        if (chars[i] < '0' || chars[i] > '9') return 0;
+        if (chars[i] < '0' || chars[i] > '9') return 0; // 非法输入
         ret = ret * 10 + (chars[i] - '0');
     }
     return isNegative ? -ret : ret;
@@ -2559,6 +2572,8 @@ public int StrToInt(String str) {
 
 <div align="center"> <img src="../pics//293d2af9-de1d-403e-bed0-85d029383528.png" width="300"/> </div><br>
 
+二叉查找树中，两个节点 p, q 的公共祖先 root 满足 p.val <= root.val && root.val <= q.val，只要找到满足这个条件的最低层节点即可。换句话说，应该先考虑子树的解而不是根节点的解，二叉树的后序遍历操作满足这个特性。在本题中我们可以利用后序遍历的特性，先在左右子树中查找解，最后再考虑根节点的解。
+
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
@@ -2570,6 +2585,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 ### 普通二叉树
 
 <div align="center"> <img src="../pics//37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
+
+在左右子树中查找两个节点的最低公共祖先，如果在其中一颗子树中查找到，那么就返回这个解，否则可以认为根节点就是最低公共祖先。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
