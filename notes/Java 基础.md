@@ -199,7 +199,7 @@ try {
 java.lang.CloneNotSupportedException: CloneTest
 ```
 
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protect 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 **2. 深拷贝与浅拷贝** 
 
@@ -235,7 +235,7 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 可以对类或类中的成员（字段以及方法）加上访问修饰符。
 
-- 成员可见表示其它类可以用成员所在类的对象访问到该成员；
+- 成员可见表示其它类可该类的对象访问到该成员；
 - 类可见表示其它类可以用这个类创建对象。
 
 在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
@@ -503,13 +503,13 @@ public static void main(java.lang.String[]);
 
 每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
-类加载相当于 Class 对象的加载。类在第一次使用时才动态加载到 JVM 中，可以使用 Class.forName('com.mysql.jdbc.Driver.class') 这种方式来控制类的加载，该方法会返回一个 Class 对象。
+类加载相当于 Class 对象的加载。类在第一次使用时才动态加载到 JVM 中，可以使用 Class.forName("com.mysql.jdbc.Driver") 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
 反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。
 
 Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
 
-1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字；
+1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
 2.  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
 3.  **Constructor** ：可以用 Constructor 创建新的对象。
 
@@ -535,7 +535,7 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 # 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示编译时系统错误。
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示 JVM 无法处理的错误（比如 java.lang.OutOfMemoryError）。
 
 Exception 分为两种：
 

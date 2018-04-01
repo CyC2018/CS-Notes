@@ -1,7 +1,13 @@
 <!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)</br> -->
-| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ | Ⅺ |
-| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:| :-------:|
-|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 资料下载[:arrow_down:](#资料下载-arrow_down)| 后记[:memo:](#后记-memo) |
+| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
+| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
+|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+</br>
+
+:loudspeaker: 本仓库的内容不涉及商业行为，不向读者收取任何费用。
+
+:loudspeaker: This repository is not involving commercial activities, and does not charge readers any fee.
+</br></br>
 
 ## 网络 :cloud:
 
@@ -129,23 +135,40 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 Google 开源项目的代码风格规范。
 
-## 资料下载 :arrow_down:
-
-> [Download](https://github.com/CyC2018/Interview-Notebook/blob/master/other/download.md)
-
 ## 后记 :memo:
 
-> [Postface](https://github.com/CyC2018/Interview-Notebook/blob/master/other/postface.md)
+**关于仓库**
 
-<!-- ## Donate
+本仓库是笔者在准备 2018 年春招实习过程中的学习总结，内容以计算机书籍的学习笔记为主，在整理重点知识的同时会尽量保证知识的系统性。 
 
- [Alipay](https://github.com/CyC2018/InterviewNotes/blob/master/other/alipay.md) 
+**关于贡献**
 
-<img src="./other/alipay.png" alt="" width="150"/> -->
+因为大部分内容是笔者一个字一个字打上去的，所有难免会有一些笔误。如果发现，可以直接在相应的文档上编辑修改。
 
-## License
+笔者能力有限，很多内容还不够完善。如果您希望和笔者一起完善这个仓库，可以在发表一个 Issue，表明您想要添加的内容，笔者会及时查看。
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
+因为不打算将这个仓库做成一个大而全的面试宝典，只希望添加一些比较通用的基础知识，或者是与 Java 和分布式相关的内容，但是不添加 Java Web 相关的内容。
 
-本作品采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。
+您也可以在 Issues 中发表关于改进本仓库的建议。
+
+**关于上传**
+
+笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
+
+进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。这里提供了笔者实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
+
+**关于排版**
+
+笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/#%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%9C%B0%E9%81%93%E7%9A%84%E7%BC%A9%E5%86%99) 进行排版，以保证内容的可读性。这里提供了笔者实现的中英混排文档在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)，目前实现了加空格的功能，之后打算实现对英文专有名词提示首字母大写的功能。
+
+不使用 `![]()` 这种方式来引用图片是为了能够控制图片以合适的大小显示。而且 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` ，所以只能使用 img 标签来引用图片。
+
+**关于转载**
+
+本仓库内容使用到的资料都会在最后面的参考资料中给出引用链接，希望您在使用本仓库的内容时也能给出相应的引用链接。
+
+**鸣谢**
+
+[TeeKee](https://github.com/linw7)
+
 

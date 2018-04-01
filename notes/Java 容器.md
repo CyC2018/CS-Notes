@@ -87,9 +87,21 @@ for (String item : list) {
 java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 
 ```java
- List list = Arrays.asList(1, 2, 3);
- int[] arr = {1, 2, 3};
- list = Arrays.asList(arr);
+@SafeVarargs
+public static <T> List<T> asList(T... a)
+```
+
+如果要将数组类型转换为 List 类型，应该注意的是参数列表为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
+
+```java
+Integer[] arr = {1, 2, 3};
+List list = Arrays.asList(arr);
+```
+
+也可以使用以下方式生成 List。
+
+```java
+List list = Arrays.asList(1,2,3);
 ```
 
 > [适配器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F)
@@ -159,7 +171,7 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那么部分内容。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
@@ -743,7 +755,7 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 
 # 五、参考资料
 
-- Java 编程思想
+- Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)
@@ -752,4 +764,5 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 - [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
 - [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 - [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
+- [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 
