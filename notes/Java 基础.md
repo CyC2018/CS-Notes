@@ -535,7 +535,11 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 # 八、异常
 
+<<<<<<< HEAD
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示 JVM 无法处理的错误（比如 java.lang.OutOfMemoryError）。
+=======
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示JVM无法处理的错误（比如java.lang.OutOfMemoryError）。
+>>>>>>> 5e5fef459deb24db39d1bea9eef372b2512baddc
 
 Exception 分为两种：
 
