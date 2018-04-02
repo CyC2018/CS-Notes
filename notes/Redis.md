@@ -212,7 +212,14 @@ Redis 可以为每个键设置过期时间，当键过期时，会自动删除�
 
 # 四、发布与订阅
 
-发布与订阅实际上是观察者模式，订阅者订阅了频道之后，发布者向频道发送字符串消息会被所有订阅者接收到。
+订阅者订阅了频道之后，发布者向频道发送字符串消息会被所有订阅者接收到。
+
+发布与订阅模式和观察者模式有以下不同：
+
+- 观察者模式中，观察者和主题都知道对方的存在；而在发布与订阅模式中，发布者与订阅者不知道对方的存在，它们之间通过频道进行通信。
+- 观察者模式是同步的，当事件触发时，主题会去调度观察者的方法；而发布与订阅模式是异步的；
+
+<div align="center"> <img src="../pics//bee1ff1d-c80f-4b3c-b58c-7073a8896ab2.jpg" width="400"/> </div><br>
 
 发布与订阅有一些问题，很少使用它，而是使用替代的解决方案。问题如下：
 
@@ -241,7 +248,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 ## 2. AOF 持久化
 
-AOF 持久化将写命令添加到 AOF 文件（Append Only File）的末尾。
+将写命令添加到 AOF 文件（Append Only File）的末尾。
 
 对硬盘的文件进行写入时，写入的内容首先会被存储到缓冲区，然后由操作系统决定什么时候将该内容同步到硬盘，用户可以调用 file.flush() 方法请求操作系统尽快将缓冲区存储的数据同步到硬盘。
 
@@ -365,7 +372,7 @@ def main():
 
 从事件处理的角度来看，服务器运行流程如下：
 
-<div align="center"> <img src="../pics//dda1608d-26e0-4f10-8327-a459969b150a.png"/> </div><br>
+<div align="center"> <img src="../pics//dda1608d-26e0-4f10-8327-a459969b150a.png" width=""/> </div><br>
 
 # 十一、Redis 与 Memcached 的区别
 
@@ -424,6 +431,8 @@ Redis 这种内存数据库能支持计数器频繁的读写操作。
 
 如果使用 Redis 来缓存数据时，要保证所有数据都是热点数据，可以将内存最大使用量设置为热点数据占用的内存量，然后启用 allkeys-lru 淘汰策略，将最近最少使用的数据淘汰。
 
+作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法（LRU、TTL）实际实现上并非针对所有 key，而是抽样一小部分 key 从中选出被淘汰 key。抽样数量可通过 maxmemory-samples 配置。
+
 # 十四、一个简单的论坛系统分析
 
 该论坛系统功能如下：
@@ -462,3 +471,4 @@ Redis 没有关系型数据库中的表这一概念来将同类型的数据存�
 - [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
 - [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
+- [Observer vs Pub-Sub](http://developers-club.com/posts/270339/)
