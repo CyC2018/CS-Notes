@@ -737,12 +737,7 @@ ConcurrentHashMap 的高并发性主要来自于三个方面：
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/ConcurrentHashMap.java)
 
-<div align="center"> <img src="../pics//7779232-1e8ed39548081a1f.png"/> </div><br>
-
-
 JDK 1.7 分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock。
-
-<div align="center"> <img src="../pics//7779232-96822582feb08651.png"/> </div><br>
 
 JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。而是使用了内置锁 synchronized，主要是出于以下考虑：
 
