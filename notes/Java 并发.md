@@ -771,14 +771,19 @@ public static String concatString(String s1, String s2, String s3) {
 
 # 九、多线程开发良好的实践
 
-1. 给线程起个有意义的名字，这样可以方便找 Bug；
+1. 给线程起个有意义的名字，这样可以方便找 Bug。
 
-2. 因为锁花费的代价很高，应该尽可能减小同步范围；
+2. 因为锁花费的代价很高，应该尽可能减小同步范围。
 
 3. 多用同步类少用 wait 和 notify。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait 和 notify 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
 
 4. 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashttable。
 
+5. 多采用无锁编程减少上下文切换，如将数据的 ID 按照 hash 算法取模分段，每个线程处理特定分段的数据。
+
+6. 多利用 CAS 算法来更新数据。如 Java 中的 Atomic 包。
+
+7. 优先考虑 volatile，而不是 synchronize。这样开销更小。
 # 参考资料
 
 - BruceEckel. Java 编程思想: 第 4 版 [M]. 机械工业出版社, 2007.
