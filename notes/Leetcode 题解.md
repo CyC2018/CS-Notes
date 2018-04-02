@@ -15,7 +15,7 @@
     * [动态规划](#动态规划)
         * [斐波那契数列](#斐波那契数列)
         * [最长递增子序列](#最长递增子序列)
-        * [最长公共子系列](#最长公共子系列)
+        * [最长公共子序列](#最长公共子序列)
         * [0-1 背包](#0-1-背包)
         * [数组区间](#数组区间)
         * [字符串编辑](#字符串编辑)
@@ -1960,7 +1960,7 @@ public int wiggleMaxLength(int[] nums) {
 }
 ```
 
-### 最长公共子系列
+### 最长公共子序列
 
 对于两个子序列 S1 和 S2，找出它们最长的公共子序列。
 
@@ -1970,7 +1970,7 @@ public int wiggleMaxLength(int[] nums) {
 
 ② 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
 
-综上，最长公共子系列的状态转移方程为：
+综上，最长公共子序列的状态转移方程为：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
 
