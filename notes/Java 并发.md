@@ -781,7 +781,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 5. 多采用无锁编程减少上下文切换，如将数据的 ID 按照 hash 算法取模分段，每个线程处理特定分段的数据。
 
-6. 多利用 CAS 算法来更新数据。如 Java 中的 Atomic 包。
+6. 多利用 CAS 算法来并发更新数据。如 Java 中的 Atomic 包。
 
 7. 优先考虑 volatile，而不是 synchronize。这样开销更小。
 # 参考资料
