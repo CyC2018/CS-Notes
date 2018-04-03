@@ -6,7 +6,7 @@
 
 :loudspeaker: 本仓库不参与商业行为，不向读者收取任何费用。
 
-:loudspeaker: This repository is not engaging in business activities., and does not charge readers any fee.
+:loudspeaker: This repository is not engaging in business activities, and does not charge readers any fee.
 </br></br>
 
 ## 网络 :cloud:
