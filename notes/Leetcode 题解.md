@@ -1841,9 +1841,8 @@ private int rob(int[] nums, int first, int last) {
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
-1. i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
-
-2. i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
+- i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
+- i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
 
@@ -2006,8 +2005,8 @@ public int wiggleMaxLength(int[] nums) {
 
 定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp[i][j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1<sub>i</sub> 与 S2<sub>j</sub> 值是否相等，分为两种情况：
 
-1. 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1 ，即 dp[i][j] = dp[i-1][j-1] + 1。
-2. 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
+- 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1 ，即 dp[i][j] = dp[i-1][j-1] + 1。
+- 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
 
 综上，最长公共子序列的状态转移方程为：
 
@@ -2041,8 +2040,8 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示体积不超过 j 的情况下，前 i 件物品能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
 
-1. 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
-2. 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
+- 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
+- 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。
 
@@ -2155,7 +2154,7 @@ Return true because "leetcode" can be segmented as "leet code".
 
 这是一个完全背包问题，和 0-1 背包不同的是，完全背包中物品可以使用多次。在这一题当中，词典中的单词可以被使用多次。
 
-0-1 背包和完全背包在实现上的不同之处是，0-1 背包对物品的迭代是在最外层，而完全背包对物品的迭代是最最里层。
+0-1 背包和完全背包在实现上的不同之处是，0-1 背包对物品的迭代是在最外层，而完全背包对物品的迭代是在最里层。
 
 ```java
 public boolean wordBreak(String s, List<String> wordDict) {
@@ -2246,7 +2245,7 @@ private int findTargetSumWays(int[] nums, int start, int S) {
 Input: Array = {"10", "0001", "111001", "1", "0"}, m = 5, n = 3
 Output: 4
 
-Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3 1s, which are “10,”0001”,”1”,”0”
+Explanation: There are totally 4 strings can be formed by the using of 5 0s and 3 1s, which are "10","0001","1","0"
 ```
 
 这是一个多维费用的 0-1 背包问题，有两个背包大小，0 的数量和 1 的数量。
@@ -2255,16 +2254,15 @@ Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3
 public int findMaxForm(String[] strs, int m, int n) {
     if (strs == null || strs.length == 0) return 0;
     int[][] dp = new int[m + 1][n + 1];
-    for (int i = 0; i < strs.length; i++) {
-        String s = strs[i];
+    for (String s : strs) { // 每个字符串只能用一次
         int ones = 0, zeros = 0;
         for (char c : s.toCharArray()) {
             if (c == '0') zeros++;
-            else if (c == '1') ones++;
+            else ones++;
         }
-        for (int j = m; j >= zeros; j--) {
-            for (int k = n; k >= ones; k--) {
-                dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
+        for (int i = m; i >= zeros; i--) {
+            for (int j = n; j >= ones; j--) {
+                dp[i][j] = Math.max(dp[i][j], dp[i - zeros][j - ones] + 1);
             }
         }
     }
@@ -2288,18 +2286,19 @@ return -1.
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上唯一的不同是，第二层循环是从 0 开始的，而不是从尾部开始。
+这是一个完全背包问题。
 
 ```java
 public int coinChange(int[] coins, int amount) {
     if (coins == null || coins.length == 0) return 0;
-    Arrays.sort(coins);
     int[] dp = new int[amount + 1];
     Arrays.fill(dp, amount + 1);
     dp[0] = 0;
     for (int i = 1; i <= amount; i++) {
-        for (int j = 0; j < coins.length && coins[j] <= i; j++) {
-            dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+        for (int c : coins) {
+            if (c <= i) {
+                dp[i] = Math.min(dp[i], dp[i - c] + 1);
+            }
         }
     }
     return dp[amount] > amount ? -1 : dp[amount];
