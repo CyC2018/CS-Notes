@@ -4,9 +4,9 @@
 |网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
 </br>
 
-:loudspeaker: 本仓库的内容不涉及商业行为，不向读者收取任何费用。
+:loudspeaker: 本仓库不参与商业行为，不向读者收取任何费用。
 
-:loudspeaker: This repository is not involving commercial activities, and does not charge readers any fee.
+:loudspeaker: This repository is not engaging in business activities, and does not charge readers any fee.
 </br></br>
 
 ## 网络 :cloud:
@@ -109,7 +109,8 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 > [分布式问题分析](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
 
-分布式事务、复杂均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。
+分布式事务、负载均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。
+
 
 ## 工具 :hammer:
 

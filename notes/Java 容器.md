@@ -31,7 +31,7 @@
 
 - HashSet：基于哈希实现，支持快速查找，但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
 
-- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logn)；
+- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)；
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序。
 
@@ -47,7 +47,7 @@
 
 - LinkedList：可以用它来支持双向队列；
 
-- PriorityQueue 是基于堆结构实现，可以用它来实现优先级队列。
+- PriorityQueue：基于堆结构实现，可以用它来实现优先级队列。
 
 ## Map
 
@@ -80,8 +80,6 @@ for (String item : list) {
 }
 ```
 
-> [迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E4%BA%8C%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
-
 ## 适配器模式
 
 java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
@@ -91,7 +89,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 public static <T> List<T> asList(T... a)
 ```
 
-如果要将数组类型转换为 List 类型，应该注意的是参数列表为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
+如果要将数组类型转换为 List 类型，应该注意的是 asList() 的参数为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
 
 ```java
 Integer[] arr = {1, 2, 3};
@@ -103,8 +101,6 @@ List list = Arrays.asList(arr);
 ```java
 List list = Arrays.asList(1,2,3);
 ```
-
-> [适配器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
 # 三、散列
 
@@ -171,7 +167,7 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
@@ -291,7 +287,7 @@ transient Entry[] table;
 
 其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
 
-<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics//8fe838e3-ef77-4f63-bf45-417b6bc5c6bb.png" width="600"/> </div><br>
 
 JDK 1.8 使用 Node 类型存储一个键值对，它依然继承自 Entry，因此可以按照上面的存储结构来理解。
 
@@ -342,24 +338,27 @@ static class Node<K,V> implements Map.Entry<K,V> {
 ### 2. 拉链法的工作原理
 
 ```java
-HashMap<String, Integer> map = new HashMap<>(); // 默认大小为 16
-map.put("sachin", 30);
-map.put("vishal", 20);
-map.put("vaibhav", 20);
+HashMap<String, String> map = new HashMap<>();
+map.put("K1", "V1");
+map.put("K2", "V2");
+map.put("K3", "V3");
 ```
 
-- 计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。
-- 同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上。("vishal", 20) 先放入， ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
+- 新建一个 HashMap，默认大小为 16；
+- 插入 &lt;K1,V1> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
+- 插入 &lt;K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
+- 插入 &lt;K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，它需要插在 &lt;K2,V2> 之前。
 
-<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg" width="600"/> </div><br>
+<div align="center"> <img src="../pics//c812c28a-1513-4a82-bfda-ab6a40981aa0.png" width="600"/> </div><br>
 
-当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此第一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+查找需要分成两步进行：
+
+- 计算键值对所在的桶；
+- 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
 ### 3. 链表转红黑树
 
 应该注意到，从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
-
-<div align="center"> <img src="../pics//061c29ce-e2ed-425a-911e-56fbba1efce3.jpg" width="500"/> </div><br>
 
 ### 4. 扩容
 
@@ -367,7 +366,7 @@ map.put("vaibhav", 20);
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
 
-为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，可就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
+为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
 
 和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
 
@@ -445,11 +444,11 @@ void transfer(Entry[] newTable) {
 
 ### 5. 确定桶下标
 
-需要三步操作：计算 Key 的 hashCode、高位运算、除留余数法取模。
+很多操作都需要先确定一个键值对所在的桶下标，需要分三步进行。
 
-<div align="center"> <img src="../pics//hashMap_u54C8_u5E0C_u7B97_u6CD5_u4F8B_u56FE.png" width="800"/> </div><br>
+（一）hashCode()
 
-**（一）hashcode()** 
+调用 Key 的 hashCode() 方法得到 hashCode。
 
 ```java
 public final int hashCode() {
@@ -457,9 +456,9 @@ public final int hashCode() {
 }
 ```
 
-**（二）高位运算** 
+（二）高位运算
 
-通过 hashCode() 的高 16 位异或低 16 位，使得数组比较小时，也能保证高低位都参与到了哈希计算中。
+将 hashCode 的高 16 位和低 16 位进行异或操作，使得在数组比较小时，也能保证高低位都参与到了哈希计算中。
 
 ```java
 static final int hash(Object key) {
@@ -468,7 +467,7 @@ static final int hash(Object key) {
 }
 ```
 
-**（三）除留余数** 
+（三）除留余数法
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
@@ -520,11 +519,11 @@ new capacity : 00100000
 
 ### 7. 扩容-计算数组容量
 
-先考虑如何求一个数的补码，对于 10100000，它的补码为 11111111，可以使用以下方法得到：
+先考虑如何求一个数的补码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
 ```
-mask |= mask >> 1    11000000
-mask |= mask >> 2    11110000
+mask |= mask >> 1    11011000
+mask |= mask >> 2    11111100
 mask |= mask >> 4    11111111
 ```
 
@@ -738,12 +737,7 @@ ConcurrentHashMap 的高并发性主要来自于三个方面：
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/ConcurrentHashMap.java)
 
-<div align="center"> <img src="../pics//7779232-1e8ed39548081a1f.png"/> </div><br>
-
-
 JDK 1.7 分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock。
-
-<div align="center"> <img src="../pics//7779232-96822582feb08651.png"/> </div><br>
 
 JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。而是使用了内置锁 synchronized，主要是出于以下考虑：
 

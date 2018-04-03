@@ -203,8 +203,6 @@ java.lang.CloneNotSupportedException: CloneTest
 
 **2. 深拷贝与浅拷贝** 
 
-<div align="center"> <img src="../pics//CLone_20_281_29.png" width="800"/> </div><br>
-
 - 浅拷贝：拷贝对象和原对象的引用类型引用同一个对象；
 - 深拷贝：引用不同对象。
 
@@ -535,14 +533,12 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 # 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**，其中 Error 用来表示 JVM 无法处理的错误（比如 java.lang.OutOfMemoryError）。
-
-Exception 分为两种：
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
 1.  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
 2.  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
-<div align="center"> <img src="../pics//48f8f98e-8dfd-450d-8b5b-df4688f0d377.jpg"/> </div><br>
+<div align="center"> <img src="../pics//PPjwP.png"/> </div><br>
 
 > - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
 > - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
@@ -558,8 +554,7 @@ public class Box<T> {
 }
 ```
 
-> - [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)
-> - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
+> [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)</br>[10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 十、注解
 
@@ -598,8 +593,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 7. Binary Literals, Underscore in literals
 8. Diamond Syntax
 
-> - [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
-> - [Java 8 特性 ](http://www.importnew.com/19345.html)
+> [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)</br> [Java 8 特性 ](http://www.importnew.com/19345.html)
 
 ## Java 与 C++ 的区别
 
