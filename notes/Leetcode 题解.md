@@ -2052,19 +2052,18 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
-    int[][] dp = new int[N][W];
-    for (int i = W - 1; i >= 0; i--) {
-        dp[0][i] = i > weights[0] ? values[0] : 0;
-    }
-    for (int i = 1; i < N; i++) {
-        for (int j = W - 1; j >= weights[i]; j--) {
-            dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weights[i]] + values[i]);
+    int[][] dp = new int[N + 1][W + 1];
+    for (int i = 1; i <= N; i++) {
+        int w = weights[i - 1], v = values[i - 1];
+        for (int j = 1; j <= W; j++) {
+            if (j >= w) {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
         }
-        for (int j = weights[i] - 1; j >= 0; j--) {
-            dp[i][j] = dp[i - 1][j];
-        }
     }
-    return dp[N - 1][W - 1];
+    return dp[N][W];
 }
 ```
 
@@ -2074,7 +2073,22 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>
 
-因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w] 防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+
+```java
+public int knapsack(int W, int N, int[] weights, int[] values) {
+    int[] dp = new int[W + 1];
+    for (int i = 1; i <= N; i++) {
+        int w = weights[i - 1], v = values[i - 1];
+        for (int j = W; j >= 1; j--) {
+            if (j >= w) {
+                dp[j] = Math.max(dp[j], dp[j - w] + v);
+            }
+        }
+    }
+    return dp[W];
+}
+```
 
 **无法使用贪心算法的解释** 
 
@@ -2088,13 +2102,13 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 **变种** 
 
-完全背包：物品可以无限个，可以转换为 0-1 背包，令每种物品的体积和价值变为 1/2/4... 倍数，把它们都当成一个新物品，然后一种物品只能添加一次。
+- 完全背包：物品数量为无限个
 
-多重背包：物品数量有限制，同样可以转换为 0-1 背包。
+- 多重背包：物品数量有限制
 
-多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制。
+- 多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制
 
-其它：物品之间相互约束或者依赖。
+- 其它：物品之间相互约束或者依赖
 
 **划分数组为和相等的两部分** 
 
