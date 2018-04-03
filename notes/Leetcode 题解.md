@@ -760,7 +760,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 - 6 -> {4}
 - 2 -> {}
 - 1 -> {}
-- 5 -> {4,3}
+- 5 -> {3}
 
 第三层：
 
