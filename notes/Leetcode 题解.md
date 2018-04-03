@@ -1841,9 +1841,9 @@ private int rob(int[] nums, int first, int last) {
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
-① i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
+1. i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
 
-② i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
+2. i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
 
@@ -1898,7 +1898,10 @@ len = 2  :      [4, 5], [5, 6]      => tails[1] = 5
 len = 3  :      [4, 5, 6]           => tails[2] = 6
 ```
 
-对于一个元素 x，如果它大于 tails 数组所有的值，那么把它添加到 tails 后面；如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x 。
+对于一个元素 x，
+
+- 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
+- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x。
 
 可以看出 tails 数组保持有序，因此在查找 S<sub>i</sub> 位于 tails 数组的位置时就可以使用二分查找。
 
@@ -1923,6 +1926,43 @@ private int binarySearch(int[] nums, int first, int last, int key) {
         else first = mid + 1;
     }
     return first;
+}
+```
+
+**一组整数对能够构成的最长链** 
+
+[Leetcode : 646. Maximum Length of Pair Chain (Medium)](https://leetcode.com/problems/maximum-length-of-pair-chain/description/)
+
+```html
+Input: [[1,2], [2,3], [3,4]]
+Output: 2
+Explanation: The longest chain is [1,2] -> [3,4]
+```
+
+对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
+
+```java
+public int findLongestChain(int[][] pairs) {
+    if(pairs == null || pairs.length == 0) {
+        return 0;
+    }
+    Arrays.sort(pairs, (a, b) -> (a[0] - b[0]));
+    int n = pairs.length;
+    int[] dp = new int[n];
+    Arrays.fill(dp, 1);
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < i; j++) {
+            if(pairs[i][0] > pairs[j][1]){
+                dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+        }
+    }
+
+    int ret = 0;
+    for(int num : dp) {
+        ret = Math.max(ret, num);
+    }
+    return ret;
 }
 ```
 
@@ -1966,9 +2006,8 @@ public int wiggleMaxLength(int[] nums) {
 
 定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp[i][j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1<sub>i</sub> 与 S2<sub>j</sub> 值是否相等，分为两种情况：
 
-① 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1 ，即 dp[i][j] = dp[i-1][j-1] + 1。
-
-② 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
+1. 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1 ，即 dp[i][j] = dp[i-1][j-1] + 1。
+2. 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
 
 综上，最长公共子序列的状态转移方程为：
 
@@ -1978,9 +2017,9 @@ public int wiggleMaxLength(int[] nums) {
 
 与最长递增子序列相比，最长公共子序列有以下不同点：
 
-① 针对的是两个序列，求它们的最长公共子序列。
-② 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub> 。
-③ 由于 2 ，在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
+- 针对的是两个序列，求它们的最长公共子序列。
+- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub> 。
+- 由于 2 ，在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
 ```java
 public int lengthOfLCS(int[] nums1, int[] nums2) {
@@ -2002,8 +2041,8 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示体积不超过 j 的情况下，前 i 件物品能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
 
-① 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
-② 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
+1. 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
+2. 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。
 
@@ -2069,33 +2108,25 @@ Output: true
 Explanation: The array can be partitioned as [1, 5, 5] and [11].
 ```
 
-可以看成一个背包大小为 sum/2 的 0-1 背包问题，但是也有不同的地方，这里没有价值属性，并且背包必须被填满。
-
-以下实现使用了空间优化。
+可以看成一个背包大小为 sum/2 的 0-1 背包问题。
 
 ```java
-public boolean canPartition(int[] nums) {
-    int sum = 0;
-    for (int num : nums) {
-        sum += num;
-    }
-    if (sum % 2 != 0) {
-        return false;
-    }
-    int W = sum / 2;
-    boolean[] dp = new boolean[W + 1];
-    for (int i = 0; i <= W; i++) {
-        if (nums[0] == i) {
-            dp[i] = true;
-        }
-    }
-    for (int i = 1; i < nums.length; i++) {
-        for (int j = W; j >= nums[i]; j--) {
-            dp[j] = dp[j] || dp[j - nums[i]];
-        }
-    }
-    return dp[W];
-}
+ public boolean canPartition(int[] nums) {
+     int sum = 0;
+     for (int num : nums) sum += num;
+     if (sum % 2 != 0) return false;
+     int W = sum / 2;
+     boolean[] dp = new boolean[W + 1];
+     dp[0] = true;
+     for (int num : nums) {               // 0-1 背包一个物品只能用一次
+         for (int i = W; i >= 0; i--) {   // 从后往前，先计算 dp[i] 再计算 dp[i-num]
+             if (num <= i) {
+                 dp[i] = dp[i] || dp[i - num];
+             }
+         }
+     }
+     return dp[W];
+ }
 ```
 
 **字符串按单词列表分割** 
@@ -2108,15 +2139,20 @@ dict = ["leet", "code"].
 Return true because "leetcode" can be segmented as "leet code".
 ```
 
+这是一个完全背包问题，和 0-1 背包不同的是，完全背包中物品可以使用多次。在这一题当中，词典中的单词可以被使用多次。
+
+0-1 背包和完全背包在实现上的不同之处是，0-1 背包对物品的迭代是在最外层，而完全背包对物品的迭代是最最里层。
+
 ```java
 public boolean wordBreak(String s, List<String> wordDict) {
     int n = s.length();
     boolean[] dp = new boolean[n + 1];
     dp[0] = true;
     for (int i = 1; i <= n; i++) {
-        for (String word : wordDict) {
-            if (word.length() <= i && word.equals(s.substring(i - word.length(), i))) {
-                dp[i] = dp[i] || dp[i - word.length()];
+        for (String word : wordDict) { // 每个单词可以使用多次
+            int len = word.length();
+            if (len <= i && word.equals(s.substring(i - len, i))) {
+                dp[i] = dp[i] || dp[i - len];
             }
         }
     }
@@ -2142,7 +2178,9 @@ Explanation:
 There are 5 ways to assign symbols to make the sum of nums be target 3.
 ```
 
-该问题可以转换为 subset sum 问题，从而使用 0-1 背包的方法来求解。可以将这组数看成两部分，P 和 N，其中 P 使用正号，N 使用负号，有以下推导：
+该问题可以转换为 Subset Sum 问题，从而使用 0-1 背包的方法来求解。
+
+可以将这组数看成两部分，P 和 N，其中 P 使用正号，N 使用负号，有以下推导：
 
 ```html
                   sum(P) - sum(N) = target
@@ -2155,26 +2193,34 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
 ```java
 public int findTargetSumWays(int[] nums, int S) {
     int sum = 0;
-    for (int num : nums) {
-        sum += num;
-    }
-    if (sum < S || (sum + S) % 2 == 1) {
-        return 0;
-    }
-    return subsetSum(nums, (sum + S) >>> 1);
-}
-
-private int subsetSum(int[] nums, int targetSum) {
-    Arrays.sort(nums);
-    int[] dp = new int[targetSum + 1];
+    for (int num : nums) sum += num;
+    if (sum < S || (sum + S) % 2 == 1) return 0;
+    int W = (sum + S) / 2;
+    int[] dp = new int[W + 1];
     dp[0] = 1;
-    for (int i = 0; i < nums.length; i++) {
-        int num = nums[i];
-        for (int j = targetSum; j >= num; j--) {
-            dp[j] = dp[j] + dp[j - num];
+    for (int num : nums) {
+        for (int i = W; i >= 0; i--) {
+            if (num <= i) {
+                dp[i] = dp[i] + dp[i - num];
+            }
         }
     }
-    return dp[targetSum];
+    return dp[W];
+}
+```
+
+DFS 解法：
+
+```java
+public int findTargetSumWays(int[] nums, int S) {
+    return findTargetSumWays(nums, 0, S);
+}
+
+private int findTargetSumWays(int[] nums, int start, int S) {
+    if (start == nums.length) {
+        return S == 0 ? 1 : 0;
+    }
+    return findTargetSumWays(nums, start + 1, S + nums[start]) + findTargetSumWays(nums, start + 1, S - nums[start]);
 }
 ```
 
@@ -2446,9 +2492,35 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-**修改一个字符串称为另一个字符串**  // TODO
+**修改一个字符串称为另一个字符串** 
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
+
+```java
+public int minDistance(String word1, String word2) {
+    if (word1 == null || word2 == null) {
+        return 0;
+    }
+    int m = word1.length(), n = word2.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 1; i <= m; i++) {
+        dp[i][0] = i;
+    }
+    for (int i = 1; i <= n; i++) {
+        dp[0][i] = i;
+    }
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i][j - 1], dp[i - 1][j])) + 1;
+            }
+        }
+    }
+    return dp[m][n];
+}
+```
 
 ### 分割整数
 
@@ -2552,6 +2624,20 @@ public int uniquePaths(int m, int n) {
 }
 ```
 
+也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 从取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
+
+```java
+public int uniquePaths(int m, int n) {
+    int S = m + n - 2; // 总共的移动次数
+    int D = m - 1;     // 向下的移动次数
+    long ret = 1;
+    for (int i = 1; i <= D; i++) {
+        ret = ret * (S - D + i) / i;
+    }
+    return (int) ret;
+}
+```
+
 **矩阵的最小路径和** 
 
 [Leetcode : 64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
@@ -2616,43 +2702,6 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-**一组整数对能够构成的最长链** 
-
-[Leetcode : 646. Maximum Length of Pair Chain (Medium)](https://leetcode.com/problems/maximum-length-of-pair-chain/description/)
-
-```html
-Input: [[1,2], [2,3], [3,4]]
-Output: 2
-Explanation: The longest chain is [1,2] -> [3,4]
-```
-
-对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
-
-```java
-public int findLongestChain(int[][] pairs) {
-    if(pairs == null || pairs.length == 0) {
-        return 0;
-    }
-    Arrays.sort(pairs, (a, b) -> (a[0] - b[0]));
-    int n = pairs.length;
-    int[] dp = new int[n];
-    Arrays.fill(dp, 1);
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < i; j++) {
-            if(pairs[i][0] > pairs[j][1]){
-                dp[i] = Math.max(dp[i], dp[j] + 1);
-            }
-        }
-    }
-
-    int ret = 0;
-    for(int num : dp) {
-        ret = Math.max(ret, num);
-    }
-    return ret;
-}
-```
-
 **买入和售出股票最大的收益** 
 
 [Leetcode : 121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
@@ -2678,6 +2727,18 @@ public int maxProfit(int[] prices) {
 **复制粘贴字符** 
 
 [Leetcode : 650. 2 Keys Keyboard (Medium)](https://leetcode.com/problems/2-keys-keyboard/description/)
+
+题目描述：最开始只有一个字符 A，问需要多少次操作能够得到 n 个字符 A，每次操作可以复制当前所有的字符，或者粘贴。
+
+```
+Input: 3
+Output: 3
+Explanation:
+Intitally, we have one character 'A'.
+In step 1, we use Copy All operation.
+In step 2, we use Paste operation to get 'AA'.
+In step 3, we use Paste operation to get 'AAA'.
+```
 
 ```java
 public int minSteps(int n) {
