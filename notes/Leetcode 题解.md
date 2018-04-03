@@ -2327,37 +2327,21 @@ Note that different sequences are counted as different combinations.
 Therefore the output is 7.
 ```
 
+完全背包。
+
 ```java
 public int combinationSum4(int[] nums, int target) {
     if (nums == null || nums.length == 0) return 0;
     int[] dp = new int[target + 1];
     dp[0] = 1;
     for (int i = 1; i <= target; i++) {
-        for (int j = 0; j < nums.length; j++) {
-            if (nums[j] <= i) {
-                dp[i] += dp[i - nums[j]];
+        for (int num : nums) {
+            if (num <= i) {
+                dp[i] += dp[i - num];
             }
         }
     }
     return dp[target];
-}
-```
-
-**只能进行两次的股票交易** 
-
-[Leetcode : 123. Best Time to Buy and Sell Stock III (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
-
-```java
-public int maxProfit(int[] prices) {
-    int firstBuy = Integer.MIN_VALUE, firstSell = 0;
-    int secondBuy = Integer.MIN_VALUE, secondSell = 0;
-    for (int curPrice : prices) {
-        if (firstBuy < -curPrice) firstBuy = -curPrice;
-        if (firstSell < firstBuy + curPrice) firstSell = firstBuy + curPrice;
-        if (secondBuy < firstSell - curPrice) secondBuy = firstSell - curPrice;
-        if (secondSell < secondBuy + curPrice) secondSell = secondBuy + curPrice;
-    }
-    return secondSell;
 }
 ```
 
@@ -2366,7 +2350,8 @@ public int maxProfit(int[] prices) {
 [Leetcode : 188. Best Time to Buy and Sell Stock IV (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
 
 ```html
-dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] } = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
+dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
+         = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
 ```
 
 ```java
@@ -2389,6 +2374,24 @@ public int maxProfit(int k, int[] prices) {
         }
     }
     return dp[k][n - 1];
+}
+```
+
+**只能进行两次的股票交易** 
+
+[Leetcode : 123. Best Time to Buy and Sell Stock III (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
+
+```java
+public int maxProfit(int[] prices) {
+    int firstBuy = Integer.MIN_VALUE, firstSell = 0;
+    int secondBuy = Integer.MIN_VALUE, secondSell = 0;
+    for (int curPrice : prices) {
+        if (firstBuy < -curPrice) firstBuy = -curPrice;
+        if (firstSell < firstBuy + curPrice) firstSell = firstBuy + curPrice;
+        if (secondBuy < firstSell - curPrice) secondBuy = firstSell - curPrice;
+        if (secondSell < secondBuy + curPrice) secondSell = secondBuy + curPrice;
+    }
+    return secondSell;
 }
 ```
 
@@ -2824,8 +2827,7 @@ public int countPrimes(int n) {
 
 ```java
 int gcd(int a, int b) {
-    if (b == 0) return a;
-    return gcd(b, a % b);
+    return b == 0 ? a : gcd(b, a% b);
 }
 ```
 
@@ -2841,16 +2843,14 @@ int lcm(int a, int b){
 
 对于 a 和 b 的最大公约数 f(a, b)，有：
 
-1\. 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2);
-2\. 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
-3\. 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
-4\. 如果 a 和 b 均为奇数，f(a, b) = f(a, a-b);
+- 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2);
+- 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
+- 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
+- 如果 a 和 b 均为奇数，f(a, b) = f(a, a-b);
 
 乘 2 和除 2 都可以转换为移位操作。
 
 ### 进制转换
-
-Java 中 static String toString(int num, int radix) 可以将一个整数装换为 redix 进制表示的字符串。
 
 **7 进制** 
 
@@ -2858,13 +2858,32 @@ Java 中 static String toString(int num, int radix) 可以将一个整数装换�
 
 ```java
 public String convertToBase7(int num) {
-    if (num < 0) {
-        return '-' + convertToBase7(-num);
-    }
-    if (num < 7) {
-        return num + "";
-    }
+    if (num < 0) return '-' + convertToBase7(-num);
+    if (num < 7) return num + "";
     return convertToBase7(num / 7) + num % 7;
+}
+```
+
+```java
+public String convertToBase7(int num) {
+    if (num == 0) return "0";
+    StringBuilder sb = new StringBuilder();
+    boolean isNegative = num < 0;
+    if (isNegative) num = -num;
+    while (num > 0) {
+        sb.append(num % 7);
+        num /= 7;
+    }
+    String ret = sb.reverse().toString();
+    return isNegative ? "-" + ret : ret;
+}
+```
+
+Java 中 static String toString(int num, int radix) 可以将一个整数转换为 redix 进制表示的字符串。
+
+```java
+public String convertToBase7(int num) {
+    return Integer.toString(num, 7);
 }
 ```
 
@@ -2872,16 +2891,32 @@ public String convertToBase7(int num) {
 
 [Leetcode : 405. Convert a Number to Hexadecimal (Easy)](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/)
 
+负数要用它的补码形式。
+
+```html
+Input:
+26
+
+Output:
+"1a"
+
+Input:
+-1
+
+Output:
+"ffffffff"
+```
+
 ```java
 public String toHex(int num) {
     char[] map = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
     if(num == 0) return "0";
-    String ret = "";
+    StringBuilder sb = new StringBuilder();
     while(num != 0){
-        ret = map[(num & 0b1111)] + ret;
-        num >>>= 4;
+        sb.append(map[num & 0b1111]);
+        num >>>= 4; // 无符号右移，左边填 0
     }
-    return ret;
+    return sb.reverse().toString();
 }
 ```
 
@@ -2918,15 +2953,14 @@ Return "100".
 ```java
 public String addBinary(String a, String b) {
     int i = a.length() - 1, j = b.length() - 1, carry = 0;
-    String str = "";
-    while(i >= 0 || j >= 0){
-        if(i >= 0 && a.charAt(i--) == '1') carry++;
-        if(j >= 0 && b.charAt(j--) == '1') carry++;
-        str = (carry % 2) + str;
+    StringBuilder str = new StringBuilder();
+    while (carry == 1 || i >= 0 || j >= 0) {
+        if (i >= 0 && a.charAt(i--) == '1') carry++;
+        if (j >= 0 && b.charAt(j--) == '1') carry++;
+        str.append(carry % 2);
         carry /= 2;
     }
-    if(carry == 1) str = "1" + str;
-    return str;
+    return str.reverse().toString();
 }
 ```
 
@@ -2938,15 +2972,15 @@ public String addBinary(String a, String b) {
 
 ```java
 public String addStrings(String num1, String num2) {
-    StringBuilder sb = new StringBuilder();
-    int carry = 0;
-    for(int i = num1.length() - 1, j = num2.length() - 1; i >= 0 || j >= 0 || carry == 1; i--, j--){
-        int x = i < 0 ? 0 : num1.charAt(i) - '0';
-        int y = j < 0 ? 0 : num2.charAt(j) - '0';
-        sb.append((x + y + carry) % 10);
+    StringBuilder str = new StringBuilder();
+    int carry = 0, i = num1.length() - 1, j = num2.length() - 1;
+    while (carry == 1 || i >= 0 || j >= 0) {
+        int x = i < 0 ? 0 : num1.charAt(i--) - '0';
+        int y = j < 0 ? 0 : num2.charAt(j--) - '0';
+        str.append((x + y + carry) % 10);
         carry = (x + y + carry) / 10;
     }
-    return sb.reverse().toString();
+    return str.reverse().toString();
 }
 ```
 
