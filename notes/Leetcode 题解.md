@@ -3013,7 +3013,7 @@ Only two moves are needed (remember each move increments or decrements one eleme
 
 **解法 1** 
 
-先排序，时间复杂度：O(NlgN)
+先排序，时间复杂度：O(NlogN)
 
 ```java
 public int minMoves2(int[] nums) {
@@ -3031,7 +3031,7 @@ public int minMoves2(int[] nums) {
 
 **解法 2** 
 
-使用快速排序找到中位数，时间复杂度 O(N)
+使用快速选择找到中位数，时间复杂度 O(N)
 
 ```java
 public int minMoves2(int[] nums) {
