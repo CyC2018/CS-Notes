@@ -70,11 +70,11 @@ public int search(int key, int[] array) {
 
 实现时需要注意以下细节：
 
-1. 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
+- 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
 
-2. 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+- 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
 
-3. l 的赋值一般都为 l = mid + 1。
+- l 的赋值一般都为 l = mid + 1。
 
 **求开方** 
 
@@ -253,7 +253,7 @@ public int findMinArrowShots(int[][] points) {
 
 题目描述：一次交易包含买入和卖出，多个交易之间不能交叉进行。
 
-对于 [a, b, c, d]，如果有 a <= b <= c <= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] > 0，那么就把 prices[i] - prices[i-1] 添加加到收益中，从而在局部最优的情况下也保证全局最优。
+对于 [a, b, c, d]，如果有 a <= b <= c <= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] > 0，那么就把 prices[i] - prices[i-1] 添加到收益中，从而在局部最优的情况下也保证全局最优。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -331,9 +331,10 @@ Return true.
 
 ```java
 public boolean isSubsequence(String s, String t) {
-    for (int i = 0, pos = 0; i < s.length(); i++, pos++) {
-        pos = t.indexOf(s.charAt(i), pos);
-        if(pos == -1) return false;
+    int index = 0;
+    for (char c : s.toCharArray()) {
+        index = t.indexOf(c, index);
+        if (index == -1) return false;
     }
     return true;
 }
@@ -355,18 +356,20 @@ A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits 
 ```java
 public List<Integer> partitionLabels(String S) {
     List<Integer> ret = new ArrayList<>();
-    int[] lastIdxs = new int[26];
-    for(int i = 0; i < S.length(); i++) lastIdxs[S.charAt(i) - 'a'] = i;
-    int startIdx = 0;
-    while(startIdx < S.length()) {
-        int endIdx = startIdx;
-        for(int i = startIdx; i < S.length() && i <= endIdx; i++) {
-            int lastIdx = lastIdxs[S.charAt(i) - 'a'];
-            if(lastIdx == i) continue;
-            if(lastIdx > endIdx) endIdx = lastIdx;
+    int[] lastIndexs = new int[26];
+    for (int i = 0; i < S.length(); i++) {
+        lastIndexs[S.charAt(i) - 'a'] = i;
+    }
+    int firstIndex = 0;
+    while (firstIndex < S.length()) {
+        int lastIndex = firstIndex;
+        for (int i = firstIndex; i < S.length() && i <= lastIndex; i++) {
+            int index = lastIndexs[S.charAt(i) - 'a'];
+            if (index == i) continue;
+            if (index > lastIndex) lastIndex = index;
         }
-        ret.add(endIdx - startIdx + 1);
-        startIdx = endIdx + 1;
+        ret.add(lastIndex - firstIndex + 1);
+        firstIndex = lastIndex + 1;
     }
     return ret;
 }
@@ -392,23 +395,21 @@ Output:
 
 ```java
 public int[][] reconstructQueue(int[][] people) {
-    if(people == null || people.length == 0 || people[0].length == 0) return new int[0][0];
-
-    Arrays.sort(people, new Comparator<int[]>() {
-       public int compare(int[] a, int[] b) {
-           if(a[0] == b[0]) return a[1] - b[1];
-           return b[0] - a[0];
-       }
+    if (people == null || people.length == 0 || people[0].length == 0) return new int[0][0];
+    Arrays.sort(people, (a, b) -> {
+        if (a[0] == b[0]) return a[1] - b[1];
+        return b[0] - a[0];
     });
-
-    int n = people.length;
+    int N = people.length;
     List<int[]> tmp = new ArrayList<>();
-    for(int i = 0; i < n; i++) {
-        tmp.add(people[i][1], new int[]{people[i][0], people[i][1]});
+    for (int i = 0; i < N; i++) {
+        int index = people[i][1];
+        int[] p = new int[]{people[i][0], people[i][1]};
+        tmp.add(index, p);
     }
 
-    int[][] ret = new int[n][2];
-    for(int i = 0; i < n; i++) {
+    int[][] ret = new int[N][2];
+    for (int i = 0; i < N; i++) {
         ret[i][0] = tmp.get(i)[0];
         ret[i][1] = tmp.get(i)[1];
     }
