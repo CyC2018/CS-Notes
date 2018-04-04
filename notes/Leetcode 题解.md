@@ -3491,9 +3491,9 @@ HashMap 也可以用来对元素进行计数统计，此时键为元素，值为
 
 [Leetcode : 1. Two Sum (Easy)](https://leetcode.com/problems/two-sum/description/)
 
-可以先对数组进行排序，然后使用双指针方法或者二分查找方法。这样做的时间复杂度为 O(nlg<sub>n</sub>)，空间复杂度为 O(1)。
+可以先对数组进行排序，然后使用双指针方法或者二分查找方法。这样做的时间复杂度为 O(NlogN)，空间复杂度为 O(1)。
 
-用 HashMap 存储数组元素和索引的映射，在访问到 nums[i] 时，判断 HashMap 中是否存在 target - nums[i] ，如果存在说明 target - nums[i] 所在的索引和 i 就是要找的两个数。该方法的时间复杂度为 O(n)，空间复杂度为 O(n)，使用空间来换取时间。
+用 HashMap 存储数组元素和索引的映射，在访问到 nums[i] 时，判断 HashMap 中是否存在 target - nums[i] ，如果存在说明 target - nums[i] 所在的索引和 i 就是要找的两个数。该方法的时间复杂度为 O(N)，空间复杂度为 O(N)，使用空间来换取时间。
 
 ```java
 public int[] twoSum(int[] nums, int target) {
@@ -3639,7 +3639,7 @@ Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 ```
 
-解决方案是从字符串的某一位开始，尝试着去扩展子字符串。
+从字符串的某一位开始，尝试着去扩展子字符串。
 
 ```java
 private int cnt = 0;
@@ -3753,7 +3753,7 @@ Output: [2,3]
 
 最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlogn)。本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
 
-主要思想是让通过交换数组元素，使得数组上的元素在正确的位置上。
+主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。
 
 遍历数组，如果第 i 位上的元素不是 i + 1 ，那么就交换第 i 位 和 nums[i] - 1 位上的元素，使得 num[i] - 1 的元素为 nums[i] ，也就是该位的元素是正确的。交换操作需要循环进行，因为一次交换没办法使得第 i 位上的元素是正确的。但是要交换的两个元素可能就是重复元素，那么循环就可能永远进行下去，终止循环的方法是加上 nums[i] != nums[nums[i] - 1 条件。
 
@@ -3925,7 +3925,7 @@ class Tuple implements Comparable<Tuple> {
 
 ## 链表
 
-**判断两个链表的交点** 
+**找出两个链表的交点** 
 
 [Leetcode : 160. Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
 
@@ -4200,7 +4200,7 @@ Return 3. The paths that sum to 8 are:
 3. -3 -> 11
 ```
 
-路径不一定以 root 开头并以 leaf 结尾，但是必须连续
+路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。
 
 ```java
 public int pathSum(TreeNode root, int sum) {
