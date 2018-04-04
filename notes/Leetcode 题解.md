@@ -2197,8 +2197,8 @@ There are 5 ways to assign symbols to make the sum of nums be target 3.
 可以将这组数看成两部分，P 和 N，其中 P 使用正号，N 使用负号，有以下推导：
 
 ```html
-                  sum(P) - sum(N) = target
-sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
+                  sum(P) + sum(N) = target
+sum(P) + sum(N) + sum(P) = target + sum(P)
                        2 * sum(P) = target + sum(nums)
 ```
 
