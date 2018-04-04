@@ -3223,16 +3223,16 @@ public int[] countBits(int num) {
 一个栈实现：
 
 ```java
-class  MyQueue {
+class MyQueue {
     private Stack<Integer> st = new Stack();
 
     public void push(int x) {
         Stack<Integer> temp = new Stack();
-        while(!st.isEmpty()){
+        while (!st.isEmpty()) {
             temp.push(st.pop());
         }
         st.push(x);
-        while(!temp.isEmpty()){
+        while (!temp.isEmpty()) {
             st.push(temp.pop());
         }
     }
@@ -3254,7 +3254,7 @@ class  MyQueue {
 两个栈实现：
 
 ```java
-class  MyQueue {
+class MyQueue {
     private Stack<Integer> in = new Stack();
     private Stack<Integer> out = new Stack();
 
@@ -3272,9 +3272,9 @@ class  MyQueue {
         return out.peek();
     }
 
-    private void in2out(){
-        if(out.isEmpty()){
-            while(!in.isEmpty()){
+    private void in2out() {
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
                 out.push(in.pop());
             }
         }
@@ -3301,8 +3301,9 @@ class MyStack {
 
     public void push(int x) {
         queue.add(x);
-        for(int i = 1; i < queue.size(); i++){ // 翻转
-            queue.add(queue.remove());
+        int cnt = queue.size();
+        while (cnt-- > 1) {
+            queue.add(queue.poll());
         }
     }
 
@@ -3341,20 +3342,14 @@ class MinStack {
 
     public void push(int x) {
         dataStack.add(x);
-        if(x < min) {
-            min = x;
-        }
+        min = Math.min(min, x);
         minStack.add(min);
     }
 
     public void pop() {
         dataStack.pop();
         minStack.pop();
-        if(!minStack.isEmpty()) {
-            min = minStack.peek();
-        } else{
-            min = Integer.MAX_VALUE;
-        }
+        min = minStack.isEmpty() ? min = Integer.MAX_VALUE : minStack.peek();
     }
 
     public int top() {
@@ -3382,17 +3377,15 @@ Output : true
 ```java
 public boolean isValid(String s) {
     Stack<Character> stack = new Stack<>();
-    for(int i = 0; i < s.length(); i++){
-        char c = s.charAt(i);
-        if(c == '(' || c == '{' || c == '[') stack.push(c);
-        else{
-            if(stack.isEmpty()) return false;
+    for (char c : s.toCharArray()) {
+        if (c == '(' || c == '{' || c == '[') stack.push(c);
+        else {
+            if (stack.isEmpty()) return false;
             char cStack = stack.pop();
-            if(c == ')' && cStack != '(' ||
-              c == ']' && cStack != '[' ||
-              c == '}' && cStack != '{' ) {
-                return false;
-            }
+            boolean b1 = c == ')' && cStack != '(';
+            boolean b2 = c == ']' && cStack != '[';
+            boolean b3 = c == '}' && cStack != '{';
+            if (b1 || b2 || b3) return false;
         }
     }
     return stack.isEmpty();
@@ -3729,14 +3722,9 @@ For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums sh
 
 ```java
 public void moveZeroes(int[] nums) {
-    int n = nums.length;
     int idx = 0;
-    for(int i = 0; i < n; i++){
-        if(nums[i] != 0) nums[idx++] = nums[i];
-    }
-    while(idx < n){
-        nums[idx++] = 0;
-    }
+    for (int num : nums) if (num != 0) nums[idx++] = num;
+    while (idx < nums.length) nums[idx++] = 0;
 }
 ```
 
@@ -3745,6 +3733,11 @@ public void moveZeroes(int[] nums) {
 **一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
 
 [Leetcode : 645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
+
+```html
+Input: nums = [1,2,2,4]
+Output: [2,3]
+```
 
 ```html
 Input: nums = [1,2,2,4]
@@ -3764,31 +3757,28 @@ Output: [2,3]
 
 ```java
 public int[] findErrorNums(int[] nums) {
-    for(int i = 0; i < nums.length; i++){
-        while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) {
+    for (int i = 0; i < nums.length; i++) {
+        while (nums[i] != i + 1) {
+            if (nums[i] == nums[nums[i] - 1]) {
+                return new int[]{nums[nums[i] - 1], i + 1};
+            }
             swap(nums, i, nums[i] - 1);
-        }
-    }
-
-    for(int i = 0; i < nums.length; i++){
-        if(i + 1 != nums[i]) {
-            return new int[]{nums[i], i + 1};
         }
     }
 
     return null;
 }
 
-private void swap(int[] nums, int i, int j){
-    int tmp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = tmp;
+private void swap(int[] nums, int i, int j) {
+    int tmp = nums[i]; nums[i] = nums[j]; nums[j] = tmp;
 }
 ```
 
-**找出数组中重复的数，数组值在 [0, n-1] 之间** 
+**找出数组中重复的数，数组值在 [1, n] 之间** 
 
 [Leetcode : 287. Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/description/)
+
+要求不能修改数组，也不能使用额外的空间。
 
 二分查找解法：
 
@@ -3812,18 +3802,17 @@ public int findDuplicate(int[] nums) {
 
 ```java
 public int findDuplicate(int[] nums) {
-      int slow = nums[0], fast = nums[nums[0]];
-      while (slow != fast) {
-          slow = nums[slow];
-          fast = nums[nums[fast]];
-      }
-
-      fast = 0;
-      while (slow != fast) {
-          slow = nums[slow];
-          fast = nums[fast];
-      }
-      return slow;
+    int slow = nums[0], fast = nums[nums[0]];
+    while (slow != fast) {
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+    }
+    fast = 0;
+    while (slow != fast) {
+        slow = nums[slow];
+        fast = nums[fast];
+    }
+    return slow;
 }
 ```
 
@@ -4014,18 +4003,20 @@ public ListNode deleteDuplicates(ListNode head) {
 
 [Leetcode : 234. Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/description/)
 
+要求以 O(1) 的空间复杂度来求解。
+
 切成两半，把后半段反转，然后比较两半是否相等。
 
 ```java
 public boolean isPalindrome(ListNode head) {
-    if(head == null || head.next == null) return true;
+    if (head == null || head.next == null) return true;
     ListNode slow = head, fast = head.next;
-    while(fast != null && fast.next != null){
+    while (fast != null && fast.next != null) {
         slow = slow.next;
         fast = fast.next.next;
     }
 
-    if(fast != null){  // 偶数节点，让 slow 指向下一个节点
+    if (fast != null) {  // 偶数节点，让 slow 指向下一个节点
         slow = slow.next;
     }
 
@@ -4035,14 +4026,14 @@ public boolean isPalindrome(ListNode head) {
     return isEqual(l1, l2);
 }
 
-private void cut(ListNode head, ListNode cutNode){
-    while( head.next != cutNode ) head = head.next;
+private void cut(ListNode head, ListNode cutNode) {
+    while (head.next != cutNode) head = head.next;
     head.next = null;
 }
 
-private ListNode reverse(ListNode head){
+private ListNode reverse(ListNode head) {
     ListNode newHead = null;
-    while(head != null){
+    while (head != null) {
         ListNode nextNode = head.next;
         head.next = newHead;
         newHead = head;
@@ -4051,9 +4042,9 @@ private ListNode reverse(ListNode head){
     return newHead;
 }
 
-private boolean isEqual(ListNode l1, ListNode l2){
-    while(l1 != null && l2 != null){
-        if(l1.val != l2.val) return false;
+private boolean isEqual(ListNode l1, ListNode l2) {
+    while (l1 != null && l2 != null) {
+        if (l1.val != l2.val) return false;
         l1 = l1.next;
         l2 = l2.next;
     }
@@ -4307,19 +4298,13 @@ There are two left leaves in the binary tree, with values 9 and 15 respectively.
 
 ```java
 public int sumOfLeftLeaves(TreeNode root) {
-    if(root == null) {
-        return 0;
-    }
-    if(isLeaf(root.left)) {
-        return root.left.val +  sumOfLeftLeaves(root.right);
-    }
+    if(root == null) return 0;
+    if(isLeaf(root.left)) return root.left.val + sumOfLeftLeaves(root.right);
     return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
 }
 
 private boolean isLeaf(TreeNode node){
-    if(node == null) {
-        return false;
-    }
+    if(node == null) return false;
     return node.left == null && node.right == null;
 }
 ```
@@ -4376,7 +4361,7 @@ Given tree s:
   / \
  1   2
 Given tree t:
-   4 
+   4
   / \
  1   2
 Return true, because t has the same structure and node values with a subtree of s.
@@ -4651,11 +4636,11 @@ public int findBottomLeftValue(TreeNode root) {
 ### 前中后序遍历
 
 ```html
-   1
-  / \
-  2  3
- / \  \
-4  5  6
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
 ```
 
 层次遍历顺序：[1 2 3 4 5 6]
@@ -4704,14 +4689,14 @@ void dfs(TreeNode root){
 ```java
 public List<Integer> preorderTraversal(TreeNode root) {
     List<Integer> ret = new ArrayList<>();
-    if (root == null) return ret;
     Stack<TreeNode> stack = new Stack<>();
     stack.push(root);
     while (!stack.isEmpty()) {
         TreeNode node = stack.pop();
+        if (node == null) continue;
         ret.add(node.val);
-        if (node.right != null) stack.push(node.right);
-        if (node.left != null) stack.push(node.left); // 先添加右子树再添加左子树，这样是为了让左子树在栈顶
+        stack.push(node.right); // 先右后左，保证左子树先遍历
+        stack.push(node.left);
     }
     return ret;
 }
@@ -4726,14 +4711,14 @@ public List<Integer> preorderTraversal(TreeNode root) {
 ```java
 public List<Integer> postorderTraversal(TreeNode root) {
     List<Integer> ret = new ArrayList<>();
-    if (root == null) return ret;
     Stack<TreeNode> stack = new Stack<>();
     stack.push(root);
     while (!stack.isEmpty()) {
         TreeNode node = stack.pop();
+        if (node == null) continue;
         ret.add(node.val);
-        if (node.left != null) stack.push(node.left);
-        if (node.right != null) stack.push(node.right);
+        stack.push(node.left);
+        stack.push(node.right);
     }
     Collections.reverse(ret);
     return ret;
@@ -4747,11 +4732,12 @@ public List<Integer> postorderTraversal(TreeNode root) {
 ```java
 public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> ret = new ArrayList<>();
+    if (root == null) return ret;
     Stack<TreeNode> stack = new Stack<>();
     TreeNode cur = root;
-    while(cur != null || !stack.isEmpty()) {
-        while(cur != null) { // 模拟递归栈的不断深入
-            stack.add(cur);
+    while (cur != null || !stack.isEmpty()) {
+        while (cur != null) {
+            stack.push(cur);
             cur = cur.left;
         }
         TreeNode node = stack.pop();
