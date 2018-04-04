@@ -2727,30 +2727,63 @@ public int minPathSum(int[][] grid) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="../pics//ac9b31ec-cef1-4880-a875-fc4571ca10e1.png"/> </div><br>
-
-```html
-s0[i] = max(s0[i - 1], s2[i - 1]); // Stay at s0, or rest from s2
-s1[i] = max(s1[i - 1], s0[i - 1] - prices[i]); // Stay at s1, or buy from s0
-s2[i] = s1[i - 1] + prices[i]; // Only one way from s1
-```
+<div align="center"> <img src="../pics//1b7f180e-7fee-4eaf-8ebb-164b68ae2b29.png"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
     if (prices == null || prices.length == 0) return 0;
-    int n = prices.length;
-    int[] s0 = new int[n];
-    int[] s1 = new int[n];
-    int[] s2 = new int[n];
-    s0[0] = 0;
-    s1[0] = -prices[0];
-    s2[0] = Integer.MIN_VALUE;
-    for (int i = 1; i < n; i++) {
-        s0[i] = Math.max(s0[i - 1], s2[i - 1]);
-        s1[i] = Math.max(s1[i - 1], s0[i - 1] - prices[i]);
-        s2[i] = Math.max(s2[i - 1], s1[i - 1] + prices[i]);
+    int N = prices.length;
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
+    for (int i = 1; i < N; i++) {
+        buy[i] = s2[i - 1] - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    return Math.max(s0[n - 1], s2[n - 1]);
+    return Math.max(sell[N - 1], s2[N - 1]);
+}
+```
+
+**需要交易费用的股票交易** 
+
+[Leetcode : 714. Best Time to Buy and Sell Stock with Transaction Fee (Medium)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
+
+```html
+Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
+Output: 8
+Explanation: The maximum profit can be achieved by:
+Buying at prices[0] = 1
+Selling at prices[3] = 8
+Buying at prices[4] = 4
+Selling at prices[5] = 9
+The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
+```
+
+题目描述：每交易一次，都要支付一定的费用。
+
+<div align="center"> <img src="../pics//6f4abf41-3728-4a6b-9b94-85eed7ca8163.png"/> </div><br>
+
+```java
+public int maxProfit(int[] prices, int fee) {
+    int N = prices.length;
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
+    for (int i = 1; i < N; i++) {
+        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
+    }
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
@@ -3786,6 +3819,45 @@ public void moveZeroes(int[] nums) {
     int idx = 0;
     for (int num : nums) if (num != 0) nums[idx++] = num;
     while (idx < nums.length) nums[idx++] = 0;
+}
+```
+
+**数组的度** 
+
+[Leetcode : 697. Degree of an Array (Easy)](https://leetcode.com/problems/degree-of-an-array/description/)
+
+```html
+Input: [1,2,2,3,1,4,2]
+Output: 6
+```
+
+题目描述：数组的度定义为元素出现的最高频率，例如上面的数组度为 3。要求找到一个最小的子数组，这个子数组的度和原数组一样。
+
+```java
+public int findShortestSubArray(int[] nums) {
+    Map<Integer, Integer> numsCnt = new HashMap<>();
+    Map<Integer, Integer> numsLastIndex = new HashMap<>();
+    Map<Integer, Integer> numsFirstIndex = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        int num = nums[i];
+        numsCnt.put(num, numsCnt.getOrDefault(num, 0) + 1);
+        numsLastIndex.put(num, i);
+        if (!numsFirstIndex.containsKey(num)) {
+            numsFirstIndex.put(num, i);
+        }
+    }
+    int maxCnt = 0;
+    for (int num : nums) {
+        maxCnt = Math.max(maxCnt, numsCnt.get(num));
+    }
+    int ret = nums.length;
+    for (int i = 0; i < nums.length; i++) {
+        int num = nums[i];
+        int cnt = numsCnt.get(num);
+        if (cnt != maxCnt) continue;
+        ret = Math.min(ret, numsLastIndex.get(num) - numsFirstIndex.get(num) + 1);
+    }
+    return ret;
 }
 ```
 
