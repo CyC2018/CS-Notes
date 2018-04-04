@@ -2755,7 +2755,7 @@ int gcd(int a, int b) {
 }
 ```
 
-最大公倍数为两数的乘积除以最大公约数。
+最小公倍数为两数的乘积除以最大公约数。
 
 ```java
 int lcm(int a, int b){
