@@ -36,8 +36,6 @@
     * [哈希表](#哈希表)
     * [字符串](#字符串)
     * [数组与矩阵](#数组与矩阵)
-        * [1-n 分布](#1-n-分布)
-        * [有序矩阵](#有序矩阵)
     * [链表](#链表)
     * [树](#树)
         * [递归](#递归)
@@ -727,6 +725,51 @@ public List<Integer> topKFrequent(int[] nums, int k) {
         }
     }
     return ret;
+}
+```
+
+**按照字符出现次数对字符串排序** 
+
+[Leetcode : 451. Sort Characters By Frequency (Medium)](https://leetcode.com/problems/sort-characters-by-frequency/description/)
+
+```html
+Input:
+"tree"
+
+Output:
+"eert"
+
+Explanation:
+'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+```
+
+```java
+public String frequencySort(String s) {
+    Map<Character, Integer> map = new HashMap<>();
+    for (char c : s.toCharArray()) {
+        map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+    List<Character>[] frequencyBucket = new List[s.length() + 1];
+    for(char c : map.keySet()){
+        int f = map.get(c);
+        if (frequencyBucket[f] == null) {
+            frequencyBucket[f] = new ArrayList<>();
+        }
+        frequencyBucket[f].add(c);
+    }
+    StringBuilder str = new StringBuilder();
+    for (int i = frequencyBucket.length - 1; i >= 0; i--) {
+        if (frequencyBucket[i] == null) {
+            continue;
+        }
+        for (char c : frequencyBucket[i]) {
+            for (int j = 0; j < i; j++) {
+                str.append(c);
+            }
+        }
+    }
+    return str.toString();
 }
 ```
 
@@ -3506,6 +3549,45 @@ public int findLHS(int[] nums) {
 }
 ```
 
+**最长连续序列** 
+
+[Leetcode : 128. Longest Consecutive Sequence (Medium)](https://leetcode.com/problems/longest-consecutive-sequence/description/)
+
+```html
+Given [100, 4, 200, 1, 3, 2],
+The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+```
+
+```java
+public int longestConsecutive(int[] nums) {
+    Map<Integer, Integer> numCnts = new HashMap<>();
+    for (int num : nums) {
+        numCnts.put(num, 1);
+    }
+    for (int num : nums) {
+        count(numCnts, num);
+    }
+    int max = 0;
+    for (int num : nums) {
+        max = Math.max(max, numCnts.get(num));
+    }
+    return max;
+}
+
+private int count(Map<Integer, Integer> numCnts, int num) {
+    if (!numCnts.containsKey(num)) {
+        return 0;
+    }
+    int cnt = numCnts.get(num);
+    if (cnt > 1) {
+        return cnt;
+    }
+    cnt = count(numCnts, num + 1) + 1;
+    numCnts.put(num, cnt);
+    return cnt;
+}
+```
+
 ## 字符串
 
 **两个字符串包含的字符是否完全相同** 
@@ -3707,7 +3789,105 @@ public void moveZeroes(int[] nums) {
 }
 ```
 
-### 1-n 分布
+**对角元素相等的矩阵** 
+
+[Leetcode : 766. Toeplitz Matrix (Easy)](https://leetcode.com/problems/toeplitz-matrix/description/)
+
+```html
+1234
+5123
+9512
+
+In the above grid, the diagonals are "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]", and in each diagonal all elements are the same, so the answer is True.
+```
+
+```java
+public boolean isToeplitzMatrix(int[][] matrix) {
+    for (int i = 0; i < matrix[0].length; i++) {
+        if (!check(matrix, matrix[0][i], 0, i)) {
+            return false;
+        }
+    }
+    for (int i = 0; i < matrix.length; i++) {
+        if (!check(matrix, matrix[i][0], i, 0)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+private boolean check(int[][] matrix, int expectValue, int row, int col) {
+    if (row >= matrix.length || col >= matrix[0].length) {
+        return true;
+    }
+    if (matrix[row][col] != expectValue) {
+        return false;
+    }
+    return check(matrix, expectValue, row + 1, col + 1);
+}
+```
+
+**嵌套数组** 
+
+[Leetcode : 565. Array Nesting (Medium)](https://leetcode.com/problems/array-nesting/description/)
+
+```html
+Input: A = [5,4,0,3,1,6,2]
+Output: 4
+Explanation:
+A[0] = 5, A[1] = 4, A[2] = 0, A[3] = 3, A[4] = 1, A[5] = 6, A[6] = 2.
+
+One of the longest S[K]:
+S[0] = {A[0], A[5], A[6], A[2]} = {5, 6, 2, 0}
+```
+
+题目描述：S[i] 表示一个集合，集合的第一个元素是 A[i]，第二个元素是 A[A[i]]，如此嵌套下去。求最大的 S[i]。
+
+```java
+public int arrayNesting(int[] nums) {
+    int max = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int cnt = 0;
+        for (int j = i; nums[j] != -1; ) {
+            cnt++;
+            int t = nums[j];
+            nums[j] = -1; // 标记该位置已经被访问
+            j = t;
+
+        }
+        max = Math.max(max, cnt);
+    }
+    return max;
+}
+```
+
+**分隔数组** 
+
+[Leetcode : 769. Max Chunks To Make Sorted (Medium)](https://leetcode.com/problems/max-chunks-to-make-sorted/description/)
+
+```html
+Input: arr = [1,0,2,3,4]
+Output: 4
+Explanation:
+We can split into two chunks, such as [1, 0], [2, 3, 4].
+However, splitting into [1, 0], [2], [3], [4] is the highest number of chunks possible.
+```
+
+题目描述：分隔数组，使得对每部分排序后数组就为有序。
+
+```java
+public int maxChunksToSorted(int[] arr) {
+    if (arr == null) return 0;
+    int ret = 0;
+    int right = arr[0];
+    for (int i = 0; i < arr.length; i++) {
+        right = Math.max(right, arr[i]);
+        if (right == i) ret++;
+    }
+    return ret;
+}
+```
+
 
 **一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
 
@@ -3795,9 +3975,9 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-### 有序矩阵
+**有序矩阵查找** 
 
-有序矩阵指的是行和列分别有序的矩阵。一般可以利用有序性使用二分查找方法。
+[Leetocde : 240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
 
 ```html
 [
@@ -3806,10 +3986,6 @@ public int findDuplicate(int[] nums) {
    [12, 13, 15]
 ]
 ```
-
-**有序矩阵查找** 
-
-[Leetocde : 240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
 
 ```java
 public boolean searchMatrix(int[][] matrix, int target) {
@@ -5062,6 +5238,66 @@ class MapSum {
 ```
 
 ## 图
+
+**冗余连接** 
+
+[Leetcode : 684. Redundant Connection (Medium)](https://leetcode.com/problems/redundant-connection/description/)
+
+```html
+Input: [[1,2], [1,3], [2,3]]
+Output: [2,3]
+Explanation: The given undirected graph will be like this:
+  1
+ / \
+2 - 3
+```
+
+题目描述：有一系列的边连成的图，找出一条边，移除它之后该图能够成为一棵树。
+
+使用 Union-Find。
+
+```java
+public int[] findRedundantConnection(int[][] edges) {
+    int N = edges.length;
+    UF uf = new UF(N);
+    for (int[] e : edges) {
+        int u = e[0], v = e[1];
+        if (uf.find(u) == uf.find(v)) {
+            return e;
+        }
+        uf.union(u, v);
+    }
+    return new int[]{-1, -1};
+}
+
+private class UF {
+    int[] id;
+
+    UF(int N) {
+        id = new int[N + 1];
+        for (int i = 0; i < id.length; i++) {
+            id[i] = i;
+        }
+    }
+
+    void union(int u, int v) {
+        int uID = find(u);
+        int vID = find(v);
+        if (uID == vID) {
+            return;
+        }
+        for (int i = 0; i < id.length; i++) {
+            if (id[i] == uID) {
+                id[i] = vID;
+            }
+        }
+    }
+
+    int find(int p) {
+        return id[p];
+    }
+}
+```
 
 ## 位运算
 
