@@ -2727,7 +2727,7 @@ public int minPathSum(int[][] grid) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="../pics//1b7f180e-7fee-4eaf-8ebb-164b68ae2b29.png"/> </div><br>
+<div align="center"> <img src="../pics//f4cdda3e-324c-49b5-8c14-08a3db634b29.png"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -4218,11 +4218,168 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 
 [Leetcode : 83. Remove Duplicates from Sorted List (Easy)](https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/)
 
+```html
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.
+```
+
 ```java
 public ListNode deleteDuplicates(ListNode head) {
     if(head == null || head.next == null) return head;
     head.next = deleteDuplicates(head.next);
     return head.next != null && head.val == head.next.val ? head.next : head;
+}
+```
+
+**交换链表中的相邻结点** 
+
+[Leetcode : 24. Swap Nodes in Pairs (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/description/)
+
+```html
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+```
+
+题目要求：不能修改结点的 val 值；O(1) 空间复杂度。
+
+```java
+public ListNode swapPairs(ListNode head) {
+    ListNode newHead = new ListNode(-1);
+    newHead.next = head;
+    ListNode cur = head, pre = newHead;
+    while (cur != null && cur.next != null) {
+        ListNode next = cur.next;
+        pre.next = next;
+        cur.next = next.next;
+        next.next = cur;
+        pre = cur;
+        cur = cur.next;
+    }
+    return newHead.next;
+}
+```
+
+**根据有序链表构造平衡的 BST** 
+
+[Leetcode : 109. Convert Sorted List to Binary Search Tree (Medium)](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/)
+
+```html
+Given the sorted linked list: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+```
+
+```java
+public TreeNode sortedListToBST(ListNode head) {
+    if (head == null) return null;
+    int size = size(head);
+    if (size == 1) return new TreeNode(head.val);
+    ListNode pre = head, mid = pre.next;
+    int step = 2;
+    while (step <= size / 2) {
+        pre = mid;
+        mid = mid.next;
+        step++;
+    }
+    pre.next = null;
+    TreeNode t = new TreeNode(mid.val);
+    t.left = sortedListToBST(head);
+    t.right = sortedListToBST(mid.next);
+    return t;
+}
+
+private int size(ListNode node) {
+    int size = 0;
+    while (node != null) {
+        size++;
+        node = node.next;
+    }
+    return size;
+}
+```
+
+
+**链表求和** 
+
+[Leetcode : 445. Add Two Numbers II (Medium)](https://leetcode.com/problems/add-two-numbers-ii/description/)
+
+```html
+Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 8 -> 0 -> 7
+```
+
+题目要求：不能修改原始链表。
+
+```java
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    Stack<Integer> l1Stack = buildStack(l1);
+    Stack<Integer> l2Stack = buildStack(l2);
+    ListNode head = new ListNode(-1);
+    int carry = 0;
+    while (!l1Stack.isEmpty() || !l2Stack.isEmpty() || carry != 0) {
+        int x = l1Stack.isEmpty() ? 0 : l1Stack.pop();
+        int y = l2Stack.isEmpty() ? 0 : l2Stack.pop();
+        int sum = x + y + carry;
+        ListNode node = new ListNode(sum % 10);
+        node.next = head.next;
+        head.next = node;
+        carry = sum / 10;
+    }
+    return head.next;
+}
+
+private Stack<Integer> buildStack(ListNode l) {
+    Stack<Integer> stack = new Stack<>();
+    while (l != null) {
+        stack.push(l.val);
+        l = l.next;
+    }
+    return stack;
+}
+```
+
+**分隔链表** 
+
+[Leetcode : 725. Split Linked List in Parts(Medium)](https://leetcode.com/problems/split-linked-list-in-parts/description/)
+
+```html
+Input:
+root = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 3
+Output: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
+Explanation:
+The input has been split into consecutive parts with size difference at most 1, and earlier parts are a larger size than the later parts.
+```
+
+题目描述：把链表分隔成 k 部分，每部分的长度都应该尽可能相同，排在前面的长度应该大于等于后面的。
+
+```java
+public ListNode[] splitListToParts(ListNode root, int k) {
+    int N = 0;
+    ListNode cur = root;
+    while (cur != null) {
+        N++;
+        cur = cur.next;
+    }
+    int mod = N % k;
+    int size = N / k;
+    ListNode[] ret = new ListNode[k];
+    cur = root;
+    for (int i = 0; cur != null && i < k; i++) {
+        ret[i] = cur;
+        int curSize = size + (mod-- > 0 ? 1 : 0);
+        for (int j = 0; j < curSize - 1; j++) {
+            cur = cur.next;
+        }
+        ListNode next = cur.next;
+        cur.next = null;
+        cur = next;
+    }
+    return ret;
 }
 ```
 
