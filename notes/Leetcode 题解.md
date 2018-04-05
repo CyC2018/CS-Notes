@@ -4231,6 +4231,33 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
+**删除链表的倒数第 n 个节点** 
+
+[Leetcode : 19. Remove Nth Node From End of List (Medium)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/)
+
+```html
+Given linked list: 1->2->3->4->5, and n = 2.
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+
+```java
+public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode newHead = new ListNode(-1);
+    newHead.next = head;
+    ListNode fast = newHead;
+    while (n-- > 0) {
+        fast = fast.next;
+    }
+    ListNode slow = newHead;
+    while (fast.next != null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+    slow.next = slow.next.next;
+    return newHead.next;
+}
+```
+
 **交换链表中的相邻结点** 
 
 [Leetcode : 24. Swap Nodes in Pairs (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/description/)

@@ -330,12 +330,21 @@ FROM mytable
 
 可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
-指定的分组字段除了能让数组按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
+指定的分组字段除了能按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
 
 ```sql
 SELECT col, COUNT(*) AS num
 FROM mytable
 GROUP BY col;
+```
+
+GROUP BY 是按照分组字段进行排序，ORDER BY 也可以以汇总字段来进行排序。
+
+```sql
+SELECT col, COUNT(*) AS num
+FROM mytable
+GROUP BY col
+ORDER BY num;
 ```
 
 WHERE 过滤行，HAVING 过滤分组。行过滤应当先与分组过滤；
@@ -348,19 +357,10 @@ GROUP BY col
 HAVING COUNT(*) >= 2;
 ```
 
-GROUP BY 的排序结果为分组字段，而 ORDER BY 也可以以聚集字段来进行排序。
-
-```sql
-SELECT col, COUNT(*) AS num
-FROM mytable
-GROUP BY col
-ORDER BY num;
-```
-
 分组规定：
 
 1. GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
-2. 除了汇总计算语句的字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
+2. 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
 3. NULL 的行会单独分为一组；
 4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
@@ -374,7 +374,7 @@ ORDER BY num;
 SELECT *
 FROM mytable1
 WHERE col1 IN (SELECT col2
-                 FROM mytable2);
+               FROM mytable2);
 ```
 
 下面的语句可以检索出客户的订单数量，子查询语句会对第一个查询检索出的每个客户执行一次：
@@ -390,7 +390,7 @@ ORDER BY cust_name;
 
 # 十五、连接
 
-连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 Where。
+连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 WHERE。
 
 连接可以替换子查询，并且比子查询的效率一般会更快。
 
@@ -463,8 +463,8 @@ from employee natural join department;
 
 ```sql
 select Customers.cust_id, Orders.order_num
-   from Customers left outer join Orders
-   on Customers.cust_id = Orders.curt_id;
+from Customers left outer join Orders
+on Customers.cust_id = Orders.curt_id;
 ```
 
 如果需要统计顾客的订单数，使用聚集函数。
@@ -522,9 +522,7 @@ WHERE col5 = val;
 ## 使用存储过程的好处
 
 1. 代码封装，保证了一定的安全性；
-
 2. 代码复用；
-
 3. 由于是预先编译，因此具有很高的性能。
 
 ## 创建存储过程
