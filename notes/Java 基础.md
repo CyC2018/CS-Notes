@@ -4,8 +4,10 @@
     * [static](#static)
 * [二、Object 通用方法](#二object-通用方法)
     * [概览](#概览)
-    * [clone()](#clone)
     * [equals()](#equals)
+    * [hashCode()](#hashcode)
+    * [toString()](#tostring)
+    * [clone()](#clone)
 * [四、继承](#四继承)
     * [访问权限](#访问权限)
     * [抽象类与接口](#抽象类与接口)
@@ -154,6 +156,147 @@ public final void wait() throws InterruptedException
 protected void finalize() throws Throwable {}
 ```
 
+## equals()
+
+**1. equals() 与 == 的区别** 
+
+- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
+- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+
+```java
+Integer x = new Integer(1);
+Integer y = new Integer(1);
+System.out.println(x.equals(y)); // true
+System.out.println(x == y);      // false
+```
+
+**2. 等价关系** 
+
+（一）自反性
+
+```java
+x.equals(x); // true
+```
+
+（二）对称性
+
+```java
+x.equals(y) == y.equals(x) // true
+```
+
+（三）传递性
+
+```java
+if(x.equals(y) && y.equals(z)) {
+    x.equals(z); // true;
+}
+```
+
+（四）一致性
+
+多次调用 equals() 方法结果不变
+
+```java
+x.equals(y) == x.equals(y); // true
+```
+
+（五）与 null 的比较
+
+对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+
+```java
+x.euqals(null); // false;
+```
+
+**3. 实现** 
+
+- 检查是否为同一个对象的引用，如果是直接返回 true；
+- 检查是否是同一个类型，如果不是，直接返回 false；
+- 将 Object 实例进行转型；
+- 判断每个关键域是否相等。
+
+```java
+public class EqualExample {
+    private int x;
+    private int y;
+    private int z;
+
+    public EqualExample(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EqualExample that = (EqualExample) o;
+
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        return z == that.z;
+    }
+}
+```
+
+## hashCode()
+
+hasCode() 返回散列值，而 equals() 是用来判断两个实例是否相等。相等的两个实例散列值一定要相同，但是散列值相同的两个实例不一定相等。
+
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也相等。
+
+下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
+
+```java
+EqualExample e1 = new EqualExample(1, 1, 1);
+EqualExample e2 = new EqualExample(1, 1, 1);
+System.out.println(e1.equals(e2)); // true
+HashSet<EqualExample> set = new HashSet<>();
+set.add(e1);
+set.add(e2);
+System.out.println(set.size()); // 2
+```
+
+理想的散列函数应当具有均匀性，即不相等的实例应当均匀分不到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
+
+一个数与 31 相乘可以转换成移位和减法：31\*x == (x<<5)-x。
+
+```java
+@Override
+public int hashCode() {
+    int result = 17;
+    result = 31 * result + x;
+    result = 31 * result + y;
+    result = 31 * result + z;
+    return result;
+}
+```
+
+## toString()
+
+默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
+
+```java
+public class ToStringExample {
+    private int number;
+
+    public ToStringExample(int number) {
+        this.number = number;
+    }
+}
+```
+
+```java
+ToStringExample example = new ToStringExample(123);
+System.out.println(example.toString());
+```
+
+```html
+ToStringExample@4554617c
+```
+
 ## clone()
 
 **1. cloneable** 
@@ -161,21 +304,48 @@ protected void finalize() throws Throwable {}
 clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去重载 clone() 就没有这个方法。
 
 ```java
-public class CloneTest {
+public class CloneExample {
     private int a;
     private int b;
 }
 ```
 
 ```java
-CloneTest x = new CloneTest();
-CloneTest y = x.clone(); // 'clone()' has protected access in 'java.lang.Object'
+CloneExample e1 = new CloneExample();
+CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
 接下来重载 Object 的 clone() 得到以下实现：
 
 ```java
-public class CloneTest{
+public class CloneExample {
+    private int a;
+    private int b;
+
+    @Override
+    protected CloneExample clone() throws CloneNotSupportedException {
+        return (CloneExample)super.clone();
+    }
+}
+```
+
+```java
+CloneExample e1 = new CloneExample();
+try {
+    CloneExample e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+```
+
+```html
+java.lang.CloneNotSupportedException: CloneTest
+```
+
+以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。
+
+```java
+public class CloneExample implements Cloneable {
     private int a;
     private int b;
 
@@ -186,44 +356,130 @@ public class CloneTest{
 }
 ```
 
-```java
-CloneTest x = new CloneTest();
-try {
-    CloneTest y = (CloneTest) x.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-```
-
-```html
-java.lang.CloneNotSupportedException: CloneTest
-```
-
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 **2. 深拷贝与浅拷贝** 
 
-- 浅拷贝：拷贝对象和原对象的引用类型引用同一个对象；
-- 深拷贝：引用不同对象。
+- 浅拷贝：拷贝实例和原始实例的引用类型引用同一个对象；
+- 深拷贝：拷贝实例和原始实例的引用类型引用不同对象。
 
-实现深拷贝的方法：
+```java
+public class ShallowCloneExample implements Cloneable {
+    private int[] arr;
 
-- [Defensive copying](http://www.javapractices.com/topic/TopicAction.do?Id=15)
-- [copy constructors](http://www.javapractices.com/topic/TopicAction.do?Id=12)
-- [static factory methods](http://www.javapractices.com/topic/TopicAction.do?Id=21).
+    public ShallowCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
 
-> [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
 
-## equals()
+    public int get(int index) {
+        return arr[index];
+    }
 
-**1. == 与 equals() 区别** 
+    @Override
+    protected ShallowCloneExample clone() throws CloneNotSupportedException {
+        return (ShallowCloneExample) super.clone();
+    }
+}
+```
 
-- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个引用是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+```java
+ShallowCloneExample e1 = new ShallowCloneExample();
+ShallowCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 222
+```
 
-**2. 等价性** 
+```java
+public class DeepCloneExample implements Cloneable {
+    private int[] arr;
 
-> [散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E4%B8%89%E6%95%A3%E5%88%977)
+    public DeepCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+
+    @Override
+    protected DeepCloneExample clone() throws CloneNotSupportedException {
+        DeepCloneExample result = (DeepCloneExample) super.clone();
+        result.arr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result.arr[i] = arr[i];
+        }
+        return result;
+    }
+}
+```
+
+```java
+DeepCloneExample e1 = new DeepCloneExample();
+DeepCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 2
+```
+
+使用 clone() 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+
+```java
+public class CloneConstructorExample {
+    private int[] arr;
+
+    public CloneConstructorExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public CloneConstructorExample(CloneConstructorExample original) {
+        arr = new int[original.arr.length];
+        for (int i = 0; i < original.arr.length; i++) {
+            arr[i] = original.arr[i];
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+}
+```
+
+```java
+CloneConstructorExample e1 = new CloneConstructorExample();
+CloneConstructorExample e2 = new CloneConstructorExample(e1);
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 2
+```
 
 # 四、继承
 

@@ -5,8 +5,7 @@
 * [二、容器中的设计模式](#二容器中的设计模式)
     * [迭代器模式](#迭代器模式)
     * [适配器模式](#适配器模式)
-* [三、散列](#三散列)
-* [四、源码分析](#四源码分析)
+* [三、源码分析](#三源码分析)
     * [ArrayList](#arraylist)
     * [Vector](#vector)
     * [LinkedList](#linkedlist)
@@ -15,7 +14,7 @@
     * [LinkedHashMap](#linkedhashmap)
     * [ConcurrentHashMap - JDK 1.7](#concurrenthashmap---jdk-17)
     * [ConcurrentHashMap - JDK 1.8](#concurrenthashmap---jdk-18)
-* [五、参考资料](#五参考资料)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -102,51 +101,7 @@ List list = Arrays.asList(arr);
 List list = Arrays.asList(1,2,3);
 ```
 
-# 三、散列
-
-hasCode() 返回散列值，使用的是对象的地址。
-
-而 equals() 是用来判断两个对象是否相等的，相等的两个对象散列值一定要相同，但是散列值相同的两个对象不一定相等。
-
-相等必须满足以下五个性质：
-
-**1. 自反性** 
-
-```java
-x.equals(x); // true
-```
-
-**2. 对称性** 
-
-```java
-x.equals(y) == y.equals(x) // true
-```
-
-**3. 传递性** 
-
-```java
-if(x.equals(y) && y.equals(z)) {
-    x.equals(z); // true;
-}
-```
-
-**4. 一致性** 
-
-多次调用 equals() 方法结果不变
-
-```java
-x.equals(y) == x.equals(y); // true
-```
-
-**5. 与 null 的比较** 
-
-对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
-
-```java
-x.euqals(null); // false;
-```
-
-# 四、源码分析
+# 三、源码分析
 
 建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对容器类源码的理解有很大帮助。
 
@@ -745,7 +700,7 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
 
-# 五、参考资料
+# 参考资料
 
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
