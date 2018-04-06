@@ -572,10 +572,7 @@ public class AbstractExtendClassExample extends AbstractClassExample{
 ```
 
 ```java
-AbstractClassExample ac1 = new AbstractClassExample(); // 'AbstractClassExample' is abstract; cannot be instantiated
-```
-
-```java
+// AbstractClassExample ac1 = new AbstractClassExample(); // 'AbstractClassExample' is abstract; cannot be instantiated
 AbstractClassExample ac2 = new AbstractExtendClassExample();
 ac2.func1();
 ```
