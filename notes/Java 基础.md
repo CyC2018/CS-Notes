@@ -46,7 +46,7 @@
 
 ```java
 final int x = 1;
-x = 2;  // cannot assign value to final variable 'x'
+// x = 2;  // cannot assign value to final variable 'x'
 final A y = new A();
 y.a = 1;
 ```
@@ -865,39 +865,35 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 ## switch
 
-A switch works with the byte, short, char, and int primitive data types. It also works with enumerated types and a few special classes that "wrap" certain primitive types: Character, Byte, Short, and Integer.
+从 Java 7 开始，可以在 switch 条件判断语句中使用 String 对象。
 
-In the JDK 7 release, you can use a String object in the expression of a switch statement.
+```java
+String s = "a";
+switch (s) {
+    case "a":
+        System.out.println("aaa");
+        break;
+    case "b":
+        System.out.println("bbb");
+        break;
+}
+```
 
 switch 不支持 long，是因为 swicth 的设计初衷是为那些只需要对少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
-> [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
-
-switch 使用查找表的方式来实现，JVM 中使用的指令是 lookupswitch。
-
 ```java
-public static void main(String... args) {
-  switch (1) {
-  case 1:
-    break;
-  case 2:
-    break;
-  }
-}
-
-public static void main(java.lang.String[]);
-  Code:
-   Stack=1, Locals=1, Args_size=1
-   0:   iconst_1
-   1:   lookupswitch{ //2
-                1: 28;
-                2: 31;
-                default: 31 }
-   28:  goto    31
-   31:  return
+//        long x = 111;
+//        switch (x) { // Incompatible types. Found: 'long', required: 'char, byte, short, int, Character, Byte, Short, Integer, String, or an enum'
+//            case 111:
+//                System.out.println(111);
+//                break;
+//            case 222:
+//                System.out.println(222);
+//                break;
+//        }
 ```
 
-> [How does Java's switch work under the hood?](https://stackoverflow.com/questions/12020048/how-does-javas-switch-work-under-the-hood)
+> [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
 
 # 七、反射
 
@@ -915,8 +911,6 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
 
-> [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
-
 **Advantages of Using Reflection:** 
 
 -  **Extensibility Features**  : An application may make use of external, user-defined classes by creating instances of extensibility objects using their fully-qualified names.
@@ -931,7 +925,7 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 -  **Security Restrictions**  : Reflection requires a runtime permission which may not be present when running under a security manager. This is in an important consideration for code which has to run in a restricted security context, such as in an Applet.
 -  **Exposure of Internals**  :Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
 
-> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
+> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html) </br> [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
 # 八、异常
 
@@ -942,8 +936,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 <div align="center"> <img src="../pics//PPjwP.png"/> </div><br>
 
-> - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-> - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+> [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception) </br> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 九、泛型
 
