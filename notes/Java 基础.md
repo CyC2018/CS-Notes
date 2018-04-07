@@ -642,6 +642,8 @@ System.out.println(InterfaceExample.x);
 
 在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次接口要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
+> [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/) </br> [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+
 ## super
 
 - 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
@@ -690,6 +692,7 @@ SuperExample.func()
 SuperExtendExample.func()
 ```
 
+> [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 
 ## 重载与重写
 
@@ -718,7 +721,7 @@ SuperExtendExample.func()
 
 **1. 可以缓存 hash 值** 
 
-因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等情况。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
+因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
 
 **2. String Pool 的需要** 
 
@@ -732,21 +735,50 @@ String 经常作为参数，String 不可变性可以保证参数不可变。例
 
 **4. 线程安全** 
 
-String 不可变性天生具备线程安全，可以在多个线程中使用。
+String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
 
 > [Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
 ## String.intern()
 
-使用 String.intern() 可以保证所有相同内容的字符串变量引用相同的内存对象。
+使用 String.intern() 可以保证相同内容的字符串实例引用相同的内存对象。
 
-> [揭开 String.intern() 那神秘的面纱](https://www.jianshu.com/p/95f516cb75ef)
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用，这个方法首先把 s1 引用的对象放到 String Poll（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
+
+```java
+String s1 = new String("aaa");
+String s2 = new String("aaa");
+System.out.println(s1 == s2);           // false
+String s3 = s1.intern();
+System.out.println(s1.intern() == s3);  // true
+```
+
+如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Poll 中。
+
+```java
+String s4 = "bbb";
+String s5 = "bbb";
+System.out.println(s4 == s5);  // true
+```
+
+Java 虚拟机将堆划分成新生代、老年代和永久代（PermGen Space）。在 Java 6 之前，字符串常量池被放在永久代中，而在 Java 7 时，它被放在堆的其它位置。这是因为永久代的空间有限，如果大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+
+> [What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) </br> [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
 # 六、基本类型与运算
 
 ## 包装类型
 
-八个基本类型：boolean/1 byte/8 char/16 short/16 int/32 float/32 long/64 double/64
+八个基本类型：
+
+- boolean/1
+- byte/8
+- char/16
+- short/16
+- int/32
+- float/32
+- long/64
+- double/64
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -755,38 +787,70 @@ Integer x = 2;     // 装箱
 int y = x;         // 拆箱
 ```
 
-new Integer(123) 与 Integer.valueOf(123) 的区别在于，Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
+new Integer(123) 与 Integer.valueOf(123) 的区别在于，new Integer(123) 每次都会新建一个对象，而 Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
 
 ```java
-public static void main(String[] args) {
-     Integer a = new Integer(1);
-     Integer b = new Integer(1);
-     System.out.println("a==b? " + (a == b));
-
-     Integer c = Integer.valueOf(1);
-     Integer d = Integer.valueOf(1);
-     System.out.println("c==d? " + (c == d));
-}
+Integer x = new Integer(123);
+Integer y = new Integer(123);
+System.out.println(x == y);    // false
+Integer z = Integer.valueOf(123);
+Integer k = Integer.valueOf(123);
+System.out.println(z == k);   // true
 ```
 
-```html
-a==b? false
-c==d? true
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+
+```java
+Integer m = 123;
+Integer n = 123;
+System.out.println(m == n); // true
 ```
 
 valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接使用缓存池的内容。
 
 ```java
 public static Integer valueOf(int i) {
-    final int offset = 128;
-    if (i >= -128 && i <= 127) {
-        return IntegerCache.cache[i + offset];
-    }
+    if (i >= IntegerCache.low && i <= IntegerCache.high)
+        return IntegerCache.cache[i + (-IntegerCache.low)];
     return new Integer(i);
 }
 ```
 
-基本类型中可以使用缓存池的值如下：
+在 Java 8 中，Integer 缓存池的大小默认为 -128\~127。
+
+```java
+static final int low = -128;
+static final int high;
+static final Integer cache[];
+
+static {
+    // high value may be configured by property
+    int h = 127;
+    String integerCacheHighPropValue =
+        sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+    if (integerCacheHighPropValue != null) {
+        try {
+            int i = parseInt(integerCacheHighPropValue);
+            i = Math.max(i, 127);
+            // Maximum array size is Integer.MAX_VALUE
+            h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+        } catch( NumberFormatException nfe) {
+            // If the property cannot be parsed into an int, ignore it.
+        }
+    }
+    high = h;
+
+    cache = new Integer[(high - low) + 1];
+    int j = low;
+    for(int k = 0; k < cache.length; k++)
+        cache[k] = new Integer(j++);
+
+    // range [-128, 127] must be interned (JLS7 5.1.7)
+    assert IntegerCache.high >= 127;
+}
+```
+
+Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些：
 
 - boolean values true and false
 - all byte values
@@ -794,13 +858,7 @@ public static Integer valueOf(int i) {
 - int values between -128 and 127
 - char in the range \u0000 to \u007F
 
-自动装箱过程编译器会调用 valueOf() 方法，因此多个 Integer 对象使用装箱来创建并且值相同，那么就会引用相同的对象。这样做很显然是为了节省内存开销。
-
-```java
-Integer x = 1;
-Integer y = 1;
-System.out.println(c == d); // true
-```
+因此在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
 
 > [Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
@@ -968,6 +1026,3 @@ Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Obje
 
 - Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
-- [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
-- [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
-- [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
