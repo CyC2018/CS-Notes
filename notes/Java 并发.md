@@ -52,11 +52,14 @@ public class MyRunnable implements Runnable {
     public void run() {
         // ...
     }
-    public static void main(String[] args) {
-        MyRunnable instance = new MyRunnable();
-        Tread thread = new Thread(instance);
-        thread.start();
-    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    MyRunnable instance = new MyRunnable();
+    Thread thread = new Thread(instance);
+    thread.start();
 }
 ```
 
@@ -68,14 +71,18 @@ public class MyRunnable implements Runnable {
 public class MyCallable implements Callable<Integer> {
     public Integer call() {
         // ...
+        return 123;
     }
-    public static void main(String[]  args) {
-        MyCallable mc = new MyCallable();
-        FutureTask<Integer> ft = new FutureTask<>(mc);
-        Thread thread = new Thread(ft);
-        thread.start();
-        System.out.println(ft.get());
-    }
+}
+```
+
+```java
+public static void main(String[] args) throws ExecutionException, InterruptedException {
+    MyCallable mc = new MyCallable();
+    FutureTask<Integer> ft = new FutureTask<>(mc);
+    Thread thread = new Thread(ft);
+    thread.start();
+    System.out.println(ft.get());
 }
 ```
 
@@ -88,10 +95,13 @@ public class MyThread extends Thread {
     public void run() {
         // ...
     }
-    public static void main(String[] args) {
-        MyThread mt = new MyThread();
-        mt.start();
-    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    MyThread mt = new MyThread();
+    mt.start();
 }
 ```
 
@@ -161,7 +171,7 @@ main() 属于非后台线程。
 3. 等待某个 I/O 的完成；
 4. 试图在某个对象上调用其同步控制方法，但是对象锁不可用，因为另一个线程已经获得了这个锁。
 
-**阻塞 睡眠 挂起** 
+**阻塞 / 睡眠 / 挂起** 
 
 阻塞是一种状态，而睡眠和挂起是一种手段，通过睡眠和挂起可以让一个线程进入阻塞状态。
 
