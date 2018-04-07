@@ -5,10 +5,11 @@
     * [继承 Thread 类](#继承-thread-类)
     * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
 * [二、基础线程机制](#二基础线程机制)
+    * [Executor](#executor)
+    * [Daemon](#daemon)
     * [sleep()](#sleep)
     * [yield()](#yield)
     * [join()](#join)
-    * [deamon](#deamon)
 * [三、结束线程](#三结束线程)
     * [阻塞](#阻塞)
     * [中断](#中断)
@@ -17,7 +18,6 @@
     * [线程同步](#线程同步)
     * [线程通信](#线程通信)
 * [五、线程状态转换](#五线程状态转换)
-* [六、Executor](#六executor)
 * [七、内存模型](#七内存模型)
     * [主内存与工作内存](#主内存与工作内存)
     * [内存模型三大特性](#内存模型三大特性)
@@ -115,27 +115,60 @@ public static void main(String[] args) {
 
 # 二、基础线程机制
 
+## Executor
+
+Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
+
+主要有三种 Executor：
+
+1. CachedTreadPool：一个任务创建一个线程；
+2. FixedThreadPool：所有任务只能使用固定大小的线程；
+3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
+
+```java
+ExecutorService exec = Executors.newCachedThreadPool();
+for (int i = 0; i < 5; i++) {
+    exec.execute(new MyRunnable());
+}
+```
+
+## Daemon
+
+守护线程是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
+
+当所有非守护线程结束时，程序也就终止，同时会杀死所有守护线程。
+
+main() 属于非守护线程。
+
+使用 setDaemon() 方法将一个线程设置为守护线程。
+
+```java
+Thread thread = new Thread(new MyRunnable());
+thread.setDaemon(true);
+// ...
+```
+
 ## sleep()
 
-Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。也可以使用 TimeUnit.TILLISECONDS.sleep(millisec)。
+Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
 
-sleep() 可能会抛出 InterruptedException。因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
+sleep() 可能会抛出 InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
 
 ```java
 public void run() {
+    // ...
     try {
-        // ...
-        Thread.sleep(1000);
-        // ...
+        Thread.sleep(3000);
     } catch (InterruptedException e) {
-        System.err.println(e);
+        e.printStackTrace();
     }
+    // ...
 }
 ```
 
 ## yield()
 
-对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。
+对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。
 
 ```java
 public void run() {
@@ -148,17 +181,55 @@ public void run() {
 
 在线程中调用另一个线程的 join() 方法，会将当前线程挂起，直到目标线程结束。
 
-可以加一个超时参数。
+以下代码中，虽然 b 线程先执行，但是因为在 b 线程中调用了 a 线程的 join() 方法，因此 b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先与 b 线程的输出。
 
-## deamon
+```java
+public class JoinExample {
 
-守护线程（deamon）是程序运行时在后台提供服务的线程，并不属于程序中不可或缺的部分。
+    private class A extends Thread {
+        @Override
+        public void run() {
+            System.out.println("A");
+        }
+    }
 
-当所有非后台线程结束时，程序也就终止，同时会杀死所有后台线程。
+    private class B extends Thread {
 
-main() 属于非后台线程。
+        private A a;
 
-使用 setDaemon() 方法将一个线程设置为后台线程。
+        B(A a) {
+            this.a = a;
+        }
+
+        @Override
+        public void run() {
+            try {
+                a.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("B");
+        }
+    }
+
+    public void test() {
+        A a = new A();
+        B b = new B(a);
+        b.start();
+        a.start();
+    }
+
+    public static void main(String[] args) {
+        JoinExample example = new JoinExample();
+        example.test();
+    }
+}
+```
+
+```
+A
+B
+```
 
 # 三、结束线程
 
@@ -424,23 +495,6 @@ Consumer-4 is consuming product.( Made By Producer-4 )
 4. 限期等待（Timed Waiting）：无需等待其它线程显示地唤醒，在一定时间之后会被系统自动唤醒；
 5. 阻塞（Blocking）：等待获取一个排它锁，如果其线程释放了锁就会结束此状态；
 6. 死亡（Terminated）：可以是线程结束任务之后自己结束，或者产生了异常而结束，中断机制就是使用了抛出中断异常的方式让一个阻塞的线程结束。
-
-# 六、Executor
-
-Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
-
-主要有三种 Executor：
-
-1. CachedTreadPool：一个任务创建一个线程；
-2. FixedThreadPool：所有任务只能使用固定大小的线程；
-3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
-
-```java
-ExecutorService exec = Executors.newCachedThreadPool();
-for(int i = 0; i < 5; i++) {
-    exec.execute(new MyRunnable());
-}
-```
 
 # 七、内存模型
 
