@@ -28,23 +28,30 @@
     * [join()](#join)
     * [wait() notify() notifyAll()](#wait-notify-notifyall)
     * [await() signal() signalAll()](#await-signal-signalall)
+* [七、J.U.C - AQS](#七juc---aqs)
+    * [CountdownLatch](#countdownlatch)
+    * [CyclicBarrier](#cyclicbarrier)
+    * [Semaphore](#semaphore)
+* [八、J.U.C - 其它组件](#八juc---其它组件)
+    * [FutureTask](#futuretask)
     * [BlockingQueue](#blockingqueue)
-* [七、线程不安全示例](#七线程不安全示例)
-* [八、Java 内存模型](#八java-内存模型)
+    * [ForkJoin](#forkjoin)
+* [九、线程不安全示例](#九线程不安全示例)
+* [十、Java 内存模型](#十java-内存模型)
     * [主内存与工作内存](#主内存与工作内存)
     * [内存间交互操作](#内存间交互操作)
     * [内存模型三大特性](#内存模型三大特性)
     * [先行发生原则](#先行发生原则)
-* [九、线程安全](#九线程安全)
+* [十一、线程安全](#十一线程安全)
     * [线程安全分类](#线程安全分类)
     * [线程安全的实现方法](#线程安全的实现方法)
-* [十、锁优化](#十锁优化)
+* [十二、锁优化](#十二锁优化)
     * [自旋锁与自适应自旋](#自旋锁与自适应自旋)
     * [锁消除](#锁消除)
     * [锁粗化](#锁粗化)
     * [轻量级锁](#轻量级锁)
     * [偏向锁](#偏向锁)
-* [九、多线程开发良好的实践](#九多线程开发良好的实践)
+* [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -683,6 +690,168 @@ public class AwaitSignalExample {
 }
 ```
 
+# 七、J.U.C - AQS
+
+java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
+
+## CountdownLatch
+
+用来控制一个线程等待多个线程。
+
+维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
+
+<div align="center"> <img src="../pics//CountdownLatch.png"/> </div><br>
+
+```java
+public class CountdownLatchExample {
+
+    public static void main(String[] args) throws InterruptedException {
+        final int totalTread = 10;
+        CountDownLatch countDownLatch = new CountDownLatch(totalTread);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < totalTread; i++) {
+            executorService.execute(() -> {
+                System.out.print("run..");
+                countDownLatch.countDown();
+            });
+        }
+        countDownLatch.await();
+        System.out.println("end");
+        executorService.shutdown();
+    }
+}
+```
+
+```html
+run..run..run..run..run..run..run..run..run..run..end
+```
+
+## CyclicBarrier
+
+用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
+
+和 CountdownLatch 相似，都是通过维护计数器来实现的。但是它的计数器是递增的，每次执行 await() 方法之后，计数器会加 1，直到计数器的值和设置的值相等，等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是 CyclicBarrier 的计数器可以循环使用，所以它才叫做循环屏障。
+
+下图应该从下往上看才正确。
+
+<div align="center"> <img src="../pics//CyclicBarrier.png"/> </div><br>
+
+```java
+public class CyclicBarrierExample {
+    public static void main(String[] args) throws InterruptedException {
+        final int totalTread = 10;
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(totalTread);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < totalTread; i++) {
+            executorService.execute(() -> {
+                System.out.print("before..");
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+                System.out.print("after..");
+            });
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+```html
+before..before..before..before..before..before..before..before..before..before..after..after..after..after..after..after..after..after..after..after..
+```
+
+## Semaphore
+
+Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
+
+<div align="center"> <img src="../pics//Semaphore.png"/> </div><br>
+
+以下代码模拟了对某个服务的并发请求，每次只能由 3 个客户端同时访问，请求总数为 10。
+
+```java
+public class SemaphoreExample {
+    public static void main(String[] args) {
+        final int clientCount = 3;
+        final int totalRequestCount = 10;
+        Semaphore semaphore = new Semaphore(clientCount);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < totalRequestCount; i++) {
+            executorService.execute(()->{
+                try {
+                    semaphore.acquire();
+                    System.out.print(semaphore.availablePermits() + " ");
+                    semaphore.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+```html
+2 1 2 2 2 2 2 1 2 2
+```
+
+# 八、J.U.C - 其它组件
+
+## FutureTask
+
+在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future<V> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
+
+```java
+public class FutureTask<V> implements RunnableFuture<V>
+```
+
+```java
+public interface RunnableFuture<V> extends Runnable, Future<V>
+```
+
+当一个计算任务需要执行很长时间，那么就可以用 FutureTask 来封装这个任务，用一个线程去执行该任务，然后执行其它任务。当需要该任务的计算结果时，再通过 FutureTask 的 get() 方法获取。
+
+```java
+public class FutureTaskExample {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int result = 0;
+                for (int i = 0; i < 100; i++) {
+                    Thread.sleep(10);
+                    result += i;
+                }
+                return result;
+            }
+        });
+
+        Thread computeThread = new Thread(futureTask);
+        computeThread.start();
+
+        Thread otherThread = new Thread(() -> {
+            System.out.println("other task is running...");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        otherThread.start();
+        System.out.println(futureTask.get());
+    }
+}
+```
+
+```html
+other task is running...
+4950
+```
+
 ## BlockingQueue
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
@@ -691,10 +860,6 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 -  **优先级队列** ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，指到队列有空闲位置。
-
-它们响应中断，当收到中断请求的时候会抛出 InterruptedException，从而提前结束阻塞状态。
-
-是线程安全的。
 
 **使用 BlockingQueue 实现生产者消费者问题** 
 
@@ -774,7 +939,13 @@ Consumer-3 is consuming product.( Made By Producer-3 )
 Consumer-4 is consuming product.( Made By Producer-4 )
 ```
 
-# 七、线程不安全示例
+
+## ForkJoin
+
+// TODO
+
+
+# 九、线程不安全示例
 
 如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
 
@@ -815,7 +986,7 @@ public class ThreadUnsafeExample {
 997
 ```
 
-# 八、Java 内存模型
+# 十、Java 内存模型
 
 Java 内存模型视图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
@@ -1019,7 +1190,7 @@ join() 方法返回先行发生于 Thread 对象的结束。
 
 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
 
-# 九、线程安全
+# 十一、线程安全
 
 ## 线程安全分类
 
@@ -1334,7 +1505,7 @@ public T get() {
 
 ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
-# 十、锁优化
+# 十二、锁优化
 
 高效并发是从 JDK 1.5 到 JDK 1.6 的一个重要改进，HotSpot 虚拟机开发团队在这个版本上花费了大量的精力去实现各种锁优化技术，如适应性自旋（Adaptive Spinning）、锁消除（Lock Elimination）、锁粗化（Lock Coarsening）、轻量级锁（Lightweight Locking）和偏向锁（Biased Locking）等。这些技术都是为了在线程之间更高效地共享数据，以及解决竞争问题，从而提高程序的执行效率。
 
@@ -1409,7 +1580,8 @@ public static String concatString(String s1, String s2, String s3) {
 
 偏向锁可以提高带有同步但无竞争的程序性能。它同样是一个带有效益权衡（Trade Off）性质的优化，也就是说，它并不一定总是对程序运行有利，如果程序中大多数的锁总是被多个不同的线程访问，那偏向模式就是多余的。在具体问题具体分析的前提下，有时候使用参数 -XX:-UseBiasedLocking 来禁止偏向锁优化反而可以提升性能。
 
-# 九、多线程开发良好的实践
+
+# 十三、多线程开发良好的实践
 
 1. 给线程起个有意义的名字，这样可以方便找 Bug；
 
@@ -1432,3 +1604,4 @@ public static String concatString(String s1, String s2, String s3) {
 - [Java - Understanding Happens-before relationship](https://www.logicbig.com/tutorials/core-java-tutorial/java-multi-threading/happens-before.html)
 - [6장 Thread Synchronization](https://www.slideshare.net/novathinker/6-thread-synchronization)
 - [How is Java's ThreadLocal implemented under the hood?](https://stackoverflow.com/questions/1202444/how-is-javas-threadlocal-implemented-under-the-hood/15653015)
+- [Concurrent](https://sites.google.com/site/webdevelopart/21-compile/06-java/javase/concurrent?tmpl=%2Fsystem%2Fapp%2Ftemplates%2Fprint%2F&showPrintDialog=1)
