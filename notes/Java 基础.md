@@ -4,8 +4,10 @@
     * [static](#static)
 * [二、Object 通用方法](#二object-通用方法)
     * [概览](#概览)
-    * [clone()](#clone)
     * [equals()](#equals)
+    * [hashCode()](#hashcode)
+    * [toString()](#tostring)
+    * [clone()](#clone)
 * [四、继承](#四继承)
     * [访问权限](#访问权限)
     * [抽象类与接口](#抽象类与接口)
@@ -44,7 +46,7 @@
 
 ```java
 final int x = 1;
-x = 2;  // cannot assign value to final variable 'x'
+// x = 2;  // cannot assign value to final variable 'x'
 final A y = new A();
 y.a = 1;
 ```
@@ -154,6 +156,147 @@ public final void wait() throws InterruptedException
 protected void finalize() throws Throwable {}
 ```
 
+## equals()
+
+**1. equals() 与 == 的区别** 
+
+- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
+- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+
+```java
+Integer x = new Integer(1);
+Integer y = new Integer(1);
+System.out.println(x.equals(y)); // true
+System.out.println(x == y);      // false
+```
+
+**2. 等价关系** 
+
+（一）自反性
+
+```java
+x.equals(x); // true
+```
+
+（二）对称性
+
+```java
+x.equals(y) == y.equals(x) // true
+```
+
+（三）传递性
+
+```java
+if(x.equals(y) && y.equals(z)) {
+    x.equals(z); // true;
+}
+```
+
+（四）一致性
+
+多次调用 equals() 方法结果不变
+
+```java
+x.equals(y) == x.equals(y); // true
+```
+
+（五）与 null 的比较
+
+对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+
+```java
+x.euqals(null); // false;
+```
+
+**3. 实现** 
+
+- 检查是否为同一个对象的引用，如果是直接返回 true；
+- 检查是否是同一个类型，如果不是，直接返回 false；
+- 将 Object 实例进行转型；
+- 判断每个关键域是否相等。
+
+```java
+public class EqualExample {
+    private int x;
+    private int y;
+    private int z;
+
+    public EqualExample(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EqualExample that = (EqualExample) o;
+
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        return z == that.z;
+    }
+}
+```
+
+## hashCode()
+
+hasCode() 返回散列值，而 equals() 是用来判断两个实例是否相等。相等的两个实例散列值一定要相同，但是散列值相同的两个实例不一定相等。
+
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也相等。
+
+下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
+
+```java
+EqualExample e1 = new EqualExample(1, 1, 1);
+EqualExample e2 = new EqualExample(1, 1, 1);
+System.out.println(e1.equals(e2)); // true
+HashSet<EqualExample> set = new HashSet<>();
+set.add(e1);
+set.add(e2);
+System.out.println(set.size()); // 2
+```
+
+理想的散列函数应当具有均匀性，即不相等的实例应当均匀分不到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
+
+一个数与 31 相乘可以转换成移位和减法：31\*x == (x<<5)-x。
+
+```java
+@Override
+public int hashCode() {
+    int result = 17;
+    result = 31 * result + x;
+    result = 31 * result + y;
+    result = 31 * result + z;
+    return result;
+}
+```
+
+## toString()
+
+默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
+
+```java
+public class ToStringExample {
+    private int number;
+
+    public ToStringExample(int number) {
+        this.number = number;
+    }
+}
+```
+
+```java
+ToStringExample example = new ToStringExample(123);
+System.out.println(example.toString());
+```
+
+```html
+ToStringExample@4554617c
+```
+
 ## clone()
 
 **1. cloneable** 
@@ -161,21 +304,48 @@ protected void finalize() throws Throwable {}
 clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去重载 clone() 就没有这个方法。
 
 ```java
-public class CloneTest {
+public class CloneExample {
     private int a;
     private int b;
 }
 ```
 
 ```java
-CloneTest x = new CloneTest();
-CloneTest y = x.clone(); // 'clone()' has protected access in 'java.lang.Object'
+CloneExample e1 = new CloneExample();
+CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
 接下来重载 Object 的 clone() 得到以下实现：
 
 ```java
-public class CloneTest{
+public class CloneExample {
+    private int a;
+    private int b;
+
+    @Override
+    protected CloneExample clone() throws CloneNotSupportedException {
+        return (CloneExample)super.clone();
+    }
+}
+```
+
+```java
+CloneExample e1 = new CloneExample();
+try {
+    CloneExample e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+```
+
+```html
+java.lang.CloneNotSupportedException: CloneTest
+```
+
+以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。
+
+```java
+public class CloneExample implements Cloneable {
     private int a;
     private int b;
 
@@ -186,44 +356,130 @@ public class CloneTest{
 }
 ```
 
-```java
-CloneTest x = new CloneTest();
-try {
-    CloneTest y = (CloneTest) x.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-```
-
-```html
-java.lang.CloneNotSupportedException: CloneTest
-```
-
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 **2. 深拷贝与浅拷贝** 
 
-- 浅拷贝：拷贝对象和原对象的引用类型引用同一个对象；
-- 深拷贝：引用不同对象。
+- 浅拷贝：拷贝实例和原始实例的引用类型引用同一个对象；
+- 深拷贝：拷贝实例和原始实例的引用类型引用不同对象。
 
-实现深拷贝的方法：
+```java
+public class ShallowCloneExample implements Cloneable {
+    private int[] arr;
 
-- [Defensive copying](http://www.javapractices.com/topic/TopicAction.do?Id=15)
-- [copy constructors](http://www.javapractices.com/topic/TopicAction.do?Id=12)
-- [static factory methods](http://www.javapractices.com/topic/TopicAction.do?Id=21).
+    public ShallowCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
 
-> [How do I copy an object in Java?](https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java)
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
 
-## equals()
+    public int get(int index) {
+        return arr[index];
+    }
 
-**1. == 与 equals() 区别** 
+    @Override
+    protected ShallowCloneExample clone() throws CloneNotSupportedException {
+        return (ShallowCloneExample) super.clone();
+    }
+}
+```
 
-- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个引用是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+```java
+ShallowCloneExample e1 = new ShallowCloneExample();
+ShallowCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 222
+```
 
-**2. 等价性** 
+```java
+public class DeepCloneExample implements Cloneable {
+    private int[] arr;
 
-> [散列](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md#%E4%B8%89%E6%95%A3%E5%88%977)
+    public DeepCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+
+    @Override
+    protected DeepCloneExample clone() throws CloneNotSupportedException {
+        DeepCloneExample result = (DeepCloneExample) super.clone();
+        result.arr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result.arr[i] = arr[i];
+        }
+        return result;
+    }
+}
+```
+
+```java
+DeepCloneExample e1 = new DeepCloneExample();
+DeepCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 2
+```
+
+使用 clone() 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+
+```java
+public class CloneConstructorExample {
+    private int[] arr;
+
+    public CloneConstructorExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public CloneConstructorExample(CloneConstructorExample original) {
+        arr = new int[original.arr.length];
+        for (int i = 0; i < original.arr.length; i++) {
+            arr[i] = original.arr[i];
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+}
+```
+
+```java
+CloneConstructorExample e1 = new CloneConstructorExample();
+CloneConstructorExample e2 = new CloneConstructorExample(e1);
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 2
+```
 
 # 四、继承
 
@@ -233,69 +489,150 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 可以对类或类中的成员（字段以及方法）加上访问修饰符。
 
-- 成员可见表示其它类可该类的对象访问到该成员；
+- 成员可见表示其它类可以用这个类的实例访问到该成员；
 - 类可见表示其它类可以用这个类创建对象。
 
-在理解类的可见性时，可以把类当做包中的一个成员，然后包表示一个类，那么就可以类比成员的可见性。
+protected 用于修饰成员，表示在继承体系中成员对于子类可见，但是这个访问修饰符对于类没有意义。
 
-protected 用于修饰成员，表示在继承体系中成员对于子类可见。但是这个访问修饰符对于类没有意义，因为包没有继承体系。
+设计良好的模块会隐藏所有的实现细节，把它的 API 与它的实现清晰地隔离开来。模块之间只通过它们的 API 进行通信，一个模块不需要知道其他模块的内部工作情况，这个概念被称为信息隐藏或封装。因此访问权限应当尽可能地使每个类或者成员不被外界访问。
 
-> [浅析 Java 中的访问权限控制](http://www.importnew.com/18097.html)
+如果子类的方法覆盖了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里式替换原则。
+
+字段决不能是公有的，因为这么做的话就失去了对这个实例域修改行为的控制，客户端可以对其随意修改。可以使用共有的 getter 和 setter 方法来替换共有字段。
+
+```java
+public class AccessExample {
+    public int x;
+}
+```
+
+```java
+public class AccessExample {
+    private int x;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+}
+```
+
+但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。
+
+```java
+public class AccessWithInnerClassExample {
+    private class InnerClass {
+        int x;
+    }
+
+    private InnerClass innerClass;
+
+    public AccessWithInnerClassExample() {
+        innerClass = new InnerClass();
+    }
+
+    public int getValue() {
+        return innerClass.x; // 直接访问
+    }
+}
+```
 
 ## 抽象类与接口
 
 **1. 抽象类** 
 
-抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
+抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。
+
+抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
 
 ```java
-public abstract class GenericServlet implements Servlet, ServletConfig, Serializable {
-    // abstract method
-    abstract void service(ServletRequest req, ServletResponse res);
+public abstract class AbstractClassExample {
 
-    void init() {
-        // Its implementation
+    protected int x;
+    private int y;
+
+    public abstract void func1();
+
+    public void func2() {
+        System.out.println("func2");
     }
-    // other method related to Servlet
 }
 ```
 
-> [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
+```java
+public class AbstractExtendClassExample extends AbstractClassExample{
+    @Override
+    public void func1() {
+        System.out.println("func1");
+    }
+}
+```
+
+```java
+// AbstractClassExample ac1 = new AbstractClassExample(); // 'AbstractClassExample' is abstract; cannot be instantiated
+AbstractClassExample ac2 = new AbstractExtendClassExample();
+ac2.func1();
+```
 
 **2. 接口** 
 
-接口是抽象类的延伸。Java 为了安全性而不支持多重继承，一个类只能有一个父类。但是接口不同，一个类可以同时实现多个接口，不管这些接口之间有没有关系，所以接口弥补不支持多重继承的缺陷。
-
-```java
-public interface Externalizable extends Serializable {
-
-    void writeExternal(ObjectOutput out) throws IOException;
-
-    void readExternal(ObjectInput in) throws IOException, ClassNotFoundException;
-}
-```
+接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
 
+接口也可以包含域，并且这些域隐式都是 static 和 final 的。
+
+接口中的方法默认都是 public 的，并且不允许定义为 private 或者 protected。
+
 ```java
-public interface InterfaceDefaultTest {
-    default void func() {
-        System.out.println("default method in interface!");
+public interface InterfaceExample {
+    void func1();
+
+    default void func2(){
+        System.out.println("func2");
+    }
+
+    int x = 123;
+    //int y;                // Variable 'y' might not have been initialized
+    public int z = 0;       // Modifier 'public' is redundant for interface fields
+    // private int k = 0;   // Modifier 'private' not allowed here
+    // protected int l = 0; // Modifier 'protected' not allowed here
+    // private void fun3(); // Modifier 'private' not allowed here
+}
+```
+
+```java
+public class InterfaceImplementExample implements InterfaceExample {
+    @Override
+    public void func1() {
+        System.out.println("func1");
     }
 }
+```
+
+```java
+// InterfaceExample ie1 = new InterfaceExample(); // 'InterfaceExample' is abstract; cannot be instantiated
+InterfaceExample ie2 = new InterfaceImplementExample();
+ie2.func1();
+System.out.println(InterfaceExample.x);
 ```
 
 **3. 比较** 
 
 - 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求子类和父类具有 IS-A 关系；
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
+- 接口的域只能是 static 和 final 类型的，而抽象类的域可以有多种访问权限。
+- 接口的方法只能是 public 的，而抽象类的方法可以由多种访问权限。
 
 **4. 使用选择** 
 
 使用抽象类：
 
 - 需要在几个相关的类中共享代码；
-- 需要能控制继承来的方法和字段的访问权限，而不是都为 public。
+- 需要能控制继承来的方法和域的访问权限，而不是都为 public。
 - 需要继承非静态（non-static）和非常量（non-final）字段。
 
 使用接口：
@@ -303,46 +640,56 @@ public interface InterfaceDefaultTest {
 - 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
 - 需要使用多重继承。
 
-> [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次接口要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
+
+> [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/) </br> [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
 
 ## super
 
-**1. 访问父类的成员** 
-
-如果子类覆盖了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
+- 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
+- 访问父类的成员：如果子类覆盖了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
-public class Superclass {
-    public void printMethod() {
-        System.out.println("Printed in Superclass.");
+public class SuperExample {
+    protected int x;
+    protected int y;
+
+    public SuperExample(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void func() {
+        System.out.println("SuperExample.func()");
     }
 }
 ```
 
 ```java
-public class Subclass extends Superclass {
-    // Overrides printMethod in Superclass
-    public void printMethod() {
-        super.printMethod();
-        System.out.println("Printed in Subclass");
+public class SuperExtendExample extends SuperExample {
+    private int z;
+
+    public SuperExtendExample(int x, int y, int z) {
+        super(x, y);
+        this.z = z;
     }
 
-    public static void main(String[] args) {
-        Subclass s = new Subclass();
-        s.printMethod();
+    @Override
+    public void func() {
+        super.func();
+        System.out.println("SuperExtendExample.func()");
     }
 }
 ```
 
-**2. 访问父类的构造函数** 
-
-可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
-
 ```java
-public MountainBike(int startHeight, int startCadence, int startSpeed, int startGear) {
-    super(startCadence, startSpeed, startGear);
-    seatHeight = startHeight;
-}
+SuperExample e = new SuperExtendExample(1, 2, 3);
+e.func();
+```
+
+```html
+SuperExample.func()
+SuperExtendExample.func()
 ```
 
 > [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
@@ -374,7 +721,7 @@ public MountainBike(int startHeight, int startCadence, int startSpeed, int start
 
 **1. 可以缓存 hash 值** 
 
-因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 等情况。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
+因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
 
 **2. String Pool 的需要** 
 
@@ -388,21 +735,50 @@ String 经常作为参数，String 不可变性可以保证参数不可变。例
 
 **4. 线程安全** 
 
-String 不可变性天生具备线程安全，可以在多个线程中使用。
+String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
 
 > [Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
 ## String.intern()
 
-使用 String.intern() 可以保证所有相同内容的字符串变量引用相同的内存对象。
+使用 String.intern() 可以保证相同内容的字符串实例引用相同的内存对象。
 
-> [揭开 String.intern() 那神秘的面纱](https://www.jianshu.com/p/95f516cb75ef)
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用，这个方法首先把 s1 引用的对象放到 String Poll（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
+
+```java
+String s1 = new String("aaa");
+String s2 = new String("aaa");
+System.out.println(s1 == s2);           // false
+String s3 = s1.intern();
+System.out.println(s1.intern() == s3);  // true
+```
+
+如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Poll 中。
+
+```java
+String s4 = "bbb";
+String s5 = "bbb";
+System.out.println(s4 == s5);  // true
+```
+
+Java 虚拟机将堆划分成新生代、老年代和永久代（PermGen Space）。在 Java 6 之前，字符串常量池被放在永久代中，而在 Java 7 时，它被放在堆的其它位置。这是因为永久代的空间有限，如果大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+
+> [What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) </br> [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
 # 六、基本类型与运算
 
 ## 包装类型
 
-八个基本类型：boolean/1 byte/8 char/16 short/16 int/32 float/32 long/64 double/64
+八个基本类型：
+
+- boolean/1
+- byte/8
+- char/16
+- short/16
+- int/32
+- float/32
+- long/64
+- double/64
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -411,38 +787,70 @@ Integer x = 2;     // 装箱
 int y = x;         // 拆箱
 ```
 
-new Integer(123) 与 Integer.valueOf(123) 的区别在于，Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
+new Integer(123) 与 Integer.valueOf(123) 的区别在于，new Integer(123) 每次都会新建一个对象，而 Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
 
 ```java
-public static void main(String[] args) {
-     Integer a = new Integer(1);
-     Integer b = new Integer(1);
-     System.out.println("a==b? " + (a == b));
-
-     Integer c = Integer.valueOf(1);
-     Integer d = Integer.valueOf(1);
-     System.out.println("c==d? " + (c == d));
-}
+Integer x = new Integer(123);
+Integer y = new Integer(123);
+System.out.println(x == y);    // false
+Integer z = Integer.valueOf(123);
+Integer k = Integer.valueOf(123);
+System.out.println(z == k);   // true
 ```
 
-```html
-a==b? false
-c==d? true
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+
+```java
+Integer m = 123;
+Integer n = 123;
+System.out.println(m == n); // true
 ```
 
 valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接使用缓存池的内容。
 
 ```java
 public static Integer valueOf(int i) {
-    final int offset = 128;
-    if (i >= -128 && i <= 127) {
-        return IntegerCache.cache[i + offset];
-    }
+    if (i >= IntegerCache.low && i <= IntegerCache.high)
+        return IntegerCache.cache[i + (-IntegerCache.low)];
     return new Integer(i);
 }
 ```
 
-基本类型中可以使用缓存池的值如下：
+在 Java 8 中，Integer 缓存池的大小默认为 -128\~127。
+
+```java
+static final int low = -128;
+static final int high;
+static final Integer cache[];
+
+static {
+    // high value may be configured by property
+    int h = 127;
+    String integerCacheHighPropValue =
+        sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+    if (integerCacheHighPropValue != null) {
+        try {
+            int i = parseInt(integerCacheHighPropValue);
+            i = Math.max(i, 127);
+            // Maximum array size is Integer.MAX_VALUE
+            h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+        } catch( NumberFormatException nfe) {
+            // If the property cannot be parsed into an int, ignore it.
+        }
+    }
+    high = h;
+
+    cache = new Integer[(high - low) + 1];
+    int j = low;
+    for(int k = 0; k < cache.length; k++)
+        cache[k] = new Integer(j++);
+
+    // range [-128, 127] must be interned (JLS7 5.1.7)
+    assert IntegerCache.high >= 127;
+}
+```
+
+Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些：
 
 - boolean values true and false
 - all byte values
@@ -450,52 +858,42 @@ public static Integer valueOf(int i) {
 - int values between -128 and 127
 - char in the range \u0000 to \u007F
 
-自动装箱过程编译器会调用 valueOf() 方法，因此多个 Integer 对象使用装箱来创建并且值相同，那么就会引用相同的对象。这样做很显然是为了节省内存开销。
-
-```java
-Integer x = 1;
-Integer y = 1;
-System.out.println(c == d); // true
-```
+因此在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
 
 > [Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
 
 ## switch
 
-A switch works with the byte, short, char, and int primitive data types. It also works with enumerated types and a few special classes that "wrap" certain primitive types: Character, Byte, Short, and Integer.
+从 Java 7 开始，可以在 switch 条件判断语句中使用 String 对象。
 
-In the JDK 7 release, you can use a String object in the expression of a switch statement.
+```java
+String s = "a";
+switch (s) {
+    case "a":
+        System.out.println("aaa");
+        break;
+    case "b":
+        System.out.println("bbb");
+        break;
+}
+```
 
 switch 不支持 long，是因为 swicth 的设计初衷是为那些只需要对少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
-> [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
-
-switch 使用查找表的方式来实现，JVM 中使用的指令是 lookupswitch。
-
 ```java
-public static void main(String... args) {
-  switch (1) {
-  case 1:
-    break;
-  case 2:
-    break;
-  }
-}
-
-public static void main(java.lang.String[]);
-  Code:
-   Stack=1, Locals=1, Args_size=1
-   0:   iconst_1
-   1:   lookupswitch{ //2
-                1: 28;
-                2: 31;
-                default: 31 }
-   28:  goto    31
-   31:  return
+//        long x = 111;
+//        switch (x) { // Incompatible types. Found: 'long', required: 'char, byte, short, int, Character, Byte, Short, Integer, String, or an enum'
+//            case 111:
+//                System.out.println(111);
+//                break;
+//            case 222:
+//                System.out.println(222);
+//                break;
+//        }
 ```
 
-> [How does Java's switch work under the hood?](https://stackoverflow.com/questions/12020048/how-does-javas-switch-work-under-the-hood)
+> [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
 
 # 七、反射
 
@@ -513,8 +911,6 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
 
-> [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
-
 **Advantages of Using Reflection:** 
 
 -  **Extensibility Features**  : An application may make use of external, user-defined classes by creating instances of extensibility objects using their fully-qualified names.
@@ -529,7 +925,7 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 -  **Security Restrictions**  : Reflection requires a runtime permission which may not be present when running under a security manager. This is in an important consideration for code which has to run in a restricted security context, such as in an Applet.
 -  **Exposure of Internals**  :Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
 
-> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
+> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html) </br> [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
 # 八、异常
 
@@ -540,8 +936,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 <div align="center"> <img src="../pics//PPjwP.png"/> </div><br>
 
-> - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-> - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+> [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception) </br> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 九、泛型
 
