@@ -49,7 +49,7 @@ Git 版本库有一个称为 stage 的暂存区，还有自动创建的 master �
 
 - git add files 把文件的修改添加到暂存区
 - git commit 把暂存区的修改提交到当前分支，提交之后暂存区就被清空了
-- git reset -- files 使用当前分支上的修改覆盖暂缓区，用来撤销最后一次 git reset  files
+- git reset -- files 使用当前分支上的修改覆盖暂缓区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
 <div align="center"> <img src="../pics//17976404-95f5-480e-9cb4-250e6aa1d55f.png"/> </div><br>
