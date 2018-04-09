@@ -1793,7 +1793,7 @@ public List<Integer> diffWaysToCompute(String input) {
 
 ## 动态规划
 
-递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解。
+递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
 
 ### 斐波那契数列
 
@@ -1809,7 +1809,7 @@ public List<Integer> diffWaysToCompute(String input) {
 
 dp[N] 即为所求。
 
-考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2] 即可，使得原来的 O(n) 空间复杂度优化为 O(1) 复杂度。
+考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
 ```java
 public int climbStairs(int n) {
@@ -1915,7 +1915,7 @@ private int rob(int[] nums, int first, int last) {
 
 题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
-定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
+定义一个数组 dp 存储错误方式数量，dp[i] 表示 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
 - i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
 - i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
@@ -1936,7 +1936,7 @@ dp[N] 即为所求。
 
 定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub> ，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
 
-因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，因此需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
+因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>
 
@@ -1976,7 +1976,7 @@ len = 3  :      [4, 5, 6]           => tails[2] = 6
 对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
-- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x。
+- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i-1] = x。
 
 可以看出 tails 数组保持有序，因此在查找 S<sub>i</sub> 位于 tails 数组的位置时就可以使用二分查找。
 
@@ -2014,7 +2014,7 @@ Output: 2
 Explanation: The longest chain is [1,2] -> [3,4]
 ```
 
-对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
+题目描述：对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
 
 ```java
 public int findLongestChain(int[][] pairs) {
