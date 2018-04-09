@@ -884,7 +884,11 @@ public class ProducerConsumer {
     private static class Producer extends Thread {
         @Override
         public void run() {
-            queue.add("product");
+            try {
+                queue.put("product");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.print("produce..");
         }
     }
@@ -894,7 +898,7 @@ public class ProducerConsumer {
         @Override
         public void run() {
             try {
-                queue.take();
+                String product = queue.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -917,7 +921,6 @@ public class ProducerConsumer {
         }
     }
 }
-
 ```
 
 ```html
