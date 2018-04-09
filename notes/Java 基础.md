@@ -128,6 +128,16 @@ public InitialOrderTest() {
 5. 子类（实例变量、普通语句块）
 6. 子类（构造函数）
 
+**5. 静态内部类**
+
+内部类的一种,静态内部类不依赖外部类，且不能访问外部类的非static变量和方法。
+
+**6. 静态导包**
+```java
+import static com.xxx.ClassName.*
+``` 
+在使用静态变量和方法时不用再指明ClassName，从而简化代码，但可读性大大降低。
+
 # 二、Object 通用方法
 
 ## 概览
