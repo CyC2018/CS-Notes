@@ -813,7 +813,7 @@ public class SemaphoreExample {
 
 ## FutureTask
 
-在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future<V> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
+在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future<V> 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future<V> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
 
 ```java
 public class FutureTask<V> implements RunnableFuture<V>
@@ -823,7 +823,7 @@ public class FutureTask<V> implements RunnableFuture<V>
 public interface RunnableFuture<V> extends Runnable, Future<V>
 ```
 
-当一个计算任务需要执行很长时间，那么就可以用 FutureTask 来封装这个任务，用一个线程去执行该任务，然后执行其它任务。当需要该任务的计算结果时，再通过 FutureTask 的 get() 方法获取。
+当一个计算任务需要执行很长时间，那么就可以用 FutureTask 来封装这个任务，用一个线程去执行该任务，然后其它线程继续执行其它任务。当需要该任务的计算结果时，再通过 FutureTask 的 get() 方法获取。
 
 ```java
 public class FutureTaskExample {
@@ -874,79 +874,54 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 **使用 BlockingQueue 实现生产者消费者问题** 
 
 ```java
-// 生产者
-public class Producer implements Runnable {
-    private BlockingQueue<String> queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-    public Producer(BlockingQueue<String> queue) {
-        this.queue = queue;
-    }
+public class ProducerConsumer {
 
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread().getName() + " is making product.");
-        String product = "Made By " + Thread.currentThread().getName();
-        try {
-            queue.put(product);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private static BlockingQueue<String> queue = new ArrayBlockingQueue<>(5);
+
+    private static class Producer extends Thread {
+        @Override
+        public void run() {
+            queue.add("product");
+            System.out.print("produce..");
         }
     }
-}
-```
 
-```java
-// 消费者
-public class Consumer implements Runnable {
-    private BlockingQueue<String> queue;
+    private static class Consumer extends Thread {
 
-    public Consumer(BlockingQueue<String> queue) {
-        this.queue = queue;
-    }
-
-    @Override
-    public void run() {
-        try {
-            String product = queue.take();
-            System.out.println(Thread.currentThread().getName() + " is consuming product." + "( " + product + " )");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        @Override
+        public void run() {
+            try {
+                queue.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print("consume..");
         }
     }
-}
-```
 
-```java
-// 客户端
-public class Client {
     public static void main(String[] args) {
-        BlockingQueue<String> queue = new LinkedBlockingQueue<>(5);
         for (int i = 0; i < 2; i++) {
-            new Thread(new Consumer(queue), "Consumer-" + i).start();
+            Producer producer = new Producer();
+            producer.start();
         }
         for (int i = 0; i < 5; i++) {
-            // 只有两个 Product，因此只能消费两个，其它三个消费者被阻塞
-            new Thread(new Producer(queue), "Producer-" + i).start();
+            Consumer consumer = new Consumer();
+            consumer.start();
         }
-        for (int i = 2; i < 5; i++) {
-            new Thread(new Consumer(queue), "Consumer-" + i).start();
+        for (int i = 0; i < 3; i++) {
+            Producer producer = new Producer();
+            producer.start();
         }
     }
 }
+
 ```
 
 ```html
-// 运行结果
-Producer-0 is making product.
-Consumer-0 is consuming product.( Made By Producer-0 )
-Producer-1 is making product.
-Consumer-1 is consuming product.( Made By Producer-1 )
-Producer-2 is making product.
-Producer-3 is making product.
-Producer-4 is making product.
-Consumer-2 is consuming product.( Made By Producer-2 )
-Consumer-3 is consuming product.( Made By Producer-3 )
-Consumer-4 is consuming product.( Made By Producer-4 )
+produce..produce..consume..consume..produce..consume..produce..consume..produce..consume..
 ```
 
 
