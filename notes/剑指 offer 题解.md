@@ -82,7 +82,7 @@
 
 # 2. 实现 Singleton
 
-> [单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+> [单例模式](https://github.com/CyC2018/Interview- Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
 
 # 3. 数组中重复的数字
 
@@ -296,7 +296,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ## 题目描述
 
-根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。
+根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
 
 ```html
 preorder = [3,9,20,15,7]
@@ -339,7 +339,7 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ## 解题思路
 
-① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
 <div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
 
@@ -393,15 +393,15 @@ public void push(int node) {
     in.push(node);
 }
 
-public int pop() {
+public int pop() throws Exception {
     if (out.isEmpty()) {
         while (!in.isEmpty()) {
             out.push(in.pop());
         }
     }
-    if (out.isEmpty()){
-            throw new Exception("queue is empty");
-        }
+    if (out.isEmpty()) {
+        throw new Exception("queue is empty");
+    }
     return out.pop();
 }
 ```
