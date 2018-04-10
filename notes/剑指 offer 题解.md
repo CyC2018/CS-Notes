@@ -82,7 +82,7 @@
 
 # 2. 实现 Singleton
 
-> [单例模式](https://github.com/CyC2018/Interview- Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+> [单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
 
 # 3. 数组中重复的数字
 
@@ -1142,7 +1142,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
     ListNode head = new ListNode(-1);
     ListNode cur = head;
     while (list1 != null && list2 != null) {
-        if (list1.val < list2.val) {
+        if (list1.val <= list2.val) {
             cur.next = list1;
             list1 = list1.next;
         } else {
@@ -1409,7 +1409,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 ## 题目描述
 
-输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
 例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
 
@@ -1673,36 +1673,30 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     int kthSmallest = findKthSmallest(nums, k - 1);
     ArrayList<Integer> ret = new ArrayList<>();
     for (int val : nums) {
-        if (val <= kthSmallest && ret.size() < k) ret.add(val);
+        if (val <= kthSmallest && ret.size() < k) {
+            ret.add(val);
+        }
     }
     return ret;
 }
 
 public int findKthSmallest(int[] nums, int k) {
-    int l = 0;
-    int h = nums.length - 1;
+    int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j < k) {
-            l = j + 1;
-        } else if (j > k) {
-            h = j - 1;
-        } else {
-            break;
-        }
+        if (j == k) break;
+        if (j > k) h = j - 1;
+        else l = j + 1;
     }
     return nums[k];
 }
 
 private int partition(int[] nums, int l, int h) {
-    int i = l;
-    int j = h + 1;
+    int i = l, j = h + 1;
     while (true) {
         while (i < h && nums[++i] < nums[l]) ;
         while (j > l && nums[l] < nums[--j]) ;
-        if (i >= j) {
-            break;
-        }
+        if (i >= j) break;
         swap(nums, i, j);
     }
     swap(nums, l, j);
@@ -1710,9 +1704,7 @@ private int partition(int[] nums, int l, int h) {
 }
 
 private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
+    int t = nums[i]; nums[i] = nums[j]; nums[j] = t;
 }
 ```
 
@@ -1882,7 +1874,7 @@ private int getAmountOfDigit(int digit) {
 }
 
 /**
- * 在 digit 位数组成的字符串中，第 index 为的数
+ * 在 digit 位数组成的字符串中，第 index 个数
  */
 private int digitAtIndex(int index, int digit) {
     int number = beginNumber(digit) + index / digit;

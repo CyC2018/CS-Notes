@@ -76,7 +76,7 @@
 
 ## 无限期等待（Waiting）
 
-等待其它线程显示地唤醒，否则不会被分配 CPU 时间片。
+等待其它线程显式地唤醒，否则不会被分配 CPU 时间片。
 
 | 进入方法 | 退出方法 |
 | --- | --- |
@@ -794,9 +794,10 @@ public class SemaphoreExample {
                 try {
                     semaphore.acquire();
                     System.out.print(semaphore.availablePermits() + " ");
-                    semaphore.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } finally {
+                    semaphore.release();
                 }
             });
         }
