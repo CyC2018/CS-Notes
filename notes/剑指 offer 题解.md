@@ -1986,6 +1986,7 @@ public int longestSubStringWithoutDuplication(String str) {
     int curLen = 0;
     int maxLen = 0;
     int[] indexs = new int[26];
+    Arrays.fill(indexs, -1);
     for (int i = 0; i < str.length(); i++) {
         int c = str.charAt(i) - 'a';
         int preIndex = indexs[c];
@@ -2010,21 +2011,19 @@ public int longestSubStringWithoutDuplication(String str) {
 ## 解题思路
 
 ```java
-public int GetUglyNumber_Solution(int N) {
-    if (N <= 6) return N;
+public int GetUglyNumber_Solution(int index) {
+    if (index <= 6) return index;
     int i2 = 0, i3 = 0, i5 = 0;
-    int cnt = 1;
-    int[] dp = new int[N];
+    int[] dp = new int[index];
     dp[0] = 1;
-    while (cnt < N) {
+    for (int i = 1; i < index; i++) {
         int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
-        int min = Math.min(n2, Math.min(n3, n5));
-        dp[cnt++] = min;
-        if (min == n2) i2++;
-        if (min == n3) i3++;
-        if (min == n5) i5++;
+        dp[i] = Math.min(n2, Math.min(n3, n5));
+        if (dp[i] == n2) i2++;
+        if (dp[i] == n3) i3++;
+        if (dp[i] == n5) i5++;
     }
-    return dp[N - 1];
+    return dp[index - 1];
 }
 ```
 

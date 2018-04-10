@@ -12,7 +12,7 @@
     * [访问权限](#访问权限)
     * [抽象类与接口](#抽象类与接口)
     * [super](#super)
-    * [重载与重写](#重载与重写)
+    * [覆盖与重载](#覆盖与重载)
 * [五、String](#五string)
     * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
     * [String 不可变的原因](#string-不可变的原因)
@@ -706,11 +706,11 @@ SuperExtendExample.func()
 
 > [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 
-## 重载与重写
+## 覆盖与重载
 
-- 重写存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
+- 覆盖（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
 
-- 重载即存在于继承体系中，也存在于同一个类中，指一个方法与已经存在的方法或者父类的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
+- 重载（Overload）也存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
 # 五、String
 
