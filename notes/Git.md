@@ -1,6 +1,3 @@
-<div align="center"> <img src="../pics//98fb8a54-e916-440e-ab4f-73b2955838c9.jpg" width="100%"/> </div><br>
-
-
 <!-- GFM-TOC -->
 * [学习资料](#学习资料)
 * [集中式与分布式](#集中式与分布式)
@@ -82,7 +79,7 @@ Git 把每次提交都连成一条时间线。分支使用指针来实现，例�
 
 # 冲突
 
-当两个分支都对同一个文件进行了修改，在分支合并时就会产生冲突。
+当两个分支都对同一个文件的同一行进行了修改，在分支合并时就会产生冲突。
 
 <div align="center"> <img src="../pics//58e57a21-6b6b-40b6-af85-956dd4e0f55a.jpg"/> </div><br>
 
@@ -157,3 +154,5 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 <div align="center"> <img src="../pics//7a29acce-f243-4914-9f00-f2988c528412.jpg"/> </div><br>
 
 比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
+
+

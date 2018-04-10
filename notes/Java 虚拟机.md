@@ -1,9 +1,9 @@
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
-    * [Java 虚拟机栈](#java-虚拟机栈)
+    * [虚拟机栈](#虚拟机栈)
     * [本地方法栈](#本地方法栈)
-    * [Java 堆](#java-堆)
+    * [堆](#堆)
     * [方法区](#方法区)
     * [运行时常量池](#运行时常量池)
     * [直接内存](#直接内存)
@@ -27,17 +27,17 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//dc695f48-4189-4fc7-b950-ed25f6c1521708518830.jpg"/> </div><br>
-
-注：白色区域为线程私有，蓝色区域为线程共享。
+<div align="center"> <img src="../pics//540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
 
 ## 程序计数器
 
 记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
 
-## Java 虚拟机栈
+## 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+
+<div align="center"> <img src="../pics//f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width=""/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
 
@@ -56,11 +56,13 @@ java -Xss=512M HackTheJava
 
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-## Java 堆
+<div align="center"> <img src="../pics//JNIFigure1.gif" width="350"/> </div><br>
+
+## 堆
 
 所有对象实例都在这里分配内存。
 
-是垃圾收集的主要区域（"GC 堆 "），现代的垃圾收集器基本都是采用分代收集算法，该算法的思想是针对不同的对象采取不同的垃圾回收算法，因此虚拟机把 Java 堆分成以下三块：
+是垃圾收集的主要区域（"GC 堆"），现代的垃圾收集器基本都是采用分代收集算法，该算法的思想是针对不同的对象采取不同的垃圾回收算法，因此虚拟机把 Java 堆分成以下三块：
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
@@ -72,14 +74,14 @@ java -Xss=512M HackTheJava
 - From Survivor
 - To Survivor
 
-<div align="center"> <img src="../pics//ppt_img.gif"/> </div><br>
+<div align="center"> <img src="../pics//ppt_img.gif" width=""/> </div><br>
 
-Java 堆不需要连续内存，并且可以通过动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
+Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
-可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置最小值，第二个参数设置最大值。
+可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
-java -Xms=1M -XmX=2M HackTheJava
+java -Xms=1M -Xmx=2M HackTheJava
 ```
 
 ## 方法区
@@ -100,7 +102,7 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，引入了一种基于通道（Channel）与缓冲区（Buffer）的 I/O 方式，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
+在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
 # 二、垃圾收集
 
@@ -123,6 +125,8 @@ objB.instance = objA;
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是都是可用的，不可达的对象可被回收。
 
+<div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
+
 GC Roots 一般包含以下内容：
 
 1. 虚拟机栈中引用的对象
@@ -132,7 +136,7 @@ GC Roots 一般包含以下内容：
 
 ### 3. 引用类型
 
-无论是通过引用计算算法判断对象的引用数量，还是通过可达性分析算法判断对象的引用链是否可达，判定对象是否存活都与“引用”有关。
+无论是通过引用计算算法判断对象的引用数量，还是通过可达性分析算法判断对象的引用链是否可达，判定对象是否存活都与引用有关。
 
 Java 对引用的概念进行了扩充，引入四种强度不同的引用类型。
 
@@ -150,7 +154,7 @@ Object obj = new Object();
 
 用来描述一些还有用但是并非必需的对象。
 
-在系统将要发生内存溢出异常之前，将会对这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出溢出异常。
+在系统将要发生内存溢出异常之前，将会对这些对象列进回收范围之中进行第二次回收。
 
 软引用主要用来实现类似缓存的功能，在内存足够的情况下直接通过软引用取值，无需从繁忙的真实来源获取数据，提升速度；当内存不足时，自动删除这部分缓存数据，从真正的来源获取这些数据。
 
@@ -211,20 +215,18 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg"/> </div><br>
+<div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
 
 将需要回收的对象进行标记，然后清除。
 
 不足：
 
-1. 标记和清除过程效率都不高
-2. 会产生大量碎片，内存碎片过多可能导致无法给大对象分配内存
-
-之后的算法都是基于该算法进行改进。
+1. 标记和清除过程效率都不高；
+2. 会产生大量碎片，内存碎片过多可能导致无法给大对象分配内存。
 
 ### 2. 复制
 
-<div align="center"> <img src="../pics//e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg"/> </div><br>
+<div align="center"> <img src="../pics//e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
@@ -234,7 +236,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 3. 标记 - 整理
 
-<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg"/> </div><br>
+<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
@@ -249,13 +251,13 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ## 垃圾收集器
 
-<div align="center"> <img src="../pics//c625baa0-dde6-449e-93df-c3a67f2f430f.jpg"/> </div><br>
+<div align="center"> <img src="../pics//c625baa0-dde6-449e-93df-c3a67f2f430f.jpg" width=""/> </div><br>
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
 ### 1. Serial 收集器
 
-<div align="center"> <img src="../pics//22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg"/> </div><br>
+<div align="center"> <img src="../pics//22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
 
 它是单线程的收集器，不仅意味着只会使用一个线程进行垃圾收集工作，更重要的是它在进行垃圾收集时，必须暂停所有其他工作线程，往往造成过长的等待时间。
 
@@ -265,7 +267,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2. ParNew 收集器
 
-<div align="center"> <img src="../pics//81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg"/> </div><br>
+<div align="center"> <img src="../pics//81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg" width=""/> </div><br>
 
 它是 Serial 收集器的多线程版本。
 
@@ -287,7 +289,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 4. Serial Old 收集器
 
-<div align="center"> <img src="../pics//08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg"/> </div><br>
+<div align="center"> <img src="../pics//08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg" width=""/> </div><br>
 
 Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下的虚拟机使用。如果用在 Server 模式下，它有两大用途：
 
@@ -296,7 +298,7 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 ### 5. Parallel Old 收集器
 
-<div align="center"> <img src="../pics//278fe431-af88-4a95-a895-9c3b80117de3.jpg"/> </div><br>
+<div align="center"> <img src="../pics//278fe431-af88-4a95-a895-9c3b80117de3.jpg" width=""/> </div><br>
 
 是 Parallel Scavenge 收集器的老年代版本。
 
@@ -304,7 +306,7 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 ### 6. CMS 收集器
 
-<div align="center"> <img src="../pics//62e77997-6957-4b68-8d12-bfd609bb2c68.jpg"/> </div><br>
+<div align="center"> <img src="../pics//62e77997-6957-4b68-8d12-bfd609bb2c68.jpg" width=""/> </div><br>
 
 CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记 - 清除算法实现的。
 
@@ -329,7 +331,7 @@ CMS（Concurrent Mark Sweep），从 Mark Sweep 可以知道它是基于标记 -
 
 ### 7. G1 收集器
 
-<div align="center"> <img src="../pics//f99ee771-c56f-47fb-9148-c0036695b5fe.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
 
 G1（Garbage-First）收集器是当今收集器技术发展最前沿的成果之一，它是一款面向服务端应用的垃圾收集器，HotSpot 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 JDK 1.5 中发布的 CMS 收集器。
 
@@ -390,7 +392,7 @@ JVM 为对象定义年龄计数器，经过 Minor GC 依然存活，并且能被
 
 ### 4. 动态对象年龄判定
 
-JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无序等待 MaxTenuringThreshold 中要求的年龄。
+JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等待 MaxTenuringThreshold 中要求的年龄。
 
 ### 5. 空间分配担保
 
@@ -414,7 +416,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 ### 4. JDK 1.7 及以前的永久代空间不足
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 
 ### 5. Concurrent Mode Failure
 
@@ -426,7 +428,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 ## 类的生命周期
 
-<div align="center"> <img src="../pics//32b8374a-e822-4720-af0b-c0f485095ea2.jpg"/> </div><br>
+<div align="center"> <img src="../pics//32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width=""/> </div><br>
 
 包括以下 7 个阶段：
 
@@ -444,7 +446,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列五种情况必须对类进行初始化（加载、验证、准备都会随着发生）：
 
-1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译器把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
+1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
 
 2. 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
 
@@ -503,19 +505,19 @@ System.out.println(ConstClass.HELLOWORLD);
 
 主要有以下 4 个阶段：
 
-**（一）文件格式验证** 
+（一）文件格式验证
 
 验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理。
 
-**（二）元数据验证** 
+（二）元数据验证
 
 对字节码描述的信息进行语义分析，以保证其描述的信息符合 Java 语言规范的要求。
 
-**（三）字节码验证** 
+（三）字节码验证
 
 通过数据流和控制流分析，确保程序语义是合法、符合逻辑的。
 
-**（四）符号引用验证** 
+（四）符号引用验证
 
 发生在虚拟机将符号引用转换为直接引用的时候，对类自身以外（常量池中的各种符号引用）的信息进行匹配性校验。
 
@@ -606,17 +608,17 @@ public static void main(String[] args) {
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
-- 启动类加载器（Bootstrap ClassLoader） 此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
 
-- 扩展类加载器（Extension ClassLoader） 这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+- 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
 
-- 应用程序类加载器（Application ClassLoader） 这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+- 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
 ### 3. 双亲委派模型
 
 应用程序都是由三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器，这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
 
-<div align="center"> <img src="../pics//2cdc3ce2-fa82-4c22-baaa-000c07d10473.jpg"/> </div><br>
+<div align="center"> <img src="../pics//class_loader_hierarchy.png" width="600"/> </div><br>
 
 **（一）工作过程** 
 
@@ -630,7 +632,7 @@ public static void main(String[] args) {
 
 ```java
 protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException{
-    //check the class has been loaded or not
+    // 先检查请求的类是否已经被加载过了
     Class c = findLoadedClass(name);
     if(c == null) {
         try{
@@ -640,9 +642,10 @@ protected synchronized Class<?> loadClass(String name, boolean resolve) throws C
                 c = findBootstrapClassOrNull(name);
             }
         } catch(ClassNotFoundException e) {
-            //if throws the exception , the father can not complete the load
+            // 如果父类加载器抛出 ClassNotFoundException，说明父类加载器无法完成加载请求
         }
         if(c == null) {
+            // 如果父类加载器无法完成加载请求，再调用自身的 findClass() 来进行加载
             c = findClass(name);
         }
     }
@@ -681,6 +684,11 @@ java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC
 
 # 参考资料
 
-- 深入理解 Java 虚拟机
+- 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
+- [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
+- [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)
+- [深入理解 JVM(2)——GC 算法与内存分配策略](https://crowhawk.github.io/2017/08/10/jvm_2/)
+- [深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm_3/)
+- [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)

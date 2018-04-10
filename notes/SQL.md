@@ -22,6 +22,7 @@
 * [二十一、事务处理](#二十一事务处理)
 * [二十二、字符集](#二十二字符集)
 * [二十三、权限管理](#二十三权限管理)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -174,7 +175,7 @@ ORDER BY col1 DESC, col2 ASC;
 
 # 九、过滤
 
-不进行过滤的数据非常大，导致通过网络传输了很多多余的数据，从而浪费了网络带宽。因此尽量使用 SQL 语句来过滤不必要的数据，而不是传输所有的数据到客户端中然后由客户端进行过滤。
+不进行过滤的数据非常大，导致通过网络传输了多余的数据，从而浪费了网络带宽。因此尽量使用 SQL 语句来过滤不必要的数据，而不是传输所有的数据到客户端中然后由客户端进行过滤。
 
 ```sql
 SELECT *
@@ -189,7 +190,7 @@ WHERE col IS NULL;
 | = <  >  | 等于 小于 大于 |
 | <> !=  | 不等于  |
 | <= !> | 小于等于 |
-| >= !< | 大于等于 |
+| &gt;= !< | 大于等于 |
 | BETWEEN | 在两个值之间 |
 | IS NULL | 为NULL值 |
 
@@ -205,9 +206,9 @@ WHERE col IS NULL;
 
 通配符也是用在过滤语句中，但它只能用于文本字段。
 
--  **%**  匹配 >=0 个任意字符，类似于 \*；
+-  **%**  匹配 >=0 个任意字符；
 
--  **\_**  匹配 ==1 个任意字符，类似于 \.；
+-  **\_**  匹配 ==1 个任意字符；
 
 -  **[ ]**  可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。
 
@@ -316,7 +317,7 @@ mysql> SELECT NOW();
 
 AVG() 会忽略 NULL 行。
 
-使用 DISTINCT 可以汇总函数值汇总不同的值。
+使用 DISTINCT 可以让汇总函数值汇总不同的值。
 
 ```sql
 SELECT AVG(DISTINCT col1) AS avg_col
@@ -329,12 +330,21 @@ FROM mytable
 
 可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
-指定的分组字段除了能让数组按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
+指定的分组字段除了能按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
 
 ```sql
 SELECT col, COUNT(*) AS num
 FROM mytable
 GROUP BY col;
+```
+
+GROUP BY 是按照分组字段进行排序，ORDER BY 也可以以汇总字段来进行排序。
+
+```sql
+SELECT col, COUNT(*) AS num
+FROM mytable
+GROUP BY col
+ORDER BY num;
 ```
 
 WHERE 过滤行，HAVING 过滤分组。行过滤应当先与分组过滤；
@@ -347,19 +357,10 @@ GROUP BY col
 HAVING COUNT(*) >= 2;
 ```
 
-GROUP BY 的排序结果为分组字段，而 ORDER BY 也可以以聚集字段来进行排序。
-
-```sql
-SELECT col, COUNT(*) AS num
-FROM mytable
-GROUP BY col
-ORDER BY num;
-```
-
 分组规定：
 
 1. GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
-2. 除了汇总计算语句的字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
+2. 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
 3. NULL 的行会单独分为一组；
 4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
@@ -369,11 +370,11 @@ ORDER BY num;
 
 可以将子查询的结果作为 WHRER 语句的过滤条件：
 
-```
+```sql
 SELECT *
 FROM mytable1
 WHERE col1 IN (SELECT col2
-                 FROM mytable2);
+               FROM mytable2);
 ```
 
 下面的语句可以检索出客户的订单数量，子查询语句会对第一个查询检索出的每个客户执行一次：
@@ -389,7 +390,7 @@ ORDER BY cust_name;
 
 # 十五、连接
 
-连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 Where。
+连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 WHERE。
 
 连接可以替换子查询，并且比子查询的效率一般会更快。
 
@@ -435,7 +436,7 @@ where department = (
 自连接版本
 
 ```sql
-select name
+select e2.name
 from employee as e1, employee as e2
 where e1.department = e2.department
       and e1.name = "Jim";
@@ -462,8 +463,8 @@ from employee natural join department;
 
 ```sql
 select Customers.cust_id, Orders.order_num
-   from Customers left outer join Orders
-   on Customers.cust_id = Orders.curt_id;
+from Customers left outer join Orders
+on Customers.cust_id = Orders.curt_id;
 ```
 
 如果需要统计顾客的订单数，使用聚集函数。
@@ -521,9 +522,7 @@ WHERE col5 = val;
 ## 使用存储过程的好处
 
 1. 代码封装，保证了一定的安全性；
-
 2. 代码复用；
-
 3. 由于是预先编译，因此具有很高的性能。
 
 ## 创建存储过程
@@ -621,7 +620,7 @@ MySQL 不允许在触发器中使用 CALL 语句 ，也就是不能调用存储�
 3. 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
 4. 保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退（与回退整个事务处理不同）。
 
-不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CRETE 和 DROP 语句。
+不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CREATE 和 DROP 语句。
 
 MySQL 的事务提交默认是隐式提交，也就是每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
@@ -704,8 +703,6 @@ SHOW GRANTS FOR myuser;
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-<div align="center"> <img src="../pics//c73aa08e-a987-43c9-92be-adea4a884c25.png"/> </div><br>
-
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
 ## 删除权限
@@ -730,3 +727,6 @@ GRANT 和 REVOKE 可在几个层次上控制访问权限：
 SET PASSWROD FOR myuser = Password('newpassword');
 ```
 
+# 参考资料
+
+- BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
