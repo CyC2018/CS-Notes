@@ -803,7 +803,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 2. HTTP/1.1 支持管线化处理
 3. HTTP/1.1 支持虚拟主机
 4. HTTP/1.1 新增状态码 100
-5. HTTP/1.1 只是分块传输编码
+5. HTTP/1.1 支持分块传输编码
 6. HTTP/1.1 新增缓存处理指令 max-age
 
 具体内容见上文

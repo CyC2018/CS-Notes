@@ -255,9 +255,9 @@ public class EqualExample {
 
 ## hashCode()
 
-hasCode() 返回散列值，而 equals() 是用来判断两个实例是否相等。相等的两个实例散列值一定要相同，但是散列值相同的两个实例不一定相等。
+hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。
 
-在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也相等。
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也等价。
 
 下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
 
@@ -710,7 +710,7 @@ SuperExtendExample.func()
 
 - 覆盖（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
 
-- 重载（Overload）也存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
+- 重载（Overload）存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
 # 五、String
 
@@ -739,7 +739,7 @@ SuperExtendExample.func()
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="../pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg" width=""/> </div><br>
 
 **3. 安全性** 
 
@@ -773,7 +773,7 @@ String s5 = "bbb";
 System.out.println(s4 == s5);  // true
 ```
 
-Java 虚拟机将堆划分成新生代、老年代和永久代（PermGen Space）。在 Java 6 之前，字符串常量池被放在永久代中，而在 Java 7 时，它被放在堆的其它位置。这是因为永久代的空间有限，如果大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+Java 虚拟机将堆划分成新生代、老年代和永久代（PermGen Space）。在 Java 7 之前，字符串常量池被放在永久代中，而在 Java 7，它被放在堆的其它位置。这是因为永久代的空间有限，如果大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 > [What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) </br> [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
@@ -946,7 +946,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 1.  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
 2.  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
-<div align="center"> <img src="../pics//PPjwP.png"/> </div><br>
+<div align="center"> <img src="../pics//PPjwP.png" width="600"/> </div><br>
 
 > [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception) </br> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
