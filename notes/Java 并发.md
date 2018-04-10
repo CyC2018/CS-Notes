@@ -1400,7 +1400,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-ABA ：如果一个变量 V 初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。J.U.C 包提供了一个带有标记的原子引用类“AtomicStampedReference”来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+ABA ：如果一个变量 V 初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。J.U.C 包提供了一个带有标记的原子引用类“AtomicStampedReference”来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题通常会采用携带版本号的方式(e.g `AtomicStampedReference`)，或者改用传统的互斥同步可能会比原子类更高效。
 
 ### 3. 无同步方案
 
