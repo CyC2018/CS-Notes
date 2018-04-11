@@ -313,7 +313,7 @@ ToStringExample@4554617c
 
 **1. cloneable** 
 
-clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去重载 clone() 就没有这个方法。
+clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去覆盖 clone() 就没有这个方法。
 
 ```java
 public class CloneExample {
@@ -327,7 +327,7 @@ CloneExample e1 = new CloneExample();
 CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
-接下来重载 Object 的 clone() 得到以下实现：
+接下来覆盖 Object 的 clone() 得到以下实现：
 
 ```java
 public class CloneExample {
@@ -595,7 +595,7 @@ ac2.func1();
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
 
-接口也可以包含域，并且这些域隐式都是 static 和 final 的。
+接口也可以包含字段，并且这些字段隐式都是 static 和 final 的。
 
 接口中的方法默认都是 public 的，并且不允许定义为 private 或者 protected。
 
@@ -636,7 +636,7 @@ System.out.println(InterfaceExample.x);
 
 - 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求子类和父类具有 IS-A 关系；
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
-- 接口的域只能是 static 和 final 类型的，而抽象类的域可以有多种访问权限。
+- 接口的字段只能是 static 和 final 类型的，而抽象类的域可以有多种访问权限。
 - 接口的方法只能是 public 的，而抽象类的方法可以由多种访问权限。
 
 **4. 使用选择** 
