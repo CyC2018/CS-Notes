@@ -484,6 +484,59 @@ public synchronized static void fun() {
 
 作用于整个类。
 
+**参数传递**
+
+使用 synchronized 进行同步一个方法时，方法体中的代码逻辑是不能够被同时多个线程执行，但是传输的传递是可以并发执行的，也就是会先把参数压近栈中，然后再进行同步，以下是一个 demo：
+
+```java
+package hello;
+
+public class A extends Thread {
+    public static Hello h;
+
+    public void run() {
+        h.test(h.i);
+    }
+}
+
+// 文件分界线
+
+package hello;
+
+public class Hello {
+    public int i = 0;
+
+    public synchronized void test(int x) {
+        System.out.println(x);
+        A.h.i += 1000;
+    }
+
+    public static void main(String[] args) {
+        Hello h = new Hello();
+        A.h = h;
+        Thread t1 = new A();
+        Thread t2 = new A();
+        t1.start();
+        t2.start();
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+输出：
+
+```
+0
+0
+```
+
+如果传输传递过程中也进行了同步的话，上述 demo 应该输出：`0 1000`。根据输出结果可知，进行参数传递过程中并没有进行同步控制。
+
 ## ReentrantLock
 
 ```java
