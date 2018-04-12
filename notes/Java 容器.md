@@ -567,7 +567,7 @@ static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 
 <div align="center"> <img src="../pics//image005.jpg"/> </div><br>
 
-### 2. HashEntery 的不可变性
+### 2. HashEntry 的不可变性
 
 HashEntry 中的 key，hash，next 都声明为 final 型。这意味着，不能把节点添加到链接的中间和尾部，也不能在链接的中间和尾部删除节点。这个特性可以保证：在访问某个节点时，这个节点之后的链接不会被改变。这个特性可以大大降低处理链表时的复杂性。
 
