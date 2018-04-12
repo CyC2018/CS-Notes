@@ -803,7 +803,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 2. HTTP/1.1 支持管线化处理
 3. HTTP/1.1 支持虚拟主机
 4. HTTP/1.1 新增状态码 100
-5. HTTP/1.1 只是分块传输编码
+5. HTTP/1.1 支持分块传输编码
 6. HTTP/1.1 新增缓存处理指令 max-age
 
 具体内容见上文
@@ -828,7 +828,7 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 
 # 参考资料
 
-- 上野宣. 图解 HTTP[M]. Ren min you dian chu ban she, 2014.
+- 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
 - [HTTP (HyperText Transfer Protocol)](https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
