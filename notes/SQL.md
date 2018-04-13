@@ -251,7 +251,7 @@ FROM mytable
 |  LOWER() UPPER() |  转换为小写或者大写 |
 | LTRIM() RTIM() | 去除左边或者右边的空格 |
 | LENGTH() | 长度 |
-| SUNDEX() | 转换为语音值 |
+| SOUNDEX() | 转换为语音值 |
 
 其中， **SOUNDEX()**  是将一个字符串转换为描述其语音表示的字母数字模式的算法，它是根据发音而不是字母比较。
 
@@ -347,7 +347,7 @@ GROUP BY col
 ORDER BY num;
 ```
 
-WHERE 过滤行，HAVING 过滤分组。行过滤应当先与分组过滤；
+WHERE 过滤行，HAVING 过滤分组。行过滤应当先于分组过滤；
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -464,7 +464,7 @@ from employee natural join department;
 ```sql
 select Customers.cust_id, Orders.order_num
 from Customers left outer join Orders
-on Customers.cust_id = Orders.curt_id;
+on Customers.cust_id = Orders.cust_id;
 ```
 
 如果需要统计顾客的订单数，使用聚集函数。
@@ -473,7 +473,7 @@ on Customers.cust_id = Orders.curt_id;
 select Customers.cust_id,
        COUNT(Orders.order_num) as num_ord
 from Customers left outer join Orders
-on Customers.cust_id = Orders.curt_id
+on Customers.cust_id = Orders.cust_id
 group by Customers.cust_id;
 ```
 
