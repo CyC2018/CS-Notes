@@ -507,7 +507,7 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 ### 3. 隧道
 
-使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。隧道本身不去解析 HTTP 请求。
+使用 SSL 等加密手段，为客户端和服务器之间建立一条安全的通信线路。
 
 # 六、HTTPs
 
@@ -810,9 +810,11 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 ## HTTP/1.1 与 HTTP/2.0 的区别
 
+> [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+
 ### 1. 多路复用
 
-HTTP/2.0 使用多路复用技术，使用同一个 TCP 连接来处理多个请求。
+HTTP/2.0 使用多路复用技术，同一个 TCP 连接可以处理多个请求。
 
 ### 2. 首部压缩
 
@@ -820,7 +822,7 @@ HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0
 
 ### 3. 服务端推送
 
-在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 index.html 页面，服务端就把 index.js 一起发给客户端。
+HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 index.html 页面，服务端就把 index.js 一起发给客户端。
 
 ### 4. 二进制格式
 
@@ -848,3 +850,5 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 - [XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
 - [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
+- [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
+- [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)

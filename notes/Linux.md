@@ -50,8 +50,11 @@
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
     * [进程状态](#进程状态)
-    * [SIGCHILD](#sigchild)
-    * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
+    * [SIGCHLD](#sigchld)
+    * [wait()](#wait)
+    * [waitpid()](#waitpid)
+    * [孤儿进程](#孤儿进程)
+    * [僵死进程](#僵死进程)
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
@@ -1061,7 +1064,6 @@ daemon 2
 
 <div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
 
-
 | 状态 | 说明 |
 | :---: | --- |
 | R | running or runnable (on run queue) |
@@ -1070,26 +1072,56 @@ daemon 2
 | Z | defunct/zombie, terminated but not reaped by its parent |
 | T | stopped, either by a job control signal or because it is being traced|
 
-## SIGCHILD
+## SIGCHLD
 
 当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
 
 - 得到 SIGCHLD 信号；
-- 阻塞的 waitpid(2)（或者 wait）调用会返回。
+- waitpid() 或者 wait() 调用会返回。
 
 <div align="center"> <img src="../pics//flow.png" width=""/> </div><br>
 
-## 孤儿进程和僵死进程
+其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
 
-### 1. 孤儿进程
+在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息。父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
+
+## wait()
+
+```c
+pid_t wait(int *status)
+```
+
+父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
+
+如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
+
+参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，我们就可以设定这个参数为 NULL：
+
+```c
+pid = wait(NULL);
+```
+
+## waitpid()
+
+```c
+pid_t waitpid(pid_t pid,int *status,int options)
+```
+
+作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
+
+pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么贺 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+
+options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
+
+## 孤儿进程
 
 一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
 
 由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
 
-### 2. 僵死进程
+## 僵死进程
 
-一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait 或 waitpid 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait 或 waitpid，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
 
 僵死进程通过 ps 命令显示出来的状态为 Z。
 
@@ -1397,3 +1429,4 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
 - [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)
+- [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)
