@@ -474,6 +474,8 @@ new capacity : 00100000
 
 ### 7. 扩容-计算数组容量
 
+HashMap 构造函数允许用户传入的容量不是 2 的幂次方，因为它可以自动地将传入的容量转换为 2 的幂次方。
+
 先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
 ```
@@ -482,7 +484,7 @@ mask |= mask >> 2    11111100
 mask |= mask >> 4    11111111
 ```
 
-mask+1 是大于原始数字的最小的 2 次方。
+mask+1 是大于原始数字的最小的 2 幂次方。
 
 ```
 num     10010000
@@ -519,7 +521,7 @@ HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 �
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/1.7/ConcurrentHashMap.java)
 
-ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶。
+ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶。
 
 相比于 HashTable 和用同步包装器包装的 HashMap（Collections.synchronizedMap(new HashMap())），ConcurrentHashMap 拥有更高的并发性。在 HashTable 和由同步包装器包装的 HashMap 中，使用一个全局的锁来同步不同线程间的并发访问。同一时间点，只能有一个线程持有锁，也就是说在同一时间点，只能有一个线程能访问容器。这虽然保证多线程间的安全并发访问，但同时也导致对容器的访问变成串行化的了。
 
@@ -536,7 +538,7 @@ static final class HashEntry<K,V> {
 }
 ```
 
-继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
+Segment 继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
 
 ```java
 static final class Segment<K,V> extends ReentrantLock implements Serializable {
@@ -572,46 +574,17 @@ static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 
 ### 2. HashEntry 的不可变性
 
-HashEntry 中的 key，hash，next 都声明为 final 型。这意味着，不能把节点添加到链接的中间和尾部，也不能在链接的中间和尾部删除节点。这个特性可以保证：在访问某个节点时，这个节点之后的链接不会被改变。这个特性可以大大降低处理链表时的复杂性。
+HashEntry 类的 value 域被声明为 Volatile 型，Java 的内存模型可以保证：某个写线程对 value 域的写入马上可以被后续的某个读线程 “看” 到。在 ConcurrentHashMap 中，不允许用 null 作为键和值，当读线程读到某个 HashEntry 的 value 域的值为 null 时，便知道产生了冲突——发生了重排序现象，需要加锁后重新读入这个 value 值。这些特性互相配合，使得读线程即使在不加锁状态下，也能正确访问 ConcurrentHashMap。
 
-同时，HashEntry 类的 value 域被声明为 Volatile 型，Java 的内存模型可以保证：某个写线程对 value 域的写入马上可以被后续的某个读线程 “看” 到。在 ConcurrentHashMap 中，不允许用 null 作为键和值，当读线程读到某个 HashEntry 的 value 域的值为 null 时，便知道产生了冲突——发生了重排序现象，需要加锁后重新读入这个 value 值。这些特性互相配合，使得读线程即使在不加锁状态下，也能正确访问 ConcurrentHashMap。
+非结构性修改操作只是更改某个 HashEntry 的 value 域的值。由于对 Volatile 变量的写入操作将与随后对这个变量的读操作进行同步。当一个写线程修改了某个 HashEntry 的 value 域后，另一个读线程读这个值域，Java 内存模型能够保证读线程读取的一定是更新后的值。所以，写线程对链表的非结构性修改能够被后续不加锁的读线程 “看到”。
 
-```java
-final V remove(Object key, int hash, Object value) {
-   if (!tryLock())
-        scanAndLock(key, hash);
-    V oldValue = null;
-    try {
-        HashEntry<K,V>[] tab = table;
-        int index = (tab.length - 1) & hash;
-        HashEntry<K,V> e = entryAt(tab, index);
-        HashEntry<K,V> pred = null;
-        while (e != null) {
-            K k;
-            HashEntry<K,V> next = e.next;
-            if ((k = e.key) == key ||
-                (e.hash == hash && key.equals(k))) {
-                V v = e.value;
-                if (value == null || value == v || value.equals(v)) {
-                    if (pred == null)
-                        setEntryAt(tab, index, next);
-                    else
-                        pred.setNext(next);
-                    ++modCount;
-                    --count;
-                    oldValue = v;
-                }
-                break;
-            }
-            pred = e;
-            e = next;
-        }
-    } finally {
-        unlock();
-    }
-    return oldValue;
-}
-```
+对 ConcurrentHashMap 做结构性修改，实质上是对某个桶指向的链表做结构性修改。如果能够确保：在读线程遍历一个链表期间，写线程对这个链表所做的结构性修改不影响读线程继续正常遍历这个链表。那么读 / 写线程之间就可以安全并发访问这个 ConcurrentHashMap。
+
+结构性修改操作包括 put，remove，clear。下面我们分别分析这三个操作。
+
+clear 操作只是把 ConcurrentHashMap 中所有的桶 “置空”，每个桶之前引用的链表依然存在，只是桶不再引用到这些链表（所有链表的结构并没有被修改）。正在遍历某个链表的读线程依然可以正常执行对该链表的遍历。
+
+put 操作如果需要插入一个新节点到链表中时 , 会在链表头部插入这个新节点。此时，链表中的原有节点的链接并没有被修改。也就是说：插入新健 / 值对到链表中的操作不会影响读线程正常遍历这个链表。
 
 在以下链表中删除 C 节点，C 节点之后的所有节点都原样保留，C 节点之前的所有节点都被克隆到新的链表中，并且顺序被反转。可以注意到，在执行 remove 操作时，原始链表并没有被修改，也就是说，读线程不会受到执行 remove 操作的并发写线程的干扰。
 
@@ -619,18 +592,9 @@ final V remove(Object key, int hash, Object value) {
 
 <div align="center"> <img src="../pics//image008.jpg"/> </div><br>
 
-除了 remove 操作，其它操作也类似。可以得出一个结论：写线程对某个链表的结构性修改不会影响其他的并发读线程对这个链表的遍历访问。
+综上，可以得出一个结论：写线程对某个链表的结构性修改不会影响其他的并发读线程对这个链表的遍历访问。
 
 ### 3. Volatile 变量
-
-```java
-static final class HashEntry<K,V> {
-    final int hash;
-    final K key;
-    volatile V value;
-    volatile HashEntry<K,V> next;
-}
-```
 
 由于内存可见性问题，未正确同步的情况下，写线程写入的值可能并不为后续的读线程可见。
 
@@ -677,7 +641,7 @@ V get(Object key, int hash) {
 
 在 ConcurrentHashMap 中，所有执行写操作的方法（put, remove, clear），在对链表做结构性修改之后，在退出写方法前都会去写这个 count 变量。所有未加锁的读操作（get, contains, containsKey）在读方法中，都会首先去读取这个 count 变量。
 
-根据 Java 内存模型，对 同一个 volatile 变量的写 / 读操作可以确保：写线程写入的值，能够被之后未加锁的读线程 “看到”。
+根据 Java 内存模型，对同一个 volatile 变量的写 / 读操作可以确保：写线程写入的值，能够被之后未加锁的读线程 “看到”。
 
 这个特性和前面介绍的 HashEntry 对象的不变性相结合，使得在 ConcurrentHashMap 中，读线程在读取散列表时，基本不需要加锁就能成功获得需要的值。这两个特性相配合，不仅减少了请求同一个锁的频率（读操作一般不需要加锁就能够成功获得值），也减少了持有同一个锁的时间（只有读到 value 域的值为 null 时 ，读线程才需要加锁后重读）。
 
