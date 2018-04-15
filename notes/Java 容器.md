@@ -9,9 +9,9 @@
     * [ArrayList](#arraylist)
     * [Vector](#vector)
     * [LinkedList](#linkedlist)
+    * [LinkedHashMap](#linkedhashmap)
     * [TreeMap](#treemap)
     * [HashMap](#hashmap)
-    * [LinkedHashMap](#linkedhashmap)
     * [ConcurrentHashMap - JDK 1.7](#concurrenthashmap---jdk-17)
     * [ConcurrentHashMap - JDK 1.8](#concurrenthashmap---jdk-18)
 * [参考资料](#参考资料)
@@ -40,13 +40,13 @@
 
 - Vector：和 ArrayList 类似，但它是线程安全的；
 
-- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
+- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 ### 3. Queue
 
 - LinkedList：可以用它来支持双向队列；
 
-- PriorityQueue：基于堆结构实现，可以用它来实现优先级队列。
+- PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
 ## Map
 
@@ -111,7 +111,7 @@ List list = Arrays.asList(1,2,3);
 
 ## ArrayList
 
-[ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
+[ArrayList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
 ### 1. 概览
 
@@ -224,6 +224,10 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 [LinkedList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/LinkedList.java)
 
+## LinkedHashMap
+
+[LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
+
 ## TreeMap
 
 [TreeMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/TreeMap.java)
@@ -302,7 +306,7 @@ map.put("K3", "V3");
 - 插入 &lt;K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
 - 插入 &lt;K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2> 后面。
 
-<div align="center"> <img src="../pics//07903a31-0fb3-45fc-86f5-26f0b28fa4e7.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//d5c16be7-a1c0-4c8d-b6b9-5999cdc6f9b3.png" width="600"/> </div><br>
 
 查找需要分成两步进行：
 
@@ -317,7 +321,7 @@ map.put("K3", "V3");
 
 因为从 JDK 1.8 开始引入了红黑树，因此扩容操作较为复杂，为了便于理解，以下内容使用 JDK 1.7 的内容。
 
-设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
+设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的复杂度为 O(N/M)。
 
 为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
 
@@ -397,11 +401,9 @@ void transfer(Entry[] newTable) {
 
 ### 5. 确定桶下标
 
-很多操作都需要先确定一个键值对所在的桶下标，需要分三步进行。
+很多操作都需要先确定一个键值对所在的桶下标，这个操作需要分三步进行。
 
-（一）hashCode()
-
-调用 Key 的 hashCode() 方法得到 hashCode。
+（一）调用 hashCode()
 
 ```java
 public final int hashCode() {
@@ -420,7 +422,7 @@ static final int hash(Object key) {
 }
 ```
 
-（三）除留余数法
+（三）除留余数
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
@@ -429,7 +431,7 @@ x   : 00010000
 x-1 : 00001111
 ```
 
-令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位及以上数：
+令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
 
 ```
 y       : 10110010
@@ -449,7 +451,7 @@ y%x : 00000010
 
 拉链法需要使用除留余数法来得到桶下标，也就是需要进行以下计算：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换位位运算。
 
-以下操作在 Java 8 中没有，但是原理上相同。
+以下操作在 JDK 1.8 中没有，但是原理上相同。
 
 ```java
 static int indexFor(int h, int length) {
@@ -472,7 +474,7 @@ new capacity : 00100000
 
 ### 7. 扩容-计算数组容量
 
-先考虑如何求一个数的补码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
+先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
 ```
 mask |= mask >> 1    11011000
@@ -480,9 +482,14 @@ mask |= mask >> 2    11111100
 mask |= mask >> 4    11111111
 ```
 
-如果最后令 mask+1，得到就是大于原始数字的最小的 2 次方。
+mask+1 是大于原始数字的最小的 2 次方。
 
-以下是 HashMap 中计算一个大小所需要的数组容量的代码：
+```
+num     10010000
+mask+1 100000000
+```
+
+以下是 HashMap 中计算数组容量的代码：
 
 ```java
 static final int tableSizeFor(int cap) {
@@ -507,10 +514,6 @@ HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 �
 - HashMap 的迭代器是 fail-fast 迭代器，而 Hashtable 的 enumerator 迭代器不是 fail-fast 的。
 - 由于 Hashtable 是线程安全的也是 synchronized，所以在单线程环境下它比 HashMap 要慢。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
-
-## LinkedHashMap
-
-[LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
 
 ## ConcurrentHashMap - JDK 1.7
 
