@@ -1168,13 +1168,7 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有�
 
 <div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png" width=""/> </div><br>
 
-### 3. 异步-阻塞
-
-这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
-
-<div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg" width=""/> </div><br>
-
-### 4. 异步-非阻塞
+### 3. 异步
 
 该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后继续之前的操作。
 
@@ -1380,7 +1374,7 @@ poll 和 select 在速度上都很慢。
 
 几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
 
-## eopll 工作模式
+## epoll 工作模式
 
 epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
 
