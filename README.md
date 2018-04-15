@@ -1,33 +1,13 @@
 <!-- ![](https://img.shields.io/badge/update-today-blue.svg) ![](https://img.shields.io/badge/gitbook-making-lightgrey.svg)</br> -->
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-|网络[:cloud:](#网络-cloud) |操作系统[:computer:](#操作系统-computer)| 算法[:pencil2:](#数据结构与算法-pencil2)| 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+| 算法[:pencil2:](#数据结构与算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
 </br>
 
 :loudspeaker: 本仓库不参与商业行为，不向读者收取任何费用。
 
 :loudspeaker: This repository is not engaging in business activities, and does not charge readers any fee.
 </br></br>
-
-## 网络 :cloud:
-
-> [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
-
-整理自《计算机网络 第七版》，重点内容会在标题后面加 \*。
-
-> [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
-
-整理自《图解 HTTP》
-
-## 操作系统 :computer:
-
-> [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
-
-整理自《现代操作系统》和《计算机操作系统》
-
-> [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
-
-整理自《鸟哥的 Linux 私房菜》
 
 ## 数据结构与算法 :pencil2:
 
@@ -42,6 +22,28 @@
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
 对题目做了一个分类，并对每种题型的解题思路做了总结。
+
+## 操作系统 :computer:
+
+> [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
+
+整理自《现代操作系统》和《计算机操作系统》
+
+> [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
+
+整理自《鸟哥的 Linux 私房菜》
+
+
+## 网络 :cloud:
+
+> [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
+
+整理自《计算机网络 第七版》，重点内容会在标题后面加 \*。
+
+> [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
+
+整理自《图解 HTTP》
+
 
 ## 面向对象 :couple:
 
