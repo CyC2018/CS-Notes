@@ -9,7 +9,7 @@
 :loudspeaker: This repository is not engaging in business activities, and does not charge readers any fee.
 </br></br>
 
-## 数据结构与算法 :pencil2:
+## 算法 :pencil2:
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
