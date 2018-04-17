@@ -90,6 +90,8 @@
 
 在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
 
+要求复杂度为 O(N) + O(1)，时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
+
 ## 解题思路
 
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
@@ -294,7 +296,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ## 题目描述
 
-根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。
+根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
 
 ```html
 preorder = [3,9,20,15,7]
@@ -337,7 +339,7 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ## 解题思路
 
-① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
 <div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
 
@@ -391,11 +393,14 @@ public void push(int node) {
     in.push(node);
 }
 
-public int pop() {
+public int pop() throws Exception {
     if (out.isEmpty()) {
         while (!in.isEmpty()) {
             out.push(in.pop());
         }
+    }
+    if (out.isEmpty()) {
+        throw new Exception("queue is empty");
     }
     return out.pop();
 }
@@ -405,17 +410,47 @@ public int pop() {
 
 ## 题目描述
 
-以 O(1) 的时间复杂度求菲波那切数列。
+求菲波那契数列的第 n 项。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br>
 
 ## 解题思路
 
-如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
+如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
 <div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png" width="300"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
+
+```java
+public int Fibonacci(int n) {
+    if(n <= 1) return n;
+    int[] fib = new int[n + 1];
+    fib[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib[n];
+}
+```
+
+考虑到第 i 项只与第 i-1 和第 i-2 项有关，因此只需要存储前两项的值就能求解第 i 项，从而将空间复杂度由 O(N) 降低为 O(1)。
+
+```java
+public int Fibonacci(int n) {
+    if(n <= 1) return n;
+    int pre2 = 0, pre1 = 1;
+    int fib = 0;
+    for (int i = 2; i <= n; i++) {
+        fib = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = fib;
+    }
+    return fib;
+}
+```
+
+由于待求解的 n 小于 40，因此可以将前 40 项的结果先进行计算，之后就能以 O(1) 时间复杂度得到第 n 项的值了。
 
 ```java
 public class Solution {
@@ -441,6 +476,8 @@ public class Solution {
 
 ## 解题思路
 
+复杂度：O(N) + O(N)
+
 ```java
 public int JumpFloor(int n) {
     if (n == 1) return 1;
@@ -451,6 +488,22 @@ public int JumpFloor(int n) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n - 1];
+}
+```
+
+复杂度：O(N) + O(1)
+
+```java
+public int JumpFloor(int n) {
+    if (n <= 1) return n;
+    int pre2 = 0, pre1 = 1;
+    int result = 0;
+    for (int i = 1; i <= n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
 }
 ```
 
@@ -483,9 +536,11 @@ public int JumpFloorII(int n) {
 
 ## 解题思路
 
+复杂度：O(N) + O(N)
+
 ```java
 public int RectCover(int n) {
-    if (n < 2) return n;
+    if (n <= 2) return n;
     int[] dp = new int[n];
     dp[0] = 1;
     dp[1] = 2;
@@ -493,6 +548,22 @@ public int RectCover(int n) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n - 1];
+}
+```
+
+复杂度：O(N) + O(1)
+
+```java
+public int RectCover(int n) {
+    if (n <= 2) return n;
+    int pre2 = 1, pre1 = 2;
+    int result = 0;
+    for (int i = 3; i <= n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
 }
 ```
 
@@ -1071,7 +1142,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
     ListNode head = new ListNode(-1);
     ListNode cur = head;
     while (list1 != null && list2 != null) {
-        if (list1.val < list2.val) {
+        if (list1.val <= list2.val) {
             cur.next = list1;
             list1 = list1.next;
         } else {
@@ -1338,7 +1409,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 ## 题目描述
 
-输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
 例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
 
@@ -1602,36 +1673,30 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     int kthSmallest = findKthSmallest(nums, k - 1);
     ArrayList<Integer> ret = new ArrayList<>();
     for (int val : nums) {
-        if (val <= kthSmallest && ret.size() < k) ret.add(val);
+        if (val <= kthSmallest && ret.size() < k) {
+            ret.add(val);
+        }
     }
     return ret;
 }
 
 public int findKthSmallest(int[] nums, int k) {
-    int l = 0;
-    int h = nums.length - 1;
+    int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j < k) {
-            l = j + 1;
-        } else if (j > k) {
-            h = j - 1;
-        } else {
-            break;
-        }
+        if (j == k) break;
+        if (j > k) h = j - 1;
+        else l = j + 1;
     }
     return nums[k];
 }
 
 private int partition(int[] nums, int l, int h) {
-    int i = l;
-    int j = h + 1;
+    int i = l, j = h + 1;
     while (true) {
         while (i < h && nums[++i] < nums[l]) ;
         while (j > l && nums[l] < nums[--j]) ;
-        if (i >= j) {
-            break;
-        }
+        if (i >= j) break;
         swap(nums, i, j);
     }
     swap(nums, l, j);
@@ -1639,9 +1704,7 @@ private int partition(int[] nums, int l, int h) {
 }
 
 private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
+    int t = nums[i]; nums[i] = nums[j]; nums[j] = t;
 }
 ```
 
@@ -1811,7 +1874,7 @@ private int getAmountOfDigit(int digit) {
 }
 
 /**
- * 在 digit 位数组成的字符串中，第 index 为的数
+ * 在 digit 位数组成的字符串中，第 index 个数
  */
 private int digitAtIndex(int index, int digit) {
     int number = beginNumber(digit) + index / digit;
@@ -1923,6 +1986,7 @@ public int longestSubStringWithoutDuplication(String str) {
     int curLen = 0;
     int maxLen = 0;
     int[] indexs = new int[26];
+    Arrays.fill(indexs, -1);
     for (int i = 0; i < str.length(); i++) {
         int c = str.charAt(i) - 'a';
         int preIndex = indexs[c];
@@ -1947,21 +2011,19 @@ public int longestSubStringWithoutDuplication(String str) {
 ## 解题思路
 
 ```java
-public int GetUglyNumber_Solution(int N) {
-    if (N <= 6) return N;
+public int GetUglyNumber_Solution(int index) {
+    if (index <= 6) return index;
     int i2 = 0, i3 = 0, i5 = 0;
-    int cnt = 1;
-    int[] dp = new int[N];
+    int[] dp = new int[index];
     dp[0] = 1;
-    while (cnt < N) {
+    for (int i = 1; i < index; i++) {
         int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
-        int min = Math.min(n2, Math.min(n3, n5));
-        dp[cnt++] = min;
-        if (min == n2) i2++;
-        if (min == n3) i3++;
-        if (min == n5) i5++;
+        dp[i] = Math.min(n2, Math.min(n3, n5));
+        if (dp[i] == n2) i2++;
+        if (dp[i] == n3) i3++;
+        if (dp[i] == n5) i5++;
     }
-    return dp[N - 1];
+    return dp[index - 1];
 }
 ```
 

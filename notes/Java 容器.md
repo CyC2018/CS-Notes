@@ -5,17 +5,16 @@
 * [二、容器中的设计模式](#二容器中的设计模式)
     * [迭代器模式](#迭代器模式)
     * [适配器模式](#适配器模式)
-* [三、散列](#三散列)
-* [四、源码分析](#四源码分析)
+* [三、源码分析](#三源码分析)
     * [ArrayList](#arraylist)
     * [Vector](#vector)
     * [LinkedList](#linkedlist)
+    * [LinkedHashMap](#linkedhashmap)
     * [TreeMap](#treemap)
     * [HashMap](#hashmap)
-    * [LinkedHashMap](#linkedhashmap)
     * [ConcurrentHashMap - JDK 1.7](#concurrenthashmap---jdk-17)
     * [ConcurrentHashMap - JDK 1.8](#concurrenthashmap---jdk-18)
-* [五、参考资料](#五参考资料)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -31,7 +30,7 @@
 
 - HashSet：基于哈希实现，支持快速查找，但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
 
-- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logn)；
+- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)；
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序。
 
@@ -41,13 +40,13 @@
 
 - Vector：和 ArrayList 类似，但它是线程安全的；
 
-- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双端队列。
+- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 ### 3. Queue
 
 - LinkedList：可以用它来支持双向队列；
 
-- PriorityQueue 是基于堆结构实现，可以用它来实现优先级队列。
+- PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
 ## Map
 
@@ -80,8 +79,6 @@ for (String item : list) {
 }
 ```
 
-> [迭代器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E4%BA%8C%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
-
 ## 适配器模式
 
 java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
@@ -91,7 +88,7 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 public static <T> List<T> asList(T... a)
 ```
 
-如果要将数组类型转换为 List 类型，应该注意的是参数列表为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
+如果要将数组类型转换为 List 类型，应该注意的是 asList() 的参数为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
 
 ```java
 Integer[] arr = {1, 2, 3};
@@ -104,53 +101,7 @@ List list = Arrays.asList(arr);
 List list = Arrays.asList(1,2,3);
 ```
 
-> [适配器模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md#%E5%8D%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F)
-
-# 三、散列
-
-hasCode() 返回散列值，使用的是对象的地址。
-
-而 equals() 是用来判断两个对象是否相等的，相等的两个对象散列值一定要相同，但是散列值相同的两个对象不一定相等。
-
-相等必须满足以下五个性质：
-
-**1. 自反性** 
-
-```java
-x.equals(x); // true
-```
-
-**2. 对称性** 
-
-```java
-x.equals(y) == y.equals(x) // true
-```
-
-**3. 传递性** 
-
-```java
-if(x.equals(y) && y.equals(z)) {
-    x.equals(z); // true;
-}
-```
-
-**4. 一致性** 
-
-多次调用 equals() 方法结果不变
-
-```java
-x.equals(y) == x.equals(y); // true
-```
-
-**5. 与 null 的比较** 
-
-对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
-
-```java
-x.euqals(null); // false;
-```
-
-# 四、源码分析
+# 三、源码分析
 
 建议先阅读 [算法-查找](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E6%9F%A5%E6%89%BE) 部分，对容器类源码的理解有很大帮助。
 
@@ -160,7 +111,7 @@ x.euqals(null); // false;
 
 ## ArrayList
 
-[ArraList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
+[ArrayList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/ArrayList.java)
 
 ### 1. 概览
 
@@ -171,7 +122,7 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。这是 ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
@@ -273,6 +224,10 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 [LinkedList.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/LinkedList.java)
 
+## LinkedHashMap
+
+[LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
+
 ## TreeMap
 
 [TreeMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/TreeMap.java)
@@ -291,11 +246,9 @@ transient Entry[] table;
 
 其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即每个桶会存放一个链表。
 
-<div align="center"> <img src="../pics//ce039f03-6588-4f0c-b35b-a494de0eac47.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics//8fe838e3-ef77-4f63-bf45-417b6bc5c6bb.png" width="600"/> </div><br>
 
 JDK 1.8 使用 Node 类型存储一个键值对，它依然继承自 Entry，因此可以按照上面的存储结构来理解。
-
-需要注意的是，Key 类型为 final，这意味着它不可改变，因此每个桶的链表采用头插法实现，也就是说新节点需要只能在链表头部插入。
 
 ```java
 static class Node<K,V> implements Map.Entry<K,V> {
@@ -342,32 +295,35 @@ static class Node<K,V> implements Map.Entry<K,V> {
 ### 2. 拉链法的工作原理
 
 ```java
-HashMap<String, Integer> map = new HashMap<>(); // 默认大小为 16
-map.put("sachin", 30);
-map.put("vishal", 20);
-map.put("vaibhav", 20);
+HashMap<String, String> map = new HashMap<>();
+map.put("K1", "V1");
+map.put("K2", "V2");
+map.put("K3", "V3");
 ```
 
-- 计算 "sachin" 的 hashcode 为 115，使用除留余数法得到 115 % 16 = 3，因此 ("sachin", 30) 键值对放到第 3 个桶上。
-- 同样得到 ("vishal", 20) 和 ("vaibhav", 20) 都应该放到第 6 个桶上。("vishal", 20) 先放入， ("vaibhav", 20) 链接到 ("vishal", 20) 之后。
+- 新建一个 HashMap，默认大小为 16；
+- 插入 &lt;K1,V1> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
+- 插入 &lt;K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
+- 插入 &lt;K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2> 后面。
 
-<div align="center"> <img src="../pics//b9a39d2a-618c-468b-86db-2e851f1a0057.jpg" width="600"/> </div><br>
+<div align="center"> <img src="../pics//d5c16be7-a1c0-4c8d-b6b9-5999cdc6f9b3.png" width="600"/> </div><br>
 
-当进行查找时，需要分成两步进行，第一步是先根据 hashcode 计算出所在的桶，第二步是在链表上顺序查找。由于 table 是数组形式的，具有随机读取的特性，因此第一步的时间复杂度为 O(1)，而第二步需要在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+查找需要分成两步进行：
+
+- 计算键值对所在的桶；
+- 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
 ### 3. 链表转红黑树
 
 应该注意到，从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
 
-<div align="center"> <img src="../pics//061c29ce-e2ed-425a-911e-56fbba1efce3.jpg" width="500"/> </div><br>
-
 ### 4. 扩容
 
 因为从 JDK 1.8 开始引入了红黑树，因此扩容操作较为复杂，为了便于理解，以下内容使用 JDK 1.7 的内容。
 
-设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的数量级为 O(N/M)。
+设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的复杂度为 O(N/M)。
 
-为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，可就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
+为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
 
 和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
 
@@ -445,11 +401,9 @@ void transfer(Entry[] newTable) {
 
 ### 5. 确定桶下标
 
-需要三步操作：计算 Key 的 hashCode、高位运算、除留余数法取模。
+很多操作都需要先确定一个键值对所在的桶下标，这个操作需要分三步进行。
 
-<div align="center"> <img src="../pics//hashMap_u54C8_u5E0C_u7B97_u6CD5_u4F8B_u56FE.png" width="800"/> </div><br>
-
-**（一）hashcode()** 
+（一）调用 hashCode()
 
 ```java
 public final int hashCode() {
@@ -457,9 +411,9 @@ public final int hashCode() {
 }
 ```
 
-**（二）高位运算** 
+（二）高位运算
 
-通过 hashCode() 的高 16 位异或低 16 位，使得数组比较小时，也能保证高低位都参与到了哈希计算中。
+将 hashCode 的高 16 位和低 16 位进行异或操作，使得在数组比较小时，也能保证高低位都参与到了哈希计算中。
 
 ```java
 static final int hash(Object key) {
@@ -468,7 +422,7 @@ static final int hash(Object key) {
 }
 ```
 
-**（三）除留余数** 
+（三）除留余数
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
@@ -477,7 +431,7 @@ x   : 00010000
 x-1 : 00001111
 ```
 
-令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位及以上数：
+令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
 
 ```
 y       : 10110010
@@ -497,7 +451,7 @@ y%x : 00000010
 
 拉链法需要使用除留余数法来得到桶下标，也就是需要进行以下计算：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换位位运算。
 
-以下操作在 Java 8 中没有，但是原理上相同。
+以下操作在 JDK 1.8 中没有，但是原理上相同。
 
 ```java
 static int indexFor(int h, int length) {
@@ -520,17 +474,24 @@ new capacity : 00100000
 
 ### 7. 扩容-计算数组容量
 
-先考虑如何求一个数的补码，对于 10100000，它的补码为 11111111，可以使用以下方法得到：
+HashMap 构造函数允许用户传入的容量不是 2 的幂次方，因为它可以自动地将传入的容量转换为 2 的幂次方。
+
+先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
 ```
-mask |= mask >> 1    11000000
-mask |= mask >> 2    11110000
+mask |= mask >> 1    11011000
+mask |= mask >> 2    11111100
 mask |= mask >> 4    11111111
 ```
 
-如果最后令 mask+1，得到就是大于原始数字的最小的 2 次方。
+mask+1 是大于原始数字的最小的 2 幂次方。
 
-以下是 HashMap 中计算一个大小所需要的数组容量的代码：
+```
+num     10010000
+mask+1 100000000
+```
+
+以下是 HashMap 中计算数组容量的代码：
 
 ```java
 static final int tableSizeFor(int cap) {
@@ -556,15 +517,11 @@ HashMap 允许有一个 Node 的 Key 为 null，该 Node 一定会放在第 0 �
 - 由于 Hashtable 是线程安全的也是 synchronized，所以在单线程环境下它比 HashMap 要慢。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
-## LinkedHashMap
-
-[LinkedHashMap.java](https://github.com/CyC2018/JDK-Source-Code/tree/master/src/HashMap.java)
-
 ## ConcurrentHashMap - JDK 1.7
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/1.7/ConcurrentHashMap.java)
 
-ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶。
+ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶。
 
 相比于 HashTable 和用同步包装器包装的 HashMap（Collections.synchronizedMap(new HashMap())），ConcurrentHashMap 拥有更高的并发性。在 HashTable 和由同步包装器包装的 HashMap 中，使用一个全局的锁来同步不同线程间的并发访问。同一时间点，只能有一个线程持有锁，也就是说在同一时间点，只能有一个线程能访问容器。这虽然保证多线程间的安全并发访问，但同时也导致对容器的访问变成串行化的了。
 
@@ -581,7 +538,7 @@ static final class HashEntry<K,V> {
 }
 ```
 
-继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
+Segment 继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
 
 ```java
 static final class Segment<K,V> extends ReentrantLock implements Serializable {
@@ -615,48 +572,19 @@ static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 
 <div align="center"> <img src="../pics//image005.jpg"/> </div><br>
 
-### 2. HashEntery 的不可变性
+### 2. HashEntry 的不可变性
 
-HashEntry 中的 key，hash，next 都声明为 final 型。这意味着，不能把节点添加到链接的中间和尾部，也不能在链接的中间和尾部删除节点。这个特性可以保证：在访问某个节点时，这个节点之后的链接不会被改变。这个特性可以大大降低处理链表时的复杂性。
+HashEntry 类的 value 域被声明为 Volatile 型，Java 的内存模型可以保证：某个写线程对 value 域的写入马上可以被后续的某个读线程 “看” 到。在 ConcurrentHashMap 中，不允许用 null 作为键和值，当读线程读到某个 HashEntry 的 value 域的值为 null 时，便知道产生了冲突——发生了重排序现象，需要加锁后重新读入这个 value 值。这些特性互相配合，使得读线程即使在不加锁状态下，也能正确访问 ConcurrentHashMap。
 
-同时，HashEntry 类的 value 域被声明为 Volatile 型，Java 的内存模型可以保证：某个写线程对 value 域的写入马上可以被后续的某个读线程 “看” 到。在 ConcurrentHashMap 中，不允许用 null 作为键和值，当读线程读到某个 HashEntry 的 value 域的值为 null 时，便知道产生了冲突——发生了重排序现象，需要加锁后重新读入这个 value 值。这些特性互相配合，使得读线程即使在不加锁状态下，也能正确访问 ConcurrentHashMap。
+非结构性修改操作只是更改某个 HashEntry 的 value 域的值。由于对 Volatile 变量的写入操作将与随后对这个变量的读操作进行同步。当一个写线程修改了某个 HashEntry 的 value 域后，另一个读线程读这个值域，Java 内存模型能够保证读线程读取的一定是更新后的值。所以，写线程对链表的非结构性修改能够被后续不加锁的读线程 “看到”。
 
-```java
-final V remove(Object key, int hash, Object value) {
-   if (!tryLock())
-        scanAndLock(key, hash);
-    V oldValue = null;
-    try {
-        HashEntry<K,V>[] tab = table;
-        int index = (tab.length - 1) & hash;
-        HashEntry<K,V> e = entryAt(tab, index);
-        HashEntry<K,V> pred = null;
-        while (e != null) {
-            K k;
-            HashEntry<K,V> next = e.next;
-            if ((k = e.key) == key ||
-                (e.hash == hash && key.equals(k))) {
-                V v = e.value;
-                if (value == null || value == v || value.equals(v)) {
-                    if (pred == null)
-                        setEntryAt(tab, index, next);
-                    else
-                        pred.setNext(next);
-                    ++modCount;
-                    --count;
-                    oldValue = v;
-                }
-                break;
-            }
-            pred = e;
-            e = next;
-        }
-    } finally {
-        unlock();
-    }
-    return oldValue;
-}
-```
+对 ConcurrentHashMap 做结构性修改，实质上是对某个桶指向的链表做结构性修改。如果能够确保：在读线程遍历一个链表期间，写线程对这个链表所做的结构性修改不影响读线程继续正常遍历这个链表。那么读 / 写线程之间就可以安全并发访问这个 ConcurrentHashMap。
+
+结构性修改操作包括 put，remove，clear。下面我们分别分析这三个操作。
+
+clear 操作只是把 ConcurrentHashMap 中所有的桶 “置空”，每个桶之前引用的链表依然存在，只是桶不再引用到这些链表（所有链表的结构并没有被修改）。正在遍历某个链表的读线程依然可以正常执行对该链表的遍历。
+
+put 操作如果需要插入一个新节点到链表中时 , 会在链表头部插入这个新节点。此时，链表中的原有节点的链接并没有被修改。也就是说：插入新健 / 值对到链表中的操作不会影响读线程正常遍历这个链表。
 
 在以下链表中删除 C 节点，C 节点之后的所有节点都原样保留，C 节点之前的所有节点都被克隆到新的链表中，并且顺序被反转。可以注意到，在执行 remove 操作时，原始链表并没有被修改，也就是说，读线程不会受到执行 remove 操作的并发写线程的干扰。
 
@@ -664,18 +592,9 @@ final V remove(Object key, int hash, Object value) {
 
 <div align="center"> <img src="../pics//image008.jpg"/> </div><br>
 
-除了 remove 操作，其它操作也类似。可以得出一个结论：写线程对某个链表的结构性修改不会影响其他的并发读线程对这个链表的遍历访问。
+综上，可以得出一个结论：写线程对某个链表的结构性修改不会影响其他的并发读线程对这个链表的遍历访问。
 
 ### 3. Volatile 变量
-
-```java
-static final class HashEntry<K,V> {
-    final int hash;
-    final K key;
-    volatile V value;
-    volatile HashEntry<K,V> next;
-}
-```
 
 由于内存可见性问题，未正确同步的情况下，写线程写入的值可能并不为后续的读线程可见。
 
@@ -722,7 +641,7 @@ V get(Object key, int hash) {
 
 在 ConcurrentHashMap 中，所有执行写操作的方法（put, remove, clear），在对链表做结构性修改之后，在退出写方法前都会去写这个 count 变量。所有未加锁的读操作（get, contains, containsKey）在读方法中，都会首先去读取这个 count 变量。
 
-根据 Java 内存模型，对 同一个 volatile 变量的写 / 读操作可以确保：写线程写入的值，能够被之后未加锁的读线程 “看到”。
+根据 Java 内存模型，对同一个 volatile 变量的写 / 读操作可以确保：写线程写入的值，能够被之后未加锁的读线程 “看到”。
 
 这个特性和前面介绍的 HashEntry 对象的不变性相结合，使得在 ConcurrentHashMap 中，读线程在读取散列表时，基本不需要加锁就能成功获得需要的值。这两个特性相配合，不仅减少了请求同一个锁的频率（读操作一般不需要加锁就能够成功获得值），也减少了持有同一个锁的时间（只有读到 value 域的值为 null 时 ，读线程才需要加锁后重读）。
 
@@ -738,12 +657,7 @@ ConcurrentHashMap 的高并发性主要来自于三个方面：
 
 [ConcurrentHashMap.java](https://github.com/CyC2018/JDK-Source-Code/blob/master/src/ConcurrentHashMap.java)
 
-<div align="center"> <img src="../pics//7779232-1e8ed39548081a1f.png"/> </div><br>
-
-
 JDK 1.7 分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock。
-
-<div align="center"> <img src="../pics//7779232-96822582feb08651.png"/> </div><br>
 
 JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。而是使用了内置锁 synchronized，主要是出于以下考虑：
 
@@ -753,7 +667,7 @@ JDK 1.8 的实现不是用了 Segment，Segment 属于重入锁 ReentrantLock。
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
 
-# 五、参考资料
+# 参考资料
 
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
