@@ -101,13 +101,15 @@
 ```html
 position-0 : (2,3,1,0,2,5) // 2 <-> 1
              (1,3,2,0,2,5) // 1 <-> 3
-             (3,1,1,0,2,5) // 3 <-> 0
-             (0,1,1,3,2,5) // already in position
-position-1 : (0,1,1,3,2,5) // already in position
-position-2 : (0,1,1,3,2,5) // nums[i] == nums[nums[i]], exit
+             (3,1,2,0,2,5) // 3 <-> 0
+             (0,1,2,3,2,5) // already in position
+position-1 : (0,1,2,3,2,5) // already in position
+position-2 : (0,1,2,3,2,5) // already in position
+position-3 : (0,1,2,3,2,5) // already in position
+position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
 ```
 
-遍历到位置 2 时，该位置上的数为 1，但是第 1 个位置上已经有一个 1 的值了，因此可以知道 1 重复。
+遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复。
 
 复杂度：O(N) + O(1)
 
