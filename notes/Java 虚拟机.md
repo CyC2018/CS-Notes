@@ -66,7 +66,7 @@ java -Xss=512M HackTheJava
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
-- 永久代（Permanent Generation）
+- 永久代（Permanent Generation）在java 8中永久代（方法区的实现）被替换为Metaspace(本地内存中)
 
 当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
 
