@@ -1150,7 +1150,8 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有�
 
 同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
 
-<div align="center"> <img src="../pics//54cb3f21-485b-4159-8bf5-dcde1c4d4c36.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//1a231f2a-5c2f-4231-8e0f-915aa5894347.jpg"/> </div><br>
+
 
 ### 1. 同步-阻塞
 
@@ -1168,13 +1169,7 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有�
 
 <div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png" width=""/> </div><br>
 
-### 3. 异步-阻塞
-
-这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
-
-<div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg" width=""/> </div><br>
-
-### 4. 异步-非阻塞
+### 3. 异步
 
 该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后继续之前的操作。
 

@@ -638,7 +638,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**堆排序** ：时间复杂度 O(OlogK)，空间复杂度 O(K)。
+**堆排序** ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
 
 ```java
 public int findKthLargest(int[] nums, int k) {
