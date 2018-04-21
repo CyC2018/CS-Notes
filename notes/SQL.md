@@ -196,7 +196,7 @@ WHERE col IS NULL;
 
 应该注意到，NULL 与 0 、空字符串都不同。
 
-**AND OR**  用于连接多个过滤条件。优先处理 AND，因此当一个过滤表达式涉及到多个 AND 和 OR 时，应当使用 () 来决定优先级。
+**AND OR**  用于连接多个过滤条件，优先处理 AND，当一个过滤表达式涉及到多个 AND 和 OR 时，可以使用 () 来决定优先级，使得优先级关系更清晰。
 
 **IN**  操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
 
@@ -246,14 +246,14 @@ FROM mytable
 ## 文本处理
 
 | 函数  | 说明  |
-| ------------ | ------------ |
+| :---: | :---: |
 |  LEFT() RIGHT() |  左边或者右边的字符 |
 |  LOWER() UPPER() |  转换为小写或者大写 |
 | LTRIM() RTIM() | 去除左边或者右边的空格 |
 | LENGTH() | 长度 |
-| SUNDEX() | 转换为语音值 |
+| SOUNDEX() | 转换为语音值 |
 
-其中， **SOUNDEX()**  是将一个字符串转换为描述其语音表示的字母数字模式的算法，它是根据发音而不是字母比较。
+其中， **SOUNDEX()**  可以将一个字符串转换为描述其语音表示的字母数字模式。
 
 ```sql
 SELECT *
@@ -267,7 +267,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 - 时间格式：HH:MM:SS
 
 |函 数 | 说 明|
-| --- | --- |
+| :---: | :---: |
 | AddDate() | 增加一个日期（天、周等）|
 | AddTime() | 增加一个时间（时、分等）|
 | CurDate() | 返回当前日期 |
@@ -288,13 +288,16 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 ```sql
 mysql> SELECT NOW();
-        -> '2017-06-28 14:01:52'
+```
+
+```
+2018-4-14 20:25:11
 ```
 
 ## 数值处理
 
 | 函数 | 说明 |
-| --- | --- |
+| :---: | :---: |
 | SIN() | 正弦 |
 | COS() | 余弦 |
 | TAN() | 正切 |
@@ -308,7 +311,7 @@ mysql> SELECT NOW();
 ## 汇总
 
 |函 数 |说 明|
-| --- | --- |
+| :---: | :---: |
 | AVG() | 返回某列的平均值 |
 | COUNT() | 返回某列的行数 |
 | MAX() | 返回某列的最大值 |
@@ -330,7 +333,7 @@ FROM mytable
 
 可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
-指定的分组字段除了能按该字段进行分组，也可以按该字段进行排序，例如按 col 字段排序并分组数据：
+指定的分组字段除了能按该字段进行分组，也会自动按按该字段进行排序。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -338,7 +341,7 @@ FROM mytable
 GROUP BY col;
 ```
 
-GROUP BY 是按照分组字段进行排序，ORDER BY 也可以以汇总字段来进行排序。
+GROUP BY 按分组字段进行排序，ORDER BY 也可以以汇总字段来进行排序。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -347,14 +350,14 @@ GROUP BY col
 ORDER BY num;
 ```
 
-WHERE 过滤行，HAVING 过滤分组。行过滤应当先与分组过滤；
+WHERE 过滤行，HAVING 过滤分组，行过滤应当先于分组过滤。
 
 ```sql
 SELECT col, COUNT(*) AS num
 FROM mytable
 WHERE col > 2
 GROUP BY col
-HAVING COUNT(*) >= 2;
+HAVING num >= 2;
 ```
 
 分组规定：
@@ -436,10 +439,10 @@ where department = (
 自连接版本
 
 ```sql
-select e2.name
+select e1.name
 from employee as e1, employee as e2
 where e1.department = e2.department
-      and e1.name = "Jim";
+      and e2.name = "Jim";
 ```
 
 连接一般比子查询的效率高。
@@ -464,7 +467,7 @@ from employee natural join department;
 ```sql
 select Customers.cust_id, Orders.order_num
 from Customers left outer join Orders
-on Customers.cust_id = Orders.curt_id;
+on Customers.cust_id = Orders.cust_id;
 ```
 
 如果需要统计顾客的订单数，使用聚集函数。
@@ -473,15 +476,15 @@ on Customers.cust_id = Orders.curt_id;
 select Customers.cust_id,
        COUNT(Orders.order_num) as num_ord
 from Customers left outer join Orders
-on Customers.cust_id = Orders.curt_id
+on Customers.cust_id = Orders.cust_id
 group by Customers.cust_id;
 ```
 
 # 十六、组合查询
 
-使用  **UNION**  来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果为 M+N 行。
+使用  **UNION**  来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果一般为 M+N 行。
 
-每个查询必须包含相同的列、表达式或者聚集函数。
+每个查询必须包含相同的列、表达式和聚集函数。
 
 默认会去除相同行，如果需要保留相同行，使用 UNION ALL。
 
@@ -622,7 +625,7 @@ MySQL 不允许在触发器中使用 CALL 语句 ，也就是不能调用存储�
 
 不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CREATE 和 DROP 语句。
 
-MySQL 的事务提交默认是隐式提交，也就是每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
+MySQL 的事务提交默认是隐式提交，每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
 通过设置 autocommit 为 0 可以取消自动提交，直到 autocommit 被设置为 1 才会提交；autocommit 标记是针对每个连接而不是针对服务器的。
 

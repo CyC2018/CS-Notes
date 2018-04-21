@@ -127,7 +127,7 @@ public int arrangeCoins(int n) {
     int l = 0, h = n;
     while(l <= h){
         int m = l + (h - l) / 2;
-        long x = m * (m + 1L) / 2;
+        long x = m * (m + 1) / 2;
         if(x == n) return m;
         else if(x < n) l = m + 1;
         else h = m - 1;
@@ -190,11 +190,11 @@ You have 3 cookies and their sizes are big enough to gratify all of the children
 You need to output 2.
 ```
 
-题目描述：每个孩子都有一个满足度，每个饼干都有一个大小，只有饼干的大小大于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
+题目描述：每个孩子都有一个满足度，每个饼干都有一个大小，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
 
 因为最小的孩子最容易得到满足，因此先满足最小孩子。给一个孩子的饼干应当尽量小又能满足该孩子，这样大饼干就能拿来给满足度比较大的孩子。
 
-证明：假设在某次选择中，贪心策略选择给第 i 个孩子分配第 m 个饼干，并且第 i 个孩子满足度最小，第 m 个饼干为可以满足第 i 个孩子的最小饼干，利用贪心策略最终可以满足 k 个孩子。假设最优策略在这次选择中给 i 个孩子分配第 n 个饼干，并且这个饼干大于第 m 个饼干。我们发现使用第 m 个饼干去替代第 n 个饼干完全不影响后续的结果，因此不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+证明：假设在某次选择中，贪心策略选择给第 i 个孩子分配第 m 个饼干，并且第 i 个孩子满足度最小，第 m 个饼干为可以满足第 i 个孩子的最小饼干。假设最优策略在这次选择中给 i 个孩子分配第 n 个饼干，并且这个饼干大于第 m 个饼干。我们发现使用第 m 个饼干去替代第 n 个饼干完全不影响后续的结果，因此不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
 ```java
 public int findContentChildren(int[] g, int[] s) {
@@ -638,7 +638,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**堆排序** ：时间复杂度 O(OlogK)，空间复杂度 O(K)。
+**堆排序** ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -1813,10 +1813,9 @@ dp[N] 即为所求。
 
 ```java
 public int climbStairs(int n) {
-    if(n == 1) return 1;
-    if(n == 2) return 2;
-    int pre1 = 2, pre2 = 1;
-    for(int i = 2; i < n; i++){
+    if (n <= 2) return n;
+    int pre2 = 1, pre1 = 2;
+    for (int i = 2; i < n; i++) {
         int cur = pre1 + pre2;
         pre2 = pre1;
         pre1 = cur;
@@ -1940,7 +1939,7 @@ dp[N] 即为所求。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>
 
-对于一个长度为 N 的序列，最长子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，即 max{ dp[i] | 1 <= i <= N} 即为所求。
+对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，即 max{ dp[i] | 1 <= i <= N} 即为所求。
 
 **最长递增子序列** 
 
@@ -1950,28 +1949,31 @@ dp[N] 即为所求。
 public int lengthOfLIS(int[] nums) {
     int n = nums.length;
     int[] dp = new int[n];
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         int max = 1;
-        for(int j = 0; j < i; j++){
-            if(nums[i] > nums[j]) max = Math.max(max, dp[j] + 1);
+        for (int j = 0; j < i; j++) {
+            if (nums[i] > nums[j]) {
+                max = Math.max(max, dp[j] + 1);
+            }
         }
         dp[i] = max;
     }
     int ret = 0;
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         ret = Math.max(ret, dp[i]);
     }
     return ret;
 }
 ```
 
-以上解法的时间复杂度为 O(n<sup>2</sup>) ，可以使用二分查找使得时间复杂度降低为 O(nlogn)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素，例如对于数组 [4,5,6,3]，有
+以上解法的时间复杂度为 O(N<sup>2</sup>) ，可以使用二分查找将时间复杂度降低为 O(NlogN)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。如果有多个长度相等的最长递增子序列，那么 tails[i] 就取最小值。例如对于数组 [4,5,6,3]，有
 
 ```html
 len = 1  :      [4], [5], [6], [3]  => tails[0] = 3
 len = 2  :      [4, 5], [5, 6]      => tails[1] = 5
 len = 3  :      [4, 5, 6]           => tails[2] = 6
 ```
+
 
 对于一个元素 x，
 
@@ -2094,7 +2096,7 @@ public int wiggleMaxLength(int[] nums) {
 
 - 针对的是两个序列，求它们的最长公共子序列。
 - 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub> 。
-- 由于 2 ，在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
+- 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
 ```java
 public int lengthOfLCS(int[] nums1, int[] nums2) {
@@ -2114,7 +2116,7 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 有一个容量为 N 的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
 
-定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示体积不超过 j 的情况下，前 i 件物品能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
+定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示前 i 件物品体积不超过 j 的情况下能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
 
 - 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
 - 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
@@ -2306,9 +2308,7 @@ public int findTargetSumWays(int[] nums, int S) {
 }
 
 private int findTargetSumWays(int[] nums, int start, int S) {
-    if (start == nums.length) {
-        return S == 0 ? 1 : 0;
-    }
+    if (start == nums.length) return S == 0 ? 1 : 0;
     return findTargetSumWays(nums, start + 1, S + nums[start]) + findTargetSumWays(nums, start + 1, S - nums[start]);
 }
 ```
@@ -2362,7 +2362,7 @@ return -1.
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-这是一个完全背包问题。
+这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上的区别在于，0-1 背包遍历物品的循环在外侧，而完全背包问题遍历物品的循环在内侧，在内侧体现出物品可以使用多次。
 
 ```java
 public int coinChange(int[] coins, int amount) {
@@ -2371,7 +2371,7 @@ public int coinChange(int[] coins, int amount) {
     Arrays.fill(dp, amount + 1);
     dp[0] = 0;
     for (int i = 1; i <= amount; i++) {
-        for (int c : coins) {
+        for (int c : coins) { // 硬币可以使用多次
             if (c <= i) {
                 dp[i] = Math.min(dp[i], dp[i - c] + 1);
             }
@@ -2584,9 +2584,30 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-**修改一个字符串称为另一个字符串** 
+**修改一个字符串成为另一个字符串** 
 
 [Leetcode : 72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
+
+```html
+Example 1:
+
+Input: word1 = "horse", word2 = "ros"
+Output: 3
+Explanation: 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+Example 2:
+
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')
+```
 
 ```java
 public int minDistance(String word1, String word2) {
@@ -2646,12 +2667,12 @@ public int numSquares(int n) {
     List<Integer> squareList = generateSquareList(n);
     int[] dp = new int[n + 1];
     for (int i = 1; i <= n; i++) {
-        int max = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
         for (int square : squareList) {
             if (square > i) break;
-            max = Math.min(max, dp[i - square] + 1);
+            min = Math.min(min, dp[i - square] + 1);
         }
-        dp[i] = max;
+        dp[i] = min;
     }
     return dp[n];
 }
@@ -2767,7 +2788,7 @@ public int minPathSum(int[][] grid) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="../pics//f4cdda3e-324c-49b5-8c14-08a3db634b29.png"/> </div><br>
+<div align="center"> <img src="../pics//a3da4342-078b-43e2-b748-7e71bec50dc4.png"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -2806,7 +2827,7 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-<div align="center"> <img src="../pics//6f4abf41-3728-4a6b-9b94-85eed7ca8163.png"/> </div><br>
+<div align="center"> <img src="../pics//61942711-45a0-4e11-bbc9-434e31436f33.png"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices, int fee) {
@@ -2833,7 +2854,7 @@ public int maxProfit(int[] prices, int fee) {
 
 只进行一次交易。
 
-只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看这个价格是否是当前的最大价格。
+只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
 
 ```java
 public int maxProfit(int[] prices) {

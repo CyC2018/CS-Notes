@@ -58,7 +58,7 @@
 
 # 一、线程状态转换
 
-<div align="center"> <img src="../pics//ace830df-9919-48ca-91b5-60b193f593d2.png"/> </div><br>
+<div align="center"> <img src="../pics//ace830df-9919-48ca-91b5-60b193f593d2.png" width=""/> </div><br>
 
 ## 新建（New）
 
@@ -192,7 +192,7 @@ Executor 管理多个异步任务的执行，而无需程序员显示地管理�
 
 主要有三种 Executor：
 
-1. CachedTreadPool：一个任务创建一个线程；
+1. CachedThreadPool：一个任务创建一个线程；
 2. FixedThreadPool：所有任务只能使用固定大小的线程；
 3. SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
 
@@ -709,7 +709,7 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
 
-<div align="center"> <img src="../pics//CountdownLatch.png"/> </div><br>
+<div align="center"> <img src="../pics//CountdownLatch.png" width=""/> </div><br>
 
 ```java
 public class CountdownLatchExample {
@@ -743,7 +743,7 @@ run..run..run..run..run..run..run..run..run..run..end
 
 下图应该从下往上看才正确。
 
-<div align="center"> <img src="../pics//CyclicBarrier.png"/> </div><br>
+<div align="center"> <img src="../pics//CyclicBarrier.png" width=""/> </div><br>
 
 ```java
 public class CyclicBarrierExample {
@@ -778,7 +778,7 @@ before..before..before..before..before..before..before..before..before..before..
 
 Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
 
-<div align="center"> <img src="../pics//Semaphore.png"/> </div><br>
+<div align="center"> <img src="../pics//Semaphore.png" width=""/> </div><br>
 
 以下代码模拟了对某个服务的并发请求，每次只能有 3 个客户端同时访问，请求总数为 10。
 
@@ -982,7 +982,7 @@ public class ForkJoinPool extends AbstractExecutorService
 
 ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线程都维护了一个双端队列，用来存储需要执行的任务。工作窃取算法允许空闲的线程从其它线程的双端队列中窃取一个任务来执行。窃取的任务必须是最晚的任务，避免和队列所属线程发生竞争。例如下图中，Thread2 从 Thread1 的队列中拿出最晚的 Task1 任务，Thread1 会拿出 Task2 来执行，这样就避免发生竞争。但是如果队列中只有一个任务时还是会发生竞争。
 
-<div align="center"> <img src="../pics//15b45dc6-27aa-4519-9194-f4acfa2b077f.jpg"/> </div><br>
+<div align="center"> <img src="../pics//15b45dc6-27aa-4519-9194-f4acfa2b077f.jpg" width=""/> </div><br>
 
 # 九、线程不安全示例
 
@@ -1027,27 +1027,27 @@ public class ThreadUnsafeExample {
 
 # 十、Java 内存模型
 
-Java 内存模型视图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
+Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
 ## 主内存与工作内存
 
 处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了高速缓存。
 
-加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致。CPU 使用一致性协议来解决一致性问题。
+加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
-<div align="center"> <img src="../pics//68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png"/> </div><br>
+<div align="center"> <img src="../pics//68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png" width=""/> </div><br>
 
 所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
 
 线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
 
-<div align="center"> <img src="../pics//47358f87-bc4c-496f-9a90-8d696de94cee.png"/> </div><br>
+<div align="center"> <img src="../pics//47358f87-bc4c-496f-9a90-8d696de94cee.png" width=""/> </div><br>
 
 ## 内存间交互操作
 
 Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。
 
-<div align="center"> <img src="../pics//536c6dfd-305a-4b95-b12c-28ca5e8aa043.png"/> </div><br>
+<div align="center"> <img src="../pics//536c6dfd-305a-4b95-b12c-28ca5e8aa043.png" width=""/> </div><br>
 
 - read：把一个变量的值从主内存传输到工作内存中
 - load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中
@@ -1070,11 +1070,11 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 下图演示了两个线程同时对 cnt 变量进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入该变量的值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
 
-<div align="center"> <img src="../pics//ef8eab00-1d5e-4d99-a7c2-d6d68ea7fe92.png"/> </div><br>
+<div align="center"> <img src="../pics//ef8eab00-1d5e-4d99-a7c2-d6d68ea7fe92.png" width=""/> </div><br>
 
 AtomicInteger 能保证多个线程修改的原子性。
 
-<div align="center"> <img src="../pics//952afa9a-458b-44ce-bba9-463e60162945.png"/> </div><br>
+<div align="center"> <img src="../pics//952afa9a-458b-44ce-bba9-463e60162945.png" width=""/> </div><br>
 
 使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现：
 
@@ -1153,7 +1153,7 @@ public class AtomicSynchronizedExample {
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
-volatile 可保证可见性。synchronized 也能够保证可见性，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。final 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一般的对象），那么其它线程就能看见 final 字段的值。
+volatile 可保证可见性。synchronized 也能够保证可见性，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。final 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
 
 对前面的线程不安全示例中的 cnt 变量用 volatile 修饰，不能解决线程不安全问题。因为 volatile 并不能保证操作的原子性。
 
@@ -1181,7 +1181,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 在一个线程内，在程序前面的操作先行发生于后面的操作。
 
-<div align="center"> <img src="../pics//single-thread-rule.png"/> </div><br>
+<div align="center"> <img src="../pics//single-thread-rule.png" width=""/> </div><br>
 
 ### 2. 管程锁定规则
 
@@ -1189,7 +1189,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
 
-<div align="center"> <img src="../pics//monitor-lock-rule.png"/> </div><br>
+<div align="center"> <img src="../pics//monitor-lock-rule.png" width=""/> </div><br>
 
 ### 3. volatile 变量规则
 
@@ -1197,15 +1197,15 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
 
-<div align="center"> <img src="../pics//volatile-variable-rule.png"/> </div><br>
+<div align="center"> <img src="../pics//volatile-variable-rule.png" width=""/> </div><br>
 
 ### 4. 线程启动规则
 
 > Thread Start Rule
 
-Thread 对象的 start() 方法先行发生于此线程的每一个动作。
+Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
 
-<div align="center"> <img src="../pics//thread-start-rule.png"/> </div><br>
+<div align="center"> <img src="../pics//thread-start-rule.png" width=""/> </div><br>
 
 ### 5. 线程加入规则
 
@@ -1213,7 +1213,7 @@ Thread 对象的 start() 方法先行发生于此线程的每一个动作。
 
 join() 方法返回先行发生于 Thread 对象的结束。
 
-<div align="center"> <img src="../pics//thread-join-rule.png"/> </div><br>
+<div align="center"> <img src="../pics//thread-join-rule.png" width=""/> </div><br>
 
 ### 6. 线程中断规则
 
@@ -1276,7 +1276,7 @@ public V put(K key, V value) {
 }
 ```
 
-多线程环境下，应当尽量使对象称为不可变，来满足线程安全。
+多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
 
 ### 2. 绝对线程安全
 
@@ -1414,7 +1414,7 @@ ABA ：如果一个变量 V 初次读取的时候是 A 值，它的值被改成�
 
 **（二）栈封闭** 
 
-多个线程方法同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在栈中，属于线程私有的。
+多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在栈中，属于线程私有的。
 
 ```java
 import java.util.concurrent.ExecutorService;
@@ -1505,7 +1505,7 @@ public class ThreadLocalExample1 {
 
 它所对应的底层结构图为：
 
-<div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png"/> </div><br>
+<div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
 每个 Thread 都有一个 TreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
 
@@ -1601,7 +1601,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 简单地介绍了对象的内存布局后，我们把话题返回到轻量级锁的执行过程上。在代码进入同步块的时候，如果此同步对象没有被锁定（锁标志位为 “01” 状态）虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的 Mark Word 的拷贝（官方把这份拷贝加上了一个 Displaced 前缀，即 Displaced Mark Word）。然后，虚拟机将使用 CAS 操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针。如果这个更新动作成功了，那么这个线程就拥有了该对象的锁，并且对象 Mark Word 的锁标志位（Mark Word 的最后 2bit）将转变为 “00”，即表示此对象处于轻量级锁定状态。
 
-<div align="center"> <img src="../pics//8cc671f0-7134-44b1-a7b5-6d24fe55e1c1.jpg"/> </div><br>
+<div align="center"> <img src="../pics//8cc671f0-7134-44b1-a7b5-6d24fe55e1c1.jpg" width="600"/> </div><br>
 
 如果这个更新操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的栈帧，如果是的话只说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁，所标志的状态变为“10”，Mark Word 中存储的就是指向重量级锁（互斥量）的指针，后面等待锁的线程也要进入阻塞状态。
 
@@ -1619,20 +1619,19 @@ public static String concatString(String s1, String s2, String s3) {
 
 当有另外一个线程去尝试获取这个锁时，偏向模式就宣告结束。根据锁对象目前是否处于被锁定的状态，撤销偏向（Revoke Bias）后恢复到未锁定（标志位为“01”）或轻量级锁定（标志位为“00”）的状态，后续的同步操作就如上面介绍的轻量级锁那样执行。偏向锁、轻量级锁的状态转换及对象 Mark Word 的关系如图 13-5 所示。
 
-<div align="center"> <img src="../pics//390c913b-5f31-444f-bbdb-2b88b688e7ce.jpg"/> </div><br>
+<div align="center"> <img src="../pics//390c913b-5f31-444f-bbdb-2b88b688e7ce.jpg" width="600"/> </div><br>
 
 偏向锁可以提高带有同步但无竞争的程序性能。它同样是一个带有效益权衡（Trade Off）性质的优化，也就是说，它并不一定总是对程序运行有利，如果程序中大多数的锁总是被多个不同的线程访问，那偏向模式就是多余的。在具体问题具体分析的前提下，有时候使用参数 -XX:-UseBiasedLocking 来禁止偏向锁优化反而可以提升性能。
-
 
 # 十三、多线程开发良好的实践
 
 - 给线程起个有意义的名字，这样可以方便找 Bug。
 
-- 缩小同步范围，例如 对于 synchronized，应该尽量使用同步块而不是同步方法。
+- 缩小同步范围，例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步类少用 wait 和 notify。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait 和 notify 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护，在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
 
-- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashttable。
+- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
 
 - 使用本地变量和不可变类来保证线程安全。
 

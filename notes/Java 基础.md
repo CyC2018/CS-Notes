@@ -12,7 +12,7 @@
     * [访问权限](#访问权限)
     * [抽象类与接口](#抽象类与接口)
     * [super](#super)
-    * [重载与重写](#重载与重写)
+    * [覆盖与重载](#覆盖与重载)
 * [五、String](#五string)
     * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
     * [String 不可变的原因](#string-不可变的原因)
@@ -55,7 +55,7 @@ y.a = 1;
 
 声明方法不能被子类覆盖。
 
-private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是覆盖基类方法，而是重载了。
+private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是覆盖基类方法，而是在子类中定义了一个新的方法。
 
 **3. 类** 
 
@@ -65,7 +65,7 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 **1. 静态变量** 
 
-静态变量在内存中只存在一份，只在类第一次实例化时初始化一次。
+静态变量在内存中只存在一份，只在类初始化时赋值一次。
 
 - 静态变量：类所有的实例都共享静态变量，可以直接通过类名来访问它；
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
@@ -83,11 +83,23 @@ public class A {
 
 **3. 静态语句块** 
 
-静态语句块和静态变量一样在类第一次实例化时运行一次。
+静态语句块在类初始化时运行一次。
 
-**4. 初始化顺序** 
+**4. 静态内部类** 
 
-静态数据优先于其它数据的初始化，静态变量和静态语句块哪个先运行取决于它们在代码中的顺序。
+内部类的一种，静态内部类不依赖外部类，且不能访问外部类的非 static 变量和方法。
+
+**5. 静态导包** 
+
+```source-java
+import static com.xxx.ClassName.*
+```
+
+在使用静态变量和方法时不用再指明 ClassName，从而简化代码，但可读性大大降低。
+
+**6. 变量赋值顺序** 
+
+静态变量的赋值和静态语句块的运行优先于实例变量的赋值和普通语句块的运行，静态变量的赋值和静态语句块的运行哪个先执行取决于它们在代码中的顺序。
 
 ```java
 public static String staticField = "静态变量";
@@ -99,8 +111,6 @@ static {
 }
 ```
 
-实例变量和普通语句块的初始化在静态变量和静态语句块初始化结束之后。
-
 ```java
 public String field = "实例变量";
 ```
@@ -111,7 +121,7 @@ public String field = "实例变量";
 }
 ```
 
-最后才是构造函数中的数据进行初始化
+最后才运行构造函数
 
 ```java
 public InitialOrderTest() {
@@ -121,24 +131,12 @@ public InitialOrderTest() {
 
 存在继承的情况下，初始化顺序为：
 
-1. 父类（静态变量、静态语句块块）
+1. 父类（静态变量、静态语句块）
 2. 子类（静态变量、静态语句块）
 3. 父类（实例变量、普通语句块）
 4. 父类（构造函数）
 5. 子类（实例变量、普通语句块）
 6. 子类（构造函数）
-
-**5. 静态内部类** 
-
-内部类的一种，静态内部类不依赖外部类，且不能访问外部类的非 static 变量和方法。
-
-**6. 静态导包** 
-
-```source-java
-import static com.xxx.ClassName.*
-```
-
-在使用静态变量和方法时不用再指明 ClassName，从而简化代码，但可读性大大降低。
 
 # 二、Object 通用方法
 
@@ -255,9 +253,9 @@ public class EqualExample {
 
 ## hashCode()
 
-hasCode() 返回散列值，而 equals() 是用来判断两个实例是否相等。相等的两个实例散列值一定要相同，但是散列值相同的两个实例不一定相等。
+hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。
 
-在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也相等。
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也等价。
 
 下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
 
@@ -313,7 +311,7 @@ ToStringExample@4554617c
 
 **1. cloneable** 
 
-clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去重载 clone() 就没有这个方法。
+clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去覆盖 clone() 就没有这个方法。
 
 ```java
 public class CloneExample {
@@ -324,10 +322,10 @@ public class CloneExample {
 
 ```java
 CloneExample e1 = new CloneExample();
-CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
+// CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
-接下来重载 Object 的 clone() 得到以下实现：
+接下来覆盖 Object 的 clone() 得到以下实现：
 
 ```java
 public class CloneExample {
@@ -510,7 +508,7 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 
 如果子类的方法覆盖了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里式替换原则。
 
-字段决不能是公有的，因为这么做的话就失去了对这个实例域修改行为的控制，客户端可以对其随意修改。可以使用共有的 getter 和 setter 方法来替换共有字段。
+字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。可以使用公有的 getter 和 setter 方法来替换公有字段。
 
 ```java
 public class AccessExample {
@@ -595,7 +593,7 @@ ac2.func1();
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
 
-接口也可以包含域，并且这些域隐式都是 static 和 final 的。
+接口也可以包含字段，并且这些字段隐式都是 static 和 final 的。
 
 接口中的方法默认都是 public 的，并且不允许定义为 private 或者 protected。
 
@@ -634,16 +632,16 @@ System.out.println(InterfaceExample.x);
 
 **3. 比较** 
 
-- 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求子类和父类具有 IS-A 关系；
+- 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
-- 接口的域只能是 static 和 final 类型的，而抽象类的域可以有多种访问权限。
+- 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。
 - 接口的方法只能是 public 的，而抽象类的方法可以由多种访问权限。
 
 **4. 使用选择** 
 
 使用抽象类：
 
-- 需要在几个相关的类中共享代码；
+- 需要在几个相关的类中共享代码。
 - 需要能控制继承来的方法和域的访问权限，而不是都为 public。
 - 需要继承非静态（non-static）和非常量（non-final）字段。
 
@@ -652,7 +650,7 @@ System.out.println(InterfaceExample.x);
 - 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
 - 需要使用多重继承。
 
-在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次接口要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
+在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
 > [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/) </br> [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
 
@@ -706,11 +704,11 @@ SuperExtendExample.func()
 
 > [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 
-## 重载与重写
+## 覆盖与重载
 
-- 重写存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
+- 覆盖（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
 
-- 重载即存在于继承体系中，也存在于同一个类中，指一个方法与已经存在的方法或者父类的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
+- 重载（Overload）存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
 # 五、String
 
@@ -739,7 +737,7 @@ SuperExtendExample.func()
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="../pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg"/> </div><br>
+<div align="center"> <img src="../pics//f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg" width=""/> </div><br>
 
 **3. 安全性** 
 
@@ -773,7 +771,7 @@ String s5 = "bbb";
 System.out.println(s4 == s5);  // true
 ```
 
-Java 虚拟机将堆划分成新生代、老年代和永久代（PermGen Space）。在 Java 6 之前，字符串常量池被放在永久代中，而在 Java 7 时，它被放在堆的其它位置。这是因为永久代的空间有限，如果大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+在 Java 7 之前，字符串常量池被放在运行时常量池中，它属于永久代。而在 Java 7，字符串常量池被放在堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 > [What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) </br> [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
@@ -946,7 +944,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 1.  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
 2.  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
-<div align="center"> <img src="../pics//PPjwP.png"/> </div><br>
+<div align="center"> <img src="../pics//PPjwP.png" width="600"/> </div><br>
 
 > [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception) </br> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
