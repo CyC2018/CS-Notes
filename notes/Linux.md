@@ -50,8 +50,11 @@
 * [九、进程管理](#九进程管理)
     * [查看进程](#查看进程)
     * [进程状态](#进程状态)
-    * [SIGCHILD](#sigchild)
-    * [孤儿进程和僵死进程](#孤儿进程和僵死进程)
+    * [SIGCHLD](#sigchld)
+    * [wait()](#wait)
+    * [waitpid()](#waitpid)
+    * [孤儿进程](#孤儿进程)
+    * [僵死进程](#僵死进程)
 * [十、I/O 复用](#十io-复用)
     * [概念理解](#概念理解)
     * [I/O 模型](#io-模型)
@@ -154,16 +157,16 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ## VIM 三个模式
 
-<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
+- 一般指令模式（Command mode）：进入 VIM 的默认模式，可以用于移动游标查看内容；
+- 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
+- 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
 
-- 一般指令模式：进入 VIM 的默认模式，可以用于移动游标查看内容；
-- 编辑模式：按下 "i" 等按键之后进入，可以对文本进行编辑；
-- 指令列模式：按下 ":" 按键之后进入，用于保存退出等操作。
+<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
 | 命令 | 作用 |
-| -- | -- |
+| :--: | -- |
 | :w | 写入磁盘|
 | :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
 | :q | 离开 |
@@ -202,7 +205,7 @@ GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息�
 
 GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics//GUID_Partition_Table_Scheme.svg.png" width="400"/> </div><br>
 
 ## 开机检测程序
 
@@ -321,7 +324,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-<div align="center"> <img src="../pics//linux-filesystem.png"/> </div><br>
+<div align="center"> <img src="../pics//linux-filesystem.png" width=""/> </div><br>
 
 ## 文件时间
 
@@ -466,10 +469,11 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内
 find 可以使用文件的属性和权限进行搜索。
 
 ```html
-# find filename [option]
+# find [basedir] [option]
+example: find . -name "shadow*"
 ```
 
-**（一）与时间有关的选项** 
+（一）与时间有关的选项
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -480,9 +484,9 @@ find 可以使用文件的属性和权限进行搜索。
 
 +4、4 和 -4 的指示的时间范围如下：
 
-<div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
+<div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
 
-**（二）与文件拥有者和所属群组有关的选项** 
+（二）与文件拥有者和所属群组有关的选项
 
 ```html
 -uid n
@@ -493,7 +497,7 @@ find 可以使用文件的属性和权限进行搜索。
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-**（三）与文件权限和名称有关的选项** 
+（三）与文件权限和名称有关的选项
 
 ```html
 -name filename
@@ -516,13 +520,11 @@ find 可以使用文件的属性和权限进行搜索。
 2. inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 号码；
 3. block：记录文件的内容，文件太大时，会占用多个 block。
 
+<div align="center"> <img src="../pics//ff0c019c-6461-467d-a266-0455341fd4f4.png" width="800"/> </div><br>
+
 当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
 磁盘碎片是指一个文件内容所在的 block 过于分散。
-
-Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一个文件系统划分为多个 block 群组，方便管理。
-
-<div align="center"> <img src="../pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"/> </div><br>
 
 ## inode
 
@@ -530,7 +532,7 @@ Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 blo
 
 inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
-<div align="center"> <img src="../pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
+<div align="center"> <img src="../pics//1bfa3118-f3cd-4480-a950-cf6d646015db.png" width="600"/> </div><br>
 
 inode 具体包含以下信息：
 
@@ -561,7 +563,7 @@ inode 具体包含以下信息：
 
 删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
-有以下限制：不能跨越 File System；不能对目录进行链接。
+有以下限制：不能跨越 File System、不能对目录进行链接。
 
 ```html
 # ln /etc/crontab .
@@ -636,7 +638,7 @@ $ bzip2 [-cdkzv#] filename
 
 提供比 bzip2 更佳的压缩比。
 
-可以看到，gzip、bzip2、xz 的压缩比不断优化。不过要注意，压缩比越高，压缩的时间也越长。
+可以看到，gzip、bzip2、xz 的压缩比不断优化。不过要注意的是，压缩比越高，压缩的时间也越长。
 
 查看命令：xzcat、xzmore、xzless、xzgrep。
 
@@ -932,7 +934,7 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-因为 { 与 } 的符号在 shell 是有特殊意义的，因此必须要使用转义字符进行转义。
+因为 { 和 } 在 shell 是有特殊意义的，因此必须要使用转义字符进行转义。
 
 ```html
 $ grep -n 'go\{2,5\}g' regular_express.txt
@@ -1026,7 +1028,7 @@ daemon 2
 
 示例三：查看特定的进程
 
-```html
+```
 # ps aux | grep threadx
 ```
 
@@ -1060,36 +1062,66 @@ daemon 2
 
 ## 进程状态
 
+<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
+
 | 状态 | 说明 |
 | :---: | --- |
 | R | running or runnable (on run queue) |
-| D |  uninterruptible sleep (usually IO) |
+| D | uninterruptible sleep (usually IO) |
 | S | interruptible sleep (waiting for an event to complete) |
 | Z | defunct/zombie, terminated but not reaped by its parent |
 | T | stopped, either by a job control signal or because it is being traced|
 
-<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png"/> </div><br>
-
-## SIGCHILD
+## SIGCHLD
 
 当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
 
 - 得到 SIGCHLD 信号；
-- 阻塞的 waitpid(2)（或者 wait）调用会返回。
+- waitpid() 或者 wait() 调用会返回。
 
-<div align="center"> <img src="../pics//flow.png"/> </div><br>
+<div align="center"> <img src="../pics//flow.png" width=""/> </div><br>
 
-## 孤儿进程和僵死进程
+其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
 
-### 1. 孤儿进程
+在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息。父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
+
+## wait()
+
+```c
+pid_t wait(int *status)
+```
+
+父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
+
+如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
+
+参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，我们就可以设定这个参数为 NULL：
+
+```c
+pid = wait(NULL);
+```
+
+## waitpid()
+
+```c
+pid_t waitpid(pid_t pid,int *status,int options)
+```
+
+作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
+
+pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么贺 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+
+options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
+
+## 孤儿进程
 
 一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
 
 由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
 
-### 2. 僵死进程
+## 僵死进程
 
-一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait 或 waitpid 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait 或 waitpid，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
 
 僵死进程通过 ps 命令显示出来的状态为 Z。
 
@@ -1118,7 +1150,8 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有�
 
 同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
 
-<div align="center"> <img src="../pics//00eda100-dba1-4ec2-9140-5fe5f3855951.jpg"/> </div><br>
+<div align="center"> <img src="../pics//1a231f2a-5c2f-4231-8e0f-915aa5894347.jpg"/> </div><br>
+
 
 ### 1. 同步-阻塞
 
@@ -1126,31 +1159,25 @@ I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有�
 
 应该注意到，在阻塞的过程中，其他程序还可以执行，因此阻塞不意味着整个操作系统都被阻塞。因为其他程序还可以执行，因此不消耗 CPU 时间，这种模型的执行效率会比较高。
 
-<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png"/> </div><br>
+<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png" width=""/> </div><br>
 
 ### 2. 同步-非阻塞
 
-非阻塞意味着用户程序在执行系统调用后还可以执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
+非阻塞意味着用户程序在执行系统调用后还可以继续执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
 
 由于 CPU 要处理更多的用户程序的询问，因此这种模型的效率是比较低的。
 
-<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png"/> </div><br>
+<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png" width=""/> </div><br>
 
-### 3. 异步-阻塞
+### 3. 异步
 
-这是 I/O 复用使用的一种模式，通过使用 select，它可以监听多个 I/O 事件，当这些事件至少有一个发生时，用户程序会收到通知。
+该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后继续之前的操作。
 
-<div align="center"> <img src="../pics//dbc5c9f1-c13c-4d06-86ba-7cc949eb4c8f.jpg"/> </div><br>
-
-### 4. 异步-非阻塞
-
-该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后完成 I/O 事务。
-
-<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg"/> </div><br>
+<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg" width=""/> </div><br>
 
 ## select poll epoll
 
-这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。可以说，新出现的实现是为了修复旧实现的不足。
+这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。
 
 ### 1. select
 
@@ -1321,7 +1348,7 @@ select 和 poll 方式中，进程只有在调用一定的方法后，内核才�
 
 新版本的 epoll_create(int size) 参数 size 不起任何作用，在旧版本的 epoll 中如果描述符的数量大于 size，不保证服务质量。
 
-epoll_ct() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
+epoll_ctl() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
 
 epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select/poll 对注册的所有描述符遍历一遍。
 
@@ -1396,3 +1423,5 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
+- [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)
+- [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)

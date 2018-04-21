@@ -1,9 +1,9 @@
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
-    * [Java 虚拟机栈](#java-虚拟机栈)
+    * [虚拟机栈](#虚拟机栈)
     * [本地方法栈](#本地方法栈)
-    * [Java 堆](#java-堆)
+    * [堆](#堆)
     * [方法区](#方法区)
     * [运行时常量池](#运行时常量池)
     * [直接内存](#直接内存)
@@ -27,17 +27,17 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//JVM-runtime-data-area.jpg" width=""/> </div><br>
+<div align="center"> <img src="../pics//540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
 
 ## 程序计数器
 
 记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
 
-## Java 虚拟机栈
+## 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//JVM-Stack.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width=""/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
 
@@ -56,13 +56,13 @@ java -Xss=512M HackTheJava
 
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-<div align="center"> <img src="../pics//JNIFigure1.gif" width="400"/> </div><br>
+<div align="center"> <img src="../pics//JNIFigure1.gif" width="350"/> </div><br>
 
-## Java 堆
+## 堆
 
 所有对象实例都在这里分配内存。
 
-是垃圾收集的主要区域（"GC 堆 "），现代的垃圾收集器基本都是采用分代收集算法，该算法的思想是针对不同的对象采取不同的垃圾回收算法，因此虚拟机把 Java 堆分成以下三块：
+是垃圾收集的主要区域（"GC 堆"），现代的垃圾收集器基本都是采用分代收集算法，该算法的思想是针对不同的对象采取不同的垃圾回收算法，因此虚拟机把 Java 堆分成以下三块：
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
@@ -102,7 +102,7 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，引入了一种基于通道（Channel）与缓冲区（Buffer）的 I/O 方式，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
+在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
 # 二、垃圾收集
 
@@ -142,7 +142,7 @@ Java 对引用的概念进行了扩充，引入四种强度不同的引用类型
 
 **（一）强引用** 
 
-只要强引用存在，垃圾回收器永远不会回收调掉被引用的对象。
+只要强引用存在，垃圾回收器永远不会回收被引用的对象。
 
 使用 new 一个新对象的方式来创建强引用。
 
@@ -154,7 +154,7 @@ Object obj = new Object();
 
 用来描述一些还有用但是并非必需的对象。
 
-在系统将要发生内存溢出异常之前，将会对这些对象列进回收范围之中进行第二次回收。
+在系统将要发生内存溢出异常之前，会将这些对象列进回收范围之中进行第二次回收。
 
 软引用主要用来实现类似缓存的功能，在内存足够的情况下直接通过软引用取值，无需从繁忙的真实来源获取数据，提升速度；当内存不足时，自动删除这部分缓存数据，从真正的来源获取这些数据。
 
@@ -221,12 +221,16 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 不足：
 
-1. 标记和清除过程效率都不高
+1. 标记和清除过程效率都不高；
 2. 会产生大量碎片，内存碎片过多可能导致无法给大对象分配内存。
 
-之后的算法都是基于该算法进行改进。
+### 2. 标记 - 整理
 
-### 2. 复制
+<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
+
+让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
+
+### 3. 复制
 
 <div align="center"> <img src="../pics//e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
 
@@ -235,12 +239,6 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 主要不足是只使用了内存的一半。
 
 现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survior 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和 使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90 %。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间。
-
-### 3. 标记 - 整理
-
-<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
-
-让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 ### 4. 分代收集
 
@@ -394,7 +392,7 @@ JVM 为对象定义年龄计数器，经过 Minor GC 依然存活，并且能被
 
 ### 4. 动态对象年龄判定
 
-JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无序等待 MaxTenuringThreshold 中要求的年龄。
+JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等待 MaxTenuringThreshold 中要求的年龄。
 
 ### 5. 空间分配担保
 
@@ -418,7 +416,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 ### 4. JDK 1.7 及以前的永久代空间不足
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 
 ### 5. Concurrent Mode Failure
 
@@ -448,7 +446,7 @@ JVM 并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才
 
 虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列五种情况必须对类进行初始化（加载、验证、准备都会随着发生）：
 
-1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译器把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
+1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
 
 2. 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
 
@@ -507,19 +505,19 @@ System.out.println(ConstClass.HELLOWORLD);
 
 主要有以下 4 个阶段：
 
-**（一）文件格式验证** 
+（一）文件格式验证
 
 验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理。
 
-**（二）元数据验证** 
+（二）元数据验证
 
 对字节码描述的信息进行语义分析，以保证其描述的信息符合 Java 语言规范的要求。
 
-**（三）字节码验证** 
+（三）字节码验证
 
 通过数据流和控制流分析，确保程序语义是合法、符合逻辑的。
 
-**（四）符号引用验证** 
+（四）符号引用验证
 
 发生在虚拟机将符号引用转换为直接引用的时候，对类自身以外（常量池中的各种符号引用）的信息进行匹配性校验。
 
@@ -598,7 +596,7 @@ public static void main(String[] args) {
 
 ### 1. 类与类加载器
 
-对于任意一个类，都需要由加载它的类加载器和这个类本身一同确立其在 Java 虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。通俗而言：比较两个类是否“相等”（这里所指的“相等”，包括类的 Class 对象的 equals() 方法、isAssignableFrom() 方法、isInstance() 方法的返回结果，也包括使用 instanceof() 关键字做对象所属关系判定等情况），只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个 Class 文件，被同一个虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。
+对于任意一个类，都需要由加载它的类加载器和这个类本身一同确立其在 Java 虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。通俗而言：比较两个类是否“相等”（这里所指的“相等”，包括类的 Class 对象的 equals() 方法、isAssignableFrom() 方法、isInstance() 方法的返回结果，也包括使用 instanceof 关键字做对象所属关系判定等情况），只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个 Class 文件，被同一个虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。
 
 ### 2. 类加载器分类
 
@@ -610,11 +608,11 @@ public static void main(String[] args) {
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
-- 启动类加载器（Bootstrap ClassLoader） 此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
 
-- 扩展类加载器（Extension ClassLoader） 这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+- 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
 
-- 应用程序类加载器（Application ClassLoader） 这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+- 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
 ### 3. 双亲委派模型
 
@@ -634,7 +632,7 @@ public static void main(String[] args) {
 
 ```java
 protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException{
-    //check the class has been loaded or not
+    // 先检查请求的类是否已经被加载过了
     Class c = findLoadedClass(name);
     if(c == null) {
         try{
@@ -644,9 +642,10 @@ protected synchronized Class<?> loadClass(String name, boolean resolve) throws C
                 c = findBootstrapClassOrNull(name);
             }
         } catch(ClassNotFoundException e) {
-            //if throws the exception , the father can not complete the load
+            // 如果父类加载器抛出 ClassNotFoundException，说明父类加载器无法完成加载请求
         }
         if(c == null) {
+            // 如果父类加载器无法完成加载请求，再调用自身的 findClass() 来进行加载
             c = findClass(name);
         }
     }

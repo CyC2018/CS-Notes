@@ -90,22 +90,26 @@
 
 在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
 
+要求复杂度为 O(N) + O(1)，时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
+
 ## 解题思路
 
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
 
 以 (2, 3, 1, 0, 2, 5) 为例：
 
-```html
+```text-html-basic
 position-0 : (2,3,1,0,2,5) // 2 <-> 1
              (1,3,2,0,2,5) // 1 <-> 3
-             (3,1,1,0,2,5) // 3 <-> 0
-             (0,1,1,3,2,5) // already in position
-position-1 : (0,1,1,3,2,5) // already in position
-position-2 : (0,1,1,3,2,5) // nums[i] == nums[nums[i]], exit
+             (3,1,2,0,2,5) // 3 <-> 0
+             (0,1,2,3,2,5) // already in position
+position-1 : (0,1,2,3,2,5) // already in position
+position-2 : (0,1,2,3,2,5) // already in position
+position-3 : (0,1,2,3,2,5) // already in position
+position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
 ```
 
-遍历到位置 2 时，该位置上的数为 1，但是第 1 个位置上已经有一个 1 的值了，因此可以知道 1 重复。
+遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复。
 
 复杂度：O(N) + O(1)
 
@@ -294,7 +298,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ## 题目描述
 
-根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。
+根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
 
 ```html
 preorder = [3,9,20,15,7]
@@ -337,7 +341,7 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 
 ## 解题思路
 
-① 如果一个节点有右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
 <div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
 
@@ -391,11 +395,14 @@ public void push(int node) {
     in.push(node);
 }
 
-public int pop() {
+public int pop() throws Exception {
     if (out.isEmpty()) {
         while (!in.isEmpty()) {
             out.push(in.pop());
         }
+    }
+    if (out.isEmpty()) {
+        throw new Exception("queue is empty");
     }
     return out.pop();
 }
@@ -405,17 +412,47 @@ public int pop() {
 
 ## 题目描述
 
-以 O(1) 的时间复杂度求菲波那切数列。
+求菲波那契数列的第 n 项。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br>
 
 ## 解题思路
 
-如果使用递归求解，那么会重复计算一些子问题。例如，求 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
+如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
 <div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png" width="300"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
+
+```java
+public int Fibonacci(int n) {
+    if(n <= 1) return n;
+    int[] fib = new int[n + 1];
+    fib[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib[n];
+}
+```
+
+考虑到第 i 项只与第 i-1 和第 i-2 项有关，因此只需要存储前两项的值就能求解第 i 项，从而将空间复杂度由 O(N) 降低为 O(1)。
+
+```java
+public int Fibonacci(int n) {
+    if(n <= 1) return n;
+    int pre2 = 0, pre1 = 1;
+    int fib = 0;
+    for (int i = 2; i <= n; i++) {
+        fib = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = fib;
+    }
+    return fib;
+}
+```
+
+由于待求解的 n 小于 40，因此可以将前 40 项的结果先进行计算，之后就能以 O(1) 时间复杂度得到第 n 项的值了。
 
 ```java
 public class Solution {
@@ -441,6 +478,8 @@ public class Solution {
 
 ## 解题思路
 
+复杂度：O(N) + O(N)
+
 ```java
 public int JumpFloor(int n) {
     if (n == 1) return 1;
@@ -451,6 +490,22 @@ public int JumpFloor(int n) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n - 1];
+}
+```
+
+复杂度：O(N) + O(1)
+
+```java
+public int JumpFloor(int n) {
+    if (n <= 1) return n;
+    int pre2 = 0, pre1 = 1;
+    int result = 0;
+    for (int i = 1; i <= n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
 }
 ```
 
@@ -483,9 +538,11 @@ public int JumpFloorII(int n) {
 
 ## 解题思路
 
+复杂度：O(N) + O(N)
+
 ```java
 public int RectCover(int n) {
-    if (n < 2) return n;
+    if (n <= 2) return n;
     int[] dp = new int[n];
     dp[0] = 1;
     dp[1] = 2;
@@ -493,6 +550,22 @@ public int RectCover(int n) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n - 1];
+}
+```
+
+复杂度：O(N) + O(1)
+
+```java
+public int RectCover(int n) {
+    if (n <= 2) return n;
+    int pre2 = 1, pre1 = 2;
+    int result = 0;
+    for (int i = 3; i <= n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
 }
 ```
 
@@ -543,7 +616,11 @@ public int minNumberInRotateArray(int[] nums) {
 
 ## 题目描述
 
-请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。例如 a b c e s f c s a d e e 矩阵中包含一条字符串 "bcced" 的路径，但是矩阵中不包含 "abcb" 路径，因为字符串的第一个字符 b 占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+
+例如下面的矩阵包含了一条 bfce 路径。
+
+<div align="center"> <img src="../pics//e31abb94-9201-4e06-9902-61101b92f475.png" width="300"/> </div><br>
 
 ## 解题思路
 
@@ -797,13 +874,13 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，令该节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="../pics//004edd56-1546-4052-a7f9-a9f7895ccec5.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//41392d76-dd1d-4712-85d9-e8bb46b04a2d.png" width="600"/> </div><br>
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
 <div align="center"> <img src="../pics//db4921d4-184b-48ba-a3cf-1d1141e3ba2d.png" width="600"/> </div><br>
 
-综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个为节点以 O(n) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
+综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个尾节点以 O(N) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -852,17 +929,17 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 解题思路
 
-应该注意到，'.' 是用来代替一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
+应该注意到，'.' 是用来当做一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
 
 ```html
 p.charAt(j) == s.charAt(i)  :  dp[i][j] = dp[i-1][j-1];
 p.charAt(j) == '.'          :  dp[i][j] = dp[i-1][j-1];
 p.charAt(j) == '*'          :
-   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  // in this case, a* only counts as empty
+   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //a* only counts as empty
    p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.':
-            dp[i][j] = dp[i-1][j]   // in this case, a* counts as multiple a
-         or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
-         or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+            dp[i][j] = dp[i-1][j]   // a* counts as multiple a
+         or dp[i][j] = dp[i][j-1]   // a* counts as single a
+         or dp[i][j] = dp[i][j-2]   // a* counts as empty
 ```
 
 ```java
@@ -1067,7 +1144,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
     ListNode head = new ListNode(-1);
     ListNode cur = head;
     while (list1 != null && list2 != null) {
-        if (list1.val < list2.val) {
+        if (list1.val <= list2.val) {
             cur.next = list1;
             list1 = list1.next;
         } else {
@@ -1217,6 +1294,8 @@ public int min() {
 
 ## 解题思路
 
+使用一个栈来模拟压入弹出操作。
+
 ```java
 public boolean IsPopOrder(int[] pushA, int[] popA) {
     int n = pushA.length;
@@ -1332,7 +1411,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 ## 题目描述
 
-输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
 例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
 
@@ -1494,7 +1573,7 @@ public class Solution {
 
     public String Serialize(TreeNode root) {
         if (root == null) return "#";
-        return root.val + " " + Serialize(root.left) + " " + Serialize(root.right);
+        return root.val + " " + Serialize(root.left) + " " + Serialize(root.right); 
     }
 
     public TreeNode Deserialize(String str) {
@@ -1557,7 +1636,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 
 ## 解题思路
 
-多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。
+多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。
 
 使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
@@ -1596,36 +1675,30 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     int kthSmallest = findKthSmallest(nums, k - 1);
     ArrayList<Integer> ret = new ArrayList<>();
     for (int val : nums) {
-        if (val <= kthSmallest && ret.size() < k) ret.add(val);
+        if (val <= kthSmallest && ret.size() < k) {
+            ret.add(val);
+        }
     }
     return ret;
 }
 
 public int findKthSmallest(int[] nums, int k) {
-    int l = 0;
-    int h = nums.length - 1;
+    int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j < k) {
-            l = j + 1;
-        } else if (j > k) {
-            h = j - 1;
-        } else {
-            break;
-        }
+        if (j == k) break;
+        if (j > k) h = j - 1;
+        else l = j + 1;
     }
     return nums[k];
 }
 
 private int partition(int[] nums, int l, int h) {
-    int i = l;
-    int j = h + 1;
+    int i = l, j = h + 1;
     while (true) {
         while (i < h && nums[++i] < nums[l]) ;
         while (j > l && nums[l] < nums[--j]) ;
-        if (i >= j) {
-            break;
-        }
+        if (i >= j) break;
         swap(nums, i, j);
     }
     swap(nums, l, j);
@@ -1633,9 +1706,7 @@ private int partition(int[] nums, int l, int h) {
 }
 
 private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
+    int t = nums[i]; nums[i] = nums[j]; nums[j] = t;
 }
 ```
 
@@ -1805,7 +1876,7 @@ private int getAmountOfDigit(int digit) {
 }
 
 /**
- * 在 digit 位数组成的字符串中，第 index 为的数
+ * 在 digit 位数组成的字符串中，第 index 个数
  */
 private int digitAtIndex(int index, int digit) {
     int number = beginNumber(digit) + index / digit;
@@ -1917,6 +1988,7 @@ public int longestSubStringWithoutDuplication(String str) {
     int curLen = 0;
     int maxLen = 0;
     int[] indexs = new int[26];
+    Arrays.fill(indexs, -1);
     for (int i = 0; i < str.length(); i++) {
         int c = str.charAt(i) - 'a';
         int preIndex = indexs[c];
@@ -1941,21 +2013,19 @@ public int longestSubStringWithoutDuplication(String str) {
 ## 解题思路
 
 ```java
-public int GetUglyNumber_Solution(int N) {
-    if (N <= 6) return N;
+public int GetUglyNumber_Solution(int index) {
+    if (index <= 6) return index;
     int i2 = 0, i3 = 0, i5 = 0;
-    int cnt = 1;
-    int[] dp = new int[N];
+    int[] dp = new int[index];
     dp[0] = 1;
-    while (cnt < N) {
+    for (int i = 1; i < index; i++) {
         int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
-        int min = Math.min(n2, Math.min(n3, n5));
-        dp[cnt++] = min;
-        if (min == n2) i2++;
-        if (min == n3) i3++;
-        if (min == n5) i5++;
+        dp[i] = Math.min(n2, Math.min(n3, n5));
+        if (dp[i] == n2) i2++;
+        if (dp[i] == n3) i3++;
+        if (dp[i] == n5) i5++;
     }
-    return dp[N - 1];
+    return dp[index - 1];
 }
 ```
 
@@ -1978,7 +2048,7 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-以上的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
+以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
 
 ```java
 public int FirstNotRepeatingChar(String str) {
@@ -2077,7 +2147,10 @@ Output:
 
 ## 解题思路
 
-可以用二分查找找出数字在数组的最左端和最右端。
+可以用二分查找找出数字在数组的最左端和最右端，找最左端和最右端在方法实现上的区别主要在于对 nums[m] == K 的处理：
+
+- 找最左端令 h = m - 1
+- 找最右端令 l = m + 1
 
 ```java
 public int GetNumberOfK(int[] nums, int K) {
@@ -2313,7 +2386,7 @@ private void reverse(char[] c, int i, int j) {
 ## 解题思路
 
 ```java
-public String LeftRotateString(String str,int n) {
+public String LeftRotateString(String str, int n) {
     if(str.length() == 0) return "";
     char[] c = str.toCharArray();
     reverse(c, 0, n - 1);
@@ -2365,7 +2438,7 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 ### 动态规划解法
 
-空间复杂度：O(n<sup>2</sup>)
+空间复杂度：O(N<sup>2</sup>)
 
 ```java
 private static int face = 6;
@@ -2393,7 +2466,7 @@ public double countProbability(int n, int s) {
 
 ### 动态规划解法 + 旋转数组
 
-空间复杂度：O(n)
+空间复杂度：O(N)
 
 ```java
 private static int face = 6;
@@ -2449,11 +2522,11 @@ public boolean isContinuous(int[] nums) {
 
 ## 题目描述
 
-让小朋友们围成一个大圈。然后 , 他随机指定一个数 m, 让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌 , 然后可以在礼品箱中任意的挑选礼物 , 并且不再回到圈中 , 从他的下一个小朋友开始 , 继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友 , 可以不用表演。
+让小朋友们围成一个大圈。然后，他随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
 
 ## 解题思路
 
-约瑟夫环
+约瑟夫环，圆圈长度为 n 的解可以看成长度为 n-1 的解再加上报数的长度 m。因为是圆圈，所以最后需要对 n 取余。
 
 ```java
 public int LastRemaining_Solution(int n, int m) {
@@ -2470,6 +2543,8 @@ public int LastRemaining_Solution(int n, int m) {
 可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
 ## 解题思路
+
+使用贪心策略，假设第 i 轮进行卖出操作，买入操作价格应该是 i 之前并且价格最低。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -2503,7 +2578,11 @@ public int Sum_Solution(int n) {
 
 # 65. 不用加减乘除做加法
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+## 解题思路
+
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
+
+递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
 public int Add(int num1, int num2) {
@@ -2536,6 +2615,8 @@ public int[] multiply(int[] A) {
 
 # 67. 把字符串转换成整数
 
+## 解题思路
+
 ```java
 public int StrToInt(String str) {
     if (str.length() == 0) return 0;
@@ -2544,7 +2625,7 @@ public int StrToInt(String str) {
     int ret = 0;
     for (int i = 0; i < chars.length; i++) {
         if (i == 0 && (chars[i] == '+' || chars[i] == '-')) continue;
-        if (chars[i] < '0' || chars[i] > '9') return 0;
+        if (chars[i] < '0' || chars[i] > '9') return 0; // 非法输入
         ret = ret * 10 + (chars[i] - '0');
     }
     return isNegative ? -ret : ret;
@@ -2559,6 +2640,8 @@ public int StrToInt(String str) {
 
 <div align="center"> <img src="../pics//293d2af9-de1d-403e-bed0-85d029383528.png" width="300"/> </div><br>
 
+二叉查找树中，两个节点 p, q 的公共祖先 root 满足 p.val <= root.val && root.val <= q.val，只要找到满足这个条件的最低层节点即可。换句话说，应该先考虑子树的解而不是根节点的解，二叉树的后序遍历操作满足这个特性。在本题中我们可以利用后序遍历的特性，先在左右子树中查找解，最后再考虑根节点的解。
+
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
@@ -2570,6 +2653,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 ### 普通二叉树
 
 <div align="center"> <img src="../pics//37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
+
+在左右子树中查找两个节点的最低公共祖先，如果在其中一颗子树中查找到，那么就返回这个解，否则可以认为根节点就是最低公共祖先。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
