@@ -715,10 +715,10 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 public class CountdownLatchExample {
 
     public static void main(String[] args) throws InterruptedException {
-        final int totalTread = 10;
-        CountDownLatch countDownLatch = new CountDownLatch(totalTread);
+        final int totalThread = 10;
+        CountDownLatch countDownLatch = new CountDownLatch(totalThread);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalTread; i++) {
+        for (int i = 0; i < totalThread; i++) {
             executorService.execute(() -> {
                 System.out.print("run..");
                 countDownLatch.countDown();
@@ -749,10 +749,10 @@ run..run..run..run..run..run..run..run..run..run..end
 public class CyclicBarrierExample {
 
     public static void main(String[] args) throws InterruptedException {
-        final int totalTread = 10;
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(totalTread);
+        final int totalThread = 10;
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(totalThread);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalTread; i++) {
+        for (int i = 0; i < totalThread; i++) {
             executorService.execute(() -> {
                 System.out.print("before..");
                 try {
@@ -1507,7 +1507,7 @@ public class ThreadLocalExample1 {
 
 <div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
-每个 Thread 都有一个 TreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
+每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
 
 ```java
 /* ThreadLocal values pertaining to this thread. This map is maintained
