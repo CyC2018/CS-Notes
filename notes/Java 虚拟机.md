@@ -123,7 +123,7 @@ objB.instance = objA;
 
 ### 2. 可达性
 
-通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是都是可用的，不可达的对象可被回收。
+通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是可用的，不可达的对象可被回收。
 
 <div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
 
