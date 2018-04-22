@@ -4,9 +4,7 @@
 | 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式[:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
 </br>
 
-:loudspeaker: 本仓库不参与商业行为，不向读者收取任何费用。
-
-:loudspeaker: This repository is not engaging in business activities, and does not charge readers any fee.
+:loudspeaker: 本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 </br></br>
 
 ## 算法 :pencil2:
