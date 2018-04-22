@@ -3465,7 +3465,7 @@ class MinStack {
     public void pop() {
         dataStack.pop();
         minStack.pop();
-        min = minStack.isEmpty() ? min = Integer.MAX_VALUE : minStack.peek();
+        min = minStack.isEmpty() ? Integer.MAX_VALUE : minStack.peek();
     }
 
     public int top() {
@@ -3710,8 +3710,8 @@ s = "rat", t = "car", return false.
 ```java
 public boolean isAnagram(String s, String t) {
     int[] cnts = new int[26];
-    for(int i  = 0; i < s.length(); i++) cnts[s.charAt(i) - 'a'] ++;
-    for(int i  = 0; i < t.length(); i++) cnts[t.charAt(i) - 'a'] --;
+    for(int i  = 0; i < s.length(); i++) cnts[s.charAt(i) - 'a']++;
+    for(int i  = 0; i < t.length(); i++) cnts[t.charAt(i) - 'a']--;
     for(int i  = 0; i < 26; i++) if(cnts[i] != 0) return false;
     return true;
 }
@@ -5719,19 +5719,21 @@ x ^ 1s = ~x     x & 1s = x      x | 1s = 1s
 x ^ x = 0       x & x = x       x | x = x
 ```
 
-- 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数；
-- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask ：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位；
-- 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1 。
+- 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。
+- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask ：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
+- 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。
 
-\>\> n 为算术右移，相当于除以 2<sup>n</sup>；
-\>\>\> n 为无符号右移，左边会补上 0。
-&lt;&lt; n 为算术左移，相当于乘以 2<sup>n</sup>。
+位与运算技巧：
 
-n&(n-1) 该位运算是去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110 **100** ，减去 1 得到 10110**011**，这两个数相与得到 10110**000**。
+- n&(n-1) 去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110 **100** ，减去 1 得到 10110**011**，这两个数相与得到 10110**000**。
+- n-n&(\~n+1) 去除 n 的位级表示中最高的那一位。
+- n&(-n) 得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110 **100** ，-n 得到 01001**100**，相与得到 00000**100**
 
-n-n&(\~n+1) 运算是去除 n 的位级表示中最高的那一位。
+移位运算：
 
-n&(-n) 该运算得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110 **100** ，-n 得到 01001**100**，相与得到 00000**100**
+- \>\> n 为算术右移，相当于除以 2<sup>n</sup>；
+- \>\>\> n 为无符号右移，左边会补上 0。
+- &lt;&lt; n 为算术左移，相当于乘以 2<sup>n</sup>。
 
 **2. mask 计算** 
 
@@ -5743,57 +5745,7 @@ n&(-n) 该运算得到 n 的位级表示中最低的那一位。-n 得到 n 的�
 
 要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~(1&lt;&lt;(i+1)-1)。
 
-**3. 位操作举例** 
-
-① 获取第 i 位
-
-num & 00010000 != 0
-
-```java
-(num & (1 << i)) != 0;
-```
-
-② 将第 i 位设置为 1
-
-num | 00010000
-
-```java
-num | (1 << i);
-```
-
-③ 将第 i 位清除为 0
-
-num & 11101111
-
-```java
-num & (~(1 << i))
-```
-
-④ 将最高位到第 i 位清除为 0
-
-num & 00001111
-
-```java
-num & ((1 << i) - 1);
-```
-
-⑤ 将第 0 位到第 i 位清除为 0
-
-num & 11110000
-
-```java
-num & (~((1 << (i+1)) - 1));
-```
-
-⑥ 将第 i 位设置为 0 或者 1
-
-先将第 i 位清零，然后将 v 左移 i 位，执行“位或”运算。
-
-```java
-(num & (1 << i)) | (v << i);
-```
-
-**4. Java 中的位操作** 
+**3. Java 中的位操作** 
 
 ```html
 static int Integer.bitCount();           // 统计 1 的数量
@@ -5804,6 +5756,19 @@ static String toBinaryString(int i);     // 转换为二进制表示的字符串
 **统计两个数的二进制表示有多少位不同** 
 
 [Leetcode : 461. Hamming Distance (Easy)](https://leetcode.com/problems/hamming-distance/)
+
+```html
+Input: x = 1, y = 4
+
+Output: 2
+
+Explanation:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+
+The above arrows point to positions where the corresponding bits are different.
+```
 
 对两个数进行异或操作，位级表示不同的那一位为 1，统计有多少个 1 即可。
 
@@ -5819,11 +5784,44 @@ public int hammingDistance(int x, int y) {
 }
 ```
 
+使用 z&(z-1) 去除 z 位级表示最低的那一位。
+
+```java
+public int hammingDistance(int x, int y) {
+    int z = x ^ y;
+    int cnt = 0;
+    while (z != 0) {
+        z &= (z - 1);
+        cnt++;
+    }
+    return cnt;
+}
+```
+
 可以使用 Integer.bitcount() 来统计 1 个的个数。
 
 ```java
 public int hammingDistance(int x, int y) {
     return Integer.bitCount(x ^ y);
+}
+```
+
+**数组中唯一一个不重复的元素** 
+
+[Leetcode : 136. Single Number (Easy)](https://leetcode.com/problems/single-number/description/)
+
+```html
+Input: [4,1,2,1,2]
+Output: 4
+```
+
+两个相同的数异或的结果为 0，对所有数进行异或操作，最后的结果就是单独出现的那个数。
+
+```java
+public int singleNumber(int[] nums) {
+    int ret = 0;
+    for (int n : nums) ret = ret ^ n;
+    return ret;
 }
 ```
 
@@ -5837,13 +5835,37 @@ Output: 2
 ```
 
 题目描述：数组元素在 0-n 之间，但是有一个数是缺失的，要求找到这个缺失的数。
-                                        `
 
 ```java
 public int missingNumber(int[] nums) {
     int ret = 0;
-    for (int i = 0; i <= nums.length; i++) {
-        ret = i == nums.length ? ret ^ i : ret ^ i ^ nums[i];
+    for (int i = 0; i < nums.length; i++) {
+        ret = ret ^ i ^ nums[i];
+    }
+    return ret ^ nums.length;
+}
+```
+
+**数组中不重复的两个元素** 
+
+[Leetcode : 260. Single Number III (Medium)](https://leetcode.com/problems/single-number-iii/description/)
+
+两个不相等的元素在位级表示上必定会有一位存在不同。
+
+将数组的所有元素异或得到的结果为不存在重复的两个元素异或的结果。
+
+diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
+
+```java
+public int[] singleNumber(int[] nums) {
+    int diff = 0;
+    for (int num : nums) diff ^= num;
+    // 得到最右一位
+    diff &= -diff;
+    int[] ret = new int[2];
+    for (int num : nums) {
+        if ((num & diff) == 0) ret[0] ^= num;
+        else ret[1] ^= num;
     }
     return ret;
 }
@@ -5906,8 +5928,6 @@ b = a ^ b;
 a = a ^ b;
 ```
 
-令 c = a ^ b，那么 b ^ c = b ^ b ^ a = a，a ^ c = a ^ a ^ b = b。
-
 **判断一个数是不是 2 的 n 次方** 
 
 [Leetcode : 231. Power of Two (Easy)](https://leetcode.com/problems/power-of-two/description/)
@@ -5932,24 +5952,7 @@ public boolean isPowerOfTwo(int n) {
 
 [Leetcode : 342. Power of Four (Easy)](https://leetcode.com/problems/power-of-four/)
 
-该数二进制表示有且只有一个奇数位为 1 ，其余的都为 0 ，例如 16 ：10000。可以每次把 1 向左移动 2 位，就能构造出这种数字，然后比较构造出来的数与要判断的数是否相同。
-
-```java
-public boolean isPowerOfFour(int num) {
-    int i = 1;
-    while(i > 0){
-        if(i == num) return true;
-        i = i << 2;
-    }
-    return false;
-}
-```
-
-```java
-public boolean isPowerOfFour(int num) {
-    return Integer.toString(num, 4).matches("10*");
-}
-```
+这种数在二进制表示中有且只有一个奇数位为 1，例如 16（10000）。
 
 ```java
 public boolean isPowerOfFour(int num) {
@@ -5957,52 +5960,32 @@ public boolean isPowerOfFour(int num) {
 }
 ```
 
-**数组中唯一一个不重复的元素** 
-
-[Leetcode : 136. Single Number (Easy)](https://leetcode.com/problems/single-number/description/)
-
-两个相同的数异或的结果为 0，对所有数进行异或操作，最后的结果就是单独出现的那个数。
-
-类似的有：[Leetcode : 389. Find the Difference (Easy)](https://leetcode.com/problems/find-the-difference/description/)，两个字符串仅有一个字符不相同，使用异或操作可以以 O(1) 的空间复杂度来求解，而不需要使用 HashSet。
+也可以使用正则表达式进行匹配。
 
 ```java
-public int singleNumber(int[] nums) {
-    int ret = 0;
-    for(int n : nums) ret = ret ^ n;
-    return ret;
+public boolean isPowerOfFour(int num) {
+    return Integer.toString(num, 4).matches("10*");
 }
 ```
 
-**数组中不重复的两个元素** 
-
-[Leetcode : 260. Single Number III (Medium)](https://leetcode.com/problems/single-number-iii/description/)
-
-两个不相等的元素在位级表示上必定会有一位存在不同。
-
-将数组的所有元素异或得到的结果为不存在重复的两个元素异或的结果。
-
-diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
-
-```java
-public int[] singleNumber(int[] nums) {
-    int diff = 0;
-    for(int num : nums) diff ^= num;
-    // 得到最右一位
-    diff &= -diff;
-    int[] ret = new int[2];
-    for(int num : nums) {
-        if((num & diff) == 0) ret[0] ^= num;
-        else ret[1] ^= num;
-    }
-    return ret;
-}
-```
 
 **判断一个数的位级表示是否不会出现连续的 0 和 1** 
 
 [Leetcode : 693. Binary Number with Alternating Bits (Easy)](https://leetcode.com/problems/binary-number-with-alternating-bits/description/)
 
-对于 10101 这种位级表示的数，把它向右移动 1 位得到 1010 ，这两个数每个位都不同，因此异或得到的结果为 11111。
+```html
+Input: 10
+Output: True
+Explanation:
+The binary representation of 10 is: 1010.
+
+Input: 11
+Output: False
+Explanation:
+The binary representation of 11 is: 1011.
+```
+
+对于 1010 这种位级表示的数，把它向右移动 1 位得到 101，这两个数每个位都不同，因此异或得到的结果为 1111。
 
 ```java
 public boolean hasAlternatingBits(int n) {
@@ -6021,15 +6004,15 @@ Output: 2
 Explanation: The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.
 ```
 
-不考虑二进制表示中的首 0 部分。
+题目描述：不考虑二进制表示中的首 0 部分。
 
 对于 00000101，要求补码可以将它与 00000111 进行异或操作。那么问题就转换为求掩码 00000111。
 
 ```java
 public int findComplement(int num) {
-    if(num == 0) return 1;
+    if (num == 0) return 1;
     int mask = 1 << 30;
-    while((num & mask) == 0) mask >>= 1;
+    while ((num & mask) == 0) mask >>= 1;
     mask = (mask << 1) - 1;
     return num ^ mask;
 }
@@ -6039,7 +6022,7 @@ public int findComplement(int num) {
 
 ```java
 public int findComplement(int num) {
-    if(num == 0) return 1;
+    if (num == 0) return 1;
     int mask = Integer.highestOneBit(num);
     mask = (mask << 1) - 1;
     return num ^ mask;
@@ -6070,7 +6053,9 @@ public int findComplement(int num) {
 
 [Leetcode : 371. Sum of Two Integers (Easy)](https://leetcode.com/problems/sum-of-two-integers/description/)
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
+
+递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
 public int getSum(int a, int b) {
@@ -6090,12 +6075,11 @@ The two words can be "abcw", "xtfn".
 
 题目描述：字符串数组的字符串只含有小写字符。求解字符串数组中两个字符串长度的最大乘积，要求这两个字符串不能含有相同字符。
 
-解题思路：本题主要问题是判断两个字符串是否含相同字符，由于字符串只含有小写字符，总共 26 位，因此可以用一个 32 位的整数来存储每个字符是否出现过。
+本题主要问题是判断两个字符串是否含相同字符，由于字符串只含有小写字符，总共 26 位，因此可以用一个 32 位的整数来存储每个字符是否出现过。
 
 ```java
 public int maxProduct(String[] words) {
     int n = words.length;
-    if (n == 0) return 0;
     int[] val = new int[n];
     for (int i = 0; i < n; i++) {
         for (char c : words[i].toCharArray()) {
@@ -6118,7 +6102,7 @@ public int maxProduct(String[] words) {
 
 [Leetcode : 338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
 
-对于数字 6(110)，它可以看成是数字 (10) 前面加上一个 1 ，因此 dp[i] = dp[i&(i-1)] + 1;
+对于数字 6(110)，它可以看成是 4(100) 再加一个 2(10)，因此 dp[i] = dp[i&(i-1)] + 1;
 
 ```java
 public int[] countBits(int num) {
