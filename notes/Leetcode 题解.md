@@ -5534,6 +5534,11 @@ Trie，又称前缀树或字典树，用于判断字符串是否存在或者是�
 ```java
 class Trie {
 
+    private class Node {
+        Node[] childs = new Node[26];
+        boolean isLeaf;
+    }
+
     private Node root = new Node();
 
     public Trie() {
@@ -5543,41 +5548,43 @@ class Trie {
         insert(word, root);
     }
 
-    private void insert(String word, Node node){
-        int idx = word.charAt(0) - 'a';
-        if(node.child[idx] == null){
-            node.child[idx] = new Node();
+    private void insert(String word, Node node) {
+        if (node == null) return;
+        if (word.length() == 0) {
+            node.isLeaf = true;
+            return;
         }
-        if(word.length() == 1) node.child[idx].isLeaf = true;
-        else insert(word.substring(1), node.child[idx]);
+        int index = indexForChar(word.charAt(0));
+        if (node.childs[index] == null) {
+            node.childs[index] = new Node();
+        }
+        insert(word.substring(1), node.childs[index]);
     }
 
     public boolean search(String word) {
         return search(word, root);
     }
 
-    private boolean search(String word, Node node){
-        if(node == null) return false;
-        int idx = word.charAt(0) - 'a';
-        if(node.child[idx] == null) return false;
-        if(word.length() == 1) return node.child[idx].isLeaf;
-        return search(word.substring(1), node.child[idx]);
+    private boolean search(String word, Node node) {
+        if (node == null) return false;
+        if (word.length() == 0) return node.isLeaf;
+        int index = indexForChar(word.charAt(0));
+        return search(word.substring(1), node.childs[index]);
     }
 
     public boolean startsWith(String prefix) {
         return startWith(prefix, root);
     }
 
-    private boolean startWith(String prefix, Node node){
-        if(node == null) return false;
-        if(prefix.length() == 0) return true;
-        int idx = prefix.charAt(0) - 'a';
-        return startWith(prefix.substring(1), node.child[idx]);
+    private boolean startWith(String prefix, Node node) {
+        if (node == null) return false;
+        if (prefix.length() == 0) return true;
+        int index = indexForChar(prefix.charAt(0));
+        return startWith(prefix.substring(1), node.childs[index]);
     }
 
-    private class Node{
-        Node[] child = new Node[26];
-        boolean isLeaf;
+    private int indexForChar(char c) {
+        return c - 'a';
     }
 }
 ```
@@ -5612,15 +5619,16 @@ class MapSum {
     }
 
     private void insert(String key, Node node, int val) {
-        int idx = key.charAt(0) - 'a';
-        if (node.child[idx] == null) {
-            node.child[idx] = new Node();
+        if (node == null) return;
+        if (key.length() == 0) {
+            node.value = val;
+            return;
         }
-        if (key.length() == 1) {
-            node.child[idx].value = val;
-        } else {
-            insert(key.substring(1), node.child[idx], val);
+        int index = indexForChar(key.charAt(0));
+        if (node.child[index] == null) {
+            node.child[index] = new Node();
         }
+        insert(key.substring(1), node.child[index], val);
     }
 
     public int sum(String prefix) {
@@ -5628,19 +5636,20 @@ class MapSum {
     }
 
     private int sum(String prefix, Node node) {
-        if (node == null) {
-            return 0;
+        if (node == null) return 0;
+        if (prefix.length() != 0) {
+            int index = indexForChar(prefix.charAt(0));
+            return sum(prefix.substring(1), node.child[index]);
         }
         int sum = node.value;
-        if (prefix.length() == 0) {
-            for (Node next : node.child) {
-                sum += sum(prefix, next);
-            }
-        } else {
-            int idx = prefix.charAt(0) - 'a';
-            sum = sum(prefix.substring(1), node.child[idx]);
+        for (Node child : node.child) {
+            sum += sum(prefix, child);
         }
         return sum;
+    }
+
+    private int indexForChar(char c) {
+        return c - 'a';
     }
 }
 ```
