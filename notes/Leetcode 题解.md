@@ -3371,6 +3371,7 @@ class MyQueue {
 
 ```java
 class MyQueue {
+
     private Stack<Integer> in = new Stack();
     private Stack<Integer> out = new Stack();
 
@@ -3524,8 +3525,8 @@ public int[] dailyTemperatures(int[] temperatures) {
     int n = temperatures.length;
     int[] ret = new int[n];
     Stack<Integer> stack = new Stack<>();
-    for(int i = 0; i < n; i++) {
-        while(!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+    for (int i = 0; i < n; i++) {
+        while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
             int idx = stack.pop();
             ret[idx] = i - idx;
         }
@@ -3548,15 +3549,15 @@ Output: [-1,3,-1]
 public int[] nextGreaterElement(int[] nums1, int[] nums2) {
     Map<Integer, Integer> map = new HashMap<>();
     Stack<Integer> stack = new Stack<>();
-    for(int num : nums2){
-        while(!stack.isEmpty() && num > stack.peek()){
+    for (int num : nums2) {
+        while (!stack.isEmpty() && num > stack.peek()) {
             map.put(stack.pop(), num);
         }
         stack.add(num);
     }
     int[] ret = new int[nums1.length];
-    for(int i = 0; i < nums1.length; i++){
-        if(map.containsKey(nums1[i])) ret[i] = map.get(nums1[i]);
+    for (int i = 0; i < nums1.length; i++) {
+        if (map.containsKey(nums1[i])) ret[i] = map.get(nums1[i]);
         else ret[i] = -1;
     }
     return ret;
@@ -3592,7 +3593,7 @@ Java 中的  **HashSet**  用于存储一个集合，并以 O(1) 的时间复杂
 
 Java 中的  **HashMap**  主要用于映射关系，从而把两个元素联系起来。
 
-在对一个内容进行压缩或者其它转换时，利用 HashMap 可以把原始内容和转换后的内容联系起来。例如在一个简化 url 的系统中（[Leetcdoe : 535. Encode and Decode TinyURL (Medium)](https://leetcode.com/problems/encode-and-decode-tinyurl/description/)），利用 HashMap 就可以存储精简后的 url 到原始 url 的映射，使得不仅可以显示简化的 url，也可以根据简化的 url 得到原始 url 从而定位到正确的资源。
+在对一个内容进行压缩或者其它转换时，利用 HashMap 可以把原始内容和转换后的内容联系起来。例如在一个简化 url 的系统中[Leetcdoe : 535. Encode and Decode TinyURL (Medium)](https://leetcode.com/problems/encode-and-decode-tinyurl/description/)，利用 HashMap 就可以存储精简后的 url 到原始 url 的映射，使得不仅可以显示简化的 url，也可以根据简化的 url 得到原始 url 从而定位到正确的资源。
 
 HashMap 也可以用来对元素进行计数统计，此时键为元素，值为计数。和 HashSet 类似，如果元素有穷并且范围不大，可以用整型数组来进行统计。
 
@@ -3602,13 +3603,13 @@ HashMap 也可以用来对元素进行计数统计，此时键为元素，值为
 
 可以先对数组进行排序，然后使用双指针方法或者二分查找方法。这样做的时间复杂度为 O(NlogN)，空间复杂度为 O(1)。
 
-用 HashMap 存储数组元素和索引的映射，在访问到 nums[i] 时，判断 HashMap 中是否存在 target - nums[i] ，如果存在说明 target - nums[i] 所在的索引和 i 就是要找的两个数。该方法的时间复杂度为 O(N)，空间复杂度为 O(N)，使用空间来换取时间。
+用 HashMap 存储数组元素和索引的映射，在访问到 nums[i] 时，判断 HashMap 中是否存在 target - nums[i]，如果存在说明 target - nums[i] 所在的索引和 i 就是要找的两个数。该方法的时间复杂度为 O(N)，空间复杂度为 O(N)，使用空间来换取时间。
 
 ```java
 public int[] twoSum(int[] nums, int target) {
     HashMap<Integer, Integer> map = new HashMap<>();
-    for(int i = 0; i < nums.length; i++){
-        if(map.containsKey(target - nums[i])) return new int[]{map.get(target - nums[i]), i};
+    for (int i = 0; i < nums.length; i++) {
+        if (map.containsKey(target - nums[i])) return new int[] { map.get(target - nums[i]), i };
         else map.put(nums[i], i);
     }
     return null;
@@ -3622,7 +3623,9 @@ public int[] twoSum(int[] nums, int target) {
 ```java
 public boolean containsDuplicate(int[] nums) {
     Set<Integer> set = new HashSet<>();
-    for (int num : nums) set.add(num);
+    for (int num : nums) {
+        set.add(num);
+    }
     return set.size() < nums.length;
 }
 ```
@@ -3657,12 +3660,14 @@ public int findLHS(int[] nums) {
 
 **最长连续序列** 
 
-[Leetcode : 128. Longest Consecutive Sequence (Medium)](https://leetcode.com/problems/longest-consecutive-sequence/description/)
+[Leetcode : 128. Longest Consecutive Sequence (Hard)](https://leetcode.com/problems/longest-consecutive-sequence/description/)
 
 ```html
 Given [100, 4, 200, 1, 3, 2],
 The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 ```
+
+题目要求：以 O(N) 的时间复杂度求解。
 
 ```java
 public int longestConsecutive(int[] nums) {
@@ -3705,41 +3710,14 @@ s = "anagram", t = "nagaram", return true.
 s = "rat", t = "car", return false.
 ```
 
-字符串只包含小写字符，总共有 26 个小写字符。可以用 Hash Table 来映射字符与出现次数，因为键值范围很小，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，比较两个字符串出现的字符数量是否相同。
+字符串只包含小写字符，总共有 26 个小写字符。可以用 Hash Table 来映射字符与出现次数，因为键值范围很小，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，然后比较两个字符串出现的字符数量是否相同。
 
 ```java
 public boolean isAnagram(String s, String t) {
     int[] cnts = new int[26];
-    for(int i  = 0; i < s.length(); i++) cnts[s.charAt(i) - 'a']++;
-    for(int i  = 0; i < t.length(); i++) cnts[t.charAt(i) - 'a']--;
-    for(int i  = 0; i < 26; i++) if(cnts[i] != 0) return false;
-    return true;
-}
-```
-
-**字符串同构** 
-
-[Leetcode : 205. Isomorphic Strings (Easy)](https://leetcode.com/problems/isomorphic-strings/description/)
-
-```html
-Given "egg", "add", return true.
-Given "foo", "bar", return false.
-Given "paper", "title", return true.
-```
-
-记录一个字符上次出现的位置，如果两个字符串中某个字符上次出现的位置一样，那么就属于同构。
-
-```java
-public boolean isIsomorphic(String s, String t) {
-    int[] m1 = new int[256];
-    int[] m2 = new int[256];
-    for(int i = 0; i < s.length(); i++){
-        if(m1[s.charAt(i)] != m2[t.charAt(i)]) {
-            return false;
-        }
-        m1[s.charAt(i)] = i + 1;
-        m2[t.charAt(i)] = i + 1;
-    }
+    for (char c : s.toCharArray()) cnts[c - 'a']++;
+    for (char c : t.toCharArray()) cnts[c - 'a']--;
+    for (int cnt : cnts) if (cnt != 0) return false;
     return true;
 }
 ```
@@ -3754,16 +3732,42 @@ Output : 7
 Explanation : One longest palindrome that can be built is "dccaccd", whose length is 7.
 ```
 
-使用长度为 128 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
+使用长度为 256 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
 
 ```java
 public int longestPalindrome(String s) {
-    int[] cnts = new int[128]; // ascii 码总共 128 个
-    for(char c : s.toCharArray()) cnts[c]++;
+    int[] cnts = new int[256];
+    for (char c : s.toCharArray()) cnts[c]++;
     int ret = 0;
-    for(int cnt : cnts)  ret += (cnt / 2) * 2;
-    if(ret < s.length()) ret++; // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
+    for (int cnt : cnts) ret += (cnt / 2) * 2;
+    if (ret < s.length()) ret++; // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
     return ret;
+}
+```
+
+**字符串同构** 
+
+[Leetcode : 205. Isomorphic Strings (Easy)](https://leetcode.com/problems/isomorphic-strings/description/)
+
+```html
+Given "egg", "add", return true.
+Given "foo", "bar", return false.
+Given "paper", "title", return true.
+```
+
+记录一个字符上次出现的位置，如果两个字符串中的字符上次出现的位置一样，那么就属于同构。
+
+```java
+public boolean isIsomorphic(String s, String t) {
+    int[] preIndexOfS = new int[256];
+    int[] preIndexOfT = new int[256];
+    for (int i = 0; i < s.length(); i++) {
+        char sc = s.charAt(i), tc = t.charAt(i);
+        if (preIndexOfS[sc] != preIndexOfT[tc]) return false;
+        preIndexOfS[sc] = i + 1;
+        preIndexOfT[tc] = i + 1;
+    }
+    return true;
 }
 ```
 
@@ -3771,17 +3775,17 @@ public int longestPalindrome(String s) {
 
 [Leetcode : 9. Palindrome Number (Easy)](https://leetcode.com/problems/palindrome-number/description/)
 
-要求不能使用额外空间，也就不能将整数转换为字符串进行判断。
+题目要求：不能使用额外空间，也就不能将整数转换为字符串进行判断。
 
 将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。
 
 ```java
 public boolean isPalindrome(int x) {
-    if(x == 0) return true;
-    if(x < 0) return false;
-    if(x % 10 == 0) return false;
+    if (x == 0) return true;
+    if (x < 0) return false;
+    if (x % 10 == 0) return false;
     int right = 0;
-    while(x > right){
+    while (x > right) {
         right = right * 10 + x % 10;
         x /= 10;
     }
@@ -3804,7 +3808,7 @@ Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 ```java
 private int cnt = 0;
 public int countSubstrings(String s) {
-    for(int i = 0; i < s.length(); i++) {
+    for (int i = 0; i < s.length(); i++) {
         extendSubstrings(s, i, i);    // 奇数长度
         extendSubstrings(s, i, i + 1); // 偶数长度
     }
@@ -3812,7 +3816,7 @@ public int countSubstrings(String s) {
 }
 
 private void extendSubstrings(String s, int start, int end) {
-    while(start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
+    while (start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
         start--;
         end++;
         cnt++;
@@ -3833,14 +3837,13 @@ Explanation: There are 6 substrings that have equal number of consecutive 1's an
 ```java
 public int countBinarySubstrings(String s) {
     int preLen = 0, curLen = 1, ret = 0;
-    for(int i = 1; i < s.length(); i++){
-        if(s.charAt(i) == s.charAt(i-1)) curLen++;
-        else{
+    for (int i = 1; i < s.length(); i++) {
+        if (s.charAt(i) == s.charAt(i-1)) curLen++;
+        else {
             preLen = curLen;
             curLen = 1;
         }
-
-        if(preLen >= curLen) ret++;
+        if (preLen >= curLen) ret++;
     }
     return ret;
 }
@@ -3848,7 +3851,7 @@ public int countBinarySubstrings(String s) {
 
 **字符串循环移位包含** 
 
-[ 编程之美：3.1](#)
+[编程之美：3.1](#)
 
 ```html
 s1 = AABCD, s2 = CDAA
@@ -3861,7 +3864,7 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 **字符串循环移位** 
 
-[ 编程之美：2.17](#)
+[编程之美：2.17](#)
 
 将字符串向右循环移动 k 位。
 
@@ -3900,12 +3903,12 @@ public void moveZeroes(int[] nums) {
 [Leetcode : 566. Reshape the Matrix (Easy)](https://leetcode.com/problems/reshape-the-matrix/description/)
 
 ```html
-Input: 
-nums = 
+Input:
+nums =
 [[1,2],
  [3,4]]
 r = 1, c = 4
-Output: 
+Output:
 [[1,2,3,4]]
 Explanation:
 The row-traversing of nums is [1,2,3,4]. The new reshaped matrix is a 1 * 4 matrix, fill it row by row by using the previous list.
@@ -3933,16 +3936,188 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 
 ```java
 public int findMaxConsecutiveOnes(int[] nums) {
-    int max = 0;
-    int cur = 0;
+    int max = 0, cur = 0;
     for (int num : nums) {
-        if (num == 0) cur = 0;
-        else {
-            cur++;
-            max = Math.max(max, cur);
-        }
+        cur = num == 0 ? 0 : cur + 1;
+        max = Math.max(max, cur);
     }
     return max;
+}
+```
+
+**一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
+
+[Leetcode : 645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
+
+```html
+Input: nums = [1,2,2,4]
+Output: [2,3]
+```
+
+```html
+Input: nums = [1,2,2,4]
+Output: [2,3]
+```
+
+最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(NlogN)。本题可以以 O(N) 的时间复杂度、O(1) 空间复杂度来求解。
+
+主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。遍历数组，如果第 i 位上的元素不是 i + 1，那么就交换第 i 位和 nums[i] - 1 位上的元素，使得 num[i] - 1 位置上的元素为 nums[i]，也就是该位置上的元素是正确的。
+
+```java
+public int[] findErrorNums(int[] nums) {
+    for (int i = 0; i < nums.length; i++) {
+        while (nums[i] != i + 1) {
+            if (nums[i] == nums[nums[i] - 1]) {
+                return new int[]{nums[nums[i] - 1], i + 1};
+            }
+            swap(nums, i, nums[i] - 1);
+        }
+    }
+
+    return null;
+}
+
+private void swap(int[] nums, int i, int j) {
+    int tmp = nums[i]; nums[i] = nums[j]; nums[j] = tmp;
+}
+```
+
+类似题目：
+
+- [Leetcode :448. Find All Numbers Disappeared in an Array (Easy)](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/)，寻找所有丢失的元素
+- [Leetcode : 442. Find All Duplicates in an Array (Medium)](https://leetcode.com/problems/find-all-duplicates-in-an-array/description/)，寻找所有重复的元素。
+
+**找出数组中重复的数，数组值在 [1, n] 之间** 
+
+[Leetcode : 287. Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/description/)
+
+要求不能修改数组，也不能使用额外的空间。
+
+二分查找解法：
+
+```java
+public int findDuplicate(int[] nums) {
+     int l = 1, h = nums.length - 1;
+     while (l <= h) {
+         int mid = l + (h - l) / 2;
+         int cnt = 0;
+         for (int i = 0; i < nums.length; i++) {
+             if (nums[i] <= mid) cnt++;
+         }
+         if (cnt > mid) h = mid - 1;
+         else l = mid + 1;
+     }
+     return l;
+}
+```
+
+双指针解法，类似于有环链表中找出环的入口：
+
+```java
+public int findDuplicate(int[] nums) {
+    int slow = nums[0], fast = nums[nums[0]];
+    while (slow != fast) {
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+    }
+    fast = 0;
+    while (slow != fast) {
+        slow = nums[slow];
+        fast = nums[fast];
+    }
+    return slow;
+}
+```
+
+**有序矩阵查找** 
+
+[Leetocde : 240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
+
+```html
+[
+   [ 1,  5,  9],
+   [10, 11, 13],
+   [12, 13, 15]
+]
+```
+
+```java
+public boolean searchMatrix(int[][] matrix, int target) {
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+    int m = matrix.length, n = matrix[0].length;
+    int row = 0, col = n - 1;
+    while (row < m && col >= 0) {
+        if (target == matrix[row][col]) return true;
+        else if (target < matrix[row][col]) col--;
+        else row++;
+    }
+    return false;
+}
+```
+
+**有序矩阵的 Kth Element** 
+
+[Leetcode : 378. Kth Smallest Element in a Sorted Matrix ((Medium))](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
+
+```html
+matrix = [
+  [ 1,  5,  9],
+  [10, 11, 13],
+  [12, 13, 15]
+],
+k = 8,
+
+return 13.
+```
+
+解题参考：[Share my thoughts and Clean Java Code](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
+
+二分查找解法：
+
+```java
+public int kthSmallest(int[][] matrix, int k) {
+    int m = matrix.length, n = matrix[0].length;
+    int lo = matrix[0][0], hi = matrix[m - 1][n - 1];
+    while(lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        int cnt = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n && matrix[i][j] <= mid; j++) {
+                cnt++;
+            }
+        }
+        if(cnt < k) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return lo;
+}
+```
+
+堆解法：
+
+```java
+public int kthSmallest(int[][] matrix, int k) {
+    int m = matrix.length, n = matrix[0].length;
+    PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
+    for(int j = 0; j < n; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
+    for(int i = 0; i < k - 1; i++) { // 小根堆，去掉 k - 1 个堆顶元素，此时堆顶元素就是第 k 的数
+        Tuple t = pq.poll();
+        if(t.x == m - 1) continue;
+        pq.offer(new Tuple(t.x + 1, t.y, matrix[t.x + 1][t.y]));
+    }
+    return pq.poll().val;
+}
+
+class Tuple implements Comparable<Tuple> {
+    int x, y, val;
+    public Tuple(int x, int y, int val) {
+        this.x = x; this.y = y; this.val = val;
+    }
+
+    @Override
+    public int compareTo(Tuple that) {
+        return this.val - that.val;
+    }
 }
 ```
 
@@ -4112,185 +4287,6 @@ public int maxChunksToSorted(int[] arr) {
 }
 ```
 
-
-**一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
-
-[Leetcode : 645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
-
-```html
-Input: nums = [1,2,2,4]
-Output: [2,3]
-```
-
-```html
-Input: nums = [1,2,2,4]
-Output: [2,3]
-```
-
-最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(nlogn)。本题可以以 O(n) 的时间复杂度、O(1) 空间复杂度来求解。
-
-主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。
-
-遍历数组，如果第 i 位上的元素不是 i + 1 ，那么就交换第 i 位 和 nums[i] - 1 位上的元素，使得 num[i] - 1 的元素为 nums[i] ，也就是该位的元素是正确的。交换操作需要循环进行，因为一次交换没办法使得第 i 位上的元素是正确的。但是要交换的两个元素可能就是重复元素，那么循环就可能永远进行下去，终止循环的方法是加上 nums[i] != nums[nums[i] - 1 条件。
-
-类似题目：
-
-- [Leetcode :448. Find All Numbers Disappeared in an Array (Easy)](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/)，寻找所有丢失的元素
-- [Leetcode : 442. Find All Duplicates in an Array (Medium)](https://leetcode.com/problems/find-all-duplicates-in-an-array/description/)，寻找所有重复的元素。
-
-```java
-public int[] findErrorNums(int[] nums) {
-    for (int i = 0; i < nums.length; i++) {
-        while (nums[i] != i + 1) {
-            if (nums[i] == nums[nums[i] - 1]) {
-                return new int[]{nums[nums[i] - 1], i + 1};
-            }
-            swap(nums, i, nums[i] - 1);
-        }
-    }
-
-    return null;
-}
-
-private void swap(int[] nums, int i, int j) {
-    int tmp = nums[i]; nums[i] = nums[j]; nums[j] = tmp;
-}
-```
-
-**找出数组中重复的数，数组值在 [1, n] 之间** 
-
-[Leetcode : 287. Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/description/)
-
-要求不能修改数组，也不能使用额外的空间。
-
-二分查找解法：
-
-```java
-public int findDuplicate(int[] nums) {
-     int l = 1, h = nums.length - 1;
-     while (l <= h) {
-         int mid = l + (h - l) / 2;
-         int cnt = 0;
-         for (int i = 0; i < nums.length; i++) {
-             if (nums[i] <= mid) cnt++;
-         }
-         if (cnt > mid) h = mid - 1;
-         else l = mid + 1;
-     }
-     return l;
-}
-```
-
-双指针解法，类似于有环链表中找出环的入口：
-
-```java
-public int findDuplicate(int[] nums) {
-    int slow = nums[0], fast = nums[nums[0]];
-    while (slow != fast) {
-        slow = nums[slow];
-        fast = nums[nums[fast]];
-    }
-    fast = 0;
-    while (slow != fast) {
-        slow = nums[slow];
-        fast = nums[fast];
-    }
-    return slow;
-}
-```
-
-**有序矩阵查找** 
-
-[Leetocde : 240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
-
-```html
-[
-   [ 1,  5,  9],
-   [10, 11, 13],
-   [12, 13, 15]
-]
-```
-
-```java
-public boolean searchMatrix(int[][] matrix, int target) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
-    int m = matrix.length, n = matrix[0].length;
-    int row = 0, col = n - 1;
-    while (row < m && col >= 0) {
-        if (target == matrix[row][col]) return true;
-        else if (target < matrix[row][col]) col--;
-        else row++;
-    }
-    return false;
-}
-```
-
-**有序矩阵的 Kth Element** 
-
-[Leetcode : 378. Kth Smallest Element in a Sorted Matrix ((Medium))](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
-
-```html
-matrix = [
-  [ 1,  5,  9],
-  [10, 11, 13],
-  [12, 13, 15]
-],
-k = 8,
-
-return 13.
-```
-
-解题参考：[Share my thoughts and Clean Java Code](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
-
-二分查找解法：
-
-```java
-public int kthSmallest(int[][] matrix, int k) {
-    int m = matrix.length, n = matrix[0].length;
-    int lo = matrix[0][0], hi = matrix[m - 1][n - 1];
-    while(lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        int cnt = 0;
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n && matrix[i][j] <= mid; j++) {
-                cnt++;
-            }
-        }
-        if(cnt < k) lo = mid + 1;
-        else hi = mid - 1;
-    }
-    return lo;
-}
-```
-
-堆解法：
-
-```java
-public int kthSmallest(int[][] matrix, int k) {
-    int m = matrix.length, n = matrix[0].length;
-    PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
-    for(int j = 0; j < n; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
-    for(int i = 0; i < k - 1; i++) { // 小根堆，去掉 k - 1 个堆顶元素，此时堆顶元素就是第 k 的数
-        Tuple t = pq.poll();
-        if(t.x == m - 1) continue;
-        pq.offer(new Tuple(t.x + 1, t.y, matrix[t.x + 1][t.y]));
-    }
-    return pq.poll().val;
-}
-
-class Tuple implements Comparable<Tuple> {
-    int x, y, val;
-    public Tuple(int x, int y, int val) {
-        this.x = x; this.y = y; this.val = val;
-    }
-
-    @Override
-    public int compareTo(Tuple that) {
-        return this.val - that.val;
-    }
-}
-```
-
 ## 链表
 
 链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
@@ -4316,7 +4312,7 @@ B:    b1 → b2 → b3
 ```java
 public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
     ListNode l1 = headA, l2 = headB;
-    while(l1 != l2){
+    while (l1 != l2) {
         l1 = (l1 == null) ? headB : l1.next;
         l2 = (l2 == null) ? headA : l2.next;
     }
@@ -4447,52 +4443,6 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-**根据有序链表构造平衡的 BST** 
-
-[Leetcode : 109. Convert Sorted List to Binary Search Tree (Medium)](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/)
-
-```html
-Given the sorted linked list: [-10,-3,0,5,9],
-
-One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
-
-      0
-     / \
-   -3   9
-   /   /
- -10  5
-```
-
-```java
-public TreeNode sortedListToBST(ListNode head) {
-    if (head == null) return null;
-    int size = size(head);
-    if (size == 1) return new TreeNode(head.val);
-    ListNode pre = head, mid = pre.next;
-    int step = 2;
-    while (step <= size / 2) {
-        pre = mid;
-        mid = mid.next;
-        step++;
-    }
-    pre.next = null;
-    TreeNode t = new TreeNode(mid.val);
-    t.left = sortedListToBST(head);
-    t.right = sortedListToBST(mid.next);
-    return t;
-}
-
-private int size(ListNode node) {
-    int size = 0;
-    while (node != null) {
-        size++;
-        node = node.next;
-    }
-    return size;
-}
-```
-
-
 **链表求和** 
 
 [Leetcode : 445. Add Two Numbers II (Medium)](https://leetcode.com/problems/add-two-numbers-ii/description/)
@@ -4529,46 +4479,6 @@ private Stack<Integer> buildStack(ListNode l) {
         l = l.next;
     }
     return stack;
-}
-```
-
-**分隔链表** 
-
-[Leetcode : 725. Split Linked List in Parts(Medium)](https://leetcode.com/problems/split-linked-list-in-parts/description/)
-
-```html
-Input:
-root = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 3
-Output: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
-Explanation:
-The input has been split into consecutive parts with size difference at most 1, and earlier parts are a larger size than the later parts.
-```
-
-题目描述：把链表分隔成 k 部分，每部分的长度都应该尽可能相同，排在前面的长度应该大于等于后面的。
-
-```java
-public ListNode[] splitListToParts(ListNode root, int k) {
-    int N = 0;
-    ListNode cur = root;
-    while (cur != null) {
-        N++;
-        cur = cur.next;
-    }
-    int mod = N % k;
-    int size = N / k;
-    ListNode[] ret = new ListNode[k];
-    cur = root;
-    for (int i = 0; cur != null && i < k; i++) {
-        ret[i] = cur;
-        int curSize = size + (mod-- > 0 ? 1 : 0);
-        for (int j = 0; j < curSize - 1; j++) {
-            cur = cur.next;
-        }
-        ListNode next = cur.next;
-        cur.next = null;
-        cur = next;
-    }
-    return ret;
 }
 ```
 
@@ -4649,6 +4559,46 @@ public ListNode oddEvenList(ListNode head) {
     }
     odd.next = evenHead;
     return head;
+}
+```
+
+**分隔链表** 
+
+[Leetcode : 725. Split Linked List in Parts(Medium)](https://leetcode.com/problems/split-linked-list-in-parts/description/)
+
+```html
+Input:
+root = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 3
+Output: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
+Explanation:
+The input has been split into consecutive parts with size difference at most 1, and earlier parts are a larger size than the later parts.
+```
+
+题目描述：把链表分隔成 k 部分，每部分的长度都应该尽可能相同，排在前面的长度应该大于等于后面的。
+
+```java
+public ListNode[] splitListToParts(ListNode root, int k) {
+    int N = 0;
+    ListNode cur = root;
+    while (cur != null) {
+        N++;
+        cur = cur.next;
+    }
+    int mod = N % k;
+    int size = N / k;
+    ListNode[] ret = new ListNode[k];
+    cur = root;
+    for (int i = 0; cur != null && i < k; i++) {
+        ret[i] = cur;
+        int curSize = size + (mod-- > 0 ? 1 : 0);
+        for (int j = 0; j < curSize - 1; j++) {
+            cur = cur.next;
+        }
+        ListNode next = cur.next;
+        cur.next = null;
+        cur = next;
+    }
+    return ret;
 }
 ```
 
@@ -5544,6 +5494,52 @@ private void inOrder(TreeNode node, int k) {
     inOrder(node.right, k);
 }
 ```
+
+**根据有序链表构造平衡的 BST** 
+
+[Leetcode : 109. Convert Sorted List to Binary Search Tree (Medium)](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/)
+
+```html
+Given the sorted linked list: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+```
+
+```java
+public TreeNode sortedListToBST(ListNode head) {
+    if (head == null) return null;
+    int size = size(head);
+    if (size == 1) return new TreeNode(head.val);
+    ListNode pre = head, mid = pre.next;
+    int step = 2;
+    while (step <= size / 2) {
+        pre = mid;
+        mid = mid.next;
+        step++;
+    }
+    pre.next = null;
+    TreeNode t = new TreeNode(mid.val);
+    t.left = sortedListToBST(head);
+    t.right = sortedListToBST(mid.next);
+    return t;
+}
+
+private int size(ListNode node) {
+    int size = 0;
+    while (node != null) {
+        size++;
+        node = node.next;
+    }
+    return size;
+}
+```
+
 
 ### Trie
 
