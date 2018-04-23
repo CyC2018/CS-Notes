@@ -874,28 +874,85 @@ private class Position {
 ```
 
 ```java
-public int maxAreaOfIsland(int[][] grid) {
-    int max = 0;
-    for (int i = 0; i < grid.length; i++) {
-        for (int j = 0; j < grid[i].length; j++) {
-            if (grid[i][j] == 1) {
-                max = Math.max(max, dfs(grid, i, j));
-            }
-        }
-    }
-    return max;
-}
+private int m, n;
+private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-private int dfs(int[][] grid, int i, int j) {
-    if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length || grid[i][j] == 0) {
+public int maxAreaOfIsland(int[][] grid) {
+    if (grid == null || grid.length == 0) {
         return 0;
     }
-    grid[i][j] = 0;
-    return dfs(grid, i + 1, j) + dfs(grid, i - 1, j) + dfs(grid, i, j + 1) + dfs(grid, i, j - 1) + 1;
+    m = grid.length;
+    n = grid[0].length;
+    int maxArea = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            maxArea = Math.max(maxArea, dfs(grid, i, j));
+        }
+    }
+    return maxArea;
+}
+
+private int dfs(int[][] grid, int r, int c) {
+    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0) {
+        return 0;
+    }
+    grid[r][c] = 0;
+    int area = 1;
+    for (int[] d : direction) {
+        area += dfs(grid, r + d[0], c + d[1]);
+    }
+    return area;
 }
 ```
 
-**图的连通分量** 
+**矩阵中的连通分量数目** 
+
+[Leetcode : 200. Number of Islands (Medium)](https://leetcode.com/problems/number-of-islands/description/)
+
+```html
+11110
+11010
+11000
+00000
+Answer: 1
+```
+
+可以将矩阵表示看成一张有向图。
+
+```java
+private int m, n;
+private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) {
+        return 0;
+    }
+    m = grid.length;
+    n = grid[0].length;
+    int islandsNum = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] != '0') {
+                dfs(grid, i, j);
+                islandsNum++;
+            }
+        }
+    }
+    return islandsNum;
+}
+
+private void dfs(char[][] grid, int i, int j) {
+    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') {
+        return;
+    }
+    grid[i][j] = '0';
+    for (int k = 0; k < direction.length; k++) {
+        dfs(grid, i + direction[k][0], j + direction[k][1]);
+    }
+}
+```
+
+**好友关系的连通分量数目** 
 
 [Leetcode : 547. Friend Circles (Medium)](https://leetcode.com/problems/friend-circles/description/)
 
@@ -909,137 +966,30 @@ Explanation:The 0th and 1st students are direct friends, so they are in a friend
 The 2nd student himself is in a friend circle. So return 2.
 ```
 
+好友关系可以看成是一个无向图，例如第 0 个人与第 1 个人是好友，那么 M[0][1] 和 M[1][0] 的值都为 1。
+
 ```java
+private int n;
+
 public int findCircleNum(int[][] M) {
-    int n = M.length;
-    int ret = 0;
+    n = M.length;
+    int circleNum = 0;
     boolean[] hasVisited = new boolean[n];
     for (int i = 0; i < n; i++) {
         if (!hasVisited[i]) {
             dfs(M, i, hasVisited);
-            ret++;
+            circleNum++;
         }
 
     }
-    return ret;
+    return circleNum;
 }
 
 private void dfs(int[][] M, int i, boolean[] hasVisited) {
     hasVisited[i] = true;
-    for (int k = 0; k < M.length; k++) {
+    for (int k = 0; k < n; k++) {
         if (M[i][k] == 1 && !hasVisited[k]) {
             dfs(M, k, hasVisited);
-        }
-    }
-}
-```
-
-**矩阵中的连通区域数量** 
-
-[Leetcode : 200. Number of Islands (Medium)](https://leetcode.com/problems/number-of-islands/description/)
-
-```html
-11110
-11010
-11000
-00000
-Answer: 1
-```
-
-```java
-private int m, n;
-private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
-public int numIslands(char[][] grid) {
-    if (grid == null || grid.length == 0) return 0;
-    m = grid.length;
-    n = grid[0].length;
-    int ret = 0;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (grid[i][j] == '1') {
-                dfs(grid, i, j);
-                ret++;
-            }
-        }
-    }
-    return ret;
-}
-
-private void dfs(char[][] grid, int i, int j) {
-    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') return;
-    grid[i][j] = '0';
-    for (int k = 0; k < direction.length; k++) {
-        dfs(grid, i + direction[k][0], j + direction[k][1]);
-    }
-}
-```
-
-**输出二叉树中所有从根到叶子的路径** 
-
-[Leetcode : 257. Binary Tree Paths (Easy)](https://leetcode.com/problems/binary-tree-paths/description/)
-
-```html
-   1
- /  \
-2    3
-\
- 5
-```
-```html
-["1->2->5", "1->3"]
-```
-
-```java
-public List<String> binaryTreePaths(TreeNode root) {
-    List<String> ret = new ArrayList();
-    if(root == null) return ret;
-    dfs(root, "", ret);
-    return ret;
-}
-
-private void dfs(TreeNode root, String prefix, List<String> ret){
-    if(root == null) return;
-    if(root.left == null && root.right == null){
-        ret.add(prefix + root.val);
-        return;
-    }
-    prefix += (root.val + "->");
-    dfs(root.left, prefix, ret);
-    dfs(root.right, prefix, ret);
-}
-```
-
-**IP 地址划分** 
-
-[Leetcode : 93. Restore IP Addresses(Medium)](https://leetcode.com/problems/restore-ip-addresses/description/)
-
-```html
-Given "25525511135",
-return ["255.255.11.135", "255.255.111.35"].
-```
-
-```java
-private List<String> ret;
-
-public List<String> restoreIpAddresses(String s) {
-    ret = new ArrayList<>();
-    doRestore(0, "", s);
-    return ret;
-}
-
-private void doRestore(int k, String path, String s) {
-    if (k == 4 || s.length() == 0) {
-        if (k == 4 && s.length() == 0) {
-            ret.add(path);
-        }
-        return;
-    }
-    for (int i = 0; i < s.length() && i <= 2; i++) {
-        if (i != 0 && s.charAt(0) == '0') break;
-        String part = s.substring(0, i + 1);
-        if (Integer.valueOf(part) <= 255) {
-            doRestore(k + 1, path.length() != 0 ? path + "." + part : part, s.substring(i + 1));
         }
     }
 }
@@ -1094,8 +1044,8 @@ public void solve(char[][] board) {
 private void dfs(char[][] board, int r, int c) {
     if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != 'O') return;
     board[r][c] = 'T';
-    for (int i = 0; i < direction.length; i++) {
-        dfs(board, r + direction[i][0], c + direction[i][1]);
+    for (int[] d : direction) {
+        dfs(board, r + d[0], c + d[1]);
     }
 }
 ```
@@ -1129,8 +1079,8 @@ private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 public List<int[]> pacificAtlantic(int[][] matrix) {
     List<int[]> ret = new ArrayList<>();
     if (matrix == null || matrix.length == 0) return ret;
-    this.m = matrix.length;
-    this.n = matrix[0].length;
+    m = matrix.length;
+    n = matrix[0].length;
     this.matrix = matrix;
     boolean[][] canReachP = new boolean[m][n];
     boolean[][] canReachA = new boolean[m][n];
@@ -1153,11 +1103,11 @@ public List<int[]> pacificAtlantic(int[][] matrix) {
 }
 
 private void dfs(int r, int c, boolean[][] canReach) {
-    if(canReach[r][c]) return;
+    if (canReach[r][c]) return;
     canReach[r][c] = true;
-    for (int i = 0; i < direction.length; i++) {
-        int nextR = direction[i][0] + r;
-        int nextC = direction[i][1] + c;
+    for (int[] d : direction) {
+        int nextR = d[0] + r;
+        int nextC = d[1] + c;
         if (nextR < 0 || nextR >= m || nextC < 0 || nextC >= n
                 || matrix[r][c] > matrix[nextR][nextC]) continue;
         dfs(nextR, nextC, canReach);
@@ -1167,9 +1117,15 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 ### Backtracking
 
-回溯属于 DF，它不是用在遍历图的节点上，而是用于求解  **排列组合**  问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串。
+Backtracking（回溯）属于 DFS。
 
-在程序实现时，回溯需要注意对元素进行标记的问题。使用递归实现的回溯，在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；但是在递归返回时，需要将该元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
+- 普通 DFS 主要用在  **可达性问题** ，这种问题只需要执行到特点的位置然后返回即可。
+- 而 Backtracking 主要用于求解  **排列组合**  问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串，这种问题在执行到特定的位置返回时，在返回之后还会继续执行求解过程。
+
+因为 Backtracking 不是立即就返回，而要继续求解，因此在程序实现时，需要注意对元素的标记问题：
+
+- 在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；
+- 但是在递归返回时，需要将该元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
 
 **数字键盘组合** 
 
@@ -1199,9 +1155,46 @@ private void combination(StringBuilder prefix, String digits, List<String> ret) 
     }
     String letters = KEYS[digits.charAt(prefix.length()) - '0'];
     for (char c : letters.toCharArray()) {
-        prefix.append(c);
+        prefix.append(c);                         // 添加
         combination(prefix, digits, ret);
         prefix.deleteCharAt(prefix.length() - 1); // 删除
+    }
+}
+```
+
+**IP 地址划分** 
+
+[Leetcode : 93. Restore IP Addresses(Medium)](https://leetcode.com/problems/restore-ip-addresses/description/)
+
+```html
+Given "25525511135",
+return ["255.255.11.135", "255.255.111.35"].
+```
+
+```java
+public List<String> restoreIpAddresses(String s) {
+    List<String> addresses = new ArrayList<>();
+    StringBuilder path = new StringBuilder();
+    doRestore(0, path, s, addresses);
+    return addresses;
+}
+
+private void doRestore(int k, StringBuilder path, String s, List<String> addresses) {
+    if (k == 4 || s.length() == 0) {
+        if (k == 4 && s.length() == 0) {
+            addresses.add(path.toString());
+        }
+        return;
+    }
+    for (int i = 0; i < s.length() && i <= 2; i++) {
+        if (i != 0 && s.charAt(0) == '0') break;
+        String part = s.substring(0, i + 1);
+        if (Integer.valueOf(part) <= 255) {
+            if (path.length() != 0) part = "." + part;
+            path.append(part);
+            doRestore(k + 1, path, s.substring(i + 1), addresses);
+            path.delete(path.length() - part.length(), path.length());
+        }
     }
 }
 ```
@@ -1224,8 +1217,7 @@ word = "ABCB", -> returns false.
 ```
 
 ```java
-private static int[][] shift = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-private static boolean[][] visited;
+private static int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 private int m;
 private int n;
 
@@ -1234,16 +1226,16 @@ public boolean exist(char[][] board, String word) {
     if (board == null || board.length == 0 || board[0].length == 0) return false;
     m = board.length;
     n = board[0].length;
-    visited = new boolean[m][n];
+    boolean[][] visited = new boolean[m][n];
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            if (dfs(board, word, 0, i, j)) return true;
+            if (dfs(board, visited, word, 0, i, j)) return true;
         }
     }
     return false;
 }
 
-private boolean dfs(char[][] board, String word, int start, int r, int c) {
+private boolean dfs(char[][] board, boolean[][] visited, String word, int start, int r, int c) {
     if (start == word.length()) {
         return true;
     }
@@ -1251,15 +1243,66 @@ private boolean dfs(char[][] board, String word, int start, int r, int c) {
         return false;
     }
     visited[r][c] = true;
-    for (int i = 0; i < shift.length; i++) {
-        int nextR = r + shift[i][0];
-        int nextC = c + shift[i][1];
-        if (dfs(board, word, start + 1, nextR, nextC)) {
+    for (int[] d : direction) {
+        if (dfs(board, visited, word, start + 1, r + d[0], c + d[1])) {
             return true;
         }
     }
     visited[r][c] = false;
     return false;
+}
+```
+
+**输出二叉树中所有从根到叶子的路径** 
+
+[Leetcode : 257. Binary Tree Paths (Easy)](https://leetcode.com/problems/binary-tree-paths/description/)
+
+```html
+   1
+ /  \
+2    3
+\
+ 5
+```
+
+```html
+["1->2->5", "1->3"]
+```
+
+```java
+public List<String> binaryTreePaths(TreeNode root) {
+    List<String> paths = new ArrayList();
+    if (root == null) return paths;
+    List<Integer> values = new ArrayList<>();
+    dfs(root, values, paths);
+    return paths;
+}
+
+private void dfs(TreeNode node, List<Integer> values, List<String> paths) {
+    if (node == null) return;
+    values.add(node.val);
+    if (isLeaf(node)) {
+        paths.add(buildPath(values));
+    } else {
+        dfs(node.left, values, paths);
+        dfs(node.right, values, paths);
+    }
+    values.remove(values.size() - 1);
+}
+
+private boolean isLeaf(TreeNode node) {
+    return node.left == null && node.right == null;
+}
+
+private String buildPath(List<Integer> values) {
+    StringBuilder str = new StringBuilder();
+    for (int i = 0; i < values.size(); i++) {
+        str.append(values.get(i));
+        if (i != values.size() - 1) {
+            str.append("->");
+        }
+    }
+    return str.toString();
 }
 ```
 
@@ -1288,14 +1331,13 @@ public List<List<Integer>> permute(int[] nums) {
     return ret;
 }
 
-private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nums, List<List<Integer>> ret){
-    if(permuteList.size() == nums.length){
-        ret.add(new ArrayList(permuteList));
+private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nums, List<List<Integer>> ret) {
+    if (permuteList.size() == nums.length) {
+        ret.add(new ArrayList(permuteList)); // 重新构造一个 List
         return;
     }
-
-    for(int i = 0; i < visited.length; i++){
-        if(visited[i]) continue;
+    for (int i = 0; i < visited.length; i++) {
+        if (visited[i]) continue;
         visited[i] = true;
         permuteList.add(nums[i]);
         backtracking(permuteList, visited, nums, ret);
@@ -1330,7 +1372,7 @@ public List<List<Integer>> permuteUnique(int[] nums) {
 
 private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nums, List<List<Integer>> ret) {
     if (permuteList.size() == nums.length) {
-        ret.add(new ArrayList(permuteList)); // 重新构造一个 List
+        ret.add(new ArrayList(permuteList));
         return;
     }
 
@@ -1370,16 +1412,16 @@ public List<List<Integer>> combine(int n, int k) {
     return ret;
 }
 
-private void backtracking(int start, int n, int k, List<Integer> combineList, List<List<Integer>> ret){
-    if(k == 0){
+private void backtracking(int start, int n, int k, List<Integer> combineList, List<List<Integer>> ret) {
+    if (k == 0) {
         ret.add(new ArrayList(combineList));
         return;
     }
 
-    for(int i = start; i <= n - k + 1; i++) {      // 剪枝
-        combineList.add(i);                        // 把 i 标记为已访问
+    for (int i = start; i <= n - k + 1; i++) {  // 剪枝
+        combineList.add(i);
         backtracking(i + 1, n, k - 1, combineList, ret);
-        combineList.remove(combineList.size() - 1); // 把 i 标记为未访问
+        combineList.remove(combineList.size() - 1);
     }
 }
 ```
