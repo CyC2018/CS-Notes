@@ -623,7 +623,7 @@ public String findLongestWord(String s, List<String> d) {
 
 ### 堆排序
 
-堆排序用于求解  **TopK Elements**  问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。当然它也可以用于求解 Kth Element 问题，因为最后出堆的那个元素就是 Kth Element。快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于  Kth Element 的元素都是 TopK Elements。可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
+堆排序用于求解  **TopK Elements**  问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。当然它也可以用于求解 Kth Element 问题，堆顶元素就是 Kth Element。快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于 Kth Element 的元素都是 TopK Elements。可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
 
 **Kth Element** 
 
@@ -642,7 +642,7 @@ public int findKthLargest(int[] nums, int k) {
 
 ```java
 public int findKthLargest(int[] nums, int k) {
-    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
     for (int val : nums) {
         pq.add(val);
         if (pq.size() > k) {
@@ -671,8 +671,8 @@ public int findKthLargest(int[] nums, int k) {
 private int partition(int[] a, int l, int h) {
     int i = l, j = h + 1;
     while (true) {
-        while (i < h && less(a[++i], a[l])) ;
-        while (j > l && less(a[l], a[--j])) ;
+        while (a[++i] < a[l] && i < h) ;
+        while (a[--j] > a[l] && j > l) ;
         if (i >= j) break;
         swap(a, i, j);
     }
@@ -684,10 +684,6 @@ private void swap(int[] a, int i, int j) {
     int tmp = a[i];
     a[i] = a[j];
     a[j] = tmp;
-}
-
-private boolean less(int v, int w) {
-    return v < w;
 }
 ```
 
@@ -705,7 +701,6 @@ Given [1,1,1,2,2,3] and k = 2, return [1,2].
 
 ```java
 public List<Integer> topKFrequent(int[] nums, int k) {
-    List<Integer> ret = new ArrayList<>();
     Map<Integer, Integer> frequencyMap = new HashMap<>();
     for (int num : nums) {
         frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
@@ -719,12 +714,13 @@ public List<Integer> topKFrequent(int[] nums, int k) {
         bucket[frequency].add(key);
     }
 
-    for (int i = bucket.length - 1; i >= 0 && ret.size() < k; i--) {
+    List<Integer> topK = new ArrayList<>();
+    for (int i = bucket.length - 1; i >= 0 && topK.size() < k; i--) {
         if (bucket[i] != null) {
-            ret.addAll(bucket[i]);
+            topK.addAll(bucket[i]);
         }
     }
-    return ret;
+    return topK;
 }
 ```
 
@@ -746,25 +742,25 @@ So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid ans
 
 ```java
 public String frequencySort(String s) {
-    Map<Character, Integer> map = new HashMap<>();
+    Map<Character, Integer> frequencyMap = new HashMap<>();
     for (char c : s.toCharArray()) {
-        map.put(c, map.getOrDefault(c, 0) + 1);
+        frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
     }
     List<Character>[] frequencyBucket = new List[s.length() + 1];
-    for(char c : map.keySet()){
-        int f = map.get(c);
+    for (char c : frequencyMap.keySet()) {
+        int f = frequencyMap.get(c);
         if (frequencyBucket[f] == null) {
             frequencyBucket[f] = new ArrayList<>();
         }
         frequencyBucket[f].add(c);
     }
     StringBuilder str = new StringBuilder();
-    for (int i = frequencyBucket.length - 1; i >= 0; i--) {
-        if (frequencyBucket[i] == null) {
+    for (int frequency = frequencyBucket.length - 1; frequency >= 0; frequency--) {
+        if (frequencyBucket[frequency] == null) {
             continue;
         }
-        for (char c : frequencyBucket[i]) {
-            for (int j = 0; j < i; j++) {
+        for (char c : frequencyBucket[frequency]) {
+            for (int i = 0; i < frequency; i++) {
                 str.append(c);
             }
         }
@@ -799,7 +795,7 @@ public String frequencySort(String s) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一轮遍历的节点都与根节点路径长度相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的路径长度，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径，如果继续遍历，之后再遍历到目的节点，所经过的路径就不是最短路径。
+可以看到，每一轮遍历的节点都与根节点路径长度相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的路径长度，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
@@ -829,7 +825,7 @@ public int minPathLength(int[][] grids, int tr, int tc) {
             Position nextPos = new Position(pos.r + next[i][0], pos.c + next[i][1], pos.length + 1);
             if (nextPos.r < 0 || nextPos.r >= m || nextPos.c < 0 || nextPos.c >= n) continue;
             if (grids[nextPos.r][nextPos.c] != 1) continue;
-            grids[nextPos.r][nextPos.c] = 0;
+            grids[nextPos.r][nextPos.c] = 0; // 标记已经访问过
             if (nextPos.r == tr && nextPos.c == tc) return nextPos.length;
             queue.add(nextPos);
         }
@@ -839,7 +835,7 @@ public int minPathLength(int[][] grids, int tr, int tc) {
 
 private class Position {
     int r, c, length;
-    public Position(int r, int c, int length) {
+    Position(int r, int c, int length) {
         this.r = r;
         this.c = c;
         this.length = length;
@@ -851,7 +847,9 @@ private class Position {
 
 <div align="center"> <img src="../pics//f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
 
-广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列先存储起来以备下一层遍历的时候再遍历；而深度优先搜索在得到到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
+广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列先存储起来以备下一层遍历的时候再遍历。
+
+而深度优先搜索在得到到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
 从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种  **可达性**  问题。
 
@@ -1769,7 +1767,7 @@ Output : [0, 2]
 ```java
 public List<Integer> diffWaysToCompute(String input) {
     int n = input.length();
-    List<Integer> ret = new ArrayList<>();
+    List<Integer> ways = new ArrayList<>();
     for (int i = 0; i < n; i++) {
         char c = input.charAt(i);
         if (c == '+' || c == '-' || c == '*') {
@@ -1778,16 +1776,24 @@ public List<Integer> diffWaysToCompute(String input) {
             for (int l : left) {
                 for (int r : right) {
                     switch (c) {
-                        case '+': ret.add(l + r); break;
-                        case '-': ret.add(l - r); break;
-                        case '*': ret.add(l * r); break;
+                        case '+':
+                            ways.add(l + r);
+                            break;
+                        case '-':
+                            ways.add(l - r);
+                            break;
+                        case '*':
+                            ways.add(l * r);
+                            break;
                     }
                 }
             }
         }
     }
-    if (ret.size() == 0) ret.add(Integer.valueOf(input));
-    return ret;
+    if (ways.size() == 0) {
+        ways.add(Integer.valueOf(input));
+    }
+    return ways;
 }
 ```
 
