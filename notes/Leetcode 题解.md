@@ -2923,13 +2923,16 @@ public int minSteps(int n) {
 **整除** 
 
 令 x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
+
 令 y = 2<sup>n0</sup> \* 3<sup>n1</sup> \* 5<sup>n2</sup> \* 7<sup>n3</sup> \* 11<sup>n4</sup> \* …
 
 如果 x 整除 y（y mod x == 0），则对于所有 i，mi <= ni。
 
-x 和 y 的  **最大公约数**  为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
+**最大公约数最小公倍数** 
 
-x 和 y 的  **最小公倍数**  为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
+x 和 y 的最大公约数为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
+
+x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
 
 **生成素数序列** 
 
@@ -2941,11 +2944,13 @@ x 和 y 的  **最小公倍数**  为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<
 public int countPrimes(int n) {
     boolean[] notPrimes = new boolean[n + 1];
     int cnt = 0;
-    for(int i = 2; i < n; i++){
-        if(notPrimes[i]) continue;
+    for (int i = 2; i < n; i++){
+        if (notPrimes[i]) {
+            continue;
+        }
         cnt++;
         // 从 i * i 开始，因为如果 k < i，那么 k * i 在之前就已经被去除过了
-        for(long j = (long) i * i; j < n; j += i){
+        for (long j = (long) i * i; j < n; j += i){
             notPrimes[(int) j] = true;
         }
     }
@@ -3040,13 +3045,37 @@ Output:
 ```java
 public String toHex(int num) {
     char[] map = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-    if(num == 0) return "0";
+    if (num == 0) return "0";
     StringBuilder sb = new StringBuilder();
-    while(num != 0){
+    while (num != 0) {
         sb.append(map[num & 0b1111]);
         num >>>= 4; // 无符号右移，左边填 0
     }
     return sb.reverse().toString();
+}
+```
+
+**26 进制** 
+
+[Leetcode : 168. Excel Sheet Column Title (Easy)](https://leetcode.com/problems/excel-sheet-column-title/description/)
+
+```html
+1 -> A
+2 -> B
+3 -> C
+...
+26 -> Z
+27 -> AA
+28 -> AB
+```
+
+因为是从 1 开始计算的，而不是从 0 开始，因此需要对 n 执行 -1 操作。
+
+```java
+public String convertToTitle(int n) {
+    if (n == 0) return "";
+    n--;
+    return convertToTitle(n / 26) + (char) (n % 26 + 'A');
 }
 ```
 
@@ -3098,7 +3127,7 @@ public String addBinary(String a, String b) {
 
 [Leetcode : 415. Add Strings (Easy)](https://leetcode.com/problems/add-strings/description/)
 
-字符串的值为非负整数
+字符串的值为非负整数。
 
 ```java
 public String addStrings(String num1, String num2) {
@@ -3148,14 +3177,14 @@ Only two moves are needed (remember each move increments or decrements one eleme
 ```java
 public int minMoves2(int[] nums) {
     Arrays.sort(nums);
-    int ret = 0;
+    int move = 0;
     int l = 0, h = nums.length - 1;
-    while(l <= h) {
-        ret += nums[h] - nums[l];
+    while (l <= h) {
+        move += nums[h] - nums[l];
         l++;
         h--;
     }
-    return ret;
+    return move;
 }
 ```
 
@@ -3165,31 +3194,41 @@ public int minMoves2(int[] nums) {
 
 ```java
 public int minMoves2(int[] nums) {
-    int ret = 0;
-    int n = nums.length;
-    int median = quickSelect(nums, 0, n - 1, n / 2 + 1);
-    for(int num : nums) ret += Math.abs(num - median);
-    return ret;
+    int move = 0;
+    int median = findKthSmallest(nums, nums.length / 2);
+    for (int num : nums) {
+        move += Math.abs(num - median);
+    }
+    return move;
 }
 
-private int quickSelect(int[] nums, int start, int end, int k) {
-    int l = start, r = end, privot = nums[(l + r) / 2];
-    while(l <= r) {
-        while(nums[l] < privot) l++;
-        while(nums[r] > privot) r--;
-        if(l >= r) break;
-        swap(nums, l, r);
-        l++; r--;
+private int findKthSmallest(int[] nums, int k) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int j = partition(nums, l, h);
+        if (j == k) break;
+        if (j < k) l = j + 1;
+        else h = j - 1;
     }
-    int left = l - start + 1;
-    if(left > k) return quickSelect(nums, start, l - 1, k);
-    if(left == k && l == r) return nums[l];
-    int right = r - start + 1;
-    return quickSelect(nums, r + 1, end, k - right);
+    return nums[k];
+}
+
+private int partition(int[] nums, int l, int h) {
+    int i = l, j = h + 1;
+    while (true) {
+        while (nums[++i] < nums[l] && i < h) ;
+        while (nums[--j] > nums[l] && j > l) ;
+        if (i >= j) break;
+        swap(nums, i, j);
+    }
+    swap(nums, l, j);
+    return j;
 }
 
 private void swap(int[] nums, int i, int j) {
-    int tmp = nums[i]; nums[i] = nums[j]; nums[j] = tmp;
+    int tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
 }
 ```
 
@@ -3199,7 +3238,7 @@ private void swap(int[] nums, int i, int j) {
 
 [Leetcode : 169. Majority Element (Easy)](https://leetcode.com/problems/majority-element/description/)
 
-先对数组排序，最中间那个数出现次数一定多于 n / 2
+先对数组排序，最中间那个数出现次数一定多于 n / 2。
 
 ```java
 public int majorityElement(int[] nums) {
@@ -3208,18 +3247,14 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(n)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int majorityElement(int[] nums) {
-    int cnt = 0, majority = 0;
-    for(int i = 0; i < nums.length; i++){
-        if(cnt == 0) {
-            majority = nums[i];
-            cnt++;
-        }
-        else if(majority == nums[i]) cnt++;
-        else cnt--;
+    int cnt = 1, majority = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        majority = (cnt == 0) ? nums[i] : majority;
+        cnt = (majority == nums[i]) ? cnt + 1 : cnt - 1;
     }
     return majority;
 }
@@ -3237,6 +3272,7 @@ Returns: True
 ```
 
 平方序列：1,4,9,16,..
+
 间隔：3,5,7,...
 
 间隔为等差数列，使用这个特性可以得到从 1 开始的平方序列。
@@ -3259,6 +3295,37 @@ public boolean isPerfectSquare(int num) {
 ```java
 public boolean isPowerOfThree(int n) {
     return n > 0 && (1162261467 % n == 0);
+}
+```
+
+**乘积数组** 
+
+[Leetcode : 238. Product of Array Except Self (Medium)](https://leetcode.com/problems/product-of-array-except-self/description/)
+
+```html
+For example, given [1,2,3,4], return [24,12,8,6].
+```
+
+题目描述：给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
+
+题目要求：时间复杂度为 O(N)，并且不能使用除法。
+
+```java
+public int[] productExceptSelf(int[] nums) {
+    int n = nums.length;
+    int[] products = new int[n];
+    Arrays.fill(products, 1);
+    int left = 1;
+    for (int i = 1; i < n; i++) {
+        left *= nums[i - 1];
+        products[i] *= left;
+    }
+    int right = 1;
+    for (int i = n - 2; i >= 0; i--) {
+        right *= nums[i + 1];
+        products[i] *= right;
+    }
+    return products;
 }
 ```
 
@@ -3294,37 +3361,6 @@ public int maximumProduct(int[] nums) {
         }
     }
     return Math.max(max1*max2*max3, max1*min1*min2);
-}
-```
-
-**乘积数组** 
-
-[Leetcode : 238. Product of Array Except Self (Medium)](https://leetcode.com/problems/product-of-array-except-self/description/)
-
-```html
-For example, given [1,2,3,4], return [24,12,8,6].
-```
-
-题目描述：给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
-
-题目要求：时间复杂度为 O(n)，并且不能使用除法。
-
-```java
-public int[] productExceptSelf(int[] nums) {
-    int n = nums.length;
-    int[] ret = new int[n];
-    ret[0] = 1;
-    int left = 1;
-    for (int i = 1; i < n; i++) {
-        ret[i] = left * nums[i - 1];
-        left *= nums[i - 1];
-    }
-    int right = 1;
-    for (int i = n - 1; i >= 0; i--) {
-        ret[i] *= right;
-        right *= nums[i];
-    }
-    return ret;
 }
 ```
 
