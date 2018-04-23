@@ -4293,6 +4293,8 @@ class Tuple implements Comparable<Tuple> {
 
 ## 链表
 
+链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
+
 **找出两个链表的交点** 
 
 [Leetcode : 160. Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
@@ -4305,7 +4307,7 @@ A:          a1 → a2
 B:    b1 → b2 → b3
 ```
 
-要求：时间复杂度为 O(n) 空间复杂度为 O(1)
+要求：时间复杂度为 O(N) 空间复杂度为 O(1)
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
@@ -4313,7 +4315,6 @@ B:    b1 → b2 → b3
 
 ```java
 public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-    if(headA == null || headB == null) return null;
     ListNode l1 = headA, l2 = headB;
     while(l1 != l2){
         l1 = (l1 == null) ? headB : l1.next;
@@ -4329,18 +4330,31 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 [Leetcode : 206. Reverse Linked List (Easy)](https://leetcode.com/problems/reverse-linked-list/description/)
 
-头插法能够按逆序构建链表。
+递归
 
 ```java
 public ListNode reverseList(ListNode head) {
-    ListNode newHead = null; // 设为 null，作为新链表的结尾
-    while(head != null){
-        ListNode nextNode = head.next;
-        head.next = newHead;
-        newHead = head;
-        head = nextNode;
-    }
+    if (head == null || head.next == null) return head;
+    ListNode next = head.next;
+    ListNode newHead = reverseList(next);
+    next.next = head;
+    head.next = null;
     return newHead;
+}
+```
+
+头插法
+
+```java
+public ListNode reverseList(ListNode head) {
+    ListNode newHead = new ListNode(-1);
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = newHead.next;
+        newHead.next = head;
+        head = next;
+    }
+    return newHead.next;
 }
 ```
 
@@ -4348,21 +4362,17 @@ public ListNode reverseList(ListNode head) {
 
 [Leetcode : 21. Merge Two Sorted Lists (Easy)](https://leetcode.com/problems/merge-two-sorted-lists/description/)
 
-链表和树一样，可以用递归方式来定义：链表是空节点，或者有一个值和一个指向下一个链表的指针。因此很多链表问题可以用递归来处理。
-
 ```java
 public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-    if(l1 == null) return l2;
-    if(l2 == null) return l1;
-    ListNode newHead = null;
-    if(l1.val < l2.val){
-        newHead = l1;
-        newHead.next = mergeTwoLists(l1.next, l2);
-    } else{
-        newHead = l2;
-        newHead.next = mergeTwoLists(l1, l2.next);
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    if (l1.val < l2.val) {
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
     }
-    return newHead;
 }
 ```
 
@@ -4377,7 +4387,7 @@ Given 1->1->2->3->3, return 1->2->3.
 
 ```java
 public ListNode deleteDuplicates(ListNode head) {
-    if(head == null || head.next == null) return head;
+    if (head == null || head.next == null) return head;
     head.next = deleteDuplicates(head.next);
     return head.next != null && head.val == head.next.val ? head.next : head;
 }
@@ -4654,7 +4664,7 @@ public ListNode oddEvenList(ListNode head) {
 
 ```java
 public int maxDepth(TreeNode root) {
-    if(root == null) return 0;
+    if (root == null) return 0;
     return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
 }
 ```
@@ -4665,7 +4675,7 @@ public int maxDepth(TreeNode root) {
 
 ```java
 public TreeNode invertTree(TreeNode root) {
-    if(root == null) return null;
+    if (root == null) return null;
     TreeNode left = root.left; // 后面的操作会改变 left 指针，因此先保存下来
     root.left = invertTree(root.right);
     root.right = invertTree(left);
@@ -4696,9 +4706,9 @@ Merged tree:
 
 ```java
 public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
-    if(t1 == null && t2 == null) return null;
-    if(t1 == null) return t2;
-    if(t2 == null) return t1;
+    if (t1 == null && t2 == null) return null;
+    if (t1 == null) return t2;
+    if (t2 == null) return t1;
     TreeNode root = new TreeNode(t1.val + t2.val);
     root.left = mergeTrees(t1.left, t2.left);
     root.right = mergeTrees(t1.right, t2.right);
@@ -4726,8 +4736,8 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 
 ```java
 public boolean hasPathSum(TreeNode root, int sum) {
-    if(root == null) return false;
-    if(root.left == null && root.right == null && root.val == sum) return true;
+    if (root == null) return false;
+    if (root.left == null && root.right == null && root.val == sum) return true;
     return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
 }
 ```
@@ -4764,11 +4774,58 @@ public int pathSum(TreeNode root, int sum) {
 }
 
 private int pathSumStartWithRoot(TreeNode root, int sum){
-    if(root == null) return 0;
+    if (root == null) return 0;
     int ret = 0;
-    if(root.val == sum) ret++;
+    if (root.val == sum) ret++;
     ret += pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);
     return ret;
+}
+```
+
+**子树** 
+
+[Leetcode : 572. Subtree of Another Tree (Easy)](https://leetcode.com/problems/subtree-of-another-tree/description/)
+
+```html
+Given tree s:
+     3
+    / \
+   4   5
+  / \
+ 1   2
+Given tree t:
+   4
+  / \
+ 1   2
+Return true, because t has the same structure and node values with a subtree of s.
+
+Given tree s:
+
+     3
+    / \
+   4   5
+  / \
+ 1   2
+    /
+   0
+Given tree t:
+   4
+  / \
+ 1   2
+Return false.
+```
+
+```java
+public boolean isSubtree(TreeNode s, TreeNode t) {
+    if (s == null) return false;
+    return isSubtreeWithRoot(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+}
+
+private boolean isSubtreeWithRoot(TreeNode s, TreeNode t) {
+    if (t == null && s == null) return true;
+    if (t == null || s == null) return false;
+    if (t.val != s.val) return false;
+    return isSubtreeWithRoot(s.left, t.left) && isSubtreeWithRoot(s.right, t.right);
 }
 ```
 
@@ -4786,14 +4843,14 @@ private int pathSumStartWithRoot(TreeNode root, int sum){
 
 ```java
 public boolean isSymmetric(TreeNode root) {
-    if(root == null) return true;
+    if (root == null) return true;
     return isSymmetric(root.left, root.right);
 }
 
 private boolean isSymmetric(TreeNode t1, TreeNode t2){
-    if(t1 == null && t2 == null) return true;
-    if(t1 == null || t2 == null) return false;
-    if(t1.val != t2.val) return false;
+    if (t1 == null && t2 == null) return true;
+    if (t1 == null || t2 == null) return false;
+    if (t1.val != t2.val) return false;
     return isSymmetric(t1.left, t2.right) && isSymmetric(t1.right, t2.left);
 }
 ```
@@ -4837,10 +4894,10 @@ public int maxDepth(TreeNode root) {
 
 ```java
 public int minDepth(TreeNode root) {
-    if(root == null) return 0;
+    if (root == null) return 0;
     int left = minDepth(root.left);
     int right = minDepth(root.right);
-    if(left == 0 || right == 0) return left + right + 1;
+    if (left == 0 || right == 0) return left + right + 1;
     return Math.min(left, right) + 1;
 }
 ```
@@ -4861,13 +4918,13 @@ There are two left leaves in the binary tree, with values 9 and 15 respectively.
 
 ```java
 public int sumOfLeftLeaves(TreeNode root) {
-    if(root == null) return 0;
-    if(isLeaf(root.left)) return root.left.val + sumOfLeftLeaves(root.right);
+    if (root == null) return 0;
+    if (isLeaf(root.left)) return root.left.val + sumOfLeftLeaves(root.right);
     return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
 }
 
 private boolean isLeaf(TreeNode node){
-    if(node == null) return false;
+    if (node == null) return false;
     return node.left == null && node.right == null;
 }
 ```
@@ -4877,7 +4934,7 @@ private boolean isLeaf(TreeNode node){
 [Leetcode : 669. Trim a Binary Search Tree (Easy)](https://leetcode.com/problems/trim-a-binary-search-tree/description/)
 
 ```html
-Input: 
+Input:
     3
    / \
   0   4
@@ -4889,10 +4946,10 @@ Input:
   L = 1
   R = 3
 
-Output: 
+Output:
       3
-     / 
-   2   
+     /
+   2
   /
  1
 ```
@@ -4903,46 +4960,12 @@ Output:
 
 ```java
 public TreeNode trimBST(TreeNode root, int L, int R) {
-    if(root == null) return null;
-    if(root.val > R) return trimBST(root.left, L, R);
-    if(root.val < L) return trimBST(root.right, L, R);
+    if (root == null) return null;
+    if (root.val > R) return trimBST(root.left, L, R);
+    if (root.val < L) return trimBST(root.right, L, R);
     root.left = trimBST(root.left, L, R);
     root.right = trimBST(root.right, L, R);
     return root;
-}
-```
-
-**子树** 
-
-[Leetcode : 572. Subtree of Another Tree (Easy)](https://leetcode.com/problems/subtree-of-another-tree/description/)
-
-```html
-Given tree s:
-     3
-    / \
-   4   5
-  / \
- 1   2
-Given tree t:
-   4
-  / \
- 1   2
-Return true, because t has the same structure and node values with a subtree of s.
-```
-
-```java
-public boolean isSubtree(TreeNode s, TreeNode t) {
-    if(s == null && t == null) return true;
-    if(s == null || t == null) return false;
-    if(s.val == t.val && isSame(s, t)) return true;
-    return isSubtree(s.left, t) || isSubtree(s.right, t);
-}
-
-private boolean isSame(TreeNode s, TreeNode t){
-    if(s == null && t == null) return true;
-    if(s == null || t == null) return false;
-    if(s.val != t.val) return false;
-    return isSame(s.left, t.left) && isSame(s.right, t.right);
 }
 ```
 
@@ -4956,7 +4979,7 @@ public TreeNode sortedArrayToBST(int[] nums) {
 }
 
 private TreeNode toBST(int[] nums, int sIdx, int eIdx){
-    if(sIdx > eIdx) return null;
+    if (sIdx > eIdx) return null;
     int mIdx = (sIdx + eIdx) / 2;
     TreeNode root = new TreeNode(nums[mIdx]);
     root.left =  toBST(nums, sIdx, mIdx - 1);
@@ -4975,7 +4998,7 @@ Input:
         / \
        2  3
       / \
-      4  5
+     4   5
 
 Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
 ```
@@ -5016,14 +5039,14 @@ Output: 5
 
 ```java
 public int findSecondMinimumValue(TreeNode root) {
-    if(root == null) return -1;
-    if(root.left == null && root.right == null) return -1;
+    if (root == null) return -1;
+    if (root.left == null && root.right == null) return -1;
     int leftVal = root.left.val;
     int rightVal = root.right.val;
-    if(leftVal == root.val) leftVal = findSecondMinimumValue(root.left);
-    if(rightVal == root.val) rightVal = findSecondMinimumValue(root.right);
-    if(leftVal != -1 && rightVal != -1) return Math.min(leftVal, rightVal);
-    if(leftVal != -1) return leftVal;
+    if (leftVal == root.val) leftVal = findSecondMinimumValue(root.left);
+    if (rightVal == root.val) rightVal = findSecondMinimumValue(root.right);
+    if (leftVal != -1 && rightVal != -1) return Math.min(leftVal, rightVal);
+    if (leftVal != -1) return leftVal;
     return rightVal;
 }
 ```
@@ -5045,8 +5068,8 @@ For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another exa
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
-    if(root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
+    if (root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
+    if (root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
     return root;
 }
 ```
@@ -5084,20 +5107,21 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
             / \
            4   5
           / \   \
-         4  4    5
+         4   4   5
 
 Output : 2
 ```
 
 ```java
 private int path = 0;
+
 public int longestUnivaluePath(TreeNode root) {
     dfs(root);
     return path;
 }
 
 private int dfs(TreeNode root){
-    if(root == null) return 0;
+    if (root == null) return 0;
     int left = dfs(root.left);
     int right = dfs(root.right);
     int leftPath = root.left != null && root.left.val == root.val ? left + 1 : 0;
@@ -5115,7 +5139,7 @@ private int dfs(TreeNode root){
      3
     / \
    2   3
-    \   \ 
+    \   \
      3   1
 Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
 ```
@@ -5146,17 +5170,17 @@ public int rob(TreeNode root) {
 ```java
 public List<Double> averageOfLevels(TreeNode root) {
     List<Double> ret = new ArrayList<>();
-    if(root == null) return ret;
+    if (root == null) return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(root);
-    while(!queue.isEmpty()){
+    while (!queue.isEmpty()){
         int cnt = queue.size();
         double sum = 0;
-        for(int i = 0; i < cnt; i++){
+        for (int i = 0; i < cnt; i++){
             TreeNode node = queue.poll();
             sum += node.val;
-            if(node.left != null) queue.add(node.left);
-            if(node.right != null) queue.add(node.right);
+            if (node.left != null) queue.add(node.left);
+            if (node.right != null) queue.add(node.right);
         }
         ret.add(sum / cnt);
     }
@@ -5187,10 +5211,10 @@ Output:
 public int findBottomLeftValue(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(root);
-    while(!queue.isEmpty()){
+    while (!queue.isEmpty()){
         root = queue.poll();
-        if(root.right != null) queue.add(root.right);
-        if(root.left != null) queue.add(root.left);
+        if (root.right != null) queue.add(root.right);
+        if (root.left != null) queue.add(root.left);
     }
     return root.val;
 }
@@ -5341,17 +5365,17 @@ public boolean findTarget(TreeNode root, int k) {
     List<Integer> nums = new ArrayList<>();
     inOrder(root, nums);
     int i = 0, j = nums.size() - 1;
-    while(i < j){
+    while (i < j){
         int sum = nums.get(i) + nums.get(j);
-        if(sum == k) return true;
-        if(sum < k) i++;
+        if (sum == k) return true;
+        if (sum < k) i++;
         else j--;
     }
     return false;
 }
 
 private void inOrder(TreeNode root, List<Integer> nums){
-    if(root == null) return;
+    if (root == null) return;
     inOrder(root.left, nums);
     nums.add(root.val);
     inOrder(root.right, nums);
@@ -5386,9 +5410,9 @@ public int getMinimumDifference(TreeNode root) {
 }
 
 private void inorder(TreeNode node){
-    if(node == null) return;
+    if (node == null) return;
     inorder(node.left);
-    if(preVal != -1) minDiff = Math.min(minDiff, Math.abs(node.val - preVal));
+    if (preVal != -1) minDiff = Math.min(minDiff, Math.abs(node.val - preVal));
     preVal = node.val;
     inorder(node.right);
 }
@@ -5487,13 +5511,13 @@ private void inOrder(TreeNode node) {
 ```java
 public int kthSmallest(TreeNode root, int k) {
     int leftCnt = count(root.left);
-    if(leftCnt == k - 1) return root.val;
-    if(leftCnt > k - 1) return kthSmallest(root.left, k);
+    if (leftCnt == k - 1) return root.val;
+    if (leftCnt > k - 1) return kthSmallest(root.left, k);
     return kthSmallest(root.right, k - leftCnt - 1);
 }
 
 private int count(TreeNode node) {
-    if(node == null) return 0;
+    if (node == null) return 0;
     return 1 + count(node.left) + count(node.right);
 }
 ```
