@@ -489,7 +489,7 @@ A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits 
 
 ```java
 public List<Integer> partitionLabels(String S) {
-    List<Integer> ret = new ArrayList<>();
+    List<Integer> partitions = new ArrayList<>();
     int[] lastIndexs = new int[26];
     for (int i = 0; i < S.length(); i++) {
         lastIndexs[S.charAt(i) - 'a'] = i;
@@ -502,10 +502,10 @@ public List<Integer> partitionLabels(String S) {
             if (index == i) continue;
             if (index > lastIndex) lastIndex = index;
         }
-        ret.add(lastIndex - firstIndex + 1);
+        partitions.add(lastIndex - firstIndex + 1);
         firstIndex = lastIndex + 1;
     }
-    return ret;
+    return partitions;
 }
 ```
 
@@ -564,9 +564,9 @@ Input: numbers={2, 7, 11, 15}, target=9
 Output: index1=1, index2=2
 ```
 
-题目描述：从一个已经排序的数组中找出两个数，使它们的和为 0。
+题目描述：在有序数组中找出两个数，使它们的和为 0。
 
-使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
+使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
 
 如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
 
@@ -580,43 +580,6 @@ public int[] twoSum(int[] numbers, int target) {
         else j--;
     }
     return null;
-}
-```
-
-**反转字符串中的元音字符** 
-
-[Leetcode : 345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
-
-```html
-Given s = "leetcode", return "leotcede".
-```
-
-使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
-
-```java
-private HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
-
-public String reverseVowels(String s) {
-    if (s.length() == 0) return s;
-    int i = 0, j = s.length() - 1;
-    char[] result = new char[s.length()];
-    while (i <= j) {
-        char ci = s.charAt(i);
-        char cj = s.charAt(j);
-        if (!vowels.contains(ci)) {
-            result[i] = ci;
-            i++;
-        } else if (!vowels.contains(cj)) {
-            result[j] = cj;
-            j--;
-        } else {
-            result[i] = cj;
-            result[j] = ci;
-            i++;
-            j--;
-        }
-    }
-    return new String(result);
 }
 ```
 
@@ -645,6 +608,38 @@ public boolean judgeSquareSum(int c) {
 }
 ```
 
+**反转字符串中的元音字符** 
+
+[Leetcode : 345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+
+```html
+Given s = "leetcode", return "leotcede".
+```
+
+使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+
+```java
+private HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+
+public String reverseVowels(String s) {
+    int i = 0, j = s.length() - 1;
+    char[] result = new char[s.length()];
+    while (i <= j) {
+        char ci = s.charAt(i);
+        char cj = s.charAt(j);
+        if (!vowels.contains(ci)) {
+            result[i++] = ci;
+        } else if (!vowels.contains(cj)) {
+            result[j--] = cj;
+        } else {
+            result[i++] = cj;
+            result[j--] = ci;
+        }
+    }
+    return new String(result);
+}
+```
+
 **回文字符串** 
 
 [Leetcode : 680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
@@ -659,20 +654,20 @@ Explanation: You could delete the character 'c'.
 
 ```java
 public boolean validPalindrome(String s) {
-    int i = 0, j = s.length() - 1;
-    while (i < j) {
+    int i = -1, j = s.length();
+    while (++i < --j) {
         if (s.charAt(i) != s.charAt(j)) {
             return isPalindrome(s, i, j - 1) || isPalindrome(s, i + 1, j);
         }
-        i++;
-        j--;
     }
     return true;
 }
 
-private boolean isPalindrome(String s, int l, int r) {
-    while (l < r) {
-        if (s.charAt(l++) != s.charAt(r--)) return false;
+private boolean isPalindrome(String s, int i, int j) {
+    while (i < j) {
+        if (s.charAt(i++) != s.charAt(j--)) {
+            return false;
+        }
     }
     return true;
 }
@@ -681,6 +676,14 @@ private boolean isPalindrome(String s, int l, int r) {
 **归并两个有序数组** 
 
 [Leetcode : 88. Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/description/)
+
+```html
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+```
 
 题目描述：把归并结果存到第一个数组上。
 
@@ -708,10 +711,9 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 public boolean hasCycle(ListNode head) {
     if (head == null) return false;
     ListNode l1 = head, l2 = head.next;
-    while (l1 != null && l2 != null) {
+    while (l1 != null && l2 != null && l2.next != null) {
         if (l1 == l2) return true;
         l1 = l1.next;
-        if (l2.next == null) break;
         l2 = l2.next.next;
     }
     return false;
@@ -734,18 +736,28 @@ Output:
 
 ```java
 public String findLongestWord(String s, List<String> d) {
-    String ret = "";
-    for (String str : d) {
-        for (int i = 0, j = 0; i < s.length() && j < str.length(); i++) {
-            if (s.charAt(i) == str.charAt(j)) j++;
-            if (j == str.length()) {
-                if (ret.length() < str.length() || (ret.length() == str.length() && ret.compareTo(str) > 0)) {
-                    ret = str;
-                }
-            }
+    String longestWord = "";
+    for (String target : d) {
+        int l1 = longestWord.length(), l2 = target.length();
+        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
+            continue;
+        }
+        if (isValid(s, target)) {
+            longestWord = target;
         }
     }
-    return ret;
+    return longestWord;
+}
+
+private boolean isValid(String s, String target) {
+    int i = 0, j = 0;
+    while (i < s.length() && j < target.length()) {
+        if (s.charAt(i) == target.charAt(j)) {
+            j++;
+        }
+        i++;
+    }
+    return j == target.length();
 }
 ```
 
@@ -913,7 +925,7 @@ public String frequencySort(String s) {
 
 <div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
 
-广度优先搜索的搜索过程有点像一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个长度。需要注意的是，遍历过的节点不能再次被遍历。
+广度优先搜索的搜索过程有点像一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
 
 第一层：
 
@@ -931,11 +943,11 @@ public String frequencySort(String s) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一轮遍历的节点都与根节点路径长度相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的路径长度，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。
+可以看到，每一轮遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
-- 队列：用来存储每一轮遍历的节点；
+- 队列：用来存储每一轮遍历得到的节点；
 - 标记：对于遍历过的节点，应该将它标记，防止重复遍历。
 
 **计算在网格中从原点到特定点的最短路径长度** 
@@ -947,34 +959,38 @@ public String frequencySort(String s) {
  [1,0,1,1]]
 ```
 
-1 表示可以经过某个位置。
+题目描述：1 表示可以经过某个位置，求解从 (0, 0) 位置到 (tr, tc) 位置的最短路径长度。
 
 ```java
 public int minPathLength(int[][] grids, int tr, int tc) {
-    int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     int m = grids.length, n = grids[0].length;
     Queue<Position> queue = new LinkedList<>();
-    queue.add(new Position(0, 0, 1));
+    queue.add(new Position(0, 0));
+    int pathLength = 0;
     while (!queue.isEmpty()) {
-        Position pos = queue.poll();
-        for (int i = 0; i < 4; i++) {
-            Position nextPos = new Position(pos.r + next[i][0], pos.c + next[i][1], pos.length + 1);
-            if (nextPos.r < 0 || nextPos.r >= m || nextPos.c < 0 || nextPos.c >= n) continue;
-            if (grids[nextPos.r][nextPos.c] != 1) continue;
-            grids[nextPos.r][nextPos.c] = 0; // 标记已经访问过
-            if (nextPos.r == tr && nextPos.c == tc) return nextPos.length;
-            queue.add(nextPos);
+        int size = queue.size();
+        pathLength++;
+        while (size-- > 0) {
+            Position cur = queue.poll();
+            for (int[] d : direction) {
+                Position next = new Position(cur.r + d[0], cur.c + d[1]);
+                if (next.r < 0 || next.r >= m || next.c < 0 || next.c >= n) continue;
+                grids[next.r][next.c] = 0;
+                if (next.r == tr && next.c == tc) return pathLength;
+                queue.add(next);
+            }
         }
     }
     return -1;
 }
 
 private class Position {
-    int r, c, length;
-    Position(int r, int c, int length) {
+    int r, c;
+
+    Position(int r, int c) {
         this.r = r;
         this.c = c;
-        this.length = length;
     }
 }
 ```
@@ -1082,8 +1098,8 @@ private void dfs(char[][] grid, int i, int j) {
         return;
     }
     grid[i][j] = '0';
-    for (int k = 0; k < direction.length; k++) {
-        dfs(grid, i + direction[k][0], j + direction[k][1]);
+    for (int[] d : direction) {
+        dfs(grid, i + d[0], j + d[1]);
     }
 }
 ```
@@ -1256,12 +1272,12 @@ private void dfs(int r, int c, boolean[][] canReach) {
 Backtracking（回溯）属于 DFS。
 
 - 普通 DFS 主要用在  **可达性问题** ，这种问题只需要执行到特点的位置然后返回即可。
-- 而 Backtracking 主要用于求解  **排列组合**  问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串，这种问题在执行到特定的位置返回时，在返回之后还会继续执行求解过程。
+- 而 Backtracking 主要用于求解  **排列组合**  问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串，这种问题在执行到特定的位置返回之后还会继续执行求解过程。
 
 因为 Backtracking 不是立即就返回，而要继续求解，因此在程序实现时，需要注意对元素的标记问题：
 
 - 在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；
-- 但是在递归返回时，需要将该元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
+- 但是在递归返回时，需要将元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
 
 **数字键盘组合** 
 
@@ -1365,13 +1381,13 @@ public boolean exist(char[][] board, String word) {
     boolean[][] visited = new boolean[m][n];
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            if (dfs(board, visited, word, 0, i, j)) return true;
+            if (backtracking(board, visited, word, 0, i, j)) return true;
         }
     }
     return false;
 }
 
-private boolean dfs(char[][] board, boolean[][] visited, String word, int start, int r, int c) {
+private boolean backtracking(char[][] board, boolean[][] visited, String word, int start, int r, int c) {
     if (start == word.length()) {
         return true;
     }
@@ -1380,7 +1396,7 @@ private boolean dfs(char[][] board, boolean[][] visited, String word, int start,
     }
     visited[r][c] = true;
     for (int[] d : direction) {
-        if (dfs(board, visited, word, start + 1, r + d[0], c + d[1])) {
+        if (backtracking(board, visited, word, start + 1, r + d[0], c + d[1])) {
             return true;
         }
     }
@@ -1394,11 +1410,11 @@ private boolean dfs(char[][] board, boolean[][] visited, String word, int start,
 [Leetcode : 257. Binary Tree Paths (Easy)](https://leetcode.com/problems/binary-tree-paths/description/)
 
 ```html
-   1
+  1
  /  \
 2    3
-\
- 5
+ \
+  5
 ```
 
 ```html
@@ -1410,18 +1426,18 @@ public List<String> binaryTreePaths(TreeNode root) {
     List<String> paths = new ArrayList();
     if (root == null) return paths;
     List<Integer> values = new ArrayList<>();
-    dfs(root, values, paths);
+    backtracking(root, values, paths);
     return paths;
 }
 
-private void dfs(TreeNode node, List<Integer> values, List<String> paths) {
+private void backtracking(TreeNode node, List<Integer> values, List<String> paths) {
     if (node == null) return;
     values.add(node.val);
     if (isLeaf(node)) {
         paths.add(buildPath(values));
     } else {
-        dfs(node.left, values, paths);
-        dfs(node.right, values, paths);
+        backtracking(node.left, values, paths);
+        backtracking(node.right, values, paths);
     }
     values.remove(values.size() - 1);
 }
@@ -1492,7 +1508,7 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
 [[1,1,2], [1,2,1], [2,1,1]]
 ```
 
-题目描述：数组元素可能含有相同的元素，进行排列时就有可能出现 重复的排列，要求重复的排列只返回一个。
+题目描述：数组元素可能含有相同的元素，进行排列时就有可能出现重复的排列，要求重复的排列只返回一个。
 
 在实现上，和 Permutations 不同的是要先排序，然后在添加一个元素时，判断这个元素是否等于前一个元素，如果等于，并且前一个元素还未访问，那么就跳过这个元素。
 
