@@ -331,49 +331,13 @@ You need to output 2.
 public int findContentChildren(int[] g, int[] s) {
     Arrays.sort(g);
     Arrays.sort(s);
-    int i = 0, j = 0;
-    while(i < g.length && j < s.length){
-        if(g[i] <= s[j]) i++;
-        j++;
+    int gIndex = 0, sIndex = 0;
+    while (gIndex < g.length && sIndex < s.length) {
+        if (g[gIndex] <= s[sIndex]) gIndex++;
+        sIndex++;
     }
-    return i;
+    return gIndex;
 }
-```
-
-**投飞镖刺破气球** 
-
-[Leetcode : 452. Minimum Number of Arrows to Burst Balloons (Medium)](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
-
-```
-Input:
-[[10,16], [2,8], [1,6], [7,12]]
-
-Output:
-2
-```
-
-题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直射向坐标轴，使得路径上的气球都会刺破。求解最小的投飞镖次数使所有气球都被刺破。
-
-从左往右投飞镖，并且在每次投飞镖时满足以下条件：
-
-1. 左边已经没有气球了；
-2. 本次投飞镖能够刺破最多的气球。
-
-```java
-public int findMinArrowShots(int[][] points) {
-    if(points.length == 0) return 0;
-    Arrays.sort(points,(a,b) -> (a[1] - b[1]));
-    int curPos = points[0][1];
-    int ret = 1;
-    for (int i = 1; i < points.length; i++) {
-        if(points[i][0] <= curPos) {
-            continue;
-        }
-        curPos = points[i][1];
-        ret++;
-    }
-    return ret;
- }
 ```
 
 **股票的最大收益** 
@@ -387,8 +351,10 @@ public int findMinArrowShots(int[][] points) {
 ```java
 public int maxProfit(int[] prices) {
     int profit = 0;
-    for(int i = 1; i < prices.length; i++){
-        if(prices[i] > prices[i-1]) profit += (prices[i] - prices[i-1]);
+    for (int i = 1; i < prices.length; i++) {
+        if (prices[i] > prices[i - 1]) {
+            profit += (prices[i] - prices[i - 1]);
+        }
     }
     return profit;
 }
@@ -403,16 +369,16 @@ Input: flowerbed = [1,0,0,0,1], n = 1
 Output: True
 ```
 
-题目描述：花朵之间至少需要一个单位的间隔。
+题目描述：花朵之间至少需要一个单位的间隔，求解是否能种下 n 朵花。
 
 ```java
 public boolean canPlaceFlowers(int[] flowerbed, int n) {
     int cnt = 0;
-    for(int i = 0; i < flowerbed.length; i++){
-        if(flowerbed[i] == 1) continue;
+    for (int i = 0; i < flowerbed.length; i++) {
+        if (flowerbed[i] == 1) continue;
         int pre = i == 0 ? 0 : flowerbed[i - 1];
         int next = i == flowerbed.length - 1 ? 0 : flowerbed[i + 1];
-        if(pre == 0 && next == 0) {
+        if (pre == 0 && next == 0) {
             cnt++;
             flowerbed[i] = 1;
         }
@@ -433,15 +399,15 @@ Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 
 题目描述：判断一个数组能不能只修改一个数就成为非递减数组。
 
-在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，那么就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，只修改 nums[i - 1] = nums[i] 不能令数组成为非递减，只能通过修改 nums[i] = nums[i - 1] 才行。
+在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，只修改 nums[i - 1] = nums[i] 不能令数组成为非递减，只能通过修改 nums[i] = nums[i - 1] 才行。
 
 ```java
 public boolean checkPossibility(int[] nums) {
     int cnt = 0;
-    for(int i = 1; i < nums.length; i++){
-        if(nums[i] < nums[i - 1]){
+    for (int i = 1; i < nums.length; i++) {
+        if (nums[i] < nums[i - 1]) {
             cnt++;
-            if(i - 2 >= 0 && nums[i - 2] > nums[i]) nums[i] = nums[i-1];
+            if (i - 2 >= 0 && nums[i - 2] > nums[i]) nums[i] = nums[i - 1];
             else nums[i - 1] = nums[i];
         }
     }
@@ -460,12 +426,51 @@ Return true.
 
 ```java
 public boolean isSubsequence(String s, String t) {
-    int index = 0;
+    int pos = -1;
     for (char c : s.toCharArray()) {
-        index = t.indexOf(c, index);
-        if (index == -1) return false;
+        pos = t.indexOf(c, pos + 1);
+        if (pos == -1) return false;
     }
     return true;
+}
+```
+
+**投飞镖刺破气球** 
+
+[Leetcode : 452. Minimum Number of Arrows to Burst Balloons (Medium)](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+
+```
+Input:
+[[10,16], [2,8], [1,6], [7,12]]
+
+Output:
+2
+```
+
+题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直投向坐标轴，使得路径上的气球都会刺破。求解最小的投飞镖次数使所有气球都被刺破。
+
+对气球按末尾位置进行排序，得到：
+
+```html
+[[1,6], [2,8], [7,12], [10,16]]
+```
+
+如果让飞镖投向 6 这个位置，那么 [1,6] 和 [2,8] 这两个气球都会被刺破，这种方式下刺破这两个气球的投飞镖次数最少，并且后面两个气球依然可以使用这种方式来刺破。
+
+```java
+public int findMinArrowShots(int[][] points) {
+    if (points.length == 0) return 0;
+    Arrays.sort(points, (a, b) -> (a[1] - b[1]));
+    int curPos = points[0][1];
+    int shots = 1;
+    for (int i = 1; i < points.length; i++) {
+        if (points[i][0] <= curPos) {
+            continue;
+        }
+        curPos = points[i][1];
+        shots++;
+    }
+    return shots;
 }
 ```
 
