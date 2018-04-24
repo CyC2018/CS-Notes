@@ -54,25 +54,39 @@
 ## 二分查找
 
 ```java
-public int search(int key, int[] array) {
-    int l = 0, h = array.length - 1;
+public int binarySearch(int key, int[] nums) {
+    int l = 0, h = nums.length - 1;
     while (l <= h) {
         int mid = l + (h - l) / 2;
-        if (key == array[mid]) return mid;
-        if (key < array[mid])  h = mid - 1;
+        if (key == nums[mid]) return mid;
+        if (key < nums[mid]) h = mid - 1;
         else l = mid + 1;
     }
     return -1;
 }
 ```
 
-实现时需要注意以下细节：
+**时间复杂度** 
 
-- 在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
+O(logN)
 
-- 对 h 的赋值和循环条件有关，当循环条件为 l <= h 时，h = mid - 1；当循环条件为 l < h 时，h = mid。解释如下：在循环条件为 l <= h 时，如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环；在循环条件为 l < h，如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+**计算 mid** 
 
-- l 的赋值一般都为 l = mid + 1。
+在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
+
+**计算 h** 
+
+当循环条件为 l <= h，则 h = mid - 1。因为如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环。
+
+当循环条件为 l < h，则 h = mid。因为如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+
+**返回值** 
+
+在循环条件为 l <= h 的情况下，循环退出时 l 总是比 h 大 1，并且 l 是将 key 插入 nums 中的正确位置。例如对于 nums = {0,1,2,3}，key = 4，循环退出时 l = 4，将 key 插入到 nums 中的第 4 个位置就能保持 nums 有序的特点。
+
+在循环条件为 l < h 的情况下，循环退出时 l 和 h 相等。
+
+如果只是想知道 key 存不存在，在循环退出之后可以直接返回 -1 表示 key 不存在于 nums 中。
 
 **求开方** 
 
@@ -87,17 +101,19 @@ Output: 2
 Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
 ```
 
-一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt 。可以利用二分查找在 0 \~ x 之间查找 sqrt。
+一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
+
+对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l <= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
 
 ```java
 public int mySqrt(int x) {
-    if(x <= 1) return x;
+    if (x <= 1) return x;
     int l = 1, h = x;
-    while(l <= h){
+    while (l <= h) {
         int mid = l + (h - l) / 2;
         int sqrt = x / mid;
-        if(sqrt == mid) return mid;
-        else if(sqrt < mid) h = mid - 1;
+        if (sqrt == mid) return mid;
+        if (sqrt < mid) h = mid - 1;
         else l = mid + 1;
     }
     return h;
@@ -120,23 +136,25 @@ Because the 4th row is incomplete, we return 3.
 
 题目描述：第 i 行摆 i 个，统计能够摆的行数。
 
-返回 h 而不是 l，因为摆的硬币最后一行不能算进去。
+n 个硬币能够摆的行数 row 在 0 \~ n 之间，并且满足 n == row * (row + 1) / 2，因此可以利用二分查找在 0 \~ n 之间查找 row。
+
+对于 n = 8，它能摆的行数 row = 3，这是因为最后没有摆满的那一行不能算进去，因此在循环退出时应该返回 h。
 
 ```java
 public int arrangeCoins(int n) {
     int l = 0, h = n;
-    while(l <= h){
-        int m = l + (h - l) / 2;
-        long x = m * (m + 1) / 2;
-        if(x == n) return m;
-        else if(x < n) l = m + 1;
-        else h = m - 1;
+    while (l <= h) {
+        int mid = l + (h - l) / 2;
+        long x = mid * (mid + 1) / 2;
+        if (x == n) return mid;
+        else if (x < n) l = mid + 1;
+        else h = mid - 1;
     }
     return h;
 }
 ```
 
-可以不用二分查找，更直观的解法如下：
+本题可以不用二分查找，更直观的解法如下：
 
 ```java
 public int arrangeCoins(int n) {
@@ -149,6 +167,39 @@ public int arrangeCoins(int n) {
 }
 ```
 
+**大于给定元素的最小元素** 
+
+[Leetcode : 744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
+
+```html
+Input:
+letters = ["c", "f", "j"]
+target = "d"
+Output: "f"
+
+Input:
+letters = ["c", "f", "j"]
+target = "k"
+Output: "c"
+```
+
+题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符。letters 字符数组是循环数组。
+
+应该注意最后返回的是 l 位置的字符。
+
+```java
+public char nextGreatestLetter(char[] letters, char target) {
+    int n = letters.length;
+    int l = 0, h = n - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (letters[m] <= target) l = m + 1;
+        else h = m - 1;
+    }
+    return l < n ? letters[l] : letters[0];
+}
+```
+
 **有序数组的 Single Element** 
 
 [Leetcode : 540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
@@ -158,18 +209,98 @@ Input: [1,1,2,3,3,4,4,8,8]
 Output: 2
 ```
 
-题目描述：一个有序数组只有一个数不出现两次，找出这个数。
+题目描述：一个有序数组只有一个数不出现两次，找出这个数。要求以 O(logN) 时间复杂度进行求解。
+
+令 key 为 Single Element 在数组中的位置。如果 m 为偶数，并且 m < key，那么 nums[m] == nums[m + 1]；m >= key，那么 nums[m] != nums[m + 1]。
+
+从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 key 所在的数组位置为 m + 2 \~ n - 1，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 key 所在的数组位置为 0 \~ m，此时令 h = m。
+
+因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l < h 这种形式。
 
 ```java
 public int singleNonDuplicate(int[] nums) {
     int l = 0, h = nums.length - 1;
-    while(l < h) {
+    while (l < h) {
         int m = l + (h - l) / 2;
-        if(m % 2 == 1) m--; // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
-        if(nums[m] == nums[m + 1]) l = m + 2;
+        if (m % 2 == 1) m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
+        if (nums[m] == nums[m + 1]) l = m + 2;
         else h = m;
     }
     return nums[l];
+}
+```
+
+**第一个错误的版本** 
+
+[Leetcode : 278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
+
+题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
+
+如果第 m 个版本出错，则表示第一个错误的版本在 1 \~ m 之前，令 h = m；否则第一个错误的版本在 m + 1 \~ n 之间，令 l = m + 1。
+
+因为 h 的赋值表达式为 h = m，因此循环条件为 l < h。
+
+```java
+public int firstBadVersion(int n) {
+    int l = 1, h = n;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (isBadVersion(m)) h = m;
+        else l = m + 1;
+    }
+    return l;
+}
+```
+
+**旋转数组的最小数字** 
+
+[Leetcode : 153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
+
+```html
+Input: [3,4,5,1,2],
+Output: 1
+```
+
+```java
+public int findMin(int[] nums) {
+    int l = 0, h = nums.length;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] <= nums[h]) h = m;
+        else l = m + 1;
+    }
+    return nums[l];
+}
+```
+
+**查找区间** 
+
+[Leetcode : 34. Search for a Range (Medium)](https://leetcode.com/problems/search-for-a-range/description/)
+
+```html
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+```
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    int first = binarySearch(nums, target);
+    int last = binarySearch(nums, target + 1) - 1;
+    if (first == nums.length || nums[first] != target) return new int[]{-1, -1};
+    return new int[]{first, Math.max(first, last)};
+}
+
+private int binarySearch(int[] nums, int target) {
+    int l = 0, h = nums.length; // 注意 h 的初始值
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] >= target) h = m;
+        else l = m + 1;
+    }
+    return l;
 }
 ```
 
@@ -185,7 +316,7 @@ public int singleNonDuplicate(int[] nums) {
 Input: [1,2], [1,2,3]
 Output: 2
 
-Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2. 
+Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2.
 You have 3 cookies and their sizes are big enough to gratify all of the children,
 You need to output 2.
 ```
