@@ -747,7 +747,6 @@ run..run..run..run..run..run..run..run..run..run..end
 
 ```java
 public class CyclicBarrierExample {
-
     public static void main(String[] args) throws InterruptedException {
         final int totalThread = 10;
         CyclicBarrier cyclicBarrier = new CyclicBarrier(totalThread);
