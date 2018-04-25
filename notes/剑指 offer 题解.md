@@ -2498,6 +2498,8 @@ public double countProbability(int n, int s) {
 
 ## 题目描述
 
+[NowCoder](https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4?tpId=13&tqId=11198&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断是否能组成顺子。
 
 ## 解题思路
@@ -2510,17 +2512,17 @@ public boolean isContinuous(int[] nums) {
     for (int num : nums) if (num == 0) cnt++;
     for (int i = cnt; i < nums.length - 1; i++) {
         if (nums[i + 1] == nums[i]) return false;
-        int interval = nums[i + 1] - nums[i] - 1;
-        if (interval > cnt) return false;
-        cnt -= interval;
+        cnt -= nums[i + 1] - nums[i] - 1;
     }
-    return true;
+    return cnt >= 0;
 }
 ```
 
 # 62. 圆圈中最后剩下的数
 
 ## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/f78a359491e64a50bce2d89cff857eb6?tpId=13&tqId=11199&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 让小朋友们围成一个大圈。然后，他随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
 
@@ -2540,6 +2542,8 @@ public int LastRemaining_Solution(int n, int m) {
 
 ## 题目描述
 
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+
 可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
 ## 解题思路
@@ -2548,15 +2552,15 @@ public int LastRemaining_Solution(int n, int m) {
 
 ```java
 public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) return 0;
     int n = prices.length;
-    if(n == 0) return 0;
     int soFarMin = prices[0];
-    int max = 0;
-    for(int i = 1; i < n; i++) {
-        if(soFarMin > prices[i]) soFarMin = prices[i];
-        else max = Math.max(max, prices[i] - soFarMin);
+    int maxProfit = 0;
+    for (int i = 1; i < n; i++) {
+        soFarMin = Math.min(soFarMin, prices[i]);
+        maxProfit = Math.max(maxProfit, prices[i] - soFarMin);
     }
-    return max;
+    return maxProfit;
 }
 ```
 
@@ -2564,9 +2568,17 @@ public int maxProfit(int[] prices) {
 
 ## 题目描述
 
+[NowCoder](https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1?tpId=13&tqId=11200&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 求 1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句（A?B:C）。
 
 ## 解题思路
+
+使用递归解法最重要的是指定返回条件，但是本题无法直接使用 if 语句来指定返回条件。
+
+条件与 && 具有短路原则，即在第一个条件语句为 false 的情况下不会去执行第二个条件语句。利用这一特性，将递归的返回条件取非然后作为 && 的第一个条件语句，递归的主体转换为第二个条件语句，那么当递归的返回条件为 true 的情况下就不会执行递归的主体部分，递归返回。
+
+以下实现中，递归的返回条件为 n <= 0，取非后就是 n > 0，递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) > 0。
 
 ```java
 public int Sum_Solution(int n) {
@@ -2578,6 +2590,12 @@ public int Sum_Solution(int n) {
 
 # 65. 不用加减乘除做加法
 
+## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215?tpId=13&tqId=11201&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+写一个函数，求两个整数之和，要求在函数体内不得使用 +、-、\*、/ 四则运算符号。
+
 ## 解题思路
 
 a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
@@ -2585,15 +2603,16 @@ a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进�
 递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
-public int Add(int num1, int num2) {
-    if(num2 == 0) return num1;
-    return Add(num1 ^ num2, (num1 & num2) << 1);
+public int Add(int num1,int num2) {
+    return num2 == 0 ? num1 : Add(num1 ^ num2, (num1 & num2) << 1);
 }
 ```
 
 # 66. 构建乘积数组
 
 ## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/94a4d381a68b47b7a8bed86f2975db46?tpId=13&tqId=11204&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 给定一个数组 A[0, 1,..., n-1], 请构建一个数组 B[0, 1,..., n-1], 其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。不能使用除法。
 
@@ -2614,6 +2633,22 @@ public int[] multiply(int[] A) {
 ```
 
 # 67. 把字符串转换成整数
+
+## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/1277c681251b4372bdef344468e4f26e?tpId=13&tqId=11202&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。 数值为 0 或者字符串不是一个合法的数值则返回 0。
+
+```html
+Iuput:
++2147483647
+1a33
+
+Output:
+2147483647
+0
+```
 
 ## 解题思路
 
@@ -2640,12 +2675,15 @@ public int StrToInt(String str) {
 
 <div align="center"> <img src="../pics//293d2af9-de1d-403e-bed0-85d029383528.png" width="300"/> </div><br>
 
+[Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
+
 二叉查找树中，两个节点 p, q 的公共祖先 root 满足 p.val <= root.val && root.val <= q.val，只要找到满足这个条件的最低层节点即可。换句话说，应该先考虑子树的解而不是根节点的解，二叉树的后序遍历操作满足这个特性。在本题中我们可以利用后序遍历的特性，先在左右子树中查找解，最后再考虑根节点的解。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
-    if(root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
+    if (root == null) return root;
+    if (root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
+    if (root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
     return root;
 }
 ```
@@ -2653,6 +2691,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 ### 普通二叉树
 
 <div align="center"> <img src="../pics//37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
+
+[Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
 在左右子树中查找两个节点的最低公共祖先，如果在其中一颗子树中查找到，那么就返回这个解，否则可以认为根节点就是最低公共祖先。
 
