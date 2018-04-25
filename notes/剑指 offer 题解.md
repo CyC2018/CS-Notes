@@ -909,15 +909,15 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
-    if (pHead == null) return null;
+    if (pHead == null || pHead.next == null) return pHead;
     ListNode next = pHead.next;
-    if (next == null) return pHead;
     if (pHead.val == next.val) {
         while (next != null && pHead.val == next.val) next = next.next;
         return deleteDuplication(next);
+    } else {
+        pHead.next = deleteDuplication(pHead.next);
+        return pHead;
     }
-    pHead.next = deleteDuplication(pHead.next);
-    return pHead;
 }
 ```
 
@@ -2256,6 +2256,8 @@ private int height(TreeNode root) {
 
 ## 题目描述
 
+[NowCoder](https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&tqId=11193&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 一个整型数组里除了两个数字之外，其他的数字都出现了两次，找出这两个数。
 
 ## 解题思路
@@ -2267,21 +2269,28 @@ private int height(TreeNode root) {
 diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
 
 ```java
-public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
-    int diff = 0;
-    for (int num : array) diff ^= num;
-    // 得到最右一位
-    diff &= -diff;
-    for (int num : array) {
-        if ((num & diff) == 0) num1[0] ^= num;
-        else num2[0] ^= num;
+    public void FindNumsAppearOnce(int[] nums, int num1[], int num2[]) {
+        int diff = 0;
+        for (int num : nums) {
+            diff ^= num;
+        }
+        // 得到最右一位
+        diff &= -diff;
+        for (int num : nums) {
+            if ((num & diff) == 0) {
+                num1[0] ^= num;
+            } else {
+                num2[0] ^= num;
+            }
+        }
     }
-}
 ```
 
 # 57.1 和为 S 的两个数字
 
 ## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/390da4f7a00f44bea7c2f3d19491311b?tpId=13&tqId=11195&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
 
@@ -2289,18 +2298,20 @@ public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
 
 使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
 
-如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
+- 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
+- 如果 sum > target，移动较大的元素，使 sum 变小一些；
+- 如果 sum < target，移动较小的元素，使 sum 变大一些。
 
 ```java
 public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
     int i = 0, j = array.length - 1;
     while (i < j) {
         int cur = array[i] + array[j];
-        if (cur == sum) return new ArrayList<Integer>(Arrays.asList(array[i], array[j]));
-        else if (cur < sum) i++;
+        if (cur == sum) return new ArrayList<>(Arrays.asList(array[i], array[j]));
+        if (cur < sum) i++;
         else j--;
     }
-    return new ArrayList<Integer>();
+    return new ArrayList<>();
 }
 ```
 
@@ -2308,32 +2319,41 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 
 ## 题目描述
 
-和为 100 的连续序列有 18, 19, 20, 21, 22。
+[NowCoder](https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe?tpId=13&tqId=11194&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+输出所有和为 S 的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+
+例如和为 100 的连续序列有：
+
+```
+[9, 10, 11, 12, 13, 14, 15, 16]
+[18, 19, 20, 21, 22]。
+```
 
 ## 解题思路
 
 ```java
 public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    int first = 1, last = 2;
+    int start = 1, end = 2;
     int curSum = 3;
-    while (first <= sum / 2 && last < sum) {
+    while (end < sum) {
         if (curSum > sum) {
-            curSum -= first;
-            first++;
+            curSum -= start;
+            start++;
         } else if (curSum < sum) {
-            last++;
-            curSum += last;
+            end++;
+            curSum += end;
         } else {
             ArrayList<Integer> list = new ArrayList<>();
-            for (int i = first; i <= last; i++) {
+            for (int i = start; i <= end; i++) {
                 list.add(i);
             }
             ret.add(list);
-            curSum -= first;
-            first++;
-            last++;
-            curSum += last;
+            curSum -= start;
+            start++;
+            end++;
+            curSum += end;
         }
     }
     return ret;
@@ -2350,11 +2370,14 @@ public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
 
 ## 解题思路
 
-题目应该有一个隐含条件，就是不能用额外的空间。虽然 Java 的题目输入参数为 String 类型，需要先创建一个字符数组使得空间复杂度为 O(n)，但是正确的参数类型应该和原书一样，为字符数组，并且只能使用该字符数组的空间。任何使用了额外空间的解法在面试时都会大打折扣，包括递归解法。正确的解法应该是和书上一样，先旋转每个单词，再旋转整个字符串。
+[NowCoder](https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3?tpId=13&tqId=11197&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目应该有一个隐含条件，就是不能用额外的空间。虽然 Java 的题目输入参数为 String 类型，需要先创建一个字符数组使得空间复杂度为 O(N)，但是正确的参数类型应该和原书一样，为字符数组，并且只能使用该字符数组的空间。任何使用了额外空间的解法在面试时都会大打折扣，包括递归解法。
+
+正确的解法应该是和书上一样，先旋转每个单词，再旋转整个字符串。
 
 ```java
 public String ReverseSentence(String str) {
-    if (str.length() == 0) return str;
     int n = str.length();
     char[] chars = str.toCharArray();
     int i = 0, j = 0;
@@ -2370,10 +2393,15 @@ public String ReverseSentence(String str) {
 }
 
 private void reverse(char[] c, int i, int j) {
-    while(i < j) {
-        char t = c[i]; c[i] = c[j]; c[j] = t;
-        i++; j--;
+    while (i < j) {
+        swap(c, i++, j--);
     }
+}
+
+private void swap(char[] c, int i, int j) {
+    char t = c[i];
+    c[i] = c[j];
+    c[j] = t;
 }
 ```
 
@@ -2381,31 +2409,42 @@ private void reverse(char[] c, int i, int j) {
 
 ## 题目描述
 
+[NowCoder](https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&tqId=11196&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 对于一个给定的字符序列 S，请你把其循环左移 K 位后的序列输出。例如，字符序列 S=”abcXYZdef”, 要求输出循环左移 3 位后的结果，即“XYZdefabc”。
 
 ## 解题思路
 
+将 "abcXYZdef" 旋转左移三位，可以先将 "abc" 和 "XYZdef" 分别旋转，得到 "cbafedZYX"，然后再把整个字符串旋转得到 "XYZdefabc"。
+
 ```java
 public String LeftRotateString(String str, int n) {
-    if(str.length() == 0) return "";
-    char[] c = str.toCharArray();
-    reverse(c, 0, n - 1);
-    reverse(c, n, c.length - 1);
-    reverse(c, 0, c.length - 1);
-    return new String(c);
+    if (n >= str.length()) return str;
+    char[] chars = str.toCharArray();
+    reverse(chars, 0, n - 1);
+    reverse(chars, n, chars.length - 1);
+    reverse(chars, 0, chars.length - 1);
+    return new String(chars);
 }
 
-private void reverse(char[] c, int i, int j) {
-    while(i < j) {
-        char t = c[i]; c[i] = c[j]; c[j] = t;
-        i++; j--;
+private void reverse(char[] chars, int i, int j) {
+    while (i < j) {
+        swap(chars, i++, j--);
     }
+}
+
+private void swap(char[] chars, int i, int j) {
+    char t = chars[i];
+    chars[i] = chars[j];
+    chars[j] = t;
 }
 ```
 
 # 59. 滑动窗口的最大值
 
 ## 题目描述
+
+[NowCoder](https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&tqId=11217&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组 {2, 3, 4, 2, 6, 2, 5, 1} 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 {4, 4, 6, 6, 6, 5}。
 
@@ -2414,14 +2453,13 @@ private void reverse(char[] c, int i, int j) {
 ```java
 public ArrayList<Integer> maxInWindows(int[] num, int size) {
     ArrayList<Integer> ret = new ArrayList<>();
-    if (size > num.length || size < 1) return ret;
-    // 构建最大堆，即堆顶元素是堆的最大值。
     PriorityQueue<Integer> heap = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
+    if (size > num.length || size < 1) return ret;
     for (int i = 0; i < size; i++) heap.add(num[i]);
     ret.add(heap.peek());
-    for (int i = 1; i + size - 1 < num.length; i++) {
+    for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {
         heap.remove(num[i - 1]);
-        heap.add(num[i + size - 1]);
+        heap.add(num[j]);
         ret.add(heap.peek());
     }
     return ret;
@@ -2432,35 +2470,39 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 ## 题目描述
 
+[Lintcode](https://www.lintcode.com/en/problem/dices-sum/)
+
 把 n 个骰子仍在地上，求点数和为 s 的概率。
 
 ## 解题思路
 
 ### 动态规划解法
 
+使用一个二维数组 dp 存储点数出现的次数，其中 dp[i][j] 表示前 i 个骰子产生点数 j 的次数。
+
 空间复杂度：O(N<sup>2</sup>)
 
 ```java
-private static int face = 6;
-
-public double countProbability(int n, int s) {
-    if (n < 1 || s < n) return 0.0;
-    int pointNum = face * n;
-    int[][] dp = new int[n][pointNum];
-    for (int i = 0; i < face; i++) {
-        dp[0][i] = 1;
+public List<Map.Entry<Integer, Double>> dicesSum(int n) {
+    final int face = 6;
+    final int pointNum = face * n;
+    long[][] dp = new long[n + 1][pointNum + 1];
+    for (int i = 1; i <= face; i++) {
+        dp[1][i] = 1;
     }
-    for (int i = 1; i < n; i++) {
-        for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
-            for (int k = 1; k <= face; k++) {
-                if (j - k >= 0) {
-                    dp[i][j] += dp[i - 1][j - k];
-                }
+    for (int i = 2; i <= n; i++) {
+        for (int j = i; j <= pointNum; j++) {  // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face && k <= j; k++) {
+                dp[i][j] += dp[i - 1][j - k];
             }
         }
     }
-    int totalNum = (int) Math.pow(6, n);
-    return (double) dp[n - 1][s - 1] / totalNum;
+    final double totalNum = Math.pow(6, n);
+    List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
+    for (int i = n; i <= pointNum; i++) {
+        ret.add(new AbstractMap.SimpleEntry<>(i, dp[n][i] / totalNum));
+    }
+    return ret;
 }
 ```
 
@@ -2469,28 +2511,30 @@ public double countProbability(int n, int s) {
 空间复杂度：O(N)
 
 ```java
-private static int face = 6;
-
-public double countProbability(int n, int s) {
-    if (n < 1 || s < n) return 0.0;
-    int pointNum = face * n;
-    int[][] dp = new int[2][pointNum];
-    for (int i = 0; i < face; i++) {
+public List<Map.Entry<Integer, Double>> dicesSum(int n) {
+    final int face = 6;
+    final int pointNum = face * n;
+    long[][] dp = new long[2][pointNum + 1];
+    for (int i = 1; i <= face; i++) {
         dp[0][i] = 1;
     }
     int flag = 1;
-    for (int i = 1; i < n; i++) {
-        for (int j = i; j < pointNum; j++) { // 使用 i 个骰子最小点数为 i
-            for (int k = 1; k <= face; k++) {
-                if (j - k >= 0) {
-                    dp[flag][j] += dp[1 - flag][j - k];
-                }
+    for (int i = 2; i <= n; i++, flag = 1 - flag) {
+        for (int j = 0; j <= pointNum; j++) {
+            dp[flag][j] = 0; // 旋转数组清零
+        }
+        for (int j = i; j <= pointNum; j++) {  // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face && k <= j; k++) {
+                dp[flag][j] += dp[1 - flag][j - k];
             }
         }
-        flag = 1 - flag;
     }
-    int totalNum = (int) Math.pow(6, n);
-    return (double) dp[flag][s - 1] / totalNum;
+    final double totalNum = Math.pow(6, n);
+    List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
+    for (int i = n; i <= pointNum; i++) {
+        ret.add(new AbstractMap.SimpleEntry<>(i, dp[1 - flag][i] / totalNum));
+    }
+    return ret;
 }
 ```
 
