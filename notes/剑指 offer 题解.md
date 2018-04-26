@@ -82,15 +82,17 @@
 
 # 2. 实现 Singleton
 
-> [单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+[单例模式](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
 
 # 3. 数组中重复的数字
+
+[NowCoder](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
 在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
 
-要求复杂度为 O(N) + O(1)，时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
+要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
 
 ## 解题思路
 
@@ -110,8 +112,6 @@ position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
 ```
 
 遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复。
-
-复杂度：O(N) + O(1)
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
@@ -135,6 +135,8 @@ private void swap(int[] nums, int i, int j) {
 
 # 4. 二维数组中的查找
 
+[NowCoder](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
@@ -157,7 +159,7 @@ Given target = 20, return false.
 
 从右上角开始查找。因为矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
 
-复杂度：O(M+N) + O(1)
+复杂度：O(M + N) + O(1)
 
 ```java
 public boolean Find(int target, int[][] matrix) {
@@ -175,6 +177,8 @@ public boolean Find(int target, int[][] matrix) {
 
 # 5. 替换空格
 
+[NowCoder](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为 We Are Happy. 则经过替换之后的字符串为 We%20Are%20Happy。
@@ -183,9 +187,9 @@ public boolean Find(int target, int[][] matrix) {
 
 在字符串尾部填充任意字符，使得字符串的长度等于字符串替换之后的长度。因为一个空格要替换成三个字符（%20），因此当遍历到一个空格时，需要在尾部填充两个任意字符。
 
-令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2 从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
+令 idxOfOld 指向字符串原来的末尾位置，idxOfNew 指向字符串现在的末尾位置。idxOfOld 和 idxOfNew 从后向前遍历，当 idxOfOld 遍历到一个空格时，就需要令 idxOfNew 指向的位置依次填充 02%（注意是逆序的），否则就填充上 idxOfOld 指向字符的值。
 
-从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
+从后向前遍是为了在改变 idxOfNew 所指向的内容时，不会影响到 idxOfOld 遍历原来字符串的内容。
 
 复杂度：O(N) + O(1)
 
@@ -214,6 +218,8 @@ public String replaceSpace(StringBuffer str) {
 ```
 
 # 6. 从尾到头打印链表
+
+[NowCoder](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -296,6 +302,8 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 # 7. 重建二叉树
 
+[NowCoder](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
@@ -322,8 +330,7 @@ public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
 }
 
 private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, int inL, int inR) {
-    if (preL == preR) return new TreeNode(pre[preL]);
-    if (preL > preR || inL > inR) return null;
+    if (preL > preR) return null;
     TreeNode root = new TreeNode(pre[preL]);
     int inIdx = inOrderNumsIdx.get(root.val);
     int leftTreeSize = inIdx - inL;
@@ -334,6 +341,8 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 ```
 
 # 8. 二叉树的下一个结点
+
+[NowCoder](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e?tpId=13&tqId=11210&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -366,12 +375,16 @@ public class TreeLinkNode {
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
     if (pNode.right != null) {
         TreeLinkNode node = pNode.right;
-        while (node.left != null) node = node.left;
+        while (node.left != null) {
+            node = node.left;
+        }
         return node;
     } else {
         while (pNode.next != null) {
             TreeLinkNode parent = pNode.next;
-            if (parent.left == pNode) return parent;
+            if (parent.left == pNode) {
+                return parent;
+            }
             pNode = pNode.next;
         }
     }
@@ -381,9 +394,15 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 # 9. 用两个栈实现队列
 
+[NowCoder](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+用两个栈来实现一个队列，完成队列的 Push 和 Pop 操作。队列中的元素为 int 类型。
+
 ## 解题思路
 
-in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，此时先进入的元素先退出，这就是队列的顺序。
+in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，先进入的元素先退出，这就是队列的顺序。
 
 <div align="center"> <img src="../pics//5acf7550-86c5-4c5b-b912-8ce70ef9c34e.png" width="400"/> </div><br>
 
@@ -410,9 +429,11 @@ public int pop() throws Exception {
 
 # 10.1 斐波那契数列
 
+[NowCoder](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
-求菲波那契数列的第 n 项。
+求菲波那契数列的第 n 项，n <= 39。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br>
 
@@ -426,7 +447,7 @@ public int pop() throws Exception {
 
 ```java
 public int Fibonacci(int n) {
-    if(n <= 1) return n;
+    if (n <= 1) return n;
     int[] fib = new int[n + 1];
     fib[1] = 1;
     for (int i = 2; i <= n; i++) {
@@ -440,7 +461,7 @@ public int Fibonacci(int n) {
 
 ```java
 public int Fibonacci(int n) {
-    if(n <= 1) return n;
+    if (n <= 1) return n;
     int pre2 = 0, pre1 = 1;
     int fib = 0;
     for (int i = 2; i <= n; i++) {
@@ -460,7 +481,7 @@ public class Solution {
     public Solution() {
         fib[1] = 1;
         fib[2] = 2;
-        for(int i = 2; i < fib.length; i++) {
+        for (int i = 2; i < fib.length; i++) {
             fib[i] = fib[i - 1] + fib[i - 2];
         }
     }
@@ -471,6 +492,8 @@ public class Solution {
 ```
 
 # 10.2 跳台阶
+
+[NowCoder](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -511,26 +534,30 @@ public int JumpFloor(int n) {
 
 # 10.3 变态跳台阶
 
+[NowCoder](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
-一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级... 它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
 ## 解题思路
 
 ```java
-public int JumpFloorII(int n) {
-    int[] dp = new int[n];
+public int JumpFloorII(int target) {
+    int[] dp = new int[target];
     Arrays.fill(dp, 1);
-    for(int i = 1; i < n; i++) {
-        for(int j = 0; j < i; j++) {
+    for (int i = 1; i < target; i++) {
+        for (int j = 0; j < i; j++) {
             dp[i] += dp[j];
         }
     }
-    return dp[n - 1];
+    return dp[target - 1];
 }
 ```
 
 # 10.4 矩形覆盖
+
+[NowCoder](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -571,30 +598,17 @@ public int RectCover(int n) {
 
 # 11. 旋转数组的最小数字
 
+[NowCoder](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
 
 ## 解题思路
 
-### 分治
+当 nums[m] <= nums[h] 的情况下，说明解在 [l, m] 之间，此时令 h = m；否则解在 [m + 1, h] 之间，令 l = m + 1。
 
-复杂度：O(logN) + O(1)，其实空间复杂度不止 O(1)，因为分治使用了递归栈，用到了额外的空间，如果对空间有要求就不能用这种方法。
-
-```java
-public int minNumberInRotateArray(int[] nums) {
-    return minNumberInRotateArray(nums, 0, nums.length - 1);
-}
-
-private int minNumberInRotateArray(int[] nums, int first, int last) {
-    if (nums[first] < nums[last]) return nums[first];
-    if (first == last) return nums[first];
-    int mid = first + (last - first) / 2;
-    return Math.min(minNumberInRotateArray(nums, first, mid), minNumberInRotateArray(nums, mid + 1, last));
-}
-```
-
-### 二分查找
+因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)。
 
 复杂度：O(logN) + O(1)
 
@@ -602,17 +616,18 @@ private int minNumberInRotateArray(int[] nums, int first, int last) {
 public int minNumberInRotateArray(int[] nums) {
     if (nums.length == 0) return 0;
     int l = 0, h = nums.length - 1;
-    while (nums[l] >= nums[h]) {
-        if (h - l == 1) return nums[h];
-        int mid = l + (h - l) / 2;
-        if (nums[mid] >= nums[l]) l = mid;
-        else h = mid;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] <= nums[h]) h = m;
+        else l = m + 1;
     }
     return nums[l];
 }
 ```
 
 # 12. 矩阵中的路径
+
+[NowCoder](https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc?tpId=13&tqId=11218&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -670,6 +685,8 @@ private char[][] buildMatrix(char[] array) {
 
 # 13. 机器人的运动范围
 
+[NowCoder](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 地上有一个 m 行和 n 列的方格。一个机器人从坐标 (0, 0) 的格子开始移动，每一次只能向左右上下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。例如，当 k 为 18 时，机器人能够进入方格（35, 37），因为 3+5+3+7=18。但是，它不能进入方格（35, 38），因为 3+5+3+8=19。请问该机器人能够达到多少个格子？
@@ -695,12 +712,12 @@ public int movingCount(int threshold, int rows, int cols) {
 }
 
 private void dfs(boolean[][] hasVisited, int r, int c) {
-    if (r < 0 || r >= this.rows || c < 0 || c >= this.cols) return;
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return;
     if (hasVisited[r][c]) return;
     hasVisited[r][c] = true;
-    if (this.digitSum[r][c] > this.threshold) return;
+    if (digitSum[r][c] > threshold) return;
     this.cnt++;
-    for (int i = 0; i < this.next.length; i++) {
+    for (int i = 0; i < next.length; i++) {
         dfs(hasVisited, r + next[i][0], c + next[i][1]);
     }
 }
@@ -714,10 +731,10 @@ private void initDigitSum() {
             n /= 10;
         }
     }
-    this.digitSum = new int[rows][cols];
-    for (int i = 0; i < this.rows; i++) {
-        for (int j = 0; j < this.cols; j++) {
-            this.digitSum[i][j] = digitSumOne[i] + digitSumOne[j];
+    digitSum = new int[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            digitSum[i][j] = digitSumOne[i] + digitSumOne[j];
         }
     }
 }
@@ -725,16 +742,20 @@ private void initDigitSum() {
 
 # 14. 剪绳子
 
+[Leetcode](https://leetcode.com/problems/integer-break/description/)
+
 ## 题目描述
 
 把一根绳子剪成多段，并且使得每段的长度乘积最大。
+
+For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
 
 ## 解题思路
 
 ### 动态规划解法
 
 ```java
-public int maxProductAfterCutting(int n) {
+public int integerBreak(int n) {
     int[] dp = new int[n + 1];
     dp[1] = 1;
     for (int i = 2; i <= n; i++) {
@@ -753,8 +774,8 @@ public int maxProductAfterCutting(int n) {
 证明：当 n >= 5 时，3(n - 3) - 2(n - 2) = n - 5 >= 0。因此把长度大于 5 的绳子切成两段，令其中一段长度为 3 可以使得两段的乘积最大。
 
 ```java
-public int maxProductAfterCutting(int n) {
-    if (n < 2) return 0;
+public int integerBreak(int n) {
+    if (n < 2)  return 0;
     if (n == 2) return 1;
     if (n == 3) return 2;
     int timesOf3 = n / 3;
@@ -765,6 +786,8 @@ public int maxProductAfterCutting(int n) {
 ```
 
 # 15. 二进制中 1 的个数
+
+[NowCoder](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
@@ -803,6 +826,8 @@ public int NumberOf1(int n) {
 
 # 16. 数值的整数次方
 
+[NowCoder](https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00?tpId=13&tqId=11165&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方。
@@ -817,16 +842,16 @@ public int NumberOf1(int n) {
 
 ```java
 public double Power(double base, int exponent) {
-    if (exponent == 0) return 1;
-    if (exponent == 1) return base;
+    if(exponent == 0) return 1;
+    if(exponent == 1) return base;
     boolean isNegative = false;
-    if (exponent < 0) {
+    if(exponent < 0) {
         exponent = -exponent;
         isNegative = true;
     }
-    double pow = Power(base * base, exponent / 2);
-    if (exponent % 2 != 0) pow = pow * base;
-    return isNegative ? (1 / pow) : pow;
+    double pow = Power(base * base , exponent / 2);
+    if(exponent % 2 != 0) pow = pow * base;
+    return isNegative ? 1 / pow : pow;
 }
 ```
 
@@ -844,7 +869,7 @@ public double Power(double base, int exponent) {
 
 ```java
 public void print1ToMaxOfNDigits(int n) {
-    if (n < 0) return;
+    if (n <= 0) return;
     char[] number = new char[n];
     print1ToMaxOfNDigits(number, -1);
 }
@@ -872,7 +897,7 @@ private void printNumber(char[] number) {
 
 ## 解题思路
 
-① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，令该节点指向下下个节点，然后删除下一个节点，时间复杂度为 O(1)。
+① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)。
 
 <div align="center"> <img src="../pics//41392d76-dd1d-4712-85d9-e8bb46b04a2d.png" width="600"/> </div><br>
 
@@ -901,6 +926,8 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 # 18.2 删除链表中重复的结点
 
+[NowCoder](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 <div align="center"> <img src="../pics//8433fbb2-c35c-45ef-831d-e3ca42aebd51.png" width="500"/> </div><br>
@@ -923,23 +950,26 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 # 19. 正则表达式匹配
 
+[NowCoder](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&tqId=11205&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
-请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配。
+请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配。
 
 ## 解题思路
 
 应该注意到，'.' 是用来当做一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
 
 ```html
-p.charAt(j) == s.charAt(i)  :  dp[i][j] = dp[i-1][j-1];
-p.charAt(j) == '.'          :  dp[i][j] = dp[i-1][j-1];
-p.charAt(j) == '*'          :
-   p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //a* only counts as empty
-   p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.':
-            dp[i][j] = dp[i-1][j]   // a* counts as multiple a
-         or dp[i][j] = dp[i][j-1]   // a* counts as single a
-         or dp[i][j] = dp[i][j-2]   // a* counts as empty
+if p.charAt(j) == s.charAt(i)  :  then dp[i][j] = dp[i-1][j-1];
+if p.charAt(j) == '.'          :  then dp[i][j] = dp[i-1][j-1];
+if p.charAt(j) == '*'          :
+     if p.charAt(j-1) != s.charAt(i)  :  then dp[i][j] = dp[i][j-2]  // a* only counts as empty
+     if p.charAt(j-1) == s.charAt(i)
+  or p.charAt(i-1) == '.'             :
+              then dp[i][j] = dp[i-1][j]   // a* counts as multiple a
+                or dp[i][j] = dp[i][j-1]   // a* counts as single a
+                or dp[i][j] = dp[i][j-2]   // a* counts as empty
 ```
 
 ```java
@@ -971,6 +1001,8 @@ public boolean match(char[] str, char[] pattern) {
 
 # 20. 表示数值的字符串
 
+[NowCoder](https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&tqId=11206&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串 "+100","5e2","-123","3.1416" 和 "-1E-16" 都表示数值。 但是 "12e","1a3.14","1.2.3","+-5" 和 "12e+4.3" 都不是。
@@ -985,33 +1017,13 @@ public boolean isNumeric(char[] str) {
 
 # 21. 调整数组顺序使奇数位于偶数前面
 
+[NowCoder](https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 ## 题目描述
 
 保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
 ## 解题思路
-
-复杂度：O(N<sup>2</sup>) + O(1)
-
-```java
-public void reOrderArray(int[] nums) {
-    int n = nums.length;
-    for (int i = 0; i < n; i++) {
-        if (nums[i] % 2 == 0) {
-            int nextOddIdx = i + 1;
-            while (nextOddIdx < n && nums[nextOddIdx] % 2 == 0) nextOddIdx++;
-            if (nextOddIdx == n) break;
-            int nextOddVal = nums[nextOddIdx];
-            for (int j = nextOddIdx; j > i; j--) {
-                nums[j] = nums[j - 1];
-            }
-            nums[i] = nextOddVal;
-        }
-    }
-}
-```
-
-复杂度：O(N) + O(N)
 
 ```java
 public void reOrderArray(int[] nums) {
