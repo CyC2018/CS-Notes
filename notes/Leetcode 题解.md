@@ -44,6 +44,8 @@
         * [BST](#bst)
         * [Trie](#trie)
     * [图](#图)
+        * [拓扑排序](#拓扑排序)
+        * [并查集](#并查集)
     * [位运算](#位运算)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -3447,14 +3449,14 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2，因为如果多于 i / 2 的话 cnt 就一定不会为 0。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int majorityElement(int[] nums) {
-    int cnt = 1, majority = nums[0];
-    for (int i = 1; i < nums.length; i++) {
-        majority = (cnt == 0) ? nums[i] : majority;
-        cnt = (majority == nums[i]) ? cnt + 1 : cnt - 1;
+    int cnt = 0, majority = nums[0];
+    for (int num : nums) {
+        majority = (cnt == 0) ? num : majority;
+        cnt = (majority == num) ? cnt + 1 : cnt - 1;
     }
     return majority;
 }
@@ -5911,6 +5913,122 @@ class MapSum {
 ```
 
 ## 图
+
+### 拓扑排序
+
+常用于在具有先序关系的任务规划中。
+
+**课程安排的合法性** 
+
+[Leetcode : 207. Course Schedule (Medium)](https://leetcode.com/problems/course-schedule/description/)
+
+```html
+2, [[1,0]]
+return true
+```
+
+```html
+2, [[1,0],[0,1]]
+return false
+```
+
+题目描述：一个课程可能会先修课程，判断给定的先修课程规定是否合法。
+
+本题不需要使用拓扑排序，只需要检测有向图是否存在环即可。
+
+```java
+public boolean canFinish(int numCourses, int[][] prerequisites) {
+    List<Integer>[] graphic = new List[numCourses];
+    for (int i = 0; i < numCourses; i++)
+        graphic[i] = new ArrayList<>();
+    for (int[] pre : prerequisites)
+        graphic[pre[0]].add(pre[1]);
+
+    boolean[] globalMarked = new boolean[numCourses];
+    boolean[] localMarked = new boolean[numCourses];
+    for (int i = 0; i < numCourses; i++)
+        if (!dfs(globalMarked, localMarked, graphic, i))
+            return false;
+
+    return true;
+}
+
+private boolean dfs(boolean[] globalMarked, boolean[] localMarked, List<Integer>[] graphic, int curNode) {
+    if (localMarked[curNode])
+        return false;
+    if (globalMarked[curNode])
+        return true;
+
+    globalMarked[curNode] = true;
+    localMarked[curNode] = true;
+
+    for (int nextNode : graphic[curNode])
+        if (!dfs(globalMarked, localMarked, graphic, nextNode))
+            return false;
+
+    localMarked[curNode] = false;
+
+    return true;
+}
+```
+
+**课程安排的顺序** 
+
+[Leetcode : 210. Course Schedule II (Medium)](https://leetcode.com/problems/course-schedule-ii/description/)
+
+```html
+4, [[1,0],[2,0],[3,1],[3,2]]
+There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
+```
+
+使用 DFS 来实现拓扑排序，使用一个栈存储后序遍历结果，这个栈元素的逆序结果就是拓扑排序结果。
+
+证明：对于任何先序关系：v->w，后序遍历结果可以保证 w 先进入栈中，因此栈的逆序结果中 v 会在 w 之前。
+
+```java
+public int[] findOrder(int numCourses, int[][] prerequisites) {
+    List<Integer>[] graphic = new List[numCourses];
+    for (int i = 0; i < numCourses; i++)
+        graphic[i] = new ArrayList<>();
+    for (int[] pre : prerequisites)
+        graphic[pre[0]].add(pre[1]);
+
+    Stack<Integer> topologyOrder = new Stack<>();
+    boolean[] globalMarked = new boolean[numCourses];
+    boolean[] localMarked = new boolean[numCourses];
+    for (int i = 0; i < numCourses; i++)
+        if (!dfs(globalMarked, localMarked, graphic, i, topologyOrder))
+            return new int[0];
+
+    int[] ret = new int[numCourses];
+    for (int i = numCourses - 1; i >= 0; i--)
+        ret[i] = topologyOrder.pop();
+    return ret;
+}
+
+private boolean dfs(boolean[] globalMarked, boolean[] localMarked, List<Integer>[] graphic, int curNode, Stack<Integer> topologyOrder) {
+    if (localMarked[curNode])
+        return false;
+    if (globalMarked[curNode])
+        return true;
+
+    globalMarked[curNode] = true;
+    localMarked[curNode] = true;
+
+    for (int nextNode : graphic[curNode])
+        if (!dfs(globalMarked, localMarked, graphic, nextNode, topologyOrder))
+            return false;
+
+    localMarked[curNode] = false;
+    topologyOrder.push(curNode);
+
+    return true;
+}
+```
+
+### 并查集
+
+并查集可以动态地连通两个点，并且可以非常快速地判断两个点是否连通。
 
 **冗余连接** 
 
