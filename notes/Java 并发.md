@@ -189,7 +189,7 @@ public static void main(String[] args) {
 
 ## Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
+Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。
 
 主要有三种 Executor：
 
