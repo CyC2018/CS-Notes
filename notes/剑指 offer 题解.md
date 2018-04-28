@@ -90,9 +90,9 @@
 
 ## 题目描述
 
-在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5, 3}，那么对应的输出是第一个重复的数字 2。
+在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5}，那么对应的输出是第一个重复的数字 2。
 
-要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
+要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。牛客网讨论区这一题的首票答案使用 nums[i] + length 来将元素标记，这么做会有加法溢出问题。
 
 ## 解题思路
 
@@ -117,12 +117,12 @@ position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
 public boolean duplicate(int[] nums, int length, int[] duplication) {
     if (nums == null || length <= 0) return false;
     for (int i = 0; i < length; i++) {
-        while (nums[i] != i && nums[i] != nums[nums[i]]) {
+        while (nums[i] != i) {
+            if (nums[i] == nums[nums[i]]) {
+                duplication[0] = nums[i];
+                return true;
+            }
             swap(nums, i, nums[i]);
-        }
-        if (nums[i] != i && nums[i] == nums[nums[i]]) {
-            duplication[0] = nums[i];
-            return true;
         }
     }
     return false;
@@ -163,13 +163,17 @@ Given target = 20, return false.
 
 ```java
 public boolean Find(int target, int[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
-    int m = matrix.length, n = matrix[0].length;
-    int r = 0, c = n - 1; // 从右上角开始
-    while (r <= m - 1 && c >= 0) {
-        if (target == matrix[r][c]) return true;
-        else if (target > matrix[r][c]) r++;
-        else c--;
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+        return false;
+    int rows = matrix.length, cols = matrix[0].length;
+    int r = 0, c = cols - 1; // 从右上角开始
+    while (r <= rows - 1 && c >= 0) {
+        if (target == matrix[r][c])
+            return true;
+        else if (target > matrix[r][c])
+            r++;
+        else 
+            c--;
     }
     return false;
 }
@@ -196,21 +200,19 @@ public boolean Find(int target, int[][] matrix) {
 ```java
 public String replaceSpace(StringBuffer str) {
     int oldLen = str.length();
-    for (int i = 0; i < oldLen; i++) {
-        if (str.charAt(i) == ' ') {
+    for (int i = 0; i < oldLen; i++)
+        if (str.charAt(i) == ' ')
             str.append("  ");
-        }
-    }
-    int idxOfOld = oldLen - 1;
-    int idxOfNew = str.length() - 1;
-    while (idxOfOld >= 0 && idxOfNew > idxOfOld) {
-        char c = str.charAt(idxOfOld--);
+
+    int P1 = oldLen - 1, P2 = str.length() - 1;
+    while (P1 >= 0 && P2 > P1) {
+        char c = str.charAt(P1--);
         if (c == ' ') {
-            str.setCharAt(idxOfNew--, '0');
-            str.setCharAt(idxOfNew--, '2');
-            str.setCharAt(idxOfNew--, '%');
+            str.setCharAt(P2--, '0');
+            str.setCharAt(P2--, '2');
+            str.setCharAt(P2--, '%');
         } else {
-            str.setCharAt(idxOfNew--, c);
+            str.setCharAt(P2--, c);
         }
     }
     return str.toString();
@@ -239,9 +241,8 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         listNode = listNode.next;
     }
     ArrayList<Integer> ret = new ArrayList<>();
-    while (!stack.isEmpty()) {
+    while (!stack.isEmpty())
         ret.add(stack.pop());
-    }
     return ret;
 }
 ```
@@ -251,7 +252,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
     ArrayList<Integer> ret = new ArrayList<>();
-    if(listNode != null) {
+    if (listNode != null) {
         ret.addAll(printListFromTailToHead(listNode.next));
         ret.add(listNode.val);
     }
@@ -320,20 +321,20 @@ inorder =  [9,3,15,20,7]
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
 ```java
-private Map<Integer, Integer> inOrderNumsIdx = new HashMap<>(); // 缓存中序遍历数组的每个值对应的索引
+private Map<Integer, Integer> inOrderNumsIndexs = new HashMap<>(); // 缓存中序遍历数组的每个值对应的索引
 
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
-    for (int i = 0; i < in.length; i++) {
-        inOrderNumsIdx.put(in[i], i);
-    }
+    for (int i = 0; i < in.length; i++)
+        inOrderNumsIndexs.put(in[i], i);
     return reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
 }
 
 private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, int inL, int inR) {
-    if (preL > preR) return null;
+    if (preL > preR)
+        return null;
     TreeNode root = new TreeNode(pre[preL]);
-    int inIdx = inOrderNumsIdx.get(root.val);
-    int leftTreeSize = inIdx - inL;
+    int inIndex = inOrderNumsIndexs.get(root.val);
+    int leftTreeSize = inIndex - inL;
     root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, in, inL, inL + leftTreeSize - 1);
     root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, in, inL + leftTreeSize + 1, inR);
     return root;
@@ -375,16 +376,14 @@ public class TreeLinkNode {
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
     if (pNode.right != null) {
         TreeLinkNode node = pNode.right;
-        while (node.left != null) {
+        while (node.left != null)
             node = node.left;
-        }
         return node;
     } else {
         while (pNode.next != null) {
             TreeLinkNode parent = pNode.next;
-            if (parent.left == pNode) {
+            if (parent.left == pNode)
                 return parent;
-            }
             pNode = pNode.next;
         }
     }
@@ -415,14 +414,13 @@ public void push(int node) {
 }
 
 public int pop() throws Exception {
-    if (out.isEmpty()) {
-        while (!in.isEmpty()) {
+    if (out.isEmpty())
+        while (!in.isEmpty())
             out.push(in.pop());
-        }
-    }
-    if (out.isEmpty()) {
+
+    if (out.isEmpty())
         throw new Exception("queue is empty");
-    }
+
     return out.pop();
 }
 ```
@@ -441,18 +439,18 @@ public int pop() throws Exception {
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png" width="300"/> </div><br>
+<div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png" width="250"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
 ```java
 public int Fibonacci(int n) {
-    if (n <= 1) return n;
+    if (n <= 1)
+        return n;
     int[] fib = new int[n + 1];
     fib[1] = 1;
-    for (int i = 2; i <= n; i++) {
+    for (int i = 2; i <= n; i++)
         fib[i] = fib[i - 1] + fib[i - 2];
-    }
     return fib[n];
 }
 ```
@@ -461,7 +459,8 @@ public int Fibonacci(int n) {
 
 ```java
 public int Fibonacci(int n) {
-    if (n <= 1) return n;
+    if (n <= 1)
+        return n;
     int pre2 = 0, pre1 = 1;
     int fib = 0;
     for (int i = 2; i <= n; i++) {
@@ -478,13 +477,14 @@ public int Fibonacci(int n) {
 ```java
 public class Solution {
     private int[] fib = new int[40];
+
     public Solution() {
         fib[1] = 1;
         fib[2] = 2;
-        for (int i = 2; i < fib.length; i++) {
+        for (int i = 2; i < fib.length; i++)
             fib[i] = fib[i - 1] + fib[i - 2];
-        }
     }
+
     public int Fibonacci(int n) {
         return fib[n];
     }
@@ -505,13 +505,13 @@ public class Solution {
 
 ```java
 public int JumpFloor(int n) {
-    if (n == 1) return 1;
+    if (n == 1)
+        return 1;
     int[] dp = new int[n];
     dp[0] = 1;
     dp[1] = 2;
-    for (int i = 2; i < n; i++) {
+    for (int i = 2; i < n; i++)
         dp[i] = dp[i - 1] + dp[i - 2];
-    }
     return dp[n - 1];
 }
 ```
@@ -520,7 +520,8 @@ public int JumpFloor(int n) {
 
 ```java
 public int JumpFloor(int n) {
-    if (n <= 1) return n;
+    if (n <= 1)
+        return n;
     int pre2 = 0, pre1 = 1;
     int result = 0;
     for (int i = 1; i <= n; i++) {
@@ -546,11 +547,9 @@ public int JumpFloor(int n) {
 public int JumpFloorII(int target) {
     int[] dp = new int[target];
     Arrays.fill(dp, 1);
-    for (int i = 1; i < target; i++) {
-        for (int j = 0; j < i; j++) {
+    for (int i = 1; i < target; i++)
+        for (int j = 0; j < i; j++)
             dp[i] += dp[j];
-        }
-    }
     return dp[target - 1];
 }
 ```
@@ -569,13 +568,13 @@ public int JumpFloorII(int target) {
 
 ```java
 public int RectCover(int n) {
-    if (n <= 2) return n;
+    if (n <= 2)
+        return n;
     int[] dp = new int[n];
     dp[0] = 1;
     dp[1] = 2;
-    for (int i = 2; i < n; i++) {
+    for (int i = 2; i < n; i++)
         dp[i] = dp[i - 1] + dp[i - 2];
-    }
     return dp[n - 1];
 }
 ```
@@ -584,7 +583,8 @@ public int RectCover(int n) {
 
 ```java
 public int RectCover(int n) {
-    if (n <= 2) return n;
+    if (n <= 2)
+        return n;
     int pre2 = 1, pre1 = 2;
     int result = 0;
     for (int i = 3; i <= n; i++) {
@@ -614,12 +614,15 @@ public int RectCover(int n) {
 
 ```java
 public int minNumberInRotateArray(int[] nums) {
-    if (nums.length == 0) return 0;
+    if (nums.length == 0)
+        return 0;
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h]) h = m;
-        else l = m + 1;
+        if (nums[m] <= nums[h])
+            h = m;
+        else
+            l = m + 1;
     }
     return nums[l];
 }
@@ -640,45 +643,42 @@ public int minNumberInRotateArray(int[] nums) {
 ## 解题思路
 
 ```java
-private int[][] next = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+private final static int[][] next = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 private int rows;
 private int cols;
 
 public boolean hasPath(char[] array, int rows, int cols, char[] str) {
-    if (rows == 0 || cols == 0) return false;
+    if (rows == 0 || cols == 0)
+        return false;
     this.rows = rows;
     this.cols = cols;
-    boolean[][] hasUsed = new boolean[rows][cols];
+    boolean[][] marked = new boolean[rows][cols];
     char[][] matrix = buildMatrix(array);
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (backtracking(matrix, str, hasUsed, 0, i, j)) return true;
-        }
-    }
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
+            if (backtracking(matrix, str, marked, 0, i, j))
+                return true;
     return false;
 }
 
-private boolean backtracking(char[][] matrix, char[] str, boolean[][] hasUsed, int pathLen, int row, int col) {
-    if (pathLen == str.length) return true;
-    if (row < 0 || row >= rows || col < 0 || col >= cols) return false;
-    if (matrix[row][col] != str[pathLen]) return false;
-    if (hasUsed[row][col]) return false;
-    hasUsed[row][col] = true;
-    for (int i = 0; i < next.length; i++) {
-        if (backtracking(matrix, str, hasUsed, pathLen + 1, row + next[i][0], col + next[i][1]))
+private boolean backtracking(char[][] matrix, char[] str, boolean[][] marked, int pathLen, int r, int c) {
+    if (pathLen == str.length)
+        return true;
+    if (r < 0 || r >= rows || c < 0 || c >= cols || matrix[r][c] != str[pathLen] || marked[r][c])
+        return false;
+    marked[r][c] = true;
+    for (int[] n : next)
+        if (backtracking(matrix, str, marked, pathLen + 1, r + n[0], c + n[1]))
             return true;
-    }
-    hasUsed[row][col] = false;
+    marked[r][c] = false;
     return false;
 }
 
 private char[][] buildMatrix(char[] array) {
     char[][] matrix = new char[rows][cols];
-    for (int i = 0, idx = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    for (int i = 0, idx = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
             matrix[i][j] = array[idx++];
-        }
-    }
     return matrix;
 }
 ```
@@ -694,8 +694,8 @@ private char[][] buildMatrix(char[] array) {
 ## 解题思路
 
 ```java
+private static final int[][] next = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 private int cnt = 0;
-private int[][] next = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 private int rows;
 private int cols;
 private int threshold;
@@ -706,20 +706,20 @@ public int movingCount(int threshold, int rows, int cols) {
     this.cols = cols;
     this.threshold = threshold;
     initDigitSum();
-    boolean[][] hasVisited = new boolean[rows][cols];
-    dfs(hasVisited, 0, 0);
+    boolean[][] marked = new boolean[rows][cols];
+    dfs(marked, 0, 0);
     return cnt;
 }
 
-private void dfs(boolean[][] hasVisited, int r, int c) {
-    if (r < 0 || r >= rows || c < 0 || c >= cols) return;
-    if (hasVisited[r][c]) return;
-    hasVisited[r][c] = true;
-    if (digitSum[r][c] > threshold) return;
-    this.cnt++;
-    for (int i = 0; i < next.length; i++) {
-        dfs(hasVisited, r + next[i][0], c + next[i][1]);
-    }
+private void dfs(boolean[][] marked, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c])
+        return;
+    marked[r][c] = true;
+    if (this.digitSum[r][c] > this.threshold)
+        return;
+    cnt++;
+    for (int[] n : next)
+        dfs(marked, r + n[0], c + n[1]);
 }
 
 private void initDigitSum() {
@@ -732,11 +732,9 @@ private void initDigitSum() {
         }
     }
     digitSum = new int[rows][cols];
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    for (int i = 0; i < this.rows; i++)
+        for (int j = 0; j < this.cols; j++)
             digitSum[i][j] = digitSumOne[i] + digitSumOne[j];
-        }
-    }
 }
 ```
 
@@ -758,11 +756,9 @@ For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 
 public int integerBreak(int n) {
     int[] dp = new int[n + 1];
     dp[1] = 1;
-    for (int i = 2; i <= n; i++) {
-        for (int j = 1; j < i; j++) {
+    for (int i = 2; i <= n; i++)
+        for (int j = 1; j < i; j++)
             dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
-        }
-    }
     return dp[n];
 }
 ```
@@ -775,11 +771,15 @@ public int integerBreak(int n) {
 
 ```java
 public int integerBreak(int n) {
-    if (n < 2)  return 0;
-    if (n == 2) return 1;
-    if (n == 3) return 2;
+    if (n < 2)
+        return 0;
+    if (n == 2)
+        return 1;
+    if (n == 3)
+        return 2;
     int timesOf3 = n / 3;
-    if (n - timesOf3 * 3 == 1) timesOf3--;
+    if (n - timesOf3 * 3 == 1)
+        timesOf3--;
     int timesOf2 = (n - timesOf3 * 3) / 2;
     return (int) (Math.pow(3, timesOf3)) * (int) (Math.pow(2, timesOf2));
 }
@@ -842,15 +842,18 @@ public int NumberOf1(int n) {
 
 ```java
 public double Power(double base, int exponent) {
-    if(exponent == 0) return 1;
-    if(exponent == 1) return base;
+    if (exponent == 0)
+        return 1;
+    if (exponent == 1)
+        return base;
     boolean isNegative = false;
-    if(exponent < 0) {
+    if (exponent < 0) {
         exponent = -exponent;
         isNegative = true;
     }
-    double pow = Power(base * base , exponent / 2);
-    if(exponent % 2 != 0) pow = pow * base;
+    double pow = Power(base * base, exponent / 2);
+    if (exponent % 2 != 0)
+        pow = pow * base;
     return isNegative ? 1 / pow : pow;
 }
 ```
@@ -869,7 +872,8 @@ public double Power(double base, int exponent) {
 
 ```java
 public void print1ToMaxOfNDigits(int n) {
-    if (n <= 0) return;
+    if (n <= 0)
+        return;
     char[] number = new char[n];
     print1ToMaxOfNDigits(number, -1);
 }
@@ -887,8 +891,10 @@ private void print1ToMaxOfNDigits(char[] number, int digit) {
 
 private void printNumber(char[] number) {
     int index = 0;
-    while (index < number.length && number[index] == '0') index++;
-    while (index < number.length) System.out.print(number[index++]);
+    while (index < number.length && number[index] == '0')
+        index++;
+    while (index < number.length)
+        System.out.print(number[index++]);
     System.out.println();
 }
 ```
@@ -909,7 +915,8 @@ private void printNumber(char[] number) {
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
-    if (head == null || head.next == null || tobeDelete == null) return null;
+    if (head == null || head.next == null || tobeDelete == null)
+        return null;
     if (tobeDelete.next != null) {
         // 要删除的节点不是尾节点
         ListNode next = tobeDelete.next;
@@ -917,7 +924,8 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
         tobeDelete.next = next.next;
     } else {
         ListNode cur = head;
-        while (cur.next != tobeDelete) cur = cur.next;
+        while (cur.next != tobeDelete)
+            cur = cur.next;
         cur.next = null;
     }
     return head;
@@ -936,10 +944,12 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
-    if (pHead == null || pHead.next == null) return pHead;
+    if (pHead == null || pHead.next == null)
+        return pHead;
     ListNode next = pHead.next;
     if (pHead.val == next.val) {
-        while (next != null && pHead.val == next.val) next = next.next;
+        while (next != null && pHead.val == next.val)
+            next = next.next;
         return deleteDuplication(next);
     } else {
         pHead.next = deleteDuplication(pHead.next);
@@ -977,24 +987,19 @@ public boolean match(char[] str, char[] pattern) {
     int m = str.length, n = pattern.length;
     boolean[][] dp = new boolean[m + 1][n + 1];
     dp[0][0] = true;
-    for (int i = 1; i <= n; i++) {
-        if (pattern[i - 1] == '*') {
+    for (int i = 1; i <= n; i++)
+        if (pattern[i - 1] == '*')
             dp[0][i] = dp[0][i - 2];
-        }
-    }
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
+
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++)
+            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
                 dp[i][j] = dp[i - 1][j - 1];
-            } else if (pattern[j - 1] == '*') {
-                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.') {
+            else if (pattern[j - 1] == '*')
+                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
                     dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
-                } else {
+                else
                     dp[i][j] = dp[i][j - 2];
-                }
-            }
-        }
-    }
     return dp[m][n];
 }
 ```
@@ -1027,13 +1032,18 @@ public boolean isNumeric(char[] str) {
 
 ```java
 public void reOrderArray(int[] nums) {
-    int oddCnt = 0; // 奇数个数
-    for (int val : nums) if (val % 2 == 1) oddCnt++;
+    // 奇数个数
+    int oddCnt = 0;
+    for (int val : nums)
+        if (val % 2 == 1)
+            oddCnt++;
     int[] copy = nums.clone();
     int i = 0, j = oddCnt;
     for (int num : copy) {
-        if (num % 2 == 1) nums[i++] = num;
-        else nums[j++] = num;
+        if (num % 2 == 1)
+            nums[i++] = num;
+        else
+            nums[j++] = num;
     }
 }
 ```
@@ -1050,22 +1060,19 @@ public void reOrderArray(int[] nums) {
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k) {
-    if (head == null) {
+    if (head == null)
         return null;
-    }
-    ListNode P1, P2;
-    P1 = P2 = head;
-    while (P1 != null && k-- > 0) {
-        P1 = P1.next;
-    }
-    if (k > 0) {
+    ListNode fast, slow;
+    fast = slow = head;
+    while (fast != null && k-- > 0)
+        fast = fast.next;
+    if (k > 0)
         return null;
+    while (fast != null) {
+        fast = fast.next;
+        slow = slow.next;
     }
-    while (P1 != null) {
-        P1 = P1.next;
-        P2 = P2.next;
-    }
-    return P2;
+    return slow;
 }
 ```
 
@@ -1083,7 +1090,8 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
-    if (pHead == null) return null;
+    if (pHead == null)
+        return null;
     ListNode slow = pHead, fast = pHead;
     while (fast != null && fast.next != null) {
         fast = fast.next.next;
@@ -1111,7 +1119,8 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 
 ```java
 public ListNode ReverseList(ListNode head) {
-    if (head == null || head.next == null) return head;
+    if (head == null || head.next == null)
+        return head;
     ListNode next = head.next;
     head.next = null;
     ListNode newHead = ReverseList(next);
@@ -1149,8 +1158,10 @@ public ListNode ReverseList(ListNode head) {
 
 ```java
 public ListNode Merge(ListNode list1, ListNode list2) {
-    if (list1 == null) return list2;
-    if (list2 == null) return list1;
+    if (list1 == null)
+        return list2;
+    if (list2 == null)
+        return list1;
     if (list1.val <= list2.val) {
         list1.next = Merge(list1.next, list2);
         return list1;
@@ -1177,8 +1188,10 @@ public ListNode Merge(ListNode list1, ListNode list2) {
         }
         cur = cur.next;
     }
-    if (list1 != null) cur.next = list1;
-    if (list2 != null) cur.next = list2;
+    if (list1 != null)
+        cur.next = list1;
+    if (list2 != null)
+        cur.next = list2;
     return head.next;
 }
 ```
@@ -1195,14 +1208,18 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 ```java
 public boolean HasSubtree(TreeNode root1, TreeNode root2) {
-    if (root1 == null || root2 == null) return false;
+    if (root1 == null || root2 == null)
+        return false;
     return isSubtree(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
 }
 
 private boolean isSubtree(TreeNode root1, TreeNode root2) {
-    if (root2 == null) return true;
-    if (root1 == null) return false;
-    if (root1.val != root2.val) return false;
+    if (root2 == null)
+        return true;
+    if (root1 == null)
+        return false;
+    if (root1.val != root2.val)
+        return false;
     return isSubtree(root1.left, root2.left) && isSubtree(root1.right, root2.right);
 }
 ```
@@ -1219,7 +1236,8 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 
 ```java
 public void Mirror(TreeNode root) {
-    if (root == null) return;
+    if (root == null)
+        return;
     swap(root);
     Mirror(root.left);
     Mirror(root.right);
@@ -1244,14 +1262,18 @@ private void swap(TreeNode root) {
 
 ```java
 boolean isSymmetrical(TreeNode pRoot) {
-    if (pRoot == null) return true;
+    if (pRoot == null)
+        return true;
     return isSymmetrical(pRoot.left, pRoot.right);
 }
 
 boolean isSymmetrical(TreeNode t1, TreeNode t2) {
-    if (t1 == null && t2 == null) return true;
-    if (t1 == null || t2 == null) return false;
-    if (t1.val != t2.val) return false;
+    if (t1 == null && t2 == null)
+        return true;
+    if (t1 == null || t2 == null)
+        return false;
+    if (t1.val != t2.val)
+        return false;
     return isSymmetrical(t1.left, t2.right) && isSymmetrical(t1.right, t2.left);
 }
 ```
@@ -1273,10 +1295,16 @@ public ArrayList<Integer> printMatrix(int[][] matrix) {
     ArrayList<Integer> ret = new ArrayList<>();
     int r1 = 0, r2 = matrix.length - 1, c1 = 0, c2 = matrix[0].length - 1;
     while (r1 <= r2 && c1 <= c2) {
-        for (int i = c1; i <= c2; i++) ret.add(matrix[r1][i]);
-        for (int i = r1 + 1; i <= r2; i++) ret.add(matrix[i][c2]);
-        if (r1 != r2) for (int i = c2 - 1; i >= c1; i--) ret.add(matrix[r2][i]);
-        if (c1 != c2) for (int i = r2 - 1; i > r1; i--) ret.add(matrix[i][c1]);
+        for (int i = c1; i <= c2; i++)
+            ret.add(matrix[r1][i]);
+        for (int i = r1 + 1; i <= r2; i++)
+            ret.add(matrix[i][c2]);
+        if (r1 != r2)
+            for (int i = c2 - 1; i >= c1; i--)
+                ret.add(matrix[r2][i]);
+        if (c1 != c2)
+            for (int i = r2 - 1; i > r1; i--)
+                ret.add(matrix[i][c1]);
         r1++; r2--; c1++; c2--;
     }
     return ret;
@@ -1365,14 +1393,17 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
     ArrayList<Integer> ret = new ArrayList<>();
-    if (root == null) return ret;
+    if (root == null)
+        return ret;
     queue.add(root);
     while (!queue.isEmpty()) {
         int cnt = queue.size();
         while (cnt-- > 0) {
             TreeNode t = queue.poll();
-            if (t.left != null) queue.add(t.left);
-            if (t.right != null) queue.add(t.right);
+            if (t.left != null)
+                queue.add(t.left);
+            if (t.right != null)
+                queue.add(t.right);
             ret.add(t.val);
         }
     }
@@ -1393,7 +1424,8 @@ public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
 ```java
 ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    if (pRoot == null) return ret;
+    if (pRoot == null)
+        return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(pRoot);
     while (!queue.isEmpty()) {
@@ -1402,8 +1434,10 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         while (cnt-- > 0) {
             TreeNode node = queue.poll();
             list.add(node.val);
-            if (node.left != null) queue.add(node.left);
-            if (node.right != null) queue.add(node.right);
+            if (node.left != null)
+                queue.add(node.left);
+            if (node.right != null)
+                queue.add(node.right);
         }
         ret.add(list);
     }
@@ -1424,7 +1458,8 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 ```java
 public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    if (pRoot == null) return ret;
+    if (pRoot == null)
+        return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(pRoot);
     boolean reverse = false;
@@ -1434,10 +1469,13 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         while (cnt-- > 0) {
             TreeNode node = queue.poll();
             list.add(node.val);
-            if (node.left != null) queue.add(node.left);
-            if (node.right != null) queue.add(node.right);
+            if (node.left != null)
+                queue.add(node.left);
+            if (node.right != null)
+                queue.add(node.right);
         }
-        if (reverse) Collections.reverse(list);
+        if (reverse)
+            Collections.reverse(list);
         reverse = !reverse;
         ret.add(list);
     }
@@ -1461,26 +1499,21 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 ```java
 public boolean VerifySquenceOfBST(int[] sequence) {
-    if (sequence == null || sequence.length == 0) {
+    if (sequence == null || sequence.length == 0)
         return false;
-    }
     return verify(sequence, 0, sequence.length - 1);
 }
 
 private boolean verify(int[] sequence, int first, int last) {
-    if (last - first <= 1) {
+    if (last - first <= 1)
         return true;
-    }
     int rootVal = sequence[last];
     int cutIndex = first;
-    while (cutIndex < last && sequence[cutIndex] <= rootVal) {
+    while (cutIndex < last && sequence[cutIndex] <= rootVal)
         cutIndex++;
-    }
-    for (int i = cutIndex + 1; i < last; i++) {
-        if (sequence[i] < rootVal) {
+    for (int i = cutIndex + 1; i < last; i++)
+        if (sequence[i] < rootVal)
             return false;
-        }
-    }
     return verify(sequence, first, cutIndex - 1) && verify(sequence, cutIndex, last - 1);
 }
 ```
@@ -1508,7 +1541,8 @@ public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
 }
 
 private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
-    if (node == null) return;
+    if (node == null)
+        return;
     path.add(node.val);
     target -= node.val;
     if (target == 0 && node.left == null && node.right == null) {
@@ -1547,9 +1581,8 @@ private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
-    if (pHead == null) {
+    if (pHead == null)
         return null;
-    }
     // 插入新节点
     RandomListNode cur = pHead;
     while (cur != null) {
@@ -1562,9 +1595,8 @@ public RandomListNode Clone(RandomListNode pHead) {
     cur = pHead;
     while (cur != null) {
         RandomListNode clone = cur.next;
-        if (cur.random != null) {
+        if (cur.random != null)
             clone.random = cur.random.next;
-        }
         cur = clone.next;
     }
     // 拆分
@@ -1596,18 +1628,22 @@ private TreeNode pre = null;
 private TreeNode head = null;
 
 public TreeNode Convert(TreeNode root) {
-    if (root == null) return null;
+    if (root == null)
+        return null;
     inOrder(root);
     return head;
 }
 
 private void inOrder(TreeNode node) {
-    if (node == null) return;
+    if (node == null)
+        return;
     inOrder(node.left);
     node.left = pre;
-    if (pre != null) pre.right = node;
+    if (pre != null)
+        pre.right = node;
     pre = node;
-    if (head == null) head = node;
+    if (head == null)
+        head = node;
     inOrder(node.right);
 }
 ```
@@ -1628,7 +1664,8 @@ public class Solution {
     private String deserializeStr;
 
     public String Serialize(TreeNode root) {
-        if (root == null) return "#";
+        if (root == null)
+            return "#";
         return root.val + " " + Serialize(root.left) + " " + Serialize(root.right); 
     }
 
@@ -1638,11 +1675,13 @@ public class Solution {
     }
 
     private TreeNode Deserialize() {
-        if (deserializeStr.length() == 0) return null;
+        if (deserializeStr.length() == 0)
+            return null;
         int index = deserializeStr.indexOf(" ");
         String node = index == -1 ? deserializeStr : deserializeStr.substring(0, index);
         deserializeStr = index == -1 ? "" : deserializeStr.substring(index + 1);
-        if (node.equals("#")) return null;
+        if (node.equals("#"))
+            return null;
         int val = Integer.valueOf(node);
         TreeNode t = new TreeNode(val);
         t.left = Deserialize();
@@ -1666,7 +1705,8 @@ public class Solution {
 private ArrayList<String> ret = new ArrayList<>();
 
 public ArrayList<String> Permutation(String str) {
-    if (str.length() == 0) return ret;
+    if (str.length() == 0)
+        return ret;
     char[] chars = str.toCharArray();
     Arrays.sort(chars);
     backtracking(chars, new boolean[chars.length], new StringBuffer());
@@ -1679,8 +1719,10 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
         return;
     }
     for (int i = 0; i < chars.length; i++) {
-        if (hasUsed[i]) continue;
-        if (i != 0 && chars[i] == chars[i - 1] && !hasUsed[i - 1]) continue; // 保证不重复
+        if (hasUsed[i])
+            continue;
+        if (i != 0 && chars[i] == chars[i - 1] && !hasUsed[i - 1]) // 保证不重复
+            continue;
         hasUsed[i] = true;
         s.append(chars[i]);
         backtracking(chars, hasUsed, s);
@@ -1711,11 +1753,9 @@ public int MoreThanHalfNum_Solution(int[] nums) {
         }
     }
     int cnt = 0;
-    for (int val : nums) {
-        if (val == majority) {
+    for (int val : nums)
+        if (val == majority)
             cnt++;
-        }
-    }
     return cnt > nums.length / 2 ? majority : 0;
 }
 ```
@@ -1737,14 +1777,13 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 
 ```java
 public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
-    if (k > nums.length || k <= 0) return new ArrayList<>();
+    if (k > nums.length || k <= 0)
+        return new ArrayList<>();
     int kthSmallest = findKthSmallest(nums, k - 1);
     ArrayList<Integer> ret = new ArrayList<>();
-    for (int val : nums) {
-        if (val <= kthSmallest && ret.size() < k) {
+    for (int val : nums)
+        if (val <= kthSmallest && ret.size() < k)
             ret.add(val);
-        }
-    }
     return ret;
 }
 
@@ -1752,9 +1791,12 @@ public int findKthSmallest(int[] nums, int k) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j == k) break;
-        if (j > k) h = j - 1;
-        else l = j + 1;
+        if (j == k)
+            break;
+        if (j > k)
+            h = j - 1;
+        else
+            l = j + 1;
     }
     return nums[k];
 }
@@ -1764,7 +1806,8 @@ private int partition(int[] nums, int l, int h) {
     while (true) {
         while (i < h && nums[++i] < nums[l]) ;
         while (j > l && nums[l] < nums[--j]) ;
-        if (i >= j) break;
+        if (i >= j)
+            break;
         swap(nums, i, j);
     }
     swap(nums, l, j);
@@ -1787,13 +1830,13 @@ private void swap(int[] nums, int i, int j) {
 
 ```java
 public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
-    if (k > nums.length || k <= 0) return new ArrayList<>();
+    if (k > nums.length || k <= 0)
+        return new ArrayList<>();
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
     for (int num : nums) {
         maxHeap.add(num);
-        if (maxHeap.size() > k) {
+        if (maxHeap.size() > k)
             maxHeap.poll();
-        }
     }
     ArrayList<Integer> ret = new ArrayList<>(maxHeap);
     return ret;
@@ -1835,11 +1878,10 @@ public class Solution {
     }
 
     public Double GetMedian() {
-        if (N % 2 == 0) {
+        if (N % 2 == 0)
             return (left.peek() + right.peek()) / 2.0;
-        } else {
+        else
             return (double) right.peek();
-        }
     }
 }
 ```
@@ -1862,13 +1904,13 @@ public class Solution {
     public void Insert(char ch) {
         cnts[ch]++;
         queue.add(ch);
-        while (!queue.isEmpty() && cnts[queue.peek()] > 1) {
+        while (!queue.isEmpty() && cnts[queue.peek()] > 1)
             queue.poll();
-        }
     }
 
     public char FirstAppearingOnce() {
-        if (queue.isEmpty()) return '#';
+        if (queue.isEmpty())
+            return '#';
         return queue.peek();
     }
 }
@@ -1885,17 +1927,17 @@ public class Solution {
 ## 解题思路
 
 ```java
-public int FindGreatestSumOfSubArray(int[] nums) {
-    if (nums.length == 0) return 0;
-    int ret = Integer.MIN_VALUE;
-    int sum = 0;
-    for (int val : nums) {
-        if (sum <= 0) sum = val;
-        else sum += val;
-        ret = Math.max(ret, sum);
-    }
-    return ret;
-}
+ public int FindGreatestSumOfSubArray(int[] nums) {
+     if (nums.length == 0)
+         return 0;
+     int ret = Integer.MIN_VALUE;
+     int sum = 0;
+     for (int val : nums) {
+         sum = sum <= 0 ? val : sum + val;
+         ret = Math.max(ret, sum);
+     }
+     return ret;
+ }
 ```
 
 # 43. 从 1 到 n 整数中 1 出现的次数
@@ -1927,14 +1969,14 @@ public int NumberOf1Between1AndN_Solution(int n) {
 
 ```java
 public int digitAtIndex(int index) {
-    if (index < 0) return -1;
+    if (index < 0)
+        return -1;
     int digit = 1;
     while (true) {
         int amount = getAmountOfDigit(digit);
         int totalAmount = amount * digit;
-        if (index < totalAmount) {
+        if (index < totalAmount)
             return digitAtIndex(index, digit);
-        }
         index -= totalAmount;
         digit++;
     }
@@ -1945,7 +1987,8 @@ public int digitAtIndex(int index) {
  * 例如 digit = 2，return 90
  */
 private int getAmountOfDigit(int digit) {
-    if (digit == 1) return 10;
+    if (digit == 1)
+        return 10;
     return (int) Math.pow(10, digit - 1) * 9;
 }
 
@@ -1963,7 +2006,8 @@ private int digitAtIndex(int index, int digit) {
  * 例如 digit = 2 return 10
  */
 private int beginNumber(int digit) {
-    if (digit == 1) return 0;
+    if (digit == 1)
+        return 0;
     return (int) Math.pow(10, digit - 1);
 }
 ```
@@ -1984,10 +2028,12 @@ private int beginNumber(int digit) {
 public String PrintMinNumber(int[] numbers) {
     int n = numbers.length;
     String[] nums = new String[n];
-    for (int i = 0; i < n; i++) nums[i] = numbers[i] + "";
+    for (int i = 0; i < n; i++)
+        nums[i] = numbers[i] + "";
     Arrays.sort(nums, (s1, s2) -> (s1 + s2).compareTo(s2 + s1));
     String ret = "";
-    for (String str : nums) ret += str;
+    for (String str : nums)
+        ret += str;
     return ret;
 }
 ```
@@ -2004,17 +2050,21 @@ public String PrintMinNumber(int[] numbers) {
 
 ```java
 public int numDecodings(String s) {
-    if (s == null || s.length() == 0) return 0;
+    if (s == null || s.length() == 0)
+        return 0;
     int n = s.length();
     int[] dp = new int[n + 1];
     dp[0] = 1;
     dp[1] = s.charAt(0) == '0' ? 0 : 1;
     for (int i = 2; i <= n; i++) {
         int one = Integer.valueOf(s.substring(i - 1, i));
-        if (one != 0) dp[i] += dp[i - 1];
-        if (s.charAt(i - 2) == '0') continue;
+        if (one != 0)
+            dp[i] += dp[i - 1];
+        if (s.charAt(i - 2) == '0')
+            continue;
         int two = Integer.valueOf(s.substring(i - 2, i));
-        if (two <= 26) dp[i] += dp[i - 2];
+        if (two <= 26)
+            dp[i] += dp[i - 2];
     }
     return dp[n];
 }
@@ -2043,14 +2093,14 @@ public int numDecodings(String s) {
 
 ```java
 public int getMost(int[][] values) {
-    if (values == null || values.length == 0 || values[0].length == 0) return 0;
+    if (values == null || values.length == 0 || values[0].length == 0)
+        return 0;
     int m = values.length, n = values[0].length;
     int[] dp = new int[n];
     for (int i = 0; i < m; i++) {
         dp[0] += values[i][0];
-        for (int j = 1; j < n; j++) {
+        for (int j = 1; j < n; j++)
             dp[j] = Math.max(dp[j], dp[j - 1]) + values[i][j];
-        }
     }
     return dp[n - 1];
 }
@@ -2098,16 +2148,20 @@ public int longestSubStringWithoutDuplication(String str) {
 
 ```java
 public int GetUglyNumber_Solution(int index) {
-    if (index <= 6) return index;
+    if (index <= 6)
+        return index;
     int i2 = 0, i3 = 0, i5 = 0;
     int[] dp = new int[index];
     dp[0] = 1;
     for (int i = 1; i < index; i++) {
         int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
         dp[i] = Math.min(n2, Math.min(n3, n5));
-        if (dp[i] == n2) i2++;
-        if (dp[i] == n3) i3++;
-        if (dp[i] == n5) i5++;
+        if (dp[i] == n2)
+            i2++;
+        if (dp[i] == n3)
+            i3++;
+        if (dp[i] == n5)
+            i5++;
     }
     return dp[index - 1];
 }
@@ -2128,8 +2182,11 @@ public int GetUglyNumber_Solution(int index) {
 ```java
 public int FirstNotRepeatingChar(String str) {
     int[] cnts = new int[256];
-    for (int i = 0; i < str.length(); i++) cnts[str.charAt(i)]++;
-    for (int i = 0; i < str.length(); i++) if (cnts[str.charAt(i)] == 1) return i;
+    for (int i = 0; i < str.length(); i++)
+        cnts[str.charAt(i)]++;
+    for (int i = 0; i < str.length(); i++)
+        if (cnts[str.charAt(i)] == 1)
+            return i;
     return -1;
 }
 ```
@@ -2141,12 +2198,15 @@ public int FirstNotRepeatingChar(String str) {
     BitSet bs1 = new BitSet(256);
     BitSet bs2 = new BitSet(256);
     for (char c : str.toCharArray()) {
-        if (!bs1.get(c) && !bs2.get(c)) bs1.set(c);     // 0 0
-        else if (bs1.get(c) && !bs2.get(c)) bs2.set(c); // 0 1
+        if (!bs1.get(c) && !bs2.get(c))
+            bs1.set(c);     // 0 0
+        else if (bs1.get(c) && !bs2.get(c))
+            bs2.set(c);     // 0 1
     }
     for (int i = 0; i < str.length(); i++) {
         char c = str.charAt(i);
-        if (bs1.get(c) && !bs2.get(c)) return i;
+        if (bs1.get(c) && !bs2.get(c))
+            return i;
     }
     return -1;
 }
@@ -2173,9 +2233,8 @@ public int InversePairs(int[] nums) {
 }
 
 private void mergeSort(int[] nums, int l, int h) {
-    if (h - l < 1) {
+    if (h - l < 1)
         return;
-    }
     int m = l + (h - l) / 2;
     mergeSort(nums, l, m);
     mergeSort(nums, m + 1, h);
@@ -2185,21 +2244,20 @@ private void mergeSort(int[] nums, int l, int h) {
 private void merge(int[] nums, int l, int m, int h) {
     int i = l, j = m + 1, k = l;
     while (i <= m || j <= h) {
-        if (i > m) {
+        if (i > m)
             tmp[k] = nums[j++];
-        } else if (j > h) {
+        else if (j > h)
             tmp[k] = nums[i++];
-        } else if (nums[i] < nums[j]) {
+        else if (nums[i] < nums[j])
             tmp[k] = nums[i++];
-        } else {
+        else {
             tmp[k] = nums[j++];
             this.cnt += m - i + 1; // a[i] > a[j]，说明 a[i...mid] 都大于 a[j]
         }
         k++;
     }
-    for (k = l; k <= h; k++) {
+    for (k = l; k <= h; k++)
         nums[k] = tmp[k];
-    }
 }
 ```
 
@@ -2255,8 +2313,10 @@ private int binarySearch(int[] nums, int K) {
     int l = 0, h = nums.length;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] >= K) h = m;
-        else l = m + 1;
+        if (nums[m] >= K)
+            h = m;
+        else
+            l = m + 1;
     }
     return l;
 }
@@ -2280,14 +2340,12 @@ public TreeNode KthNode(TreeNode pRoot, int k) {
 }
 
 private void inOrder(TreeNode root, int k) {
-    if (root == null || cnt >= k) {
+    if (root == null || cnt >= k)
         return;
-    }
     inOrder(root.left, k);
     cnt++;
-    if (cnt == k) {
+    if (cnt == k)
         ret = root;
-    }
     inOrder(root.right, k);
 }
 ```
@@ -2331,14 +2389,15 @@ public boolean IsBalanced_Solution(TreeNode root) {
 }
 
 private int height(TreeNode root) {
-    if (root == null) return 0;
+    if (root == null)
+        return 0;
     int left = height(root.left);
     int right = height(root.right);
-    if (Math.abs(left - right) > 1) isBalanced = false;
+    if (Math.abs(left - right) > 1)
+        isBalanced = false;
     return 1 + Math.max(left, right);
 }
 ```
-
 
 # 56. 数组中只出现一次的数字
 
@@ -2359,17 +2418,15 @@ diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复
 ```java
     public void FindNumsAppearOnce(int[] nums, int num1[], int num2[]) {
         int diff = 0;
-        for (int num : nums) {
+        for (int num : nums)
             diff ^= num;
-        }
         // 得到最右一位
         diff &= -diff;
         for (int num : nums) {
-            if ((num & diff) == 0) {
+            if ((num & diff) == 0)
                 num1[0] ^= num;
-            } else {
+            else
                 num2[0] ^= num;
-            }
         }
     }
 ```
@@ -2395,9 +2452,12 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
     int i = 0, j = array.length - 1;
     while (i < j) {
         int cur = array[i] + array[j];
-        if (cur == sum) return new ArrayList<>(Arrays.asList(array[i], array[j]));
-        if (cur < sum) i++;
-        else j--;
+        if (cur == sum)
+            return new ArrayList<>(Arrays.asList(array[i], array[j]));
+        if (cur < sum)
+            i++;
+        else
+            j--;
     }
     return new ArrayList<>();
 }
@@ -2434,9 +2494,8 @@ public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
             curSum += end;
         } else {
             ArrayList<Integer> list = new ArrayList<>();
-            for (int i = start; i <= end; i++) {
+            for (int i = start; i <= end; i++)
                 list.add(i);
-            }
             ret.add(list);
             curSum -= start;
             start++;
@@ -2481,9 +2540,8 @@ public String ReverseSentence(String str) {
 }
 
 private void reverse(char[] c, int i, int j) {
-    while (i < j) {
+    while (i < j)
         swap(c, i++, j--);
-    }
 }
 
 private void swap(char[] c, int i, int j) {
@@ -2507,7 +2565,8 @@ private void swap(char[] c, int i, int j) {
 
 ```java
 public String LeftRotateString(String str, int n) {
-    if (n >= str.length()) return str;
+    if (n >= str.length())
+        return str;
     char[] chars = str.toCharArray();
     reverse(chars, 0, n - 1);
     reverse(chars, n, chars.length - 1);
@@ -2516,9 +2575,8 @@ public String LeftRotateString(String str, int n) {
 }
 
 private void reverse(char[] chars, int i, int j) {
-    while (i < j) {
+    while (i < j)
         swap(chars, i++, j--);
-    }
 }
 
 private void swap(char[] chars, int i, int j) {
@@ -2542,8 +2600,10 @@ private void swap(char[] chars, int i, int j) {
 public ArrayList<Integer> maxInWindows(int[] num, int size) {
     ArrayList<Integer> ret = new ArrayList<>();
     PriorityQueue<Integer> heap = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
-    if (size > num.length || size < 1) return ret;
-    for (int i = 0; i < size; i++) heap.add(num[i]);
+    if (size > num.length || size < 1)
+        return ret;
+    for (int i = 0; i < size; i++)
+        heap.add(num[i]);
     ret.add(heap.peek());
     for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {
         heap.remove(num[i - 1]);
@@ -2575,21 +2635,18 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
     final int face = 6;
     final int pointNum = face * n;
     long[][] dp = new long[n + 1][pointNum + 1];
-    for (int i = 1; i <= face; i++) {
+    for (int i = 1; i <= face; i++)
         dp[1][i] = 1;
-    }
-    for (int i = 2; i <= n; i++) {
-        for (int j = i; j <= pointNum; j++) {  // 使用 i 个骰子最小点数为 i
-            for (int k = 1; k <= face && k <= j; k++) {
+
+    for (int i = 2; i <= n; i++)
+        for (int j = i; j <= pointNum; j++)  // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face && k <= j; k++)
                 dp[i][j] += dp[i - 1][j - k];
-            }
-        }
-    }
+
     final double totalNum = Math.pow(6, n);
     List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
-    for (int i = n; i <= pointNum; i++) {
+    for (int i = n; i <= pointNum; i++)
         ret.add(new AbstractMap.SimpleEntry<>(i, dp[n][i] / totalNum));
-    }
     return ret;
 }
 ```
@@ -2603,25 +2660,20 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
     final int face = 6;
     final int pointNum = face * n;
     long[][] dp = new long[2][pointNum + 1];
-    for (int i = 1; i <= face; i++) {
+    for (int i = 1; i <= face; i++)
         dp[0][i] = 1;
-    }
     int flag = 1;
     for (int i = 2; i <= n; i++, flag = 1 - flag) {
-        for (int j = 0; j <= pointNum; j++) {
+        for (int j = 0; j <= pointNum; j++)
             dp[flag][j] = 0; // 旋转数组清零
-        }
-        for (int j = i; j <= pointNum; j++) {  // 使用 i 个骰子最小点数为 i
-            for (int k = 1; k <= face && k <= j; k++) {
+        for (int j = i; j <= pointNum; j++)  // 使用 i 个骰子最小点数为 i
+            for (int k = 1; k <= face && k <= j; k++)
                 dp[flag][j] += dp[1 - flag][j - k];
-            }
-        }
     }
     final double totalNum = Math.pow(6, n);
     List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
-    for (int i = n; i <= pointNum; i++) {
+    for (int i = n; i <= pointNum; i++)
         ret.add(new AbstractMap.SimpleEntry<>(i, dp[1 - flag][i] / totalNum));
-    }
     return ret;
 }
 ```
@@ -2638,12 +2690,16 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ```java
 public boolean isContinuous(int[] nums) {
-    if (nums.length < 5) return false;
+    if (nums.length < 5)
+        return false;
     Arrays.sort(nums);
     int cnt = 0;
-    for (int num : nums) if (num == 0) cnt++;
+    for (int num : nums)
+        if (num == 0)
+            cnt++;
     for (int i = cnt; i < nums.length - 1; i++) {
-        if (nums[i + 1] == nums[i]) return false;
+        if (nums[i + 1] == nums[i])
+            return false;
         cnt -= nums[i + 1] - nums[i] - 1;
     }
     return cnt >= 0;
@@ -2664,8 +2720,10 @@ public boolean isContinuous(int[] nums) {
 
 ```java
 public int LastRemaining_Solution(int n, int m) {
-    if (n == 0) return -1;
-    if (n == 1) return 0;
+    if (n == 0)
+        return -1;
+    if (n == 1)
+        return 0;
     return (LastRemaining_Solution(n - 1, m) + m) % n;
 }
 ```
@@ -2684,7 +2742,8 @@ public int LastRemaining_Solution(int n, int m) {
 
 ```java
 public int maxProfit(int[] prices) {
-    if (prices == null || prices.length == 0) return 0;
+    if (prices == null || prices.length == 0)
+        return 0;
     int n = prices.length;
     int soFarMin = prices[0];
     int maxProfit = 0;
@@ -2754,12 +2813,10 @@ public int Add(int num1,int num2) {
 public int[] multiply(int[] A) {
     int n = A.length;
     int[] B = new int[n];
-    for (int i = 0, product = 1; i < n; product *= A[i], i++) {
+    for (int i = 0, product = 1; i < n; product *= A[i], i++)
         B[i] = product;
-    }
-    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--) {
+    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--)
         B[i] *= product;
-    }
     return B;
 }
 ```
@@ -2786,13 +2843,16 @@ Output:
 
 ```java
 public int StrToInt(String str) {
-    if (str.length() == 0) return 0;
+    if (str.length() == 0)
+        return 0;
     char[] chars = str.toCharArray();
     boolean isNegative = chars[0] == '-';
     int ret = 0;
     for (int i = 0; i < chars.length; i++) {
-        if (i == 0 && (chars[i] == '+' || chars[i] == '-')) continue;
-        if (chars[i] < '0' || chars[i] > '9') return 0; // 非法输入
+        if (i == 0 && (chars[i] == '+' || chars[i] == '-'))
+            continue;
+        if (chars[i] < '0' || chars[i] > '9')
+            return 0; // 非法输入
         ret = ret * 10 + (chars[i] - '0');
     }
     return isNegative ? -ret : ret;
@@ -2813,9 +2873,12 @@ public int StrToInt(String str) {
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if (root == null) return root;
-    if (root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
-    if (root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
+    if (root == null)
+        return root;
+    if (root.val > p.val && root.val > q.val)
+        return lowestCommonAncestor(root.left, p, q);
+    if (root.val < p.val && root.val < q.val)
+        return lowestCommonAncestor(root.right, p, q);
     return root;
 }
 ```
@@ -2830,7 +2893,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if (root == null || root == p || root == q) return root;
+    if (root == null || root == p || root == q)
+        return root;
     TreeNode left = lowestCommonAncestor(root.left, p, q);
     TreeNode right = lowestCommonAncestor(root.right, p, q);
     return left == null ? right : right == null ? left : root;
