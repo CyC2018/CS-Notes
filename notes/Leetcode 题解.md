@@ -44,6 +44,7 @@
         * [BST](#bst)
         * [Trie](#trie)
     * [图](#图)
+        * [二分图](#二分图)
         * [拓扑排序](#拓扑排序)
         * [并查集](#并查集)
     * [位运算](#位运算)
@@ -55,14 +56,19 @@
 
 ## 二分查找
 
+**正常实现** 
+
 ```java
-public int binarySearch(int key, int[] nums) {
+public int binarySearch(int[] nums, int key) {
     int l = 0, h = nums.length - 1;
     while (l <= h) {
-        int mid = l + (h - l) / 2;
-        if (key == nums[mid]) return mid;
-        if (key < nums[mid]) h = mid - 1;
-        else l = mid + 1;
+        int m = l + (h - l) / 2;
+        if (nums[m] == key)
+            return m;
+        else if (nums[m] > key)
+            h = m - 1;
+        else
+            l = m + 1;
     }
     return -1;
 }
@@ -74,21 +80,59 @@ O(logN)
 
 **计算 mid** 
 
-在计算 mid 时不能使用 mid = (l + h) / 2 这种方式，因为 l + h 可能会导致加法溢出，应该使用 mid = l + (h - l) / 2。
+有两种计算 mid 的方式：
 
-**计算 h** 
+- mid = (l + h) / 2
+- mid = l + (h - l) / 2
 
-当循环条件为 l <= h，则 h = mid - 1。因为如果 h = mid，会出现循环无法退出的情况，例如 l = 1，h = 1，此时 mid 也等于 1，如果此时继续执行 h = mid，那么就会无限循环。
-
-当循环条件为 l < h，则 h = mid。因为如果 h = mid - 1，会错误跳过查找的数，例如对于数组 [1,2,3]，要查找 1，最开始 l = 0，h = 2，mid = 1，判断 key < arr[mid] 执行 h = mid - 1 = 0，此时循环退出，直接把查找的数跳过了。
+l + h 可能出现加法溢出，最好使用第二种方式。
 
 **返回值** 
 
-在循环条件为 l <= h 的情况下，循环退出时 l 总是比 h 大 1，并且 l 是将 key 插入 nums 中的正确位置。例如对于 nums = {0,1,2,3}，key = 4，循环退出时 l = 4，将 key 插入到 nums 中的第 4 个位置就能保持 nums 有序的特点。
+循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
 
-在循环条件为 l < h 的情况下，循环退出时 l 和 h 相等。
+- -1：以一个错误码指示没有查找到 key
+- l：将 key 插入到 nums 中的正确位置
 
-如果只是想知道 key 存不存在，在循环退出之后可以直接返回 -1 表示 key 不存在于 nums 中。
+**变种** 
+
+二分查找可以有很多变种，变种实现要多注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
+
+```java
+public int binarySearch(int[] nums, int key) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] >= key)
+            h = m;
+        else
+            l = m + 1;
+    }
+    return l;
+}
+```
+
+该实现和正常实现有以下不同：
+
+- 循环条件为 l < h
+- h 的赋值表达式为 h = m
+- 最后返回 l 而不是 -1
+
+在 nums[m] >= key 的情况下，可以推导出最左 key 位于 [0, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
+
+在 h 的赋值表达式为 h = mid 的情况下，如果循环条件为 l <= h，那么会出现循环无法退出的情况，因此循环条件只能是 l < h。
+
+```text
+nums = {0, 1}, key = 0
+l   m   h
+0   1   2  nums[m] >= key
+0   0   1  nums[m] >= key
+0   0   0  nums[m] >= key
+0   0   0  nums[m] >= key
+...
+```
+
+当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
 
 **求开方** 
 
@@ -109,63 +153,20 @@ Explanation: The square root of 8 is 2.82842..., and since we want to return an 
 
 ```java
 public int mySqrt(int x) {
-    if (x <= 1) return x;
+    if (x <= 1)
+        return x;
     int l = 1, h = x;
     while (l <= h) {
         int mid = l + (h - l) / 2;
         int sqrt = x / mid;
-        if (sqrt == mid) return mid;
-        if (sqrt < mid) h = mid - 1;
-        else l = mid + 1;
+        if (sqrt == mid)
+            return mid;
+        else if (sqrt < mid)
+            h = mid - 1;
+        else
+            l = mid + 1;
     }
     return h;
-}
-```
-
-**摆硬币** 
-
-[Leetcode : 441. Arranging Coins (Easy)](https://leetcode.com/problems/arranging-coins/description/)
-
-```html
-n = 8
-The coins can form the following rows:
-¤
-¤ ¤
-¤ ¤ ¤
-¤ ¤
-Because the 4th row is incomplete, we return 3.
-```
-
-题目描述：第 i 行摆 i 个，统计能够摆的行数。
-
-n 个硬币能够摆的行数 row 在 0 \~ n 之间，并且满足 n == row * (row + 1) / 2，因此可以利用二分查找在 0 \~ n 之间查找 row。
-
-对于 n = 8，它能摆的行数 row = 3，这是因为最后没有摆满的那一行不能算进去，因此在循环退出时应该返回 h。
-
-```java
-public int arrangeCoins(int n) {
-    int l = 0, h = n;
-    while (l <= h) {
-        int mid = l + (h - l) / 2;
-        long x = mid * (mid + 1) / 2;
-        if (x == n) return mid;
-        else if (x < n) l = mid + 1;
-        else h = mid - 1;
-    }
-    return h;
-}
-```
-
-本题可以不用二分查找，更直观的解法如下：
-
-```java
-public int arrangeCoins(int n) {
-    int level = 1;
-    while (n > 0) {
-        n -= level;
-        level++;
-    }
-    return n == 0 ? level - 1 : level - 2;
 }
 ```
 
@@ -195,8 +196,10 @@ public char nextGreatestLetter(char[] letters, char target) {
     int l = 0, h = n - 1;
     while (l <= h) {
         int m = l + (h - l) / 2;
-        if (letters[m] <= target) l = m + 1;
-        else h = m - 1;
+        if (letters[m] <= target)
+            l = m + 1;
+        else
+            h = m - 1;
     }
     return l < n ? letters[l] : letters[0];
 }
@@ -213,9 +216,9 @@ Output: 2
 
 题目描述：一个有序数组只有一个数不出现两次，找出这个数。要求以 O(logN) 时间复杂度进行求解。
 
-令 key 为 Single Element 在数组中的位置。如果 m 为偶数，并且 m < key，那么 nums[m] == nums[m + 1]；m >= key，那么 nums[m] != nums[m + 1]。
+令 key 为 Single Element 在数组中的位置。如果 m 为偶数，并且 m + 1 < key，那么 nums[m] == nums[m + 1]；m + 1 >= key，那么 nums[m] != nums[m + 1]。
 
-从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 key 所在的数组位置为 m + 2 \~ n - 1，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 key 所在的数组位置为 0 \~ m，此时令 h = m。
+从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 key 所在的数组位置为 [m + 2, n - 1]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 key 所在的数组位置为 [0, m]，此时令 h = m。
 
 因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l < h 这种形式。
 
@@ -224,9 +227,12 @@ public int singleNonDuplicate(int[] nums) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (m % 2 == 1) m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
-        if (nums[m] == nums[m + 1]) l = m + 2;
-        else h = m;
+        if (m % 2 == 1)
+            m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
+        if (nums[m] == nums[m + 1])
+            l = m + 2;
+        else
+            h = m;
     }
     return nums[l];
 }
@@ -238,7 +244,7 @@ public int singleNonDuplicate(int[] nums) {
 
 题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
 
-如果第 m 个版本出错，则表示第一个错误的版本在 1 \~ m 之前，令 h = m；否则第一个错误的版本在 m + 1 \~ n 之间，令 l = m + 1。
+如果第 m 个版本出错，则表示第一个错误的版本在 [1, m] 之间，令 h = m；否则第一个错误的版本在 [m + 1, n] 之间，令 l = m + 1。
 
 因为 h 的赋值表达式为 h = m，因此循环条件为 l < h。
 
@@ -246,9 +252,11 @@ public int singleNonDuplicate(int[] nums) {
 public int firstBadVersion(int n) {
     int l = 1, h = n;
     while (l < h) {
-        int m = l + (h - l) / 2;
-        if (isBadVersion(m)) h = m;
-        else l = m + 1;
+        int mid = l + (h - l) / 2;
+        if (isBadVersion(mid))
+            h = mid;
+        else
+            l = mid + 1;
     }
     return l;
 }
@@ -268,8 +276,10 @@ public int findMin(int[] nums) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h]) h = m;
-        else l = m + 1;
+        if (nums[m] <= nums[h])
+            h = m;
+        else
+            l = m + 1;
     }
     return nums[l];
 }
@@ -291,16 +301,20 @@ Output: [-1,-1]
 public int[] searchRange(int[] nums, int target) {
     int first = binarySearch(nums, target);
     int last = binarySearch(nums, target + 1) - 1;
-    if (first == nums.length || nums[first] != target) return new int[]{-1, -1};
-    return new int[]{first, Math.max(first, last)};
+    if (first == nums.length || nums[first] != target)
+        return new int[]{-1, -1};
+    else
+        return new int[]{first, Math.max(first, last)};
 }
 
 private int binarySearch(int[] nums, int target) {
     int l = 0, h = nums.length; // 注意 h 的初始值
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] >= target) h = m;
-        else l = m + 1;
+        if (nums[m] >= target)
+            h = m;
+        else
+            l = m + 1;
     }
     return l;
 }
@@ -5913,6 +5927,64 @@ class MapSum {
 ```
 
 ## 图
+
+### 二分图
+
+如果可以用两种颜色对图中的节点进行着色，并且保证相邻的节点颜色不同，那么这个图就是二分图。
+
+**判断是否为二分图** 
+
+[Leetcode : 785. Is Graph Bipartite? (Medium)](https://leetcode.com/problems/is-graph-bipartite/description/)
+
+```html
+Input: [[1,3], [0,2], [1,3], [0,2]]
+Output: true
+Explanation:
+The graph looks like this:
+0----1
+|    |
+|    |
+3----2
+We can divide the vertices into two groups: {0, 2} and {1, 3}.
+```
+
+```html
+Example 2:
+Input: [[1,2,3], [0,2], [0,1,3], [0,2]]
+Output: false
+Explanation:
+The graph looks like this:
+0----1
+| \  |
+|  \ |
+3----2
+We cannot find a way to divide the set of nodes into two independent subsets.
+```
+
+```java
+public boolean isBipartite(int[][] graph) {
+    int[] colors = new int[graph.length];
+    Arrays.fill(colors, -1);
+
+    for (int i = 0; i < graph.length; i++)
+        if (colors[i] != -1 && !isBipartite(graph, i, 0, colors))
+            return false;
+
+    return true;
+}
+
+private boolean isBipartite(int[][] graph, int cur, int color, int[] colors) {
+    if (colors[cur] != -1)
+        return colors[cur] == color;
+
+    colors[cur] = color;
+    for (int next : graph[cur])
+        if (!isBipartite(graph, next, 1 - color, colors))
+            return false;
+
+    return true;
+}
+```
 
 ### 拓扑排序
 
