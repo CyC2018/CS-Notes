@@ -985,7 +985,7 @@ public String frequencySort(String s) {
 
 <div align="center"> <img src="../pics//3b49dd67-2c40-4b81-8ad2-7bbb1fe2fcbd.png"/> </div><br>
 
-**对颜色进行排序** 
+**按颜色进行排序** 
 
 [75. Sort Colors (Medium)](https://leetcode.com/problems/sort-colors/description/)
 
@@ -993,6 +993,8 @@ public String frequencySort(String s) {
 Input: [2,0,2,1,1,0]
 Output: [0,0,1,1,2,2]
 ```
+
+题目描述：只有 0/1/2 三种颜色。
 
 ```java
 public void sortColors(int[] nums) {
@@ -1040,7 +1042,7 @@ private void swap(int[] nums, int i, int j) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一轮遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。
+可以看到，每一轮遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
@@ -1060,35 +1062,174 @@ private void swap(int[] nums, int i, int j) {
 
 ```java
 public int minPathLength(int[][] grids, int tr, int tc) {
-    int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    int m = grids.length, n = grids[0].length;
-    Queue<Position> queue = new LinkedList<>();
-    queue.add(new Position(0, 0));
+    final int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    final int m = grids.length, n = grids[0].length;
+    Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+    queue.add(new Pair(0, 0));
     int pathLength = 0;
     while (!queue.isEmpty()) {
         int size = queue.size();
         pathLength++;
         while (size-- > 0) {
-            Position cur = queue.poll();
+            Pair<Integer, Integer> cur = queue.poll();
             for (int[] d : direction) {
-                Position next = new Position(cur.r + d[0], cur.c + d[1]);
-                if (next.r < 0 || next.r >= m || next.c < 0 || next.c >= n) continue;
-                grids[next.r][next.c] = 0;
-                if (next.r == tr && next.c == tc) return pathLength;
+                Pair<Integer, Integer> next = new Pair(cur.getKey() + d[0], cur.getValue() + d[1]);
+                if (next.getKey() < 0 || next.getValue() >= m || next.getKey() < 0 || next.getValue() >= n)
+                    continue;
+                grids[next.getKey()][next.getValue()] = 0; // 标记
+                if (next.getKey() == tr && next.getValue() == tc)
+                    return pathLength;
                 queue.add(next);
             }
         }
     }
     return -1;
 }
+```
 
-private class Position {
-    int r, c;
+**组成整数的最小平方数数量** 
 
-    Position(int r, int c) {
-        this.r = r;
-        this.c = c;
+[279. Perfect Squares (Medium)](https://leetcode.com/problems/perfect-squares/description/)
+
+```html
+For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+```
+
+可以将每个整数看成图中的一个节点，如果两个整数只差为一个平方数，那么这两个整数所在的节点就有一条边。
+
+要求解最小的平方数数量，就是求解从节点 n 到节点 0 的最短路径。
+
+本题也可以用动态规划求解，在之后动态规划部分中会再次出现。
+
+```java
+public int numSquares(int n) {
+    List<Integer> squares = generateSquares(n);
+    Queue<Integer> queue = new LinkedList<>();
+    boolean[] marked = new boolean[n + 1];
+    queue.add(n);
+    marked[n] = true;
+    int num = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        num++;
+        while (size-- > 0) {
+            int cur = queue.poll();
+            for (int s : squares) {
+                int next = cur - s;
+                if (next < 0)
+                    break;
+                if (next == 0)
+                    return num;
+                if (marked[next])
+                    continue;
+                marked[next] = true;
+                queue.add(cur - s);
+            }
+        }
     }
+    return n;
+}
+
+private List<Integer> generateSquares(int n) {
+    List<Integer> squares = new ArrayList<>();
+    int square = 1;
+    int diff = 3;
+    while (square <= n) {
+        squares.add(square);
+        square += diff;
+        diff += 2;
+    }
+    return squares;
+}
+```
+
+**最短单词路径** 
+
+[127. Word Ladder (Medium)](https://leetcode.com/problems/word-ladder/description/)
+
+```html
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+```
+
+```html
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: 0
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+```
+
+题目描述：要找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
+
+```java
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    wordList.add(beginWord);
+    int N = wordList.size();
+    int start = N - 1;
+    int end = 0;
+    while (end < N && !wordList.get(end).equals(endWord))
+        end++;
+    if (end == N)
+        return 0;
+    List<Integer>[] graphic = buildGraphic(wordList);
+    return getShortestPath(graphic, start, end);
+}
+
+private List<Integer>[] buildGraphic(List<String> wordList) {
+    int N = wordList.size();
+    List<Integer>[] graphic = new List[N];
+    for (int i = 0; i < N; i++) {
+        graphic[i] = new ArrayList<>();
+        for (int j = 0; j < N; j++) {
+            if (isConnect(wordList.get(i), wordList.get(j)))
+                graphic[i].add(j);
+        }
+    }
+    return graphic;
+}
+
+private boolean isConnect(String s1, String s2) {
+    int diffCnt = 0;
+    for (int i = 0; i < s1.length() && diffCnt <= 1; i++) {
+        if (s1.charAt(i) != s2.charAt(i))
+            diffCnt++;
+    }
+    return diffCnt == 1;
+}
+
+private int getShortestPath(List<Integer>[] graphic, int start, int end) {
+    Queue<Integer> queue = new LinkedList<>();
+    boolean[] marked = new boolean[graphic.length];
+    queue.add(start);
+    marked[start] = true;
+    int path = 1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        path++;
+        while (size-- > 0) {
+            int cur = queue.poll();
+            for (int next : graphic[cur]) {
+                if (next == end)
+                    return path;
+                if (marked[next])
+                    continue;
+                marked[next] = true;
+                queue.add(next);
+            }
+        }
+    }
+    return 0;
 }
 ```
 
