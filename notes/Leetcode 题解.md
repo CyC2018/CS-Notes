@@ -7,6 +7,7 @@
         * [快速选择](#快速选择)
         * [堆排序](#堆排序)
         * [桶排序](#桶排序)
+        * [荷兰国旗问题](#荷兰国旗问题)
     * [搜索](#搜索)
         * [BFS](#bfs)
         * [DFS](#dfs)
@@ -855,9 +856,8 @@ public int findKthLargest(int[] nums, int k) {
     PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
     for (int val : nums) {
         pq.add(val);
-        if (pq.size() > k) {
+        if (pq.size() > k) // 维护堆的大小为 K
             pq.poll();
-        }
     }
     return pq.peek();
 }
@@ -871,9 +871,12 @@ public int findKthLargest(int[] nums, int k) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j == k) break;
-        if (j < k) l = j + 1;
-        else h = j - 1;
+        if (j == k)
+            break;
+        else if (j < k)
+            l = j + 1;
+        else
+            h = j - 1;
     }
     return nums[k];
 }
@@ -883,7 +886,8 @@ private int partition(int[] a, int l, int h) {
     while (true) {
         while (a[++i] < a[l] && i < h) ;
         while (a[--j] > a[l] && j > l) ;
-        if (i >= j) break;
+        if (i >= j)
+            break;
         swap(a, i, j);
     }
     swap(a, l, j);
@@ -891,9 +895,9 @@ private int partition(int[] a, int l, int h) {
 }
 
 private void swap(int[] a, int i, int j) {
-    int tmp = a[i];
+    int t = a[i];
     a[i] = a[j];
-    a[j] = tmp;
+    a[j] = t;
 }
 ```
 
@@ -912,24 +916,22 @@ Given [1,1,1,2,2,3] and k = 2, return [1,2].
 ```java
 public List<Integer> topKFrequent(int[] nums, int k) {
     Map<Integer, Integer> frequencyMap = new HashMap<>();
-    for (int num : nums) {
+    for (int num : nums)
         frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
-    }
+
     List<Integer>[] bucket = new List[nums.length + 1];
     for (int key : frequencyMap.keySet()) {
         int frequency = frequencyMap.get(key);
-        if (bucket[frequency] == null) {
+        if (bucket[frequency] == null)
             bucket[frequency] = new ArrayList<>();
-        }
         bucket[frequency].add(key);
     }
 
     List<Integer> topK = new ArrayList<>();
-    for (int i = bucket.length - 1; i >= 0 && topK.size() < k; i--) {
-        if (bucket[i] != null) {
+    for (int i = bucket.length - 1; i >= 0 && topK.size() < k; i--)
+        if (bucket[i] != null)
             topK.addAll(bucket[i]);
-        }
-    }
+
     return topK;
 }
 ```
@@ -953,29 +955,62 @@ So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid ans
 ```java
 public String frequencySort(String s) {
     Map<Character, Integer> frequencyMap = new HashMap<>();
-    for (char c : s.toCharArray()) {
+    for (char c : s.toCharArray())
         frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
-    }
+
     List<Character>[] frequencyBucket = new List[s.length() + 1];
     for (char c : frequencyMap.keySet()) {
         int f = frequencyMap.get(c);
-        if (frequencyBucket[f] == null) {
+        if (frequencyBucket[f] == null)
             frequencyBucket[f] = new ArrayList<>();
-        }
         frequencyBucket[f].add(c);
     }
     StringBuilder str = new StringBuilder();
-    for (int frequency = frequencyBucket.length - 1; frequency >= 0; frequency--) {
-        if (frequencyBucket[frequency] == null) {
+    for (int i = frequencyBucket.length - 1; i >= 0; i--) {
+        if (frequencyBucket[i] == null)
             continue;
-        }
-        for (char c : frequencyBucket[frequency]) {
-            for (int i = 0; i < frequency; i++) {
+        for (char c : frequencyBucket[i])
+            for (int j = 0; j < i; j++)
                 str.append(c);
-            }
-        }
     }
     return str.toString();
+}
+```
+
+### 荷兰国旗问题
+
+荷兰国旗包含三种颜色：红、白、蓝。有这三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。
+
+它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
+
+<div align="center"> <img src="../pics//3b49dd67-2c40-4b81-8ad2-7bbb1fe2fcbd.png"/> </div><br>
+
+**对颜色进行排序** 
+
+[75. Sort Colors (Medium)](https://leetcode.com/problems/sort-colors/description/)
+
+```html
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+```
+
+```java
+public void sortColors(int[] nums) {
+    int zero = -1, one = 0, two = nums.length;
+    while (one < two) {
+        if (nums[one] == 0)
+            swap(nums, ++zero, one++);
+        else if (nums[one] == 2)
+            swap(nums, --two, one);
+        else
+            ++one;
+    }
+}
+
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
 }
 ```
 
