@@ -349,7 +349,8 @@ public int findContentChildren(int[] g, int[] s) {
     Arrays.sort(s);
     int gIndex = 0, sIndex = 0;
     while (gIndex < g.length && sIndex < s.length) {
-        if (g[gIndex] <= s[sIndex]) gIndex++;
+        if (g[gIndex] <= s[sIndex])
+            gIndex++;
         sIndex++;
     }
     return gIndex;
@@ -367,11 +368,10 @@ public int findContentChildren(int[] g, int[] s) {
 ```java
 public int maxProfit(int[] prices) {
     int profit = 0;
-    for (int i = 1; i < prices.length; i++) {
-        if (prices[i] > prices[i - 1]) {
+    for (int i = 1; i < prices.length; i++)
+        if (prices[i] > prices[i - 1])
             profit += (prices[i] - prices[i - 1]);
-        }
-    }
+
     return profit;
 }
 ```
@@ -389,11 +389,13 @@ Output: True
 
 ```java
 public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    int len = flowerbed.length;
     int cnt = 0;
-    for (int i = 0; i < flowerbed.length; i++) {
-        if (flowerbed[i] == 1) continue;
+    for (int i = 0; i < len; i++) {
+        if (flowerbed[i] == 1)
+            continue;
         int pre = i == 0 ? 0 : flowerbed[i - 1];
-        int next = i == flowerbed.length - 1 ? 0 : flowerbed[i + 1];
+        int next = i == len - 1 ? 0 : flowerbed[i + 1];
         if (pre == 0 && next == 0) {
             cnt++;
             flowerbed[i] = 1;
@@ -415,17 +417,19 @@ Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 
 题目描述：判断一个数组能不能只修改一个数就成为非递减数组。
 
-在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，只修改 nums[i - 1] = nums[i] 不能令数组成为非递减，只能通过修改 nums[i] = nums[i - 1] 才行。
+在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，只修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
 
 ```java
 public boolean checkPossibility(int[] nums) {
     int cnt = 0;
-    for (int i = 1; i < nums.length; i++) {
-        if (nums[i] < nums[i - 1]) {
-            cnt++;
-            if (i - 2 >= 0 && nums[i - 2] > nums[i]) nums[i] = nums[i - 1];
-            else nums[i - 1] = nums[i];
-        }
+    for (int i = 1; i < nums.length && cnt < 2; i++) {
+        if (nums[i] >= nums[i - 1])
+            continue;
+        cnt++;
+        if (i - 2 >= 0 && nums[i - 2] > nums[i])
+            nums[i] = nums[i - 1];
+        else
+            nums[i - 1] = nums[i];
     }
     return cnt <= 1;
 }
@@ -442,12 +446,58 @@ Return true.
 
 ```java
 public boolean isSubsequence(String s, String t) {
-    int pos = -1;
+    int index = -1;
     for (char c : s.toCharArray()) {
-        pos = t.indexOf(c, pos + 1);
-        if (pos == -1) return false;
+        index = t.indexOf(c, index + 1);
+        if (index == -1)
+            return false;
     }
     return true;
+}
+```
+
+**不重叠的区间个数** 
+
+[435. Non-overlapping Intervals (Medium)](https://leetcode.com/problems/non-overlapping-intervals/description/)
+
+```html
+Input: [ [1,2], [1,2], [1,2] ]
+
+Output: 2
+
+Explanation: You need to remove two [1,2] to make the rest of intervals non-overlapping.
+```
+
+```html
+Input: [ [1,2], [2,3] ]
+
+Output: 0
+
+Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+```
+
+题目描述：计算让一组区间不重叠所需要移除的区间个数。
+
+直接计算最多能组成的不重叠区间个数即可。
+
+在每次选择中，区间的结尾最为重要，选择的区间结尾越小，留给后面的区间的空间越大，那么后面能够选择的区间个数也就越大。
+
+按区间的结尾进行排序，每次选择结尾最小，并且和前一个区间不重叠的区间。
+
+```java
+public int eraseOverlapIntervals(Interval[] intervals) {
+    if (intervals.length == 0)
+        return 0;
+    Arrays.sort(intervals, Comparator.comparingInt(o -> o.end));
+    int cnt = 1;
+    int end = intervals[0].end;
+    for (int i = 1; i < intervals.length; i++) {
+        if (intervals[i].start < end)
+            continue;
+        end = intervals[i].end;
+        cnt++;
+    }
+    return intervals.length - cnt;
 }
 ```
 
@@ -465,30 +515,26 @@ Output:
 
 题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直投向坐标轴，使得路径上的气球都会刺破。求解最小的投飞镖次数使所有气球都被刺破。
 
-对气球按末尾位置进行排序，得到：
-
-```html
-[[1,6], [2,8], [7,12], [10,16]]
-```
-
-如果让飞镖投向 6 这个位置，那么 [1,6] 和 [2,8] 这两个气球都会被刺破，这种方式下刺破这两个气球的投飞镖次数最少，并且后面两个气球依然可以使用这种方式来刺破。
+也是计算不重叠的区间个数，不过和 Non-overlapping Intervals 的区别在于，[1, 2] 和 [2, 3] 在本题中算是重叠区间。
 
 ```java
 public int findMinArrowShots(int[][] points) {
-    if (points.length == 0) return 0;
-    Arrays.sort(points, (a, b) -> (a[1] - b[1]));
-    int curPos = points[0][1];
-    int shots = 1;
+    if (points.length == 0)
+        return 0;
+
+    Arrays.sort(points, Comparator.comparingInt(o -> o[1]));
+
+    int cnt = 1, end = points[0][1];
     for (int i = 1; i < points.length; i++) {
-        if (points[i][0] <= curPos) {
+        if (points[i][0] <= end) // [1,2] 和 [2,3] 算重叠
             continue;
-        }
-        curPos = points[i][1];
-        shots++;
+        cnt++;
+        end = points[i][1];
     }
-    return shots;
+    return cnt;
 }
 ```
+
 
 **分隔字符串使同种字符出现在一起** 
 
@@ -504,25 +550,25 @@ A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits 
 ```
 
 ```java
-public List<Integer> partitionLabels(String S) {
-    List<Integer> partitions = new ArrayList<>();
-    int[] lastIndexs = new int[26];
-    for (int i = 0; i < S.length(); i++) {
-        lastIndexs[S.charAt(i) - 'a'] = i;
-    }
-    int firstIndex = 0;
-    while (firstIndex < S.length()) {
-        int lastIndex = firstIndex;
-        for (int i = firstIndex; i < S.length() && i <= lastIndex; i++) {
-            int index = lastIndexs[S.charAt(i) - 'a'];
-            if (index == i) continue;
-            if (index > lastIndex) lastIndex = index;
-        }
-        partitions.add(lastIndex - firstIndex + 1);
-        firstIndex = lastIndex + 1;
-    }
-    return partitions;
-}
+ public List<Integer> partitionLabels(String S) {
+     int[] lastIndexs = new int[26];
+     for (int i = 0; i < S.length(); i++)
+         lastIndexs[S.charAt(i) - 'a'] = i;
+
+     List<Integer> ret = new ArrayList<>();
+     int firstIndex = 0;
+     while (firstIndex < S.length()) {
+         int lastIndex = firstIndex;
+         for (int i = firstIndex; i < S.length() && i <= lastIndex; i++) {
+             int index = lastIndexs[S.charAt(i) - 'a'];
+             if (index > lastIndex)
+                 lastIndex = index;
+         }
+         ret.add(lastIndex - firstIndex + 1);
+         firstIndex = lastIndex + 1;
+     }
+     return ret;
+ }
 ```
 
 **根据身高和序号重组队列** 
@@ -545,25 +591,17 @@ Output:
 
 ```java
 public int[][] reconstructQueue(int[][] people) {
-    if (people == null || people.length == 0 || people[0].length == 0) return new int[0][0];
-    Arrays.sort(people, (a, b) -> {
-        if (a[0] == b[0]) return a[1] - b[1];
-        return b[0] - a[0];
-    });
-    int N = people.length;
-    List<int[]> tmp = new ArrayList<>();
-    for (int i = 0; i < N; i++) {
-        int index = people[i][1];
-        int[] p = new int[]{people[i][0], people[i][1]};
-        tmp.add(index, p);
-    }
+    if (people == null || people.length == 0 || people[0].length == 0)
+        return new int[0][0];
 
-    int[][] ret = new int[N][2];
-    for (int i = 0; i < N; i++) {
-        ret[i][0] = tmp.get(i)[0];
-        ret[i][1] = tmp.get(i)[1];
-    }
-    return ret;
+    Arrays.sort(people, (a, b) -> (a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]));
+
+    List<int[]> queue = new ArrayList<>();
+
+    for (int[] p : people)
+        queue.add(p[1], p);
+
+    return queue.toArray(new int[queue.size()][]);
 }
 ```
 
