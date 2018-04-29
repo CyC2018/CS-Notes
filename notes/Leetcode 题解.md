@@ -629,9 +629,12 @@ public int[] twoSum(int[] numbers, int target) {
     int i = 0, j = numbers.length - 1;
     while (i < j) {
         int sum = numbers[i] + numbers[j];
-        if (sum == target) return new int[]{i + 1, j + 1};
-        else if (sum < target) i++;
-        else j--;
+        if (sum == target)
+            return new int[]{i + 1, j + 1};
+        else if (sum < target)
+            i++;
+        else
+            j--;
     }
     return null;
 }
@@ -654,9 +657,12 @@ public boolean judgeSquareSum(int c) {
     int i = 0, j = (int) Math.sqrt(c);
     while (i <= j) {
         int powSum = i * i + j * j;
-        if (powSum == c) return true;
-        if (powSum > c) j--;
-        else i++;
+        if (powSum == c)
+            return true;
+        if (powSum > c)
+            j--;
+        else
+            i++;
     }
     return false;
 }
@@ -681,11 +687,11 @@ public String reverseVowels(String s) {
     while (i <= j) {
         char ci = s.charAt(i);
         char cj = s.charAt(j);
-        if (!vowels.contains(ci)) {
+        if (!vowels.contains(ci))
             result[i++] = ci;
-        } else if (!vowels.contains(cj)) {
+        else if (!vowels.contains(cj))
             result[j--] = cj;
-        } else {
+        else {
             result[i++] = cj;
             result[j--] = ci;
         }
@@ -709,20 +715,18 @@ Explanation: You could delete the character 'c'.
 ```java
 public boolean validPalindrome(String s) {
     int i = -1, j = s.length();
-    while (++i < --j) {
-        if (s.charAt(i) != s.charAt(j)) {
+    while (++i < --j)
+        if (s.charAt(i) != s.charAt(j))
             return isPalindrome(s, i, j - 1) || isPalindrome(s, i + 1, j);
-        }
-    }
+
     return true;
 }
 
 private boolean isPalindrome(String s, int i, int j) {
-    while (i < j) {
-        if (s.charAt(i++) != s.charAt(j--)) {
+    while (i < j)
+        if (s.charAt(i++) != s.charAt(j--))
             return false;
-        }
-    }
+
     return true;
 }
 ```
@@ -743,13 +747,18 @@ Output: [1,2,2,3,5,6]
 
 ```java
 public void merge(int[] nums1, int m, int[] nums2, int n) {
-    int i = m - 1, j = n - 1; // 需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值
+    // 需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值
+    int i = m - 1, j = n - 1;
     int index = m + n - 1;
     while (i >= 0 || j >= 0) {
-        if (i < 0) nums1[index] = nums2[j--];
-        else if (j < 0) nums1[index] = nums1[i--];
-        else if (nums1[i] > nums2[j]) nums1[index] = nums1[i--];
-        else nums1[index] = nums2[j--];
+        if (i < 0)
+            nums1[index] = nums2[j--];
+        else if (j < 0)
+            nums1[index] = nums1[i--];
+        else if (nums1[i] > nums2[j])
+            nums1[index] = nums1[i--];
+        else
+            nums1[index] = nums2[j--];
         index--;
     }
 }
@@ -763,10 +772,12 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 ```java
 public boolean hasCycle(ListNode head) {
-    if (head == null) return false;
+    if (head == null)
+        return false;
     ListNode l1 = head, l2 = head.next;
     while (l1 != null && l2 != null && l2.next != null) {
-        if (l1 == l2) return true;
+        if (l1 == l2)
+            return true;
         l1 = l1.next;
         l2 = l2.next.next;
     }
@@ -793,12 +804,10 @@ public String findLongestWord(String s, List<String> d) {
     String longestWord = "";
     for (String target : d) {
         int l1 = longestWord.length(), l2 = target.length();
-        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
+        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0))
             continue;
-        }
-        if (isValid(s, target)) {
+        if (isValid(s, target))
             longestWord = target;
-        }
     }
     return longestWord;
 }
@@ -806,9 +815,8 @@ public String findLongestWord(String s, List<String> d) {
 private boolean isValid(String s, String target) {
     int i = 0, j = 0;
     while (i < s.length() && j < target.length()) {
-        if (s.charAt(i) == target.charAt(j)) {
+        if (s.charAt(i) == target.charAt(j))
             j++;
-        }
         i++;
     }
     return j == target.length();
