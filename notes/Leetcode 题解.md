@@ -1237,9 +1237,9 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 <div align="center"> <img src="../pics//f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
 
-广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列先存储起来以备下一层遍历的时候再遍历。
+广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。
 
-而深度优先搜索在得到到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
+而深度优先搜索在得到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
 从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种  **可达性**  问题。
 
@@ -1268,29 +1268,29 @@ private int m, n;
 private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
 public int maxAreaOfIsland(int[][] grid) {
-    if (grid == null || grid.length == 0) {
+    if (grid == null || grid.length == 0)
         return 0;
-    }
+
     m = grid.length;
     n = grid[0].length;
+
     int maxArea = 0;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
             maxArea = Math.max(maxArea, dfs(grid, i, j));
-        }
-    }
+
     return maxArea;
 }
 
 private int dfs(int[][] grid, int r, int c) {
-    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0) {
+    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0)
         return 0;
-    }
+
     grid[r][c] = 0;
     int area = 1;
-    for (int[] d : direction) {
+    for (int[] d : direction)
         area += dfs(grid, r + d[0], c + d[1]);
-    }
+
     return area;
 }
 ```
@@ -1300,11 +1300,13 @@ private int dfs(int[][] grid, int r, int c) {
 [200. Number of Islands (Medium)](https://leetcode.com/problems/number-of-islands/description/)
 
 ```html
-11110
-11010
+Input:
 11000
-00000
-Answer: 1
+11000
+00100
+00011
+
+Output: 3
 ```
 
 可以将矩阵表示看成一张有向图。
@@ -1314,31 +1316,29 @@ private int m, n;
 private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
 public int numIslands(char[][] grid) {
-    if (grid == null || grid.length == 0) {
+    if (grid == null || grid.length == 0)
         return 0;
-    }
+
     m = grid.length;
     n = grid[0].length;
     int islandsNum = 0;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
             if (grid[i][j] != '0') {
                 dfs(grid, i, j);
                 islandsNum++;
             }
-        }
-    }
+
     return islandsNum;
 }
 
 private void dfs(char[][] grid, int i, int j) {
-    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') {
+    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0')
         return;
-    }
+
     grid[i][j] = '0';
-    for (int[] d : direction) {
+    for (int[] d : direction)
         dfs(grid, i + d[0], j + d[1]);
-    }
 }
 ```
 
@@ -1365,23 +1365,20 @@ public int findCircleNum(int[][] M) {
     n = M.length;
     int circleNum = 0;
     boolean[] hasVisited = new boolean[n];
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         if (!hasVisited[i]) {
             dfs(M, i, hasVisited);
             circleNum++;
         }
 
-    }
     return circleNum;
 }
 
 private void dfs(int[][] M, int i, boolean[] hasVisited) {
     hasVisited[i] = true;
-    for (int k = 0; k < n; k++) {
-        if (M[i][k] == 1 && !hasVisited[k]) {
+    for (int k = 0; k < n; k++)
+        if (M[i][k] == 1 && !hasVisited[k])
             dfs(M, k, hasVisited);
-        }
-    }
 }
 ```
 
@@ -1403,7 +1400,7 @@ X X X X
 X O X X
 ```
 
-题目描述：使得被 'X' 的 'O' 转换为 'X'。
+题目描述：使得被 'X' 包围的 'O' 转换为 'X'。
 
 先填充最外侧，剩下的就是里侧了。
 
@@ -1412,9 +1409,12 @@ private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 private int m, n;
 
 public void solve(char[][] board) {
-    if (board == null || board.length == 0) return;
+    if (board == null || board.length == 0)
+        return;
+
     m = board.length;
     n = board[0].length;
+
     for (int i = 0; i < m; i++) {
         dfs(board, i, 0);
         dfs(board, i, n - 1);
@@ -1423,24 +1423,27 @@ public void solve(char[][] board) {
         dfs(board, 0, i);
         dfs(board, m - 1, i);
     }
-    for (int i = 0; i < m; i++) {
+
+    for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++) {
-            if (board[i][j] == 'T') board[i][j] = 'O';
-            else if (board[i][j] == 'O') board[i][j] = 'X';
+            if (board[i][j] == 'T')
+                board[i][j] = 'O';
+            else if (board[i][j] == 'O')
+                board[i][j] = 'X';
         }
-    }
 }
 
 private void dfs(char[][] board, int r, int c) {
-    if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != 'O') return;
+    if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != 'O')
+        return;
+
     board[r][c] = 'T';
-    for (int[] d : direction) {
+    for (int[] d : direction)
         dfs(board, r + d[0], c + d[1]);
-    }
 }
 ```
 
-**从两个方向都能到达的区域** 
+**能到达的太平洋和大西洋的区域** 
 
 [417. Pacific Atlantic Water Flow (Medium)](https://leetcode.com/problems/pacific-atlantic-water-flow/description/)
 
@@ -1468,12 +1471,15 @@ private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
 public List<int[]> pacificAtlantic(int[][] matrix) {
     List<int[]> ret = new ArrayList<>();
-    if (matrix == null || matrix.length == 0) return ret;
+    if (matrix == null || matrix.length == 0)
+        return ret;
+
     m = matrix.length;
     n = matrix[0].length;
     this.matrix = matrix;
     boolean[][] canReachP = new boolean[m][n];
     boolean[][] canReachA = new boolean[m][n];
+
     for (int i = 0; i < m; i++) {
         dfs(i, 0, canReachP);
         dfs(i, n - 1, canReachA);
@@ -1482,24 +1488,25 @@ public List<int[]> pacificAtlantic(int[][] matrix) {
         dfs(0, i, canReachP);
         dfs(m - 1, i, canReachA);
     }
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (canReachP[i][j] && canReachA[i][j]) {
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            if (canReachP[i][j] && canReachA[i][j])
                 ret.add(new int[]{i, j});
-            }
-        }
-    }
+
     return ret;
 }
 
 private void dfs(int r, int c, boolean[][] canReach) {
-    if (canReach[r][c]) return;
+    if (canReach[r][c])
+        return;
+
     canReach[r][c] = true;
     for (int[] d : direction) {
         int nextR = d[0] + r;
         int nextC = d[1] + c;
-        if (nextR < 0 || nextR >= m || nextC < 0 || nextC >= n
-                || matrix[r][c] > matrix[nextR][nextC]) continue;
+        if (nextR < 0 || nextR >= m || nextC < 0 || nextC >= n || matrix[r][c] > matrix[nextR][nextC])
+            continue;
         dfs(nextR, nextC, canReach);
     }
 }
@@ -1533,7 +1540,8 @@ private static final String[] KEYS = {"", "", "abc", "def", "ghi", "jkl", "mno",
 
 public List<String> letterCombinations(String digits) {
     List<String> ret = new ArrayList<>();
-    if (digits == null || digits.length() == 0) return ret;
+    if (digits == null || digits.length() == 0)
+        return ret;
     combination(new StringBuilder(), digits, ret);
     return ret;
 }
@@ -1571,16 +1579,17 @@ public List<String> restoreIpAddresses(String s) {
 
 private void doRestore(int k, StringBuilder path, String s, List<String> addresses) {
     if (k == 4 || s.length() == 0) {
-        if (k == 4 && s.length() == 0) {
+        if (k == 4 && s.length() == 0)
             addresses.add(path.toString());
-        }
         return;
     }
     for (int i = 0; i < s.length() && i <= 2; i++) {
-        if (i != 0 && s.charAt(0) == '0') break;
+        if (i != 0 && s.charAt(0) == '0')
+            break;
         String part = s.substring(0, i + 1);
         if (Integer.valueOf(part) <= 255) {
-            if (path.length() != 0) part = "." + part;
+            if (path.length() != 0)
+                part = "." + part;
             path.append(part);
             doRestore(k + 1, path, s.substring(i + 1), addresses);
             path.delete(path.length() - part.length(), path.length());
@@ -1612,33 +1621,36 @@ private int m;
 private int n;
 
 public boolean exist(char[][] board, String word) {
-    if (word == null || word.length() == 0) return true;
-    if (board == null || board.length == 0 || board[0].length == 0) return false;
+    if (word == null || word.length() == 0)
+        return true;
+    if (board == null || board.length == 0 || board[0].length == 0)
+        return false;
+
     m = board.length;
     n = board[0].length;
     boolean[][] visited = new boolean[m][n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
             if (backtracking(board, visited, word, 0, i, j)) return true;
-        }
-    }
+
     return false;
 }
 
 private boolean backtracking(char[][] board, boolean[][] visited, String word, int start, int r, int c) {
-    if (start == word.length()) {
+    if (start == word.length())
         return true;
-    }
-    if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != word.charAt(start) || visited[r][c]) {
+    if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != word.charAt(start) || visited[r][c])
         return false;
-    }
+
     visited[r][c] = true;
-    for (int[] d : direction) {
-        if (backtracking(board, visited, word, start + 1, r + d[0], c + d[1])) {
+
+    for (int[] d : direction)
+        if (backtracking(board, visited, word, start + 1, r + d[0], c + d[1]))
             return true;
-        }
-    }
+
     visited[r][c] = false;
+
     return false;
 }
 ```
@@ -1662,18 +1674,20 @@ private boolean backtracking(char[][] board, boolean[][] visited, String word, i
 ```java
 public List<String> binaryTreePaths(TreeNode root) {
     List<String> paths = new ArrayList();
-    if (root == null) return paths;
+    if (root == null)
+        return paths;
     List<Integer> values = new ArrayList<>();
     backtracking(root, values, paths);
     return paths;
 }
 
 private void backtracking(TreeNode node, List<Integer> values, List<String> paths) {
-    if (node == null) return;
+    if (node == null)
+        return;
     values.add(node.val);
-    if (isLeaf(node)) {
+    if (isLeaf(node))
         paths.add(buildPath(values));
-    } else {
+    else {
         backtracking(node.left, values, paths);
         backtracking(node.right, values, paths);
     }
@@ -1688,9 +1702,8 @@ private String buildPath(List<Integer> values) {
     StringBuilder str = new StringBuilder();
     for (int i = 0; i < values.size(); i++) {
         str.append(values.get(i));
-        if (i != values.size() - 1) {
+        if (i != values.size() - 1)
             str.append("->");
-        }
     }
     return str.toString();
 }
@@ -1727,7 +1740,8 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
         return;
     }
     for (int i = 0; i < visited.length; i++) {
-        if (visited[i]) continue;
+        if (visited[i])
+            continue;
         visited[i] = true;
         permuteList.add(nums[i]);
         backtracking(permuteList, visited, nums, ret);
@@ -1767,8 +1781,10 @@ private void backtracking(List<Integer> permuteList, boolean[] visited, int[] nu
     }
 
     for (int i = 0; i < visited.length; i++) {
-        if (i != 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue; // 防止重复
-        if (visited[i]) continue;
+        if (i != 0 && nums[i] == nums[i - 1] && !visited[i - 1])
+            continue; // 防止重复
+        if (visited[i])
+            continue;
         visited[i] = true;
         permuteList.add(nums[i]);
         backtracking(permuteList, visited, nums, ret);
@@ -1827,27 +1843,25 @@ A solution set is:
 ```
 
 ```java
- private List<List<Integer>> ret;
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    List<List<Integer>> ret = new ArrayList<>();
+    doCombination(candidates, target, 0, new ArrayList<>(), ret);
+    return ret;
+}
 
- public List<List<Integer>> combinationSum(int[] candidates, int target) {
-     ret = new ArrayList<>();
-     doCombination(candidates, target, 0, new ArrayList<>());
-     return ret;
- }
-
- private void doCombination(int[] candidates, int target, int start, List<Integer> list) {
-     if (target == 0) {
-         ret.add(new ArrayList<>(list));
-         return;
-     }
-     for (int i = start; i < candidates.length; i++) {
-         if (candidates[i] <= target) {
-             list.add(candidates[i]);
-             doCombination(candidates, target - candidates[i], i, list);
-             list.remove(list.size() - 1);
-         }
-     }
- }
+private void doCombination(int[] candidates, int target, int start, List<Integer> list, List<List<Integer>> ret) {
+    if (target == 0) {
+        ret.add(new ArrayList<>(list));
+        return;
+    }
+    for (int i = start; i < candidates.length; i++) {
+        if (candidates[i] <= target) {
+            list.add(candidates[i]);
+            doCombination(candidates, target - candidates[i], i, list, ret);
+            list.remove(list.size() - 1);
+        }
+    }
+}
 ```
 
 **含有相同元素的求组合求和** 
@@ -1866,26 +1880,25 @@ A solution set is:
 ```
 
 ```java
-private List<List<Integer>> ret;
-
 public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-    ret = new ArrayList<>();
+    List<List<Integer>> ret = new ArrayList<>();
     Arrays.sort(candidates);
-    doCombination(candidates, target, 0, new ArrayList<>(), new boolean[candidates.length]);
+    doCombination(candidates, target, 0, new ArrayList<>(), new boolean[candidates.length], ret);
     return ret;
 }
 
-private void doCombination(int[] candidates, int target, int start, List<Integer> list, boolean[] visited) {
+private void doCombination(int[] candidates, int target, int start, List<Integer> list, boolean[] visited, List<List<Integer>> ret) {
     if (target == 0) {
         ret.add(new ArrayList<>(list));
         return;
     }
     for (int i = start; i < candidates.length; i++) {
-        if (i != 0 && candidates[i] == candidates[i - 1] && !visited[i - 1]) continue;
+        if (i != 0 && candidates[i] == candidates[i - 1] && !visited[i - 1])
+            continue;
         if (candidates[i] <= target) {
             list.add(candidates[i]);
             visited[i] = true;
-            doCombination(candidates, target - candidates[i], i + 1, list, visited);
+            doCombination(candidates, target - candidates[i], i + 1, list, visited, ret);
             visited[i] = false;
             list.remove(list.size() - 1);
         }
@@ -1905,17 +1918,13 @@ Output:
 [[1,2,6], [1,3,5], [2,3,4]]
 ```
 
-题目描述：从 1-9 数字中选出 k 个数，使得它们的和为 n。
+题目描述：从 1-9 数字中选出 k 个数不重复的数，使得它们的和为 n。
 
 ```java
 public List<List<Integer>> combinationSum3(int k, int n) {
     List<List<Integer>> ret = new ArrayList<>();
     List<Integer> path = new ArrayList<>();
-    for (int i = 1; i <= 9; i++) {
-        path.add(i);
-        backtracking(k - 1, n - i, path, i, ret);
-        path.remove(0);
-    }
+    backtracking(k, n, path, 1, ret);
     return ret;
 }
 
@@ -1924,10 +1933,11 @@ private void backtracking(int k, int n, List<Integer> path, int start, List<List
         ret.add(new ArrayList<>(path));
         return;
     }
-    if (k == 0 || n == 0) return;
-    for (int i = start + 1; i <= 9; i++) { // 只能访问下一个元素，防止遍历的结果重复
+    if (k == 0 || n == 0)
+        return;
+    for (int i = start; i <= 9; i++) {
         path.add(i);
-        backtracking(k - 1, n - i, path, i, ret);
+        backtracking(k - 1, n - i, path, i + 1, ret);
         path.remove(path.size() - 1);
     }
 }
@@ -1946,9 +1956,8 @@ private List<Integer> subsetList;
 public List<List<Integer>> subsets(int[] nums) {
     ret = new ArrayList<>();
     subsetList = new ArrayList<>();
-    for (int i = 0; i <= nums.length; i++) { // 不同的子集大小
+    for (int i = 0; i <= nums.length; i++) // 不同的子集大小
         backtracking(0, i, nums);
-    }
     return ret;
 }
 
@@ -1957,7 +1966,6 @@ private void backtracking(int startIdx, int size, int[] nums) {
         ret.add(new ArrayList(subsetList));
         return;
     }
-
     for (int i = startIdx; i < nums.length; i++) {
         subsetList.add(nums[i]);
         backtracking(i + 1, size, nums);
@@ -1994,9 +2002,10 @@ public List<List<Integer>> subsetsWithDup(int[] nums) {
     subsetList = new ArrayList<>();
     visited = new boolean[nums.length];
     Arrays.sort(nums);
-    for (int i = 0; i <= nums.length; i++) {
+
+    for (int i = 0; i <= nums.length; i++)
         backtracking(0, i, nums);
-    }
+
     return ret;
 }
 
@@ -2005,9 +2014,9 @@ private void backtracking(int startIdx, int size, int[] nums) {
         ret.add(new ArrayList(subsetList));
         return;
     }
-
     for (int i = startIdx; i < nums.length; i++) {
-        if (i != 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
+        if (i != 0 && nums[i] == nums[i - 1] && !visited[i - 1])
+            continue;
         subsetList.add(nums[i]);
         visited[i] = true;
         backtracking(i + 1, size, nums);
@@ -2036,11 +2045,11 @@ private List<List<String>> ret;
 
 public List<List<String>> partition(String s) {
     ret = new ArrayList<>();
-    doPartion(new ArrayList<>(), s);
+    doPartition(new ArrayList<>(), s);
     return ret;
 }
 
-private void doPartion(List<String> list, String s) {
+private void doPartition(List<String> list, String s) {
     if (s.length() == 0) {
         ret.add(new ArrayList<>(list));
         return;
@@ -2048,16 +2057,16 @@ private void doPartion(List<String> list, String s) {
     for (int i = 0; i < s.length(); i++) {
         if (isPalindrome(s, 0, i)) {
             list.add(s.substring(0, i + 1));
-            doPartion(list, s.substring(i + 1));
+            doPartition(list, s.substring(i + 1));
             list.remove(list.size() - 1);
         }
     }
 }
 
 private boolean isPalindrome(String s, int begin, int end) {
-    while (begin < end) {
-        if (s.charAt(begin++) != s.charAt(end--)) return false;
-    }
+    while (begin < end)
+        if (s.charAt(begin++) != s.charAt(end--))
+            return false;
     return true;
 }
 ```
@@ -2076,20 +2085,19 @@ private char[][] board;
 
 public void solveSudoku(char[][] board) {
     this.board = board;
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++) {
-            if (board[i][j] == '.') continue;
+            if (board[i][j] == '.')
+                continue;
             int num = board[i][j] - '0';
             rowsUsed[i][num] = true;
             colsUsed[j][num] = true;
             cubesUsed[cubeNum(i, j)][num] = true;
         }
-    }
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+
+    for (int i = 0; i < 9; i++)
+        for (int j = 0; j < 9; j++)
             backtracking(i, j);
-        }
-    }
 }
 
 private boolean backtracking(int row, int col) {
@@ -2097,14 +2105,17 @@ private boolean backtracking(int row, int col) {
         row = col == 8 ? row + 1 : row;
         col = col == 8 ? 0 : col + 1;
     }
-    if (row == 9) {
+
+    if (row == 9)
         return true;
-    }
+
     for (int num = 1; num <= 9; num++) {
-        if (rowsUsed[row][num] || colsUsed[col][num] || cubesUsed[cubeNum(row, col)][num]) continue;
+        if (rowsUsed[row][num] || colsUsed[col][num] || cubesUsed[cubeNum(row, col)][num])
+            continue;
         rowsUsed[row][num] = colsUsed[col][num] = cubesUsed[cubeNum(row, col)][num] = true;
         board[row][col] = (char) (num + '0');
-        if (backtracking(row, col)) return true;
+        if (backtracking(row, col))
+            return true;
         board[row][col] = '.';
         rowsUsed[row][num] = colsUsed[col][num] = cubesUsed[cubeNum(row, col)][num] = false;
     }
@@ -2124,15 +2135,15 @@ private int cubeNum(int i, int j) {
 
 <div align="center"> <img src="../pics//1f080e53-4758-406c-bb5f-dbedf89b63ce.jpg"/> </div><br>
 
-题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，要求解所有的 n 皇后解。
+题目描述：在 n\*n 的矩阵中摆放 n 个皇后，并且每个皇后不能在同一行，同一列，同一对角线上，求所有的 n 皇后的解。
 
 一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
 
-45 度对角线标记数组的维度为 2\*n - 1，通过下图可以明确 (r,c) 的位置所在的数组下标为 r + c。
+45 度对角线标记数组的维度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
 
 <div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
 
-135 度对角线标记数组的维度也是 2\*n - 1，(r,c) 的位置所在的数组下标为 n - 1 - (r - c)。
+135 度对角线标记数组的维度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
 <div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
 
@@ -2147,21 +2158,21 @@ private int n;
 public List<List<String>> solveNQueens(int n) {
     ret = new ArrayList<>();
     nQueens = new char[n][n];
-    Arrays.fill(nQueens, '.');
+    for(int i = 0; i < n; i++)
+        Arrays.fill(nQueens[i], '.');
     colUsed = new boolean[n];
     diagonals45Used = new boolean[2 * n - 1];
     diagonals135Used = new boolean[2 * n - 1];
     this.n = n;
-    backstracking(0);
+    backtracking(0);
     return ret;
 }
 
-private void backstracking(int row) {
+private void backtracking(int row) {
     if (row == n) {
         List<String> list = new ArrayList<>();
-        for (char[] chars : nQueens) {
+        for (char[] chars : nQueens)
             list.add(new String(chars));
-        }
         ret.add(list);
         return;
     }
@@ -2169,12 +2180,11 @@ private void backstracking(int row) {
     for (int col = 0; col < n; col++) {
         int diagonals45Idx = row + col;
         int diagonals135Idx = n - 1 - (row - col);
-        if (colUsed[col] || diagonals45Used[diagonals45Idx] || diagonals135Used[diagonals135Idx]) {
+        if (colUsed[col] || diagonals45Used[diagonals45Idx] || diagonals135Used[diagonals135Idx])
             continue;
-        }
         nQueens[row][col] = 'Q';
         colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = true;
-        backstracking(row + 1);
+        backtracking(row + 1);
         colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = false;
         nQueens[row][col] = '.';
     }
