@@ -43,6 +43,7 @@
     * [内存模型三大特性](#内存模型三大特性)
     * [先行发生原则](#先行发生原则)
 * [十一、线程安全](#十一线程安全)
+    * [线程安全定义](#线程安全定义)
     * [线程安全分类](#线程安全分类)
     * [线程安全的实现方法](#线程安全的实现方法)
 * [十二、锁优化](#十二锁优化)
@@ -86,7 +87,7 @@
 
 ## 限期等待（Timed Waiting）
 
-无需等待其它线程显示地唤醒，在一定时间之后会被系统自动唤醒。
+无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
 
 调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。
 
@@ -188,7 +189,7 @@ public static void main(String[] args) {
 
 ## Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显示地管理线程的生命周期。
+Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。
 
 主要有三种 Executor：
 
@@ -715,10 +716,10 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 public class CountdownLatchExample {
 
     public static void main(String[] args) throws InterruptedException {
-        final int totalTread = 10;
-        CountDownLatch countDownLatch = new CountDownLatch(totalTread);
+        final int totalThread = 10;
+        CountDownLatch countDownLatch = new CountDownLatch(totalThread);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalTread; i++) {
+        for (int i = 0; i < totalThread; i++) {
             executorService.execute(() -> {
                 System.out.print("run..");
                 countDownLatch.countDown();
@@ -747,12 +748,11 @@ run..run..run..run..run..run..run..run..run..run..end
 
 ```java
 public class CyclicBarrierExample {
-
     public static void main(String[] args) throws InterruptedException {
-        final int totalTread = 10;
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(totalTread);
+        final int totalThread = 10;
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(totalThread);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalTread; i++) {
+        for (int i = 0; i < totalThread; i++) {
             executorService.execute(() -> {
                 System.out.print("before..");
                 try {
@@ -1235,6 +1235,10 @@ join() 方法返回先行发生于 Thread 对象的结束。
 
 # 十一、线程安全
 
+## 线程安全定义
+
+一个类在可以被多个线程安全调用时就是线程安全的。
+
 ## 线程安全分类
 
 线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类：不可变、绝对线程安全、相对线程安全、线程兼容和线程对立。
@@ -1507,7 +1511,7 @@ public class ThreadLocalExample1 {
 
 <div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
-每个 Thread 都有一个 TreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
+每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
 
 ```java
 /* ThreadLocal values pertaining to this thread. This map is maintained
@@ -1595,7 +1599,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 ## 轻量级锁
 
-轻量级锁是 JDK 1.6 之中加入的新型锁机制，它名字中的“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的，因此传统的锁机制就称为“重量级”锁。首先需要强调一点的是，轻量级锁并不是用来代替重要级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用操作系统互斥量产生的性能消耗。
+轻量级锁是 JDK 1.6 之中加入的新型锁机制，它名字中的“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的，因此传统的锁机制就称为“重量级”锁。首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用操作系统互斥量产生的性能消耗。
 
 要理解轻量级锁，以及后面会讲到的偏向锁的原理和运作过程，必须从 HotSpot 虚拟机的对象（对象头部分）的内存布局开始介绍。HotSpot 虚拟机的对象头（Object Header）分为两部分信息，第一部分用于存储对象自身的运行时数据，如哈希码（HashCode）、GC 分代年龄（Generational GC Age）等，这部分数据是长度在 32 位和 64 位的虚拟机中分别为 32 bit 和 64 bit，官方称它为“Mark Word”，它是实现轻量级锁和偏向锁的关键。另外一部分用于存储指向方法区对象类型数据的指针，如果是数组对象的话，还会有一个额外的部分用于存储数组长度。
 
