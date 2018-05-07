@@ -603,7 +603,10 @@ INSERT 触发器包含一个名为 NEW 的虚拟表。
 
 ```sql
 CREATE TRIGGER mytrigger AFTER INSERT ON mytable
-FOR EACH ROW SELECT NEW.col;
+FOR EACH ROW SELECT NEW.col into @result;
+
+-- 获取结果
+SELECT @result;
 ```
 
 DELETE 触发器包含一个名为 OLD 的虚拟表，并且是只读的。
