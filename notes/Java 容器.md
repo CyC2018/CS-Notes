@@ -40,7 +40,7 @@
 
 - Vector：和 ArrayList 类似，但它是线程安全的；
 
-- LinkedList：基于双向循环链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
+- LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 ### 3. Queue
 
@@ -212,7 +212,7 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 ### 4. 和 LinkedList 的区别
 
-- ArrayList 基于动态数组实现，LinkedList 基于双向循环链表实现；
+- ArrayList 基于动态数组实现，LinkedList 基于双向链表实现；
 - ArrayList 支持随机访问，LinkedList 不支持；
 - LinkedList 在任意位置添加删除元素更快。
 

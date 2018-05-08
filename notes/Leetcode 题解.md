@@ -2208,9 +2208,8 @@ Output : [0, 2]
 
 ```java
 public List<Integer> diffWaysToCompute(String input) {
-    int n = input.length();
     List<Integer> ways = new ArrayList<>();
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < input.length(); i++) {
         char c = input.charAt(i);
         if (c == '+' || c == '-' || c == '*') {
             List<Integer> left = diffWaysToCompute(input.substring(0, i));
@@ -2232,9 +2231,10 @@ public List<Integer> diffWaysToCompute(String input) {
             }
         }
     }
-    if (ways.size() == 0) {
+
+    if (ways.size() == 0)
         ways.add(Integer.valueOf(input));
-    }
+
     return ways;
 }
 ```

