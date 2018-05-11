@@ -1017,6 +1017,8 @@ public boolean match(char[] str, char[] pattern) {
 
 ```java
 public boolean isNumeric(char[] str) {
+    if (str == null)
+        return false;
     return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
 }
 ```
