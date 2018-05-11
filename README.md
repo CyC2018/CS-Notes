@@ -63,7 +63,7 @@
 
 整理自《SQL 必知必会》
 
-> [Leetcode/Database 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20题解.md)
+> [Leetcode-Database 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20题解.md)
 
 Leetcode 上数据库题目的解题记录。
 
