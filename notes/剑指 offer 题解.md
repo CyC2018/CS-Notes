@@ -1805,13 +1805,10 @@ public int findKthSmallest(int[] nums, int k) {
 private int partition(int[] nums, int l, int h) {
     // 切分元素
     int parti = nums[l];
-    // [l + 1, i) (j, h]
-    int i = l + 1, j = h;
+    int i = l, j = h + 1;
     while (true) {
-        while (i != h && nums[i] < parti)
-            i++;
-        while (j != l && nums[j] > parti)
-            j--;
+        while (i != h && nums[++i] < parti) ;
+        while (j != l && nums[--j] > parti) ;
         if (i >= j)
             break;
         swap(nums, i, j);
