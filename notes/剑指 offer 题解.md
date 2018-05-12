@@ -1776,8 +1776,6 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 
 快速排序的 partition() 方法，会返回一个整数 j 使得 a[l..j-1] 小于等于 a[j]，且 a[j+1..h] 大于等于 a[j]，此时 a[j] 就是数组的第 j 大元素。可以利用这个特性找出数组的第 K 个元素，这种找第 K 个元素的算法称为快速选择算法。
 
-找到第 K 个元素之后，就可以再遍历一次数组，所有小于等于该元素的数组元素都是最小的 K 个数。
-
 ```java
 public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     ArrayList<Integer> ret = new ArrayList<>();
@@ -1805,10 +1803,15 @@ public int findKthSmallest(int[] nums, int k) {
 }
 
 private int partition(int[] nums, int l, int h) {
-    int i = l, j = h + 1;
+    // 切分元素
+    int parti = nums[l];
+    // [l + 1, i) (j, h]
+    int i = l + 1, j = h;
     while (true) {
-        while (i < h && nums[++i] < nums[l]) ;
-        while (j > l && nums[l] < nums[--j]) ;
+        while (i != h && nums[i] < parti)
+            i++;
+        while (j != l && nums[j] > parti)
+            j--;
         if (i >= j)
             break;
         swap(nums, i, j);
