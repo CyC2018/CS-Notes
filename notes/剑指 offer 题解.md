@@ -1779,46 +1779,49 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 找到第 K 个元素之后，就可以再遍历一次数组，所有小于等于该元素的数组元素都是最小的 K 个数。
 
 ```java
- public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
-        ArrayList<Integer> res = new ArrayList<>();
-        if (k > input.length || k <= 0) return res;
-        findKthSmallest(input, k - 1);
-        for (int i = 0; i < k; i++) {
-            res.add(input[i]);
-        }
-        return res;
+public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
+    ArrayList<Integer> ret = new ArrayList<>();
+    if (k > nums.length || k <= 0)
+        return ret;
+    int kthSmallest = findKthSmallest(nums, k - 1);
+    // findKthSmallest 会让改变数组，使得前 k 个数都是最小的 k 个数
+    for (int i = 0; i < k; i++)
+        ret.add(nums[i]);
+    return ret;
+}
+
+public int findKthSmallest(int[] nums, int k) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int j = partition(nums, l, h);
+        if (j == k)
+            break;
+        if (j > k)
+            h = j - 1;
+        else
+            l = j + 1;
     }
+    return nums[k];
+}
 
-    private void findKthSmallest(int[] nums, int k) {
-        int l = 0, h = nums.length - 1;
-        while (l < h) {
-            int j = paration(nums, l, h);
-            if (j == k) break;
-            else if (j > k) h = j - 1;
-            else l = j + 1;
-        }
+private int partition(int[] nums, int l, int h) {
+    int i = l, j = h + 1;
+    while (true) {
+        while (i < h && nums[++i] < nums[l]) ;
+        while (j > l && nums[l] < nums[--j]) ;
+        if (i >= j)
+            break;
+        swap(nums, i, j);
     }
+    swap(nums, l, j);
+    return j;
+}
 
-    private int paration(int[] nums, int l, int h) {
-        //nums[l+1,i] nums[j,h]
-        int i = l, j = h + 1;
-        while (true) {
-            while (i < h && nums[++i] < nums[l]) ;
-            while (j > l + 1 && nums[--j] > nums[l]) ;
-            if (i >= j) break;
-            swap(nums, i, j);
-        }
-        swap(nums, l, j);
-        return j;
-
-
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int t = nums[i];
-        nums[i] = nums[j];
-        nums[j] = t;
-    }
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
 ```
 
 ### 大小为 K 的最小堆
