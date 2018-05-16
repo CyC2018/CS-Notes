@@ -2365,7 +2365,7 @@ private int rob(int[] nums, int first, int last) {
 定义一个数组 dp 存储错误方式数量，dp[i] 表示 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
 - i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
-- i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (n-1)\*dp[i-1] 种错误装信方式。
+- i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
 
@@ -6197,20 +6197,19 @@ We cannot find a way to divide the set of nodes into two independent subsets.
 public boolean isBipartite(int[][] graph) {
     int[] colors = new int[graph.length];
     Arrays.fill(colors, -1);
-
-    for (int i = 0; i < graph.length; i++)
-        if (colors[i] != -1 && !isBipartite(graph, i, 0, colors))
+    for (int i = 0; i < graph.length; i++) {
+        if (colors[i] == -1 && !isBipartite(graph, i, 0, colors))
             return false;
-
+    }
     return true;
 }
 
-private boolean isBipartite(int[][] graph, int cur, int color, int[] colors) {
-    if (colors[cur] != -1)
-        return colors[cur] == color;
+private boolean isBipartite(int[][] graph, int node, int color, int[] colors) {
+    if (colors[node] != -1)
+        return colors[node] == color;
 
-    colors[cur] = color;
-    for (int next : graph[cur])
+    colors[node] = color;
+    for (int next : graph[node])
         if (!isBipartite(graph, next, 1 - color, colors))
             return false;
 
