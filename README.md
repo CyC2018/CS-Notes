@@ -77,6 +77,10 @@ Leetcode 上数据库题目的解题记录。
 
 ## Java :coffee:
 
+> [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
+
+整理了一些常见考点。
+
 > [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
 整理自《深入理解 Java 虚拟机》
@@ -92,10 +96,6 @@ Leetcode 上数据库题目的解题记录。
 > [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
 File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
-
-> [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
-
-整理了一些常见考点。
 
 > [JDK 中的设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JDK%20中的设计模式.md)
 
