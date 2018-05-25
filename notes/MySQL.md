@@ -19,6 +19,10 @@
     * [水平切分](#水平切分)
     * [切分的选择](#切分的选择)
     * [存在的问题](#存在的问题)
+* [六、分库与分表带来的分布式困境与应对之策](#六分库与分表带来的分布式困境与应对之策)
+    * [事务问题](#事务问题)
+    * [查询问题](#查询问题)
+    * [ID 唯一性](#id-唯一性)
 * [六、故障转移和故障恢复](#六故障转移和故障恢复)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -368,6 +372,24 @@ do {
 
 最显而易见的就是数据的定位问题和数据的增删改查的重复执行问题，这些都可以通过应用程序解决，但必然引起额外的逻辑运算。
 
+# 六、分库与分表带来的分布式困境与应对之策
+
+<div align="center"> <img src="../pics//c81af7d8-3128-4a3c-a9c9-3e0f5b87ab22.jpg"/> </div><br>
+
+## 事务问题
+
+使用分布式事务。
+
+## 查询问题
+
+使用汇总表。
+
+## ID 唯一性
+
+- 使用全局唯一 ID：GUID。
+- 为每个分片指定一个 ID 范围。
+- 分布式 ID 生成器 (如 Twitter 的 [Snowflake](https://twitter.github.io/twitter-server/) 算法)。
+
 
 # 六、故障转移和故障恢复
 
@@ -396,3 +418,6 @@ do {
 - [MySQL 索引背后的数据结构及算法原理 ](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
 - [20+ 条 MySQL 性能优化的最佳经验 ](https://www.jfox.info/20-tiao-mysql-xing-nen-you-hua-de-zui-jia-jing-yan.html)
 - [数据库为什么分库分表？mysql的分库分表方案](https://www.i3geek.com/archives/1108)
+- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
+- [服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策](http://blog.720ui.com/2017/mysql_core_09_multi_db_table2/ "服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策")
+- [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
