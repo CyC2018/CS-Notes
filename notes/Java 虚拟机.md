@@ -191,7 +191,7 @@ WeakHashMap 的 Entry 继承自 WeakReference，主要用来实现缓存。
 private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
 ```
 
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMa 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
+Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMap 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
 
 ```java
 public final class ConcurrentCache<K, V> {
