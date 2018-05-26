@@ -18,10 +18,10 @@
     * [优化数据访问](#优化数据访问)
     * [重构查询方式](#重构查询方式)
 * [五、切分](#五切分)
-    * [垂直切分](#垂直切分)
     * [水平切分](#水平切分)
-    * [切分的选择](#切分的选择)
-    * [存在的问题](#存在的问题)
+    * [垂直切分](#垂直切分)
+    * [Sharding 策略](#sharding-策略)
+    * [Sharding 存在的问题](#sharding-存在的问题)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -380,43 +380,53 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 # 五、切分
 
+## 水平切分
 
-随着时间和业务的发展，数据库中的表会越来越多，并且表中的数据量也会越来越大，那么读写操作的开销也会随着增大。
+<div align="center"> <img src="../pics//63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg"/> </div><br>
+
+水平切分就是就是常见的 Sharding，它是将同一个表中的记录拆分到多个结构相同的表中。
+
+当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
 
 ## 垂直切分
 
-将表按功能模块、关系密切程度划分出来，部署到不同的库上。例如，我们会建立商品数据库 payDB、用户数据库 userDB 等，分别用来存储项目与商品有关的表和与用户有关的表。
+<div align="center"> <img src="../pics//e130e5b8-b19a-4f1e-b860-223040525cf6.jpg"/> </div><br>
 
-## 水平切分
+垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分。也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
 
-把表中的数据按照某种规则存储到多个结构相同的表中，例如按 id 的散列值、性别等进行划分。
+也可以在数据库的层面使用垂直切分，它按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库 payDB、用户数据库 userBD 等。
 
-## 切分的选择
+## Sharding 策略
 
-如果数据库中的表太多，并且项目各项业务逻辑清晰，那么垂直切分是首选。
+- 哈希取模：hash(key) % NUM_DB
+- 范围：可以是 ID 范围也可以是时间范围
+- 映射表：使用单独的一个数据库来存储映射关系
 
-如果数据库的表不多，但是单表的数据量很大，应该选择水平切分。
-
-## 存在的问题
+## Sharding 存在的问题
 
 ### 1. 事务问题
 
-在执行分库分表之后，由于数据存储到了不同的库上，数据库事务管理出现了困难。如果依赖数据库本身的分布式事务管理功能去执行事务，将付出高昂的性能代价；如果由应用程序去协助控制，形成程序逻辑上的事务，又会造成编程方面的负担。
+使用分布式事务。
 
-### 2. 跨库跨表连接问题
+### 2. JOIN
 
-在执行了分库分表之后，难以避免会将原本逻辑关联性很强的数据划分到不同的表、不同的库上。这时，表的连接操作将受到限制，我们无法连接位于不同分库的表，也无法连接分表粒度不同的表，导致原本只需要一次查询就能够完成的业务需要进行多次才能完成。
+将原来的 JOIN 查询分解成多个单表查询，然后在用户程序中进行 JOIN。
 
-### 3. 额外的数据管理负担和数据运算压力
+### 3. ID 唯一性
 
-最显而易见的就是数据的定位问题和数据的增删改查的重复执行问题，这些都可以通过应用程序解决，但必然引起额外的逻辑运算。
+- 使用全局唯一 ID：GUID。
+- 为每个分片指定一个 ID 范围。
+- 分布式 ID 生成器 (如 Twitter 的 Snowflake 算法)。
+
+更多内容请参考：
+
+- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
+- [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
 
 # 参考资料
 
 - BaronScbwartz, PeterZaitsev, VadimTkacbenko, 等. 高性能 MySQL[M]. 电子工业出版社, 2013.
-- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
-- [20+ 条 MySQL 性能优化的最佳经验 ](https://www.jfox.info/20-tiao-mysql-xing-nen-you-hua-de-zui-jia-jing-yan.html)
-- [数据库为什么分库分表？mysql的分库分表方案](https://www.i3geek.com/archives/1108)
-- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
+- [20+ 条 MySQL 性能优化的最佳经验](https://www.jfox.info/20-tiao-mysql-xing-nen-you-hua-de-zui-jia-jing-yan.html)
 - [服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策](http://blog.720ui.com/2017/mysql_core_09_multi_db_table2/ "服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策")
 - [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
+- [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
