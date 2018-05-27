@@ -64,13 +64,6 @@
     * [waitpid()](#waitpid)
     * [孤儿进程](#孤儿进程)
     * [僵死进程](#僵死进程)
-* [十一、I/O 复用](#十一io-复用)
-    * [概念理解](#概念理解)
-    * [I/O 模型](#io-模型)
-    * [select poll epoll](#select-poll-epoll)
-    * [select 和 poll 比较](#select-和-poll-比较)
-    * [eopll 工作模式](#eopll-工作模式)
-    * [select poll epoll 应用场景](#select-poll-epoll-应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1208,7 +1201,7 @@ pid_t wait(int *status)
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
 
-参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，我们就可以设定这个参数为 NULL：
+参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，以设定这个参数为 NULL：
 
 ```c
 pid = wait(NULL);
@@ -1217,12 +1210,12 @@ pid = wait(NULL);
 ## waitpid()
 
 ```c
-pid_t waitpid(pid_t pid,int *status,int options)
+pid_t waitpid(pid_t pid, int *status, int options)
 ```
 
 作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
 
-pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么贺 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么和 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
 
 options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
 
@@ -1242,298 +1235,10 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
 
-# 十一、I/O 复用
-
-## 概念理解
-
-I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有处理多个 I/O 事件的能力。
-
-当某个 I/O 事件条件满足时，进程会收到通知。
-
-如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时连接几万个连接，那么就需要创建相同数量的线程。并且相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
-
-## I/O 模型
-
-- 阻塞（Blocking）
-- 非阻塞（Non-blocking）
-- 同步（Synchronous）
-- 异步（Asynchronous）
-
-阻塞非阻塞是等待 I/O 完成的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
-
-同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
-
-<div align="center"> <img src="../pics//1a231f2a-5c2f-4231-8e0f-915aa5894347.jpg" width=""/> </div><br>
-
-
-### 1. 同步-阻塞
-
-这是最常见的一种模型，用户程序在使用 read() 时会执行系统调用从而陷入内核，之后就被阻塞直到系统调用完成。
-
-应该注意到，在阻塞的过程中，其他程序还可以执行，因此阻塞不意味着整个操作系统都被阻塞。因为其他程序还可以执行，因此不消耗 CPU 时间，这种模型的执行效率会比较高。
-
-<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png" width=""/> </div><br>
-
-### 2. 同步-非阻塞
-
-非阻塞意味着用户程序在执行系统调用后还可以继续执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
-
-由于 CPU 要处理更多的用户程序的询问，因此这种模型的效率是比较低的。
-
-<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png" width=""/> </div><br>
-
-### 3. 异步
-
-该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后继续之前的操作。
-
-<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg" width=""/> </div><br>
-
-## select poll epoll
-
-这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。
-
-### 1. select
-
-```c
-int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
-```
-
-- fd_set 表示描述符集合；
-- readset、writeset 和 exceptset 这三个参数指定让操作系统内核测试读、写和异常条件的描述符；
-- timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间；
-- 成功调用返回结果大于 0；出错返回结果为 -1；超时返回结果为 0。
-
-```c
-fd_set fd_in, fd_out;
-struct timeval tv;
-
-// Reset the sets
-FD_ZERO( &fd_in );
-FD_ZERO( &fd_out );
-
-// Monitor sock1 for input events
-FD_SET( sock1, &fd_in );
-
-// Monitor sock2 for output events
-FD_SET( sock2, &fd_out );
-
-// Find out which socket has the largest numeric value as select requires it
-int largest_sock = sock1 > sock2 ? sock1 : sock2;
-
-// Wait up to 10 seconds
-tv.tv_sec = 10;
-tv.tv_usec = 0;
-
-// Call the select
-int ret = select( largest_sock + 1, &fd_in, &fd_out, NULL, &tv );
-
-// Check if select actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    if ( FD_ISSET( sock1, &fd_in ) )
-        // input event on sock1
-
-    if ( FD_ISSET( sock2, &fd_out ) )
-        // output event on sock2
-}
-```
-
-每次调用 select() 都需要将 fd_set \*readfds, fd_set \*writefds, fd_set \*exceptfds 链表内容全部从用户进程内存中复制到操作系统内核中，内核需要将所有 fd_set 遍历一遍，这个过程非常低效。
-
-返回结果中内核并没有声明哪些 fd_set 已经准备好了，所以如果返回值大于 0 时，程序需要遍历所有的 fd_set 判断哪个 I/O 已经准备好。
-
-在 Linux 中 select 最多支持 1024 个 fd_set 同时轮询，其中 1024 由 Linux 内核的 FD_SETSIZE 决定。如果需要打破该限制可以修改 FD_SETSIZE，然后重新编译内核。
-
-### 2. poll
-
-```c
-int poll (struct pollfd *fds, unsigned int nfds, int timeout);
-```
-
-```c
-struct pollfd {
-    int fd;       //文件描述符
-    short events; //监视的请求事件
-    short revents; //已发生的事件
-};
-```
-
-```c
-// The structure for two events
-struct pollfd fds[2];
-
-// Monitor sock1 for input
-fds[0].fd = sock1;
-fds[0].events = POLLIN;
-
-// Monitor sock2 for output
-fds[1].fd = sock2;
-fds[1].events = POLLOUT;
-
-// Wait 10 seconds
-int ret = poll( &fds, 2, 10000 );
-// Check if poll actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    // If we detect the event, zero it out so we can reuse the structure
-    if ( pfd[0].revents & POLLIN )
-        pfd[0].revents = 0;
-        // input event on sock1
-
-    if ( pfd[1].revents & POLLOUT )
-        pfd[1].revents = 0;
-        // output event on sock2
-}
-```
-
-它和 select() 功能基本相同。同样需要每次将 struct pollfd \*fds 复制到内核，返回后同样需要进行轮询每一个 pollfd 是否已经 I/O 准备好。poll() 取消了 1024 个描述符数量上限，但是数量太大以后不能保证执行效率，因为复制大量内存到内核十分低效，所需时间与描述符数量成正比。poll() 在 pollfd 的重复利用上比 select() 的 fd_set 会更好。
-
-如果在多线程下，如果一个线程对某个描述符调用了 poll() 系统调用，但是另一个线程关闭了该描述符，会导致 poll() 调用结果不确定，该问题同样出现在 select() 中。
-
-### 3. epoll
-
-```c
-int epoll_create(int size);
-int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
-int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
-```
-
-```c
-// Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
-// The function argument is ignored (it was not before, but now it is), so put your favorite number here
-int pollingfd = epoll_create( 0xCAFE );
-
-if ( pollingfd < 0 )
- // report error
-
-// Initialize the epoll structure in case more members are added in future
-struct epoll_event ev = { 0 };
-
-// Associate the connection class instance with the event. You can associate anything
-// you want, epoll does not use this information. We store a connection class pointer, pConnection1
-ev.data.ptr = pConnection1;
-
-// Monitor for input, and do not automatically rearm the descriptor after the event
-ev.events = EPOLLIN | EPOLLONESHOT;
-// Add the descriptor into the monitoring list. We can do it even if another thread is
-// waiting in epoll_wait - the descriptor will be properly added
-if ( epoll_ctl( epollfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 )
-    // report error
-
-// Wait for up to 20 events (assuming we have added maybe 200 sockets before that it may happen)
-struct epoll_event pevents[ 20 ];
-
-// Wait for 10 seconds, and retrieve less than 20 epoll_event and store them into epoll_event array
-int ready = epoll_wait( pollingfd, pevents, 20, 10000 );
-// Check if epoll actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    // Check if any events detected
-    for ( int i = 0; i < ret; i++ )
-    {
-        if ( pevents[i].events & EPOLLIN )
-        {
-            // Get back our connection pointer
-            Connection * c = (Connection*) pevents[i].data.ptr;
-            c->handleReadEvent();
-         }
-    }
-}
-```
-
-epoll 仅仅适用于 Linux OS。
-
-它是 select 和 poll 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
-
-select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
-
-新版本的 epoll_create(int size) 参数 size 不起任何作用，在旧版本的 epoll 中如果描述符的数量大于 size，不保证服务质量。
-
-epoll_ctl() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
-
-epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select/poll 对注册的所有描述符遍历一遍。
-
-epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
-
-## select 和 poll 比较
-
-### 1. 功能
-
-它们提供了几乎相同的功能，但是在一些细节上有所不同：
-
-- select 会修改 fd_set 参数，而 poll 不会；
-- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
-- poll 提供了更多的事件类型。
-
-### 2. 速度
-
-poll 和 select 在速度上都很慢。
-
-- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
-- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
-
-### 3. 可移植性
-
-几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
-
-## eopll 工作模式
-
-epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
-
-### 1. LT 模式
-
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
-
-### 2. ET 模式
-
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
-
-## select poll epoll 应用场景
-
-很容易产生一种错觉认为只要用 epoll 就可以了，select poll 都是历史遗留问题，并没有什么应用场景，其实并不是这样的。
-
-### 1. select 应用场景
-
-select() poll() epoll_wait() 都有一个 timeout 参数，在 select() 中 timeout 的精确度为 1ns，而 poll() 和 epoll_wait() 中则为 1ms。所以 select 更加适用于实时要求更高的场景，比如核反应堆的控制。
-
-select 历史更加悠久，它的可移植性更好，几乎被所有主流平台所支持。
-
-### 2. poll 应用场景
-
-poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
-
-需要同时监控小于 1000 个描述符。那么也没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
-
-需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。epoll 的描述符存储在内核，不容易调试。
-
-### 3. epoll 应用场景
-
-程序只需要运行在 Linux 平台上，有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
-
-### 4. 性能对比
-
-> [epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
-
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
-- [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
-- [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
-- [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
-- [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
 - [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)

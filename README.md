@@ -42,6 +42,10 @@
 
 整理自《图解 HTTP》
 
+> [Socket](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md)
+
+整理自《Unix 网络编程》
+
 
 ## 面向对象 :couple:
 
@@ -87,7 +91,7 @@ Leetcode 上数据库题目的解题记录。
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
-只整理了一些比较基础的概念，之后会继续添加更多内容。
+整理了一些并发的基本概念。
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
