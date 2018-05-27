@@ -906,9 +906,9 @@ strSQL = "SELECT * FROM users;"
 
 ### 3. 防范手段
 
-（一）使用参数化查询
+**（一）使用参数化查询** 
 
-以下以 Java 中的 PreparedStatement 为例，它是预先编译的 SQL 语句，可以并且传入适当参数多次执行。由于没有拼接的过程，因此可以防止 SQL 注入的发生。
+以下以 Java 中的 PreparedStatement 为例，它是预先编译的 SQL 语句，可以传入适当参数并且多次执行。由于没有拼接的过程，因此可以防止 SQL 注入的发生。
 
 ```java
 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE userid=? AND password=?");
@@ -917,7 +917,7 @@ stmt.setString(2, password);
 ResultSet rs = stmt.executeQuery();
 ```
 
-（二）单引号转换
+**（二）单引号转换** 
 
 将传入的参数中的单引号转换为连续两个单引号，PHP 中的 Magic quote 可以完成这个功能。
 
@@ -984,7 +984,7 @@ POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
 ```
 
-DELETE /idX/delete HTTP/1.1 是幂等的，即便是不同请求之间接收到的状态码不一样：
+DELETE /idX/delete HTTP/1.1 是幂等的，即便不同的请求接收到的状态码不一样：
 
 ```
 DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
@@ -996,9 +996,9 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 如果要对响应进行缓存，需要满足以下条件：
 
-1. 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
-2. 响应报文的状态码是可缓存的，包括：200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501。
-3. 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
+- 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
+- 响应报文的状态码是可缓存的，包括：200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501。
+- 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
 
 ## XMLHttpRequest
 
@@ -1010,14 +1010,12 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 # 九、HTTP/1.0 与 HTTP/1.1 的区别
 
-1. HTTP/1.1 默认是持久连接
-2. HTTP/1.1 支持管线化处理
-3. HTTP/1.1 支持虚拟主机
-4. HTTP/1.1 新增状态码 100
-5. HTTP/1.1 支持分块传输编码
-6. HTTP/1.1 新增缓存处理指令 max-age
-
-具体内容见上文
+- HTTP/1.1 默认是持久连接
+- HTTP/1.1 支持管线化处理
+- HTTP/1.1 支持虚拟主机
+- HTTP/1.1 新增状态码 100
+- HTTP/1.1 支持分块传输编码
+- HTTP/1.1 新增缓存处理指令 max-age
 
 # 十、HTTP/2.0
 
@@ -1026,7 +1024,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
  HTTP/1.x 实现简单是以牺牲应用性能为代价的：
 
 - 客户端需要使用多个连接才能实现并发和缩短延迟；
-- 不会压缩请求和响应标头，从而导致不必要的网络流量；
+- 不会压缩请求和响应首部，从而导致不必要的网络流量；
 - 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
 
 ## 二进制分帧层
