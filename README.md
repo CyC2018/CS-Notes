@@ -111,10 +111,6 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 整理自《大规模分布式存储系统》
 
-> [一致性协议](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性协议.md)
-
-两阶段提交、Paxos、Raft、拜占庭将军问题。
-
 > [分布式问题分析](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
 
 分布式事务、负载均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。
