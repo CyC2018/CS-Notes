@@ -397,7 +397,7 @@ map.put("K3", "V3");
 - 插入 &lt;K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
 - 插入 &lt;K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2> 前面。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 <K3,V3> 不是插在 <K2,V2> 后面，而是插入在链表头部。
+应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3> 不是插在 &lt;K2,V2> 后面，而是插入在链表头部。
 
 查找需要分成两步进行：
 
@@ -419,7 +419,7 @@ public V put(K key, V value) {
     int hash = hash(key);
     // 确定桶下标
     int i = indexFor(hash, table.length);
-    // 先找出是否已经存在键位 key 的键值对，如果存在的话就更新这个键值对的值为 value
+    // 先找出是否已经存在键为 key 的键值对，如果存在的话就更新这个键值对的值为 value
     for (Entry<K,V> e = table[i]; e != null; e = e.next) {
         Object k;
         if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
@@ -546,7 +546,7 @@ y%x : 00000010
 
 我们知道，位运算的代价比求模运算小的多，因此在进行这种计算时能用位运算的话能带来更高的性能。
 
-确定桶下标的最后一步是将 key 的 hash 值对桶个数取模：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换位位运算。
+确定桶下标的最后一步是将 key 的 hash 值对桶个数取模：hash%capacity，如果能保证 capacity 为 2 的幂次方，那么就可以将这个操作转换为位运算。
 
 ```java
 static int indexFor(int h, int length) {
