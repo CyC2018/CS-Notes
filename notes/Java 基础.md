@@ -27,7 +27,7 @@
 * [十一、特性](#十一特性)
     * [面向对象三大特性](#面向对象三大特性)
     * [Java 各版本的新特性](#java-各版本的新特性)
-    * [Java 与 C++ 的区别](#java-与-c++-的区别)
+    * [Java 与 C++ 的区别](#java-与-c-的区别)
     * [JRE or JDK](#jre-or-jdk)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -51,7 +51,7 @@ final A y = new A();
 y.a = 1;
 ```
 
-**2. 方法**  </font> </br>
+**2. 方法** 
 
 声明方法不能被子类覆盖。
 
@@ -79,7 +79,7 @@ public class A {
 
 **2. 静态方法** 
 
-静态方法在类加载的时候就存在了，它不依赖于任何实例，所以 static 方法必须实现，也就是说它不能是抽象方法（abstract）。
+静态方法在类加载的时候就存在了，它不依赖于任何实例，所以静态方法必须有实现，也就是说它不能是抽象方法（abstract）。
 
 **3. 静态语句块** 
 
@@ -87,11 +87,11 @@ public class A {
 
 **4. 静态内部类** 
 
-内部类的一种，静态内部类不依赖外部类，且不能访问外部类的非 static 变量和方法。
+内部类的一种，静态内部类不依赖外部类，且不能访问外部类的非静态的变量和方法。
 
 **5. 静态导包** 
 
-```source-java
+```java
 import static com.xxx.ClassName.*
 ```
 
@@ -131,12 +131,12 @@ public InitialOrderTest() {
 
 存在继承的情况下，初始化顺序为：
 
-1. 父类（静态变量、静态语句块）
-2. 子类（静态变量、静态语句块）
-3. 父类（实例变量、普通语句块）
-4. 父类（构造函数）
-5. 子类（实例变量、普通语句块）
-6. 子类（构造函数）
+- 父类（静态变量、静态语句块）
+- 子类（静态变量、静态语句块）
+- 父类（实例变量、普通语句块）
+- 父类（构造函数）
+- 子类（实例变量、普通语句块）
+- 子类（构造函数）
 
 # 二、Object 通用方法
 
@@ -191,15 +191,14 @@ x.equals(x); // true
 （二）对称性
 
 ```java
-x.equals(y) == y.equals(x) // true
+x.equals(y) == y.equals(x); // true
 ```
 
 （三）传递性
 
 ```java
-if(x.equals(y) && y.equals(z)) {
+if (x.equals(y) && y.equals(z))
     x.equals(z); // true;
-}
 ```
 
 （四）一致性
@@ -255,7 +254,7 @@ public class EqualExample {
 
 hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。
 
-在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证相等的两个实例散列值也等价。
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个实例散列值也相等。
 
 下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
 
@@ -271,7 +270,7 @@ System.out.println(set.size()); // 2
 
 理想的散列函数应当具有均匀性，即不相等的实例应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
 
-一个数与 31 相乘可以转换成移位和减法：31\*x == (x<<5)-x。
+一个数与 31 相乘可以转换成移位和减法：`31\*x == (x<<5)-x`，编译器会自动进行这个优化。
 
 ```java
 @Override
@@ -593,9 +592,9 @@ ac2.func1();
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
 
-接口也可以包含字段，并且这些字段隐式都是 static 和 final 的。
+接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。
 
-接口中的方法默认都是 public 的，并且不允许定义为 private 或者 protected。
+接口的字段默认都是 static 和 final 的。
 
 ```java
 public interface InterfaceExample {
@@ -606,7 +605,7 @@ public interface InterfaceExample {
     }
 
     int x = 123;
-    //int y;                // Variable 'y' might not have been initialized
+    // int y;                // Variable 'y' might not have been initialized
     public int z = 0;       // Modifier 'public' is redundant for interface fields
     // private int k = 0;   // Modifier 'private' not allowed here
     // protected int l = 0; // Modifier 'protected' not allowed here
@@ -892,15 +891,15 @@ switch (s) {
 switch 不支持 long，是因为 swicth 的设计初衷是为那些只需要对少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
 ```java
-//        long x = 111;
-//        switch (x) { // Incompatible types. Found: 'long', required: 'char, byte, short, int, Character, Byte, Short, Integer, String, or an enum'
-//            case 111:
-//                System.out.println(111);
-//                break;
-//            case 222:
-//                System.out.println(222);
-//                break;
-//        }
+// long x = 111;
+// switch (x) { // Incompatible types. Found: 'long', required: 'char, byte, short, int, Character, Byte, Short, Integer, String, or an enum'
+//     case 111:
+//         System.out.println(111);
+//         break;
+//     case 222:
+//         System.out.println(222);
+//         break;
+// }
 ```
 
 > [Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
@@ -959,7 +958,7 @@ public class Box<T> {
 }
 ```
 
-> [Java 泛型详解](https://www.ziwenxie.site/2017/03/01/java-generic/)</br>[10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
+> [Java 泛型详解](http://www.importnew.com/24029.html)</br>[10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 十、注解
 

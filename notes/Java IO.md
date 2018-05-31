@@ -14,6 +14,7 @@
     * [通道与缓冲区](#通道与缓冲区)
     * [缓冲区状态变量](#缓冲区状态变量)
     * [文件 NIO 实例](#文件-nio-实例)
+    * [选择器](#选择器)
     * [套接字 NIO 实例](#套接字-nio-实例)
     * [内存映射文件](#内存映射文件)
     * [对比](#对比)
@@ -74,9 +75,15 @@ byte[] bytes = str.getBytes(encoding);     // 编码
 String str = new String(bytes, encoding)； // 解码
 ```
 
-GBK 编码中，中文占 2 个字节，英文占 1 个字节；UTF-8 编码中，中文占 3 个字节，英文占 1 个字节；Java 使用双字节编码 UTF-16be，中文和英文都占 2 个字节。
-
 如果编码和解码过程使用不同的编码方式那么就出现了乱码。
+
+- GBK 编码中，中文占 2 个字节，英文占 1 个字节；
+- UTF-8 编码中，中文占 3 个字节，英文占 1 个字节；
+- UTF-16be 编码中，中文和英文都占 2 个字节。
+
+UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-16le，le 指的是 Little Endian，也就是小端。
+
+Java 使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码正是为了让一个中文或者一个英文都能使用一个 char 来存储。
 
 # 五、对象操作
 
@@ -148,15 +155,19 @@ is.close();
 
 # 七、NIO
 
-新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的。NIO 弥补了原来的 I/O 的不足，它在标准 Java 代码中提供了高速的、面向块的 I/O。
+- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+- [Java NIO 浅析](https://tech.meituan.com/nio.html)
+- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+
+新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的。NIO 弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
 ## 流与块
 
 I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。
 
-面向流的 I/O 一次处理一个字节数据，一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责单个复杂处理机制的一部分，这样也是相对简单的。不利的一面是，面向流的 I/O 通常相当慢。
+面向流的 I/O 一次处理一个字节数据，一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
 
-一个面向块的 I/O 系统以块的形式处理数据，一次处理一个数据块。按块处理数据比按流处理数据要快得多。但是面向块的 I/O 缺少一些面向流的 I/O 所具有的优雅性和简单性。
+面向块的 I/O 一次处理一个数据块，按块处理数据比按流处理数据要快得多。但是面向块的 I/O 缺少一些面向流的 I/O 所具有的优雅性和简单性。
 
 I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，java.io.\* 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
@@ -177,7 +188,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 ### 2. 缓冲区
 
-发送给一个通道的所有数据都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
+发送给一个通道的所有数据都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要先读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
 
 缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
 
@@ -203,11 +214,11 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-② 从输入通道中读取 3 个字节数据写入缓冲区中，此时 position 移动设为 3，limit 保持不变。
+② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 移动设置为 5，limit 保持不变。
 
-<div align="center"> <img src="../pics//4628274c-25b6-4053-97cf-d1239b44c43d.png"/> </div><br>
+<div align="center"> <img src="../pics//80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
 
-③ 以下图例为已经从输入通道读取了 5 个字节数据写入缓冲区中。在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
+③ 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
 
 <div align="center"> <img src="../pics//952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
 
@@ -221,153 +232,206 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 ## 文件 NIO 实例
 
-① 为要读取的文件创建 FileInputStream，之后通过 FileInputStream 获取输入 FileChannel；
+以下展示了使用 NIO 快速复制文件的实例：
 
 ```java
-FileInputStream fin = new FileInputStream("readandshow.txt");
-FileChannel fic = fin.getChannel();
-```
+public class FastCopyFile {
+    public static void main(String args[]) throws Exception {
 
-② 创建一个容量为 1024 的 Buffer；
+        String inFile = "data/abc.txt";
+        String outFile = "data/abc-copy.txt";
 
-```java
-ByteBuffer buffer = ByteBuffer.allocate(1024);
-```
+        // 获得源文件的输入字节流
+        FileInputStream fin = new FileInputStream(inFile);
+        // 获取输入字节流的文件通道
+        FileChannel fcin = fin.getChannel();
 
-③ 将数据从输入 FileChannel 写入到 Buffer 中，如果没有数据的话，read() 方法会返回 -1；
+        // 获取目标文件的输出字节流
+        FileOutputStream fout = new FileOutputStream(outFile);
+        // 获取输出字节流的通道
+        FileChannel fcout = fout.getChannel();
 
-```java
-int r = fcin.read(buffer);
-if (r == -1) {
-     break;
+        // 为缓冲区分配 1024 个字节
+        ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+
+        while (true) {
+            // 从输入通道中读取数据到缓冲区中
+            int r = fcin.read(buffer);
+            // read() 返回 -1 表示 EOF
+            if (r == -1)
+                break;
+            // 切换读写
+            buffer.flip();
+            // 把缓冲区的内容写入输出文件中
+            fcout.write(buffer);
+            // 清空缓冲区
+            buffer.clear();
+        }
+    }
 }
 ```
 
-④ 为要写入的文件创建 FileOutputStream，之后通过 FileOutputStream 获取输出 FileChannel
+## 选择器
+
+一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去检查多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
+
+因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件具有更好的性能。
+
+<div align="center"> <img src="../pics//4d930e22-f493-49ae-8dff-ea21cd6895dc.png"/> </div><br>
+
+### 1. 创建选择器
 
 ```java
-FileOutputStream fout = new FileOutputStream("writesomebytes.txt");
-FileChannel foc = fout.getChannel();
+Selector selector = Selector.open();
 ```
 
-⑤ 调用 flip() 切换读写
+### 2. 将通道注册到选择器上
 
 ```java
-buffer.flip();
+ServerSocketChannel ssChannel = ServerSocketChannel.open();
+ssChannel.configureBlocking(false);
+ssChannel.register(selector, SelectionKey.OP_ACCEPT);
 ```
 
-⑥ 把 Buffer 中的数据读取到输出 FileChannel 中
+通道必须配置为非阻塞模式，否则使用选择器就没有任何意义了，因为如果通道在某个事件上被阻塞，那么服务器就不能响应其它时间，必须等待这个事件处理完毕才能去处理其它事件，显然这和选择器的作用背道而驰。
+
+在将通道注册到选择器上时，还需要指定要注册的具体事件，主要有以下几类：
+
+- SelectionKey.OP_CONNECT
+- SelectionKey.OP_ACCEPT
+- SelectionKey.OP_READ
+- SelectionKey.OP_WRITE
+
+它们在 SelectionKey 的定义如下：
 
 ```java
-foc.write(buffer);
+public static final int OP_READ = 1 << 0;
+public static final int OP_WRITE = 1 << 2;
+public static final int OP_CONNECT = 1 << 3;
+public static final int OP_ACCEPT = 1 << 4;
 ```
 
-⑦ 最后调用 clear() 重置缓冲区
+可以看出每个事件可以被当成一个位域，从而组成事件集整数。例如：
 
 ```java
-buffer.clear();
+int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+```
+
+### 3. 监听事件
+
+```java
+int num = selector.select();
+```
+
+使用 select() 来监听事件到达，它会一直阻塞直到有至少一个事件到达。
+
+### 4. 获取到达的事件
+
+```java
+Set<SelectionKey> keys = selector.selectedKeys();
+Iterator<SelectionKey> keyIterator = keys.iterator();
+while (keyIterator.hasNext()) {
+    SelectionKey key = keyIterator.next();
+    if (key.isAcceptable()) {
+        // ...
+    } else if (key.isReadable()) {
+        // ...
+    }
+    keyIterator.remove();
+}
+```
+
+### 5. 事件循环
+
+因为一次 select() 调用不能处理完所有的事件，并且服务器端有可能需要一直监听事件，因此服务器端处理事件的代码一般会放在一个死循环内。
+
+```java
+while (true) {
+    int num = selector.select();
+    Set<SelectionKey> keys = selector.selectedKeys();
+    Iterator<SelectionKey> keyIterator = keys.iterator();
+    while (keyIterator.hasNext()) {
+        SelectionKey key = keyIterator.next();
+        if (key.isAcceptable()) {
+            // ...
+        } else if (key.isReadable()) {
+            // ...
+        }
+        keyIterator.remove();
+    }
+}
 ```
 
 ## 套接字 NIO 实例
 
-### 1. ServerSocketChannel
-
-每一个监听端口都需要有一个 ServerSocketChannel 用来监听连接。
-
 ```java
-ServerSocketChannel ssc = ServerSocketChannel.open();
-ssc.configureBlocking(false); // 设置为非阻塞
+public class NIOServer {
 
-ServerSocket ss = ssc.socket();
-InetSocketAddress address = new InetSocketAddress(ports[i]);
-ss.bind(address); // 绑定端口号
-```
+    public static void main(String[] args) throws IOException {
+        Selector selector = Selector.open();
 
-### 2. Selectors
+        ServerSocketChannel ssChannel = ServerSocketChannel.open();
+        ssChannel.configureBlocking(false);
+        ssChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-异步 I/O 通过 Selector 注册对特定 I/O 事件的兴趣 ― 可读的数据的到达、新的套接字连接等等，在发生这样的事件时，系统将会发送通知。
+        ServerSocket serverSocket = ssChannel.socket();
+        InetSocketAddress address = new InetSocketAddress("127.0.0.1", 8888);
+        serverSocket.bind(address);
 
-创建 Selectors 之后，就可以对不同的通道对象调用 register() 方法。register() 的第一个参数总是这个 Selector。第二个参数是 OP_ACCEPT，这里它指定我们想要监听 ACCEPT 事件，也就是在新的连接建立时所发生的事件。
+        while (true) {
+            selector.select();
+            Set<SelectionKey> keys = selector.selectedKeys();
+            Iterator<SelectionKey> keyIterator = keys.iterator();
+            while (keyIterator.hasNext()) {
+                SelectionKey key = keyIterator.next();
+                if (key.isAcceptable()) {
+                    ServerSocketChannel ssChannel1 = (ServerSocketChannel) key.channel();
+                    // 服务器会为每个新连接创建一个 SocketChannel
+                    SocketChannel sChannel = ssChannel1.accept();
+                    sChannel.configureBlocking(false);
+                    // 这个新连接主要用于从客户端读取数据
+                    sChannel.register(selector, SelectionKey.OP_READ);
+                } else if (key.isReadable()) {
+                    SocketChannel sChannel = (SocketChannel) key.channel();
+                    System.out.println(readDataFromSocketChannel(sChannel));
+                    sChannel.close();
+                }
+                keyIterator.remove();
+            }
+        }
+    }
 
-SelectionKey 代表这个通道在此 Selector 上的这个注册。当某个 Selector 通知您某个传入事件时，它是通过提供对应于该事件的 SelectionKey 来进行的。SelectionKey 还可以用于取消通道的注册。
-
-```java
-Selector selector = Selector.open();
-SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
-```
-
-### 3. 主循环
-
-首先，我们调用 Selector 的 select() 方法。这个方法会阻塞，直到至少有一个已注册的事件发生。当一个或者更多的事件发生时，select() 方法将返回所发生的事件的数量。
-
-接下来，我们调用 Selector 的 selectedKeys() 方法，它返回发生了事件的 SelectionKey 对象的一个集合。
-
-我们通过迭代 SelectionKeys 并依次处理每个 SelectionKey 来处理事件。对于每一个 SelectionKey，您必须确定发生的是什么 I/O 事件，以及这个事件影响哪些 I/O 对象。
-
-```java
-int num = selector.select();
-
-Set selectedKeys = selector.selectedKeys();
-Iterator it = selectedKeys.iterator();
-
-while (it.hasNext()) {
-     SelectionKey key = (SelectionKey)it.next();
-     // ... deal with I/O event ...
+    private static String readDataFromSocketChannel(SocketChannel sChannel) throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        StringBuffer data = new StringBuffer();
+        while (true) {
+            buffer.clear();
+            int n = sChannel.read(buffer);
+            if (n == -1)
+                break;
+            buffer.flip();
+            int limit = buffer.limit();
+            char[] dst = new char[limit];
+            for (int i = 0; i < limit; i++)
+                dst[i] = (char) buffer.get(i);
+            data.append(dst);
+            buffer.clear();
+        }
+        return data.toString();
+    }
 }
 ```
 
-### 4. 监听新连接
-
-程序执行到这里，我们仅注册了 ServerSocketChannel，并且仅注册它们“接收”事件。为确认这一点，我们对 SelectionKey 调用 readyOps() 方法，并检查发生了什么类型的事件：
-
 ```java
-if ((key.readyOps() & SelectionKey.OP_ACCEPT)
-     == SelectionKey.OP_ACCEPT) {
-     // Accept the new connection
-     // ...
-}
-```
+public class NIOClient {
 
-可以肯定地说，readOps() 方法告诉我们该事件是新的连接。
-
-### 5. 接受新的连接
-
-因为我们知道这个服务器套接字上有一个传入连接在等待，所以可以安全地接受它；也就是说，不用担心 accept() 操作会阻塞：
-
-```java
-ServerSocketChannel ssc = (ServerSocketChannel)key.channel();
-SocketChannel sc = ssc.accept();
-```
-
-下一步是将新连接的 SocketChannel 配置为非阻塞的。而且由于接受这个连接的目的是为了读取来自套接字的数据，所以我们还必须将 SocketChannel 注册到 Selector 上，如下所示：
-
-```java
-sc.configureBlocking(false);
-SelectionKey newKey = sc.register(selector, SelectionKey.OP_READ);
-```
-
-注意我们使用 register() 的 OP_READ 参数，将 SocketChannel 注册用于读取而不是接受新连接。
-
-### 6. 删除处理过的 SelectionKey
-
-在处理 SelectionKey 之后，我们几乎可以返回主循环了。但是我们必须首先将处理过的 SelectionKey 从选定的键集合中删除。如果我们没有删除处理过的键，那么它仍然会在主集合中以一个激活的键出现，这会导致我们尝试再次处理它。我们调用迭代器的 remove() 方法来删除处理过的 SelectionKey：
-
-```java
-it.remove();
-```
-
-现在我们可以返回主循环并接受从一个套接字中传入的数据 (或者一个传入的 I/O 事件) 了。
-
-### 7. 传入的 I/O
-
-当来自一个套接字的数据到达时，它会触发一个 I/O 事件。这会导致在主循环中调用 Selector.select()，并返回一个或者多个 I/O 事件。这一次， SelectionKey 将被标记为 OP_READ 事件，如下所示：
-
-```java
-} else if ((key.readyOps() & SelectionKey.OP_READ)
-     == SelectionKey.OP_READ) {
-     // Read the data
-     SocketChannel sc = (SocketChannel)key.channel();
-     // ...
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("127.0.0.1", 8888);
+        OutputStream out = socket.getOutputStream();
+        String s = "hello world";
+        out.write(s.getBytes());
+        out.close();
+    }
 }
 ```
 
