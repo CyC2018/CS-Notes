@@ -1,4 +1,10 @@
 <!-- GFM-TOC -->
+* [595. Big Countries](#595-big-countries)
+* [627. Swap Salary](#627-swap-salary)
+* [620. Not Boring Movies](#620-not-boring-movies)
+* [596. Classes More Than 5 Students](#596-classes-more-than-5-students)
+* [182. Duplicate Emails](#182-duplicate-emails)
+* [196. Delete Duplicate Emails](#196-delete-duplicate-emails)
 * [175. Combine Two Tables](#175-combine-two-tables)
 * [181. Employees Earning More Than Their Managers](#181-employees-earning-more-than-their-managers)
 * [183. Customers Who Never Order](#183-customers-who-never-order)
@@ -9,6 +15,360 @@
 * [180. Consecutive Numbers](#180-consecutive-numbers)
 <!-- GFM-TOC -->
 
+
+# 595. Big Countries
+
+https://leetcode.com/problems/big-countries/description/
+
+## Description
+
+```html
++-----------------+------------+------------+--------------+---------------+
+| name            | continent  | area       | population   | gdp           |
++-----------------+------------+------------+--------------+---------------+
+| Afghanistan     | Asia       | 652230     | 25500100     | 20343000      |
+| Albania         | Europe     | 28748      | 2831741      | 12960000      |
+| Algeria         | Africa     | 2381741    | 37100000     | 188681000     |
+| Andorra         | Europe     | 468        | 78115        | 3712000       |
+| Angola          | Africa     | 1246700    | 20609294     | 100990000     |
++-----------------+------------+------------+--------------+---------------+
+```
+
+查找面积超过 3,000,000 或者人口数超过 25,000,000 的国家。
+
+```html
++--------------+-------------+--------------+
+| name         | population  | area         |
++--------------+-------------+--------------+
+| Afghanistan  | 25500100    | 652230       |
+| Algeria      | 37100000    | 2381741      |
++--------------+-------------+--------------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS World;
+CREATE TABLE World ( NAME VARCHAR ( 255 ), continent VARCHAR ( 255 ), area INT, population INT, gdp INT );
+INSERT INTO World ( NAME, continent, area, population, gdp )
+VALUES
+    ( 'Afghanistan', 'Asia', '652230', '25500100', '203430000' ),
+    ( 'Albania', 'Europe', '28748', '2831741', '129600000' ),
+    ( 'Algeria', 'Africa', '2381741', '37100000', '1886810000' ),
+    ( 'Andorra', 'Europe', '468', '78115', '37120000' ),
+    ( 'Angola', 'Africa', '1246700', '20609294', '1009900000' );
+```
+
+## Solution
+
+```sql
+SELECT name,
+    population,
+    area
+FROM
+    World
+WHERE
+    area > 3000000
+    OR population > 25000000;
+```
+
+# 627. Swap Salary
+
+https://leetcode.com/problems/swap-salary/description/
+
+## Description
+
+```html
+| id | name | sex | salary |
+|----|------|-----|--------|
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
+```
+
+只用一个 SQL 查询，将 sex 字段反转。
+
+```html
+| id | name | sex | salary |
+|----|------|-----|--------|
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS World;
+CREATE TABLE World ( NAME VARCHAR ( 255 ), continent VARCHAR ( 255 ), area INT, population INT, gdp INT );
+INSERT INTO World ( NAME, continent, area, population, gdp )
+VALUES
+    ( 'Afghanistan', 'Asia', '652230', '25500100', '203430000' ),
+    ( 'Albania', 'Europe', '28748', '2831741', '129600000' ),
+    ( 'Algeria', 'Africa', '2381741', '37100000', '1886810000' ),
+    ( 'Andorra', 'Europe', '468', '78115', '37120000' ),
+    ( 'Angola', 'Africa', '1246700', '20609294', '1009900000' );
+```
+
+## Solution
+
+```sql
+UPDATE salary
+SET sex = CHAR ( ASCII(sex) ^ ASCII( 'm' ) ^ ASCII( 'f' ) );
+```
+
+# 620. Not Boring Movies
+
+https://leetcode.com/problems/not-boring-movies/description/
+
+## Description
+
+邮件地址表：
+
+```html
++---------+-----------+--------------+-----------+
+|   id    | movie     |  description |  rating   |
++---------+-----------+--------------+-----------+
+|   1     | War       |   great 3D   |   8.9     |
+|   2     | Science   |   fiction    |   8.5     |
+|   3     | irish     |   boring     |   6.2     |
+|   4     | Ice song  |   Fantacy    |   8.6     |
+|   5     | House card|   Interesting|   9.1     |
++---------+-----------+--------------+-----------+
+```
+
+查找 id 为奇数，并且 description 不是 boring 的电影，按 rating 降序。
+
+```html
++---------+-----------+--------------+-----------+
+|   id    | movie     |  description |  rating   |
++---------+-----------+--------------+-----------+
+|   5     | House card|   Interesting|   9.1     |
+|   1     | War       |   great 3D   |   8.9     |
++---------+-----------+--------------+-----------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS cinema;
+CREATE TABLE cinema ( id INT, movie VARCHAR ( 255 ), description VARCHAR ( 255 ), rating FLOAT ( 2, 1 ) );
+INSERT INTO cinema ( id, movie, description, rating )
+VALUES
+    ( 1, 'War', 'great 3D', 8.9 ),
+    ( 2, 'Science', 'fiction', 8.5 ),
+    ( 3, 'irish', 'boring', 6.2 ),
+    ( 4, 'Ice song', 'Fantacy', 8.6 ),
+    ( 5, 'House card', 'Interesting', 9.1 );
+```
+
+## Solution
+
+```sql
+SELECT
+    *
+FROM
+    cinema
+WHERE
+    id % 2 = 1
+    AND description != 'boring'
+ORDER BY
+    rating DESC;
+```
+
+# 596. Classes More Than 5 Students
+
+https://leetcode.com/problems/classes-more-than-5-students/description/
+
+## Description
+
+```html
++---------+------------+
+| student | class      |
++---------+------------+
+| A       | Math       |
+| B       | English    |
+| C       | Math       |
+| D       | Biology    |
+| E       | Math       |
+| F       | Computer   |
+| G       | Math       |
+| H       | Math       |
+| I       | Math       |
++---------+------------+
+```
+
+查找有五名及以上 student 的 class。
+
+```html
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS courses;
+CREATE TABLE courses ( student VARCHAR ( 255 ), class VARCHAR ( 255 ) );
+INSERT INTO courses ( student, class )
+VALUES
+    ( 'A', 'Math' ),
+    ( 'B', 'English' ),
+    ( 'C', 'Math' ),
+    ( 'D', 'Biology' ),
+    ( 'E', 'Math' ),
+    ( 'F', 'Computer' ),
+    ( 'G', 'Math' ),
+    ( 'H', 'Math' ),
+    ( 'I', 'Math' );
+```
+
+## Solution
+
+```sql
+SELECT
+    class
+FROM
+    courses
+GROUP BY
+    class
+HAVING
+    count( DISTINCT student ) >= 5;
+```
+
+# 182. Duplicate Emails
+
+https://leetcode.com/problems/duplicate-emails/description/
+
+## Description
+
+邮件地址表：
+
+```html
++----+---------+
+| Id | Email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+```
+
+查找重复的邮件地址：
+
+```html
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS Person;
+CREATE TABLE Person ( Id INT, Email VARCHAR ( 255 ) );
+INSERT INTO Person ( Id, Email )
+VALUES
+    ( 1, 'a@b.com' ),
+    ( 2, 'c@d.com' ),
+    ( 3, 'a@b.com' );
+```
+
+## Solution
+
+```sql
+SELECT
+    Email
+FROM
+    Person
+GROUP BY
+    Email
+HAVING
+    COUNT( * ) >= 2;
+```
+
+# 196. Delete Duplicate Emails
+
+## Description
+
+邮件地址表：
+
+```html
++----+---------+
+| Id | Email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+```
+
+查找重复的邮件地址：
+
+```html
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+```
+
+## SQL Schema
+
+与 182 相同。
+
+## Solution
+
+连接：
+
+```sql
+DELETE p1
+FROM
+    Person p1,
+    Person p2
+WHERE
+    p1.Email = p2.Email
+    AND p1.Id > p2.Id
+```
+
+子查询：
+
+```sql
+DELETE
+FROM
+    Person
+WHERE
+    id NOT IN ( SELECT id FROM ( SELECT min( id ) AS id FROM Person GROUP BY email ) AS m );
+```
+
+应该注意的是上述解法额外嵌套了一个 SELECT 语句，如果不这么做，会出现错误：You can't specify target table 'Person' for update in FROM clause。以下演示了这种错误解法。
+
+```sql
+DELETE
+FROM
+    Person
+WHERE
+    id NOT IN ( SELECT min( id ) AS id FROM Person GROUP BY email );
+```
+
+参考：[pMySQL Error 1093 - Can't specify target table for update in FROM clause](https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause)
 
 # 175. Combine Two Tables
 
@@ -75,7 +435,7 @@ SELECT
     City,
     State
 FROM
-    Person AS P
+    Person P
     LEFT JOIN Address AS A ON P.PersonId = A.PersonId;
 ```
 
@@ -103,14 +463,16 @@ Employee 表：
 ## SQL Schema
 
 ```sql
-DROP TABLE IF EXISTS Employee;
+DROP TABLE
+IF
+    EXISTS Employee;
 CREATE TABLE Employee ( Id INT, NAME VARCHAR ( 255 ), Salary INT, ManagerId INT );
 INSERT INTO Employee ( Id, NAME, Salary, ManagerId )
 VALUES
-    ( '1', 'Joe', '70000', '3' ),
-    ( '2', 'Henry', '80000', '4' ),
-    ( '3', 'Sam', '60000', NULL ),
-    ( '4', 'Max', '90000', NULL );
+    ( 1, 'Joe', 70000, 3 ),
+    ( 2, 'Henry', 80000, 4 ),
+    ( 3, 'Sam', 60000, NULL ),
+    ( 4, 'Max', 90000, NULL );
 ```
 
 ## Solution
@@ -119,8 +481,8 @@ VALUES
 SELECT
     E1.NAME AS Employee
 FROM
-    Employee AS E1
-    INNER JOIN Employee AS E2 ON E1.ManagerId = E2.Id
+    Employee E1
+    INNER JOIN Employee E2 ON E1.ManagerId = E2.Id
     AND E1.Salary > E2.Salary;
 ```
 
@@ -168,20 +530,24 @@ Orders 表：
 ## SQL Schema
 
 ```sql
-DROP TABLE IF EXISTS Customers;
+DROP TABLE
+IF
+    EXISTS Customers;
 CREATE TABLE Customers ( Id INT, NAME VARCHAR ( 255 ) );
-DROP TABLE IF EXISTS Orders;
+DROP TABLE
+IF
+    EXISTS Orders;
 CREATE TABLE Orders ( Id INT, CustomerId INT );
 INSERT INTO Customers ( Id, NAME )
 VALUES
-    ( '1', 'Joe' ),
-    ( '2', 'Henry' ),
-    ( '3', 'Sam' ),
-    ( '4', 'Max' );
+    ( 1, 'Joe' ),
+    ( 2, 'Henry' ),
+    ( 3, 'Sam' ),
+    ( 4, 'Max' );
 INSERT INTO Orders ( Id, CustomerId )
 VALUES
-    ( '1', '3' ),
-    ( '2', '1' );
+    ( 1, 3 ),
+    ( 2, 1 );
 ```
 
 ## Solution
@@ -192,8 +558,8 @@ VALUES
 SELECT
     C.NAME AS Customers
 FROM
-    Customers AS C
-    LEFT JOIN Orders AS O ON C.Id = O.CustomerId
+    Customers C
+    LEFT JOIN Orders O ON C.Id = O.CustomerId
 WHERE
     O.CustomerId IS NULL;
 ```
@@ -204,7 +570,7 @@ WHERE
 SELECT
     C.NAME AS Customers
 FROM
-    Customers AS C
+    Customers C
 WHERE
     C.Id NOT IN ( SELECT CustomerId FROM Orders );
 ```
@@ -277,16 +643,16 @@ VALUES
 
 ```sql
 SELECT
-    D.NAME AS Department,
-    E.NAME AS Employee,
+    D.NAME Department,
+    E.NAME Employee,
     E.Salary
 FROM
-    Employee AS E,
-    Department AS D,
-    ( SELECT DepartmentId, MAX( Salary ) AS Salary FROM Employee GROUP BY DepartmentId ) AS M 
+    Employee E,
+    Department D,
+    ( SELECT DepartmentId, MAX( Salary ) Salary FROM Employee GROUP BY DepartmentId ) M
 WHERE
-    E.DepartmentId = D.Id 
-    AND E.DepartmentId = M.DepartmentId 
+    E.DepartmentId = D.Id
+    AND E.DepartmentId = M.DepartmentId
     AND E.Salary = M.Salary;
 ```
 
@@ -327,9 +693,9 @@ IF
 CREATE TABLE Employee ( Id INT, Salary INT );
 INSERT INTO Employee ( Id, Salary )
 VALUES
-    ( '1', '100' ),
-    ( '2', '200' ),
-    ( '3', '300' );
+    ( 1, 100 ),
+    ( 2, 200 ),
+    ( 3, 300 );
 ```
 
 ## Solution
@@ -338,7 +704,7 @@ VALUES
 
 ```sql
 SELECT
-    ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1 ) AS SecondHighestSalary;
+    ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1 ) SecondHighestSalary;
 ```
 
 # 177. Nth Highest Salary
@@ -407,12 +773,12 @@ IF
 CREATE TABLE Scores ( Id INT, Score DECIMAL ( 3, 2 ) );
 INSERT INTO Scores ( Id, Score )
 VALUES
-    ( '1', '3.5' ),
-    ( '2', '3.65' ),
-    ( '3', '4.0' ),
-    ( '4', '3.85' ),
-    ( '5', '4.0' ),
-    ( '6', '3.65' );
+    ( 1, 3.5 ),
+    ( 2, 3.65 ),
+    ( 3, 4.0 ),
+    ( 4, 3.85 ),
+    ( 5, 4.0 ),
+    ( 6, 3.65 );
 ```
 
 ## Solution
@@ -420,10 +786,10 @@ VALUES
 ```sql
 SELECT
     S1.score,
-    COUNT( DISTINCT S2.score ) AS Rank
+    COUNT( DISTINCT S2.score ) Rank
 FROM
-    Scores AS S1
-    INNER JOIN Scores AS S2 ON S1.score <= S2.score
+    Scores S1
+    INNER JOIN Scores S2 ON S1.score <= S2.score
 GROUP BY
     S1.id
 ORDER BY
@@ -471,26 +837,26 @@ IF
 CREATE TABLE LOGS ( Id INT, Num INT );
 INSERT INTO LOGS ( Id, Num )
 VALUES
-    ( '1', '1' ),
-    ( '2', '1' ),
-    ( '3', '1' ),
-    ( '4', '2' ),
-    ( '5', '1' ),
-    ( '6', '2' ),
-    ( '7', '2' );
+    ( 1, 1 ),
+    ( 2, 1 ),
+    ( 3, 1 ),
+    ( 4, 2 ),
+    ( 5, 1 ),
+    ( 6, 2 ),
+    ( 7, 2 );
 ```
 
 ## Solution
 
 ```sql
 SELECT
-    DISTINCT L1.num AS ConsecutiveNums
+    DISTINCT L1.num ConsecutiveNums
 FROM
-    Logs AS L1,
-    Logs AS L2,
-    Logs AS L3
+    Logs L1,
+    Logs L2,
+    Logs L3
 WHERE L1.id = l2.id - 1
     AND L2.id = L3.id - 1
     AND L1.num = L2.num
-    AND l2.num = l3.num;
+    AND l2.num = l3.num; 
 ```
