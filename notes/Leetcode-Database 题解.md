@@ -3,7 +3,10 @@
 * [181. Employees Earning More Than Their Managers](#181-employees-earning-more-than-their-managers)
 * [183. Customers Who Never Order](#183-customers-who-never-order)
 * [184. Department Highest Salary](#184-department-highest-salary)
-* [未完待续...](#未完待续)
+* [176. Second Highest Salary](#176-second-highest-salary)
+* [177. Nth Highest Salary](#177-nth-highest-salary)
+* [178. Rank Scores](#178-rank-scores)
+* [180. Consecutive Numbers](#180-consecutive-numbers)
 <!-- GFM-TOC -->
 
 
@@ -45,9 +48,13 @@ AddressId is the primary key column for this table.
 ## SQL Schema
 
 ```sql
-DROP TABLE Person;
+DROP TABLE
+IF
+    EXISTS Person;
 CREATE TABLE Person ( PersonId INT, FirstName VARCHAR ( 255 ), LastName VARCHAR ( 255 ) );
-DROP TABLE Address;
+DROP TABLE
+IF
+    EXISTS Address;
 CREATE TABLE Address ( AddressId INT, PersonId INT, City VARCHAR ( 255 ), State VARCHAR ( 255 ) );
 INSERT INTO Person ( PersonId, LastName, FirstName )
 VALUES
@@ -62,9 +69,14 @@ VALUES
 使用左外连接。
 
 ```sql
-SELECT FirstName, LastName, City, State
-FROM Person AS P LEFT JOIN Address AS A
-ON P.PersonId = A.PersonId;
+SELECT
+    FirstName,
+    LastName,
+    City,
+    State
+FROM
+    Person AS P
+    LEFT JOIN Address AS A ON P.PersonId = A.PersonId;
 ```
 
 # 181. Employees Earning More Than Their Managers
@@ -86,12 +98,12 @@ Employee 表：
 +----+-------+--------+-----------+
 ```
 
-查找所有员工，它们的薪资大于其经理薪资。
+查找所有员工，他们的薪资大于其经理薪资。
 
 ## SQL Schema
 
 ```sql
-DROP TABLE Employee;
+DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee ( Id INT, NAME VARCHAR ( 255 ), Salary INT, ManagerId INT );
 INSERT INTO Employee ( Id, NAME, Salary, ManagerId )
 VALUES
@@ -104,9 +116,12 @@ VALUES
 ## Solution
 
 ```sql
-SELECT E1.Name AS Employee
-FROM Employee AS E1, Employee AS E2
-WHERE E1.ManagerId = E2.Id AND E1.Salary > E2.Salary;
+SELECT
+    E1.NAME AS Employee
+FROM
+    Employee AS E1
+    INNER JOIN Employee AS E2 ON E1.ManagerId = E2.Id
+    AND E1.Salary > E2.Salary;
 ```
 
 # 183. Customers Who Never Order
@@ -153,9 +168,9 @@ Orders 表：
 ## SQL Schema
 
 ```sql
-DROP TABLE Customers;
+DROP TABLE IF EXISTS Customers;
 CREATE TABLE Customers ( Id INT, NAME VARCHAR ( 255 ) );
-DROP TABLE Orders;
+DROP TABLE IF EXISTS Orders;
 CREATE TABLE Orders ( Id INT, CustomerId INT );
 INSERT INTO Customers ( Id, NAME )
 VALUES
@@ -174,21 +189,24 @@ VALUES
 左外链接
 
 ```sql
-SELECT C.Name AS Customers
-FROM Customers AS C LEFT JOIN Orders AS O
-ON C.Id = O.CustomerId
-WHERE O.CustomerId IS NULL;
+SELECT
+    C.NAME AS Customers
+FROM
+    Customers AS C
+    LEFT JOIN Orders AS O ON C.Id = O.CustomerId
+WHERE
+    O.CustomerId IS NULL;
 ```
 
 子查询
 
 ```sql
-SELECT C.Name AS Customers
-FROM Customers AS C
-WHERE C.Id NOT IN (
-    SELECT CustomerId
-    FROM Orders
-);
+SELECT
+    C.NAME AS Customers
+FROM
+    Customers AS C
+WHERE
+    C.Id NOT IN ( SELECT CustomerId FROM Orders );
 ```
 
 # 184. Department Highest Salary
@@ -235,9 +253,9 @@ Department 表：
 ## SQL Schema
 
 ```sql
-DROP TABLE Employee;
+DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee ( Id INT, NAME VARCHAR ( 255 ), Salary INT, DepartmentId INT );
-DROP TABLE Department;
+DROP TABLE IF EXISTS Department;
 CREATE TABLE Department ( Id INT, NAME VARCHAR ( 255 ) );
 INSERT INTO Employee ( Id, NAME, Salary, DepartmentId )
 VALUES
@@ -253,15 +271,226 @@ VALUES
 
 ## Solution
 
+创建一个临时表，包含了部门员工的最大薪资。可以对部门进行分组，然后使用 MAX() 汇总函数取得最大薪资。
+
+之后使用连接将找到一个部门中薪资等于临时表中最大薪资的员工。
+
 ```sql
-SELECT D.Name AS Department, E.Name AS Employee, E.Salary
-FROM Employee AS E, Department AS D,
-    (SELECT DepartmentId, MAX(Salary) AS Salary
-    FROM Employee
-    GROUP BY DepartmentId) AS M
-WHERE E.DepartmentId = D.Id
-    AND E.DepartmentId = M.DepartmentId
+SELECT
+    D.NAME AS Department,
+    E.NAME AS Employee,
+    E.Salary
+FROM
+    Employee AS E,
+    Department AS D,
+    ( SELECT DepartmentId, MAX( Salary ) AS Salary FROM Employee GROUP BY DepartmentId ) AS M 
+WHERE
+    E.DepartmentId = D.Id 
+    AND E.DepartmentId = M.DepartmentId 
     AND E.Salary = M.Salary;
 ```
 
-# 未完待续...
+# 176. Second Highest Salary
+
+https://leetcode.com/problems/second-highest-salary/description/
+
+## Description
+
+```html
++----+--------+
+| Id | Salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+```
+
+查找工资第二高的员工。
+
+```html
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| 200                 |
++---------------------+
+```
+
+如果没有找到，那么就返回 null 而不是不返回数据。
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS Employee;
+CREATE TABLE Employee ( Id INT, Salary INT );
+INSERT INTO Employee ( Id, Salary )
+VALUES
+    ( '1', '100' ),
+    ( '2', '200' ),
+    ( '3', '300' );
+```
+
+## Solution
+
+为了在没有查找到数据时返回 null，需要在查询结果外面再套一层 SELECT。
+
+```sql
+SELECT
+    ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1 ) AS SecondHighestSalary;
+```
+
+# 177. Nth Highest Salary
+
+## Description
+
+查找工资第 N 高的员工。
+
+## SQL Schema
+
+同 176。
+
+## Solution
+
+```sql
+CREATE FUNCTION getNthHighestSalary ( N INT ) RETURNS INT BEGIN
+
+SET N = N - 1;
+RETURN ( SELECT ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N, 1 ) );
+
+END
+```
+
+# 178. Rank Scores
+
+https://leetcode.com/problems/rank-scores/description/
+
+## Description
+
+得分表：
+
+```html
++----+-------+
+| Id | Score |
++----+-------+
+| 1  | 3.50  |
+| 2  | 3.65  |
+| 3  | 4.00  |
+| 4  | 3.85  |
+| 5  | 4.00  |
+| 6  | 3.65  |
++----+-------+
+```
+
+将得分排序，并统计排名。
+
+```html
++-------+------+
+| Score | Rank |
++-------+------+
+| 4.00  | 1    |
+| 4.00  | 1    |
+| 3.85  | 2    |
+| 3.65  | 3    |
+| 3.65  | 3    |
+| 3.50  | 4    |
++-------+------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS Scores;
+CREATE TABLE Scores ( Id INT, Score DECIMAL ( 3, 2 ) );
+INSERT INTO Scores ( Id, Score )
+VALUES
+    ( '1', '3.5' ),
+    ( '2', '3.65' ),
+    ( '3', '4.0' ),
+    ( '4', '3.85' ),
+    ( '5', '4.0' ),
+    ( '6', '3.65' );
+```
+
+## Solution
+
+```sql
+SELECT
+    S1.score,
+    COUNT( DISTINCT S2.score ) AS Rank
+FROM
+    Scores AS S1
+    INNER JOIN Scores AS S2 ON S1.score <= S2.score
+GROUP BY
+    S1.id
+ORDER BY
+    S1.score DESC;
+```
+
+# 180. Consecutive Numbers
+
+https://leetcode.com/problems/consecutive-numbers/description/
+
+## Description
+
+数字表：
+
+```html
++----+-----+
+| Id | Num |
++----+-----+
+| 1  |  1  |
+| 2  |  1  |
+| 3  |  1  |
+| 4  |  2  |
+| 5  |  1  |
+| 6  |  2  |
+| 7  |  2  |
++----+-----+
+```
+
+查找连续出现三次的数字。
+
+```html
++-----------------+
+| ConsecutiveNums |
++-----------------+
+| 1               |
++-----------------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS LOGS;
+CREATE TABLE LOGS ( Id INT, Num INT );
+INSERT INTO LOGS ( Id, Num )
+VALUES
+    ( '1', '1' ),
+    ( '2', '1' ),
+    ( '3', '1' ),
+    ( '4', '2' ),
+    ( '5', '1' ),
+    ( '6', '2' ),
+    ( '7', '2' );
+```
+
+## Solution
+
+```sql
+SELECT
+    DISTINCT L1.num AS ConsecutiveNums
+FROM
+    Logs AS L1,
+    Logs AS L2,
+    Logs AS L3
+WHERE L1.id = l2.id - 1
+    AND L2.id = L3.id - 1
+    AND L1.num = L2.num
+    AND l2.num = l3.num;
+```
