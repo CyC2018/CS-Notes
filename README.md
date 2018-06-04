@@ -31,7 +31,6 @@
 
 整理自《鸟哥的 Linux 私房菜》
 
-
 ## 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
@@ -45,7 +44,6 @@
 > [Socket](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md)
 
 整理自《Unix 网络编程》
-
 
 ## 面向对象 :couple:
 
@@ -101,10 +99,6 @@ Leetcode 上数据库题目的解题记录。
 
 File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
-> [JDK 中的设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JDK%20中的设计模式.md)
-
-对每种设计模式做了一个总结，并给出在 JDK 中的使用实例。
-
 ## 分布式 :sweat_drops:
 
 > [分布式基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式基础.md)
@@ -114,7 +108,6 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 > [分布式问题分析](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
 
 分布式事务、负载均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。
-
 
 ## 工具 :hammer:
 
