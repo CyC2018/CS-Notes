@@ -105,15 +105,14 @@ https://leetcode.com/problems/swap-salary/description/
 ```sql
 DROP TABLE
 IF
-    EXISTS World;
-CREATE TABLE World ( NAME VARCHAR ( 255 ), continent VARCHAR ( 255 ), area INT, population INT, gdp INT );
-INSERT INTO World ( NAME, continent, area, population, gdp )
+    EXISTS salary;
+CREATE TABLE salary ( id INT, NAME VARCHAR ( 100 ), sex CHAR ( 1 ), salary INT );
+INSERT INTO salary ( id, NAME, sex, salary )
 VALUES
-    ( 'Afghanistan', 'Asia', '652230', '25500100', '203430000' ),
-    ( 'Albania', 'Europe', '28748', '2831741', '129600000' ),
-    ( 'Algeria', 'Africa', '2381741', '37100000', '1886810000' ),
-    ( 'Andorra', 'Europe', '468', '78115', '37120000' ),
-    ( 'Angola', 'Africa', '1246700', '20609294', '1009900000' );
+    ( '1', 'A', 'm', '2500' ),
+    ( '2', 'B', 'f', '1500' ),
+    ( '3', 'C', 'm', '5500' ),
+    ( '4', 'D', 'f', '500' );
 ```
 
 ## Solution
