@@ -3417,21 +3417,44 @@ int gcd(int a, int b) {
 最小公倍数为两数的乘积除以最大公约数。
 
 ```java
-int lcm(int a, int b){
+int lcm(int a, int b) {
     return a * b / gcd(a, b);
 }
 ```
 
-对于最大公约数问题，因为需要计算 a % b ，而这个操作是比较耗时的，可以使用 [编程之美：2.7]() 的方法，利用减法和移位操作来替换它。
+**使用位操作和减法求解最大公约数** 
+
+[编程之美：2.7](#)
 
 对于 a 和 b 的最大公约数 f(a, b)，有：
 
 - 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2);
 - 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
 - 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
-- 如果 a 和 b 均为奇数，f(a, b) = f(a, a-b);
+- 如果 a 和 b 均为奇数，f(a, b) = f(b, a-b);
 
 乘 2 和除 2 都可以转换为移位操作。
+
+```java
+public int gcd(int a, int b) {
+    if (a < b) {
+        return gcd(b, a);
+    }
+    if (b == 0) {
+        return a;
+    }
+    boolean isAEven = isEven(a), isBEven = isEven(b);
+    if (isAEven && isBEven) {
+        return 2 * gcd(a >> 1, b >> 1);
+    } else if (isAEven && !isBEven) {
+        return gcd(a >> 1, b);
+    } else if (!isAEven && isBEven) {
+        return gcd(a, b >> 1);
+    } else {
+        return gcd(b, a - b);
+    }
+}
+```
 
 ### 进制转换
 
@@ -3441,18 +3464,14 @@ int lcm(int a, int b){
 
 ```java
 public String convertToBase7(int num) {
-    if (num < 0) return '-' + convertToBase7(-num);
-    if (num < 7) return num + "";
-    return convertToBase7(num / 7) + num % 7;
-}
-```
-
-```java
-public String convertToBase7(int num) {
-    if (num == 0) return "0";
+    if (num == 0) {
+        return "0";
+    }
     StringBuilder sb = new StringBuilder();
     boolean isNegative = num < 0;
-    if (isNegative) num = -num;
+    if (isNegative) {
+        num = -num;
+    }
     while (num > 0) {
         sb.append(num % 7);
         num /= 7;
@@ -3474,8 +3493,6 @@ public String convertToBase7(int num) {
 
 [405. Convert a Number to Hexadecimal (Easy)](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/)
 
-负数要用它的补码形式。
-
 ```html
 Input:
 26
@@ -3490,14 +3507,16 @@ Output:
 "ffffffff"
 ```
 
+负数要用它的补码形式。
+
 ```java
 public String toHex(int num) {
-    char[] map = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+    char[] map = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     if (num == 0) return "0";
     StringBuilder sb = new StringBuilder();
     while (num != 0) {
         sb.append(map[num & 0b1111]);
-        num >>>= 4; // 无符号右移，左边填 0
+        num >>>= 4; // 因为考虑的是补码形式，因此符号位就不能有特殊的意义，需要使用无符号右移，左边填 0
     }
     return sb.reverse().toString();
 }
@@ -3521,7 +3540,9 @@ public String toHex(int num) {
 
 ```java
 public String convertToTitle(int n) {
-    if (n == 0) return "";
+    if (n == 0) {
+        return "";
+    }
     n--;
     return convertToTitle(n / 26) + (char) (n % 26 + 'A');
 }
@@ -3562,8 +3583,12 @@ public String addBinary(String a, String b) {
     int i = a.length() - 1, j = b.length() - 1, carry = 0;
     StringBuilder str = new StringBuilder();
     while (carry == 1 || i >= 0 || j >= 0) {
-        if (i >= 0 && a.charAt(i--) == '1') carry++;
-        if (j >= 0 && b.charAt(j--) == '1') carry++;
+        if (i >= 0 && a.charAt(i--) == '1') {
+            carry++;
+        }
+        if (j >= 0 && b.charAt(j--) == '1') {
+            carry++;
+        }
         str.append(carry % 2);
         carry /= 2;
     }
@@ -3654,9 +3679,14 @@ private int findKthSmallest(int[] nums, int k) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j == k) break;
-        if (j < k) l = j + 1;
-        else h = j - 1;
+        if (j == k) {
+            break;
+        }
+        if (j < k) {
+            l = j + 1;
+        } else {
+            h = j - 1;
+        }
     }
     return nums[k];
 }
@@ -3666,7 +3696,9 @@ private int partition(int[] nums, int l, int h) {
     while (true) {
         while (nums[++i] < nums[l] && i < h) ;
         while (nums[--j] > nums[l] && j > l) ;
-        if (i >= j) break;
+        if (i >= j) {
+            break;
+        }
         swap(nums, i, j);
     }
     swap(nums, l, j);
@@ -3754,9 +3786,9 @@ public boolean isPowerOfThree(int n) {
 For example, given [1,2,3,4], return [24,12,8,6].
 ```
 
-题目描述：给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
+给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
 
-题目要求：时间复杂度为 O(N)，并且不能使用除法。
+要求时间复杂度为 O(N)，并且不能使用除法。
 
 ```java
 public int[] productExceptSelf(int[] nums) {
