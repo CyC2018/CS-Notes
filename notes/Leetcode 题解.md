@@ -3820,44 +3820,11 @@ public int maximumProduct(int[] nums) {
 
 [232. Implement Queue using Stacks (Easy)](https://leetcode.com/problems/implement-queue-using-stacks/description/)
 
-一个栈实现：
-
-```java
-class MyQueue {
-    private Stack<Integer> st = new Stack();
-
-    public void push(int x) {
-        Stack<Integer> temp = new Stack();
-        while (!st.isEmpty()) {
-            temp.push(st.pop());
-        }
-        st.push(x);
-        while (!temp.isEmpty()) {
-            st.push(temp.pop());
-        }
-    }
-
-    public int pop() {
-        return st.pop();
-    }
-
-    public int peek() {
-        return st.peek();
-    }
-
-    public boolean empty() {
-        return st.isEmpty();
-    }
-}
-```
-
-两个栈实现：
-
 ```java
 class MyQueue {
 
-    private Stack<Integer> in = new Stack();
-    private Stack<Integer> out = new Stack();
+    private Stack<Integer> in = new Stack<>();
+    private Stack<Integer> out = new Stack<>();
 
     public void push(int x) {
         in.push(x);
@@ -3890,6 +3857,8 @@ class MyQueue {
 **用队列实现栈** 
 
 [225. Implement Stack using Queues (Easy)](https://leetcode.com/problems/implement-stack-using-queues/description/)
+
+在将一个元素 x 插入队列时，需要让除了 x 之外的所有元素出队列，再入队列。此时 x 在队首，第一个出队列，实现了后进先出顺序。
 
 ```java
 class MyStack {
@@ -3926,8 +3895,6 @@ class MyStack {
 
 [155. Min Stack (Easy)](https://leetcode.com/problems/min-stack/description/)
 
-用两个栈实现，一个存储数据，一个存储最小值。
-
 ```java
 class MinStack {
 
@@ -3958,7 +3925,7 @@ class MinStack {
     }
 
     public int getMin() {
-        return min;
+        return minStack.peek();
     }
 }
 ```
@@ -3979,14 +3946,19 @@ Output : true
 public boolean isValid(String s) {
     Stack<Character> stack = new Stack<>();
     for (char c : s.toCharArray()) {
-        if (c == '(' || c == '{' || c == '[') stack.push(c);
-        else {
-            if (stack.isEmpty()) return false;
+        if (c == '(' || c == '{' || c == '[') {
+            stack.push(c);
+        } else {
+            if (stack.isEmpty()) {
+                return false;
+            }
             char cStack = stack.pop();
             boolean b1 = c == ')' && cStack != '(';
             boolean b2 = c == ']' && cStack != '[';
             boolean b3 = c == '}' && cStack != '{';
-            if (b1 || b2 || b3) return false;
+            if (b1 || b2 || b3) {
+                return false;
+            }
         }
     }
     return stack.isEmpty();
@@ -3995,28 +3967,28 @@ public boolean isValid(String s) {
 
 **数组中元素与下一个比它大的元素之间的距离** 
 
+[739. Daily Temperatures (Medium)](https://leetcode.com/problems/daily-temperatures/description/)
+
 ```html
 Input: [73, 74, 75, 71, 69, 72, 76, 73]
 Output: [1, 1, 4, 2, 1, 1, 0, 0]
 ```
-
-[739. Daily Temperatures (Medium)](https://leetcode.com/problems/daily-temperatures/description/)
 
 在遍历数组时用 Stack 把数组中的数存起来，如果当前遍历的数比栈顶元素来的大，说明栈顶元素的下一个比它大的数就是当前元素。
 
 ```java
 public int[] dailyTemperatures(int[] temperatures) {
     int n = temperatures.length;
-    int[] ret = new int[n];
-    Stack<Integer> stack = new Stack<>();
-    for (int i = 0; i < n; i++) {
-        while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
-            int idx = stack.pop();
-            ret[idx] = i - idx;
+    int[] dist = new int[n];
+    Stack<Integer> indexs = new Stack<>();
+    for (int curIndex = 0; curIndex < n; curIndex++) {
+        while (!indexs.isEmpty() && temperatures[curIndex] > temperatures[indexs.peek()]) {
+            int preIndex = indexs.pop();
+            dist[preIndex] = curIndex - preIndex;
         }
-        stack.add(i);
+        indexs.add(curIndex);
     }
-    return ret;
+    return dist;
 }
 ```
 
