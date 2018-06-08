@@ -3364,11 +3364,11 @@ public int minSteps(int n) {
 
 ### 素数
 
-**素数分解** 
+（一）素数分解
 
 每一个数都可以分解成素数的乘积，例如 84 = 2<sup>2</sup> \* 3<sup>1</sup> \* 5<sup>0</sup> \* 7<sup>1</sup> \* 11<sup>0</sup> \* 13<sup>0</sup> \* 17<sup>0</sup> \* …
 
-**整除** 
+（二）整除
 
 令 x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
 
@@ -3376,7 +3376,7 @@ public int minSteps(int n) {
 
 如果 x 整除 y（y mod x == 0），则对于所有 i，mi <= ni。
 
-**最大公约数最小公倍数** 
+（三）最大公约数最小公倍数
 
 x 和 y 的最大公约数为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
 
@@ -3391,18 +3391,18 @@ x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(
 ```java
 public int countPrimes(int n) {
     boolean[] notPrimes = new boolean[n + 1];
-    int cnt = 0;
-    for (int i = 2; i < n; i++){
+    int count = 0;
+    for (int i = 2; i < n; i++) {
         if (notPrimes[i]) {
             continue;
         }
-        cnt++;
+        count++;
         // 从 i * i 开始，因为如果 k < i，那么 k * i 在之前就已经被去除过了
-        for (long j = (long) i * i; j < n; j += i){
+        for (long j = (long) (i) * i; j < n; j += i) {
             notPrimes[(int) j] = true;
         }
     }
-    return cnt;
+    return count;
 }
 ```
 
