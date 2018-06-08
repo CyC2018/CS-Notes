@@ -3992,48 +3992,34 @@ public int[] dailyTemperatures(int[] temperatures) {
 }
 ```
 
-**在另一个数组中比当前元素大的下一个元素** 
-
-[496. Next Greater Element I (Easy)](https://leetcode.com/problems/next-greater-element-i/description/)
-
-```html
-Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
-Output: [-1,3,-1]
-```
-
-```java
-public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-    Map<Integer, Integer> map = new HashMap<>();
-    Stack<Integer> stack = new Stack<>();
-    for (int num : nums2) {
-        while (!stack.isEmpty() && num > stack.peek()) {
-            map.put(stack.pop(), num);
-        }
-        stack.add(num);
-    }
-    int[] ret = new int[nums1.length];
-    for (int i = 0; i < nums1.length; i++) {
-        if (map.containsKey(nums1[i])) ret[i] = map.get(nums1[i]);
-        else ret[i] = -1;
-    }
-    return ret;
-}
-```
-
 **循环数组中比当前元素大的下一个元素** 
 
 [503. Next Greater Element II (Medium)](https://leetcode.com/problems/next-greater-element-ii/description/)
 
+```text
+Input: [1,2,1]
+Output: [2,-1,2]
+Explanation: The first 1's next greater number is 2; 
+The number 2 can't find next greater number; 
+The second 1's next greater number needs to search circularly, which is also 2.
+```
+
+与 739. Daily Temperatures (Medium) 不同的是，数组是循环数组，并且最后要求的不是距离而是下一个元素。
+
 ```java
 public int[] nextGreaterElements(int[] nums) {
-    int n = nums.length, next[] = new int[n];
+    int n = nums.length;
+    int[] next = new int[n];
     Arrays.fill(next, -1);
-    Stack<Integer> stack = new Stack<>();
+    Stack<Integer> pre = new Stack<>();
     for (int i = 0; i < n * 2; i++) {
         int num = nums[i % n];
-        while (!stack.isEmpty() && nums[stack.peek()] < num)
-            next[stack.pop()] = num;
-        if (i < n) stack.push(i);
+        while (!pre.isEmpty() && nums[pre.peek()] < num) {
+            next[pre.pop()] = num;
+        }
+        if (i < n){
+            pre.push(i);
+        }
     }
     return next;
 }
