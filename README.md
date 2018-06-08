@@ -19,7 +19,7 @@
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-整理自《算法 第四版》
+整理自《算法 第四版》与《数据结构与算法分析》
 
 ## 操作系统 :computer:
 
@@ -35,7 +35,7 @@
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-整理自《计算机网络 第七版》，重点内容会在标题后面加 \*。
+整理自《计算机网络 第七版》与《计算机网络 自顶向下方法》
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
@@ -49,17 +49,17 @@
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
-整理自《Head First 设计模式》
+整理自《Head First 设计模式》与《设计模式 可复用面向对象软件的基础》
 
 > [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
 
-一些面向对象思想和设计原则。
+面向对象三个原则，类图，设计原则
 
 ## 数据库 :floppy_disk:
 
 > [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
 
-整理自《数据库系统概论 第四版》
+整理自《数据库系统原理》
 
 > [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
 
@@ -67,7 +67,7 @@
 
 > [Leetcode-Database 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20题解.md)
 
-Leetcode 上数据库题目的解题记录。
+Leetcode 上数据库题目的解题记录
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
@@ -81,7 +81,7 @@ Leetcode 上数据库题目的解题记录。
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
-整理了一些常见考点。
+整理了一些常见知识点
 
 > [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
@@ -97,7 +97,7 @@ Leetcode 上数据库题目的解题记录。
 
 > [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
-File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
+重点是 NIO
 
 ## 分布式 :sweat_drops:
 
@@ -113,7 +113,7 @@ File, InputStream OutputStream, Reader Writer, Serializable, Socket, NIO
 
 > [Git](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md)
 
-整理一些 Git 的使用和概念。
+整理一些 Git 的使用和概念
 
 > [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
 
