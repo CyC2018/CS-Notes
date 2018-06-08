@@ -4027,11 +4027,11 @@ public int[] nextGreaterElements(int[] nums) {
 
 ## 哈希表
 
-利用 Hash Table 可以快速查找一个元素是否存在等问题，但是需要一定的空间来存储。在优先考虑时间复杂度的情况下，可以利用 Hash Table 这种空间换取时间的做法。
+哈希表使用 O(N) 空间复杂度存储数据，从而能够以 O(1) 时间复杂度求解问题。
 
-Java 中的  **HashSet**  用于存储一个集合，并以 O(1) 的时间复杂度查找元素是否在集合中。
+Java 中的  **HashSet**  用于存储一个集合，可以查找元素是否在集合中。
 
-如果元素有穷，并且范围不大，那么可以用一个布尔数组来存储一个元素是否存在，例如对于只有小写字符的元素，就可以用一个长度为 26 的布尔数组来存储一个字符集合，使得空间复杂度降低为 O(1)。
+如果元素有穷，并且范围不大，那么可以用一个布尔数组来存储一个元素是否存在。例如对于只有小写字符的元素，就可以用一个长度为 26 的布尔数组来存储一个字符集合，使得空间复杂度降低为 O(1)。
 
 Java 中的  **HashMap**  主要用于映射关系，从而把两个元素联系起来。
 
@@ -4049,16 +4049,19 @@ HashMap 也可以用来对元素进行计数统计，此时键为元素，值为
 
 ```java
 public int[] twoSum(int[] nums, int target) {
-    HashMap<Integer, Integer> map = new HashMap<>();
+    HashMap<Integer, Integer> indexForNum = new HashMap<>();
     for (int i = 0; i < nums.length; i++) {
-        if (map.containsKey(target - nums[i])) return new int[] { map.get(target - nums[i]), i };
-        else map.put(nums[i], i);
+        if (indexForNum.containsKey(target - nums[i])) {
+            return new int[]{indexForNum.get(target - nums[i]), i};
+        } else {
+            indexForNum.put(nums[i], i);
+        }
     }
     return null;
 }
 ```
 
-**判断数组是否含有相同元素** 
+**判断数组是否含有重复元素** 
 
 [217. Contains Duplicate (Easy)](https://leetcode.com/problems/contains-duplicate/description/)
 
@@ -4082,21 +4085,21 @@ Output: 5
 Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 ```
 
-和谐序列中最大数和最小数只差正好为 1。
+和谐序列中最大数和最小数只差正好为 1，应该注意的是序列的元素不一定是数组的连续元素。
 
 ```java
 public int findLHS(int[] nums) {
-    Map<Long, Integer> map = new HashMap<>();
-    for (long num : nums) {
-        map.put(num, map.getOrDefault(num, 0) + 1);
+    Map<Integer, Integer> countForNum = new HashMap<>();
+    for (int num : nums) {
+        countForNum.put(num, countForNum.getOrDefault(num, 0) + 1);
     }
-    int result = 0;
-    for (long key : map.keySet()) {
-        if (map.containsKey(key + 1)) {
-            result = Math.max(result, map.get(key + 1) + map.get(key));
+    int longest = 0;
+    for (int num : countForNum.keySet()) {
+        if (countForNum.containsKey(num + 1)) {
+            longest = Math.max(longest, countForNum.get(num + 1) + countForNum.get(num));
         }
     }
-    return result;
+    return longest;
 }
 ```
 
@@ -4109,35 +4112,39 @@ Given [100, 4, 200, 1, 3, 2],
 The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 ```
 
-题目要求：以 O(N) 的时间复杂度求解。
+要求以 O(N) 的时间复杂度求解。
 
 ```java
 public int longestConsecutive(int[] nums) {
-    Map<Integer, Integer> numCnts = new HashMap<>();
+    Map<Integer, Integer> countForNum = new HashMap<>();
     for (int num : nums) {
-        numCnts.put(num, 1);
+        countForNum.put(num, 1);
     }
     for (int num : nums) {
-        count(numCnts, num);
+        forward(countForNum, num);
     }
-    int max = 0;
-    for (int num : nums) {
-        max = Math.max(max, numCnts.get(num));
-    }
-    return max;
+    return maxCount(countForNum);
 }
 
-private int count(Map<Integer, Integer> numCnts, int num) {
-    if (!numCnts.containsKey(num)) {
+private int forward(Map<Integer, Integer> countForNum, int num) {
+    if (!countForNum.containsKey(num)) {
         return 0;
     }
-    int cnt = numCnts.get(num);
+    int cnt = countForNum.get(num);
     if (cnt > 1) {
         return cnt;
     }
-    cnt = count(numCnts, num + 1) + 1;
-    numCnts.put(num, cnt);
+    cnt = forward(countForNum, num + 1) + 1;
+    countForNum.put(num, cnt);
     return cnt;
+}
+
+private int maxCount(Map<Integer, Integer> countForNum) {
+    int max = 0;
+    for (int num : countForNum.keySet()) {
+        max = Math.max(max, countForNum.get(num));
+    }
+    return max;
 }
 ```
 
