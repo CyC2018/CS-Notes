@@ -4159,14 +4159,22 @@ s = "anagram", t = "nagaram", return true.
 s = "rat", t = "car", return false.
 ```
 
-字符串只包含小写字符，总共有 26 个小写字符。可以用 Hash Table 来映射字符与出现次数，因为键值范围很小，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，然后比较两个字符串出现的字符数量是否相同。
+字符串只包含小写字符，总共有 26 个小写字符。可以用 HashMap 来映射字符与出现次数。因为键的范围很小，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，然后比较两个字符串出现的字符数量是否相同。
 
 ```java
 public boolean isAnagram(String s, String t) {
     int[] cnts = new int[26];
-    for (char c : s.toCharArray()) cnts[c - 'a']++;
-    for (char c : t.toCharArray()) cnts[c - 'a']--;
-    for (int cnt : cnts) if (cnt != 0) return false;
+    for (char c : s.toCharArray()) {
+        cnts[c - 'a']++;
+    }
+    for (char c : t.toCharArray()) {
+        cnts[c - 'a']--;
+    }
+    for (int cnt : cnts) {
+        if (cnt != 0) {
+            return false;
+        }
+    }
     return true;
 }
 ```
@@ -4181,16 +4189,24 @@ Output : 7
 Explanation : One longest palindrome that can be built is "dccaccd", whose length is 7.
 ```
 
-使用长度为 256 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
+使用长度为 256 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。
+
+因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
 
 ```java
 public int longestPalindrome(String s) {
     int[] cnts = new int[256];
-    for (char c : s.toCharArray()) cnts[c]++;
-    int ret = 0;
-    for (int cnt : cnts) ret += (cnt / 2) * 2;
-    if (ret < s.length()) ret++; // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
-    return ret;
+    for (char c : s.toCharArray()) {
+        cnts[c]++;
+    }
+    int palindrome = 0;
+    for (int cnt : cnts) {
+        palindrome += (cnt / 2) * 2;
+    }
+    if (palindrome < s.length()) {
+        palindrome++;   // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
+    }
+    return palindrome;
 }
 ```
 
@@ -4212,33 +4228,13 @@ public boolean isIsomorphic(String s, String t) {
     int[] preIndexOfT = new int[256];
     for (int i = 0; i < s.length(); i++) {
         char sc = s.charAt(i), tc = t.charAt(i);
-        if (preIndexOfS[sc] != preIndexOfT[tc]) return false;
+        if (preIndexOfS[sc] != preIndexOfT[tc]) {
+            return false;
+        }
         preIndexOfS[sc] = i + 1;
         preIndexOfT[tc] = i + 1;
     }
     return true;
-}
-```
-
-**判断一个整数是否是回文数** 
-
-[9. Palindrome Number (Easy)](https://leetcode.com/problems/palindrome-number/description/)
-
-题目要求：不能使用额外空间，也就不能将整数转换为字符串进行判断。
-
-将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。
-
-```java
-public boolean isPalindrome(int x) {
-    if (x == 0) return true;
-    if (x < 0) return false;
-    if (x % 10 == 0) return false;
-    int right = 0;
-    while (x > right) {
-        right = right * 10 + x % 10;
-        x /= 10;
-    }
-    return x == right || x == right / 10;
 }
 ```
 
@@ -4256,9 +4252,10 @@ Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 
 ```java
 private int cnt = 0;
+
 public int countSubstrings(String s) {
     for (int i = 0; i < s.length(); i++) {
-        extendSubstrings(s, i, i);    // 奇数长度
+        extendSubstrings(s, i, i);     // 奇数长度
         extendSubstrings(s, i, i + 1); // 偶数长度
     }
     return cnt;
@@ -4270,6 +4267,31 @@ private void extendSubstrings(String s, int start, int end) {
         end++;
         cnt++;
     }
+}
+```
+
+**判断一个整数是否是回文数** 
+
+[9. Palindrome Number (Easy)](https://leetcode.com/problems/palindrome-number/description/)
+
+要求不能使用额外空间，也就不能将整数转换为字符串进行判断。
+
+将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。
+
+```java
+public boolean isPalindrome(int x) {
+    if (x == 0) {
+        return true;
+    }
+    if (x < 0 || x % 10 == 0) {
+        return false;
+    }
+    int right = 0;
+    while (x > right) {
+        right = right * 10 + x % 10;
+        x /= 10;
+    }
+    return x == right || x == right / 10;
 }
 ```
 
@@ -4285,16 +4307,20 @@ Explanation: There are 6 substrings that have equal number of consecutive 1's an
 
 ```java
 public int countBinarySubstrings(String s) {
-    int preLen = 0, curLen = 1, ret = 0;
+    int preLen = 0, curLen = 1, count = 0;
     for (int i = 1; i < s.length(); i++) {
-        if (s.charAt(i) == s.charAt(i-1)) curLen++;
-        else {
+        if (s.charAt(i) == s.charAt(i - 1)) {
+            curLen++;
+        } else {
             preLen = curLen;
             curLen = 1;
         }
-        if (preLen >= curLen) ret++;
+
+        if (preLen >= curLen) {
+            count++;
+        }
     }
-    return ret;
+    return count;
 }
 ```
 
@@ -4307,7 +4333,7 @@ s1 = AABCD, s2 = CDAA
 Return : true
 ```
 
-给定两个字符串 s1 和 s2 ，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
+给定两个字符串 s1 和 s2，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
 
 s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。
 
@@ -4315,9 +4341,12 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 [编程之美：2.17](#)
 
-将字符串向右循环移动 k 位。
+```html
+s = "abcd123" k = 3
+Return "123abcd"
+```
 
-例如 abcd123 向右移动 3 位 得到 123abcd
+将字符串向右循环移动 k 位。
 
 将 abcd123 中的 abcd 和 123 单独逆序，得到 dcba321，然后对整个字符串进行逆序，得到 123abcd。
 
@@ -4325,7 +4354,10 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 [程序员代码面试指南](#)
 
-例如将 "I am a student" 翻转成 "student a am I"
+```html
+s = "I am a student"
+return "student a am I"
+```
 
 将每个单词逆序，然后将整个字符串逆序。
 
