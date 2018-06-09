@@ -94,10 +94,10 @@ https://leetcode.com/problems/swap-salary/description/
 ```html
 | id | name | sex | salary |
 |----|------|-----|--------|
-| 1  | A    | m   | 2500   |
-| 2  | B    | f   | 1500   |
-| 3  | C    | m   | 5500   |
-| 4  | D    | f   | 500    |
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
 ```
 
 ## SQL Schema
@@ -128,7 +128,6 @@ https://leetcode.com/problems/not-boring-movies/description/
 
 ## Description
 
-邮件地址表：
 
 ```html
 +---------+-----------+--------------+-----------+

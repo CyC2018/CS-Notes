@@ -1021,7 +1021,6 @@ $ split [-bl] file PREFIX
 
 ```html
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
--a ： 将 binary 文件以 text 文件的方式进行搜寻
 -c ： 计算找到个数
 -i ： 忽略大小写
 -n ： 输出行号
@@ -1162,6 +1161,8 @@ daemon 2
 
 查看占用端口的进程
 
+示例：查看特定端口的进程
+
 ```
 # netstat -anp | grep port
 ```
@@ -1173,10 +1174,10 @@ daemon 2
 | 状态 | 说明 |
 | :---: | --- |
 | R | running or runnable (on run queue) |
-| D | uninterruptible sleep (usually IO) |
+| D | uninterruptible sleep (usually I/O) |
 | S | interruptible sleep (waiting for an event to complete) |
 | Z | defunct/zombie, terminated but not reaped by its parent |
-| T | stopped, either by a job control signal or because it is being traced|
+| T | stopped, either by a job control signal or because it is being traced |
 
 ## SIGCHLD
 
@@ -1201,7 +1202,7 @@ pid_t wait(int *status)
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
 
-参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，以设定这个参数为 NULL：
+参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵死进程消灭掉，以设定这个参数为 NULL：
 
 ```c
 pid = wait(NULL);
@@ -1221,7 +1222,9 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 ## 孤儿进程
 
-一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。
+
+孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
 
 由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
 
