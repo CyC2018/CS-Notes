@@ -37,7 +37,38 @@ Java 的 I/O 大概可以分成以下几类：
 
 File 类可以用于表示文件和目录，但是它只用于表示文件的信息，而不表示文件的内容。
 
+递归地输出一个目录下所有文件：
+
+```java
+public static void listAllFiles(File dir) {
+    if (dir.isFile()) {
+        System.out.println(dir.getName());
+        return;
+    }
+    for (File file : dir.listFiles()) {
+        listAllFiles(file);
+    }
+}
+```
+
 # 三、字节操作
+
+使用字节流操作进行文件复制：
+
+```java
+public static void fileCopy(String src, String dist) throws IOException {
+    FileInputStream in = new FileInputStream("file/1.txt");
+    FileOutputStream out = new FileOutputStream("file/2.txt");
+    byte[] buffer = new byte[20 * 1024];
+    // read() 最多读取 buffer.length 个字节，返回的是实际读取的个数
+    // 返回 -1 的时候表示读到 eof，即文件尾
+    while (in.read(buffer, 0, buffer.length) != -1) {
+        out.write(buffer);
+    }
+    in.close();
+    out.close();
+}
+```
 
 <div align="center"> <img src="../pics//DP-Decorator-java.io.png" width="500"/> </div><br>
 
@@ -46,31 +77,17 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStrea
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
 ```java
-BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+FileInputStream fileInputStream = new FileInputStream("file/1.txt");
+BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 ```
 
 DataInputStream 装饰者提供了对更多数据类型进行输入的操作，比如 int、double 等基本类型。
-
-使用字节流操作进行文件复制：
-
-```java
-FileInputStream in = new FileInputStream("file/1.txt");
-FileOutputStream out = new FileOutputStream("file/2.txt");
-byte[] buffer = new byte[20 * 1024];
-// read() 最多读取 buffer.length 个字节，返回的是实际读取的个数
-// 返回 -1 的时候表示读到 eof，即文件尾
-while (in.read(buffer, 0, buffer.length) != -1) {
-    out.write(buffer);
-}
-in.close();
-out.close;
-```
 
 # 四、字符操作
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
-InputStreamReader 实现从文本文件的字节流解码成字符流；OutputStreamWriter 实现字符流编码成为文本文件的字节流。它们分别继承自 Reader 和 Writer。
+InputStreamReader 实现从文本文件的字节流解码成字符流；OutputStreamWriter 实现字符流编码成为文本文件的字节流。
 
 逐行输出文本文件的内容：
 
@@ -117,11 +134,42 @@ byte[] bytes = str1.getBytes();
 
 序列化就是将一个对象转换成字节序列，方便存储和传输。
 
-序列化：ObjectOutputStream.writeObject()
+- 序列化：ObjectOutputStream.writeObject()
+- 反序列化：ObjectInputStream.readObject()
 
-反序列化：ObjectInputStream.readObject()
+序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。
 
-序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现。
+```java
+public static void main(String[] args) throws IOException, ClassNotFoundException {
+    A a1 = new A(123, "abc");
+    String objectFile = "file/a1";
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
+    objectOutputStream.writeObject(a1);
+    objectOutputStream.close();
+    ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(objectFile));
+    A a2 = (A) objectInputStream.readObject();
+    objectInputStream.close();
+    System.out.println(a2);
+}
+
+private static class A implements Serializable {
+    private int x;
+    private String y;
+
+    A(int x, String y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "x = " + x +
+                "  " + "y = " + y;
+    }
+}
+```
+
+不会对静态变量进行序列化，因为序列化只是保存对象的状态，静态变量属于类的状态。
 
 transient 关键字可以使一些属性不会被序列化。
 
@@ -146,7 +194,7 @@ Java 中的网络支持：
 
 ```java
 InetAddress.getByName(String host);
-InetAddress.getByAddress(byte[] addr);
+InetAddress.getByAddress(byte[] address);
 ```
 
 ## URL
@@ -164,8 +212,6 @@ while (line != null) {
     line = br.readLine();
 }
 br.close();
-isr.close();
-is.close();
 ```
 
 ## Sockets
@@ -495,3 +541,4 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
 - [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
 - [深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.htm)
+ - [ava 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
