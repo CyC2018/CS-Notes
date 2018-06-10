@@ -76,19 +76,20 @@ You need to output 2.
 
 因为最小的孩子最容易得到满足，因此先满足最小孩子。给一个孩子的饼干应当尽量小又能满足该孩子，这样大饼干就能拿来给满足度比较大的孩子。
 
-证明：假设在某次选择中，贪心策略选择给第 i 个孩子分配第 m 个饼干，并且第 i 个孩子满足度最小，第 m 个饼干为可以满足第 i 个孩子的最小饼干。假设最优策略在这次选择中给 i 个孩子分配第 n 个饼干，并且这个饼干大于第 m 个饼干。我们发现使用第 m 个饼干去替代第 n 个饼干完全不影响后续的结果，因此不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
 ```java
 public int findContentChildren(int[] g, int[] s) {
     Arrays.sort(g);
     Arrays.sort(s);
-    int gIndex = 0, sIndex = 0;
-    while (gIndex < g.length && sIndex < s.length) {
-        if (g[gIndex] <= s[sIndex])
-            gIndex++;
-        sIndex++;
+    int gi = 0, si = 0;
+    while (gi < g.length && si < s.length) {
+        if (g[gi] <= s[si]) {
+            gi++;
+        }
+        si++;
     }
-    return gIndex;
+    return gi;
 }
 ```
 
