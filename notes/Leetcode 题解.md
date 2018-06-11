@@ -7,11 +7,11 @@
         * [堆排序](#堆排序)
         * [桶排序](#桶排序)
         * [荷兰国旗问题](#荷兰国旗问题)
+    * [二分查找](#二分查找)
     * [搜索](#搜索)
         * [BFS](#bfs)
         * [DFS](#dfs)
         * [Backtracking](#backtracking)
-    * [二分查找](#二分查找)
     * [分治](#分治)
     * [动态规划](#动态规划)
         * [斐波那契数列](#斐波那契数列)
@@ -386,12 +386,13 @@ public int[] twoSum(int[] numbers, int target) {
     int i = 0, j = numbers.length - 1;
     while (i < j) {
         int sum = numbers[i] + numbers[j];
-        if (sum == target)
+        if (sum == target) {
             return new int[]{i + 1, j + 1};
-        else if (sum < target)
+        } else if (sum < target) {
             i++;
-        else
+        } else {
             j--;
+        }
     }
     return null;
 }
@@ -414,12 +415,13 @@ public boolean judgeSquareSum(int c) {
     int i = 0, j = (int) Math.sqrt(c);
     while (i <= j) {
         int powSum = i * i + j * j;
-        if (powSum == c)
+        if (powSum == c) {
             return true;
-        if (powSum > c)
+        } else if (powSum > c) {
             j--;
-        else
+        } else {
             i++;
+        }
     }
     return false;
 }
@@ -436,7 +438,7 @@ Given s = "leetcode", return "leotcede".
 使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
 
 ```java
-private HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
 
 public String reverseVowels(String s) {
     int i = 0, j = s.length() - 1;
@@ -444,11 +446,11 @@ public String reverseVowels(String s) {
     while (i <= j) {
         char ci = s.charAt(i);
         char cj = s.charAt(j);
-        if (!vowels.contains(ci))
+        if (!vowels.contains(ci)) {
             result[i++] = ci;
-        else if (!vowels.contains(cj))
+        } else if (!vowels.contains(cj)) {
             result[j--] = cj;
-        else {
+        } else {
             result[i++] = cj;
             result[j--] = ci;
         }
@@ -472,18 +474,20 @@ Explanation: You could delete the character 'c'.
 ```java
 public boolean validPalindrome(String s) {
     int i = -1, j = s.length();
-    while (++i < --j)
-        if (s.charAt(i) != s.charAt(j))
+    while (++i < --j) {
+        if (s.charAt(i) != s.charAt(j)) {
             return isPalindrome(s, i, j - 1) || isPalindrome(s, i + 1, j);
-
+        }
+    }
     return true;
 }
 
 private boolean isPalindrome(String s, int i, int j) {
-    while (i < j)
-        if (s.charAt(i++) != s.charAt(j--))
+    while (i < j) {
+        if (s.charAt(i++) != s.charAt(j--)) {
             return false;
-
+        }
+    }
     return true;
 }
 ```
@@ -502,21 +506,22 @@ Output: [1,2,2,3,5,6]
 
 题目描述：把归并结果存到第一个数组上。
 
+需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值
+
 ```java
 public void merge(int[] nums1, int m, int[] nums2, int n) {
-    // 需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值
-    int i = m - 1, j = n - 1;
-    int index = m + n - 1;
-    while (i >= 0 || j >= 0) {
-        if (i < 0)
-            nums1[index] = nums2[j--];
-        else if (j < 0)
-            nums1[index] = nums1[i--];
-        else if (nums1[i] > nums2[j])
-            nums1[index] = nums1[i--];
-        else
-            nums1[index] = nums2[j--];
-        index--;
+    int index1 = m - 1, index2 = n - 1;
+    int indexMerge = m + n - 1;
+    while (index1 >= 0 || index2 >= 0) {
+        if (index1 < 0) {
+            nums1[indexMerge--] = nums2[index2--];
+        } else if (index2 < 0) {
+            nums1[indexMerge--] = nums1[index1--];
+        } else if (nums1[index1] > nums2[index2]) {
+            nums1[indexMerge--] = nums1[index1--];
+        } else {
+            nums1[indexMerge--] = nums2[index2--];
+        }
     }
 }
 ```
@@ -529,12 +534,14 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 ```java
 public boolean hasCycle(ListNode head) {
-    if (head == null)
+    if (head == null) {
         return false;
+    }
     ListNode l1 = head, l2 = head.next;
     while (l1 != null && l2 != null && l2.next != null) {
-        if (l1 == l2)
+        if (l1 == l2) {
             return true;
+        }
         l1 = l1.next;
         l2 = l2.next.next;
     }
@@ -561,10 +568,12 @@ public String findLongestWord(String s, List<String> d) {
     String longestWord = "";
     for (String target : d) {
         int l1 = longestWord.length(), l2 = target.length();
-        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0))
+        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
             continue;
-        if (isValid(s, target))
+        }
+        if (isValid(s, target)) {
             longestWord = target;
+        }
     }
     return longestWord;
 }
@@ -572,8 +581,9 @@ public String findLongestWord(String s, List<String> d) {
 private boolean isValid(String s, String target) {
     int i = 0, j = 0;
     while (i < s.length() && j < target.length()) {
-        if (s.charAt(i) == target.charAt(j))
+        if (s.charAt(i) == target.charAt(j)) {
             j++;
+        }
         i++;
     }
     return j == target.length();
@@ -627,12 +637,13 @@ public int findKthLargest(int[] nums, int k) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
-        if (j == k)
+        if (j == k) {
             break;
-        else if (j < k)
+        } else if (j < k) {
             l = j + 1;
-        else
+        } else {
             h = j - 1;
+        }
     }
     return nums[k];
 }
@@ -642,8 +653,9 @@ private int partition(int[] a, int l, int h) {
     while (true) {
         while (a[++i] < a[l] && i < h) ;
         while (a[--j] > a[l] && j > l) ;
-        if (i >= j)
+        if (i >= j) {
             break;
+        }
         swap(a, i, j);
     }
     swap(a, l, j);
@@ -671,23 +683,24 @@ Given [1,1,1,2,2,3] and k = 2, return [1,2].
 
 ```java
 public List<Integer> topKFrequent(int[] nums, int k) {
-    Map<Integer, Integer> frequencyMap = new HashMap<>();
-    for (int num : nums)
-        frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
-
-    List<Integer>[] bucket = new List[nums.length + 1];
-    for (int key : frequencyMap.keySet()) {
-        int frequency = frequencyMap.get(key);
-        if (bucket[frequency] == null)
-            bucket[frequency] = new ArrayList<>();
-        bucket[frequency].add(key);
+    Map<Integer, Integer> frequencyForNum = new HashMap<>();
+    for (int num : nums) {
+        frequencyForNum.put(num, frequencyForNum.getOrDefault(num, 0) + 1);
     }
-
+    List<Integer>[] buckets = new ArrayList[nums.length + 1];
+    for (int key : frequencyForNum.keySet()) {
+        int frequency = frequencyForNum.get(key);
+        if (buckets[frequency] == null) {
+            buckets[frequency] = new ArrayList<>();
+        }
+        buckets[frequency].add(key);
+    }
     List<Integer> topK = new ArrayList<>();
-    for (int i = bucket.length - 1; i >= 0 && topK.size() < k; i--)
-        if (bucket[i] != null)
-            topK.addAll(bucket[i]);
-
+    for (int i = buckets.length - 1; i >= 0 && topK.size() < k; i--) {
+        if (buckets[i] != null) {
+            topK.addAll(buckets[i]);
+        }
+    }
     return topK;
 }
 ```
@@ -710,24 +723,28 @@ So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid ans
 
 ```java
 public String frequencySort(String s) {
-    Map<Character, Integer> frequencyMap = new HashMap<>();
+    Map<Character, Integer> frequencyForNum = new HashMap<>();
     for (char c : s.toCharArray())
-        frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        frequencyForNum.put(c, frequencyForNum.getOrDefault(c, 0) + 1);
 
-    List<Character>[] frequencyBucket = new List[s.length() + 1];
-    for (char c : frequencyMap.keySet()) {
-        int f = frequencyMap.get(c);
-        if (frequencyBucket[f] == null)
+    List<Character>[] frequencyBucket = new ArrayList[s.length() + 1];
+    for (char c : frequencyForNum.keySet()) {
+        int f = frequencyForNum.get(c);
+        if (frequencyBucket[f] == null) {
             frequencyBucket[f] = new ArrayList<>();
+        }
         frequencyBucket[f].add(c);
     }
     StringBuilder str = new StringBuilder();
     for (int i = frequencyBucket.length - 1; i >= 0; i--) {
-        if (frequencyBucket[i] == null)
+        if (frequencyBucket[i] == null) {
             continue;
-        for (char c : frequencyBucket[i])
-            for (int j = 0; j < i; j++)
+        }
+        for (char c : frequencyBucket[i]) {
+            for (int j = 0; j < i; j++) {
                 str.append(c);
+            }
+        }
     }
     return str.toString();
 }
@@ -756,12 +773,13 @@ Output: [0,0,1,1,2,2]
 public void sortColors(int[] nums) {
     int zero = -1, one = 0, two = nums.length;
     while (one < two) {
-        if (nums[one] == 0)
+        if (nums[one] == 0) {
             swap(nums, ++zero, one++);
-        else if (nums[one] == 2)
+        } else if (nums[one] == 2) {
             swap(nums, --two, one);
-        else
+        } else {
             ++one;
+        }
     }
 }
 
@@ -769,6 +787,277 @@ private void swap(int[] nums, int i, int j) {
     int t = nums[i];
     nums[i] = nums[j];
     nums[j] = t;
+}
+```
+
+## 二分查找
+
+**正常实现** 
+
+```java
+public int binarySearch(int[] nums, int key) {
+    int l = 0, h = nums.length - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] == key) {
+            return m;
+        } else if (nums[m] > key) {
+            h = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    return -1;
+}
+```
+
+**时间复杂度** 
+
+二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度都为 O(logN)。
+
+**m 计算** 
+
+有两种计算中值 m 的方式：
+
+- m = (l + h) / 2
+- m = l + (h - l) / 2
+
+l + h 可能出现加法溢出，最好使用第二种方式。
+
+**返回值** 
+
+循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
+
+- -1：以一个错误码表示没有查找到 key
+- l：将 key 插入到 nums 中的正确位置
+
+**变种** 
+
+二分查找可以有很多变种，变种实现要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
+
+```java
+public int binarySearch(int[] nums, int key) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] >= key) {
+            h = m;
+        } else {
+            l = m + 1;
+        }
+    }
+    return l;
+}
+```
+
+该实现和正常实现有以下不同：
+
+- 循环条件为 l < h
+- h 的赋值表达式为 h = m
+- 最后返回 l 而不是 -1
+
+在 nums[m] >= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
+
+在 h 的赋值表达式为 h = mid 的情况下，如果循环条件为 l <= h，那么会出现循环无法退出的情况，因此循环条件只能是 l < h。以下演示了循环条件为 l <= h 时循环无法退出的情况：
+
+```text
+nums = {0, 1, 2}, key = 1
+l   m   h
+0   1   2  nums[m] >= key
+0   0   1  nums[m] < key
+1   1   1  nums[m] >= key
+1   1   1  nums[m] >= key
+...
+```
+
+当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
+
+**求开方** 
+
+[69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
+
+```html
+Input: 4
+Output: 2
+
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
+```
+
+一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
+
+对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l <= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
+
+```java
+public int mySqrt(int x) {
+    if (x <= 1) {
+        return x;
+    }
+    int l = 1, h = x;
+    while (l <= h) {
+        int mid = l + (h - l) / 2;
+        int sqrt = x / mid;
+        if (sqrt == mid) {
+            return mid;
+        } else if (mid > sqrt) {
+            h = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return h;
+}
+```
+
+**大于给定元素的最小元素** 
+
+[744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
+
+```html
+Input:
+letters = ["c", "f", "j"]
+target = "d"
+Output: "f"
+
+Input:
+letters = ["c", "f", "j"]
+target = "k"
+Output: "c"
+```
+
+题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符，如果找不到就返回第 1 个字符。
+
+```java
+public char nextGreatestLetter(char[] letters, char target) {
+    int n = letters.length;
+    int l = 0, h = n - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (letters[m] <= target) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+    return l < n ? letters[l] : letters[0];
+}
+```
+
+**有序数组的 Single Element** 
+
+[540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
+
+```html
+Input: [1,1,2,3,3,4,4,8,8]
+Output: 2
+```
+
+题目描述：一个有序数组只有一个数不出现两次，找出这个数。要求以 O(logN) 时间复杂度进行求解。
+
+令 index 为 Single Element 在数组中的位置。如果 m 为偶数，并且 m + 1 < index，那么 nums[m] == nums[m + 1]；m + 1 >= index，那么 nums[m] != nums[m + 1]。
+
+从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 index 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 index 所在的数组位置为 [l, m]，此时令 h = m。
+
+因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l < h 这种形式。
+
+```java
+public int singleNonDuplicate(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (m % 2 == 1) {
+            m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
+        }
+        if (nums[m] == nums[m + 1]) {
+            l = m + 2;
+        } else {
+            h = m;
+        }
+    }
+    return nums[l];
+}
+```
+
+**第一个错误的版本** 
+
+[278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
+
+题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
+
+如果第 m 个版本出错，则表示第一个错误的版本在 [l, m] 之间，令 h = m；否则第一个错误的版本在 [m + 1, h] 之间，令 l = m + 1。
+
+因为 h 的赋值表达式为 h = m，因此循环条件为 l < h。
+
+```java
+public int firstBadVersion(int n) {
+    int l = 1, h = n;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (isBadVersion(mid))
+            h = mid;
+        else
+            l = mid + 1;
+    }
+    return l;
+}
+```
+
+**旋转数组的最小数字** 
+
+[153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
+
+```html
+Input: [3,4,5,1,2],
+Output: 1
+```
+
+```java
+public int findMin(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] <= nums[h])
+            h = m;
+        else
+            l = m + 1;
+    }
+    return nums[l];
+}
+```
+
+**查找区间** 
+
+[34. Search for a Range (Medium)](https://leetcode.com/problems/search-for-a-range/description/)
+
+```html
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+```
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    int first = binarySearch(nums, target);
+    int last = binarySearch(nums, target + 1) - 1;
+    if (first == nums.length || nums[first] != target)
+        return new int[]{-1, -1};
+    else
+        return new int[]{first, Math.max(first, last)};
+}
+
+private int binarySearch(int[] nums, int target) {
+    int l = 0, h = nums.length; // 注意 h 的初始值
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] >= target)
+            h = m;
+        else
+            l = m + 1;
+    }
+    return l;
 }
 ```
 
@@ -2016,274 +2305,6 @@ private void backtracking(int row) {
         colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = false;
         nQueens[row][col] = '.';
     }
-}
-```
-
-## 二分查找
-
-（一）正常实现
-
-```java
-public int binarySearch(int[] nums, int key) {
-    int l = 0, h = nums.length - 1;
-    while (l <= h) {
-        int m = l + (h - l) / 2;
-        if (nums[m] == key) {
-            return m;
-        } else if (nums[m] > key) {
-            h = m - 1;
-        } else {
-            l = m + 1;
-        }
-    }
-    return -1;
-}
-```
-
-（二）时间复杂度
-
-O(logN)
-
-（三）m 计算
-
-有两种计算 m 的方式：
-
-- m = (l + h) / 2
-- m = l + (h - l) / 2
-
-l + h 可能出现加法溢出，最好使用第二种方式。
-
-（四）返回值
-
-循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
-
-- -1：以一个错误码表示没有查找到 key
-- l：将 key 插入到 nums 中的正确位置
-
-（五）变种
-
-二分查找可以有很多变种，变种实现要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
-
-```java
-public int binarySearch(int[] nums, int key) {
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int m = l + (h - l) / 2;
-        if (nums[m] >= key) {
-            h = m;
-        } else {
-            l = m + 1;
-        }
-    }
-    return l;
-}
-```
-
-该实现和正常实现有以下不同：
-
-- 循环条件为 l < h
-- h 的赋值表达式为 h = m
-- 最后返回 l 而不是 -1
-
-在 nums[m] >= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
-
-在 h 的赋值表达式为 h = mid 的情况下，如果循环条件为 l <= h，那么会出现循环无法退出的情况，因此循环条件只能是 l < h。以下演示了循环条件为 l<=h 循环无法退出的情况。
-
-```text
-nums = {0, 1, 2}, key = 1
-l   m   h
-0   1   2  nums[m] >= key
-0   0   1  nums[m] < key
-1   1   1  nums[m] >= key
-1   1   1  nums[m] >= key
-...
-```
-
-当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
-
-**求开方** 
-
-[69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
-
-```html
-Input: 4
-Output: 2
-
-Input: 8
-Output: 2
-Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
-```
-
-一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
-
-对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l <= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
-
-```java
-public int mySqrt(int x) {
-    if (x <= 1)
-        return x;
-    int l = 1, h = x;
-    while (l <= h) {
-        int mid = l + (h - l) / 2;
-        int sqrt = x / mid;
-        if (sqrt == mid)
-            return mid;
-        else if (sqrt < mid)
-            h = mid - 1;
-        else
-            l = mid + 1;
-    }
-    return h;
-}
-```
-
-**大于给定元素的最小元素** 
-
-[744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
-
-```html
-Input:
-letters = ["c", "f", "j"]
-target = "d"
-Output: "f"
-
-Input:
-letters = ["c", "f", "j"]
-target = "k"
-Output: "c"
-```
-
-题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符。letters 字符数组是循环数组。
-
-应该注意最后返回的是 l 位置的字符。
-
-```java
-public char nextGreatestLetter(char[] letters, char target) {
-    int n = letters.length;
-    int l = 0, h = n - 1;
-    while (l <= h) {
-        int m = l + (h - l) / 2;
-        if (letters[m] <= target)
-            l = m + 1;
-        else
-            h = m - 1;
-    }
-    return l < n ? letters[l] : letters[0];
-}
-```
-
-**有序数组的 Single Element** 
-
-[540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
-
-```html
-Input: [1,1,2,3,3,4,4,8,8]
-Output: 2
-```
-
-题目描述：一个有序数组只有一个数不出现两次，找出这个数。要求以 O(logN) 时间复杂度进行求解。
-
-令 key 为 Single Element 在数组中的位置。如果 m 为偶数，并且 m + 1 < key，那么 nums[m] == nums[m + 1]；m + 1 >= key，那么 nums[m] != nums[m + 1]。
-
-从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 key 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 key 所在的数组位置为 [l, m]，此时令 h = m。
-
-因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l < h 这种形式。
-
-```java
-public int singleNonDuplicate(int[] nums) {
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int m = l + (h - l) / 2;
-        if (m % 2 == 1)
-            m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
-        if (nums[m] == nums[m + 1])
-            l = m + 2;
-        else
-            h = m;
-    }
-    return nums[l];
-}
-```
-
-**第一个错误的版本** 
-
-[278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
-
-题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
-
-如果第 m 个版本出错，则表示第一个错误的版本在 [l, m] 之间，令 h = m；否则第一个错误的版本在 [m + 1, h] 之间，令 l = m + 1。
-
-因为 h 的赋值表达式为 h = m，因此循环条件为 l < h。
-
-```java
-public int firstBadVersion(int n) {
-    int l = 1, h = n;
-    while (l < h) {
-        int mid = l + (h - l) / 2;
-        if (isBadVersion(mid))
-            h = mid;
-        else
-            l = mid + 1;
-    }
-    return l;
-}
-```
-
-**旋转数组的最小数字** 
-
-[153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
-
-```html
-Input: [3,4,5,1,2],
-Output: 1
-```
-
-```java
-public int findMin(int[] nums) {
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h])
-            h = m;
-        else
-            l = m + 1;
-    }
-    return nums[l];
-}
-```
-
-**查找区间** 
-
-[34. Search for a Range (Medium)](https://leetcode.com/problems/search-for-a-range/description/)
-
-```html
-Input: nums = [5,7,7,8,8,10], target = 8
-Output: [3,4]
-
-Input: nums = [5,7,7,8,8,10], target = 6
-Output: [-1,-1]
-```
-
-```java
-public int[] searchRange(int[] nums, int target) {
-    int first = binarySearch(nums, target);
-    int last = binarySearch(nums, target + 1) - 1;
-    if (first == nums.length || nums[first] != target)
-        return new int[]{-1, -1};
-    else
-        return new int[]{first, Math.max(first, last)};
-}
-
-private int binarySearch(int[] nums, int target) {
-    int l = 0, h = nums.length; // 注意 h 的初始值
-    while (l < h) {
-        int m = l + (h - l) / 2;
-        if (nums[m] >= target)
-            h = m;
-        else
-            l = m + 1;
-    }
-    return l;
 }
 ```
 
