@@ -56,7 +56,7 @@ public static void listAllFiles(File dir) {
 使用字节流操作进行文件复制：
 
 ```java
-public static void fileCopy(String src, String dist) throws IOException {
+public static void copyFile(String src, String dist) throws IOException {
     FileInputStream in = new FileInputStream("file/1.txt");
     FileOutputStream out = new FileOutputStream("file/2.txt");
     byte[] buffer = new byte[20 * 1024];
@@ -184,7 +184,7 @@ private transient Object[] elementData;
 Java 中的网络支持：
 
 - InetAddress：用于表示网络上的硬件资源，即 IP 地址；
-- URL：统一资源定位符，通过 URL 可以直接读取或者写入网络上的数据；
+- URL：统一资源定位符；
 - Sockets：使用 TCP 协议实现网络通信；
 - Datagram：使用 UDP 协议实现网络通信。
 
@@ -199,7 +199,7 @@ InetAddress.getByAddress(byte[] address);
 
 ## URL
 
-可以直接从 URL 中读取字节流数据
+可以直接从 URL 中读取字节流数据。
 
 ```java
 URL url = new URL("http://www.baidu.com");
@@ -311,29 +311,25 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 ```java
 public class FastCopyFile {
     public static void main(String args[]) throws Exception {
-
-        String inFile = "data/abc.txt";
-        String outFile = "data/abc-copy.txt";
-
+        String inFile = "file/abc.txt";
+        String outFile = "file/abc-copy.txt";
         // 获得源文件的输入字节流
         FileInputStream fin = new FileInputStream(inFile);
         // 获取输入字节流的文件通道
         FileChannel fcin = fin.getChannel();
-
         // 获取目标文件的输出字节流
         FileOutputStream fout = new FileOutputStream(outFile);
         // 获取输出字节流的通道
         FileChannel fcout = fout.getChannel();
-
         // 为缓冲区分配 1024 个字节
         ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
-
         while (true) {
             // 从输入通道中读取数据到缓冲区中
             int r = fcin.read(buffer);
             // read() 返回 -1 表示 EOF
-            if (r == -1)
+            if (r == -1) {
                 break;
+            }
             // 切换读写
             buffer.flip();
             // 把缓冲区的内容写入输出文件中
@@ -477,17 +473,19 @@ public class NIOServer {
 
     private static String readDataFromSocketChannel(SocketChannel sChannel) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        StringBuffer data = new StringBuffer();
+        StringBuilder data = new StringBuilder();
         while (true) {
             buffer.clear();
             int n = sChannel.read(buffer);
-            if (n == -1)
+            if (n == -1) {
                 break;
+            }
             buffer.flip();
             int limit = buffer.limit();
             char[] dst = new char[limit];
-            for (int i = 0; i < limit; i++)
+            for (int i = 0; i < limit; i++) {
                 dst[i] = (char) buffer.get(i);
+            }
             data.append(dst);
             buffer.clear();
         }
