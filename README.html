@@ -1,0 +1,930 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>@font-face {
+  font-family: octicons-anchor;
+  src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body .markdown-body {
+    padding: 45px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+
+pre {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .plan-price-unit {
+  color: #767676;
+  font-weight: normal;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body .plan-choice {
+  padding: 15px;
+  padding-left: 40px;
+  display: block;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  font-weight: normal;
+  background-color: #fafafa;
+}
+
+.markdown-body .plan-choice.open {
+  background-color: #fff;
+}
+
+.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+  display: block;
+}
+
+.markdown-body .plan-choice-free {
+  border-radius: 3px 3px 0 0;
+}
+
+.markdown-body .plan-choice-paid {
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-body .plan-choice-radio {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+
+.markdown-body .plan-choice-exp {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.markdown-body .plan-choice-seat-breakdown {
+  margin-top: 10px;
+  display: none;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+
+@media print {
+  body .markdown-body {
+    padding: 0;
+    border: none;
+  }
+}
+</style><title>README</title></head><body><article class="markdown-body">
+<table>
+<thead>
+<tr>
+<th align="center">Ⅰ</th>
+<th align="center">Ⅱ</th>
+<th align="center">Ⅲ</th>
+<th align="center">Ⅳ</th>
+<th align="center">Ⅴ</th>
+<th align="center">Ⅵ</th>
+<th align="center">Ⅶ</th>
+<th align="center">Ⅷ</th>
+<th align="center">Ⅸ</th>
+<th align="center">Ⅹ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">算法<a href="#%E7%AE%97%E6%B3%95-pencil2"><g-emoji class="g-emoji" alias="pencil2" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/270f.png">✏️</g-emoji></a>
+</td>
+<td align="center">操作系统<a href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-computer"><g-emoji class="g-emoji" alias="computer" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4bb.png">💻</g-emoji></a>
+</td>
+<td align="center">网络<a href="#%E7%BD%91%E7%BB%9C-cloud"><g-emoji class="g-emoji" alias="cloud" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2601.png">☁️</g-emoji></a>
+</td>
+<td align="center">面向对象<a href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-couple"><g-emoji class="g-emoji" alias="couple" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f46b.png">👫</g-emoji></a>
+</td>
+<td align="center">数据库<a href="#%E6%95%B0%E6%8D%AE%E5%BA%93-floppy_disk"><g-emoji class="g-emoji" alias="floppy_disk" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4be.png">💾</g-emoji></a>
+</td>
+<td align="center">Java <a href="#java-coffee"><g-emoji class="g-emoji" alias="coffee" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2615.png">☕️</g-emoji></a>
+</td>
+<td align="center">分布式<a href="#%E5%88%86%E5%B8%83%E5%BC%8F-sweat_drops"><g-emoji class="g-emoji" alias="sweat_drops" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a6.png">💦</g-emoji></a>
+</td>
+<td align="center">工具<a href="#%E5%B7%A5%E5%85%B7-hammer"><g-emoji class="g-emoji" alias="hammer" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f528.png">🔨</g-emoji></a>
+</td>
+<td align="center">编码实践<a href="#%E7%BC%96%E7%A0%81%E5%AE%9E%E8%B7%B5-speak_no_evil"><g-emoji class="g-emoji" alias="speak_no_evil" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png">🙊</g-emoji></a>
+</td>
+<td align="center">后记<a href="#%E5%90%8E%E8%AE%B0-memo"><g-emoji class="g-emoji" alias="memo" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4dd.png">📝</g-emoji></a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="user-content-算法-pencil2" class="anchor" href="#%E7%AE%97%E6%B3%95-pencil2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>算法 <g-emoji class="g-emoji" alias="pencil2" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/270f.png">✏️</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E5%89%91%E6%8C%87%20offer%20%E9%A2%98%E8%A7%A3.md">剑指 Offer 题解</a></p>
+</blockquote>
+<p>《剑指 Offer 第二版》的最优解，在牛客网在线编程中出现的题目都已 AC。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md">Leetcode 题解</a></p>
+</blockquote>
+<p>对题目做了一个分类，并对每种题型的解题思路做了总结。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E7%AE%97%E6%B3%95.md">算法</a></p>
+</blockquote>
+<p>整理自《算法 第四版》与《数据结构与算法分析》</p>
+<h2>
+<a id="user-content-操作系统-computer" class="anchor" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-computer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>操作系统 <g-emoji class="g-emoji" alias="computer" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4bb.png">💻</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.md">计算机操作系统</a></p>
+</blockquote>
+<p>整理自《现代操作系统》和《计算机操作系统》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md">Linux</a></p>
+</blockquote>
+<p>整理自《鸟哥的 Linux 私房菜》</p>
+<h2>
+<a id="user-content-网络-cloud" class="anchor" href="#%E7%BD%91%E7%BB%9C-cloud" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>网络 <g-emoji class="g-emoji" alias="cloud" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2601.png">☁️</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md">计算机网络</a></p>
+</blockquote>
+<p>整理自《计算机网络 第七版》与《计算机网络 自顶向下方法》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md">HTTP</a></p>
+</blockquote>
+<p>整理自《图解 HTTP》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md">Socket</a></p>
+</blockquote>
+<p>整理自《Unix 网络编程》</p>
+<h2>
+<a id="user-content-面向对象-couple" class="anchor" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-couple" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>面向对象 <g-emoji class="g-emoji" alias="couple" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f46b.png">👫</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md">设计模式</a></p>
+</blockquote>
+<p>整理自《Head First 设计模式》与《设计模式 可复用面向对象软件的基础》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3.md">面向对象思想</a></p>
+</blockquote>
+<p>面向对象三个原则，类图，设计原则</p>
+<h2>
+<a id="user-content-数据库-floppy_disk" class="anchor" href="#%E6%95%B0%E6%8D%AE%E5%BA%93-floppy_disk" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>数据库 <g-emoji class="g-emoji" alias="floppy_disk" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4be.png">💾</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86.md">数据库系统原理</a></p>
+</blockquote>
+<p>整理自《数据库系统原理》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md">SQL</a></p>
+</blockquote>
+<p>整理自《SQL 必知必会》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20%E9%A2%98%E8%A7%A3.md">Leetcode-Database 题解</a></p>
+</blockquote>
+<p>Leetcode 上数据库题目的解题记录</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md">MySQL</a></p>
+</blockquote>
+<p>整理自《高性能 MySQL》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md">Redis</a></p>
+</blockquote>
+<p>整理自《Redis 设计与实现》和《Redis 实战》</p>
+<h2>
+<a id="user-content-java-coffee" class="anchor" href="#java-coffee" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Java <g-emoji class="g-emoji" alias="coffee" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2615.png">☕️</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20%E5%9F%BA%E7%A1%80.md">Java 基础</a></p>
+</blockquote>
+<p>整理了一些常见知识点</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20%E8%99%9A%E6%8B%9F%E6%9C%BA.md">Java 虚拟机</a></p>
+</blockquote>
+<p>整理自《深入理解 Java 虚拟机》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md">Java 并发</a></p>
+</blockquote>
+<p>整理了一些并发的基本概念。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md">Java 容器</a></p>
+</blockquote>
+<p>容器的一些总结，包含容器源码的分析。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md">Java I/O</a></p>
+</blockquote>
+<p>重点是 NIO</p>
+<h2>
+<a id="user-content-分布式-sweat_drops" class="anchor" href="#%E5%88%86%E5%B8%83%E5%BC%8F-sweat_drops" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>分布式 <g-emoji class="g-emoji" alias="sweat_drops" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a6.png">💦</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80.md">分布式基础</a></p>
+</blockquote>
+<p>整理自《大规模分布式存储系统》</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8F%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90.md">分布式问题分析</a></p>
+</blockquote>
+<p>分布式事务、负载均衡算法与实现、分布式锁、分布式 Session、分库分表的分布式困境与应对之策。</p>
+<h2>
+<a id="user-content-工具-hammer" class="anchor" href="#%E5%B7%A5%E5%85%B7-hammer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>工具 <g-emoji class="g-emoji" alias="hammer" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f528.png">🔨</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md">Git</a></p>
+</blockquote>
+<p>整理一些 Git 的使用和概念</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.md">正则表达式</a></p>
+</blockquote>
+<p>整理自《正则表达式必知必会》</p>
+<h2>
+<a id="user-content-编码实践-speak_no_evil" class="anchor" href="#%E7%BC%96%E7%A0%81%E5%AE%9E%E8%B7%B5-speak_no_evil" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>编码实践 <g-emoji class="g-emoji" alias="speak_no_evil" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png">🙊</g-emoji>
+</h2>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E9%87%8D%E6%9E%84.md">重构</a></p>
+</blockquote>
+<p>重构是对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7.md">代码可读性</a></p>
+</blockquote>
+<p>编程有很大一部分时间是在阅读代码，可读性良好的代码能够大大提高编程效率。</p>
+<blockquote>
+<p><a href="https://github.com/CyC2018/InnterviewNotes/blob/master/notes/%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E8%A7%84%E8%8C%83.md">代码风格规范</a></p>
+</blockquote>
+<p>Google 开源项目的代码风格规范。</p>
+<h2>
+<a id="user-content-后记-memo" class="anchor" href="#%E5%90%8E%E8%AE%B0-memo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>后记 <g-emoji class="g-emoji" alias="memo" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4dd.png">📝</g-emoji>
+</h2>
+<p><strong>关于仓库</strong></p>
+<p>笔者在学习的过程中有做笔记的习惯，一方面是为了更深入的理解，另一方面是因为不习惯一些书籍文章的语言描述和排版风格。</p>
+<p><a href="https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md">BOOKLIST</a>，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都翻完，但是每本书多多少少都看过一部分。</p>
+<p>这个仓库算是笔者的一个学习笔记，主要记录一些比较重要的知识点，希望对大家有所帮助。</p>
+<p><strong>关于贡献</strong></p>
+<p>因为大部分内容是笔者一个字一个字打上去的，所以难免会有一些笔误。如果发现，可以直接在相应的文档上编辑修改。</p>
+<p>笔者能力有限，很多内容还不够完善。如果您希望和笔者一起完善这个仓库，可以发表一个 Issue，表明您想要添加的内容，笔者会及时查看。</p>
+<p>因为不打算将这个仓库做成一个大而全的面试宝典，只希望添加一些比较通用的基础知识，或者是与 Java 和分布式相关的内容，但是不添加 Java Web 相关的内容。</p>
+<p>您也可以在 Issues 中发表关于改进本仓库的建议。</p>
+<p><strong>关于上传</strong></p>
+<p>笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。</p>
+<p>进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。这里提供了笔者实现的 GFM 文档转换工具的下载：<a href="https://github.com/CyC2018/GFM-Converter">GFM-Converter</a>。</p>
+<p><strong>关于排版</strong></p>
+<p>笔记内容按照 <a href="http://mazhuang.org/wiki/chinese-copywriting-guidelines/" rel="nofollow">中文文案排版指北</a> 进行排版，以保证内容的可读性。这里提供了笔者实现的中英混排文档在线排版工具：<a href="https://github.com/CyC2018/Markdown-Typesetting">Text-Typesetting</a>，目前实现了加空格的功能，之后打算实现对英文专有名词提示首字母大写的功能。</p>
+<p>不使用 <code>![]()</code> 这种方式来引用图片是为了能够控制图片以合适的大小显示。而且 GFM 不支持 <code>&lt;center&gt; ![]() &lt;/center&gt;</code> 让图片居中显示，只能使用 <code>&lt;div align="center"&gt; &lt;img src=""/&gt; &lt;/div&gt;</code> ，所以只能使用 img 标签来引用图片。</p>
+<p><strong>关于转载</strong></p>
+<p>本仓库内容使用到的资料都会在最后面的参考资料中给出引用链接，希望您在使用本仓库的内容时也能给出相应的引用链接。</p>
+<p><strong>鸣谢</strong></p>
+<p><a href="https://github.com/linw7">TeeKee</a></p>
+</article></body></html>
