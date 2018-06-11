@@ -994,10 +994,11 @@ public int firstBadVersion(int n) {
     int l = 1, h = n;
     while (l < h) {
         int mid = l + (h - l) / 2;
-        if (isBadVersion(mid))
+        if (isBadVersion(mid)) {
             h = mid;
-        else
+        } else {
             l = mid + 1;
+        }
     }
     return l;
 }
@@ -1017,10 +1018,11 @@ public int findMin(int[] nums) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h])
+        if (nums[m] <= nums[h]) {
             h = m;
-        else
+        } else {
             l = m + 1;
+        }
     }
     return nums[l];
 }
@@ -1042,20 +1044,22 @@ Output: [-1,-1]
 public int[] searchRange(int[] nums, int target) {
     int first = binarySearch(nums, target);
     int last = binarySearch(nums, target + 1) - 1;
-    if (first == nums.length || nums[first] != target)
+    if (first == nums.length || nums[first] != target) {
         return new int[]{-1, -1};
-    else
+    } else {
         return new int[]{first, Math.max(first, last)};
+    }
 }
 
 private int binarySearch(int[] nums, int target) {
     int l = 0, h = nums.length; // 注意 h 的初始值
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] >= target)
+        if (nums[m] >= target) {
             h = m;
-        else
+        } else {
             l = m + 1;
+        }
     }
     return l;
 }
