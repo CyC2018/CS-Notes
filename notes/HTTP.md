@@ -1,6 +1,5 @@
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
-    * [Web 基础](#web-基础)
     * [URL](#url)
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
@@ -64,13 +63,6 @@
 
 
 # 一 、基础概念
-
-## Web 基础
-
-- WWW（World Wide Web）的三种技术：HTML、HTTP、URL
-- HTML（HyperText Markup Language，超文本标记语言）
-- HTTP（HyperText Transfer Protocol，超文本传输协议）
-- RFC（Request for Comments，征求修正意见书），互联网的设计文档。
 
 ## URL
 
@@ -756,18 +748,11 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 **（一）设置 Cookie 为 HttpOnly** 
 
-设置了 HttpOnly 的 Cookie 可以防止 JavaScript 脚本调用，在一定程度上可以防止 XSS 窃取用户的 Cookie 信息。
+设置了 HttpOnly 的 Cookie 可以防止 JavaScript 脚本调用，就无法通过 document.cookie 获取用户 Cookie 信息。
 
 **（二）过滤特殊字符** 
 
-许多语言都提供了对 HTML 的过滤：
-
-- PHP 的 htmlentities() 或是 htmlspecialchars()。
-- Python 的 cgi.escape()。
-- Java 的 xssprotect (Open Source Library)。
-- Node.js 的 node-validator。
-
-例如 htmlspecialchars() 可以将 `<` 转义为 `&lt;`，将 `>` 转义为 `&gt;`，从而避免 HTML 和 Jascript 代码的运行。
+例如将 `<` 转义为 `&lt;`，将 `>` 转义为 `&gt;`，从而避免 HTML 和 Jascript 代码的运行。
 
 **（三）富文本编辑器的处理** 
 
@@ -841,7 +826,7 @@ alert(/xss/);
 
 ### 1. 概念
 
-跨站请求伪造（Cross-site request forgery，CSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。这利用了 Web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
+跨站请求伪造（Cross-site request forgery，CSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。
 
 XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户浏览器的信任。
 
@@ -865,15 +850,19 @@ http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName
 
 ### 2. 防范手段
 
-**（一）检查 Referer 字段** 
+**（一）检查 Referer 首部字段** 
 
-HTTP 头中有一个 Referer 字段，这个字段用于标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer 字段应和请求的地址位于同一域名下。
+Referer 首部字段位于 HTTP 报文中，用于标识请求来源的地址。检查这个首部字段并要求请求来源的地址在同一个域名下，可以极大的防止 XSRF 攻击。
 
 这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
 
 **（二）添加校验 Token** 
 
-由于 CSRF 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在 Cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行 CSRF 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求时，这个伪乱数也一并提交上去以供校验。正常的访问时，客户端浏览器能够正确得到并传回这个伪乱数，而通过 CSRF 传来的欺骗性攻击中，攻击者无从事先得知这个伪乱数的值，服务器端就会因为校验 Token 的值为空或者错误，拒绝这个可疑请求。
+在访问敏感数据请求时，要求用户浏览器提供不保存在 Cookie 中，并且攻击者无法伪造的数据作为校验。例如服务器生成随机数并附加在表单中，并要求客户端传回这个随机数。
+
+**（三）输入验证码** 
+
+因为 CSRF 攻击是在用户无意识的情况下发生的，所以要求用户输入验证码可以让用户知道自己正在做的操作。
 
 也可以要求用户输入验证码来进行校验。
 
@@ -985,7 +974,7 @@ GET /pageX HTTP/1.1
 POST /add_row HTTP/1.1 不是幂等的。如果调用多次，就会增加多行记录：
 
 ```
-POST /add_row HTTP/1.1
+POST /add_row HTTP/1.1   -> Adds a 1nd row
 POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
 ```
