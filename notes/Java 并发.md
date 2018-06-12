@@ -569,7 +569,7 @@ ReentrantLock 多了一些高级功能。
 
 在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待， 直到目标线程结束。
 
-对于以下代码，虽然 b 线程先启动，但是因为在 b 线程中调用了 a 线程的 join() 方法，因此 b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先与 b 线程的输出。
+对于以下代码，虽然 b 线程先启动，但是因为在 b 线程中调用了 a 线程的 join() 方法，因此 b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先于 b 线程的输出。
 
 ```java
 public class JoinExample {
@@ -887,7 +887,7 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 -  **FIFO 队列** ：LinkedBlockingQueue、ArrayListBlockingQueue（固定长度）
 -  **优先级队列** ：PriorityBlockingQueue
 
-提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，指到队列有空闲位置。
+提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
 
 **使用 BlockingQueue 实现生产者消费者问题** 
 

@@ -2381,7 +2381,9 @@ dp[N] 即为所求。
 
 ```java
 public int climbStairs(int n) {
-    if (n <= 2) return n;
+    if (n <= 2) {
+        return n;
+    }
     int pre2 = 1, pre1 = 2;
     for (int i = 2; i < n; i++) {
         int cur = pre1 + pre2;
@@ -2392,55 +2394,27 @@ public int climbStairs(int n) {
 }
 ```
 
-**母牛生产** 
-
-[程序员代码面试指南-P181](#)
-
-题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
-
-第 i 年成熟的牛的数量为：
-
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
-
 **强盗抢劫** 
 
 [198. House Robber (Easy)](https://leetcode.com/problems/house-robber/description/)
 
 题目描述：抢劫一排住户，但是不能抢邻近的住户，求最大抢劫量。
 
-定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 和 i - 3 的住户，所以
+定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 或者 i - 3 的住户，所以
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
 
-O(n) 空间复杂度实现方法：
-
 ```java
 public int rob(int[] nums) {
     int n = nums.length;
-    if(n == 0) return 0;
-    if(n == 1) return nums[0];
-    if(n == 2) return Math.max(nums[0], nums[1]);
-    int[] dp = new int[n];
-    dp[0] = nums[0];
-    dp[1] = nums[1];
-    dp[2] = nums[0] + nums[2];
-    for(int i = 3; i < n; i++){
-        dp[i] = Math.max(dp[i -2], dp[i - 3]) + nums[i];
+    if (n == 0) {
+        return 0;
     }
-    return Math.max(dp[n - 1], dp[n - 2]);
-}
-```
-
-O(1) 空间复杂度实现方法：
-
-```java
-public int rob(int[] nums) {
-    int n = nums.length;
-    if(n == 0) return 0;
-    if(n == 1) return nums[0];
-    if(n == 2) return Math.max(nums[0], nums[1]);
-    int pre3 = nums[0], pre2 = nums[1], pre1 = nums[2] + nums[0];
-    for(int i = 3; i < n; i++){
+    if (n == 1) {
+        return nums[0];
+    }
+    int pre3 = 0, pre2 = 0, pre1 = 0;
+    for (int i = 0; i < n; i++) {
         int cur = Math.max(pre2, pre3) + nums[i];
         pre3 = pre2;
         pre2 = pre1;
@@ -2455,34 +2429,44 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-private int[] dp;
-
 public int rob(int[] nums) {
-    if (nums == null || nums.length == 0) return 0;
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
     int n = nums.length;
-    if (n == 1) return nums[0];
-    dp = new int[n];
+    if (n == 1) {
+        return nums[0];
+    }
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
 private int rob(int[] nums, int first, int last) {
-    if (last - first == 0) return nums[first];
-    if (last - first == 1) return Math.max(nums[first], nums[first + 1]);
-    dp[first] = nums[first];
-    dp[first + 1] = nums[first + 1];
-    dp[first + 2] = nums[first] + nums[first + 2];
-    for (int i = first + 3; i <= last; i++) {
-        dp[i] = Math.max(dp[i - 2], dp[i - 3]) + nums[i];
+    int pre3 = 0, pre2 = 0, pre1 = 0;
+    for (int i = first; i <= last; i++) {
+        int cur = Math.max(pre3, pre2) + nums[i];
+        pre3 = pre2;
+        pre2 = pre1;
+        pre1 = cur;
     }
-    return Math.max(dp[last], dp[last - 1]);
+    return Math.max(pre2, pre1);
 }
 ```
+
+**母牛生产** 
+
+[程序员代码面试指南-P181](#)
+
+题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
+
+第 i 年成熟的牛的数量为：
+
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
 
 **信件错排** 
 
 题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
-定义一个数组 dp 存储错误方式数量，dp[i] 表示 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
+定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
 - i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
 - i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
@@ -2492,8 +2476,6 @@ private int rob(int[] nums, int first, int last) {
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>
 
 dp[N] 即为所求。
-
-和上楼梯问题一样，dp[i] 只与 dp[i-1] 和 dp[i-2] 有关，因此也可以只用两个变量来存储 dp[i-1] 和 dp[i-2]。
 
 ### 最长递增子序列
 
@@ -2526,27 +2508,37 @@ public int lengthOfLIS(int[] nums) {
         }
         dp[i] = max;
     }
-    int ret = 0;
-    for (int i = 0; i < n; i++) {
-        ret = Math.max(ret, dp[i]);
-    }
-    return ret;
+    return Arrays.stream(dp).max().orElse(0);
 }
 ```
 
-以上解法的时间复杂度为 O(N<sup>2</sup>) ，可以使用二分查找将时间复杂度降低为 O(NlogN)。定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。如果有多个长度相等的最长递增子序列，那么 tails[i] 就取最小值。例如对于数组 [4,5,6,3]，有
+使用 Stream 求最大值会导致运行时间过长，可以改成以下形式：
 
-```html
-len = 1  :      [4], [5], [6], [3]  => tails[0] = 3
-len = 2  :      [4, 5], [5, 6]      => tails[1] = 5
-len = 3  :      [4, 5, 6]           => tails[2] = 6
+```java
+int ret = 0;
+for (int i = 0; i < n; i++) {
+    ret = Math.max(ret, dp[i]);
+}
+return ret;
 ```
 
+以上解法的时间复杂度为 O(N<sup>2</sup>) ，可以使用二分查找将时间复杂度降低为 O(NlogN)。
 
-对于一个元素 x，
+定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
 - 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i-1] = x。
+
+例如对于数组 [4,3,6,5]，有：
+
+```html
+tails      len      num
+[]         0        4
+[4]        1        3
+[3]        1        6
+[3,6]      2        5
+[3,5]      2        null
+```
 
 可以看出 tails 数组保持有序，因此在查找 S<sub>i</sub> 位于 tails 数组的位置时就可以使用二分查找。
 
@@ -2554,23 +2546,30 @@ len = 3  :      [4, 5, 6]           => tails[2] = 6
 public int lengthOfLIS(int[] nums) {
     int n = nums.length;
     int[] tails = new int[n];
-    int size = 0;
-    for (int i = 0; i < n; i++) {
-        int index = binarySearch(tails, 0, size, nums[i]);
-        tails[index] = nums[i];
-        if (index == size) size++;
+    int len = 0;
+    for (int num : nums) {
+        int index = binarySearch(tails, len, num);
+        tails[index] = num;
+        if (index == len) {
+            len++;
+        }
     }
-    return size;
+    return len;
 }
 
-private int binarySearch(int[] nums, int first, int last, int key) {
-    while (first < last) {
-        int mid = first + (last - first) / 2;
-        if (nums[mid] == key) return mid;
-        else if (nums[mid] > key) last = mid;
-        else first = mid + 1;
+private int binarySearch(int[] tails, int len, int key) {
+    int l = 0, h = len;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (tails[mid] == key) {
+            return mid;
+        } else if (tails[mid] > key) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
     }
-    return first;
+    return l;
 }
 ```
 
