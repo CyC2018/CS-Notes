@@ -11,7 +11,7 @@
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-做了一个大致分类，并对每种分类的题型的解题思路做了总结。
+做了一个大致分类，并对每种分类题型的解题思路做了总结。
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
@@ -31,7 +31,7 @@
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-参考谢希仁的计算机网络、计算机网络 自顶向下方法、TCP/IP 详解。
+参考谢希仁的计算机网络、计算机网络-自顶向下方法、TCP/IP 详解。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
