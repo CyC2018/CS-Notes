@@ -95,7 +95,7 @@
 
 睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
 
-阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁；而等待是主动的，通过调用 Thread.sleep() 和 Object.wait() 等方法进入。
+阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁。而等待是主动的，通过调用 Thread.sleep() 和 Object.wait() 等方法进入。
 
 | 进入方法 | 退出方法 |
 | --- | --- |
@@ -165,7 +165,7 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 
 ## 继承 Thread 类
 
-同样也是需要实现 run() 方法，并且最后也是调用 start() 方法来启动线程。
+同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runable 接口。
 
 ```java
 public class MyThread extends Thread {
@@ -193,7 +193,7 @@ public static void main(String[] args) {
 
 ## Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。
+Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。
 
 主要有三种 Executor：
 
@@ -383,7 +383,7 @@ Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问
 **1. 同步一个代码块** 
 
 ```java
-public void func () {
+public void func() {
     synchronized (this) {
         // ...
     }
@@ -392,7 +392,7 @@ public void func () {
 
 它只作用于同一个对象，如果调用两个对象上的同步代码块，就不会进行同步。
 
-对于以下代码，使用 ExecutorService 执行了两个线程（这两个线程使用 Lambda 创建），由于调用的是同一个对象的同步代码块，因此这两个线程会进行同步，当一个线程进入同步语句块时，另一个线程就必须等待。
+对于以下代码，使用 ExecutorService 执行了两个线程，由于调用的是同一个对象的同步代码块，因此这两个线程会进行同步，当一个线程进入同步语句块时，另一个线程就必须等待。
 
 ```java
 public class SynchronizedExample {
@@ -445,7 +445,7 @@ public synchronized void func () {
 }
 ```
 
-它和同步代码块一样，只作用于同一个对象。
+它和同步代码块一样，作用于同一个对象。
 
 **3. 同步一个类** 
 
@@ -457,7 +457,7 @@ public void func() {
 }
 ```
 
-作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也需要进行同步。
+作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。
 
 ```java
 public class SynchronizedExample {
@@ -533,15 +533,17 @@ ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁，相比于 synchr
 
 **1. 等待可中断** 
 
-当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情，可中断特性对处理执行时间非常长的同步块很有帮助。
+当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
 
 **2. 可实现公平锁** 
 
-公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁；而非公平锁则不保证这一点，在锁被释放时，任何一个等待锁的线程都有机会获得锁。synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但可以通过带布尔值的构造函数要求使用公平锁。
+公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但可以通过带布尔值的构造函数要求使用公平锁。
 
 **3. 锁绑定多个条件** 
 
-一个 ReentrantLock 对象可以同时绑定多个 Condition 对象，而在 synchronized 中，锁对象的 wait() 和 notify() 或 notifyAll() 方法可以实现一个隐含的条件，如果要和多于一个的条件关联的时候，就不得不额外地添加一个锁，而 ReentrantLock 则无须这样做，只需要多次调用 newCondition() 方法即可。
+一个 ReentrantLock 对象可以同时绑定多个 Condition 对象。
 
 ## synchronized 和 ReentrantLock 比较
 
@@ -551,7 +553,7 @@ synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
 
 **2. 性能** 
 
-从性能上来看，新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等。目前来看它和 ReentrantLock 的性能基本持平了，因此性能因素不再是选择 ReentrantLock 的理由。synchronized 有更大的性能优化空间，应该优先考虑 synchronized。
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等。目前来看它和 ReentrantLock 的性能基本持平了，因此性能因素不再是选择 ReentrantLock 的理由。synchronized 有更大的性能优化空间，应该优先考虑 synchronized。
 
 **3. 功能** 
 
