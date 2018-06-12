@@ -7,7 +7,7 @@
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
-目录根据原书第二版进行编排，Java 实现。
+目录根据原书第二版进行编排。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
@@ -31,7 +31,7 @@
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-参考谢希仁的计算机网络、计算机网络-自顶向下方法、TCP/IP 详解。
+参考谢希仁的计算机网络、计算机网络：自顶向下方法、TCP/IP 详解。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
@@ -119,7 +119,7 @@ Leetcode 上数据库题目的解题记录。
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
-参考重构-改善既有代码的设计。
+参考重构：改善既有代码的设计。
 
 > [代码可读性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码可读性.md)
 
