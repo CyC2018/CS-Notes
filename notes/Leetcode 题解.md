@@ -2587,26 +2587,21 @@ Explanation: The longest chain is [1,2] -> [3,4]
 
 ```java
 public int findLongestChain(int[][] pairs) {
-    if(pairs == null || pairs.length == 0) {
+    if (pairs == null || pairs.length == 0) {
         return 0;
     }
     Arrays.sort(pairs, (a, b) -> (a[0] - b[0]));
     int n = pairs.length;
     int[] dp = new int[n];
     Arrays.fill(dp, 1);
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < i; j++) {
-            if(pairs[i][0] > pairs[j][1]){
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (pairs[j][1] < pairs[i][0]) {
                 dp[i] = Math.max(dp[i], dp[j] + 1);
             }
         }
     }
-
-    int ret = 0;
-    for(int num : dp) {
-        ret = Math.max(ret, num);
-    }
-    return ret;
+    return Arrays.stream(dp).max().orElse(0);
 }
 ```
 
@@ -2627,18 +2622,20 @@ Input: [1,2,3,4,5,6,7,8,9]
 Output: 2
 ```
 
-要求：使用 O(n) 时间复杂度求解。
-
-使用两个状态 up 和 down。
+要求：使用 O(N) 时间复杂度求解。
 
 ```java
 public int wiggleMaxLength(int[] nums) {
-    int len = nums.length;
-    if (len == 0) return 0;
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
     int up = 1, down = 1;
-    for (int i = 1; i < len; i++) {
-        if (nums[i] > nums[i - 1]) up = down + 1;
-        else if (nums[i] < nums[i - 1]) down = up + 1;
+    for (int i = 1; i < nums.length; i++) {
+        if (nums[i] > nums[i - 1]) {
+            up = down + 1;
+        } else if (nums[i] < nums[i - 1]) {
+            down = up + 1;
+        }
     }
     return Math.max(up, down);
 }
@@ -2671,8 +2668,11 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
     int[][] dp = new int[n1 + 1][n2 + 1];
     for (int i = 1; i <= n1; i++) {
         for (int j = 1; j <= n2; j++) {
-            if (nums1[i - 1] == nums2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
-            else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            if (nums1[i - 1] == nums2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
         }
     }
     return dp[n1][n2];
