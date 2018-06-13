@@ -192,9 +192,9 @@ public boolean Find(int target, int[][] matrix) {
 
 在字符串尾部填充任意字符，使得字符串的长度等于字符串替换之后的长度。因为一个空格要替换成三个字符（%20），因此当遍历到一个空格时，需要在尾部填充两个任意字符。
 
-令 idxOfOld 指向字符串原来的末尾位置，idxOfNew 指向字符串现在的末尾位置。idxOfOld 和 idxOfNew 从后向前遍历，当 idxOfOld 遍历到一个空格时，就需要令 idxOfNew 指向的位置依次填充 02%（注意是逆序的），否则就填充上 idxOfOld 指向字符的值。
+令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
 
-从后向前遍是为了在改变 idxOfNew 所指向的内容时，不会影响到 idxOfOld 遍历原来字符串的内容。
+从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
 复杂度：O(N) + O(1)
 
@@ -839,7 +839,7 @@ public int NumberOf1(int n) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right."/></div> <br>
 
-因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每递归一次，n 都减小一半，因此整个算法的时间复杂度为 O(logn)。
+因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每递归一次，n 都减小一半，因此整个算法的时间复杂度为 O(logN)。
 
 ```java
 public double Power(double base, int exponent) {
@@ -976,8 +976,8 @@ if p.charAt(j) == s.charAt(i)  :  then dp[i][j] = dp[i-1][j-1];
 if p.charAt(j) == '.'          :  then dp[i][j] = dp[i-1][j-1];
 if p.charAt(j) == '*'          :
      if p.charAt(j-1) != s.charAt(i)  :  then dp[i][j] = dp[i][j-2]  // a* only counts as empty
-     if p.charAt(j-1) == s.charAt(i)
-  or p.charAt(i-1) == '.'             :
+     if p.charAt(j-1) == s.charAt(i) or
+        p.charAt(i-1) == '.'          :
               then dp[i][j] = dp[i-1][j]   // a* counts as multiple a
                 or dp[i][j] = dp[i][j-1]   // a* counts as single a
                 or dp[i][j] = dp[i][j-2]   // a* counts as empty
@@ -1085,7 +1085,7 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ## 解题思路
 
-使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
+使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。假设相遇点在下图的 z1 位置，此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
@@ -1093,22 +1093,21 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
-    if (pHead == null)
+    if (pHead == null || pHead.next == null)
         return null;
     ListNode slow = pHead, fast = pHead;
     while (fast != null && fast.next != null) {
         fast = fast.next.next;
         slow = slow.next;
-        if (slow == fast) {
-            fast = pHead;
-            while (slow != fast) {
-                slow = slow.next;
-                fast = fast.next;
-            }
-            return slow;
-        }
+        if (slow == fast)
+            break;
     }
-    return null;
+    fast = pHead;
+    while (slow != fast) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    return slow;
 }
 ```
 
@@ -1782,7 +1781,7 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
     if (k > nums.length || k <= 0)
         return ret;
     int kthSmallest = findKthSmallest(nums, k - 1);
-    // findKthSmallest 会让改变数组，使得前 k 个数都是最小的 k 个数
+    // findKthSmallest 会改变数组，使得前 k 个数都是最小的 k 个数
     for (int i = 0; i < k; i++)
         ret.add(nums[i]);
     return ret;
@@ -1902,22 +1901,18 @@ public class Solution {
 ## 解题思路
 
 ```java
-public class Solution {
-    private int[] cnts = new int[256];
-    private Queue<Character> queue = new LinkedList<>();
+private int[] cnts = new int[256];
+private Queue<Character> queue = new LinkedList<>();
 
-    public void Insert(char ch) {
-        cnts[ch]++;
-        queue.add(ch);
-        while (!queue.isEmpty() && cnts[queue.peek()] > 1)
-            queue.poll();
-    }
+public void Insert(char ch) {
+    cnts[ch]++;
+    queue.add(ch);
+    while (!queue.isEmpty() && cnts[queue.peek()] > 1)
+        queue.poll();
+}
 
-    public char FirstAppearingOnce() {
-        if (queue.isEmpty())
-            return '#';
-        return queue.peek();
-    }
+public char FirstAppearingOnce() {
+    return queue.isEmpty() ? '#' : queue.peek();
 }
 ```
 
@@ -1932,17 +1927,17 @@ public class Solution {
 ## 解题思路
 
 ```java
- public int FindGreatestSumOfSubArray(int[] nums) {
-     if (nums.length == 0)
-         return 0;
-     int ret = Integer.MIN_VALUE;
-     int sum = 0;
-     for (int val : nums) {
-         sum = sum <= 0 ? val : sum + val;
-         ret = Math.max(ret, sum);
-     }
-     return ret;
- }
+public int FindGreatestSumOfSubArray(int[] nums) {
+    if (nums == null || nums.length == 0)
+        return 0;
+    int ret = Integer.MIN_VALUE;
+    int sum = 0;
+    for (int val : nums) {
+        sum = sum <= 0 ? val : sum + val;
+        ret = Math.max(ret, sum);
+    }
+    return ret;
+}
 ```
 
 # 43. 从 1 到 n 整数中 1 出现的次数
@@ -2031,6 +2026,8 @@ private int beginNumber(int digit) {
 
 ```java
 public String PrintMinNumber(int[] numbers) {
+    if (numbers == null || numbers.length == 0)
+        return "";
     int n = numbers.length;
     String[] nums = new String[n];
     for (int i = 0; i < n; i++)
@@ -2196,7 +2193,7 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，那么使用两个比特位就能存储这些信息。
+以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，使用两个比特位就能存储这些信息。
 
 ```java
 public int FirstNotRepeatingChar(String str) {
@@ -2743,7 +2740,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 ## 解题思路
 
-使用贪心策略，假设第 i 轮进行卖出操作，买入操作价格应该是 i 之前并且价格最低。
+使用贪心策略，假设第 i 轮进行卖出操作，买入操作价格应该在 i 之前并且价格最低。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -2799,7 +2796,7 @@ a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进�
 递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
-public int Add(int num1,int num2) {
+public int Add(int num1, int num2) {
     return num2 == 0 ? num1 : Add(num1 ^ num2, (num1 & num2) << 1);
 }
 ```
@@ -2848,17 +2845,17 @@ Output:
 
 ```java
 public int StrToInt(String str) {
-    if (str.length() == 0)
+    if (str == null || str.length() == 0)
         return 0;
-    char[] chars = str.toCharArray();
-    boolean isNegative = chars[0] == '-';
+    boolean isNegative = str.charAt(0) == '-';
     int ret = 0;
-    for (int i = 0; i < chars.length; i++) {
-        if (i == 0 && (chars[i] == '+' || chars[i] == '-'))
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (i == 0 && (c == '+' || c == '-'))
             continue;
-        if (chars[i] < '0' || chars[i] > '9')
+        if (c < '0' || c > '9')
             return 0; // 非法输入
-        ret = ret * 10 + (chars[i] - '0');
+        ret = ret * 10 + (c - '0');
     }
     return isNegative ? -ret : ret;
 }
@@ -2874,7 +2871,7 @@ public int StrToInt(String str) {
 
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
-二叉查找树中，两个节点 p, q 的公共祖先 root 满足 p.val <= root.val && root.val <= q.val，只要找到满足这个条件的最低层节点即可。换句话说，应该先考虑子树的解而不是根节点的解，二叉树的后序遍历操作满足这个特性。在本题中我们可以利用后序遍历的特性，先在左右子树中查找解，最后再考虑根节点的解。
+二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val >= p.val && root.val <= q.val。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {

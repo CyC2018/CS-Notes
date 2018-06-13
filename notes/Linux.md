@@ -30,7 +30,6 @@
     * [目录配置](#目录配置)
 * [五、文件](#五文件)
     * [文件属性](#文件属性)
-    * [文件时间](#文件时间)
     * [文件与目录的基本操作](#文件与目录的基本操作)
     * [修改权限](#修改权限)
     * [文件默认权限](#文件默认权限)
@@ -65,13 +64,6 @@
     * [waitpid()](#waitpid)
     * [孤儿进程](#孤儿进程)
     * [僵死进程](#僵死进程)
-* [十一、I/O 复用](#十一io-复用)
-    * [概念理解](#概念理解)
-    * [I/O 模型](#io-模型)
-    * [select poll epoll](#select-poll-epoll)
-    * [select 和 poll 比较](#select-和-poll-比较)
-    * [eopll 工作模式](#eopll-工作模式)
-    * [select poll epoll 应用场景](#select-poll-epoll-应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -154,8 +146,8 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 | 基于的包管理工具 | 商业发行版 | 社区发行版 |
 | :--: | :--: | :--: |
-| DPKG | Ubuntu | Debian |
 | RPM | Red Hat | Fedora / CentOS |
+| DPKG | Ubuntu | Debian |
 
 ## VIM 三个模式
 
@@ -197,12 +189,12 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 Hard Disk Drives(HDD) 俗称硬盘，具有以下结构：
 
-1. 盘面（Platter）：一个硬盘有多个盘面；
-2. 磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；
-3. 扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；
-4. 磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；
-5. 制动手臂（Actuator arm）：用于在磁道之间移动磁头；
-6. 主轴（Spindle）：使整个盘面转动。
+- 盘面（Platter）：一个硬盘有多个盘面；
+- 磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；
+- 扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；
+- 磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；
+- 制动手臂（Actuator arm）：用于在磁道之间移动磁头；
+- 主轴（Spindle）：使整个盘面转动。
 
 <div align="center"> <img src="../pics//014fbc4d-d873-4a12-b160-867ddaed9807.jpg" width=""/> </div><br>
 
@@ -239,7 +231,7 @@ Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘�
 - IDE 磁盘：/dev/hd[a-d]
 - SATA/SCSI/SAS 磁盘：/dev/sd[a-p]
 
-其中文件名后面的序号的确定与系统侦测到磁盘的顺序有关，而与磁盘所插入的插槽位置无关。
+其中文件名后面的序号的确定与系统检测到磁盘的顺序有关，而与磁盘所插入的插槽位置无关。
 
 # 三、分区
 
@@ -249,7 +241,7 @@ Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘�
 
 ### 1. MBR
 
-MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中 MBR 占 446 bytes，分区表占 64 bytes。
+MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中主要开机记录占 446 bytes，分区表占 64 bytes。
 
 分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它将其它扇区用来记录分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
 
@@ -259,7 +251,7 @@ Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件�
 
 不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA），LBA 默认大小为 512 bytes。
 
-GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。这 33 个区块第一个为 GPT 表头纪录，这个部份纪录了分区表本身的位置与大小和备份分区的位置，同时放置了分区表的校验码 (CRC32)，操作系统可以根据这个校验码来判断 GPT 是否正确。若有错误，可以使用备份分区进行恢复。
+GPT 第 1 个区块记录了主要开机记录（MBR），紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。这 33 个区块第一个为 GPT 表头纪录，这个部份纪录了分区表本身的位置与大小和备份分区的位置，同时放置了分区表的校验码 (CRC32)，操作系统可以根据这个校验码来判断 GPT 是否正确。若有错误，可以使用备份分区进行恢复。
 
 GPT 没有扩展分区概念，都是主分区，每个 LAB 可以分 4 个分区，因此总共可以分 4 * 32 = 128 个分区。
 
@@ -271,19 +263,19 @@ MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB 
 
 ### 1. BIOS
 
-BIOS（Basic Input/Output System，基本输入输出系统），它是一个固件（嵌入与硬件中的软件），BIOS 程序存放在断电后内容不会丢失的只读内存中。
+BIOS（Basic Input/Output System，基本输入输出系统），它是一个固件（嵌入在硬件中的软件），BIOS 程序存放在断电后内容不会丢失的只读内存中。
 
-BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的 MBR，由 MBR 执行 MBR 中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
+BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的主要开机记录（MBR），由主要开机记录（MBR）执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
 <div align="center"> <img src="../pics//50831a6f-2777-46ea-a571-29f23c85cc21.jpg"/> </div><br>
 
-MBR 中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动 MBR 中的开机管理程序时，就可以通过选单选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
+主要开机记录（MBR）中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动开机管理程序时，就可以通过选单选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
-下图中，第一扇区的 MBR 中的开机管理程序提供了两个选单：M1、M2，M1 指向了 Windows 操作系统，而 M2 指向其它分区的启动扇区，里面包含了另外一个开机管理程序，提供了一个指向 Linux 的选单。
+下图中，第一扇区的主要开机记录（MBR）中的开机管理程序提供了两个选单：M1、M2，M1 指向了 Windows 操作系统，而 M2 指向其它分区的启动扇区，里面包含了另外一个开机管理程序，提供了一个指向 Linux 的选单。
 
 <div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
 
-安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
+安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉主要开机记录（MBR），而 Linux 可以选择将开机管理程序安装在主要开机记录（MBR）或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
 ### 2. UEFI
 
@@ -301,13 +293,13 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 最主要的几个组成部分如下：
 
-1. inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 编号；
-2. block：记录文件的内容，文件太大时，会占用多个 block。
+- inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 编号；
+- block：记录文件的内容，文件太大时，会占用多个 block。
 
 除此之外还包括：
 
-1. superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
-2. block bitmap：记录 block 是否被使用的位域；
+- superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
+- block bitmap：记录 block 是否被使用的位域；
 
 ## 文件读取
 
@@ -352,7 +344,7 @@ inode 具有以下特点：
 - 每个 inode 大小均固定为 128 bytes (新的 ext4 与 xfs 可设定到 256 bytes)；
 - 每个文件都仅会占用一个 inode。
 
-inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
+inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块记录引用信息。
 
 <div align="center"> <img src="../pics//inode_with_signatures.jpg" width="600"/> </div><br>
 
@@ -404,11 +396,11 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 9 位的文件权限字段中，每 3 个为一组，共 3 组，每一组分别代表对文件拥有者、所属群组以及其它人的文件权限。一组权限中的 3 位分别为 r、w、x 权限，表示可读、可写、可执行。
 
-## 文件时间
+文件时间有以下三种：
 
-1. modification time (mtime)：文件的内容更新就会更新；
-2. status time (ctime)：文件的状态（权限、属性）更新就会更新；
-3. access time (atime)：读取文件时就会更新。
+- modification time (mtime)：文件的内容更新就会更新；
+- status time (ctime)：文件的状态（权限、属性）更新就会更新；
+- access time (atime)：读取文件时就会更新。
 
 ## 文件与目录的基本操作
 
@@ -559,7 +551,7 @@ cp [-adfilprsu] source destination
 
 删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
-有以下限制：不能跨越 File System、不能对目录进行链接。
+有以下限制：不能跨越文件系统、不能对目录进行链接。
 
 ```html
 # ln /etc/crontab .
@@ -789,15 +781,11 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 ## 特性
 
-- 命令历史：记录使用过的命令。本次登录所执行的命令都会暂时存放到内存中，\~/.bash_history 文件中记录的是前一次登录所执行过的命令。
-
-- 命令与文件补全：快捷键：tab。
-
-- 命名别名：例如 lm 是 ls -al 的别名。
-
-- shell scripts。
-
-- 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件。
+- 命令历史：记录使用过的命令
+- 命令与文件补全：快捷键：tab
+- 命名别名：例如 lm 是 ls -al 的别名
+- shell scripts
+- 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
 ## 变量操作
 
@@ -808,17 +796,17 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 输出变量使用 echo 命令。
 
 ```bash
-$ var=abc
-$ echo $var
-$ echo ${var}
+$ x=abc
+$ echo $x
+$ echo ${x}
 ```
 
-变量内容如果有空格，必须需要使用双引号或者单引号。
+变量内容如果有空格，必须使用双引号或者单引号。
 
-- 双引号内的特殊字符可以保留原本特性，例如 var="lang is \$LANG"，则 var 的值为 lang is zh_TW.UTF-8；
-- 单引号内的特殊字符就是特殊字符本身，例如 var='lang is \$LANG'，则 var 的值为 lang is \$LANG。
+- 双引号内的特殊字符可以保留原本特性，例如 x="lang is \$LANG"，则 x 的值为 lang is zh_TW.UTF-8；
+- 单引号内的特殊字符就是特殊字符本身，例如 x='lang is \$LANG'，则 x 的值为 lang is \$LANG。
 
-可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 3.10.0-229.el7.x86_64。
+可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 4.15.0-22-generic。
 
 可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
 
@@ -842,10 +830,10 @@ $ echo ${array[1]}
 
 ## 指令搜索顺序
 
-1. 以绝对或相对路径来执行指令，例如 /bin/ls 或者 ./ls ；
-2. 由别名找到该指令来执行；
-3. 由 Bash 内建的指令来执行；
-4. 按 \$PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
+- 以绝对或相对路径来执行指令，例如 /bin/ls 或者 ./ls ；
+- 由别名找到该指令来执行；
+- 由 Bash 内建的指令来执行；
+- 按 \$PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
 
 ## 数据流重定向
 
@@ -854,7 +842,7 @@ $ echo ${array[1]}
 | 1 | 代码 | 运算符 |
 | :---: | :---: | :---:|
 | 标准输入 (stdin)  | 0 | < 或 << |
-| 标准输出 (stdout) | 1 | > 或 >> |
+| 标准输出 (stdout) | 1 | &gt; 或 >> |
 | 标准错误输出 (stderr) | 2 | 2> 或 2>> |
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
@@ -1029,7 +1017,6 @@ $ split [-bl] file PREFIX
 
 ```html
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
--a ： 将 binary 文件以 text 文件的方式进行搜寻
 -c ： 计算找到个数
 -i ： 忽略大小写
 -n ： 输出行号
@@ -1170,6 +1157,8 @@ daemon 2
 
 查看占用端口的进程
 
+示例：查看特定端口的进程
+
 ```
 # netstat -anp | grep port
 ```
@@ -1181,10 +1170,10 @@ daemon 2
 | 状态 | 说明 |
 | :---: | --- |
 | R | running or runnable (on run queue) |
-| D | uninterruptible sleep (usually IO) |
+| D | uninterruptible sleep (usually I/O) |
 | S | interruptible sleep (waiting for an event to complete) |
 | Z | defunct/zombie, terminated but not reaped by its parent |
-| T | stopped, either by a job control signal or because it is being traced|
+| T | stopped, either by a job control signal or because it is being traced |
 
 ## SIGCHLD
 
@@ -1209,7 +1198,7 @@ pid_t wait(int *status)
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
 
-参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，我们就可以设定这个参数为 NULL：
+参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵死进程消灭掉，以设定这个参数为 NULL：
 
 ```c
 pid = wait(NULL);
@@ -1218,18 +1207,20 @@ pid = wait(NULL);
 ## waitpid()
 
 ```c
-pid_t waitpid(pid_t pid,int *status,int options)
+pid_t waitpid(pid_t pid, int *status, int options)
 ```
 
 作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
 
-pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么贺 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么和 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
 
 options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
 
 ## 孤儿进程
 
-一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。
+
+孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
 
 由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
 
@@ -1243,298 +1234,10 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
 
-# 十一、I/O 复用
-
-## 概念理解
-
-I/O Multiplexing 又被称为 Event Driven I/O，它可以让单个进程具有处理多个 I/O 事件的能力。
-
-当某个 I/O 事件条件满足时，进程会收到通知。
-
-如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时连接几万个连接，那么就需要创建相同数量的线程。并且相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
-
-## I/O 模型
-
-- 阻塞（Blocking）
-- 非阻塞（Non-blocking）
-- 同步（Synchronous）
-- 异步（Asynchronous）
-
-阻塞非阻塞是等待 I/O 完成的方式，阻塞要求用户程序停止执行，直到 I/O 完成，而非阻塞在 I/O 完成之前还可以继续执行。
-
-同步异步是获知 I/O 完成的方式，同步需要时刻关心 I/O 是否已经完成，异步无需主动关心，在 I/O 完成时它会收到通知。
-
-<div align="center"> <img src="../pics//1a231f2a-5c2f-4231-8e0f-915aa5894347.jpg" width=""/> </div><br>
-
-
-### 1. 同步-阻塞
-
-这是最常见的一种模型，用户程序在使用 read() 时会执行系统调用从而陷入内核，之后就被阻塞直到系统调用完成。
-
-应该注意到，在阻塞的过程中，其他程序还可以执行，因此阻塞不意味着整个操作系统都被阻塞。因为其他程序还可以执行，因此不消耗 CPU 时间，这种模型的执行效率会比较高。
-
-<div align="center"> <img src="../pics//5e9b10f3-9504-4483-9667-d4770adebf9f.png" width=""/> </div><br>
-
-### 2. 同步-非阻塞
-
-非阻塞意味着用户程序在执行系统调用后还可以继续执行，内核并不是马上执行完 I/O，而是以一个错误码来告知用户程序 I/O 还未完成。为了获得 I/O 完成事件，用户程序必须调用多次系统调用去询问内核，甚至是忙等，也就是在一个循环里面一直询问并等待。
-
-由于 CPU 要处理更多的用户程序的询问，因此这种模型的效率是比较低的。
-
-<div align="center"> <img src="../pics//1582217a-ed46-4cac-811e-90d13a65163b.png" width=""/> </div><br>
-
-### 3. 异步
-
-该模式下，I/O 操作会立即返回，之后可以处理其它操作，并且在 I/O 完成时会收到一个通知，此时会中断正在处理的操作，然后继续之前的操作。
-
-<div align="center"> <img src="../pics//b4b29aa9-dd2c-467b-b75f-ca6541cb25b5.jpg" width=""/> </div><br>
-
-## select poll epoll
-
-这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。
-
-### 1. select
-
-```c
-int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
-```
-
-- fd_set 表示描述符集合；
-- readset、writeset 和 exceptset 这三个参数指定让操作系统内核测试读、写和异常条件的描述符；
-- timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间；
-- 成功调用返回结果大于 0；出错返回结果为 -1；超时返回结果为 0。
-
-```c
-fd_set fd_in, fd_out;
-struct timeval tv;
-
-// Reset the sets
-FD_ZERO( &fd_in );
-FD_ZERO( &fd_out );
-
-// Monitor sock1 for input events
-FD_SET( sock1, &fd_in );
-
-// Monitor sock2 for output events
-FD_SET( sock2, &fd_out );
-
-// Find out which socket has the largest numeric value as select requires it
-int largest_sock = sock1 > sock2 ? sock1 : sock2;
-
-// Wait up to 10 seconds
-tv.tv_sec = 10;
-tv.tv_usec = 0;
-
-// Call the select
-int ret = select( largest_sock + 1, &fd_in, &fd_out, NULL, &tv );
-
-// Check if select actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    if ( FD_ISSET( sock1, &fd_in ) )
-        // input event on sock1
-
-    if ( FD_ISSET( sock2, &fd_out ) )
-        // output event on sock2
-}
-```
-
-每次调用 select() 都需要将 fd_set \*readfds, fd_set \*writefds, fd_set \*exceptfds 链表内容全部从用户进程内存中复制到操作系统内核中，内核需要将所有 fd_set 遍历一遍，这个过程非常低效。
-
-返回结果中内核并没有声明哪些 fd_set 已经准备好了，所以如果返回值大于 0 时，程序需要遍历所有的 fd_set 判断哪个 I/O 已经准备好。
-
-在 Linux 中 select 最多支持 1024 个 fd_set 同时轮询，其中 1024 由 Linux 内核的 FD_SETSIZE 决定。如果需要打破该限制可以修改 FD_SETSIZE，然后重新编译内核。
-
-### 2. poll
-
-```c
-int poll (struct pollfd *fds, unsigned int nfds, int timeout);
-```
-
-```c
-struct pollfd {
-    int fd;       //文件描述符
-    short events; //监视的请求事件
-    short revents; //已发生的事件
-};
-```
-
-```c
-// The structure for two events
-struct pollfd fds[2];
-
-// Monitor sock1 for input
-fds[0].fd = sock1;
-fds[0].events = POLLIN;
-
-// Monitor sock2 for output
-fds[1].fd = sock2;
-fds[1].events = POLLOUT;
-
-// Wait 10 seconds
-int ret = poll( &fds, 2, 10000 );
-// Check if poll actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    // If we detect the event, zero it out so we can reuse the structure
-    if ( pfd[0].revents & POLLIN )
-        pfd[0].revents = 0;
-        // input event on sock1
-
-    if ( pfd[1].revents & POLLOUT )
-        pfd[1].revents = 0;
-        // output event on sock2
-}
-```
-
-它和 select() 功能基本相同。同样需要每次将 struct pollfd \*fds 复制到内核，返回后同样需要进行轮询每一个 pollfd 是否已经 I/O 准备好。poll() 取消了 1024 个描述符数量上限，但是数量太大以后不能保证执行效率，因为复制大量内存到内核十分低效，所需时间与描述符数量成正比。poll() 在 pollfd 的重复利用上比 select() 的 fd_set 会更好。
-
-如果在多线程下，如果一个线程对某个描述符调用了 poll() 系统调用，但是另一个线程关闭了该描述符，会导致 poll() 调用结果不确定，该问题同样出现在 select() 中。
-
-### 3. epoll
-
-```c
-int epoll_create(int size);
-int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
-int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
-```
-
-```c
-// Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
-// The function argument is ignored (it was not before, but now it is), so put your favorite number here
-int pollingfd = epoll_create( 0xCAFE );
-
-if ( pollingfd < 0 )
- // report error
-
-// Initialize the epoll structure in case more members are added in future
-struct epoll_event ev = { 0 };
-
-// Associate the connection class instance with the event. You can associate anything
-// you want, epoll does not use this information. We store a connection class pointer, pConnection1
-ev.data.ptr = pConnection1;
-
-// Monitor for input, and do not automatically rearm the descriptor after the event
-ev.events = EPOLLIN | EPOLLONESHOT;
-// Add the descriptor into the monitoring list. We can do it even if another thread is
-// waiting in epoll_wait - the descriptor will be properly added
-if ( epoll_ctl( epollfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 )
-    // report error
-
-// Wait for up to 20 events (assuming we have added maybe 200 sockets before that it may happen)
-struct epoll_event pevents[ 20 ];
-
-// Wait for 10 seconds, and retrieve less than 20 epoll_event and store them into epoll_event array
-int ready = epoll_wait( pollingfd, pevents, 20, 10000 );
-// Check if epoll actually succeed
-if ( ret == -1 )
-    // report error and abort
-else if ( ret == 0 )
-    // timeout; no event detected
-else
-{
-    // Check if any events detected
-    for ( int i = 0; i < ret; i++ )
-    {
-        if ( pevents[i].events & EPOLLIN )
-        {
-            // Get back our connection pointer
-            Connection * c = (Connection*) pevents[i].data.ptr;
-            c->handleReadEvent();
-         }
-    }
-}
-```
-
-epoll 仅仅适用于 Linux OS。
-
-它是 select 和 poll 的增强版，更加灵活而且没有描述符限制。它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
-
-select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
-
-新版本的 epoll_create(int size) 参数 size 不起任何作用，在旧版本的 epoll 中如果描述符的数量大于 size，不保证服务质量。
-
-epoll_ctl() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
-
-epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到程序中，不需要像 select/poll 对注册的所有描述符遍历一遍。
-
-epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
-
-## select 和 poll 比较
-
-### 1. 功能
-
-它们提供了几乎相同的功能，但是在一些细节上有所不同：
-
-- select 会修改 fd_set 参数，而 poll 不会；
-- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
-- poll 提供了更多的事件类型。
-
-### 2. 速度
-
-poll 和 select 在速度上都很慢。
-
-- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
-- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
-
-### 3. 可移植性
-
-几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
-
-## eopll 工作模式
-
-epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
-
-### 1. LT 模式
-
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
-
-### 2. ET 模式
-
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
-
-## select poll epoll 应用场景
-
-很容易产生一种错觉认为只要用 epoll 就可以了，select poll 都是历史遗留问题，并没有什么应用场景，其实并不是这样的。
-
-### 1. select 应用场景
-
-select() poll() epoll_wait() 都有一个 timeout 参数，在 select() 中 timeout 的精确度为 1ns，而 poll() 和 epoll_wait() 中则为 1ms。所以 select 更加适用于实时要求更高的场景，比如核反应堆的控制。
-
-select 历史更加悠久，它的可移植性更好，几乎被所有主流平台所支持。
-
-### 2. poll 应用场景
-
-poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
-
-需要同时监控小于 1000 个描述符。那么也没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
-
-需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。epoll 的描述符存储在内核，不容易调试。
-
-### 3. epoll 应用场景
-
-程序只需要运行在 Linux 平台上，有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
-
-### 4. 性能对比
-
-> [epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
-
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
-- [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
-- [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
-- [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
-- [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
 - [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)

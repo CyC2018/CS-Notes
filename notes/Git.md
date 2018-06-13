@@ -129,7 +129,7 @@ HEAD is now at 049d078 added the index file (To restore them type "git stash app
 
 # SSH 传输设置
 
-Git 仓库和 Github 中心仓库之间是通过 SSH 加密。
+Git 仓库和 Github 中心仓库之间的传输是通过 SSH 加密。
 
 如果工作区下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
 
@@ -143,9 +143,9 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 忽略以下文件：
 
-1. 操作系统自动生成的文件，比如缩略图；
-2. 编译生成的中间文件，比如 Java 编译产生的 .class 文件；
-3. 自己的敏感信息，比如存放口令的配置文件。
+- 操作系统自动生成的文件，比如缩略图；
+- 编译生成的中间文件，比如 Java 编译产生的 .class 文件；
+- 自己的敏感信息，比如存放口令的配置文件。
 
 不需要全部自己编写，可以到 [https://github.com/github/gitignore](https://github.com/github/gitignore) 中进行查询。
 

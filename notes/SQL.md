@@ -197,13 +197,15 @@ WHERE col IS NULL;
 下表显示了 WHERE 子句可用的操作符
 
 |  操作符 | 说明  |
-| ------------ | ------------ |
-| `=` `<` `>`  | 等于 小于 大于 |
-| `<>` `!=`  | 不等于  |
-| `<=` `!>` | 小于等于 |
-| `>=` `!<` | 大于等于 |
-| `BETWEEN` | 在两个值之间 |
-| `IS NULL` | 为 NULL 值 |
+| :---: | :---: |
+| = | 等于 |
+| &lt; | 小于 |
+| &gt; | 大于 |
+| &lt;&gt; != | 不等于 |
+| &lt;= !&gt; | 小于等于 |
+| &gt;= !&lt; | 大于等于 |
+| BETWEEN | 在两个值之间 |
+| IS NULL | 为 NULL 值 |
 
 应该注意到，NULL 与 0、空字符串都不同。
 
@@ -253,17 +255,39 @@ FROM mytable;
 
 # 十二、函数
 
-各个 DBMS 的函数都是不相同的，因此不可移植。
+各个 DBMS 的函数都是不相同的，因此不可移植，以下主要是 MySQL 的函数。
+
+## 汇总
+
+|函 数 |说 明|
+| :---: | :---: |
+| AVG() | 返回某列的平均值 |
+| COUNT() | 返回某列的行数 |
+| MAX() | 返回某列的最大值 |
+| MIN() | 返回某列的最小值 |
+| SUM() |返回某列值之和 |
+
+AVG() 会忽略 NULL 行。
+
+使用 DISTINCT 可以让汇总函数值汇总不同的值。
+
+```sql
+SELECT AVG(DISTINCT col1) AS avg_col
+FROM mytable;
+```
 
 ## 文本处理
 
 | 函数  | 说明  |
 | :---: | :---: |
-|  `LEFT()` `RIGHT()` |  左边或者右边的字符 |
-|  `LOWER()` `UPPER()` |  转换为小写或者大写 |
-| `LTRIM()` `RTIM()` | 去除左边或者右边的空格 |
-| `LENGTH()` | 长度 |
-| `SOUNDEX()` | 转换为语音值 |
+|  LEFT() |  左边的字符 |
+| RIGHT() | 右边的字符 |
+| LOWER() | 转换为小写字符 |
+| UPPER() | 转换为大写字符 |
+| LTRIM() | 去除左边的空格 |
+| RTRIM() | 去除右边的空格 |
+| LENGTH() | 长度 |
+| SOUNDEX() | 转换为语音值 |
 
 其中， **SOUNDEX()**  可以将一个字符串转换为描述其语音表示的字母数字模式。
 
@@ -280,23 +304,23 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 |函 数 | 说 明|
 | :---: | :---: |
-| `AddDate()` | 增加一个日期（天、周等）|
-| `AddTime()` | 增加一个时间（时、分等）|
-| `CurDate()` | 返回当前日期 |
-| `CurTime()` | 返回当前时间 |
-| `Date()` |返回日期时间的日期部分|
-| `DateDiff()` |计算两个日期之差|
-| `Date_Add()` |高度灵活的日期运算函数|
-| `Date_Format()` |返回一个格式化的日期或时间串|
-| `Day()`| 返回一个日期的天数部分|
-| `DayOfWeek()` |对于一个日期，返回对应的星期几|
-| `Hour()` |返回一个时间的小时部分|
-| `Minute()` |返回一个时间的分钟部分|
-| `Month()` |返回一个日期的月份部分|
-| `Now()` |返回当前日期和时间|
-| `Second()` |返回一个时间的秒部分|
-| `Time()` |返回一个日期时间的时间部分|
-| `Year()` |返回一个日期的年份部分|
+| AddDate() | 增加一个日期（天、周等）|
+| AddTime() | 增加一个时间（时、分等）|
+| CurDate() | 返回当前日期 |
+| CurTime() | 返回当前时间 |
+| Date() |返回日期时间的日期部分|
+| DateDiff() |计算两个日期之差|
+| Date_Add() |高度灵活的日期运算函数|
+| Date_Format() |返回一个格式化的日期或时间串|
+| Day()| 返回一个日期的天数部分|
+| DayOfWeek() |对于一个日期，返回对应的星期几|
+| Hour() |返回一个时间的小时部分|
+| Minute() |返回一个时间的分钟部分|
+| Month() |返回一个日期的月份部分|
+| Now() |返回当前日期和时间|
+| Second() |返回一个时间的秒部分|
+| Time() |返回一个日期时间的时间部分|
+| Year() |返回一个日期的年份部分|
 
 ```sql
 mysql> SELECT NOW();
@@ -310,34 +334,15 @@ mysql> SELECT NOW();
 
 | 函数 | 说明 |
 | :---: | :---: |
-| `SIN()` | 正弦 |
-| `COS()` | 余弦 |
-| `TAN()` | 正切 |
-| `ABS()` | 绝对值 |
-| `SQRT()` | 平方根 |
-| `MOD()` | 余数 |
-| `EXP()` | 指数 |
-| `PI()` | 圆周率 |
-| `RAND()` | 随机数 |
-
-## 汇总
-
-|函 数 |说 明|
-| :---: | :---: |
-| `AVG()` | 返回某列的平均值 |
-| `COUNT()` | 返回某列的行数 |
-| `MAX()` | 返回某列的最大值 |
-| `MIN()` | 返回某列的最小值 |
-| `SUM()` |返回某列值之和 |
-
-AVG() 会忽略 NULL 行。
-
-使用 DISTINCT 可以让汇总函数值汇总不同的值。
-
-```sql
-SELECT AVG(DISTINCT col1) AS avg_col
-FROM mytable
-```
+| SIN() | 正弦 |
+| COS() | 余弦 |
+| TAN() | 正切 |
+| ABS() | 绝对值 |
+| SQRT() | 平方根 |
+| MOD() | 余数 |
+| EXP() | 指数 |
+| PI() | 圆周率 |
+| RAND() | 随机数 |
 
 # 十三、分组
 
@@ -374,10 +379,10 @@ HAVING num >= 2;
 
 分组规定：
 
-1. GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
-2. 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
-3. NULL 的行会单独分为一组；
-4. 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
+- GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
+- 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
+- NULL 的行会单独分为一组；
+- 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
 
 # 十四、子查询
 
@@ -416,16 +421,16 @@ ORDER BY cust_name;
 内连接又称等值连接，使用 INNER JOIN 关键字。
 
 ```sql
-SELECT a, b, c
-FROM A INNER JOIN B
+SELECT A.value, B.value
+FROM tablea AS A INNER JOIN tableb AS B
 ON A.key = B.key;
 ```
 
 可以不明确使用 INNER JOIN，而使用普通查询并在 WHERE 中将两个表中要连接的列用等值方法连接起来。
 
 ```sql
-SELECT a, b, c
-FROM A, B
+SELECT A.value, B.value
+FROM tablea AS A, tableb AS B
 WHERE A.key = B.key;
 ```
 
@@ -452,12 +457,10 @@ WHERE department = (
 
 ```sql
 SELECT e1.name
-FROM employee AS e1, employee AS e2
-WHERE e1.department = e2.department
+FROM employee AS e1 INNER JOIN employee AS e2
+ON e1.department = e2.department
       AND e2.name = "Jim";
 ```
-
-连接一般比子查询的效率高。
 
 ## 自然连接
 
@@ -466,8 +469,8 @@ WHERE e1.department = e2.department
 内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列。
 
 ```sql
-SELECT *
-FROM employee NATURAL JOIN department;
+SELECT A.value, B.value
+FROM tablea AS A NATURAL JOIN tableb AS B;
 ```
 
 ## 外连接
@@ -482,15 +485,32 @@ FROM Customers LEFT OUTER JOIN Orders
 ON Customers.cust_id = Orders.cust_id;
 ```
 
-如果需要统计顾客的订单数，使用聚集函数。
+customers 表：
 
-```sql
-SELECT Customers.cust_id,
-       COUNT(Orders.order_num) AS num_ord
-FROM Customers LEFT OUTER JOIN Orders
-ON Customers.cust_id = Orders.cust_id
-GROUP BY Customers.cust_id;
-```
+| cust_id | cust_name |
+| :---: | :---: |
+| 1 | a |
+| 2 | b |
+| 3 | c |
+
+orders 表：
+
+| order_id | cust_id |
+| :---: | :---: |
+|1    | 1 |
+|2    | 1 |
+|3    | 3 |
+|4    | 3 |
+
+结果：
+
+| cust_id | cust_name | order_id |
+| :---: | :---: | :---: |
+| 1 | a | 1 |
+| 1 | a | 2 |
+| 3 | c | 3 |
+| 3 | c | 4 |
+| 2 | b | Null |
 
 # 十六、组合查询
 
@@ -520,10 +540,10 @@ WHERE col =2;
 
 视图具有如下好处：
 
-1. 简化复杂的 SQL 操作，比如复杂的连接；
-2. 只使用实际表的一部分数据；
-3. 通过只给用户访问视图的权限，保证数据的安全性；
-4. 更改数据格式和表示。
+- 简化复杂的 SQL 操作，比如复杂的连接；
+- 只使用实际表的一部分数据；
+- 通过只给用户访问视图的权限，保证数据的安全性；
+- 更改数据格式和表示。
 
 ```sql
 CREATE VIEW myview AS
@@ -536,11 +556,11 @@ WHERE col5 = val;
 
 存储过程可以看成是对一系列 SQL 操作的批处理；
 
-使用存储过程的好处
+使用存储过程的好处：
 
-1. 代码封装，保证了一定的安全性；
-2. 代码复用；
-3. 由于是预先编译，因此具有很高的性能。
+- 代码封装，保证了一定的安全性；
+- 代码复用；
+- 由于是预先编译，因此具有很高的性能。
 
 命令行中创建存储过程需要自定义分隔符，因为命令行是以 ; 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。
 
@@ -561,6 +581,7 @@ create procedure myprocedure( out ret int )
         into y;
         select y*y into ret;
     end //
+
 delimiter ;
 ```
 
@@ -609,7 +630,7 @@ create procedure myprocedure(out ret int)
 
 触发器会在某个表执行以下语句时而自动执行：DELETE、INSERT、UPDATE。
 
-触发器必须指定在语句执行之前还是之后自动执行，之前执行使用 BEFORE 关键字，之后执行使用 AFTER 关键字。BEFORE 用于数据验证和净化。
+触发器必须指定在语句执行之前还是之后自动执行，之前执行使用 BEFORE 关键字，之后执行使用 AFTER 关键字。BEFORE 用于数据验证和净化，AFTER 用于审计跟踪，将修改记录到另外一张表中。
 
 INSERT 触发器包含一个名为 NEW 的虚拟表。
 
@@ -624,18 +645,16 @@ DELETE 触发器包含一个名为 OLD 的虚拟表，并且是只读的。
 
 UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中 NEW 是可以被修改地，而 OLD 是只读的。
 
-可以使用触发器来进行审计跟踪，把修改记录到另外一张表中。
-
 MySQL 不允许在触发器中使用 CALL 语句，也就是不能调用存储过程。
 
 # 二十一、事务处理
 
 基本术语：
 
-1. 事务（transaction）指一组 SQL 语句；
-2. 回退（rollback）指撤销指定 SQL 语句的过程；
-3. 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
-4. 保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退（与回退整个事务处理不同）。
+- 事务（transaction）指一组 SQL 语句；
+- 回退（rollback）指撤销指定 SQL 语句的过程；
+- 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
+- 保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退（与回退整个事务处理不同）。
 
 不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CREATE 和 DROP 语句。
 
@@ -659,9 +678,9 @@ COMMIT
 
 基本术语：
 
-1. 字符集为字母和符号的集合；
-2. 编码为某个字符集成员的内部表示；
-3. 校对字符指定如何比较，主要用于排序和分组。
+- 字符集为字母和符号的集合；
+- 编码为某个字符集成员的内部表示；
+- 校对字符指定如何比较，主要用于排序和分组。
 
 除了给表指定字符集和校对外，也可以给列指定：
 

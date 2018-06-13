@@ -130,7 +130,7 @@ public class ReferenceCountingGC {
 }
 ```
 
-正因为循环引用的存在，因此 Java 虚拟机不适用引用计数算法。
+正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
 
 ### 2. 可达性分析算法
 
@@ -191,7 +191,7 @@ WeakHashMap 的 Entry 继承自 WeakReference，主要用来实现缓存。
 private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
 ```
 
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMa 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
+Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMap 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
 
 ```java
 public final class ConcurrentCache<K, V> {
@@ -270,7 +270,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 <div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
 
-将需要回收的对象进行标记，然后清理掉被标记的对象。
+将需要存活的对象进行标记，然后清理掉未被标记的对象。
 
 不足：
 
@@ -312,7 +312,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 <div align="center"> <img src="../pics//22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
 
-Serial 翻译为串行，可以理解为垃圾收集和用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序。除了 CMS 和 G1 之外，其它收集器都是以串行的方式执行。CMS 和 G1 可以使得垃圾收集和用户程序同时执行，被称为并发执行。
+Serial 翻译为串行，垃圾收集和用户程序不能同时执行，这意味着在执行垃圾收集的时候需要停顿用户程序。除了 CMS 和 G1 之外，其它收集器都是以串行的方式执行。CMS 和 G1 可以使得垃圾收集和用户程序同时执行，被称为并发执行。
 
 它是单线程的收集器，只会使用一个线程进行垃圾收集工作。
 
@@ -394,7 +394,7 @@ G1 把新生代和老年代划分成多个大小相等的独立区域（Region�
 
 <div align="center"> <img src="../pics//9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
 
-通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 记录垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
+通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
 每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
 
@@ -682,7 +682,7 @@ public static void main(String[] args) {
 
 **（二）好处** 
 
-使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而是的基础类得到统一。
+使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而使得基础类得到统一。
 
 例如 java.lang.Object 存放在 rt.jar 中，如果编写另外一个 java.lang.Object 的类并放到 ClassPath 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。正因为 rt.jar 中的 Object 优先级更高，因为程序中所有的 Object 都是这个 Object。
 
