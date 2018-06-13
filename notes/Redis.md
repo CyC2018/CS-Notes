@@ -247,11 +247,11 @@ typedef struct dictEntry {
 
 rehash 操作不是一次性完成，而是采用渐进方式，这是为了避免一次性执行过多的 rehash 操作给服务器带来过大的负担。
 
-渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict[0] rehash 到 dict[1]，这一次会把 dict[0] 上 table[rehashidx] 的键值对 rehash 到 dict[1] 上，table[rehashidx] 指向 null，并令 rehashidx++。
+渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict[0] rehash 到 dict[1]，这一次会把 dict[0] 上 table[rehashidx] 的键值对 rehash 到 dict[1] 上，dict[0] 的 table[rehashidx] 指向 null，并令 rehashidx++。
 
 在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
 
-采用渐进式 rehash 会导致字典中的数据分散在两个 dict 上，因此对字典的操作也需要到对应的 dict 去执行。
+采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的操作也需要到对应的 dictht 去执行。
 
 ```c
 /* Performs N steps of incremental rehashing. Returns 1 if there are still
