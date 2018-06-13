@@ -2769,52 +2769,29 @@ Explanation: The array can be partitioned as [1, 5, 5] and [11].
 可以看成一个背包大小为 sum/2 的 0-1 背包问题。
 
 ```java
- public boolean canPartition(int[] nums) {
-     int sum = 0;
-     for (int num : nums) sum += num;
-     if (sum % 2 != 0) return false;
-     int W = sum / 2;
-     boolean[] dp = new boolean[W + 1];
-     dp[0] = true;
-     for (int num : nums) {               // 0-1 背包一个物品只能用一次
-         for (int i = W; i >= 0; i--) {   // 从后往前，先计算 dp[i] 再计算 dp[i-num]
-             if (num <= i) {
-                 dp[i] = dp[i] || dp[i - num];
-             }
-         }
-     }
-     return dp[W];
- }
-```
-
-**字符串按单词列表分割** 
-
-[139. Word Break (Medium)](https://leetcode.com/problems/word-break/description/)
-
-```html
-s = "leetcode",
-dict = ["leet", "code"].
-Return true because "leetcode" can be segmented as "leet code".
-```
-
-这是一个完全背包问题，和 0-1 背包不同的是，完全背包中物品可以使用多次。在这一题当中，词典中的单词可以被使用多次。
-
-0-1 背包和完全背包在实现上的不同之处是，0-1 背包对物品的迭代是在最外层，而完全背包对物品的迭代是在最里层。
-
-```java
-public boolean wordBreak(String s, List<String> wordDict) {
-    int n = s.length();
-    boolean[] dp = new boolean[n + 1];
+public boolean canPartition(int[] nums) {
+    int sum = computeArraySum(nums);
+    if (sum % 2 != 0) {
+        return false;
+    }
+    int W = sum / 2;
+    boolean[] dp = new boolean[W + 1];
     dp[0] = true;
-    for (int i = 1; i <= n; i++) {
-        for (String word : wordDict) { // 每个单词可以使用多次
-            int len = word.length();
-            if (len <= i && word.equals(s.substring(i - len, i))) {
-                dp[i] = dp[i] || dp[i - len];
-            }
+    Arrays.sort(nums);
+    for (int num : nums) {                 // 0-1 背包一个物品只能用一次
+        for (int i = W; i >= num; i--) {   // 从后往前，先计算 dp[i] 再计算 dp[i-num]
+            dp[i] = dp[i] || dp[i - num];
         }
     }
-    return dp[n];
+    return dp[W];
+}
+
+private int computeArraySum(int[] nums) {
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    return sum;
 }
 ```
 
@@ -2850,20 +2827,28 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
 
 ```java
 public int findTargetSumWays(int[] nums, int S) {
-    int sum = 0;
-    for (int num : nums) sum += num;
-    if (sum < S || (sum + S) % 2 == 1) return 0;
+    int sum = computeArraySum(nums);
+    if (sum < S || (sum + S) % 2 == 1) {
+        return 0;
+    }
     int W = (sum + S) / 2;
     int[] dp = new int[W + 1];
     dp[0] = 1;
+    Arrays.sort(nums);
     for (int num : nums) {
-        for (int i = W; i >= 0; i--) {
-            if (num <= i) {
-                dp[i] = dp[i] + dp[i - num];
-            }
+        for (int i = W; i >= num; i--) {
+            dp[i] = dp[i] + dp[i - num];
         }
     }
     return dp[W];
+}
+
+private int computeArraySum(int[] nums) {
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    return sum;
 }
 ```
 
@@ -2875,8 +2860,42 @@ public int findTargetSumWays(int[] nums, int S) {
 }
 
 private int findTargetSumWays(int[] nums, int start, int S) {
-    if (start == nums.length) return S == 0 ? 1 : 0;
-    return findTargetSumWays(nums, start + 1, S + nums[start]) + findTargetSumWays(nums, start + 1, S - nums[start]);
+    if (start == nums.length) {
+        return S == 0 ? 1 : 0;
+    }
+    return findTargetSumWays(nums, start + 1, S + nums[start])
+            + findTargetSumWays(nums, start + 1, S - nums[start]);
+}
+```
+
+**字符串按单词列表分割** 
+
+[139. Word Break (Medium)](https://leetcode.com/problems/word-break/description/)
+
+```html
+s = "leetcode",
+dict = ["leet", "code"].
+Return true because "leetcode" can be segmented as "leet code".
+```
+
+dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。
+
+0-1 背包和完全背包在实现上的不同之处是，0-1 背包对物品的迭代是在最外层，而完全背包对物品的迭代是在最里层。
+
+```java
+public boolean wordBreak(String s, List<String> wordDict) {
+    int n = s.length();
+    boolean[] dp = new boolean[n + 1];
+    dp[0] = true;
+    for (int i = 1; i <= n; i++) {
+        for (String word : wordDict) {   // 完全一个物品可以使用多次
+            int len = word.length();
+            if (len <= i && word.equals(s.substring(i - len, i))) {
+                dp[i] = dp[i] || dp[i - len];
+            }
+        }
+    }
+    return dp[n];
 }
 ```
 
@@ -2895,13 +2914,18 @@ Explanation: There are totally 4 strings can be formed by the using of 5 0s and 
 
 ```java
 public int findMaxForm(String[] strs, int m, int n) {
-    if (strs == null || strs.length == 0) return 0;
+    if (strs == null || strs.length == 0) {
+        return 0;
+    }
     int[][] dp = new int[m + 1][n + 1];
-    for (String s : strs) { // 每个字符串只能用一次
+    for (String s : strs) {    // 每个字符串只能用一次
         int ones = 0, zeros = 0;
         for (char c : s.toCharArray()) {
-            if (c == '0') zeros++;
-            else ones++;
+            if (c == '0') {
+                zeros++;
+            } else {
+                ones++;
+            }
         }
         for (int i = m; i >= zeros; i--) {
             for (int j = n; j >= ones; j--) {
@@ -2913,7 +2937,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 }
 ```
 
-**找零钱** 
+**找零钱的方法数** 
 
 [322. Coin Change (Medium)](https://leetcode.com/problems/coin-change/description/)
 
@@ -2929,22 +2953,27 @@ return -1.
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-这是一个完全背包问题，完全背包问题和 0-1 背包问题在实现上的区别在于，0-1 背包遍历物品的循环在外侧，而完全背包问题遍历物品的循环在内侧，在内侧体现出物品可以使用多次。
+- 物品：硬币
+- 物品大小：面额
+- 物品价值：数量
+
+因为硬币可以重复使用，因此这是一个完全背包问题。
 
 ```java
 public int coinChange(int[] coins, int amount) {
-    if (coins == null || coins.length == 0) return 0;
-    int[] dp = new int[amount + 1];
-    Arrays.fill(dp, amount + 1);
-    dp[0] = 0;
+    if (coins == null || coins.length == 0) {
+        return 0;
+    }
+    int[] minimum = new int[amount + 1];
+    Arrays.fill(minimum, amount + 1);
+    minimum[0] = 0;
+    Arrays.sort(coins);
     for (int i = 1; i <= amount; i++) {
-        for (int c : coins) { // 硬币可以使用多次
-            if (c <= i) {
-                dp[i] = Math.min(dp[i], dp[i - c] + 1);
-            }
+        for (int j = 0; j < coins.length && coins[j] <= i; j++) {
+            minimum[i] = Math.min(minimum[i], minimum[i - coins[j]] + 1);
         }
     }
-    return dp[amount] > amount ? -1 : dp[amount];
+    return minimum[amount] > amount ? -1 : minimum[amount];
 }
 ```
 
@@ -2974,17 +3003,18 @@ Therefore the output is 7.
 
 ```java
 public int combinationSum4(int[] nums, int target) {
-    if (nums == null || nums.length == 0) return 0;
-    int[] dp = new int[target + 1];
-    dp[0] = 1;
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int[] maximum = new int[target + 1];
+    maximum[0] = 1;
+    Arrays.sort(nums);
     for (int i = 1; i <= target; i++) {
-        for (int num : nums) {
-            if (num <= i) {
-                dp[i] += dp[i - num];
-            }
+        for (int j = 0; j < nums.length && nums[j] <= i; j++) {
+            maximum[i] += maximum[i - nums[j]];
         }
     }
-    return dp[target];
+    return maximum[target];
 }
 ```
 
@@ -2992,31 +3022,27 @@ public int combinationSum4(int[] nums, int target) {
 
 [188. Best Time to Buy and Sell Stock IV (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
 
-```html
-dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
-         = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
-```
-
 ```java
 public int maxProfit(int k, int[] prices) {
     int n = prices.length;
-    if (k >= n/2) { // 这种情况下该问题退化为普通的股票交易问题
-        int maxPro = 0;
+    if (k >= n / 2) {   // 这种情况下该问题退化为普通的股票交易问题
+        int maxProfit = 0;
         for (int i = 1; i < n; i++) {
-            if (prices[i] > prices[i-1])
-                maxPro += prices[i] - prices[i-1];
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
         }
-        return maxPro;
+        return maxProfit;
     }
-    int[][] dp = new int[k + 1][n];
+    int[][] maxProfit = new int[k + 1][n];
     for (int i = 1; i <= k; i++) {
-        int localMax = dp[i - 1][0] - prices[0];
+        int localMax = maxProfit[i - 1][0] - prices[0];
         for (int j = 1; j < n; j++) {
-            dp[i][j] = Math.max(dp[i][j - 1], prices[j] + localMax);
-            localMax = Math.max(localMax, dp[i - 1][j] - prices[j]);
+            maxProfit[i][j] = Math.max(maxProfit[i][j - 1], prices[j] + localMax);
+            localMax = Math.max(localMax, maxProfit[i - 1][j] - prices[j]);
         }
     }
-    return dp[k][n - 1];
+    return maxProfit[k][n - 1];
 }
 ```
 
@@ -3029,10 +3055,18 @@ public int maxProfit(int[] prices) {
     int firstBuy = Integer.MIN_VALUE, firstSell = 0;
     int secondBuy = Integer.MIN_VALUE, secondSell = 0;
     for (int curPrice : prices) {
-        if (firstBuy < -curPrice) firstBuy = -curPrice;
-        if (firstSell < firstBuy + curPrice) firstSell = firstBuy + curPrice;
-        if (secondBuy < firstSell - curPrice) secondBuy = firstSell - curPrice;
-        if (secondSell < secondBuy + curPrice) secondSell = secondBuy + curPrice;
+        if (firstBuy < -curPrice) {
+            firstBuy = -curPrice;
+        }
+        if (firstSell < firstBuy + curPrice) {
+            firstSell = firstBuy + curPrice;
+        }
+        if (secondBuy < firstSell - curPrice) {
+            secondBuy = firstSell - curPrice;
+        }
+        if (secondSell < secondBuy + curPrice) {
+            secondSell = secondBuy + curPrice;
+        }
     }
     return secondSell;
 }
