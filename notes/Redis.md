@@ -6,7 +6,8 @@
     * [SET](#set)
     * [HASH](#hash)
     * [ZSET](#zset)
-* [三、使用场景](#三使用场景)
+* [三、字典](#三字典)
+* [四、使用场景](#四使用场景)
     * [缓存](#缓存)
     * [计数器](#计数器)
     * [消息队列](#消息队列)
@@ -15,28 +16,28 @@
     * [排行榜](#排行榜)
     * [分布式 Session](#分布式-session)
     * [分布式锁](#分布式锁)
-* [四、Redis 与 Memcached](#四redis-与-memcached)
+* [五、Redis 与 Memcached](#五redis-与-memcached)
     * [数据类型](#数据类型)
     * [数据持久化](#数据持久化)
     * [分布式](#分布式)
     * [内存管理机制](#内存管理机制)
-* [五、键的过期时间](#五键的过期时间)
-* [六、数据淘汰策略](#六数据淘汰策略)
-* [七、持久化](#七持久化)
+* [六、键的过期时间](#六键的过期时间)
+* [七、数据淘汰策略](#七数据淘汰策略)
+* [八、持久化](#八持久化)
     * [快照持久化](#快照持久化)
     * [AOF 持久化](#aof-持久化)
-* [八、发布与订阅](#八发布与订阅)
-* [九、事务](#九事务)
-* [十、事件](#十事件)
+* [九、发布与订阅](#九发布与订阅)
+* [十、事务](#十事务)
+* [十一、事件](#十一事件)
     * [文件事件](#文件事件)
     * [时间事件](#时间事件)
     * [事件的调度与执行](#事件的调度与执行)
-* [十一、复制](#十一复制)
+* [十二、复制](#十二复制)
     * [连接过程](#连接过程)
     * [主从链](#主从链)
-* [十二、Sentinel](#十二sentinel)
-* [十三、分片](#十三分片)
-* [十四、一个简单的论坛系统分析](#十四一个简单的论坛系统分析)
+* [十三、Sentinel](#十三sentinel)
+* [十四、分片](#十四分片)
+* [十五、一个简单的论坛系统分析](#十五一个简单的论坛系统分析)
     * [文章信息](#文章信息)
     * [点赞功能](#点赞功能)
     * [对文章进行排序](#对文章进行排序)
@@ -204,7 +205,111 @@ OK
 2) "982"
 ```
 
-# 三、使用场景
+# 三、字典
+
+以下是 Redis 字典的主要数据结构，从上往下分析，一个 dict 有两个 dictht，一个 dictht 有一个 dictEntry 数组，每个 dictEntry 有 next 指针因此是一个链表结构。从上面的分析可以看出 Redis 的字典是一个基于拉链法解决冲突的哈希表结构。
+
+```c
+typedef struct dict {
+    dictType *type;
+    void *privdata;
+    dictht ht[2];
+    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
+    unsigned long iterators; /* number of iterators currently running */
+} dict;
+```
+
+```c
+/* This is our hash table structure. Every dictionary has two of this as we
+ * implement incremental rehashing, for the old to the new table. */
+typedef struct dictht {
+    dictEntry **table;
+    unsigned long size;
+    unsigned long sizemask;
+    unsigned long used;
+} dictht;
+```
+
+```c
+typedef struct dictEntry {
+    void *key;
+    union {
+        void *val;
+        uint64_t u64;
+        int64_t s64;
+        double d;
+    } v;
+    struct dictEntry *next;
+} dictEntry;
+```
+
+哈希表需要具备扩容能力，在扩容时就需要对每个键值对进行 rehash。dict 有两个 dictht，在 rehash 的时候会将一个 dictht 上的键值对重新插入另一个 dictht 上面，完成之后释放空间并交换两个 dictht 的角色。
+
+rehash 操作不是一次性完成，而是采用渐进方式，这是为了避免一次性执行过多的 rehash 操作给服务器带来过大的负担。
+
+渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict[0] rehash 到 dict[1]，这一次会把 dict[0] 上 table[rehashidx] 的键值对 rehash 到 dict[1] 上，table[rehashidx] 指向 null，并令 rehashidx++。
+
+在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
+
+采用渐进式 rehash 会导致字典中的数据分散在两个 dict 上，因此对字典的操作也需要到对应的 dict 去执行。
+
+```c
+/* Performs N steps of incremental rehashing. Returns 1 if there are still
+ * keys to move from the old to the new hash table, otherwise 0 is returned.
+ *
+ * Note that a rehashing step consists in moving a bucket (that may have more
+ * than one key as we use chaining) from the old to the new hash table, however
+ * since part of the hash table may be composed of empty spaces, it is not
+ * guaranteed that this function will rehash even a single bucket, since it
+ * will visit at max N*10 empty buckets in total, otherwise the amount of
+ * work it does would be unbound and the function may block for a long time. */
+int dictRehash(dict *d, int n) {
+    int empty_visits = n * 10; /* Max number of empty buckets to visit. */
+    if (!dictIsRehashing(d)) return 0;
+
+    while (n-- && d->ht[0].used != 0) {
+        dictEntry *de, *nextde;
+
+        /* Note that rehashidx can't overflow as we are sure there are more
+         * elements because ht[0].used != 0 */
+        assert(d->ht[0].size > (unsigned long) d->rehashidx);
+        while (d->ht[0].table[d->rehashidx] == NULL) {
+            d->rehashidx++;
+            if (--empty_visits == 0) return 1;
+        }
+        de = d->ht[0].table[d->rehashidx];
+        /* Move all the keys in this bucket from the old to the new hash HT */
+        while (de) {
+            uint64_t h;
+
+            nextde = de->next;
+            /* Get the index in the new hash table */
+            h = dictHashKey(d, de->key) & d->ht[1].sizemask;
+            de->next = d->ht[1].table[h];
+            d->ht[1].table[h] = de;
+            d->ht[0].used--;
+            d->ht[1].used++;
+            de = nextde;
+        }
+        d->ht[0].table[d->rehashidx] = NULL;
+        d->rehashidx++;
+    }
+
+    /* Check if we already rehashed the whole table... */
+    if (d->ht[0].used == 0) {
+        zfree(d->ht[0].table);
+        d->ht[0] = d->ht[1];
+        _dictReset(&d->ht[1]);
+        d->rehashidx = -1;
+        return 0;
+    }
+
+    /* More to rehash... */
+    return 1;
+}
+```
+
+# 四、使用场景
 
 ## 缓存
 
@@ -238,7 +343,7 @@ Redis 这种内存数据库能支持计数器频繁的读写操作。
 
 除了可以使用 SETNX 命令实现分布式锁之外，还可以使用官方提供的 RedLock 分布式锁实现。
 
-# 四、Redis 与 Memcached
+# 五、Redis 与 Memcached
 
 两者都是非关系型内存键值数据库。有以下主要不同：
 
@@ -262,14 +367,13 @@ Redis Cluster 实现了分布式的支持。
 
 Memcached 将内存分割成特定长度的块来存储数据，以完全解决内存碎片的问题，但是这种方式会使得内存的利用率不高，例如块的大小为 128 bytes，只存储 100 bytes 的数据，那么剩下的 28 bytes 就浪费掉了。
 
-
-# 五、键的过期时间
+# 六、键的过期时间
 
 Redis 可以为每个键设置过期时间，当键过期时，会自动删除该键。
 
 对于散列表这种容器，只能为整个键设置过期时间（整个散列表），而不能为键里面的单个元素设置过期时间。
 
-# 六、数据淘汰策略
+# 七、数据淘汰策略
 
 可以设置内存最大使用量，当内存使用量超过时施行淘汰策略，具体有 6 种淘汰策略。
 
@@ -286,7 +390,7 @@ Redis 可以为每个键设置过期时间，当键过期时，会自动删除�
 
 作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法（LRU、TTL）实际实现上并非针对所有 key，而是抽样一小部分 key 从中选出被淘汰 key。
 
-# 七、持久化
+# 八、持久化
 
 Redis 是内存型数据库，为了保证数据在断电后不会丢失，需要将内存中的数据持久化到硬盘上。
 
@@ -320,7 +424,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 随着服务器写请求的增多，AOF 文件会越来越大。Redis 提供了一种将 AOF 重写的特性，能够去除 AOF 文件中的冗余写命令。
 
-# 八、发布与订阅
+# 九、发布与订阅
 
 订阅者订阅了频道之后，发布者向频道发送字符串消息会被所有订阅者接收到。
 
@@ -333,7 +437,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 <div align="center"> <img src="../pics//bee1ff1d-c80f-4b3c-b58c-7073a8896ab2.jpg" width="400"/> </div><br>
 
-# 九、事务
+# 十、事务
 
 一个事务包含了多个命令，服务器在执行事务期间，不会改去执行其它客户端的命令请求。
 
@@ -341,7 +445,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 Redis 最简单的事务实现方式是使用 MULTI 和 EXEC 命令将事务操作包围起来。
 
-# 十、事件
+# 十一、事件
 
 Redis 服务器是一个事件驱动程序。
 
@@ -416,7 +520,7 @@ def main():
 
 <div align="center"> <img src="../pics//dda1608d-26e0-4f10-8327-a459969b150a.png" width=""/> </div><br>
 
-# 十一、复制
+# 十二、复制
 
 通过使用 slaveof host port 命令来让一个服务器成为另一个服务器的从服务器。
 
@@ -436,11 +540,11 @@ def main():
 
 <div align="center"> <img src="../pics//395a9e83-b1a1-4a1d-b170-d081e7bb5bab.png" width="600"/> </div><br>
 
-# 十二、Sentinel
+# 十三、Sentinel
 
 Sentinel（哨兵）可以监听主服务器，并在主服务器进入下线状态时，自动从从服务器中选举出新的主服务器。
 
-# 十三、分片
+# 十四、分片
 
 分片是将数据划分为多个部分的方法，可以将数据存储到多台机器里面，也可以从多台机器里面获取数据，这种方法在解决某些问题时可以获得线性级别的性能提升。
 
@@ -452,7 +556,7 @@ Sentinel（哨兵）可以监听主服务器，并在主服务器进入下线状
 - 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。
 - 服务器分片：Redis Cluster。
 
-# 十四、一个简单的论坛系统分析
+# 十五、一个简单的论坛系统分析
 
 该论坛系统功能如下：
 
