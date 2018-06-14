@@ -3116,7 +3116,9 @@ the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 
 ```java
 public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) return 0;
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
     int preSum = nums[0];
     int maxSum = preSum;
     for (int i = 1; i < nums.length; i++) {
@@ -3142,7 +3144,9 @@ dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
-    if (A == null || A.length == 0) return 0;
+    if (A == null || A.length == 0) {
+        return 0;
+    }
     int n = A.length;
     int[] dp = new int[n];
     for (int i = 2; i < n; i++) {
@@ -3150,9 +3154,11 @@ public int numberOfArithmeticSlices(int[] A) {
             dp[i] = dp[i - 1] + 1;
         }
     }
-    int ret = 0;
-    for (int cnt : dp) ret += cnt;
-    return ret;
+    int total = 0;
+    for (int cnt : dp) {
+        total += cnt;
+    }
+    return total;
 }
 ```
 
@@ -3176,16 +3182,21 @@ public int minDistance(String word1, String word2) {
     int[][] dp = new int[m + 1][n + 1];
     for (int i = 0; i <= m; i++) {
         for (int j = 0; j <= n; j++) {
-            if (i == 0 || j == 0) continue;
-            dp[i][j] = word1.charAt(i - 1) == word2.charAt(j - 1) ?
-                    dp[i - 1][j - 1] + 1 : Math.max(dp[i][j - 1], dp[i - 1][j]);
+            if (i == 0 || j == 0) {
+                continue;
+            }
+            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+            }
         }
     }
     return m + n - 2 * dp[m][n];
 }
 ```
 
-**修改一个字符串成为另一个字符串** 
+**编辑距离** 
 
 [72. Edit Distance (Hard)](https://leetcode.com/problems/edit-distance/description/)
 
@@ -3194,7 +3205,7 @@ Example 1:
 
 Input: word1 = "horse", word2 = "ros"
 Output: 3
-Explanation: 
+Explanation:
 horse -> rorse (replace 'h' with 'r')
 rorse -> rose (remove 'r')
 rose -> ros (remove 'e')
@@ -3202,13 +3213,15 @@ Example 2:
 
 Input: word1 = "intention", word2 = "execution"
 Output: 5
-Explanation: 
+Explanation:
 intention -> inention (remove 't')
 inention -> enention (replace 'i' with 'e')
 enention -> exention (replace 'n' with 'x')
 exention -> exection (replace 'n' with 'c')
 exection -> execution (insert 'u')
 ```
+
+题目描述：修改一个字符串成为另一个字符串，使得修改次数最少。一次修改操作包括：插入一个字符、删除一个字符、替换一个字符。
 
 ```java
 public int minDistance(String word1, String word2) {
@@ -3248,8 +3261,8 @@ public int minDistance(String word1, String word2) {
 public int integerBreak(int n) {
     int[] dp = new int[n + 1];
     dp[1] = 1;
-    for(int i = 2; i <= n; i++) {
-        for(int j = 1; j <= i - 1; j++) {
+    for (int i = 2; i <= n; i++) {
+        for (int j = 1; j <= i - 1; j++) {
             dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
         }
     }
@@ -3270,7 +3283,9 @@ public int numSquares(int n) {
     for (int i = 1; i <= n; i++) {
         int min = Integer.MAX_VALUE;
         for (int square : squareList) {
-            if (square > i) break;
+            if (square > i) {
+                break;
+            }
             min = Math.min(min, dp[i - square] + 1);
         }
         dp[i] = min;
@@ -3299,17 +3314,25 @@ private List<Integer> generateSquareList(int n) {
 
 ```java
 public int numDecodings(String s) {
-    if(s == null || s.length() == 0) return 0;
+    if (s == null || s.length() == 0) {
+        return 0;
+    }
     int n = s.length();
     int[] dp = new int[n + 1];
     dp[0] = 1;
     dp[1] = s.charAt(0) == '0' ? 0 : 1;
-    for(int i = 2; i <= n; i++) {
+    for (int i = 2; i <= n; i++) {
         int one = Integer.valueOf(s.substring(i - 1, i));
-        if(one != 0) dp[i] += dp[i - 1];
-        if(s.charAt(i - 2) == '0') continue;
+        if (one != 0) {
+            dp[i] += dp[i - 1];
+        }
+        if (s.charAt(i - 2) == '0') {
+            continue;
+        }
         int two = Integer.valueOf(s.substring(i - 2, i));
-        if(two <= 26) dp[i] += dp[i - 2];
+        if (two <= 26) {
+            dp[i] += dp[i - 2];
+        }
     }
     return dp[n];
 }
@@ -3342,8 +3365,8 @@ public int uniquePaths(int m, int n) {
 
 ```java
 public int uniquePaths(int m, int n) {
-    int S = m + n - 2; // 总共的移动次数
-    int D = m - 1;     // 向下的移动次数
+    int S = m + n - 2;  // 总共的移动次数
+    int D = m - 1;      // 向下的移动次数
     long ret = 1;
     for (int i = 1; i <= D; i++) {
         ret = ret * (S - D + i) / i;
@@ -3367,14 +3390,20 @@ Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes
 
 ```java
 public int minPathSum(int[][] grid) {
-    if (grid.length == 0 || grid[0].length == 0) return 0;
+    if (grid.length == 0 || grid[0].length == 0) {
+        return 0;
+    }
     int m = grid.length, n = grid[0].length;
     int[] dp = new int[n];
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            if (j == 0) dp[0] = dp[0] + grid[i][0];           // 只能从上侧走到该位置
-            else if (i == 0) dp[j] = dp[j - 1] + grid[0][j];  // 只能从右侧走到该位置
-            else dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+            if (j == 0) {
+                dp[0] = dp[0] + grid[i][0];      // 只能从上侧走到该位置
+            } else if (i == 0) {
+                dp[j] = dp[j - 1] + grid[0][j];  // 只能从右侧走到该位置
+            } else {
+                dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+            }
         }
     }
     return dp[n - 1];
@@ -3517,11 +3546,11 @@ public int minSteps(int n) {
 
 ### 素数
 
-（一）素数分解
+**素数分解** 
 
 每一个数都可以分解成素数的乘积，例如 84 = 2<sup>2</sup> \* 3<sup>1</sup> \* 5<sup>0</sup> \* 7<sup>1</sup> \* 11<sup>0</sup> \* 13<sup>0</sup> \* 17<sup>0</sup> \* …
 
-（二）整除
+**整除** 
 
 令 x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
 
@@ -3529,7 +3558,7 @@ public int minSteps(int n) {
 
 如果 x 整除 y（y mod x == 0），则对于所有 i，mi <= ni。
 
-（三）最大公约数最小公倍数
+**最大公约数最小公倍数** 
 
 x 和 y 的最大公约数为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
 
