@@ -6,7 +6,9 @@
     * [SET](#set)
     * [HASH](#hash)
     * [ZSET](#zset)
-* [三、字典](#三字典)
+* [三、数据结构](#三数据结构)
+    * [字典](#字典)
+    * [跳跃表](#跳跃表)
 * [四、使用场景](#四使用场景)
     * [缓存](#缓存)
     * [计数器](#计数器)
@@ -205,7 +207,9 @@ OK
 2) "982"
 ```
 
-# 三、字典
+# 三、数据结构
+
+## 字典
 
 以下是 Redis 字典的主要数据结构，从上往下分析，一个 dict 有两个 dictht，一个 dictht 有一个 dictEntry 数组，每个 dictEntry 有 next 指针因此是一个链表结构。从上面的分析可以看出 Redis 的字典是一个基于拉链法解决冲突的哈希表结构。
 
@@ -308,6 +312,24 @@ int dictRehash(dict *d, int n) {
     return 1;
 }
 ```
+
+## 跳跃表
+
+是有序集合的底层实现之一。
+
+跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。
+
+<div align="center"> <img src="../pics//beba612e-dc5b-4fc2-869d-0b23408ac90a.png"/> </div><br>
+
+在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。例如下图演示了查找 22 的过程。
+
+<div align="center"> <img src="../pics//0ea37ee2-c224-4c79-b895-e131c6805c40.png"/> </div><br>
+
+与红黑树等平衡树相比，跳跃表具有以下优点：
+
+- 插入速度非常快速，因为不需要平衡树的旋转操作；
+- 更容易实现；
+- 支持无锁操作。
 
 # 四、使用场景
 
@@ -562,13 +584,13 @@ Sentinel（哨兵）可以监听主服务器，并在主服务器进入下线状
 
 - 可以发布文章；
 - 可以对文章进行点赞；
-- 在首页可以按文章的发布时间或者文章的点赞数进行排序显示；
+- 在首页可以按文章的发布时间或者文章的点赞数进行排序显示。
 
 ## 文章信息
 
 文章包括标题、作者、赞数等信息，在关系型数据库中很容易构建一张表来存储这些信息，在 Redis 中可以使用 HASH 来存储每种信息以及其对应的值的映射。
 
-Redis 没有关系型数据库中的表这一概念来将同类型的数据存放在一起，而是使用命名空间的方式来实现这一功能。键名的前面部分存储命名空间，后面部分的内容存储 ID，通常使用 : 来进行分隔。例如下面的 HASH 的键名为 article:92617，其中 article 为命名空间，ID 为 92617。
+Redis 没有关系型数据库中的表这一概念来将同种类型的数据存放在一起，而是使用命名空间的方式来实现这一功能。键名的前面部分存储命名空间，后面部分的内容存储 ID，通常使用 : 来进行分隔。例如下面的 HASH 的键名为 article:92617，其中 article 为命名空间，ID 为 92617。
 
 <div align="center"> <img src="../pics//7c54de21-e2ff-402e-bc42-4037de1c1592.png" width="400"/> </div><br>
 
@@ -591,6 +613,7 @@ Redis 没有关系型数据库中的表这一概念来将同类型的数据存�
 - Carlson J L. Redis in Action[J]. Media.johnwiley.com.au, 2013.
 - [黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.](http://redisbook.com/index.html)
 - [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
+- [Skip Lists: Done Right](http://ticki.github.io/blog/skip-lists-done-right/)
 - [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
 - [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
