@@ -63,7 +63,7 @@
     * [wait()](#wait)
     * [waitpid()](#waitpid)
     * [孤儿进程](#孤儿进程)
-    * [僵死进程](#僵死进程)
+    * [僵尸进程](#僵尸进程)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -380,19 +380,19 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x. 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
 
-- drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段。
-- 3：链接数；
-- root：文件拥有者；
-- root：所属群组；
-- 17：文件大小；
-- May 6 00:14：文件最后被修改的时间；
-- .config：文件名。
+- drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段
+- 3：链接数
+- root：文件拥有者
+- root：所属群组
+- 17：文件大小
+- May 6 00:14：文件最后被修改的时间
+- .config：文件名
 
 常见的文件类型及其含义有：
 
-- d：目录；
-- -：文件；
-- l：链接文件；
+- d：目录
+- -：文件
+- l：链接文件
 
 9 位的文件权限字段中，每 3 个为一组，共 3 组，每一组分别代表对文件拥有者、所属群组以及其它人的文件权限。一组权限中的 3 位分别为 r、w、x 权限，表示可读、可写、可执行。
 
@@ -435,7 +435,7 @@ cd [相对路径或绝对路径]
 
 ### 4. rmdir
 
-删除目录，必须为空。
+删除目录，目录必须为空。
 
 ```html
 rmdir [-p] 目录名称
@@ -499,7 +499,7 @@ cp [-adfilprsu] source destination
 # chmod [-R] xyz dirname/filename
 ```
 
-范例：将 .bashrc 文件的权限修改为 -rwxr-xr--。
+示例：将 .bashrc 文件的权限修改为 -rwxr-xr--。
 
 ```html
 # chmod 754 .bashrc
@@ -518,7 +518,7 @@ cp [-adfilprsu] source destination
 - =：设定权限
 ```
 
-范例：为 .bashrc 文件的所有用户添加写权限。
+示例：为 .bashrc 文件的所有用户添加写权限。
 
 ```html
 # chmod a+w .bashrc
@@ -545,9 +545,11 @@ cp [-adfilprsu] source destination
 -f ：如果目标文件存在时，先删除目标文件
 ```
 
+<div align="center"> <img src="../pics//b8081c84-62c4-4019-b3ee-4bd0e443d647.jpg"/> </div><br>
+
 ### 1. 实体链接
 
-它和普通文件类似，实体链接文件的 inode 都指向源文件所在的 block 上，也就是说读取文件直接从源文件的 block 上读取。
+在目录下创建一个条目，记录着文件名与 inode 编号，这个 inode 就是源文件的 inode。
 
 删除任意一个条目，文件还是存在，只要引用数量不为 0。
 
@@ -857,7 +859,9 @@ $ find /home -name .bashrc > list 2>&1
 
 # 八、管线指令
 
-管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。在命令之间使用 | 分隔各个管线命令。
+管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。
+
+在命令之间使用 | 分隔各个管线命令。
 
 ```bash
 $ ls -al /etc | less
@@ -874,7 +878,7 @@ $ cut
 -c ：以字符为单位取出区间
 ```
 
-范例 1：last 将显示的登入者的信息，要求仅显示用户名。
+示例 1：last 显示登入者的信息，取出用户名。
 
 ```html
 $ last
@@ -885,7 +889,7 @@ root pts/1 192.168.201.254 Thu Feb 5 22:37 - 23:53 (01:16)
 $ last | cut -d ' ' -f 1
 ```
 
-范例 2：将 export 输出的讯息，取得第 12 字符以后的所有字符串。
+示例 2：将 export 输出的讯息，取出第 12 字符以后的所有字符串。
 
 ```html
 $ export
@@ -914,7 +918,7 @@ $ sort [-fbMnrtuk] [file or stdin]
 -k ：指定排序的区间
 ```
 
-范例：/etc/passwd 文件内容以 : 来分隔，要求以第三列进行排序。
+示例：/etc/passwd 文件内容以 : 来分隔，要求以第三列进行排序。
 
 ```html
 $ cat /etc/passwd | sort -t ':' -k 3
@@ -932,7 +936,7 @@ $ uniq [-ic]
 -c ：进行计数
 ```
 
-范例：取得每个人的登录总次数
+示例：取得每个人的登录总次数
 
 ```html
 $ last | cut -d ' ' -f 1 | sort | uniq -c
@@ -961,7 +965,7 @@ $ tr [-ds] SET1 ...
 -d ： 删除行中 SET1 这个字符串
 ```
 
-范例，将 last 输出的信息所有小写转换为大写。
+示例，将 last 输出的信息所有小写转换为大写。
 
 ```html
 $ last | tr '[a-z]' '[A-Z]'
@@ -1013,7 +1017,7 @@ $ split [-bl] file PREFIX
 
 ## grep
 
-使用正则表示式把匹配的行提取出来。
+g/re/p（globally search a regular expression and print)，使用正则表示式进行全局查找并打印。
 
 ```html
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
@@ -1024,7 +1028,7 @@ $ grep [-acinv] [--color=auto] 搜寻字符串 filename
 --color=auto ：找到的关键字加颜色显示
 ```
 
-范例：把含有 the 字符串的行提取出来（注意默认会有 --color=auto 选项，因此以下内容在 Linux 中有颜色显示 the 字符串）
+示例：把含有 the 字符串的行提取出来（注意默认会有 --color=auto 选项，因此以下内容在 Linux 中有颜色显示 the 字符串）
 
 ```html
 $ grep -n 'the' regular_express.txt
@@ -1056,15 +1060,11 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 ## awk
 
-可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
-
-```html
-$ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
-```
+是由 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
-范例 1：取出登录用户的用户名和 ip
+示例 1：取出登录用户的用户名和 ip
 
 ```html
 $ last -n 5
@@ -1077,15 +1077,30 @@ dmtsai tty1 Fri May 29 11:55 - 12:11 (00:15)
 $ last -n 5 | awk '{print $1 "\t" $3}
 ```
 
+可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
+
+```html
+$ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
+```
+
+示例 2：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
+
+```text
+$ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
+root 0
+bin 1
+daemon 2
+```
+
 awk 变量：
 
 | 变量名称 | 代表意义 |
-| -- | -- |
+| :--: | -- |
 | NF | 每一行拥有的字段总数 |
 | NR | 目前所处理的是第几行数据 |
 | FS | 目前的分隔字符，默认是空格键 |
 
-范例 2：输出正在处理的行号，并显示每一行有多少字段
+示例 3：输出正在处理的行号，并显示每一行有多少字段
 
 ```html
 $ last -n 5 | awk '{print $1 "\t lines: " NR "\t columns: " NF}'
@@ -1094,17 +1109,6 @@ dmtsai lines: 2 columns: 10
 dmtsai lines: 3 columns: 10
 dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
-```
-
-可以使用条件，其中等于使用 ==。
-
-范例 3：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
-
-```text
-$ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
-root 0
-bin 1
-daemon 2
 ```
 
 # 十、进程管理
@@ -1172,8 +1176,8 @@ daemon 2
 | R | running or runnable (on run queue) |
 | D | uninterruptible sleep (usually I/O) |
 | S | interruptible sleep (waiting for an event to complete) |
-| Z | defunct/zombie, terminated but not reaped by its parent |
-| T | stopped, either by a job control signal or because it is being traced |
+| Z | zombie (terminated but not reaped by its parent) |
+| T | stopped (either by a job control signal or because it is being traced) |
 
 ## SIGCHLD
 
@@ -1196,9 +1200,9 @@ pid_t wait(int *status)
 
 父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
 
-如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 - 1，同时 errno 被置为 ECHILD。
+如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
 
-参数 status 用来保存被收集进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵死进程消灭掉，以设定这个参数为 NULL：
+参数 status 用来保存被收集的子进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个子进程消灭掉，可以设置这个参数为 NULL：
 
 ```c
 pid = wait(NULL);
@@ -1224,21 +1228,22 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
 
-## 僵死进程
+## 僵尸进程
 
-一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵死进程。
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。
 
-僵死进程通过 ps 命令显示出来的状态为 Z。
+僵尸进程通过 ps 命令显示出来的状态为 Z（zombie）。
 
-系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+系统所能使用的进程号是有限的，如果大量的产生僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
 
-要消灭系统中大量的僵死进程，只需要将其父进程杀死，此时所有的僵死进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵死进程。
+要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时所有的僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵尸进程。
 
 # 参考资料
 
 - 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+- [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
 - [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)
 - [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)
