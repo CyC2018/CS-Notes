@@ -22,6 +22,9 @@
     * [垂直切分](#垂直切分)
     * [Sharding 策略](#sharding-策略)
     * [Sharding 存在的问题](#sharding-存在的问题)
+* [六、复制](#六复制)
+    * [主从复制](#主从复制)
+    * [读写分离](#读写分离)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -423,6 +426,32 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 - [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
 - [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
+
+# 六、复制
+
+## 主从复制
+
+主要涉及三个线程：binlog 线程、I/O 线程和 SQL 线程。
+
+-  **binlog 线程** ：负责将主服务器上的数据更改写入二进制文件（binlog）中。
+-  **I/O 线程** ：负责从主服务器上读取二进制日志文件，并写入中继日志中。
+-  **SQL 线程** ：负责读取中继日志并重放其中的 SQL 语句。
+
+<div align="center"> <img src="../pics//master-slave.png"/> </div><br>
+
+## 读写分离
+
+主服务器用来处理写操作，而从服务器用来处理读操作。
+
+读写分离常用代理方式来实现，代理服务器接收应用层传来的读写请求，然后决定转发到哪个服务器。
+
+MySQL 读写分离能提高性能的原因在于：
+
+- 主从服务器负责各自的读和写，极大程度缓解了锁的争用；
+- 从服务器可以配置 MyISAM 引擎，提升查询技能以及节约系统开销；
+- 增加冗余，提高可用性。
+
+<div align="center"> <img src="../pics//master-slave-proxy.png"/> </div><br>
 
 # 参考资料
 
