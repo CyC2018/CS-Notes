@@ -21,21 +21,21 @@
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
-参考现代操作系统、Unix 环境高级编程、深入理解计算机系统。
+参考 现代操作系统、Unix 环境高级编程、深入理解计算机系统。
 
 > [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
 
-参考鸟哥的 Linux 私房菜。
+参考 鸟哥的 Linux 私房菜。
 
 ## 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-参考谢希仁的计算机网络、计算机网络：自顶向下方法、TCP/IP 详解。
+参考 谢希仁的计算机网络、计算机网络 自顶向下方法、TCP/IP 详解。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
-参考图解 HTTP，更多的是参考网上的文档，比如 MDN、维基百科等。
+参考 图解 HTTP，更多的是参考网上的文档，比如 MDN、维基百科等。
 
 > [Socket](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md)
 
@@ -45,7 +45,7 @@
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
-参考 Head First 设计模式以及设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
+参考 Head First 设计模式、设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
 
 > [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
 
@@ -55,7 +55,7 @@
 
 > [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
 
-参考数据库系统原理。
+参考 数据库系统原理。
 
 > [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
 
@@ -67,11 +67,11 @@ Leetcode 上数据库题目的解题记录。
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-参考高性能 MySQL。
+参考 高性能 MySQL。
 
 > [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
 
-参考 Redis 设计与实现以及 Redis 实战。
+参考 Redis 设计与实现、Redis 实战。
 
 ## Java :coffee:
 
@@ -85,7 +85,7 @@ Leetcode 上数据库题目的解题记录。
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
-参考 Java 编程思想以及 Java 虚拟机。
+参考 Java 编程思想、深入理解 Java 虚拟机。
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
@@ -109,17 +109,17 @@ CAP、BASE、Paxos、Raft
 
 > [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
 
-参考正则表达式必知必会。
+参考 正则表达式必知必会。
 
 ## 编码实践 :speak_no_evil:
 
 > [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
-参考重构：改善既有代码的设计。
+参考 重构 改善既有代码的设计。
 
 > [代码可读性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码可读性.md)
 
-参考编写可读代码的艺术。
+参考 编写可读代码的艺术。
 
 > [代码风格规范](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码风格规范.md)
 
