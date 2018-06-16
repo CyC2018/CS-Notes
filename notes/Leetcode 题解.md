@@ -4588,12 +4588,18 @@ For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums sh
 ```java
 public void moveZeroes(int[] nums) {
     int idx = 0;
-    for (int num : nums) if (num != 0) nums[idx++] = num;
-    while (idx < nums.length) nums[idx++] = 0;
+    for (int num : nums) {
+        if (num != 0) {
+            nums[idx++] = num;
+        }
+    }
+    while (idx < nums.length) {
+        nums[idx++] = 0;
+    }
 }
 ```
 
-**调整矩阵** 
+**改变矩阵维度** 
 
 [566. Reshape the Matrix (Easy)](https://leetcode.com/problems/reshape-the-matrix/description/)
 
@@ -4603,8 +4609,10 @@ nums =
 [[1,2],
  [3,4]]
 r = 1, c = 4
+
 Output:
 [[1,2,3,4]]
+
 Explanation:
 The row-traversing of nums is [1,2,3,4]. The new reshaped matrix is a 1 * 4 matrix, fill it row by row by using the previous list.
 ```
@@ -4612,16 +4620,18 @@ The row-traversing of nums is [1,2,3,4]. The new reshaped matrix is a 1 * 4 matr
 ```java
 public int[][] matrixReshape(int[][] nums, int r, int c) {
     int m = nums.length, n = nums[0].length;
-    if (m * n != r * c) return nums;
-    int[][] ret = new int[r][c];
+    if (m * n != r * c) {
+        return nums;
+    }
+    int[][] reshapedNums = new int[r][c];
     int index = 0;
     for (int i = 0; i < r; i++) {
         for (int j = 0; j < c; j++) {
-            ret[i][j] = nums[index / n][index % n];
+            reshapedNums[i][j] = nums[index / n][index % n];
             index++;
         }
     }
-    return ret;
+    return reshapedNums;
 }
 ```
 
@@ -4632,15 +4642,15 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 ```java
 public int findMaxConsecutiveOnes(int[] nums) {
     int max = 0, cur = 0;
-    for (int num : nums) {
-        cur = num == 0 ? 0 : cur + 1;
+    for (int x : nums) {
+        cur = x == 0 ? 0 : cur + 1;
         max = Math.max(max, cur);
     }
     return max;
 }
 ```
 
-**一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出丢失的数和重复的数** 
+**一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数** 
 
 [645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
 
@@ -4656,24 +4666,27 @@ Output: [2,3]
 
 最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(NlogN)。本题可以以 O(N) 的时间复杂度、O(1) 空间复杂度来求解。
 
-主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。遍历数组，如果第 i 位上的元素不是 i + 1，那么就交换第 i 位和 nums[i] - 1 位上的元素，使得 num[i] - 1 位置上的元素为 nums[i]，也就是该位置上的元素是正确的。
+主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。遍历数组，如果第 i 位上的元素不是 i + 1，那么一直交换第 i 位和 nums[i] - 1 位置上的元素。
 
 ```java
 public int[] findErrorNums(int[] nums) {
     for (int i = 0; i < nums.length; i++) {
-        while (nums[i] != i + 1) {
-            if (nums[i] == nums[nums[i] - 1]) {
-                return new int[]{nums[nums[i] - 1], i + 1};
-            }
+        while (nums[i] != i + 1 && nums[nums[i] - 1] != nums[i]) {
             swap(nums, i, nums[i] - 1);
         }
     }
-
+    for (int i = 0; i < nums.length; i++) {
+        if (nums[i] != i + 1) {
+            return new int[]{nums[i], i + 1};
+        }
+    }
     return null;
 }
 
 private void swap(int[] nums, int i, int j) {
-    int tmp = nums[i]; nums[i] = nums[j]; nums[j] = tmp;
+    int tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
 }
 ```
 
@@ -6408,22 +6421,24 @@ We cannot find a way to divide the set of nodes into two independent subsets.
 public boolean isBipartite(int[][] graph) {
     int[] colors = new int[graph.length];
     Arrays.fill(colors, -1);
-    for (int i = 0; i < graph.length; i++) {
-        if (colors[i] == -1 && !isBipartite(graph, i, 0, colors))
+    for (int i = 0; i < graph.length; i++) {  // 处理图不是连通的情况
+        if (colors[i] == -1 && !isBipartite(i, 0, colors, graph)) {
             return false;
+        }
     }
     return true;
 }
 
-private boolean isBipartite(int[][] graph, int node, int color, int[] colors) {
-    if (colors[node] != -1)
-        return colors[node] == color;
-
-    colors[node] = color;
-    for (int next : graph[node])
-        if (!isBipartite(graph, next, 1 - color, colors))
+private boolean isBipartite(int curNode, int curColor, int[] colors, int[][] graph) {
+    if (colors[curNode] != -1) {
+        return colors[curNode] == curColor;
+    }
+    colors[curNode] = curColor;
+    for (int nextNode : graph[curNode]) {
+        if (!isBipartite(nextNode, 1 - curColor, colors, graph)) {
             return false;
-
+        }
+    }
     return true;
 }
 ```
@@ -6453,36 +6468,40 @@ return false
 ```java
 public boolean canFinish(int numCourses, int[][] prerequisites) {
     List<Integer>[] graphic = new List[numCourses];
-    for (int i = 0; i < numCourses; i++)
+    for (int i = 0; i < numCourses; i++) {
         graphic[i] = new ArrayList<>();
-    for (int[] pre : prerequisites)
+    }
+    for (int[] pre : prerequisites) {
         graphic[pre[0]].add(pre[1]);
-
+    }
     boolean[] globalMarked = new boolean[numCourses];
     boolean[] localMarked = new boolean[numCourses];
-    for (int i = 0; i < numCourses; i++)
-        if (!dfs(globalMarked, localMarked, graphic, i))
+    for (int i = 0; i < numCourses; i++) {
+        if (hasCycle(globalMarked, localMarked, graphic, i)) {
             return false;
-
+        }
+    }
     return true;
 }
 
-private boolean dfs(boolean[] globalMarked, boolean[] localMarked, List<Integer>[] graphic, int curNode) {
-    if (localMarked[curNode])
-        return false;
-    if (globalMarked[curNode])
-        return true;
+private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
+                         List<Integer>[] graphic, int curNode) {
 
+    if (localMarked[curNode]) {
+        return true;
+    }
+    if (globalMarked[curNode]) {
+        return false;
+    }
     globalMarked[curNode] = true;
     localMarked[curNode] = true;
-
-    for (int nextNode : graphic[curNode])
-        if (!dfs(globalMarked, localMarked, graphic, nextNode))
-            return false;
-
+    for (int nextNode : graphic[curNode]) {
+        if (hasCycle(globalMarked, localMarked, graphic, nextNode)) {
+            return true;
+        }
+    }
     localMarked[curNode] = false;
-
-    return true;
+    return false;
 }
 ```
 
@@ -6495,48 +6514,53 @@ private boolean dfs(boolean[] globalMarked, boolean[] localMarked, List<Integer>
 There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
 ```
 
-使用 DFS 来实现拓扑排序，使用一个栈存储后序遍历结果，这个栈元素的逆序结果就是拓扑排序结果。
+使用 DFS 来实现拓扑排序，使用一个栈存储后序遍历结果，这个栈的逆序结果就是拓扑排序结果。
 
 证明：对于任何先序关系：v->w，后序遍历结果可以保证 w 先进入栈中，因此栈的逆序结果中 v 会在 w 之前。
 
 ```java
 public int[] findOrder(int numCourses, int[][] prerequisites) {
     List<Integer>[] graphic = new List[numCourses];
-    for (int i = 0; i < numCourses; i++)
+    for (int i = 0; i < numCourses; i++) {
         graphic[i] = new ArrayList<>();
-    for (int[] pre : prerequisites)
+    }
+    for (int[] pre : prerequisites) {
         graphic[pre[0]].add(pre[1]);
-
-    Stack<Integer> topologyOrder = new Stack<>();
+    }
+    Stack<Integer> postOrder = new Stack<>();
     boolean[] globalMarked = new boolean[numCourses];
     boolean[] localMarked = new boolean[numCourses];
-    for (int i = 0; i < numCourses; i++)
-        if (!dfs(globalMarked, localMarked, graphic, i, topologyOrder))
+    for (int i = 0; i < numCourses; i++) {
+        if (hasCycle(globalMarked, localMarked, graphic, i, postOrder)) {
             return new int[0];
-
-    int[] ret = new int[numCourses];
-    for (int i = numCourses - 1; i >= 0; i--)
-        ret[i] = topologyOrder.pop();
-    return ret;
+        }
+    }
+    int[] orders = new int[numCourses];
+    for (int i = numCourses - 1; i >= 0; i--) {
+        orders[i] = postOrder.pop();
+    }
+    return orders;
 }
 
-private boolean dfs(boolean[] globalMarked, boolean[] localMarked, List<Integer>[] graphic, int curNode, Stack<Integer> topologyOrder) {
-    if (localMarked[curNode])
-        return false;
-    if (globalMarked[curNode])
-        return true;
+private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Integer>[] graphic,
+                         int curNode, Stack<Integer> postOrder) {
 
+    if (localMarked[curNode]) {
+        return true;
+    }
+    if (globalMarked[curNode]) {
+        return false;
+    }
     globalMarked[curNode] = true;
     localMarked[curNode] = true;
-
-    for (int nextNode : graphic[curNode])
-        if (!dfs(globalMarked, localMarked, graphic, nextNode, topologyOrder))
-            return false;
-
+    for (int nextNode : graphic[curNode]) {
+        if (hasCycle(globalMarked, localMarked, graphic, nextNode, postOrder)) {
+            return true;
+        }
+    }
     localMarked[curNode] = false;
-    topologyOrder.push(curNode);
-
-    return true;
+    postOrder.push(curNode);
+    return false;
 }
 ```
 
@@ -6559,15 +6583,13 @@ Explanation: The given undirected graph will be like this:
 
 题目描述：有一系列的边连成的图，找出一条边，移除它之后该图能够成为一棵树。
 
-使用 Union-Find。
-
 ```java
 public int[] findRedundantConnection(int[][] edges) {
     int N = edges.length;
     UF uf = new UF(N);
     for (int[] e : edges) {
         int u = e[0], v = e[1];
-        if (uf.find(u) == uf.find(v)) {
+        if (uf.connect(u, v)) {
             return e;
         }
         uf.union(u, v);
@@ -6576,7 +6598,7 @@ public int[] findRedundantConnection(int[][] edges) {
 }
 
 private class UF {
-    int[] id;
+    private int[] id;
 
     UF(int N) {
         id = new int[N + 1];
@@ -6600,6 +6622,10 @@ private class UF {
 
     int find(int p) {
         return id[p];
+    }
+
+    boolean connect(int u, int v) {
+        return find(u) == find(v);
     }
 }
 ```
