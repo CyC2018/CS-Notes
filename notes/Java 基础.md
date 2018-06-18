@@ -16,7 +16,7 @@
     * [访问权限](#访问权限)
     * [抽象类与接口](#抽象类与接口)
     * [super](#super)
-    * [覆盖与重载](#覆盖与重载)
+    * [重写与重载](#重写与重载)
 * [五、Object 通用方法](#五object-通用方法)
     * [概览](#概览)
     * [equals()](#equals)
@@ -494,7 +494,8 @@ System.out.println(InterfaceExample.x);
 
 在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
-> [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/) </br> [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+- [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
+- [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
 
 ## super
 
@@ -544,11 +545,11 @@ SuperExample.func()
 SuperExtendExample.func()
 ```
 
-> [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
+[Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 
-## 覆盖与重载
+## 重写与重载
 
-- 覆盖（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
+- 重写（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法；
 
 - 重载（Overload）存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
@@ -679,7 +680,7 @@ System.out.println(e1.equals(e2)); // true
 HashSet<EqualExample> set = new HashSet<>();
 set.add(e1);
 set.add(e2);
-System.out.println(set.size()); // 2
+System.out.println(set.size());   // 2
 ```
 
 理想的散列函数应当具有均匀性，即不相等的实例应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
@@ -724,7 +725,7 @@ ToStringExample@4554617c
 
 **1. cloneable** 
 
-clone() 是 Object 的受保护方法，这意味着，如果一个类不显式去覆盖 clone() 就没有这个方法。
+clone() 是 Object 的 protect 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法。
 
 ```java
 public class CloneExample {
@@ -738,7 +739,7 @@ CloneExample e1 = new CloneExample();
 // CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
-接下来覆盖 Object 的 clone() 得到以下实现：
+接下来重写 Object 的 clone() 得到以下实现：
 
 ```java
 public class CloneExample {
@@ -1106,7 +1107,9 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 -  **Security Restrictions**  : Reflection requires a runtime permission which may not be present when running under a security manager. This is in an important consideration for code which has to run in a restricted security context, such as in an Applet.
 -  **Exposure of Internals**  :Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
 
-> [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html) </br> [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
+
+- [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
+- [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
 # 八、异常
 
@@ -1117,7 +1120,8 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 <div align="center"> <img src="../pics//PPjwP.png" width="600"/> </div><br>
 
-> [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception) </br> [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+- [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
+- [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
 
 # 九、泛型
 
@@ -1130,13 +1134,14 @@ public class Box<T> {
 }
 ```
 
-> [Java 泛型详解](http://www.importnew.com/24029.html)</br>[10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
+- [Java 泛型详解](http://www.importnew.com/24029.html)
+- [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 十、注解
 
 Java 注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。
 
-> [注解 Annotation 实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
+[注解 Annotation 实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
 # 十一、特性
 
@@ -1165,7 +1170,8 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 7. Binary Literals, Underscore in literals
 8. Diamond Syntax
 
-> [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)</br> [Java 8 特性 ](http://www.importnew.com/19345.html)
+- [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
+- [Java 8 特性](http://www.importnew.com/19345.html)
 
 ## Java 与 C++ 的区别
 
@@ -1185,7 +1191,7 @@ Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Obje
 | Java has built-in support for documentation comments (`/** ... */`); therefore, Java source files can contain their own documentation, which is read by a separate tool usually `javadoc` and reformatted into HTML. This helps keeping documentation maintained in easy way. | C++ does not support documentation comments. |
 | Java is interpreted for the most part and hence platform independent. | C++ generates object code and the same code may not run on different platforms. |
 
-> [What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
+[What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
 
 ## JRE or JDK
 
