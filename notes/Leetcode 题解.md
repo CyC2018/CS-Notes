@@ -5005,13 +5005,13 @@ public int maxChunksToSorted(int[] arr) {
 
 ```html
 A:          a1 → a2
-                  ↘
-                    c1 → c2 → c3
-                  ↗
+                    ↘
+                      c1 → c2 → c3
+                    ↗
 B:    b1 → b2 → b3
 ```
 
-要求：时间复杂度为 O(N) 空间复杂度为 O(1)
+要求：时间复杂度为 O(N)，空间复杂度为 O(1)
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
@@ -5028,7 +5028,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ```
 
-如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美：3.6]() 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较第一个链表最后一个节点和第二个链表最后一个节点是否相同。
+如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美：3.6]() 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较两个链表的最后一个节点是否相同。
 
 **链表反转** 
 
@@ -5038,7 +5038,9 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 ```java
 public ListNode reverseList(ListNode head) {
-    if (head == null || head.next == null) return head;
+    if (head == null || head.next == null) {
+        return head;
+    }
     ListNode next = head.next;
     ListNode newHead = reverseList(next);
     next.next = head;
@@ -5091,9 +5093,9 @@ Given 1->1->2->3->3, return 1->2->3.
 
 ```java
 public ListNode deleteDuplicates(ListNode head) {
-    if (head == null || head.next == null) return head;
+    if(head == null || head.next == null) return head;
     head.next = deleteDuplicates(head.next);
-    return head.next != null && head.val == head.next.val ? head.next : head;
+    return head.val == head.next.val ? head.next : head;
 }
 ```
 
@@ -5108,19 +5110,18 @@ After removing the second node from the end, the linked list becomes 1->2->3->5.
 
 ```java
 public ListNode removeNthFromEnd(ListNode head, int n) {
-    ListNode newHead = new ListNode(-1);
-    newHead.next = head;
-    ListNode fast = newHead;
+    ListNode fast = head;
     while (n-- > 0) {
         fast = fast.next;
     }
-    ListNode slow = newHead;
+    if (fast == null) return head.next;
+    ListNode slow = head;
     while (fast.next != null) {
         fast = fast.next;
         slow = slow.next;
     }
     slow.next = slow.next.next;
-    return newHead.next;
+    return head;
 }
 ```
 
@@ -5132,22 +5133,23 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 Given 1->2->3->4, you should return the list as 2->1->4->3.
 ```
 
-题目要求：不能修改结点的 val 值；O(1) 空间复杂度。
+题目要求：不能修改结点的 val 值，O(1) 空间复杂度。
 
 ```java
 public ListNode swapPairs(ListNode head) {
-    ListNode newHead = new ListNode(-1);
-    newHead.next = head;
-    ListNode cur = head, pre = newHead;
-    while (cur != null && cur.next != null) {
-        ListNode next = cur.next;
-        pre.next = next;
-        cur.next = next.next;
-        next.next = cur;
-        pre = cur;
-        cur = cur.next;
+    ListNode node = new ListNode(-1);
+    node.next = head;
+    ListNode pre = node;
+    while (pre.next != null && pre.next.next != null) {
+        ListNode l1 = pre.next, l2 = pre.next.next;
+        ListNode next = l2.next;
+        l1.next = next;
+        l2.next = l1;
+        pre.next = l2;
+
+        pre = l1;
     }
-    return newHead.next;
+    return node.next;
 }
 ```
 
@@ -5194,7 +5196,7 @@ private Stack<Integer> buildStack(ListNode l) {
 
 [234. Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/description/)
 
-要求以 O(1) 的空间复杂度来求解。
+题目要求：以 O(1) 的空间复杂度来求解。
 
 切成两半，把后半段反转，然后比较两半是否相等。
 
@@ -5206,19 +5208,15 @@ public boolean isPalindrome(ListNode head) {
         slow = slow.next;
         fast = fast.next.next;
     }
-
-    if (fast != null) {  // 偶数节点，让 slow 指向下一个节点
-        slow = slow.next;
-    }
-
-    cut(head, slow); // 切成两个链表
-    ListNode l1 = head, l2 = slow;
-    l2 = reverse(l2);
-    return isEqual(l1, l2);
+    if (fast != null) slow = slow.next;  // 偶数节点，让 slow 指向下一个节点
+    cut(head, slow);                     // 切成两个链表
+    return isEqual(head, reverse(slow));
 }
 
 private void cut(ListNode head, ListNode cutNode) {
-    while (head.next != cutNode) head = head.next;
+    while (head.next != cutNode) {
+        head = head.next;
+    }
     head.next = null;
 }
 
@@ -5240,33 +5238,6 @@ private boolean isEqual(ListNode l1, ListNode l2) {
         l2 = l2.next;
     }
     return true;
-}
-```
-
-**链表元素按奇偶聚集** 
-
-[328. Odd Even Linked List (Medium)](https://leetcode.com/problems/odd-even-linked-list/description/)
-
-```html
-Example:
-Given 1->2->3->4->5->NULL,
-return 1->3->5->2->4->NULL.
-```
-
-```java
-public ListNode oddEvenList(ListNode head) {
-    if (head == null) {
-        return head;
-    }
-    ListNode odd = head, even = head.next, evenHead = even;
-    while (even != null && even.next != null) {
-        odd.next = odd.next.next;
-        odd = odd.next;
-        even.next = even.next.next;
-        even = even.next;
-    }
-    odd.next = evenHead;
-    return head;
 }
 ```
 
@@ -5307,6 +5278,33 @@ public ListNode[] splitListToParts(ListNode root, int k) {
         cur = next;
     }
     return ret;
+}
+```
+
+**链表元素按奇偶聚集** 
+
+[328. Odd Even Linked List (Medium)](https://leetcode.com/problems/odd-even-linked-list/description/)
+
+```html
+Example:
+Given 1->2->3->4->5->NULL,
+return 1->3->5->2->4->NULL.
+```
+
+```java
+public ListNode oddEvenList(ListNode head) {
+    if (head == null) {
+        return head;
+    }
+    ListNode odd = head, even = head.next, evenHead = even;
+    while (even != null && even.next != null) {
+        odd.next = odd.next.next;
+        odd = odd.next;
+        even.next = even.next.next;
+        even = even.next;
+    }
+    odd.next = evenHead;
+    return head;
 }
 ```
 
