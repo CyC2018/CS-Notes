@@ -498,26 +498,19 @@ Redis 将所有时间事件都放在一个无序链表中，通过遍历整个�
 
 ```python
 def aeProcessEvents():
-
     # 获取到达时间离当前时间最接近的时间事件
     time_event = aeSearchNearestTimer()
-
     # 计算最接近的时间事件距离到达还有多少毫秒
     remaind_ms = time_event.when - unix_ts_now()
-
     # 如果事件已到达，那么 remaind_ms 的值可能为负数，将它设为 0
     if remaind_ms < 0:
         remaind_ms = 0
-
     # 根据 remaind_ms 的值，创建 timeval
     timeval = create_timeval_with_ms(remaind_ms)
-
     # 阻塞并等待文件事件产生，最大阻塞时间由传入的 timeval 决定
     aeApiPoll(timeval)
-
     # 处理所有已产生的文件事件
     procesFileEvents()
-
     # 处理所有已到达的时间事件
     processTimeEvents()
 ```
@@ -526,21 +519,18 @@ def aeProcessEvents():
 
 ```python
 def main():
-
     # 初始化服务器
     init_server()
-
     # 一直处理事件，直到服务器关闭为止
     while server_is_not_shutdown():
         aeProcessEvents()
-
     # 服务器关闭，执行清理操作
     clean_server()
 ```
 
 从事件处理的角度来看，服务器运行流程如下：
 
-<div align="center"> <img src="../pics//dda1608d-26e0-4f10-8327-a459969b150a.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//c0a9fa91-da2e-4892-8c9f-80206a6f7047.png" width="400"/> </div><br>
 
 # 十二、复制
 
