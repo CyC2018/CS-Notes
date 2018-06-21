@@ -5325,6 +5325,70 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
+**平衡树** 
+
+[110. Balanced Binary Tree (Easy)](https://leetcode.com/problems/balanced-binary-tree/description/)
+
+```html
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+平衡树左右子树高度差都小于等于 1
+
+```java
+private boolean result = true;
+
+public boolean isBalanced(TreeNode root) {
+    maxDepth(root);
+    return result;
+}
+
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    int l = maxDepth(root.left);
+    int r = maxDepth(root.right);
+    if (Math.abs(l - r) > 1) result = false;
+    return 1 + Math.max(l, r);
+}
+```
+
+**两节点的最长路径** 
+
+[543. Diameter of Binary Tree (Easy)](https://leetcode.com/problems/diameter-of-binary-tree/description/)
+
+```html
+Input:
+
+         1
+        / \
+       2  3
+      / \
+     4   5
+
+Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
+```
+
+```java
+private int max = 0;
+
+public int diameterOfBinaryTree(TreeNode root) {
+    depth(root);
+    return max;
+}
+
+private int depth(TreeNode root) {
+    if (root == null) return 0;
+    int leftDepth = depth(root.left);
+    int rightDepth = depth(root.right);
+    max = Math.max(max, leftDepth + rightDepth);
+    return Math.max(leftDepth, rightDepth) + 1;
+}
+```
+
 **翻转树** 
 
 [226. Invert Binary Tree (Easy)](https://leetcode.com/problems/invert-binary-tree/description/)
@@ -5332,7 +5396,7 @@ public int maxDepth(TreeNode root) {
 ```java
 public TreeNode invertTree(TreeNode root) {
     if (root == null) return null;
-    TreeNode left = root.left; // 后面的操作会改变 left 指针，因此先保存下来
+    TreeNode left = root.left;  // 后面的操作会改变 left 指针，因此先保存下来
     root.left = invertTree(root.right);
     root.right = invertTree(left);
     return root;
@@ -5424,12 +5488,12 @@ Return 3. The paths that sum to 8 are:
 
 ```java
 public int pathSum(TreeNode root, int sum) {
-    if(root == null) return 0;
+    if (root == null) return 0;
     int ret = pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
     return ret;
 }
 
-private int pathSumStartWithRoot(TreeNode root, int sum){
+private int pathSumStartWithRoot(TreeNode root, int sum) {
     if (root == null) return 0;
     int ret = 0;
     if (root.val == sum) ret++;
@@ -5449,10 +5513,12 @@ Given tree s:
    4   5
   / \
  1   2
+
 Given tree t:
    4
   / \
  1   2
+
 Return true, because t has the same structure and node values with a subtree of s.
 
 Given tree s:
@@ -5464,10 +5530,12 @@ Given tree s:
  1   2
     /
    0
+
 Given tree t:
    4
   / \
  1   2
+
 Return false.
 ```
 
@@ -5503,42 +5571,11 @@ public boolean isSymmetric(TreeNode root) {
     return isSymmetric(root.left, root.right);
 }
 
-private boolean isSymmetric(TreeNode t1, TreeNode t2){
+private boolean isSymmetric(TreeNode t1, TreeNode t2) {
     if (t1 == null && t2 == null) return true;
     if (t1 == null || t2 == null) return false;
     if (t1.val != t2.val) return false;
     return isSymmetric(t1.left, t2.right) && isSymmetric(t1.right, t2.left);
-}
-```
-
-**平衡树** 
-
-[110. Balanced Binary Tree (Easy)](https://leetcode.com/problems/balanced-binary-tree/description/)
-
-```html
-    3
-   / \
-  9  20
-    /  \
-   15   7
-```
-
-平衡树左右子树高度差都小于等于 1
-
-```java
-private boolean result = true;
-
-public boolean isBalanced(TreeNode root) {
-    maxDepth(root);
-    return result;
-}
-
-public int maxDepth(TreeNode root) {
-    if (root == null) return 0;
-    int l = maxDepth(root.left);
-    int r = maxDepth(root.right);
-    if (Math.abs(l - r) > 1) result = false;
-    return 1 + Math.max(l, r);
 }
 ```
 
@@ -5591,6 +5628,7 @@ private boolean isLeaf(TreeNode node){
 
 ```html
 Input:
+
     3
    / \
   0   4
@@ -5603,6 +5641,7 @@ Input:
   R = 3
 
 Output:
+
       3
      /
    2
@@ -5644,81 +5683,19 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 }
 ```
 
-**两节点的最长路径** 
-
-[543. Diameter of Binary Tree (Easy)](https://leetcode.com/problems/diameter-of-binary-tree/description/)
-
-```html
-Input:
-         1
-        / \
-       2  3
-      / \
-     4   5
-
-Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
-```
-
-```java
-private int max = 0;
-
-public int diameterOfBinaryTree(TreeNode root) {
-    depth(root);
-    return max;
-}
-
-private int depth(TreeNode root) {
-    if (root == null) return 0;
-    int leftDepth = depth(root.left);
-    int rightDepth = depth(root.right);
-    max = Math.max(max, leftDepth + rightDepth);
-    return Math.max(leftDepth, rightDepth) + 1;
-}
-```
-
-**找出二叉树中第二小的节点** 
-
-[671. Second Minimum Node In a Binary Tree (Easy)](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/)
-
-```html
-Input:
-   2
-  / \
- 2   5
-    / \
-    5  7
-
-Output: 5
-```
-
-一个节点要么具有 0 个或 2 个子节点，如果有子节点，那么根节点是最小的节点。
-
-```java
-public int findSecondMinimumValue(TreeNode root) {
-    if (root == null) return -1;
-    if (root.left == null && root.right == null) return -1;
-    int leftVal = root.left.val;
-    int rightVal = root.right.val;
-    if (leftVal == root.val) leftVal = findSecondMinimumValue(root.left);
-    if (rightVal == root.val) rightVal = findSecondMinimumValue(root.right);
-    if (leftVal != -1 && rightVal != -1) return Math.min(leftVal, rightVal);
-    if (leftVal != -1) return leftVal;
-    return rightVal;
-}
-```
-
 **二叉查找树的最近公共祖先** 
 
 [235. Lowest Common Ancestor of a Binary Search Tree (Easy)](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
 ```html
         _______6______
-       /              \
-    ___2__          ___8__
-   /      \        /      \
-   0      _4       7       9
-         /  \
-         3   5
+      /                \
+  ___2__             ___8__
+ /      \           /      \
+0        4         7        9
+        /  \
+       3   5
+
 For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 ```
 
@@ -5736,12 +5713,13 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ```html
        _______3______
-       /              \
-    ___5__          ___1__
-   /      \        /      \
-   6      _2       0       8
-         /  \
-         7   4
+      /              \
+  ___5__           ___1__
+ /      \         /      \
+6        2       0        8
+        /  \
+       7    4
+
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ```
 
@@ -5804,14 +5782,41 @@ Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
 public int rob(TreeNode root) {
     if (root == null) return 0;
     int val1 = root.val;
-    if (root.left != null) {
-        val1 += rob(root.left.left) + rob(root.left.right);
-    }
-    if (root.right != null) {
-        val1 += rob(root.right.left) + rob(root.right.right);
-    }
+    if (root.left != null) val1 += rob(root.left.left) + rob(root.left.right);
+    if (root.right != null) val1 += rob(root.right.left) + rob(root.right.right);
     int val2 = rob(root.left) + rob(root.right);
     return Math.max(val1, val2);
+}
+```
+
+**找出二叉树中第二小的节点** 
+
+[671. Second Minimum Node In a Binary Tree (Easy)](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/)
+
+```html
+Input:
+   2
+  / \
+ 2   5
+    / \
+    5  7
+
+Output: 5
+```
+
+一个节点要么具有 0 个或 2 个子节点，如果有子节点，那么根节点是最小的节点。
+
+```java
+public int findSecondMinimumValue(TreeNode root) {
+    if (root == null) return -1;
+    if (root.left == null && root.right == null) return -1;
+    int leftVal = root.left.val;
+    int rightVal = root.right.val;
+    if (leftVal == root.val) leftVal = findSecondMinimumValue(root.left);
+    if (rightVal == root.val) rightVal = findSecondMinimumValue(root.right);
+    if (leftVal != -1 && rightVal != -1) return Math.min(leftVal, rightVal);
+    if (leftVal != -1) return leftVal;
+    return rightVal;
 }
 ```
 
