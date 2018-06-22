@@ -15,14 +15,14 @@
     * [分治](#分治)
     * [动态规划](#动态规划)
         * [斐波那契数列](#斐波那契数列)
+        * [矩阵路径](#矩阵路径)
+        * [数组区间](#数组区间)
+        * [分割整数](#分割整数)
         * [最长递增子序列](#最长递增子序列)
         * [最长公共子序列](#最长公共子序列)
         * [0-1 背包](#0-1-背包)
-        * [数组区间](#数组区间)
+        * [股票交易](#股票交易)
         * [字符串编辑](#字符串编辑)
-        * [分割整数](#分割整数)
-        * [矩阵路径](#矩阵路径)
-        * [其它问题](#其它问题)
     * [数学](#数学)
         * [素数](#素数)
         * [最大公约数](#最大公约数)
@@ -2477,6 +2477,258 @@ private int rob(int[] nums, int first, int last) {
 
 dp[N] 即为所求。
 
+### 矩阵路径
+
+**矩阵的最小路径和** 
+
+[64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
+
+```html
+[[1,3,1],
+ [1,5,1],
+ [4,2,1]]
+Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes the sum.
+```
+
+题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向右和向下移动。
+
+```java
+public int minPathSum(int[][] grid) {
+    if (grid.length == 0 || grid[0].length == 0) {
+        return 0;
+    }
+    int m = grid.length, n = grid[0].length;
+    int[] dp = new int[n];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (j == 0) {
+                dp[j] = dp[j];        // 只能从上侧走到该位置
+            } else if (i == 0) {
+                dp[j] = dp[j - 1];    // 只能从左侧走到该位置
+            } else {
+                dp[j] = Math.min(dp[j - 1], dp[j]);
+            }
+            dp[j] += grid[i][j];
+        }
+    }
+    return dp[n - 1];
+}
+```
+
+**矩阵的总路径数** 
+
+[62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
+
+题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
+
+<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
+
+```java
+public int uniquePaths(int m, int n) {
+    int[] dp = new int[n];
+    Arrays.fill(dp, 1);
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[j] = dp[j] + dp[j - 1];
+        }
+    }
+    return dp[n - 1];
+}
+```
+
+也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 从取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
+
+```java
+public int uniquePaths(int m, int n) {
+    int S = m + n - 2;  // 总共的移动次数
+    int D = m - 1;      // 向下的移动次数
+    long ret = 1;
+    for (int i = 1; i <= D; i++) {
+        ret = ret * (S - D + i) / i;
+    }
+    return (int) ret;
+}
+```
+
+### 数组区间
+
+**数组区间和** 
+
+[303. Range Sum Query - Immutable (Easy)](https://leetcode.com/problems/range-sum-query-immutable/description/)
+
+```html
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
+
+```java
+class NumArray {
+    private int[] sums;
+
+    public NumArray(int[] nums) {
+        sums = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sums[i] = i == 0 ? nums[0] : sums[i - 1] + nums[i];
+        }
+    }
+
+    public int sumRange(int i, int j) {
+        return i == 0 ? sums[j] : sums[j] - sums[i - 1];
+    }
+}
+```
+
+**子数组最大的和** 
+
+[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+
+```html
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+```
+
+```java
+public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int preSum = nums[0];
+    int maxSum = preSum;
+    for (int i = 1; i < nums.length; i++) {
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        maxSum = Math.max(maxSum, preSum);
+    }
+    return maxSum;
+}
+```
+
+**数组中等差递增子区间的个数** 
+
+[413. Arithmetic Slices (Medium)](https://leetcode.com/problems/arithmetic-slices/description/)
+
+```html
+A = [1, 2, 3, 4]
+return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
+```
+
+dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
+
+如果 A[i] - A[i - 1] == A[i - 1] - A[i - 2]，表示 [A[i - 2], A[i - 1], A[i]] 是一个等差递增子区间。如果 [A[i - 3], A[i - 2], A[i - 1]] 是一个等差递增子区间，那么 [A[i - 3], A[i - 2], A[i - 1], A[i]] 也是。因此在这个条件下，dp[i] = dp[i-1] + 1。
+
+```java
+public int numberOfArithmeticSlices(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int n = A.length;
+    int[] dp = new int[n];
+    for (int i = 2; i < n; i++) {
+        if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+            dp[i] = dp[i - 1] + 1;
+        }
+    }
+    int total = 0;
+    for (int cnt : dp) {
+        total += cnt;
+    }
+    return total;
+}
+```
+
+### 分割整数
+
+**分割整数的最大乘积** 
+
+[343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
+
+题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        for (int j = 1; j <= i - 1; j++) {
+            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
+        }
+    }
+    return dp[n];
+}
+```
+
+**按平方数来分割整数** 
+
+[279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
+
+题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+
+```java
+public int numSquares(int n) {
+    List<Integer> squareList = generateSquareList(n);
+    int[] dp = new int[n + 1];
+    for (int i = 1; i <= n; i++) {
+        int min = Integer.MAX_VALUE;
+        for (int square : squareList) {
+            if (square > i) {
+                break;
+            }
+            min = Math.min(min, dp[i - square] + 1);
+        }
+        dp[i] = min;
+    }
+    return dp[n];
+}
+
+private List<Integer> generateSquareList(int n) {
+    List<Integer> squareList = new ArrayList<>();
+    int diff = 3;
+    int square = 1;
+    while (square <= n) {
+        squareList.add(square);
+        square += diff;
+        diff += 2;
+    }
+    return squareList;
+}
+```
+
+**分割整数构成字母字符串** 
+
+[91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
+
+题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+```java
+public int numDecodings(String s) {
+    if (s == null || s.length() == 0) {
+        return 0;
+    }
+    int n = s.length();
+    int[] dp = new int[n + 1];
+    dp[0] = 1;
+    dp[1] = s.charAt(0) == '0' ? 0 : 1;
+    for (int i = 2; i <= n; i++) {
+        int one = Integer.valueOf(s.substring(i - 1, i));
+        if (one != 0) {
+            dp[i] += dp[i - 1];
+        }
+        if (s.charAt(i - 2) == '0') {
+            continue;
+        }
+        int two = Integer.valueOf(s.substring(i - 2, i));
+        if (two <= 26) {
+            dp[i] += dp[i - 2];
+        }
+    }
+    return dp[n];
+}
+```
+
 ### 最长递增子序列
 
 已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>} ，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个 **子序列** 。
@@ -3072,93 +3324,95 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-### 数组区间
+### 股票交易
 
-**数组区间和** 
+**需要冷却期的股票交易** 
 
-[303. Range Sum Query - Immutable (Easy)](https://leetcode.com/problems/range-sum-query-immutable/description/)
+[309. Best Time to Buy and Sell Stock with Cooldown(Medium)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
 
-```html
-Given nums = [-2, 0, 3, -5, 2, -1]
+题目描述：交易之后需要有一天的冷却时间。
 
-sumRange(0, 2) -> 1
-sumRange(2, 5) -> -1
-sumRange(0, 5) -> -3
-```
-
-求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
+<div align="center"> <img src="../pics//a3da4342-078b-43e2-b748-7e71bec50dc4.png"/> </div><br>
 
 ```java
-class NumArray {
-    private int[] sums;
-
-    public NumArray(int[] nums) {
-        sums = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            sums[i] = i == 0 ? nums[0] : sums[i - 1] + nums[i];
-        }
+public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+        return 0;
     }
-
-    public int sumRange(int i, int j) {
-        return i == 0 ? sums[j] : sums[j] - sums[i - 1];
+    int N = prices.length;
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
+    for (int i = 1; i < N; i++) {
+        buy[i] = s2[i - 1] - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
-**子数组最大的和** 
+**需要交易费用的股票交易** 
 
-[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+[714. Best Time to Buy and Sell Stock with Transaction Fee (Medium)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
 
 ```html
-For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
-the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
+Output: 8
+Explanation: The maximum profit can be achieved by:
+Buying at prices[0] = 1
+Selling at prices[3] = 8
+Buying at prices[4] = 4
+Selling at prices[5] = 9
+The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 ```
 
+题目描述：每交易一次，都要支付一定的费用。
+
+<div align="center"> <img src="../pics//61942711-45a0-4e11-bbc9-434e31436f33.png"/> </div><br>
+
 ```java
-public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) {
-        return 0;
+public int maxProfit(int[] prices, int fee) {
+    int N = prices.length;
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
+    for (int i = 1; i < N; i++) {
+        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    int preSum = nums[0];
-    int maxSum = preSum;
-    for (int i = 1; i < nums.length; i++) {
-        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
-        maxSum = Math.max(maxSum, preSum);
-    }
-    return maxSum;
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
-**数组中等差递增子区间的个数** 
+**买入和售出股票最大的收益** 
 
-[413. Arithmetic Slices (Medium)](https://leetcode.com/problems/arithmetic-slices/description/)
+[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
 
-```html
-A = [1, 2, 3, 4]
-return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
-```
+题目描述：只进行一次交易。
 
-dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
-
-如果 A[i] - A[i - 1] == A[i - 1] - A[i - 2]，表示 [A[i - 2], A[i - 1], A[i]] 是一个等差递增子区间。如果 [A[i - 3], A[i - 2], A[i - 1]] 是一个等差递增子区间，那么 [A[i - 3], A[i - 2], A[i - 1], A[i]] 也是。因此在这个条件下，dp[i] = dp[i-1] + 1。
+只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
 
 ```java
-public int numberOfArithmeticSlices(int[] A) {
-    if (A == null || A.length == 0) {
-        return 0;
+public int maxProfit(int[] prices) {
+    int n = prices.length;
+    if (n == 0) return 0;
+    int soFarMin = prices[0];
+    int max = 0;
+    for (int i = 1; i < n; i++) {
+        if (soFarMin > prices[i]) soFarMin = prices[i];
+        else max = Math.max(max, prices[i] - soFarMin);
     }
-    int n = A.length;
-    int[] dp = new int[n];
-    for (int i = 2; i < n; i++) {
-        if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
-            dp[i] = dp[i - 1] + 1;
-        }
-    }
-    int total = 0;
-    for (int cnt : dp) {
-        total += cnt;
-    }
-    return total;
+    return max;
 }
 ```
 
@@ -3249,257 +3503,6 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-### 分割整数
-
-**分割整数的最大乘积** 
-
-[343. Integer Break (Medim)](https://leetcode.com/problems/integer-break/description/)
-
-题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
-
-```java
-public int integerBreak(int n) {
-    int[] dp = new int[n + 1];
-    dp[1] = 1;
-    for (int i = 2; i <= n; i++) {
-        for (int j = 1; j <= i - 1; j++) {
-            dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
-        }
-    }
-    return dp[n];
-}
-```
-
-**按平方数来分割整数** 
-
-[279. Perfect Squares(Medium)](https://leetcode.com/problems/perfect-squares/description/)
-
-题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
-
-```java
-public int numSquares(int n) {
-    List<Integer> squareList = generateSquareList(n);
-    int[] dp = new int[n + 1];
-    for (int i = 1; i <= n; i++) {
-        int min = Integer.MAX_VALUE;
-        for (int square : squareList) {
-            if (square > i) {
-                break;
-            }
-            min = Math.min(min, dp[i - square] + 1);
-        }
-        dp[i] = min;
-    }
-    return dp[n];
-}
-
-private List<Integer> generateSquareList(int n) {
-    List<Integer> squareList = new ArrayList<>();
-    int diff = 3;
-    int square = 1;
-    while (square <= n) {
-        squareList.add(square);
-        square += diff;
-        diff += 2;
-    }
-    return squareList;
-}
-```
-
-**分割整数构成字母字符串** 
-
-[91. Decode Ways (Medium)](https://leetcode.com/problems/decode-ways/description/)
-
-题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
-
-```java
-public int numDecodings(String s) {
-    if (s == null || s.length() == 0) {
-        return 0;
-    }
-    int n = s.length();
-    int[] dp = new int[n + 1];
-    dp[0] = 1;
-    dp[1] = s.charAt(0) == '0' ? 0 : 1;
-    for (int i = 2; i <= n; i++) {
-        int one = Integer.valueOf(s.substring(i - 1, i));
-        if (one != 0) {
-            dp[i] += dp[i - 1];
-        }
-        if (s.charAt(i - 2) == '0') {
-            continue;
-        }
-        int two = Integer.valueOf(s.substring(i - 2, i));
-        if (two <= 26) {
-            dp[i] += dp[i - 2];
-        }
-    }
-    return dp[n];
-}
-```
-
-### 矩阵路径
-
-**矩阵的总路径数** 
-
-[62. Unique Paths (Medium)](https://leetcode.com/problems/unique-paths/description/)
-
-题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
-
-<div align="center"> <img src="../pics//7c98e1b6-c446-4cde-8513-5c11b9f52aea.jpg"/> </div><br>
-
-```java
-public int uniquePaths(int m, int n) {
-    int[] dp = new int[n];
-    Arrays.fill(dp, 1);
-    for (int i = 1; i < m; i++) {
-        for (int j = 1; j < n; j++) {
-            dp[j] = dp[j] + dp[j - 1];
-        }
-    }
-    return dp[n - 1];
-}
-```
-
-也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 从取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
-
-```java
-public int uniquePaths(int m, int n) {
-    int S = m + n - 2;  // 总共的移动次数
-    int D = m - 1;      // 向下的移动次数
-    long ret = 1;
-    for (int i = 1; i <= D; i++) {
-        ret = ret * (S - D + i) / i;
-    }
-    return (int) ret;
-}
-```
-
-**矩阵的最小路径和** 
-
-[64. Minimum Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/description/)
-
-```html
-[[1,3,1],
- [1,5,1],
- [4,2,1]]
-Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes the sum.
-```
-
-题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向左和向下移动。
-
-```java
-public int minPathSum(int[][] grid) {
-    if (grid.length == 0 || grid[0].length == 0) {
-        return 0;
-    }
-    int m = grid.length, n = grid[0].length;
-    int[] dp = new int[n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (j == 0) {
-                dp[0] = dp[0] + grid[i][0];      // 只能从上侧走到该位置
-            } else if (i == 0) {
-                dp[j] = dp[j - 1] + grid[0][j];  // 只能从右侧走到该位置
-            } else {
-                dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
-            }
-        }
-    }
-    return dp[n - 1];
-}
-```
-
-### 其它问题
-
-**需要冷却期的股票交易** 
-
-[309. Best Time to Buy and Sell Stock with Cooldown(Medium)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
-
-题目描述：交易之后需要有一天的冷却时间。
-
-<div align="center"> <img src="../pics//a3da4342-078b-43e2-b748-7e71bec50dc4.png"/> </div><br>
-
-```java
-public int maxProfit(int[] prices) {
-    if (prices == null || prices.length == 0) return 0;
-    int N = prices.length;
-    int[] buy = new int[N];
-    int[] s1 = new int[N];
-    int[] sell = new int[N];
-    int[] s2 = new int[N];
-    s1[0] = buy[0] = -prices[0];
-    sell[0] = s2[0] = 0;
-    for (int i = 1; i < N; i++) {
-        buy[i] = s2[i - 1] - prices[i];
-        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
-        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
-        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
-    }
-    return Math.max(sell[N - 1], s2[N - 1]);
-}
-```
-
-**需要交易费用的股票交易** 
-
-[714. Best Time to Buy and Sell Stock with Transaction Fee (Medium)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
-
-```html
-Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
-Output: 8
-Explanation: The maximum profit can be achieved by:
-Buying at prices[0] = 1
-Selling at prices[3] = 8
-Buying at prices[4] = 4
-Selling at prices[5] = 9
-The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
-```
-
-题目描述：每交易一次，都要支付一定的费用。
-
-<div align="center"> <img src="../pics//61942711-45a0-4e11-bbc9-434e31436f33.png"/> </div><br>
-
-```java
-public int maxProfit(int[] prices, int fee) {
-    int N = prices.length;
-    int[] buy = new int[N];
-    int[] s1 = new int[N];
-    int[] sell = new int[N];
-    int[] s2 = new int[N];
-    s1[0] = buy[0] = -prices[0];
-    sell[0] = s2[0] = 0;
-    for (int i = 1; i < N; i++) {
-        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
-        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
-        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
-        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
-    }
-    return Math.max(sell[N - 1], s2[N - 1]);
-}
-```
-
-**买入和售出股票最大的收益** 
-
-[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
-
-只进行一次交易。
-
-只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
-
-```java
-public int maxProfit(int[] prices) {
-    int n = prices.length;
-    if(n == 0) return 0;
-    int soFarMin = prices[0];
-    int max = 0;
-    for(int i = 1; i < n; i++){
-        if(soFarMin > prices[i]) soFarMin = prices[i];
-        else max = Math.max(max, prices[i] - soFarMin);
-    }
-    return max;
-}
-```
-
 **复制粘贴字符** 
 
 [650. 2 Keys Keyboard (Medium)](https://leetcode.com/problems/2-keys-keyboard/description/)
@@ -3518,10 +3521,21 @@ In step 3, we use Paste operation to get 'AAA'.
 
 ```java
 public int minSteps(int n) {
+    if (n == 1) return 0;
+    for (int i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i == 0) return i + minSteps(n / i);
+    }
+    return n;
+}
+```
+
+```java
+public int minSteps(int n) {
     int[] dp = new int[n + 1];
+    int h = (int) Math.sqrt(n);
     for (int i = 2; i <= n; i++) {
         dp[i] = i;
-        for (int j = i - 1; j >= 0; j--) {
+        for (int j = 2; j <= h; j++) {
             if (i % j == 0) {
                 dp[i] = dp[j] + dp[i / j];
                 break;
@@ -3529,16 +3543,6 @@ public int minSteps(int n) {
         }
     }
     return dp[n];
-}
-```
-
-```java
-public int minSteps(int n) {
-    if (n == 1) return 0;
-    for (int i = 2; i <= Math.sqrt(n); i++) {
-        if (n % i == 0) return i + minSteps(n / i);
-    }
-    return n;
 }
 ```
 
@@ -6660,8 +6664,8 @@ x ^ x = 0       x & x = x       x | x = x
 位与运算技巧：
 
 - n&(n-1) 去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110 **100** ，减去 1 得到 10110**011**，这两个数相与得到 10110**000**。
+- n&(-n) 得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110 **100** ，-n 得到 01001**100**，相与得到 00000**100**。
 - n-n&(\~n+1) 去除 n 的位级表示中最高的那一位。
-- n&(-n) 得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110 **100** ，-n 得到 01001**100**，相与得到 00000**100**
 
 移位运算：
 
@@ -6710,8 +6714,8 @@ The above arrows point to positions where the corresponding bits are different.
 public int hammingDistance(int x, int y) {
     int z = x ^ y;
     int cnt = 0;
-    while(z != 0){
-        if((z & 1) == 1) cnt++;
+    while(z != 0) {
+        if ((z & 1) == 1) cnt++;
         z = z >> 1;
     }
     return cnt;
@@ -6794,8 +6798,7 @@ diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复
 public int[] singleNumber(int[] nums) {
     int diff = 0;
     for (int num : nums) diff ^= num;
-    // 得到最右一位
-    diff &= -diff;
+    diff &= -diff;  // 得到最右一位
     int[] ret = new int[2];
     for (int num : nums) {
         if ((num & diff) == 0) ret[0] ^= num;
@@ -6829,13 +6832,11 @@ private static Map<Byte, Integer> cache = new HashMap<>();
 public int reverseBits(int n) {
     int ret = 0;
     for (int i = 0; i < 4; i++) {
-        byte b = (byte) (n & 0b11111111);
         ret <<= 8;
-        ret |= reverseByte(b);
+        ret |= reverseByte((byte) (n & 0b11111111));
         n >>= 8;
     }
     return ret;
-
 }
 
 private int reverseByte(byte b) {
