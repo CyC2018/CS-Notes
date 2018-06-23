@@ -688,9 +688,9 @@ static final class HashEntry<K,V> {
 }
 ```
 
-Segment 继承自 ReentrantLock，每个 Segment 维护着多个 HashEntry。
+ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁（Segment），每个分段锁维护着几个桶（HashEntry），多个线程可以同时访问不同分段锁上的桶，从而使其并发度更高（并发度就是 Segment 的个数）。
 
-ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁，每个分段锁维护着几个桶，多个线程可以同时访问不同分段锁上的桶，从而使其并发度更高（并发度就是 Segment 的个数）。
+Segment 继承自 ReentrantLock。
 
 ```java
 static final class Segment<K,V> extends ReentrantLock implements Serializable {
@@ -722,7 +722,7 @@ final Segment<K,V>[] segments;
 static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 ```
 
-<div align="center"> <img src="../pics//image005.jpg"/> </div><br>
+<div align="center"> <img src="../pics//3fdfc89d-719e-4d93-b518-29fa612b3b18.png"/> </div><br>
 
 ### 2. size 操作
 
