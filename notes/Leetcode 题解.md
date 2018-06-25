@@ -5728,10 +5728,10 @@ public List<Double> averageOfLevels(TreeNode root) {
     if (root == null) return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(root);
-    while (!queue.isEmpty()){
+    while (!queue.isEmpty()) {
         int cnt = queue.size();
         double sum = 0;
-        for (int i = 0; i < cnt; i++){
+        for (int i = 0; i < cnt; i++) {
             TreeNode node = queue.poll();
             sum += node.val;
             if (node.left != null) queue.add(node.left);
@@ -5766,7 +5766,7 @@ Output:
 public int findBottomLeftValue(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(root);
-    while (!queue.isEmpty()){
+    while (!queue.isEmpty()) {
         root = queue.poll();
         if (root.right != null) queue.add(root.right);
         if (root.left != null) queue.add(root.left);
@@ -5785,10 +5785,10 @@ public int findBottomLeftValue(TreeNode root) {
 4   5   6
 ```
 
-层次遍历顺序：[1 2 3 4 5 6]
-前序遍历顺序：[1 2 4 5 3 6]
-中序遍历顺序：[4 2 5 1 3 6]
-后序遍历顺序：[4 5 2 6 3 1]
+- 层次遍历顺序：[1 2 3 4 5 6]
+- 前序遍历顺序：[1 2 4 5 3 6]
+- 中序遍历顺序：[4 2 5 1 3 6]
+- 后序遍历顺序：[4 5 2 6 3 1]
 
 层次遍历使用 BFS 实现，利用的就是 BFS 一层一层遍历的特性；而前序、中序、后序遍历利用了 DFS 实现。
 
@@ -5797,7 +5797,7 @@ public int findBottomLeftValue(TreeNode root) {
 ① 前序
 
 ```java
-void dfs(TreeNode root){
+void dfs(TreeNode root) {
     visit(root);
     dfs(root.left);
     dfs(root.right);
@@ -5807,7 +5807,7 @@ void dfs(TreeNode root){
 ② 中序
 
 ```java
-void dfs(TreeNode root){
+void dfs(TreeNode root) {
     dfs(root.left);
     visit(root);
     dfs(root.right);
@@ -5817,7 +5817,7 @@ void dfs(TreeNode root){
 ③ 后序
 
 ```java
-void dfs(TreeNode root){
+void dfs(TreeNode root) {
     dfs(root.left);
     dfs(root.right);
     visit(root);
@@ -5837,7 +5837,7 @@ public List<Integer> preorderTraversal(TreeNode root) {
         TreeNode node = stack.pop();
         if (node == null) continue;
         ret.add(node.val);
-        stack.push(node.right); // 先右后左，保证左子树先遍历
+        stack.push(node.right);  // 先右后左，保证左子树先遍历
         stack.push(node.left);
     }
     return ret;
@@ -5923,7 +5923,7 @@ Output:
  1
 ```
 
-只保留值在 L \~ R 之间的节点
+题目描述：只保留值在 L \~ R 之间的节点
 
 ```java
 public TreeNode trimBST(TreeNode root, int L, int R) {
@@ -6008,12 +6008,12 @@ public TreeNode convertBST(TreeNode root) {
     return root;
 }
 
-private void traver(TreeNode root) {
-    if (root == null) return;
-    if (root.right != null) traver(root.right);
-    sum += root.val;
-    root.val = sum;
-    if (root.left != null) traver(root.left);
+private void traver(TreeNode node) {
+    if (node == null) return;
+    traver(node.right);
+    sum += node.val;
+    node.val = sum;
+    traver(node.left);
 }
 ```
 
@@ -6085,7 +6085,6 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 }
 ```
 
-
 **根据有序链表构造平衡的二叉查找树** 
 
 [109. Convert Sorted List to Binary Search Tree (Medium)](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/)
@@ -6105,29 +6104,25 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
 ```java
 public TreeNode sortedListToBST(ListNode head) {
     if (head == null) return null;
-    int size = size(head);
-    if (size == 1) return new TreeNode(head.val);
-    ListNode pre = head, mid = pre.next;
-    int step = 2;
-    while (step <= size / 2) {
-        pre = mid;
-        mid = mid.next;
-        step++;
-    }
-    pre.next = null;
+    if (head.next == null) return new TreeNode(head.val);
+    ListNode preMid = preMid(head);
+    ListNode mid = preMid.next; 
+    preMid.next = null;  // 断开链表
     TreeNode t = new TreeNode(mid.val);
     t.left = sortedListToBST(head);
     t.right = sortedListToBST(mid.next);
     return t;
 }
 
-private int size(ListNode node) {
-    int size = 0;
-    while (node != null) {
-        size++;
-        node = node.next;
+private ListNode preMid(ListNode head) {
+    ListNode slow = head, fast = head.next;
+    ListNode pre = head;
+    while (fast != null && fast.next != null) {
+        pre = slow;
+        slow = slow.next;
+        fast = fast.next.next;
     }
-    return size;
+    return pre;
 }
 ```
 
@@ -6207,7 +6202,7 @@ public int getMinimumDifference(TreeNode root) {
 private void inOrder(TreeNode node) {
     if (node == null) return;
     inOrder(node.left);
-    if (preNode != null) minDiff = Math.min(minDiff, Math.abs(node.val - preNode.val));
+    if (preNode != null) minDiff = Math.min(minDiff, node.val - preNode.val);
     preNode = node;
     inOrder(node.right);
 }
