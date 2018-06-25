@@ -288,7 +288,7 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 }
 ```
 
-**判断是否为子串** 
+**判断是否为子序列** 
 
 [392. Is Subsequence (Medium)](https://leetcode.com/problems/is-subsequence/description/)
 
