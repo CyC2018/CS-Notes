@@ -35,17 +35,21 @@ Java 的 I/O 大概可以分成以下几类：
 
 # 二、磁盘操作
 
-File 类可以用于表示文件和目录，但是它只用于表示文件的信息，而不表示文件的内容。
+File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。
 
 递归地输出一个目录下所有文件：
 
 ```java
-public static void listAllFiles(File dir) {
+public static void listAllFiles(File dir)
+{
+    if (dir == null || !dir.exists()) {
+        return;
+    }
     if (dir.isFile()) {
         System.out.println(dir.getName());
         return;
     }
-    for (File file : dir.listFiles()) {
+    for (File file : Objects.requireNonNull(dir.listFiles())) {
         listAllFiles(file);
     }
 }
@@ -56,12 +60,13 @@ public static void listAllFiles(File dir) {
 使用字节流操作进行文件复制：
 
 ```java
-public static void copyFile(String src, String dist) throws IOException {
-    FileInputStream in = new FileInputStream("file/1.txt");
-    FileOutputStream out = new FileOutputStream("file/2.txt");
+public static void copyFile(String src, String dist) throws IOException
+{
+    FileInputStream in = new FileInputStream(src);
+    FileOutputStream out = new FileOutputStream(dist);
     byte[] buffer = new byte[20 * 1024];
-    // read() 最多读取 buffer.length 个字节，返回的是实际读取的个数
-    // 返回 -1 的时候表示读到 eof，即文件尾
+    /* read() 最多读取 buffer.length 个字节
+       返回的是实际读取的个数，返回 -1 的时候表示读到 eof，即文件尾 */
     while (in.read(buffer, 0, buffer.length) != -1) {
         out.write(buffer);
     }
@@ -87,7 +92,8 @@ DataInputStream 装饰者提供了对更多数据类型进行输入的操作，�
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
-InputStreamReader 实现从文本文件的字节流解码成字符流；OutputStreamWriter 实现字符流编码成为文本文件的字节流。
+- InputStreamReader 实现从文本文件的字节流解码成字符流；
+- OutputStreamWriter 实现字符流编码成为文本文件的字节流。
 
 逐行输出文本文件的内容：
 
@@ -98,8 +104,9 @@ String line;
 while ((line = bufferedReader.readLine()) != null) {
     System.out.println(line);
 }
-// 装饰者模式使得 BufferedReader 组合了一个 Reader 对象
-// 在调用 BufferedReader 的 close() 方法时会去调用 fileReader 的 close() 方法，因此只要一个 close() 调用即可
+/* 装饰者模式使得 BufferedReader 组合了一个 Reader 对象
+   在调用 BufferedReader 的 close() 方法时会去调用 fileReader 的 close() 方法
+   因此只要一个 close() 调用即可 */
 bufferedReader.close();
 ```
 
@@ -140,31 +147,35 @@ byte[] bytes = str1.getBytes();
 序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。
 
 ```java
-public static void main(String[] args) throws IOException, ClassNotFoundException {
+public static void main(String[] args) throws IOException, ClassNotFoundException
+{
     A a1 = new A(123, "abc");
     String objectFile = "file/a1";
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
     objectOutputStream.writeObject(a1);
     objectOutputStream.close();
+
     ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(objectFile));
     A a2 = (A) objectInputStream.readObject();
     objectInputStream.close();
     System.out.println(a2);
 }
 
-private static class A implements Serializable {
+private static class A implements Serializable
+{
     private int x;
     private String y;
 
-    A(int x, String y) {
+    A(int x, String y)
+    {
         this.x = x;
         this.y = y;
     }
 
     @Override
-    public String toString() {
-        return "x = " + x +
-                "  " + "y = " + y;
+    public String toString()
+    {
+        return "x = " + x + "  " + "y = " + y;
     }
 }
 ```
@@ -202,16 +213,19 @@ InetAddress.getByAddress(byte[] address);
 可以直接从 URL 中读取字节流数据。
 
 ```java
-URL url = new URL("http://www.baidu.com");
-InputStream is = url.openStream();                           // 字节流
-InputStreamReader isr = new InputStreamReader(is, "utf-8");  // 字符流
-BufferedReader br = new BufferedReader(isr);
-String line = br.readLine();
-while (line != null) {
-    System.out.println(line);
-    line = br.readLine();
+public static void main(String[] args) throws IOException
+{
+    URL url = new URL("http://www.baidu.com");
+    InputStream is = url.openStream();                           /* 字节流 */
+    InputStreamReader isr = new InputStreamReader(is, "utf-8");  /* 字符流 */
+    BufferedReader br = new BufferedReader(isr);
+    String line = br.readLine();
+    while (line != null) {
+        System.out.println(line);
+        line = br.readLine();
+    }
+    br.close();
 }
-br.close();
 ```
 
 ## Sockets

@@ -2526,7 +2526,8 @@ public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
 正确的解法应该是和书上一样，先旋转每个单词，再旋转整个字符串。
 
 ```java
-public String ReverseSentence(String str) {
+public String ReverseSentence(String str)
+{
     int n = str.length();
     char[] chars = str.toCharArray();
     int i = 0, j = 0;
@@ -2541,12 +2542,14 @@ public String ReverseSentence(String str) {
     return new String(chars);
 }
 
-private void reverse(char[] c, int i, int j) {
+private void reverse(char[] c, int i, int j)
+{
     while (i < j)
         swap(c, i++, j--);
 }
 
-private void swap(char[] c, int i, int j) {
+private void swap(char[] c, int i, int j)
+{
     char t = c[i];
     c[i] = c[j];
     c[j] = t;
@@ -2566,7 +2569,8 @@ private void swap(char[] c, int i, int j) {
 将 "abcXYZdef" 旋转左移三位，可以先将 "abc" 和 "XYZdef" 分别旋转，得到 "cbafedZYX"，然后再把整个字符串旋转得到 "XYZdefabc"。
 
 ```java
-public String LeftRotateString(String str, int n) {
+public String LeftRotateString(String str, int n)
+{
     if (n >= str.length())
         return str;
     char[] chars = str.toCharArray();
@@ -2576,12 +2580,14 @@ public String LeftRotateString(String str, int n) {
     return new String(chars);
 }
 
-private void reverse(char[] chars, int i, int j) {
+private void reverse(char[] chars, int i, int j)
+{
     while (i < j)
         swap(chars, i++, j--);
 }
 
-private void swap(char[] chars, int i, int j) {
+private void swap(char[] chars, int i, int j)
+{
     char t = chars[i];
     chars[i] = chars[j];
     chars[j] = t;
@@ -2599,15 +2605,16 @@ private void swap(char[] chars, int i, int j) {
 ## 解题思路
 
 ```java
-public ArrayList<Integer> maxInWindows(int[] num, int size) {
+public ArrayList<Integer> maxInWindows(int[] num, int size)
+{
     ArrayList<Integer> ret = new ArrayList<>();
-    PriorityQueue<Integer> heap = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
     if (size > num.length || size < 1)
         return ret;
+    PriorityQueue<Integer> heap = new PriorityQueue<>((o1, o2) -> o2 - o1);  /* 大顶堆 */
     for (int i = 0; i < size; i++)
         heap.add(num[i]);
     ret.add(heap.peek());
-    for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {
+    for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
         heap.remove(num[i - 1]);
         heap.add(num[j]);
         ret.add(heap.peek());
@@ -2633,15 +2640,17 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 空间复杂度：O(N<sup>2</sup>)
 
 ```java
-public List<Map.Entry<Integer, Double>> dicesSum(int n) {
+public List<Map.Entry<Integer, Double>> dicesSum(int n)
+{
     final int face = 6;
     final int pointNum = face * n;
     long[][] dp = new long[n + 1][pointNum + 1];
+
     for (int i = 1; i <= face; i++)
         dp[1][i] = 1;
 
     for (int i = 2; i <= n; i++)
-        for (int j = i; j <= pointNum; j++)  // 使用 i 个骰子最小点数为 i
+        for (int j = i; j <= pointNum; j++)     /* 使用 i 个骰子最小点数为 i */
             for (int k = 1; k <= face && k <= j; k++)
                 dp[i][j] += dp[i - 1][j - k];
 
@@ -2649,6 +2658,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
     List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
     for (int i = n; i <= pointNum; i++)
         ret.add(new AbstractMap.SimpleEntry<>(i, dp[n][i] / totalNum));
+
     return ret;
 }
 ```
@@ -2658,24 +2668,30 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 空间复杂度：O(N)
 
 ```java
-public List<Map.Entry<Integer, Double>> dicesSum(int n) {
+public List<Map.Entry<Integer, Double>> dicesSum(int n)
+{
     final int face = 6;
     final int pointNum = face * n;
     long[][] dp = new long[2][pointNum + 1];
+
     for (int i = 1; i <= face; i++)
         dp[0][i] = 1;
-    int flag = 1;
+
+    int flag = 1;                                     /* 旋转标记 */
     for (int i = 2; i <= n; i++, flag = 1 - flag) {
         for (int j = 0; j <= pointNum; j++)
-            dp[flag][j] = 0; // 旋转数组清零
-        for (int j = i; j <= pointNum; j++)  // 使用 i 个骰子最小点数为 i
+            dp[flag][j] = 0;                          /* 旋转数组清零 */
+
+        for (int j = i; j <= pointNum; j++)
             for (int k = 1; k <= face && k <= j; k++)
                 dp[flag][j] += dp[1 - flag][j - k];
     }
+
     final double totalNum = Math.pow(6, n);
     List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
     for (int i = n; i <= pointNum; i++)
         ret.add(new AbstractMap.SimpleEntry<>(i, dp[1 - flag][i] / totalNum));
+
     return ret;
 }
 ```
@@ -2691,18 +2707,20 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 ## 解题思路
 
 ```java
-public boolean isContinuous(int[] nums) {
+public boolean isContinuous(int[] nums)
+{
     if (nums.length < 5)
         return false;
     Arrays.sort(nums);
     int cnt = 0;
-    for (int num : nums)
+    for (int num : nums)                   /* 统计癞子数量 */
         if (num == 0)
             cnt++;
+
     for (int i = cnt; i < nums.length - 1; i++) {
         if (nums[i + 1] == nums[i])
             return false;
-        cnt -= nums[i + 1] - nums[i] - 1;
+        cnt -= nums[i + 1] - nums[i] - 1;  /* 使用癞子去补全不连续的顺子 */
     }
     return cnt >= 0;
 }
@@ -2721,10 +2739,11 @@ public boolean isContinuous(int[] nums) {
 约瑟夫环，圆圈长度为 n 的解可以看成长度为 n-1 的解再加上报数的长度 m。因为是圆圈，所以最后需要对 n 取余。
 
 ```java
-public int LastRemaining_Solution(int n, int m) {
-    if (n == 0)
+public int LastRemaining_Solution(int n, int m)
+{
+    if (n == 0)     /* 特殊输入的处理 */
         return -1;
-    if (n == 1)
+    if (n == 1)     /* 返回条件 */
         return 0;
     return (LastRemaining_Solution(n - 1, m) + m) % n;
 }
@@ -2743,13 +2762,13 @@ public int LastRemaining_Solution(int n, int m) {
 使用贪心策略，假设第 i 轮进行卖出操作，买入操作价格应该在 i 之前并且价格最低。
 
 ```java
-public int maxProfit(int[] prices) {
+public int maxProfit(int[] prices)
+{
     if (prices == null || prices.length == 0)
         return 0;
-    int n = prices.length;
     int soFarMin = prices[0];
     int maxProfit = 0;
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < prices.length; i++) {
         soFarMin = Math.min(soFarMin, prices[i]);
         maxProfit = Math.max(maxProfit, prices[i] - soFarMin);
     }
@@ -2774,7 +2793,8 @@ public int maxProfit(int[] prices) {
 以下实现中，递归的返回条件为 n <= 0，取非后就是 n > 0，递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) > 0。
 
 ```java
-public int Sum_Solution(int n) {
+public int Sum_Solution(int n)
+{
     int sum = n;
     boolean b = (n > 0) && ((sum += Sum_Solution(n - 1)) > 0);
     return sum;
@@ -2796,8 +2816,9 @@ a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进�
 递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
-public int Add(int num1, int num2) {
-    return num2 == 0 ? num1 : Add(num1 ^ num2, (num1 & num2) << 1);
+public int Add(int a, int b)
+{
+    return b == 0 ? a : Add(a ^ b, (a & b) << 1);
 }
 ```
 
@@ -2812,12 +2833,13 @@ public int Add(int num1, int num2) {
 ## 解题思路
 
 ```java
-public int[] multiply(int[] A) {
+public int[] multiply(int[] A)
+{
     int n = A.length;
     int[] B = new int[n];
-    for (int i = 0, product = 1; i < n; product *= A[i], i++)
+    for (int i = 0, product = 1; i < n; product *= A[i], i++)       /* 从左往右累乘 */
         B[i] = product;
-    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--)
+    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--)  /* 从右往左累乘 */
         B[i] *= product;
     return B;
 }
@@ -2844,17 +2866,18 @@ Output:
 ## 解题思路
 
 ```java
-public int StrToInt(String str) {
+public int StrToInt(String str)
+{
     if (str == null || str.length() == 0)
         return 0;
     boolean isNegative = str.charAt(0) == '-';
     int ret = 0;
     for (int i = 0; i < str.length(); i++) {
         char c = str.charAt(i);
-        if (i == 0 && (c == '+' || c == '-'))
+        if (i == 0 && (c == '+' || c == '-'))  /* 符号判定 */
             continue;
-        if (c < '0' || c > '9')
-            return 0; // 非法输入
+        if (c < '0' || c > '9')                /* 非法输入 */
+            return 0;
         ret = ret * 10 + (c - '0');
     }
     return isNegative ? -ret : ret;
@@ -2891,7 +2914,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 [Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
-在左右子树中查找两个节点的最低公共祖先，如果在其中一颗子树中查找到，那么就返回这个解，否则可以认为根节点就是最低公共祖先。
+在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是 LCA。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
