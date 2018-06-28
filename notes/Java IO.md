@@ -344,7 +344,7 @@ public static void fastCopy(String src, String dist) throws IOException
 
 ## 选择器
 
-一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去检查多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
+一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去监听多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
 
 因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件具有更好的性能。
 
@@ -364,7 +364,7 @@ ssChannel.configureBlocking(false);
 ssChannel.register(selector, SelectionKey.OP_ACCEPT);
 ```
 
-通道必须配置为非阻塞模式，否则使用选择器就没有任何意义了，因为如果通道在某个事件上被阻塞，那么服务器就不能响应其它时间，必须等待这个事件处理完毕才能去处理其它事件，显然这和选择器的作用背道而驰。
+通道必须配置为非阻塞模式，否则使用选择器就没有任何意义了，因为如果通道在某个事件上被阻塞，那么服务器就不能响应其它事件，必须等待这个事件处理完毕才能去处理其它事件，显然这和选择器的作用背道而驰。
 
 在将通道注册到选择器上时，还需要指定要注册的具体事件，主要有以下几类：
 
@@ -436,9 +436,10 @@ while (true) {
 ## 套接字 NIO 实例
 
 ```java
-public class NIOServer {
-
-    public static void main(String[] args) throws IOException {
+public class NIOServer
+{
+    public static void main(String[] args) throws IOException
+    {
         Selector selector = Selector.open();
 
         ServerSocketChannel ssChannel = ServerSocketChannel.open();
@@ -496,9 +497,10 @@ public class NIOServer {
 ```
 
 ```java
-public class NIOClient {
-
-    public static void main(String[] args) throws IOException {
+public class NIOClient
+{
+    public static void main(String[] args) throws IOException 
+    {
         Socket socket = new Socket("127.0.0.1", 8888);
         OutputStream out = socket.getOutputStream();
         String s = "hello world";

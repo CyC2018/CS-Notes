@@ -1087,11 +1087,9 @@ public InitialOrderTest() {
 
 Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
 
-1.  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
-2.  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
-3.  **Constructor** ：可以用 Constructor 创建新的对象。
-
-IDE 使用反射机制获取类的信息，在使用一个类的对象时，能够把类的字段、方法和构造函数等信息列出来供用户选择。
+-  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
+-  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
+-  **Constructor** ：可以用 Constructor 创建新的对象。
 
 **Advantages of Using Reflection:** 
 
@@ -1115,8 +1113,8 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
-1.  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
-2.  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
+-  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
+-  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
 
 <div align="center"> <img src="../pics//PPjwP.png" width="600"/> </div><br>
 
@@ -1175,21 +1173,15 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ## Java 与 C++ 的区别
 
-Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
-
-| Java | C++ |
-| -- | -- |
-| Java does not support pointers, templates, unions, operator overloading, structures etc. The Java language promoters initially said "No pointers!", but when many programmers questioned how you can work without pointers, the promoters began saying "Restricted pointers." Java supports what it calls "references". References act a lot like pointers in C++ languages but you cannot perform arithmetic on pointers in Java. References have types, and they're type-safe. These references cannot be interpreted as raw address and unsafe conversion is not allowed. | C++ supports structures, unions, templates, operator overloading, pointers and pointer arithmetic.|
-| Java support automatic garbage collection. It does not support destructors as C++ does. | C++ support destructors, which is automatically invoked when the object is destroyed. |
-| Java does not support conditional compilation and inclusion. | Conditional inclusion (#ifdef #ifndef type) is one of the main features of C++. |
-| Java has built in support for threads. In Java, there is a `Thread` class that you inherit to create a new thread and override the `run()` method. | C++ has no built in support for threads. C++ relies on non-standard third-party libraries for thread support. |
-| Java does not support default arguments. There is no scope resolution operator (::) in Java. The method definitions must always occur within a class, so there is no need for scope resolution there either. | C++ supports default arguments. C++ has scope resolution operator (::) which is used to to define a method outside a class and to access a global variable within from the scope where a local variable also exists with the same name. |
-| There is no _goto_ statement in Java. The keywords `const` and `goto` are reserved, even though they are not used. | C++ has _goto_ statement. However, it is not considered good practice to use of _goto_ statement. |
-| Java doesn't provide multiple inheritance, at least not in the same sense that C++ does. | C++ does support multiple inheritance. The keyword `virtual` is used to resolve ambiguities during multiple inheritance if there is any. |
-| Exception handling in Java is different because there are no destructors. Also, in Java, try/catch must be defined if the function declares that it may throw an exception. | While in C++, you may not include the try/catch even if the function throws an exception. |
-| Java has method overloading, but no operator overloading. The `String` class does use the `+` and `+=` operators to concatenate strings and `String`expressions use automatic type conversion, but that's a special built-in case. | C++ supports both method overloading and operator overloading. |
-| Java has built-in support for documentation comments (`/** ... */`); therefore, Java source files can contain their own documentation, which is read by a separate tool usually `javadoc` and reformatted into HTML. This helps keeping documentation maintained in easy way. | C++ does not support documentation comments. |
-| Java is interpreted for the most part and hence platform independent. | C++ generates object code and the same code may not run on different platforms. |
+- Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
+- Java 通过虚拟机从而实现跨平台特性，但是 C++ 依赖于特定的平台。
+- Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针。
+- Java 支持自动垃圾回收，而 C++ 需要手动回收。
+- Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承。
+- Java 不支持操作符重载，虽然可以对两个 String 对象支持加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
+- Java 内置了线程的支持，而 C++ 需要依靠第三方库。
+- Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
+- Java 不支持条件编译，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
 
 [What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
 
