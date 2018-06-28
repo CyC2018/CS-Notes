@@ -1,10 +1,9 @@
 # Summary
 
-* [Introduction](README.md)
 * 算法
   * [剑指 Offer 题解](/notes/剑指 offer 题解.md) 
   * [Leetcode 题解](/notes/Leetcode 题解.md)
-  * [算法](算法.md)
+  * [算法](/notes/算法.md)
 * 操作系统
   * [计算机操作系统](/notes/计算机操作系统.md)
   * [Linux](/notes/Linux.md)
