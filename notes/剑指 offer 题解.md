@@ -2025,7 +2025,8 @@ private int beginNumber(int digit) {
 可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 < S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
 
 ```java
-public String PrintMinNumber(int[] numbers) {
+public String PrintMinNumber(int[] numbers)
+{
     if (numbers == null || numbers.length == 0)
         return "";
     int n = numbers.length;
@@ -2051,7 +2052,8 @@ public String PrintMinNumber(int[] numbers) {
 ## 解题思路
 
 ```java
-public int numDecodings(String s) {
+public int numDecodings(String s)
+{
     if (s == null || s.length() == 0)
         return 0;
     int n = s.length();
@@ -2094,15 +2096,16 @@ public int numDecodings(String s) {
 应该用动态规划求解，而不是深度优先搜索，深度优先搜索过于复杂，不是最优解。
 
 ```java
-public int getMost(int[][] values) {
+public int getMost(int[][] values)
+{
     if (values == null || values.length == 0 || values[0].length == 0)
         return 0;
-    int m = values.length, n = values[0].length;
+    int n = values[0].length;
     int[] dp = new int[n];
-    for (int i = 0; i < m; i++) {
-        dp[0] += values[i][0];
-        for (int j = 1; j < n; j++)
-            dp[j] = Math.max(dp[j], dp[j - 1]) + values[i][j];
+    for (int[] value : values) {
+        dp[0] += value[0];
+        for (int i = 1; i < n; i++)
+            dp[i] = Math.max(dp[i], dp[i - 1]) + value[i];
     }
     return dp[n - 1];
 }
@@ -2117,21 +2120,22 @@ public int getMost(int[][] values) {
 ## 解题思路
 
 ```java
-public int longestSubStringWithoutDuplication(String str) {
+public int longestSubStringWithoutDuplication(String str)
+{
     int curLen = 0;
     int maxLen = 0;
     int[] preIndexs = new int[26];
     Arrays.fill(preIndexs, -1);
-    for (int i = 0; i < str.length(); i++) {
-        int c = str.charAt(i) - 'a';
-        int preIndex = preIndexs[c];
-        if (preIndex == -1 || i - preIndex > curLen) {
+    for (int curI = 0; curI < str.length(); curI++) {
+        int c = str.charAt(curI) - 'a';
+        int preI = preIndexs[c];
+        if (preI == -1 || curI - preI > curLen) {
             curLen++;
         } else {
             maxLen = Math.max(maxLen, curLen);
-            curLen = i - preIndex;
+            curLen = curI - preI;
         }
-        preIndexs[c] = i;
+        preIndexs[c] = curI;
     }
     maxLen = Math.max(maxLen, curLen);
     return maxLen;
@@ -2144,28 +2148,29 @@ public int longestSubStringWithoutDuplication(String str) {
 
 ## 题目描述
 
-把只包含因子 2、3 和 5 的数称作丑数（Ugly Number）。例如 6、8 都是丑数，但 14 不是，因为它包含因子 7。 习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
+把只包含因子 2、3 和 5 的数称作丑数（Ugly Number）。例如 6、8 都是丑数，但 14 不是，因为它包含因子 7。习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
 
 ## 解题思路
 
 ```java
-public int GetUglyNumber_Solution(int index) {
-    if (index <= 6)
-        return index;
+public int GetUglyNumber_Solution(int N)
+{
+    if (N <= 6)
+        return N;
     int i2 = 0, i3 = 0, i5 = 0;
-    int[] dp = new int[index];
+    int[] dp = new int[N];
     dp[0] = 1;
-    for (int i = 1; i < index; i++) {
-        int n2 = dp[i2] * 2, n3 = dp[i3] * 3, n5 = dp[i5] * 5;
-        dp[i] = Math.min(n2, Math.min(n3, n5));
-        if (dp[i] == n2)
+    for (int i = 1; i < N; i++) {
+        int next2 = dp[i2] * 2, next3 = dp[i3] * 3, next5 = dp[i5] * 5;
+        dp[i] = Math.min(next2, Math.min(next3, next5));
+        if (dp[i] == next2)
             i2++;
-        if (dp[i] == n3)
+        if (dp[i] == next3)
             i3++;
-        if (dp[i] == n5)
+        if (dp[i] == next5)
             i5++;
     }
-    return dp[index - 1];
+    return dp[N - 1];
 }
 ```
 
@@ -2182,7 +2187,8 @@ public int GetUglyNumber_Solution(int index) {
 最直观的解法是使用 HashMap 对出现次数进行统计，但是考虑到要统计的字符范围有限，因此可以使用整型数组代替 HashMap。
 
 ```java
-public int FirstNotRepeatingChar(String str) {
+public int FirstNotRepeatingChar(String str)
+{
     int[] cnts = new int[256];
     for (int i = 0; i < str.length(); i++)
         cnts[str.charAt(i)]++;
@@ -2196,18 +2202,19 @@ public int FirstNotRepeatingChar(String str) {
 以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，使用两个比特位就能存储这些信息。
 
 ```java
-public int FirstNotRepeatingChar(String str) {
+public int FirstNotRepeatingChar2(String str)
+{
     BitSet bs1 = new BitSet(256);
     BitSet bs2 = new BitSet(256);
     for (char c : str.toCharArray()) {
         if (!bs1.get(c) && !bs2.get(c))
-            bs1.set(c);     // 0 0
+            bs1.set(c);     // 0 0 -> 0 1
         else if (bs1.get(c) && !bs2.get(c))
-            bs2.set(c);     // 0 1
+            bs2.set(c);     // 0 1 -> 1 1
     }
     for (int i = 0; i < str.length(); i++) {
         char c = str.charAt(i);
-        if (bs1.get(c) && !bs2.get(c))
+        if (bs1.get(c) && !bs2.get(c))  // 0 1
             return i;
     }
     return -1;
@@ -2226,15 +2233,17 @@ public int FirstNotRepeatingChar(String str) {
 
 ```java
 private long cnt = 0;
-private int[] tmp; // 在这里创建辅助数组，而不是在 merge() 递归函数中创建
+private int[] tmp;  // 在这里创建辅助数组，而不是在 merge() 递归函数中创建
 
-public int InversePairs(int[] nums) {
+public int InversePairs(int[] nums)
+{
     tmp = new int[nums.length];
     mergeSort(nums, 0, nums.length - 1);
     return (int) (cnt % 1000000007);
 }
 
-private void mergeSort(int[] nums, int l, int h) {
+private void mergeSort(int[] nums, int l, int h)
+{
     if (h - l < 1)
         return;
     int m = l + (h - l) / 2;
@@ -2243,7 +2252,8 @@ private void mergeSort(int[] nums, int l, int h) {
     merge(nums, l, m, h);
 }
 
-private void merge(int[] nums, int l, int m, int h) {
+private void merge(int[] nums, int l, int m, int h)
+{
     int i = l, j = m + 1, k = l;
     while (i <= m || j <= h) {
         if (i > m)
@@ -2254,7 +2264,7 @@ private void merge(int[] nums, int l, int m, int h) {
             tmp[k] = nums[i++];
         else {
             tmp[k] = nums[j++];
-            this.cnt += m - i + 1; // a[i] > a[j]，说明 a[i...mid] 都大于 a[j]
+            this.cnt += m - i + 1;  // nums[i] >= nums[j]，说明 nums[i...mid] 都大于 nums[j]
         }
         k++;
     }
@@ -2278,7 +2288,8 @@ private void merge(int[] nums, int l, int m, int h) {
 当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部重新开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部重新开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
 
 ```java
-public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2)
+{
     ListNode l1 = pHead1, l2 = pHead2;
     while (l1 != l2) {
         l1 = (l1 == null) ? pHead2 : l1.next;
@@ -2305,13 +2316,15 @@ Output:
 ## 解题思路
 
 ```java
-public int GetNumberOfK(int[] nums, int K) {
+public int GetNumberOfK(int[] nums, int K)
+{
     int first = binarySearch(nums, K);
     int last = binarySearch(nums, K + 1);
     return (first == nums.length || nums[first] != K) ? 0 : last - first;
 }
 
-private int binarySearch(int[] nums, int K) {
+private int binarySearch(int[] nums, int K)
+{
     int l = 0, h = nums.length;
     while (l < h) {
         int m = l + (h - l) / 2;
@@ -2336,12 +2349,14 @@ private int binarySearch(int[] nums, int K) {
 private TreeNode ret;
 private int cnt = 0;
 
-public TreeNode KthNode(TreeNode pRoot, int k) {
+public TreeNode KthNode(TreeNode pRoot, int k)
+{
     inOrder(pRoot, k);
     return ret;
 }
 
-private void inOrder(TreeNode root, int k) {
+private void inOrder(TreeNode root, int k)
+{
     if (root == null || cnt >= k)
         return;
     inOrder(root.left, k);
@@ -2365,7 +2380,8 @@ private void inOrder(TreeNode root, int k) {
 ## 解题思路
 
 ```java
-public int TreeDepth(TreeNode root) {
+public int TreeDepth(TreeNode root)
+{
     return root == null ? 0 : 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
 }
 ```
@@ -2385,13 +2401,15 @@ public int TreeDepth(TreeNode root) {
 ```java
 private boolean isBalanced = true;
 
-public boolean IsBalanced_Solution(TreeNode root) {
+public boolean IsBalanced_Solution(TreeNode root)
+{
     height(root);
     return isBalanced;
 }
 
-private int height(TreeNode root) {
-    if (root == null)
+private int height(TreeNode root)
+{
+    if (root == null || !isBalanced)
         return 0;
     int left = height(root.left);
     int right = height(root.right);
@@ -2411,26 +2429,24 @@ private int height(TreeNode root) {
 
 ## 解题思路
 
-两个不相等的元素在位级表示上必定会有一位存在不同。
-
-将数组的所有元素异或得到的结果为不存在重复的两个元素异或的结果。
+两个不相等的元素在位级表示上必定会有一位存在不同，将数组的所有元素异或得到的结果为不存在重复的两个元素异或的结果。
 
 diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
 
 ```java
-    public void FindNumsAppearOnce(int[] nums, int num1[], int num2[]) {
-        int diff = 0;
-        for (int num : nums)
-            diff ^= num;
-        // 得到最右一位
-        diff &= -diff;
-        for (int num : nums) {
-            if ((num & diff) == 0)
-                num1[0] ^= num;
-            else
-                num2[0] ^= num;
-        }
+public void FindNumsAppearOnce(int[] nums, int num1[], int num2[])
+{
+    int diff = 0;
+    for (int num : nums)
+        diff ^= num;
+    diff &= -diff;
+    for (int num : nums) {
+        if ((num & diff) == 0)
+            num1[0] ^= num;
+        else
+            num2[0] ^= num;
     }
+}
 ```
 
 # 57.1 和为 S 的两个数字
@@ -2450,7 +2466,8 @@ diff &= -diff 得到出 diff 最右侧不为 0 的位，也就是不存在重复
 - 如果 sum < target，移动较小的元素，使 sum 变大一些。
 
 ```java
-public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
+public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum)
+{
     int i = 0, j = array.length - 1;
     while (i < j) {
         int cur = array[i] + array[j];
@@ -2471,7 +2488,7 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 
 ## 题目描述
 
-输出所有和为 S 的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+输出所有和为 S 的连续正数序列。
 
 例如和为 100 的连续序列有：
 
@@ -2483,7 +2500,8 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 ## 解题思路
 
 ```java
-public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
+public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum)
+{
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
     int start = 1, end = 2;
     int curSum = 3;
