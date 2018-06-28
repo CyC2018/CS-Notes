@@ -21,14 +21,14 @@
   * [MySQL](/notes/MySQL.md)
   * [Redis](/notes/Redis.md)
 * Java
-  * [Java 基础](Java 基础.md)
-  * [Java 虚拟机](Java 虚拟机.md)
-  * [Java 并发](Java 并发.md)
-  * [Java 容器](Java 容器.md)
-  * [Java I/O](Java I/O.md)
+  * [Java 基础](/notes/Java 基础.md)
+  * [Java 虚拟机](/notes/Java 虚拟机.md)
+  * [Java 并发](/notes/Java 并发.md)
+  * [Java 容器](/notes/Java 容器.md)
+  * [Java I/O](/notes/Java I/O.md)
 * 分布式
-  * [一致性](一致性.md)
-  * [分布式问题分析](分布式问题分析.md)
+  * [一致性](/notes/一致性.md)
+  * [分布式问题分析](/notes/分布式问题分析.md)
 
 
 
