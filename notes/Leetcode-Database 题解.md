@@ -13,6 +13,7 @@
 * [177. Nth Highest Salary](#177-nth-highest-salary)
 * [178. Rank Scores](#178-rank-scores)
 * [180. Consecutive Numbers](#180-consecutive-numbers)
+* [626. Exchange Seats](#626-exchange-seats)
 <!-- GFM-TOC -->
 
 
@@ -856,5 +857,87 @@ FROM
 WHERE L1.id = l2.id - 1
     AND L2.id = L3.id - 1
     AND L1.num = L2.num
-    AND l2.num = l3.num; 
+    AND l2.num = l3.num;
+```
+
+# 626. Exchange Seats
+
+https://leetcode.com/problems/exchange-seats/description/
+
+## Description
+
+seat 表存储着座位对应的学生。
+
+```html
++---------+---------+
+|    id   | student |
++---------+---------+
+|    1    | Abbot   |
+|    2    | Doris   |
+|    3    | Emerson |
+|    4    | Green   |
+|    5    | Jeames  |
++---------+---------+
+```
+
+要求交换相邻座位的两个学生，如果最后一个座位是奇数，那么不交换这个座位上的学生。
+
+```html
++---------+---------+
+|    id   | student |
++---------+---------+
+|    1    | Doris   |
+|    2    | Abbot   |
+|    3    | Green   |
+|    4    | Emerson |
+|    5    | Jeames  |
++---------+---------+
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS seat;
+CREATE TABLE seat ( id INT, student VARCHAR ( 255 ) );
+INSERT INTO seat ( id, student )
+VALUES
+    ( '1', 'Abbot' ),
+    ( '2', 'Doris' ),
+    ( '3', 'Emerson' ),
+    ( '4', 'Green' ),
+    ( '5', 'Jeames' );
+```
+
+## Solution
+
+使用多个 union。
+
+```sql
+SELECT
+    s1.id - 1 AS id,
+    s1.student 
+FROM
+    seat s1 
+WHERE
+    s1.id MOD 2 = 0 UNION
+SELECT
+    s2.id + 1 AS id,
+    s2.student 
+FROM
+    seat s2 
+WHERE
+    s2.id MOD 2 = 1 
+    AND s2.id != ( SELECT max( s3.id ) FROM seat s3 ) UNION
+SELECT
+    s4.id AS id,
+    s4.student 
+FROM
+    seat s4 
+WHERE
+    s4.id MOD 2 = 1 
+    AND s4.id = ( SELECT max( s5.id ) FROM seat s5 ) 
+ORDER BY
+    id;
 ```

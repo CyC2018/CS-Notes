@@ -660,7 +660,7 @@ MySQL 不允许在触发器中使用 CALL 语句，也就是不能调用存储�
 
 MySQL 的事务提交默认是隐式提交，每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
-通过设置 autocommit 为 0 可以取消自动提交，直到 autocommit 被设置为 1 才会提交；autocommit 标记是针对每个连接而不是针对服务器的。
+通过设置 autocommit 为 0 可以取消自动提交；autocommit 标记是针对每个连接而不是针对服务器的。
 
 如果没有设置保留点，ROLLBACK 会回退到 START TRANSACTION 语句处；如果设置了保留点，并且在 ROLLBACK 中指定该保留点，则会回退到该保留点。
 
