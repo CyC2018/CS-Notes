@@ -144,7 +144,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 String 被声明为 final，因此它不可被继承。
 
-内部使用 char 数组存储数据，该数组被申明为 final，也就是说 String 不可变。
+内部使用 char 数组存储数据，该数组被声明为 final，这意味着 value 数组初始化之后就不能再引用其它数组。并且 String 内部没有改变 value 数组的方法，因此可以保证 String 不可变。
 
 ```java
 public final class String
@@ -739,7 +739,7 @@ CloneExample e1 = new CloneExample();
 // CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
 ```
 
-接下来重写 Object 的 clone() 得到以下实现：
+重写 clone() 得到以下实现：
 
 ```java
 public class CloneExample {
