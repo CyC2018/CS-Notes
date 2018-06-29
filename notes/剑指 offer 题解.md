@@ -1706,16 +1706,18 @@ public class Solution {
 ```java
 private ArrayList<String> ret = new ArrayList<>();
 
-public ArrayList<String> Permutation(String str) {
+public ArrayList<String> Permutation(String str)
+{
     if (str.length() == 0)
         return ret;
     char[] chars = str.toCharArray();
     Arrays.sort(chars);
-    backtracking(chars, new boolean[chars.length], new StringBuffer());
+    backtracking(chars, new boolean[chars.length], new StringBuilder());
     return ret;
 }
 
-private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
+private void backtracking(char[] chars, boolean[] hasUsed, StringBuilder s)
+{
     if (s.length() == chars.length) {
         ret.add(s.toString());
         return;
@@ -1723,7 +1725,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
     for (int i = 0; i < chars.length; i++) {
         if (hasUsed[i])
             continue;
-        if (i != 0 && chars[i] == chars[i - 1] && !hasUsed[i - 1]) // 保证不重复
+        if (i != 0 && chars[i] == chars[i - 1] && !hasUsed[i - 1]) /* 保证不重复 */
             continue;
         hasUsed[i] = true;
         s.append(chars[i]);
@@ -1745,7 +1747,8 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuffer s) {
 使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
-public int MoreThanHalfNum_Solution(int[] nums) {
+public int MoreThanHalfNum_Solution(int[] nums)
+{
     int majority = nums[0];
     for (int i = 1, cnt = 1; i < nums.length; i++) {
         cnt = nums[i] == majority ? cnt + 1 : cnt - 1;
@@ -1776,18 +1779,20 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 快速排序的 partition() 方法，会返回一个整数 j 使得 a[l..j-1] 小于等于 a[j]，且 a[j+1..h] 大于等于 a[j]，此时 a[j] 就是数组的第 j 大元素。可以利用这个特性找出数组的第 K 个元素，这种找第 K 个元素的算法称为快速选择算法。
 
 ```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
+public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k)
+{
     ArrayList<Integer> ret = new ArrayList<>();
     if (k > nums.length || k <= 0)
         return ret;
-    int kthSmallest = findKthSmallest(nums, k - 1);
-    // findKthSmallest 会改变数组，使得前 k 个数都是最小的 k 个数
+    findKthSmallest(nums, k - 1);
+    /* findKthSmallest 会改变数组，使得前 k 个数都是最小的 k 个数 */
     for (int i = 0; i < k; i++)
         ret.add(nums[i]);
     return ret;
 }
 
-public int findKthSmallest(int[] nums, int k) {
+public void findKthSmallest(int[] nums, int k)
+{
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int j = partition(nums, l, h);
@@ -1798,16 +1803,15 @@ public int findKthSmallest(int[] nums, int k) {
         else
             l = j + 1;
     }
-    return nums[k];
 }
 
-private int partition(int[] nums, int l, int h) {
-    // 切分元素
-    int parti = nums[l];
+private int partition(int[] nums, int l, int h)
+{
+    int p = nums[l];     /* 切分元素 */
     int i = l, j = h + 1;
     while (true) {
-        while (i != h && nums[++i] < parti) ;
-        while (j != l && nums[--j] > parti) ;
+        while (i != h && nums[++i] < p) ;
+        while (j != l && nums[--j] > p) ;
         if (i >= j)
             break;
         swap(nums, i, j);
@@ -1816,7 +1820,8 @@ private int partition(int[] nums, int l, int h) {
     return j;
 }
 
-private void swap(int[] nums, int i, int j) {
+private void swap(int[] nums, int i, int j)
+{
     int t = nums[i];
     nums[i] = nums[j];
     nums[j] = t;
@@ -1833,7 +1838,8 @@ private void swap(int[] nums, int i, int j) {
 维护一个大小为 K 的最小堆过程如下：在添加一个元素之后，如果大顶堆的大小大于 K，那么需要将大顶堆的堆顶元素去除。
 
 ```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
+public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k)
+{
     if (k > nums.length || k <= 0)
         return new ArrayList<>();
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
@@ -1842,8 +1848,7 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
         if (maxHeap.size() > k)
             maxHeap.poll();
     }
-    ArrayList<Integer> ret = new ArrayList<>(maxHeap);
-    return ret;
+    return new ArrayList<>(maxHeap) ;
 }
 ```
 
@@ -1858,35 +1863,35 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k) {
 ## 解题思路
 
 ```java
-public class Solution {
-    // 大顶堆，存储左半边元素
-    private PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
-    // 小顶堆，存储右半边元素，并且右半边元素都大于左半边
-    private PriorityQueue<Integer> right = new PriorityQueue<>();
-    // 当前数据流读入的元素个数
-    private int N = 0;
+/* 大顶堆，存储左半边元素 */
+private PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
+/* 小顶堆，存储右半边元素，并且右半边元素都大于左半边 */
+private PriorityQueue<Integer> right = new PriorityQueue<>();
+/* 当前数据流读入的元素个数 */
+private int N = 0;
 
-    public void Insert(Integer val) {
-        // 插入要保证两个堆存于平衡状态
-        if (N % 2 == 0) {
-            // N 为偶数的情况下插入到右半边。
-            // 因为右半边元素都要大于左半边，但是新插入的元素不一定比左半边元素来的大，
-            // 因此需要先将元素插入左半边，然后利用左半边为大顶堆的特点，取出堆顶元素即为最大元素，此时插入右半边
-            left.add(val);
-            right.add(left.poll());
-        } else {
-            right.add(val);
-            left.add(right.poll());
-        }
-        N++;
+public void Insert(Integer val)
+{
+    /* 插入要保证两个堆存于平衡状态 */
+    if (N % 2 == 0) {
+        /* N 为偶数的情况下插入到右半边。
+         * 因为右半边元素都要大于左半边，但是新插入的元素不一定比左半边元素来的大，
+         * 因此需要先将元素插入左半边，然后利用左半边为大顶堆的特点，取出堆顶元素即为最大元素，此时插入右半边 */
+        left.add(val);
+        right.add(left.poll());
+    } else {
+        right.add(val);
+        left.add(right.poll());
     }
+    N++;
+}
 
-    public Double GetMedian() {
-        if (N % 2 == 0)
-            return (left.peek() + right.peek()) / 2.0;
-        else
-            return (double) right.peek();
-    }
+public Double GetMedian()
+{
+    if (N % 2 == 0)
+        return (left.peek() + right.peek()) / 2.0;
+    else
+        return (double) right.peek();
 }
 ```
 
@@ -1904,14 +1909,16 @@ public class Solution {
 private int[] cnts = new int[256];
 private Queue<Character> queue = new LinkedList<>();
 
-public void Insert(char ch) {
+public void Insert(char ch)
+{
     cnts[ch]++;
     queue.add(ch);
     while (!queue.isEmpty() && cnts[queue.peek()] > 1)
         queue.poll();
 }
 
-public char FirstAppearingOnce() {
+public char FirstAppearingOnce()
+{
     return queue.isEmpty() ? '#' : queue.peek();
 }
 ```
@@ -1927,16 +1934,17 @@ public char FirstAppearingOnce() {
 ## 解题思路
 
 ```java
-public int FindGreatestSumOfSubArray(int[] nums) {
+public int FindGreatestSumOfSubArray(int[] nums)
+{
     if (nums == null || nums.length == 0)
         return 0;
-    int ret = Integer.MIN_VALUE;
+    int greatestSum = Integer.MIN_VALUE;
     int sum = 0;
     for (int val : nums) {
         sum = sum <= 0 ? val : sum + val;
-        ret = Math.max(ret, sum);
+        greatestSum = Math.max(greatestSum, sum);
     }
-    return ret;
+    return greatestSum;
 }
 ```
 
@@ -1947,7 +1955,8 @@ public int FindGreatestSumOfSubArray(int[] nums) {
 ## 解题思路
 
 ```java
-public int NumberOf1Between1AndN_Solution(int n) {
+public int NumberOf1Between1AndN_Solution(int n)
+{
     int cnt = 0;
     for (int m = 1; m <= n; m *= 10) {
         int a = n / m, b = n % m;
@@ -1968,47 +1977,53 @@ public int NumberOf1Between1AndN_Solution(int n) {
 ## 解题思路
 
 ```java
-public int digitAtIndex(int index) {
+public int getDigitAtIndex(int index)
+{
     if (index < 0)
         return -1;
-    int digit = 1;
+    int place = 1;  // 位数，1 表示个位，2 表示 十位...
     while (true) {
-        int amount = getAmountOfDigit(digit);
-        int totalAmount = amount * digit;
+        int amount = getAmountOfPlace(place);
+        int totalAmount = amount * place;
         if (index < totalAmount)
-            return digitAtIndex(index, digit);
+            return getDigitAtIndex(index, place);
         index -= totalAmount;
-        digit++;
+        place++;
     }
 }
 
 /**
- * digit 位数的数字组成的字符串长度
- * 例如 digit = 2，return 90
+ * place 位数的数字组成的字符串长度
+ * 10, 90, 900, ...
  */
-private int getAmountOfDigit(int digit) {
-    if (digit == 1)
+private int getAmountOfPlace(int place)
+{
+    if (place == 1)
         return 10;
-    return (int) Math.pow(10, digit - 1) * 9;
+    return (int) Math.pow(10, place - 1) * 9;
 }
 
 /**
- * 在 digit 位数组成的字符串中，第 index 个数
+ * place 位数的起始数字
+ * 0, 10, 100, ...
  */
-private int digitAtIndex(int index, int digit) {
-    int number = beginNumber(digit) + index / digit;
-    int remain = index % digit;
-    return (number + "").charAt(remain) - '0';
-}
-
-/**
- * digit 位数的起始数字
- * 例如 digit = 2 return 10
- */
-private int beginNumber(int digit) {
-    if (digit == 1)
+private int getBeginNumberOfPlace(int place)
+{
+    if (place == 1)
         return 0;
-    return (int) Math.pow(10, digit - 1);
+    return (int) Math.pow(10, place - 1);
+}
+
+/**
+ * 在 place 位数组成的字符串中，第 index 个数
+ */
+private int getDigitAtIndex(int index, int place)
+{
+    int beginNumber = getBeginNumberOfPlace(place);
+    int shiftNumber = index / place;
+    String number = (beginNumber + shiftNumber) + "";
+    int count = index % place;
+    return number.charAt(count) - '0';
 }
 ```
 
