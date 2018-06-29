@@ -17,9 +17,6 @@
     * [类初始化时机](#类初始化时机)
     * [类加载过程](#类加载过程)
     * [类加载器](#类加载器)
-* [四、JVM 参数](#四jvm-参数)
-    * [GC 优化配置](#gc-优化配置)
-    * [GC 类型设置](#gc-类型设置)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -293,7 +290,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 主要不足是只使用了内存的一半。
 
-现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survior 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90 %。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间存储放不下的对象。
+现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间存储放不下的对象。
 
 ### 4. 分代收集
 
@@ -384,7 +381,7 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 具有以下缺点：
 
 - 吞吐量低：低停顿时间是以牺牲吞吐量为代价的，导致 CPU 利用率不够高。
-- 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。可以使用 -XX:CMSInitiatingOccupancyFraction 来改变触发 CMS 收集器工作的内存占用百分，如果这个值设置的太大，导致预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
+- 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
 - 标记 - 清除算法导致的空间碎片，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
 
 ### 7. G1 收集器
@@ -395,7 +392,7 @@ Java 堆被分为新生代、老年代和永久代，其它收集器进行收集
 
 <div align="center"> <img src="../pics//4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
 
-G1 把新生代和老年代划分成多个大小相等的独立区域（Region），新生代和永久代不再物理隔离。
+G1 把堆划分成多个大小相等的独立区域（Region），新生代和永久代不再物理隔离。
 
 <div align="center"> <img src="../pics//9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
 
@@ -410,7 +407,7 @@ G1 把新生代和老年代划分成多个大小相等的独立区域（Region�
 - 初始标记
 - 并发标记
 - 最终标记：为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程的 Remembered Set Logs 里面，最终标记阶段需要把 Remembered Set Logs 的数据合并到 Remembered Set 中。这阶段需要停顿线程，但是可并行执行。
-- 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿是时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。
+- 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。
 
 具备如下特点：
 
@@ -433,20 +430,18 @@ G1 把新生代和老年代划分成多个大小相等的独立区域（Region�
 
 ## 内存分配与回收策略
 
-对象的内存分配，也就是在堆上分配。主要分配在新生代的 Eden 区上，少数情况下也可能直接分配在老年代中。
-
 ### 1. Minor GC 和 Full GC
 
 - Minor GC：发生在新生代上，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
-- Full GC：发生在老年代上，老年代对象和新生代的相反，其存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC 慢很多。
+- Full GC：发生在老年代上，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
 
 ### 2. 内存分配策略
 
-**（一）对象优先在 Eden 分配** 
+（一）对象优先在 Eden 分配
 
 大多数情况下，对象在新生代 Eden 区分配，当 Eden 区空间不够时，发起 Minor GC。
 
-**（二）大对象直接进入老年代** 
+（二）大对象直接进入老年代
 
 大对象是指需要连续内存空间的对象，最典型的大对象是那种很长的字符串以及数组。
 
@@ -454,17 +449,17 @@ G1 把新生代和老年代划分成多个大小相等的独立区域（Region�
 
 -XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 区和 Survivor 区之间的大量内存复制。
 
-**（三）长期存活的对象进入老年代** 
+（三）长期存活的对象进入老年代
 
 为对象定义年龄计数器，对象在 Eden 出生并经过 Minor GC 依然存活，将移动到 Survivor 中，年龄就增加 1 岁，增加到一定年龄则移动到老年代中。
 
 -XX:MaxTenuringThreshold 用来定义年龄的阈值。
 
-**（四）动态对象年龄判定** 
+（四）动态对象年龄判定
 
 虚拟机并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。
 
-**（五）空间分配担保** 
+（五）空间分配担保
 
 在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的；如果不成立的话虚拟机会查看 HandlePromotionFailure 设置值是否允许担保失败，如果允许那么就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次 Minor GC，尽管这次 Minor GC 是有风险的；如果小于，或者 HandlePromotionFailure 设置不允许冒险，那这时也要改为进行一次 Full GC。
 
@@ -472,25 +467,27 @@ G1 把新生代和老年代划分成多个大小相等的独立区域（Region�
 
 对于 Minor GC，其触发条件非常简单，当 Eden 区空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
 
-**（一）调用 System.gc()** 
+（一）调用 System.gc()
 
-此方法的调用是建议虚拟机进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存。可通过 -XX:DisableExplicitGC 来禁止 RMI 调用 System.gc()。
+只是建议虚拟机执行 Full GC，但是虚拟机不一定真正去执行。不建议使用这种方式，而是让虚拟机管理内存。
 
-**（二）老年代空间不足** 
+（二）老年代空间不足
 
-老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 Java.lang.OutOfMemoryError。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在新生代多存活一段时间以及不要创建过大的对象及数组。
+老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等。
 
-**（三）空间分配担保失败** 
+为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代。还可以通过 -XX:MaxTenuringThreshold 调大对象进入老年代的年龄，让对象在新生代多存活一段时间。
 
-使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 HandlePromotionFailure 担保失败，则会触发 Full GC。
+（三）空间分配担保失败
 
-**（四）JDK 1.7 及以前的永久代空间不足** 
+使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果担保失败会执行一次 Full GC。具体内容请参考上面的第五小节。
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+（四）JDK 1.7 及以前的永久代空间不足
 
-**（五）Concurrent Mode Failure** 
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 
-执行 CMS GC 的过程中同时有对象要放入老年代，而此时老年代空间不足（有时候“空间不足”是 CMS GC 时当前的浮动垃圾过多导致暂时性的空间不足），便会报 Concurrent Mode Failure 错误，并触发 Full GC。
+（五）Concurrent Mode Failure
+
+执行 CMS GC 的过程中同时有对象要放入老年代，而此时老年代空间不足（有时候“空间不足”是指 CMS GC 当前的浮动垃圾过多导致暂时性的空间不足），便会报 Concurrent Mode Failure 错误，并触发 Full GC。
 
 # 三、类加载机制
 
@@ -649,7 +646,7 @@ public static void main(String[] args) {
 
 ## 类加载器
 
-实现类的加载动作。在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。
+在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。
 
 ### 1. 类与类加载器
 
@@ -681,17 +678,17 @@ public static void main(String[] args) {
 
 <div align="center"> <img src="../pics//class_loader_hierarchy.png" width="600"/> </div><br>
 
-**（一）工作过程** 
+（一）工作过程
 
 一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载。
 
-**（二）好处** 
+（二）好处
 
 使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而使得基础类得到统一。
 
 例如 java.lang.Object 存放在 rt.jar 中，如果编写另外一个 java.lang.Object 的类并放到 ClassPath 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。正因为 rt.jar 中的 Object 优先级更高，因为程序中所有的 Object 都是这个 Object。
 
-**（三）实现** 
+（三）实现
 
 以下是抽象类 java.lang.ClassLoader 的代码片段，其中的 loadClass() 方法运行过程如下：先检查类是否已经加载过，如果没有则让父类加载器去加载。当父类加载器加载失败时抛出 ClassNotFoundException，此时尝试自己去加载。
 
@@ -743,7 +740,7 @@ public abstract class ClassLoader {
 
 FileSystemClassLoader 是自定义类加载器，继承自 java.lang.ClassLoader，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（.class 文件），然后读取该文件内容，最后通过 defineClass() 方法来把这些字节代码转换成 java.lang.Class 类的实例。
 
-java.lang.ClassLoader 类的方法 loadClass() 实现了双亲委派模型的逻辑，因此自定义类加载器一般不去重写它，而是通过重写 findClass() 方法。
+java.lang.ClassLoader 的 loadClass() 实现了双亲委派模型的逻辑，因此自定义类加载器一般不去重写它，但是需要重写 findClass() 方法。
 
 ```java
 public class FileSystemClassLoader extends ClassLoader {
@@ -786,32 +783,6 @@ public class FileSystemClassLoader extends ClassLoader {
                 + className.replace('.', File.separatorChar) + ".class";
     }
 }
-```
-
-# 四、JVM 参数
-
-## GC 优化配置
-
-| 配置 | 描述 |
-| --- | --- |
-| -Xms | 初始化堆内存大小 |
-| -Xmx | 堆内存最大值 |
-| -Xmn | 新生代大小 |
-| -XX:PermSize | 初始化永久代大小 |
-| -XX:MaxPermSize | 永久代最大容量 |
-
-## GC 类型设置
-
-| 配置 | 描述 |
-| --- | --- |
-| -XX:+UseSerialGC | 串行垃圾回收器 |
-| -XX:+UseParallelGC | 并行垃圾回收器 |
-| -XX:+UseConcMarkSweepGC | 并发标记扫描垃圾回收器 |
-| -XX:ParallelCMSThreads= | 并发标记扫描垃圾回收器 = 为使用的线程数量 |
-| -XX:+UseG1GC | G1 垃圾回收器 |
-
-```java
-java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar java-application.jar
 ```
 
 # 参考资料
