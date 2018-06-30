@@ -187,8 +187,6 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 ## HDD
 
-[Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
-
 Hard Disk Drives(HDD) 俗称硬盘，具有以下结构：
 
 - 盘面（Platter）：一个硬盘有多个盘面；
@@ -199,6 +197,8 @@ Hard Disk Drives(HDD) 俗称硬盘，具有以下结构：
 - 主轴（Spindle）：使整个盘面转动。
 
 <div align="center"> <img src="../pics//014fbc4d-d873-4a12-b160-867ddaed9807.jpg" width=""/> </div><br>
+
+[Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
 
 ## 磁盘接口
 
