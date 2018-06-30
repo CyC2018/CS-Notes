@@ -1,17 +1,24 @@
 <!-- GFM-TOC -->
-* [一、I/O 复用](#一io-复用)
-    * [I/O 模型](#io-模型)
-    * [select/poll/epoll](#selectpollepoll)
+* [一、I/O 模型](#一io-模型)
+    * [阻塞式 I/O](#阻塞式-io)
+    * [非阻塞式 I/O](#非阻塞式-io)
+    * [I/O 复用](#io-复用)
+    * [信号驱动 I/O](#信号驱动-io)
+    * [异步 I/O](#异步-io)
+    * [同步 I/O 与异步 I/O](#同步-io-与异步-io)
+    * [五大 I/O 模型比较](#五大-io-模型比较)
+* [二、I/O 复用](#二io-复用)
+    * [select](#select)
+    * [poll](#poll)
+    * [epoll](#epoll)
     * [select 和 poll 比较](#select-和-poll-比较)
     * [eopll 工作模式](#eopll-工作模式)
-    * [select poll epoll 应用场景](#select-poll-epoll-应用场景)
+    * [应用场景](#应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-# 一、I/O 复用
-
-## I/O 模型
+# 一、I/O 模型
 
 一个输入操作通常包括两个阶段：
 
@@ -28,7 +35,7 @@ Unix 下有五种 I/O 模型：
 - 信号驱动式 I/O（SIGIO）
 - 异步 I/O（AIO）
 
-### 1. 阻塞式 I/O
+## 阻塞式 I/O
 
 应用进程被阻塞，直到数据复制到应用进程缓冲区中才返回。
 
@@ -42,15 +49,15 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 <div align="center"> <img src="../pics//1492928416812_4.png"/> </div><br>
 
-### 2. 非阻塞式 I/O
+## 非阻塞式 I/O
 
-应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式成为轮询（polling）。
+应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询（polling）。
 
 由于 CPU 要处理更多的系统调用，因此这种模型是比较低效的。
 
 <div align="center"> <img src="../pics//1492929000361_5.png"/> </div><br>
 
-### 3. I/O 复用
+## I/O 复用
 
 使用 select 或者 poll 等待数据，并且可以等待多个套接字中的任何一个变为可读，这一过程会被阻塞，当某一个套接字可读时返回。之后再使用 recvfrom 把数据从内核复制到进程中。
 
@@ -60,7 +67,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 <div align="center"> <img src="../pics//1492929444818_6.png"/> </div><br>
 
-### 4. 信号驱动 I/O
+## 信号驱动 I/O
 
 应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行，也就是说等待数据阶段应用进程是非阻塞的。内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中。
 
@@ -68,7 +75,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 <div align="center"> <img src="../pics//1492929553651_7.png"/> </div><br>
 
-### 5. 异步 I/O
+## 异步 I/O
 
 进行 aio_read 系统调用会立即返回，应用进程继续执行，不会被阻塞，内核会在所有操作完成之后向应用进程发送信号。
 
@@ -76,36 +83,36 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 <div align="center"> <img src="../pics//1492930243286_8.png"/> </div><br>
 
-### 6. 同步 I/O 与异步 I/O
+## 同步 I/O 与异步 I/O
 
 - 同步 I/O：应用进程在调用 recvfrom 操作时会阻塞。
 - 异步 I/O：不会阻塞。
 
 阻塞式 I/O、非阻塞式 I/O、I/O 复用和信号驱动 I/O 都是同步 I/O，虽然非阻塞式 I/O 和信号驱动 I/O 在等待数据阶段不会阻塞，但是在之后的将数据从内核复制到应用进程这个操作会阻塞。
 
-### 7. 五大 I/O 模型比较
+## 五大 I/O 模型比较
 
 前四种 I/O 模型的主要区别在于第一个阶段，而第二个阶段是一样的：将数据从内核复制到应用进程过程中，应用进程会被阻塞。
 
 <div align="center"> <img src="../pics//1492928105791_3.png"/> </div><br>
 
-## select/poll/epoll
+# 二、I/O 复用
 
-这三个都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。
+select/poll/epoll 都是 I/O 多路复用的具体实现，select 出现的最早，之后是 poll，再是 epoll。
 
-### 1. select
+## select
 
 ```c
 int select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 ```
 
-fd_set 表示描述符集合类型，有三个参数：readset、writeset 和 exceptset，分别对应读、写、异常条件的描述符集合。
+readset, writeset, exceptset 参数，分别对应读、写、异常条件的描述符集合。
 
-timeout 参数告知内核等待所指定描述符中的任何一个就绪可花多少时间；
+timeout 参数告知内核等待所指定描述符中的任何一个就绪的最长时间；
 
 成功调用返回结果大于 0；出错返回结果为 -1；超时返回结果为 0。
 
-每次调用 select 都需要将 fd_set \*readfds, fd_set \*writefds, fd_set \*exceptfds 链表内容全部从应用进程缓冲复制到内核缓冲。
+每次调用 select 都需要将 readfds, writefds, exceptfds 链表内容全部从应用进程缓冲区复制到内核缓冲区。
 
 返回结果中内核并没有声明 fd_set 中哪些描述符已经准备好，所以如果返回值大于 0 时，应用进程需要遍历所有的 fd_set。
 
@@ -150,7 +157,7 @@ else
 }
 ```
 
-### 2. poll
+## poll
 
 ```c
 int poll(struct pollfd *fds, unsigned int nfds, int timeout);
@@ -158,13 +165,13 @@ int poll(struct pollfd *fds, unsigned int nfds, int timeout);
 
 ```c
 struct pollfd {
-    int fd;       //文件描述符
-    short events; //监视的请求事件
-    short revents; //已发生的事件
+    int fd;        // 文件描述符
+    short events;  // 监视的请求事件
+    short revents; // 已发生的事件
 };
 ```
 
-它和 select 功能基本相同。同样需要每次将描述符从应用进程复制到内核，poll 调用返回后同样需要进行轮询才能知道哪些描述符已经准备好。
+它和 select 功能基本相同，同样需要每次都将描述符从应用进程缓冲区复制到内核缓冲区，调用返回后同样需要进行轮询才能知道哪些描述符已经准备好。
 
 poll 取消了 1024 个描述符数量上限，但是数量太大以后不能保证执行效率，因为复制大量内存到内核十分低效，所需时间与描述符数量成正比。
 
@@ -204,7 +211,7 @@ else
 }
 ```
 
-### 3. epoll
+## epoll
 
 ```c
 int epoll_create(int size);
@@ -212,11 +219,11 @@ int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
 int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
 ```
 
-epoll 仅仅适用于 Linux OS。
+epoll 仅适用于 Linux OS。
 
 它是 select 和 poll 的增强版，更加灵活而且没有描述符数量限制。
 
-它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户空间和内核空间拷贝一次。
+它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户进程缓冲区和内核缓冲区拷贝一次。
 
 select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
 
@@ -226,7 +233,7 @@ epoll_ctl() 执行一次系统调用，用于向内核注册新的描述符或�
 
 epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到应用进程中，不需要像 select/poll 对注册的所有描述符遍历一遍。
 
-epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait() 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait 另一个线程关闭了同一个描述符也不会产生不确定情况。
+epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait() 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生不确定情况。
 
 ```c
 // Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
@@ -290,7 +297,7 @@ else
 poll 和 select 在速度上都很慢。
 
 - 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
-- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要复制更多的内核空间。
+- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要在用户进程和内核之间复制更多的数据。
 
 ### 3. 可移植性
 
@@ -308,7 +315,7 @@ epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger�
 
 当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
 
-## select poll epoll 应用场景
+## 应用场景
 
 很容易产生一种错觉认为只要用 epoll 就可以了，select poll 都是历史遗留问题，并没有什么应用场景，其实并不是这样的。
 
@@ -322,9 +329,9 @@ select 历史更加悠久，它的可移植性更好，几乎被所有主流平�
 
 poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
 
-需要同时监控小于 1000 个描述符。那么也没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
+需要同时监控小于 1000 个描述符。没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
 
-需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。epoll 的描述符存储在内核，不容易调试。
+需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。并且epoll 的描述符存储在内核，不容易调试。
 
 ### 3. epoll 应用场景
 
@@ -332,7 +339,7 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 
 ### 4. 性能对比
 
-> [epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
+[epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
 
 # 参考资料
 
