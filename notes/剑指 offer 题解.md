@@ -1062,26 +1062,33 @@ public void reOrderArray(int[] nums) {
 <div align="center"> <img src="../pics//207c1801-2335-4b1b-b65c-126a0ba966cb.png" width="500"/> </div><br>
 
 ```java
-public ListNode FindKthToTail(ListNode head, int k) {
+public ListNode FindKthToTail(ListNode head, int k)
+{
     if (head == null)
         return null;
-    ListNode fast, slow;
-    fast = slow = head;
-    while (fast != null && k-- > 0)
-        fast = fast.next;
+    ListNode P1 = head;
+    while (P1 != null && k-- > 0)
+        P1 = P1.next;
     if (k > 0)
         return null;
-    while (fast != null) {
-        fast = fast.next;
-        slow = slow.next;
+    ListNode P2 = head;
+    while (P1 != null) {
+        P1 = P1.next;
+        P2 = P2.next;
     }
-    return slow;
+    return P2;
 }
 ```
 
 # 23. 链表中环的入口结点
 
 [NowCoder](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+一个链表中包含环，请找出该链表的环的入口结点。
+
+要求不能使用额外的空间。
 
 ## 解题思路
 
@@ -1092,16 +1099,15 @@ public ListNode FindKthToTail(ListNode head, int k) {
 <div align="center"> <img src="../pics//71363383-2d06-4c63-8b72-c01c2186707d.png" width="600"/> </div><br>
 
 ```java
-public ListNode EntryNodeOfLoop(ListNode pHead) {
+public ListNode EntryNodeOfLoop(ListNode pHead)
+{
     if (pHead == null || pHead.next == null)
         return null;
     ListNode slow = pHead, fast = pHead;
-    while (fast != null && fast.next != null) {
+    do {
         fast = fast.next.next;
         slow = slow.next;
-        if (slow == fast)
-            break;
-    }
+    } while (slow != fast);
     fast = pHead;
     while (slow != fast) {
         slow = slow.next;
@@ -1159,7 +1165,8 @@ public ListNode ReverseList(ListNode head) {
 ### 递归
 
 ```java
-public ListNode Merge(ListNode list1, ListNode list2) {
+public ListNode Merge(ListNode list1, ListNode list2)
+{
     if (list1 == null)
         return list2;
     if (list2 == null)
@@ -1177,7 +1184,8 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 ### 迭代
 
 ```java
-public ListNode Merge(ListNode list1, ListNode list2) {
+public ListNode Merge(ListNode list1, ListNode list2)
+{
     ListNode head = new ListNode(-1);
     ListNode cur = head;
     while (list1 != null && list2 != null) {
@@ -1209,20 +1217,22 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 ## 解题思路
 
 ```java
-public boolean HasSubtree(TreeNode root1, TreeNode root2) {
+public boolean HasSubtree(TreeNode root1, TreeNode root2)
+{
     if (root1 == null || root2 == null)
         return false;
-    return isSubtree(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+    return isSubtreeWithRoot(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
 }
 
-private boolean isSubtree(TreeNode root1, TreeNode root2) {
+private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2)
+{
     if (root2 == null)
         return true;
     if (root1 == null)
         return false;
     if (root1.val != root2.val)
         return false;
-    return isSubtree(root1.left, root2.left) && isSubtree(root1.right, root2.right);
+    return isSubtreeWithRoot(root1.left, root2.left) && isSubtreeWithRoot(root1.right, root2.right);
 }
 ```
 
@@ -1237,7 +1247,8 @@ private boolean isSubtree(TreeNode root1, TreeNode root2) {
 ## 解题思路
 
 ```java
-public void Mirror(TreeNode root) {
+public void Mirror(TreeNode root)
+{
     if (root == null)
         return;
     swap(root);
@@ -1245,7 +1256,8 @@ public void Mirror(TreeNode root) {
     Mirror(root.right);
 }
 
-private void swap(TreeNode root) {
+private void swap(TreeNode root)
+{
     TreeNode t = root.left;
     root.left = root.right;
     root.right = t;
@@ -1263,13 +1275,15 @@ private void swap(TreeNode root) {
 ## 解题思路
 
 ```java
-boolean isSymmetrical(TreeNode pRoot) {
+boolean isSymmetrical(TreeNode pRoot)
+{
     if (pRoot == null)
         return true;
     return isSymmetrical(pRoot.left, pRoot.right);
 }
 
-boolean isSymmetrical(TreeNode t1, TreeNode t2) {
+boolean isSymmetrical(TreeNode t1, TreeNode t2)
+{
     if (t1 == null && t2 == null)
         return true;
     if (t1 == null || t2 == null)
@@ -1293,7 +1307,8 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 ## 解题思路
 
 ```java
-public ArrayList<Integer> printMatrix(int[][] matrix) {
+public ArrayList<Integer> printMatrix(int[][] matrix)
+{
     ArrayList<Integer> ret = new ArrayList<>();
     int r1 = 0, r2 = matrix.length - 1, c1 = 0, c2 = matrix[0].length - 1;
     while (r1 <= r2 && c1 <= c2) {
@@ -1324,24 +1339,28 @@ public ArrayList<Integer> printMatrix(int[][] matrix) {
 ## 解题思路
 
 ```java
-private Stack<Integer> stack = new Stack<>();
+private Stack<Integer> dataStack = new Stack<>();
 private Stack<Integer> minStack = new Stack<>();
 
-public void push(int node) {
-    stack.push(node);
+public void push(int node)
+{
+    dataStack.push(node);
     minStack.push(minStack.isEmpty() ? node : Math.min(minStack.peek(), node));
 }
 
-public void pop() {
-    stack.pop();
+public void pop()
+{
+    dataStack.pop();
     minStack.pop();
 }
 
-public int top() {
-    return stack.peek();
+public int top()
+{
+    return dataStack.peek();
 }
 
-public int min() {
+public int min()
+{
     return minStack.peek();
 }
 ```
@@ -1359,12 +1378,13 @@ public int min() {
 使用一个栈来模拟压入弹出操作。
 
 ```java
-public boolean IsPopOrder(int[] pushA, int[] popA) {
-    int n = pushA.length;
+public boolean IsPopOrder(int[] pushSequence, int[] popSequence)
+{
+    int n = pushSequence.length;
     Stack<Integer> stack = new Stack<>();
     for (int pushIndex = 0, popIndex = 0; pushIndex < n; pushIndex++) {
-        stack.push(pushA[pushIndex]);
-        while (popIndex < n && stack.peek() == popA[popIndex]) {
+        stack.push(pushSequence[pushIndex]);
+        while (popIndex < n && stack.peek() == popSequence[popIndex]) {
             stack.pop();
             popIndex++;
         }
@@ -1392,21 +1412,20 @@ public boolean IsPopOrder(int[] pushA, int[] popA) {
 不需要使用两个队列分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
 
 ```java
-public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+public ArrayList<Integer> PrintFromTopToBottom(TreeNode root)
+{
     Queue<TreeNode> queue = new LinkedList<>();
     ArrayList<Integer> ret = new ArrayList<>();
-    if (root == null)
-        return ret;
     queue.add(root);
     while (!queue.isEmpty()) {
         int cnt = queue.size();
         while (cnt-- > 0) {
             TreeNode t = queue.poll();
-            if (t.left != null)
-                queue.add(t.left);
-            if (t.right != null)
-                queue.add(t.right);
+            if (t == null)
+                continue;
             ret.add(t.val);
+            queue.add(t.left);
+            queue.add(t.right);
         }
     }
     return ret;
@@ -1424,10 +1443,9 @@ public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
 ## 解题思路
 
 ```java
-ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+ArrayList<ArrayList<Integer>> Print(TreeNode pRoot)
+{
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    if (pRoot == null)
-        return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(pRoot);
     while (!queue.isEmpty()) {
@@ -1435,13 +1453,14 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         int cnt = queue.size();
         while (cnt-- > 0) {
             TreeNode node = queue.poll();
+            if (node == null)
+                continue;
             list.add(node.val);
-            if (node.left != null)
-                queue.add(node.left);
-            if (node.right != null)
-                queue.add(node.right);
+            queue.add(node.left);
+            queue.add(node.right);
         }
-        ret.add(list);
+        if (list.size() != 0)
+            ret.add(list);
     }
     return ret;
 }
@@ -1458,10 +1477,9 @@ ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 ## 解题思路
 
 ```java
-public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot)
+{
     ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    if (pRoot == null)
-        return ret;
     Queue<TreeNode> queue = new LinkedList<>();
     queue.add(pRoot);
     boolean reverse = false;
@@ -1470,16 +1488,17 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         int cnt = queue.size();
         while (cnt-- > 0) {
             TreeNode node = queue.poll();
+            if (node == null)
+                continue;
             list.add(node.val);
-            if (node.left != null)
-                queue.add(node.left);
-            if (node.right != null)
-                queue.add(node.right);
+            queue.add(node.left);
+            queue.add(node.right);
         }
         if (reverse)
             Collections.reverse(list);
         reverse = !reverse;
-        ret.add(list);
+        if (list.size() != 0)
+            ret.add(list);
     }
     return ret;
 }
@@ -1500,13 +1519,15 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 ## 解题思路
 
 ```java
-public boolean VerifySquenceOfBST(int[] sequence) {
+public boolean VerifySquenceOfBST(int[] sequence)
+{
     if (sequence == null || sequence.length == 0)
         return false;
     return verify(sequence, 0, sequence.length - 1);
 }
 
-private boolean verify(int[] sequence, int first, int last) {
+private boolean verify(int[] sequence, int first, int last)
+{
     if (last - first <= 1)
         return true;
     int rootVal = sequence[last];
@@ -1537,18 +1558,20 @@ private boolean verify(int[] sequence, int first, int last) {
 ```java
 private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
 
-public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
+public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target)
+{
     backtracking(root, target, new ArrayList<>());
     return ret;
 }
 
-private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
+private void backtracking(TreeNode node, int target, ArrayList<Integer> path)
+{
     if (node == null)
         return;
     path.add(node.val);
     target -= node.val;
     if (target == 0 && node.left == null && node.right == null) {
-        ret.add(new ArrayList(path));
+        ret.add(new ArrayList<>(path));
     } else {
         backtracking(node.left, target, path);
         backtracking(node.right, target, path);
@@ -1582,7 +1605,8 @@ private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
 <div align="center"> <img src="../pics//8f3b9519-d705-48fe-87ad-2e4052fc81d2.png" width="600"/> </div><br>
 
 ```java
-public RandomListNode Clone(RandomListNode pHead) {
+public RandomListNode Clone(RandomListNode pHead)
+{
     if (pHead == null)
         return null;
     // 插入新节点
@@ -1629,14 +1653,14 @@ public RandomListNode Clone(RandomListNode pHead) {
 private TreeNode pre = null;
 private TreeNode head = null;
 
-public TreeNode Convert(TreeNode root) {
-    if (root == null)
-        return null;
+public TreeNode Convert(TreeNode root)
+{
     inOrder(root);
     return head;
 }
 
-private void inOrder(TreeNode node) {
+private void inOrder(TreeNode node)
+{
     if (node == null)
         return;
     inOrder(node.left);
@@ -1661,35 +1685,35 @@ private void inOrder(TreeNode node) {
 ## 解题思路
 
 ```java
-public class Solution {
+private String deserializeStr;
 
-    private String deserializeStr;
+public String Serialize(TreeNode root)
+{
+    if (root == null)
+        return "#";
+    return root.val + " " + Serialize(root.left) + " " + Serialize(root.right);
+}
 
-    public String Serialize(TreeNode root) {
-        if (root == null)
-            return "#";
-        return root.val + " " + Serialize(root.left) + " " + Serialize(root.right); 
-    }
+public TreeNode Deserialize(String str)
+{
+    deserializeStr = str;
+    return Deserialize();
+}
 
-    public TreeNode Deserialize(String str) {
-        deserializeStr = str;
-        return Deserialize();
-    }
-
-    private TreeNode Deserialize() {
-        if (deserializeStr.length() == 0)
-            return null;
-        int index = deserializeStr.indexOf(" ");
-        String node = index == -1 ? deserializeStr : deserializeStr.substring(0, index);
-        deserializeStr = index == -1 ? "" : deserializeStr.substring(index + 1);
-        if (node.equals("#"))
-            return null;
-        int val = Integer.valueOf(node);
-        TreeNode t = new TreeNode(val);
-        t.left = Deserialize();
-        t.right = Deserialize();
-        return t;
-    }
+private TreeNode Deserialize()
+{
+    if (deserializeStr.length() == 0)
+        return null;
+    int index = deserializeStr.indexOf(" ");
+    String node = index == -1 ? deserializeStr : deserializeStr.substring(0, index);
+    deserializeStr = index == -1 ? "" : deserializeStr.substring(index + 1);
+    if (node.equals("#"))
+        return null;
+    int val = Integer.valueOf(node);
+    TreeNode t = new TreeNode(val);
+    t.left = Deserialize();
+    t.right = Deserialize();
+    return t;
 }
 ```
 
