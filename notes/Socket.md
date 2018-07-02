@@ -12,7 +12,7 @@
     * [poll](#poll)
     * [epoll](#epoll)
     * [select 和 poll 比较](#select-和-poll-比较)
-    * [eopll 工作模式](#eopll-工作模式)
+    * [epoll 工作模式](#epoll-工作模式)
     * [应用场景](#应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -303,7 +303,7 @@ poll 和 select 在速度上都很慢。
 
 几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
 
-## eopll 工作模式
+## epoll 工作模式
 
 epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
 
