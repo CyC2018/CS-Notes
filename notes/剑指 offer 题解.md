@@ -1532,10 +1532,10 @@ private boolean verify(int[] sequence, int first, int last)
         return true;
     int rootVal = sequence[last];
     int cutIndex = first;
-    while (cutIndex < last && sequence[cutIndex] <= rootVal)
+    while (cutIndex < last && sequence[cutIndex] > rootVal)
         cutIndex++;
     for (int i = cutIndex + 1; i < last; i++)
-        if (sequence[i] < rootVal)
+        if (sequence[i] > rootVal)
             return false;
     return verify(sequence, first, cutIndex - 1) && verify(sequence, cutIndex, last - 1);
 }
