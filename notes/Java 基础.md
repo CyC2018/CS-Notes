@@ -204,11 +204,7 @@ String s3 = s1.intern();
 System.out.println(s1.intern() == s3);  // true
 ```
 
-<<<<<<< HEAD
 如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Pool 中。
-=======
-如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入String Pool中。
->>>>>>> 2d1e09a2bf809965305565d3c5df0edc81664e9b
 
 ```java
 String s4 = "bbb";
