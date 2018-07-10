@@ -64,7 +64,7 @@
 
 # 开发工具
 
-- [Pro Git](https://book.douban.com/subject/3420144/)
+- [Pro Git](https://git-scm.com/book/zh/v2)
 - [正则表达式必知必会](https://book.douban.com/subject/2269648/)
 
 # 编码实践
