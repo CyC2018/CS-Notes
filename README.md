@@ -5,7 +5,7 @@
 
 ## 面试准备
 
-> [校招信息](interview/READEME.md)
+> [校招信息](interview/README.md)
 
 ## 算法 :pencil2:
 
