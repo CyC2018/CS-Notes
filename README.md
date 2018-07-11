@@ -147,7 +147,7 @@ Google 开源项目的代码风格规范。
 
 **授权相关**
 
-虽然没有加开源协议，但是默认允许非商业使用。
+虽然没有加开源协议，但是允许非商业性使用。
 
 转载使用请注明出处，谢谢！
 
@@ -157,7 +157,7 @@ Google 开源项目的代码风格规范。
 
 进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
-这里提供了笔者实现的 GFM 文档转换工具的下载：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
+这里提供了笔者实现的 GFM 文档转换工具的链接：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 **排版指南**
 
@@ -165,7 +165,7 @@ Google 开源项目的代码风格规范。
 
 笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
-这里提供了笔者实现的中英混排文档在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+这里提供了笔者实现的中英混排文档在线排版工具的链接：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
 **声明**
 
