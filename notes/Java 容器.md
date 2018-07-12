@@ -255,6 +255,36 @@ List<String> synList = Collections.synchronizedList(list);
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
+扩展
+CopyOnWriteArrayList是一种CopyOnWrite容器，从以下源码看出：添加元素是在复制的新数组上进行的，然后将原数组的引用指向新数组；读取元素是从原数组读取。这样可以进行并发的且不需加锁的读取，读取效率高，适用于读操作远大于写操作的场景中。
+
+```java
+public boolean add(E e) {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+        Object[] elements = getArray();
+        int len = elements.length;
+        Object[] newElements = Arrays.copyOf(elements, len + 1); 
+        newElements[len] = e; 
+        setArray(newElements);
+        return true;
+    } finally {
+        lock.unlock();
+    }
+}
+
+final void setArray(Object[] a) {
+    array = a;
+}
+
+@SuppressWarnings("unchecked")
+private E get(Object[] a, int index) {
+    return (E) a[index]; 
+}
+
+```
+
 ## LinkedList
 
 ### 1. 概览
