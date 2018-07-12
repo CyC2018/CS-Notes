@@ -255,8 +255,7 @@ List<String> synList = Collections.synchronizedList(list);
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
-扩展
-CopyOnWriteArrayList是一种CopyOnWrite容器，从以下源码看出：添加元素是在复制的新数组上进行的，然后将原数组的引用指向新数组；读取元素是从原数组读取。这样可以进行并发的且不需加锁的读取，读取效率高，适用于读操作远大于写操作的场景中。
+CopyOnWriteArrayList是一种CopyOnWrite容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
 
 ```java
 public boolean add(E e) {
