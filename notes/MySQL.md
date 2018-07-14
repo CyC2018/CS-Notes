@@ -250,7 +250,7 @@ SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5;
 
 ```sql
 SELECT film_id, actor_ id FROM sakila.film_actor
-WhERE actor_id = 1 AND film_id = 1;
+WHERE actor_id = 1 AND film_id = 1;
 ```
 
 ### 3. 索引列的顺序
