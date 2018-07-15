@@ -484,7 +484,7 @@ System.out.println(InterfaceExample.x);
 使用抽象类：
 
 - 需要在几个相关的类中共享代码。
-- 需要能控制继承来的方法和域的访问权限，而不是都为 public。
+- 需要能控制继承来的成员的访问权限，而不是都为 public。
 - 需要继承非静态（non-static）和非常量（non-final）字段。
 
 使用接口：

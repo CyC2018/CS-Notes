@@ -255,7 +255,7 @@ List<String> synList = Collections.synchronizedList(list);
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
-CopyOnWriteArrayList是一种CopyOnWrite容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
+CopyOnWriteArrayList 是一种 CopyOnWrite 容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
 
 ```java
 public boolean add(E e) {
@@ -265,7 +265,7 @@ public boolean add(E e) {
         Object[] elements = getArray();
         int len = elements.length;
         Object[] newElements = Arrays.copyOf(elements, len + 1); 
-        newElements[len] = e; 
+        newElements[len] = e;
         setArray(newElements);
         return true;
     } finally {
@@ -279,9 +279,8 @@ final void setArray(Object[] a) {
 
 @SuppressWarnings("unchecked")
 private E get(Object[] a, int index) {
-    return (E) a[index]; 
+    return (E) a[index];
 }
-
 ```
 
 ## LinkedList
