@@ -10,6 +10,9 @@
 
 ## 数据结构和算法
 
+[数据结构基础概念篇](https://blog.csdn.net/qq_31196849/article/details/78529724)
+[B_树和B+树](https://blog.csdn.net/crystal6918/article/details/78073721)
+
 ## 数据库原理
 
 ## java 语言基础
