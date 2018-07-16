@@ -66,7 +66,7 @@
 
 ## URL
 
-- URI（Uniform Resource Indentifier，统一资源标识符）
+- URI（Uniform Resource Identifier，统一资源标识符）
 - URL（Uniform Resource Locator，统一资源定位符）
 - URN（Uniform Resource Name，统一资源名称），例如 urn:isbn:0-486-27557-4。
 
