@@ -1232,7 +1232,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 > Thread Join Rule
 
-join() 方法返回先行发生于 Thread 对象的结束。
+Thread 对象的结束先行发生于join() 方法返回 。
 
 <div align="center"> <img src="../pics//thread-join-rule.png" width=""/> </div><br>
 
