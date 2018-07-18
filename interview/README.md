@@ -2,7 +2,8 @@
 
 目标职位： java 工程师、大数据开发方向 
 
-[简历](熊饶饶-校招简历-0717.pdf)
+[简历](熊饶饶-校招简历-0717.pdf)  
+[头像](我的头像.jpg)
 
 ## 1. 招聘信息
 
@@ -15,10 +16,9 @@
 ~~百度~~ | 提前批 | 7.8 -- * | 百度SER 线下面试 
 阿里巴巴 | 内推/网申 | 7.16 - 8.17 |  [招聘官网](https://campus.alibaba.com/process.htm)
 网易游戏 | 内推 |  | [招聘官网](http://game.campus.163.com/2018/zhiwei/zaixian/yxchl/2018/06/25/29304_760507.html)
-京东 | 网申 | 笔试时间 9.9；面试时间 9.16-9.20 | [技术岗java](http://campus.jd.com/web/job/job_detail?jobId=561)
-网易 | 内推/网申 | 内推时间：7.16-8.8 <br/> 网申时间：8.9-9.5| [职位列表](https://campus.163.com/app/campus/recruitment4campus)
+京东 | 网申 | <li>简历截止：8.30</li><li>笔试时间 9.9</li><li>面试时间 9.16-9.20</li> | [技术岗java](http://campus.jd.com/web/job/job_detail?jobId=561)
+网易 | 内推/网申 | <li>内推时间：7.16-8.8 </li> <li>网申时间：8.9-9.5</li>| [职位列表](https://campus.163.com/app/campus/recruitment4campus)
 
-- 2017.7.8, 百度SRE提前批
 
 ## 2. 面试记录
 
