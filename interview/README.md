@@ -18,7 +18,11 @@
 网易游戏 | 内推 |  | [招聘官网](http://game.campus.163.com/2018/zhiwei/zaixian/yxchl/2018/06/25/29304_760507.html)
 京东 | 网申 | <li>简历截止：8.30</li><li>笔试时间 9.9</li><li>面试时间 9.16-9.20</li> | [技术岗java](http://campus.jd.com/web/job/job_detail?jobId=561)
 网易 | 内推/网申 | <li>内推时间：7.16-8.8 </li> <li>网申时间：8.9-9.5</li>| [职位列表](https://campus.163.com/app/campus/recruitment4campus)
-
+唯品会 | 网申 | <li>笔试9.15</li> <li>面试9月中下旬</li> | [招聘官网](http://campus.vip.com/) 7月18已投简历
+拼多多 | | | [招聘官网]
+蚂蚁金服 | |  | [招聘官网](https://mp.weixin.qq.com/s/6THqKtD1sUF2034ZZYi0hw)
+百度智能云技术三部 | 内推 | | <li>内推邮箱:zhangchi25@baidu.com</li>
+Thoutworks | 内推 | | [内推链接](https://jinshuju.net/f/CcO2JA)
 
 ## 2. 面试记录
 
