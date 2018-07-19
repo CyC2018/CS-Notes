@@ -170,7 +170,6 @@ FROM mytable
 LIMIT 2, 3;
 ```
 
-
 # 八、排序
 
 -  **ASC** ：升序（默认）

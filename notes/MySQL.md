@@ -250,7 +250,7 @@ SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5;
 
 ```sql
 SELECT film_id, actor_ id FROM sakila.film_actor
-WhERE actor_id = 1 AND film_id = 1;
+WHERE actor_id = 1 AND film_id = 1;
 ```
 
 ### 3. 索引列的顺序
@@ -379,7 +379,7 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
 
-在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库 payDB、用户数据库 userBD 等。
+在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库 payDB、用户数据库 userDB 等。
 
 ## Sharding 策略
 
