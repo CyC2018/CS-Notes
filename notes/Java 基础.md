@@ -763,10 +763,10 @@ try {
 ```
 
 ```html
-java.lang.CloneNotSupportedException: CloneTest
+java.lang.CloneNotSupportedException: CloneExample
 ```
 
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。
+以上抛出了 CloneNotSupportedException，这是因为 CloneExample 没有实现 Cloneable 接口。
 
 ```java
 public class CloneExample implements Cloneable {
