@@ -66,7 +66,7 @@
 
 ## URL
 
-- URI（Uniform Resource Indentifier，统一资源标识符）
+- URI（Uniform Resource Identifier，统一资源标识符）
 - URL（Uniform Resource Locator，统一资源定位符）
 - URN（Uniform Resource Name，统一资源名称），例如 urn:isbn:0-486-27557-4。
 
@@ -232,7 +232,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **500 Internal Server Error** ：服务器正在执行请求时发生错误。
 
--  **503 Service Unavilable** ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+-  **503 Service Unavailable** ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
 
 # 四、HTTP 首部
 
