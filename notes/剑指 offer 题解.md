@@ -411,6 +411,9 @@ Stack<Integer> in = new Stack<Integer>();
 Stack<Integer> out = new Stack<Integer>();
 
 public void push(int node) {
+    if (in.isEmpty())
+        while (!out.isEmpty())
+            in.push(out.pop());
     in.push(node);
 }
 
