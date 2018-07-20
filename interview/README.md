@@ -19,10 +19,14 @@
 京东 | 网申 | <li>简历截止：8.30</li><li>笔试时间 9.9</li><li>面试时间 9.16-9.20</li> | [技术岗java](http://campus.jd.com/web/job/job_detail?jobId=561)
 网易 | 内推/网申 | <li>内推时间：7.16-8.8 </li> <li>网申时间：8.9-9.5</li>| <li>[职位列表](https://campus.163.com/app/campus/recruitment4campus)</li><li>7月17日投简历</li>
 唯品会 | 网申 | <li>笔试9.15</li> <li>面试9月中下旬</li> | [招聘官网](http://campus.vip.com/) 7月18已投简历
-拼多多 | | | [招聘官网]
+拼多多 |内推/网申 | <li>学霸批：7.2-8.3 | [招聘官网](www.pinduoduo.com/campus.html) <li>发送邮件：pddcampus@pinduoduo.com邮件/简历命名格式：【学霸批】岗位-学校-专业-姓名
 蚂蚁金服 | |  | [招聘官网](https://mp.weixin.qq.com/s/6THqKtD1sUF2034ZZYi0hw)
 百度智能云技术三部 | 内推 | | <li>内推邮箱:zhangchi25@baidu.com</li>
 Thoutworks | 内推 | | [内推链接](https://jinshuju.net/f/CcO2JA)
+百度深研(深圳)| 提前批 | <li>简历命名格式：姓名+岗位+学校+电话<li>邮件标题格式：应聘岗位+姓名+学校 | zhaorongcun@baidu.com
+京东 | 内推 | | 786020019@qq.com (7.19日收到内推短信)
+顺丰科技 | 网申 | 即日 -- 9.23日 | [招聘官网](http://campus.sf-tech.com.cn/campusRecruitment/Default.html?p=28668990421)  <br>7月20日投了内推
+多益网络 | 内推 | <li>内推笔试第一批：8.11 10:00 <li> 内推笔试第二批: 9.06 10:00 | [招聘官网](https://xz.duoyi.com/jobs/index.html?t=0) <br>7月20日投了内推
 
 ## 2. 面试记录
 
