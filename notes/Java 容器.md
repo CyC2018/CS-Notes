@@ -41,7 +41,7 @@
 
 ### 3. Queue
 
-- LinkedList：可以用它来支持双向队列；
+- LinkedQueue：可以用它来支持双向队列；
 
 - PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
