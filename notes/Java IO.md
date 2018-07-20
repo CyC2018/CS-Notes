@@ -49,7 +49,7 @@ public static void listAllFiles(File dir)
         System.out.println(dir.getName());
         return;
     }
-    for (File file : Objects.requireNonNull(dir.listFiles())) {
+    for (File file : dir.listFiles()) {
         listAllFiles(file);
     }
 }
@@ -65,8 +65,9 @@ public static void copyFile(String src, String dist) throws IOException
     FileInputStream in = new FileInputStream(src);
     FileOutputStream out = new FileOutputStream(dist);
     byte[] buffer = new byte[20 * 1024];
-    /* read() 最多读取 buffer.length 个字节
-       返回的是实际读取的个数，返回 -1 的时候表示读到 eof，即文件尾 */
+    // read() 最多读取 buffer.length 个字节
+    // 返回的是实际读取的个数
+    // 返回 -1 的时候表示读到 eof，即文件尾
     while (in.read(buffer, 0, buffer.length) != -1) {
         out.write(buffer);
     }
@@ -82,7 +83,7 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStrea
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
 ```java
-FileInputStream fileInputStream = new FileInputStream("file/1.txt");
+FileInputStream fileInputStream = new FileInputStream(filePath);
 BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 ```
 
@@ -92,22 +93,25 @@ DataInputStream 装饰者提供了对更多数据类型进行输入的操作，�
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
-- InputStreamReader 实现从文本文件的字节流解码成字符流；
-- OutputStreamWriter 实现字符流编码成为文本文件的字节流。
+- InputStreamReader 实现从字节流解码成字符流；
+- OutputStreamWriter 实现字符流编码成为字节流。
 
 逐行输出文本文件的内容：
 
 ```java
-FileReader fileReader = new FileReader("file/1.txt");
-BufferedReader bufferedReader = new BufferedReader(fileReader);
-String line;
-while ((line = bufferedReader.readLine()) != null) {
-    System.out.println(line);
+public static void readFileContent(String filePath) throws IOException
+{
+    FileReader fileReader = new FileReader(filePath);
+    BufferedReader bufferedReader = new BufferedReader(fileReader);
+    String line;
+    while ((line = bufferedReader.readLine()) != null) {
+        System.out.println(line);
+    }
+    // 装饰者模式使得 BufferedReader 组合了一个 Reader 对象
+    // 在调用 BufferedReader 的 close() 方法时会去调用 fileReader 的 close() 方法
+    // 因此只要一个 close() 调用即可
+    bufferedReader.close();
 }
-/* 装饰者模式使得 BufferedReader 组合了一个 Reader 对象
-   在调用 BufferedReader 的 close() 方法时会去调用 fileReader 的 close() 方法
-   因此只要一个 close() 调用即可 */
-bufferedReader.close();
 ```
 
 编码就是把字符转换为字节，而解码是把字节重新组合成字符。
@@ -216,8 +220,10 @@ InetAddress.getByAddress(byte[] address);
 public static void main(String[] args) throws IOException
 {
     URL url = new URL("http://www.baidu.com");
-    InputStream is = url.openStream();                           /* 字节流 */
-    InputStreamReader isr = new InputStreamReader(is, "utf-8");  /* 字符流 */
+    // 字节流
+    InputStream is = url.openStream();
+    // 字符流
+    InputStreamReader isr = new InputStreamReader(is, "utf-8");
     BufferedReader br = new BufferedReader(isr);
     String line = br.readLine();
     while (line != null) {
@@ -253,7 +259,7 @@ public static void main(String[] args) throws IOException
 
 I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。
 
-面向流的 I/O 一次处理一个字节数据，一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
+面向流的 I/O 一次处理一个字节数据：一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
 
 面向块的 I/O 一次处理一个数据块，按块处理数据比按流处理数据要快得多。但是面向块的 I/O 缺少一些面向流的 I/O 所具有的优雅性和简单性。
 
@@ -325,7 +331,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 ```java
 public static void fastCopy(String src, String dist) throws IOException
 {
-    FileInputStream fin = new FileInputStream(src);      /* 获得源文件的输入字节流 */
+    FileInputStream fin = new FileInputStream(src);      /* 获取源文件的输入字节流 */
     FileChannel fcin = fin.getChannel();                 /* 获取输入字节流的文件通道 */
     FileOutputStream fout = new FileOutputStream(dist);  /* 获取目标文件的输出字节流 */
     FileChannel fcout = fout.getChannel();               /* 获取输出字节流的通道 */
@@ -344,9 +350,15 @@ public static void fastCopy(String src, String dist) throws IOException
 
 ## 选择器
 
-一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去监听多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
+NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
+
+NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去监听多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
+
+通过配置监听的通道 Channel 为非阻塞，那么当 Channel 上的 IO 事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它 Channel，找到 IO 事件已经到达的 Channel 执行。
 
 因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件具有更好的性能。
+
+应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
 <div align="center"> <img src="../pics//4d930e22-f493-49ae-8dff-ea21cd6895dc.png"/> </div><br>
 
@@ -394,7 +406,7 @@ int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 int num = selector.select();
 ```
 
-使用 select() 来监听事件到达，它会一直阻塞直到有至少一个事件到达。
+使用 select() 来监听到达的事件，它会一直阻塞直到有至少一个事件到达。
 
 ### 4. 获取到达的事件
 
@@ -514,10 +526,6 @@ public class NIOClient
 
 内存映射文件 I/O 是一种读和写文件数据的方法，它可以比常规的基于流或者基于通道的 I/O 快得多。
 
-只有文件中实际读取或者写入的部分才会映射到内存中。
-
-现代操作系统一般会根据需要将文件的部分映射为内存的部分，从而实现文件系统。Java 内存映射机制只不过是在底层操作系统中可以采用这种机制时，提供了对该机制的访问。
-
 向内存映射文件写入可能是危险的，仅只是改变数组的单个元素这样的简单操作，就可能会直接修改磁盘上的文件。修改数据与将数据保存到磁盘是没有分开的。
 
 下面代码行将文件的前 1024 个字节映射到内存中，map() 方法返回一个 MappedByteBuffer，它是 ByteBuffer 的子类。因此，您可以像使用其他任何 ByteBuffer 一样使用新映射的缓冲区，操作系统会在需要时负责执行映射。
@@ -530,8 +538,8 @@ MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 
 NIO 与普通 I/O 的区别主要有以下两点：
 
-- NIO 是非阻塞的。应当注意，FileChannel 不能切换到非阻塞模式，套接字 Channel 可以。
-- NIO 面向块，I/O 面向流。
+- NIO 是非阻塞的
+- NIO 面向块，I/O 面向流
 
 # 八、参考资料
 

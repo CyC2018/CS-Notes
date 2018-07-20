@@ -440,7 +440,7 @@ public int pop() throws Exception {
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//955af054-8872-4569-82e7-2e10b66bc38e.png" width="250"/> </div><br>
+<div align="center"> <img src="../pics//a0df8edc-581b-4977-95c2-d7025795b899.png" width="300"/> </div><br>
 
 递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
 
@@ -603,13 +603,15 @@ public int RectCover(int n) {
 
 ## 题目描述
 
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+
+例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
 
 ## 解题思路
 
 当 nums[m] <= nums[h] 的情况下，说明解在 [l, m] 之间，此时令 h = m；否则解在 [m + 1, h] 之间，令 l = m + 1。
 
-因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)。
+因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE) 二分查找部分。
 
 复杂度：O(logN) + O(1)
 
@@ -732,10 +734,10 @@ private void initDigitSum() {
             n /= 10;
         }
     }
-    digitSum = new int[rows][cols];
+    this.digitSum = new int[rows][cols];
     for (int i = 0; i < this.rows; i++)
         for (int j = 0; j < this.cols; j++)
-            digitSum[i][j] = digitSumOne[i] + digitSumOne[j];
+            this.digitSum[i][j] = digitSumOne[i] + digitSumOne[j];
 }
 ```
 
@@ -747,24 +749,17 @@ private void initDigitSum() {
 
 把一根绳子剪成多段，并且使得每段的长度乘积最大。
 
-For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+```html
+n = 2
+return 1 (2 = 1 + 1)
+
+n = 10
+return 36 (10 = 3 + 3 + 4)
+```
 
 ## 解题思路
 
-### 动态规划解法
-
-```java
-public int integerBreak(int n) {
-    int[] dp = new int[n + 1];
-    dp[1] = 1;
-    for (int i = 2; i <= n; i++)
-        for (int j = 1; j < i; j++)
-            dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
-    return dp[n];
-}
-```
-
-### 贪心解法
+### 贪心
 
 尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
@@ -786,6 +781,19 @@ public int integerBreak(int n) {
 }
 ```
 
+### 动态规划
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+        for (int j = 1; j < i; j++)
+            dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
+    return dp[n];
+}
+```
+
 # 15. 二进制中 1 的个数
 
 [NowCoder](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
@@ -804,7 +812,7 @@ public int NumberOf1(int n) {
 
 ### n&(n-1)
 
-O(logM) 时间复杂度解法，其中 M 表示 1 的个数。
+O(M) 时间复杂度解法，其中 M 表示 1 的个数。
 
 该位运算是去除 n 的位级表示中最低的那一位。
 
@@ -965,28 +973,19 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 题目描述
 
-请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配。
+请实现一个函数用来匹配包括 '.' 和 '\*' 的正则表达式。模式中的字符 '.' 表示任意一个字符，而 '\*' 表示它前面的字符可以出现任意次（包含 0 次）。
+
+在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串 "aaa" 与模式 "a.a" 和 "ab\*ac\*a" 匹配，但是与 "aa.a" 和 "ab\*a" 均不匹配。
 
 ## 解题思路
 
 应该注意到，'.' 是用来当做一个任意字符，而 '\*' 是用来重复前面的字符。这两个的作用不同，不能把 '.' 的作用和 '\*' 进行类比，从而把它当成重复前面字符一次。
 
-```html
-if p.charAt(j) == s.charAt(i)  :  then dp[i][j] = dp[i-1][j-1];
-if p.charAt(j) == '.'          :  then dp[i][j] = dp[i-1][j-1];
-if p.charAt(j) == '*'          :
-     if p.charAt(j-1) != s.charAt(i)  :  then dp[i][j] = dp[i][j-2]  // a* only counts as empty
-     if p.charAt(j-1) == s.charAt(i) or
-        p.charAt(i-1) == '.'          :
-              then dp[i][j] = dp[i-1][j]   // a* counts as multiple a
-                or dp[i][j] = dp[i][j-1]   // a* counts as single a
-                or dp[i][j] = dp[i][j-2]   // a* counts as empty
-```
-
 ```java
 public boolean match(char[] str, char[] pattern) {
     int m = str.length, n = pattern.length;
     boolean[][] dp = new boolean[m + 1][n + 1];
+
     dp[0][0] = true;
     for (int i = 1; i <= n; i++)
         if (pattern[i - 1] == '*')
@@ -997,10 +996,13 @@ public boolean match(char[] str, char[] pattern) {
             if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
                 dp[i][j] = dp[i - 1][j - 1];
             else if (pattern[j - 1] == '*')
-                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
-                    dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
-                else
-                    dp[i][j] = dp[i][j - 2];
+                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.') {
+                    dp[i][j] |= dp[i][j - 1]; // a* counts as single a
+                    dp[i][j] |= dp[i - 1][j]; // a* counts as multiple a
+                    dp[i][j] |= dp[i][j - 2]; // a* counts as empty
+                } else
+                    dp[i][j] = dp[i][j - 2];   // a* only counts as empty
+
     return dp[m][n];
 }
 ```
@@ -1011,9 +1013,24 @@ public boolean match(char[] str, char[] pattern) {
 
 ## 题目描述
 
-请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串 "+100","5e2","-123","3.1416" 和 "-1E-16" 都表示数值。 但是 "12e","1a3.14","1.2.3","+-5" 和 "12e+4.3" 都不是。
+请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。
+
+例如，字符串 "+100","5e2","-123","3.1416" 和 "-1E-16" 都表示数值。但是 "12e","1a3.14","1.2.3","+-5" 和 "12e+4.3" 都不是。
 
 ## 解题思路
+
+使用正则表达式进行匹配。
+
+```html
+[]  ： 字符集合
+()  ： 分组，在这里是为了让表达式更清晰
+?   ： 重复 0 ~ 1
++   ： 重复 1 ~ n
+*   ： 重复 0 ~ n
+.   ： 任意字符
+\\. ： 转义后的 .
+\\d ： 任意数字
+```
 
 ```java
 public boolean isNumeric(char[] str) {
@@ -1029,7 +1046,7 @@ public boolean isNumeric(char[] str) {
 
 ## 题目描述
 
-保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
+需要保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
 ## 解题思路
 
