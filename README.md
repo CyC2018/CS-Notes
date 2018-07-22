@@ -139,7 +139,7 @@ Google 开源项目的代码风格规范。
 
 ## 后记 :memo:
 
-**关于仓库**
+**About**
 
 这个仓库是笔者的一个学习笔记，主要总结一些比较重要的知识点，希望对大家有所帮助。
 
@@ -147,19 +147,19 @@ Google 开源项目的代码风格规范。
 
 [BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都看完，但每本书多多少少都看了一部分。
 
-**如何贡献**
+**How to contribute**
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
 
 欢迎提交对本仓库的改进建议~
 
-**授权相关**
+**Authorized**
 
 虽然没有加开源协议，但是允许非商业性使用。
 
 转载使用请注明出处，谢谢！
 
-**上传方案**
+**Uploading**
 
 笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
 
@@ -167,7 +167,7 @@ Google 开源项目的代码风格规范。
 
 这里提供了笔者实现的 GFM 文档转换工具的链接：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-**排版指南**
+**Typesetting**
 
 笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
 
@@ -175,14 +175,39 @@ Google 开源项目的代码风格规范。
 
 这里提供了笔者实现的中英混排文档在线排版工具的链接：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
-**声明**
+**Statement**
 
 本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 
 **Logo**
 
-Logo power by https://logomakr.com/
+Power by [logomakr](https://logomakr.com/).
 
-**鸣谢**
+**Acknowledgements**
 
-[TeeKee](https://github.com/linw7)  [g10guang](https://github.com/g10guang) [crossoverJie](https://github.com/crossoverJie) 
+感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与笔者联系。
+
+<a href="https://github.com/linw7">
+    <img src="other/21679154.png" width="50px">
+</a> 
+<a href="https://github.com/g10guang">
+    <img src="other/18458140.jpg" width="50px">
+</a> 
+<a href="https://github.com/ResolveWang">
+    <img src="other/8018776.jpg" width="50px">
+</a>
+<a href="https://github.com/crossoverJie">
+    <img src="other/15684156.jpg" width="50px">
+</a> 
+<a href="https://github.com/jy03078584">
+    <img src="other/7719370.png" width="50px">
+</a>
+<a href="https://github.com/kwongtailau">
+    <img src="other/22954582.jpg" width="50px">
+</a>
+<a href="https://github.com/xiangflight">
+    <img src="other/10072416.jpg" width="50px">
+</a>
+
+
+
