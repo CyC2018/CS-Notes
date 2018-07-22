@@ -6,7 +6,7 @@
 
 <br>
 <div align="center">
-    <img src="other/LogoMakr_0zpEzN.png" width="200px">
+    <img src="other/LogoMakr_0zpEzN.png" width="150px">
 </div>
 
 ## 算法 :pencil2:
