@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/_-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/>-gitbook-blue.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details) 
+[![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-blue.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details) 
 
 <br>
 
