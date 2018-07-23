@@ -147,13 +147,13 @@ Google 开源项目的代码风格规范。
 
 [BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都看完，但每本书多多少少都看了一部分。
 
-**How to contribute**
+**How To Contribute**
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
 
 欢迎提交对本仓库的改进建议~
 
-**Authorized**
+**Authorization**
 
 虽然没有加开源协议，但是允许非商业性使用。
 
