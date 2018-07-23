@@ -613,6 +613,8 @@ public int RectCover(int n) {
 
 因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE) 二分查找部分。
 
+但是如果出现 nums[l] == nums[m] == nums[h]，那么此时无法确定解在哪个区间，因此需要切换到顺序查找。
+
 复杂度：O(logN) + O(1)
 
 ```java
@@ -622,11 +624,20 @@ public int minNumberInRotateArray(int[] nums) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h])
+        if (nums[l] == nums[m] && nums[m] == nums[h])
+            return minNumber(nums, l, h);
+        else if (nums[m] <= nums[h])
             h = m;
         else
             l = m + 1;
     }
+    return nums[l];
+}
+
+private int minNumber(int[] nums, int l, int h) {
+    for (int i = l; i < h; i++)
+        if (nums[i] > nums[i + 1])
+            return nums[i + 1];
     return nums[l];
 }
 ```
