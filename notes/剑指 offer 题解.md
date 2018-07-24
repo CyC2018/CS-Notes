@@ -2033,7 +2033,7 @@ public int getDigitAtIndex(int index)
 {
     if (index < 0)
         return -1;
-    int place = 1;  // 位数，1 表示个位，2 表示 十位...
+    int place = 1;  // 1 表示个位，2 表示 十位...
     while (true) {
         int amount = getAmountOfPlace(place);
         int totalAmount = amount * place;
@@ -2651,7 +2651,7 @@ private void swap(char[] c, int i, int j)
 
 ## 解题思路
 
-将 "abcXYZdef" 旋转左移三位，可以先将 "abc" 和 "XYZdef" 分别旋转，得到 "cbafedZYX"，然后再把整个字符串旋转得到 "XYZdefabc"。
+先将 "abc" 和 "XYZdef" 分别翻转，得到 "cbafedZYX"，然后再把整个字符串翻转得到 "XYZdefabc"。
 
 ```java
 public String LeftRotateString(String str, int n)
