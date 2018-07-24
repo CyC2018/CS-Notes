@@ -6,8 +6,9 @@
 
 ## 面试准备
 
-> [校招信息](interview/README.md)
-> [优秀博文](interview/blog.md)
+> [校招信息](interview/README.md)  
+> [优秀博文](interview/blog.md)  
+> [个人笔记](interview/note.md)
 
 ## 算法 :pencil2:
 

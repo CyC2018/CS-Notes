@@ -46,6 +46,9 @@ df, disk free, 通过文件系统来快速获取空间大小的信息，当我�
 当文件系统也确定删除了该文件后，这时候du与df就一致了。
 
 (2) kafka 组件
+
+
+
 (3) HDFS读写文件等
 
 ## 3. 技术范围
@@ -56,15 +59,17 @@ df, disk free, 通过文件系统来快速获取空间大小的信息，当我�
 
 数组，链表，哈希表，堆，队列，栈，二叉树，B树/B+树，红黑树，图
 
-- 排序：
+- [排序](http://xraorao.top/2018/07/11/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more)：
 
 冒泡，选择，插入，快排，堆排，归并排序，希尔排序
 
-- 查找：
+- [查找](http://xraorao.top/2018/07/14/%E5%B8%B8%E8%A7%81%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/#more)：
 
 二分查找，红黑树，散列表，二叉查找树
 
-- 并查集：
+- [并查集](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/%E7%AE%97%E6%B3%95.md#%E5%9B%9B%E5%B9%B6%E6%9F%A5%E9%9B%86)：
+
+并查集（Disjoint set或者Union-find set）是一种树型的数据结构，常用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。
 
 - 算法分析：
 
