@@ -1,5 +1,5 @@
 <!-- GFM-TOC -->
-* [一、基本类型](#一基本类型)
+* [一、数据类型](#一数据类型)
     * [包装类型](#包装类型)
     * [缓存池](#缓存池)
 * [二、String](#二string)
@@ -38,7 +38,7 @@
 <!-- GFM-TOC -->
 
 
-# 一、基本类型
+# 一、数据类型
 
 ## 包装类型
 
@@ -81,7 +81,7 @@ Integer n = 123;
 System.out.println(m == n); // true
 ```
 
-valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接使用缓存池的内容。
+valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。
 
 ```java
 public static Integer valueOf(int i) {
@@ -194,7 +194,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 使用 String.intern() 可以保证相同内容的字符串变量引用相同的内存对象。
 
-下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用，这个方法首先把 s1 引用的对象放到 String Poll（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用，这个方法首先把 s1 引用的对象放到 String Pool（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
 
 ```java
 String s1 = new String("aaa");
@@ -204,7 +204,7 @@ String s3 = s1.intern();
 System.out.println(s1.intern() == s3);  // true
 ```
 
-如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Poll 中。
+如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Pool 中。
 
 ```java
 String s4 = "bbb";
@@ -266,7 +266,7 @@ public class PassByValueExample {
 
 ## float 与 double
 
-1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是下转型，会使得精度下降，因此 Java 不能隐式执行下转型。
+1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。Java 不能隐式执行向下转型，因为这会使得精度降低。
 
 ```java
 // float f = 1.1;
@@ -341,8 +341,8 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 可以对类或类中的成员（字段以及方法）加上访问修饰符。
 
-- 成员可见表示其它类可以用这个类的实例访问到该成员；
-- 类可见表示其它类可以用这个类创建对象。
+- 成员可见表示其它类可以用这个类的实例对象访问到该成员；
+- 类可见表示其它类可以用这个类创建实例对象。
 
 protected 用于修饰成员，表示在继承体系中成员对于子类可见，但是这个访问修饰符对于类没有意义。
 
@@ -484,7 +484,7 @@ System.out.println(InterfaceExample.x);
 使用抽象类：
 
 - 需要在几个相关的类中共享代码。
-- 需要能控制继承来的方法和域的访问权限，而不是都为 public。
+- 需要能控制继承来的成员的访问权限，而不是都为 public。
 - 需要继承非静态（non-static）和非常量（non-final）字段。
 
 使用接口：
@@ -629,7 +629,7 @@ x.equals(y) == x.equals(y); // true
 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
 
 ```java
-x.euqals(null); // false;
+x.equals(null); // false;
 ```
 
 **3. 实现** 
@@ -685,7 +685,7 @@ System.out.println(set.size());   // 2
 
 理想的散列函数应当具有均匀性，即不相等的实例应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
 
-一个数与 31 相乘可以转换成移位和减法：`31\*x == (x<<5)-x`，编译器会自动进行这个优化。
+一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，编译器会自动进行这个优化。
 
 ```java
 @Override
@@ -763,10 +763,10 @@ try {
 ```
 
 ```html
-java.lang.CloneNotSupportedException: CloneTest
+java.lang.CloneNotSupportedException: CloneExample
 ```
 
-以上抛出了 CloneNotSupportedException，这是因为 CloneTest 没有实现 Cloneable 接口。
+以上抛出了 CloneNotSupportedException，这是因为 CloneExample 没有实现 Cloneable 接口。
 
 ```java
 public class CloneExample implements Cloneable {
@@ -937,9 +937,7 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 **1. 静态变量** 
 
-静态变量在内存中只存在一份，只在类初始化时赋值一次。
-
-- 静态变量：类所有的实例都共享静态变量，可以直接通过类名来访问它；
+- 静态变量：类所有的实例都共享静态变量，可以直接通过类名来访问它；静态变量在内存中只存在一份。
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
 
 ```java
@@ -1114,7 +1112,7 @@ Reflection is powerful, but should not be used indiscriminately. If it is possib
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
 -  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
--  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。
+-  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
 
 <div align="center"> <img src="../pics//PPjwP.png" width="600"/> </div><br>
 

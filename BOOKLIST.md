@@ -12,6 +12,7 @@
 - [鸟哥的 Linux 私房菜](https://book.douban.com/subject/4889838/)
 - [Unix 环境高级编程](https://book.douban.com/subject/25900403/)
 - [Unix/Linux 编程实践教程](https://book.douban.com/subject/1219329/)
+- [Operating Systems: Three Easy Pieces (OSTEP)](http://pages.cs.wisc.edu/~remzi/OSTEP/)
 
 # 计算机网络
 
@@ -63,7 +64,7 @@
 
 # 开发工具
 
-- [Pro Git](https://book.douban.com/subject/3420144/)
+- [Pro Git](https://git-scm.com/book/zh/v2)
 - [正则表达式必知必会](https://book.douban.com/subject/2269648/)
 
 # 编码实践
