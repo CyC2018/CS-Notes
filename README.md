@@ -1,6 +1,6 @@
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式 [:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+| 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 系统设计[:bulb:](#系统设计-bulb)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
 
 <br>
 <div align="center">
@@ -103,7 +103,7 @@ Leetcode 上数据库题目的解题记录。
 
 包含 NIO 的原理以及实例。
 
-## 分布式 :sweat_drops:
+## 系统设计 :bulb:
 
 > [一致性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性.md)
 
@@ -147,13 +147,13 @@ Google 开源项目的代码风格规范。
 
 [BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都看完，但每本书多多少少都看了一部分。
 
-**How to contribute**
+**How To Contribute**
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
 
 欢迎提交对本仓库的改进建议~
 
-**Authorized**
+**Authorization**
 
 虽然没有加开源协议，但是允许非商业性使用。
 
