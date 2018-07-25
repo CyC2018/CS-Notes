@@ -499,7 +499,7 @@ public synchronized static void fun() {
 
 ## ReentrantLock
 
-ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁.
+ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁。
 
 ```java
 public class LockExample {
@@ -952,7 +952,7 @@ produce..produce..consume..consume..produce..consume..produce..consume..produce.
 
 ```java
 public class ForkJoinExample extends RecursiveTask<Integer> {
-    private final int threhold = 5;
+    private final int threshold = 5;
     private int first;
     private int last;
 
@@ -964,7 +964,7 @@ public class ForkJoinExample extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         int result = 0;
-        if (last - first <= threhold) {
+        if (last - first <= threshold) {
             // 任务足够小则直接计算
             for (int i = first; i <= last; i++) {
                 result += i;
@@ -1134,7 +1134,7 @@ public static void main(String[] args) throws InterruptedException {
 1000
 ```
 
-除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的完整性，它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
+除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的原子性。它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
 
 ```java
 public class AtomicSynchronizedExample {
@@ -1176,9 +1176,13 @@ public static void main(String[] args) throws InterruptedException {
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
-volatile 可保证可见性。synchronized 也能够保证可见性，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。final 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+主要有有三种实现可见性的方式：
 
-对前面的线程不安全示例中的 cnt 变量用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
+- volatile
+- synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
+- final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+
+对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
 
 ### 3. 有序性
 
@@ -1662,9 +1666,9 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 缩小同步范围，例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护，在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂的控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
 
-- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
+- 多用并发集合少用同步集合，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
 
 - 使用本地变量和不可变类来保证线程安全。
 

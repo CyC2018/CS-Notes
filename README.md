@@ -1,8 +1,15 @@
-[![](https://img.shields.io/badge/_-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/>-gitbook-blue.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details) 
-
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 分布式 [:sweat_drops:](#分布式-sweat_drops)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+| 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 系统设计[:bulb:](#系统设计-bulb)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+
+<br>
+<div align="center">
+    <img src="other/LogoMakr_0zpEzN.png" width="150px">
+    <br>
+    <a href="https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"> <img src="https://img.shields.io/badge/>-gitter-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
+</div>
+
+<!-- [![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-4ab8a1.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details)  -->
 
 ## 面试准备
 
@@ -102,7 +109,7 @@ Leetcode 上数据库题目的解题记录。
 
 包含 NIO 的原理以及实例。
 
-## 分布式 :sweat_drops:
+## 系统设计 :bulb:
 
 > [一致性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性.md)
 
@@ -138,7 +145,7 @@ Google 开源项目的代码风格规范。
 
 ## 后记 :memo:
 
-**关于仓库**
+**About**
 
 这个仓库是笔者的一个学习笔记，主要总结一些比较重要的知识点，希望对大家有所帮助。
 
@@ -146,19 +153,19 @@ Google 开源项目的代码风格规范。
 
 [BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都看完，但每本书多多少少都看了一部分。
 
-**如何贡献**
+**How To Contribute**
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
 
 欢迎提交对本仓库的改进建议~
 
-**授权相关**
+**Authorization**
 
 虽然没有加开源协议，但是允许非商业性使用。
 
 转载使用请注明出处，谢谢！
 
-**上传方案**
+**Uploading**
 
 笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
 
@@ -166,7 +173,7 @@ Google 开源项目的代码风格规范。
 
 这里提供了笔者实现的 GFM 文档转换工具的链接：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-**排版指南**
+**Typesetting**
 
 笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
 
@@ -174,10 +181,39 @@ Google 开源项目的代码风格规范。
 
 这里提供了笔者实现的中英混排文档在线排版工具的链接：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
-**声明**
+**Statement**
 
 本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 
-**鸣谢**
+**Logo**
 
-[TeeKee](https://github.com/linw7)  [g10guang](https://github.com/g10guang) [crossoverJie](https://github.com/crossoverJie) 
+Power by [logomakr](https://logomakr.com/).
+
+**Acknowledgements**
+
+感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与笔者联系。
+
+<a href="https://github.com/linw7">
+    <img src="other/21679154.png" width="50px">
+</a> 
+<a href="https://github.com/g10guang">
+    <img src="other/18458140.jpg" width="50px">
+</a> 
+<a href="https://github.com/ResolveWang">
+    <img src="other/8018776.jpg" width="50px">
+</a>
+<a href="https://github.com/crossoverJie">
+    <img src="other/15684156.jpg" width="50px">
+</a> 
+<a href="https://github.com/jy03078584">
+    <img src="other/7719370.png" width="50px">
+</a>
+<a href="https://github.com/kwongtailau">
+    <img src="other/22954582.jpg" width="50px">
+</a>
+<a href="https://github.com/xiangflight">
+    <img src="other/10072416.jpg" width="50px">
+</a>
+
+
+
