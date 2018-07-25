@@ -90,11 +90,19 @@
 
 ## 题目描述
 
-在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。例如，如果输入长度为 7 的数组 {2, 3, 1, 0, 2, 5}，那么对应的输出是第一个重复的数字 2。
+在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字是重复的，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。
 
-要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。牛客网讨论区这一题的首票答案使用 nums[i] + length 来将元素标记，这么做会有加法溢出问题。
+```html
+Input:
+{2, 3, 1, 0, 2, 5}
+
+Output:
+2
+```
 
 ## 解题思路
+
+要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。牛客网讨论区这一题的首票答案使用 nums[i] + length 来将元素标记，这么做会有加法溢出问题。
 
 这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
 
@@ -158,7 +166,11 @@ Given target = 20, return false.
 
 ## 解题思路
 
-从右上角开始查找。因为矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
+从右上角开始查找。矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
+
+当前元素的查找区间为左下角的所有元素，例如元素 12 的查找区间如下：
+
+<div align="center"> <img src="../pics//026d3cb4-67f7-4a83-884d-8032f57ec446.png" width="200"/> </div><br>
 
 复杂度：O(M + N) + O(1)
 
@@ -261,25 +273,14 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-### 使用 Collections.reverse()
-
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (listNode != null) {
-        ret.add(listNode.val);
-        listNode = listNode.next;
-    }
-    Collections.reverse(ret);
-    return ret;
-}
-```
-
 ### 使用头插法
 
 利用链表头插法为逆序的特点。
 
-头结点和第一个节点的区别：头结点是在头插法中使用的一个额外节点，这个节点不存储值；第一个节点就是链表的第一个真正存储值的节点。
+头结点和第一个节点的区别：
+
+- 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
+- 第一个节点就是链表的第一个真正存储值的节点。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -298,6 +299,20 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         ret.add(head.val);
         head = head.next;
     }
+    return ret;
+}
+```
+
+### 使用 Collections.reverse()
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (listNode != null) {
+        ret.add(listNode.val);
+        listNode = listNode.next;
+    }
+    Collections.reverse(ret);
     return ret;
 }
 ```
@@ -322,22 +337,23 @@ inorder =  [9,3,15,20,7]
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
 ```java
-private Map<Integer, Integer> inOrderNumsIndexs = new HashMap<>(); // 缓存中序遍历数组的每个值对应的索引
+// 缓存中序遍历数组的每个值对应的索引
+private Map<Integer, Integer> inOrderNumsIndexs = new HashMap<>();
 
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
     for (int i = 0; i < in.length; i++)
         inOrderNumsIndexs.put(in[i], i);
-    return reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
+    return reConstructBinaryTree(pre, 0, pre.length - 1, 0, in.length - 1);
 }
 
-private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, int inL, int inR) {
+private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int inL, int inR) {
     if (preL > preR)
         return null;
     TreeNode root = new TreeNode(pre[preL]);
     int inIndex = inOrderNumsIndexs.get(root.val);
     int leftTreeSize = inIndex - inL;
-    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, in, inL, inL + leftTreeSize - 1);
-    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, in, inL + leftTreeSize + 1, inR);
+    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, inL, inL + leftTreeSize - 1);
+    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, inL + leftTreeSize + 1, inR);
     return root;
 }
 ```
@@ -349,16 +365,6 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int[] in, 
 ## 题目描述
 
 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
-
-## 解题思路
-
-① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
-
-<div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
-
-② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
-
-<div align="center"> <img src="../pics//e143f6da-d114-4ba4-8712-f65299047fa2.png" width="250"/> </div><br>
 
 ```java
 public class TreeLinkNode {
@@ -372,6 +378,16 @@ public class TreeLinkNode {
     }
 }
 ```
+
+## 解题思路
+
+① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
+
+<div align="center"> <img src="../pics//cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
+
+② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
+
+<div align="center"> <img src="../pics//e143f6da-d114-4ba4-8712-f65299047fa2.png" width="250"/> </div><br>
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
@@ -398,7 +414,7 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 ## 题目描述
 
-用两个栈来实现一个队列，完成队列的 Push 和 Pop 操作。队列中的元素为 int 类型。
+用两个栈来实现一个队列，完成队列的 Push 和 Pop 操作。
 
 ## 解题思路
 
@@ -442,7 +458,7 @@ public int pop() throws Exception {
 
 <div align="center"> <img src="../pics//a0df8edc-581b-4977-95c2-d7025795b899.png" width="300"/> </div><br>
 
-递归方法是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，避免重复求解子问题。
+递归是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，从而避免重复求解子问题。
 
 ```java
 public int Fibonacci(int n) {
@@ -521,11 +537,11 @@ public int JumpFloor(int n) {
 
 ```java
 public int JumpFloor(int n) {
-    if (n <= 1)
+    if (n <= 2)
         return n;
-    int pre2 = 0, pre1 = 1;
-    int result = 0;
-    for (int i = 1; i <= n; i++) {
+    int pre2 = 1, pre1 = 2;
+    int result = 1;
+    for (int i = 2; i < n; i++) {
         result = pre2 + pre1;
         pre2 = pre1;
         pre1 = result;
@@ -613,6 +629,8 @@ public int RectCover(int n) {
 
 因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE) 二分查找部分。
 
+但是如果出现 nums[l] == nums[m] == nums[h]，那么此时无法确定解在哪个区间，因此需要切换到顺序查找。
+
 复杂度：O(logN) + O(1)
 
 ```java
@@ -622,11 +640,20 @@ public int minNumberInRotateArray(int[] nums) {
     int l = 0, h = nums.length - 1;
     while (l < h) {
         int m = l + (h - l) / 2;
-        if (nums[m] <= nums[h])
+        if (nums[l] == nums[m] && nums[m] == nums[h])
+            return minNumber(nums, l, h);
+        else if (nums[m] <= nums[h])
             h = m;
         else
             l = m + 1;
     }
+    return nums[l];
+}
+
+private int minNumber(int[] nums, int l, int h) {
+    for (int i = l; i < h; i++)
+        if (nums[i] > nums[i + 1])
+            return nums[i + 1];
     return nums[l];
 }
 ```
@@ -2022,7 +2049,7 @@ public int getDigitAtIndex(int index)
 {
     if (index < 0)
         return -1;
-    int place = 1;  // 位数，1 表示个位，2 表示 十位...
+    int place = 1;  // 1 表示个位，2 表示 十位...
     while (true) {
         int amount = getAmountOfPlace(place);
         int totalAmount = amount * place;
@@ -2640,7 +2667,7 @@ private void swap(char[] c, int i, int j)
 
 ## 解题思路
 
-将 "abcXYZdef" 旋转左移三位，可以先将 "abc" 和 "XYZdef" 分别旋转，得到 "cbafedZYX"，然后再把整个字符串旋转得到 "XYZdefabc"。
+先将 "abc" 和 "XYZdef" 分别翻转，得到 "cbafedZYX"，然后再把整个字符串翻转得到 "XYZdefabc"。
 
 ```java
 public String LeftRotateString(String str, int n)
