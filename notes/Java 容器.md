@@ -13,6 +13,7 @@
     * [HashMap](#hashmap)
     * [ConcurrentHashMap](#concurrenthashmap)
     * [LinkedHashMap](#linkedhashmap)
+    * [WeekHashMap](#weekhashmap)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -981,6 +982,63 @@ public static void main(String[] args) {
 ```html
 [3, 1, 4]
 ```
+
+## WeekHashMap
+
+### 存储结构
+
+WeakHashMap 的 Entry 继承自 WeakReference，被 WeakReference 关联的对象在下一次垃圾回收时会被回收。
+
+WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存对象，由 JVM 对这部分缓存进行回收。
+
+```java
+private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
+```
+
+### ConcurrentCache
+
+Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。
+
+ConcurrentCache 采取的是分代缓存：
+
+- 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
+- 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，用来存放比较老的对象，这些老对象会被垃圾收集器回收。
+
+```java
+public final class ConcurrentCache<K, V> {
+
+    private final int size;
+
+    private final Map<K, V> eden;
+
+    private final Map<K, V> longterm;
+
+    public ConcurrentCache(int size) {
+        this.size = size;
+        this.eden = new ConcurrentHashMap<>(size);
+        this.longterm = new WeakHashMap<>(size);
+    }
+
+    public V get(K k) {
+        V v = this.eden.get(k);
+        if (v == null) {
+            v = this.longterm.get(k);
+            if (v != null)
+                this.eden.put(k, v);
+        }
+        return v;
+    }
+
+    public void put(K k, V v) {
+        if (this.eden.size() >= size) {
+            this.longterm.putAll(this.eden);
+            this.eden.clear();
+        }
+        this.eden.put(k, v);
+    }
+}
+```
+
 
 # 参考资料
 
