@@ -87,17 +87,17 @@ Leetcode 上数据库题目的解题记录。
 
 参考 Effective Java、Java 编程思想，也有部分内容参考官方文档以及 StackOverflow。
 
-> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
+> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
-参考 深入理解 Java 虚拟机。
+包含容器源码分析。
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
 参考 Java 编程思想、深入理解 Java 虚拟机。
 
-> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
+> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
-包含容器源码的分析。
+参考 深入理解 Java 虚拟机。
 
 > [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
