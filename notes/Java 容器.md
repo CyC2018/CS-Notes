@@ -12,6 +12,7 @@
     * [LinkedList](#linkedlist)
     * [HashMap](#hashmap)
     * [ConcurrentHashMap](#concurrenthashmap)
+    * [LinkedHashMap](#linkedhashmap)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -319,7 +320,7 @@ private static class Node<E> {
 }
 ```
 
-每个链表存储了 Head 和 Tail 指针：
+每个链表存储了 first 和 last 指针：
 
 ```java
 transient Node<E> first;
@@ -847,7 +848,6 @@ public int size() {
 }
 ```
 
-
 ### 3. JDK 1.8 的改动
 
 JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发程度与 Segment 数量相等。
@@ -855,6 +855,132 @@ JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment�
 JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized。
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
+
+## LinkedHashMap
+
+### 存储结构
+
+继承自 HashMap，因此具有和 HashMap 一样的快速查找特性。
+
+```java
+public class LinkedHashMap<K,V> extends HashMap<K,V> implements Map<K,V>
+```
+
+内存维护了一个双向循环链表，用来维护插入顺序或者 LRU 顺序。
+
+```java
+/**
+ * The head (eldest) of the doubly linked list.
+ */
+transient LinkedHashMap.Entry<K,V> head;
+
+/**
+ * The tail (youngest) of the doubly linked list.
+ */
+transient LinkedHashMap.Entry<K,V> tail;
+```
+
+顺序使用 accessOrder 来决定，默认为 false，此时使用的是插入顺序。
+
+```java
+final boolean accessOrder;
+```
+
+LinkedHashMap 最重要的是以下用于记录顺序的函数，它们会在 put、get 等方法中调用。
+
+```java
+void afterNodeAccess(Node<K,V> p) { }
+void afterNodeInsertion(boolean evict) { }
+```
+
+### afterNodeAccess()
+
+当一个 Node 被访问时，如果 accessOrder 为 true，会将它移到链表尾部。也就是说指定为 LRU 顺序之后，在每次方位一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久为使用的节点。
+
+```java
+void afterNodeAccess(Node<K,V> e) { // move node to last
+    LinkedHashMap.Entry<K,V> last;
+    if (accessOrder && (last = tail) != e) {
+        LinkedHashMap.Entry<K,V> p =
+            (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
+        p.after = null;
+        if (b == null)
+            head = a;
+        else
+            b.after = a;
+        if (a != null)
+            a.before = b;
+        else
+            last = b;
+        if (last == null)
+            head = p;
+        else {
+            p.before = last;
+            last.after = p;
+        }
+        tail = p;
+        ++modCount;
+    }
+}
+```
+
+### afterNodeInsertion()
+
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 ture 时会移除最晚的节点，也就是链表首部节点 first。
+
+evict 只有在构建 Map 的时候才为 true。
+
+```java
+void afterNodeInsertion(boolean evict) { // possibly remove eldest
+    LinkedHashMap.Entry<K,V> first;
+    if (evict && (first = head) != null && removeEldestEntry(first)) {
+        K key = first.key;
+        removeNode(hash(key), key, null, false, true);
+    }
+}
+```
+
+removeEldestEntry() 默认为 false，如果需要让它为 true，需要继承 LinkedHashMap 并且覆盖这个方法的实现，这在实现 LRU 的缓存中特别有用，通过移除最近最久未使用的节点，从而保证缓存空间足够，并且缓存的数据都是热点数据。
+
+```java
+protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+        return false;
+    }
+```
+
+### LRU 缓存
+
+以下是使用 LinkedHashMap 实现的一个 LRU 缓存，设定最大缓存空间 MAX_ENTRIES  为 2，并且使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LUR 顺序。并且覆盖了 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
+
+```java
+class LRUCache<K, V> extends LinkedHashMap<K, V> {
+    private static final int MAX_ENTRIES = 3;
+
+    protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() > MAX_ENTRIES;
+    }
+
+    LRUCache() {
+        super(MAX_ENTRIES, 0.75f, true);
+    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    LRUCache<Integer, String> cache = new LRUCache<>();
+    cache.put(1, "a");
+    cache.put(2, "b");
+    cache.put(3, "c");
+    cache.get(1);
+    cache.put(4, "d");
+    System.out.println(cache.keySet());
+}
+```
+
+```html
+[3, 1, 4]
+```
 
 # 参考资料
 
