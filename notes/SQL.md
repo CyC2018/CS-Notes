@@ -415,6 +415,12 @@ ORDER BY cust_name;
 
 可以用 AS 给列名、计算字段和表名取别名，给表名取别名是为了简化 SQL 语句以及连接相同表。
 
+连接一般分为：内连接，外连接，交叉连接。
+
+> 外连接：LEFT/RIGHT/FULL OUTER JOIN,通常我们都省略OUTER关键字,写成LEFT/RIGHT/FULL JOIN。
+> 内连接：内连接是用比较运算符比较要连接的列的值的连接，不匹配的行不会被显示。sql关键字JOIN 或者INNER JOIN，通常我们写成JOIN
+> 没有where条件的交叉连接将产生连接表所涉及的笛卡尔积。即TableA的行数*TableB的行数的结果集。SQL关键字为CROSS JOIN
+
 ## 内连接
 
 内连接又称等值连接，使用 INNER JOIN 关键字。
@@ -479,7 +485,7 @@ FROM tablea AS A NATURAL JOIN tableb AS B;
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```sql
-SELECT Customers.cust_id, Orders.order_num
+SELECT Customers.*, Orders.order_id
 FROM Customers LEFT OUTER JOIN Orders
 ON Customers.cust_id = Orders.cust_id;
 ```
