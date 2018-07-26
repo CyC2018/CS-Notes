@@ -8,6 +8,7 @@
 * [三、源码分析](#三源码分析)
     * [ArrayList](#arraylist)
     * [Vector](#vector)
+    * [CopyOnWriteArrayList](#copyonwritearraylist)
     * [LinkedList](#linkedlist)
     * [HashMap](#hashmap)
     * [ConcurrentHashMap](#concurrenthashmap)
@@ -25,23 +26,23 @@
 
 ### 1. Set
 
-- HashSet：基于哈希实现，支持快速查找，但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的；
+- HashSet：基于哈希实现，支持快速查找，但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
 
-- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)；
+- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)。
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序。
 
 ### 2. List
 
-- ArrayList：基于动态数组实现，支持随机访问；
+- ArrayList：基于动态数组实现，支持随机访问。
 
-- Vector：和 ArrayList 类似，但它是线程安全的；
+- Vector：和 ArrayList 类似，但它是线程安全的。
 
 - LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 ### 3. Queue
 
-- LinkedList：可以用它来支持双向队列；
+- LinkedList：可以用它来实现双向队列。
 
 - PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
@@ -85,14 +86,14 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 public static <T> List<T> asList(T... a)
 ```
 
-如果要将数组类型转换为 List 类型，应该注意的是 asList() 的参数为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
+应该注意的是 asList() 的参数为泛型的变长参数，不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
 
 ```java
 Integer[] arr = {1, 2, 3};
 List list = Arrays.asList(arr);
 ```
 
-也可以使用以下方式生成 List。
+也可以使用以下方式使用 asList()：
 
 ```java
 List list = Arrays.asList(1,2,3);
@@ -235,12 +236,12 @@ public synchronized E get(int index) {
 }
 ```
 
-### 2. ArrayList 与 Vector
+### 2. 与 ArrayList 的区别
 
 - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 - Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
-### 3. Vector 替代方案
+### 3. 替代方案
 
 为了获得线程安全的 ArrayList，可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
@@ -255,7 +256,15 @@ List<String> synList = Collections.synchronizedList(list);
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
-CopyOnWriteArrayList 是一种 CopyOnWrite 容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
+## CopyOnWriteArrayList
+
+### 读写分离
+
+写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响。
+
+写操作需要加锁，防止同时并发写入时导致的写入数据丢失。
+
+写操作结束之后需要把原始数组指向新的复制数组。
 
 ```java
 public boolean add(E e) {
@@ -264,7 +273,7 @@ public boolean add(E e) {
     try {
         Object[] elements = getArray();
         int len = elements.length;
-        Object[] newElements = Arrays.copyOf(elements, len + 1); 
+        Object[] newElements = Arrays.copyOf(elements, len + 1);
         newElements[len] = e;
         setArray(newElements);
         return true;
@@ -276,12 +285,25 @@ public boolean add(E e) {
 final void setArray(Object[] a) {
     array = a;
 }
+```
 
+```java
 @SuppressWarnings("unchecked")
 private E get(Object[] a, int index) {
     return (E) a[index];
 }
 ```
+
+### 适用场景
+
+CopyOnWriteArrayList 在写操作的同时允许读操作，大大提高了读操作的性能，因此很适合读多写少的应用场景。
+
+但是 CopyOnWriteArrayList 有其缺陷：
+
+- 内存占用：在写操作时需要复制一个新的数组，使得内存占用为原来的两倍左右；
+- 数据不一致：读操作不能读取实时性的数据，因为部分写操作的数据还未同步到读数组中。
+
+所以 CopyOnWriteArrayList 不适合内存敏感以及对实时性要求很高的场景。
 
 ## LinkedList
 
