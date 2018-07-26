@@ -895,7 +895,7 @@ void afterNodeInsertion(boolean evict) { }
 
 ### afterNodeAccess()
 
-当一个 Node 被访问时，如果 accessOrder 为 true，会将它移到链表尾部。也就是说指定为 LRU 顺序之后，在每次方位一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久为使用的节点。
+当一个 Node 被访问时，如果 accessOrder 为 true，会将它移到链表尾部。也就是说指定为 LRU 顺序之后，在每次访问一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久未使用的节点。
 
 ```java
 void afterNodeAccess(Node<K,V> e) { // move node to last
@@ -928,7 +928,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 
 在 put 等操作之后执行，当 removeEldestEntry() 方法返回 ture 时会移除最晚的节点，也就是链表首部节点 first。
 
-evict 只有在构建 Map 的时候才为 true。
+evict 只有在构建 Map 的时候才为 false，在这里为 true。
 
 ```java
 void afterNodeInsertion(boolean evict) { // possibly remove eldest
@@ -950,7 +950,7 @@ protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
 
 ### LRU 缓存
 
-以下是使用 LinkedHashMap 实现的一个 LRU 缓存，设定最大缓存空间 MAX_ENTRIES  为 2，并且使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LUR 顺序。并且覆盖了 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
+以下是使用 LinkedHashMap 实现的一个 LRU 缓存，设定最大缓存空间 MAX_ENTRIES  为 3。使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LUR 顺序。覆盖 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
 
 ```java
 class LRUCache<K, V> extends LinkedHashMap<K, V> {
