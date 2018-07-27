@@ -52,6 +52,20 @@ df, disk free, 通过文件系统来快速获取空间大小的信息，当我�
 
 (3) HDFS读写文件等
 
+2. 2017.7.27，百度深研院
+
+(1) kafka 什么时候 rebalance, consumer 的 session.timeout.ms的配置项是干嘛的？
+(2) java String StringBuffer StringBuilder 的区别？
+(3) linux 如何查看线程、端口占用情况？
+(4) java 如何实现线程安全？
+(5) jvm 内存分配策略,GC 触发条件, 收集器？
+(6) TCP 四次挥手的过程？time_out的缺点？
+(7) mysql 的 group by 和 partition by?
+(8) 海量数据去重，例如大量的IP地址，如何去重？
+答：MapReduce
+(9) 进程间通信方式？
+答：管道，命名管道，消息队列，信号量，共享内存。
+
 ## 3. 技术范围
 
 1. 数据结构和算法
