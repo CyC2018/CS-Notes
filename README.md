@@ -105,13 +105,21 @@ Leetcode 上数据库题目的解题记录。
 
 ## 系统设计 :bulb:
 
-> [一致性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/一致性.md)
+> [分布式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式.md)
 
-CAP、BASE、Paxos、Raft
+分布式锁、分布式事务、CAP、BASE、Paxos、Raft
 
->[分布式问题分析](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
+> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
 
-分布式事务、分布式锁、分布式 Session、负载均衡
+负载均衡、Session 管理
+
+> [安全性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/安全性.md)
+
+XSS、CSRF、SQL 注入、DDos
+
+> [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
+
+消息处理模型、使用场景、可靠性
 
 ## 工具 :hammer:
 

