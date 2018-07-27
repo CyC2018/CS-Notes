@@ -61,6 +61,8 @@ df, disk free, 通过文件系统来快速获取空间大小的信息，当我�
 (5) jvm 内存分配策略,GC 触发条件, 收集器？  
 (6) TCP 四次挥手的过程？time_out的缺点？  
 (7) mysql 的 group by 和 partition by?  
+答：group by 用来做聚合操作，partition by 用于对某个字段分区，然后做某些操作。  
+[参考链接](https://blog.csdn.net/cyl937/article/details/19930349)
 (8) 海量数据去重，例如大量的IP地址，如何去重？  
 答：MapReduce  
 (9) 进程间通信方式？  
