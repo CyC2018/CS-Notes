@@ -109,7 +109,7 @@ Leetcode 上数据库题目的解题记录。
 
 分布式锁、分布式事务、CAP、BASE、Paxos、Raft
 
-> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式问题分析.md)
+> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/集群.md)
 
 负载均衡、Session 管理
 
