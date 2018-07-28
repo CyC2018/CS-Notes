@@ -903,7 +903,7 @@ declare -x HOME="/home/dmtsai"
 declare -x HOSTNAME="study.centos.vbird"
 .....(其他省略).....
 
-$ export | cut -c 12
+$ export | cut -c 12-
 ```
 
 ## 排序指令
