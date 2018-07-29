@@ -1640,6 +1640,19 @@ private void backtracking(TreeNode node, int target, ArrayList<Integer> path)
 
 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
 
+```java
+public class RandomListNode
+{
+    int label;
+    RandomListNode next = null;
+    RandomListNode random = null;
+
+    RandomListNode(int label) {
+        this.label = label;
+    }
+}
+```
+
 <div align="center"> <img src="../pics//a01d1516-8168-461a-a24b-620b9cfc40f4.png" width="300"/> </div><br>
 
 ## 解题思路
@@ -1820,7 +1833,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuilder s)
 
 多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。
 
-使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0 ，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums)
@@ -1924,7 +1937,7 @@ public ArrayList<Integer> GetLeastNumbers_Solution(int[] nums, int k)
         if (maxHeap.size() > k)
             maxHeap.poll();
     }
-    return new ArrayList<>(maxHeap) ;
+    return new ArrayList<>(maxHeap);
 }
 ```
 
@@ -2005,7 +2018,7 @@ public char FirstAppearingOnce()
 
 ## 题目描述
 
-{6,-3,-2,7,-15,1,2,2}，连续子数组的最大和为 8（从第 0 个开始，到第 3 个为止）。
+{6, -3, -2, 7, -15, 1, 2, 2}，连续子数组的最大和为 8（从第 0 个开始，到第 3 个为止）。
 
 ## 解题思路
 
