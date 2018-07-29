@@ -1,1 +1,14 @@
 .DS_Store
+
+# idea
+code/.idea
+code/build
+*.jar
+*.log
+*.class
+*.war
+code/logs
+
+# gradle
+code/.gradle
+!code/gradle/wrapper/gradle-wrapper.jar

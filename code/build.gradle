@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group 'xraorao'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        //url 'https://mvnrepository.com/artifact/org.apache.storm/storm-core'
+        url 'http://clojars.org/repo/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/org.apache.storm/storm-core
+    compile  group: 'org.apache.storm', name: 'storm-core', version: '1.1.1'
+
+    //compile  group: 'org.apache.storm', name: 'storm-kafka', version: '1.1.1'
+    compile 'com.google.guava:guava:25.1-jre'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0'
+
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'License',
+                'Implementation-Version': version
+        attributes "Class-Path": configurations.compile.collect { it.getName() }.join(' dependencies/')
+    }
+}
+
+task copyJar(type: Copy){
+    from configurations.runtime
+    into ('build/libs/dependencies')
+}
