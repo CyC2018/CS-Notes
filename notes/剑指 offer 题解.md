@@ -1,4 +1,5 @@
 <!-- GFM-TOC -->
+* [1. 前言](#1-前言)
 * [2. 实现 Singleton](#2-实现-singleton)
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
@@ -79,6 +80,13 @@
 * [参考文献](#参考文献)
 <!-- GFM-TOC -->
 
+
+# 1. 前言
+
+本文的绘图可通过以下途径免费获得并使用：
+
+- [ProcessOn](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)
+- [DrawIO](https://drive.google.com/file/d/1nSSCpPUC05MFoeFuf_aeTtkm7dG5-bJ1/view?usp=sharing)
 
 # 2. 实现 Singleton
 
@@ -456,7 +464,7 @@ public int pop() throws Exception {
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="../pics//a0df8edc-581b-4977-95c2-d7025795b899.png" width="300"/> </div><br>
+<div align="center"> <img src="../pics//faecea49-9974-40db-9821-c8636137df61.jpg" width="300"/> </div><br>
 
 递归是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，从而避免重复求解子问题。
 
@@ -941,11 +949,11 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="../pics//41392d76-dd1d-4712-85d9-e8bb46b04a2d.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
-<div align="center"> <img src="../pics//db4921d4-184b-48ba-a3cf-1d1141e3ba2d.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
 
 综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个尾节点以 O(N) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
@@ -1103,7 +1111,7 @@ public void reOrderArray(int[] nums) {
 
 设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
 
-<div align="center"> <img src="../pics//207c1801-2335-4b1b-b65c-126a0ba966cb.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics//ea2304ce-268b-4238-9486-4d8f8aea8ca4.png" width="500"/> </div><br>
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k)
@@ -1140,7 +1148,7 @@ public ListNode FindKthToTail(ListNode head, int k)
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="../pics//71363383-2d06-4c63-8b72-c01c2186707d.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics//2858f8ad-aedb-45a5-a706-e98c96d690fa.jpg" width="600"/> </div><br>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead)
@@ -1346,7 +1354,7 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2)
 
 下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
-<div align="center"> <img src="../pics//0f373947-c68f-45b4-a59e-086154745ac5.png" width="300"/> </div><br>
+<div align="center"> <img src="../pics//6539b9a4-2b24-4d10-8c94-2eb5aba1e296.png" width="300"/> </div><br>
 
 ## 解题思路
 
