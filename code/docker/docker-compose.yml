@@ -1,0 +1,212 @@
+version: "3"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    container_name: namenode
+    networks:
+      - hadoop
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 50070:50070
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    container_name: datanode
+    networks:
+      - hadoop
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 50075:50075
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
+    container_name: resourcemanager
+    networks:
+      - hadoop
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8088:8088
+
+  nodemanager1:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
+    container_name: nodemanager
+    networks:
+      - hadoop
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8042:8042
+
+  historyserver:
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
+    container_name: historyserver
+    networks:
+      - hadoop
+    volumes:
+      - hadoop_historyserver:/hadoop/yarn/timeline
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8188:8188
+  
+  zoo1:
+    image: zookeeper:3.4.10
+    container_name: zoo1
+    networks:
+      - hadoop
+    restart: always
+    hostname: zoo1
+    volumes:
+      - hadoop_zookeeper:/data
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    ports:
+      - 21811:2181
+    volumes:
+      - /home/xrr/data/docker/zookeeper/zk1_data:/data
+      - /home/xrr/data/docker/zookeeper/zk1_log:/datalog
+
+  zoo2:
+    image: zookeeper:3.4.10
+    container_name: zoo2
+    networks:
+      - hadoop
+    restart: always
+    hostname: zoo2
+    volumes:
+      - /home/xrr/data/docker/zookeeper/zk2_data:/data
+      - /home/xrr/data/docker/zookeeper/zk2_log:/datalog
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    ports:
+      - 21812:2181
+  zoo3:
+    image: zookeeper:3.4.10
+    container_name: zoo3
+    networks:
+      - hadoop
+    restart: always
+    hostname: zoo3
+    volumes:
+      - /home/xrr/data/docker/zookeeper/zk3_data:/data
+      - /home/xrr/data/docker/zookeeper/zk3_log:/datalog
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    ports:
+      - 21813:2181
+  kafka1:
+    image: xiongraorao/kafka
+    networks:
+      - hadoop
+    hostname: kafka1
+    container_name: hadoop_kafka1
+    restart: always
+    ports:
+      - "29092:19092"
+    environment:
+      # add the entry "127.0.0.1    kafka1" to your /etc/hosts file
+      KAFKA_ZOOKEEPER_TIMEOUT_MS: 60000
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka1:19092"
+      KAFKA_NUM_RECOVERY_THREADS_PER_DATA_DIR: 4
+      #HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181,zoo2:2181,zoo3:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+    volumes:
+      - /home/xrr/data/docker/kafka1-data:/var/lib/kafka/data
+  kafka2:
+    image: xiongraorao/kafka
+    networks:
+      - hadoop
+    hostname: kafka2
+    container_name: hadoop_kafka2
+    restart: always
+    ports:
+      - "29093:19093"
+    environment:
+      # add the entry "127.0.0.1    kafka1" to your /etc/hosts file
+      KAFKA_ZOOKEEPER_TIMEOUT_MS: 60000
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka2:19093"
+      KAFKA_NUM_RECOVERY_THREADS_PER_DATA_DIR: 4
+      #HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181,zoo2:2181,zoo3:2181"
+      KAFKA_BROKER_ID: 2
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+    volumes:
+      - /home/xrr/data/docker/kafka2-data:/var/lib/kafka/data
+
+  kafka3:
+    image: xiongraorao/kafka
+    networks:
+      - hadoop
+    hostname: kafka3
+    container_name: hadoop_kafka3
+    restart: always
+    ports:
+      - "29094:19094"
+    environment:
+      # add the entry "127.0.0.1    kafka1" to your /etc/hosts file
+      KAFKA_ZOOKEEPER_TIMEOUT_MS: 60000
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka3:19094"
+      KAFKA_NUM_RECOVERY_THREADS_PER_DATA_DIR: 4
+      #HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181,zoo2:2181,zoo3:2181"
+      KAFKA_BROKER_ID: 3
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+    volumes:
+      - /home/xrr/data/docker/kafka3-data:/var/lib/kafka/data
+
+  hbase-master:
+    image: bde2020/hbase-master:1.0.0-hbase1.2.6
+    container_name: hbase-master
+    networks:
+      - hadoop
+    hostname: hbase-master
+    env_file:
+      - ./hbase-distributed-local.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 zoo:2181"
+    ports:
+      - 16010:16010
+
+  hbase-region:
+    image: bde2020/hbase-regionserver:1.0.0-hbase1.2.6
+    container_name: hbase-regionserver
+    networks:
+      - hadoop
+    hostname: hbase-regionserver
+    env_file:
+      - ./hbase-distributed-local.env
+    environment:
+      HBASE_CONF_hbase_regionserver_hostname: hbase-region
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 zoo1:2181 hbase-master:16010"
+    ports:
+      - 16030:16030
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  hadoop_historyserver:
+networks:
+  hadoop:
