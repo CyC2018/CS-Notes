@@ -121,6 +121,10 @@ Leetcode 上数据库题目的解题记录。
 
 XSS、CSRF、SQL 注入、DDoS
 
+> [缓存](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/缓存.md)
+
+缓存特征、缓存位置、缓存问题、数据分布、一致性哈希、LRU、CDN
+
 > [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
 
 消息处理模型、使用场景、可靠性
