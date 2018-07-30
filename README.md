@@ -105,6 +105,10 @@ Leetcode 上数据库题目的解题记录。
 
 ## 系统设计 :bulb:
 
+> [系统设计基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/系统设计基础.md)
+
+性能、伸缩性、扩展性、可用性、安全性
+
 > [分布式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式.md)
 
 分布式锁、分布式事务、CAP、BASE、Paxos、Raft
@@ -113,9 +117,9 @@ Leetcode 上数据库题目的解题记录。
 
 负载均衡、Session 管理
 
-> [安全性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/安全性.md)
+> [攻击技术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/攻击技术.md)
 
-XSS、CSRF、SQL 注入、DDos
+XSS、CSRF、SQL 注入、DDoS
 
 > [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
 
