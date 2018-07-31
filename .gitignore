@@ -9,6 +9,7 @@ code/build
 *.war
 code/logs
 code/code.iml
+code/out
 
 # gradle
 code/.gradle

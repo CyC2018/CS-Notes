@@ -12,6 +12,7 @@ repositories {
     maven {
         //url 'https://mvnrepository.com/artifact/org.apache.storm/storm-core'
         url 'http://clojars.org/repo/'
+        //url 'http://mirrors.163.com/maven/#browse/browse/components:maven-public/'
     }
 }
 
@@ -26,6 +27,16 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0'
+
+    // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common
+    compile group: 'org.apache.hadoop', name: 'hadoop-common', version: '2.7.4'
+
+    // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs
+    compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '2.7.4'
+
+    // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapreduce-client-core
+    compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '2.7.4'
+
 
 }
 
