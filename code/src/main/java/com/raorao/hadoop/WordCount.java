@@ -1,8 +1,11 @@
 package com.raorao.hadoop;
 
+import com.raorao.util.LogUtil;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -21,6 +24,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
  * @since 2018-07-31-10:22
  */
 public class WordCount {
+  public static Logger logger = LogUtil.newInstance(WordCount.class, Level.INFO);
   public static class TokenizerMapper
       extends Mapper<Object, Text, Text, IntWritable>{
 
@@ -30,9 +34,11 @@ public class WordCount {
     public void map(Object key, Text value, Context context
     ) throws IOException, InterruptedException {
       StringTokenizer itr = new StringTokenizer(value.toString());
+      logger.info("key: " + key.toString());
       while (itr.hasMoreTokens()) {
         word.set(itr.nextToken());
         context.write(word, one);
+        logger.info("Map: " + "word= " + word.toString() + ", value= " + one.toString());
       }
     }
   }
@@ -50,6 +56,7 @@ public class WordCount {
       }
       result.set(sum);
       context.write(key, result);
+      logger.info("Reduce: " + "key= " + key + ", value= " + result.toString());
     }
   }
 

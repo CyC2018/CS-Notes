@@ -251,3 +251,4 @@ mapreduce 流程图：
 - [hadoop文件系统HDFS](https://www.jianshu.com/p/5f00ec80a13c)
 - [hadoop 学习笔记：mapreduce框架详解](http://www.cnblogs.com/sharpxiajun/p/3151395.html)
 - [MapReduce 过程详解](https://www.cnblogs.com/npumenglei/p/3631244.html)
+- [Hadoop详解(三)——MapReduce原理和执行过程，远程Debug，Writable序列化接口，MapReduce程序编写](https://blog.csdn.net/u013087513/article/details/77771600)
