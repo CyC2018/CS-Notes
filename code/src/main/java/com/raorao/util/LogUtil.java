@@ -35,6 +35,10 @@ public class LogUtil {
     return newInstance(clazz, level, "./", false, null);
   }
 
+  public static Logger newInstance(Class clazz, boolean isSave2File){
+    return newInstance(clazz, Level.INFO, "./", isSave2File, clazz.getName());
+  }
+
   //    SEVERE > WARNING > INFO > CONFIG > FINE > FINER > FINEST
   public static Logger newInstance(Class clazz, Level level, String logDir, boolean isSave2File,
       String subName) {

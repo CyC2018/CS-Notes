@@ -24,7 +24,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
  * @since 2018-07-31-10:22
  */
 public class WordCount {
-  public static Logger logger = LogUtil.newInstance(WordCount.class, Level.INFO);
+  public static Logger logger = LogUtil.newInstance(WordCount.class, true);
   public static class TokenizerMapper
       extends Mapper<Object, Text, Text, IntWritable>{
 
