@@ -30,7 +30,7 @@
   * [一致性](/notes/一致性.md)
   * [分布式问题分析](/notes/分布式问题分析.md)
 
-
+This file is used to generate gitbook catalogue.
 
 
 
