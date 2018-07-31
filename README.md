@@ -145,7 +145,7 @@ Docker 基本原理。
 
 > [构建工具](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/构建工具.md)
 
-参考 正则表达式必知必会。
+构建工具的基本概念、主流构建工具介绍
 
 ## 编码实践 :speak_no_evil:
 
