@@ -191,7 +191,7 @@ Google 开源项目的代码风格规范。
 
 笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
-笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费试用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
 **Uploading**
 
