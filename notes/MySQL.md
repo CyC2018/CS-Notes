@@ -95,15 +95,15 @@ VARCHAR 会保留字符串末尾的空格，而 CHAR 会删除。
 
 ## 时间和日期
 
-MySQL 提供了两种相似的日期时间类型：DATATIME 和 TIMESTAMP。
+MySQL 提供了两种相似的日期时间类型：DATETIME 和 TIMESTAMP。
 
-### 1. DATATIME
+### 1. DATETIME
 
 能够保存从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
 
 它与时区无关。
 
-默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATATIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
+默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATETIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
 
 ### 2. TIMESTAMP
 
@@ -329,7 +329,7 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。
 
 ```sql
-DELEFT FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
+DELETE FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 ```
 
 ```sql
@@ -351,7 +351,7 @@ do {
 - 查询本身效率也可能会有所提升。例如下面的例子中，使用 IN() 代替连接查询，可以让 MySQL 按照 ID 顺序进行查询，这可能比随机的连接要更高效。
 
 ```sql
-SELECT * FROM tab
+SELECT * FROM tag
 JOIN tag_post ON tag_post.tag_id=tag.id
 JOIN post ON tag_post.post_id=post.id
 WHERE tag.tag='mysql';
