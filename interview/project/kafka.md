@@ -1,3 +1,21 @@
+<!-- TOC -->
+
+- [Kafka](#kafka)
+- [简介](#简介)
+    - [使用场景](#使用场景)
+    - [特性](#特性)
+    - [重要概念](#重要概念)
+    - [消息存储](#消息存储)
+    - [消息顺序](#消息顺序)
+    - [Guaranteens](#guaranteens)
+    - [Kafka as a Messaging System](#kafka-as-a-messaging-system)
+        - [消息队列](#消息队列)
+        - [发布/订阅](#发布订阅)
+    - [Kafka as a Storage System](#kafka-as-a-storage-system)
+    - [Kafka for Stream Processing](#kafka-for-stream-processing)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 # Kafka
 
 Apacha [Kafka](http://kafka.apache.org/intro)是一个分布式流媒体平台，主要功能有3个：

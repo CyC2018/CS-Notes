@@ -1,10 +1,26 @@
-<!--TOC -->
+<!-- TOC -->
 
-* [HBase 简介](#简介)
-* [HBase 架构](#架构)
+- [简介](#简介)
+- [架构](#架构)
+- [HBase 容错性](#hbase-容错性)
+- [逻辑存储](#逻辑存储)
+    - [Row Key](#row-key)
+    - [列簇](#列簇)
+    - [时间戳](#时间戳)
+    - [Cell](#cell)
+- [物理存储](#物理存储)
+- [HBase Rowkey 设计](#hbase-rowkey-设计)
+    - [RowKey的长度原则](#rowkey的长度原则)
+    - [RowKey散列原则](#rowkey散列原则)
+    - [RowKey唯一原则](#rowkey唯一原则)
+    - [什么是热点](#什么是热点)
+    - [其他一些建议](#其他一些建议)
+- [HBase 读写过程](#hbase-读写过程)
+- [HBase 优化](#hbase-优化)
+- [面试问题](#面试问题)
+- [参考文档](#参考文档)
 
-
-<!--TOC -->
+<!-- /TOC -->
 
 # 简介
 
@@ -183,6 +199,69 @@ HLog文件就是一个普通的Hadoop Sequence File，Sequence File 的Key是HLo
 
 # HBase Rowkey 设计
 
+HBase是三维有序存储的，通过rowkey（行键），column key（column family和qualifier）和TimeStamp（时间戳）这个三个维度可以对HBase中的数据进行快速定位。
+
+HBase中rowkey可以唯一标识一行记录，在HBase查询的时候，有两种方式：
+
+- 通过get方式，指定rowkey获取唯一一条记录
+- 通过scan方式，设置startRow和stopRow参数进行范围匹配全表扫描，即直接扫描整张表中所有行记录
+
+
+## RowKey的长度原则
+rowkey是一个二进制码流，可以是任意字符串，最大长度 64kb ，实际应用中一般为10-100bytes，以 byte[] 形式保存，一般设计成定长。
+
+建议越短越好，不要超过16个字节，原因如下：
+
+- 数据的持久化文件HFile中是按照KeyValue存储的，如果rowkey过长，比如超过100字节，1000w行数据，光rowkey就要占用100*1000w=10亿个字节，将近1G数据，这样会极大影响HFile的存储效率；
+- MemStore将缓存部分数据到内存，如果rowkey字段过长，内存的有效利用率就会降低，系统不能缓存更多的数据，这样会降低检索效率。
+目前操作系统都是64位系统，内存8字节对齐，控制在16个字节，8字节的整数倍利用了操作系统的最佳特性。
+
+## RowKey散列原则
+
+如果rowkey按照时间戳的方式递增，不要将时间放在二进制码的前面，建议将rowkey的高位作为散列字段，由程序随机生成，低位放时间字段，这样将提高数据均衡分布在每个RegionServer，以实现负载均衡的几率。如果没有散列字段，首字段直接是时间信息，所有的数据都会集中在一个RegionServer上，这样在数据检索的时候负载会集中在个别的RegionServer上，造成热点问题，会降低查询效率。
+
+## RowKey唯一原则
+必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一块。
+
+## 什么是热点
+HBase中的行是按照rowkey的字典顺序排序的，这种设计优化了scan操作，可以将相关的行以及会被一起读取的行存取在临近位置，便于scan。然而糟糕的rowkey设计是热点的源头。 热点发生在大量的client直接访问集群的一个或极少数个节点（访问可能是读，写或者其他操作）。大量访问会使热点region所在的单个机器超出自身承受能力，引起性能下降甚至region不可用，这也会影响同一个RegionServer上的其他region，由于主机无法服务其他region的请求。 设计良好的数据访问模式以使集群被充分，均衡的利用。
+
+为了避免写热点，设计rowkey使得不同行在同一个region，但是在更多数据情况下，数据应该被写入集群的多个region，而不是一个。
+
+下面是一些常见的避免热点的方法以及它们的优缺点：
+
+- 加盐 
+
+这里所说的加盐不是密码学中的加盐，而是在rowkey的前面增加随机数，具体就是给rowkey分配一个随机前缀以使得它和之前的rowkey的开头不同。分配的前缀种类数量应该和你想使用数据分散到不同的region的数量一致。加盐之后的rowkey就会根据随机生成的前缀分散到各个region上，以避免热点。
+
+- 哈希 
+
+哈希会使同一行永远用一个前缀加盐。哈希也可以使负载分散到整个集群，但是读却是可以预测的。使用确定的哈希可以让客户端重构完整的rowkey，可以使用get操作准确获取某一个行数据
+
+- 反转 
+
+第三种防止热点的方法时反转固定长度或者数字格式的rowkey。这样可以使得rowkey中经常改变的部分（最没有意义的部分）放在前面。这样可以有效的随机rowkey，但是牺牲了rowkey的有序性。
+
+反转rowkey的例子以手机号为rowkey，可以将手机号反转后的字符串作为rowkey，这样的就避免了以手机号那样比较固定开头导致热点问题
+
+- 时间戳反转 
+
+一个常见的数据处理问题是快速获取数据的最近版本，使用反转的时间戳作为rowkey的一部分对这个问题十分有用，可以用 Long.Max_Value - timestamp 追加到key的末尾，例如 [key][reverse_timestamp] , [key] 的最新值可以通过scan [key]获得[key]的第一条记录，因为HBase中rowkey是有序的，第一条记录是最后录入的数据。
+
+比如需要保存一个用户的操作记录，按照操作时间倒序排序，在设计rowkey的时候，可以这样设计
+
+[userId反转][Long.Max_Value - timestamp]，在查询用户的所有操作记录数据的时候，直接指定反转后的userId，startRow是[userId反转][000000000000],stopRow是[userId反转][Long.Max_Value - timestamp]
+
+如果需要查询某段时间的操作记录，startRow是[user反转][Long.Max_Value - 起始时间]，stopRow是[userId反转][Long.Max_Value - 结束时间]
+
+## 其他一些建议
+
+尽量减少行和列的大小在HBase中，value永远和它的key一起传输的。当具体的值在系统间传输时，它的rowkey，列名，时间戳也会一起传输。如果你的rowkey和列名很大，甚至可以和具体的值相比较，那么你将会遇到一些有趣的问题。HBase storefiles中的索引（有助于随机访问）最终占据了HBase分配的大量内存，因为具体的值和它的key很大。可以增加block大小使得storefiles索引再更大的时间间隔增加，或者修改表的模式以减小rowkey和列名的大小。压缩也有助于更大的索引。
+
+列族尽可能越短越好，最好是一个字符
+
+冗长的属性名虽然可读性好，但是更短的属性名存储在HBase中会更好
+
 # HBase 读写过程
 
 hbase使用MemStore和StoreFile存储对表的更新。 
@@ -335,6 +414,7 @@ hbase.hregion.memstore.flush.size
 Memstore中缓存的内容超过配置的范围后将会写到磁盘上，例如：删除操作是先写入MemStore里做个标记，指示那个value, column 或 family等下是要删除的，HBase会定期对存储文件做一个major compaction，在那时HBase会把MemStore刷入一个新的HFile存储文件中。如果在一定时间范围内没有做major compaction，而Memstore中超出的范围就写入磁盘上了。
 
 # 面试问题
+
 
 
 # 参考文档

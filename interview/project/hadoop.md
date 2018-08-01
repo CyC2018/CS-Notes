@@ -1,14 +1,16 @@
-<!--TOC -->
+<!-- TOC -->
 
-* [Hadoop](#hadoop)
-* [HDFS](#hdfs)
-    * [HDFS 文件读写](#hdfs-文件读写)
-    * [HDFS 数据存储](#hdfs-数据存储)
-    * [HDFS 可靠性保障](#hdfs-可靠性保障)
-    * [HDFS 优缺点](#hdfs-优缺点)
-* [MapReduce](#mapreduce)
+- [Hadoop](#hadoop)
+- [HDFS](#hdfs)
+    - [HDFS 文件读写](#hdfs-文件读写)
+    - [HDFS 数据存储](#hdfs-数据存储)
+    - [HDFS 可靠性保障](#hdfs-可靠性保障)
+    - [Second NameNode](#second-namenode)
+    - [HDFS 优缺点](#hdfs-优缺点)
+- [MapReduce](#mapreduce)
+- [参考文档](#参考文档)
 
-<!--TOC -->
+<!-- /TOC -->
 # Hadoop
 
 Hadoop 是一个开源的分布式计算基础架构，核心内容包含HDFS、MapReduce, hadoop2.0以后引入yarn.
