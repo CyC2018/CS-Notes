@@ -11,7 +11,6 @@
     * [GNU](#gnu)
     * [开源协议](#开源协议)
 * [二、磁盘](#二磁盘)
-    * [HDD](#hdd)
     * [磁盘接口](#磁盘接口)
     * [磁盘的文件名](#磁盘的文件名)
 * [三、分区](#三分区)
@@ -184,21 +183,6 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 - [如何选择开源许可证？](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
 
 # 二、磁盘
-
-## HDD
-
-Hard Disk Drives(HDD) 俗称硬盘，具有以下结构：
-
-- 盘面（Platter）：一个硬盘有多个盘面；
-- 磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；
-- 扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；
-- 磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；
-- 制动手臂（Actuator arm）：用于在磁道之间移动磁头；
-- 主轴（Spindle）：使整个盘面转动。
-
-<div align="center"> <img src="../pics//014fbc4d-d873-4a12-b160-867ddaed9807.jpg" width=""/> </div><br>
-
-[Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
 
 ## 磁盘接口
 
@@ -1025,10 +1009,10 @@ g/re/p（globally search a regular expression and print)，使用正则表示式
 
 ```html
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
--c ： 计算找到个数
+-c ： 统计个数
 -i ： 忽略大小写
 -n ： 输出行号
--v ： 反向选择，亦即显示出没有 搜寻字符串 内容的那一行
+-v ： 反向选择，也就是显示出没有 搜寻字符串 内容的那一行
 --color=auto ：找到的关键字加颜色显示
 ```
 
@@ -1068,7 +1052,7 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
-示例 1：取出登录用户的用户名和 ip
+示例：取出登录用户的用户名和 IP
 
 ```html
 $ last -n 5
@@ -1077,7 +1061,9 @@ dmtsai pts/0 192.168.1.100 Thu Jul 9 23:36 - 02:58 (03:22)
 dmtsai pts/0 192.168.1.100 Thu Jul 9 17:23 - 23:36 (06:12)
 dmtsai pts/0 192.168.1.100 Thu Jul 9 08:02 - 08:17 (00:14)
 dmtsai tty1 Fri May 29 11:55 - 12:11 (00:15)
+```
 
+```html
 $ last -n 5 | awk '{print $1 "\t" $3}'
 ```
 
@@ -1087,7 +1073,7 @@ $ last -n 5 | awk '{print $1 "\t" $3}'
 $ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 ```
 
-示例 2：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
+示例：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
 ```text
 $ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
@@ -1104,7 +1090,7 @@ awk 变量：
 | NR | 目前所处理的是第几行数据 |
 | FS | 目前的分隔字符，默认是空格键 |
 
-示例 3：输出正在处理的行号，并显示每一行有多少字段
+示例：显示正在处理的行号以及每一行有多少字段
 
 ```html
 $ last -n 5 | awk '{print $1 "\t lines: " NR "\t columns: " NF}'
@@ -1125,19 +1111,19 @@ dmtsai lines: 5 columns: 9
 
 示例一：查看自己的进程
 
-```
+```sh
 # ps -l
 ```
 
 示例二：查看系统所有进程
 
-```
+```sh
 # ps aux
 ```
 
 示例三：查看特定的进程
 
-```
+```sh
 # ps aux | grep threadx
 ```
 
@@ -1147,7 +1133,7 @@ dmtsai lines: 5 columns: 9
 
 示例：两秒钟刷新一次
 
-```
+```sh
 # top -d 2
 ```
 
@@ -1157,7 +1143,7 @@ dmtsai lines: 5 columns: 9
 
 示例：查看所有进程树
 
-```
+```sh
 # pstree -A
 ```
 
@@ -1167,13 +1153,11 @@ dmtsai lines: 5 columns: 9
 
 示例：查看特定端口的进程
 
-```
+```sh
 # netstat -anp | grep port
 ```
 
 ## 进程状态
-
-<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
 
 | 状态 | 说明 |
 | :---: | --- |
@@ -1183,9 +1167,11 @@ dmtsai lines: 5 columns: 9
 | Z | zombie (terminated but not reaped by its parent) |
 | T | stopped (either by a job control signal or because it is being traced) |
 
+<div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
+
 ## SIGCHLD
 
-当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
+当一个子进程改变了它的状态时（停止运行，继续运行或者退出），有两件事会发生在父进程中：
 
 - 得到 SIGCHLD 信号；
 - waitpid() 或者 wait() 调用会返回。
@@ -1194,7 +1180,7 @@ dmtsai lines: 5 columns: 9
 
 其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
 
-在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息。父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
+在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
 ## wait()
 
@@ -1206,11 +1192,7 @@ pid_t wait(int *status)
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
 
-参数 status 用来保存被收集的子进程退出时的一些状态，如果对这个子进程是如何死掉的毫不在意，只想把这个子进程消灭掉，可以设置这个参数为 NULL：
-
-```c
-pid = wait(NULL);
-```
+参数 status 用来保存被收集的子进程退出时的一些状态，如果对这个子进程是如何死掉的毫不在意，只想把这个子进程消灭掉，可以设置这个参数为 NULL。
 
 ## waitpid()
 
@@ -1238,9 +1220,9 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 僵尸进程通过 ps 命令显示出来的状态为 Z（zombie）。
 
-系统所能使用的进程号是有限的，如果大量的产生僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+系统所能使用的进程号是有限的，如果产生大量僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
 
-要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵尸进程。
+要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程。
 
 # 参考资料
 
