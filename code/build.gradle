@@ -37,6 +37,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapreduce-client-core
     compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '2.7.4'
 
+    // https://mvnrepository.com/artifact/org.apache.hbase/hbase-client
+    compile group: 'org.apache.hbase', name: 'hbase-client', version: '1.2.6'
 
 }
 

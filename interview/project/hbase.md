@@ -16,6 +16,7 @@
     - [什么是热点](#什么是热点)
     - [其他一些建议](#其他一些建议)
 - [HBase 读写过程](#hbase-读写过程)
+- [HBase 文件合并](#hbase-文件合并)
 - [HBase 优化](#hbase-优化)
 - [面试问题](#面试问题)
 - [参考文档](#参考文档)
@@ -265,9 +266,11 @@ HBase中的行是按照rowkey的字典顺序排序的，这种设计优化了sca
 # HBase 读写过程
 
 hbase使用MemStore和StoreFile存储对表的更新。 
-数据在更新时首先写入Log(WAL log)和内存(MemStore)中，MemStore中的数据是排序的，当MemStore累计到一定阈值时，就会创建一个新的MemStore，并且将老的MemStore添加到flush队列，由单独的线程flush到磁盘上，成为一个StoreFile。于此同时，系统会在zookeeper中记录一个redo point，表示这个时刻之前的变更已经持久化了。(minor compact) 
+数据在更新时首先写入Log(WAL log)和内存(MemStore)中，MemStore中的数据是排序的，当MemStore累计到一定阈值时，就会创建一个新的MemStore，并且将老的MemStore添加到flush队列，由单独的线程flush到磁盘上，成为一个StoreFile。于此同时，系统会在zookeeper中记录一个redo point，表示这个时刻之前的变更已经持久化了。
+
 当系统出现意外时，可能导致内存(MemStore)中的数据丢失，此时使用Log(WAL log)来恢复checkpoint之后的数据。 
-前面提到过StoreFile是只读的，一旦创建后就不可以再修改。因此Hbase的更 新其实是不断追加的操作。当一个Store中的StoreFile达到一定的阈值后，就会进行一次合并(major compact),将对同一个key的修改合并到一起，形成一个大的StoreFile，当StoreFile的大小达到一定阈值后，又会对StoreFile进行split，等分为两个StoreFile。 
+
+前面提到过StoreFile是只读的，一旦创建后就不可以再修改。因此Hbase的更新其实是不断追加的操作。当一个Store中的StoreFile达到一定的阈值后，就会进行一次合并(major compact),将对同一个key的修改合并到一起，形成一个大的StoreFile，当StoreFile的大小达到一定阈值后，又会对StoreFile进行split，等分为两个StoreFile。 
 由于对表的更新是不断追加的，处理读请求时，需要访问Store中全部的StoreFile和MemStore，将他们的按照row key进行合并，由于StoreFile和MemStore都是经过排序的，并且StoreFile带有内存中索引，合并的过程还是比较快。 
 写请求处理过程 
 
@@ -280,6 +283,22 @@ hbase使用MemStore和StoreFile存储对表的更新。
 5 将更新写入WAL log 
 6 将更新写入Memstore 
 7 判断Memstore的是否需要flush为Store文件。
+
+# HBase 文件合并
+
+在HBase中，每当memstore的数据flush到磁盘后，就形成一个storefile，当storefile的数量越来越大时，会严重影响HBase的读性能 ，所以必须将过多的storefile文件进行合并操作。Compaction是Buffer-flush-merge的LSM-Tree模型的关键操作，主要起到如下几个作用：
+
+（1）合并文件
+
+（2）清除删除、过期、多余版本的数据
+
+（3）提高读写数据的效率
+
+HBase中实现了两种compaction的方式：minor and major:
+
+minor compaction: Minor操作只用来做部分文件的合并操作以及包括minVersion=0并且设置ttl的过期版本清理，不做任何删除数据、多版本数据的清理工作。
+
+major compaction: Major操作是对Region下的HStore下的所有StoreFile执行合并操作，最终的结果是整理合并出一个文件。
 
 # HBase 优化
 
