@@ -15,59 +15,59 @@
 
 > [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
-目录根据原书第二版进行编排。
+目录根据原书第二版进行编排，代码和原书有所不同，尽量实现地比原书更加简洁。
 
 > [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
-做了一个大致分类，并对每种分类题型的解题思路做了总结。
+对题目做了一个大致分类，并对每种题型的解题思路做了总结。
 
 > [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-主要参考 Robert Sedgewick 的算法书进行实现，源代码以及测试代码可在另一个仓库获取。
+排序、并查集、栈和队列、红黑树、散列表。
 
 ## 操作系统 :computer:
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
-参考 现代操作系统、Unix 环境高级编程、深入理解计算机系统。
+进程管理、内存管理、设备管理、链接。
 
 > [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
 
-参考 鸟哥的 Linux 私房菜。
+基本实现原理以及基本操作。
 
 ## 网络 :cloud:
 
 > [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
-参考 谢希仁的计算机网络、计算机网络 自顶向下方法、TCP/IP 详解。
+物理层、链路层、网络层、运输层、应用层。
 
 > [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
 
-参考 图解 HTTP，更多的是参考网上的文档，比如 MDN、维基百科等。
+方法、状态码、Cookie、缓存、连接管理、HTTPs、HTTP 2.0。
 
 > [Socket](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md)
 
-参考 Unix 网络编程。
+I/O 模型、I/O 多路复用。
 
 ## 面向对象 :couple:
 
 > [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
-参考 Head First 设计模式、设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
+实现了 Gof 的 23 种设计模式。
 
 > [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
 
-内容包括三大原则（继承、封装、多态）、类图、设计原则。
+三大原则（继承、封装、多态）、类图、设计原则。
 
 ## 数据库 :floppy_disk:
 
 > [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
 
-参考 数据库系统原理。
+事务、锁、隔离级别、MVCC、间隙锁、范式。
 
 > [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
 
-参考 SQL 必知必会。
+SQL 基本语法。
 
 > [Leetcode-Database 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20题解.md)
 
@@ -75,33 +75,33 @@ Leetcode 上数据库题目的解题记录。
 
 > [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
 
-参考 高性能 MySQL。
+存储引擎、索引、查询优化、切分、复制。
 
 > [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
 
-参考 Redis 设计与实现、Redis 实战。
+五种数据类型、字典和跳跃表数据结构、使用场景、和 Memcache 的比较、淘汰策略、持久化、文件事件的 Reactor 模式、复制。
 
 ## Java :coffee:
 
 > [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
-参考 Effective Java、Java 编程思想，也有部分内容参考官方文档以及 StackOverflow。
+不会涉及很多基本语法介绍，主要是一些实现原理以及关键特性。
 
 > [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
-包含容器源码分析。
+源码分析：ArrayListVector、CopyOnWriteArrayList、LinkedList、HashMap、ConcurrentHashMap、LinkedHashMap、WeekHashMap。
 
 > [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
 
-参考 Java 编程思想、深入理解 Java 虚拟机。
+线程使用方式、两种互斥同步方法、线程协作、JUC、线程安全、内存模型、锁优化。
 
 > [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
-参考 深入理解 Java 虚拟机。
+运行时数据区域、垃圾收集、类加载。
 
 > [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
 
-包含 NIO 的原理以及实例。
+NIO 的原理以及实例。
 
 ## 系统设计 :bulb:
 
@@ -141,11 +141,11 @@ Docker 基本原理。
 
 > [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
 
-参考 正则表达式必知必会。
+正则表达式基本语法。
 
 > [构建工具](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/构建工具.md)
 
-构建工具的基本概念、主流构建工具介绍
+构建工具的基本概念、主流构建工具介绍。
 
 ## 编码实践 :speak_no_evil:
 
