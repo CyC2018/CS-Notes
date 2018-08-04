@@ -586,7 +586,7 @@ protected void finalize() throws Throwable {}
 **1. equals() 与 == 的区别** 
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 则是根据引用的对象的 equals() 方法的具体实现来进行比较。
+- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价，根据引用的对象的 equals() 方法的具体实现来进行比较。
 
 ```java
 Integer x = new Integer(1);
