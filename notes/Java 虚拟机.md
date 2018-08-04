@@ -1,7 +1,7 @@
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
-    * [虚拟机栈](#虚拟机栈)
+    * [Java 虚拟机栈](#java-虚拟机栈)
     * [本地方法栈](#本地方法栈)
     * [堆](#堆)
     * [方法区](#方法区)
@@ -23,19 +23,19 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="500"/> </div><br>
 
 ## 程序计数器
 
 记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
 
-## 虚拟机栈
+## Java 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息，从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width=""/> </div><br>
 
-可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
+可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
 ```java
 java -Xss=512M HackTheJava
@@ -56,27 +56,22 @@ java -Xss=512M HackTheJava
 
 ## 堆
 
-所有对象实例都在这里分配内存。
+所有对象实例都在这里分配内存，是垃圾收集的主要区域（"GC 堆"）。
 
-是垃圾收集的主要区域（"GC 堆"）。现代的垃圾收集器基本都是采用分代收集算法，主要思想是针对不同的对象采取不同的垃圾回收算法。虚拟机把 Java 堆分成以下三块：
+现代的垃圾收集器基本都是采用分代收集算法，针对不同的对象采取不同的垃圾回收算法，可以将堆分成两块：
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
-- 永久代（Permanent Generation）
 
-当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。
-
-新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
+新生代可以继续划分成以下三个空间：
 
 - Eden（伊甸园）
 - From Survivor（幸存者）
 - To Survivor
 
-<div align="center"> <img src="../pics//ppt_img.gif" width=""/> </div><br>
+堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
-Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
-
-可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
 java -Xms=1M -Xmx=2M HackTheJava
@@ -86,11 +81,13 @@ java -Xms=1M -Xmx=2M HackTheJava
 
 用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
 
-和 Java 堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。
+和堆一样不需要连续的内存，并且可以动态扩展。
+
+动态扩展失败一样会抛出 OutOfMemoryError 异常。
 
 对这块区域进行垃圾回收的主要目标是对常量池的回收和对类的卸载，但是一般比较难实现。
 
-JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收，JDK 1.8 之后，取消了永久代，用 metaspace（元数据）区替代。
+JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收。但是从 JDK 1.7 开始，已经把原本放在永久代的字符串常量池移到 Native Method 中。
 
 ## 运行时常量池
 
@@ -102,7 +99,9 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
+在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。
+
+这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
 # 二、垃圾收集
 
@@ -751,6 +750,7 @@ public class FileSystemClassLoader extends ClassLoader {
 # 参考资料
 
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
+- [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
 - [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
