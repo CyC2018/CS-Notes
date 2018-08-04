@@ -25,6 +25,8 @@ Java后端开发（大数据、分布式应用等）
 
 > [linux](../notes/Linux.md)
 
+> [linux 命令](linux/linux.md)
+
 ## 数据库
 
 > [SQL](../notes/SQL.md)
