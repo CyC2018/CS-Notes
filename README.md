@@ -55,7 +55,7 @@
 
 > [设计模式](https://github.com/athc/ath-kn-doc/blob/master/notes/design-patterns/设计模式.md)
 >
-> [设计模式学习笔记](https://github.com/athc/ath-kn-doc/blob/master/notes/design-patterns/设计模式学习.md**)
+> [设计模式学习笔记](https://github.com/athc/ath-kn-doc/blob/master/notes/design-patterns/设计模式学习.md)
 
 参考 Head First 设计模式、设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
 
