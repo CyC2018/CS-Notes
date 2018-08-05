@@ -13,151 +13,157 @@
 
 ## 算法 :pencil2:
 
-> [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
+> [剑指 Offer 题解](https://github.com/athc/ath-kn-doc/blob/master/notes/剑指%20offer%20题解.md)
 
 目录根据原书第二版进行编排。
 
-> [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
+> [Leetcode 题解](https://github.com/athc/ath-kn-doc/blob/master/notes/Leetcode%20题解.md)
 
 做了一个大致分类，并对每种分类题型的解题思路做了总结。
 
-> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+> [算法](https://github.com/athc/ath-kn-doc/blob/master/notes/算法.md)
 
 主要参考 Robert Sedgewick 的算法书进行实现，源代码以及测试代码可在另一个仓库获取。
 
 ## 操作系统 :computer:
 
-> [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
+> [计算机操作系统](https://github.com/athc/ath-kn-doc/blob/master/notes/计算机操作系统.md)
 
 参考 现代操作系统、Unix 环境高级编程、深入理解计算机系统。
 
-> [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
+> [Linux](https://github.com/athc/ath-kn-doc/blob/master/notes/linux/Linux.md)
+>
+> [linux常用命令](https://github.com/athc/ath-kn-doc/blob/master/notes/linux/linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.md)
 
 参考 鸟哥的 Linux 私房菜。
 
 ## 网络 :cloud:
 
-> [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
+> [计算机网络](https://github.com/athc/ath-kn-doc/blob/master/notes/计算机网络.md)
 
 参考 谢希仁的计算机网络、计算机网络 自顶向下方法、TCP/IP 详解。
 
-> [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
+> [HTTP](https://github.com/athc/ath-kn-doc/blob/master/notes/HTTP.md)
 
 参考 图解 HTTP，更多的是参考网上的文档，比如 MDN、维基百科等。
 
-> [Socket](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Socket.md)
+> [Socket](https://github.com/athc/ath-kn-doc/blob/master/notes/Socket.md)
 
 参考 Unix 网络编程。
 
 ## 面向对象 :couple:
 
-> [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
+> [设计模式](https://github.com/athc/ath-kn-doc/blob/master/notes/design-patterns/设计模式.md)
+>
+> [设计模式学习笔记](https://github.com/athc/ath-kn-doc/blob/master/notes/design-patterns/设计模式学习.md**)
 
 参考 Head First 设计模式、设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
 
-> [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
+> [面向对象思想](https://github.com/athc/ath-kn-doc/blob/master/notes/面向对象思想.md)
 
 内容包括三大原则（继承、封装、多态）、类图、设计原则。
 
 ## 数据库 :floppy_disk:
 
-> [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
+> [数据库系统原理](https://github.com/athc/ath-kn-doc/blob/master/notes/数据库系统原理.md)
 
 参考 数据库系统原理。
 
-> [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
+> [SQL](https://github.com/athc/ath-kn-doc/blob/master/notes/SQL.md)
 
 参考 SQL 必知必会。
 
-> [Leetcode-Database 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode-Database%20题解.md)
+> [Leetcode-Database 题解](https://github.com/athc/ath-kn-doc/blob/master/notes/Leetcode-Database%20题解.md)
 
 Leetcode 上数据库题目的解题记录。
 
-> [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
+> [MySQL](https://github.com/athc/ath-kn-doc/blob/master/notes/MySQL.md)
 
 参考 高性能 MySQL。
 
-> [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
+> [Redis](https://github.com/athc/ath-kn-doc/blob/master/notes/Redis.md)
 
 参考 Redis 设计与实现、Redis 实战。
 
 ## Java :coffee:
 
-> [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
+> [Java 基础](https://github.com/athc/ath-kn-doc/blob/master/notes/java/Java%20基础.md)
 
 参考 Effective Java、Java 编程思想，也有部分内容参考官方文档以及 StackOverflow。
 
-> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
+> [Java 容器](https://github.com/athc/ath-kn-doc/blob/master/notes/java/Java%20容器.md)
 
 包含容器源码分析。
 
-> [Java 并发](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20并发.md)
+> [Java 并发](https://github.com/athc/ath-kn-doc/blob/master/notes/java/Java%20并发.md)
 
 参考 Java 编程思想、深入理解 Java 虚拟机。
 
-> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
+> [Java 虚拟机](https://github.com/athc/ath-kn-doc/blob/master/notes/java/Java%20虚拟机.md)
 
 参考 深入理解 Java 虚拟机。
 
-> [Java I/O](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
+> [Java I/O](https://github.com/athc/ath-kn-doc/blob/master/notes/java/Java%20IO.md)
 
 包含 NIO 的原理以及实例。
 
 ## 系统设计 :bulb:
 
-> [系统设计基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/系统设计基础.md)
+> [系统设计基础](https://github.com/athc/ath-kn-doc/blob/master/notes/系统设计基础.md)
 
 性能、伸缩性、扩展性、可用性、安全性
 
-> [分布式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式.md)
+> [分布式](https://github.com/athc/ath-kn-doc/blob/master/notes/分布式.md)
 
 分布式锁、分布式事务、CAP、BASE、Paxos、Raft
 
-> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/集群.md)
+> [集群](https://github.com/athc/ath-kn-doc/blob/master/notes/集群.md)
 
 负载均衡、Session 管理
 
-> [攻击技术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/攻击技术.md)
+> [攻击技术](https://github.com/athc/ath-kn-doc/blob/master/notes/攻击技术.md)
 
 XSS、CSRF、SQL 注入、DDoS
 
-> [缓存](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/缓存.md)
+> [缓存](https://github.com/athc/ath-kn-doc/blob/master/notes/缓存.md)
 
 缓存特征、缓存位置、缓存问题、数据分布、一致性哈希、LRU、CDN
 
-> [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
+> [消息队列](https://github.com/athc/ath-kn-doc/blob/master/notes/消息队列.md)
 
 消息处理模型、使用场景、可靠性
 
 ## 工具 :hammer:
 
-> [Git](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md)
+> [Git](https://github.com/athc/ath-kn-doc/blob/master/notes/version-control-tool/Git.md)
+>
+> [Git常用命令](https://github.com/athc/ath-kn-doc/blob/master/notes/version-control-tool/git常用命令.md)
 
 一些 Git 的使用和概念。
 
-> [Docker](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Docker.md)
+> [Docker](https://github.com/athc/ath-kn-doc/blob/master/notes/Docker.md)
 
 Docker 基本原理。
 
-> [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
+> [正则表达式](https://github.com/athc/ath-kn-doc/blob/master/notes/正则表达式.md)
 
 参考 正则表达式必知必会。
 
-> [构建工具](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/构建工具.md)
+> [构建工具](https://github.com/athc/ath-kn-doc/blob/master/notes/构建工具.md)
 
 构建工具的基本概念、主流构建工具介绍
 
 ## 编码实践 :speak_no_evil:
 
-> [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
+> [重构](https://github.com/athc/ath-kn-doc/blob/master/notes/重构.md)
 
 参考 重构 改善既有代码的设计。
 
-> [代码可读性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码可读性.md)
+> [代码可读性](https://github.com/athc/ath-kn-doc/blob/master/notes/代码可读性.md)
 
 参考 编写可读代码的艺术。
 
-> [代码风格规范](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码风格规范.md)
+> [代码风格规范](https://github.com/athc/ath-kn-doc/blob/master/notes/代码风格规范.md)
 
 Google 开源项目的代码风格规范。
 
