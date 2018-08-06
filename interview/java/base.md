@@ -16,6 +16,13 @@
 - [什么是cookie？Session和cookie有什么区别？](#什么是cookiesession和cookie有什么区别)
 - [如何避免死锁](#如何避免死锁)
 - [进程和线程区别](#进程和线程区别)
+- [java 8 新特性](#java-8-新特性)
+    - [Stream](#stream)
+    - [Optional](#optional)
+    - [更好的类型推断](#更好的类型推断)
+    - [方法引用](#方法引用)
+    - [Lambda 表达式](#lambda-表达式)
+    - [接口默认方法](#接口默认方法)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -316,6 +323,176 @@ Cookie是会话技术,将用户的信息保存到浏览器的对象.
 
 同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。
 
+# java 8 新特性
+
+## Stream
+
+Java 8 中的 Stream 是对集合（Collection）对象功能的增强，它专注于对集合对象进行各种非常便利、高效的聚合操作（aggregate operation），或者大批量数据操作 (bulk data operation)。Stream API 借助于同样新出现的 Lambda 表达式，极大的提高编程效率和程序可读性。同时它提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势，使用 fork/join 并行方式来拆分任务和加速处理过程。通常编写并行代码很难而且容易出错, 但使用 Stream API 无需编写一行多线程的代码，就可以很方便地写出高性能的并发程序。
+
+
+## Optional
+
+Google Guava 库中引入了Optional 作为解决空指针异常的一种方式，不赞成代码被null检查的代码污染，期望程序员写整洁的代码。java 8 中因此引入了Optional。
+
+``` java
+Optional< String > fullName = Optional.ofNullable( null );
+System.out.println( "Full Name is set? " + fullName.isPresent() );        
+System.out.println( "Full Name: " + fullName.orElseGet( () -> "[none]" ) );
+System.out.println( fullName.map( s -> "Hey " + s + "!" ).orElse( "Hey Stranger!" ) );
+```
+
+## 更好的类型推断
+
+``` java
+Map<Integer, Integer> map = new HashMap<>(); // 不需要在HashMap中指定key 和 value的类型
+```
+
+## 方法引用
+
+方法引用提供了一个很有用的语义来直接访问类或者实例的已经存在的方法或者构造方法。结合Lambda表达式，方法引用使语法结构紧凑简明。不需要复杂的引用。
+
+下面我们用Car 这个类来做示例，Car这个类有不同的方法定义。让我们来看看java 8支持的4种方法引用。
+
+``` java
+public static class Car {
+    public static Car create( final Supplier< Car > supplier ) {
+        return supplier.get();
+    }              
+ 
+    public static void collide( final Car car ) {
+        System.out.println( "Collided " + car.toString() );
+    }
+ 
+    public void follow( final Car another ) {
+        System.out.println( "Following the " + another.toString() );
+    }
+ 
+    public void repair() {
+        System.out.println( "Repaired " + this.toString() );
+    }
+}
+```
+
+- 1、构造引用
+
+语法是：Class::new ，对于泛型来说语法是：Class<T >::new，请注意构造方法没有参数:
+
+``` java
+final Car car = Car.create( Car::new );
+final List< Car > cars = Arrays.asList( car );
+```
+
+- 2、静态方法引用
+
+语法是：Class::static_method请注意这个静态方法只支持一个类型为Car的参数。
+
+``` java
+cars.forEach( Car::collide );
+```
+
+- 3、类实例的方法引用
+
+语法是：Class::method请注意方法没有参数。
+
+``` java
+cars.forEach( Car::repair );
+```
+
+- 4、引用特殊类的方法
+
+语法是：instance::method，请注意只接受Car类型的一个参数。
+
+``` java
+final Car police = Car.create( Car::new );
+cars.forEach( police::follow );
+```
+
+## Lambda 表达式
+
+Lambda 表达式是java8的一个特性，支持函数式接口。它允许我们将一个函数当作方法的参数（传递函数），或者说把代码当作数据，这是每个函数式编程者熟悉的概念。很多基于JVM平台的语言一开始就支持Lambda表达式，但是Java程序员没有选择，只能使用匿名内部类来替代Lambda表达式。
+
+``` java
+package com.raorao.java.base;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Lambda 表达式.
+ *
+ * @author Xiong Raorao
+ * @since 2018-08-06-17:32
+ */
+public class LambdaTest {
+
+  public static void main(String[] args) {
+    foo1();
+  }
+
+  public static void foo1() {
+    String[] ss = new String[] {"a", "c", "b", "d"};
+    List<String> list = Arrays.asList(ss);
+    list.forEach(e -> System.out.print(e));
+    System.out.println();
+    list.sort((e1, e2) -> e2.compareTo(e1));
+    list.forEach(System.out::print);
+    System.out.println();
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < 5; i++) {
+      map.put(i, i * i);
+    }
+    map.forEach((k, v) -> System.out.println("key = " + k + ", value = " + v));
+
+    Thread t = new Thread(()->{
+      System.out.println(  "start thread");
+      try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("end thread");
+    });
+    t.start();
+  }
+}
+```
+
+## 接口默认方法
+
+jdk 1.8 开始，接口支持**默认和静态**方法，默认方法和抽象方法的区别是抽象方法必须要被实现，默认方法不是。作为替代方式，接口可以提供一个默认的方法实现，所有这个接口的实现类都会通过继承得倒这个方法（如果有需要也可以重写这个方法），让我们来看看下面的例子：
+
+``` java
+private interface Defaulable {
+    // Interfaces now allow default methods, the implementer may or
+    // may not implement (override) them.
+    default String notRequired() {
+        return "Default implementation";
+    }
+}
+ 
+private static class DefaultableImpl implements Defaulable {
+}
+ 
+private static class OverridableImpl implements Defaulable {
+    @Override
+    public String notRequired() {
+        return "Overridden implementation";
+    }
+}
+
+private interface DefaulableFactory {
+    // Interfaces now allow static methods
+    static Defaulable create( Supplier< Defaulable > supplier ) {
+        return supplier.get();
+    }
+}
+```
+
+接口Defaulable使用default关键字声明了一个默认方法notRequired()，类DefaultableImpl实现了Defaulable接口，没有对默认方法做任何修改。另外一个类OverridableImpl重写类默认实现，提供了自己的实现方法。
+
+**默认和静态方法 主要是为了扩充接口的方法，否则，所有实现了该接口的类都需要重新实现新方法**
 
 # 参考文档
 

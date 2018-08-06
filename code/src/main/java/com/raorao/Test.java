@@ -1,5 +1,21 @@
 package com.raorao;
 
+import afu.org.checkerframework.checker.igj.qual.I;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
+
 /**
  * .
  *
@@ -14,6 +30,13 @@ public class Test {
     //System.out.println(foo());
     int r = new Test().foo();
     System.out.println(r);
+    PriorityBlockingQueue<Integer> aa;
+    LinkedBlockingQueue<Integer> ss;
+    ss = new LinkedBlockingQueue<>();
+    ss.add(1);
+    ArrayBlockingQueue<Integer> s;
+    LinkedBlockingQueue<Integer> a;
+
   }
 
   public int foo() {
