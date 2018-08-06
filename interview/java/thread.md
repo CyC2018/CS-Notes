@@ -28,6 +28,16 @@
     - [shedule(TimerTask task, Date date)](#sheduletimertask-task-date-date)
     - [shedule 周期性执行](#shedule-周期性执行)
     - [sheduleAtFixedRate](#sheduleatfixedrate)
+- [Concurrent 容器](#concurrent-容器)
+    - [BlockingQueue](#blockingqueue)
+    - [DelayQueue](#delayqueue)
+    - [PriorityBlockingQueue](#priorityblockingqueue)
+    - [ArrayBlockingQueue 和 LinkedBlockingQueue](#arrayblockingqueue-和-linkedblockingqueue)
+    - [ConcurrentHashMap](#concurrenthashmap)
+    - [ConcurrentLinkedDeque 和 ConcurrentLinkedQueue](#concurrentlinkeddeque-和-concurrentlinkedqueue)
+    - [Deque](#deque)
+        - [LinkedList](#linkedlist)
+        - [ArrayDeque](#arraydeque)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -846,6 +856,187 @@ public class TimerTest {
 shedule: 如果执行任务的时间没有被延迟，那么下一次任务的执行时间参考的是上一次任务的“开始”时间计算。
 
 sheduleAtFixedRate: 如果执行任务的时间没有被延迟，那么下一次任务的执行时间参考的是上一次任务的“结束”时间计算。
+
+# Concurrent 容器
+
+
+## BlockingQueue
+
+![](img/TIM截图20180806153217.jpg)
+
+BlockingQueue 是一个阻塞接口，定义了阻塞队列的行为。
+
+- boolean add(E e): 对尾插入元素，成功返回true;
+- boolean offer(E e): 队尾插入元素，成功返回true; 和 add 区别在于,如果超过队列容量，add 会抛出 IllegalStateException 异常
+- void put(E e): 队尾插入元素，如果在线程等待的时候发生线程中断，抛出异常。
+- boolean offer(E e, long timeout, TimeUnit unit): 超时放弃，线程等待的时候如果发生中断信号，也会抛出中断异常。
+- E take(): 弹出队头元素，线程等待的时候如果发生中断信号，也会抛出中断异常。
+- E remove(): 弹出队头元素， 如果为空，抛出NoSuchElementException;
+- E poll(): 弹出队头元素，如果为空，返回null
+- E poll(long timeout, TimeUnit unit): 超时放弃，线程等待的时候如果发生中断信号，抛出异常。
+- E element(): 仅仅返回对头元素， 如果为空，抛出NoSuchElementException;
+- E peek(): 仅仅返回队头元素，如果为空，返回null
+- int remainingCapacity(): 返回理想情况下，可以直接入队不用阻塞的元素个数
+
+## DelayQueue
+
+![](img/TIM截图20180806160547.jpg)
+
+无界的阻塞队列(BlockingQueue), 用于防止实现了Delayed接口的对象,其中的对象只能在到期时才能从对队列中取走。队列本身是有序的, 即对头对象的延迟到期的时间最长的Delayed元素。
+
+为了具有调用行为，存放到DelayDeque的元素必须继承Delayed接口。Delayed接口使对象成为延迟对象，它使存放在DelayQueue类中的对象具有了激活日期。该接口强制执行下列两个方法。
+
+CompareTo(Delayed o)：Delayed接口继承了Comparable接口，因此有了这个方法。
+getDelay(TimeUnit unit):这个方法返回到激活日期的剩余时间，时间单位由单位参数指定。
+
+``` java
+public class DelayEvent implements Delayed {
+    private Date startDate;
+    public DelayEvent(Date startDate) {
+        super();
+        this.startDate = startDate;
+    }
+    @Override
+    public int compareTo(Delayed o) {
+        long result = this.getDelay(TimeUnit.NANOSECONDS)
+                - o.getDelay(TimeUnit.NANOSECONDS);
+        if (result < 0) {
+            return -1;
+        } else if (result > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    @Override
+    public long getDelay(TimeUnit unit) {
+        Date now = new Date();
+        long diff = startDate.getTime() - now.getTime();
+        return unit.convert(diff, TimeUnit.MILLISECONDS);
+    }
+}
+
+
+public class DelayTask implements Runnable {
+    private int id;
+    private DelayQueue<DelayEvent> queue;
+    public DelayTask(int id, DelayQueue<DelayEvent> queue) {
+        super();
+        this.id = id;
+        this.queue = queue;
+    }
+    @Override
+    public void run() {
+        Date now = new Date();
+        Date delay = new Date();
+        delay.setTime(now.getTime() + id * 1000); // 根据id的不同，延迟的时间不同
+        System.out.println("Thread " + id + " " + delay);
+        for (int i = 0; i < 100; i++) {
+            DelayEvent delayEvent = new DelayEvent(delay);
+            queue.add(delayEvent);
+        }
+    }
+}
+
+public class DelayDequeMain {
+    public static void main(String[] args) throws Exception {
+        DelayQueue<DelayEvent> queue = new DelayQueue<DelayEvent>();
+        Thread threads[] = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            DelayTask task = new DelayTask(i + 1, queue);
+            threads[i] = new Thread(task);
+        }
+        for (int i = 0; i < threads.length; i++) {
+            threads[i].start();
+        }
+        for (int i = 0; i < threads.length; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        do {
+            int counter = 0;
+            DelayEvent delayEvent;
+            do {
+                delayEvent = queue.poll();
+                if (delayEvent != null) {
+                    counter++;
+                }
+            } while (delayEvent != null);
+            System.out.println("At " + new Date() + " you have read " + counter+ " event");
+            TimeUnit.MILLISECONDS.sleep(500);
+        } while (queue.size() > 0);
+    }
+}
+```
+
+## PriorityBlockingQueue
+
+![](img/TIM截图20180806160740.jpg)
+阻塞的优先队列。
+
+## ArrayBlockingQueue 和 LinkedBlockingQueue
+
+![](img/TIM截图20180806162223.jpg)
+![](img/TIM截图20180806162336.jpg)
+
+FIFO 阻塞队列, 前者采用固定数组长度的数组实现队列（初始化需指定队列长度），后者采用链表实现。
+
+## ConcurrentHashMap
+
+![](img/TIM截图20180806163031.jpg)
+
+ConcurrentHashMap 默认容量为16， 最大容量2^30，默认并发度16，负载因子0.75。当散列桶的元素个数超过8的时候，将链表改为红黑树（jdk1.8）。
+
+ConcurrentHashMap 相较于HashMap，采用了分段锁（Segment, 继承自 ReentrantLock）的方式保证多线程安全（JDK1.7）。
+
+在JDK1.8 中， CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized， 
+
+## ConcurrentLinkedDeque 和 ConcurrentLinkedQueue
+
+![](img/TIM截图20180806164620.jpg)
+![](img/TIM截图20180806164709.jpg)
+
+ConcurrentLinkedDeque: 线程安全的链表实现的双端队列。
+ConcurrentLinkedQueque: 线程安全的链表实现的队列。
+
+## Deque
+
+Deque 定义一个双端队列的接口，可以在两段进行插入和弹出, 方法如下：
+
+修饰符和返回值 | 	方法名 |	描述
+--- | --- | ---
+void | push(E)	 |向队列头部插入一个元素,失败时抛出异常 
+void | addFirst(E)	|向队列头部插入一个元素,失败时抛出异常
+void | addLast(E)	|向队列尾部插入一个元素,失败时抛出异常
+boolean | offerFirst(E)|向队列头部加入一个元素,失败时返回false
+boolean | offerLast(E)|向队列尾部加入一个元素,失败时返回false
+E	| getFirst()	| 获取队列头部元素,队列为空时抛出异常
+E 	| getLast()	 | 获取队列尾部元素,队列为空时抛出异常
+E 	| peekFirst()	| 获取队列头部元素,队列为空时返回null
+E 	| peekLast()	| 获取队列尾部元素,队列为空时返回null
+boolean	| removeFirstOccurrence(Object)	| 删除第一次出现的指定元素,不存在时返回false
+boolean | removeLastOccurrence(Object) | 删除最后一次出现的指定元素,不存在时返回false
+E |	pop() | 弹出队列头部元素,队列为空时抛出异常
+E |	removeFirst() | 弹出队列头部元素,队列为空时抛出异常
+E | removeLast() | 弹出队列尾部元素,队列为空时抛出异常
+E | pollFirst()	| 弹出队列头部元素,队列为空时返回null 
+E | pollLast() | 弹出队列尾部元素,队列为空时返回null 
+Iterator<E>	| descendingIterator()	| 返回队列反向迭代器
+
+### LinkedList
+
+![](img/TIM截图20180806171115.jpg)
+
+LinkedList: 链表实现的双端队列
+
+### ArrayDeque
+
+![](img/TIM截图20180806171310.jpg)
+
+ArrayDeque: 数组实现的双端队列，默认队列长度为16，队列满了就直接扩充一倍（double）
 
 # 参考文档
 
