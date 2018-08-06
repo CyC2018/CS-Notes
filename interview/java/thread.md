@@ -16,6 +16,18 @@
         - [newCachedThreadPool](#newcachedthreadpool)
         - [Future 接口](#future-接口)
         - [ScheduledThreadPoolExecutor](#scheduledthreadpoolexecutor)
+- [ThreadLocal](#threadlocal)
+- [Lock](#lock)
+    - [Synchronized](#synchronized)
+    - [ReentrantLock](#reentrantlock)
+        - [ReentranceLock 几个特殊的方法](#reentrancelock-几个特殊的方法)
+    - [ReentranceReadWriteLock](#reentrancereadwritelock)
+    - [condition](#condition)
+    - [公平锁和非公平锁](#公平锁和非公平锁)
+- [Timer](#timer)
+    - [shedule(TimerTask task, Date date)](#sheduletimertask-task-date-date)
+    - [shedule 周期性执行](#shedule-周期性执行)
+    - [sheduleAtFixedRate](#sheduleatfixedrate)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -474,6 +486,366 @@ ScheduledThreadPoolExecutor 继承自 ThreadPoolExecutor, 主要用来在给定�
 - long：period; 表示任务执行的间隔周期
 
 该类采用了DelyQueue，封装了一个优先队列，该队列会对队列中的SheduledFutureTask 进行排序。time小的会排在前面，如果time相同，则会比较sequenceNumber, 就是说如果两个任务的执行时间相同，谁先提交就谁先执行
+
+# ThreadLocal
+
+变量值的共享可以采用public static 的类变量，但是在多线程情况下，static 类变量显然不能满足多线程的读写，因此采用ThreadLocal 变量来存储多线程下的变量的副本。
+
+``` java
+/*
+ * Copyright (c) 2018.  Xiong Raorao. All rights reserved.
+ * Project Name: book-notes
+ * File Name: Test.java
+ * Date: 18-7-25 下午5:32
+ * Author: Xiong Raorao
+ */
+
+package com.raorao.java.thread;
+
+/**
+ * .
+ *
+ * @author Xiong Raorao
+ * @since 2018-07-25-17:32
+ */
+public class ThreadLocalTest {
+  private static ThreadLocal<Integer> local = new ThreadLocal<>();
+  public static void main(String[] args) throws InterruptedException {
+    Thread t1 = new Thread(() -> {
+      System.out.println(" I am t1");
+      local.set(1);
+      try {
+        Thread.sleep(2000);
+        System.out.println("t1 value: "  + local.get());
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    Thread.sleep(2000);
+    Thread t2 = new Thread(() -> {
+      System.out.println("I am t2");
+      System.out.println("before set , I get " + local.get());
+      try {
+        Thread.sleep(2000);
+        local.set(2);
+        System.out.println("set after 2 s, I get " + local.get());
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    t2.start();
+    t1.start();// 无论怎么更换两个线程的启动顺序，得到的值是不一样的
+  }
+}
+
+```
+
+# Lock
+
+除了使用synchronized 关键字加锁同步之外，也可以实现Lock 来自定义同步过程。
+
+## Synchronized
+
+jvm提供的一种互斥同步锁的方式
+
+synchronized 可以作用于代码块，方法，类方法，类等，锁加载的
+
+## ReentrantLock
+
+``` java
+public class LockExample {
+
+    private Lock lock = new ReentrantLock();
+
+    public void func() {
+        lock.lock();
+        try {
+            for (int i = 0; i < 10; i++) {
+                System.out.print(i + " ");
+            }
+        } finally {
+            lock.unlock(); // 确保释放锁，从而避免发生死锁。
+        }
+    }
+
+    public static void main(String[] args) {
+    LockExample lockExample = new LockExample();
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    executorService.execute(() -> lockExample.func());
+    executorService.execute(() -> lockExample.func());
+    }
+}
+
+```
+
+输出：
+
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
+
+**synchronized 和 ReentrantLock的比较：**
+
+1. 锁的实现
+
+synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+
+2. 性能
+
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+
+3. 等待可中断
+
+当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
+
+ReentrantLock 可中断，而 synchronized 不行。
+
+4. 公平锁
+
+公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+
+5. 锁绑定多个条件
+
+一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+
+### ReentranceLock 几个特殊的方法
+
+getHoldCount(): 查询当前线程保持此锁的个数
+getQueueLength(): 返回正在等待获取次锁定的估计线程数。比如有5个线程，其中1个线程执行await()方法,调用该方法就返回4
+getWaitQueueLength(): 返回等待与此锁定相关的给定条件Condition的线程估计数。
+
+hasQueuedThread(Thread t): 查询指定线程是否正在等待获取此锁定
+hasQueuedThreads(): 查询是否有线程正在等待获取此锁定
+hasWaiters(Condition condition): 查询是否有线程正在等待与次锁定有关的condition条件
+
+## ReentranceReadWriteLock
+
+ReentranceLock 是完全互斥锁，同一时间，只有同一个线程在执行ReentrantLock.lock()后面的任务，虽然安全，但是效率低下。
+
+ReentranceReadWriteLock（读写锁），读锁是共享锁，多个读锁之间不互斥，读锁和写锁之间互斥，写锁和写锁之间互斥。
+
+``` java
+package com.raorao.java.thread;
+
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+/**
+ * 读写锁测试.
+ *
+ * @author Xiong Raorao
+ * @since 2018-08-06-11:48
+ */
+public class ReentrantReadWriteLockTest {
+
+  private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
+  public void read(){
+    lock.readLock().lock(); // 读锁
+    System.out.println("获得读锁 " + Thread.currentThread().getName() + " " + System.currentTimeMillis());
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }finally {
+      lock.readLock().unlock();
+    }
+  }
+
+  public void write(){
+    lock.writeLock().lock(); // 写锁
+    System.out.println("获得写锁 " + Thread.currentThread().getName() + " " + System.currentTimeMillis());
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }finally {
+      lock.writeLock().unlock();
+    }
+  }
+
+  public static void main(String[] args) {
+    // 1. 读读共享, A 和 B 同时获得锁
+    ReentrantReadWriteLockTest test = new ReentrantReadWriteLockTest();
+    Thread t1 = new Thread(()-> {
+      Thread.currentThread().setName("A");
+      test.read();
+    });
+    Thread t2 = new Thread(()-> {
+      Thread.currentThread().setName("B");
+      test.read();
+    });
+    t1.start();
+    t2.start();
+
+    // 2. 写写互斥, D线程比C线程落后两秒执行
+    t1 = new Thread(()->{
+      Thread.currentThread().setName("C");
+      test.write();
+    });
+    t2 = new Thread(()->{
+      Thread.currentThread().setName("D");
+      test.write();
+    });
+    t1.start();
+    t2.start();
+
+  }
+}
+
+```
+
+读写和写读两个锁也是互斥的，这里就不测试了。
+
+## condition
+
+condition 可以用于实现线程wait 和 notify，主要的方法有await()、signal() 和 signalAll() 方法，对应Object 类的 wait(), notify() 和notifyAll()方法，区别是，**前者只会通知持有锁的在等待的对象，后者则是对所有等待的线程通知，效率低下**
+
+``` java
+package com.raorao.java.thread;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 可重入锁测试.
+ *
+ * @author Xiong Raorao
+ * @since 2018-08-06-10:27
+ */
+public class ReentrantLockTest {
+
+  private Lock lock = new ReentrantLock();
+  private Condition conditionA = lock.newCondition();
+  private Condition conditionB = lock.newCondition();
+
+  public static void main(String[] args) throws InterruptedException {
+    ReentrantLockTest test = new ReentrantLockTest();
+    new Thread(() -> test.testLock()).start();
+    new Thread(() -> test.testLock()).start();
+
+    Thread t = new Thread(() -> test.awaitA());
+    t.start();
+    Thread.sleep(2000);
+    test.signalA();
+
+  }
+
+  public void awaitA() {
+    lock.lock();
+    try {
+      System.out.println("before awaitA at " + System.currentTimeMillis());
+      conditionA.await(); // 在此之前必须获得锁，不然报错illegalMonitorStateException 错误
+      System.out.println("after awaitA at " + System.currentTimeMillis());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+      System.out.println(" 释放锁 awaitA ");
+    }
+  }
+
+  public void signalA() {
+    lock.lock();
+    try {
+      System.out.println("signalA at " + System.currentTimeMillis());
+      conditionA.signal(); // 在此之前必须获得锁，不然报错illegalMonitorStateException 错误
+      System.out.println("signalA over at " + System.currentTimeMillis());
+    } finally {
+      lock.unlock();
+      System.out.println(" 释放锁 signalA ");
+    }
+  }
+
+  public void testLock() {
+    lock.lock();
+    for (int i = 0; i < 5; i++) {
+      System.out.print(i + " ");
+    }
+    System.out.println();
+    lock.unlock();
+  }
+}
+
+```
+
+上面的程序对应的是利用Condition的进行等待和通知。
+
+## 公平锁和非公平锁
+
+公平锁：线程获取锁的顺序使按照线程加锁的顺序来分配的，满足FIFO
+非公平锁：等待线程抢占获取锁，也有可能造成某个线程一直获取不到锁
+
+ReentrantLock 构造函数输入可以设置是否是公平锁，默认非公平锁。
+
+
+# Timer
+
+Timer 定时器，主要负责计划任务的功能，也就是在指定的时间开始执行某一个任务。
+
+## shedule(TimerTask task, Date date)
+
+``` java
+package com.raorao.java.thread;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * 定时器.
+ *
+ * @author Xiong Raorao
+ * @since 2018-08-06-13:07
+ */
+public class TimerTest {
+  private static Timer timer = new Timer();
+
+  static class MyTask extends TimerTask{
+
+    @Override
+    public void run() {
+      System.out.println("运行时间： " + new Date());
+    }
+  }
+
+  public static void main(String[] args) {
+    MyTask task1 = new MyTask();
+    try {
+      Date taskDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2018-08-06 13:15:00");
+      System.out.println("执行时间： " + taskDate.toLocaleString() + "，当前时间" + new Date().toLocaleString());
+      timer.schedule(task1, taskDate);
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+输出：
+
+执行时间： 2018-8-6 13:15:00，当前时间2018-8-6 13:14:27
+运行时间： Mon Aug 06 13:15:00 CST 2018
+
+如果任务执行时间比当前时间晚，则到了计划时间执行，否则立即执行。
+
+## shedule 周期性执行
+
+函数： shedule(TimeTask task, Date firstTime, long period)
+表示在指定的日期之后，按照指定的时间间隔(period)周期性的无休止的执行某一任务。
+
+**同样满足如果是未来的任务，到计划时间执行，否则立即执行**
+
+## sheduleAtFixedRate
+
+该方法和shedule方法的区别在于任务不延迟的情况。
+
+shedule: 如果执行任务的时间没有被延迟，那么下一次任务的执行时间参考的是上一次任务的“开始”时间计算。
+
+sheduleAtFixedRate: 如果执行任务的时间没有被延迟，那么下一次任务的执行时间参考的是上一次任务的“结束”时间计算。
 
 # 参考文档
 
