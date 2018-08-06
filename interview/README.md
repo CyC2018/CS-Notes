@@ -31,7 +31,7 @@ Thoutworks | 内推 | | [内推链接](https://jinshuju.net/f/CcO2JA)
 华为 | 网申 | | [招聘官网](http://career.huawei.com/reccampportal/next/mini/index.html)
 腾讯 | 提前批/网申 | <li> 提前批：7.25-9.12 <li> 提前批：7.25-9.14 <li> 在线笔试：9.16-9.17 <li> 面试：9.26开始| [招聘官网](https://join.qq.com/) 
 抖音、头条 | 内推  | 8.1 - 12.31| [招聘官网](https://job.bytedance.com/campus/) <li> 8.2 投简历
-携程 | 内推 | <li> 内推：8.2 - 8.12 <li> 网申 8.2 - 9.4 | [招聘官网](http://campus.ctrip.com)
+携程 | 内推 | <li> 内推：8.2 - 8.12 <li> 网申 8.2 - 9.4 | [招聘官网](http://campus.ctrip.com) <li> 8.2 已投简历
 老虎证券 | 内推 | <li> 内推: 8.4 - 8.10 | <li>8.4 日已经提交内推
 贝壳网 | 内推 |  | [招聘官网](http://campus.ke.com/)<li> 8.4已投简历
 美团 | 内推/网申 | 面试时间：9.6-9.14 | <li>8.6 已投简历
