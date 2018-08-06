@@ -147,6 +147,8 @@ git 常用命令
 
 `git clone <版本库的网址> <本地目录名>`指定克隆的目录
 
+`git remote add upstream fork.url`添加fork的源路径，方便同步源代码
+
 ### 3. Git init/git add
 
 `git init` 初始化一个工作区
