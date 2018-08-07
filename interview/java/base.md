@@ -494,6 +494,10 @@ private interface DefaulableFactory {
 
 **默认和静态方法 主要是为了扩充接口的方法，否则，所有实现了该接口的类都需要重新实现新方法**
 
+# socket 编程
+
+[socket 编程](https://www.cnblogs.com/rocomp/p/4790340.html)
+
 # 参考文档
 
 - [HashMap? ConcurrentHashMap? 相信看完这篇没人能难住你！](https://crossoverjie.top/2018/07/23/java-senior/ConcurrentHashMap/)
