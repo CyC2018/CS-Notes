@@ -680,8 +680,8 @@ void transfer(Entry[] newTable) {
 假设原数组长度 capacity 为 8，扩容之后 new capacity 为 16：
 
 ```html
-capacity     : 00010000
-new capacity : 00100000
+capacity     : 00001000
+new capacity : 00010000
 ```
 
 对于一个 Key，它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 + 8。
