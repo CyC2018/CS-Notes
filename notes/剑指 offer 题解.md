@@ -633,37 +633,27 @@ public int RectCover(int n) {
 
 ## 解题思路
 
-当 nums[m] <= nums[h] 的情况下，说明解在 [l, m] 之间，此时令 h = m；否则解在 [m + 1, h] 之间，令 l = m + 1。
+先取出数组的第一个元素用于缩小区间，二分查找中如果array[mid] > array[mid + 1]，那么array[mid + 1]就是最小值，直接返回，如果不符合条件，判断array[mid]和数组的第一个元素，若大于数组的第一个元素说明这时在旋转数组的左边，应该继续在右边区间查找，反之在左边区间查找，如果array[mid] > array[mid + 1] 永远不满足，说明数据所有元素都相等，直接返回第一个元素
 
-因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE) 二分查找部分。
-
-但是如果出现 nums[l] == nums[m] == nums[h]，那么此时无法确定解在哪个区间，因此需要切换到顺序查找。
-
-复杂度：O(logN) + O(1)
+复杂度：O(logN)
 
 ```java
-public int minNumberInRotateArray(int[] nums) {
-    if (nums.length == 0)
-        return 0;
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int m = l + (h - l) / 2;
-        if (nums[l] == nums[m] && nums[m] == nums[h])
-            return minNumber(nums, l, h);
-        else if (nums[m] <= nums[h])
-            h = m;
-        else
-            l = m + 1;
-    }
-    return nums[l];
-}
-
-private int minNumber(int[] nums, int l, int h) {
-    for (int i = l; i < h; i++)
-        if (nums[i] > nums[i + 1])
-            return nums[i + 1];
-    return nums[l];
-}
+public int minNumberInRotateArray(int [] array) {
+      if (array.length == 0)
+          return 0;
+      int v = array[0];
+      int lo = 0, hi = array.length - 1;
+      while (lo <= hi) {
+          int mid = lo + ((hi-lo)>>>1);
+          if (mid+1 < array.length && array[mid] > array[mid+1])
+              return array[mid + 1];
+          if (array[mid] >= v)
+              lo = mid + 1;
+          else 
+              hi = mid - 1;
+      }
+      return array[0];
+  }
 ```
 
 # 12. 矩阵中的路径
