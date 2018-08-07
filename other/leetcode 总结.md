@@ -5,7 +5,7 @@
 
 ## LeetCode 习题集合
 
-* [LeetCode 解题集合](https://github.com/apachecn/leetcode/docs/Leetcode_Solutions)
+* [LeetCode 解题集合](https://github.com/apachecn/LeetCode/tree/master/docs/Leetcode_Solutions)
 
 
 ## 模版要求
@@ -19,7 +19,7 @@
 
 > **案例模版**
 
-[模版：007. Reverse Integer 反转整数](https://github.com/apachecn/leetcode/docs/Leetcode_Solutions/007._Reverse_Integer.md)
+[模版：007. Reverse Integer 反转整数](https://github.com/apachecn/LeetCode/tree/master/docs/Leetcode_Solutions/007._Reverse_Integer.md)
 
 
 ## 项目贡献者
