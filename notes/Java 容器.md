@@ -1,9 +1,4 @@
 <!-- GFM-TOC -->
-<<<<<<< HEAD
-<!-- GFM-TOC -->
-
-
-=======
 * [一、概览](#一概览)
     * [Collection](#collection)
     * [Map](#map)
@@ -1152,4 +1147,3 @@ ListIterator <-- List
 - [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 - [Java Collection Framework – The LinkedList Class](http://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
 
->>>>>>> 8c67483fe9ac599aa6f6358fb32a541d7e279666

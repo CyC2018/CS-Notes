@@ -1,9 +1,27 @@
 <!-- GFM-TOC -->
+* [一、概览](#一概览)
+* [二、磁盘操作](#二磁盘操作)
+* [三、字节操作](#三字节操作)
+* [四、字符操作](#四字符操作)
+* [五、对象操作](#五对象操作)
+* [六、网络操作](#六网络操作)
+    * [InetAddress](#inetaddress)
+    * [URL](#url)
+    * [Sockets](#sockets)
+    * [Datagram](#datagram)
+* [七、NIO](#七nio)
+    * [流与块](#流与块)
+    * [通道与缓冲区](#通道与缓冲区)
+    * [缓冲区状态变量](#缓冲区状态变量)
+    * [文件 NIO 实例](#文件-nio-实例)
+    * [选择器](#选择器)
+    * [套接字 NIO 实例](#套接字-nio-实例)
+    * [内存映射文件](#内存映射文件)
+    * [对比](#对比)
+* [八、参考资料](#八参考资料)
 <!-- GFM-TOC -->
 
 
-<<<<<<< HEAD
-=======
 # 一、概览
 
 Java 的 I/O 大概可以分成以下几类：
@@ -570,4 +588,3 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [NIO 与传统 IO 的区别](http://blog.csdn.net/shimiso/article/details/24990499)
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
 - [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
->>>>>>> 8c67483fe9ac599aa6f6358fb32a541d7e279666

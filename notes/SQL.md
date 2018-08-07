@@ -1,9 +1,4 @@
 <!-- GFM-TOC -->
-<<<<<<< HEAD
-<!-- GFM-TOC -->
-
-
-=======
 * [一、基础](#一基础)
 * [二、创建表](#二创建表)
 * [三、修改表](#三修改表)
@@ -770,4 +765,3 @@ SET PASSWROD FOR myuser = Password('new_password');
 # 参考资料
 
 - BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
->>>>>>> 8c67483fe9ac599aa6f6358fb32a541d7e279666
