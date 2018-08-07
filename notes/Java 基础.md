@@ -4,7 +4,7 @@
     * [缓存池](#缓存池)
 * [二、String](#二string)
     * [概览](#概览)
-    * [String 不可变的好处](#string-不可变的好处)
+    * [不可变的好处](#不可变的好处)
     * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
     * [String.intern()](#stringintern)
 * [三、运算](#三运算)
@@ -153,7 +153,7 @@ public final class String
     private final char value[];
 ```
 
-## String 不可变的好处
+## 不可变的好处
 
 **1. 可以缓存 hash 值** 
 
@@ -212,7 +212,7 @@ String s5 = "bbb";
 System.out.println(s4 == s5);  // true
 ```
 
-在 Java 7 之前，字符串常量池被放在运行时常量池中，它属于永久代。而在 Java 7，字符串常量池被放在堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+在 Java 7 之前，字符串常量池被放在运行时常量池中，它属于永久代。而在 Java 7，字符串常量池被移到 Native Method 中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 - [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) 
 - [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
@@ -583,19 +583,7 @@ protected void finalize() throws Throwable {}
 
 ## equals()
 
-**1. equals() 与 == 的区别** 
-
-- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价，根据引用的对象的 equals() 方法的具体实现来进行比较。
-
-```java
-Integer x = new Integer(1);
-Integer y = new Integer(1);
-System.out.println(x.equals(y)); // true
-System.out.println(x == y);      // false
-```
-
-**2. 等价关系** 
+**1. 等价关系** 
 
 （一）自反性
 
@@ -630,6 +618,18 @@ x.equals(y) == x.equals(y); // true
 
 ```java
 x.equals(null); // false;
+```
+
+**2. equals() 与 ==** 
+
+- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
+- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价，根据引用对象 equals() 方法的具体实现来进行比较。
+
+```java
+Integer x = new Integer(1);
+Integer y = new Integer(1);
+System.out.println(x.equals(y)); // true
+System.out.println(x == y);      // false
 ```
 
 **3. 实现** 
@@ -1005,7 +1005,7 @@ public class A {
 
 **4. 静态内部类** 
 
-非静态内部类依赖于需要外部类的实例，而静态内部类不需要。
+非静态内部类依赖于外部类的实例，而静态内部类不需要。
 
 ```java
 public class OuterClass {
