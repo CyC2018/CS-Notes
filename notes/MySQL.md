@@ -483,3 +483,5 @@ MySQL 读写分离能提高性能的原因在于：
 - [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
 - [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
 - [MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
+- [服务端指南 数据存储篇 | MySQL（04） 索引使用的注意事项](http://blog.720ui.com/2017/mysql_core_04_index_item/)
+- [mysql 聚簇索引 和聚簇索引 （二级索引）的 那些事](https://blog.csdn.net/bigtree_3721/article/details/51335479)
