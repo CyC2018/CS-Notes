@@ -93,7 +93,7 @@ Leetcode 上数据库题目的解题记录。
 
 不会涉及很多基本语法介绍，主要是一些实现原理以及关键特性。
 
-> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
+> [Java 容器](/notes/Java%20容器.md)
 
 源码分析：ArrayList、Vector、CopyOnWriteArrayList、LinkedList、HashMap、ConcurrentHashMap、LinkedHashMap、WeekHashMap。
 
@@ -101,7 +101,7 @@ Leetcode 上数据库题目的解题记录。
 
 线程使用方式、两种互斥同步方法、线程协作、JUC、线程安全、内存模型、锁优化。
 
-> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
+> [Java 虚拟机](notes/Java%20虚拟机.md)
 
 运行时数据区域、垃圾收集、类加载。
 
@@ -111,27 +111,27 @@ NIO 的原理以及实例。
 
 ## 系统设计 :bulb:
 
-> [系统设计基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/系统设计基础.md)
+> [系统设计基础](notes/系统设计基础.md)
 
 性能、伸缩性、扩展性、可用性、安全性
 
-> [分布式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式.md)
+> [分布式](notes/分布式.md)
 
 分布式锁、分布式事务、CAP、BASE、Paxos、Raft
 
-> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/集群.md)
+> [集群](notes/集群.md)
 
 负载均衡、Session 管理
 
-> [攻击技术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/攻击技术.md)
+> [攻击技术](notes/攻击技术.md)
 
 XSS、CSRF、SQL 注入、DDoS
 
-> [缓存](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/缓存.md)
+> [缓存](notes/缓存.md)
 
 缓存特征、缓存位置、缓存问题、数据分布、一致性哈希、LRU、CDN
 
-> [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
+> [消息队列](notes/消息队列.md)
 
 消息处理模型、使用场景、可靠性
 
@@ -141,15 +141,15 @@ XSS、CSRF、SQL 注入、DDoS
 
 一些 Git 的使用和概念。
 
-> [Docker](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Docker.md)
+> [Docker](notes/Docker.md)
 
 Docker 基本原理。
 
-> [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
+> [正则表达式](notes/正则表达式.md)
 
 正则表达式基本语法。
 
-> [构建工具](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/构建工具.md)
+> [构建工具](notes/构建工具.md)
 
 构建工具的基本概念、主流构建工具介绍。
 
