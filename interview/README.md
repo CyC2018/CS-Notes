@@ -15,7 +15,7 @@
 ---|---|---|---
 ~~百度~~ | 提前批 | 7.8 -- * | 百度SER 线下面试 
 阿里巴巴 | 内推/网申 | 7.16 - 8.17 |  [招聘官网](https://campus.alibaba.com/process.htm)
-网易游戏 | 内推 |  | [招聘官网](http://game.campus.163.com/2018/zhiwei/zaixian/yxchl/2018/06/25/29304_760507.html)
+网易游戏 | 内推 | 内推信息： 丁涵宇 18674802640 N8033  | [招聘官网](http://game.campus.163.com/2018/zhiwei/zaixian/yxchl/2018/06/25/29304_760507.html) <li> 8.8 日投了内推
 京东 | 网申 | <li>简历截止：8.30</li><li>笔试时间 9.9</li><li>面试时间 9.16-9.20</li> | [技术岗java](http://campus.jd.com/web/job/job_detail?jobId=561)
 网易 | 内推/网申 | <li>内推时间：7.16-8.8 </li> <li>网申时间：8.9-9.5</li>| <li>[职位列表](https://campus.163.com/app/campus/recruitment4campus)</li><li>7月17日投简历</li>
 唯品会 | 网申 | <li>笔试9.15</li> <li>面试9月中下旬</li> | [招聘官网](http://campus.vip.com/) 7月18已投简历
@@ -36,6 +36,10 @@ Thoutworks | 内推 | | [内推链接](https://jinshuju.net/f/CcO2JA)
 贝壳网 | 内推 |  | [招聘官网](http://campus.ke.com/)<li> 8.4 已投简历
 美团 | 内推/网申 | 面试时间：9.6-9.14 | <li>8.6 已投简历
 招银网络科技 | 内推/网申 | 面试时间：9.8 和 9.25 | <li> 8.7 已投简历
+爱奇艺 | 内推/网申 <li> 内推码：DEiSUa | 面试时间：8.17 后 | [大数据开发岗位](http://zhaopin.iqiyi.com/job-detail-info-school.html?id=1824&isschool=1) <li> 8.8 日 已投简历
+百度互联网数据研发部 | 内推 | 邮箱：1064550387@qq.com | <li> 8.8 发送邮件
+WPS | 内推 | <li> 投递： 8.1-8.25 <li>内推直通面试 <li> 面试： 8月下旬 - 8 月底 | [网申链接](http://join.wps.cn) <li> 内推邮箱：s_huangsidi@wps.cn <li> 8.8 发送邮件 
+新浪微博 | 内推 |  内推码： 5VLHS |  [校招官网](http://career.sina.com.cn/welcome.html)
 
 ## 2. 面试记录
 
