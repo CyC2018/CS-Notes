@@ -358,6 +358,10 @@ select * from users where age > 16 and age < 30 and height = 180
 select from users where brith_date = 19950610;
 ```
 
+### 11. like 语句的索引失效问题
+
+当我们使用 like “value%” 的方式时是会使用索引的，但是对于 like “%value%” 这样的方式，必定会执行全表查询，这在数据量小的表，不存在性能问题，但是对于海量数据，全表扫描是非常可怕的事情。所以，根据业务需求，考虑使用 ElasticSearch 或 Solr 是个不错的方案。
+
 ## 重构查询方式
 
 ### 1. 切分大查询
