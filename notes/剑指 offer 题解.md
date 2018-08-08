@@ -1298,6 +1298,7 @@ private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2)
 
 ## 解题思路
 
+### 递归
 ```java
 public void Mirror(TreeNode root)
 {
@@ -1313,6 +1314,28 @@ private void swap(TreeNode root)
     TreeNode t = root.left;
     root.left = root.right;
     root.right = t;
+}
+```
+
+### 迭代
+```java
+public void Mirror(TreeNode root) {
+    if (root == null)
+        return;
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        TreeNode p = stack.pop();
+        if (p.left == null && p.right == null)
+            continue;
+        TreeNode left = p.left;
+        p.left = p.right;
+        p.right = left;
+        if (p.left != null)
+            stack.push(p.left);
+        if (p.right != null)
+            stack.push(p.right);
+    }
 }
 ```
 
