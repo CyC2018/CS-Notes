@@ -1,7 +1,7 @@
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
-    * [虚拟机栈](#虚拟机栈)
+    * [Java 虚拟机栈](#java-虚拟机栈)
     * [本地方法栈](#本地方法栈)
     * [堆](#堆)
     * [方法区](#方法区)
@@ -23,19 +23,19 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="400"/> </div><br>
 
 ## 程序计数器
 
 记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
 
-## 虚拟机栈
+## Java 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息，从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width=""/> </div><br>
+<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="450"/> </div><br>
 
-可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
+可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
 ```java
 java -Xss=512M HackTheJava
@@ -52,31 +52,28 @@ java -Xss=512M HackTheJava
 
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-<div align="center"> <img src="../pics//JNIFigure1.gif" width="350"/> </div><br>
+本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的, 并且被编译为基于本机硬件和操作系统的程序。
+
+<div align="center"> <img src="../pics//JNI-Java-Native-Interface.jpg" width="350"/> </div><br>
 
 ## 堆
 
-所有对象实例都在这里分配内存。
+所有对象实例都在这里分配内存，是垃圾收集的主要区域（"GC 堆"）。
 
-是垃圾收集的主要区域（"GC 堆"）。现代的垃圾收集器基本都是采用分代收集算法，主要思想是针对不同的对象采取不同的垃圾回收算法。虚拟机把 Java 堆分成以下三块：
+现代的垃圾收集器基本都是采用分代收集算法，针对不同的对象采取不同的垃圾回收算法，可以将堆分成两块：
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
-- 永久代（Permanent Generation）
 
-当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。
-
-新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
+新生代可以继续划分成以下三个空间：
 
 - Eden（伊甸园）
 - From Survivor（幸存者）
 - To Survivor
 
-<div align="center"> <img src="../pics//ppt_img.gif" width=""/> </div><br>
+堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
-Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
-
-可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
 java -Xms=1M -Xmx=2M HackTheJava
@@ -86,11 +83,13 @@ java -Xms=1M -Xmx=2M HackTheJava
 
 用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
 
-和 Java 堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。
+和堆一样不需要连续的内存，并且可以动态扩展。
+
+动态扩展失败一样会抛出 OutOfMemoryError 异常。
 
 对这块区域进行垃圾回收的主要目标是对常量池的回收和对类的卸载，但是一般比较难实现。
 
-JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收，JDK 1.8 之后，取消了永久代，用 metaspace（元数据）区替代。
+JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收。但是从 JDK 1.7 开始，已经把原本放在永久代的字符串常量池移到 Native Method 中。
 
 ## 运行时常量池
 
@@ -102,11 +101,15 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
+在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。
+
+这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
 # 二、垃圾收集
 
-程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。垃圾回收主要是针对 Java 堆和方法区进行。
+垃圾回收主要是针对堆和方法区进行。
+
+程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。
 
 ## 判断一个对象是否存活
 
@@ -115,6 +118,8 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 给对象添加一个引用计数器，当对象增加一个引用时计数器加 1，引用失效时计数器减 1。引用计数不为 0 的对象仍然存活。
 
 两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。
+
+正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
 
 ```java
 public class ReferenceCountingGC {
@@ -128,8 +133,6 @@ public class ReferenceCountingGC {
     }
 }
 ```
-
-正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
 
 ### 2. 可达性分析算法
 
@@ -152,7 +155,7 @@ Java 具有四种强度不同的引用类型。
 
 **（一）强引用** 
 
-被强引用关联的对象不会被垃圾收集器回收。
+被强引用关联的对象不会被回收。
 
 使用 new 一个新对象的方式来创建强引用。
 
@@ -162,7 +165,7 @@ Object obj = new Object();
 
 **（二）软引用** 
 
-被软引用关联的对象，只有在内存不够的情况下才会被回收。
+被软引用关联的对象只有在内存不够的情况下才会被回收。
 
 使用 SoftReference 类来创建软引用。
 
@@ -174,7 +177,7 @@ obj = null;  // 使对象只被软引用关联
 
 **（三）弱引用** 
 
-被弱引用关联的对象一定会被垃圾收集器回收，也就是说它只能存活到下一次垃圾收集。
+被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾收集。
 
 使用 WeakReference 类来实现弱引用。
 
@@ -184,54 +187,11 @@ WeakReference<Object> wf = new WeakReference<Object>(obj);
 obj = null;
 ```
 
-WeakHashMap 的 Entry 继承自 WeakReference，主要用来实现缓存。
-
-```java
-private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
-```
-
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMap 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
-
-```java
-public final class ConcurrentCache<K, V> {
-
-    private final int size;
-
-    private final Map<K, V> eden;
-
-    private final Map<K, V> longterm;
-
-    public ConcurrentCache(int size) {
-        this.size = size;
-        this.eden = new ConcurrentHashMap<>(size);
-        this.longterm = new WeakHashMap<>(size);
-    }
-
-    public V get(K k) {
-        V v = this.eden.get(k);
-        if (v == null) {
-            v = this.longterm.get(k);
-            if (v != null)
-                this.eden.put(k, v);
-        }
-        return v;
-    }
-
-    public void put(K k, V v) {
-        if (this.eden.size() >= size) {
-            this.longterm.putAll(this.eden);
-            this.eden.clear();
-        }
-        this.eden.put(k, v);
-    }
-}
-```
-
 **（四）虚引用** 
 
 又称为幽灵引用或者幻影引用。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用取得一个对象实例。
 
-为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。
+为一个对象设置虚引用关联的唯一目的就是能在这个对象被回收时收到一个系统通知。
 
 使用 PhantomReference 来实现虚引用。
 
@@ -243,19 +203,19 @@ obj = null;
 
 ### 4. 方法区的回收
 
-因为方法区主要存放永久代对象，而永久代对象的回收率比新生代差很多，因此在方法区上进行回收性价比不高。
+因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，因此在方法区上进行回收性价比不高。
 
 主要是对常量池的回收和对类的卸载。
 
+在大量使用反射、动态代理、CGLib 等 ByteCode 框架、动态生成 JSP 以及 OSGi 这类频繁自定义 ClassLoader 的场景都需要虚拟机具备类卸载功能，以保证不会出现内存溢出。
+
 类的卸载条件很多，需要满足以下三个条件，并且满足了也不一定会被卸载：
 
-- 该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。
+- 该类所有的实例都已经被回收，也就是堆中不存在该类的任何实例。
 - 加载该类的 ClassLoader 已经被回收。
-- 该类对应的 java.lang.Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
+- 该类对应的 Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
 
 可以通过 -Xnoclassgc 参数来控制是否对类进行卸载。
-
-在大量使用反射、动态代理、CGLib 等 ByteCode 框架、动态生成 JSP 以及 OSGi 这类频繁自定义 ClassLoader 的场景都需要虚拟机具备类卸载功能，以保证不会出现内存溢出。
 
 ### 5. finalize()
 
@@ -290,16 +250,18 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 主要不足是只使用了内存的一半。
 
-现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间存储放不下的对象。
+现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将新生代划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。
+
+HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间存储放不下的对象。
 
 ### 4. 分代收集
 
 现在的商业虚拟机采用分代收集算法，它根据对象存活周期将内存划分为几块，不同块采用适当的收集算法。
 
-一般将 Java 堆分为新生代和老年代。
+一般将堆分为新生代和老年代。
 
 - 新生代使用：复制算法
-- 老年代使用：标记 - 清理 或者 标记 - 整理 算法
+- 老年代使用：标记 - 清除 或者 标记 - 整理 算法
 
 ## 垃圾收集器
 
@@ -307,8 +269,8 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
-- 单线程与并行（多线程）：单线程指的是垃圾收集器只使用一个线程进行收集，而并行使用多个线程。
-- 串行与并发：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并发指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+- 单线程与多线程：单线程指的是垃圾收集器只使用一个线程进行收集，而多线程使用多个线程；
+- 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并形指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
 
 ### 1. Serial 收集器
 
@@ -334,15 +296,15 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 3. Parallel Scavenge 收集器
 
-与 ParNew 一样是并行的多线程收集器。
+与 ParNew 一样是多线程收集器。
 
 其它收集器关注点是尽可能缩短垃圾收集时用户线程的停顿时间，而它的目标是达到一个可控制的吞吐量，它被称为“吞吐量优先”收集器。这里的吞吐量指 CPU 用于运行用户代码的时间占总时间的比值。
 
 停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验。而高吞吐量则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。
 
-提供了两个参数用于精确控制吞吐量，分别是控制最大垃圾收集停顿时间 -XX:MaxGCPauseMillis 参数以及直接设置吞吐量大小的 -XX:GCTimeRatio 参数（值为大于 0 且小于 100 的整数）。缩短停顿时间是以牺牲吞吐量和新生代空间来换取的：新生代空间变小，垃圾回收变得频繁，导致吞吐量下降。
+缩短停顿时间是以牺牲吞吐量和新生代空间来换取的：新生代空间变小，垃圾回收变得频繁，导致吞吐量下降。
 
-还提供了一个参数 -XX:+UseAdaptiveSizePolicy，这是一个开关参数，打开参数后，就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例（-XX:SurvivorRatio）、晋升老年代对象年龄（-XX:PretenureSizeThreshold）等细节参数了，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量，这种方式称为 GC 自适应的调节策略（GC Ergonomics）。
+可以通过一个开关参数打卡 GC 自适应的调节策略（GC Ergonomics），就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例、晋升老年代对象年龄等细节参数了。虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量，这种方式称为 。
 
 ### 4. Serial Old 收集器
 
@@ -367,8 +329,6 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
-特点：并发收集、低停顿。
-
 分为以下四个流程：
 
 - 初始标记：仅仅只是标记一下 GC Roots 能直接关联到的对象，速度很快，需要停顿。
@@ -388,7 +348,7 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
 
-Java 堆被分为新生代、老年代和永久代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
+堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
 <div align="center"> <img src="../pics//4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
 
@@ -415,18 +375,6 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 - 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
 
 更详细内容请参考：[Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
-
-### 8. 比较
-
-| 收集器 | 单线程/并行 | 串行/并发 | 新生代/老年代 | 收集算法 | 目标 | 适用场景 |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|  **Serial**  | 单线程 | 串行 | 新生代 | 复制 | 响应速度优先 | 单 CPU 环境下的 Client 模式 |
-|  **Serial Old**  | 单线程 | 串行 | 老年代 | 标记-整理 | 响应速度优先 | 单 CPU 环境下的 Client 模式、CMS 的后备预案 |
-|  **ParNew**  |  并行 |串行 | 新生代 | 复制算法 | 响应速度优先 | 多 CPU 环境时在 Server 模式下与 CMS 配合 |
-|  **Parallel Scavenge**  | 并行 | 串行 | 新生代 | 复制算法 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
-|  **Parallel Old**  | 并行 | 串行 | 老年代 | 标记-整理 | 吞吐量优先 | 在后台运算而不需要太多交互的任务 |
-|  **CMS**  | 并行 | 并发 | 老年代 | 标记-清除 | 响应速度优先 | 集中在互联网站或 B/S 系统服务端上的 Java 应用 |
-|  **G1**  | 并行 | 并发 | 新生代 + 老年代 | 标记-整理 + 复制算法 | 响应速度优先 | 面向服务端应用，将来替换 CMS |
 
 ## 内存分配与回收策略
 
@@ -670,7 +618,7 @@ public static void main(String[] args) {
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
-- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JAVA_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JRE_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
 
 - 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
 
@@ -794,7 +742,9 @@ public class FileSystemClassLoader extends ClassLoader {
 # 参考资料
 
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
+- [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
+- [JNI Part1: Java Native Interface Introduction and “Hello World” application](http://electrofriends.com/articles/jni/jni-part1-java-native-interface/)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
 - [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
 - [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)

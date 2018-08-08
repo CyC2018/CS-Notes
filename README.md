@@ -6,7 +6,7 @@
 <div align="center">
     <img src="other/LogoMakr_0zpEzN.png" width="150px">
     <br>
-    <a href="https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"> <img src="https://img.shields.io/badge/>-gitter-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
+    <a href="other/Group.md"> <img src="https://img.shields.io/badge/>-group-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
 </div>
 
 <!-- [![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-4ab8a1.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details)  -->
@@ -21,59 +21,59 @@
 
 > [剑指 Offer 题解](notes/剑指%20offer%20题解.md)
 
-目录根据原书第二版进行编排。
+目录根据原书第二版进行编排，代码和原书有所不同，尽量比原书更简洁。
 
 > [Leetcode 题解](notes/Leetcode%20题解.md)
 
-做了一个大致分类，并对每种分类题型的解题思路做了总结。
+对题目做了一个大致分类，并对每种题型的解题思路做了总结。
 
 > [算法](notes/算法.md)
 
-主要参考 Robert Sedgewick 的算法书进行实现，源代码以及测试代码可在另一个仓库获取。
+排序、并查集、栈和队列、红黑树、散列表。
 
 ## 操作系统 :computer:
 
 > [计算机操作系统](notes/计算机操作系统.md)
 
-参考 现代操作系统、Unix 环境高级编程、深入理解计算机系统。
+进程管理、内存管理、设备管理、链接。
 
 > [Linux](notes/Linux.md)
 
-参考 鸟哥的 Linux 私房菜。
+基本实现原理以及基本操作。
 
 ## 网络 :cloud:
 
 > [计算机网络](notes/计算机网络.md)
 
-参考 谢希仁的计算机网络、计算机网络 自顶向下方法、TCP/IP 详解。
+物理层、链路层、网络层、运输层、应用层。
 
 > [HTTP](notes/HTTP.md)
 
-参考 图解 HTTP，更多的是参考网上的文档，比如 MDN、维基百科等。
+方法、状态码、Cookie、缓存、连接管理、HTTPs、HTTP 2.0。
 
 > [Socket](notes/Socket.md)
 
-参考 Unix 网络编程。
+I/O 模型、I/O 多路复用。
 
 ## 面向对象 :couple:
 
 > [设计模式](notes/设计模式.md)
 
-参考 Head First 设计模式、设计模式 可复用面向对象软件的基础，实现了 Gof 的 23 种设计模式。
+实现了 Gof 的 23 种设计模式。
 
 > [面向对象思想](notes/面向对象思想.md)
 
-内容包括三大原则（继承、封装、多态）、类图、设计原则。
+三大原则（继承、封装、多态）、类图、设计原则。
 
 ## 数据库 :floppy_disk:
 
 > [数据库系统原理](notes/数据库系统原理.md)
 
-参考 数据库系统原理。
+事务、锁、隔离级别、MVCC、间隙锁、范式。
 
 > [SQL](notes/SQL.md)
 
-参考 SQL 必知必会。
+SQL 基本语法。
 
 > [Leetcode-Database 题解](notes/Leetcode-Database%20题解.md)
 
@@ -81,43 +81,59 @@ Leetcode 上数据库题目的解题记录。
 
 > [MySQL](notes/MySQL.md)
 
-参考 高性能 MySQL。
+存储引擎、索引、查询优化、切分、复制。
 
 > [Redis](notes/Redis.md)
 
-参考 Redis 设计与实现、Redis 实战。
+五种数据类型、字典和跳跃表数据结构、使用场景、和 Memcache 的比较、淘汰策略、持久化、文件事件的 Reactor 模式、复制。
 
 ## Java :coffee:
 
 > [Java 基础](notes/Java%20基础.md)
 
-参考 Effective Java、Java 编程思想，也有部分内容参考官方文档以及 StackOverflow。
+不会涉及很多基本语法介绍，主要是一些实现原理以及关键特性。
 
-> [Java 虚拟机](notes/Java%20虚拟机.md)
+> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
 
-参考 深入理解 Java 虚拟机。
+源码分析：ArrayList、Vector、CopyOnWriteArrayList、LinkedList、HashMap、ConcurrentHashMap、LinkedHashMap、WeekHashMap。
 
 > [Java 并发](notes/Java%20并发.md)
 
-参考 Java 编程思想、深入理解 Java 虚拟机。
+线程使用方式、两种互斥同步方法、线程协作、JUC、线程安全、内存模型、锁优化。
 
-> [Java 容器](notes/Java%20容器.md)
+> [Java 虚拟机](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20虚拟机.md)
 
-包含容器源码的分析。
+运行时数据区域、垃圾收集、类加载。
 
 > [Java I/O](notes/Java%20IO.md)
 
-包含 NIO 的原理以及实例。
+NIO 的原理以及实例。
 
 ## 系统设计 :bulb:
 
-> [一致性](notes/一致性.md)
+> [系统设计基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/系统设计基础.md)
 
-CAP、BASE、Paxos、Raft
+性能、伸缩性、扩展性、可用性、安全性
 
->[分布式问题分析](notes/分布式问题分析.md)
+> [分布式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/分布式.md)
 
-分布式事务、分布式锁、分布式 Session、负载均衡
+分布式锁、分布式事务、CAP、BASE、Paxos、Raft
+
+> [集群](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/集群.md)
+
+负载均衡、Session 管理
+
+> [攻击技术](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/攻击技术.md)
+
+XSS、CSRF、SQL 注入、DDoS
+
+> [缓存](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/缓存.md)
+
+缓存特征、缓存位置、缓存问题、数据分布、一致性哈希、LRU、CDN
+
+> [消息队列](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/消息队列.md)
+
+消息处理模型、使用场景、可靠性
 
 ## 工具 :hammer:
 
@@ -125,9 +141,17 @@ CAP、BASE、Paxos、Raft
 
 一些 Git 的使用和概念。
 
-> [正则表达式](notes/正则表达式.md)
+> [Docker](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Docker.md)
 
-参考 正则表达式必知必会。
+Docker 基本原理。
+
+> [正则表达式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/正则表达式.md)
+
+正则表达式基本语法。
+
+> [构建工具](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/构建工具.md)
+
+构建工具的基本概念、主流构建工具介绍。
 
 ## 编码实践 :speak_no_evil:
 
@@ -157,7 +181,9 @@ Google 开源项目的代码风格规范。
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
 
-欢迎提交对本仓库的改进建议~
+如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
+
+欢迎在 Issue 中提交对本仓库的改进建议~
 
 **Authorization**
 
@@ -165,21 +191,21 @@ Google 开源项目的代码风格规范。
 
 转载使用请注明出处，谢谢！
 
-**Uploading**
-
-笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
-
-进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
-
-这里提供了笔者实现的 GFM 文档转换工具的链接：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
-
 **Typesetting**
 
 笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
 
 笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
-这里提供了笔者实现的中英混排文档在线排版工具的链接：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+
+**Uploading**
+
+笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
+
+进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
+
+笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 **Statement**
 

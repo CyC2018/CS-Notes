@@ -9,7 +9,7 @@
     * [字符串](#字符串)
     * [时间和日期](#时间和日期)
 * [三、索引](#三索引)
-    * [B Tree 原理](#b-tree-原理)
+    * [B+ Tree 原理](#b-tree-原理)
     * [索引分类](#索引分类)
     * [索引的优点](#索引的优点)
     * [索引优化](#索引优化)
@@ -95,15 +95,15 @@ VARCHAR 会保留字符串末尾的空格，而 CHAR 会删除。
 
 ## 时间和日期
 
-MySQL 提供了两种相似的日期时间类型：DATATIME 和 TIMESTAMP。
+MySQL 提供了两种相似的日期时间类型：DATETIME 和 TIMESTAMP。
 
-### 1. DATATIME
+### 1. DATETIME
 
 能够保存从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
 
 它与时区无关。
 
-默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATATIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
+默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATETIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
 
 ### 2. TIMESTAMP
 
@@ -125,57 +125,39 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。
 
-## B Tree 原理
+## B+ Tree 原理
 
-### 1. B-Tree
+### 1. 数据结构
 
-<div align="center"> <img src="../pics//06976908-98ab-46e9-a632-f0c2760ec46c.png"/> </div><br>
+B Tree 指的是 Balance Tree，也就是平衡树。平衡树时一颗查找树，并且所有叶子节点位于同一层。
 
-定义一条数据记录为一个二元组 [key, data]，B-Tree 是满足下列条件的数据结构：
+B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具有 B Tree 的平衡性，并且通过顺序访问指针来提高区间查询的性能。
 
-- 所有叶节点具有相同的深度，也就是说 B-Tree 是平衡的；
-- 一个节点中的 key 从左到右非递减排列；
-- 如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为 null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>。
-
-查找算法：首先在根节点进行二分查找，如果找到则返回对应节点的 data，否则在相应区间的指针指向的节点递归进行查找。
-
-由于插入删除新的数据记录会破坏 B-Tree 的性质，因此在插入删除时，需要对树进行一个分裂、合并、旋转等操作以保持 B-Tree 性质。
-
-### 2. B+Tree
-
-<div align="center"> <img src="../pics//7299afd2-9114-44e6-9d5e-4025d0b2a541.png"/> </div><br>
-
-与 B-Tree 相比，B+Tree 有以下不同点：
-
-- 每个节点的指针上限为 2d 而不是 2d+1（d 为节点的出度）；
-- 内节点不存储 data，只存储 key；
-- 叶子节点不存储指针。
-
-### 3. 顺序访问指针
+在 B+ Tree 中，一个节点中的 key 从左到右非递减排列，如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为 null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>。
 
 <div align="center"> <img src="../pics//061c88c1-572f-424f-b580-9cbce903a3fe.png"/> </div><br>
 
-一般在数据库系统或文件系统中使用的 B+Tree 结构都在经典 B+Tree 基础上进行了优化，在叶子节点增加了顺序访问指针，做这个优化的目的是为了提高区间访问的性能。
+### 2. 操作
 
-### 4. 优势
+进行查找操作时，首先在根节点进行二分查找，找到一个 key 所在的指针，然后递归地在指针所指向的节点进行查找。直到查找到叶子节点，然后在叶子节点上进行二分查找，找出 key 所对应的 data。
 
-红黑树等平衡树也可以用来实现索引，但是文件系统及数据库系统普遍采用 B Tree 作为索引结构，主要有以下两个原因：
+插入删除操作记录会破坏平衡树的平衡性，因此在插入删除时，需要对树进行一个分裂、合并、旋转等操作。
+
+### 3. 与红黑树的比较
+
+红黑树等平衡树也可以用来实现索引，但是文件系统及数据库系统普遍采用 B+ Tree 作为索引结构，主要有以下两个原因：
 
 （一）更少的检索次数
 
 平衡树检索数据的时间复杂度等于树高 h，而树高大致为 O(h)=O(log<sub>d</sub>N)，其中 d 为每个节点的出度。
 
-红黑树的出度为 2，而 B Tree 的出度一般都非常大。红黑树的树高 h 很明显比 B Tree 大非常多，因此检索的次数也就更多。
-
-B+Tree 相比于 B-Tree 更适合外存索引，因为 B+Tree 内节点去掉了 data 域，因此可以拥有更大的出度，检索效率会更高。
+红黑树的出度为 2，而 B+ Tree 的出度一般都非常大。红黑树的树高 h 很明显比 B+ Tree 大非常多，因此检索的次数也就更多。
 
 （二）利用计算机预读特性
 
 为了减少磁盘 I/O，磁盘往往不是严格按需读取，而是每次都会预读。这样做的理论依据是计算机科学中著名的局部性原理：当一个数据被用到时，其附近的数据也通常会马上被使用。预读过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的旋转时间，因此速度会非常快。
 
 操作系统一般将内存和磁盘分割成固态大小的块，每一块称为一页，内存与磁盘以页为单位交换数据。数据库系统将索引的一个节点的大小设置为页的大小，使得一次 I/O 就能完全载入一个节点，并且可以利用预读特性，相邻的节点也能够被预先载入。
-
-更多内容请参考：[MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
 
 ## 索引分类
 
@@ -442,3 +424,4 @@ MySQL 读写分离能提高性能的原因在于：
 - [服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策](http://blog.720ui.com/2017/mysql_core_09_multi_db_table2/ "服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策")
 - [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
 - [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
+- [MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
