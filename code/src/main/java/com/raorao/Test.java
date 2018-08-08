@@ -1,10 +1,16 @@
 package com.raorao;
 
 import afu.org.checkerframework.checker.igj.qual.I;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingDeque;
@@ -36,7 +42,10 @@ public class Test {
     ss.add(1);
     ArrayBlockingQueue<Integer> s;
     LinkedBlockingQueue<Integer> a;
-
+    FileInputStream fis;
+    FileOutputStream fos;
+    InputStreamReader isr;
+    OutputStreamWriter osw;
   }
 
   public int foo() {
