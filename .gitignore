@@ -1,5 +1,4 @@
 .DS_Store
-<<<<<<< HEAD
 
 # idea
 code/.idea
@@ -15,6 +14,4 @@ code/out
 # gradle
 code/.gradle
 !code/gradle/wrapper/gradle-wrapper.jar
-=======
 *.txt
->>>>>>> 4770ba68eceb376456a49d8e08f5e74780bbda20
