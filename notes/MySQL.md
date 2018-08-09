@@ -304,64 +304,6 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 
 最有效的方式是使用索引来覆盖查询。
 
-### 3. 不要在列上使用函数和进行运算
-
-在列上使用函数和计算将导致索引失效而进行全表扫描。
-
-### 4. 尽量避免使用 != 或 not in 或 <> 等否定操作符
-
-尽量避免在 where 子句中使用 or 来连接条件，因为这会导致索引失效而进行全表扫描。
-
-### 5. 尽量避免使用 or 来连接条件
-
-尽量避免在 where 子句中使用 or 来连接条件，因为这会导致索引失效而进行全表扫描。
-
-### 6. 多个单列限制应该改成一个多列索引（复合索引）查询
-
-因为 MySQL 只能使用一个单列索引，所以为多个列创建单列索引并不能提高 MySQL 的查询性能。正确的做法是将这多个要限定条件的列单独做成一个多列索引（复合索引）。
-
-### 7. 查询时要按照复合索引的最左列开始查找
-
-查询条件中没有使用复合索引的第一个字段，索引是不会被使用的。复合索引遵守“最左前缀”原则，即在查询条件中使用了复合索引的第一个字段，索引才会被使用。
-
-假如我们只有一个复合索引 ```age_height_idx(age, height)```
-
-如果我们使用
-```mysql
-select * from user where height = 170;
-```
-那么复合索引 ```age_height_idx(age, height)```将不会被使用。
-
-### 8. 尽量不用范围查询
-
-如果查询中的某个列有范围查询，则其右边所有列都无法使用索引优化查找。
-
-比如说我们使用
-```mysql
-select * from users where age > 16 and age < 30 and height = 180
-```
-则索引中 age 右边所有列都无法使用索引优化查找。换句话说，```age_height_idx(age, height)``` 索引等价于 ```age_height_idx(age)```。
-
-### 9. 索引不要包含有NULL值的列
-
-只要列中包含有 NULL 值，它就不会被包含在索引中，复合索引中只要有一列含有 NULL 值，那么这一列对于此复合索引就是无效的。
-
-因此，在数据库设计时，除非有一个很特别的原因使用 NULL 值，不然尽量不要让字段的默认值为 NULL。
-
-### 10. 隐式转换可能带来不好的影响
-
-当 where 查询条件左右两侧类型不匹配的时候会发生隐式转换，隐式转换可能带来的不好影响就是导致索引失效而进行全表扫描。
-
-下面的案例中，brith_date 是字符串，然而匹配的是整数类型，从而发生隐式转换。
-
-```mysql
-select from users where brith_date = 19950610;
-```
-
-### 11. like 语句的索引失效问题
-
-当我们使用 like “value%” 的方式时是会使用索引的，但是对于 like “%value%” 这样的方式，必定会执行全表查询，这在数据量小的表，不存在性能问题，但是对于海量数据，全表扫描是非常可怕的事情。所以，根据业务需求，考虑使用 ElasticSearch 或 Solr 是个不错的方案。
-
 ## 重构查询方式
 
 ### 1. 切分大查询
@@ -483,5 +425,3 @@ MySQL 读写分离能提高性能的原因在于：
 - [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
 - [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
 - [MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
-- [服务端指南 数据存储篇 | MySQL（04） 索引使用的注意事项](http://blog.720ui.com/2017/mysql_core_04_index_item/)
-- [mysql 聚簇索引 和聚簇索引 （二级索引）的 那些事](https://blog.csdn.net/bigtree_3721/article/details/51335479)
