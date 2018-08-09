@@ -39,7 +39,9 @@ Thoutworks | 内推 | | [内推链接](https://jinshuju.net/f/CcO2JA)
 爱奇艺 | 内推/网申 <li> 内推码：DEiSUa | 面试时间：8.17 后 | [大数据开发岗位](http://zhaopin.iqiyi.com/job-detail-info-school.html?id=1824&isschool=1) <li> 8.8 日 已投简历
 百度互联网数据研发部 | 内推 | 邮箱：1064550387@qq.com | <li> 8.8 发送邮件
 WPS | 内推 | <li> 投递： 8.1-8.25 <li>内推直通面试 <li> 面试： 8月下旬 - 8 月底 | [网申链接](http://join.wps.cn) <li> 内推邮箱：s_huangsidi@wps.cn <li> 8.8 发送邮件 
-新浪微博 | 内推 |  内推码： 5VLHS |  [校招官网](http://career.sina.com.cn/welcome.html)
+新浪微博 | 内推 |  内推码： 5VLHS |  [校招官网](http://career.sina.com.cn/welcome.html) <li> 8.8 已投简历
+秒针 | 内推 | 邮箱 1315215440@qq.com | 8.9 已发送邮件
+百度智能云三部 <li> 基础平台研发工程师 | 内推 | 邮箱：zhangzuliang@baidu.com | 8.9 发送邮件
 
 ## 2. 面试记录
 

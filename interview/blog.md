@@ -14,6 +14,7 @@
 [B_树和B+树](https://blog.csdn.net/crystal6918/article/details/78073721)
 [hashmap linkedhashmap treemap的区别](https://www.cnblogs.com/acm-bingzi/p/javaMap.html)
 [B树，B-树和B+树的区别](https://blog.csdn.net/zwz2011303359/article/details/63262541)
+[01背包问题](https://www.cnblogs.com/Christal-R/p/Dynamic_programming.html)
 
 ## 数据库原理
 
