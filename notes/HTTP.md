@@ -45,7 +45,7 @@
     * [二进制分帧层](#二进制分帧层)
     * [服务端推送](#服务端推送)
     * [首部压缩](#首部压缩)
-* [八、GET 和 POST 的区别](#八get-和-post-的区别)
+* [八、GET 和 POST 比较](#八get-和-post-比较)
     * [作用](#作用)
     * [参数](#参数)
     * [安全](#安全)
@@ -61,13 +61,13 @@
 
 ## URL
 
-- URI（Uniform Resource Identifier，统一资源标识符）
-- URL（Uniform Resource Locator，统一资源定位符）
-- URN（Uniform Resource Name，统一资源名称），例如 urn:isbn:0-486-27557-4。
-
 URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
 
-<div align="center"> <img src="../pics//f716427a-94f2-4875-9c86-98793cf5dcc3.jpg" width="400"/> </div><br>
+- URI（Uniform Resource Identifier，统一资源标识符）
+- URL（Uniform Resource Locator，统一资源定位符）
+- URN（Uniform Resource Name，统一资源名称）
+
+<div align="center"> <img src="../pics//urlnuri.jpg" width="600"/> </div><br>
 
 ## 请求和响应报文
 
@@ -197,7 +197,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **204 No Content** ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
 
--  **206 Partial Content** ：表示客户端进行了范围请求。响应报文包含由 Content-Range 指定范围的实体内容。
+-  **206 Partial Content** ：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
 
 ## 3XX 重定向
 
@@ -219,7 +219,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
 
--  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
+-  **403 Forbidden** ：请求被拒绝。
 
 -  **404 Not Found** 
 
@@ -331,7 +331,7 @@ Set-Cookie: tasty_cookie=strawberry
 [page content]
 ```
 
-客户端之后对同一个服务器发送请求时，会从浏览器中读出 Cookie 信息通过 Cookie 请求首部字段发送给服务器。
+客户端之后对同一个服务器发送请求时，会从浏览器中取出 Cookie 信息并通过 Cookie 请求首部字段发送给服务器。
 
 ```html
 GET /sample_page.html HTTP/1.1
@@ -382,9 +382,9 @@ Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
 
-Session 可以存储在服务器上的文件、数据库或者内存中。也可以将 Session 存储在内存型数据库中，比如 Redis，效率会更高。
+Session 可以存储在服务器上的文件、数据库或者内存中。也可以将 Session 存储在 Redis 这种内存型数据库中，效率会更高。
 
-使用 Session 维护用户登录的过程如下：
+使用 Session 维护用户登录状态的过程如下：
 
 - 用户进行登录时，用户提交包含用户名和密码的表单，放入 HTTP 请求报文中；
 - 服务器验证该用户名和密码；
@@ -499,7 +499,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 ### 1. 短连接与长连接
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要断开一次 TCP 连接，连接建立和断开的开销会很大。
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
 
 长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
@@ -688,7 +688,7 @@ HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 ### 3. HTTPs 采用的加密方式
 
-HTTPs 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证安全性，之后使用对称密钥加密进行通信来保证效率。（下图中的 Session Key 就是对称密钥）
+HTTPs 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。（下图中的 Session Key 就是对称密钥）
 
 <div align="center"> <img src="../pics//How-HTTPS-Works.png" width="600"/> </div><br>
 
@@ -717,7 +717,7 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 ## HTTPs 的缺点
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
-- 需要支付证书授权的高费用。
+- 需要支付证书授权的高额费用。
 
 ## 配置 HTTPs
 
@@ -727,7 +727,7 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 ## HTTP/1.x 缺陷
 
- HTTP/1.x 实现简单是以牺牲应用性能为代价的：
+ HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 - 客户端需要使用多个连接才能实现并发和缩短延迟；
 - 不会压缩请求和响应首部，从而导致不必要的网络流量；
@@ -763,7 +763,7 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 <div align="center"> <img src="../pics//_u4E0B_u8F7D.png" width="600"/> </div><br>
 
-# 八、GET 和 POST 的区别
+# 八、GET 和 POST 比较
 
 ## 作用
 
@@ -870,6 +870,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 - [htmlspecialchars](http://php.net/manual/zh/function.htmlspecialchars.php)
+- [Difference between file URI and URL in java](http://java2db.com/java-io/how-to-get-and-the-difference-between-file-uri-and-url-in-java)
 - [How to Fix SQL Injection Using Java PreparedStatement & CallableStatement](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-using-prepared-callable-statement)
 - [浅谈 HTTP 中 Get 与 Post 的区别](https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html)
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)

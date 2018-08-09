@@ -275,8 +275,6 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 ## 组成
 
-<div align="center"> <img src="../pics//BSD_disk.png" width="800"/> </div><br>
-
 最主要的几个组成部分如下：
 
 - inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 编号；
@@ -286,6 +284,9 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 - superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
 - block bitmap：记录 block 是否被使用的位域；
+
+<div align="center"> <img src="../pics//BSD_disk.png" width="800"/> </div><br>
+
 
 ## 文件读取
 
@@ -336,7 +337,9 @@ inode 中记录了文件内容所在的 block 编号，但是每个 block 非常
 
 ## 目录
 
-建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
+建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。
+
+可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
 
 ## 日志
 
