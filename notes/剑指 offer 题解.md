@@ -1296,7 +1296,10 @@ private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2) {
 ## 解题思路
 
 ### 递归
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0d7909db6d01bdfa0a0fd9abaee469b9ddd2e3a4
 ```java
 public void Mirror(TreeNode root) {
     if (root == null)
@@ -1314,6 +1317,7 @@ private void swap(TreeNode root) {
 ```
 
 ### 迭代
+<<<<<<< HEAD
 
 ```java
 public void Mirror(TreeNode root) {
@@ -1334,6 +1338,27 @@ private void swap(TreeNode node) {
     node.left = node.right;
     node.right = t;
 }
+=======
+```java
+public void Mirror(TreeNode root) {
+    if (root == null)
+        return;
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        TreeNode p = stack.pop();
+        if (p.left == null && p.right == null)
+            continue;
+        TreeNode left = p.left;
+        p.left = p.right;
+        p.right = left;
+        if (p.left != null)
+            stack.push(p.left);
+        if (p.right != null)
+            stack.push(p.right);
+    }
+}
+>>>>>>> 0d7909db6d01bdfa0a0fd9abaee469b9ddd2e3a4
 ```
 
 # 28 对称的二叉树
