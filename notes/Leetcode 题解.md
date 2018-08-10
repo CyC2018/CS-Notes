@@ -1,18 +1,18 @@
 <!-- GFM-TOC -->
 * [算法思想](#算法思想)
-    * [贪心思想](#贪心思想)
     * [双指针](#双指针)
     * [排序](#排序)
         * [快速选择](#快速选择)
         * [堆排序](#堆排序)
         * [桶排序](#桶排序)
         * [荷兰国旗问题](#荷兰国旗问题)
+    * [贪心思想](#贪心思想)
     * [二分查找](#二分查找)
+    * [分治](#分治)
     * [搜索](#搜索)
         * [BFS](#bfs)
         * [DFS](#dfs)
         * [Backtracking](#backtracking)
-    * [分治](#分治)
     * [动态规划](#动态规划)
         * [斐波那契数列](#斐波那契数列)
         * [矩阵路径](#矩阵路径)
@@ -55,9 +55,449 @@
 
 # 算法思想
 
+## 双指针
+
+双指针主要用于遍历数组，两个指针指向不同的元素，从而协同完成任务。
+
+**有序数组的 Two Sum** 
+
+[Leetcode ：167. Two Sum II - Input array is sorted (Easy)](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
+
+```html
+Input: numbers={2, 7, 11, 15}, target=9
+Output: index1=1, index2=2
+```
+
+题目描述：在有序数组中找出两个数，使它们的和为 target。
+
+使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
+
+- 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
+- 如果 sum > target，移动较大的元素，使 sum 变小一些；
+- 如果 sum < target，移动较小的元素，使 sum 变大一些。
+
+```java
+public int[] twoSum(int[] numbers, int target) {
+    int i = 0, j = numbers.length - 1;
+    while (i < j) {
+        int sum = numbers[i] + numbers[j];
+        if (sum == target) {
+            return new int[]{i + 1, j + 1};
+        } else if (sum < target) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    return null;
+}
+```
+
+**两数平方和** 
+
+[633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
+
+```html
+Input: 5
+Output: True
+Explanation: 1 * 1 + 2 * 2 = 5
+```
+
+题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
+
+```java
+public boolean judgeSquareSum(int c) {
+    int i = 0, j = (int) Math.sqrt(c);
+    while (i <= j) {
+        int powSum = i * i + j * j;
+        if (powSum == c) {
+            return true;
+        } else if (powSum > c) {
+            j--;
+        } else {
+            i++;
+        }
+    }
+    return false;
+}
+```
+
+**反转字符串中的元音字符** 
+
+[345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+
+```html
+Given s = "leetcode", return "leotcede".
+```
+
+使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+
+```java
+private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+
+public String reverseVowels(String s) {
+    int i = 0, j = s.length() - 1;
+    char[] result = new char[s.length()];
+    while (i <= j) {
+        char ci = s.charAt(i);
+        char cj = s.charAt(j);
+        if (!vowels.contains(ci)) {
+            result[i++] = ci;
+        } else if (!vowels.contains(cj)) {
+            result[j--] = cj;
+        } else {
+            result[i++] = cj;
+            result[j--] = ci;
+        }
+    }
+    return new String(result);
+}
+```
+
+**回文字符串** 
+
+[680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
+
+```html
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+```
+
+题目描述：可以删除一个字符，判断是否能构成回文字符串。
+
+```java
+public boolean validPalindrome(String s) {
+    int i = -1, j = s.length();
+    while (++i < --j) {
+        if (s.charAt(i) != s.charAt(j)) {
+            return isPalindrome(s, i, j - 1) || isPalindrome(s, i + 1, j);
+        }
+    }
+    return true;
+}
+
+private boolean isPalindrome(String s, int i, int j) {
+    while (i < j) {
+        if (s.charAt(i++) != s.charAt(j--)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+**归并两个有序数组** 
+
+[88. Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/description/)
+
+```html
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+```
+
+题目描述：把归并结果存到第一个数组上。
+
+需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值。
+
+```java
+public void merge(int[] nums1, int m, int[] nums2, int n) {
+    int index1 = m - 1, index2 = n - 1;
+    int indexMerge = m + n - 1;
+    while (index1 >= 0 || index2 >= 0) {
+        if (index1 < 0) {
+            nums1[indexMerge--] = nums2[index2--];
+        } else if (index2 < 0) {
+            nums1[indexMerge--] = nums1[index1--];
+        } else if (nums1[index1] > nums2[index2]) {
+            nums1[indexMerge--] = nums1[index1--];
+        } else {
+            nums1[indexMerge--] = nums2[index2--];
+        }
+    }
+}
+```
+
+**判断链表是否存在环** 
+
+[141. Linked List Cycle (Easy)](https://leetcode.com/problems/linked-list-cycle/description/)
+
+使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
+
+```java
+public boolean hasCycle(ListNode head) {
+    if (head == null) {
+        return false;
+    }
+    ListNode l1 = head, l2 = head.next;
+    while (l1 != null && l2 != null && l2.next != null) {
+        if (l1 == l2) {
+            return true;
+        }
+        l1 = l1.next;
+        l2 = l2.next.next;
+    }
+    return false;
+}
+```
+
+**最长子序列** 
+
+[524. Longest Word in Dictionary through Deleting (Medium)](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/)
+
+```
+Input:
+s = "abpcplea", d = ["ale","apple","monkey","plea"]
+
+Output:
+"apple"
+```
+
+题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回字典序的最大字符串。
+
+```java
+public String findLongestWord(String s, List<String> d) {
+    String longestWord = "";
+    for (String target : d) {
+        int l1 = longestWord.length(), l2 = target.length();
+        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
+            continue;
+        }
+        if (isValid(s, target)) {
+            longestWord = target;
+        }
+    }
+    return longestWord;
+}
+
+private boolean isValid(String s, String target) {
+    int i = 0, j = 0;
+    while (i < s.length() && j < target.length()) {
+        if (s.charAt(i) == target.charAt(j)) {
+            j++;
+        }
+        i++;
+    }
+    return j == target.length();
+}
+```
+
+## 排序
+
+### 快速选择
+
+用于求解  **Kth Element**  问题，使用快速排序的 partition() 进行实现。
+
+需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
+
+### 堆排序
+
+用于求解  **TopK Elements**  问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。
+
+堆排序也可以用于求解 Kth Element 问题，堆顶元素就是 Kth Element。
+
+快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于 Kth Element 的元素都是 TopK Elements。
+
+可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
+
+**Kth Element** 
+
+[215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
+
+**排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
+
+```java
+public int findKthLargest(int[] nums, int k) {
+    Arrays.sort(nums);
+    return nums[nums.length - k];
+}
+```
+
+**堆排序** ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
+
+```java
+public int findKthLargest(int[] nums, int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
+    for (int val : nums) {
+        pq.add(val);
+        if (pq.size() > k) // 维护堆的大小为 K
+            pq.poll();
+    }
+    return pq.peek();
+}
+```
+
+**快速选择** ：时间复杂度 O(N)，空间复杂度 O(1)
+
+```java
+public int findKthLargest(int[] nums, int k) {
+    k = nums.length - k;
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int j = partition(nums, l, h);
+        if (j == k) {
+            break;
+        } else if (j < k) {
+            l = j + 1;
+        } else {
+            h = j - 1;
+        }
+    }
+    return nums[k];
+}
+
+private int partition(int[] a, int l, int h) {
+    int i = l, j = h + 1;
+    while (true) {
+        while (a[++i] < a[l] && i < h) ;
+        while (a[--j] > a[l] && j > l) ;
+        if (i >= j) {
+            break;
+        }
+        swap(a, i, j);
+    }
+    swap(a, l, j);
+    return j;
+}
+
+private void swap(int[] a, int i, int j) {
+    int t = a[i];
+    a[i] = a[j];
+    a[j] = t;
+}
+```
+
+### 桶排序
+
+**出现频率最多的 k 个数** 
+
+[347. Top K Frequent Elements (Medium)](https://leetcode.com/problems/top-k-frequent-elements/description/)
+
+```html
+Given [1,1,1,2,2,3] and k = 2, return [1,2].
+```
+
+设置若干个桶，每个桶存储出现频率相同的数，并且桶的下标代表桶中数出现的频率，即第 i 个桶中存储的数出现的频率为 i。
+
+把数都放到桶之后，从后向前遍历桶，最先得到的 k 个数就是出现频率最多的的 k 个数。
+
+```java
+public List<Integer> topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> frequencyForNum = new HashMap<>();
+    for (int num : nums) {
+        frequencyForNum.put(num, frequencyForNum.getOrDefault(num, 0) + 1);
+    }
+    List<Integer>[] buckets = new ArrayList[nums.length + 1];
+    for (int key : frequencyForNum.keySet()) {
+        int frequency = frequencyForNum.get(key);
+        if (buckets[frequency] == null) {
+            buckets[frequency] = new ArrayList<>();
+        }
+        buckets[frequency].add(key);
+    }
+    List<Integer> topK = new ArrayList<>();
+    for (int i = buckets.length - 1; i >= 0 && topK.size() < k; i--) {
+        if (buckets[i] != null) {
+            topK.addAll(buckets[i]);
+        }
+    }
+    return topK;
+}
+```
+
+**按照字符出现次数对字符串排序** 
+
+[451. Sort Characters By Frequency (Medium)](https://leetcode.com/problems/sort-characters-by-frequency/description/)
+
+```html
+Input:
+"tree"
+
+Output:
+"eert"
+
+Explanation:
+'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+```
+
+```java
+public String frequencySort(String s) {
+    Map<Character, Integer> frequencyForNum = new HashMap<>();
+    for (char c : s.toCharArray())
+        frequencyForNum.put(c, frequencyForNum.getOrDefault(c, 0) + 1);
+
+    List<Character>[] frequencyBucket = new ArrayList[s.length() + 1];
+    for (char c : frequencyForNum.keySet()) {
+        int f = frequencyForNum.get(c);
+        if (frequencyBucket[f] == null) {
+            frequencyBucket[f] = new ArrayList<>();
+        }
+        frequencyBucket[f].add(c);
+    }
+    StringBuilder str = new StringBuilder();
+    for (int i = frequencyBucket.length - 1; i >= 0; i--) {
+        if (frequencyBucket[i] == null) {
+            continue;
+        }
+        for (char c : frequencyBucket[i]) {
+            for (int j = 0; j < i; j++) {
+                str.append(c);
+            }
+        }
+    }
+    return str.toString();
+}
+```
+
+### 荷兰国旗问题
+
+荷兰国旗包含三种颜色：红、白、蓝。
+
+有三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。
+
+它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
+
+<div align="center"> <img src="../pics//3b49dd67-2c40-4b81-8ad2-7bbb1fe2fcbd.png"/> </div><br>
+
+**按颜色进行排序** 
+
+[75. Sort Colors (Medium)](https://leetcode.com/problems/sort-colors/description/)
+
+```html
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+```
+
+题目描述：只有 0/1/2 三种颜色。
+
+```java
+public void sortColors(int[] nums) {
+    int zero = -1, one = 0, two = nums.length;
+    while (one < two) {
+        if (nums[one] == 0) {
+            swap(nums, ++zero, one++);
+        } else if (nums[one] == 2) {
+            swap(nums, --two, one);
+        } else {
+            ++one;
+        }
+    }
+}
+
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
+```
+
 ## 贪心思想
 
-贪心思想保证每次操作都是局部最优的，并且最后得到的结果是全局最优的。
+保证每次操作都是局部最优的，并且最后得到的结果是全局最优的。
 
 **分配饼干** 
 
@@ -74,7 +514,7 @@ You need to output 2.
 
 题目描述：每个孩子都有一个满足度，每个饼干都有一个大小，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
 
-因为最小的孩子最容易得到满足，因此先满足最小孩子。给一个孩子的饼干应当尽量小又能满足该孩子，这样大饼干就能拿来给满足度比较大的孩子。因此贪心策略
+给一个孩子的饼干应当尽量小又能满足该孩子，这样大饼干就能拿来给满足度比较大的孩子。因为最小的孩子最容易得到满足，所以先满足最小的孩子。
 
 证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
@@ -362,434 +802,6 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-## 双指针
-
-双指针主要用于遍历数组，两个指针指向不同的元素，从而协同完成任务。
-
-**有序数组的 Two Sum** 
-
-[Leetcode ：167. Two Sum II - Input array is sorted (Easy)](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
-
-```html
-Input: numbers={2, 7, 11, 15}, target=9
-Output: index1=1, index2=2
-```
-
-题目描述：在有序数组中找出两个数，使它们的和为 target。
-
-使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
-
-如果两个指针指向元素的和 sum == target，那么得到要求的结果；如果 sum > target，移动较大的元素，使 sum 变小一些；如果 sum < target，移动较小的元素，使 sum 变大一些。
-
-```java
-public int[] twoSum(int[] numbers, int target) {
-    int i = 0, j = numbers.length - 1;
-    while (i < j) {
-        int sum = numbers[i] + numbers[j];
-        if (sum == target) {
-            return new int[]{i + 1, j + 1};
-        } else if (sum < target) {
-            i++;
-        } else {
-            j--;
-        }
-    }
-    return null;
-}
-```
-
-**两数平方和** 
-
-[633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
-
-```html
-Input: 5
-Output: True
-Explanation: 1 * 1 + 2 * 2 = 5
-```
-
-题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
-
-```java
-public boolean judgeSquareSum(int c) {
-    int i = 0, j = (int) Math.sqrt(c);
-    while (i <= j) {
-        int powSum = i * i + j * j;
-        if (powSum == c) {
-            return true;
-        } else if (powSum > c) {
-            j--;
-        } else {
-            i++;
-        }
-    }
-    return false;
-}
-```
-
-**反转字符串中的元音字符** 
-
-[345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
-
-```html
-Given s = "leetcode", return "leotcede".
-```
-
-使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
-
-```java
-private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
-
-public String reverseVowels(String s) {
-    int i = 0, j = s.length() - 1;
-    char[] result = new char[s.length()];
-    while (i <= j) {
-        char ci = s.charAt(i);
-        char cj = s.charAt(j);
-        if (!vowels.contains(ci)) {
-            result[i++] = ci;
-        } else if (!vowels.contains(cj)) {
-            result[j--] = cj;
-        } else {
-            result[i++] = cj;
-            result[j--] = ci;
-        }
-    }
-    return new String(result);
-}
-```
-
-**回文字符串** 
-
-[680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
-
-```html
-Input: "abca"
-Output: True
-Explanation: You could delete the character 'c'.
-```
-
-题目描述：可以删除一个字符，判断是否能构成回文字符串。
-
-```java
-public boolean validPalindrome(String s) {
-    int i = -1, j = s.length();
-    while (++i < --j) {
-        if (s.charAt(i) != s.charAt(j)) {
-            return isPalindrome(s, i, j - 1) || isPalindrome(s, i + 1, j);
-        }
-    }
-    return true;
-}
-
-private boolean isPalindrome(String s, int i, int j) {
-    while (i < j) {
-        if (s.charAt(i++) != s.charAt(j--)) {
-            return false;
-        }
-    }
-    return true;
-}
-```
-
-**归并两个有序数组** 
-
-[88. Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/description/)
-
-```html
-Input:
-nums1 = [1,2,3,0,0,0], m = 3
-nums2 = [2,5,6],       n = 3
-
-Output: [1,2,2,3,5,6]
-```
-
-题目描述：把归并结果存到第一个数组上。
-
-需要从尾开始遍历，否则在 nums1 上归并得到的值会覆盖还未进行归并比较的值
-
-```java
-public void merge(int[] nums1, int m, int[] nums2, int n) {
-    int index1 = m - 1, index2 = n - 1;
-    int indexMerge = m + n - 1;
-    while (index1 >= 0 || index2 >= 0) {
-        if (index1 < 0) {
-            nums1[indexMerge--] = nums2[index2--];
-        } else if (index2 < 0) {
-            nums1[indexMerge--] = nums1[index1--];
-        } else if (nums1[index1] > nums2[index2]) {
-            nums1[indexMerge--] = nums1[index1--];
-        } else {
-            nums1[indexMerge--] = nums2[index2--];
-        }
-    }
-}
-```
-
-**判断链表是否存在环** 
-
-[141. Linked List Cycle (Easy)](https://leetcode.com/problems/linked-list-cycle/description/)
-
-使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
-
-```java
-public boolean hasCycle(ListNode head) {
-    if (head == null) {
-        return false;
-    }
-    ListNode l1 = head, l2 = head.next;
-    while (l1 != null && l2 != null && l2.next != null) {
-        if (l1 == l2) {
-            return true;
-        }
-        l1 = l1.next;
-        l2 = l2.next.next;
-    }
-    return false;
-}
-```
-
-**最长子序列** 
-
-[524. Longest Word in Dictionary through Deleting (Medium)](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/)
-
-```
-Input:
-s = "abpcplea", d = ["ale","apple","monkey","plea"]
-
-Output:
-"apple"
-```
-
-题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回按字典序排序的最大字符串。
-
-```java
-public String findLongestWord(String s, List<String> d) {
-    String longestWord = "";
-    for (String target : d) {
-        int l1 = longestWord.length(), l2 = target.length();
-        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
-            continue;
-        }
-        if (isValid(s, target)) {
-            longestWord = target;
-        }
-    }
-    return longestWord;
-}
-
-private boolean isValid(String s, String target) {
-    int i = 0, j = 0;
-    while (i < s.length() && j < target.length()) {
-        if (s.charAt(i) == target.charAt(j)) {
-            j++;
-        }
-        i++;
-    }
-    return j == target.length();
-}
-```
-
-## 排序
-
-### 快速选择
-
-一般用于求解  **Kth Element**  问题，可以在 O(N) 时间复杂度，O(1) 空间复杂度完成求解工作。
-
-与快速排序一样，快速选择一般需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
-
-### 堆排序
-
-堆排序用于求解  **TopK Elements**  问题，通过维护一个大小为 K 的堆，堆中的元素就是 TopK Elements。当然它也可以用于求解 Kth Element 问题，堆顶元素就是 Kth Element。快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于 Kth Element 的元素都是 TopK Elements。可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
-
-**Kth Element** 
-
-[215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
-
-**排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
-
-```java
-public int findKthLargest(int[] nums, int k) {
-    Arrays.sort(nums);
-    return nums[nums.length - k];
-}
-```
-
-**堆排序** ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
-
-```java
-public int findKthLargest(int[] nums, int k) {
-    PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
-    for (int val : nums) {
-        pq.add(val);
-        if (pq.size() > k) // 维护堆的大小为 K
-            pq.poll();
-    }
-    return pq.peek();
-}
-```
-
-**快速选择** ：时间复杂度 O(N)，空间复杂度 O(1)
-
-```java
-public int findKthLargest(int[] nums, int k) {
-    k = nums.length - k;
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int j = partition(nums, l, h);
-        if (j == k) {
-            break;
-        } else if (j < k) {
-            l = j + 1;
-        } else {
-            h = j - 1;
-        }
-    }
-    return nums[k];
-}
-
-private int partition(int[] a, int l, int h) {
-    int i = l, j = h + 1;
-    while (true) {
-        while (a[++i] < a[l] && i < h) ;
-        while (a[--j] > a[l] && j > l) ;
-        if (i >= j) {
-            break;
-        }
-        swap(a, i, j);
-    }
-    swap(a, l, j);
-    return j;
-}
-
-private void swap(int[] a, int i, int j) {
-    int t = a[i];
-    a[i] = a[j];
-    a[j] = t;
-}
-```
-
-### 桶排序
-
-**出现频率最多的 k 个数** 
-
-[347. Top K Frequent Elements (Medium)](https://leetcode.com/problems/top-k-frequent-elements/description/)
-
-```html
-Given [1,1,1,2,2,3] and k = 2, return [1,2].
-```
-
-设置若干个桶，每个桶存储出现频率相同的数，并且桶的下标代表桶中数出现的频率，即第 i 个桶中存储的数出现的频率为 i。把数都放到桶之后，从后向前遍历桶，最先得到的 k 个数就是出现频率最多的的 k 个数。
-
-```java
-public List<Integer> topKFrequent(int[] nums, int k) {
-    Map<Integer, Integer> frequencyForNum = new HashMap<>();
-    for (int num : nums) {
-        frequencyForNum.put(num, frequencyForNum.getOrDefault(num, 0) + 1);
-    }
-    List<Integer>[] buckets = new ArrayList[nums.length + 1];
-    for (int key : frequencyForNum.keySet()) {
-        int frequency = frequencyForNum.get(key);
-        if (buckets[frequency] == null) {
-            buckets[frequency] = new ArrayList<>();
-        }
-        buckets[frequency].add(key);
-    }
-    List<Integer> topK = new ArrayList<>();
-    for (int i = buckets.length - 1; i >= 0 && topK.size() < k; i--) {
-        if (buckets[i] != null) {
-            topK.addAll(buckets[i]);
-        }
-    }
-    return topK;
-}
-```
-
-**按照字符出现次数对字符串排序** 
-
-[451. Sort Characters By Frequency (Medium)](https://leetcode.com/problems/sort-characters-by-frequency/description/)
-
-```html
-Input:
-"tree"
-
-Output:
-"eert"
-
-Explanation:
-'e' appears twice while 'r' and 't' both appear once.
-So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
-```
-
-```java
-public String frequencySort(String s) {
-    Map<Character, Integer> frequencyForNum = new HashMap<>();
-    for (char c : s.toCharArray())
-        frequencyForNum.put(c, frequencyForNum.getOrDefault(c, 0) + 1);
-
-    List<Character>[] frequencyBucket = new ArrayList[s.length() + 1];
-    for (char c : frequencyForNum.keySet()) {
-        int f = frequencyForNum.get(c);
-        if (frequencyBucket[f] == null) {
-            frequencyBucket[f] = new ArrayList<>();
-        }
-        frequencyBucket[f].add(c);
-    }
-    StringBuilder str = new StringBuilder();
-    for (int i = frequencyBucket.length - 1; i >= 0; i--) {
-        if (frequencyBucket[i] == null) {
-            continue;
-        }
-        for (char c : frequencyBucket[i]) {
-            for (int j = 0; j < i; j++) {
-                str.append(c);
-            }
-        }
-    }
-    return str.toString();
-}
-```
-
-### 荷兰国旗问题
-
-荷兰国旗包含三种颜色：红、白、蓝。有这三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。
-
-它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
-
-<div align="center"> <img src="../pics//3b49dd67-2c40-4b81-8ad2-7bbb1fe2fcbd.png"/> </div><br>
-
-**按颜色进行排序** 
-
-[75. Sort Colors (Medium)](https://leetcode.com/problems/sort-colors/description/)
-
-```html
-Input: [2,0,2,1,1,0]
-Output: [0,0,1,1,2,2]
-```
-
-题目描述：只有 0/1/2 三种颜色。
-
-```java
-public void sortColors(int[] nums) {
-    int zero = -1, one = 0, two = nums.length;
-    while (one < two) {
-        if (nums[one] == 0) {
-            swap(nums, ++zero, one++);
-        } else if (nums[one] == 2) {
-            swap(nums, --two, one);
-        } else {
-            ++one;
-        }
-    }
-}
-
-private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
-}
-```
-
 ## 二分查找
 
 **正常实现** 
@@ -1062,6 +1074,53 @@ private int binarySearch(int[] nums, int target) {
         }
     }
     return l;
+}
+```
+
+## 分治
+
+**给表达式加括号** 
+
+[241. Different Ways to Add Parentheses (Medium)](https://leetcode.com/problems/different-ways-to-add-parentheses/description/)
+
+```html
+Input: "2-1-1".
+
+((2-1)-1) = 0
+(2-(1-1)) = 2
+
+Output : [0, 2]
+```
+
+```java
+public List<Integer> diffWaysToCompute(String input) {
+    List<Integer> ways = new ArrayList<>();
+    for (int i = 0; i < input.length(); i++) {
+        char c = input.charAt(i);
+        if (c == '+' || c == '-' || c == '*') {
+            List<Integer> left = diffWaysToCompute(input.substring(0, i));
+            List<Integer> right = diffWaysToCompute(input.substring(i + 1));
+            for (int l : left) {
+                for (int r : right) {
+                    switch (c) {
+                        case '+':
+                            ways.add(l + r);
+                            break;
+                        case '-':
+                            ways.add(l - r);
+                            break;
+                        case '*':
+                            ways.add(l * r);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    if (ways.size() == 0) {
+        ways.add(Integer.valueOf(input));
+    }
+    return ways;
 }
 ```
 
@@ -2309,53 +2368,6 @@ private void backtracking(int row) {
         colUsed[col] = diagonals45Used[diagonals45Idx] = diagonals135Used[diagonals135Idx] = false;
         nQueens[row][col] = '.';
     }
-}
-```
-
-## 分治
-
-**给表达式加括号** 
-
-[241. Different Ways to Add Parentheses (Medium)](https://leetcode.com/problems/different-ways-to-add-parentheses/description/)
-
-```html
-Input: "2-1-1".
-
-((2-1)-1) = 0
-(2-(1-1)) = 2
-
-Output : [0, 2]
-```
-
-```java
-public List<Integer> diffWaysToCompute(String input) {
-    List<Integer> ways = new ArrayList<>();
-    for (int i = 0; i < input.length(); i++) {
-        char c = input.charAt(i);
-        if (c == '+' || c == '-' || c == '*') {
-            List<Integer> left = diffWaysToCompute(input.substring(0, i));
-            List<Integer> right = diffWaysToCompute(input.substring(i + 1));
-            for (int l : left) {
-                for (int r : right) {
-                    switch (c) {
-                        case '+':
-                            ways.add(l + r);
-                            break;
-                        case '-':
-                            ways.add(l - r);
-                            break;
-                        case '*':
-                            ways.add(l * r);
-                            break;
-                    }
-                }
-            }
-        }
-    }
-    if (ways.size() == 0) {
-        ways.add(Integer.valueOf(input));
-    }
-    return ways;
 }
 ```
 
