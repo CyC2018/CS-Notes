@@ -1,11 +1,6 @@
 package com.raorao.java.base;
 
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -77,11 +72,11 @@ public class StreamTest {
     System.out.println(sum.orElse(0));
 
     // 3. min
-    int min = intList.stream().mapToInt(e->e).min().getAsInt();
+    int min = intList.stream().mapToInt(e -> e).min().getAsInt();
     System.out.println("min: " + min);
 
     // 自己生成流
-    Stream.iterate(0, n -> n +3).limit(10).forEach((e) -> System.out.print(e + " "));
+    Stream.iterate(0, n -> n + 3).limit(10).forEach((e) -> System.out.print(e + " "));
     // 生成随机数
     Random seed = new Random();
     Supplier<Integer> random = seed::nextInt;

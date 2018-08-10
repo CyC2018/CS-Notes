@@ -54,6 +54,8 @@ public class Test {
     FileOutputStream fos;
     InputStreamReader isr;
     OutputStreamWriter osw;
+    int b = 'z';
+    System.out.println(b);
   }
 
   public int foo() {
