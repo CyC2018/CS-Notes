@@ -25,7 +25,7 @@
 
 ## Collection
 
-<div align="center"> <img src="../pics//NP4z3i8m38Ntd28NQ4_0KCJ2q044Oez.png"/> </div><br>
+<div align="center"> <img src="../pics//VP4n3i8m34Ntd28NQ4_0KCJ2q044Oez.png"/> </div><br>
 
 ### 1. Set
 
@@ -129,10 +129,65 @@ private static final int DEFAULT_CAPACITY = 10;
 
 ArrayList 基于数组实现，并且具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。
 
-保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
+```
+
+ArrayList 实现了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+
+```java
+private void readObject(java.io.ObjectInputStream s)
+    throws java.io.IOException, ClassNotFoundException {
+    elementData = EMPTY_ELEMENTDATA;
+
+    // Read in size, and any hidden stuff
+    s.defaultReadObject();
+
+    // Read in capacity
+    s.readInt(); // ignored
+
+    if (size > 0) {
+        // be like clone(), allocate array based upon size not capacity
+        ensureCapacityInternal(size);
+
+        Object[] a = elementData;
+        // Read in all elements in the proper order.
+        for (int i=0; i<size; i++) {
+            a[i] = s.readObject();
+        }
+    }
+}
+```
+
+```java
+private void writeObject(java.io.ObjectOutputStream s)
+    throws java.io.IOException{
+    // Write out element count, and any hidden stuff
+    int expectedModCount = modCount;
+    s.defaultWriteObject();
+
+    // Write out size as capacity for behavioural compatibility with clone()
+    s.writeInt(size);
+
+    // Write out all elements in the proper order.
+    for (int i=0; i<size; i++) {
+        s.writeObject(elementData[i]);
+    }
+
+    if (modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+    }
+}
+```
+
+序列化时需要使用 ObjectOutputStream 的 writeObject() 将对象转换为字节流并输出。而 writeObject() 方法在传入的对象存在 writeObject() 的时候会去反射调用该对象的 writeObject() 来实现序列化。反序列化使用的是 ObjectInputStream 的 readObject() 方法，原理类似。
+
+```java
+ArrayList list = new ArrayList();
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+oos.writeObject(list);
 ```
 
 ### 3. 扩容
@@ -1080,7 +1135,7 @@ Set <|.. LinkedHashSet
 SortSet <|.. TreeSet
 List <|.. ArrayList
 List <|.. Vector
-List <|.. LinkeList
+List <|.. LinkedList
 Queue <|.. LinkedList
 Queue <|.. PriorityQueue
 
