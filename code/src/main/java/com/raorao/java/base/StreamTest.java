@@ -62,10 +62,10 @@ public class StreamTest {
      * 和前面 Stream 的第一个、第二个、第 n 个元素组合。从这个意义上说，字符串拼接、数值的 sum、min、max、average 都是特殊的 reduce。
      */
     // 1. 字符串拼接
-    Optional<String> ss = stream.reduce((a, b) -> a + b);
-    System.out.println(ss.orElse(null));
-    //String s2 = stream.reduce("", (a, b) -> a + b + "-");
-    //System.out.println(s2);
+    //Optional<String> ss = stream.reduce((a, b) -> a + b);
+    //System.out.println(ss.orElse(null));
+    String s2 = stream.reduce("", (a, b) -> a +  "-" + b );
+    System.out.println(s2);
 
     // 2. 数值相加
     Optional<Integer> sum = intList.stream().reduce((a, b) -> a + b);
