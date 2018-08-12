@@ -1080,7 +1080,7 @@ Set <|.. LinkedHashSet
 SortSet <|.. TreeSet
 List <|.. ArrayList
 List <|.. Vector
-List <|.. LinkeList
+List <|.. LinkedList
 Queue <|.. LinkedList
 Queue <|.. PriorityQueue
 
