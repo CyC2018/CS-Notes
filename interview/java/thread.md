@@ -38,6 +38,7 @@
     - [Deque](#deque)
         - [LinkedList](#linkedlist)
         - [ArrayDeque](#arraydeque)
+    - [Vector](#vector)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -1037,6 +1038,10 @@ LinkedList: 链表实现的双端队列
 ![](img/TIM截图20180806171310.jpg)
 
 ArrayDeque: 数组实现的双端队列，默认队列长度为16，队列满了就直接扩充一倍（double）
+
+## Vector
+
+Vector 是一个线程安全的动态数组，内部采用数组实现，和ArrayList的区别在于，ArrayList的增长速度是50%，而 Vector 的增长速度为100%
 
 # 参考文档
 

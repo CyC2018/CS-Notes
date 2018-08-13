@@ -47,21 +47,63 @@
 
 11、hashcode 和 equals 方法常用地方
 
+> 答: hashcode 和 equals 都是Object类的方法，hashcode用来求哈希码，返回的是一个int整数，这个哈希码的作用是确定该对象在哈希表中的索引位置。equals方法通常用于判断两个对象是否相等。**类的equal函数返回true，则hashcode一定相等；但类的hashcode相等，不一定得到对象相等**
+
+> 在创建类的散列表的时候（HashMap,HashTable,HashSet等），hashcode()和equals()函数是有关系的，在这种情况下,若要判断两个对象是否相等，除了要覆盖equals方法，也要覆盖hashcode方法。
+
 12、对象比较是否相同
+
+> 答：使用“==”判断对象是否是同一个对象（比较地址），使用equals函数比较对象的值是否相等。
 
 13、hashmap put 方法存放的时候怎么判断是否是重复的
 
+> 答：首先计算key的hash值，然后计算hash值和hashMap的数组长度-1的与值，如果对应的位置没有元素，则存放到该位置，否则将该点插入到原来有的位置的前面（链表法），如果超过8个元素，则将链表改为红黑树（1.8+）
+
 14、Object toString 方法常用的地方，为什么要重写该方法
+
+> 答：经常用在输出对象值的时候，重写该方法可以便于对象的格式化输出。
 
 15、Set 和 List 区别？
 
+> Set 存储不重复的数据，且无序。List可以存储重复数据，且有序。
+
 16、ArrayList 和 LinkedList 区别
+
+> ArrayList底层是数组实现的，随机访问快，但是插入和删除慢。
+> LinkedList底层是链表实现的，随机访问慢，但是插入和删除快。
 
 17、如果存取相同的数据，ArrayList 和 LinkedList 谁占用空间更大？
 
+> 显然是ArrayList 占用空间更大，因为ArrayList内部采用的是数据存储。没当数据达到数组的长度，就会将数组长度增长为原来的1.5倍。
+
+ArrayList 数组增长的源码。
+``` java
+    private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+
 18、Set 存的顺序是有序的吗？
 
+> 无序的, 数据的存入和取出无序。其中TreeSet会对Set的元素进行排序。
+
 19、常见 Set 的实现有哪些？
+
+> HashSet, TreeSet, LinkedHashSet
+
+HashSet是使用哈希表（hash table）实现的，其中的元素是无序的。HashSet的add、remove、contains方法 的时间复杂度为常量O(1)。
+
+TreeSet使用树形结构（算法书中的红黑树red-black tree）实现的。TreeSet中的元素是可排序的，但add、remove和contains方法的时间复杂度为O(log(n))。TreeSet还提供了first()、last()、headSet()、tailSet()等方法来操作排序后的集合。
+
+LinkedHashSet介于HashSet和TreeSet之间。它基于一个由链表实现的哈希表，保留了元素插入顺序。LinkedHashSet中基本方法的时间复杂度为O(1)。
 
 20、TreeSet 对存入对数据有什么要求呢？
 
@@ -71,13 +113,26 @@
 
 23、HashSet 是不是线程安全的？为什么不是线程安全的？
 
+HashSet不是线程安全的，没有使用锁机制。
+
 24、Java 中有哪些线程安全的 Map？
+
+> ConcurrentHashMap HashTable
 
 25、Concurrenthashmap 是怎么做到线程安全的？
 
+> 1.7 采用Segment 的方式存储数据，Segment继承了ReentrantLock
+1.8 采用 Synchronized + CAS 的方式实现了线程安全
+
 26、HashTable 你了解过吗？
 
+HashTable 相比HashMap，实现了线程安全，但是
+
 27、如何保证线程安全问题？
+
+> 1. 悲观锁（Synchronized, ReentrantLock)，也叫互斥同步
+2. 乐观锁（CAS），也叫非互斥同步
+3. 无同步方案（可重入代码，栈封闭，Thread Local Storage)
 
 28、synchronized、lock
 
