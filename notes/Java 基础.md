@@ -62,7 +62,10 @@ int y = x;         // 拆箱
 
 ## 缓存池
 
-new Integer(123) 与 Integer.valueOf(123) 的区别在于，new Integer(123) 每次都会新建一个对象，而 Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
+new Integer(123) 与 Integer.valueOf(123) 的区别在于：
+
+- new Integer(123) 每次都会新建一个对象
+- Integer.valueOf(123) 会使用缓存池中的对象，多次调用会取得同一个对象的引用。
 
 ```java
 Integer x = new Integer(123);
@@ -71,14 +74,6 @@ System.out.println(x == y);    // false
 Integer z = Integer.valueOf(123);
 Integer k = Integer.valueOf(123);
 System.out.println(z == k);   // true
-```
-
-编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
-
-```java
-Integer m = 123;
-Integer n = 123;
-System.out.println(m == n); // true
 ```
 
 valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。
@@ -125,7 +120,15 @@ static {
 }
 ```
 
-Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些：
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+
+```java
+Integer m = 123;
+Integer n = 123;
+System.out.println(m == n); // true
+```
+
+基本类型对应的缓冲池如下：
 
 - boolean values true and false
 - all byte values
@@ -133,7 +136,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 - int values between -128 and 127
 - char in the range \u0000 to \u007F
 
-因此在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
+在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
 
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
@@ -186,15 +189,15 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 - String 不可变，因此是线程安全的
 - StringBuilder 不是线程安全的
-- StringBuffer 是线程安全的，内部使用 synchronized 来同步
+- StringBuffer 是线程安全的，内部使用 synchronized 进行同步
 
 [StackOverflow : String, StringBuffer, and StringBuilder](https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder)
 
 ## String.intern()
 
-使用 String.intern() 可以保证相同内容的字符串变量引用相同的内存对象。
+使用 String.intern() 可以保证相同内容的字符串变量引用同一的内存对象。
 
-下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用，这个方法首先把 s1 引用的对象放到 String Pool（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用。intern() 首先把 s1 引用的对象放到 String Pool（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
 
 ```java
 String s1 = new String("aaa");
@@ -214,7 +217,7 @@ System.out.println(s4 == s5);  // true
 
 在 Java 7 之前，字符串常量池被放在运行时常量池中，它属于永久代。而在 Java 7，字符串常量池被移到 Native Method 中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
-- [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning) 
+- [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning)
 - [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
 # 三、运算
@@ -223,7 +226,7 @@ System.out.println(s4 == s5);  // true
 
 Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。但是如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
+以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中改变指针引用的对象，那么这两个指针此时指向的是完全不同的对象，一方改变其所指向对象的内容对另一方没有影响。
 
 ```java
 public class Dog {
@@ -234,7 +237,11 @@ public class Dog {
     }
 
     String getName() {
-        return name;
+        return this.name;
+    }
+
+    void setName(String name) {
+        this.name = name;
     }
 
     String getObjectAddress() {
@@ -258,6 +265,22 @@ public class PassByValueExample {
         dog = new Dog("B");
         System.out.println(dog.getObjectAddress()); // Dog@74a14482
         System.out.println(dog.getName());          // B
+    }
+}
+```
+
+但是如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
+
+```java
+class PassByValueExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("A");
+        func(dog);
+        System.out.println(dog.getName());          // B
+    }
+
+    private static void func(Dog dog) {
+        dog.setName("B");
     }
 }
 ```
@@ -317,7 +340,7 @@ switch (s) {
 }
 ```
 
-switch 不支持 long，是因为 switch 的设计初衷是为那些只需要对少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
+switch 不支持 long，是因为 switch 的设计初衷是对那些只有少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
 ```java
 // long x = 111;
@@ -341,33 +364,37 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 可以对类或类中的成员（字段以及方法）加上访问修饰符。
 
-- 成员可见表示其它类可以用这个类的实例对象访问到该成员；
 - 类可见表示其它类可以用这个类创建实例对象。
+- 成员可见表示其它类可以用这个类的实例对象访问到该成员；
 
 protected 用于修饰成员，表示在继承体系中成员对于子类可见，但是这个访问修饰符对于类没有意义。
 
 设计良好的模块会隐藏所有的实现细节，把它的 API 与它的实现清晰地隔离开来。模块之间只通过它们的 API 进行通信，一个模块不需要知道其他模块的内部工作情况，这个概念被称为信息隐藏或封装。因此访问权限应当尽可能地使每个类或者成员不被外界访问。
 
-如果子类的方法覆盖了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里氏替换原则。
+如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里氏替换原则。
 
-字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。可以使用公有的 getter 和 setter 方法来替换公有字段。
+字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。例如下面的例子中，AccessExample 拥有 id 共有字段，如果在某个时刻，我们想要使用 int 去存储 id 字段，那么就需要去修改所有的客户端代码。
 
 ```java
 public class AccessExample {
-    public int x;
+    public String id;
 }
 ```
 
+可以使用公有的 getter 和 setter 方法来替换公有字段，这样的话就可以控制对字段的修改行为。
+
+
 ```java
 public class AccessExample {
-    private int x;
 
-    public int getX() {
-        return x;
+    private int id;
+
+    public String getId() {
+        return id + "";
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setId(String id) {
+        this.id = Integer.valueOf(id);
     }
 }
 ```
@@ -387,7 +414,7 @@ public class AccessWithInnerClassExample {
     }
 
     public int getValue() {
-        return innerClass.x; // 直接访问
+        return innerClass.x;  // 直接访问
     }
 }
 ```
@@ -396,7 +423,7 @@ public class AccessWithInnerClassExample {
 
 **1. 抽象类** 
 
-抽象类和抽象方法都使用 abstract 进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。
+抽象类和抽象方法都使用 abstract 关键字进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。
 
 抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
 
@@ -415,7 +442,7 @@ public abstract class AbstractClassExample {
 ```
 
 ```java
-public class AbstractExtendClassExample extends AbstractClassExample{
+public class AbstractExtendClassExample extends AbstractClassExample {
     @Override
     public void func1() {
         System.out.println("func1");
@@ -448,7 +475,7 @@ public interface InterfaceExample {
     }
 
     int x = 123;
-    // int y;                // Variable 'y' might not have been initialized
+    // int y;               // Variable 'y' might not have been initialized
     public int z = 0;       // Modifier 'public' is redundant for interface fields
     // private int k = 0;   // Modifier 'private' not allowed here
     // protected int l = 0; // Modifier 'protected' not allowed here
@@ -477,20 +504,20 @@ System.out.println(InterfaceExample.x);
 - 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
 - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。
-- 接口的方法只能是 public 的，而抽象类的方法可以有多种访问权限。
+- 接口的成员只能是 public 的，而抽象类的成员可以有多种访问权限。
 
 **4. 使用选择** 
-
-使用抽象类：
-
-- 需要在几个相关的类中共享代码。
-- 需要能控制继承来的成员的访问权限，而不是都为 public。
-- 需要继承非静态（non-static）和非常量（non-final）字段。
 
 使用接口：
 
 - 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
 - 需要使用多重继承。
+
+使用抽象类：
+
+- 需要在几个相关的类中共享代码。
+- 需要能控制继承来的成员的访问权限，而不是都为 public。
+- 需要继承非静态和非常量字段。
 
 在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
@@ -499,8 +526,8 @@ System.out.println(InterfaceExample.x);
 
 ## super
 
-- 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而完成一些初始化的工作。
-- 访问父类的成员：如果子类覆盖了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
+- 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
+- 访问父类的成员：如果子类重写了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
 public class SuperExample {
@@ -549,7 +576,7 @@ SuperExtendExample.func()
 
 ## 重写与重载
 
-- 重写（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法，子类的返回值类型要等于或者小于父类的返回值；
+- 重写（Override）存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。子类的返回值类型要等于或者小于父类的返回值；
 
 - 重载（Overload）存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
 
