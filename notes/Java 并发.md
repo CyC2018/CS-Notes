@@ -23,7 +23,8 @@
 * [五、互斥同步](#五互斥同步)
     * [synchronized](#synchronized)
     * [ReentrantLock](#reentrantlock)
-    * [synchronized 和 ReentrantLock 比较](#synchronized-和-reentrantlock-比较)
+    * [比较](#比较)
+    * [使用选择](#使用选择)
 * [六、线程之间的协作](#六线程之间的协作)
     * [join()](#join)
     * [wait() notify() notifyAll()](#wait-notify-notifyall)
@@ -498,6 +499,8 @@ public synchronized static void fun() {
 
 ## ReentrantLock
 
+ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁。
+
 ```java
 public class LockExample {
 
@@ -529,23 +532,8 @@ public static void main(String[] args) {
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁，相比于 synchronized，它多了以下高级功能：
 
-**1. 等待可中断** 
-
-当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
-
-**2. 可实现公平锁** 
-
-公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
-
-synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但可以通过带布尔值的构造函数要求使用公平锁。
-
-**3. 锁绑定多个条件** 
-
-一个 ReentrantLock 对象可以同时绑定多个 Condition 对象。
-
-## synchronized 和 ReentrantLock 比较
+## 比较
 
 **1. 锁的实现** 
 
@@ -553,13 +541,25 @@ synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
 
 **2. 性能** 
 
-新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等。目前来看它和 ReentrantLock 的性能基本持平了，因此性能因素不再是选择 ReentrantLock 的理由。synchronized 有更大的性能优化空间，应该优先考虑 synchronized。
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
 
-**3. 功能** 
+**3. 等待可中断** 
 
-ReentrantLock 多了一些高级功能。
+当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
 
-**4. 使用选择** 
+ReentrantLock 可中断，而 synchronized 不行。
+
+**4. 公平锁** 
+
+公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+
+**5. 锁绑定多个条件** 
+
+一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+
+## 使用选择
 
 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
 
@@ -952,7 +952,7 @@ produce..produce..consume..consume..produce..consume..produce..consume..produce.
 
 ```java
 public class ForkJoinExample extends RecursiveTask<Integer> {
-    private final int threhold = 5;
+    private final int threshold = 5;
     private int first;
     private int last;
 
@@ -964,7 +964,7 @@ public class ForkJoinExample extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         int result = 0;
-        if (last - first <= threhold) {
+        if (last - first <= threshold) {
             // 任务足够小则直接计算
             for (int i = first; i <= last; i++) {
                 result += i;
@@ -1134,7 +1134,7 @@ public static void main(String[] args) throws InterruptedException {
 1000
 ```
 
-除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的完整性，它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
+除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的原子性。它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
 
 ```java
 public class AtomicSynchronizedExample {
@@ -1176,9 +1176,13 @@ public static void main(String[] args) throws InterruptedException {
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
-volatile 可保证可见性。synchronized 也能够保证可见性，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。final 关键字也能保证可见性：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程可以通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+主要有有三种实现可见性的方式：
 
-对前面的线程不安全示例中的 cnt 变量用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
+- volatile
+- synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
+- final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+
+对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
 
 ### 3. 有序性
 
@@ -1232,7 +1236,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 > Thread Join Rule
 
-join() 方法返回先行发生于 Thread 对象的结束。
+Thread 对象的结束先行发生于 join() 方法返回。
 
 <div align="center"> <img src="../pics//thread-join-rule.png" width=""/> </div><br>
 
@@ -1240,7 +1244,7 @@ join() 方法返回先行发生于 Thread 对象的结束。
 
 > Thread Interruption Rule
 
-对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 Thread.interrupted() 方法检测到是否有中断发生。
+对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 interrupted() 方法检测到是否有中断发生。
 
 ### 7. 对象终结规则
 
@@ -1385,22 +1389,21 @@ synchronized 和 ReentrantLock。
 
 ### 2. 非阻塞同步
 
-互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步（Blocking Synchronization）。
+互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
 
-从处理问题的方式上说，互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施（例如加锁），那就肯定会出现问题，无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
+互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
 
-随着硬件指令集的发展，我们有了另外一个选择：基于冲突检测的乐观并发策略，通俗地说，就是先进行操作，如果没有其他线程争用共享数据，那操作就成功了；如果共享数据有争用，产生了冲突，那就再采取其他的补偿措施（最常见的补偿措施就是不断地重试，直到成功为止），这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为非阻塞同步（Non-Blocking Synchronization）。
+随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为非阻塞同步。
 
-乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。
+乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。
 
-CAS 指令需要有 3 个操作数，分别是内存位置（在 Java 中可以简单理解为变量的内存地址，用 V 表示）、旧的预期值（用 A 表示）和新值（用 B 表示）。CAS 指令执行时，当且仅当 V 符合旧预期值 A 时，处理器用新值 B 更新 V 的值，否则它就不执行更新。但是无论是否更新了 V 的值，都会返回 V 的旧值，上述的处理过程是一个原子操作。
+硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
 
 J.U.C 包里面的整数原子类 AtomicInteger，其中的 compareAndSet() 和 getAndIncrement() 等方法都使用了 Unsafe 类的 CAS 操作。
 
-在下面的代码 1 中，使用了 AtomicInteger 执行了自增的操作。代码 2 是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。代码 3 是 getAndAddInt() 源码，var1 指示内存位置，var2 指示新值，var4 指示操作需要加的数值，这里为 1。在代码 3 的实现中，通过 getIntVolatile(var1, var2) 得到旧的预期值。通过调用 compareAndSwapInt() 来进行 CAS 比较，如果 var2=var5，那么就更新内存地址为 var1 的变量为 var5+var4。可以看到代码 3 是在一个循环中进行，发生冲突的做法是不断的进行重试。
+以下代码使用了 AtomicInteger 执行了自增的操作。
 
 ```java
-// 代码 1
 private AtomicInteger cnt = new AtomicInteger();
 
 public void add() {
@@ -1408,15 +1411,19 @@ public void add() {
 }
 ```
 
+以下代码是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。
+
 ```java
-// 代码 2
 public final int incrementAndGet() {
     return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
 }
 ```
 
+以下代码是 getAndAddInt() 源码，var1 指示对象内存地址，var2 指示该字段相对对象内存地址的偏移，var4 指示操作需要加的数值，这里为 1。通过 getIntVolatile(var1, var2) 得到旧的预期值，通过调用 compareAndSwapInt() 来进行 CAS 比较，如果该字段内存地址中的值 ==var5，那么就更新内存地址为 var1+var2 的变量为 var5+var4。
+
+可以看到 getAndAddInt() 在一个循环中进行，发生冲突的做法是不断的进行重试。
+
 ```java
-// 代码 3
 public final int getAndAddInt(Object var1, long var2, int var4) {
     int var5;
     do {
@@ -1427,7 +1434,9 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。J.U.C 包提供了一个带有标记的原子引用类“AtomicStampedReference”来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
+
+J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
 ### 3. 无同步方案
 
@@ -1435,9 +1444,9 @@ ABA ：如果一个变量初次读取的时候是 A 值，它的值被改成了 
 
 **（一）可重入代码（Reentrant Code）** 
 
-这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。相对线程安全来说，可重入性是更基本的特性，它可以保证线程安全，即所有的可重入的代码都是线程安全的，但是并非所有的线程安全的代码都是可重入的。
+这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
 
-可重入代码有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法等。我们可以通过一个简单的原则来判断代码是否具备可重入性：如果一个方法，它的返回结果是可以预测的，只要输入了相同的数据，就都能返回相同的结果，那它就满足可重入性的要求，当然也就是线程安全的。
+可重入代码有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法等。
 
 **（二）栈封闭** 
 
@@ -1659,9 +1668,9 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 缩小同步范围，例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, Semaphore, CyclicBarrier 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂控制流的控制。其次，这些类是由最好的企业编写和维护，在后续的 JDK 中它们还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步类少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现对复杂的控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
 
-- 多用并发集合少用同步集合。并发集合比同步集合的可扩展性更好，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
+- 多用并发集合少用同步集合，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
 
 - 使用本地变量和不可变类来保证线程安全。
 

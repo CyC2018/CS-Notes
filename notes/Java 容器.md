@@ -8,9 +8,13 @@
 * [三、源码分析](#三源码分析)
     * [ArrayList](#arraylist)
     * [Vector](#vector)
+    * [CopyOnWriteArrayList](#copyonwritearraylist)
     * [LinkedList](#linkedlist)
     * [HashMap](#hashmap)
     * [ConcurrentHashMap](#concurrenthashmap)
+    * [LinkedHashMap](#linkedhashmap)
+    * [WeekHashMap](#weekhashmap)
+* [附录](#附录)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -21,39 +25,39 @@
 
 ## Collection
 
-<div align="center"> <img src="../pics//java-collections.png"/> </div><br>
+<div align="center"> <img src="../pics//NP4z3i8m38Ntd28NQ4_0KCJ2q044Oez.png"/> </div><br>
 
 ### 1. Set
 
-- HashSet：基于哈希实现，支持快速查找，但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的；
+- HashSet：基于哈希表实现，支持快速查找。但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
 
-- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)；
+- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)。
 
-- LinkedHashSet：具有 HashSet 的查找效率，且内部使用链表维护元素的插入顺序。
+- LinkedHashSet：具有 HashSet 的查找效率，且内部使用双向链表维护元素的插入顺序。
 
 ### 2. List
 
-- ArrayList：基于动态数组实现，支持随机访问；
+- ArrayList：基于动态数组实现，支持随机访问。
 
-- Vector：和 ArrayList 类似，但它是线程安全的；
+- Vector：和 ArrayList 类似，但它是线程安全的。
 
 - LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 ### 3. Queue
 
-- LinkedList：可以用它来支持双向队列；
+- LinkedList：可以用它来实现双向队列。
 
 - PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
 ## Map
 
-<div align="center"> <img src="../pics//java-collections1.png"/> </div><br>
+<div align="center"> <img src="../pics//SoWkIImgAStDuUBAp2j9BKfBJ4vLy4q.png"/> </div><br>
 
-- HashMap：基于哈希实现；
+- HashMap：基于哈希表实现；
 
 - HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。它是遗留类，不应该去使用它。现在可以使用 ConcurrentHashMap 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
-- LinkedHashMap：使用链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
+- LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
 - TreeMap：基于红黑树实现。
 
@@ -61,7 +65,7 @@
 
 ## 迭代器模式
 
-<div align="center"> <img src="../pics//Iterator-1.jpg"/> </div><br>
+<div align="center"> <img src="../pics//SoWkIImgAStDuUBAp2j9BKfBJ4vLy0G.png"/> </div><br>
 
 Collection 实现了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
@@ -85,14 +89,14 @@ java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
 public static <T> List<T> asList(T... a)
 ```
 
-如果要将数组类型转换为 List 类型，应该注意的是 asList() 的参数为泛型的变长参数，因此不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
+应该注意的是 asList() 的参数为泛型的变长参数，不能使用基本类型数组作为参数，只能使用相应的包装类型数组。
 
 ```java
 Integer[] arr = {1, 2, 3};
 List list = Arrays.asList(arr);
 ```
 
-也可以使用以下方式生成 List。
+也可以使用以下方式调用 asList()：
 
 ```java
 List list = Arrays.asList(1,2,3);
@@ -108,7 +112,7 @@ List list = Arrays.asList(1,2,3);
 
 ### 1. 概览
 
-实现了 RandomAccess 接口，因此支持随机访问，这是理所当然的，因为 ArrayList 是基于数组实现的。
+实现了 RandomAccess 接口，因此支持随机访问。这是理所当然的，因为 ArrayList 是基于数组实现的。
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
@@ -123,7 +127,9 @@ private static final int DEFAULT_CAPACITY = 10;
 
 ### 2. 序列化
 
-基于数组实现，保存元素的数组使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+ArrayList 基于数组实现，并且具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。
+
+保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
@@ -171,7 +177,7 @@ private void grow(int minCapacity) {
 
 ### 4. 删除元素
 
-需要调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上。
+需要调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上，该操作的时间复杂度为 O(N)，可以看出 ArrayList 删除元素的代价是非常高的。
 
 ```java
 public E remove(int index) {
@@ -235,12 +241,12 @@ public synchronized E get(int index) {
 }
 ```
 
-### 2. ArrayList 与 Vector
+### 2. 与 ArrayList 的区别
 
 - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 - Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
-### 3. Vector 替代方案
+### 3. 替代方案
 
 为了获得线程安全的 ArrayList，可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
@@ -255,7 +261,15 @@ List<String> synList = Collections.synchronizedList(list);
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
-CopyOnWriteArrayList 是一种 CopyOnWrite 容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
+## CopyOnWriteArrayList
+
+### 读写分离
+
+写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响。
+
+写操作需要加锁，防止同时并发写入时导致的写入数据丢失。
+
+写操作结束之后需要把原始数组指向新的复制数组。
 
 ```java
 public boolean add(E e) {
@@ -264,7 +278,7 @@ public boolean add(E e) {
     try {
         Object[] elements = getArray();
         int len = elements.length;
-        Object[] newElements = Arrays.copyOf(elements, len + 1); 
+        Object[] newElements = Arrays.copyOf(elements, len + 1);
         newElements[len] = e;
         setArray(newElements);
         return true;
@@ -276,18 +290,31 @@ public boolean add(E e) {
 final void setArray(Object[] a) {
     array = a;
 }
+```
 
+```java
 @SuppressWarnings("unchecked")
 private E get(Object[] a, int index) {
     return (E) a[index];
 }
 ```
 
+### 适用场景
+
+CopyOnWriteArrayList 在写操作的同时允许读操作，大大提高了读操作的性能，因此很适合读多写少的应用场景。
+
+但是 CopyOnWriteArrayList 有其缺陷：
+
+- 内存占用：在写操作时需要复制一个新的数组，使得内存占用为原来的两倍左右；
+- 数据不一致：读操作不能读取实时性的数据，因为部分写操作的数据还未同步到读数组中。
+
+所以 CopyOnWriteArrayList 不适合内存敏感以及对实时性要求很高的场景。
+
 ## LinkedList
 
 ### 1. 概览
 
-基于双向链表实现，内部使用 Node 来存储链表节点信息。
+基于双向链表实现，使用 Node 存储链表节点信息。
 
 ```java
 private static class Node<E> {
@@ -297,14 +324,14 @@ private static class Node<E> {
 }
 ```
 
-每个链表存储了 Head 和 Tail 指针：
+每个链表存储了 first 和 last 指针：
 
 ```java
 transient Node<E> first;
 transient Node<E> last;
 ```
 
-<div align="center"> <img src="../pics//5158bc2f-83a6-4351-817e-c9b07f955d76.png"/> </div><br>
+<div align="center"> <img src="../pics//49495c95-52e5-4c9a-b27b-92cf235ff5ec.png"/> </div><br>
 
 ### 2. ArrayList 与 LinkedList
 
@@ -450,7 +477,7 @@ public V put(K key, V value) {
 }
 ```
 
-HashMap 允许插入键为 null 的键值对。因为无法调用 null 的 hashCode()，也就无法确定该键值对的桶下标，只能通过强制指定一个桶下标来存放。HashMap 使用第 0 个桶存放键为 null 的键值对。
+HashMap 允许插入键为 null 的键值对。但是因为无法调用 null 的 hashCode() 方法，也就无法确定该键值对的桶下标，只能通过强制指定一个桶下标来存放。HashMap 使用第 0 个桶存放键为 null 的键值对。
 
 ```java
 private V putForNullKey(V value) {
@@ -577,10 +604,10 @@ static int indexFor(int h, int length) {
 
 | 参数 | 含义 |
 | :--: | :-- |
-| capacity | table 的容量大小，默认为 16，需要注意的是 capacity 必须保证为 2 的 n 次方。|
+| capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | table 的实际使用量。 |
 | threshold | size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。 |
-| load_factor | 装载因子，table 能够使用的比例，threshold = capacity * load_factor。|
+| loadFactor | 装载因子，table 能够使用的比例，threshold = capacity * loadFactor。|
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -650,14 +677,14 @@ void transfer(Entry[] newTable) {
 
 在进行扩容时，需要把键值对重新放到对应的桶上。HashMap 使用了一个特殊的机制，可以降低重新计算桶下标的操作。
 
-假设原数组长度 capacity 为 8，扩容之后 new capacity 为 16：
+假设原数组长度 capacity 为 16，扩容之后 new capacity 为 32：
 
 ```html
 capacity     : 00010000
 new capacity : 00100000
 ```
 
-对于一个 Key，它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 + 8。
+对于一个 Key，它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 +16。
 
 ### 7. 扩容-计算数组容量
 
@@ -825,14 +852,286 @@ public int size() {
 }
 ```
 
-
 ### 3. JDK 1.8 的改动
 
-JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发程度与 Segment 数量相等。
+JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发度与 Segment 数量相等。
 
 JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized。
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
+
+## LinkedHashMap
+
+### 存储结构
+
+继承自 HashMap，因此具有和 HashMap 一样的快速查找特性。
+
+```java
+public class LinkedHashMap<K,V> extends HashMap<K,V> implements Map<K,V>
+```
+
+内存维护了一个双向链表，用来维护插入顺序或者 LRU 顺序。
+
+```java
+/**
+ * The head (eldest) of the doubly linked list.
+ */
+transient LinkedHashMap.Entry<K,V> head;
+
+/**
+ * The tail (youngest) of the doubly linked list.
+ */
+transient LinkedHashMap.Entry<K,V> tail;
+```
+
+accessOrder 决定了顺序，默认为 false，此时使用的是插入顺序。
+
+```java
+final boolean accessOrder;
+```
+
+LinkedHashMap 最重要的是以下用于维护顺序的函数，它们会在 put、get 等方法中调用。
+
+```java
+void afterNodeAccess(Node<K,V> p) { }
+void afterNodeInsertion(boolean evict) { }
+```
+
+### afterNodeAccess()
+
+当一个节点被访问时，如果 accessOrder 为 true，则会将 该节点移到链表尾部。也就是说指定为 LRU 顺序之后，在每次访问一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久未使用的节点。
+
+```java
+void afterNodeAccess(Node<K,V> e) { // move node to last
+    LinkedHashMap.Entry<K,V> last;
+    if (accessOrder && (last = tail) != e) {
+        LinkedHashMap.Entry<K,V> p =
+            (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
+        p.after = null;
+        if (b == null)
+            head = a;
+        else
+            b.after = a;
+        if (a != null)
+            a.before = b;
+        else
+            last = b;
+        if (last == null)
+            head = p;
+        else {
+            p.before = last;
+            last.after = p;
+        }
+        tail = p;
+        ++modCount;
+    }
+}
+```
+
+### afterNodeInsertion()
+
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 ture 时会移除最晚的节点，也就是链表首部节点 first。
+
+evict 只有在构建 Map 的时候才为 false，在这里为 true。
+
+```java
+void afterNodeInsertion(boolean evict) { // possibly remove eldest
+    LinkedHashMap.Entry<K,V> first;
+    if (evict && (first = head) != null && removeEldestEntry(first)) {
+        K key = first.key;
+        removeNode(hash(key), key, null, false, true);
+    }
+}
+```
+
+removeEldestEntry() 默认为 false，如果需要让它为 true，需要继承 LinkedHashMap 并且覆盖这个方法的实现，这在实现 LRU 的缓存中特别有用，通过移除最近最久未使用的节点，从而保证缓存空间足够，并且缓存的数据都是热点数据。
+
+```java
+protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+        return false;
+    }
+```
+
+### LRU 缓存
+
+以下是使用 LinkedHashMap 实现的一个 LRU 缓存：
+
+- 设定最大缓存空间 MAX_ENTRIES  为 3；
+- 使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LUR 顺序；
+- 覆盖 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
+
+```java
+class LRUCache<K, V> extends LinkedHashMap<K, V> {
+    private static final int MAX_ENTRIES = 3;
+
+    protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() > MAX_ENTRIES;
+    }
+
+    LRUCache() {
+        super(MAX_ENTRIES, 0.75f, true);
+    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    LRUCache<Integer, String> cache = new LRUCache<>();
+    cache.put(1, "a");
+    cache.put(2, "b");
+    cache.put(3, "c");
+    cache.get(1);
+    cache.put(4, "d");
+    System.out.println(cache.keySet());
+}
+```
+
+```html
+[3, 1, 4]
+```
+
+## WeekHashMap
+
+### 存储结构
+
+WeakHashMap 的 Entry 继承自 WeakReference，被 WeakReference 关联的对象在下一次垃圾回收时会被回收。
+
+WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存对象，由 JVM 对这部分缓存进行回收。
+
+```java
+private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
+```
+
+### ConcurrentCache
+
+Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。
+
+ConcurrentCache 采取的是分代缓存：
+
+- 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
+- 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，这些老对象会被垃圾收集器回收。
+- 当调用  get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，保证频繁被访问的节点不容易被回收。
+- 当调用 put() 方法时，如果缓存当前容量大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
+
+```java
+public final class ConcurrentCache<K, V> {
+
+    private final int size;
+
+    private final Map<K, V> eden;
+
+    private final Map<K, V> longterm;
+
+    public ConcurrentCache(int size) {
+        this.size = size;
+        this.eden = new ConcurrentHashMap<>(size);
+        this.longterm = new WeakHashMap<>(size);
+    }
+
+    public V get(K k) {
+        V v = this.eden.get(k);
+        if (v == null) {
+            v = this.longterm.get(k);
+            if (v != null)
+                this.eden.put(k, v);
+        }
+        return v;
+    }
+
+    public void put(K k, V v) {
+        if (this.eden.size() >= size) {
+            this.longterm.putAll(this.eden);
+            this.eden.clear();
+        }
+        this.eden.put(k, v);
+    }
+}
+```
+
+# 附录
+
+Collection 绘图源码：
+
+```
+@startuml
+
+interface Collection
+interface Set
+interface List
+interface Queue
+interface SortSet
+
+class HashSet
+class LinkedHashSet
+class TreeSet
+class ArrayList
+class Vector
+class LinkedList
+class PriorityQueue
+
+
+Collection <|-- Set
+Collection <|-- List
+Collection <|-- Queue
+Set <|-- SortSet
+
+Set <|.. HashSet
+Set <|.. LinkedHashSet
+SortSet <|.. TreeSet
+List <|.. ArrayList
+List <|.. Vector
+List <|.. LinkedList
+Queue <|.. LinkedList
+Queue <|.. PriorityQueue
+
+@enduml
+```
+
+Map 绘图源码
+
+```
+@startuml
+
+interface Map
+interface SortMap
+
+class HashTable
+class LinkedHashMap
+class HashMap
+class TreeMap
+
+Map <|.. HashTable
+Map <|.. LinkedHashMap
+Map <|.. HashMap
+Map <|-- SortMap
+SortMap <|.. TreeMap
+
+@enduml
+```
+
+迭代器类图
+
+```
+@startuml
+
+interface Iterable
+interface Collection
+interface List
+interface Set
+interface Queue
+interface Iterator
+interface ListIterator
+
+Iterable <|-- Collection
+Collection <|.. List
+Collection <|.. Set
+Collection <|-- Queue
+Iterator <-- Iterable
+Iterator <|.. ListIterator
+ListIterator <-- List
+
+@enduml
+```
 
 # 参考资料
 
