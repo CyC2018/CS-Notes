@@ -21,17 +21,17 @@
 
 # 一、概览
 
-容器主要包括 Collection 和 Map 两种，Collection 又包含了 List、Set 以及 Queue。
+容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。
 
 ## Collection
 
-<div align="center"> <img src="../pics//NP4z3i8m38Ntd28NQ4_0KCJ2q044Oez.png"/> </div><br>
+<div align="center"> <img src="../pics//VP4n3i8m34Ntd28NQ4_0KCJ2q044Oez.png"/> </div><br>
 
 ### 1. Set
 
-- HashSet：基于哈希表实现，支持快速查找。但不支持有序性操作，例如根据一个范围查找元素的操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
+- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。
 
-- TreeSet：基于红黑树实现，支持有序性操作，但是查找效率不如 HashSet，HashSet 查找时间复杂度为 O(1)，TreeSet 则为 O(logN)。
+- HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
 
 - LinkedHashSet：具有 HashSet 的查找效率，且内部使用双向链表维护元素的插入顺序。
 
@@ -53,13 +53,14 @@
 
 <div align="center"> <img src="../pics//SoWkIImgAStDuUBAp2j9BKfBJ4vLy4q.png"/> </div><br>
 
-- HashMap：基于哈希表实现；
+- TreeMap：基于红黑树实现。
+
+- HashMap：基于哈希表实现。
 
 - HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。它是遗留类，不应该去使用它。现在可以使用 ConcurrentHashMap 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
-- TreeMap：基于红黑树实现。
 
 # 二、容器中的设计模式
 
@@ -129,10 +130,65 @@ private static final int DEFAULT_CAPACITY = 10;
 
 ArrayList 基于数组实现，并且具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。
 
-保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。ArrayList 重写了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。
 
 ```java
 transient Object[] elementData; // non-private to simplify nested class access
+```
+
+ArrayList 实现了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+
+```java
+private void readObject(java.io.ObjectInputStream s)
+    throws java.io.IOException, ClassNotFoundException {
+    elementData = EMPTY_ELEMENTDATA;
+
+    // Read in size, and any hidden stuff
+    s.defaultReadObject();
+
+    // Read in capacity
+    s.readInt(); // ignored
+
+    if (size > 0) {
+        // be like clone(), allocate array based upon size not capacity
+        ensureCapacityInternal(size);
+
+        Object[] a = elementData;
+        // Read in all elements in the proper order.
+        for (int i=0; i<size; i++) {
+            a[i] = s.readObject();
+        }
+    }
+}
+```
+
+```java
+private void writeObject(java.io.ObjectOutputStream s)
+    throws java.io.IOException{
+    // Write out element count, and any hidden stuff
+    int expectedModCount = modCount;
+    s.defaultWriteObject();
+
+    // Write out size as capacity for behavioural compatibility with clone()
+    s.writeInt(size);
+
+    // Write out all elements in the proper order.
+    for (int i=0; i<size; i++) {
+        s.writeObject(elementData[i]);
+    }
+
+    if (modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+    }
+}
+```
+
+序列化时需要使用 ObjectOutputStream 的 writeObject() 将对象转换为字节流并输出。而 writeObject() 方法在传入的对象存在 writeObject() 的时候会去反射调用该对象的 writeObject() 来实现序列化。反序列化使用的是 ObjectInputStream 的 readObject() 方法，原理类似。
+
+```java
+ArrayList list = new ArrayList();
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+oos.writeObject(list);
 ```
 
 ### 3. 扩容
@@ -241,14 +297,14 @@ public synchronized E get(int index) {
 }
 ```
 
-### 2. 与 ArrayList 的区别
+### 2. 与 ArrayList 的比较
 
 - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
 - Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
 
 ### 3. 替代方案
 
-为了获得线程安全的 ArrayList，可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
+可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
 ```java
 List<String> list = new ArrayList<>();
@@ -267,7 +323,7 @@ List<String> list = new CopyOnWriteArrayList<>();
 
 写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响。
 
-写操作需要加锁，防止同时并发写入时导致的写入数据丢失。
+写操作需要加锁，防止并发写入时导致写入数据丢失。
 
 写操作结束之后需要把原始数组指向新的复制数组。
 
@@ -331,9 +387,9 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
-<div align="center"> <img src="../pics//49495c95-52e5-4c9a-b27b-92cf235ff5ec.png"/> </div><br>
+<div align="center"> <img src="../pics//49495c95-52e5-4c9a-b27b-92cf235ff5ec.png" width="500"/> </div><br>
 
-### 2. ArrayList 与 LinkedList
+### 2. 与 ArrayList 的比较
 
 - ArrayList 基于动态数组实现，LinkedList 基于双向链表实现；
 - ArrayList 支持随机访问，LinkedList 不支持；
@@ -351,7 +407,7 @@ transient Node<E> last;
 transient Entry[] table;
 ```
 
-其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即数组中的每个位置被当成一个桶，一个桶存放一个链表，链表中存放哈希值相同的 Entry。也就是说，HashMap 使用拉链法来解决冲突。
+Entry 存储着键值对。它包含了四个字段，从 next 字段我们可以看出 Entry 是一个链表。即数组中的每个位置被当成一个桶，一个桶存放一个链表。HashMap 使用拉链法来解决冲突，同一个链表中存放哈希值相同的 Entry。
 
 <div align="center"> <img src="../pics//8fe838e3-ef77-4f63-bf45-417b6bc5c6bb.png" width="600"/> </div><br>
 
@@ -579,8 +635,8 @@ y&(x-1) : 00000010
 这个性质和 y 对 x 取模效果是一样的：
 
 ```
-x   : 00010000
 y   : 10110010
+x   : 00010000
 y%x : 00000010
 ```
 
@@ -638,7 +694,7 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 }
 ```
 
-扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把旧 table 的所有键值对重新插入新的 table 中，因此这一步是很费时的。
+扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把 oldTable 的所有键值对重新插入 newTable 中，因此这一步是很费时的。
 
 ```java
 void resize(int newCapacity) {
@@ -684,7 +740,10 @@ capacity     : 00010000
 new capacity : 00100000
 ```
 
-对于一个 Key，它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 +16。
+对于一个 Key，
+
+- 它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；
+- 如果为 1，那么得到的结果为原来的结果 +16。
 
 ### 7. 扩容-计算数组容量
 
@@ -723,7 +782,7 @@ static final int tableSizeFor(int cap) {
 
 从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
 
-### 9. HashMap 与 HashTable
+### 9. 与 HashTable 的比较
 
 - HashTable 使用 synchronized 来进行同步。
 - HashMap 可以插入键为 null 的 Entry。
@@ -884,7 +943,7 @@ transient LinkedHashMap.Entry<K,V> head;
 transient LinkedHashMap.Entry<K,V> tail;
 ```
 
-accessOrder 决定了顺序，默认为 false，此时使用的是插入顺序。
+accessOrder 决定了顺序，默认为 false，此时维护的是插入顺序。
 
 ```java
 final boolean accessOrder;
@@ -899,7 +958,7 @@ void afterNodeInsertion(boolean evict) { }
 
 ### afterNodeAccess()
 
-当一个节点被访问时，如果 accessOrder 为 true，则会将 该节点移到链表尾部。也就是说指定为 LRU 顺序之后，在每次访问一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久未使用的节点。
+当一个节点被访问时，如果 accessOrder 为 true，则会将该节点移到链表尾部。也就是说指定为 LRU 顺序之后，在每次访问一个节点时，会将这个节点移到链表尾部，保证链表尾部是最近访问的节点，那么链表首部就是最近最久未使用的节点。
 
 ```java
 void afterNodeAccess(Node<K,V> e) { // move node to last
@@ -948,8 +1007,8 @@ removeEldestEntry() 默认为 false，如果需要让它为 true，需要继承 
 
 ```java
 protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
-        return false;
-    }
+    return false;
+}
 ```
 
 ### LRU 缓存
@@ -957,7 +1016,7 @@ protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
 以下是使用 LinkedHashMap 实现的一个 LRU 缓存：
 
 - 设定最大缓存空间 MAX_ENTRIES  为 3；
-- 使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LUR 顺序；
+- 使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LRU 顺序；
 - 覆盖 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
 
 ```java
@@ -1004,14 +1063,14 @@ private static class Entry<K,V> extends WeakReference<Object> implements Map.Ent
 
 ### ConcurrentCache
 
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。
+Tomcat 中的 ConcurrentCache 使用了 WeakHashMap 来实现缓存功能。
 
 ConcurrentCache 采取的是分代缓存：
 
 - 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
 - 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，这些老对象会被垃圾收集器回收。
-- 当调用  get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，保证频繁被访问的节点不容易被回收。
-- 当调用 put() 方法时，如果缓存当前容量大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
+- 当调用  get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，从而保证经常被访问的节点不容易被回收。
+- 当调用 put() 方法时，如果 eden 的大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
 
 ```java
 public final class ConcurrentCache<K, V> {
