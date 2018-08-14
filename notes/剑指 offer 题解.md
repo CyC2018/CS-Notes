@@ -58,8 +58,8 @@
 * [50. 第一个只出现一次的字符位置](#50-第一个只出现一次的字符位置)
 * [51. 数组中的逆序对](#51-数组中的逆序对)
 * [52. 两个链表的第一个公共结点](#52-两个链表的第一个公共结点)
-* [53 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
-* [54. 二叉搜索树的第 K 个结点](#54-二叉搜索树的第-k-个结点)
+* [53. 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
+* [54. 二叉查找树的第 K 个结点](#54-二叉查找树的第-k-个结点)
 * [55.1 二叉树的深度](#551-二叉树的深度)
 * [55.2 平衡二叉树](#552-平衡二叉树)
 * [56. 数组中只出现一次的数字](#56-数组中只出现一次的数字)
@@ -112,11 +112,11 @@ Output:
 
 要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。牛客网讨论区这一题的首票答案使用 nums[i] + length 来将元素标记，这么做会有加法溢出问题。
 
-这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素放到第 i 个位置上。
+这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素调整到第 i 个位置上。
 
 以 (2, 3, 1, 0, 2, 5) 为例：
 
-```text-html-basic
+```text
 position-0 : (2,3,1,0,2,5) // 2 <-> 1
              (1,3,2,0,2,5) // 1 <-> 3
              (3,1,2,0,2,5) // 3 <-> 0
@@ -146,7 +146,9 @@ public boolean duplicate(int[] nums, int length, int[] duplication) {
 }
 
 private void swap(int[] nums, int i, int j) {
-    int t = nums[i]; nums[i] = nums[j]; nums[j] = t;
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
 }
 ```
 
@@ -176,11 +178,11 @@ Given target = 20, return false.
 
 从右上角开始查找。矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
 
+复杂度：O(M + N) + O(1)
+
 当前元素的查找区间为左下角的所有元素，例如元素 12 的查找区间如下：
 
 <div align="center"> <img src="../pics//f94389e9-55b1-4f49-9d37-00ed05900ae0.png" width="250"/> </div><br>
-
-复杂度：O(M + N) + O(1)
 
 ```java
 public boolean Find(int target, int[][] matrix) {
@@ -193,7 +195,7 @@ public boolean Find(int target, int[][] matrix) {
             return true;
         else if (target > matrix[r][c])
             r++;
-        else 
+        else
             c--;
     }
     return false;
@@ -206,26 +208,33 @@ public boolean Find(int target, int[][] matrix) {
 
 ## 题目描述
 
-请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为 We Are Happy. 则经过替换之后的字符串为 We%20Are%20Happy。
+
+将一个字符串中的空格替换成 "%20"。
+
+```text
+Input:
+"We Are Happy"
+
+Output:
+"We%20Are%20Happy"
+```
 
 ## 解题思路
 
-在字符串尾部填充任意字符，使得字符串的长度等于字符串替换之后的长度。因为一个空格要替换成三个字符（%20），因此当遍历到一个空格时，需要在尾部填充两个任意字符。
+在字符串尾部填充任意字符，使得字符串的长度等于替换之后的长度。因为一个空格要替换成三个字符（%20），因此当遍历到一个空格时，需要在尾部填充两个任意字符。
 
 令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
-复杂度：O(N) + O(1)
-
 ```java
 public String replaceSpace(StringBuffer str) {
-    int oldLen = str.length();
-    for (int i = 0; i < oldLen; i++)
+    int P1 = str.length() - 1;
+    for (int i = 0; i < str.length(); i++)
         if (str.charAt(i) == ' ')
             str.append("  ");
 
-    int P1 = oldLen - 1, P2 = str.length() - 1;
+    int P2 = str.length() - 1;
     while (P1 >= 0 && P2 > P1) {
         char c = str.charAt(P1--);
         if (c == ' ') {
@@ -345,23 +354,23 @@ inorder =  [9,3,15,20,7]
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
 ```java
-// 缓存中序遍历数组的每个值对应的索引
-private Map<Integer, Integer> inOrderNumsIndexs = new HashMap<>();
+// 缓存中序遍历数组每个值对应的索引
+private Map<Integer, Integer> indexForInOrders = new HashMap<>();
 
 public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
     for (int i = 0; i < in.length; i++)
-        inOrderNumsIndexs.put(in[i], i);
-    return reConstructBinaryTree(pre, 0, pre.length - 1, 0, in.length - 1);
+        indexForInOrders.put(in[i], i);
+    return reConstructBinaryTree(pre, 0, pre.length - 1, 0);
 }
 
-private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int inL, int inR) {
+private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int inL) {
     if (preL > preR)
         return null;
     TreeNode root = new TreeNode(pre[preL]);
-    int inIndex = inOrderNumsIndexs.get(root.val);
+    int inIndex = indexForInOrders.get(root.val);
     int leftTreeSize = inIndex - inL;
-    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, inL, inL + leftTreeSize - 1);
-    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, inL + leftTreeSize + 1, inR);
+    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, inL);
+    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, inL + leftTreeSize + 1);
     return root;
 }
 ```
@@ -2259,7 +2268,7 @@ public int GetUglyNumber_Solution(int N) {
 
 ## 题目描述
 
-在一个字符串 (1 <= 字符串长度 <= 10000，全部由字母组成) 中找到第一个只出现一次的字符，并返回它的位置。
+在一个字符串 中找到第一个只出现一次的字符，并返回它的位置。
 
 ## 解题思路
 
@@ -2277,7 +2286,7 @@ public int FirstNotRepeatingChar(String str) {
 }
 ```
 
-以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么我们只需要统计的次数信息只有 0,1,更大，使用两个比特位就能存储这些信息。
+以上实现的空间复杂度还不是最优的。考虑到只需要找到只出现一次的字符，那么需要统计的次数信息只有 0,1,更大，使用两个比特位就能存储这些信息。
 
 ```java
 public int FirstNotRepeatingChar2(String str) {
@@ -2304,13 +2313,13 @@ public int FirstNotRepeatingChar2(String str) {
 
 ## 题目描述
 
-在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数 P。
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
 
 ## 解题思路
 
 ```java
 private long cnt = 0;
-private int[] tmp;  // 在这里创建辅助数组，而不是在 merge() 递归函数中创建
+private int[] tmp;  // 在这里声明辅助数组，而不是在 merge() 递归函数中声明
 
 public int InversePairs(int[] nums) {
     tmp = new int[nums.length];
@@ -2359,7 +2368,7 @@ private void merge(int[] nums, int l, int m, int h) {
 
 设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
 
-当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部重新开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部重新开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
+当访问链表 A 的指针访问到链表尾部时，令它从链表 B 的头部重新开始访问链表 B；同样地，当访问链表 B 的指针访问到链表尾部时，令它从链表 A 的头部重新开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
 
 ```java
 public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
@@ -2372,7 +2381,7 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 }
 ```
 
-# 53 数字在排序数组中出现的次数
+# 53. 数字在排序数组中出现的次数
 
 [NowCoder](https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2?tpId=13&tqId=11190&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -2380,8 +2389,9 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 
 ```html
 Input:
-1, 2, 3, 3, 3, 3, 4, 6
-3
+nums = 1, 2, 3, 3, 3, 3, 4, 6
+K = 3
+
 Output:
 4
 ```
@@ -2408,13 +2418,13 @@ private int binarySearch(int[] nums, int K) {
 }
 ```
 
-# 54. 二叉搜索树的第 K 个结点
+# 54. 二叉查找树的第 K 个结点
 
 [NowCoder](https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a?tpId=13&tqId=11215&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 解题思路
 
-利用二叉搜索数中序遍历有序的特点。
+利用二叉查找树中序遍历有序的特点。
 
 ```java
 private TreeNode ret;
