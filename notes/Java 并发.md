@@ -758,6 +758,7 @@ run..run..run..run..run..run..run..run..run..run..end
 
 用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
 
+<<<<<<< HEAD
 和 CountdownLatch 相似，都是通过维护计数器来实现的。线程执行 await() 方法之后计数器会减 1，并进行等待，直到计数器为 0，所有调用 awati() 方法而在等待的线程才能继续执行。
 
 CyclicBarrier 和 CountdownLatch 的一个区别是，CyclicBarrier 的计数器通过调用 reset() 方法可以循环使用，所以它才叫做循环屏障。
@@ -771,6 +772,9 @@ public CyclicBarrier(int parties, Runnable barrierAction) {
     this.count = parties;
     this.barrierCommand = barrierAction;
 }
+=======
+和 CountdownLatch 相似，都是通过维护计数器来实现的。初始化的时候计数器count与构造函数传入的参数parties相同，每次有线程调用await方法时候，计数器count不断减1，直到count减为0时等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是，CyclicBarrier 可以通过调用reset方法循环使用，所以它才叫做循环屏障。
+>>>>>>> 8fffe40cb7afc5159cb5751b8906ac9cea7cc563
 
 public CyclicBarrier(int parties) {
     this(parties, null);
