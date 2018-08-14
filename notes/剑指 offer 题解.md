@@ -2520,7 +2520,7 @@ public void FindNumsAppearOnce(int[] nums, int num1[], int num2[]) {
 
 ## 题目描述
 
-输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S，如果有多对数字的和等于 S，输出两个数的乘积最小的。
+输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S。如果有多对数字的和等于 S，输出两个数的乘积最小的。
 
 ## 解题思路
 
@@ -2596,9 +2596,13 @@ public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
 
 ## 题目描述
 
-输入："I am a student."
+```html
+Input:
+"I am a student."
 
-输出："student. a am I"
+Output:
+"student. a am I"
+```
 
 ## 解题思路
 
@@ -2640,7 +2644,14 @@ private void swap(char[] c, int i, int j) {
 
 ## 题目描述
 
-对于一个给定的字符序列 S，请你把其循环左移 K 位后的序列输出。例如，字符序列 S=”abcXYZdef”, 要求输出循环左移 3 位后的结果，即“XYZdefabc”。
+```html
+Input:
+S="abcXYZdef"
+K=3
+
+Output:
+"XYZdefabc"
+```
 
 ## 解题思路
 
@@ -2675,7 +2686,9 @@ private void swap(char[] chars, int i, int j) {
 
 ## 题目描述
 
-给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组 {2, 3, 4, 2, 6, 2, 5, 1} 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 {4, 4, 6, 6, 6, 5}。
+给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+
+例如，如果输入数组 {2, 3, 4, 2, 6, 2, 5, 1} 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 {4, 4, 6, 6, 6, 5}。
 
 ## 解题思路
 
@@ -2774,7 +2787,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ## 题目描述
 
-五张牌，其中大小鬼为癞子，牌面大小为 0。判断是否能组成顺子。
+五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
 
 ## 解题思路
 
@@ -2803,7 +2816,7 @@ public boolean isContinuous(int[] nums) {
 
 ## 题目描述
 
-让小朋友们围成一个大圈。然后，他随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
+让小朋友们围成一个大圈。然后，随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
 
 ## 解题思路
 
@@ -2813,7 +2826,7 @@ public boolean isContinuous(int[] nums) {
 public int LastRemaining_Solution(int n, int m) {
     if (n == 0)     /* 特殊输入的处理 */
         return -1;
-    if (n == 1)     /* 返回条件 */
+    if (n == 1)     /* 递归返回条件 */
         return 0;
     return (LastRemaining_Solution(n - 1, m) + m) % n;
 }
@@ -2851,7 +2864,7 @@ public int maxProfit(int[] prices) {
 
 ## 题目描述
 
-求 1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句（A?B:C）。
+要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句 A ? B : C。
 
 ## 解题思路
 
@@ -2859,7 +2872,7 @@ public int maxProfit(int[] prices) {
 
 条件与 && 具有短路原则，即在第一个条件语句为 false 的情况下不会去执行第二个条件语句。利用这一特性，将递归的返回条件取非然后作为 && 的第一个条件语句，递归的主体转换为第二个条件语句，那么当递归的返回条件为 true 的情况下就不会执行递归的主体部分，递归返回。
 
-以下实现中，递归的返回条件为 n <= 0，取非后就是 n > 0，递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) > 0。
+本题的递归返回条件为 n <= 0，取非后就是 n > 0；递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) > 0。
 
 ```java
 public int Sum_Solution(int n) {
@@ -2875,7 +2888,7 @@ public int Sum_Solution(int n) {
 
 ## 题目描述
 
-写一个函数，求两个整数之和，要求在函数体内不得使用 +、-、\*、/ 四则运算符号。
+写一个函数，求两个整数之和，要求不得使用 +、-、\*、/ 四则运算符号。
 
 ## 解题思路
 
@@ -2895,7 +2908,7 @@ public int Add(int a, int b) {
 
 ## 题目描述
 
-给定一个数组 A[0, 1,..., n-1], 请构建一个数组 B[0, 1,..., n-1], 其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。不能使用除法。
+给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
 
 ## 解题思路
 
@@ -2917,7 +2930,7 @@ public int[] multiply(int[] A) {
 
 ## 题目描述
 
-将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。 数值为 0 或者字符串不是一个合法的数值则返回 0。
+将一个字符串转换成一个整数，字符串不是一个合法的数值则返回 0，要求不能使用字符串转换整数的库函数。
 
 ```html
 Iuput:
@@ -2979,7 +2992,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 [Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
-在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是 LCA。
+在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
