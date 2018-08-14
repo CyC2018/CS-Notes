@@ -99,25 +99,31 @@ ArrayList 数组增长的源码。
 
 > HashSet, TreeSet, LinkedHashSet
 
-HashSet是使用哈希表（hash table）实现的，其中的元素是无序的。HashSet的add、remove、contains方法 的时间复杂度为常量O(1)。
+> HashSet是使用哈希表（hash table）实现的，其中的元素是无序的。HashSet的add、remove、contains方法 的时间复杂度为常量O(1)。
 
-TreeSet使用树形结构（算法书中的红黑树red-black tree）实现的。TreeSet中的元素是可排序的，但add、remove和contains方法的时间复杂度为O(log(n))。TreeSet还提供了first()、last()、headSet()、tailSet()等方法来操作排序后的集合。
+> TreeSet使用树形结构（算法书中的红黑树red-black tree）实现的。TreeSet中的元素是可排序的，但add、remove和contains方法的时间复杂度为O(log(n))。TreeSet还提供了first()、last()、headSet()、tailSet()等方法来操作排序后的集合。
 
-LinkedHashSet介于HashSet和TreeSet之间。它基于一个由链表实现的哈希表，保留了元素插入顺序。LinkedHashSet中基本方法的时间复杂度为O(1)。
+> LinkedHashSet介于HashSet和TreeSet之间。它基于一个由链表实现的哈希表，保留了元素插入顺序。LinkedHashSet中基本方法的时间复杂度为O(1)。
 
 20、TreeSet 对存入对数据有什么要求呢？
 
+> TreeSet是一个有序集合，TreeSet中的元素将按照升序排列，缺省是按照自然排序进行排列，意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。 
+
 21、HashSet 的底层实现呢
+
+> HashSet实现Set接口，由哈希表（实际上是一个HashMap实例）支持。它不保证set 的迭代顺序；特别是它不保证该顺序恒久不变。此类允许使用null元素。
 
 22、TreeSet 底层源码有看过吗？
 
 23、HashSet 是不是线程安全的？为什么不是线程安全的？
 
-HashSet不是线程安全的，没有使用锁机制。
+> HashSet不是线程安全的，没有使用锁机制。
 
 24、Java 中有哪些线程安全的 Map？
 
-> ConcurrentHashMap HashTable
+> ConcurrentHashMap HashTable SynchronizedMap
+
+    private Map<String, Object> map = Collections.synchronizedMap(new HashMap<String, Object>());
 
 25、Concurrenthashmap 是怎么做到线程安全的？
 
@@ -126,51 +132,162 @@ HashSet不是线程安全的，没有使用锁机制。
 
 26、HashTable 你了解过吗？
 
-HashTable 相比HashMap，实现了线程安全，但是
+> HashTable 相比HashMap，出现的早（1.1），实现了线程安全，但是HashTable 继承的是Dictionary抽象类,对HashMap的一些方法做了同步处理。
 
 27、如何保证线程安全问题？
 
 > 1. 悲观锁（Synchronized, ReentrantLock)，也叫互斥同步
 2. 乐观锁（CAS），也叫非互斥同步
-3. 无同步方案（可重入代码，栈封闭，Thread Local Storage)
+3. 无同步方案（可重入代码，栈封闭，Thread Local Storage， final)
 
 28、synchronized、lock
 
+> synchronized 是jvm实现的一个互斥锁，lock是jdk提供的一个锁机制。
+
 29、volatile 的原子性问题？为什么 i++ 这种不支持原子性？从计算机原理的设计来讲下不能保证原子性的原因
+
+> 被volatile修饰的变量在每次写入之后，将处理器缓存回写到内存中，一个春利器的焕春会写到内存会导致其他处理器的缓存无效。
+
+> i++ 不属于原子操作,通过查看字节码会发现，i++的操作是分步的，如下：
+
+``` java
+void f1();
+Code:
+0: aload_0
+1: dup
+2: getfield #2; //Field i:I
+5: iconst_1
+6: iadd
+7: putfield #2; //Field i:I
+10: return
+```
+
+> 因此，在多线程的情况下，i++的指令是分步的，所以不管是多少次i++,最终只能加一次
+
+``` 
+package com.raorao.java.thread;
+
+/**
+ * i++ 的原子性证明.
+ *
+ * @author Xiong Raorao
+ * @since 2018-08-14-15:15
+ */
+public class IPlusPlus {
+
+  private static volatile int index = 0;
+
+  public static void main(String[] args) throws InterruptedException {
+    for (int i = 0; i < 10; i++) {
+      new Thread(() -> {
+        synchronized (IPlusPlus.class){
+          for (int j = 0; j < 10000; j++) {
+            index++;
+          }
+        }
+        System.out.println(Thread.currentThread().getName() + ", index = " + index);
+      }).start();
+    }
+    Thread.sleep(2000);
+    System.out.println(index);
+  }
+
+}
+
+```
+
+如果不采用synchronized 的话，最终输出的结果是小雨100000的。
 
 30、happens before 原理
 
+> happens before 是 JMM中最核心的概念，happens before 用来指定两个操作之间的执行顺序，JMM通过happens before 来保证跨线程的内存可见性保证（如果A线程的写操作a和B线程的读操作b存在happens before，尽管a和b操作在不同的线程中执行，但是JMM保证a操作对b可见。
+
 31、cas 操作
+
+> CAS 的语义是指：如果发现一个数的预期值和现在读取到的值相等，则将更新新值，否则不执行更新。但是无论是否更新了变量的值，返回的依旧是变量的旧值，CAS也是原子操作。
 
 32、lock 和 synchronized 的区别？
 
+> 一个是jdk实现的，一个是jvm实现的，都是互斥锁
+
 33、公平锁和非公平锁
+
+> 公平锁指的是多个线程在等待同一个锁时，必须按照申请所的时间顺序来依次获得锁，而非公平锁不能保证这一点。synchronized 锁是非公平的，ReentrantLock 可以在初始化的时候，通过带布尔值的构造函数来实现公平锁。
 
 34、Java 读写锁
 
+> Java 读写锁包含了了两个锁，一个是读操作的锁，称为共享锁；一个是写操作的锁，称为排它锁。也就是说多个读锁之间不互斥，读锁和写锁以及写锁和写锁之间是互斥的。相关类ReentrantReadWriteLock类。
+
 35、读写锁设计主要解决什么问题？
+
+> 提高读操作的速度吧。我想的
 
 36、你项目除了写 Java 代码，还有前端代码，那你知道前端有哪些框架吗？
 
 37、MySQL 分页查询语句
 
+> 使用limit关键字， select * from table_name limit 0,5 ; 表示查询表的前5条数据
+
 38、MySQL 事务特性和隔离级别
+
+**事务的基本要素（ACID）：**
+
+1. 原子性(Atomicity): 事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。
+
+2. 一致性（Consistency）：事务开始前和结束后，数据库的完整性约束没有被破坏 。比如A向B转账，不可能A扣了钱，B却没收到。
+
+3. 隔离性（Isolation）：同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱的过程结束前，B不能向这张卡转账。
+
+4. 持久性（Durability）：事务完成后，事务对数据库的所有更新将被保存到数据库，不能回滚。
+
+**事务的并发问题：**
+
+1、脏读：事务A读取了事务B更新的数据，然后B回滚操作，那么A读取到的数据是脏数据
+
+2、不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果 不一致。
+
+3、幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。
+
+小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表
+
+**Mysql事务隔离级别：**
+
+事务隔离级别	| 脏读	| 不可重复读	| 幻读
+---|---|---|---
+读未提交（read-uncommitted）	| 是 | 	是	| 是
+不可重复读（read-committed）	| 否 |	是	| 是
+可重复读（repeatable-read）     | 否 |  否  | 是
+串行化（serializable）	        | 否 |  否  | 否
 
 39、不可重复读会出现在什么场景？
 
+事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果 不一致。
+
 40、sql having 的使用场景
+
+> 给分组设置条件
 
 41、前端浏览器地址的一个 http 请求到后端整个流程是怎么样？能够说下吗？
 
+> 首先将请求的URL的域名部分解析成ip地址，然后建立HTTP链接，发起请求，服务器给出响应，浏览器负责将响应的内容解析成Web页面。
+
 42、http 默认端口，https 默认端口
 
+> 80 443
+
 43、DNS 你知道是干嘛的吗？
+
+> 解析域名
 
 44、你们开发用的 ide 是啥？你能说下 idea 的常用几个快捷键吧？
 
 45、代码版本管理你们用的是啥？
 
+> git
+
 46、git rebase 和 merge 有什么区别？
+
+> rebase 是在上一个分支的后面加上自己的分支，merge则是合并分支
 
 47、你们公司加班多吗？
 

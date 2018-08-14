@@ -23,6 +23,8 @@
     - [方法引用](#方法引用)
     - [Lambda 表达式](#lambda-表达式)
     - [接口默认方法](#接口默认方法)
+- [socket 编程](#socket-编程)
+- [Java 集合类的底层实现](#java-集合类的底层实现)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -497,6 +499,10 @@ private interface DefaulableFactory {
 # socket 编程
 
 [socket 编程](https://www.cnblogs.com/rocomp/p/4790340.html)
+
+# Java 集合类的底层实现
+
+[参考文档](https://blog.csdn.net/qq_25868207/article/details/55259978)
 
 # 参考文档
 
