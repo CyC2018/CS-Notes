@@ -759,7 +759,7 @@ run..run..run..run..run..run..run..run..run..run..end
 
 用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
 
-和 CountdownLatch 相似，都是通过维护计数器来实现的。但是它的计数器是递增的，每次执行 await() 方法之后，计数器会加 1，直到计数器的值和设置的值相等，等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是，CyclicBarrier 的计数器可以循环使用，所以它才叫做循环屏障。
+和 CountdownLatch 相似，都是通过维护计数器来实现的。初始化的时候计数器count与构造函数传入的参数parties相同，每次有线程调用await方法时候，计数器count不断减1，知道count减为0时等待的所有线程才会继续执行。和 CountdownLatch 的另一个区别是，CyclicBarrier 可以通过调用reset方法循环使用，所以它才叫做循环屏障。
 
 下图应该从下往上看才正确。
 
