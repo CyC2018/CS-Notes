@@ -1,11 +1,16 @@
 <!-- TOC -->
 
-- [HashMap ConcurrentHashMap](#hashmap-concurrenthashmap)
+- [HashMap ConcurrentHashMap Hashtable](#hashmap-concurrenthashmap-hashtable)
+    - [为什么HashMap线程不安全](#为什么hashmap线程不安全)
+    - [如何线程安全的使用hashmap](#如何线程安全的使用hashmap)
+    - [TreeMap、HashMap、LindedHashMap的区别](#treemaphashmaplindedhashmap的区别)
+- [try?catch?finally，try里有return，finally还执行么](#trycatchfinallytry里有returnfinally还执行么)
 - [java this 和 super的用法](#java-this-和-super的用法)
     - [this](#this)
     - [super](#super)
     - [super和this的异同：](#super和this的异同)
 - [抽象类和接口](#抽象类和接口)
+- [java 重写和重载的区别](#java-重写和重载的区别)
 - [Synchronized 和 volitate区别](#synchronized-和-volitate区别)
 - [异常](#异常)
 - [String StringBuffer StringBuilder的区别](#string-stringbuffer-stringbuilder的区别)
@@ -29,7 +34,7 @@
 
 <!-- /TOC -->
 
-# HashMap ConcurrentHashMap
+# HashMap ConcurrentHashMap Hashtable
 
 HashMap和ConcurrentHashMap的最主要的区别就是前者是线程不安全，后者是线程安全的。在不同的JDK版本中，区别也不一样
 
@@ -44,6 +49,92 @@ HashMap重复hash值的链表元素超过8个，就改成红黑树实现
 ConcurrentHashMap 不用segment,改成CAS+synchronized方法实现。
 
 CAS 的含义是“我认为原有的值应该是什么，如果是，则将原有的值更新为新值，否则不做修改，并告诉我原来的值是多少”
+
+Hashtable 继承自陈旧的Directory，使用synchronized 同步，但是**不允许key和value为空**
+
+Hashtable使用Enumeration，HashMap使用Iterator
+
+HashMap 的迭代器：遍历的时候，根据Node数组的索引自然顺序，forEach
+Hashtable 除了Iterator,自己实现了迭代器Enumeration，但是是从Node的**尾部到头部**开始遍历，不一样
+
+hashtable elements() 方法获取的迭代器的下一个元素
+
+``` java
+@SuppressWarnings("unchecked")
+        public T nextElement() {
+            Entry<?,?> et = entry;
+            int i = index; // index 为元素的长度
+            Entry<?,?>[] t = table;
+            /* Use locals for faster loop iteration */
+            while (et == null && i > 0) {
+                et = t[--i];
+            }
+            entry = et;
+            index = i;
+            if (et != null) {
+                Entry<?,?> e = lastReturned = entry;
+                entry = e.next;
+                return type == KEYS ? (T)e.key : (type == VALUES ? (T)e.value : (T)e);
+            }
+            throw new NoSuchElementException("Hashtable Enumerator");
+        }
+
+```
+
+HashTable虽然性能上不如ConcurrentHashMap，但并不能完全被取代，两者的迭代器的一致性不同的，HashTable的迭代器是强一致性的，而ConcurrentHashMap是弱一致的。 
+
+ConcurrentHashMap的get，clear，iterator 都是弱一致性的。 Doug Lea 也将这个判断留给用户自己决定是否使用ConcurrentHashMap。
+
+弱一致性的意思就是，put一个元素进去之后，不是马上对该元素可见。
+
+## 为什么HashMap线程不安全
+
+HashMap 在并发执行 put 操作时会引起死循环，导致 CPU 利用率接近100%。因为多线程会导致 HashMap 的 Node 链表形成环形数据结构，一旦形成环形数据结构，Node 的 next 节点永远不为空，就会在获取 Node 时产生死循环。
+
+## 如何线程安全的使用hashmap
+
+三种方法：
+
+``` java
+Map<String, String> hashtable = new Hashtable<>();
+//synchronizedMap
+Map<String, String> synchronizedHashMap = Collections.synchronizedMap(new HashMap<String, String>());
+//ConcurrentHashMap
+Map<String, String> concurrentHashMap = new ConcurrentHashMap<>();
+```
+
+## TreeMap、HashMap、LindedHashMap的区别
+
+LinkedHashMap可以保证HashMap集合有序，存入的顺序和取出的顺序一致。LinekdHashMap的Entry继承自HashMap.Node, 提供了双向指针。
+
+LinkedHashMap 继承了HashMap，hashmap预留了三个函数，便于linkedHashMap对元素进行后续操作，下面三个函数在LinkedHashMap都有实现。
+
+``` java
+    // Callbacks to allow LinkedHashMap post-actions
+    void afterNodeAccess(Node<K,V> p) { }
+    void afterNodeInsertion(boolean evict) { }
+    void afterNodeRemoval(Node<K,V> p) { }
+```
+
+TreeMap实现SortMap接口，能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator遍历TreeMap时，得到的记录是排过序的。
+
+HashMap不保证顺序，即为无序的，具有很快的访问速度。
+HashMap最多只允许一条记录的键为Null;允许多条记录的值为 Null。
+
+HashMap不支持线程的同步。
+我们在开发的过程中使用HashMap比较多，在Map中在Map 中插入、删除和定位元素，HashMap 是最好的选择。
+
+但如果您要按自然顺序或自定义顺序遍历键，那么TreeMap会更好。
+
+如果需要输出的顺序和输入的相同,那么用LinkedHashMap 可以实现,它还可以按读取顺序来排列。
+
+总结：其实联系到三种hashmap的底层实现原理，很容易想到，TreeMap 的底层使用的是二叉堆来实现的，自然能够保证自动排序，HashMap底层使用数组实现，使用迭代器遍历的话，是根据key的hash值在存储表的索引来确定的，是无序的。LinkedHashMap底层使用的链表来存储数据，可根据插入的顺序来读取数据。
+
+# try?catch?finally，try里有return，finally还执行么
+
+肯定会执行。finally{}块的代码。 只有在try{}块中包含遇到System.exit(0)。 之类的导致Java虚拟机直接退出的语句才会不执行。
+
+当程序执行try{}遇到return时，程序会先执行return语句，但并不会立即返回——也就是把return语句要做的一切事情都准备好，也就是在将要返回、但并未返回的时候，程序把执行流程转去执行finally块，当finally块执行完成后就直接返回刚才return语句已经准备好的结果。
 
 # java this 和 super的用法
 
@@ -159,10 +250,6 @@ this和super不能同时出现在一个构造函数里面，因为this必然会�
 this()和super()都指的是对象，所以，均不可以在static环境中使用。包括：static变量,static方法，static语句块。
 从本质上讲，this是一个指向本对象的指针, 然而super是一个Java关键字。
 
-
-
-
-
 # 抽象类和接口
 
 抽象类与接口：
@@ -197,6 +284,10 @@ this()和super()都指的是对象，所以，均不可以在static环境中使�
 
 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
 需要使用多重继承，例如Runnable接口实现线程类
+
+# java 重写和重载的区别
+
+
 
 # Synchronized 和 volitate区别
 

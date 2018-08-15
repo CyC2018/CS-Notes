@@ -63,6 +63,8 @@ Java后端开发（大数据、分布式应用等）
 
 > [计算机网络基础](network/base.md)
 
+> [Http](network/http.md)
+
 ## 项目技能
 
 > [分布式问题分析](../notes/分布式问题分析.md)
