@@ -10,8 +10,8 @@
 * [9. 用两个栈实现队列](#9-用两个栈实现队列)
 * [10.1 斐波那契数列](#101-斐波那契数列)
 * [10.2 跳台阶](#102-跳台阶)
-* [10.3 变态跳台阶](#103-变态跳台阶)
-* [10.4 矩形覆盖](#104-矩形覆盖)
+* [10.3 矩形覆盖](#103-矩形覆盖)
+* [10.4 变态跳台阶](#104-变态跳台阶)
 * [11. 旋转数组的最小数字](#11-旋转数组的最小数字)
 * [12. 矩阵中的路径](#12-矩阵中的路径)
 * [13. 机器人的运动范围](#13-机器人的运动范围)
@@ -465,7 +465,7 @@ public int pop() throws Exception {
 
 ## 题目描述
 
-求菲波那契数列的第 n 项，n <= 39。
+求斐波那契数列的第 n 项，n <= 39。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br>
 
@@ -535,23 +535,6 @@ public class Solution {
 
 ## 解题思路
 
-复杂度：O(N) + O(N)
-
-```java
-public int JumpFloor(int n) {
-    if (n == 1)
-        return 1;
-    int[] dp = new int[n];
-    dp[0] = 1;
-    dp[1] = 2;
-    for (int i = 2; i < n; i++)
-        dp[i] = dp[i - 1] + dp[i - 2];
-    return dp[n - 1];
-}
-```
-
-复杂度：O(N) + O(1)
-
 ```java
 public int JumpFloor(int n) {
     if (n <= 2)
@@ -567,7 +550,32 @@ public int JumpFloor(int n) {
 }
 ```
 
-# 10.3 变态跳台阶
+# 10.3 矩形覆盖
+
+[NowCoder](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
+
+## 解题思路
+
+```java
+public int RectCover(int n) {
+    if (n <= 2)
+        return n;
+    int pre2 = 1, pre1 = 2;
+    int result = 0;
+    for (int i = 3; i <= n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
+}
+```
+
+# 10.4 变态跳台阶
 
 [NowCoder](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -588,47 +596,6 @@ public int JumpFloorII(int target) {
 }
 ```
 
-# 10.4 矩形覆盖
-
-[NowCoder](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
-
-## 题目描述
-
-我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
-
-## 解题思路
-
-复杂度：O(N) + O(N)
-
-```java
-public int RectCover(int n) {
-    if (n <= 2)
-        return n;
-    int[] dp = new int[n];
-    dp[0] = 1;
-    dp[1] = 2;
-    for (int i = 2; i < n; i++)
-        dp[i] = dp[i - 1] + dp[i - 2];
-    return dp[n - 1];
-}
-```
-
-复杂度：O(N) + O(1)
-
-```java
-public int RectCover(int n) {
-    if (n <= 2)
-        return n;
-    int pre2 = 1, pre1 = 2;
-    int result = 0;
-    for (int i = 3; i <= n; i++) {
-        result = pre2 + pre1;
-        pre2 = pre1;
-        pre1 = result;
-    }
-    return result;
-}
-```
 
 # 11. 旋转数组的最小数字
 
@@ -638,18 +605,34 @@ public int RectCover(int n) {
 
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
 
-例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
+例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转，该数组的最小值为 1。
 
 ## 解题思路
+
+在一个有序数组中查找一个元素可以用二分查找，二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度都为 O(logN)。
+
+本题可以修改二分查找算法进行求解：
 
 - 当 nums[m] <= nums[h] 的情况下，说明解在 [l, m] 之间，此时令 h = m；
 - 否则解在 [m + 1, h] 之间，令 l = m + 1。
 
-因为 h 的赋值表达式为 h = m，因此循环体的循环条件应该为 l < h，详细解释请见 [Leetcode 题解](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3.md) 二分查找部分。
+```java
+public int minNumberInRotateArray(int[] nums) {
+    if (nums.length == 0)
+        return 0;
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] <= nums[h])
+            h = m;
+        else
+            l = m + 1;
+    }
+    return nums[l];
+}
+```
 
-但是如果出现 nums[l] == nums[m] == nums[h]，那么此时无法确定解在哪个区间，需要切换到顺序查找。
-
-复杂度：O(logN) + O(1)
+如果数组元素允许重复的话，那么就会出现一个特殊的情况：nums[l] == nums[m] == nums[h]，那么此时无法确定解在哪个区间，需要切换到顺序查找。例如对于数组 {1,1,1,0,1}，l、m 和 h 指向的数都为 1，此时无法知道最小数字 0 在哪个区间。
 
 ```java
 public int minNumberInRotateArray(int[] nums) {
@@ -737,7 +720,9 @@ private char[][] buildMatrix(char[] array) {
 
 ## 题目描述
 
-地上有一个 m 行和 n 列的方格。一个机器人从坐标 (0, 0) 的格子开始移动，每一次只能向左右上下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。例如，当 k 为 18 时，机器人能够进入方格（35, 37），因为 3+5+3+7=18。但是，它不能进入方格（35, 38），因为 3+5+3+8=19。请问该机器人能够达到多少个格子？
+地上有一个 m 行和 n 列的方格。一个机器人从坐标 (0, 0) 的格子开始移动，每一次只能向左右上下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。
+
+例如，当 k 为 18 时，机器人能够进入方格 (35,37)，因为 3+5+3+7=18。但是，它不能进入方格 (35,37)，因为 3+5+3+8=19。请问该机器人能够达到多少个格子？
 
 ## 解题思路
 
@@ -806,7 +791,7 @@ return 36 (10 = 3 + 3 + 4)
 
 ### 贪心
 
-尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现，如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
+尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现。如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
 证明：当 n >= 5 时，3(n - 3) - 2(n - 2) = n - 5 >= 0。因此把长度大于 5 的绳子切成两段，令其中一段长度为 3 可以使得两段的乘积最大。
 
@@ -847,25 +832,18 @@ public int integerBreak(int n) {
 
 输入一个整数，输出该数二进制表示中 1 的个数。
 
-### Integer.bitCount()
-
-```java
-public int NumberOf1(int n) {
-    return Integer.bitCount(n);
-}
-```
-
 ### n&(n-1)
 
-O(M) 时间复杂度解法，其中 M 表示 1 的个数。
-
-该位运算是去除 n 的位级表示中最低的那一位。
+该位运算去除 n 的位级表示中最低的那一位。
 
 ```
 n       : 10110100
 n-1     : 10110011
 n&(n-1) : 10110000
 ```
+
+时间复杂度：O(M)，其中 M 表示 1 的个数。
+
 
 ```java
 public int NumberOf1(int n) {
@@ -878,13 +856,22 @@ public int NumberOf1(int n) {
 }
 ```
 
+
+### Integer.bitCount()
+
+```java
+public int NumberOf1(int n) {
+    return Integer.bitCount(n);
+}
+```
+
 # 16. 数值的整数次方
 
 [NowCoder](https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00?tpId=13&tqId=11165&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
-给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方。
+给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent，求 base 的 exponent 次方。
 
 ## 解题思路
 
@@ -892,7 +879,7 @@ public int NumberOf1(int n) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right."/></div> <br>
 
-因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每递归一次，n 都减小一半，因此整个算法的时间复杂度为 O(logN)。
+因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每次递归 n 都减小一半，因此整个算法的时间复杂度为 O(logN)。
 
 ```java
 public double Power(double base, int exponent) {
@@ -1028,6 +1015,7 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ```java
 public boolean match(char[] str, char[] pattern) {
+
     int m = str.length, n = pattern.length;
     boolean[][] dp = new boolean[m + 1][n + 1];
 
@@ -1058,9 +1046,24 @@ public boolean match(char[] str, char[] pattern) {
 
 ## 题目描述
 
-请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。
+```html
+true
 
-例如，字符串 "+100","5e2","-123","3.1416" 和 "-1E-16" 都表示数值。但是 "12e","1a3.14","1.2.3","+-5" 和 "12e+4.3" 都不是。
+"+100"
+"5e2"
+"-123"
+"3.1416"
+"-1E-16"
+
+false
+
+"12e"
+"1a3.14"
+"1.2.3"
+"+-5"
+"12e+4.3"
+```
+
 
 ## 解题思路
 
@@ -1124,8 +1127,7 @@ public void reOrderArray(int[] nums) {
 <div align="center"> <img src="../pics//ea2304ce-268b-4238-9486-4d8f8aea8ca4.png" width="500"/> </div><br>
 
 ```java
-public ListNode FindKthToTail(ListNode head, int k)
-{
+public ListNode FindKthToTail(ListNode head, int k) {
     if (head == null)
         return null;
     ListNode P1 = head;
@@ -1148,9 +1150,7 @@ public ListNode FindKthToTail(ListNode head, int k)
 
 ## 题目描述
 
-一个链表中包含环，请找出该链表的环的入口结点。
-
-要求不能使用额外的空间。
+一个链表中包含环，请找出该链表的环的入口结点。要求不能使用额外的空间。
 
 ## 解题思路
 
@@ -1161,8 +1161,7 @@ public ListNode FindKthToTail(ListNode head, int k)
 <div align="center"> <img src="../pics//2858f8ad-aedb-45a5-a706-e98c96d690fa.jpg" width="600"/> </div><br>
 
 ```java
-public ListNode EntryNodeOfLoop(ListNode pHead)
-{
+public ListNode EntryNodeOfLoop(ListNode pHead) {
     if (pHead == null || pHead.next == null)
         return null;
     ListNode slow = pHead, fast = pHead;
@@ -1304,8 +1303,6 @@ private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2) {
 
 ## 解题思路
 
-### 递归
-
 ```java
 public void Mirror(TreeNode root) {
     if (root == null)
@@ -1319,29 +1316,6 @@ private void swap(TreeNode root) {
     TreeNode t = root.left;
     root.left = root.right;
     root.right = t;
-}
-```
-
-### 迭代
-
-```java
-public void Mirror(TreeNode root) {
-    Stack<TreeNode> stack = new Stack<>();
-    stack.push(root);
-    while (!stack.isEmpty()) {
-        TreeNode node = stack.pop();
-        if (node == null)
-            continue;
-        swap(node);
-        stack.push(node.left);
-        stack.push(node.right);
-    }
-}
-
-private void swap(TreeNode node) {
-    TreeNode t = node.left;
-    node.left = node.right;
-    node.right = t;
 }
 ```
 
@@ -1445,7 +1419,9 @@ public int min() {
 
 ## 题目描述
 
-输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。
+
+例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
 
 ## 解题思路
 
@@ -1838,7 +1814,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuilder s) {
 
 多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。
 
-使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素相等时，令 cnt++，否则令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums) {
