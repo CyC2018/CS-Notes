@@ -45,7 +45,7 @@
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
 ```java
-java -Xss=512M HackTheJava
+java -Xss512M HackTheJava
 ```
 
 该区域可能抛出以下异常：
@@ -81,7 +81,7 @@ java -Xss=512M HackTheJava
 可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
-java -Xms=1M -Xmx=2M HackTheJava
+java -Xms1M -Xmx2M HackTheJava
 ```
 
 ## 方法区
