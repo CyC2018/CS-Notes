@@ -179,12 +179,6 @@
 
 欢迎在 Issue 中提交对本仓库的改进建议~
 
-### Authorization
-
-虽然没有加开源协议，但是允许非商业性使用。
-
-转载使用请注明出处，谢谢！
-
 ### Typesetting
 
 笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
@@ -200,6 +194,12 @@
 进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
 笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
+
+### License
+
+在对本作品进行演绎时，请署名并以相同方式共享。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
 ### Statement
 
