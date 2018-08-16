@@ -54,7 +54,7 @@ public class Test {
     FileOutputStream fos;
     InputStreamReader isr;
     OutputStreamWriter osw;
-    int b = 'z';
+    float b = Math.round(11.5);
     System.out.println(b);
   }
 
