@@ -21,7 +21,7 @@
 
   对题目做了一个大致分类，并对每种题型的解题思路做了总结。
   
-  - [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+ - [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
   排序、并查集、栈和队列、红黑树、散列表。
 
