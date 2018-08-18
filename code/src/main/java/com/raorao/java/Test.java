@@ -1,6 +1,9 @@
 package com.raorao.java;
 
+import clojure.lang.Obj;
 import com.google.common.collect.HashBasedTable;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -9,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
-public class Test {
+public class Test implements Serializable {
 
   static int a;
   static int c;
