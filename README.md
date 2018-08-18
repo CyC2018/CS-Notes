@@ -23,7 +23,7 @@
   
  - [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-  排序、并查集、栈和队列、红黑树、散列表。
+   排序、并查集、栈和队列、红黑树、散列表。
 
 ## 操作系统 :computer:
 
