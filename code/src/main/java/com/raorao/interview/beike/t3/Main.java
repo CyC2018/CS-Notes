@@ -1,4 +1,4 @@
-package com.raorao.interview.beike.t1.t3;
+package com.raorao.interview.beike.t3;
 
 import java.util.HashMap;
 import java.util.Map;

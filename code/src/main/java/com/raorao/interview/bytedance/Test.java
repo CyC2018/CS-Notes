@@ -1,5 +1,10 @@
 package com.raorao.interview.bytedance;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Vector;
+
 /**
  * .
  *
@@ -8,4 +13,9 @@ package com.raorao.interview.bytedance;
  */
 public class Test {
 
+  public static void main(String[] args) {
+    ArrayList a;
+    LinkedList b;
+    Vector v;
+  }
 }

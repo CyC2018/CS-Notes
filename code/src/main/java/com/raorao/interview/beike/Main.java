@@ -1,4 +1,4 @@
-package com.raorao.interview.beike.t1;
+package com.raorao.interview.beike;
 
 import java.util.Arrays;
 import java.util.Comparator;

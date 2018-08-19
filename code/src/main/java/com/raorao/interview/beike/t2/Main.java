@@ -1,4 +1,4 @@
-package com.raorao.interview.beike.t1.t2;
+package com.raorao.interview.beike.t2;
 
 import java.util.Scanner;
 
