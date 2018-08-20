@@ -195,12 +195,6 @@
 
 笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-### License
-
-在对本作品进行演绎时，请署名并以相同方式共享。
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
 ### Statement
 
 本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
@@ -235,5 +229,9 @@ Power by [logomakr](https://logomakr.com/).
     <img src="other/10072416.jpg" width="50px">
 </a>
 
+### License
 
+在对本作品进行演绎时，请署名并以相同方式共享。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
