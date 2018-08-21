@@ -1,6 +1,6 @@
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#算法-pencil2) | 操作系统[:computer:](#操作系统-computer)|网络[:cloud:](#网络-cloud) | 面向对象[:couple:](#面向对象-couple) |数据库[:floppy_disk:](#数据库-floppy_disk)| Java [:coffee:](#java-coffee)| 系统设计[:bulb:](#系统设计-bulb)| 工具[:hammer:](#工具-hammer)| 编码实践[:speak_no_evil:](#编码实践-speak_no_evil)| 后记[:memo:](#后记-memo) |
+| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) |
 
 <br>
 <div align="center">
@@ -11,7 +11,7 @@
 
 <!-- [![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-4ab8a1.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details)  -->
 
-## 算法 :pencil2:
+## :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
 
@@ -20,12 +20,12 @@
 - [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
 
   对题目做了一个大致分类，并对每种题型的解题思路做了总结。
+  
+ - [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
 
-- [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+   排序、并查集、栈和队列、红黑树、散列表。
 
-  排序、并查集、栈和队列、红黑树、散列表。
-
-## 操作系统 :computer:
+## :computer: 操作系统
 
 - [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
 
@@ -35,7 +35,7 @@
 
   基本实现原理以及基本操作。
 
-## 网络 :cloud:
+## :cloud: 网络 
 
 - [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
 
@@ -49,7 +49,7 @@
 
   I/O 模型、I/O 多路复用。
 
-## 面向对象 :couple:
+## :couple: 面向对象
 
 - [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
 
@@ -59,7 +59,7 @@
 
   三大原则（继承、封装、多态）、类图、设计原则。
 
-## 数据库 :floppy_disk:
+## :floppy_disk: 数据库 
 
 - [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
 
@@ -81,7 +81,7 @@
 
   五种数据类型、字典和跳跃表数据结构、使用场景、和 Memcache 的比较、淘汰策略、持久化、文件事件的 Reactor 模式、复制。
 
-## Java :coffee:
+## :coffee: Java
 
 - [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
 
@@ -103,7 +103,7 @@
 
   NIO 的原理以及实例。
 
-## 系统设计 :bulb:
+## :bulb: 系统设计 
 
 - [系统设计基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/系统设计基础.md)
 
@@ -129,7 +129,7 @@
 
   消息处理模型、使用场景、可靠性
 
-## 工具 :hammer:
+## :hammer: 工具 
 
 - [Git](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Git.md)
 
@@ -147,7 +147,7 @@
 
   构建工具的基本概念、主流构建工具介绍。
 
-## 编码实践 :speak_no_evil:
+## :speak_no_evil: 编码实践 
 
 - [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
 
@@ -161,7 +161,7 @@
 
   Google 开源项目的代码风格规范。
 
-## 后记 :memo:
+## :memo: 后记 
 
 ### About
 
@@ -194,12 +194,6 @@
 进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
 笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
-
-### License
-
-在对本作品进行演绎时，请署名并以相同方式共享。
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
 ### Statement
 
@@ -235,5 +229,9 @@ Power by [logomakr](https://logomakr.com/).
     <img src="other/10072416.jpg" width="50px">
 </a>
 
+### License
 
+在对本作品进行演绎时，请署名并以相同方式共享。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 

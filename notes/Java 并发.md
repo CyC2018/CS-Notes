@@ -168,6 +168,8 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 
 同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runable 接口。
 
+当调用 start() 方法启动一个线程时，虚拟机会将该线程放入就绪队列中等待被调度，当一个线程被调度时会执行该线程的 run() 方法。
+
 ```java
 public class MyThread extends Thread {
     public void run() {
@@ -1018,7 +1020,7 @@ ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线�
 
 如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
 
-以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值为 997 而不是 1000。
+以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值有可能小于 1000。
 
 ```java
 public class ThreadUnsafeExample {
