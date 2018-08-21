@@ -209,9 +209,9 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 
 ```html
 +---------+
-| Email   |
+| class   |
 +---------+
-| a@b.com |
+| Math    |
 +---------+
 ```
 
@@ -305,6 +305,8 @@ HAVING
 
 # 196. Delete Duplicate Emails
 
+https://leetcode.com/problems/delete-duplicate-emails/description/
+
 ## Description
 
 邮件地址表：
@@ -319,14 +321,15 @@ HAVING
 +----+---------+
 ```
 
-查找重复的邮件地址：
+删除重复的邮件地址：
 
 ```html
-+---------+
-| Email   |
-+---------+
-| a@b.com |
-+---------+
++----+------------------+
+| Id | Email            |
++----+------------------+
+| 1  | john@example.com |
+| 2  | bob@example.com  |
++----+------------------+
 ```
 
 ## SQL Schema
@@ -435,7 +438,8 @@ SELECT
     State
 FROM
     Person P
-    LEFT JOIN Address AS A ON P.PersonId = A.PersonId;
+    LEFT JOIN Address A
+    ON P.PersonId = A.PersonId;
 ```
 
 # 181. Employees Earning More Than Their Managers
@@ -457,7 +461,7 @@ Employee 表：
 +----+-------+--------+-----------+
 ```
 
-查找所有员工，他们的薪资大于其经理薪资。
+查找薪资大于其经理薪资的员工信息。
 
 ## SQL Schema
 
@@ -481,7 +485,8 @@ SELECT
     E1.NAME AS Employee
 FROM
     Employee E1
-    INNER JOIN Employee E2 ON E1.ManagerId = E2.Id
+    INNER JOIN Employee E2
+    ON E1.ManagerId = E2.Id
     AND E1.Salary > E2.Salary;
 ```
 
@@ -558,7 +563,8 @@ SELECT
     C.Name AS Customers
 FROM
     Customers C
-    LEFT JOIN Orders O ON C.Id = O.CustomerId
+    LEFT JOIN Orders O
+    ON C.Id = O.CustomerId
 WHERE
     O.CustomerId IS NULL;
 ```
@@ -681,7 +687,7 @@ https://leetcode.com/problems/second-highest-salary/description/
 +---------------------+
 ```
 
-如果没有找到，那么就返回 null 而不是不返回数据。
+没有找到返回 null 而不是不返回数据。
 
 ## SQL Schema
 
@@ -788,7 +794,8 @@ SELECT
     COUNT( DISTINCT S2.score ) Rank
 FROM
     Scores S1
-    INNER JOIN Scores S2 ON S1.score <= S2.score
+    INNER JOIN Scores S2
+    ON S1.score <= S2.score
 GROUP BY
     S1.id
 ORDER BY
@@ -917,27 +924,27 @@ VALUES
 ```sql
 SELECT
     s1.id - 1 AS id,
-    s1.student 
+    s1.student
 FROM
-    seat s1 
+    seat s1
 WHERE
     s1.id MOD 2 = 0 UNION
 SELECT
     s2.id + 1 AS id,
-    s2.student 
+    s2.student
 FROM
-    seat s2 
+    seat s2
 WHERE
-    s2.id MOD 2 = 1 
+    s2.id MOD 2 = 1
     AND s2.id != ( SELECT max( s3.id ) FROM seat s3 ) UNION
 SELECT
     s4.id AS id,
-    s4.student 
+    s4.student
 FROM
-    seat s4 
+    seat s4
 WHERE
-    s4.id MOD 2 = 1 
-    AND s4.id = ( SELECT max( s5.id ) FROM seat s5 ) 
+    s4.id MOD 2 = 1
+    AND s4.id = ( SELECT max( s5.id ) FROM seat s5 )
 ORDER BY
     id;
 ```
