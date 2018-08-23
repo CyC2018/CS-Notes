@@ -40,7 +40,7 @@ Java 的 I/O 大概可以分成以下几类：
 - 字符操作：Reader 和 Writer
 - 对象操作：Serializable
 - 网络操作：Socket
-- 新的输入/输出：NIO
+- 非阻塞式I/O：NIO（Non-blocking I/O，在Java领域，也称为New I/O）
 
 # 二、磁盘操作
 
@@ -284,7 +284,7 @@ public static void main(String[] args) throws IOException {
 - [Java NIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
 
-新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
+NIO 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
 ## 流与块
 
