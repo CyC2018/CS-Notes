@@ -125,6 +125,7 @@
 ## HTTP
 
 - cookie和session的区别，分布式环境怎么保存用户状态；
+- http 和 https 的区别，ssl加密过程；
 
 # 设计模式
 
@@ -147,7 +148,7 @@
 
 # Linux
 
-- 
+- top命令查看系统的参数
 
 # 安全
 
@@ -158,7 +159,6 @@
 ## Storm
 - storm 的 ACK机制
 - storm 的tuple分组机制
-- 
 
 ## Zookeeper
 
