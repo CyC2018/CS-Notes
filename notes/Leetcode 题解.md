@@ -2505,24 +2505,23 @@ Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes
 题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向右和向下移动。
 
 ```java
-public int minPathSum(int[][] grid) {
-    if (grid.length == 0 || grid[0].length == 0) {
-        return 0;
+    if (grid == null) {
+      return 0;
     }
-    int m = grid.length, n = grid[0].length;
-    int[] dp = new int[n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (i == 0) {
-                dp[j] = dp[j - 1];
-            } else {
-                dp[j] = Math.min(dp[j - 1], dp[j]);
-            }
-            dp[j] += grid[i][j];
-        }
+    int rowLen = grid.length;
+    int colLen = grid[0].length;
+    int[] res = new int[colLen + 1];
+    Arrays.fill(res, Integer.MAX_VALUE);
+    res[1] = 0;
+    for (int i = 1; i <= rowLen; i++) {
+      for (int j = 1; j <= colLen; j++) {
+        //当前点的最小路径和为 : 从左边和上边选择最小的路径和再加上当前点的值
+        //res[j]没更新之前就表示i-1行到第j个元素的最小路径和
+        //因为是从左往右更新,res[j-1]表示i行第j-1个元素的最小路径和
+        res[j] = Math.min(res[j], res[j - 1]) + grid[i - 1][j - 1];
+      }
     }
-    return dp[n - 1];
-}
+    return res[colLen];
 ```
 
 **矩阵的总路径数** 
