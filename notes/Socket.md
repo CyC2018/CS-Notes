@@ -10,9 +10,9 @@
 * [二、I/O 复用](#二io-复用)
     * [select](#select)
     * [poll](#poll)
+    * [比较](#比较)
     * [epoll](#epoll)
-    * [select 和 poll 比较](#select-和-poll-比较)
-    * [epoll 工作模式](#epoll-工作模式)
+    * [工作模式](#工作模式)
     * [应用场景](#应用场景)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -106,17 +106,11 @@ select/poll/epoll 都是 I/O 多路复用的具体实现，select 出现的最�
 int select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 ```
 
-readset, writeset, exceptset 参数，分别对应读、写、异常条件的描述符集合。
+有三种类型的描述符类型：readset、writeset、exceptset，分别对应读、写、异常条件的描述符集合。fd_set 使用数组实现，数组大小使用 FD_SETSIZE 定义。
 
-timeout 参数告知内核等待所指定描述符中的任何一个就绪的最长时间；
+timeout 为超时参数，调用 select 会一直阻塞直到有描述符的事件到达或者等待的时间超过 timeout。
 
-成功调用返回结果大于 0；出错返回结果为 -1；超时返回结果为 0。
-
-每次调用 select 都需要将 readfds, writefds, exceptfds 链表内容全部从应用进程缓冲区复制到内核缓冲区。
-
-返回结果中内核并没有声明 fd_set 中哪些描述符已经准备好，所以如果返回值大于 0 时，应用进程需要遍历所有的 fd_set。
-
-select 最多支持 1024 个描述符，其中 1024 由内核的 FD_SETSIZE 决定。如果需要打破该限制可以修改 FD_SETSIZE，然后重新编译内核。
+成功调用返回结果大于 0，出错返回结果为 -1，超时返回结果为 0。
 
 ```c
 fd_set fd_in, fd_out;
@@ -163,21 +157,7 @@ else
 int poll(struct pollfd *fds, unsigned int nfds, int timeout);
 ```
 
-```c
-struct pollfd {
-    int fd;        // 文件描述符
-    short events;  // 监视的请求事件
-    short revents; // 已发生的事件
-};
-```
-
-它和 select 功能基本相同，同样需要每次都将描述符从应用进程缓冲区复制到内核缓冲区，调用返回后同样需要进行轮询才能知道哪些描述符已经准备好。
-
-poll 取消了 1024 个描述符数量上限，但是数量太大以后不能保证执行效率，因为复制大量内存到内核十分低效，所需时间与描述符数量成正比。
-
-poll 在描述符的重复利用上比 select 的 fd_set 会更好。
-
-如果在多线程下，如果一个线程对某个描述符调用了 poll 系统调用，但是另一个线程关闭了该描述符，会导致 poll 调用结果不确定，该问题同样出现在 select 中。
+pollfd 使用链表实现。
 
 ```c
 // The structure for two events
@@ -211,6 +191,28 @@ else
 }
 ```
 
+## 比较
+
+### 1. 功能
+
+select 和 poll 的功能基本相同，不过在一些实现细节上有所不同。
+
+- select 会修改描述符，而 poll 不会；
+- select 的描述符类型使用数组实现，FD_SETSIZE 大小默认为 1024，因此默认只能监听 1024 个描述符。如果要监听更多描述符的话，需要修改 FD_SETSIZE 之后重新编译；而 poll 的描述符类型使用链表实现，没有描述符的数量的限制；
+- poll 提供了更多的事件类型，并且对描述符的重复利用上比 select 高。
+- 如果一个线程对某个描述符调用了 select 或者 poll，另一个线程关闭了该描述符，会导致调用结果不确定。
+
+### 2. 速度
+
+select 和 poll 速度都比较慢。
+
+- select 和 poll 每次调用都需要将全部描述符从应用进程缓冲区复制到内核缓冲区。
+- select 和 poll 的返回结果中没有声明哪些描述符已经准备好，所以如果返回值大于 0 时，应用进程都需要使用轮询的方式来找到 I/O 完成的描述符。
+
+### 3. 可移植性
+
+几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
+
 ## epoll
 
 ```c
@@ -219,21 +221,15 @@ int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
 int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
 ```
 
+epoll_ctl() 用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理，进程调用 epoll_wait() 便可以得到事件完成的描述符。
+
+从上面的描述可以看出，epoll 只需要将描述符从进程缓冲区向内核缓冲区拷贝一次，并且进程不需要通过轮询来获得事件完成的描述符。
+
 epoll 仅适用于 Linux OS。
 
-它是 select 和 poll 的增强版，更加灵活而且没有描述符数量限制。
+epoll 比 select 和 poll 更加灵活而且没有描述符数量限制。
 
-它将用户关心的描述符放到内核的一个事件表中，从而只需要在用户进程缓冲区和内核缓冲区拷贝一次。
-
-select 和 poll 方式中，进程只有在调用一定的方法后，内核才对所有监视的描述符进行扫描。而 epoll 事先通过 epoll_ctl() 来注册描述符，一旦基于某个描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个描述符，当进程调用 epoll_wait() 时便得到通知。
-
-新版本的 epoll_create(int size) 参数 size 不起任何作用，在旧版本的 epoll 中如果描述符的数量大于 size，不保证服务质量。
-
-epoll_ctl() 执行一次系统调用，用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上，通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理。
-
-epoll_wait() 取出在内核中通过链表维护的 I/O 准备好的描述符，将他们从内核复制到应用进程中，不需要像 select/poll 对注册的所有描述符遍历一遍。
-
-epoll 对多线程编程更有友好，同时多个线程对同一个描述符调用了 epoll_wait() 也不会产生像 select/poll 的不确定情况。或者一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生不确定情况。
+epoll 对多线程编程更有友好，一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生像 select 和 poll 的不确定情况。
 
 ```c
 // Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
@@ -282,64 +278,42 @@ else
 }
 ```
 
-## select 和 poll 比较
 
-### 1. 功能
+## 工作模式
 
-它们提供了几乎相同的功能，但是在一些细节上有所不同：
-
-- select 会修改 fd_set 参数，而 poll 不会；
-- select 默认只能监听 1024 个描述符，如果要监听更多的话，需要修改 FD_SETSIZE 之后重新编译；
-- poll 提供了更多的事件类型。
-
-### 2. 速度
-
-poll 和 select 在速度上都很慢。
-
-- 它们都采取轮询的方式来找到 I/O 完成的描述符，如果描述符很多，那么速度就会很慢；
-- select 只使用每个描述符的 3 位，而 poll 通常需要使用 64 位，因此 poll 需要在用户进程和内核之间复制更多的数据。
-
-### 3. 可移植性
-
-几乎所有的系统都支持 select，但是只有比较新的系统支持 poll。
-
-## epoll 工作模式
-
-epoll_event 有两种触发模式：LT（level trigger）和 ET（edge trigger）。
+epoll 的描述符事件有两种触发模式：LT（level trigger）和 ET（edge trigger）。
 
 ### 1. LT 模式
 
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用 epoll_wait() 时，会再次响应应用程序并通知此事件。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
+当 epoll_wait() 检测到描述符事件到达时，将此事件通知进程，进程可以不立即处理该事件，下次调用 epoll_wait() 会再次通知进程。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
 
 ### 2. ET 模式
 
-当 epoll_wait() 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用 epoll_wait() 时，不会再次响应应用程序并通知此事件。很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+和 LT 模式不同的是，通知之后进程必须立即处理事件，下次再调用 epoll_wait() 时不会再得到事件到达的通知。
+
+很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
 
 ## 应用场景
 
-很容易产生一种错觉认为只要用 epoll 就可以了，select poll 都是历史遗留问题，并没有什么应用场景，其实并不是这样的。
+很容易产生一种错觉认为只要用 epoll 就可以了，select 和 poll 都已经过时了，其实它们都有各自的使用场景。
 
 ### 1. select 应用场景
 
-select() poll() epoll_wait() 都有一个 timeout 参数，在 select() 中 timeout 的精确度为 1ns，而 poll() 和 epoll_wait() 中则为 1ms。所以 select 更加适用于实时要求更高的场景，比如核反应堆的控制。
+select 的 timeout 参数精度为 1ns，而 poll 和 epoll 为 1ms，因此 select 更加适用于实时要求更高的场景，比如核反应堆的控制。
 
-select 历史更加悠久，它的可移植性更好，几乎被所有主流平台所支持。
+select 可移植性更好，几乎被所有主流平台所支持。
 
 ### 2. poll 应用场景
 
-poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 且对实时性要求并不是十分严格，而不是 select。
+poll 没有最大描述符数量的限制，如果平台支持并且对实时性要求不高，应该使用 poll 而不是 select。
 
-需要同时监控小于 1000 个描述符。没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
+需要同时监控小于 1000 个描述符，就没有必要使用 epoll，因为这个应用场景下并不能体现 epoll 的优势。
 
-需要监控的描述符状态变化多，而且都是非常短暂的。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。并且epoll 的描述符存储在内核，不容易调试。
+需要监控的描述符状态变化多，而且都是非常短暂的，也没有必要使用 epoll。因为 epoll 中的所有描述符都存储在内核中，造成每次需要对描述符的状态改变都需要通过 epoll_ctl() 进行系统调用，频繁系统调用降低效率。并且epoll 的描述符存储在内核，不容易调试。
 
 ### 3. epoll 应用场景
 
-程序只需要运行在 Linux 平台上，有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
-
-### 4. 性能对比
-
-[epoll Scalability Web Page](http://lse.sourceforge.net/epoll/index.html)
+只需要运行在 Linux 平台上，并且有非常大量的描述符需要同时轮询，而且这些连接最好是长连接。
 
 # 参考资料
 
@@ -348,3 +322,5 @@ poll 没有最大描述符数量的限制，如果平台支持应该采用 poll 
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
 - [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
+- [select / poll / epoll: practical difference for system architects](http://www.ulduzsoft.com/2014/01/select-poll-epoll-practical-difference-for-system-architects/)
+- [Browse the source code of userspace/glibc/sysdeps/unix/sysv/linux/ online](https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/)
