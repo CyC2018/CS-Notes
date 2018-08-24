@@ -214,7 +214,7 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。
 
 ```sql
-DELEFT FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
+DELETE FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 ```
 
 ```sql
@@ -342,7 +342,7 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 水平切分又称为 Sharding，它是将同一个表中的记录拆分到多个结构相同的表中。
 
-当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
+当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓解单个数据库的压力。
 
 <div align="center"> <img src="../pics//63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg"/> </div><br>
 
