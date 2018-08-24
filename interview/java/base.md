@@ -12,6 +12,7 @@
 - [抽象类和接口](#抽象类和接口)
 - [java 重写和重载的区别](#java-重写和重载的区别)
 - [Synchronized 和 volitate区别](#synchronized-和-volitate区别)
+- [Synchronized 的内部实现](#synchronized-的内部实现)
 - [异常](#异常)
 - [String StringBuffer StringBuilder的区别](#string-stringbuffer-stringbuilder的区别)
     - [运行速度：](#运行速度)
@@ -40,6 +41,9 @@
     - [接口默认方法](#接口默认方法)
 - [socket 编程](#socket-编程)
 - [Java 集合类的底层实现](#java-集合类的底层实现)
+- [.class 和 getclass的区别](#class-和-getclass的区别)
+    - [加载时机不同](#加载时机不同)
+    - [静态内部类](#静态内部类)
 - [参考文档](#参考文档)
 
 <!-- /TOC -->
@@ -378,6 +382,10 @@ java 类可以继承一个抽象类，实现多个接口，都不能被实例化
 4) volatile不会造成线程的阻塞,而synchronized可能会造成线程的阻塞.
 5) 当一个域的值依赖于它之前的值时，volatile就无法工作了，如n=n+1,n++等。如果某个域的值受到其他域的值的限制，那么volatile也无法工作，如Range类的lower和upper边界，必须遵循lower<=upper的限制。
 6) 使用volatile而不是synchronized的唯一安全的情况是类中只有一个可变的域。
+
+# Synchronized 的内部实现
+
+通过javap反编译代码可以看到，对于同步方法，JVM采用**ACC_SYNCHRONIZED**标记符来实现同步。 对于同步代码块。JVM采用**monitorenter、monitorexit**两个指令来实现同步。
 
 # 异常
 
@@ -908,6 +916,25 @@ private interface DefaulableFactory {
 # Java 集合类的底层实现
 
 [参考文档](https://blog.csdn.net/qq_25868207/article/details/55259978)
+
+# .class 和 getclass的区别
+
+最明显的一个区别是，.class 可以直接从类名获取，.getClass() 是一个对象实例的方法。
+
+## 加载时机不同
+
+Class.forName(),getClass()在运行时加载；
+
+Class.class是在编译器加载，即.class是静态加载，
+
+.getClass()是动态加载。
+
+## 静态内部类
+
+Iterator it = s.iterator();得到的it的真正类型是KeyIterator，是Iterator的子类，按常理来说应该可以执行next()方法，但是值得注意的是，KeyIterator是hashmap的内部类，JAVA给的提示是cannot access a member of class java.util.HashMap$KeyIterator withmodifiers "public"
+
+从上面的那些例子上也能看出，除内部类外的其他类的应用上.class功能完全等于.getClass()!只是一个是用类直接获得的，一个是用实例获得的。
+
 
 # 参考文档
 
