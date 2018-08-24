@@ -52,6 +52,9 @@
         - [java线程调度](#java线程调度)
         - [状态转换](#状态转换)
 - [java 线程安全和锁优化](#java-线程安全和锁优化)
+- [java的符号引用和直接引用](#java的符号引用和直接引用)
+    - [符号引用](#符号引用)
+    - [直接引用](#直接引用)
 
 <!-- /TOC -->
 
@@ -897,3 +900,17 @@ java定义了5中线程状态，在任意一个时间点，一个线程只能有
 
 - [线程安全](https://github.com/xiongraorao/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md#%E5%8D%81%E4%B8%80%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8)
 - [锁优化](https://github.com/xiongraorao/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md#%E5%8D%81%E4%BA%8C%E9%94%81%E4%BC%98%E5%8C%96)
+
+# java的符号引用和直接引用
+
+## 符号引用
+
+符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。例如，在Class文件中它以CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info等类型的常量出现。
+
+## 直接引用
+
+ 直接引用可以是
+（1）直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）
+（2）相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）
+（3）一个能间接定位到目标的句柄
+直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。

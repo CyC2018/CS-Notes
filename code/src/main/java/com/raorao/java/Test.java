@@ -1,15 +1,9 @@
 package com.raorao.java;
 
-import clojure.lang.Obj;
-import com.google.common.collect.HashBasedTable;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
 public class Test implements Serializable {
@@ -29,10 +23,10 @@ public class Test implements Serializable {
     hashMap.put(2, 20);
     hashMap.put(3, 30);
     hashMap.put(19, 30);
-    hashMap.forEach((e1, e2)-> System.out.println( e1 + ":" + e2));
+    hashMap.forEach((e1, e2) -> System.out.println(e1 + ":" + e2));
     Iterator<Entry<Integer, Integer>> iterator = hashMap.entrySet().iterator();
     Enumeration<Integer> enumeration = hashMap.elements();
-    while (enumeration.hasMoreElements()){
+    while (enumeration.hasMoreElements()) {
       System.out.println(enumeration.nextElement());
     }
 

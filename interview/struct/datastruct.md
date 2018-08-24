@@ -14,6 +14,7 @@
     - [B*树](#b树)
     - [B B- B+ B* 树总结](#b-b--b-b-树总结)
     - [B+/B*Tree应用](#bbtree应用)
+- [Mysql中B+树索引](#mysql中b树索引)
 - [参考链接](#参考链接)
 
 <!-- /TOC -->
@@ -233,6 +234,13 @@ B*树：在B+树基础上，为非叶子结点也增加链表指针，将结点�
 倒排索引--也可以由B树及其变种实现但不一定非要B树及其变种实现，如lucene没有使用B树结构，因此lucene可以用二分搜索算法快速定位关键词。实现时，lucene将下面三列分别作为词典文件（Term Dictionary）、频率文件(frequencies)、位置文件 (positions)保存。其中词典文件不仅保存有每个关键词，还保留了指向频率文件和位置文件的指针，通过指针可以找到该关键字的频率信息和位置信息。 　　
 
 参考链接：[B-树和B+树的应用：数据搜索和数据库索引](http://blog.csdn.net/hguisu/article/details/7786014)
+
+# Mysql中B+树索引
+
+参考文档：
+- [经典查找算法 --- B+树](https://blog.csdn.net/sjyttkl/article/details/70198504)
+
+
 
 # 参考链接
 

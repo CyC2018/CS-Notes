@@ -41,21 +41,27 @@ public class Test {
   private int a;
 
   public static void main(String[] args) {
-    //System.out.println(foo());
-    int r = new Test().foo();
-    System.out.println(r);
-    PriorityBlockingQueue<Integer> aa;
-    LinkedBlockingQueue<Integer> ss;
-    ss = new LinkedBlockingQueue<>();
-    ss.add(1);
-    ArrayBlockingQueue<Integer> s;
-    LinkedBlockingQueue<Integer> a;
-    FileInputStream fis;
-    FileOutputStream fos;
-    InputStreamReader isr;
-    OutputStreamWriter osw;
-    float b = Math.round(11.5);
-    System.out.println(b);
+//    //System.out.println(foo());
+//    int r = new Test().foo();
+//    //System.out.println(r);
+//    PriorityBlockingQueue<Integer> aa;
+//    LinkedBlockingQueue<Integer> ss;
+//    ss = new LinkedBlockingQueue<>();
+//    ss.add(1);
+//    ArrayBlockingQueue<Integer> s;
+//    LinkedBlockingQueue<Integer> a;
+//    FileInputStream fis;
+//    FileOutputStream fos;
+//    InputStreamReader isr;
+//    OutputStreamWriter osw;
+//    float b = Math.round(11.5);
+//    //System.out.println(b);
+
+    int[] t = new int[]{1,2};
+    int[] temp = t;
+    System.out.println(t[0]);
+    t[0]= 10;
+    System.out.println(temp[0]);
   }
 
   public int foo() {
