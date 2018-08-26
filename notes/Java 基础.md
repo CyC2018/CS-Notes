@@ -461,6 +461,7 @@ public class AccessExample {
 
 ```java
 public class AccessWithInnerClassExample {
+
     private class InnerClass {
         int x;
     }
@@ -526,6 +527,7 @@ ac2.func1();
 
 ```java
 public interface InterfaceExample {
+
     void func1();
 
     default void func2(){
@@ -577,7 +579,7 @@ System.out.println(InterfaceExample.x);
 - 需要能控制继承来的成员的访问权限，而不是都为 public。
 - 需要继承非静态和非常量字段。
 
-在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
+在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
@@ -718,7 +720,7 @@ x.equals(y) == x.equals(y); // true
 x.equals(null); // false;
 ```
 
-**2. equals() 与 ==** 
+**2. 等价与相等** 
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
 - 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。
@@ -781,7 +783,7 @@ set.add(e2);
 System.out.println(set.size());   // 2
 ```
 
-理想的散列函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
+理想的散列函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来。可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
 
 一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，编译器会自动进行这个优化。
 
@@ -886,6 +888,7 @@ public class CloneExample implements Cloneable {
 
 ```java
 public class ShallowCloneExample implements Cloneable {
+
     private int[] arr;
 
     public ShallowCloneExample() {
@@ -928,6 +931,7 @@ System.out.println(e2.get(2)); // 222
 
 ```java
 public class DeepCloneExample implements Cloneable {
+
     private int[] arr;
 
     public DeepCloneExample() {
@@ -975,6 +979,7 @@ System.out.println(e2.get(2)); // 2
 
 ```java
 public class CloneConstructorExample {
+
     private int[] arr;
 
     public CloneConstructorExample() {
@@ -1040,7 +1045,7 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 **1. 静态变量** 
 
-- 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它；静态变量在内存中只存在一份。
+- 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它。静态变量在内存中只存在一份。
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
 
 ```java
@@ -1059,7 +1064,7 @@ public class A {
 
 **2. 静态方法** 
 
-静态方法在类加载的时候就存在了，它不依赖于任何实例。所以静态方法必须有实现，也就是说它不能是抽象方法（abstract）。
+静态方法在类加载的时候就存在了，它不依赖于任何实例。所以静态方法必须有实现，也就是说它不能是抽象方法。
 
 ```java
 public abstract class A {
@@ -1182,7 +1187,7 @@ public InitialOrderTest() {
 
 每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
-类加载相当于 Class 对象的加载。类在第一次使用时才动态加载到 JVM 中，可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
+类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
 反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。
 
@@ -1279,7 +1284,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针。
 - Java 支持自动垃圾回收，而 C++ 需要手动回收。
 - Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承。
-- Java 不支持操作符重载，虽然可以对两个 String 对象支持加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
+- Java 不支持操作符重载，虽然可以对两个 String 对象执行加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
 - Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
 - Java 不支持条件编译，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
 
