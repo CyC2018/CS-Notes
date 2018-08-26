@@ -354,17 +354,17 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 ## 垂直切分
 
-<div align="center"> <img src="../pics//e130e5b8-b19a-4f1e-b860-223040525cf6.jpg"/> </div><br>
-
 垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
 
 在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库、用户数据库等。
 
+<div align="center"> <img src="../pics//e130e5b8-b19a-4f1e-b860-223040525cf6.jpg"/> </div><br>
+
 ## Sharding 策略
 
-- 哈希取模：hash(key) % NUM_DB
-- 范围：可以是 ID 范围也可以是时间范围
-- 映射表：使用单独的一个数据库来存储映射关系
+- 哈希取模：hash(key) % N；
+- 范围：可以是 ID 范围也可以是时间范围；
+- 映射表：使用单独的一个数据库来存储映射关系。
 
 ## Sharding 存在的问题及解决方案
 
@@ -382,20 +382,15 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 - 为每个分片指定一个 ID 范围
 - 分布式 ID 生成器 (如 Twitter 的 Snowflake 算法)
 
-更多内容请参考：
-
-- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
-- [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
-
 # 六、复制
 
 ## 主从复制
 
 主要涉及三个线程：binlog 线程、I/O 线程和 SQL 线程。
 
--  **binlog 线程** ：负责将主服务器上的数据更改写入二进制日志中。
--  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的中继日志中。
--  **SQL 线程** ：负责读取中继日志并重放其中的 SQL 语句。
+-  **binlog 线程** ：负责将主服务器上的数据更改写入二进制日志（Binary log）中。
+-  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的重放日志（Replay log）中。
+-  **SQL 线程** ：负责读取重放日志并重放其中的 SQL 语句。
 
 <div align="center"> <img src="../pics//master-slave.png"/> </div><br>
 
@@ -423,3 +418,5 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 - [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
 - [MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
+- [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
+- [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
