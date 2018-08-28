@@ -232,7 +232,7 @@ public String replaceSpace(StringBuffer str) {
     int P1 = str.length() - 1;
     for (int i = 0; i < str.length(); i++)
         if (str.charAt(i) == ' ')
-            str.append("  ");
+            str.append("aa");
 
     int P2 = str.length() - 1;
     while (P1 >= 0 && P2 > P1) {
