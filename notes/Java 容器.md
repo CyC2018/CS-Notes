@@ -1182,7 +1182,7 @@ ListIterator <-- List
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
-- [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java-hashmap.html)
+- [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java_hashmap.html)
 - [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
 - [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
 - [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
