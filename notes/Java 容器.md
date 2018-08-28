@@ -126,7 +126,91 @@ public class ArrayList<E> extends AbstractList<E>
 private static final int DEFAULT_CAPACITY = 10;
 ```
 
-### 2. 序列化
+### 2. 扩容
+
+添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，也就是旧容量的 1.5 倍。
+
+扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
+
+```java
+public boolean add(E e) {
+    ensureCapacityInternal(size + 1);  // Increments modCount!!
+    elementData[size++] = e;
+    return true;
+}
+
+private void ensureCapacityInternal(int minCapacity) {
+    if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+        minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
+    }
+    ensureExplicitCapacity(minCapacity);
+}
+
+private void ensureExplicitCapacity(int minCapacity) {
+    modCount++;
+    // overflow-conscious code
+    if (minCapacity - elementData.length > 0)
+        grow(minCapacity);
+}
+
+private void grow(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
+        newCapacity = hugeCapacity(minCapacity);
+    // minCapacity is usually close to size, so this is a win:
+    elementData = Arrays.copyOf(elementData, newCapacity);
+}
+```
+
+### 3. 删除元素
+
+需要调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上，该操作的时间复杂度为 O(N)，可以看出 ArrayList 删除元素的代价是非常高的。
+
+```java
+public E remove(int index) {
+    rangeCheck(index);
+    modCount++;
+    E oldValue = elementData(index);
+    int numMoved = size - index - 1;
+    if (numMoved > 0)
+        System.arraycopy(elementData, index+1, elementData, index, numMoved);
+    elementData[--size] = null; // clear to let GC do its work
+    return oldValue;
+}
+```
+
+### 4. Fail-Fast
+
+modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+
+在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
+
+```java
+private void writeObject(java.io.ObjectOutputStream s)
+    throws java.io.IOException{
+    // Write out element count, and any hidden stuff
+    int expectedModCount = modCount;
+    s.defaultWriteObject();
+
+    // Write out size as capacity for behavioural compatibility with clone()
+    s.writeInt(size);
+
+    // Write out all elements in the proper order.
+    for (int i=0; i<size; i++) {
+        s.writeObject(elementData[i]);
+    }
+
+    if (modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+    }
+}
+```
+
+### 5. 序列化
 
 ArrayList 基于数组实现，并且具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。
 
@@ -189,90 +273,6 @@ private void writeObject(java.io.ObjectOutputStream s)
 ArrayList list = new ArrayList();
 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 oos.writeObject(list);
-```
-
-### 3. 扩容
-
-添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，也就是旧容量的 1.5 倍。
-
-扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
-
-```java
-public boolean add(E e) {
-    ensureCapacityInternal(size + 1);  // Increments modCount!!
-    elementData[size++] = e;
-    return true;
-}
-
-private void ensureCapacityInternal(int minCapacity) {
-    if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
-        minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
-    }
-    ensureExplicitCapacity(minCapacity);
-}
-
-private void ensureExplicitCapacity(int minCapacity) {
-    modCount++;
-    // overflow-conscious code
-    if (minCapacity - elementData.length > 0)
-        grow(minCapacity);
-}
-
-private void grow(int minCapacity) {
-    // overflow-conscious code
-    int oldCapacity = elementData.length;
-    int newCapacity = oldCapacity + (oldCapacity >> 1);
-    if (newCapacity - minCapacity < 0)
-        newCapacity = minCapacity;
-    if (newCapacity - MAX_ARRAY_SIZE > 0)
-        newCapacity = hugeCapacity(minCapacity);
-    // minCapacity is usually close to size, so this is a win:
-    elementData = Arrays.copyOf(elementData, newCapacity);
-}
-```
-
-### 4. 删除元素
-
-需要调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上，该操作的时间复杂度为 O(N)，可以看出 ArrayList 删除元素的代价是非常高的。
-
-```java
-public E remove(int index) {
-    rangeCheck(index);
-    modCount++;
-    E oldValue = elementData(index);
-    int numMoved = size - index - 1;
-    if (numMoved > 0)
-        System.arraycopy(elementData, index+1, elementData, index, numMoved);
-    elementData[--size] = null; // clear to let GC do its work
-    return oldValue;
-}
-```
-
-### 5. Fail-Fast
-
-modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
-
-在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
-
-```java
-private void writeObject(java.io.ObjectOutputStream s)
-    throws java.io.IOException{
-    // Write out element count, and any hidden stuff
-    int expectedModCount = modCount;
-    s.defaultWriteObject();
-
-    // Write out size as capacity for behavioural compatibility with clone()
-    s.writeInt(size);
-
-    // Write out all elements in the proper order.
-    for (int i=0; i<size; i++) {
-        s.writeObject(elementData[i]);
-    }
-
-    if (modCount != expectedModCount) {
-        throw new ConcurrentModificationException();
-    }
-}
 ```
 
 ## Vector
@@ -460,21 +460,6 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 
     public final String toString() {
         return getKey() + "=" + getValue();
-    }
-
-    /**
-     * This method is invoked whenever the value in an entry is
-     * overwritten by an invocation of put(k,v) for a key k that's already
-     * in the HashMap.
-     */
-    void recordAccess(HashMap<K,V> m) {
-    }
-
-    /**
-     * This method is invoked whenever the entry is
-     * removed from the table.
-     */
-    void recordRemoval(HashMap<K,V> m) {
     }
 }
 ```
@@ -929,7 +914,7 @@ JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败�
 public class LinkedHashMap<K,V> extends HashMap<K,V> implements Map<K,V>
 ```
 
-内存维护了一个双向链表，用来维护插入顺序或者 LRU 顺序。
+内部维护了一个双向链表，用来维护插入顺序或者 LRU 顺序。
 
 ```java
 /**

@@ -54,7 +54,7 @@
 - [STL 源码剖析](https://book.douban.com/subject/1110934/)
 - [深度探索 C++ 对象模型](https://book.douban.com/subject/1091086/)
 
-# 网站架构/分布式
+# 系统设计
 
 - [大规模分布式存储系统](https://book.douban.com/subject/25723658/)
 - [从 Paxos 到 Zookeeper](https://book.douban.com/subject/26292004/)

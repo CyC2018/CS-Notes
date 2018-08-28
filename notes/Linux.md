@@ -1169,7 +1169,7 @@ dmtsai lines: 5 columns: 9
 | S | interruptible sleep (waiting for an event to complete) |
 | Z | zombie (terminated but not reaped by its parent) |
 | T | stopped (either by a job control signal or because it is being traced) |
-
+<br>
 <div align="center"> <img src="../pics//76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
 
 ## SIGCHLD
@@ -1179,11 +1179,11 @@ dmtsai lines: 5 columns: 9
 - 得到 SIGCHLD 信号；
 - waitpid() 或者 wait() 调用会返回。
 
-<div align="center"> <img src="../pics//flow.png" width=""/> </div><br>
-
 其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
 
 在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
+
+<div align="center"> <img src="../pics//flow.png" width=""/> </div><br>
 
 ## wait()
 

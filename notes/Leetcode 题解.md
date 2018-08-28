@@ -3601,7 +3601,7 @@ public int countPrimes(int n) {
 
 ```java
 int gcd(int a, int b) {
-    return b == 0 ? a : gcd(b, a% b);
+    return b == 0 ? a : gcd(b, a % b);
 }
 ```
 
@@ -3672,7 +3672,7 @@ public String convertToBase7(int num) {
 }
 ```
 
-Java 中 static String toString(int num, int radix) 可以将一个整数转换为 redix 进制表示的字符串。
+Java 中 static String toString(int num, int radix) 可以将一个整数转换为 radix 进制表示的字符串。
 
 ```java
 public String convertToBase7(int num) {
@@ -6402,7 +6402,6 @@ public int maxChunksToSorted(int[] arr) {
 }
 ```
 
-
 ## 图
 
 ### 二分图
@@ -6619,6 +6618,7 @@ public int[] findRedundantConnection(int[][] edges) {
 }
 
 private class UF {
+
     private int[] id;
 
     UF(int N) {
@@ -6664,7 +6664,7 @@ x ^ x = 0       x & x = x       x | x = x
 ```
 
 - 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。
-- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask ：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
+- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
 - 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。
 
 位与运算技巧：
@@ -6908,7 +6908,6 @@ public boolean isPowerOfFour(int num) {
     return Integer.toString(num, 4).matches("10*");
 }
 ```
-
 
 **判断一个数的位级表示是否不会出现连续的 0 和 1** 
 

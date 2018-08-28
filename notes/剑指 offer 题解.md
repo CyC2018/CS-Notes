@@ -1082,7 +1082,7 @@ false
 
 ```java
 public boolean isNumeric(char[] str) {
-    if (str == null)
+    if (str == null || str.length == 0)
         return false;
     return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
 }
@@ -2779,19 +2779,25 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ```java
 public boolean isContinuous(int[] nums) {
+
     if (nums.length < 5)
         return false;
+
     Arrays.sort(nums);
+
+    // 统计癞子数量
     int cnt = 0;
-    for (int num : nums)                   /* 统计癞子数量 */
+    for (int num : nums)
         if (num == 0)
             cnt++;
 
+    // 使用癞子去补全不连续的顺子
     for (int i = cnt; i < nums.length - 1; i++) {
         if (nums[i + 1] == nums[i])
             return false;
-        cnt -= nums[i + 1] - nums[i] - 1;  /* 使用癞子去补全不连续的顺子 */
+        cnt -= nums[i + 1] - nums[i] - 1;
     }
+
     return cnt >= 0;
 }
 ```
@@ -2824,7 +2830,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 ## 题目描述
 
-可以有一次买入和一次卖出，买入必须在前。求最大收益。
+可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
 
 ## 解题思路
 
