@@ -4,7 +4,7 @@
 
 <br>
 <div align="center">
-    <img src="other/LogoMakr_0zpEzN.png" width="150px">
+    <img src="other/LogoMakr_0zpEzN.png" width="200px">
     <br>
     <a href="other/Group.md"> <img src="https://img.shields.io/badge/>-group-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
 </div>
