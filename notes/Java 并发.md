@@ -637,6 +637,7 @@ B
 
 ```java
 public class WaitNotifyExample {
+
     public synchronized void before() {
         System.out.println("before");
         notifyAll();
@@ -674,12 +675,15 @@ after
 
 ## await() signal() signalAll()
 
-java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
+java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。
+
+相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
 
 使用 Lock 来获取一个 Condition 对象。
 
 ```java
 public class AwaitSignalExample {
+
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
 
@@ -809,7 +813,7 @@ before..before..before..before..before..before..before..before..before..before..
 
 ## Semaphore
 
-Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
+Semaphore 类似于操作系统中的信号量，可以控制对互斥资源的访问线程数。
 
 <div align="center"> <img src="../pics//Semaphore.png" width=""/> </div><br>
 
@@ -1098,11 +1102,11 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 
 Java 内存模型保证了 read、load、use、assign、store、write、lock 和 unlock 操作具有原子性，例如对一个 int 类型的变量执行 assign 赋值操作，这个操作就是原子性的。但是 Java 内存模型允许虚拟机将没有被 volatile 修饰的 64 位数据（long，double）的读写操作划分为两次 32 位的操作来进行，即 load、store、read 和 write 操作可以不具备原子性。
 
-有一个错误认识就是，int 等原子性的变量在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 变量属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
+有一个错误认识就是，int 等原子性的类型在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
 
 为了方便讨论，将内存间的交互操作简化为 3 个：load、assign、store。
 
-下图演示了两个线程同时对 cnt 变量进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入该变量的值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
+下图演示了两个线程同时对 cnt 进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入旧值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
 
 <div align="center"> <img src="../pics//ef8eab00-1d5e-4d99-a7c2-d6d68ea7fe92.png" width=""/> </div><br>
 
@@ -1200,9 +1204,7 @@ public static void main(String[] args) throws InterruptedException {
 
 ### 3. 有序性
 
-有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。
-
-在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
 volatile 关键字通过添加内存屏障的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前。
 
@@ -1413,7 +1415,7 @@ synchronized 和 ReentrantLock。
 
 **（二）AtomicInteger** 
 
-J.U.C 包里面的整数原子类 AtomicInteger，其中的 compareAndSet() 和 getAndIncrement() 等方法都使用了 Unsafe 类的 CAS 操作。
+J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。
 
 以下代码使用了 AtomicInteger 执行了自增的操作。
 
@@ -1425,7 +1427,7 @@ public void add() {
 }
 ```
 
-以下代码是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。
+以下代码是 incrementAndGet() 的源码，它调用了 Unsafe 的 getAndAddInt() 。
 
 ```java
 public final int incrementAndGet() {
@@ -1463,9 +1465,6 @@ J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference �
 多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
 
 ```java
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class StackClosedExample {
     public void add100() {
         int cnt = 0;
@@ -1555,7 +1554,7 @@ public class ThreadLocalExample1 {
 
 <div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
-每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
+每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象。
 
 ```java
 /* ThreadLocal values pertaining to this thread. This map is maintained
@@ -1686,15 +1685,15 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 缩小同步范围，从而减少锁争用。例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步工具少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现复杂控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步工具少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现复杂控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善。
+
+- 使用 BlockingQueue 实现生产者消费者问题。
 
 - 多用并发集合少用同步集合，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
 
 - 使用本地变量和不可变类来保证线程安全。
 
-- 使用线程池而不是直接创建 Thread 对象，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
-
-- 使用 BlockingQueue 实现生产者消费者问题。
+- 使用线程池而不是直接创建线程，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
 
 # 参考资料
 

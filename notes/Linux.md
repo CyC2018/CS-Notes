@@ -644,7 +644,7 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内
 example: find . -name "shadow*"
 ```
 
-（一）与时间有关的选项
+**① 与时间有关的选项** 
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -657,7 +657,7 @@ example: find . -name "shadow*"
 
 <div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
 
-（二）与文件拥有者和所属群组有关的选项
+**② 与文件拥有者和所属群组有关的选项** 
 
 ```html
 -uid n
@@ -668,7 +668,7 @@ example: find . -name "shadow*"
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-（三）与文件权限和名称有关的选项
+**③ 与文件权限和名称有关的选项** 
 
 ```html
 -name filename
@@ -1038,9 +1038,7 @@ $ grep -n 'go\{2,5\}g' regular_express.txt
 
 ## printf
 
-用于格式化输出。
-
-它不属于管道命令，在给 printf 传数据时需要使用 $( ) 形式。
+用于格式化输出。它不属于管道命令，在给 printf 传数据时需要使用 $( ) 形式。
 
 ```html
 $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)

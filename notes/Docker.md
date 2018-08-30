@@ -4,6 +4,7 @@
 * [三、优势](#三优势)
 * [四、使用场景](#四使用场景)
 * [五、镜像与容器](#五镜像与容器)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -14,11 +15,6 @@
 由于不同的机器有不同的操作系统，以及不同的库和组件，在将一个应用部署到多台机器上需要进行大量的环境配置操作。
 
 Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其他机器中。
-
-参考资料：
-
-- [DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP](https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/)
-- [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
 # 二、与虚拟机的比较
 
@@ -40,29 +36,21 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 而 Docker 只是一个进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以开启成千上万个 Docker。
 
-参考资料：
-
-- [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php)
-
 # 三、优势
 
 除了启动速度快以及占用资源少之外，Docker 具有以下优势：
 
 ## 更容易迁移
 
-Docker 可以提供一致性的运行环境，可以在不同的机器上进行迁移，而不用担心环境变化导致无法运行。
+提供一致性的运行环境，可以在不同的机器上进行迁移，而不用担心环境变化导致无法运行。
 
 ## 更容易维护
 
-Docker 使用分层技术和镜像，使得应用可以更容易复用重复部分。复用程度越高，维护工作也越容易。
+使用分层技术和镜像，使得应用可以更容易复用重复部分。复用程度越高，维护工作也越容易。
 
 ## 更容易扩展
 
 可以使用基础镜像进一步扩展得到新的镜像，并且官方和开源社区提供了大量的镜像，通过扩展这些镜像可以非常容易得到我们想要的镜像。
-
-参考资料：
-
-- [为什么要使用 Docker？](https://yeasy.gitbooks.io/docker_practice/introduction/why.html)
 
 # 四、使用场景
 
@@ -80,11 +68,6 @@ Docker 具有轻量级以及隔离性的特点，在将代码集成到一个 Doc
 
 Docker 轻量级的特点使得它很适合用于部署、维护、组合微服务。
 
-参考资料：
-
-- [What is Docker](https://www.docker.com/what-docker)
-- [持续集成是什么？](http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
-
 # 五、镜像与容器
 
 镜像是一种静态的结构，可以看成面向对象里面的类，而容器是镜像的一个实例。
@@ -95,9 +78,14 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 <div align="center"> <img src="../pics//docker-filesystems-busyboxrw.png"/> </div><br>
 
-参考资料：
+# 参考资料
 
+- [DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP](https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/)
+- [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
+- [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php)
 - [How to Create Docker Container using Dockerfile](https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
 - [理解 Docker（2）：Docker 镜像](http://www.cnblogs.com/sammyliu/p/5877964.html)
-
+- [为什么要使用 Docker？](https://yeasy.gitbooks.io/docker_practice/introduction/why.html)
+- [What is Docker](https://www.docker.com/what-docker)
+- [持续集成是什么？](http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
 
