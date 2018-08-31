@@ -25,6 +25,7 @@
     * [实体首部字段](#实体首部字段)
 * [五、具体应用](#五具体应用)
     * [Cookie](#cookie)
+    * [6. Secure](#6-secure)
     * [缓存](#缓存)
     * [连接管理](#连接管理)
     * [内容协商](#内容协商)
@@ -310,7 +311,7 @@ HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使
 
 Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器之后向同一服务器再次发起请求时被携带上，用于告知服务端两个请求是否来自同一浏览器。由于之后每次请求都会需要携带 Cookie 数据，因此会带来额外的性能开销（尤其是在移动环境下）。
 
-Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API （本地存储和会话存储）或 IndexedDB。
+Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API（本地存储和会话存储）或 IndexedDB。
 
 ### 1. 用途
 
@@ -348,7 +349,17 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
 ```
 
-### 4. JavaScript 获取 Cookie
+### 4. 作用域
+
+Domain 标识指定了哪些主机可以接受 Cookie。如果不指定，默认为当前文档的主机（不包含子域名）。如果指定了 Domain，则一般包含子域名。例如，如果设置 Domain=mozilla.org，则 Cookie 也包含在子域名中（如 developer.mozilla.org）。
+
+Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径必须存在于请求 URL 中）。以字符 %x2F ("/") 作为路径分隔符，子路径也会被匹配。例如，设置 Path=/docs，则以下地址都会匹配：
+
+- /docs
+- /docs/Web/
+- /docs/Web/HTTP
+
+### 5. JavaScript
 
 通过 `Document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
@@ -358,9 +369,7 @@ document.cookie = "tasty_cookie=strawberry";
 console.log(document.cookie);
 ```
 
-### 5. Secure 和 HttpOnly
-
-标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
+### 6.   HttpOnly
 
 标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
@@ -368,15 +377,9 @@ console.log(document.cookie);
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 ```
 
-### 6. 作用域
+## 6. Secure
 
-Domain 标识指定了哪些主机可以接受 Cookie。如果不指定，默认为当前文档的主机（不包含子域名）。如果指定了 Domain，则一般包含子域名。例如，如果设置 Domain=mozilla.org，则 Cookie 也包含在子域名中（如 developer.mozilla.org）。
-
-Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径必须存在于请求 URL 中）。以字符 %x2F ("/") 作为路径分隔符，子路径也会被匹配。例如，设置 Path=/docs，则以下地址都会匹配：
-
-- /docs
-- /docs/Web/
-- /docs/Web/HTTP
+标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
 ### 7. Session
 
@@ -387,8 +390,7 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 使用 Session 维护用户登录状态的过程如下：
 
 - 用户进行登录时，用户提交包含用户名和密码的表单，放入 HTTP 请求报文中；
-- 服务器验证该用户名和密码；
-- 如果正确则把用户信息存储到 Redis 中，它在 Redis 中的 Key 称为 Session ID；
+- 服务器验证该用户名和密码，如果正确则把用户信息存储到 Redis 中，它在 Redis 中的 Key 称为 Session ID；
 - 服务器返回的响应报文的 Set-Cookie 首部字段包含了这个 Session ID，客户端收到响应报文之后将该 Cookie 值存入浏览器中；
 - 客户端之后对同一个服务器进行请求时会包含该 Cookie 值，服务器收到之后提取出 Session ID，从 Redis 中取出用户信息，继续之前的业务操作。
 
@@ -462,12 +464,12 @@ Cache-Control: max-age=31536000
 
 Expires 首部字段也可以用于告知缓存服务器该资源什么时候会过期。
 
-- 在 HTTP/1.1 中，会优先处理 max-age 指令；
-- 在 HTTP/1.0 中，max-age 指令会被忽略掉。
-
 ```html
 Expires: Wed, 04 Jul 2012 08:26:05 GMT
 ```
+
+- 在 HTTP/1.1 中，会优先处理 max-age 指令；
+- 在 HTTP/1.0 中，max-age 指令会被忽略掉。
 
 ### 4. 缓存验证
 
@@ -727,7 +729,7 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 ## HTTP/1.x 缺陷
 
- HTTP/1.x 实现简单是以牺牲性能为代价的：
+HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 - 客户端需要使用多个连接才能实现并发和缩短延迟；
 - 不会压缩请求和响应首部，从而导致不必要的网络流量；
@@ -741,9 +743,9 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
-- 一个数据流都有一个唯一标识符和可选的优先级信息，用于承载双向信息。
-- 消息（Message）是与逻辑请求或响应消息对应的完整的一系列帧。
-- 帧（Fram）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
+- 一个数据流（Stream）都有一个唯一标识符和可选的优先级信息，用于承载双向信息。
+- 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
+- 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
 <div align="center"> <img src="../pics//af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
