@@ -1,6 +1,5 @@
 package com.raorao.java;
 
-import io.netty.buffer.ByteBuf;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import java.util.Arrays;
  * @author Xiong Raorao
  * @since 2018-08-10-23:27
  */
-public class A {
+public class BigEnd {
 
   public static void main(String[] args) {
     ByteBuffer bb = ByteBuffer.wrap(new byte[12]);

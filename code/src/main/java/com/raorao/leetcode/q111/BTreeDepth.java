@@ -1,6 +1,7 @@
 package com.raorao.leetcode.q111;
 
 
+import com.raorao.leetcode.TreeNode;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -42,16 +43,5 @@ public class BTreeDepth {
       level++;
     }
     return level;
-  }
-
-  public class TreeNode {
-
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
   }
 }
