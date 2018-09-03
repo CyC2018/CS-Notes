@@ -1,3 +1,5 @@
+This file used to generate gitbook catalogue.
+
 # Summary
 
 * 算法
@@ -29,8 +31,6 @@
 * 分布式
   * [一致性](/notes/一致性.md)
   * [分布式问题分析](/notes/分布式问题分析.md)
-
-
 
 
 

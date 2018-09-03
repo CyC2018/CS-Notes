@@ -461,7 +461,7 @@ Employee 表：
 +----+-------+--------+-----------+
 ```
 
-查找所有员工，他们的薪资大于其经理薪资。
+查找薪资大于其经理薪资的员工信息。
 
 ## SQL Schema
 
@@ -924,27 +924,27 @@ VALUES
 ```sql
 SELECT
     s1.id - 1 AS id,
-    s1.student 
+    s1.student
 FROM
-    seat s1 
+    seat s1
 WHERE
     s1.id MOD 2 = 0 UNION
 SELECT
     s2.id + 1 AS id,
-    s2.student 
+    s2.student
 FROM
-    seat s2 
+    seat s2
 WHERE
-    s2.id MOD 2 = 1 
+    s2.id MOD 2 = 1
     AND s2.id != ( SELECT max( s3.id ) FROM seat s3 ) UNION
 SELECT
     s4.id AS id,
-    s4.student 
+    s4.student
 FROM
-    seat s4 
+    seat s4
 WHERE
-    s4.id MOD 2 = 1 
-    AND s4.id = ( SELECT max( s5.id ) FROM seat s5 ) 
+    s4.id MOD 2 = 1
+    AND s4.id = ( SELECT max( s5.id ) FROM seat s5 )
 ORDER BY
     id;
 ```

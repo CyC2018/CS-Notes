@@ -430,3 +430,54 @@ where SCORE.SNO = STUDENT.SNO and SSEX = '男' and CNO = (
 
 
 
+-- 46、使用游标方式来同时查询每位同学的名字，他所选课程及成绩。
+
+declare
+ cursor student_cursor is
+  select S.SNO,S.SNAME,C.CNAME,SC.DEGREE as DEGREE
+  from STUDENT S, COURSE C, SCORE SC
+  where S.SNO=SC.SNO
+  and SC.CNO=C.CNO;
+
+  student_row student_cursor%ROWTYPE;
+
+begin
+  open student_cursor;
+   loop
+    fetch student_cursor INTO student_row;
+    exit when student_cursor%NOTFOUND;
+     dbms_output.put_line( student_row.SNO || '' || 
+
+student_row.SNAME|| '' || student_row.CNAME || '' ||
+
+student_row.DEGREE);
+   end loop;
+  close student_cursor;
+END;
+/ 
+
+
+-- 47、 声明触发器指令，每当有同学转换班级时执行触发器显示当前和之前所在班级。
+
+CREATE OR REPLACE TRIGGER display_class_changes 
+AFTER DELETE OR INSERT OR UPDATE ON student 
+FOR EACH ROW 
+WHEN (NEW.sno > 0) 
+
+BEGIN 
+   
+   dbms_output.put_line('Old class: ' || :OLD.class); 
+   dbms_output.put_line('New class: ' || :NEW.class); 
+END; 
+/ 
+
+
+Update student
+set class=95031
+where sno=109;
+
+
+-- 48、 删除已设置的触发器指令
+
+DROP TRIGGER display_class_changes;
+
