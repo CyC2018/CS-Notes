@@ -30,7 +30,7 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="400"/> </div><br>
+<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="450"/> </div><br>
 
 ## 程序计数器
 
@@ -40,7 +40,7 @@
 
 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="450"/> </div><br>
+<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="500"/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 

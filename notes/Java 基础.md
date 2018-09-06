@@ -685,26 +685,26 @@ protected void finalize() throws Throwable {}
 
 **1. 等价关系** 
 
-（一）自反性
+Ⅰ 自反性
 
 ```java
 x.equals(x); // true
 ```
 
-（二）对称性
+Ⅱ 对称性
 
 ```java
 x.equals(y) == y.equals(x); // true
 ```
 
-（三）传递性
+Ⅲ 传递性
 
 ```java
 if (x.equals(y) && y.equals(z))
     x.equals(z); // true;
 ```
 
-（四）一致性
+Ⅳ 一致性
 
 多次调用 equals() 方法结果不变
 
@@ -712,7 +712,7 @@ if (x.equals(y) && y.equals(z))
 x.equals(y) == x.equals(y); // true
 ```
 
-（五）与 null 的比较
+Ⅴ 与 null 的比较
 
 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
 
@@ -741,6 +741,7 @@ System.out.println(x == y);      // false
 
 ```java
 public class EqualExample {
+
     private int x;
     private int y;
     private int z;
