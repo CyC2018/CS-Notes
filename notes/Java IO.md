@@ -182,8 +182,10 @@ public static void readFileContent(String filePath) throws IOException {
 
 ```java
 public static void main(String[] args) throws IOException, ClassNotFoundException {
+
     A a1 = new A(123, "abc");
     String objectFile = "file/a1";
+
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
     objectOutputStream.writeObject(a1);
     objectOutputStream.close();
@@ -195,6 +197,7 @@ public static void main(String[] args) throws IOException, ClassNotFoundExceptio
 }
 
 private static class A implements Serializable {
+
     private int x;
     private String y;
 

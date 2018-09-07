@@ -25,7 +25,6 @@
     * [实体首部字段](#实体首部字段)
 * [五、具体应用](#五具体应用)
     * [Cookie](#cookie)
-    * [6. Secure](#6-secure)
     * [缓存](#缓存)
     * [连接管理](#连接管理)
     * [内容协商](#内容协商)
@@ -40,7 +39,6 @@
     * [认证](#认证)
     * [完整性保护](#完整性保护)
     * [HTTPs 的缺点](#https-的缺点)
-    * [配置 HTTPs](#配置-https)
 * [七、HTTP/2.0](#七http20)
     * [HTTP/1.x 缺陷](#http1x-缺陷)
     * [二进制分帧层](#二进制分帧层)
@@ -369,7 +367,7 @@ document.cookie = "tasty_cookie=strawberry";
 console.log(document.cookie);
 ```
 
-### 6.   HttpOnly
+### 6. HttpOnly
 
 标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
@@ -377,11 +375,11 @@ console.log(document.cookie);
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 ```
 
-## 6. Secure
+### 7. Secure
 
 标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
-### 7. Session
+### 8. Session
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
 
@@ -396,11 +394,11 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 应该注意 Session ID 的安全性问题，不能让它被恶意攻击者轻易获取，那么就不能产生一个容易被猜到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
 
-### 8. 浏览器禁用 Cookie
+### 9. 浏览器禁用 Cookie
 
 此时无法使用 Cookie 来保存用户信息，只能使用 Session。除此之外，不能再将 Session ID 存放到 Cookie 中，而是使用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递。
 
-### 9. Cookie 与 Session 选择
+### 10. Cookie 与 Session 选择
 
 - Cookie 只能存储 ASCII 码字符串，而 Session 则可以存取任何类型的数据，因此在考虑数据复杂性时首选 Session；
 - Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
@@ -720,11 +718,6 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要支付证书授权的高额费用。
-
-## 配置 HTTPs
-
-[Nginx 配置 HTTPS 服务器](https://aotu.io/notes/2016/08/16/nginx-https/index.html)
-
 # 七、HTTP/2.0
 
 ## HTTP/1.x 缺陷
@@ -849,7 +842,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 # 九、HTTP/1.0 与 HTTP/1.1 的区别
 
-> 详细内容请见上文
+详细内容请见上文
 
 - HTTP/1.1 默认是长连接
 
