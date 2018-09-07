@@ -39,7 +39,6 @@
     * [认证](#认证)
     * [完整性保护](#完整性保护)
     * [HTTPs 的缺点](#https-的缺点)
-    * [配置 HTTPs](#配置-https)
 * [七、HTTP/2.0](#七http20)
     * [HTTP/1.x 缺陷](#http1x-缺陷)
     * [二进制分帧层](#二进制分帧层)
@@ -719,11 +718,6 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要支付证书授权的高额费用。
-
-## 配置 HTTPs
-
-[Nginx 配置 HTTPS 服务器](https://aotu.io/notes/2016/08/16/nginx-https/index.html)
-
 # 七、HTTP/2.0
 
 ## HTTP/1.x 缺陷
@@ -848,7 +842,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 # 九、HTTP/1.0 与 HTTP/1.1 的区别
 
-> 详细内容请见上文
+详细内容请见上文
 
 - HTTP/1.1 默认是长连接
 
