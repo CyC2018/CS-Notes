@@ -13,7 +13,7 @@
     * [HashMap](#hashmap)
     * [ConcurrentHashMap](#concurrenthashmap)
     * [LinkedHashMap](#linkedhashmap)
-    * [WeekHashMap](#weekhashmap)
+    * [WeakHashMap](#weakhashmap)
 * [附录](#附录)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -974,7 +974,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 
 ### afterNodeInsertion()
 
-在 put 等操作之后执行，当 removeEldestEntry() 方法返回 ture 时会移除最晚的节点，也就是链表首部节点 first。
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最晚的节点，也就是链表首部节点 first。
 
 evict 只有在构建 Map 的时候才为 false，在这里为 true。
 
@@ -1034,7 +1034,7 @@ public static void main(String[] args) {
 [3, 1, 4]
 ```
 
-## WeekHashMap
+## WeakHashMap
 
 ### 存储结构
 
