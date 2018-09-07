@@ -9,8 +9,6 @@
     <a href="other/Group.md"> <img src="https://img.shields.io/badge/>-group-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
 </div>
 
-<!-- [![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-4ab8a1.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details)  -->
-
 ### :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
