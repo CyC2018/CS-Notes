@@ -44,9 +44,10 @@
     * [内存模型三大特性](#内存模型三大特性)
     * [先行发生原则](#先行发生原则)
 * [十一、线程安全](#十一线程安全)
-    * [线程安全定义](#线程安全定义)
-    * [线程安全分类](#线程安全分类)
-    * [线程安全的实现方法](#线程安全的实现方法)
+    * [不可变](#不可变)
+    * [互斥同步](#互斥同步)
+    * [非阻塞同步](#非阻塞同步)
+    * [无同步方案](#无同步方案)
 * [十二、锁优化](#十二锁优化)
     * [自旋锁](#自旋锁)
     * [锁消除](#锁消除)
@@ -739,6 +740,7 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 ```java
 public class CountdownLatchExample {
+
     public static void main(String[] args) throws InterruptedException {
         final int totalThread = 10;
         CountDownLatch countDownLatch = new CountDownLatch(totalThread);
@@ -787,6 +789,7 @@ public CyclicBarrier(int parties) {
 
 ```java
 public class CyclicBarrierExample {
+
     public static void main(String[] args) {
         final int totalThread = 10;
         CyclicBarrier cyclicBarrier = new CyclicBarrier(totalThread);
@@ -821,6 +824,7 @@ Semaphore 类似于操作系统中的信号量，可以控制对互斥资源的�
 
 ```java
 public class SemaphoreExample {
+
     public static void main(String[] args) {
         final int clientCount = 3;
         final int totalRequestCount = 10;
@@ -865,6 +869,7 @@ FutureTask 可用于异步获取执行结果或取消执行任务的场景。当
 
 ```java
 public class FutureTaskExample {
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
             @Override
@@ -970,6 +975,7 @@ produce..produce..consume..consume..produce..consume..produce..consume..produce.
 
 ```java
 public class ForkJoinExample extends RecursiveTask<Integer> {
+
     private final int threshold = 5;
     private int first;
     private int last;
@@ -1274,19 +1280,13 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 # 十一、线程安全
 
-## 线程安全定义
+多个线程不管以何种方式访问某个类，并在在主调代码中不需要进行同步，都能表现正确的行为。
 
-一个类在可以被多个线程安全调用时就是线程安全的。
+线程安全有以下几种实现方式：
 
-## 线程安全分类
+## 不可变
 
-线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类：不可变、绝对线程安全、相对线程安全、线程兼容和线程对立。
-
-### 1. 不可变
-
-不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。
-
-多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
+不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
 
 不可变的类型：
 
@@ -1321,99 +1321,23 @@ public V put(K key, V value) {
 }
 ```
 
-### 2. 绝对线程安全
-
-不管运行时环境如何，调用者都不需要任何额外的同步措施。
-
-### 3. 相对线程安全
-
-相对线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做额外的保障措施。但是对于一些特定顺序的连续调用，就可能需要在调用端使用额外的同步手段来保证调用的正确性。
-
-在 Java 语言中，大部分的线程安全类都属于这种类型，例如 Vector、HashTable、Collections 的 synchronizedCollection() 方法包装的集合等。
-
-对于下面的代码，如果删除元素的线程删除了 Vector 的一个元素，而获取元素的线程试图访问一个已经被删除的元素，那么就会抛出 ArrayIndexOutOfBoundsException。
-
-```Java
-public class VectorUnsafeExample {
-    private static Vector<Integer> vector = new Vector<>();
-
-    public static void main(String[] args) {
-        while (true) {
-            for (int i = 0; i < 100; i++) {
-                vector.add(i);
-            }
-            ExecutorService executorService = Executors.newCachedThreadPool();
-            executorService.execute(() -> {
-                for (int i = 0; i < vector.size(); i++) {
-                    vector.remove(i);
-                }
-            });
-            executorService.execute(() -> {
-                for (int i = 0; i < vector.size(); i++) {
-                    vector.get(i);
-                }
-            });
-            executorService.shutdown();
-        }
-    }
-}
-```
-
-```html
-Exception in thread "Thread-159738" java.lang.ArrayIndexOutOfBoundsException: Array index out of range: 3
-    at java.util.Vector.remove(Vector.java:831)
-    at VectorUnsafeExample.lambda$main$0(VectorUnsafeExample.java:14)
-    at VectorUnsafeExample$$Lambda$1/713338599.run(Unknown Source)
-    at java.lang.Thread.run(Thread.java:745)
-```
-
-
-如果要保证上面的代码能正确执行下去，就需要对删除元素和获取元素的代码进行同步。
-
-```java
-executorService.execute(() -> {
-    synchronized (vector) {
-        for (int i = 0; i < vector.size(); i++) {
-            vector.remove(i);
-        }
-    }
-});
-executorService.execute(() -> {
-    synchronized (vector) {
-        for (int i = 0; i < vector.size(); i++) {
-            vector.get(i);
-        }
-    }
-});
-```
-
-### 4. 线程兼容
-
-线程兼容是指对象本身并不是线程安全的，但是可以通过在调用端正确地使用同步手段来保证对象在并发环境中可以安全地使用，我们平常说一个类不是线程安全的，绝大多数时候指的是这一种情况。Java API 中大部分的类都是属于线程兼容的，如与前面的 Vector 和 HashTable 相对应的集合类 ArrayList 和 HashMap 等。
-
-### 5. 线程对立
-
-线程对立是指无论调用端是否采取了同步措施，都无法在多线程环境中并发使用的代码。由于 Java 语言天生就具备多线程特性，线程对立这种排斥多线程的代码是很少出现的，而且通常都是有害的，应当尽量避免。
-
-## 线程安全的实现方法
-
-### 1. 互斥同步
+## 互斥同步
 
 synchronized 和 ReentrantLock。
 
-### 2. 非阻塞同步
+## 非阻塞同步
 
 互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
 
 互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
 
-**（一）CAS** 
+### 1. CAS
 
 随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
 
-**（二）AtomicInteger** 
+### 2. AtomicInteger
 
 J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。
 
@@ -1450,17 +1374,17 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-**（三）ABA** 
+### 3. ABA
 
 如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
 
 J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
-### 3. 无同步方案
+## 无同步方案
 
 要保证线程安全，并不是一定就要进行同步。如果一个方法本来就不涉及共享数据，那它自然就无须任何同步措施去保证正确性。
 
-**（一）栈封闭** 
+### 1. 栈封闭
 
 多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
 
@@ -1491,7 +1415,7 @@ public static void main(String[] args) {
 100
 ```
 
-**（二）线程本地存储（Thread Local Storage）** 
+### 2. 线程本地存储（Thread Local Storage）
 
 如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
 
@@ -1597,7 +1521,7 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
-**（三）可重入代码（Reentrant Code）** 
+### 3. 可重入代码（Reentrant Code）
 
 这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
 
