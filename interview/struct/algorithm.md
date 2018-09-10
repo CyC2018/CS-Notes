@@ -26,3 +26,5 @@
 # LRU实现
 
 最小访问的算法实现
+
+- [LRU缓存实现(Java)](https://www.cnblogs.com/lzrabbit/p/3734850.html)
