@@ -216,7 +216,7 @@ System.out.println(s3 == s4);           // true
 ```java
 String s5 = "bbb";
 String s6 = "bbb";
-System.out.println(s4 == s5);  // true
+System.out.println(s5 == s6);  // true
 ```
 
 在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
