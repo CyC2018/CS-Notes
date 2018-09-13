@@ -226,9 +226,9 @@ System.out.println(s4 == s5);  // true
 
 ## new String("abc")
 
-使用这种方式一共会创建两个字符串对象（前提是 String Poll 中还没有 "abc" 字符串对象）。
+使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
 
-- "abc" 属于字符串字面量，因此编译时期会在 String Poll 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
+- "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
 - 而使用 new 的方式会在堆中创建一个字符串对象。
 
 创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。
@@ -267,7 +267,7 @@ Constant pool:
 // ...
 ```
 
-在 Constant Poll 中，#19 存储这字符串字面量 "abc"，#3 是 String Poll 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Poll 中的字符串对象作为 String 构造函数的参数。
+在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
 以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
 
