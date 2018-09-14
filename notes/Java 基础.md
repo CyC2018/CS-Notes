@@ -196,9 +196,9 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 ## String Pool
 
-字符串常量池（String Poll）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程中将字符串添加到 String Poll 中。
+字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程中将字符串添加到 String Pool 中。
 
-当一个字符串调用 intern() 方法时，如果 String Poll 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Poll 中字符串的引用；否则，就会在 String Poll 中添加一个新的字符串，并返回这个新字符串的引用。
+当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。
 
 下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 方法取得一个字符串引用。intern() 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。
 
@@ -216,19 +216,19 @@ System.out.println(s3 == s4);           // true
 ```java
 String s5 = "bbb";
 String s6 = "bbb";
-System.out.println(s4 == s5);  // true
+System.out.println(s5 == s6);  // true
 ```
 
-在 Java 7 之前，String Poll 被放在运行时常量池中，它属于永久代。而在 Java 7，String Poll 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 - [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning)
 - [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
 ## new String("abc")
 
-使用这种方式一共会创建两个字符串对象（前提是 String Poll 中还没有 "abc" 字符串对象）。
+使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
 
-- "abc" 属于字符串字面量，因此编译时期会在 String Poll 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
+- "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
 - 而使用 new 的方式会在堆中创建一个字符串对象。
 
 创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。
@@ -267,7 +267,7 @@ Constant pool:
 // ...
 ```
 
-在 Constant Poll 中，#19 存储这字符串字面量 "abc"，#3 是 String Poll 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Poll 中的字符串对象作为 String 构造函数的参数。
+在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
 以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
 
@@ -368,10 +368,11 @@ short s1 = 1;
 // s1 = s1 + 1;
 ```
 
-但是使用 += 运算符可以执行隐式类型转换。
+但是使用 += 或者 ++ 运算符可以执行隐式类型转换。
 
 ```java
 s1 += 1;
+// s1++;
 ```
 
 上面的语句相当于将 s1 + 1 的计算结果进行了向下转型：
@@ -1041,6 +1042,10 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 **3. 类** 
 
 声明类不允许被继承。
+
+**4. 构造器** 
+
+声明类不允许被 `new` 实例化，多用于 `Singleton` 模式中。如果该类有子类需要继承，若该类无其他构造器，则不允许被继承。
 
 ## static
 
