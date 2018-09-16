@@ -1559,7 +1559,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
-例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
+例如，下图是后序遍历序列 1,3,2 所对应的二叉搜索树。
 
 <div align="center"> <img src="../pics//836a4eaf-4798-4e48-b52a-a3dab9435ace.png" width="150"/> </div><br>
 
