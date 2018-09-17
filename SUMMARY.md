@@ -27,7 +27,7 @@ This file used to generate gitbook catalogue.
   * [Java 虚拟机](/notes/Java 虚拟机.md)
   * [Java 并发](/notes/Java 并发.md)
   * [Java 容器](/notes/Java 容器.md)
-  * [Java I/O](/notes/Java I/O.md)
+  * [Java I/O](/notes/Java IO.md)
 * 分布式
   * [一致性](/notes/一致性.md)
   * [分布式问题分析](/notes/分布式问题分析.md)
