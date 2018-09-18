@@ -57,7 +57,7 @@ public class Main {
         yyMax = entry.getValue();
       }
     }
-    if (map.entrySet().size() == m) {// 一人一票
+    if (map.entrySet().size() == m) {
       return false;
     }
     return xxMax == 1;

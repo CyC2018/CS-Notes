@@ -484,6 +484,10 @@ jstack | Stack Trace for Java, 显示虚拟机的线程快照
 - JConsole
 - VisualVM
 
+参考文档：
+- [java命令--jmap命令使用](https://www.cnblogs.com/kongzhongqijing/articles/3621163.html)
+- [java命令--jstat命令使用](https://www.cnblogs.com/lizhonghua34/p/7307139.html)
+
 # 类文件结构
 
 [class 文件结构](https://www.cnblogs.com/wade-luffy/p/5929325.html)
