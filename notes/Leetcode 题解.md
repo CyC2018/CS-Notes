@@ -2415,27 +2415,19 @@ public int climbStairs(int n) {
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
 
 由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 或者 i - 3 的住户，所以
-
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
+dp[i] = max(dp[i-1], dp[i-2] + nums[i]) <br>
 
 ```java
 public int rob(int[] nums) {
-    int n = nums.length;
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return nums[0];
-    }
-    int pre3 = 0, pre2 = 0, pre1 = 0;
-    for (int i = 0; i < n; i++) {
-        int cur = Math.max(pre2, pre3) + nums[i];
-        pre3 = pre2;
+    int pre2 = 0, pre1 = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int cur = Math.max(pre2 + nums[i], pre1);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre1, pre2);
+    return pre1;
 }
+
 ```
 
 **强盗在环形街区抢劫** 
@@ -2443,7 +2435,7 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-public int rob(int[] nums) {
+public  int rob(int[] nums) {
     if (nums == null || nums.length == 0) {
         return 0;
     }
@@ -2454,15 +2446,14 @@ public int rob(int[] nums) {
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int first, int last) {
-    int pre3 = 0, pre2 = 0, pre1 = 0;
+private   int rob(int[] nums, int first, int last) {
+    int pre2 = 0, pre1 = 0;
     for (int i = first; i <= last; i++) {
-        int cur = Math.max(pre3, pre2) + nums[i];
-        pre3 = pre2;
+        int cur = Math.max(pre1, pre2 + nums[i]);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre2, pre1);
+    return pre1;
 }
 ```
 
