@@ -27,10 +27,23 @@ This file used to generate gitbook catalogue.
   * [Java 虚拟机](/notes/Java 虚拟机.md)
   * [Java 并发](/notes/Java 并发.md)
   * [Java 容器](/notes/Java 容器.md)
-  * [Java I/O](/notes/Java I/O.md)
-* 分布式
-  * [一致性](/notes/一致性.md)
-  * [分布式问题分析](/notes/分布式问题分析.md)
-
-
+  * [Java I/O](/notes/Java IO.md)
+* 系统设计
+  * [系统设计基础](/notes/系统设计基础.md)
+  * [分布式](/notes/分布式.md)
+  * [集群](/notes/集群.md)
+  * [攻击技术](/notes/攻击技术.md)
+  * [缓存](/notes/缓存.md)
+  * [消息队列](/notes/消息队列.md)
+* 工具
+  * [Git](/notes/Git.md)
+  * [Docker](/notes/Docker.md)
+  * [正则表达式](/notes/正则表达式.md)
+  * [构建工具](/notes/构建工具.md)
+* 编码实践 
+  * [重构](/notes/重构.md)
+  * [代码可读性](/notes/代码可读性.md)
+  * [代码风格规范](/notes/代码风格规范.md)
+* 参考书目
+  * [BOOKLIST](/BOOKLIST.md)
 
