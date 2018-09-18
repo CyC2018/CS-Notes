@@ -2505,9 +2505,9 @@ public int minPathSum(int[][] grid) {
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             if (i == 0) {
-                dp[j] = dp[j - 1];
+                if (j>0) dp[j] = dp[j - 1];
             } else {
-                dp[j] = Math.min(dp[j - 1], dp[j]);
+                if (j>0) dp[j] = Math.min(dp[j - 1], dp[j]);
             }
             dp[j] += grid[i][j];
         }
