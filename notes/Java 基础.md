@@ -216,7 +216,7 @@ System.out.println(s3 == s4);           // true
 ```java
 String s5 = "bbb";
 String s6 = "bbb";
-System.out.println(s4 == s5);  // true
+System.out.println(s5 == s6);  // true
 ```
 
 在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
@@ -226,9 +226,9 @@ System.out.println(s4 == s5);  // true
 
 ## new String("abc")
 
-使用这种方式一共会创建两个字符串对象（前提是 String Poll 中还没有 "abc" 字符串对象）。
+使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
 
-- "abc" 属于字符串字面量，因此编译时期会在 String Poll 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
+- "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
 - 而使用 new 的方式会在堆中创建一个字符串对象。
 
 创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。
@@ -267,7 +267,7 @@ Constant pool:
 // ...
 ```
 
-在 Constant Poll 中，#19 存储这字符串字面量 "abc"，#3 是 String Poll 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Poll 中的字符串对象作为 String 构造函数的参数。
+在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
 以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
 
@@ -368,10 +368,11 @@ short s1 = 1;
 // s1 = s1 + 1;
 ```
 
-但是使用 += 运算符可以执行隐式类型转换。
+但是使用 += 或者 ++ 运算符可以执行隐式类型转换。
 
 ```java
 s1 += 1;
+// s1++;
 ```
 
 上面的语句相当于将 s1 + 1 的计算结果进行了向下转型：

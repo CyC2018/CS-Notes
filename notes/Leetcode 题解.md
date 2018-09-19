@@ -2420,21 +2420,13 @@ public int climbStairs(int n) {
 
 ```java
 public int rob(int[] nums) {
-    int n = nums.length;
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return nums[0];
-    }
-    int pre3 = 0, pre2 = 0, pre1 = 0;
-    for (int i = 0; i < n; i++) {
-        int cur = Math.max(pre2, pre3) + nums[i];
-        pre3 = pre2;
+    int pre2 = 0, pre1 = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int cur = Math.max(pre2 + nums[i], pre1);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre1, pre2);
+    return pre1;
 }
 ```
 
@@ -2443,7 +2435,7 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-public int rob(int[] nums) {
+public  int rob(int[] nums) {
     if (nums == null || nums.length == 0) {
         return 0;
     }
@@ -2454,15 +2446,14 @@ public int rob(int[] nums) {
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int first, int last) {
-    int pre3 = 0, pre2 = 0, pre1 = 0;
+private   int rob(int[] nums, int first, int last) {
+    int pre2 = 0, pre1 = 0;
     for (int i = first; i <= last; i++) {
-        int cur = Math.max(pre3, pre2) + nums[i];
-        pre3 = pre2;
+        int cur = Math.max(pre1, pre2 + nums[i]);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre2, pre1);
+    return pre1;
 }
 ```
 
@@ -7063,4 +7054,3 @@ public int[] countBits(int num) {
 - 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
 - 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
 - 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
-

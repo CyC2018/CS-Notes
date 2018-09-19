@@ -1154,11 +1154,11 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ## 解题思路
 
-使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。假设相遇点在下图的 z1 位置，此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
+使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。假设相遇点在下图的 y6 位置，此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="../pics//2858f8ad-aedb-45a5-a706-e98c96d690fa.jpg" width="600"/> </div><br>
+<div align="center"> <img src="../pics//70fa1f83-dae7-456d-b94b-ce28963b2ba1.png"/> </div><br>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
@@ -1559,7 +1559,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
-例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
+例如，下图是后序遍历序列 1,3,2 所对应的二叉搜索树。
 
 <div align="center"> <img src="../pics//836a4eaf-4798-4e48-b52a-a3dab9435ace.png" width="150"/> </div><br>
 
