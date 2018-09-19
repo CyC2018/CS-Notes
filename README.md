@@ -17,6 +17,10 @@
 
 主要参考 Robert Sedgewick 的算法书进行实现，源代码以及测试代码可在另一个仓库获取。
 
+> [面试算法整理](https://github.com/haiker2011/Interview-Notebook/blob/master/notes/面试总结.md)
+
+主要是对公司面试的算法题目进行总结整理，方便自己查阅。
+
 ## 操作系统 :computer:
 
 > [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
