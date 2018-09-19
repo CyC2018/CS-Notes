@@ -2415,8 +2415,7 @@ public int climbStairs(int n) {
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
 
 由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 或者 i - 3 的住户，所以
-
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
+dp[i] = max(dp[i-1], dp[i-2] + nums[i]) <br>
 
 ```java
 public int rob(int[] nums) {
@@ -2428,6 +2427,7 @@ public int rob(int[] nums) {
     }
     return pre1;
 }
+
 ```
 
 **强盗在环形街区抢劫** 
@@ -2505,9 +2505,9 @@ public int minPathSum(int[][] grid) {
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             if (i == 0) {
-                dp[j] = dp[j - 1];
+                if (j>0) dp[j] = dp[j - 1];
             } else {
-                dp[j] = Math.min(dp[j - 1], dp[j]);
+                if (j>0) dp[j] = Math.min(dp[j - 1], dp[j]);
             }
             dp[j] += grid[i][j];
         }
