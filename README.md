@@ -208,25 +208,28 @@ Power by [logomakr](https://logomakr.com/).
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与笔者联系。
 
 <a href="https://github.com/linw7">
-    <img src="other/21679154.png" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/g10guang">
-    <img src="other/18458140.jpg" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/ResolveWang">
-    <img src="other/8018776.jpg" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/crossoverJie">
-    <img src="other/15684156.jpg" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/jy03078584">
-    <img src="other/7719370.png" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/kwongtailau">
-    <img src="other/22954582.jpg" width="50px">
+    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/xiangflight">
-    <img src="other/10072416.jpg" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
+</a>
+<a href="https://github.com/mafulong">
+    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
 </a>
 
 #### License
