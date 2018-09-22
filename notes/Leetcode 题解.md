@@ -3086,7 +3086,6 @@ public int findTargetSumWays(int[] nums, int S) {
     int W = (sum + S) / 2;
     int[] dp = new int[W + 1];
     dp[0] = 1;
-    Arrays.sort(nums);
     for (int num : nums) {
         for (int i = W; i >= num; i--) {
             dp[i] = dp[i] + dp[i - num];
