@@ -284,10 +284,6 @@ public static void main(String[] args) throws IOException {
 
 # 七、NIO
 
-- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
-- [Java NIO 浅析](https://tech.meituan.com/nio.html)
-- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
-
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
 ## 流与块
@@ -343,7 +339,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 移动设置为 5，limit 保持不变。
+② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 为 5，limit 保持不变。
 
 <div align="center"> <img src="../pics//80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
 
@@ -612,6 +608,8 @@ NIO 与普通 I/O 的区别主要有以下两点：
 
 - Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+- [Java NIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
 - [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.htm)
 - [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
