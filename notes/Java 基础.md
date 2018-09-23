@@ -288,6 +288,7 @@ Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
 ```java
 public class Dog {
+
     String name;
 
     Dog(String name) {
@@ -347,7 +348,9 @@ class PassByValueExample {
 
 ## float 与 double
 
-1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。Java 不能隐式执行向下转型，因为这会使得精度降低。
+Java 不能隐式执行向下转型，因为这会使得精度降低。
+
+1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。
 
 ```java
 // float f = 1.1;
@@ -588,10 +591,11 @@ System.out.println(InterfaceExample.x);
 ## super
 
 - 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
-- 访问父类的成员：如果子类重写了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
+- 访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
 public class SuperExample {
+
     protected int x;
     protected int y;
 
@@ -608,6 +612,7 @@ public class SuperExample {
 
 ```java
 public class SuperExtendExample extends SuperExample {
+
     private int z;
 
     public SuperExtendExample(int x, int y, int z) {
@@ -659,7 +664,6 @@ SuperExtendExample.func()
 ## 概览
 
 ```java
-public final native Class<?> getClass()
 
 public native int hashCode()
 
@@ -668,6 +672,10 @@ public boolean equals(Object obj)
 protected native Object clone() throws CloneNotSupportedException
 
 public String toString()
+
+public final native Class<?> getClass()
+
+protected void finalize() throws Throwable {}
 
 public final native void notify()
 
@@ -678,8 +686,6 @@ public final native void wait(long timeout) throws InterruptedException
 public final void wait(long timeout, int nanos) throws InterruptedException
 
 public final void wait() throws InterruptedException
-
-protected void finalize() throws Throwable {}
 ```
 
 ## equals()
@@ -806,6 +812,7 @@ public int hashCode() {
 
 ```java
 public class ToStringExample {
+
     private int number;
 
     public ToStringExample(int number) {
@@ -849,7 +856,7 @@ public class CloneExample {
     private int b;
 
     @Override
-    protected CloneExample clone() throws CloneNotSupportedException {
+    public CloneExample clone() throws CloneNotSupportedException {
         return (CloneExample)super.clone();
     }
 }
@@ -878,7 +885,7 @@ public class CloneExample implements Cloneable {
     private int b;
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 }
@@ -1052,6 +1059,7 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 ```java
 public class A {
+
     private int x;         // 实例变量
     private static int y;  // 静态变量
 
@@ -1080,6 +1088,7 @@ public abstract class A {
 
 ```java
 public class A {
+
     private static int x;
     private int y;
 
@@ -1118,6 +1127,7 @@ public class A {
 
 ```java
 public class OuterClass {
+
     class InnerClass {
     }
 
