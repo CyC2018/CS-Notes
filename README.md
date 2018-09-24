@@ -23,7 +23,7 @@
 
    排序、并查集、栈和队列、红黑树、散列表。
    
- - [面试算法整理](https://github.com/haiker2011/Interview-Notebook/blob/master/notes/面试总结.md)
+ - [面试算法整理](https://github.com/haiker2011/Interview-Notebook/blob/haiker2011-patch-ownInterview/notes/面试总结.md)
 
    主要是对公司面试的算法题目进行总结整理，方便自己查阅。
 
