@@ -209,7 +209,7 @@ OK
 
 ## 字典
 
-dictht 是一个散列表结构，使用拉链法保存哈希冲突的 dictEntry。
+dictht 是一个散列表结构，使用拉链法保存哈希冲突。
 
 ```c
 /* This is our hash table structure. Every dictionary has two of this as we
@@ -253,7 +253,7 @@ rehash 操作不是一次性完成，而是采用渐进方式，这是为了避�
 
 在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
 
-采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的操作也需要到对应的 dictht 去执行。
+采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的查找操作也需要到对应的 dictht 去执行。
 
 ```c
 /* Performs N steps of incremental rehashing. Returns 1 if there are still
