@@ -103,7 +103,7 @@ Output: True
 Explanation: 1 * 1 + 2 * 2 = 5
 ```
 
-题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
+题目描述：判断一个数是否为两个数的平方和。
 
 ```java
 public boolean judgeSquareSum(int c) {
@@ -130,7 +130,7 @@ public boolean judgeSquareSum(int c) {
 Given s = "leetcode", return "leotcede".
 ```
 
-使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+使用双指针指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
@@ -307,6 +307,8 @@ private boolean isValid(String s, String target) {
 
 [215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
+题目描述：找到第 k 大的元素。
+
 **排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
 
 ```java
@@ -323,7 +325,7 @@ public int findKthLargest(int[] nums, int k) {
     PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
     for (int val : nums) {
         pq.add(val);
-        if (pq.size() > k) // 维护堆的大小为 K
+        if (pq.size() > k)  // 维护堆的大小为 K
             pq.poll();
     }
     return pq.peek();
@@ -555,7 +557,7 @@ Explanation: You don't need to remove any of the intervals since they're already
 
 题目描述：计算让一组区间不重叠所需要移除的区间个数。
 
-计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
+先计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
 
 在每次选择中，区间的结尾最为重要，选择的区间结尾越小，留给后面的区间的空间越大，那么后面能够选择的区间个数也就越大。
 
@@ -639,7 +641,7 @@ Output:
 
 题目描述：一个学生用两个分量 (h, k) 描述，h 表示身高，k 表示排在前面的有 k 个学生的身高比他高或者和他一样高。
 
-为了在每次插入操作时不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入第 k 个位置可能会变成第 k+1 个位置。
+为了使插入操作不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入的第 k 个位置可能会变成第 k+1 个位置。
 
 身高降序、k 值升序，然后按排好序的顺序插入队列的第 k 个位置中。
 
@@ -825,7 +827,7 @@ public int binarySearch(int[] nums, int key) {
 
 **时间复杂度** 
 
-二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度都为 O(logN)。
+二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
 **m 计算** 
 
@@ -961,7 +963,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 [540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
-Input: [1,1,2,3,3,4,4,8,8]
+Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
 Output: 2
 ```
 
@@ -1132,11 +1134,11 @@ public List<Integer> diffWaysToCompute(String input) {
 
 <div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
 
-广度优先搜索的搜索过程有点像一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
+广度优先搜索一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
 
 第一层：
 
-- 0 -> {6,2,1,5};
+- 0 -> {6,2,1,5}
 
 第二层：
 
@@ -1150,7 +1152,7 @@ public List<Integer> diffWaysToCompute(String input) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
+每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
@@ -1180,19 +1182,17 @@ public int minPathLength(int[][] grids, int tr, int tc) {
         pathLength++;
         while (size-- > 0) {
             Pair<Integer, Integer> cur = queue.poll();
+            int cr = cur.getKey(), cc = cur.getValue();
+            grids[cr][cc] = 0; // 标记
             for (int[] d : direction) {
-                int nr = cur.getKey() + d[0], nc = cur.getValue() + d[1];
-                Pair<Integer, Integer> next = new Pair<>(nr, nc);
-                if (next.getKey() < 0 || next.getValue() >= m
-                        || next.getKey() < 0 || next.getValue() >= n) {
-
+                int nr = cr + d[0], nc = cc + d[1];
+                if (nr < 0 || nr >= m || nc < 0 || nc >= n || grids[nr][nc] == 0) {
                     continue;
                 }
-                grids[next.getKey()][next.getValue()] = 0; // 标记
-                if (next.getKey() == tr && next.getValue() == tc) {
+                if (nr == tr && nc == tc) {
                     return pathLength;
                 }
-                queue.add(next);
+                queue.add(new Pair<>(nr, nc));
             }
         }
     }
