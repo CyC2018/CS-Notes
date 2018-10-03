@@ -1239,7 +1239,7 @@ public int numSquares(int n) {
                     continue;
                 }
                 marked[next] = true;
-                queue.add(cur - s);
+                queue.add(next);
             }
         }
     }
