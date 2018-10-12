@@ -2690,8 +2690,8 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
     for (int i = 0; i < size; i++)
         heap.add(num[i]);
     ret.add(heap.peek());
-    for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
-        heap.remove(num[i - 1]);
+    for (int i = 0, j = i + size; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
+        heap.remove(num[i]);
         heap.add(num[j]);
         ret.add(heap.peek());
     }
