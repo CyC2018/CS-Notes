@@ -378,7 +378,7 @@ Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径
 
 ### 5. JavaScript
 
-通过 `Document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
+通过 `document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
 ```html
 document.cookie = "yummy_cookie=choco";
@@ -388,7 +388,7 @@ console.log(document.cookie);
 
 ### 6. HttpOnly
 
-标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
+标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
 ```html
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
@@ -520,7 +520,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 **1.1 服务端驱动型** 
 
-客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Languag，服务器根据这些字段返回特定的资源。
+客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language，服务器根据这些字段返回特定的资源。
 
 它存在以下问题：
 
