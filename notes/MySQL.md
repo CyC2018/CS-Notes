@@ -220,7 +220,7 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。
 
 ```sql
-DELEFT FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
+DELETE FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 ```
 
 ```sql
