@@ -6,7 +6,7 @@
     * [装饰者模式](#装饰者模式)
 * [四、字符操作](#四字符操作)
     * [编码与解码](#编码与解码)
-    * [String](#string)
+    * [String 的编码方式](#string-的编码方式)
     * [Reader 与 Writer](#reader-与-writer)
     * [实现逐行输出文本文件的内容](#实现逐行输出文本文件的内容)
 * [五、对象操作](#五对象操作)
@@ -69,16 +69,17 @@ public static void listAllFiles(File dir) {
 
 ```java
 public static void copyFile(String src, String dist) throws IOException {
-
     FileInputStream in = new FileInputStream(src);
     FileOutputStream out = new FileOutputStream(dist);
+
     byte[] buffer = new byte[20 * 1024];
+    int cnt;
 
     // read() 最多读取 buffer.length 个字节
     // 返回的是实际读取的个数
     // 返回 -1 的时候表示读到 eof，即文件尾
-    while (in.read(buffer, 0, buffer.length) != -1) {
-        out.write(buffer);
+    while ((cnt = in.read(buffer, 0, buffer.length)) != -1) {
+        out.write(buffer, 0, cnt);
     }
 
     in.close();
@@ -121,7 +122,7 @@ UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-
 
 Java 使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码是为了让一个中文或者一个英文都能使用一个 char 来存储。
 
-## String
+## String 的编码方式
 
 String 可以看成一个字符序列，可以指定一个编码方式将它编码为字节序列，也可以指定一个编码方式将一个字节序列解码为 String。
 
@@ -182,8 +183,10 @@ public static void readFileContent(String filePath) throws IOException {
 
 ```java
 public static void main(String[] args) throws IOException, ClassNotFoundException {
+
     A a1 = new A(123, "abc");
     String objectFile = "file/a1";
+
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
     objectOutputStream.writeObject(a1);
     objectOutputStream.close();
@@ -195,6 +198,7 @@ public static void main(String[] args) throws IOException, ClassNotFoundExceptio
 }
 
 private static class A implements Serializable {
+
     private int x;
     private String y;
 
@@ -280,10 +284,6 @@ public static void main(String[] args) throws IOException {
 
 # 七、NIO
 
-- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
-- [Java NIO 浅析](https://tech.meituan.com/nio.html)
-- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
-
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
 ## 流与块
@@ -339,7 +339,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 移动设置为 5，limit 保持不变。
+② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 为 5，limit 保持不变。
 
 <div align="center"> <img src="../pics//80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
 
@@ -371,7 +371,7 @@ public static void fastCopy(String src, String dist) throws IOException {
     /* 获取目标文件的输出字节流 */
     FileOutputStream fout = new FileOutputStream(dist);
 
-    /* 获取输出字节流的通道 */
+    /* 获取输出字节流的文件通道 */
     FileChannel fcout = fout.getChannel();
 
     /* 为缓冲区分配 1024 个字节 */
@@ -392,7 +392,7 @@ public static void fastCopy(String src, String dist) throws IOException {
 
         /* 把缓冲区的内容写入输出文件中 */
         fcout.write(buffer);
-        
+
         /* 清空缓冲区 */
         buffer.clear();
     }
@@ -407,7 +407,7 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 通过配置监听的通道 Channel 为非阻塞，那么当 Channel 上的 IO 事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它 Channel，找到 IO 事件已经到达的 Channel 执行。
 
-因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件具有更好的性能。
+因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件，对于 IO 密集型的应用具有很好地性能。
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
@@ -601,13 +601,15 @@ MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 
 NIO 与普通 I/O 的区别主要有以下两点：
 
-- NIO 是非阻塞的
-- NIO 面向块，I/O 面向流
+- NIO 是非阻塞的；
+- NIO 面向块，I/O 面向流。
 
 # 八、参考资料
 
 - Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+- [Java NIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
 - [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.htm)
 - [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)

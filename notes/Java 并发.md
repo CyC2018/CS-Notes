@@ -44,9 +44,10 @@
     * [内存模型三大特性](#内存模型三大特性)
     * [先行发生原则](#先行发生原则)
 * [十一、线程安全](#十一线程安全)
-    * [线程安全定义](#线程安全定义)
-    * [线程安全分类](#线程安全分类)
-    * [线程安全的实现方法](#线程安全的实现方法)
+    * [不可变](#不可变)
+    * [互斥同步](#互斥同步)
+    * [非阻塞同步](#非阻塞同步)
+    * [无同步方案](#无同步方案)
 * [十二、锁优化](#十二锁优化)
     * [自旋锁](#自旋锁)
     * [锁消除](#锁消除)
@@ -167,6 +168,8 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 ## 继承 Thread 类
 
 同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runable 接口。
+
+当调用 start() 方法启动一个线程时，虚拟机会将该线程放入就绪队列中等待被调度，当一个线程被调度时会执行该线程的 run() 方法。
 
 ```java
 public class MyThread extends Thread {
@@ -635,6 +638,7 @@ B
 
 ```java
 public class WaitNotifyExample {
+
     public synchronized void before() {
         System.out.println("before");
         notifyAll();
@@ -672,12 +676,15 @@ after
 
 ## await() signal() signalAll()
 
-java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
+java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。
+
+相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
 
 使用 Lock 来获取一个 Condition 对象。
 
 ```java
 public class AwaitSignalExample {
+
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
 
@@ -733,6 +740,7 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 ```java
 public class CountdownLatchExample {
+
     public static void main(String[] args) throws InterruptedException {
         final int totalThread = 10;
         CountDownLatch countDownLatch = new CountDownLatch(totalThread);
@@ -781,6 +789,7 @@ public CyclicBarrier(int parties) {
 
 ```java
 public class CyclicBarrierExample {
+
     public static void main(String[] args) {
         final int totalThread = 10;
         CyclicBarrier cyclicBarrier = new CyclicBarrier(totalThread);
@@ -807,7 +816,7 @@ before..before..before..before..before..before..before..before..before..before..
 
 ## Semaphore
 
-Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
+Semaphore 类似于操作系统中的信号量，可以控制对互斥资源的访问线程数。
 
 <div align="center"> <img src="../pics//Semaphore.png" width=""/> </div><br>
 
@@ -815,6 +824,7 @@ Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访�
 
 ```java
 public class SemaphoreExample {
+
     public static void main(String[] args) {
         final int clientCount = 3;
         final int totalRequestCount = 10;
@@ -859,6 +869,7 @@ FutureTask 可用于异步获取执行结果或取消执行任务的场景。当
 
 ```java
 public class FutureTaskExample {
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
             @Override
@@ -964,6 +975,7 @@ produce..produce..consume..consume..produce..consume..produce..consume..produce.
 
 ```java
 public class ForkJoinExample extends RecursiveTask<Integer> {
+
     private final int threshold = 5;
     private int first;
     private int last;
@@ -1018,7 +1030,7 @@ ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线�
 
 如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
 
-以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值为 997 而不是 1000。
+以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值有可能小于 1000。
 
 ```java
 public class ThreadUnsafeExample {
@@ -1096,11 +1108,11 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 
 Java 内存模型保证了 read、load、use、assign、store、write、lock 和 unlock 操作具有原子性，例如对一个 int 类型的变量执行 assign 赋值操作，这个操作就是原子性的。但是 Java 内存模型允许虚拟机将没有被 volatile 修饰的 64 位数据（long，double）的读写操作划分为两次 32 位的操作来进行，即 load、store、read 和 write 操作可以不具备原子性。
 
-有一个错误认识就是，int 等原子性的变量在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 变量属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
+有一个错误认识就是，int 等原子性的类型在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
 
 为了方便讨论，将内存间的交互操作简化为 3 个：load、assign、store。
 
-下图演示了两个线程同时对 cnt 变量进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入该变量的值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
+下图演示了两个线程同时对 cnt 进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入旧值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
 
 <div align="center"> <img src="../pics//ef8eab00-1d5e-4d99-a7c2-d6d68ea7fe92.png" width=""/> </div><br>
 
@@ -1198,9 +1210,7 @@ public static void main(String[] args) throws InterruptedException {
 
 ### 3. 有序性
 
-有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。
-
-在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
 volatile 关键字通过添加内存屏障的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前。
 
@@ -1270,19 +1280,13 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 # 十一、线程安全
 
-## 线程安全定义
+多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。
 
-一个类在可以被多个线程安全调用时就是线程安全的。
+线程安全有以下几种实现方式：
 
-## 线程安全分类
+## 不可变
 
-线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类：不可变、绝对线程安全、相对线程安全、线程兼容和线程对立。
-
-### 1. 不可变
-
-不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。
-
-多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
+不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
 
 不可变的类型：
 
@@ -1317,101 +1321,25 @@ public V put(K key, V value) {
 }
 ```
 
-### 2. 绝对线程安全
-
-不管运行时环境如何，调用者都不需要任何额外的同步措施。
-
-### 3. 相对线程安全
-
-相对线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做额外的保障措施。但是对于一些特定顺序的连续调用，就可能需要在调用端使用额外的同步手段来保证调用的正确性。
-
-在 Java 语言中，大部分的线程安全类都属于这种类型，例如 Vector、HashTable、Collections 的 synchronizedCollection() 方法包装的集合等。
-
-对于下面的代码，如果删除元素的线程删除了 Vector 的一个元素，而获取元素的线程试图访问一个已经被删除的元素，那么就会抛出 ArrayIndexOutOfBoundsException。
-
-```Java
-public class VectorUnsafeExample {
-    private static Vector<Integer> vector = new Vector<>();
-
-    public static void main(String[] args) {
-        while (true) {
-            for (int i = 0; i < 100; i++) {
-                vector.add(i);
-            }
-            ExecutorService executorService = Executors.newCachedThreadPool();
-            executorService.execute(() -> {
-                for (int i = 0; i < vector.size(); i++) {
-                    vector.remove(i);
-                }
-            });
-            executorService.execute(() -> {
-                for (int i = 0; i < vector.size(); i++) {
-                    vector.get(i);
-                }
-            });
-            executorService.shutdown();
-        }
-    }
-}
-```
-
-```html
-Exception in thread "Thread-159738" java.lang.ArrayIndexOutOfBoundsException: Array index out of range: 3
-    at java.util.Vector.remove(Vector.java:831)
-    at VectorUnsafeExample.lambda$main$0(VectorUnsafeExample.java:14)
-    at VectorUnsafeExample$$Lambda$1/713338599.run(Unknown Source)
-    at java.lang.Thread.run(Thread.java:745)
-```
-
-
-如果要保证上面的代码能正确执行下去，就需要对删除元素和获取元素的代码进行同步。
-
-```java
-executorService.execute(() -> {
-    synchronized (vector) {
-        for (int i = 0; i < vector.size(); i++) {
-            vector.remove(i);
-        }
-    }
-});
-executorService.execute(() -> {
-    synchronized (vector) {
-        for (int i = 0; i < vector.size(); i++) {
-            vector.get(i);
-        }
-    }
-});
-```
-
-### 4. 线程兼容
-
-线程兼容是指对象本身并不是线程安全的，但是可以通过在调用端正确地使用同步手段来保证对象在并发环境中可以安全地使用，我们平常说一个类不是线程安全的，绝大多数时候指的是这一种情况。Java API 中大部分的类都是属于线程兼容的，如与前面的 Vector 和 HashTable 相对应的集合类 ArrayList 和 HashMap 等。
-
-### 5. 线程对立
-
-线程对立是指无论调用端是否采取了同步措施，都无法在多线程环境中并发使用的代码。由于 Java 语言天生就具备多线程特性，线程对立这种排斥多线程的代码是很少出现的，而且通常都是有害的，应当尽量避免。
-
-## 线程安全的实现方法
-
-### 1. 互斥同步
+## 互斥同步
 
 synchronized 和 ReentrantLock。
 
-### 2. 非阻塞同步
+## 非阻塞同步
 
 互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
 
 互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
 
-**（一）CAS** 
+### 1. CAS
 
 随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
 
-**（二）AtomicInteger** 
+### 2. AtomicInteger
 
-J.U.C 包里面的整数原子类 AtomicInteger，其中的 compareAndSet() 和 getAndIncrement() 等方法都使用了 Unsafe 类的 CAS 操作。
+J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。
 
 以下代码使用了 AtomicInteger 执行了自增的操作。
 
@@ -1423,7 +1351,7 @@ public void add() {
 }
 ```
 
-以下代码是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。
+以下代码是 incrementAndGet() 的源码，它调用了 Unsafe 的 getAndAddInt() 。
 
 ```java
 public final int incrementAndGet() {
@@ -1446,24 +1374,21 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-**（三）ABA** 
+### 3. ABA
 
 如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
 
 J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
-### 3. 无同步方案
+## 无同步方案
 
 要保证线程安全，并不是一定就要进行同步。如果一个方法本来就不涉及共享数据，那它自然就无须任何同步措施去保证正确性。
 
-**（一）栈封闭** 
+### 1. 栈封闭
 
 多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
 
 ```java
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class StackClosedExample {
     public void add100() {
         int cnt = 0;
@@ -1490,7 +1415,7 @@ public static void main(String[] args) {
 100
 ```
 
-**（二）线程本地存储（Thread Local Storage）** 
+### 2. 线程本地存储（Thread Local Storage）
 
 如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
 
@@ -1553,7 +1478,7 @@ public class ThreadLocalExample1 {
 
 <div align="center"> <img src="../pics//3646544a-cb57-451d-9e03-d3c4f5e4434a.png" width=""/> </div><br>
 
-每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象，Thread 类中就定义了 ThreadLocal.ThreadLocalMap 成员。
+每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象。
 
 ```java
 /* ThreadLocal values pertaining to this thread. This map is maintained
@@ -1596,7 +1521,7 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
-**（三）可重入代码（Reentrant Code）** 
+### 3. 可重入代码（Reentrant Code）
 
 这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
 
@@ -1684,15 +1609,15 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 缩小同步范围，从而减少锁争用。例如对于 synchronized，应该尽量使用同步块而不是同步方法。
 
-- 多用同步工具少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现复杂控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善，使用这些更高等级的同步工具你的程序可以不费吹灰之力获得优化。
+- 多用同步工具少用 wait() 和 notify()。首先，CountDownLatch, CyclicBarrier, Semaphore 和 Exchanger 这些同步类简化了编码操作，而用 wait() 和 notify() 很难实现复杂控制流；其次，这些同步类是由最好的企业编写和维护，在后续的 JDK 中还会不断优化和完善。
+
+- 使用 BlockingQueue 实现生产者消费者问题。
 
 - 多用并发集合少用同步集合，例如应该使用 ConcurrentHashMap 而不是 Hashtable。
 
 - 使用本地变量和不可变类来保证线程安全。
 
-- 使用线程池而不是直接创建 Thread 对象，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
-
-- 使用 BlockingQueue 实现生产者消费者问题。
+- 使用线程池而不是直接创建线程，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
 
 # 参考资料
 

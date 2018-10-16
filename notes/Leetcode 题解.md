@@ -103,7 +103,7 @@ Output: True
 Explanation: 1 * 1 + 2 * 2 = 5
 ```
 
-题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
+题目描述：判断一个数是否为两个数的平方和。
 
 ```java
 public boolean judgeSquareSum(int c) {
@@ -130,7 +130,7 @@ public boolean judgeSquareSum(int c) {
 Given s = "leetcode", return "leotcede".
 ```
 
-使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+使用双指针指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
@@ -307,6 +307,8 @@ private boolean isValid(String s, String target) {
 
 [215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
+题目描述：找到第 k 大的元素。
+
 **排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
 
 ```java
@@ -323,7 +325,7 @@ public int findKthLargest(int[] nums, int k) {
     PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
     for (int val : nums) {
         pq.add(val);
-        if (pq.size() > k) // 维护堆的大小为 K
+        if (pq.size() > k)  // 维护堆的大小为 K
             pq.poll();
     }
     return pq.peek();
@@ -555,7 +557,7 @@ Explanation: You don't need to remove any of the intervals since they're already
 
 题目描述：计算让一组区间不重叠所需要移除的区间个数。
 
-计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
+先计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
 
 在每次选择中，区间的结尾最为重要，选择的区间结尾越小，留给后面的区间的空间越大，那么后面能够选择的区间个数也就越大。
 
@@ -639,7 +641,7 @@ Output:
 
 题目描述：一个学生用两个分量 (h, k) 描述，h 表示身高，k 表示排在前面的有 k 个学生的身高比他高或者和他一样高。
 
-为了在每次插入操作时不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入第 k 个位置可能会变成第 k+1 个位置。
+为了使插入操作不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入的第 k 个位置可能会变成第 k+1 个位置。
 
 身高降序、k 值升序，然后按排好序的顺序插入队列的第 k 个位置中。
 
@@ -802,6 +804,52 @@ public int maxProfit(int[] prices) {
 }
 ```
 
+**子数组最大的和** 
+
+[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+
+```html
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+```
+
+```java
+public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int preSum = nums[0];
+    int maxSum = preSum;
+    for (int i = 1; i < nums.length; i++) {
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        maxSum = Math.max(maxSum, preSum);
+    }
+    return maxSum;
+}
+```
+
+**买入和售出股票最大的收益** 
+
+[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+
+题目描述：只进行一次交易。
+
+只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
+
+```java
+public int maxProfit(int[] prices) {
+    int n = prices.length;
+    if (n == 0) return 0;
+    int soFarMin = prices[0];
+    int max = 0;
+    for (int i = 1; i < n; i++) {
+        if (soFarMin > prices[i]) soFarMin = prices[i];
+        else max = Math.max(max, prices[i] - soFarMin);
+    }
+    return max;
+}
+```
+
 ## 二分查找
 
 **正常实现** 
@@ -825,7 +873,7 @@ public int binarySearch(int[] nums, int key) {
 
 **时间复杂度** 
 
-二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度都为 O(logN)。
+二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
 **m 计算** 
 
@@ -961,7 +1009,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 [540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
-Input: [1,1,2,3,3,4,4,8,8]
+Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
 Output: 2
 ```
 
@@ -1132,11 +1180,11 @@ public List<Integer> diffWaysToCompute(String input) {
 
 <div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
 
-广度优先搜索的搜索过程有点像一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
+广度优先搜索一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
 
 第一层：
 
-- 0 -> {6,2,1,5};
+- 0 -> {6,2,1,5}
 
 第二层：
 
@@ -1150,7 +1198,7 @@ public List<Integer> diffWaysToCompute(String input) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
+每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
@@ -1180,19 +1228,17 @@ public int minPathLength(int[][] grids, int tr, int tc) {
         pathLength++;
         while (size-- > 0) {
             Pair<Integer, Integer> cur = queue.poll();
+            int cr = cur.getKey(), cc = cur.getValue();
+            grids[cr][cc] = 0; // 标记
             for (int[] d : direction) {
-                int nr = cur.getKey() + d[0], nc = cur.getValue() + d[1];
-                Pair<Integer, Integer> next = new Pair<>(nr, nc);
-                if (next.getKey() < 0 || next.getValue() >= m
-                        || next.getKey() < 0 || next.getValue() >= n) {
-
+                int nr = cr + d[0], nc = cc + d[1];
+                if (nr < 0 || nr >= m || nc < 0 || nc >= n || grids[nr][nc] == 0) {
                     continue;
                 }
-                grids[next.getKey()][next.getValue()] = 0; // 标记
-                if (next.getKey() == tr && next.getValue() == tc) {
+                if (nr == tr && nc == tc) {
                     return pathLength;
                 }
-                queue.add(next);
+                queue.add(new Pair<>(nr, nc));
             }
         }
     }
@@ -1239,7 +1285,7 @@ public int numSquares(int n) {
                     continue;
                 }
                 marked[next] = true;
-                queue.add(cur - s);
+                queue.add(next);
             }
         }
     }
@@ -1290,7 +1336,7 @@ Output: 0
 Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 ```
 
-找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
+题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
 
 ```java
 public int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -1365,7 +1411,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。
 
-而深度优先搜索在得到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
+而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
 从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种  **可达性**  问题。
 
@@ -1479,12 +1525,14 @@ Input:
 [[1,1,0],
  [1,1,0],
  [0,0,1]]
+
 Output: 2
+
 Explanation:The 0th and 1st students are direct friends, so they are in a friend circle.
 The 2nd student himself is in a friend circle. So return 2.
 ```
 
-好友关系可以看成是一个无向图，例如第 0 个人与第 1 个人是好友，那么 M[0][1] 和 M[1][0] 的值都为 1。
+题目描述：好友关系可以看成是一个无向图，例如第 0 个人与第 1 个人是好友，那么 M[0][1] 和 M[1][0] 的值都为 1。
 
 ```java
 private int n;
@@ -1530,7 +1578,7 @@ X X X X
 X O X X
 ```
 
-使被 'X' 包围的 'O' 转换为 'X'。
+题目描述：使被 'X' 包围的 'O' 转换为 'X'。
 
 先填充最外侧，剩下的就是里侧了。
 
@@ -1678,7 +1726,6 @@ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 ```
 
 ```java
-
 private static final String[] KEYS = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 public List<String> letterCombinations(String digits) {
@@ -2316,11 +2363,11 @@ private int cubeNum(int i, int j) {
 
 一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
 
-45 度对角线标记数组的维度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
+45 度对角线标记数组的长度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
 
 <div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
 
-135 度对角线标记数组的维度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
+135 度对角线标记数组的长度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
 <div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
 
@@ -2389,8 +2436,6 @@ private void backtracking(int row) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br>
 
-dp[N] 即为所求。
-
 考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
 ```java
@@ -2416,27 +2461,19 @@ public int climbStairs(int n) {
 
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
 
-由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 或者 i - 3 的住户，所以
+由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])"/></div> <br>
 
 ```java
 public int rob(int[] nums) {
-    int n = nums.length;
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return nums[0];
-    }
-    int pre3 = 0, pre2 = 0, pre1 = 0;
-    for (int i = 0; i < n; i++) {
-        int cur = Math.max(pre2, pre3) + nums[i];
-        pre3 = pre2;
+    int pre2 = 0, pre1 = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int cur = Math.max(pre2 + nums[i], pre1);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre1, pre2);
+    return pre1;
 }
 ```
 
@@ -2445,7 +2482,7 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-public int rob(int[] nums) {
+public  int rob(int[] nums) {
     if (nums == null || nums.length == 0) {
         return 0;
     }
@@ -2456,27 +2493,16 @@ public int rob(int[] nums) {
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int first, int last) {
-    int pre3 = 0, pre2 = 0, pre1 = 0;
+private   int rob(int[] nums, int first, int last) {
+    int pre2 = 0, pre1 = 0;
     for (int i = first; i <= last; i++) {
-        int cur = Math.max(pre3, pre2) + nums[i];
-        pre3 = pre2;
+        int cur = Math.max(pre1, pre2 + nums[i]);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre2, pre1);
+    return pre1;
 }
 ```
-
-**母牛生产** 
-
-[程序员代码面试指南-P181](#)
-
-题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
-
-第 i 年成熟的牛的数量为：
-
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
 
 **信件错排** 
 
@@ -2491,7 +2517,15 @@ private int rob(int[] nums, int first, int last) {
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>
 
-dp[N] 即为所求。
+**母牛生产** 
+
+[程序员代码面试指南-P181](#)
+
+题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
+
+第 i 年成熟的牛的数量为：
+
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
 
 ### 矩阵路径
 
@@ -2517,10 +2551,8 @@ public int minPathSum(int[][] grid) {
     int[] dp = new int[n];
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            if (j == 0) {
-                dp[j] = dp[j];        // 只能从上侧走到该位置
-            } else if (i == 0) {
-                dp[j] = dp[j - 1];    // 只能从左侧走到该位置
+            if (i == 0) {
+                dp[j] = dp[j - 1];
             } else {
                 dp[j] = Math.min(dp[j - 1], dp[j]);
             }
@@ -2552,7 +2584,7 @@ public int uniquePaths(int m, int n) {
 }
 ```
 
-也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 从取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
+也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 中取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -2580,46 +2612,23 @@ sumRange(2, 5) -> -1
 sumRange(0, 5) -> -3
 ```
 
-求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
+求区间 i \~ j 的和，可以转换为 sum[j + 1] - sum[i]，其中 sum[i] 为 0 \~ i - 1 的和。
 
 ```java
 class NumArray {
+
     private int[] sums;
 
     public NumArray(int[] nums) {
-        sums = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            sums[i] = i == 0 ? nums[0] : sums[i - 1] + nums[i];
+        sums = new int[nums.length + 1];
+        for (int i = 1; i <= nums.length; i++) {
+            sums[i] = sums[i - 1] + nums[i - 1];
         }
     }
 
     public int sumRange(int i, int j) {
-        return i == 0 ? sums[j] : sums[j] - sums[i - 1];
+        return sums[j + 1] - sums[i];
     }
-}
-```
-
-**子数组最大的和** 
-
-[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
-
-```html
-For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
-the contiguous subarray [4,-1,2,1] has the largest sum = 6.
-```
-
-```java
-public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) {
-        return 0;
-    }
-    int preSum = nums[0];
-    int maxSum = preSum;
-    for (int i = 1; i < nums.length; i++) {
-        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
-        maxSum = Math.max(maxSum, preSum);
-    }
-    return maxSum;
 }
 ```
 
@@ -2634,7 +2643,7 @@ return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] i
 
 dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
 
-如果 A[i] - A[i - 1] == A[i - 1] - A[i - 2]，表示 [A[i - 2], A[i - 1], A[i]] 是一个等差递增子区间。如果 [A[i - 3], A[i - 2], A[i - 1]] 是一个等差递增子区间，那么 [A[i - 3], A[i - 2], A[i - 1], A[i]] 也是。因此在这个条件下，dp[i] = dp[i-1] + 1。
+在 A[i] - A[i - 1] == A[i - 1] - A[i - 2] 的条件下，{A[i - 2], A[i - 1], A[i]} 是一个等差递增子区间。如果 {A[i - 3], A[i - 2], A[i - 1]} 是一个等差递增子区间，那么 {A[i - 3], A[i - 2], A[i - 1], A[i]} 也是等差递增子区间，dp[i] = dp[i-1] + 1。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
@@ -2747,17 +2756,17 @@ public int numDecodings(String s) {
 
 ### 最长递增子序列
 
-已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>} ，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个 **子序列** 。
+已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>}，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个 **子序列** 。
 
 如果在子序列中，当下标 ix > iy 时，S<sub>ix</sub> > S<sub>iy</sub>，称子序列为原序列的一个 **递增子序列** 。
 
-定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub> ，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
+定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub>，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>
 
-对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，即 max{ dp[i] | 1 <= i <= N} 即为所求。
+对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp[i] | 1 <= i <= N} 即为所求。
 
 **最长递增子序列** 
 
@@ -2790,12 +2799,12 @@ for (int i = 0; i < n; i++) {
 return ret;
 ```
 
-以上解法的时间复杂度为 O(N<sup>2</sup>) ，可以使用二分查找将时间复杂度降低为 O(NlogN)。
+以上解法的时间复杂度为 O(N<sup>2</sup>)，可以使用二分查找将时间复杂度降低为 O(NlogN)。
 
 定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
-- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i-1] = x。
+- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x。
 
 例如对于数组 [4,3,6,5]，有：
 
@@ -2915,19 +2924,19 @@ public int wiggleMaxLength(int[] nums) {
 
 定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp[i][j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1<sub>i</sub> 与 S2<sub>j</sub> 值是否相等，分为两种情况：
 
-- 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1 ，即 dp[i][j] = dp[i-1][j-1] + 1。
-- 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，与 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
+- 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1，即 dp[i][j] = dp[i-1][j-1] + 1。
+- 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，或者 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，取它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
 
 综上，最长公共子序列的状态转移方程为：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
 
-对于长度为 N 的序列 S<sub>1</sub> 和 长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
+对于长度为 N 的序列 S<sub>1</sub> 和长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
 
 与最长递增子序列相比，最长公共子序列有以下不同点：
 
 - 针对的是两个序列，求它们的最长公共子序列。
-- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub> 。
+- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>。
 - 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
 ```java
@@ -2956,9 +2965,7 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 - 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
 - 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
 
-第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。
-
-综上，0-1 背包的状态转移方程为：
+第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br>
 
@@ -2981,11 +2988,11 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 **空间优化** 
 
-在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅由前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
+在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>
 
-因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
@@ -3102,7 +3109,6 @@ public int findTargetSumWays(int[] nums, int S) {
     int W = (sum + S) / 2;
     int[] dp = new int[W + 1];
     dp[0] = 1;
-    Arrays.sort(nums);
     for (int num : nums) {
         for (int i = W; i >= num; i--) {
             dp[i] = dp[i] + dp[i - num];
@@ -3205,7 +3211,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 }
 ```
 
-**找零钱的方法数** 
+**找零钱的最少硬币数** 
 
 [322. Coin Change (Medium)](https://leetcode.com/problems/coin-change/description/)
 
@@ -3286,60 +3292,6 @@ public int combinationSum4(int[] nums, int target) {
 }
 ```
 
-**只能进行 k 次的股票交易** 
-
-[188. Best Time to Buy and Sell Stock IV (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
-
-```java
-public int maxProfit(int k, int[] prices) {
-    int n = prices.length;
-    if (k >= n / 2) {   // 这种情况下该问题退化为普通的股票交易问题
-        int maxProfit = 0;
-        for (int i = 1; i < n; i++) {
-            if (prices[i] > prices[i - 1]) {
-                maxProfit += prices[i] - prices[i - 1];
-            }
-        }
-        return maxProfit;
-    }
-    int[][] maxProfit = new int[k + 1][n];
-    for (int i = 1; i <= k; i++) {
-        int localMax = maxProfit[i - 1][0] - prices[0];
-        for (int j = 1; j < n; j++) {
-            maxProfit[i][j] = Math.max(maxProfit[i][j - 1], prices[j] + localMax);
-            localMax = Math.max(localMax, maxProfit[i - 1][j] - prices[j]);
-        }
-    }
-    return maxProfit[k][n - 1];
-}
-```
-
-**只能进行两次的股票交易** 
-
-[123. Best Time to Buy and Sell Stock III (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
-
-```java
-public int maxProfit(int[] prices) {
-    int firstBuy = Integer.MIN_VALUE, firstSell = 0;
-    int secondBuy = Integer.MIN_VALUE, secondSell = 0;
-    for (int curPrice : prices) {
-        if (firstBuy < -curPrice) {
-            firstBuy = -curPrice;
-        }
-        if (firstSell < firstBuy + curPrice) {
-            firstSell = firstBuy + curPrice;
-        }
-        if (secondBuy < firstSell - curPrice) {
-            secondBuy = firstSell - curPrice;
-        }
-        if (secondSell < secondBuy + curPrice) {
-            secondSell = secondBuy + curPrice;
-        }
-    }
-    return secondSell;
-}
-```
-
 ### 股票交易
 
 **需要冷却期的股票交易** 
@@ -3410,25 +3362,58 @@ public int maxProfit(int[] prices, int fee) {
 }
 ```
 
-**买入和售出股票最大的收益** 
 
-[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+**只能进行两次的股票交易** 
 
-题目描述：只进行一次交易。
-
-只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
+[123. Best Time to Buy and Sell Stock III (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
 
 ```java
 public int maxProfit(int[] prices) {
-    int n = prices.length;
-    if (n == 0) return 0;
-    int soFarMin = prices[0];
-    int max = 0;
-    for (int i = 1; i < n; i++) {
-        if (soFarMin > prices[i]) soFarMin = prices[i];
-        else max = Math.max(max, prices[i] - soFarMin);
+    int firstBuy = Integer.MIN_VALUE, firstSell = 0;
+    int secondBuy = Integer.MIN_VALUE, secondSell = 0;
+    for (int curPrice : prices) {
+        if (firstBuy < -curPrice) {
+            firstBuy = -curPrice;
+        }
+        if (firstSell < firstBuy + curPrice) {
+            firstSell = firstBuy + curPrice;
+        }
+        if (secondBuy < firstSell - curPrice) {
+            secondBuy = firstSell - curPrice;
+        }
+        if (secondSell < secondBuy + curPrice) {
+            secondSell = secondBuy + curPrice;
+        }
     }
-    return max;
+    return secondSell;
+}
+```
+
+**只能进行 k 次的股票交易** 
+
+[188. Best Time to Buy and Sell Stock IV (Hard)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
+
+```java
+public int maxProfit(int k, int[] prices) {
+    int n = prices.length;
+    if (k >= n / 2) {   // 这种情况下该问题退化为普通的股票交易问题
+        int maxProfit = 0;
+        for (int i = 1; i < n; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+        return maxProfit;
+    }
+    int[][] maxProfit = new int[k + 1][n];
+    for (int i = 1; i <= k; i++) {
+        int localMax = maxProfit[i - 1][0] - prices[0];
+        for (int j = 1; j < n; j++) {
+            maxProfit[i][j] = Math.max(maxProfit[i][j - 1], prices[j] + localMax);
+            localMax = Math.max(localMax, maxProfit[i - 1][j] - prices[j]);
+        }
+    }
+    return maxProfit[k][n - 1];
 }
 ```
 
@@ -3450,11 +3435,8 @@ Explanation: You need one step to make "sea" to "ea" and another step to make "e
 public int minDistance(String word1, String word2) {
     int m = word1.length(), n = word2.length();
     int[][] dp = new int[m + 1][n + 1];
-    for (int i = 0; i <= m; i++) {
-        for (int j = 0; j <= n; j++) {
-            if (i == 0 || j == 0) {
-                continue;
-            }
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
             if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                 dp[i][j] = dp[i - 1][j - 1] + 1;
             } else {
@@ -3612,7 +3594,7 @@ public int countPrimes(int n) {
 
 ```java
 int gcd(int a, int b) {
-    return b == 0 ? a : gcd(b, a% b);
+    return b == 0 ? a : gcd(b, a % b);
 }
 ```
 
@@ -3683,7 +3665,7 @@ public String convertToBase7(int num) {
 }
 ```
 
-Java 中 static String toString(int num, int radix) 可以将一个整数转换为 redix 进制表示的字符串。
+Java 中 static String toString(int num, int radix) 可以将一个整数转换为 radix 进制表示的字符串。
 
 ```java
 public String convertToBase7(int num) {
@@ -6413,7 +6395,6 @@ public int maxChunksToSorted(int[] arr) {
 }
 ```
 
-
 ## 图
 
 ### 二分图
@@ -6630,6 +6611,7 @@ public int[] findRedundantConnection(int[][] edges) {
 }
 
 private class UF {
+
     private int[] id;
 
     UF(int N) {
@@ -6675,7 +6657,7 @@ x ^ x = 0       x & x = x       x | x = x
 ```
 
 - 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。
-- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask ：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
+- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
 - 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。
 
 位与运算技巧：
@@ -6920,7 +6902,6 @@ public boolean isPowerOfFour(int num) {
 }
 ```
 
-
 **判断一个数的位级表示是否不会出现连续的 0 和 1** 
 
 [693. Binary Number with Alternating Bits (Easy)](https://leetcode.com/problems/binary-number-with-alternating-bits/description/)
@@ -7074,4 +7055,3 @@ public int[] countBits(int num) {
 - 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
 - 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
 - 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
-

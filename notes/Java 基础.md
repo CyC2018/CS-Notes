@@ -6,7 +6,8 @@
     * [概览](#概览)
     * [不可变的好处](#不可变的好处)
     * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
-    * [String.intern()](#stringintern)
+    * [String Pool](#string-pool)
+    * [new String("abc")](#new-string"abc")
 * [三、运算](#三运算)
     * [参数传递](#参数传递)
     * [float 与 double](#float-与-double)
@@ -64,7 +65,7 @@ int y = x;         // 拆箱
 
 new Integer(123) 与 Integer.valueOf(123) 的区别在于：
 
-- new Integer(123) 每次都会新建一个对象
+- new Integer(123) 每次都会新建一个对象；
 - Integer.valueOf(123) 会使用缓存池中的对象，多次调用会取得同一个对象的引用。
 
 ```java
@@ -193,32 +194,89 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [StackOverflow : String, StringBuffer, and StringBuilder](https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder)
 
-## String.intern()
+## String Pool
 
-使用 String.intern() 可以保证相同内容的字符串变量引用同一的内存对象。
+字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程中将字符串添加到 String Pool 中。
 
-下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同对象，而 s3 是通过 s1.intern() 方法取得一个对象引用。intern() 首先把 s1 引用的对象放到 String Pool（字符串常量池）中，然后返回这个对象引用。因此 s3 和 s1 引用的是同一个字符串常量池的对象。
+当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。
+
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 方法取得一个字符串引用。intern() 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。
 
 ```java
 String s1 = new String("aaa");
 String s2 = new String("aaa");
 System.out.println(s1 == s2);           // false
 String s3 = s1.intern();
-System.out.println(s1.intern() == s3);  // true
+String s4 = s1.intern();
+System.out.println(s3 == s4);           // true
 ```
 
-如果是采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Pool 中。
+如果是采用 "bbb" 这种字面量的形式创建字符串，会自动地将字符串放入 String Pool 中。
 
 ```java
-String s4 = "bbb";
 String s5 = "bbb";
-System.out.println(s4 == s5);  // true
+String s6 = "bbb";
+System.out.println(s5 == s6);  // true
 ```
 
-在 Java 7 之前，字符串常量池被放在运行时常量池中，它属于永久代。而在 Java 7，字符串常量池被移到 Native Method 中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 - [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning)
 - [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
+
+## new String("abc")
+
+使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
+
+- "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
+- 而使用 new 的方式会在堆中创建一个字符串对象。
+
+创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。
+
+```java
+public class NewStringTest {
+    public static void main(String[] args) {
+        String s = new String("abc");
+    }
+}
+```
+
+使用 javap -verbose 进行反编译，得到以下内容：
+
+```java
+// ...
+Constant pool:
+// ...
+   #2 = Class              #18            // java/lang/String
+   #3 = String             #19            // abc
+// ...
+  #18 = Utf8               java/lang/String
+  #19 = Utf8               abc
+// ...
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=1
+         0: new           #2                  // class java/lang/String
+         3: dup
+         4: ldc           #3                  // String abc
+         6: invokespecial #4                  // Method java/lang/String."<init>":(Ljava/lang/String;)V
+         9: astore_1
+// ...
+```
+
+在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
+
+以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
+
+```java
+public String(String original) {
+    this.value = original.value;
+    this.hash = original.hash;
+}
+```
 
 # 三、运算
 
@@ -226,10 +284,11 @@ System.out.println(s4 == s5);  // true
 
 Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中改变指针引用的对象，那么这两个指针此时指向的是完全不同的对象，一方改变其所指向对象的内容对另一方没有影响。
+以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中使指针引用其它对象，那么这两个指针此时指向的是完全不同的对象，在一方改变其所指向对象的内容时对另一方没有影响。
 
 ```java
 public class Dog {
+
     String name;
 
     Dog(String name) {
@@ -269,7 +328,7 @@ public class PassByValueExample {
 }
 ```
 
-但是如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
+如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
 
 ```java
 class PassByValueExample {
@@ -289,7 +348,9 @@ class PassByValueExample {
 
 ## float 与 double
 
-1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。Java 不能隐式执行向下转型，因为这会使得精度降低。
+Java 不能隐式执行向下转型，因为这会使得精度降低。
+
+1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。
 
 ```java
 // float f = 1.1;
@@ -310,10 +371,11 @@ short s1 = 1;
 // s1 = s1 + 1;
 ```
 
-但是使用 += 运算符可以执行隐式类型转换。
+但是使用 += 或者 ++ 运算符可以执行隐式类型转换。
 
 ```java
 s1 += 1;
+// s1++;
 ```
 
 上面的语句相当于将 s1 + 1 的计算结果进行了向下转型：
@@ -373,7 +435,7 @@ protected 用于修饰成员，表示在继承体系中成员对于子类可见�
 
 如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里氏替换原则。
 
-字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。例如下面的例子中，AccessExample 拥有 id 共有字段，如果在某个时刻，我们想要使用 int 去存储 id 字段，那么就需要去修改所有的客户端代码。
+字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。例如下面的例子中，AccessExample 拥有 id 公有字段，如果在某个时刻，我们想要使用 int 存储 id 字段，那么就需要修改所有的客户端代码。
 
 ```java
 public class AccessExample {
@@ -403,6 +465,7 @@ public class AccessExample {
 
 ```java
 public class AccessWithInnerClassExample {
+
     private class InnerClass {
         int x;
     }
@@ -468,6 +531,7 @@ ac2.func1();
 
 ```java
 public interface InterfaceExample {
+
     void func1();
 
     default void func2(){
@@ -519,7 +583,7 @@ System.out.println(InterfaceExample.x);
 - 需要能控制继承来的成员的访问权限，而不是都为 public。
 - 需要继承非静态和非常量字段。
 
-在很多情况下，接口优先于抽象类，因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
+在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
@@ -527,10 +591,11 @@ System.out.println(InterfaceExample.x);
 ## super
 
 - 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
-- 访问父类的成员：如果子类重写了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。
+- 访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
 public class SuperExample {
+
     protected int x;
     protected int y;
 
@@ -547,6 +612,7 @@ public class SuperExample {
 
 ```java
 public class SuperExtendExample extends SuperExample {
+
     private int z;
 
     public SuperExtendExample(int x, int y, int z) {
@@ -598,7 +664,6 @@ SuperExtendExample.func()
 ## 概览
 
 ```java
-public final native Class<?> getClass()
 
 public native int hashCode()
 
@@ -607,6 +672,10 @@ public boolean equals(Object obj)
 protected native Object clone() throws CloneNotSupportedException
 
 public String toString()
+
+public final native Class<?> getClass()
+
+protected void finalize() throws Throwable {}
 
 public final native void notify()
 
@@ -617,34 +686,32 @@ public final native void wait(long timeout) throws InterruptedException
 public final void wait(long timeout, int nanos) throws InterruptedException
 
 public final void wait() throws InterruptedException
-
-protected void finalize() throws Throwable {}
 ```
 
 ## equals()
 
 **1. 等价关系** 
 
-（一）自反性
+Ⅰ 自反性
 
 ```java
 x.equals(x); // true
 ```
 
-（二）对称性
+Ⅱ 对称性
 
 ```java
 x.equals(y) == y.equals(x); // true
 ```
 
-（三）传递性
+Ⅲ 传递性
 
 ```java
 if (x.equals(y) && y.equals(z))
     x.equals(z); // true;
 ```
 
-（四）一致性
+Ⅳ 一致性
 
 多次调用 equals() 方法结果不变
 
@@ -652,7 +719,7 @@ if (x.equals(y) && y.equals(z))
 x.equals(y) == x.equals(y); // true
 ```
 
-（五）与 null 的比较
+Ⅴ 与 null 的比较
 
 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
 
@@ -660,7 +727,7 @@ x.equals(y) == x.equals(y); // true
 x.equals(null); // false;
 ```
 
-**2. equals() 与 ==** 
+**2. 等价与相等** 
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
 - 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。
@@ -681,6 +748,7 @@ System.out.println(x == y);      // false
 
 ```java
 public class EqualExample {
+
     private int x;
     private int y;
     private int z;
@@ -707,7 +775,7 @@ public class EqualExample {
 
 ## hashCode()
 
-hasCode() 返回散列值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
+hashCode() 返回散列值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
 
 在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象散列值也相等。
 
@@ -723,7 +791,7 @@ set.add(e2);
 System.out.println(set.size());   // 2
 ```
 
-理想的散列函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
+理想的散列函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来。可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
 
 一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，编译器会自动进行这个优化。
 
@@ -744,6 +812,7 @@ public int hashCode() {
 
 ```java
 public class ToStringExample {
+
     private int number;
 
     public ToStringExample(int number) {
@@ -787,7 +856,7 @@ public class CloneExample {
     private int b;
 
     @Override
-    protected CloneExample clone() throws CloneNotSupportedException {
+    public CloneExample clone() throws CloneNotSupportedException {
         return (CloneExample)super.clone();
     }
 }
@@ -816,7 +885,7 @@ public class CloneExample implements Cloneable {
     private int b;
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 }
@@ -828,6 +897,7 @@ public class CloneExample implements Cloneable {
 
 ```java
 public class ShallowCloneExample implements Cloneable {
+
     private int[] arr;
 
     public ShallowCloneExample() {
@@ -870,6 +940,7 @@ System.out.println(e2.get(2)); // 222
 
 ```java
 public class DeepCloneExample implements Cloneable {
+
     private int[] arr;
 
     public DeepCloneExample() {
@@ -917,6 +988,7 @@ System.out.println(e2.get(2)); // 2
 
 ```java
 public class CloneConstructorExample {
+
     private int[] arr;
 
     public CloneConstructorExample() {
@@ -982,11 +1054,12 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 **1. 静态变量** 
 
-- 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它；静态变量在内存中只存在一份。
+- 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它。静态变量在内存中只存在一份。
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
 
 ```java
 public class A {
+
     private int x;         // 实例变量
     private static int y;  // 静态变量
 
@@ -1001,7 +1074,7 @@ public class A {
 
 **2. 静态方法** 
 
-静态方法在类加载的时候就存在了，它不依赖于任何实例。所以静态方法必须有实现，也就是说它不能是抽象方法（abstract）。
+静态方法在类加载的时候就存在了，它不依赖于任何实例。所以静态方法必须有实现，也就是说它不能是抽象方法。
 
 ```java
 public abstract class A {
@@ -1015,6 +1088,7 @@ public abstract class A {
 
 ```java
 public class A {
+
     private static int x;
     private int y;
 
@@ -1053,6 +1127,7 @@ public class A {
 
 ```java
 public class OuterClass {
+
     class InnerClass {
     }
 
@@ -1124,7 +1199,7 @@ public InitialOrderTest() {
 
 每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
-类加载相当于 Class 对象的加载。类在第一次使用时才动态加载到 JVM 中，可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
+类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
 反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。
 
@@ -1221,7 +1296,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针。
 - Java 支持自动垃圾回收，而 C++ 需要手动回收。
 - Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承。
-- Java 不支持操作符重载，虽然可以对两个 String 对象支持加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
+- Java 不支持操作符重载，虽然可以对两个 String 对象执行加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
 - Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
 - Java 不支持条件编译，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
 

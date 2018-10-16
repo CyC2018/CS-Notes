@@ -30,7 +30,7 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="400"/> </div><br>
+<div align="center"> <img src="../pics//c9ad2bf4-5580-4018-bce4-1b9a71804d9c.png" width="450"/> </div><br>
 
 ## 程序计数器
 
@@ -38,9 +38,9 @@
 
 ## Java 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息，从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="450"/> </div><br>
+<div align="center"> <img src="../pics//926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="500"/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
@@ -55,9 +55,9 @@ java -Xss512M HackTheJava
 
 ## 本地方法栈
 
-本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
-
 本地方法栈与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
+
+本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
 <div align="center"> <img src="../pics//JNI-Java-Native-Interface.jpg" width="350"/> </div><br>
 
@@ -65,16 +65,10 @@ java -Xss512M HackTheJava
 
 所有对象都在这里分配内存，是垃圾收集的主要区域（"GC 堆"）。
 
-现代的垃圾收集器基本都是采用分代收集算法，针对不同类型的对象采取不同的垃圾回收算法，可以将堆分成两块：
+现代的垃圾收集器基本都是采用分代收集算法，其主要的思想是针对不同类型的对象采取不同的垃圾回收算法，可以将堆分成两块：
 
 - 新生代（Young Generation）
 - 老年代（Old Generation）
-
-新生代可以继续划分成以下三个空间：
-
-- Eden（伊甸园）
-- From Survivor（幸存者）
-- To Survivor
 
 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
@@ -92,7 +86,7 @@ java -Xms1M -Xmx2M HackTheJava
 
 对这块区域进行垃圾回收的主要目标是对常量池的回收和对类的卸载，但是一般比较难实现。
 
-JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收。但是从 JDK 1.7 开始，已经把原本放在永久代的字符串常量池移到 Native Method 中。
+HotSpot 虚拟机把它当成永久代来进行垃圾回收。但是很难确定永久代的大小，因为它受到很多因素影响，并且每次 Full GC 之后永久代的大小都会改变，所以经常会抛出 OutOfMemoryError 异常。为了更容易管理方法区，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，而不是虚拟机内存中。
 
 ## 运行时常量池
 
@@ -104,7 +98,7 @@ Class 文件中的常量池（编译器生成的各种字面量和符号引用�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。
+在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存（Native 堆），然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。
 
 这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
@@ -142,14 +136,14 @@ public class ReferenceCountingGC {
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
 
-<div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
-
 Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
 
-- 虚拟机栈中引用的对象
-- 本地方法栈中引用的对象
+- 虚拟机栈中局部变量表中引用的对象
+- 本地方法栈中 JNI 中引用的对象
 - 方法区中类静态属性引用的对象
 - 方法区中的常量引用的对象
+
+<div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
 
 ### 3. 方法区的回收
 
@@ -171,13 +165,13 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。但是 try-finally 等方式可以做的更好，并且该方法运行代价高昂，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
 
-当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能通过在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会调用 finalize() 方法。
+当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会调用 finalize() 方法。
 
 ## 引用类型
 
-无论是通过引用计算算法判断对象的引用数量，还是通过可达性分析算法判断对象是否可达，判定对象是否可被回收都与引用有关。
+无论是通过引用计数算法判断对象的引用数量，还是通过可达性分析算法判断对象是否可达，判定对象是否可被回收都与引用有关。
 
-Java 具有四种强度不同的引用类型。
+Java 提供了四种强度不同的引用类型。
 
 ### 1. 强引用
 
@@ -274,7 +268,7 @@ HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了�
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
 - 单线程与多线程：单线程指的是垃圾收集器只使用一个线程进行收集，而多线程使用多个线程；
-- 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并形指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+- 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
 
 ### 1. Serial 收集器
 
@@ -286,7 +280,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 它的优点是简单高效，对于单个 CPU 环境来说，由于没有线程交互的开销，因此拥有最高的单线程收集效率。
 
-它是 Client 模式下的默认新生代收集器，因为在用户的桌面应用场景下，分配给虚拟机管理的内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的新生代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
+它是 Client 模式下的默认新生代收集器，因为在该应用场景下，分配给虚拟机管理的内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的新生代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
 
 ### 2. ParNew 收集器
 
@@ -304,11 +298,11 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 其它收集器关注点是尽可能缩短垃圾收集时用户线程的停顿时间，而它的目标是达到一个可控制的吞吐量，它被称为“吞吐量优先”收集器。这里的吞吐量指 CPU 用于运行用户代码的时间占总时间的比值。
 
-停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验。而高吞吐量则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。
+停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验。而高吞吐量则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，适合在后台运算而不需要太多交互的任务。
 
 缩短停顿时间是以牺牲吞吐量和新生代空间来换取的：新生代空间变小，垃圾回收变得频繁，导致吞吐量下降。
 
-可以通过一个开关参数打卡 GC 自适应的调节策略（GC Ergonomics），就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例、晋升老年代对象年龄等细节参数了。虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量，这种方式称为 。
+可以通过一个开关参数打开 GC 自适应的调节策略（GC Ergonomics），就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例、晋升老年代对象年龄等细节参数了。虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量。
 
 ### 4. Serial Old 收集器
 
@@ -377,8 +371,6 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 - 空间整合：整体来看是基于“标记 - 整理”算法实现的收集器，从局部（两个 Region 之间）上来看是基于“复制”算法实现的，这意味着运行期间不会产生内存空间碎片。
 - 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
-
-更详细内容请参考：[Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
 
 # 三、内存分配与回收策略
 
@@ -539,7 +531,7 @@ public class Test {
 
 - 与类的构造函数（或者说实例构造器 &lt;init>()）不同，不需要显式的调用父类的构造器。虚拟机会自动保证在子类的 &lt;clinit>() 方法运行之前，父类的 &lt;clinit>() 方法已经执行结束。因此虚拟机中第一个执行 &lt;clinit>() 方法的类肯定为 java.lang.Object。
 
-- 由于父类的 &lt;clinit>() 方法先执行，也就意味着父类中定义的静态语句块要优先于子类的变量赋值操作。例如以下代码：
+- 由于父类的 &lt;clinit>() 方法先执行，也就意味着父类中定义的静态语句块的执行要优先于子类。例如以下代码：
 
 ```java
 static class Parent {
@@ -744,6 +736,7 @@ public class FileSystemClassLoader extends ClassLoader {
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
+[Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
 - [JNI Part1: Java Native Interface Introduction and “Hello World” application](http://electrofriends.com/articles/jni/jni-part1-java-native-interface/)
 - [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
 - [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
