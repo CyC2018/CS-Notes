@@ -168,10 +168,6 @@
 
 学习笔记不是从网上到处拼凑而来，除了少部分引用书上和技术文档的原文，其余都是笔者的原创。在您引用本仓库内容或者对内容进行修改演绎时，请遵循文末的开源协议，谢谢。
 
-#### BookList
-
-本仓库参考的书目：[BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)。
-
 #### How To Contribute
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接对相应文档进行编辑修改。
@@ -179,6 +175,10 @@
 如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
 
 欢迎在 Issue 中提交对本仓库的改进建议~
+
+#### BookList
+
+本仓库参考的书目：[BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)。
 
 #### Typesetting
 
