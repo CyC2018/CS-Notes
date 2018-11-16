@@ -178,12 +178,12 @@ else if ( ret == 0 )
 else
 {
     // If we detect the event, zero it out so we can reuse the structure
-    if ( pfd[0].revents & POLLIN )
-        pfd[0].revents = 0;
+    if ( fds[0].revents & POLLIN )
+        fds[0].revents = 0;
         // input event on sock1
 
-    if ( pfd[1].revents & POLLOUT )
-        pfd[1].revents = 0;
+    if ( fds[1].revents & POLLOUT )
+        fds[1].revents = 0;
         // output event on sock2
 }
 ```
