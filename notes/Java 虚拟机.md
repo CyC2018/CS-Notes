@@ -227,7 +227,7 @@ obj = null;
 
 <div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
 
-将存活的对象进行标记，然后清理掉未被标记的对象。
+标记要回收的对象，然后清除。
 
 不足：
 
