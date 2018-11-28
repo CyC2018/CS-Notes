@@ -44,7 +44,7 @@ Java 的 I/O 大概可以分成以下几类：
 
 # 二、磁盘操作
 
-File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。（已被Java7的Path类代替）
+File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。
 
 递归地列出一个目录下所有文件：
 
@@ -62,6 +62,8 @@ public static void listAllFiles(File dir) {
     }
 }
 ```
+
+从 Java7 开始，可以使用 Paths 和 Files 代替 File。
 
 # 三、字节操作
 
