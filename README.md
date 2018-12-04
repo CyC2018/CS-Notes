@@ -3,13 +3,12 @@
 | 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) |
 
 <br>
+
 <div align="center">
     <img src="other/LogoMakr_0zpEzN.png" width="150px">
     <br>
     <a href="other/Group.md"> <img src="https://img.shields.io/badge/>-group-4ab8a1.svg"></a> <a href="https://legacy.gitbook.com/book/cyc2018/interview-notebook/details"> <img src="https://img.shields.io/badge/_-gitbook-4ab8a1.svg"></a> 
-</div>
-
-<!-- [![](https://img.shields.io/badge/>-gitter-blue.svg)](https://gitter.im/CyC2018-Interview-Notebook/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![](https://img.shields.io/badge/_-gitbook-4ab8a1.svg)](https://legacy.gitbook.com/book/cyc2018/interview-notebook/details)  -->
+</div> 
 
 ### :pencil2: 算法
 
@@ -165,23 +164,25 @@
 
 #### About
 
-这个仓库是笔者的一个学习笔记，主要总结一些比较重要的知识点，希望对大家有所帮助。
+本仓库主要是根据计算机经典书籍以及官方技术文档进行总结的学习笔记，希望对大家有所帮助。
 
-笔记不是从网上到处复制粘贴拼凑而来，虽然有少部分内容会直接引入书上原文或者官方技术文档的原文，但是没有直接摘抄其他人的博客文章，只做了参考，参考的文章会在最后给出链接。
-
-[BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)，这个书单是笔者至今看的一些比较好的技术书籍，虽然没有全都看完，但每本书多多少少都看了一部分。
+学习笔记不是从网上到处拼凑而来，除了少部分引用书上和技术文档的原文，其余都是笔者的原创。在您引用本仓库内容或者对内容进行修改演绎时，请遵循文末的开源协议，谢谢。
 
 #### How To Contribute
 
-笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接在相应文档进行编辑修改。
+笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接对相应文档进行编辑修改。
 
 如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
 
 欢迎在 Issue 中提交对本仓库的改进建议~
 
+#### BookList
+
+本仓库参考的书目：[BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)。
+
 #### Typesetting
 
-笔记内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
+笔记内容按照 [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
 
 笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
@@ -195,38 +196,41 @@
 
 笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
-#### Statement
-
-本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
-
 #### Logo
 
 Power by [logomakr](https://logomakr.com/).
+
+#### Statement
+
+本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 
 #### Acknowledgements
 
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与笔者联系。
 
 <a href="https://github.com/linw7">
-    <img src="other/21679154.png" width="50px">
+​    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/g10guang">
-    <img src="other/18458140.jpg" width="50px">
+​    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/ResolveWang">
-    <img src="other/8018776.jpg" width="50px">
+​    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/crossoverJie">
-    <img src="other/15684156.jpg" width="50px">
+​    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/jy03078584">
-    <img src="other/7719370.png" width="50px">
+​    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/kwongtailau">
-    <img src="other/22954582.jpg" width="50px">
+​    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/xiangflight">
-    <img src="other/10072416.jpg" width="50px">
+​    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
+</a>
+<a href="https://github.com/mafulong">
+​    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
 </a>
 
 #### License

@@ -103,7 +103,7 @@ Output: True
 Explanation: 1 * 1 + 2 * 2 = 5
 ```
 
-题目描述：判断一个数是否为两个数的平方和，例如 5 = 1<sup>2</sup> + 2<sup>2</sup>。
+题目描述：判断一个数是否为两个数的平方和。
 
 ```java
 public boolean judgeSquareSum(int c) {
@@ -130,7 +130,7 @@ public boolean judgeSquareSum(int c) {
 Given s = "leetcode", return "leotcede".
 ```
 
-使用双指针，指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+使用双指针指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
@@ -307,6 +307,8 @@ private boolean isValid(String s, String target) {
 
 [215. Kth Largest Element in an Array (Medium)](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
+题目描述：找到第 k 大的元素。
+
 **排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
 
 ```java
@@ -323,7 +325,7 @@ public int findKthLargest(int[] nums, int k) {
     PriorityQueue<Integer> pq = new PriorityQueue<>(); // 小顶堆
     for (int val : nums) {
         pq.add(val);
-        if (pq.size() > k) // 维护堆的大小为 K
+        if (pq.size() > k)  // 维护堆的大小为 K
             pq.poll();
     }
     return pq.peek();
@@ -555,7 +557,7 @@ Explanation: You don't need to remove any of the intervals since they're already
 
 题目描述：计算让一组区间不重叠所需要移除的区间个数。
 
-计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
+先计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
 
 在每次选择中，区间的结尾最为重要，选择的区间结尾越小，留给后面的区间的空间越大，那么后面能够选择的区间个数也就越大。
 
@@ -639,7 +641,7 @@ Output:
 
 题目描述：一个学生用两个分量 (h, k) 描述，h 表示身高，k 表示排在前面的有 k 个学生的身高比他高或者和他一样高。
 
-为了在每次插入操作时不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入第 k 个位置可能会变成第 k+1 个位置。
+为了使插入操作不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入的第 k 个位置可能会变成第 k+1 个位置。
 
 身高降序、k 值升序，然后按排好序的顺序插入队列的第 k 个位置中。
 
@@ -802,6 +804,52 @@ public int maxProfit(int[] prices) {
 }
 ```
 
+**子数组最大的和** 
+
+[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+
+```html
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+```
+
+```java
+public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int preSum = nums[0];
+    int maxSum = preSum;
+    for (int i = 1; i < nums.length; i++) {
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        maxSum = Math.max(maxSum, preSum);
+    }
+    return maxSum;
+}
+```
+
+**买入和售出股票最大的收益** 
+
+[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+
+题目描述：只进行一次交易。
+
+只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
+
+```java
+public int maxProfit(int[] prices) {
+    int n = prices.length;
+    if (n == 0) return 0;
+    int soFarMin = prices[0];
+    int max = 0;
+    for (int i = 1; i < n; i++) {
+        if (soFarMin > prices[i]) soFarMin = prices[i];
+        else max = Math.max(max, prices[i] - soFarMin);
+    }
+    return max;
+}
+```
+
 ## 二分查找
 
 **正常实现** 
@@ -825,7 +873,7 @@ public int binarySearch(int[] nums, int key) {
 
 **时间复杂度** 
 
-二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度都为 O(logN)。
+二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
 **m 计算** 
 
@@ -961,7 +1009,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 [540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
-Input: [1,1,2,3,3,4,4,8,8]
+Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
 Output: 2
 ```
 
@@ -1132,11 +1180,11 @@ public List<Integer> diffWaysToCompute(String input) {
 
 <div align="center"> <img src="../pics//4ff355cf-9a7f-4468-af43-e5b02038facc.jpg"/> </div><br>
 
-广度优先搜索的搜索过程有点像一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
+广度优先搜索一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
 
 第一层：
 
-- 0 -> {6,2,1,5};
+- 0 -> {6,2,1,5}
 
 第二层：
 
@@ -1150,7 +1198,7 @@ public List<Integer> diffWaysToCompute(String input) {
 - 4 -> {}
 - 3 -> {}
 
-可以看到，每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub><=d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
+每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等  **最优解**  问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径。
 
 在程序实现 BFS 时需要考虑以下问题：
 
@@ -1180,19 +1228,17 @@ public int minPathLength(int[][] grids, int tr, int tc) {
         pathLength++;
         while (size-- > 0) {
             Pair<Integer, Integer> cur = queue.poll();
+            int cr = cur.getKey(), cc = cur.getValue();
+            grids[cr][cc] = 0; // 标记
             for (int[] d : direction) {
-                int nr = cur.getKey() + d[0], nc = cur.getValue() + d[1];
-                Pair<Integer, Integer> next = new Pair<>(nr, nc);
-                if (next.getKey() < 0 || next.getValue() >= m
-                        || next.getKey() < 0 || next.getValue() >= n) {
-
+                int nr = cr + d[0], nc = cc + d[1];
+                if (nr < 0 || nr >= m || nc < 0 || nc >= n || grids[nr][nc] == 0) {
                     continue;
                 }
-                grids[next.getKey()][next.getValue()] = 0; // 标记
-                if (next.getKey() == tr && next.getValue() == tc) {
+                if (nr == tr && nc == tc) {
                     return pathLength;
                 }
-                queue.add(next);
+                queue.add(new Pair<>(nr, nc));
             }
         }
     }
@@ -1239,7 +1285,7 @@ public int numSquares(int n) {
                     continue;
                 }
                 marked[next] = true;
-                queue.add(cur - s);
+                queue.add(next);
             }
         }
     }
@@ -1290,7 +1336,7 @@ Output: 0
 Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 ```
 
-找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
+题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
 
 ```java
 public int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -1365,7 +1411,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。
 
-而深度优先搜索在得到一个新节点时立马对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
+而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
 从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种  **可达性**  问题。
 
@@ -1479,12 +1525,14 @@ Input:
 [[1,1,0],
  [1,1,0],
  [0,0,1]]
+
 Output: 2
+
 Explanation:The 0th and 1st students are direct friends, so they are in a friend circle.
 The 2nd student himself is in a friend circle. So return 2.
 ```
 
-好友关系可以看成是一个无向图，例如第 0 个人与第 1 个人是好友，那么 M[0][1] 和 M[1][0] 的值都为 1。
+题目描述：好友关系可以看成是一个无向图，例如第 0 个人与第 1 个人是好友，那么 M[0][1] 和 M[1][0] 的值都为 1。
 
 ```java
 private int n;
@@ -1530,7 +1578,7 @@ X X X X
 X O X X
 ```
 
-使被 'X' 包围的 'O' 转换为 'X'。
+题目描述：使被 'X' 包围的 'O' 转换为 'X'。
 
 先填充最外侧，剩下的就是里侧了。
 
@@ -1678,7 +1726,6 @@ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 ```
 
 ```java
-
 private static final String[] KEYS = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 public List<String> letterCombinations(String digits) {
@@ -2316,11 +2363,11 @@ private int cubeNum(int i, int j) {
 
 一行一行地摆放，在确定一行中的那个皇后应该摆在哪一列时，需要用三个标记数组来确定某一列是否合法，这三个标记数组分别为：列标记数组、45 度对角线标记数组和 135 度对角线标记数组。
 
-45 度对角线标记数组的维度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
+45 度对角线标记数组的长度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
 
 <div align="center"> <img src="../pics//85583359-1b45-45f2-9811-4f7bb9a64db7.jpg"/> </div><br>
 
-135 度对角线标记数组的维度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
+135 度对角线标记数组的长度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
 <div align="center"> <img src="../pics//9e80f75a-b12b-4344-80c8-1f9ccc2d5246.jpg"/> </div><br>
 
@@ -2414,27 +2461,19 @@ public int climbStairs(int n) {
 
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
 
-由于不能抢劫邻近住户，因此如果抢劫了第 i 个住户那么只能抢劫 i - 2 或者 i - 3 的住户，所以
+由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2],dp[i-3])+nums[i]"/></div> <br>
+<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])"/></div> <br>
 
 ```java
 public int rob(int[] nums) {
-    int n = nums.length;
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return nums[0];
-    }
-    int pre3 = 0, pre2 = 0, pre1 = 0;
-    for (int i = 0; i < n; i++) {
-        int cur = Math.max(pre2, pre3) + nums[i];
-        pre3 = pre2;
+    int pre2 = 0, pre1 = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int cur = Math.max(pre2 + nums[i], pre1);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre1, pre2);
+    return pre1;
 }
 ```
 
@@ -2443,7 +2482,7 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-public int rob(int[] nums) {
+public  int rob(int[] nums) {
     if (nums == null || nums.length == 0) {
         return 0;
     }
@@ -2454,15 +2493,14 @@ public int rob(int[] nums) {
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private int rob(int[] nums, int first, int last) {
-    int pre3 = 0, pre2 = 0, pre1 = 0;
+private   int rob(int[] nums, int first, int last) {
+    int pre2 = 0, pre1 = 0;
     for (int i = first; i <= last; i++) {
-        int cur = Math.max(pre3, pre2) + nums[i];
-        pre3 = pre2;
+        int cur = Math.max(pre1, pre2 + nums[i]);
         pre2 = pre1;
         pre1 = cur;
     }
-    return Math.max(pre2, pre1);
+    return pre1;
 }
 ```
 
@@ -2546,7 +2584,7 @@ public int uniquePaths(int m, int n) {
 }
 ```
 
-也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 从取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
+也可以直接用数学公式求解，这是一个组合问题。机器人总共移动的次数 S=m+n-2，向下移动的次数 D=m-1，那么问题可以看成从 S 中取出 D 个位置的组合数量，这个问题的解为 C(S, D)。
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -2574,7 +2612,7 @@ sumRange(2, 5) -> -1
 sumRange(0, 5) -> -3
 ```
 
-求区间 i \~ j 的和，可以转换为 sum[j] - sum[i-1]，其中 sum[i] 为 0 \~ i 的和。
+求区间 i \~ j 的和，可以转换为 sum[j + 1] - sum[i]，其中 sum[i] 为 0 \~ i - 1 的和。
 
 ```java
 class NumArray {
@@ -2591,30 +2629,6 @@ class NumArray {
     public int sumRange(int i, int j) {
         return sums[j + 1] - sums[i];
     }
-}
-```
-
-**子数组最大的和** 
-
-[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
-
-```html
-For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
-the contiguous subarray [4,-1,2,1] has the largest sum = 6.
-```
-
-```java
-public int maxSubArray(int[] nums) {
-    if (nums == null || nums.length == 0) {
-        return 0;
-    }
-    int preSum = nums[0];
-    int maxSum = preSum;
-    for (int i = 1; i < nums.length; i++) {
-        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
-        maxSum = Math.max(maxSum, preSum);
-    }
-    return maxSum;
 }
 ```
 
@@ -2790,7 +2804,7 @@ return ret;
 定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
-- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i-1] = x。
+- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x。
 
 例如对于数组 [4,3,6,5]，有：
 
@@ -3095,7 +3109,6 @@ public int findTargetSumWays(int[] nums, int S) {
     int W = (sum + S) / 2;
     int[] dp = new int[W + 1];
     dp[0] = 1;
-    Arrays.sort(nums);
     for (int num : nums) {
         for (int i = W; i >= num; i--) {
             dp[i] = dp[i] + dp[i - num];
@@ -3349,27 +3362,6 @@ public int maxProfit(int[] prices, int fee) {
 }
 ```
 
-**买入和售出股票最大的收益** 
-
-[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
-
-题目描述：只进行一次交易。
-
-只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
-
-```java
-public int maxProfit(int[] prices) {
-    int n = prices.length;
-    if (n == 0) return 0;
-    int soFarMin = prices[0];
-    int max = 0;
-    for (int i = 1; i < n; i++) {
-        if (soFarMin > prices[i]) soFarMin = prices[i];
-        else max = Math.max(max, prices[i] - soFarMin);
-    }
-    return max;
-}
-```
 
 **只能进行两次的股票交易** 
 
@@ -7063,4 +7055,3 @@ public int[] countBits(int num) {
 - 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
 - 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
 - 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
-
