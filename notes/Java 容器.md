@@ -68,7 +68,7 @@
 
 <div align="center"> <img src="../pics//SoWkIImgAStDuUBAp2j9BKfBJ4vLy0G.png"/> </div><br>
 
-Collection 实现了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
+Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
 从 JDK 1.5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。
 
@@ -646,8 +646,8 @@ static int indexFor(int h, int length) {
 | 参数 | 含义 |
 | :--: | :-- |
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
-| size | table 的实际使用量。 |
-| threshold | size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。 |
+| size | 键值对数量。 |
+| threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
 | loadFactor | 装载因子，table 能够使用的比例，threshold = capacity * loadFactor。|
 
 ```java
@@ -727,7 +727,7 @@ new capacity : 00100000
 
 对于一个 Key，
 
-- 它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；
+- 它的哈希值如果在第 5 位上为 0，那么取模得到的结果和之前一样；
 - 如果为 1，那么得到的结果为原来的结果 +16。
 
 ### 7. 计算数组容量
