@@ -223,14 +223,14 @@ Output:
 
 在字符串尾部填充任意字符，使得字符串的长度等于替换之后的长度。因为一个空格要替换成三个字符（%20），因此当遍历到一个空格时，需要在尾部填充两个任意字符。
 
-令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
+令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2 从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
 ```java
 public String replaceSpace(StringBuffer str) {
     int P1 = str.length() - 1;
-    for (int i = 0; i < P1 + 1; i++)
+    for (int i = 0; i <= P1; i++)
         if (str.charAt(i) == ' ')
             str.append("  ");
 
@@ -385,6 +385,7 @@ private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int inL) {
 
 ```java
 public class TreeLinkNode {
+
     int val;
     TreeLinkNode left = null;
     TreeLinkNode right = null;
@@ -510,6 +511,7 @@ public int Fibonacci(int n) {
 
 ```java
 public class Solution {
+
     private int[] fib = new int[40];
 
     public Solution() {
@@ -722,7 +724,7 @@ private char[][] buildMatrix(char[] array) {
 
 地上有一个 m 行和 n 列的方格。一个机器人从坐标 (0, 0) 的格子开始移动，每一次只能向左右上下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。
 
-例如，当 k 为 18 时，机器人能够进入方格 (35,37)，因为 3+5+3+7=18。但是，它不能进入方格 (35,37)，因为 3+5+3+8=19。请问该机器人能够达到多少个格子？
+例如，当 k 为 18 时，机器人能够进入方格 (35,37)，因为 3+5+3+7=18。但是，它不能进入方格 (35,38)，因为 3+5+3+8=19。请问该机器人能够达到多少个格子？
 
 ## 解题思路
 
@@ -956,7 +958,7 @@ private void printNumber(char[] number) {
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
-    if (head == null || head.next == null || tobeDelete == null)
+    if (head == null || tobeDelete == null)
         return null;
     if (tobeDelete.next != null) {
         // 要删除的节点不是尾节点
@@ -1154,11 +1156,11 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 ## 解题思路
 
-使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。假设相遇点在下图的 z1 位置，此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
+使用双指针，一个指针 fast 每次移动两个节点，一个指针 slow 每次移动一个节点。因为存在环，所以两个指针必定相遇在环中的某个节点上。假设相遇点在下图的 y6 位置，此时 fast 移动的节点数为 x+2y+z，slow 为 x+y，由于 fast 速度比 slow 快一倍，因此 x+2y+z=2(x+y)，得到 x=z。
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="../pics//2858f8ad-aedb-45a5-a706-e98c96d690fa.jpg" width="600"/> </div><br>
+<div align="center"> <img src="../pics//70fa1f83-dae7-456d-b94b-ce28963b2ba1.png" width="500"/> </div><br>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
@@ -1433,7 +1435,8 @@ public boolean IsPopOrder(int[] pushSequence, int[] popSequence) {
     Stack<Integer> stack = new Stack<>();
     for (int pushIndex = 0, popIndex = 0; pushIndex < n; pushIndex++) {
         stack.push(pushSequence[pushIndex]);
-        while (popIndex < n && stack.peek() == popSequence[popIndex]) {
+        while (popIndex < n && !stack.isEmpty() 
+                && stack.peek() == popSequence[popIndex]) {
             stack.pop();
             popIndex++;
         }
@@ -1558,7 +1561,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
 
-例如，下图是后序遍历序列 3,1,2 所对应的二叉搜索树。
+例如，下图是后序遍历序列 1,3,2 所对应的二叉搜索树。
 
 <div align="center"> <img src="../pics//836a4eaf-4798-4e48-b52a-a3dab9435ace.png" width="150"/> </div><br>
 
@@ -1578,7 +1581,7 @@ private boolean verify(int[] sequence, int first, int last) {
     int cutIndex = first;
     while (cutIndex < last && sequence[cutIndex] <= rootVal)
         cutIndex++;
-    for (int i = cutIndex + 1; i < last; i++)
+    for (int i = cutIndex; i < last; i++)
         if (sequence[i] < rootVal)
             return false;
     return verify(sequence, first, cutIndex - 1) && verify(sequence, cutIndex, last - 1);
@@ -2687,8 +2690,8 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
     for (int i = 0; i < size; i++)
         heap.add(num[i]);
     ret.add(heap.peek());
-    for (int i = 1, j = i + size - 1; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
-        heap.remove(num[i - 1]);
+    for (int i = 0, j = i + size; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
+        heap.remove(num[i]);
         heap.add(num[j]);
         ret.add(heap.peek());
     }

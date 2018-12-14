@@ -220,7 +220,7 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。
 
 ```sql
-DELEFT FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
+DELETE FROM messages WHERE create < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 ```
 
 ```sql
@@ -316,7 +316,7 @@ FLOAT、DOUBLE 和 DECIMAL 都可以指定列宽，例如 DECIMAL(18, 9) 表示�
 
 VARCHAR 这种变长类型能够节省空间，因为只需要存储必要的内容。但是在执行 UPDATE 时可能会使行变得比原来长，当超出一个页所能容纳的大小时，就要执行额外的操作。MyISAM 会将行拆成不同的片段存储，而 InnoDB 则需要分裂页来使行放进页内。
 
-VARCHAR 会保留字符串末尾的空格，而 CHAR 会删除。
+在进行存储和检索时，会保留 VARCHAR 末尾的空格，而会删除 CHAR 末尾的空格。
 
 ## 时间和日期
 
@@ -374,7 +374,7 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 ### 2. 连接
 
-可以将原来的连接分解成多个单表连接查询，然后在用户程序中进行连接。
+可以将原来的连接分解成多个单表查询，然后在用户程序中进行连接。
 
 ### 3. ID 唯一性
 

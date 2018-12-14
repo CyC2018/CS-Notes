@@ -209,7 +209,7 @@ OK
 
 ## 字典
 
-dictht 是一个散列表结构，使用拉链法保存哈希冲突的 dictEntry。
+dictht 是一个散列表结构，使用拉链法保存哈希冲突。
 
 ```c
 /* This is our hash table structure. Every dictionary has two of this as we
@@ -253,7 +253,7 @@ rehash 操作不是一次性完成，而是采用渐进方式，这是为了避�
 
 在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
 
-采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的操作也需要到对应的 dictht 去执行。
+采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的查找操作也需要到对应的 dictht 去执行。
 
 ```c
 /* Performs N steps of incremental rehashing. Returns 1 if there are still
@@ -355,7 +355,7 @@ List 是一个双向链表，可以通过 lpop 和 lpush 写入和读取消息�
 
 ## 会话缓存
 
-在分布式场景下具有多个应用服务器，可以使用 Redis 来统一存储这些应用服务器的会话信息。
+可以使用 Redis 来统一存储多台应用服务器的会话信息。
 
 当应用服务器不再存储用户的会话信息，也就不再具有状态，一个用户可以请求任意一个应用服务器，从而更容易实现高可用性以及可伸缩性。
 

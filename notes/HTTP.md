@@ -24,10 +24,9 @@
     * [响应首部字段](#响应首部字段)
     * [实体首部字段](#实体首部字段)
 * [五、具体应用](#五具体应用)
-    * [Cookie](#cookie)
-    * [6. Secure](#6-secure)
-    * [缓存](#缓存)
     * [连接管理](#连接管理)
+    * [Cookie](#cookie)
+    * [缓存](#缓存)
     * [内容协商](#内容协商)
     * [内容编码](#内容编码)
     * [范围请求](#范围请求)
@@ -40,20 +39,19 @@
     * [认证](#认证)
     * [完整性保护](#完整性保护)
     * [HTTPs 的缺点](#https-的缺点)
-    * [配置 HTTPs](#配置-https)
 * [七、HTTP/2.0](#七http20)
     * [HTTP/1.x 缺陷](#http1x-缺陷)
     * [二进制分帧层](#二进制分帧层)
     * [服务端推送](#服务端推送)
     * [首部压缩](#首部压缩)
-* [八、GET 和 POST 比较](#八get-和-post-比较)
+* [八、HTTP/1.1 新特性](#八http11-新特性)
+* [九、GET 和 POST 比较](#九get-和-post-比较)
     * [作用](#作用)
     * [参数](#参数)
     * [安全](#安全)
     * [幂等性](#幂等性)
     * [可缓存](#可缓存)
     * [XMLHttpRequest](#xmlhttprequest)
-* [九、HTTP/1.0 与 HTTP/1.1 的区别](#九http10-与-http11-的区别)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -104,7 +102,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 POST 主要用来传输数据，而 GET 主要用来获取资源。
 
-更多 POST 与 GET 的比较请见第八章。
+更多 POST 与 GET 的比较请见第九章。
 
 ## PUT
 
@@ -305,6 +303,25 @@ CONNECT www.example.com:443 HTTP/1.1
 
 # 五、具体应用
 
+## 连接管理
+
+<div align="center"> <img src="../pics//HTTP1_x_Connections.png" width="800"/> </div><br>
+
+### 1. 短连接与长连接
+
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
+
+长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
+
+- 从 HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 `Connection : close`；
+- 在 HTTP/1.1 之前默认是短连接的，如果需要使用长连接，则使用 `Connection : Keep-Alive`。
+
+### 2. 流水线
+
+默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于会受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
+
+流水线是在同一条长连接上发出连续的请求，而不用等待响应返回，这样可以避免连接延迟。
+
 ## Cookie
 
 HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
@@ -361,7 +378,7 @@ Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径
 
 ### 5. JavaScript
 
-通过 `Document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
+通过 `document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
 ```html
 document.cookie = "yummy_cookie=choco";
@@ -369,19 +386,19 @@ document.cookie = "tasty_cookie=strawberry";
 console.log(document.cookie);
 ```
 
-### 6.   HttpOnly
+### 6. HttpOnly
 
-标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
+标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
 ```html
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 ```
 
-## 6. Secure
+### 7. Secure
 
 标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
-### 7. Session
+### 8. Session
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
 
@@ -396,11 +413,11 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 应该注意 Session ID 的安全性问题，不能让它被恶意攻击者轻易获取，那么就不能产生一个容易被猜到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
 
-### 8. 浏览器禁用 Cookie
+### 9. 浏览器禁用 Cookie
 
 此时无法使用 Cookie 来保存用户信息，只能使用 Session。除此之外，不能再将 Session ID 存放到 Cookie 中，而是使用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递。
 
-### 9. Cookie 与 Session 选择
+### 10. Cookie 与 Session 选择
 
 - Cookie 只能存储 ASCII 码字符串，而 Session 则可以存取任何类型的数据，因此在考虑数据复杂性时首选 Session；
 - Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
@@ -422,7 +439,7 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 HTTP/1.1 通过 Cache-Control 首部字段来控制缓存。
 
-**（一）禁止进行缓存** 
+**3.1 禁止进行缓存** 
 
 no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 
@@ -430,7 +447,7 @@ no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 Cache-Control: no-store
 ```
 
-**（二）强制确认缓存** 
+**3.2 强制确认缓存** 
 
 no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效才将能使用该缓存对客户端的请求进行响应。
 
@@ -438,7 +455,7 @@ no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源�
 Cache-Control: no-cache
 ```
 
-**（三）私有缓存和公共缓存** 
+**3.3 私有缓存和公共缓存** 
 
 private 指令规定了将资源作为私有缓存，只能被单独用户所使用，一般存储在用户浏览器中。
 
@@ -452,7 +469,7 @@ public 指令规定了将资源作为公共缓存，可以被多个用户所使�
 Cache-Control: public
 ```
 
-**（四）缓存过期机制** 
+**3.4 缓存过期机制** 
 
 max-age 指令出现在请求报文中，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
 
@@ -495,34 +512,15 @@ Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
 If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 ```
 
-## 连接管理
-
-<div align="center"> <img src="../pics//HTTP1_x_Connections.png" width="800"/> </div><br>
-
-### 1. 短连接与长连接
-
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
-
-长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
-
-- 从 HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 `Connection : close`；
-- 在 HTTP/1.1 之前默认是短连接的，如果需要使用长连接，则使用 `Connection : Keep-Alive`。
-
-### 2. 流水线
-
-默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于会受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
-
-流水线是在同一条长连接上发出连续的请求，而不用等待响应返回，这样可以避免连接延迟。
-
 ## 内容协商
 
 通过内容协商返回最合适的内容，例如根据浏览器的默认语言选择返回中文界面还是英文界面。
 
 ### 1. 类型
 
-**（一）服务端驱动型** 
+**1.1 服务端驱动型** 
 
-客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Languag，服务器根据这些字段返回特定的资源。
+客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language，服务器根据这些字段返回特定的资源。
 
 它存在以下问题：
 
@@ -530,7 +528,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 - 客户端提供的信息相当冗长（HTTP/2 协议的首部压缩机制缓解了这个问题），并且存在隐私风险（HTTP 指纹识别技术）；
 - 给定的资源需要返回不同的展现形式，共享缓存的效率会降低，而服务器端的实现会越来越复杂。
 
-**（二）代理驱动型** 
+**1.2 代理驱动型** 
 
 服务器返回 300 Multiple Choices 或者 406 Not Acceptable，客户端从中选出最合适的那个资源。
 
@@ -720,11 +718,6 @@ HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认�
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要支付证书授权的高额费用。
-
-## 配置 HTTPs
-
-[Nginx 配置 HTTPS 服务器](https://aotu.io/notes/2016/08/16/nginx-https/index.html)
-
 # 七、HTTP/2.0
 
 ## HTTP/1.x 缺陷
@@ -765,7 +758,25 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 <div align="center"> <img src="../pics//_u4E0B_u8F7D.png" width="600"/> </div><br>
 
-# 八、GET 和 POST 比较
+# 八、HTTP/1.1 新特性
+
+详细内容请见上文
+
+- 默认是长连接
+
+- 支持流水线
+
+- 支持同时打开多个 TCP 连接
+
+- 支持虚拟主机
+
+- 新增状态码 100
+
+- 支持分块传输编码
+
+- 新增缓存处理指令 max-age
+
+# 九、GET 和 POST 比较
 
 ## 作用
 
@@ -847,23 +858,6 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 - 在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
 - 而 GET 方法 Header 和 Data 会一起发送。
 
-# 九、HTTP/1.0 与 HTTP/1.1 的区别
-
-> 详细内容请见上文
-
-- HTTP/1.1 默认是长连接
-
-- HTTP/1.1 支持管线化处理
-
-- HTTP/1.1 支持同时打开多个 TCP 连接
-
-- HTTP/1.1 支持虚拟主机
-
-- HTTP/1.1 新增状态码 100
-
-- HTTP/1.1 支持分块传输编码
-
-- HTTP/1.1 新增缓存处理指令 max-age
 
 
 # 参考资料

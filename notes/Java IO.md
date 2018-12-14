@@ -63,22 +63,25 @@ public static void listAllFiles(File dir) {
 }
 ```
 
+从 Java7 开始，可以使用 Paths 和 Files 代替 File。
+
 # 三、字节操作
 
 ## 实现文件复制
 
 ```java
 public static void copyFile(String src, String dist) throws IOException {
-
     FileInputStream in = new FileInputStream(src);
     FileOutputStream out = new FileOutputStream(dist);
+
     byte[] buffer = new byte[20 * 1024];
+    int cnt;
 
     // read() 最多读取 buffer.length 个字节
     // 返回的是实际读取的个数
     // 返回 -1 的时候表示读到 eof，即文件尾
-    while (in.read(buffer, 0, buffer.length) != -1) {
-        out.write(buffer);
+    while ((cnt = in.read(buffer, 0, buffer.length)) != -1) {
+        out.write(buffer, 0, cnt);
     }
 
     in.close();
@@ -119,7 +122,7 @@ DataInputStream 装饰者提供了对更多数据类型进行输入的操作，�
 
 UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-16le，le 指的是 Little Endian，也就是小端。
 
-Java 使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码是为了让一个中文或者一个英文都能使用一个 char 来存储。
+Java 的内存编码使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码是为了让一个中文或者一个英文都能使用一个 char 来存储。
 
 ## String 的编码方式
 
@@ -182,8 +185,10 @@ public static void readFileContent(String filePath) throws IOException {
 
 ```java
 public static void main(String[] args) throws IOException, ClassNotFoundException {
+
     A a1 = new A(123, "abc");
     String objectFile = "file/a1";
+
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
     objectOutputStream.writeObject(a1);
     objectOutputStream.close();
@@ -195,6 +200,7 @@ public static void main(String[] args) throws IOException, ClassNotFoundExceptio
 }
 
 private static class A implements Serializable {
+
     private int x;
     private String y;
 
@@ -280,10 +286,6 @@ public static void main(String[] args) throws IOException {
 
 # 七、NIO
 
-- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
-- [Java NIO 浅析](https://tech.meituan.com/nio.html)
-- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
-
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
 ## 流与块
@@ -339,7 +341,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 <div align="center"> <img src="../pics//1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
 
-② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 移动设置为 5，limit 保持不变。
+② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 为 5，limit 保持不变。
 
 <div align="center"> <img src="../pics//80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
 
@@ -608,8 +610,10 @@ NIO 与普通 I/O 的区别主要有以下两点：
 
 - Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+- [Java NIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
-- [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.htm)
+- [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.html)
 - [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
 - [NIO 与传统 IO 的区别](http://blog.csdn.net/shimiso/article/details/24990499)
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
