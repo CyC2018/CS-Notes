@@ -22,6 +22,8 @@
 - [[微服务学习资料汇总][知识点]](https://www.infoq.cn/article/2014%2F07%2Fmicroservice-learning-resources)
 - [[理解 RESTful 架构][知识点]](http://www.ruanyifeng.com/blog/2011/09/restful.html)
 - [[MapReduce 算法][知识点]](https://github.com/xuelangZF/CS_Offer/blob/master/Others/Hadoop_Spark.md)
+- [[高并发、分布式、高可用][面试题集锦]](https://github.com/doocs/advanced-java)
+
 
 # Spring
 
