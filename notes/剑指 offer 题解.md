@@ -587,6 +587,8 @@ public int RectCover(int n) {
 
 ## 解题思路
 
+### 动态规划
+
 ```java
 public int JumpFloorII(int target) {
     int[] dp = new int[target];
@@ -598,6 +600,34 @@ public int JumpFloorII(int target) {
 }
 ```
 
+### 数学式子推导
+
+跳上 n-1 级台阶，可以从 n-2 级跳 1 级上去，也可以从 n-3 级跳 2 级上去...也可以从 0 级跳上去。那么
+```
+f(n-1) = f(n-2) + f(n-3) + ... + f(0) ①
+```
+
+同样，跳上 n 级台阶，可以从 n-1 级跳 1 级上去，也可以从 n-2 级跳 2 级上去...也可以从 0 级跳上去。那么
+```
+f(n) = f(n-1) + f(n-2) + ... + f(0)  ②
+```
+
+②-①：
+```
+f(n) - f(n-1) = f(n-1)
+f(n) = 2*f(n-1)
+```
+
+所以 f(n) 是一个等比数列：
+```
+f(n) = 2^(n-1)
+```
+
+```java
+public int JumpFloorII(int target) {
+    return (int) Math.pow(2, target - 1);
+}
+```
 
 # 11. 旋转数组的最小数字
 
