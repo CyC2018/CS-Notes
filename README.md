@@ -232,7 +232,7 @@ Power by [logomakr](https://logomakr.com/).
 <a href="https://github.com/mafulong">
 ​    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
 </a>
-<a href="https://github.com/mafulong">
+<a href="https://github.com/yanglbme">
 ​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
 
