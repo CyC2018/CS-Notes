@@ -1,4 +1,5 @@
 - Getting started
 
-  - [README](README.md)
+  - [README](https://github.com/CyC2018/CS-Notes/blob/master/docs/README.md)
   - [guide](guide.md)
+
