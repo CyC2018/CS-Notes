@@ -30,7 +30,7 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="../pics//85370d54-40d1-4912-bcbe-37a2481c861d.png" width="450"/> </div><br>
+<div align="center"> <img src="pics/85370d54-40d1-4912-bcbe-37a2481c861d.png" width="450"/> </div><br>
 
 ## 程序计数器
 
@@ -40,7 +40,7 @@
 
 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="../pics//28ab96b4-82ea-4d99-99fb-b320f60d0a58.png" width="500"/> </div><br>
+<div align="center"> <img src="pics/28ab96b4-82ea-4d99-99fb-b320f60d0a58.png" width="500"/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
@@ -59,7 +59,7 @@ java -Xss512M HackTheJava
 
 本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
-<div align="center"> <img src="../pics//JNI-Java-Native-Interface.jpg" width="350"/> </div><br>
+<div align="center"> <img src="pics/JNI-Java-Native-Interface.jpg" width="350"/> </div><br>
 
 ## 堆
 
@@ -143,7 +143,7 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 - 方法区中类静态属性引用的对象
 - 方法区中的常量引用的对象
 
-<div align="center"> <img src="../pics//0635cbe8.png" width=""/> </div><br>
+<div align="center"> <img src="pics/0635cbe8.png" width=""/> </div><br>
 
 ### 3. 方法区的回收
 
@@ -225,7 +225,7 @@ obj = null;
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="../pics//a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
 
 标记要回收的对象，然后清除。
 
@@ -236,13 +236,13 @@ obj = null;
 
 ### 2. 标记 - 整理
 
-<div align="center"> <img src="../pics//902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 ### 3. 复制
 
-<div align="center"> <img src="../pics//e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
@@ -263,7 +263,7 @@ HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了�
 
 ## 垃圾收集器
 
-<div align="center"> <img src="../pics//c625baa0-dde6-449e-93df-c3a67f2f430f.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg" width=""/> </div><br>
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
@@ -272,7 +272,7 @@ HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了�
 
 ### 1. Serial 收集器
 
-<div align="center"> <img src="../pics//22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
 
 Serial 翻译为串行，也就是说它以串行的方式执行。
 
@@ -284,7 +284,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 2. ParNew 收集器
 
-<div align="center"> <img src="../pics//81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg" width=""/> </div><br>
 
 它是 Serial 收集器的多线程版本。
 
@@ -306,7 +306,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 4. Serial Old 收集器
 
-<div align="center"> <img src="../pics//08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg" width=""/> </div><br>
 
 是 Serial 收集器的老年代版本，也是给 Client 模式下的虚拟机使用。如果用在 Server 模式下，它有两大用途：
 
@@ -315,7 +315,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 5. Parallel Old 收集器
 
-<div align="center"> <img src="../pics//278fe431-af88-4a95-a895-9c3b80117de3.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/278fe431-af88-4a95-a895-9c3b80117de3.jpg" width=""/> </div><br>
 
 是 Parallel Scavenge 收集器的老年代版本。
 
@@ -323,7 +323,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 6. CMS 收集器
 
-<div align="center"> <img src="../pics//62e77997-6957-4b68-8d12-bfd609bb2c68.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg" width=""/> </div><br>
 
 CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
@@ -348,17 +348,17 @@ G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，�
 
 堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
-<div align="center"> <img src="../pics//4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
 
 G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
 
-<div align="center"> <img src="../pics//9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
 
 通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
 每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
 
-<div align="center"> <img src="../pics//f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
 
 如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：
 
@@ -446,7 +446,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ## 类的生命周期
 
-<div align="center"> <img src="../pics//32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width=""/> </div><br>
 
 包括以下 7 个阶段：
 
@@ -622,7 +622,7 @@ System.out.println(ConstClass.HELLOWORLD);
 
 下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
 
-<div align="center"> <img src="../pics//class_loader_hierarchy.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/class_loader_hierarchy.png" width="600"/> </div><br>
 
 ### 1. 工作过程
 

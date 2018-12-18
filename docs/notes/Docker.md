@@ -8,7 +8,7 @@
 <!-- GFM-TOC -->
 
 
-<div align="center"> <img src="../pics//011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png"/> </div><br>
+<div align="center"> <img src="pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png"/> </div><br>
 
 # 一、解决的问题
 
@@ -20,9 +20,9 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。
 
-<div align="center"> <img src="../pics//71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png"/> </div><br>
+<div align="center"> <img src="pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png"/> </div><br>
 
-<div align="center"> <img src="../pics//7e873b60-44dc-4911-b080-defd5b8f0b49.png"/> </div><br>
+<div align="center"> <img src="pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png"/> </div><br>
 
 ## 启动速度
 
@@ -76,7 +76,7 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。
 
-<div align="center"> <img src="../pics//docker-filesystems-busyboxrw.png"/> </div><br>
+<div align="center"> <img src="pics/docker-filesystems-busyboxrw.png"/> </div><br>
 
 # 参考资料
 
