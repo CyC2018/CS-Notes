@@ -628,7 +628,7 @@ f(n) = 2*f(n-1)
 
 所以 f(n) 是一个等比数列
 
-```source-java
+```java
 public int JumpFloorII(int target) {
     return (int) Math.pow(2, target - 1);
 }
@@ -925,15 +925,10 @@ public double Power(double base, int exponent) {
         return 1;
     if (exponent == 1)
         return base;
-    boolean isNegative = false;
-    if (exponent < 0) {
-        exponent = -exponent;
-        isNegative = true;
-    }
-    double pow = Power(base * base, exponent / 2);
-    if (exponent % 2 != 0)
-        pow = pow * base;
-    return isNegative ? 1 / pow : pow;
+    double pow = Power(base * base, Math.abs(exponent) >> 1);
+    if ((exponent & 1) == 1)
+        pow *= base;
+    return exponent < 0 ? 1 / pow : pow;
 }
 ```
 
@@ -998,9 +993,8 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
         return null;
     if (tobeDelete.next != null) {
         // 要删除的节点不是尾节点
-        ListNode next = tobeDelete.next;
-        tobeDelete.val = next.val;
-        tobeDelete.next = next.next;
+        tobeDelete.val = tobeDelete.next.val;
+        tobeDelete.next = tobeDelete.next.next;
     } else {
         ListNode cur = head;
         while (cur.next != tobeDelete)
