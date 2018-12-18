@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
     <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
-    <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
-    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
 </head>
 
 <body>
@@ -28,16 +26,22 @@
         auto2top: true,
         // logo: '/_media/logomakr-3sxxzw-128x128.png'
     }
-    // const gitalk = new Gitalk({
-    // clientID: '0a3e1a4c29a4778f35f2',
-    // clientSecret: '5bf2890d68acc32cbf8327924805a0b48e15f64c',
-    // repo: 'test',
-    // owner: 'CyC2018',
-    // admin: ['CyC2018'],
-    // distractionFreeMode: false
-    // })
+    const gitalk = new Gitalk({
+        clientID: 'c6c02367e36ca6e2bb2d',
+        clientSecret: '31a2700e3315b21c5e9f2e887709d8cf21f9ff8f',
+        repo: 'test',
+        owner: 'CyC2018',
+        admin: ['CyC2018'],
+        distractionFreeMode: false
+    })
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//unpkg.com/docsify-copy-code"></script>
+    <script src="//unpkg.com/prismjs/components/prism-java.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
 </body>
 
 </html>
