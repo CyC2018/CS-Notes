@@ -1,4 +1,4 @@
-<img width="150px" src="https://github.com/CyC2018/CS-Notes/tree/master/docs/_media/LogoMakr_1J56bI.png">
+<img width="150px" src="_media/LogoMakr_1J56bI.png">
 
 # CS-Notes
 
