@@ -5,7 +5,7 @@
 > Computer Sicence Learning Notes.
 
 - Algorithm
-- Computer Networkste
+- Computer Networks
 - ...
 
 <span id="busuanzi_container_site_pv">Site View : <span id="busuanzi_value_site_pv">
