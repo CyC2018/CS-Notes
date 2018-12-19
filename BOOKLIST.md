@@ -1,5 +1,5 @@
-# 数据结构与算法
-
+# 数据结构与算法 
+ 
 - [算法](https://book.douban.com/subject/19952400/)
 - [数据结构与算法分析](https://book.douban.com/subject/3351237/)
 - [编程珠玑](https://book.douban.com/subject/3227098/)
@@ -41,6 +41,7 @@
 
 - [Java 编程思想](https://book.douban.com/subject/2130190/)
 - [Effective java 中文版](https://book.douban.com/subject/3360807/)
+- [深入Java虚拟机(原书第2版)](https://book.douban.com/subject/1138768/)
 - [深入理解 Java 虚拟机](https://book.douban.com/subject/24722612/)
 - [Java 并发编程实战](https://book.douban.com/subject/10484692/)
 - [精通 Spring 4.x](https://book.douban.com/subject/26952826/)
