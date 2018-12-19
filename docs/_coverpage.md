@@ -9,7 +9,5 @@
 - Operating System
 - ...
 
-[GitHub](https://github.com/CyC2018/CS-Notes)
-
-<!-- ![color](#107ea485) -->
+[Get Started](README.md)
 

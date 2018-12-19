@@ -9,21 +9,23 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
     <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <link rel="stylesheet" href="_style/style.css">
 </head>
 
 <body>
     <nav>
-        <a href="#/">Github</a>
+        <a href="#/readme">HOME</a>
     </nav>
     <div id="app"></div>
     <script>
     window.$docsify = {
         name: 'CS-Notes',
-        repo: '',
-        loadSidebar: true,
-        subMaxLevel: 1,
+        repo: 'https://github.com/CyC2018/CS-Notes',
+        loadSidebar: false,
+        subMaxLevel: 2,
         coverpage: true,
         auto2top: true,
+        autoHeader: true
         // logo: '/_media/logomakr-3sxxzw-128x128.png'
     }
     const gitalk = new Gitalk({
@@ -43,6 +45,7 @@
     <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
 </body>
 
 </html>
