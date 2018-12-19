@@ -13,7 +13,7 @@
 
 > [计算机网络](notes/计算机网络.md) </br>
 > [HTTP](notes/HTTP.md) </br>
-> [Sockets](notes/Sockets.md)
+> [Socket](notes/Socket.md)
 
 ## 👫 面向对象
 
