@@ -1,0 +1,48 @@
+& = ≠ ≤ ≥
+* + - / ÷ ^
+< <= > >=
+
+start with begin with end with
+starts with begins with ends with
+does not contain doesn't contain
+contain contains
+is in isn't in is not in
+is contained by isn't contained by is not contained by
+greater than greater than or equal greater than or equal to
+less than less than or equal less than or equal to
+does not come before doesn't come before comes before
+does not come after doesn't come after comes after
+is equal isn't equal is not equal
+is equal to isn't equal to is not equal to
+does not equal doesn't equal equals
+isn't is not
+ref a ref to a reference to
+and or div mod as not
+
+----------------------------------------------------
+
+[
+	["operator", "&"], ["operator", "="], ["operator", "≠"], ["operator", "≤"], ["operator", "≥"],
+	["operator", "*"], ["operator", "+"], ["operator", "-"], ["operator", "/"], ["operator", "÷"], ["operator", "^"],
+	["operator", "<"], ["operator", "<="], ["operator", ">"], ["operator", ">="],
+	["operator", "start with"], ["operator", "begin with"], ["operator", "end with"],
+	["operator", "starts with"], ["operator", "begins with"], ["operator", "ends with"],
+	["operator", "does not contain"], ["operator", "doesn't contain"],
+	["operator", "contain"], ["operator", "contains"],
+	["operator", "is in"], ["operator", "isn't in"], ["operator", "is not in"],
+	["operator", "is contained by"], ["operator", "isn't contained by"], ["operator", "is not contained by"],
+	["operator", "greater than"], ["operator", "greater than or equal"], ["operator", "greater than or equal to"],
+	["operator", "less than"], ["operator", "less than or equal"], ["operator", "less than or equal to"],
+	["operator", "does not come before"], ["operator", "doesn't come before"], ["operator", "comes before"],
+	["operator", "does not come after"], ["operator", "doesn't come after"], ["operator", "comes after"],
+	["operator", "is equal"], ["operator", "isn't equal"], ["operator", "is not equal"],
+	["operator", "is equal to"], ["operator", "isn't equal to"], ["operator", "is not equal to"],
+	["operator", "does not equal"], ["operator", "doesn't equal"], ["operator", "equals"],
+	["operator", "isn't"], ["operator", "is not"],
+	["operator", "ref"], ["operator", "a ref to"], ["operator", "a reference to"],
+	["operator", "and"], ["operator", "or"], ["operator", "div"], ["operator", "mod"], ["operator", "as"], ["operator", "not"]
+]
+
+----------------------------------------------------
+
+Checks for most of the operators.

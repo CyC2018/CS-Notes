@@ -1,0 +1,20 @@
+port = 8080;
+MySQL.port = 3307, My-Client-Database.port = 3308;
+my-own-variable = something;
+
+----------------------------------------------------
+
+[
+	"port ", ["punctuation", "="],
+	["value", "8080"], ["punctuation", ";"],
+	"\r\nMySQL", ["punctuation", "."], "port ", ["punctuation", "="],
+	["value", "3307"], ["punctuation", ","],
+	" My-Client-Database", ["punctuation", "."], "port ", ["punctuation", "="],
+	["value", "3308"], ["punctuation", ";"],
+	"\r\nmy-own-variable ", ["punctuation", "="],
+	["value", "something"], ["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for default values.

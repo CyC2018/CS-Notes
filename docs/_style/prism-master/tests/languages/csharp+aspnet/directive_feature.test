@@ -1,0 +1,70 @@
+<%: Page.Title %>
+<%#:Item.ProductID%>
+<a href="ProductDetails.aspx?productID=<%#:Item.ProductID%>">
+<% if(foo) { %>
+	foobar
+<% } %>
+
+----------------------------------------------------
+
+[
+	["directive tag", [
+		["directive tag", "<%:"],
+		" Page",
+		["punctuation", "."],
+		"Title ",
+		["directive tag", "%>"]
+	]],
+
+	["directive tag", [
+        ["directive tag", "<%#:"],
+        "Item",
+        ["punctuation", "."],
+        "ProductID",
+        ["directive tag", "%>"]
+    ]],
+
+    ["tag", [
+        ["tag", [
+            ["punctuation", "<"],
+            "a"
+        ]],
+        ["attr-name", [
+            "href"
+        ]],
+        ["attr-value", [
+            ["punctuation", "="],
+            ["punctuation", "\""],
+            "ProductDetails.aspx?productID=",
+            ["directive tag", [
+                ["directive tag", "<%#:"],
+                "Item",
+		        ["punctuation", "."],
+		        "ProductID",
+		        ["directive tag", "%>"]
+            ]],
+            ["punctuation", "\""]
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive tag", [
+        ["directive tag", "<%"],
+        ["keyword", "if"],
+        ["punctuation", "("],
+        "foo",
+        ["punctuation", ")"],
+        ["punctuation", "{"],
+        ["directive tag", "%>"]
+    ]],
+    "\r\n\tfoobar\r\n",
+    ["directive tag", [
+        ["directive tag", "<%"],
+        ["punctuation", "}"],
+        ["directive tag", "%>"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for directives.

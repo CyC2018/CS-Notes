@@ -1,0 +1,12 @@
+.include "header.asm"
+
+-------------------------
+
+[
+  ["directive", ".include"],
+  ["string", "\"header.asm\""]
+]
+
+-------------------------
+
+Check for strings

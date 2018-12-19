@@ -1,0 +1,69 @@
+<p>Note: this component focuses on first and second-generation BASICs (such as MSX BASIC, GW-BASIC, SuperBASIC, QuickBASIC, PowerBASIC...).</p>
+
+<h2>Comments</h2>
+<pre><code>! This is a comment
+REM This is a remark</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"This a string."
+"This is a string with ""quotes"" in it."</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.14159
+-42
+-3.14159
+.5
+10.
+2E10
+4.2E-14
+-3E+2</code></pre>
+
+<h2>Dartmouth Basic example</h2>
+<pre><code>5 LET S = 0
+10 MAT INPUT V
+20 LET N = NUM
+30 IF N = 0 THEN 99
+40 FOR I = 1 TO N
+45 LET S = S + V(I)
+50 NEXT I
+60 PRINT S/N
+70 GO TO 5
+99 END</code></pre>
+
+<h2>GW-BASIC example</h2>
+<pre><code>10 INPUT "What is your name: ", U$
+20 PRINT "Hello "; U$
+30 INPUT "How many stars do you want: ", N
+40 S$ = ""
+50 FOR I = 1 TO N
+60 S$ = S$ + "*"
+70 NEXT I
+80 PRINT S$
+90 INPUT "Do you want more stars? ", A$
+100 IF LEN(A$) = 0 THEN GOTO 90
+110 A$ = LEFT$(A$, 1)
+120 IF A$ = "Y" OR A$ = "y" THEN GOTO 30
+130 PRINT "Goodbye "; U$
+140 END</code></pre>
+
+<h2>QuickBASIC example</h2>
+<pre><code>DECLARE SUB PrintSomeStars (StarCount!)
+REM QuickBASIC example
+INPUT "What is your name: ", UserName$
+PRINT "Hello "; UserName$
+DO
+   INPUT "How many stars do you want: ", NumStars
+   CALL PrintSomeStars(NumStars)
+   DO
+      INPUT "Do you want more stars? ", Answer$
+   LOOP UNTIL Answer$ <> ""
+   Answer$ = LEFT$(Answer$, 1)
+LOOP WHILE UCASE$(Answer$) = "Y"
+PRINT "Goodbye "; UserName$
+
+SUB PrintSomeStars (StarCount)
+   REM This procedure uses a local variable called Stars$
+   Stars$ = STRING$(StarCount, "*")
+   PRINT Stars$
+END SUB</code></pre>

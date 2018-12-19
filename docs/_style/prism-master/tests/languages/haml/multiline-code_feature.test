@@ -1,0 +1,58 @@
+	~ 1,
+	  1,
+	  1
+~ 2 |
+  2 |
+  2 |
+
+- 3,
+  3,
+  3
+	- 4 |
+	  4 |
+	  4 |
+
+  = 5,
+    5,
+    5
+= 6 |
+  6 |
+  6 |
+
+&= 7,
+   7,
+   7
+  &= 8 |
+     8 |
+     8 |
+
+!= 9,
+   9,
+   9
+!= 10 |
+   10 |
+   10 |
+
+----------------------------------------------------
+
+[
+	["punctuation", "~"], ["multiline-code", [["number", "1"], ["punctuation", ","], ["number", "1"], ["punctuation", ","], ["number", "1"]]],
+	["punctuation", "~"], ["multiline-code", [["number", "2"], ["operator", "|"], ["number", "2"], ["operator", "|"], ["number", "2"], ["operator", "|"]]],
+    
+	["punctuation", "-"], ["multiline-code", [["number", "3"], ["punctuation", ","], ["number", "3"], ["punctuation", ","], ["number", "3"]]],
+    ["punctuation", "-"], ["multiline-code", [["number", "4"], ["operator", "|"], ["number", "4"], ["operator", "|"], ["number", "4"], ["operator", "|"]]],
+    
+    ["punctuation", "="], ["multiline-code", [["number", "5"], ["punctuation", ","], ["number", "5"], ["punctuation", ","], ["number", "5"]]],
+	["punctuation", "="], ["multiline-code", [["number", "6"], ["operator", "|"], ["number", "6"], ["operator", "|"], ["number", "6"], ["operator", "|"]]],
+	
+	["punctuation", "&="], ["multiline-code", [["number", "7"], ["punctuation", ","], ["number", "7"], ["punctuation", ","], ["number", "7"]]],
+	["punctuation", "&="], ["multiline-code", [["number", "8"], ["operator", "|"], ["number", "8"], ["operator", "|"], ["number", "8"], ["operator", "|"]]],
+	
+	["punctuation", "!="], ["multiline-code", [["number", "9"], ["punctuation", ","], ["number", "9"], ["punctuation", ","], ["number", "9"]]],
+	["punctuation", "!="], ["multiline-code", [["number", "10"], ["operator", "|"], ["number", "10"], ["operator", "|"], ["number", "10"], ["operator", "|"]]]
+]
+
+----------------------------------------------------
+
+Checks for inline code, with all possible prefixes, some not indented, some
+indented with two spaces, some indented with one tab.

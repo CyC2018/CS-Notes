@@ -1,0 +1,17 @@
+---
+foo: true
+bar: false
+
+----------------------------------------------------
+
+[
+	["punctuation", "---"],
+	["key", "foo"], ["punctuation", ":"],
+	["boolean", "true"],
+	["key", "bar"], ["punctuation", ":"],
+	["boolean", "false"]
+]
+
+----------------------------------------------------
+
+Checks for booleans.

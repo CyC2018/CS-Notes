@@ -1,0 +1,15 @@
+/*
+ * ([{}])
+ * //  <= double slash comment
+ * ([{}]) <= punctuation
+ */
+
+----------------------------------------------------
+
+[
+	["comment", "/*\r\n * ([{}])\r\n * //  <= double slash comment\r\n * ([{}]) <= punctuation\r\n */"]
+]
+
+----------------------------------------------------
+
+Checks for single-line comment inside multi-line comment. See #1340

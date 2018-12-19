@@ -1,0 +1,121 @@
+$foo$
+$a \dots
+b$
+\(foo\)
+\(a \dots
+b\)
+\[foo\]
+\[a \dots
+b\]
+
+\begin{equation}foo\end{equation}
+\begin{equation}a \dots
+b\end{equation}
+\begin{math}foo\end{math}
+\begin{math}a \dots
+b\end{math}
+\begin{eqnarray}foo\end{eqnarray}
+\begin{eqnarray}a \dots
+b\end{eqnarray}
+\begin{align}foo\end{align}
+\begin{align*}a \dots
+b\end{align*}
+\begin{multline}foo\end{multline}
+\begin{multline}a \dots
+b\end{multline}
+\begin{gather}foo\end{gather}
+\begin{gather}a \dots
+b\end{gather}
+
+----------------------------------------------------
+
+[
+	["equation", ["$foo$"]],
+	["equation", [
+		"$a ",
+		["equation-command", "\\dots"],
+		"\r\nb$"
+	]],
+	["equation", ["\\(foo\\)"]],
+	["equation", [
+		"\\(a ",
+		["equation-command", "\\dots"],
+		"\r\nb\\)"
+	]],
+	["equation", ["\\[foo\\]"]],
+	["equation", [
+		"\\[a ",
+		["equation-command", "\\dots"],
+		"\r\nb\\]"
+	]],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "equation"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "equation"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "equation"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "equation"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "math"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "math"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "math"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "math"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "eqnarray"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "eqnarray"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "eqnarray"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "eqnarray"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "align"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "align"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "align*"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "align*"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "multline"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "multline"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "multline"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "multline"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "gather"], ["punctuation", "}"],
+	["equation", ["foo"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "gather"], ["punctuation", "}"],
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "gather"], ["punctuation", "}"],
+	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "gather"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for equations.

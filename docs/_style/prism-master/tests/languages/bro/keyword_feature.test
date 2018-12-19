@@ -1,0 +1,87 @@
+break
+next
+continue
+alarm
+using
+of
+add
+delete
+export
+print
+return
+schedule
+when
+timeout
+addr
+any
+bool
+count
+double
+enum
+file
+int
+interval
+pattern
+opaque
+port
+record
+set
+string
+subnet
+table
+time
+vector
+for
+if
+else
+in
+module
+function
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "next"],
+	["keyword", "continue"],
+	["keyword", "alarm"],
+	["keyword", "using"],
+	["keyword", "of"],
+	["keyword", "add"],
+	["keyword", "delete"],
+	["keyword", "export"],
+	["keyword", "print"],
+	["keyword", "return"],
+	["keyword", "schedule"],
+	["keyword", "when"],
+	["keyword", "timeout"],
+	["keyword", "addr"],
+	["keyword", "any"],
+	["keyword", "bool"],
+	["keyword", "count"],
+	["keyword", "double"],
+	["keyword", "enum"],
+	["keyword", "file"],
+	["keyword", "int"],
+	["keyword", "interval"],
+	["keyword", "pattern"],
+	["keyword", "opaque"],
+	["keyword", "port"],
+	["keyword", "record"],
+	["keyword", "set"],
+	["keyword", "string"],
+	["keyword", "subnet"],
+	["keyword", "table"],
+	["keyword", "time"],
+	["keyword", "vector"],
+	["keyword", "for"],
+	["keyword", "if"],
+	["keyword", "else"],
+	["keyword", "in"],
+	["keyword", "module"],
+	["keyword", "function"]
+]
+
+----------------------------------------------------
+
+Checks for the builtins

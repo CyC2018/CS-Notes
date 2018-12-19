@@ -1,0 +1,37 @@
++ -
+* /
+\ ^
+< = >
+& # @
+$ % !
+Sub Print( _
+    Param1 As Integer, _
+    Param2 As Integer )
+
+----------------------------------------------------
+
+[
+	["operator", "+"], ["operator", "-"],
+	["operator", "*"], ["operator", "/"],
+	["operator", "\\"], ["operator", "^"],
+	["operator", "<"], ["operator", "="], ["operator", ">"],
+	["operator", "&"], ["operator", "#"], ["operator", "@"],
+	["operator", "$"], ["operator", "%"], ["operator", "!"],
+	["keyword", "Sub"],
+	" Print",
+	["punctuation", "("],
+	["operator", "_"],
+	"\r\n    Param1 ",
+	["keyword", "As"],
+	["keyword", "Integer"],
+	["punctuation", ","],
+	["operator", "_"],
+	"\r\n    Param2 ",
+	["keyword", "As"],
+	["keyword", "Integer"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for operators and type characters.

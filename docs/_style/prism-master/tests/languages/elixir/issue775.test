@@ -1,0 +1,17 @@
+@doc """
+## Parameters
+"""
+
+----------------------------------------------------
+
+[
+	["attribute", "@doc"],
+	["string", [
+		"\"\"\"\r\n## Parameters\r\n\"\"\""
+	]]
+]
+
+----------------------------------------------------
+
+Ensures that markdown headers are not highlighted as comments inside strings.
+See #775 for details.

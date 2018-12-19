@@ -1,0 +1,36 @@
+# foo
+# bar
+## baz
+#[fr](#foo){background:pink} Foobar
+
+* foo
+** bar
+*** baz
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["list", [["punctuation", "#"], " foo"]],
+		["list", [["punctuation", "#"], " bar"]],
+		["list", [["punctuation", "##"], " baz"]],
+		["list", [
+			["punctuation", "#"],
+			["modifier", [
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"],
+				["punctuation", "("], ["class-id", "#foo"], ["punctuation", ")"],
+				["css", ["{background:pink}"]]
+			]],
+			" Foobar"
+		]]
+	]],
+	["phrase", [
+		["list", [["punctuation", "*"], " foo"]],
+		["list", [["punctuation", "**"], " bar"]],
+		["list", [["punctuation", "***"], " baz"]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for list items.

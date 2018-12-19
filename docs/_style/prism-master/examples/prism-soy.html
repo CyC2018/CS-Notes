@@ -1,0 +1,36 @@
+<h2>Comments</h2>
+<pre><code>/* Multi-line
+comment */
+// This is a comment with &lt;p>some markup&lt;/p> in it</code></pre>
+
+<h2>Variable</h2>
+<pre><code>{$name}
+{$folders[0]['name']}
+{$aaa?.bbb.ccc?[0]}</code></pre>
+
+<h2>Commands</h2>
+<pre><code>{template .helloNames}
+  // Greet the person.
+  {call .helloName data="all" /}<br>
+  // Greet the additional people.
+  {foreach $additionalName in $additionalNames}
+    {call .helloName}
+      {param name: $additionalName /}
+    {/call}
+    {if not isLast($additionalName)}
+      &lt;br>  // break after every line except the last
+    {/if}
+  {ifempty}
+    No additional people to greet.
+  {/foreach}
+{/template}</code></pre>
+
+<h2>Functions and print directives</h2>
+<pre><code>{if length($items) > 5}
+{$foo|changeNewlineToBr}
+{$bar|truncate: 4, false}</code></pre>
+
+<h2>Literal section</h2>
+<pre><code>{literal}
+This is not a {$variable}
+{/literal}</code></pre>

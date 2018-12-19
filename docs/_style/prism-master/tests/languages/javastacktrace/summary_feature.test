@@ -1,0 +1,155 @@
+java.lang.NullPointerException
+java.lang.NullPointerException: This is bad
+HighLevelException: MidLevelException: LowLevelException
+HighLevelException: MidLevelException: LowLevelException: This is bad
+
+Exception in thread "main" java.lang.RuntimeException: A test exception
+Exception in thread "main" HighLevelException: MidLevelException: LowLevelException: This is bad
+
+Caused by: Exception: This also includes causes and suppressed exceptions
+Caused by: MidLevelException: LowLevelException
+Caused by: com.example.myproject.MyProjectServletException
+
+Suppressed: java.lang.RuntimeException: could not insert: [com.example.myproject.MyEntity]
+
+----------------------------------------------------
+
+[
+	["summary", [
+		["exceptions", [
+			["namespace", "java"],
+			["punctuation", "."],
+			["namespace", "lang"],
+			["punctuation", "."],
+			["class-name", "NullPointerException"]
+		]]
+	]],
+
+	["summary", [
+		["exceptions", [
+			["namespace", "java"],
+			["punctuation", "."],
+			["namespace", "lang"],
+			["punctuation", "."],
+			["class-name", "NullPointerException"]
+		]],
+		["punctuation", ":"],
+		["message", "This is bad"]
+	]],
+
+	["summary", [
+		["exceptions", [
+			["class-name", "HighLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "MidLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "LowLevelException"]
+		]]
+	]],
+
+	["summary", [
+		["exceptions", [
+			["class-name", "HighLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "MidLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "LowLevelException"]
+		]],
+		["punctuation", ":"],
+		["message", "This is bad"]
+	]],
+
+	["summary", [
+		["keyword", "Exception in thread"],
+		["string", "\"main\""],
+		["exceptions", [
+			["namespace", "java"],
+			["punctuation", "."],
+			["namespace", "lang"],
+			["punctuation", "."],
+			["class-name", "RuntimeException"]
+		]],
+		["punctuation", ":"],
+		["message", "A test exception"]
+	]],
+
+	["summary", [
+		["keyword", "Exception in thread"],
+		["string", "\"main\""],
+		["exceptions", [
+			["class-name", "HighLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "MidLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "LowLevelException"]
+		]],
+		["punctuation", ":"],
+		["message", "This is bad"]
+	]],
+
+	["summary", [
+		["keyword", "Caused by"],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "Exception"]
+		]],
+		["punctuation", ":"],
+		["message", "This also includes causes and suppressed exceptions"]
+	]],
+
+	["summary", [
+		["keyword", "Caused by"],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "MidLevelException"]
+		]],
+		["punctuation", ":"],
+		["exceptions", [
+			["class-name", "LowLevelException"]
+		]]
+	]],
+
+	["summary", [
+		["keyword", "Caused by"],
+		["punctuation", ":"],
+		["exceptions", [
+			["namespace", "com"],
+			["punctuation", "."],
+			["namespace", "example"],
+			["punctuation", "."],
+			["namespace", "myproject"],
+			["punctuation", "."],
+			["class-name", "MyProjectServletException"]
+		]]
+	]],
+
+	["summary", [
+		["keyword", "Suppressed"],
+		["punctuation", ":"],
+		["exceptions", [
+			["namespace", "java"],
+			["punctuation", "."],
+			["namespace", "lang"],
+			["punctuation", "."],
+			["class-name", "RuntimeException"]
+		]],
+		["punctuation", ":"],
+		["message", "could not insert: [com.example.myproject.MyEntity]"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for exception summaries.

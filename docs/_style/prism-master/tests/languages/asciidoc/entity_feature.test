@@ -1,0 +1,48 @@
+&#x278a; &#182;
+
+&#x278a; &#182;
+============
+
+['&#x278a; &#182;']
+
+--
+&#x278a; &#182;
+--
+
+|======
+| &#x278a; &#182;
+|======
+
+----------------------------------------------------
+
+[
+	["entity", "&#x278a;"], ["entity", "&#182;"],
+	["title", [
+		["entity", "&#x278a;"], ["entity", "&#182;"],
+		["punctuation", "============"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["interpreted", [
+			["punctuation", "'"],
+			["entity", "&#x278a;"], ["entity", "&#182;"],
+			["punctuation", "'"]
+		]],
+		["punctuation", "]"]
+	]],
+	["other-block", [
+		["punctuation", "--"],
+		["entity", "&#x278a;"], ["entity", "&#182;"],
+		["punctuation", "--"]
+	]],
+	["table", [
+		["punctuation", "|======"],
+		["punctuation", "|"],
+		["entity", "&#x278a;"], ["entity", "&#182;"],
+		["punctuation", "|======"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for entities.

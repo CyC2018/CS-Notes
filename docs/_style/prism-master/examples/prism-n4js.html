@@ -1,0 +1,114 @@
+<h2>Keywords</h2>
+<pre><code>
+class C {..}
+interface I {..}
+
+foo(c: C, i: I) {
+    c instanceof C; // ok
+    c instanceof I; // ok
+}
+</code></pre>
+
+<h2>Annotations</h2>
+<pre><code>
+// Final Methods
+@Final
+private tasks = new Map&lt;string,Task&gt;();
+
+// Redefinition of Members
+@Override
+public async size(): int {
+  …
+}
+
+// Dependency Injection
+@Binder
+@Bind(Storage,StorageInMemory)
+class InMemoryBinder {}
+
+@GenerateInjector @UseBinder(InMemoryBinder)
+export public class TaskManagerTest {
+  …
+}
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>
+// A Web User Interface in HTML
+// NOTE: requires full example project bundled with N4JS IDE to run.
+
+import { TaskManager } from "TaskManager";
+import {Application, Response } from "express";
+import express from "express";
+import { Todo } from "model";
+
+
+export class WebUI {
+
+     private app: Application;
+
+     @Inject
+     private manager: TaskManager;
+
+     public start() {
+
+          this.app = express();
+
+          this.app.get('/', async (req, res) => {
+               let page = await this.renderHomePage();
+               res.send(page);
+          });
+
+          this.app.get("/clear", async (req, res) => {
+               await this.manager.clear();
+               redirect(res, '/');
+          });
+
+          this.app.get("/create", async (req, res) => {
+               let values = req.query as ~Object with {type: string, label: string};
+               if (values && values.type === 'Todo' && values.label && values.label.length > 0) {
+                    await this.manager.createTodo(values.label);
+               }
+               redirect(res, '/');
+          });
+
+          this.app.listen(4000, '0.0.0.0', 511, function() {
+               console.log("HTML server listening on http://localhost:4000/");
+          });
+     }
+
+     protected async renderHomePage(): string {
+          let tasks = await this.manager.getTasks();
+          let todos = tasks.filter((task) => task instanceof Todo);
+          return `
+
+&lt;html&gt;
+&lt;body&gt;
+     Your to-do's:
+     &lt;ul&gt;
+     ${
+          todos.length === 0 ? '&lt;li&gt;&lt;em&gt;none&lt;/em&gt;&lt;/li&gt;\n'
+          : todos.map((task) =>
+               '&lt;li&gt;' + task.label + ' &lt;small&gt;(id: ' + task.id + ')&lt;/small&gt;&lt;/li&gt;'
+          ).join('\n')
+     }
+     &lt;/ul&gt;
+     &lt;hr/&gt;
+     &lt;form action="/create" method="get"&gt;
+     &lt;input type="hidden" name="type" value="Todo"&gt;
+     Label: &lt;input type="text" name="label"&gt;&lt;br&gt;
+     &lt;input type="submit" value="Create Todo"&gt;
+     &lt;/form&gt;
+     &lt;hr/&gt;
+     &lt;a href="/clear"&gt;[Clear All]&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+`;
+     }
+}
+
+function redirect(res: Response, url: string) {
+     res.header('Cache-Control', 'no-cache');
+     res.redirect(301, url);
+}
+</code></pre>

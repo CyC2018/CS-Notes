@@ -1,0 +1,143 @@
+absolute array asm
+begin case const
+constructor
+destructor
+do downto else
+end file for
+function goto
+if implementation
+inherited inline
+interface label
+nil object of
+operator packed
+procedure program
+record reintroduce
+repeat self
+set string then
+to type unit
+until uses var
+while with
+
+dispose exit false
+new true
+
+class dispinterface
+except exports
+finalization
+finally
+initialization
+inline library
+on out packed
+property raise
+resourcestring
+threadvar try
+
+absolute abstract
+alias assembler
+bitpacked break
+cdecl continue
+cppdecl cvar
+default deprecated
+dynamic enumerator
+experimental
+export external
+far far16
+forward generic
+helper implements
+index interrupt
+iochecks local
+message name near
+nodefault noreturn
+nostackframe
+oldfpccall
+otherwise
+overload override 
+pascal platform
+private protected
+public published
+read register
+reintroduce result
+safecall saveregisters
+softfloat specialize
+static stdcall
+stored strict
+unaligned
+unimplemented
+varargs virtual
+write
+
+----------------------------------------------------
+
+[
+	["keyword", "absolute"], ["keyword", "array"], ["keyword", "asm"],
+	["keyword", "begin"], ["keyword", "case"], ["keyword", "const"],
+	["keyword", "constructor"],
+	["keyword", "destructor"],
+	["keyword", "do"], ["keyword", "downto"], ["keyword", "else"],
+	["keyword", "end"], ["keyword", "file"], ["keyword", "for"],
+	["keyword", "function"], ["keyword", "goto"],
+	["keyword", "if"], ["keyword", "implementation"],
+	["keyword", "inherited"], ["keyword", "inline"],
+	["keyword", "interface"], ["keyword", "label"],
+	["keyword", "nil"], ["keyword", "object"], ["keyword", "of"],
+	["keyword", "operator"], ["keyword", "packed"],
+	["keyword", "procedure"], ["keyword", "program"],
+	["keyword", "record"], ["keyword", "reintroduce"],
+	["keyword", "repeat"], ["keyword", "self"],
+	["keyword", "set"], ["keyword", "string"], ["keyword", "then"],
+	["keyword", "to"], ["keyword", "type"], ["keyword", "unit"],
+	["keyword", "until"], ["keyword", "uses"], ["keyword", "var"],
+	["keyword", "while"], ["keyword", "with"],
+
+	["keyword", "dispose"], ["keyword", "exit"], ["keyword", "false"],
+	["keyword", "new"], ["keyword", "true"],
+
+	["keyword", "class"], ["keyword", "dispinterface"],
+	["keyword", "except"], ["keyword", "exports"],
+	["keyword", "finalization"],
+	["keyword", "finally"],
+	["keyword", "initialization"],
+	["keyword", "inline"], ["keyword", "library"],
+	["keyword", "on"], ["keyword", "out"], ["keyword", "packed"],
+	["keyword", "property"], ["keyword", "raise"],
+	["keyword", "resourcestring"],
+	["keyword", "threadvar"], ["keyword", "try"],
+
+	["keyword", "absolute"], ["keyword", "abstract"],
+	["keyword", "alias"], ["keyword", "assembler"],
+	["keyword", "bitpacked"], ["keyword", "break"],
+	["keyword", "cdecl"], ["keyword", "continue"],
+	["keyword", "cppdecl"], ["keyword", "cvar"],
+	["keyword", "default"], ["keyword", "deprecated"],
+	["keyword", "dynamic"], ["keyword", "enumerator"],
+	["keyword", "experimental"],
+	["keyword", "export"], ["keyword", "external"],
+	["keyword", "far"], ["keyword", "far16"],
+	["keyword", "forward"], ["keyword", "generic"],
+	["keyword", "helper"], ["keyword", "implements"],
+	["keyword", "index"], ["keyword", "interrupt"],
+	["keyword", "iochecks"], ["keyword", "local"],
+	["keyword", "message"], ["keyword", "name"], ["keyword", "near"],
+	["keyword", "nodefault"], ["keyword", "noreturn"],
+	["keyword", "nostackframe"],
+	["keyword", "oldfpccall"],
+	["keyword", "otherwise"],
+	["keyword", "overload"], ["keyword", "override"],
+	["keyword", "pascal"], ["keyword", "platform"],
+	["keyword", "private"], ["keyword", "protected"],
+	["keyword", "public"], ["keyword", "published"],
+	["keyword", "read"], ["keyword", "register"],
+	["keyword", "reintroduce"], ["keyword", "result"],
+	["keyword", "safecall"], ["keyword", "saveregisters"],
+	["keyword", "softfloat"], ["keyword", "specialize"],
+	["keyword", "static"], ["keyword", "stdcall"],
+	["keyword", "stored"], ["keyword", "strict"],
+	["keyword", "unaligned"],
+	["keyword", "unimplemented"],
+	["keyword", "varargs"], ["keyword", "virtual"],
+	["keyword", "write"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

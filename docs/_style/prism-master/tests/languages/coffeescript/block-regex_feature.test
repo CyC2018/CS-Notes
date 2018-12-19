@@ -1,0 +1,33 @@
+///foo[bar]///
+///foo
+[bar]///
+///foo
+b#{ar}baz///
+///foo #bar
+baz///
+
+----------------------------------------------------
+
+[
+	["block-regex", [
+        "///foo[bar]///"
+    ]],
+    ["block-regex", [
+        "///foo\r\n[bar]///"
+    ]],
+    ["block-regex", [
+        "///foo\r\nb",
+        ["interpolation", "#{ar}"],
+        "baz///"
+    ]],
+    ["block-regex", [
+        "///foo ",
+        ["comment", "#bar"],
+        "\r\nbaz///"
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for block regex.
+Also checks for comments and interpolations inside block regex.

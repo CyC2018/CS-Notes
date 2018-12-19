@@ -1,0 +1,147 @@
+abs
+acos
+asc
+asin
+atan
+ceil
+chr
+class
+cos
+dllcall
+exp
+fileexist
+Fileopen
+floor
+il_add
+il_create
+il_destroy
+instr
+substr
+isfunc
+islabel
+IsObject
+ln
+log
+lv_add
+lv_delete
+lv_deletecol
+lv_getcount
+lv_getnext
+lv_gettext
+lv_insert
+lv_insertcol
+lv_modify
+lv_modifycol
+lv_setimagelist
+mod
+onmessage
+numget
+numput
+registercallback
+regexmatch
+regexreplace
+round
+sin
+tan
+sqrt
+strlen
+sb_seticon
+sb_setparts
+sb_settext
+strsplit
+tv_add
+tv_delete
+tv_getchild
+tv_getcount
+tv_getnext
+tv_get
+tv_getparent
+tv_getprev
+tv_getselection
+tv_gettext
+tv_modify
+varsetcapacity
+winactive
+winexist
+__New
+__Call
+__Get
+__Set
+
+----------------------------------------------------
+
+[
+	["builtin", "abs"],
+	["builtin", "acos"],
+	["builtin", "asc"],
+	["builtin", "asin"],
+	["builtin", "atan"],
+	["builtin", "ceil"],
+	["builtin", "chr"],
+	["builtin", "class"],
+	["builtin", "cos"],
+	["builtin", "dllcall"],
+	["builtin", "exp"],
+	["builtin", "fileexist"],
+	["builtin", "Fileopen"],
+	["builtin", "floor"],
+	["builtin", "il_add"],
+	["builtin", "il_create"],
+	["builtin", "il_destroy"],
+	["builtin", "instr"],
+	["builtin", "substr"],
+	["builtin", "isfunc"],
+	["builtin", "islabel"],
+	["builtin", "IsObject"],
+	["builtin", "ln"],
+	["builtin", "log"],
+	["builtin", "lv_add"],
+	["builtin", "lv_delete"],
+	["builtin", "lv_deletecol"],
+	["builtin", "lv_getcount"],
+	["builtin", "lv_getnext"],
+	["builtin", "lv_gettext"],
+	["builtin", "lv_insert"],
+	["builtin", "lv_insertcol"],
+	["builtin", "lv_modify"],
+	["builtin", "lv_modifycol"],
+	["builtin", "lv_setimagelist"],
+	["builtin", "mod"],
+	["builtin", "onmessage"],
+	["builtin", "numget"],
+	["builtin", "numput"],
+	["builtin", "registercallback"],
+	["builtin", "regexmatch"],
+	["builtin", "regexreplace"],
+	["builtin", "round"],
+	["builtin", "sin"],
+	["builtin", "tan"],
+	["builtin", "sqrt"],
+	["builtin", "strlen"],
+	["builtin", "sb_seticon"],
+	["builtin", "sb_setparts"],
+	["builtin", "sb_settext"],
+	["builtin", "strsplit"],
+	["builtin", "tv_add"],
+	["builtin", "tv_delete"],
+	["builtin", "tv_getchild"],
+	["builtin", "tv_getcount"],
+	["builtin", "tv_getnext"],
+	["builtin", "tv_get"],
+	["builtin", "tv_getparent"],
+	["builtin", "tv_getprev"],
+	["builtin", "tv_getselection"],
+	["builtin", "tv_gettext"],
+	["builtin", "tv_modify"],
+	["builtin", "varsetcapacity"],
+	["builtin", "winactive"],
+	["builtin", "winexist"],
+	["builtin", "__New"],
+	["builtin", "__Call"],
+	["builtin", "__Get"],
+	["builtin", "__Set"]
+]
+
+----------------------------------------------------
+
+Checks for all builtins.

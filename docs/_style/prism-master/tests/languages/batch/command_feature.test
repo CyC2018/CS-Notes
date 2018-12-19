@@ -1,0 +1,103 @@
+FOR /l %%a in (5,-1,1) do (TITLE %title% -- closing in %%as)
+SET title=%~n0
+echo.Hello World
+@ECHO OFF
+if not defined ProgressFormat set "ProgressFormat=[PPPP]"
+EXIT /b
+set /a ProgressCnt+=1
+IF "%~1" NEQ "" (SET %~1=%new%) ELSE (echo.%new%)
+
+----------------------------------------------------
+
+[
+	["command", [
+		["keyword", "FOR"],
+		["parameter", ["/l"]],
+		["variable", "%%a"],
+		["keyword", "in"],
+		["punctuation", "("],
+		["number", "5"], ["punctuation", ","],
+		["number", "-1"], ["punctuation", ","],
+		["number", "1"], ["punctuation", ")"],
+		["keyword", "do"]
+	]],
+	["punctuation", "("],
+	["command", [
+		["keyword", "TITLE"],
+		["variable", "%title%"],
+		" -- closing in ",
+		["variable", "%%as"]
+	]],
+	["punctuation", ")"],
+
+	["command", [
+		["keyword", "SET"],
+		["variable", "title"],
+		["operator", "="],
+		["variable", "%~n0"]
+	]],
+
+	["command", [
+		["keyword", "echo"],
+		".Hello World"
+	]],
+
+	["operator", "@"],
+	["command", [
+		["keyword", "ECHO"],
+		" OFF"
+	]],
+
+	["command", [
+		["keyword", "if"],
+		["keyword", "not"],
+		["keyword", "defined"],
+		" ProgressFormat"
+	]],
+	["command", [
+		["keyword", "set"],
+		["string", "\"ProgressFormat=[PPPP]\""]
+	]],
+
+	["command", [
+		["keyword", "EXIT"],
+		["parameter", ["/b"]]
+	]],
+
+	["command", [
+		["keyword", "set"],
+		["parameter", ["/a"]],
+		["variable", "ProgressCnt"],
+		["operator", "+="],
+		["number", "1"]
+	]],
+
+	["command", [
+		["keyword", "IF"],
+		["string", "\"%~1\""],
+		["operator", "NEQ"],
+		["string", "\"\""]
+	]],
+	["punctuation", "("],
+	["command", [
+		["keyword", "SET"],
+		["variable", "%~1"],
+		["operator", "="],
+		["variable", "%new%"]
+	]],
+	["punctuation", ")"],
+	["command", [
+		["keyword", "ELSE"]
+	]],
+	["punctuation", "("],
+	["command", [
+		["keyword", "echo"],
+		".",
+		["variable", "%new%"]
+	]],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for commands.

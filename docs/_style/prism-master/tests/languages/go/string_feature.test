@@ -1,0 +1,37 @@
+'a'
+'ä'
+'本'
+'\t'
+'\xff'
+'\u12e4'
+
+`abc`
+`\n
+\n`
+"\n"
+"\""
+"Hello, world!\n"
+"日本語"
+"\xff\u00FF"
+
+----------------------------------------------------
+
+[
+	["string", "'a'"],
+	["string", "'ä'"],
+	["string", "'本'"],
+	["string", "'\\t'"],
+	["string", "'\\xff'"],
+	["string", "'\\u12e4'"],
+	["string", "`abc`"],
+	["string", "`\\n\r\n\\n`"],
+	["string", "\"\\n\""],
+	["string", "\"\\\"\""],
+	["string", "\"Hello, world!\\n\""],
+	["string", "\"日本語\""],
+	["string", "\"\\xff\\u00FF\""]
+]
+
+----------------------------------------------------
+
+Checks for runes and strings.

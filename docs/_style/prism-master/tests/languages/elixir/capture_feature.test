@@ -1,0 +1,28 @@
+fun = &Math.zero?/1
+(&is_function/1).(fun)
+fun = &(&1 + 1)
+&List.flatten(&1, &2)
+
+----------------------------------------------------
+
+[
+	"fun ", ["operator", "="],
+	["capture", "&Math.zero?/1"],
+	["punctuation", "("],
+	["capture", "&is_function/1"],
+	["punctuation", ")"],
+	["punctuation", "."],
+	["punctuation", "("], "fun", ["punctuation", ")"],
+	"\r\nfun ", ["operator", "="],
+	["capture", "&"],
+	["punctuation", "("], ["argument", "&1"],
+	["operator", "+"], ["number", "1"], ["punctuation", ")"],
+	["capture", "&List.flatten"],
+	["punctuation", "("], ["argument", "&1"],
+	["punctuation", ","], ["argument", "&2"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for function capturing and arguments.

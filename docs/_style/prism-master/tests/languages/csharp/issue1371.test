@@ -1,0 +1,144 @@
+container.Register<Car>();
+container.Register<IJuice, Juice>();
+var container = new Container(f =>
+{
+    f.For<IFoo>().Use<Foo>();
+});
+class LandAnimal {
+    public void Move() => Run(); }
+class Dog : LandAnimal {
+    public new void Move() => Run(); }
+class Works : LandAnimal {
+    public override void Move() => Run(); }
+[Required]
+[RequiredAttribute()]
+[Range(1, 10)]
+
+----------------------------------------------------
+
+[
+	"container",
+	["punctuation", "."],
+	["generic-method", [
+		["function", "Register"],
+		["punctuation", "<"],
+		["class-name", ["Car"]],
+		["punctuation", ">"]
+	]],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	"\r\ncontainer",
+	["punctuation", "."],
+	["generic-method", [
+		["function", "Register"],
+		["punctuation", "<"],
+		["class-name", ["IJuice"]],
+		["punctuation", ","],
+		["class-name", ["Juice"]],
+		["punctuation", ">"]
+	]],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["keyword", "var"],
+	" container ",
+	["operator", "="],
+	["keyword", "new"],
+	["class-name", ["Container"]],
+	["punctuation", "("],
+	"f ",
+	["operator", "=>"],
+	["punctuation", "{"],
+	"\r\n    f",
+	["punctuation", "."],
+	["generic-method", [
+		["function", "For"],
+		["punctuation", "<"],
+		["class-name", ["IFoo"]],
+		["punctuation", ">"]
+	]],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "."],
+	["generic-method", [
+		["function", "Use"],
+		["punctuation", "<"],
+		["class-name", ["Foo"]],
+		["punctuation", ">"]
+	]],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["keyword", "class"],
+	["class-name", ["LandAnimal"]],
+	["punctuation", "{"],
+	["keyword", "public"],
+	["keyword", "void"],
+	["function", "Move"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["operator", "=>"],
+	["function", "Run"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["keyword", "class"],
+	["class-name", ["Dog"]],
+	["punctuation", ":"],
+	["class-name", ["LandAnimal"]],
+	["punctuation", "{"],
+	["keyword", "public"],
+	["keyword", "new"],
+	["keyword", "void"],
+	["function", "Move"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["operator", "=>"],
+	["function", "Run"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["keyword", "class"],
+	["class-name", ["Works"]],
+	["punctuation", ":"],
+	["class-name", ["LandAnimal"]],
+	["punctuation", "{"],
+	["keyword", "public"],
+	["keyword", "override"],
+	["keyword", "void"],
+	["function", "Move"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["operator", "=>"],
+	["function", "Run"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["punctuation", "["],
+	["class-name", ["Required"]],
+	["punctuation", "]"],
+	["punctuation", "["],
+	["class-name", ["RequiredAttribute"]],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "]"],
+	["punctuation", "["],
+	["class-name", ["Range"]],
+	["punctuation", "("],
+	["number", "1"],
+	["punctuation", ","],
+	["number", "10"],
+	["punctuation", ")"],
+	["punctuation", "]"]
+]
+
+----------------------------------------------------
+
+Checks for various cases of class names. See #1371

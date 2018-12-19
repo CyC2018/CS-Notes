@@ -1,0 +1,33 @@
+[1]_
+[2]_
+[#]_
+[#foobar]_
+[CIT2002]_
+
+foobar_
+foo__
+foo:bar_
+`foo:bar`_
+`foo bar baz`__
+_`inline internal target`
+
+----------------------------------------------------
+
+[
+	["link", [["punctuation", "["], "1", ["punctuation", "]_"]]],
+	["link", [["punctuation", "["], "2", ["punctuation", "]_"]]],
+	["link", [["punctuation", "["], "#", ["punctuation", "]_"]]],
+	["link", [["punctuation", "["], "#foobar", ["punctuation", "]_"]]],
+	["link", [["punctuation", "["], "CIT2002", ["punctuation", "]_"]]],
+
+	["link", ["foobar", ["punctuation", "_"]]],
+	["link", ["foo", ["punctuation", "__"]]],
+	["link", ["foo:bar", ["punctuation", "_"]]],
+	["link", [["punctuation", "`"], "foo:bar", ["punctuation", "`_"]]],
+	["link", [["punctuation", "`"], "foo bar baz", ["punctuation", "`__"]]],
+	["link", [["punctuation", "_`"], "inline internal target", ["punctuation", "`"]]]
+]
+
+----------------------------------------------------
+
+Checks for links.

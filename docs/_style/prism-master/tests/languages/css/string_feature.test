@@ -1,0 +1,22 @@
+"f\"oo"
+'f\'oo'
+"foo\
+bar"
+'foo\
+bar'
+"foo /* bar" /* and out */
+
+----------------------------------------------------
+
+[
+	["string", "\"f\\\"oo\""],
+	["string", "'f\\'oo'"],
+	["string", "\"foo\\\r\nbar\""],
+    ["string", "'foo\\\r\nbar'"],
+    ["string", "\"foo /* bar\""],
+    ["comment", "/* and out */"]
+]
+
+----------------------------------------------------
+
+Checks for single-quoted and double-quoted strings.

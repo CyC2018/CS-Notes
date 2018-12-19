@@ -1,0 +1,166 @@
+*bold*
+**bold**
+_italic_
+__italic__
+??cite??
+@code@
++inserted+
+-deleted-
+%span%
+^superscript^
+~subscript~
+
+*{color:red}bold*
+__(foo#bar)[fr]italique__
+%{text-decoration:underline}span *[en]bold*%
+
+*_a_ __b__ ??c?? @d@ +e+ -f- %g% ^h^ ~i~*
+**_a_ __b__ ??c?? @d@ +e+ -f- %g% ^h^ ~i~**
+_*a* **b** ??c?? @d@ +e+ -f- %g% ^h^ ~i~_
+__*a* **b** ??c?? @d@ +e+ -f- %g% ^h^ ~i~__
++*a* **b** _c_ __d__ ??e?? @f@ -g- %h% ^i^ ~j~+
+-*a* **b** _c_ __d__ ??e?? @f@ +g+ %h% ^i^ ~j~-
+%*a* **b** _c_ __d__ ??e?? @f@ +g+ -h- ^i^ ~j~%
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["inline", [["punctuation", "*"], ["bold", ["bold"]], ["punctuation", "*"]]],
+		["inline", [["punctuation", "**"], ["bold", ["bold"]], ["punctuation", "**"]]],
+		["inline", [["punctuation", "_"], ["italic", ["italic"]], ["punctuation", "_"]]],
+		["inline", [["punctuation", "__"], ["italic", ["italic"]], ["punctuation", "__"]]],
+		["inline", [["punctuation", "??"], ["cite", "cite"], ["punctuation", "??"]]],
+		["inline", [["punctuation", "@"], ["code", "code"], ["punctuation", "@"]]],
+		["inline", [["punctuation", "+"], ["inserted", ["inserted"]], ["punctuation", "+"]]],
+		["inline", [["punctuation", "-"], ["deleted", ["deleted"]], ["punctuation", "-"]]],
+		["inline", [["punctuation", "%"], ["span", ["span"]], ["punctuation", "%"]]],
+		["inline", [["punctuation", "^"], "superscript", ["punctuation", "^"]]],
+		["inline", [["punctuation", "~"], "subscript", ["punctuation", "~"]]]
+	]],
+
+	["phrase", [
+		["inline", [
+			["punctuation", "*"],
+			["modifier", [
+				["css", ["{color:red}"]]
+			]],
+			["bold", ["bold"]],
+			["punctuation", "*"]
+		]],
+		["inline", [
+			["punctuation", "__"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo#bar"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"]
+			]],
+			["italic", ["italique"]],
+			["punctuation", "__"]
+		]],
+		["inline", [
+			["punctuation", "%"],
+			["modifier", [
+				["css", ["{text-decoration:underline}"]]
+			]],
+			["span", [
+				"span ",
+				["inline", [
+					["punctuation", "*"],
+					["modifier", [
+						["punctuation", "["], ["lang", "en"], ["punctuation", "]"]
+					]],
+					["bold", ["bold"]],
+					["punctuation", "*"]
+				]]
+			]],
+			["punctuation", "%"]
+		]]
+	]],
+
+	["phrase", [
+		["inline", [["punctuation", "*"], ["bold", [
+			["inline", [["punctuation", "_"], ["italic", ["a"]], ["punctuation", "_"]]],
+			["inline", [["punctuation", "__"], ["italic", ["b"]], ["punctuation", "__"]]],
+			["inline", [["punctuation", "??"], ["cite", "c"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "d"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["e"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["f"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "%"], ["span", ["g"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "h", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "i", ["punctuation", "~"]]]
+		]], ["punctuation", "*"]]],
+		["inline", [["punctuation", "**"], ["bold", [
+			["inline", [["punctuation", "_"], ["italic", ["a"]], ["punctuation", "_"]]],
+			["inline", [["punctuation", "__"], ["italic", ["b"]], ["punctuation", "__"]]],
+			["inline", [["punctuation", "??"], ["cite", "c"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "d"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["e"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["f"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "%"], ["span", ["g"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "h", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "i", ["punctuation", "~"]]]
+		]], ["punctuation", "**"]]],
+		["inline", [["punctuation", "_"], ["italic", [
+			["inline", [["punctuation", "*"], ["bold", ["a"]], ["punctuation", "*"]]],
+			["inline", [["punctuation", "**"], ["bold", ["b"]], ["punctuation", "**"]]],
+			["inline", [["punctuation", "??"], ["cite", "c"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "d"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["e"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["f"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "%"], ["span", ["g"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "h", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "i", ["punctuation", "~"]]]
+		]], ["punctuation", "_"]]],
+		["inline", [["punctuation", "__"], ["italic", [
+			["inline", [["punctuation", "*"], ["bold", ["a"]], ["punctuation", "*"]]],
+			["inline", [["punctuation", "**"], ["bold", ["b"]], ["punctuation", "**"]]],
+			["inline", [["punctuation", "??"], ["cite", "c"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "d"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["e"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["f"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "%"], ["span", ["g"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "h", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "i", ["punctuation", "~"]]]
+		]], ["punctuation", "__"]]],
+		["inline", [["punctuation", "+"], ["inserted", [
+			["inline", [["punctuation", "*"], ["bold", ["a"]], ["punctuation", "*"]]],
+			["inline", [["punctuation", "**"], ["bold", ["b"]], ["punctuation", "**"]]],
+			["inline", [["punctuation", "_"], ["italic", ["c"]], ["punctuation", "_"]]],
+			["inline", [["punctuation", "__"], ["italic", ["d"]], ["punctuation", "__"]]],
+			["inline", [["punctuation", "??"], ["cite", "e"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "f"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["g"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "%"], ["span", ["h"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "i", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "j", ["punctuation", "~"]]]
+		]], ["punctuation", "+"]]],
+		["inline", [["punctuation", "-"], ["deleted", [
+			["inline", [["punctuation", "*"], ["bold", ["a"]], ["punctuation", "*"]]],
+			["inline", [["punctuation", "**"], ["bold", ["b"]], ["punctuation", "**"]]],
+			["inline", [["punctuation", "_"], ["italic", ["c"]], ["punctuation", "_"]]],
+			["inline", [["punctuation", "__"], ["italic", ["d"]], ["punctuation", "__"]]],
+			["inline", [["punctuation", "??"], ["cite", "e"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "f"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["g"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "%"], ["span", ["h"]], ["punctuation", "%"]]],
+			["inline", [["punctuation", "^"], "i", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "j", ["punctuation", "~"]]]
+		]], ["punctuation", "-"]]],
+		["inline", [["punctuation", "%"], ["span", [
+			["inline", [["punctuation", "*"], ["bold", ["a"]], ["punctuation", "*"]]],
+			["inline", [["punctuation", "**"], ["bold", ["b"]], ["punctuation", "**"]]],
+			["inline", [["punctuation", "_"], ["italic", ["c"]], ["punctuation", "_"]]],
+			["inline", [["punctuation", "__"], ["italic", ["d"]], ["punctuation", "__"]]],
+			["inline", [["punctuation", "??"], ["cite", "e"], ["punctuation", "??"]]],
+			["inline", [["punctuation", "@"], ["code", "f"], ["punctuation", "@"]]],
+			["inline", [["punctuation", "+"], ["inserted", ["g"]], ["punctuation", "+"]]],
+			["inline", [["punctuation", "-"], ["deleted", ["h"]], ["punctuation", "-"]]],
+			["inline", [["punctuation", "^"], "i", ["punctuation", "^"]]],
+			["inline", [["punctuation", "~"], "j", ["punctuation", "~"]]]
+		]], ["punctuation", "%"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for inline styles and nesting.

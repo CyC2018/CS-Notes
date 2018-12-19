@@ -1,0 +1,263 @@
+<h2>Comments</h2>
+<pre><code># This is a comment
+include foo # This is another comment</code></pre>
+
+<h2>Targets</h2>
+<pre><code>kbd.o command.o files.o : command.h
+display.o insert.o search.o files.o : buffer.h
+
+.PHONY: clean
+clean:
+        rm *.o temp</code></pre>
+
+<h2>Variables</h2>
+<pre><code>objects = main.o kbd.o command.o display.o \
+          insert.o search.o files.o utils.o
+
+edit : $(objects)
+        cc -o edit $(objects)
+
+$(objects) : defs.h
+
+%oo: $$< $$^ $$+ $$*
+
+foo : bar/lose
+        cd $(@D) && gobble $(@F) > ../$@</code></pre>
+
+<h2>Strings</h2>
+<pre><code>STR = 'A string!'
+
+HELLO = 'hello \
+world'
+
+HELLO2 = "hello \
+world"</code></pre>
+
+<h2>Directives</h2>
+<pre><code>include foo *.mk $(bar)
+
+vpath %.c foo
+
+override define two-lines =
+foo
+$(bar)
+endef
+
+ifeq ($(CC),gcc)
+  libs=$(libs_for_gcc)
+else
+  libs=$(normal_libs)
+endif</code></pre>
+
+<h2>Functions</h2>
+<pre><code>whoami    := $(shell whoami)
+host-type := $(shell arch)
+
+y = $(subst 1,2,$(x))
+
+dirs := a b c d
+files := $(foreach dir,$(dirs),$(wildcard $(dir)/*))
+
+reverse = $(2) $(1)
+foo = $(call reverse,a,b)
+
+$(foreach prog,$(PROGRAMS),$(eval $(call PROGRAM_template,$(prog))))</code></pre>
+
+<h2>Complete example</h2>
+<pre><code>#!/usr/bin/make -f
+# Generated automatically from Makefile.in by configure.
+# Un*x Makefile for GNU tar program.
+# Copyright (C) 1991 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute
+# it and/or modify it under the terms of the GNU
+# General Public License …
+…
+…
+
+SHELL = /bin/sh
+
+#### Start of system configuration section. ####
+
+srcdir = .
+
+# If you use gcc, you should either run the
+# fixincludes script that comes with it or else use
+# gcc with the -traditional option.  Otherwise ioctl
+# calls will be compiled incorrectly on some systems.
+CC = gcc -O
+YACC = bison -y
+INSTALL = /usr/local/bin/install -c
+INSTALLDATA = /usr/local/bin/install -c -m 644
+
+# Things you might add to DEFS:
+# -DSTDC_HEADERS        If you have ANSI C headers and
+#                       libraries.
+# -DPOSIX               If you have POSIX.1 headers and
+#                       libraries.
+# -DBSD42               If you have sys/dir.h (unless
+#                       you use -DPOSIX), sys/file.h,
+#                       and st_blocks in `struct stat'.
+# -DUSG                 If you have System V/ANSI C
+#                       string and memory functions
+#                       and headers, sys/sysmacros.h,
+#                       fcntl.h, getcwd, no valloc,
+#                       and ndir.h (unless
+#                       you use -DDIRENT).
+# -DNO_MEMORY_H         If USG or STDC_HEADERS but do not
+#                       include memory.h.
+# -DDIRENT              If USG and you have dirent.h
+#                       instead of ndir.h.
+# -DSIGTYPE=int         If your signal handlers
+#                       return int, not void.
+# -DNO_MTIO             If you lack sys/mtio.h
+#                       (magtape ioctls).
+# -DNO_REMOTE           If you do not have a remote shell
+#                       or rexec.
+# -DUSE_REXEC           To use rexec for remote tape
+#                       operations instead of
+#                       forking rsh or remsh.
+# -DVPRINTF_MISSING     If you lack vprintf function
+#                       (but have _doprnt).
+# -DDOPRNT_MISSING      If you lack _doprnt function.
+#                       Also need to define
+#                       -DVPRINTF_MISSING.
+# -DFTIME_MISSING       If you lack ftime system call.
+# -DSTRSTR_MISSING      If you lack strstr function.
+# -DVALLOC_MISSING      If you lack valloc function.
+# -DMKDIR_MISSING       If you lack mkdir and
+#                       rmdir system calls.
+# -DRENAME_MISSING      If you lack rename system call.
+# -DFTRUNCATE_MISSING   If you lack ftruncate
+#                       system call.
+# -DV7                  On Version 7 Unix (not
+#                       tested in a long time).
+# -DEMUL_OPEN3          If you lack a 3-argument version
+#                       of open, and want to emulate it
+#                       with system calls you do have.
+# -DNO_OPEN3            If you lack the 3-argument open
+#                       and want to disable the tar -k
+#                       option instead of emulating open.
+# -DXENIX               If you have sys/inode.h
+#                       and need it 94 to be included.
+
+DEFS =  -DSIGTYPE=int -DDIRENT -DSTRSTR_MISSING \
+        -DVPRINTF_MISSING -DBSD42
+# Set this to rtapelib.o unless you defined NO_REMOTE,
+# in which case make it empty.
+RTAPELIB = rtapelib.o
+LIBS =
+DEF_AR_FILE = /dev/rmt8
+DEFBLOCKING = 20
+
+CDEBUG = -g
+CFLAGS = $(CDEBUG) -I. -I$(srcdir) $(DEFS) \
+        -DDEF_AR_FILE=\"$(DEF_AR_FILE)\" \
+        -DDEFBLOCKING=$(DEFBLOCKING)
+LDFLAGS = -g
+
+prefix = /usr/local
+# Prefix for each installed program,
+# normally empty or `g'.
+binprefix =
+
+# The directory to install tar in.
+bindir = $(prefix)/bin
+
+# The directory to install the info files in.
+infodir = $(prefix)/info
+
+#### End of system configuration section. ####
+
+SRCS_C  = tar.c create.c extract.c buffer.c   \
+          getoldopt.c update.c gnu.c mangle.c \
+          version.c list.c names.c diffarch.c \
+          port.c wildmat.c getopt.c getopt1.c \
+          regex.c
+SRCS_Y  = getdate.y
+SRCS    = $(SRCS_C) $(SRCS_Y)
+OBJS    = $(SRCS_C:.c=.o) $(SRCS_Y:.y=.o) $(RTAPELIB)
+
+AUX =   README COPYING ChangeLog Makefile.in  \
+        makefile.pc configure configure.in \
+        tar.texinfo tar.info* texinfo.tex \
+        tar.h port.h open3.h getopt.h regex.h \
+        rmt.h rmt.c rtapelib.c alloca.c \
+        msd_dir.h msd_dir.c tcexparg.c \
+        level-0 level-1 backup-specs testpad.c
+
+.PHONY: all
+all:    tar rmt tar.info
+
+tar:    $(OBJS)
+        $(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+rmt:    rmt.c
+        $(CC) $(CFLAGS) $(LDFLAGS) -o $@ rmt.c
+
+tar.info: tar.texinfo
+        makeinfo tar.texinfo
+
+.PHONY: install
+install: all
+        $(INSTALL) tar $(bindir)/$(binprefix)tar
+        -test ! -f rmt || $(INSTALL) rmt /etc/rmt
+        $(INSTALLDATA) $(srcdir)/tar.info* $(infodir)
+
+$(OBJS): tar.h port.h testpad.h
+regex.o buffer.o tar.o: regex.h
+# getdate.y has 8 shift/reduce conflicts.
+
+testpad.h: testpad
+        ./testpad
+
+testpad: testpad.o
+        $(CC) -o $@ testpad.o
+
+TAGS:   $(SRCS)
+        etags $(SRCS)
+
+.PHONY: clean
+clean:
+        rm -f *.o tar rmt testpad testpad.h core
+
+.PHONY: distclean
+distclean: clean
+        rm -f TAGS Makefile config.status
+
+.PHONY: realclean
+realclean: distclean
+        rm -f tar.info*
+
+.PHONY: shar
+shar: $(SRCS) $(AUX)
+        shar $(SRCS) $(AUX) | compress \
+          > tar-`sed -e '/version_string/!d' \
+                     -e 's/[^0-9.]*\([0-9.]*\).*/\1/' \
+                     -e q
+                     version.c`.shar.Z
+
+.PHONY: dist
+dist: $(SRCS) $(AUX)
+        echo tar-`sed \
+             -e '/version_string/!d' \
+             -e 's/[^0-9.]*\([0-9.]*\).*/\1/' \
+             -e q
+             version.c` > .fname
+        -rm -rf `cat .fname`
+        mkdir `cat .fname`
+        ln $(SRCS) $(AUX) `cat .fname`
+        tar chZf `cat .fname`.tar.Z `cat .fname`
+        -rm -rf `cat .fname` .fname
+
+tar.zoo: $(SRCS) $(AUX)
+        -rm -rf tmp.dir
+        -mkdir tmp.dir
+        -rm tar.zoo
+        for X in $(SRCS) $(AUX) ; do \
+            echo $$X ; \
+            sed 's/$$/^M/' $$X \
+            > tmp.dir/$$X ; done
+        cd tmp.dir ; zoo aM ../tar.zoo *
+        -rm -rf tmp.dir
+</code></pre>

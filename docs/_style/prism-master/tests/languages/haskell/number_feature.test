@@ -1,0 +1,23 @@
+42
+3.14159
+2E3
+1.2e-4
+0.9e+1
+0o47
+0xBadFace
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "2E3"],
+	["number", "1.2e-4"],
+	["number", "0.9e+1"],
+	["number", "0o47"],
+	["number", "0xBadFace"]
+]
+
+----------------------------------------------------
+
+Checks for decimal, octal and hexadecimal numbers.

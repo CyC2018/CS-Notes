@@ -1,0 +1,33 @@
+..
+reverse . sort
++ - * /
+^ ^^ **
+&& ||
+< <= == /=
+>= > |
+++ : !!
+<- ->
+= :: =>
+>> >>= >@>
+~ ! @
+
+----------------------------------------------------
+
+[
+	["operator", ".."],
+	["hvariable", "reverse"], ["operator", " . "], ["hvariable", "sort"],
+	["operator", "+"], ["operator", "-"], ["operator", "*"], ["operator", "/"],
+	["operator", "^"], ["operator", "^^"], ["operator", "**"],
+	["operator", "&&"], ["operator", "||"],
+	["operator", "<"], ["operator", "<="], ["operator", "=="], ["operator", "/="],
+	["operator", ">="], ["operator", ">"], ["operator", "|"],
+	["operator", "++"], ["operator", ":"], ["operator", "!!"],
+	["operator", "<-"], ["operator", "->"],
+	["operator", "="], ["operator", "::"], ["operator", "=>"],
+	["operator", ">>"], ["operator", ">>="], ["operator", ">@>"],
+	["operator", "~"], ["operator", "!"], ["operator", "@"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

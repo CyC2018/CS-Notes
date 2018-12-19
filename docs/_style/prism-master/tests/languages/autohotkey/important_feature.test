@@ -1,0 +1,67 @@
+#AllowSameLineComments
+#ClipboardTimeout
+#CommentFlag
+#ErrorStdOut
+#EscapeChar
+#HotkeyInterval
+#HotkeyModifierTimeout
+#Hotstring
+#IfWinActive
+#IfWinExist
+#IfWinNotActive
+#IfWinNotExist
+#Include
+#IncludeAgain
+#InstallKeybdHook
+#InstallMouseHook
+#KeyHistory
+#LTrim
+#MaxHotkeysPerInterval
+#MaxMem
+#MaxThreads
+#MaxThreadsBuffer
+#MaxThreadsPerHotkey
+#NoEnv
+#NoTrayIcon
+#Persistent
+#SingleInstance
+#UseHook
+#WinActivateForce
+
+----------------------------------------------------
+
+[
+	["important", "#AllowSameLineComments"],
+	["important", "#ClipboardTimeout"],
+	["important", "#CommentFlag"],
+	["important", "#ErrorStdOut"],
+	["important", "#EscapeChar"],
+	["important", "#HotkeyInterval"],
+	["important", "#HotkeyModifierTimeout"],
+	["important", "#Hotstring"],
+	["important", "#IfWinActive"],
+	["important", "#IfWinExist"],
+	["important", "#IfWinNotActive"],
+	["important", "#IfWinNotExist"],
+	["important", "#Include"],
+	["important", "#IncludeAgain"],
+	["important", "#InstallKeybdHook"],
+	["important", "#InstallMouseHook"],
+	["important", "#KeyHistory"],
+	["important", "#LTrim"],
+	["important", "#MaxHotkeysPerInterval"],
+	["important", "#MaxMem"],
+	["important", "#MaxThreads"],
+	["important", "#MaxThreadsBuffer"],
+	["important", "#MaxThreadsPerHotkey"],
+	["important", "#NoEnv"],
+	["important", "#NoTrayIcon"],
+	["important", "#Persistent"],
+	["important", "#SingleInstance"],
+	["important", "#UseHook"],
+	["important", "#WinActivateForce"]
+]
+
+----------------------------------------------------
+
+Checks for all important keywords.

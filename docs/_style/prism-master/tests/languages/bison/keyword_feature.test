@@ -1,0 +1,22 @@
+%union
+%token
+%%
+exp: %empty
+%%
+
+----------------------------------------------------
+
+[
+	["bison", [
+		["keyword", "%union"],
+		["keyword", "%token"],
+		["punctuation", "%%"],
+		["property", "exp"], ["punctuation", ":"],
+		["keyword", "%empty"],
+		["punctuation", "%%"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

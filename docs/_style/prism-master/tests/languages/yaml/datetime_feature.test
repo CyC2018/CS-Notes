@@ -1,0 +1,31 @@
+---
+canonical: 2001-12-15T02:59:43.1Z
+iso8601: 2001-12-14t21:59:43.10-05:00
+spaced: 2001-12-14 21:59:43.10 -5
+date: 2002-12-14
+times:
+	- 10:53
+	- 10:53:20.53
+
+----------------------------------------------------
+
+[
+	["punctuation", "---"],
+	["key", "canonical"], ["punctuation", ":"],
+	["datetime", "2001-12-15T02:59:43.1Z"],
+	["key", "iso8601"], ["punctuation", ":"],
+	["datetime", "2001-12-14t21:59:43.10-05:00"],
+	["key", "spaced"], ["punctuation", ":"],
+	["datetime", "2001-12-14 21:59:43.10 -5"],
+	["key", "date"], ["punctuation", ":"],
+	["datetime", "2002-12-14"],
+	["key", "times"], ["punctuation", ":"],
+	["punctuation", "-"],
+	["datetime", "10:53"],
+	["punctuation", "-"],
+	["datetime", "10:53:20.53"]
+]
+
+----------------------------------------------------
+
+Checks for dates, times and datetimes.

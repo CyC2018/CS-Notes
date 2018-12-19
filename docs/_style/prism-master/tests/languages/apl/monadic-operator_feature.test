@@ -1,0 +1,15 @@
+\ / ⌿ ⍀
+¨ ⍨ ⌶
+& ∥
+
+----------------------------------------------------
+
+[
+	["monadic-operator", "\\"], ["monadic-operator", "/"], ["monadic-operator", "⌿"], ["monadic-operator", "⍀"],
+	["monadic-operator", "¨"], ["monadic-operator", "⍨"], ["monadic-operator", "⌶"],
+	["monadic-operator", "&"], ["monadic-operator", "∥"]
+]
+
+----------------------------------------------------
+
+Checks for monadic operators.

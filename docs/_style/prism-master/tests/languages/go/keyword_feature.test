@@ -1,0 +1,59 @@
+break
+case
+chan
+const
+continue
+default
+defer
+else
+fallthrough
+for
+func
+go
+goto
+if
+import
+interface
+map
+package
+range
+return
+select
+struct
+switch
+type
+var
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "chan"],
+	["keyword", "const"],
+	["keyword", "continue"],
+	["keyword", "default"],
+	["keyword", "defer"],
+	["keyword", "else"],
+	["keyword", "fallthrough"],
+	["keyword", "for"],
+	["keyword", "func"],
+	["keyword", "go"],
+	["keyword", "goto"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "interface"],
+	["keyword", "map"],
+	["keyword", "package"],
+	["keyword", "range"],
+	["keyword", "return"],
+	["keyword", "select"],
+	["keyword", "struct"],
+	["keyword", "switch"],
+	["keyword", "type"],
+	["keyword", "var"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords

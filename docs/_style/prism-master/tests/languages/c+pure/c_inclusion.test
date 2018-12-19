@@ -1,0 +1,28 @@
+%<
+asm ();
+%>
+
+%< -*- C -*-
+asm ();
+%>
+
+----------------------------------------------------
+
+[
+	["inline-lang", [
+		["delimiter", "%<"],
+		["keyword", "asm"], ["punctuation", "("], ["punctuation", ")"], ["punctuation", ";"],
+		["delimiter", "%>"]
+	]],
+
+	["inline-lang-c", [
+		["delimiter", "%< "],
+		["lang", "-*- C -*-"],
+		["keyword", "asm"], ["punctuation", "("], ["punctuation", ")"], ["punctuation", ";"],
+		["delimiter", "%>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for C in Pure.

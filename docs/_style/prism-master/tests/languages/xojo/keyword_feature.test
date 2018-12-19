@@ -1,0 +1,125 @@
+AddHandler
+App
+Array
+As
+Assigns
+ByRef
+ByVal
+Break
+Call
+Case
+Catch
+Const
+Continue
+CurrentMethodName
+Declare
+Dim
+Do
+DownTo
+Each
+Else
+ElseIf
+End
+Exit
+Extends
+False
+Finally
+For
+Global
+If
+In
+Lib
+Loop
+Me
+Next
+Nil
+Optional
+ParamArray
+Raise
+RaiseEvent
+ReDim
+Rem
+RemoveHandler
+Return
+Select
+Self
+Soft
+Static
+Step
+Super
+Then
+To
+True
+Try
+Ubound
+Until
+Using
+Wend
+While
+
+----------------------------------------------------
+
+[
+	["keyword", "AddHandler"],
+	["keyword", "App"],
+	["keyword", "Array"],
+	["keyword", "As"],
+	["keyword", "Assigns"],
+	["keyword", "ByRef"],
+	["keyword", "ByVal"],
+	["keyword", "Break"],
+	["keyword", "Call"],
+	["keyword", "Case"],
+	["keyword", "Catch"],
+	["keyword", "Const"],
+	["keyword", "Continue"],
+	["keyword", "CurrentMethodName"],
+	["keyword", "Declare"],
+	["keyword", "Dim"],
+	["keyword", "Do"],
+	["keyword", "DownTo"],
+	["keyword", "Each"],
+	["keyword", "Else"],
+	["keyword", "ElseIf"],
+	["keyword", "End"],
+	["keyword", "Exit"],
+	["keyword", "Extends"],
+	["keyword", "False"],
+	["keyword", "Finally"],
+	["keyword", "For"],
+	["keyword", "Global"],
+	["keyword", "If"],
+	["keyword", "In"],
+	["keyword", "Lib"],
+	["keyword", "Loop"],
+	["keyword", "Me"],
+	["keyword", "Next"],
+	["keyword", "Nil"],
+	["keyword", "Optional"],
+	["keyword", "ParamArray"],
+	["keyword", "Raise"],
+	["keyword", "RaiseEvent"],
+	["keyword", "ReDim"],
+	["keyword", "Rem"],
+	["keyword", "RemoveHandler"],
+	["keyword", "Return"],
+	["keyword", "Select"],
+	["keyword", "Self"],
+	["keyword", "Soft"],
+	["keyword", "Static"],
+	["keyword", "Step"],
+	["keyword", "Super"],
+	["keyword", "Then"],
+	["keyword", "To"],
+	["keyword", "True"],
+	["keyword", "Try"],
+	["keyword", "Ubound"],
+	["keyword", "Until"],
+	["keyword", "Using"],
+	["keyword", "Wend"],
+	["keyword", "While"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

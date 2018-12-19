@@ -1,0 +1,153 @@
+abort
+abs
+abstract
+accept
+access
+aliased
+all
+and
+array
+at
+begin
+body
+case
+constant
+declare
+delay
+delta
+digits
+do
+else
+new
+return
+elsif
+end
+entry
+exception
+exit
+for
+function
+generic
+goto
+if
+in
+interface
+is
+limited
+loop
+mod
+not
+null
+of
+others
+out
+overriding
+package
+pragma
+private
+procedure
+protected
+raise
+range
+record
+rem
+renames
+requeue
+reverse
+select
+separate
+some
+subtype
+synchronized
+tagged
+task
+terminate
+then
+type
+until
+use
+when
+while
+with
+xor
+
+----------------------------------------------------
+
+[
+	["keyword", "abort"],
+	["keyword", "abs"],
+	["keyword", "abstract"],
+	["keyword", "accept"],
+	["keyword", "access"],
+	["keyword", "aliased"],
+	["keyword", "all"],
+	["keyword", "and"],
+	["keyword", "array"],
+	["keyword", "at"],
+	["keyword", "begin"],
+	["keyword", "body"],
+	["keyword", "case"],
+	["keyword", "constant"],
+	["keyword", "declare"],
+	["keyword", "delay"],
+	["keyword", "delta"],
+	["keyword", "digits"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "new"],
+	["keyword", "return"],
+	["keyword", "elsif"],
+	["keyword", "end"],
+	["keyword", "entry"],
+	["keyword", "exception"],
+	["keyword", "exit"],
+	["keyword", "for"],
+	["keyword", "function"],
+	["keyword", "generic"],
+	["keyword", "goto"],
+	["keyword", "if"],
+	["keyword", "in"],
+	["keyword", "interface"],
+	["keyword", "is"],
+	["keyword", "limited"],
+	["keyword", "loop"],
+	["keyword", "mod"],
+	["keyword", "not"],
+	["keyword", "null"],
+	["keyword", "of"],
+	["keyword", "others"],
+	["keyword", "out"],
+	["keyword", "overriding"],
+	["keyword", "package"],
+	["keyword", "pragma"],
+	["keyword", "private"],
+	["keyword", "procedure"],
+	["keyword", "protected"],
+	["keyword", "raise"],
+	["keyword", "range"],
+	["keyword", "record"],
+	["keyword", "rem"],
+	["keyword", "renames"],
+	["keyword", "requeue"],
+	["keyword", "reverse"],
+	["keyword", "select"],
+	["keyword", "separate"],
+	["keyword", "some"],
+	["keyword", "subtype"],
+	["keyword", "synchronized"],
+	["keyword", "tagged"],
+	["keyword", "task"],
+	["keyword", "terminate"],
+	["keyword", "then"],
+	["keyword", "type"],
+	["keyword", "until"],
+	["keyword", "use"],
+	["keyword", "when"],
+	["keyword", "while"],
+	["keyword", "with"],
+	["keyword", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

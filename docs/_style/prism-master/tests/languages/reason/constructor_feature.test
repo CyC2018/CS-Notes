@@ -1,0 +1,15 @@
+Yes
+Foo_bar
+A
+
+----------------------------------------------------
+
+[
+	["constructor", "Yes"],
+	["constructor", "Foo_bar"],
+	["constructor", "A"]
+]
+
+----------------------------------------------------
+
+Checks for constructors.
