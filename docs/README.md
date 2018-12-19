@@ -1,7 +1,7 @@
 ##  ✏️ 算法
 
   > [剑指 Offer 题解](notes/剑指%20offer%20题解.md) </br>
-  > [Leetcode 题解](notes/Leetcode%20题解)
+  > [Leetcode 题解](notes/Leetcode%20题解) </br>
   > [算法](notes/算法.md)
 
 ## 💻 操作系统
