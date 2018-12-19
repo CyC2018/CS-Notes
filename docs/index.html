@@ -33,16 +33,7 @@
             // Headline depth, 1 - 6
             depth: 2,
             hideOtherSidebarContent: false, // whether or not to hide other sidebar content
-        },
-
-        // const gitalk = new Gitalk({
-        //         clientID: 'c6c02367e36ca6e2bb2d',
-        //         clientSecret: '31a2700e3315b21c5e9f2e887709d8cf21f9ff8f',
-        //         repo: 'CS-Notes',
-        //         owner: 'CyC2018',
-        //         admin: ['CyC2018'],
-        //         // distractionFreeMode: false
-        //     }),
+        }
     }
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
@@ -56,6 +47,16 @@
     <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
     <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script>
+    const gitalk = new Gitalk({
+        clientID: 'c6c02367e36ca6e2bb2d',
+        clientSecret: '31a2700e3315b21c5e9f2e887709d8cf21f9ff8f',
+        repo: 'CS-Notes',
+        owner: 'CyC2018',
+        admin: ['CyC2018'],
+        // distractionFreeMode: false
+    })
+    </script>
 </body>
 
 </html>
