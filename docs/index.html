@@ -21,24 +21,23 @@
     <div id="app"></div>
     <script>
     window.$docsify = {
+        maxAge: 100,
         name: 'CS-Notes',
         repo: 'https://github.com/CyC2018/CS-Notes',
-        loadSidebar: false,
-        subMaxLevel: 2,
-        coverpage: true,
-        auto2top: true,
-        autoHeader: true,
 
         search: {
+            paths: 'auto',
             placeholder: '🔍 Type to search ',
             noData: '😞 No Results! ',
             // Headline depth, 1 - 6
-            depth: 2,
-            hideOtherSidebarContent: false, // whether or not to hide other sidebar content
-        }
+            depth: 6
+        },
+        // subMaxLevel: 2,
+        coverpage: true
     }
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
     <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script src="//unpkg.com/docsify-copy-code"></script>
@@ -46,8 +45,7 @@
     <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
-    <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
-    <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
+    <!-- <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script> -->
     <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
     <script>
     const gitalk = new Gitalk({
