@@ -1,0 +1,30 @@
+Content-type: application/xml
+
+<foo></foo>
+
+----------------------------------------------------
+
+[
+	["header-name", "Content-type:"],
+	" application/xml",
+	["application/xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "<"],
+				"foo"
+			]],
+			["punctuation", ">"]
+		]],
+		["tag", [
+			["tag", [
+				["punctuation", "</"],
+				"foo"
+			]],
+			["punctuation", ">"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for XML content in HTTP.

@@ -1,0 +1,15 @@
+CSS(Cascading Style Sheet)
+HTML(HyperText Markup Language)
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["acronym", ["CSS", ["punctuation", "("], ["comment", "Cascading Style Sheet"], ["punctuation", ")"]]],
+		["acronym", ["HTML", ["punctuation", "("], ["comment", "HyperText Markup Language"], ["punctuation", ")"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for acronyms.

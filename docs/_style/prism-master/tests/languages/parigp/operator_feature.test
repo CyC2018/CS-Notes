@@ -1,0 +1,155 @@
+..
+. .
+*
+*=
+* =
+/
+/=
+/ =
+!
+!=
+! =
+%
+%=
+% =
+%#
+% #
+%'
+% '
+%#'
+% # '
+%'''''
+% '''''
+%#'''''
+% # '''''
++
+++
++ +
++=
++ =
+-
+--
+- -
+-=
+- =
+->
+- >
+<
+<<
+< <
+<=
+< =
+<<=
+< < =
+<>
+< >
+>
+>>
+> >
+>=
+> =
+>>=
+> > =
+=
+==
+= =
+===
+= = =
+\
+\/
+\ /
+\=
+\ =
+\/=
+\ / =
+&
+&&
+& &
+||
+| |
+'
+#
+~
+^
+
+----------------------------------------------------
+
+[
+	["operator", ".."],
+	["operator", ". ."],
+	["operator", "*"],
+	["operator", "*="],
+	["operator", "* ="],
+	["operator", "/"],
+	["operator", "/="],
+	["operator", "/ ="],
+	["operator", "!"],
+	["operator", "!="],
+	["operator", "! ="],
+	["operator", "%"],
+	["operator", "%="],
+	["operator", "% ="],
+	["operator", "%#"],
+	["operator", "% #"],
+	["operator", "%'"],
+	["operator", "% '"],
+	["operator", "%#'"],
+	["operator", "% # '"],
+	["operator", "%'''''"],
+	["operator", "% '''''"],
+	["operator", "%#'''''"],
+	["operator", "% # '''''"],
+	["operator", "+"],
+	["operator", "++"],
+	["operator", "+ +"],
+	["operator", "+="],
+	["operator", "+ ="],
+	["operator", "-"],
+	["operator", "--"],
+	["operator", "- -"],
+	["operator", "-="],
+	["operator", "- ="],
+	["operator", "->"],
+	["operator", "- >"],
+	["operator", "<"],
+	["operator", "<<"],
+	["operator", "< <"],
+	["operator", "<="],
+	["operator", "< ="],
+	["operator", "<<="],
+	["operator", "< < ="],
+	["operator", "<>"],
+	["operator", "< >"],
+	["operator", ">"],
+	["operator", ">>"],
+	["operator", "> >"],
+	["operator", ">="],
+	["operator", "> ="],
+	["operator", ">>="],
+	["operator", "> > ="],
+	["operator", "="],
+	["operator", "=="],
+	["operator", "= ="],
+	["operator", "==="],
+	["operator", "= = ="],
+	["operator", "\\"],
+	["operator", "\\/"],
+	["operator", "\\ /"],
+	["operator", "\\="],
+	["operator", "\\ ="],
+	["operator", "\\/="],
+	["operator", "\\ / ="],
+	["operator", "&"],
+	["operator", "&&"],
+	["operator", "& &"],
+	["operator", "||"],
+	["operator", "| |"],
+	["operator", "'"],
+	["operator", "#"],
+	["operator", "~"],
+	["operator", "^"]
+]
+
+----------------------------------------------------
+
+Checks for operators. Also checks that whitespaces are ignored.

@@ -1,0 +1,34 @@
+<h2>Comments</h2>
+<pre><code># Single line comment
+-- Single line comment
+// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+"Multi-line strings
+are supported"
+'Multi-line strings
+are supported'</code></pre>
+
+<h2>Variables</h2>
+<pre><code>SET @variable = 1;
+SET @$_ = 2;
+SET @"quoted-variable" = 3;
+SET @'quoted-variable' = 3;
+SET @`quoted-variable` = 3;</code></pre>
+
+<h2>Operators</h2>
+<pre><code>SELECT 1 && 1;
+SELECT 1 OR NULL;
+SELECT 5 & 2*3;
+SELECT 2 BETWEEN 1 AND 3;</code></pre>
+
+<h2>Functions and keywords</h2>
+<pre><code>SELECT COUNT(*) AS cpt, MAX(t.pos) AS max_pos
+FROM `my_table`
+LEFT JOIN `other_table` AS t
+WHERE `somecol` IS NOT NULL
+ORDER BY t.other_col DESC</code></pre>

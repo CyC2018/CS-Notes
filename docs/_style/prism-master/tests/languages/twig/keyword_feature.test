@@ -1,0 +1,53 @@
+{% for foo in bar if baz %}{% endfor %}
+{%- if foo() -%}{%- endif -%}
+{% macro foobar() %}{% endmacro %}
+{{ foo is even or bar is odd }}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "for"]]],
+		["property", "foo"],
+		["operator", "in"], ["property", "bar"],
+		["keyword", "if"], ["property", "baz"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "endfor"]]],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%-"], ["keyword", "if"]]],
+		["property", "foo"], ["punctuation", "("], ["punctuation", ")"],
+		["rd", [["punctuation", "-%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%-"], ["keyword", "endif"]]],
+		["rd", [["punctuation", "-%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "macro"]]],
+		["property", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "endmacro"]]],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "foo"],
+		["operator", "is"],
+		["keyword", "even"],
+		["operator", "or"],
+		["property", "bar"],
+		["operator", "is"],
+		["keyword", "odd"],
+		["rd", [["punctuation", "}}"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

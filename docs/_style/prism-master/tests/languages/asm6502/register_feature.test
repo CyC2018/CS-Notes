@@ -1,0 +1,17 @@
+LDA $8000,x
+ASL A
+
+-------------------------
+
+[
+  ["opcode", "LDA"],
+  ["hexnumber", "$8000"],
+  ",",
+  ["register", "x"],
+  ["opcode", "ASL"],
+  ["register", "A"]
+]
+
+-------------------------
+
+Check for registers

@@ -1,0 +1,35 @@
+<h2>Comments</h2>
+<pre><code>{# Some comment
+on multiple lines
+with &lt;html>&lt;/html>
+inside #}</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>{% if foo %} bar {% endif %}
+{% for key, value in arr if value %} {{ do_something() }} {% endfor %}
+{% include 'header.html' %}
+{% include 'template.html' with {'foo': 'bar'} %}</code></pre>
+
+<h2>Operators</h2>
+<pre><code>{{ not a }}
+{{ 20 // 7 }}
+{{ b b-and c }}
+{% if phone matches '/^[\\d\\.]+$/' %} ... {% endif %}</code></pre>
+
+<h2>Twig embedded in HTML</h2>
+<pre><code>&lt;div>
+{% if foo %}
+	&lt;p>Foo!&lt;/p>
+{% else %}
+	&lt;p>Not foo...&lt;/p>
+{% endif %}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Tag containing Twig is not highlighted</h3>
+<pre><code>&lt;div{% if foo %} class="bar"{% endif %}>&lt;/div></code></pre>

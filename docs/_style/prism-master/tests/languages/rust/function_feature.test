@@ -1,0 +1,23 @@
+foo (
+foobar(
+foo_bar_42(
+
+foo! (
+foobar![
+foo_bar_42!(
+
+----------------------------------------------------
+
+[
+	["function", "foo"], ["punctuation", "("],
+	["function", "foobar"], ["punctuation", "("],
+	["function", "foo_bar_42"], ["punctuation", "("],
+
+	["function", "foo!"], ["punctuation", "("],
+	["function", "foobar!"], ["punctuation", "["],
+	["function", "foo_bar_42!"], ["punctuation", "("]
+]
+
+----------------------------------------------------
+
+Checks for functions and macros.

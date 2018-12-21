@@ -1,0 +1,18 @@
+#**#
+#*Multiline <div>
+comment*#
+##
+## Single line comment <div>
+
+----------------------------------------------------
+
+[
+	["velocity-comment", "#**#"],
+	["velocity-comment", "#*Multiline <div>\r\ncomment*#"],
+	["velocity-comment", "##"],
+	["velocity-comment", "## Single line comment <div>"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

@@ -1,0 +1,17 @@
+LDA
+BNE
+inx
+clc
+
+-------------------------------------
+
+[
+  ["opcode", "LDA"],
+  ["opcode", "BNE"],
+  ["opcode", "inx"],
+  ["opcode", "clc"]
+]
+
+-------------------------------------
+
+Check for opcodes

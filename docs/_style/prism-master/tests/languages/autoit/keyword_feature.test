@@ -1,0 +1,83 @@
+Case
+Const
+ContinueCase
+ContinueLoop
+Default
+Dim
+Do
+Else
+ElseIf
+EndFunc
+EndIf
+EndSelect
+EndSwitch
+EndWith
+Enum
+Exit
+ExitLoop
+For
+Func
+Global
+If
+In
+Local
+Next
+Null
+ReDim
+Select
+Static
+Step
+Switch
+Then
+To
+Until
+Volatile
+WEnd
+While
+With
+
+----------------------------------------------------
+
+[
+	["keyword", "Case"],
+	["keyword", "Const"],
+	["keyword", "ContinueCase"],
+	["keyword", "ContinueLoop"],
+	["keyword", "Default"],
+	["keyword", "Dim"],
+	["keyword", "Do"],
+	["keyword", "Else"],
+	["keyword", "ElseIf"],
+	["keyword", "EndFunc"],
+	["keyword", "EndIf"],
+	["keyword", "EndSelect"],
+	["keyword", "EndSwitch"],
+	["keyword", "EndWith"],
+	["keyword", "Enum"],
+	["keyword", "Exit"],
+	["keyword", "ExitLoop"],
+	["keyword", "For"],
+	["keyword", "Func"],
+	["keyword", "Global"],
+	["keyword", "If"],
+	["keyword", "In"],
+	["keyword", "Local"],
+	["keyword", "Next"],
+	["keyword", "Null"],
+	["keyword", "ReDim"],
+	["keyword", "Select"],
+	["keyword", "Static"],
+	["keyword", "Step"],
+	["keyword", "Switch"],
+	["keyword", "Then"],
+	["keyword", "To"],
+	["keyword", "Until"],
+	["keyword", "Volatile"],
+	["keyword", "WEnd"],
+	["keyword", "While"],
+	["keyword", "With"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

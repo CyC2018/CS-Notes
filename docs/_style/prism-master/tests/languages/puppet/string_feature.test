@@ -1,0 +1,36 @@
+''
+'fo\'obar'
+'foo
+$bar
+baz'
+""
+"fo\"obar"
+"foo
+$bar
+baz"
+" @(foo) "
+"foo /* bar */ baz"
+"foo #bar baz"
+
+----------------------------------------------------
+
+[
+	["string", ["''"]],
+	["string", ["'fo\\'obar'"]],
+	["string", ["'foo\r\n$bar\r\nbaz'"]],
+	["string", [["double-quoted", ["\"\""]]]],
+	["string", [["double-quoted", ["\"fo\\\"obar\""]]]],
+	["string", [["double-quoted", [
+		"\"foo\r\n",
+		["interpolation", ["$bar"]],
+		"\r\nbaz\""
+	]]]],
+	["string", [["double-quoted", ["\" @(foo) \""]]]],
+	["string", [["double-quoted", ["\"foo /* bar */ baz\""]]]],
+	["string", [["double-quoted", ["\"foo #bar baz\""]]]]
+]
+
+----------------------------------------------------
+
+Checks for strings.
+Also checks that string interpolation only applies to double-quoted strings.

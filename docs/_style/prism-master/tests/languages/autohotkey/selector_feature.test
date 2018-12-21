@@ -1,0 +1,381 @@
+AutoTrim
+BlockInput
+Break
+Click
+ClipWait
+Continue
+Control
+ControlClick
+ControlFocus
+ControlGet
+ControlGetFocus
+ControlGetPos
+ControlGetText
+ControlMove
+ControlSend
+ControlSendRaw
+ControlSetText
+CoordMode
+Critical
+DetectHiddenText
+DetectHiddenWindows
+Drive
+DriveGet
+DriveSpaceFree
+EnvAdd
+EnvDiv
+EnvGet
+EnvMult
+EnvSet
+EnvSub
+EnvUpdate
+Exit
+ExitApp
+FileAppend
+FileCopy
+FileCopyDir
+FileCreateDir
+FileCreateShortcut
+FileDelete
+FileEncoding
+FileGetAttrib
+FileGetShortcut
+FileGetSize
+FileGetTime
+FileGetVersion
+FileInstall
+FileMove
+FileMoveDir
+FileRead
+FileReadLine
+FileRecycle
+FileRecycleEmpty
+FileRemoveDir
+FileSelectFile
+FileSelectFolder
+FileSetAttrib
+FileSetTime
+FormatTime
+GetKeyState
+Gosub
+Goto
+GroupActivate
+GroupAdd
+GroupClose
+GroupDeactivate
+Gui
+GuiControl
+GuiControlGet
+Hotkey
+ImageSearch
+IniDelete
+IniRead
+IniWrite
+Input
+InputBox
+KeyWait
+ListHotkeys
+ListLines
+ListVars
+Loop
+Menu
+MouseClick
+MouseClickDrag
+MouseGetPos
+MouseMove
+MsgBox
+OnExit
+OutputDebug
+Pause
+PixelGetColor
+PixelSearch
+PostMessage
+Process
+Progress
+Random
+RegDelete
+RegRead
+RegWrite
+Reload
+Repeat
+Return
+Run
+RunAs
+RunWait
+Send
+SendEvent
+SendInput
+SendMessage
+SendMode
+SendPlay
+SendRaw
+SetBatchLines
+SetCapslockState
+SetControlDelay
+SetDefaultMouseSpeed
+SetEnv
+SetFormat
+SetKeyDelay
+SetMouseDelay
+SetNumlockState
+SetScrollLockState
+SetStoreCapslockMode
+SetTimer
+SetTitleMatchMode
+SetWinDelay
+SetWorkingDir
+Shutdown
+Sleep
+Sort
+SoundBeep
+SoundGet
+SoundGetWaveVolume
+SoundPlay
+SoundSet
+SoundSetWaveVolume
+SplashImage
+SplashTextOff
+SplashTextOn
+SplitPath
+StatusBarGetText
+StatusBarWait
+StringCaseSense
+StringGetPos
+StringLeft
+StringLen
+StringLower
+StringMid
+StringReplace
+StringRight
+StringSplit
+StringTrimLeft
+StringTrimRight
+StringUpper
+Suspend
+SysGet
+Thread
+ToolTip
+Transform
+TrayTip
+URLDownloadToFile
+WinActivate
+WinActivateBottom
+WinClose
+WinGet
+WinGetActiveStats
+WinGetActiveTitle
+WinGetClass
+WinGetPos
+WinGetText
+WinGetTitle
+WinHide
+WinKill
+WinMaximize
+WinMenuSelectItem
+WinMinimize
+WinMinimizeAll
+WinMinimizeAllUndo
+WinMove
+WinRestore
+WinSet
+WinSetTitle
+WinShow
+WinWait
+WinWaitActive
+WinWaitClose
+WinWaitNotActive
+
+----------------------------------------------------
+
+[
+	["selector", "AutoTrim"],
+	["selector", "BlockInput"],
+	["selector", "Break"],
+	["selector", "Click"],
+	["selector", "ClipWait"],
+	["selector", "Continue"],
+	["selector", "Control"],
+	["selector", "ControlClick"],
+	["selector", "ControlFocus"],
+	["selector", "ControlGet"],
+	["selector", "ControlGetFocus"],
+	["selector", "ControlGetPos"],
+	["selector", "ControlGetText"],
+	["selector", "ControlMove"],
+	["selector", "ControlSend"],
+	["selector", "ControlSendRaw"],
+	["selector", "ControlSetText"],
+	["selector", "CoordMode"],
+	["selector", "Critical"],
+	["selector", "DetectHiddenText"],
+	["selector", "DetectHiddenWindows"],
+	["selector", "Drive"],
+	["selector", "DriveGet"],
+	["selector", "DriveSpaceFree"],
+	["selector", "EnvAdd"],
+	["selector", "EnvDiv"],
+	["selector", "EnvGet"],
+	["selector", "EnvMult"],
+	["selector", "EnvSet"],
+	["selector", "EnvSub"],
+	["selector", "EnvUpdate"],
+	["selector", "Exit"],
+	["selector", "ExitApp"],
+	["selector", "FileAppend"],
+	["selector", "FileCopy"],
+	["selector", "FileCopyDir"],
+	["selector", "FileCreateDir"],
+	["selector", "FileCreateShortcut"],
+	["selector", "FileDelete"],
+	["selector", "FileEncoding"],
+	["selector", "FileGetAttrib"],
+	["selector", "FileGetShortcut"],
+	["selector", "FileGetSize"],
+	["selector", "FileGetTime"],
+	["selector", "FileGetVersion"],
+	["selector", "FileInstall"],
+	["selector", "FileMove"],
+	["selector", "FileMoveDir"],
+	["selector", "FileRead"],
+	["selector", "FileReadLine"],
+	["selector", "FileRecycle"],
+	["selector", "FileRecycleEmpty"],
+	["selector", "FileRemoveDir"],
+	["selector", "FileSelectFile"],
+	["selector", "FileSelectFolder"],
+	["selector", "FileSetAttrib"],
+	["selector", "FileSetTime"],
+	["selector", "FormatTime"],
+	["selector", "GetKeyState"],
+	["selector", "Gosub"],
+	["selector", "Goto"],
+	["selector", "GroupActivate"],
+	["selector", "GroupAdd"],
+	["selector", "GroupClose"],
+	["selector", "GroupDeactivate"],
+	["selector", "Gui"],
+	["selector", "GuiControl"],
+	["selector", "GuiControlGet"],
+	["selector", "Hotkey"],
+	["selector", "ImageSearch"],
+	["selector", "IniDelete"],
+	["selector", "IniRead"],
+	["selector", "IniWrite"],
+	["selector", "Input"],
+	["selector", "InputBox"],
+	["selector", "KeyWait"],
+	["selector", "ListHotkeys"],
+	["selector", "ListLines"],
+	["selector", "ListVars"],
+	["selector", "Loop"],
+	["selector", "Menu"],
+	["selector", "MouseClick"],
+	["selector", "MouseClickDrag"],
+	["selector", "MouseGetPos"],
+	["selector", "MouseMove"],
+	["selector", "MsgBox"],
+	["selector", "OnExit"],
+	["selector", "OutputDebug"],
+	["selector", "Pause"],
+	["selector", "PixelGetColor"],
+	["selector", "PixelSearch"],
+	["selector", "PostMessage"],
+	["selector", "Process"],
+	["selector", "Progress"],
+	["selector", "Random"],
+	["selector", "RegDelete"],
+	["selector", "RegRead"],
+	["selector", "RegWrite"],
+	["selector", "Reload"],
+	["selector", "Repeat"],
+	["selector", "Return"],
+	["selector", "Run"],
+	["selector", "RunAs"],
+	["selector", "RunWait"],
+	["selector", "Send"],
+	["selector", "SendEvent"],
+	["selector", "SendInput"],
+	["selector", "SendMessage"],
+	["selector", "SendMode"],
+	["selector", "SendPlay"],
+	["selector", "SendRaw"],
+	["selector", "SetBatchLines"],
+	["selector", "SetCapslockState"],
+	["selector", "SetControlDelay"],
+	["selector", "SetDefaultMouseSpeed"],
+	["selector", "SetEnv"],
+	["selector", "SetFormat"],
+	["selector", "SetKeyDelay"],
+	["selector", "SetMouseDelay"],
+	["selector", "SetNumlockState"],
+	["selector", "SetScrollLockState"],
+	["selector", "SetStoreCapslockMode"],
+	["selector", "SetTimer"],
+	["selector", "SetTitleMatchMode"],
+	["selector", "SetWinDelay"],
+	["selector", "SetWorkingDir"],
+	["selector", "Shutdown"],
+	["selector", "Sleep"],
+	["selector", "Sort"],
+	["selector", "SoundBeep"],
+	["selector", "SoundGet"],
+	["selector", "SoundGetWaveVolume"],
+	["selector", "SoundPlay"],
+	["selector", "SoundSet"],
+	["selector", "SoundSetWaveVolume"],
+	["selector", "SplashImage"],
+	["selector", "SplashTextOff"],
+	["selector", "SplashTextOn"],
+	["selector", "SplitPath"],
+	["selector", "StatusBarGetText"],
+	["selector", "StatusBarWait"],
+	["selector", "StringCaseSense"],
+	["selector", "StringGetPos"],
+	["selector", "StringLeft"],
+	["selector", "StringLen"],
+	["selector", "StringLower"],
+	["selector", "StringMid"],
+	["selector", "StringReplace"],
+	["selector", "StringRight"],
+	["selector", "StringSplit"],
+	["selector", "StringTrimLeft"],
+	["selector", "StringTrimRight"],
+	["selector", "StringUpper"],
+	["selector", "Suspend"],
+	["selector", "SysGet"],
+	["selector", "Thread"],
+	["selector", "ToolTip"],
+	["selector", "Transform"],
+	["selector", "TrayTip"],
+	["selector", "URLDownloadToFile"],
+	["selector", "WinActivate"],
+	["selector", "WinActivateBottom"],
+	["selector", "WinClose"],
+	["selector", "WinGet"],
+	["selector", "WinGetActiveStats"],
+	["selector", "WinGetActiveTitle"],
+	["selector", "WinGetClass"],
+	["selector", "WinGetPos"],
+	["selector", "WinGetText"],
+	["selector", "WinGetTitle"],
+	["selector", "WinHide"],
+	["selector", "WinKill"],
+	["selector", "WinMaximize"],
+	["selector", "WinMenuSelectItem"],
+	["selector", "WinMinimize"],
+	["selector", "WinMinimizeAll"],
+	["selector", "WinMinimizeAllUndo"],
+	["selector", "WinMove"],
+	["selector", "WinRestore"],
+	["selector", "WinSet"],
+	["selector", "WinSetTitle"],
+	["selector", "WinShow"],
+	["selector", "WinWait"],
+	["selector", "WinWaitActive"],
+	["selector", "WinWaitClose"],
+	["selector", "WinWaitNotActive"]
+]
+
+----------------------------------------------------
+
+Checks for all selectors.

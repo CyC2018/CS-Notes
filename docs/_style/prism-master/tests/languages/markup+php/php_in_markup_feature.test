@@ -1,0 +1,129 @@
+<div><?php echo $foo; ?></div>
+<div><? echo $foo; ?></div>
+<div class="<?php echo $foo; ?>">
+<div class="<? echo $foo; ?>">
+<div><?= $foo; ?></div>
+___PHP1___<?php 1 ?>___PHP2___ <?php 2 ?>
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["php", [
+		["delimiter", "<?php"],
+		["keyword", "echo"],
+		["variable", "$foo"],
+		["punctuation", ";"],
+		["delimiter", "?>"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["php", [
+		["delimiter", "<?"],
+		["keyword", "echo"],
+		["variable", "$foo"],
+		["punctuation", ";"],
+		["delimiter", "?>"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["php", [
+				["delimiter", "<?php"],
+				["keyword", "echo"],
+				["variable", "$foo"],
+				["punctuation", ";"],
+				["delimiter", "?>"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["php", [
+				["delimiter", "<?"],
+				["keyword", "echo"],
+				["variable", "$foo"],
+				["punctuation", ";"],
+				["delimiter", "?>"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["php", [
+		["delimiter", "<?="],
+		["variable", "$foo"],
+		["punctuation", ";"],
+		["delimiter", "?>"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	"\r\n___PHP1___",
+	["php", [
+		["delimiter", "<?php"],
+		["number", "1"],
+		["delimiter", "?>"]
+	]],
+	"___PHP2___ ",
+	["php", [
+		["delimiter", "<?php"],
+		["number", "2"],
+		["delimiter", "?>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for PHP inside Markup.

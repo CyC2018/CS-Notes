@@ -1,0 +1,59 @@
+abstract continue for
+new
+switch assert default
+goto package synchronized
+boolean do if private
+this break double
+implements
+protected throw byte else
+import public throws case
+enum
+instanceof
+return transient catch
+extends
+int short try char
+final
+interface
+static void
+class
+finally long
+strictfp volatile const
+float native super while
+var null
+module requires transitive
+exports uses open
+opens with to provides
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "continue"], ["keyword", "for"],
+	["keyword", "new"],
+	["keyword", "switch"], ["keyword", "assert"], ["keyword", "default"],
+	["keyword", "goto"], ["keyword", "package"], ["keyword", "synchronized"],
+	["keyword", "boolean"], ["keyword", "do"], ["keyword", "if"], ["keyword", "private"],
+	["keyword", "this"], ["keyword", "break"], ["keyword", "double"],
+	["keyword", "implements"],
+	["keyword", "protected"], ["keyword", "throw"], ["keyword", "byte"], ["keyword", "else"],
+	["keyword", "import"], ["keyword", "public"], ["keyword", "throws"], ["keyword", "case"],
+	["keyword", "enum"],
+	["keyword", "instanceof"],
+	["keyword", "return"], ["keyword", "transient"], ["keyword", "catch"],
+	["keyword", "extends"],
+	["keyword", "int"], ["keyword", "short"], ["keyword", "try"], ["keyword", "char"],
+	["keyword", "final"],
+	["keyword", "interface"],
+	["keyword", "static"], ["keyword", "void"],
+	["keyword", "class"],
+	["keyword", "finally"], ["keyword", "long"],
+	["keyword", "strictfp"], ["keyword", "volatile"], ["keyword", "const"],
+	["keyword", "float"], ["keyword", "native"], ["keyword", "super"], ["keyword", "while"],
+	["keyword", "var"], ["keyword", "null"],
+	["keyword", "module"], ["keyword", "requires"], ["keyword", "transitive"],
+	["keyword", "exports"], ["keyword", "uses"], ["keyword", "open"],
+	["keyword", "opens"], ["keyword", "with"], ["keyword", "to"], ["keyword","provides"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

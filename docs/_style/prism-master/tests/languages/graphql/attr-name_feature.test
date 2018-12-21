@@ -1,0 +1,27 @@
+{
+	zuck: user(id: 4) {
+		name
+	}
+}
+
+----------------------------------------------------
+
+[
+	["punctuation", "{"],
+	["attr-name", "zuck"],
+	["punctuation", ":"],
+	" user",
+	["punctuation", "("],
+	["attr-name", "id"],
+	["punctuation", ":"],
+	["number", "4"],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	"\r\n\t\tname\r\n\t",
+	["punctuation", "}"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for aliases, parameter names, etc.

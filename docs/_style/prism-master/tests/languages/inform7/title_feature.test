@@ -1,0 +1,21 @@
+Volume 1 - Foobar
+Book 2 - Foobar
+Part 3 - Foobar
+Chapter 4 - Foobar
+Section 5 - Foobar
+Table 6 - Foobar
+
+----------------------------------------------------
+
+[
+	["title", "Volume 1 - Foobar"],
+	["title", "Book 2 - Foobar"],
+	["title", "Part 3 - Foobar"],
+	["title", "Chapter 4 - Foobar"],
+	["title", "Section 5 - Foobar"],
+	["title", "Table 6 - Foobar"]
+]
+
+----------------------------------------------------
+
+Checks for titles.

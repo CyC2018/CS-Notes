@@ -1,0 +1,15 @@
+$foo $bar_baz $var4u $1 $true_as $falsey
+
+----------------------------------------------------
+
+[
+	["variable", "$foo"],
+	["variable", "$bar_baz"],
+	["variable", "$var4u"],
+	["variable", "$1"],
+	["variable", "$true_as"],
+	["variable", "$falsey"]
+]
+----------------------------------------------------
+
+Testing variables

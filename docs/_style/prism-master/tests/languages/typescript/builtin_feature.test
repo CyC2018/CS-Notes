@@ -1,0 +1,31 @@
+string
+Function
+any
+number
+boolean
+Array
+symbol
+console
+Promise
+unknown
+never
+
+----------------------------------------------------
+
+[
+	["builtin", "string"],
+	["builtin", "Function"],
+	["builtin", "any"],
+	["builtin", "number"],
+	["builtin", "boolean"],
+	["builtin", "Array"],
+	["builtin", "symbol"],
+	["builtin", "console"],
+	["builtin", "Promise"],
+	["builtin", "unknown"],
+	["builtin", "never"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

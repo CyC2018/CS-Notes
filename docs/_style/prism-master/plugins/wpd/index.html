@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>WebPlatform Docs ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/wpd/prism-wpd.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>WebPlatform Docs</h2>
+	<p>Makes tokens link to <a href="https://webplatform.github.io/docs/">WebPlatform.org documentation. The links open in a new tab.</a></p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+
+	<p>No setup required, just include the plugin in your <a href="download.html">download</a> and you’re good to go!</p>
+
+	<p>Tokens that currently link to documentation:</p>
+
+	<ul>
+		<li>HTML, MathML and SVG tags</li>
+		<li>HTML, MathML and SVG non-namespaced attributes</li>
+		<li>(Non-prefixed) CSS properties</li>
+		<li>(Non-prefixed) CSS @rules</li>
+		<li>(Non-prefixed) CSS pseudo-classes</li>
+		<li>(Non-prefixed) CSS pseudo-elements (starting with <code>::</code>)</li>
+	</ul>
+
+	<p><strong>Beta:</strong> This plugin is still in beta. Please help make it better: Test it and report any false positives etc!</p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>CSS</h2>
+	<pre data-src="style.css"></pre>
+	<pre data-src="themes/prism.css"></pre>
+
+	<h2>HTML</h2>
+	<pre data-src="index.html" class="language-markup"></pre>
+
+	<h2>SVG</h2>
+	<pre data-src="logo.svg" class="language-markup"></pre>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/wpd/prism-wpd.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

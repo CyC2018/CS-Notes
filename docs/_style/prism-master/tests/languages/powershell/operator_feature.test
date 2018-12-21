@@ -1,0 +1,55 @@
+! -eq -ne -gt -ge -lt -le -shl -shr -not -band -and -bxor -bor -or
+-Like -Match -Contains -In -NotLike -NotMatch -NotContains -NotIn -Replace -Join
+-is -isNot -as
+-= += *= /= %= - + * / % -- ++
+
+----------------------------------------------------
+
+[
+	["operator", "!"], 
+	["operator", "-eq"], 
+	["operator", "-ne"], 
+	["operator", "-gt"], 
+	["operator", "-ge"], 
+	["operator", "-lt"], 
+	["operator", "-le"], 
+	["operator", "-shl"], 
+	["operator", "-shr"], 
+	["operator", "-not"], 
+	["operator", "-band"], 
+	["operator", "-and"], 
+	["operator", "-bxor"], 
+	["operator", "-bor"], 
+	["operator", "-or"], 
+	
+	["operator", "-Like"], 
+	["operator", "-Match"], 
+	["operator", "-Contains"], 
+	["operator", "-In"], 
+	["operator", "-NotLike"], 
+	["operator", "-NotMatch"], 
+	["operator", "-NotContains"], 
+	["operator", "-NotIn"], 
+	["operator", "-Replace"], 
+	["operator", "-Join"], 
+	["operator", "-is"], 
+	["operator", "-isNot"], 
+	["operator", "-as"], 
+	
+	["operator", "-="],
+	["operator", "+="],
+	["operator", "*="],
+	["operator", "/="],
+	["operator", "%="],
+	["operator", "-"],
+	["operator", "+"],
+	["operator", "*"],
+	["operator", "/"],
+	["operator", "%"],
+	["operator", "--"],
+	["operator", "++"]
+
+]
+----------------------------------------------------
+
+Testing operators.

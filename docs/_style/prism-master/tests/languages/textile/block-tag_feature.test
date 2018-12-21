@@ -1,0 +1,131 @@
+h1. Header 1
+
+h2>. Header 2
+
+bq. A block quotation
+
+p<. Foo
+
+p=. Bar
+
+p<>. Baz
+
+p(. Foobar
+baz
+
+p))). Foo
+
+h1(foo). Foo
+
+h2[en]. Bar
+
+h3{color: red}. Baz
+
+h4[fr]{text-decoration:underline;}(#bar). Foobar
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["block-tag", [["tag", "h1"], ["punctuation", "."]]],
+		" Header 1"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h2"],
+			["modifier", [["punctuation", ">"]]],
+			["punctuation", "."]
+		]],
+		" Header 2"
+	]],
+	["phrase", [
+		["block-tag", [["tag", "bq"], ["punctuation", "."]]],
+		" A block quotation"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "p"],
+			["modifier", [["punctuation", "<"]]],
+			["punctuation", "."]
+		]],
+		" Foo"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "p"],
+			["modifier", [["punctuation", "="]]],
+			["punctuation", "."]
+		]],
+		" Bar"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "p"],
+			["modifier", [["punctuation", "<"], ["punctuation", ">"]]],
+			["punctuation", "."]
+		]],
+		" Baz"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "p"],
+			["modifier", [["punctuation", "("]]],
+			["punctuation", "."]
+		]],
+		" Foobar\r\nbaz"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "p"],
+			["modifier", [["punctuation", ")"], ["punctuation", ")"], ["punctuation", ")"]]],
+			["punctuation", "."]
+		]],
+		" Foo"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h1"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"]
+			]],
+			["punctuation", "."]
+		]],
+		" Foo"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h2"],
+			["modifier", [
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"]
+			]],
+			["punctuation", "."]
+		]],
+		" Bar"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h3"],
+			["modifier", [
+				["css", ["{color: red}"]]
+			]],
+			["punctuation", "."]
+		]],
+		" Baz"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h4"],
+			["modifier", [
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"],
+				["css", ["{text-decoration:underline;}"]],
+				["punctuation", "("], ["class-id", "#bar"], ["punctuation", ")"]
+			]],
+			["punctuation", "."]
+		]],
+		" Foobar"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for tags at the beginning of a block and alignment modifiers.

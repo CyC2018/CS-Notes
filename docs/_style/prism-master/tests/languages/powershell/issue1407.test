@@ -1,0 +1,43 @@
+While($true){
+    Write-Output "$($($InFiles | Where-Object {$_.ToCopy -eq 0}).count)"
+}
+
+----------------------------------------------------
+
+[
+	["keyword", "While"],
+	["punctuation", "("],
+	["boolean", "$true"],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["function", "Write-Output"],
+	["string", [
+		"\"",
+		["function", [
+			"$",
+			["punctuation", "("],
+			"$",
+			["punctuation", "("],
+			["variable", "$InFiles"],
+			["punctuation", "|"],
+			["function", "Where-Object"],
+			["punctuation", "{"],
+			["variable", "$_"],
+			["punctuation", "."],
+			"ToCopy ",
+			["operator", "-eq"],
+			" 0",
+			["punctuation", "}"],
+			["punctuation", ")"],
+			["punctuation", "."],
+			"count",
+			["punctuation", ")"]
+		]],
+		"\""
+	]],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for nested expressions in strings. See #1407

@@ -1,0 +1,25 @@
+[foo]http://prismjs.com
+[bar]http://www.example.com
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["link-ref", [
+			["punctuation", "["],
+			["string", "foo"],
+			["punctuation", "]"],
+			["url", "http://prismjs.com"]
+		]],
+		["link-ref", [
+			["punctuation", "["],
+			["string", "bar"],
+			["punctuation", "]"],
+			["url", "http://www.example.com"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for links references.

@@ -1,0 +1,37 @@
+-a  Simple option
+-b
+  Simple option on next line
+--very-long-option    Long option
++f  Option using +
+-f FILE  Option with value 1
+--file=FILE  Option with value 2
+-2, --two  Two options in a row.
+-f FILE, --file=FILE  Two options with values in a row.
+/V    A VMS/DOS-style option.
+
+----------------------------------------------------
+
+[
+	["command-line-option", "-a"],
+	"  Simple option\r\n",
+	["command-line-option", "-b"],
+	"\r\n  Simple option on next line\r\n",
+	["command-line-option", "--very-long-option"],
+	"    Long option\r\n",
+	["command-line-option", "+f"],
+	"  Option using +\r\n",
+	["command-line-option", "-f FILE"],
+	"  Option with value 1\r\n",
+	["command-line-option", "--file=FILE"],
+	"  Option with value 2\r\n",
+	["command-line-option", "-2, --two"],
+	"  Two options in a row.\r\n",
+	["command-line-option", "-f FILE, --file=FILE"],
+	"  Two options with values in a row.\r\n",
+	["command-line-option", "/V"],
+	"    A VMS/DOS-style option."
+]
+
+----------------------------------------------------
+
+Checks for command line options.

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CS-Notes</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" href="_media/logomakr-3sxxzw-128x128.png">
+    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <link rel="stylesheet" href="_style/style.css">
+    <!--solarizedlight tomorrow coy-->
+    <link rel="stylesheet" href="_style/prism-master/themes/prism-coy.css">
+</head>
+
+<body>
+    <!-- <nav>
+    <a href="#/README">HOME</a>
+</nav> -->
+    <div id="app"></div>
+    <script>
+    window.$docsify = {
+        maxAge: 100,
+        name: 'CS-Notes',
+        repo: 'https://github.com/CyC2018/CS-Notes',
+        ga: 'UA-121566133-2',
+        search: {
+            paths: 'auto',
+            placeholder: '🔍 Type to search ',
+            noData: '😞 No Results! ',
+            // Headline depth, 1 - 6
+            depth: 6
+        },
+        // subMaxLevel: 2,
+        coverpage: true
+    }
+    </script>
+    <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+    <!-- <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script> -->
+    <!-- 上面的基本不可用，无法搜索 -->
+    <script src="https://cdn.bootcss.com/docsify/4.5.9/plugins/search.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//unpkg.com/docsify-copy-code"></script>
+    <script src="//unpkg.com/prismjs/components/prism-java.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-sql.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
+    <!-- <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script> -->
+    <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script>
+    const gitalk = new Gitalk({
+        clientID: 'c6c02367e36ca6e2bb2d',
+        clientSecret: '31a2700e3315b21c5e9f2e887709d8cf21f9ff8f',
+        repo: 'Gittalk-Issue',
+        owner: 'CyC2018',
+        admin: ['CyC2018'],
+        // distractionFreeMode: false
+    })
+    </script>
+</body>
+
+</html>

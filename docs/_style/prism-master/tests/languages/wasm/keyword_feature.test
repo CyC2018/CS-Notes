@@ -1,0 +1,407 @@
+align=
+offset=
+
+f32
+f64
+i32
+i64
+i32.load
+i64.load
+f32.load
+f64.load
+i32.load8_s
+i32.load8_u
+i32.load16_s
+i32.load16_u
+i64.load8_s
+i64.load8_u
+i64.load16_s
+i64.load16_u
+i64.load32_s
+i64.load32_u
+i32.store
+i64.store
+f32.store
+f64.store
+i32.store8
+i32.store16
+i64.store8
+i64.store16
+i64.store32
+i32.const
+i64.const
+f32.const
+f64.const
+i32.clz
+i32.ctz
+i32.popcnt
+i32.add
+i32.sub
+i32.mul
+i32.div_s
+i32.div_u
+i32.rem_s
+i32.rem_u
+i32.and
+i32.or
+i32.xor
+i32.shl
+i32.shr_s
+i32.shr_u
+i32.rotl
+i32.rotr
+i64.clz
+i64.ctz
+i64.popcnt
+i64.add
+i64.sub
+i64.mul
+i64.div_s
+i64.div_u
+i64.rem_s
+i64.rem_u
+i64.and
+i64.or
+i64.xor
+i64.shl
+i64.shr_s
+i64.shr_u
+i64.rotl
+i64.rotr
+f32.abs
+f32.neg
+f32.ceil
+f32.floor
+f32.trunc
+f32.nearest
+f32.sqrt
+f32.add
+f32.sub
+f32.mul
+f32.div
+f32.min
+f32.max
+f32.copysign
+f64.abs
+f64.neg
+f64.ceil
+f64.floor
+f64.trunc
+f64.nearest
+f64.sqrt
+f64.add
+f64.sub
+f64.mul
+f64.div
+f64.min
+f64.max
+f64.copysign
+i32.eqz
+i32.eq
+i32.ne
+i32.lt_s
+i32.lt_u
+i32.gt_s
+i32.gt_u
+i32.le_s
+i32.le_u
+i32.ge_s
+i32.ge_u
+i64.eqz
+i64.eq
+i64.ne
+i64.lt_s
+i64.lt_u
+i64.gt_s
+i64.gt_u
+i64.le_s
+i64.le_u
+i64.ge_s
+i64.ge_u
+f32.eq
+f32.ne
+f32.lt
+f32.gt
+f32.le
+f32.ge
+f64.eq
+f64.ne
+f64.lt
+f64.gt
+f64.le
+f64.ge
+i32.wrap/i64
+i32.trunc_s/f32
+i32.trunc_u/f32
+i32.trunc_s/f64
+i32.trunc_u/f64
+i64.extend_s/i32
+i64.extend_u/i32
+i64.trunc_s/f32
+i64.trunc_u/f32
+i64.trunc_s/f64
+i64.trunc_u/f64
+f32.convert_s/i32
+f32.convert_u/i32
+f32.convert_s/i64
+f32.convert_u/i64
+f32.demote/f64
+f64.convert_s/i32
+f64.convert_u/i32
+f64.convert_s/i64
+f64.convert_u/i64
+f64.promote/f32
+i32.reinterpret/f32
+i64.reinterpret/f64
+f32.reinterpret/i32
+f64.reinterpret/i64
+
+memory.size
+memory.grow
+
+anyfunc
+block
+br
+br_if
+br_table
+call
+call_indirect
+data
+drop
+elem
+else
+end
+export
+func
+get_global
+get_local
+global
+if
+import
+local
+loop
+memory
+module
+mut
+nop
+offset
+param
+result
+return
+select
+set_global
+set_local
+start
+table
+tee_local
+then
+type
+unreachable
+
+----------------------------------------------------
+
+[
+	["keyword", ["align", ["operator", "="]]],
+	["keyword", ["offset", ["operator", "="]]],
+
+	["keyword", ["f32"]],
+	["keyword", ["f64"]],
+	["keyword", ["i32"]],
+	["keyword", ["i64"]],
+	["keyword", ["i32", ["punctuation", "."], "load"]],
+	["keyword", ["i64", ["punctuation", "."], "load"]],
+	["keyword", ["f32", ["punctuation", "."], "load"]],
+	["keyword", ["f64", ["punctuation", "."], "load"]],
+	["keyword", ["i32", ["punctuation", "."], "load8_s"]],
+	["keyword", ["i32", ["punctuation", "."], "load8_u"]],
+	["keyword", ["i32", ["punctuation", "."], "load16_s"]],
+	["keyword", ["i32", ["punctuation", "."], "load16_u"]],
+	["keyword", ["i64", ["punctuation", "."], "load8_s"]],
+	["keyword", ["i64", ["punctuation", "."], "load8_u"]],
+	["keyword", ["i64", ["punctuation", "."], "load16_s"]],
+	["keyword", ["i64", ["punctuation", "."], "load16_u"]],
+	["keyword", ["i64", ["punctuation", "."], "load32_s"]],
+	["keyword", ["i64", ["punctuation", "."], "load32_u"]],
+	["keyword", ["i32", ["punctuation", "."], "store"]],
+	["keyword", ["i64", ["punctuation", "."], "store"]],
+	["keyword", ["f32", ["punctuation", "."], "store"]],
+	["keyword", ["f64", ["punctuation", "."], "store"]],
+	["keyword", ["i32", ["punctuation", "."], "store8"]],
+	["keyword", ["i32", ["punctuation", "."], "store16"]],
+	["keyword", ["i64", ["punctuation", "."], "store8"]],
+	["keyword", ["i64", ["punctuation", "."], "store16"]],
+	["keyword", ["i64", ["punctuation", "."], "store32"]],
+	["keyword", ["i32", ["punctuation", "."], "const"]],
+	["keyword", ["i64", ["punctuation", "."], "const"]],
+	["keyword", ["f32", ["punctuation", "."], "const"]],
+	["keyword", ["f64", ["punctuation", "."], "const"]],
+	["keyword", ["i32", ["punctuation", "."], "clz"]],
+	["keyword", ["i32", ["punctuation", "."], "ctz"]],
+	["keyword", ["i32", ["punctuation", "."], "popcnt"]],
+	["keyword", ["i32", ["punctuation", "."], "add"]],
+	["keyword", ["i32", ["punctuation", "."], "sub"]],
+	["keyword", ["i32", ["punctuation", "."], "mul"]],
+	["keyword", ["i32", ["punctuation", "."], "div_s"]],
+	["keyword", ["i32", ["punctuation", "."], "div_u"]],
+	["keyword", ["i32", ["punctuation", "."], "rem_s"]],
+	["keyword", ["i32", ["punctuation", "."], "rem_u"]],
+	["keyword", ["i32", ["punctuation", "."], "and"]],
+	["keyword", ["i32", ["punctuation", "."], "or"]],
+	["keyword", ["i32", ["punctuation", "."], "xor"]],
+	["keyword", ["i32", ["punctuation", "."], "shl"]],
+	["keyword", ["i32", ["punctuation", "."], "shr_s"]],
+	["keyword", ["i32", ["punctuation", "."], "shr_u"]],
+	["keyword", ["i32", ["punctuation", "."], "rotl"]],
+	["keyword", ["i32", ["punctuation", "."], "rotr"]],
+	["keyword", ["i64", ["punctuation", "."], "clz"]],
+	["keyword", ["i64", ["punctuation", "."], "ctz"]],
+	["keyword", ["i64", ["punctuation", "."], "popcnt"]],
+	["keyword", ["i64", ["punctuation", "."], "add"]],
+	["keyword", ["i64", ["punctuation", "."], "sub"]],
+	["keyword", ["i64", ["punctuation", "."], "mul"]],
+	["keyword", ["i64", ["punctuation", "."], "div_s"]],
+	["keyword", ["i64", ["punctuation", "."], "div_u"]],
+	["keyword", ["i64", ["punctuation", "."], "rem_s"]],
+	["keyword", ["i64", ["punctuation", "."], "rem_u"]],
+	["keyword", ["i64", ["punctuation", "."], "and"]],
+	["keyword", ["i64", ["punctuation", "."], "or"]],
+	["keyword", ["i64", ["punctuation", "."], "xor"]],
+	["keyword", ["i64", ["punctuation", "."], "shl"]],
+	["keyword", ["i64", ["punctuation", "."], "shr_s"]],
+	["keyword", ["i64", ["punctuation", "."], "shr_u"]],
+	["keyword", ["i64", ["punctuation", "."], "rotl"]],
+	["keyword", ["i64", ["punctuation", "."], "rotr"]],
+	["keyword", ["f32", ["punctuation", "."], "abs"]],
+	["keyword", ["f32", ["punctuation", "."], "neg"]],
+	["keyword", ["f32", ["punctuation", "."], "ceil"]],
+	["keyword", ["f32", ["punctuation", "."], "floor"]],
+	["keyword", ["f32", ["punctuation", "."], "trunc"]],
+	["keyword", ["f32", ["punctuation", "."], "nearest"]],
+	["keyword", ["f32", ["punctuation", "."], "sqrt"]],
+	["keyword", ["f32", ["punctuation", "."], "add"]],
+	["keyword", ["f32", ["punctuation", "."], "sub"]],
+	["keyword", ["f32", ["punctuation", "."], "mul"]],
+	["keyword", ["f32", ["punctuation", "."], "div"]],
+	["keyword", ["f32", ["punctuation", "."], "min"]],
+	["keyword", ["f32", ["punctuation", "."], "max"]],
+	["keyword", ["f32", ["punctuation", "."], "copysign"]],
+	["keyword", ["f64", ["punctuation", "."], "abs"]],
+	["keyword", ["f64", ["punctuation", "."], "neg"]],
+	["keyword", ["f64", ["punctuation", "."], "ceil"]],
+	["keyword", ["f64", ["punctuation", "."], "floor"]],
+	["keyword", ["f64", ["punctuation", "."], "trunc"]],
+	["keyword", ["f64", ["punctuation", "."], "nearest"]],
+	["keyword", ["f64", ["punctuation", "."], "sqrt"]],
+	["keyword", ["f64", ["punctuation", "."], "add"]],
+	["keyword", ["f64", ["punctuation", "."], "sub"]],
+	["keyword", ["f64", ["punctuation", "."], "mul"]],
+	["keyword", ["f64", ["punctuation", "."], "div"]],
+	["keyword", ["f64", ["punctuation", "."], "min"]],
+	["keyword", ["f64", ["punctuation", "."], "max"]],
+	["keyword", ["f64", ["punctuation", "."], "copysign"]],
+	["keyword", ["i32", ["punctuation", "."], "eqz"]],
+	["keyword", ["i32", ["punctuation", "."], "eq"]],
+	["keyword", ["i32", ["punctuation", "."], "ne"]],
+	["keyword", ["i32", ["punctuation", "."], "lt_s"]],
+	["keyword", ["i32", ["punctuation", "."], "lt_u"]],
+	["keyword", ["i32", ["punctuation", "."], "gt_s"]],
+	["keyword", ["i32", ["punctuation", "."], "gt_u"]],
+	["keyword", ["i32", ["punctuation", "."], "le_s"]],
+	["keyword", ["i32", ["punctuation", "."], "le_u"]],
+	["keyword", ["i32", ["punctuation", "."], "ge_s"]],
+	["keyword", ["i32", ["punctuation", "."], "ge_u"]],
+	["keyword", ["i64", ["punctuation", "."], "eqz"]],
+	["keyword", ["i64", ["punctuation", "."], "eq"]],
+	["keyword", ["i64", ["punctuation", "."], "ne"]],
+	["keyword", ["i64", ["punctuation", "."], "lt_s"]],
+	["keyword", ["i64", ["punctuation", "."], "lt_u"]],
+	["keyword", ["i64", ["punctuation", "."], "gt_s"]],
+	["keyword", ["i64", ["punctuation", "."], "gt_u"]],
+	["keyword", ["i64", ["punctuation", "."], "le_s"]],
+	["keyword", ["i64", ["punctuation", "."], "le_u"]],
+	["keyword", ["i64", ["punctuation", "."], "ge_s"]],
+	["keyword", ["i64", ["punctuation", "."], "ge_u"]],
+	["keyword", ["f32", ["punctuation", "."], "eq"]],
+	["keyword", ["f32", ["punctuation", "."], "ne"]],
+	["keyword", ["f32", ["punctuation", "."], "lt"]],
+	["keyword", ["f32", ["punctuation", "."], "gt"]],
+	["keyword", ["f32", ["punctuation", "."], "le"]],
+	["keyword", ["f32", ["punctuation", "."], "ge"]],
+	["keyword", ["f64", ["punctuation", "."], "eq"]],
+	["keyword", ["f64", ["punctuation", "."], "ne"]],
+	["keyword", ["f64", ["punctuation", "."], "lt"]],
+	["keyword", ["f64", ["punctuation", "."], "gt"]],
+	["keyword", ["f64", ["punctuation", "."], "le"]],
+	["keyword", ["f64", ["punctuation", "."], "ge"]],
+	["keyword", ["i32", ["punctuation", "."], "wrap/i64"]],
+	["keyword", ["i32", ["punctuation", "."], "trunc_s/f32"]],
+	["keyword", ["i32", ["punctuation", "."], "trunc_u/f32"]],
+	["keyword", ["i32", ["punctuation", "."], "trunc_s/f64"]],
+	["keyword", ["i32", ["punctuation", "."], "trunc_u/f64"]],
+	["keyword", ["i64", ["punctuation", "."], "extend_s/i32"]],
+	["keyword", ["i64", ["punctuation", "."], "extend_u/i32"]],
+	["keyword", ["i64", ["punctuation", "."], "trunc_s/f32"]],
+	["keyword", ["i64", ["punctuation", "."], "trunc_u/f32"]],
+	["keyword", ["i64", ["punctuation", "."], "trunc_s/f64"]],
+	["keyword", ["i64", ["punctuation", "."], "trunc_u/f64"]],
+	["keyword", ["f32", ["punctuation", "."], "convert_s/i32"]],
+	["keyword", ["f32", ["punctuation", "."], "convert_u/i32"]],
+	["keyword", ["f32", ["punctuation", "."], "convert_s/i64"]],
+	["keyword", ["f32", ["punctuation", "."], "convert_u/i64"]],
+	["keyword", ["f32", ["punctuation", "."], "demote/f64"]],
+	["keyword", ["f64", ["punctuation", "."], "convert_s/i32"]],
+	["keyword", ["f64", ["punctuation", "."], "convert_u/i32"]],
+	["keyword", ["f64", ["punctuation", "."], "convert_s/i64"]],
+	["keyword", ["f64", ["punctuation", "."], "convert_u/i64"]],
+	["keyword", ["f64", ["punctuation", "."], "promote/f32"]],
+	["keyword", ["i32", ["punctuation", "."], "reinterpret/f32"]],
+	["keyword", ["i64", ["punctuation", "."], "reinterpret/f64"]],
+	["keyword", ["f32", ["punctuation", "."], "reinterpret/i32"]],
+	["keyword", ["f64", ["punctuation", "."], "reinterpret/i64"]],
+
+	["keyword", ["memory", ["punctuation", "."], "size"]],
+	["keyword", ["memory", ["punctuation", "."], "grow"]],
+	
+	["keyword", "anyfunc"],
+	["keyword", "block"],
+	["keyword", "br"],
+	["keyword", "br_if"],
+	["keyword", "br_table"],
+	["keyword", "call"],
+	["keyword", "call_indirect"],
+	["keyword", "data"],
+	["keyword", "drop"],
+	["keyword", "elem"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "export"],
+	["keyword", "func"],
+	["keyword", "get_global"],
+	["keyword", "get_local"],
+	["keyword", "global"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "local"],
+	["keyword", "loop"],
+	["keyword", "memory"],
+	["keyword", "module"],
+	["keyword", "mut"],
+	["keyword", "nop"],
+	["keyword", "offset"],
+	["keyword", "param"],
+	["keyword", "result"],
+	["keyword", "return"],
+	["keyword", "select"],
+	["keyword", "set_global"],
+	["keyword", "set_local"],
+	["keyword", "start"],
+	["keyword", "table"],
+	["keyword", "tee_local"],
+	["keyword", "then"],
+	["keyword", "type"],
+	["keyword", "unreachable"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

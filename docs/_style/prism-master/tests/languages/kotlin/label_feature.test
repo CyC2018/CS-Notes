@@ -1,0 +1,15 @@
+loop@
+break@loop
+return@forEach
+
+----------------------------------------------------
+
+[
+	["label", "loop@"],
+	["keyword", "break"], ["label", "@loop"],
+	["keyword", "return"], ["label", "@forEach"]
+]
+
+----------------------------------------------------
+
+Checks for labels.

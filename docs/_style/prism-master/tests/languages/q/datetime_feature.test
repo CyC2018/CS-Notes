@@ -1,0 +1,39 @@
+0Nm 0Nd 0Nz 0Nu 0Nv 0Nt
+0Wd 0Wt 0Wz
+
+2015.09m
+2015.09.08
+2015.09.08d
+2015.09.08z
+2015.09.08T08:25:32
+2015.09.08T08:25:32.000
+08:25
+08:25u
+08:25v
+08:25t
+08:25:32
+08:25:32:000
+
+----------------------------------------------------
+
+[
+	["datetime", "0Nm"], ["datetime", "0Nd"], ["datetime", "0Nz"], ["datetime", "0Nu"], ["datetime", "0Nv"], ["datetime", "0Nt"],
+	["datetime", "0Wd"], ["datetime", "0Wt"], ["datetime", "0Wz"],
+
+	["datetime", "2015.09m"],
+	["datetime", "2015.09.08"],
+	["datetime", "2015.09.08d"],
+	["datetime", "2015.09.08z"],
+	["datetime", "2015.09.08T08:25:32"],
+	["datetime", "2015.09.08T08:25:32.000"],
+	["datetime", "08:25"],
+	["datetime", "08:25u"],
+	["datetime", "08:25v"],
+	["datetime", "08:25t"],
+	["datetime", "08:25:32"],
+	["datetime", "08:25:32:000"]
+]
+
+----------------------------------------------------
+
+Checks for dates, times and datetimes.

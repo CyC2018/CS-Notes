@@ -1,0 +1,125 @@
+Void
+Strict
+Public
+Private
+Property
+Bool
+Int
+Float
+String
+Array
+Object
+Continue
+Exit
+Import
+Extern
+New
+Self
+Super
+Try
+Catch
+Eachin
+True
+False
+Extends
+Abstract
+Final
+Select
+Case
+Default
+Const
+Local
+Global
+Field
+Method
+Function
+Class
+End
+If
+Then
+Else
+ElseIf
+EndIf
+While
+Wend
+Repeat
+Until
+Forever
+For
+To
+Step
+Next
+Return
+Module
+Interface
+Implements
+Inline
+Throw
+Null
+
+----------------------------------------------------
+
+[
+	["keyword", "Void"],
+	["keyword", "Strict"],
+	["keyword", "Public"],
+	["keyword", "Private"],
+	["keyword", "Property"],
+	["keyword", "Bool"],
+	["keyword", "Int"],
+	["keyword", "Float"],
+	["keyword", "String"],
+	["keyword", "Array"],
+	["keyword", "Object"],
+	["keyword", "Continue"],
+	["keyword", "Exit"],
+	["keyword", "Import"],
+	["keyword", "Extern"],
+	["keyword", "New"],
+	["keyword", "Self"],
+	["keyword", "Super"],
+	["keyword", "Try"],
+	["keyword", "Catch"],
+	["keyword", "Eachin"],
+	["keyword", "True"],
+	["keyword", "False"],
+	["keyword", "Extends"],
+	["keyword", "Abstract"],
+	["keyword", "Final"],
+	["keyword", "Select"],
+	["keyword", "Case"],
+	["keyword", "Default"],
+	["keyword", "Const"],
+	["keyword", "Local"],
+	["keyword", "Global"],
+	["keyword", "Field"],
+	["keyword", "Method"],
+	["keyword", "Function"],
+	["keyword", "Class"],
+	["keyword", "End"],
+	["keyword", "If"],
+	["keyword", "Then"],
+	["keyword", "Else"],
+	["keyword", "ElseIf"],
+	["keyword", "EndIf"],
+	["keyword", "While"],
+	["keyword", "Wend"],
+	["keyword", "Repeat"],
+	["keyword", "Until"],
+	["keyword", "Forever"],
+	["keyword", "For"],
+	["keyword", "To"],
+	["keyword", "Step"],
+	["keyword", "Next"],
+	["keyword", "Return"],
+	["keyword", "Module"],
+	["keyword", "Interface"],
+	["keyword", "Implements"],
+	["keyword", "Inline"],
+	["keyword", "Throw"],
+	["keyword", "Null"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

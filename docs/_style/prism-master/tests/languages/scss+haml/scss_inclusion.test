@@ -1,0 +1,40 @@
+:scss
+	#main {
+		width: $width;
+	}
+
+~
+	:scss
+	  #main {
+	    width: $width;
+	  }
+
+----------------------------------------------------
+
+[
+	["filter-scss", [
+		["filter-name", ":scss"],
+		["selector", ["#main "]],
+		["punctuation", "{"],
+		["property", ["width"]],
+		["punctuation", ":"],
+		["variable", "$width"],
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]],
+	["punctuation", "~"],
+	["filter-scss", [
+		["filter-name", ":scss"],
+		["selector", ["#main "]],
+		["punctuation", "{"],
+		["property", ["width"]],
+		["punctuation", ":"],
+		["variable", "$width"],
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for CSS filter in Haml. The tilde serves only as a separator.

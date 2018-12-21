@@ -1,0 +1,31 @@
+boolean
+byte
+char
+color
+double
+float
+int
+XML
+
+Foobar
+Foo_bar_42
+
+----------------------------------------------------
+
+[
+	["type", "boolean"],
+	["type", "byte"],
+	["type", "char"],
+	["type", "color"],
+	["type", "double"],
+	["type", "float"],
+	["type", "int"],
+	["type", "XML"],
+
+	["type", "Foobar"],
+	["type", "Foo_bar_42"]
+]
+
+----------------------------------------------------
+
+Checks for types.

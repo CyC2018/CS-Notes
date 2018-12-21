@@ -1,0 +1,31 @@
+-Here's my tetx file
++Here's my text file
++And this is the second line
+
+––– a/web/js/lazy.js
++++ b/web/js/lazy.js
+
+-      if (url !== null && url !== '' && typeof url !== 'undefined') {
++      if (url === null || url === '' || typeof url === 'undefined') {
++        return;
++      }
++
+
+----------------------------------------------------
+
+[
+	["deleted", "-Here's my tetx file"],
+	["inserted", "+Here's my text file"],
+	["inserted", "+And this is the second line"],
+	["deleted", "––– a/web/js/lazy.js"],
+	["inserted", "+++ b/web/js/lazy.js"],
+	["deleted", "-      if (url !== null && url !== '' && typeof url !== 'undefined') {"],
+	["inserted", "+      if (url === null || url === '' || typeof url === 'undefined') {"],
+	["inserted", "+        return;"],
+	["inserted", "+      }"],
+	["inserted", "+"]
+]
+
+----------------------------------------------------
+
+Checks for inserted and deleted lines in git diff output.

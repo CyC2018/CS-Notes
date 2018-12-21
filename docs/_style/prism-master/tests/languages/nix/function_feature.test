@@ -1,0 +1,133 @@
+abort
+add
+all
+any
+attrNames
+attrValues
+baseNameOf
+compareVersions
+concatLists
+currentSystem
+deepSeq
+derivation
+dirOf
+div
+elem
+elemAt
+fetchurl
+fetchTarball
+filter
+filterSource
+fromJSON
+genList
+getAttr
+getEnv
+hasAttr
+hashString
+head
+import
+intersectAttrs
+isAttrs
+isBool
+isFunction
+isInt
+isList
+isNull
+isString
+length
+lessThan
+listToAttrs
+map
+mul
+parseDrvName
+pathExists
+readDir
+readFile
+removeAttrs
+replaceStrings
+seq
+sort
+stringLength
+sub
+substring
+tail
+throw
+toFile
+toJSON
+toPath
+toString
+toXML
+trace
+typeOf
+foldl'
+
+----------------------------------------------------
+
+[
+	["function", "abort"],
+	["function", "add"],
+	["function", "all"],
+	["function", "any"],
+	["function", "attrNames"],
+	["function", "attrValues"],
+	["function", "baseNameOf"],
+	["function", "compareVersions"],
+	["function", "concatLists"],
+	["function", "currentSystem"],
+	["function", "deepSeq"],
+	["function", "derivation"],
+	["function", "dirOf"],
+	["function", "div"],
+	["function", "elem"],
+	["function", "elemAt"],
+	["function", "fetchurl"],
+	["function", "fetchTarball"],
+	["function", "filter"],
+	["function", "filterSource"],
+	["function", "fromJSON"],
+	["function", "genList"],
+	["function", "getAttr"],
+	["function", "getEnv"],
+	["function", "hasAttr"],
+	["function", "hashString"],
+	["function", "head"],
+	["function", "import"],
+	["function", "intersectAttrs"],
+	["function", "isAttrs"],
+	["function", "isBool"],
+	["function", "isFunction"],
+	["function", "isInt"],
+	["function", "isList"],
+	["function", "isNull"],
+	["function", "isString"],
+	["function", "length"],
+	["function", "lessThan"],
+	["function", "listToAttrs"],
+	["function", "map"],
+	["function", "mul"],
+	["function", "parseDrvName"],
+	["function", "pathExists"],
+	["function", "readDir"],
+	["function", "readFile"],
+	["function", "removeAttrs"],
+	["function", "replaceStrings"],
+	["function", "seq"],
+	["function", "sort"],
+	["function", "stringLength"],
+	["function", "sub"],
+	["function", "substring"],
+	["function", "tail"],
+	["function", "throw"],
+	["function", "toFile"],
+	["function", "toJSON"],
+	["function", "toPath"],
+	["function", "toString"],
+	["function", "toXML"],
+	["function", "trace"],
+	["function", "typeOf"],
+	["function", "foldl'"]
+]
+
+----------------------------------------------------
+
+Checks for built-in functions.

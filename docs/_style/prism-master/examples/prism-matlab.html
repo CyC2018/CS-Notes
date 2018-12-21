@@ -1,0 +1,52 @@
+<h2>Strings</h2>
+<pre><code>myString = 'Hello, world';
+otherString = 'You''re right';</code></pre>
+
+<h2>Comments</h2>
+<pre><code>% Single line comment
+%{ Multi-line
+comment }%</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>x = 325.499
+realmax + .0001e+308
+e = 1 - 3*(4/3 - 1)
+b = 1e-16 + 1 - 1e-16;
+x = 2 + 3i;
+z =
+   4.7842 -1.0921i   0.8648 -1.5931i   1.2616 -2.2753i
+   2.6130 -0.0941i   4.8987 -2.3898i   4.3787 -3.7538i
+   4.4007 -7.1512i   1.3572 -5.2915i   3.6865 -0.5182i
+</code></pre>
+
+<h2>Control flow</h2>
+<pre><code>if rem(a, 2) == 0
+    disp('a is even')
+    b = a/2;
+end
+switch dayString
+   case 'Monday'
+      disp('Start of the work week')
+   case 'Tuesday'
+      disp('Day 2')
+   case 'Wednesday'
+      disp('Day 3')
+   case 'Thursday'
+      disp('Day 4')
+   case 'Friday'
+      disp('Last day of the work week')
+   otherwise
+      disp('Weekend!')
+end
+n = 1;
+nFactorial = 1;
+while nFactorial < 1e100
+    n = n + 1;
+    nFactorial = nFactorial * n;
+end</code></pre>
+
+<h2>Functions</h2>
+<pre><code>q = integral(sqr,0,1);
+y = parabola(x)
+mygrid = @(x,y) ndgrid((-x:x/c:x),(-y:y/c:y));
+[x,y] = mygrid(pi,2*pi);</code></pre>

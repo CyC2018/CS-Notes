@@ -1,0 +1,40 @@
+Examples: foo
+| start  | eat | left |
+|  <foo> |  5  |  7   |
+	|  20    |  5  |  15  |
+
+----------------------------------------------------
+
+[
+	["scenario", [["keyword", "Examples:"], ["important", " foo"]]],
+	["table-head", [
+		["punctuation", "|"],
+		["th", " start  "],
+		["punctuation", "|"],
+        ["th", " eat "],
+        ["punctuation", "|"],
+        ["th", " left "],
+        ["punctuation", "|"]
+    ]],
+    ["table-body", [
+		["punctuation", "|"],
+		["outline", "<foo>"],
+		["punctuation", "|"],
+		["td", "  5  "],
+		["punctuation", "|"],
+        ["td", "  7   "],
+        ["punctuation", "|"],
+
+        ["punctuation", "|"],
+        ["td", "  20    "],
+        ["punctuation", "|"],
+        ["td", "  5  "],
+        ["punctuation", "|"],
+        ["td", "  15  "],
+        ["punctuation", "|"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for table heads and table bodies.

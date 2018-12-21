@@ -1,0 +1,147 @@
+{|
+| Foo
+| Bar
+|-
+| Baz
+| Foobar
+|}
+
+{|
+|Foo
+bar
+
+baz
+|
+''Foobar''
+|}
+
+{|
+| Foo || Bar || Baz
+|-
+| Baz || Bar || Foo
+|}
+
+{|
+! style="text-align:left;"| Foo
+! Bar
+! Baz
+|-
+| foo
+| bar
+| baz
+|}
+
+{|
+! style="color:red;"| Foo !! style="color:blue;"| Bar !! Baz
+|-
+| foo || style="font-weight:bold;"| bar || baz
+|}
+
+----------------------------------------------------
+
+[
+	["punctuation", "{|"],
+	["punctuation", "|"], " Foo\r\n",
+	["punctuation", "|"], " Bar\r\n",
+	["punctuation", "|-"],
+	["punctuation", "|"], " Baz\r\n",
+	["punctuation", "|"], " Foobar\r\n",
+	["punctuation", "|}"],
+
+	["punctuation", "{|"],
+	["punctuation", "|"], "Foo\r\nbar\r\n\r\nbaz\r\n",
+	["punctuation", "|"],
+	["emphasis", [["punctuation", "''"], ["italic", "Foobar"], ["punctuation", "''"]]],
+	["punctuation", "|}"],
+
+	["punctuation", "{|"],
+	["punctuation", "|"], " Foo ",
+	["punctuation", "||"], " Bar ",
+	["punctuation", "||"], " Baz\r\n",
+	["punctuation", "|-"],
+	["punctuation", "|"], " Baz ",
+	["punctuation", "||"], " Bar ",
+	["punctuation", "||"], " Foo\r\n",
+	["punctuation", "|}"],
+
+	["punctuation", "{|"],
+	["punctuation", "!"],
+	["table-tag", [
+		["style-attr", [
+			["attr-name", [["attr-name", ["style"]]]],
+			["punctuation", "=\""],
+			["attr-value", [
+				["property", "text-align"],
+				["punctuation", ":"],
+				"left",
+				["punctuation", ";"]
+			]],
+			["punctuation", "\""]
+		]],
+		["table-bar", "|"]
+	]], " Foo\r\n",
+	["punctuation", "!"], " Bar\r\n",
+	["punctuation", "!"], " Baz\r\n",
+	["punctuation", "|-"],
+	["punctuation", "|"], " foo\r\n",
+	["punctuation", "|"], " bar\r\n",
+	["punctuation", "|"], " baz\r\n",
+	["punctuation", "|}"],
+
+	["punctuation", "{|"],
+	["punctuation", "!"],
+	["table-tag", [
+		["style-attr", [
+			["attr-name", [["attr-name", ["style"]]]],
+			["punctuation", "=\""],
+			["attr-value", [
+				["property", "color"],
+				["punctuation", ":"],
+				"red",
+				["punctuation", ";"]
+			]],
+			["punctuation", "\""]
+		]],
+		["table-bar", "|"]
+	]], " Foo ",
+	["punctuation", "!!"],
+	["table-tag", [
+		["style-attr", [
+			["attr-name", [["attr-name", ["style"]]]],
+			["punctuation", "=\""],
+			["attr-value", [
+				["property", "color"],
+				["punctuation", ":"],
+				"blue",
+				["punctuation", ";"]
+			]],
+			["punctuation", "\""]
+		]],
+		["table-bar", "|"]
+	]], " Bar ",
+	["punctuation", "!!"], " Baz\r\n",
+	["punctuation", "|-"],
+	["punctuation", "|"], " foo ",
+	["punctuation", "||"],
+	["table-tag", [
+		["style-attr", [
+			["attr-name", [["attr-name", ["style"]]]],
+			["punctuation", "=\""],
+			["attr-value", [
+				["property", "font-weight"],
+				["punctuation", ":"],
+				"bold",
+				["punctuation", ";"]
+			]],
+			["punctuation", "\""]
+		]],
+		["table-bar", "|"]
+	]], " bar ",
+	["punctuation", "||"], " baz\r\n",
+	["punctuation", "|}"]
+]
+
+----------------------------------------------------
+
+Checks for tables and cell attributes.
+Note: Markup is loaded before CSS so that inline styles are added into grammar.

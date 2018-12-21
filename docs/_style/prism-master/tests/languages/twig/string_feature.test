@@ -1,0 +1,33 @@
+{{ '' }}
+{{ "" }}
+{{ "ba\"r" }}
+{{ 'ba\'z' }}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["string", [["punctuation", "'"], ["punctuation", "'"]]],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["string", [["punctuation", "\""], ["punctuation", "\""]]],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["string", [["punctuation", "\""], "ba\\\"r", ["punctuation", "\""]]],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["string", [["punctuation", "'"], "ba\\'z", ["punctuation", "'"]]],
+		["rd", [["punctuation", "}}"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings.

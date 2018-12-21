@@ -1,0 +1,443 @@
+ADDHANDLER
+ADDRESSOF
+ALIAS
+AND
+ANDALSO
+AS
+BEEP
+BLOAD
+BOOLEAN
+BSAVE
+BYREF
+BYTE
+BYVAL
+CALL
+CALL ABSOLUTE
+CASE
+CATCH
+CBOOL
+CBYTE
+CCHAR
+CDATE
+CDEC
+CDBL
+CHAIN
+CHAR
+CHDIR
+CINT
+CLASS
+CLEAR
+CLNG
+CLOSE
+CLS
+COBJ
+COM
+COMMON
+CONST
+CONTINUE
+CSBYTE
+CSHORT
+CSNG
+CSTR
+CTYPE
+CUINT
+CULNG
+CUSHORT
+DATA
+DATE
+DECIMAL
+DECLARE
+DEFAULT
+DEF FN
+DEF SEG
+DEFDBL
+DEFINT
+DEFLNG
+DEFSNG
+DEFSTR
+DELEGATE
+DIM
+DIRECTCAST
+DO
+DOUBLE
+ELSE
+ELSEIF
+END
+ENUM
+ENVIRON
+ERASE
+ERROR
+EVENT
+EXIT
+FALSE
+FIELD
+FILES
+FINALLY
+FOR
+FOR EACH
+FRIEND
+FUNCTION
+GET
+GETTYPE
+GETXMLNAMESPACE
+GLOBAL
+GOSUB
+GOTO
+HANDLES
+IF
+IMPLEMENTS
+IMPORTS
+IN
+INHERITS
+INPUT
+INTEGER
+INTERFACE
+IOCTL
+IS
+ISNOT
+KEY
+KILL
+LINE INPUT
+LET
+LIB
+LIKE
+LOCATE
+LOCK
+LONG
+LOOP
+LSET
+ME
+MKDIR
+MOD
+MODULE
+MUSTINHERIT
+MUSTOVERRIDE
+MYBASE
+MYCLASS
+NAME
+NAMESPACE
+NARROWING
+NEW
+NEXT
+NOT
+NOTHING
+NOTINHERITABLE
+NOTOVERRIDABLE
+OBJECT
+OF
+OFF
+ON
+ON COM
+ON ERROR
+ON KEY
+ON TIMER
+OPERATOR
+OPEN
+OPTION
+OPTION BASE
+OPTIONAL
+OR
+ORELSE
+OUT
+OVERLOADS
+OVERRIDABLE
+OVERRIDES
+PARAMARRAY
+PARTIAL
+POKE
+PRIVATE
+PROPERTY
+PROTECTED
+PUBLIC
+PUT
+RAISEEVENT
+READ
+READONLY
+REDIM
+REM
+REMOVEHANDLER
+RESTORE
+RESUME
+RETURN
+RMDIR
+RSET
+RUN
+SBYTE
+SELECT
+SELECT CASE
+SET
+SHADOWS
+SHARED
+SHORT
+SINGLE
+SHELL
+SLEEP
+STATIC
+STEP
+STOP
+STRING
+STRUCTURE
+SUB
+SYNCLOCK
+SWAP
+SYSTEM
+THEN
+THROW
+TIMER
+TO
+TROFF
+TRON
+TRUE
+TRY
+TRYCAST
+TYPE
+TYPEOF
+UINTEGER
+ULONG
+UNLOCK
+UNTIL
+USHORT
+USING
+VIEW PRINT
+WAIT
+WEND
+WHEN
+WHILE
+WIDENING
+WITH
+WITHEVENTS
+WRITE
+WRITEONLY
+XOR
+#CONST
+#ELSE
+#ELSE
+#ELSEIF
+#END
+#IF
+
+----------------------------------------------------
+
+[
+	["keyword", "ADDHANDLER"],
+	["keyword", "ADDRESSOF"],
+	["keyword", "ALIAS"],
+	["keyword", "AND"],
+	["keyword", "ANDALSO"],
+	["keyword", "AS"],
+	["keyword", "BEEP"],
+	["keyword", "BLOAD"],
+	["keyword", "BOOLEAN"],
+	["keyword", "BSAVE"],
+	["keyword", "BYREF"],
+	["keyword", "BYTE"],
+	["keyword", "BYVAL"],
+	["keyword", "CALL"],
+	["keyword", "CALL ABSOLUTE"],
+	["keyword", "CASE"],
+	["keyword", "CATCH"],
+	["keyword", "CBOOL"],
+	["keyword", "CBYTE"],
+	["keyword", "CCHAR"],
+	["keyword", "CDATE"],
+	["keyword", "CDEC"],
+	["keyword", "CDBL"],
+	["keyword", "CHAIN"],
+	["keyword", "CHAR"],
+	["keyword", "CHDIR"],
+	["keyword", "CINT"],
+	["keyword", "CLASS"],
+	["keyword", "CLEAR"],
+	["keyword", "CLNG"],
+	["keyword", "CLOSE"],
+	["keyword", "CLS"],
+	["keyword", "COBJ"],
+	["keyword", "COM"],
+	["keyword", "COMMON"],
+	["keyword", "CONST"],
+	["keyword", "CONTINUE"],
+	["keyword", "CSBYTE"],
+	["keyword", "CSHORT"],
+	["keyword", "CSNG"],
+	["keyword", "CSTR"],
+	["keyword", "CTYPE"],
+	["keyword", "CUINT"],
+	["keyword", "CULNG"],
+	["keyword", "CUSHORT"],
+	["keyword", "DATA"],
+	["keyword", "DATE"],
+	["keyword", "DECIMAL"],
+	["keyword", "DECLARE"],
+	["keyword", "DEFAULT"],
+	["keyword", "DEF FN"],
+	["keyword", "DEF SEG"],
+	["keyword", "DEFDBL"],
+	["keyword", "DEFINT"],
+	["keyword", "DEFLNG"],
+	["keyword", "DEFSNG"],
+	["keyword", "DEFSTR"],
+	["keyword", "DELEGATE"],
+	["keyword", "DIM"],
+	["keyword", "DIRECTCAST"],
+	["keyword", "DO"],
+	["keyword", "DOUBLE"],
+	["keyword", "ELSE"],
+	["keyword", "ELSEIF"],
+	["keyword", "END"],
+	["keyword", "ENUM"],
+	["keyword", "ENVIRON"],
+	["keyword", "ERASE"],
+	["keyword", "ERROR"],
+	["keyword", "EVENT"],
+	["keyword", "EXIT"],
+	["keyword", "FALSE"],
+	["keyword", "FIELD"],
+	["keyword", "FILES"],
+	["keyword", "FINALLY"],
+	["keyword", "FOR"],
+	["keyword", "FOR EACH"],
+	["keyword", "FRIEND"],
+	["keyword", "FUNCTION"],
+	["keyword", "GET"],
+	["keyword", "GETTYPE"],
+	["keyword", "GETXMLNAMESPACE"],
+	["keyword", "GLOBAL"],
+	["keyword", "GOSUB"],
+	["keyword", "GOTO"],
+	["keyword", "HANDLES"],
+	["keyword", "IF"],
+	["keyword", "IMPLEMENTS"],
+	["keyword", "IMPORTS"],
+	["keyword", "IN"],
+	["keyword", "INHERITS"],
+	["keyword", "INPUT"],
+	["keyword", "INTEGER"],
+	["keyword", "INTERFACE"],
+	["keyword", "IOCTL"],
+	["keyword", "IS"],
+	["keyword", "ISNOT"],
+	["keyword", "KEY"],
+	["keyword", "KILL"],
+	["keyword", "LINE INPUT"],
+	["keyword", "LET"],
+	["keyword", "LIB"],
+	["keyword", "LIKE"],
+	["keyword", "LOCATE"],
+	["keyword", "LOCK"],
+	["keyword", "LONG"],
+	["keyword", "LOOP"],
+	["keyword", "LSET"],
+	["keyword", "ME"],
+	["keyword", "MKDIR"],
+	["keyword", "MOD"],
+	["keyword", "MODULE"],
+	["keyword", "MUSTINHERIT"],
+	["keyword", "MUSTOVERRIDE"],
+	["keyword", "MYBASE"],
+	["keyword", "MYCLASS"],
+	["keyword", "NAME"],
+	["keyword", "NAMESPACE"],
+	["keyword", "NARROWING"],
+	["keyword", "NEW"],
+	["keyword", "NEXT"],
+	["keyword", "NOT"],
+	["keyword", "NOTHING"],
+	["keyword", "NOTINHERITABLE"],
+	["keyword", "NOTOVERRIDABLE"],
+	["keyword", "OBJECT"],
+	["keyword", "OF"],
+	["keyword", "OFF"],
+	["keyword", "ON"],
+	["keyword", "ON COM"],
+	["keyword", "ON ERROR"],
+	["keyword", "ON KEY"],
+	["keyword", "ON TIMER"],
+	["keyword", "OPERATOR"],
+	["keyword", "OPEN"],
+	["keyword", "OPTION"],
+	["keyword", "OPTION BASE"],
+	["keyword", "OPTIONAL"],
+	["keyword", "OR"],
+	["keyword", "ORELSE"],
+	["keyword", "OUT"],
+	["keyword", "OVERLOADS"],
+	["keyword", "OVERRIDABLE"],
+	["keyword", "OVERRIDES"],
+	["keyword", "PARAMARRAY"],
+	["keyword", "PARTIAL"],
+	["keyword", "POKE"],
+	["keyword", "PRIVATE"],
+	["keyword", "PROPERTY"],
+	["keyword", "PROTECTED"],
+	["keyword", "PUBLIC"],
+	["keyword", "PUT"],
+	["keyword", "RAISEEVENT"],
+	["keyword", "READ"],
+	["keyword", "READONLY"],
+	["keyword", "REDIM"],
+	["keyword", "REM"],
+	["keyword", "REMOVEHANDLER"],
+	["keyword", "RESTORE"],
+	["keyword", "RESUME"],
+	["keyword", "RETURN"],
+	["keyword", "RMDIR"],
+	["keyword", "RSET"],
+	["keyword", "RUN"],
+	["keyword", "SBYTE"],
+	["keyword", "SELECT"],
+	["keyword", "SELECT CASE"],
+	["keyword", "SET"],
+	["keyword", "SHADOWS"],
+	["keyword", "SHARED"],
+	["keyword", "SHORT"],
+	["keyword", "SINGLE"],
+	["keyword", "SHELL"],
+	["keyword", "SLEEP"],
+	["keyword", "STATIC"],
+	["keyword", "STEP"],
+	["keyword", "STOP"],
+	["keyword", "STRING"],
+	["keyword", "STRUCTURE"],
+	["keyword", "SUB"],
+	["keyword", "SYNCLOCK"],
+	["keyword", "SWAP"],
+	["keyword", "SYSTEM"],
+	["keyword", "THEN"],
+	["keyword", "THROW"],
+	["keyword", "TIMER"],
+	["keyword", "TO"],
+	["keyword", "TROFF"],
+	["keyword", "TRON"],
+	["keyword", "TRUE"],
+	["keyword", "TRY"],
+	["keyword", "TRYCAST"],
+	["keyword", "TYPE"],
+	["keyword", "TYPEOF"],
+	["keyword", "UINTEGER"],
+	["keyword", "ULONG"],
+	["keyword", "UNLOCK"],
+	["keyword", "UNTIL"],
+	["keyword", "USHORT"],
+	["keyword", "USING"],
+	["keyword", "VIEW PRINT"],
+	["keyword", "WAIT"],
+	["keyword", "WEND"],
+	["keyword", "WHEN"],
+	["keyword", "WHILE"],
+	["keyword", "WIDENING"],
+	["keyword", "WITH"],
+	["keyword", "WITHEVENTS"],
+	["keyword", "WRITE"],
+	["keyword", "WRITEONLY"],
+	["keyword", "XOR"],
+	["keyword", "#CONST"],
+	["keyword", "#ELSE"],
+	["keyword", "#ELSE"],
+	["keyword", "#ELSEIF"],
+	["keyword", "#END"],
+	["keyword", "#IF"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,30 @@
+|x: int, y: int| -> int {}
+|| {}
+
+----------------------------------------------------
+
+[
+	["closure-params", [
+		["punctuation", "|"],
+		"x",
+		["punctuation", ":"],
+		" int",
+		["punctuation", ","],
+		" y",
+		["punctuation", ":"],
+		" int",
+		["punctuation", "|"]
+	]],
+	["punctuation", "->"],
+	" int ", ["punctuation", "{"], ["punctuation", "}"],
+
+	["closure-params", [
+		["punctuation", "|"],
+		["punctuation", "|"]
+	]],
+	["punctuation", "{"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for closure params.
