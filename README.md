@@ -170,7 +170,7 @@
 
 #### How To Use
 
-[Wiki](https://github.com/CyC2018/CS-Notes.wiki.git)
+[Wiki](https://github.com/CyC2018/CS-Notes/wiki)
 
 #### How To Contribute
 
