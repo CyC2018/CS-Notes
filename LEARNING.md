@@ -8,11 +8,11 @@
 
 Coursera 上有配套视频课程可学习：[Algorithms](https://www.coursera.org/learn/algorithms-part1)，如果还没到注册时间的话，也是可以点进去观看视频，只是没有作业和证书。
 
-> **浙江大学 - 数据结构**
+> **数据结构**
 
-[浙江大学 数据结构](https://www.icourse163.org/course/ZJU-93001)
+[豆瓣](https://book.douban.com/subject/25859528/) 9.4 分，139 分。
 
-这门数据结构的课程备受好评，很值得学习。
+C++ 实现，可以结合配套视频观看：[清华大学  数据结构](https://www.xuetangx.com/courses/course-v1:TsinghuaX+30240184+sp/about)
 
 > **剑指 Offer 题解**
 
