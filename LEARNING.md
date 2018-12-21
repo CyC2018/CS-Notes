@@ -1,6 +1,6 @@
 # 算法
 
->  **算法（第 4 版）**
+> **算法（第 4 版）**
 
 [豆瓣](https://book.douban.com/subject/19952400/) 9.4 分，873 人评分。
 
@@ -8,7 +8,7 @@
 
 Coursera 上有配套视频课程可学习：[Algorithms](https://www.coursera.org/learn/algorithms-part1)，如果还没到注册时间的话，也是可以点进去观看视频，只是没有作业和证书。
 
->  **浙江大学 - 数据结构**
+> **浙江大学 - 数据结构**
 
 [浙江大学 数据结构](https://www.icourse163.org/course/ZJU-93001)
 
