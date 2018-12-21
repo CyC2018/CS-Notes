@@ -78,6 +78,16 @@ TCP/IP 是网络中最重要的一部分，也是面试中常问的，所以这�
 
 这本书（UNP）和 UNIX 环境高级编程（APUE）被称为腾讯的敲门砖，应该说 C++ 岗位的同学都应该学习一下，Java 或者其它岗位的同学倒是没那么高的要求。不过这两本是大部头，从头看到尾是不现实的，适合当做工具书，碰到问题的时候再去查找书中的内容。然后对于面试中经常问到的重点知识，也适合看看这本书的内容，而不是背网上所谓的面试答案。
 
+> **Socket**
+
+[我的笔记](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Socket.md) 对常见的 Socket 问题做了总结，如果觉得阅读 UNP 太慢的话可以看看这个。
+
+> **图解 HTTP**
+
+[豆瓣](https://book.douban.com/subject/25863515/) 8.1 分，1669 人评分。
+
+HTTP 也是网络中非常重要的部分，这本书很容易看懂，也推荐看我总结的 [笔记](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/HTTP.md) 。
+
 # 操作系统
 
 > **计算机操作系统**
