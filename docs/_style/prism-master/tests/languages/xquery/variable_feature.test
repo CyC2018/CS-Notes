@@ -1,0 +1,15 @@
+$foo
+$foo-bar
+$strings:LetterA
+
+----------------------------------------------------
+
+[
+	["variable", "$foo"],
+	["variable", "$foo-bar"],
+	["variable", "$strings:LetterA"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

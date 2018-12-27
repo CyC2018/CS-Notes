@@ -1,0 +1,21 @@
+@Deprecated(SUBSYSTEM_DEPRECATED)
+@SetUp
+@Suppress
+@field:Ann
+@file:JvmName
+@set:[Inject VisibleForTesting]
+
+----------------------------------------------------
+
+[
+	["annotation", "@Deprecated"], ["punctuation", "("], "SUBSYSTEM_DEPRECATED", ["punctuation", ")"],
+	["annotation", "@SetUp"],
+	["annotation", "@Suppress"],
+	["annotation", "@field:Ann"],
+	["annotation", "@file:JvmName"],
+	["annotation", "@set:[Inject VisibleForTesting]"]
+]
+
+----------------------------------------------------
+
+Checks for annotations.

@@ -1,0 +1,19 @@
+alias as case else
+exposing if in
+infixl infixr let
+module of then
+type
+
+----------------------------------------------------
+
+[
+	["keyword", "alias"], ["keyword", "as"], ["keyword", "case"], ["keyword", "else"],
+	["keyword", "exposing"], ["keyword", "if"], ["keyword", "in"],
+	["keyword", "infixl"], ["keyword", "infixr"], ["keyword", "let"],
+	["keyword", "module"], ["keyword", "of"], ["keyword", "then"],
+	["keyword", "type"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

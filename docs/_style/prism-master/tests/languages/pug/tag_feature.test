@@ -1,0 +1,97 @@
+div
+	span&attributes({'data-foo': 'bar'})
+
+input(data-bar="foo", type='checkbox', checked)
+
+a(style={color: 'red', background: 'green'})
+
+div(unescaped!="<code>")
+
+a.button
+.content
+
+a#main-link
+#content
+
+a: span
+
+----------------------------------------------------
+
+[
+	["tag", ["div"]],
+	["tag", [
+		"span",
+		["attributes", [
+			["operator", "&"],
+			["function", "attributes"],
+			["punctuation", "("],
+			["punctuation", "{"],
+			["string", "'data-foo'"],
+			["punctuation", ":"],
+			["string", "'bar'"],
+			["punctuation", "}"],
+			["punctuation", ")"]
+		]]
+	]],
+
+	["tag", [
+		"input",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "data-bar"],
+			["punctuation", "="],
+			["attr-value", [["string", "\"foo\""]]],
+			["punctuation", ","],
+			["attr-name", "type"],
+			["punctuation", "="],
+			["attr-value", [["string", "'checkbox'"]]],
+			["punctuation", ","],
+			["attr-name", "checked"],
+			["punctuation", ")"]
+		]]
+	]],
+
+	["tag", [
+		"a",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "style"],
+			["punctuation", "="],
+			["attr-value", [
+				["punctuation", "{"],
+				"color",
+				["punctuation", ":"],
+				["string", "'red'"],
+				["punctuation", ","],
+				" background",
+				["punctuation", ":"],
+				["string", "'green'"],
+				["punctuation", "}"]
+			]],
+			["punctuation", ")"]
+		]]
+	]],
+
+	["tag", [
+		"div",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "unescaped"],
+			["punctuation", "!="],
+			["attr-value", [["string", "\"<code>\""]]],
+			["punctuation", ")"]
+		]]
+	]],
+
+	["tag", ["a.button"]],
+	["tag", [".content"]],
+	["tag", ["a#main-link"]],
+	["tag", ["#content"]],
+
+	["tag", ["a", ["punctuation", ":"]]],
+	["tag", ["span"]]
+]
+
+----------------------------------------------------
+
+Checks for tags and attributes.

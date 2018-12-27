@@ -1,0 +1,13 @@
+has("mac")
+exists("s:call_count")
+
+----------------------------------------------------
+
+[
+	["function", "has"], ["punctuation", "("], ["string", "\"mac\""], ["punctuation", ")"],
+	["function", "exists"], ["punctuation", "("], ["string", "\"s:call_count\""], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

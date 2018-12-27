@@ -1,0 +1,44 @@
+<h2>Full example</h2>
+<pre><code>#import &lt;UIKit/UIKit.h>
+#import "Dependency.h"
+
+@protocol WorldDataSource
+@optional
+- (NSString*)worldName;
+@required
+- (BOOL)allowsToLive;
+@end
+
+@interface Test : NSObject &lt;HelloDelegate, WorldDataSource> {
+  NSString *_greeting;
+}
+
+@property (nonatomic, readonly) NSString *greeting;
+- (IBAction) show;
+@end
+
+@implementation Test
+
+@synthesize test=_test;
+
++ (id) test {
+  return [self testWithGreeting:@"Hello, world!\nFoo bar!"];
+}
+
++ (id) testWithGreeting:(NSString*)greeting {
+  return [[[self alloc] initWithGreeting:greeting] autorelease];
+}
+
+- (id) initWithGreeting:(NSString*)greeting {
+  if ( (self = [super init]) ) {
+    _greeting = [greeting retain];
+  }
+  return self;
+}
+
+- (void) dealloc {
+  [_greeting release];
+  [super dealloc];
+}
+
+@end</code></pre>

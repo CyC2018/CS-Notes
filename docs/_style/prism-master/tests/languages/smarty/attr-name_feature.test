@@ -1,0 +1,36 @@
+{assign var=foo value="bar"}
+{foo bar = 40}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["function", "assign"],
+		["attr-name", [
+			"var",
+			["operator", "="],
+			["variable", "foo"]
+		]],
+		["attr-name", [
+			"value",
+			["operator", "="]
+		]],
+		["string", "\"bar\""],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "foo"],
+		["attr-name", [
+			"bar ",
+			["operator", "="]
+		]],
+		["number", "40"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for attributes.

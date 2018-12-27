@@ -1,0 +1,33 @@
+<h2>Normal Diff</h2>
+<pre><code>7c7
+&lt; qt: core
+---
+&gt; qt: core quick</code></pre>
+
+<h2>Context Diff</h2>
+<pre><code>*** qcli.yml	2014-12-16 11:43:41.000000000 +0800
+--- /Users/uranusjr/Desktop/qcli.yml	2014-12-31 11:28:08.000000000 +0800
+***************
+*** 4,8 ****
+  project:
+      sources: "src/*.cpp"
+      headers: "src/*.h"
+!     qt: core
+  public_headers: "src/*.h"
+--- 4,8 ----
+  project:
+      sources: "src/*.cpp"
+      headers: "src/*.h"
+!     qt: core gui
+  public_headers: "src/*.h"</code></pre>
+
+<h2>Unified Diff</h2>
+<pre><code>--- qcli.yml	2014-12-16 11:43:41.000000000 +0800
++++ /Users/uranusjr/Desktop/qcli.yml	2014-12-31 11:28:08.000000000 +0800
+@@ -4,5 +4,5 @@
+ project:
+     sources: "src/*.cpp"
+     headers: "src/*.h"
+-    qt: core
++    qt: core gui
+ public_headers: "src/*.h"</code></pre>

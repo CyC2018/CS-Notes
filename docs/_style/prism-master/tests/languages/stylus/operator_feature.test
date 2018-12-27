@@ -1,0 +1,273 @@
+a = !b
+b = b != a
+c = ~b
+d = c + b
+d += a
+e = d - c
+e -= b
+f = a * b
+g = c ** d
+g *= f
+h = g / f
+h /= e
+i = h % g
+i %= f
+j = 1..5
+k = 1...5
+l = k < j
+m = l <= k
+n = m > l
+o = n >= m
+p = o ? n : m
+q ?= p
+r = q == p
+s := r
+t = s && r
+u = t || s
+v = u and t
+w = v or u
+x = 1 in w
+y = true is true
+z = true is not false
+aa = z isnt y
+ab = #fff is a 'rgba'
+ac = ab is defined
+ad = not ac
+
+----------------------------------------------------
+
+[
+	["variable-declaration", [
+		["variable", "a"],
+		["operator", "="],
+		["operator", "!"],
+		"b"
+	]],
+	["variable-declaration", [
+		["variable", "b"],
+		["operator", "="],
+		" b ",
+		["operator", "!="],
+		" a"
+	]],
+	["variable-declaration", [
+		["variable", "c"],
+		["operator", "="],
+		["operator", "~"],
+		"b"
+	]],
+	["variable-declaration", [
+		["variable", "d"],
+		["operator", "="],
+		" c ",
+		["operator", "+"],
+		" b"
+	]],
+	["variable-declaration", [
+		["variable", "d"],
+		["operator", "+="],
+		" a"
+	]],
+	["variable-declaration", [
+		["variable", "e"],
+		["operator", "="],
+		" d ",
+		["operator", "-"],
+		" c"
+	]],
+	["variable-declaration", [
+		["variable", "e"],
+		["operator", "-="],
+		" b"
+	]],
+	["variable-declaration", [
+		["variable", "f"],
+		["operator", "="],
+		" a ",
+		["operator", "*"],
+		" b"
+	]],
+	["variable-declaration", [
+		["variable", "g"],
+		["operator", "="],
+		" c ",
+		["operator", "**"],
+		" d"
+	]],
+	["variable-declaration", [
+		["variable", "g"],
+		["operator", "*="],
+		" f"
+	]],
+	["variable-declaration", [
+		["variable", "h"],
+		["operator", "="],
+		" g ",
+		["operator", "/"],
+		" f"
+	]],
+	["variable-declaration", [
+		["variable", "h"],
+		["operator", "/="],
+		" e"
+	]],
+	["variable-declaration", [
+		["variable", "i"],
+		["operator", "="],
+		" h ",
+		["operator", "%"],
+		" g"
+	]],
+	["variable-declaration", [
+		["variable", "i"],
+		["operator", "%="],
+		" f"
+	]],
+	["variable-declaration", [
+		["variable", "j"],
+		["operator", "="],
+		["number", "1"],
+		["operator", ".."],
+		["number", "5"]
+	]],
+	["variable-declaration", [
+		["variable", "k"],
+		["operator", "="],
+		["number", "1"],
+		["operator", "..."],
+		["number", "5"]
+	]],
+	["variable-declaration", [
+		["variable", "l"],
+		["operator", "="],
+		" k ",
+		["operator", "<"],
+		" j"
+	]],
+	["variable-declaration", [
+		["variable", "m"],
+		["operator", "="],
+		" l ",
+		["operator", "<="],
+		" k"
+	]],
+	["variable-declaration", [
+		["variable", "n"],
+		["operator", "="],
+		" m ",
+		["operator", ">"],
+		" l"
+	]],
+	["variable-declaration", [
+		["variable", "o"],
+		["operator", "="],
+		" n ",
+		["operator", ">="],
+		" m"
+	]],
+	["variable-declaration", [
+		["variable", "p"],
+		["operator", "="],
+		" o ",
+		["operator", "?"],
+		" n ",
+		["punctuation", ":"],
+		" m"
+	]],
+	["variable-declaration", [
+		["variable", "q"],
+		["operator", "?="],
+		" p"
+	]],
+	["variable-declaration", [
+		["variable", "r"],
+		["operator", "="],
+		" q ",
+		["operator", "=="],
+		" p"
+	]],
+	["variable-declaration", [
+		["variable", "s"],
+		["operator", ":="],
+		" r"
+	]],
+	["variable-declaration", [
+		["variable", "t"],
+		["operator", "="],
+		" s ",
+		["operator", "&&"],
+		" r"
+	]],
+	["variable-declaration", [
+		["variable", "u"],
+		["operator", "="],
+		" t ",
+		["operator", "||"],
+		" s"
+	]],
+	["variable-declaration", [
+		["variable", "v"],
+		["operator", "="],
+		" u ",
+		["operator", "and"],
+		" t"
+	]],
+	["variable-declaration", [
+		["variable", "w"],
+		["operator", "="],
+		" v ",
+		["operator", "or"],
+		" u"
+	]],
+	["variable-declaration", [
+		["variable", "x"],
+		["operator", "="],
+		["number", "1"],
+		["operator", "in"],
+		" w"
+	]],
+	["variable-declaration", [
+		["variable", "y"],
+		["operator", "="],
+		["boolean", "true"],
+		["operator", "is"],
+		["boolean", "true"]
+	]],
+	["variable-declaration", [
+		["variable", "z"],
+		["operator", "="],
+		["boolean", "true"],
+		["operator", "is not"],
+		["boolean", "false"]
+	]],
+	["variable-declaration", [
+		["variable", "aa"],
+		["operator", "="],
+		" z ",
+		["operator", "isnt"],
+		" y"
+	]],
+	["variable-declaration", [
+		["variable", "ab"],
+		["operator", "="],
+		["hexcode", "#fff"],
+		["operator", "is a"],
+		["string", "'rgba'"]
+	]],
+	["variable-declaration", [
+		["variable", "ac"],
+		["operator", "="],
+		" ab ",
+		["operator", "is defined"]
+	]],
+	["variable-declaration", [
+		["variable", "ad"],
+		["operator", "="],
+		["operator", "not"],
+		" ac"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

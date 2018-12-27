@@ -1,0 +1,17 @@
+(
+#'foo
+'foo
+)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("],
+	["quoted-symbol", "#'foo"],
+	["quoted-symbol", "'foo"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for quoted symbols.

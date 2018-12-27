@@ -1,0 +1,21 @@
+=> ->
+class if else
+switch case
+return exit
+try catch
+finally raise
+
+----------------------------------------------------
+
+[
+	["keyword", "=>"], ["keyword", "->"],
+	["keyword", "class"], ["keyword", "if"], ["keyword", "else"],
+	["keyword", "switch"], ["keyword", "case"],
+	["keyword", "return"], ["keyword", "exit"],
+	["keyword", "try"], ["keyword", "catch"],
+	["keyword", "finally"], ["keyword", "raise"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,455 @@
+Abort
+AddBrandingImage
+AddSize
+AdvSplash
+AllowRootDirInstall
+AllowSkipFiles
+AutoCloseWindow
+Banner
+BGFont
+BGGradient
+BGImage
+BrandingText
+BringToFront
+Call
+CallInstDLL
+Caption
+ChangeUI
+CheckBitmap
+ClearErrors
+CompletedText
+ComponentText
+CopyFiles
+CRCCheck
+CreateDirectory
+CreateFont
+CreateShortCut
+Delete
+DeleteINISec
+DeleteINIStr
+DeleteRegKey
+DeleteRegValue
+DetailPrint
+DetailsButtonText
+Dialer
+DirText
+DirVar
+DirVerify
+EnableWindow
+EnumRegKey
+EnumRegValue
+Exch
+Exec
+ExecShell
+ExecWait
+ExecShellWait
+ExpandEnvStrings
+File
+FileBufSize
+FileClose
+FileErrorText
+FileOpen
+FileRead
+FileReadByte
+FileReadUTF16LE
+FileReadWord
+FileSeek
+FileWrite
+FileWriteByte
+FileWriteUTF16LE
+FileWriteWord
+FindClose
+FindFirst
+FindNext
+FindWindow
+FlushINI
+GetCurInstType
+GetCurrentAddress
+GetDlgItem
+GetDLLVersion
+GetDLLVersionLocal
+GetErrorLevel
+GetFileTime
+GetFileTimeLocal
+GetFullPathName
+GetFunction
+GetFunctionAddress
+GetFunctionEnd
+GetInstDirError
+GetLabelAddress
+GetTempFileName
+Goto
+HideWindow
+Icon
+IfAbort
+IfErrors
+IfFileExists
+IfRebootFlag
+IfSilent
+InitPluginsDir
+InstallButtonText
+InstallColors
+InstallDir
+InstallDirRegKey
+InstProgressFlags
+InstType
+InstTypeGetText
+InstTypeSetText
+Int64Cmp
+Int64CmpU
+Int64Fmt
+IntCmp
+IntCmpU
+IntFmt
+IntOp
+IntPtrCmp
+IntPtrCmpU
+IntPtrOp
+IsWindow
+LangDLL
+LangString
+LicenseBkColor
+LicenseData
+LicenseForceSelection
+LicenseLangString
+LicenseText
+LoadLanguageFile
+LockWindow
+LogSet
+LogText
+ManifestDPIAware
+ManifestSupportedOS
+Math
+MessageBox
+MiscButtonText
+Name
+Nop
+nsDialogs
+nsExec
+NSISdl
+OutFile
+Page
+PageCallbacks
+PEDllCharacteristics
+PESubsysVer
+Pop
+Push
+Quit
+ReadEnvStr
+ReadINIStr
+ReadRegDWORD
+ReadRegStr
+Reboot
+RegDLL
+Rename
+RequestExecutionLevel
+ReserveFile
+Return
+RMDir
+SearchPath
+Section
+SectionEnd
+SectionGetFlags
+SectionGetInstTypes
+SectionGetSize
+SectionGetText
+SectionGroup
+SectionIn
+SectionSetFlags
+SectionSetInstTypes
+SectionSetSize
+SectionSetText
+SendMessage
+SetAutoClose
+SetBrandingImage
+SetCompress
+SetCompressor
+SetCompressorDictSize
+SetCtlColors
+SetCurInstType
+SetDatablockOptimize
+SetDateSave
+SetDetailsPrint
+SetDetailsView
+SetErrorLevel
+SetErrors
+SetFileAttributes
+SetFont
+SetOutPath
+SetOverwrite
+SetPluginUnload
+SetRebootFlag
+SetRegView
+SetShellVarContext
+SetSilent
+ShowInstDetails
+ShowUninstDetails
+ShowWindow
+SilentInstall
+SilentUnInstall
+Sleep
+SpaceTexts
+Splash
+StartMenu
+StrCmp
+StrCmpS
+StrCpy
+StrLen
+SubCaption
+System
+Unicode
+UninstallButtonText
+UninstallCaption
+UninstallIcon
+UninstallSubCaption
+UninstallText
+UninstPage
+UnRegDLL
+UserInfo
+Var
+VIAddVersionKey
+VIFileVersion
+VIProductVersion
+VPatch
+WindowIcon
+WriteINIStr
+WriteRegBin
+WriteRegDWORD
+WriteRegExpandStr
+WriteRegMultiStr
+WriteRegNone
+WriteRegStr
+WriteUninstaller
+XPStyle
+
+----------------------------------------------------
+
+[
+	["keyword", "Abort"],
+	["keyword", "AddBrandingImage"],
+	["keyword", "AddSize"],
+	["keyword", "AdvSplash"],
+	["keyword", "AllowRootDirInstall"],
+	["keyword", "AllowSkipFiles"],
+	["keyword", "AutoCloseWindow"],
+	["keyword", "Banner"],
+	["keyword", "BGFont"],
+	["keyword", "BGGradient"],
+	["keyword", "BGImage"],
+	["keyword", "BrandingText"],
+	["keyword", "BringToFront"],
+	["keyword", "Call"],
+	["keyword", "CallInstDLL"],
+	["keyword", "Caption"],
+	["keyword", "ChangeUI"],
+	["keyword", "CheckBitmap"],
+	["keyword", "ClearErrors"],
+	["keyword", "CompletedText"],
+	["keyword", "ComponentText"],
+	["keyword", "CopyFiles"],
+	["keyword", "CRCCheck"],
+	["keyword", "CreateDirectory"],
+	["keyword", "CreateFont"],
+	["keyword", "CreateShortCut"],
+	["keyword", "Delete"],
+	["keyword", "DeleteINISec"],
+	["keyword", "DeleteINIStr"],
+	["keyword", "DeleteRegKey"],
+	["keyword", "DeleteRegValue"],
+	["keyword", "DetailPrint"],
+	["keyword", "DetailsButtonText"],
+	["keyword", "Dialer"],
+	["keyword", "DirText"],
+	["keyword", "DirVar"],
+	["keyword", "DirVerify"],
+	["keyword", "EnableWindow"],
+	["keyword", "EnumRegKey"],
+	["keyword", "EnumRegValue"],
+	["keyword", "Exch"],
+	["keyword", "Exec"],
+	["keyword", "ExecShell"],
+	["keyword", "ExecWait"],
+	["keyword", "ExecShellWait"],
+	["keyword", "ExpandEnvStrings"],
+	["keyword", "File"],
+	["keyword", "FileBufSize"],
+	["keyword", "FileClose"],
+	["keyword", "FileErrorText"],
+	["keyword", "FileOpen"],
+	["keyword", "FileRead"],
+	["keyword", "FileReadByte"],
+	["keyword", "FileReadUTF16LE"],
+	["keyword", "FileReadWord"],
+	["keyword", "FileSeek"],
+	["keyword", "FileWrite"],
+	["keyword", "FileWriteByte"],
+	["keyword", "FileWriteUTF16LE"],
+	["keyword", "FileWriteWord"],
+	["keyword", "FindClose"],
+	["keyword", "FindFirst"],
+	["keyword", "FindNext"],
+	["keyword", "FindWindow"],
+	["keyword", "FlushINI"],
+	["keyword", "GetCurInstType"],
+	["keyword", "GetCurrentAddress"],
+	["keyword", "GetDlgItem"],
+	["keyword", "GetDLLVersion"],
+	["keyword", "GetDLLVersionLocal"],
+	["keyword", "GetErrorLevel"],
+	["keyword", "GetFileTime"],
+	["keyword", "GetFileTimeLocal"],
+	["keyword", "GetFullPathName"],
+	["keyword", "GetFunction"],
+	["keyword", "GetFunctionAddress"],
+	["keyword", "GetFunctionEnd"],
+	["keyword", "GetInstDirError"],
+	["keyword", "GetLabelAddress"],
+	["keyword", "GetTempFileName"],
+	["keyword", "Goto"],
+	["keyword", "HideWindow"],
+	["keyword", "Icon"],
+	["keyword", "IfAbort"],
+	["keyword", "IfErrors"],
+	["keyword", "IfFileExists"],
+	["keyword", "IfRebootFlag"],
+	["keyword", "IfSilent"],
+	["keyword", "InitPluginsDir"],
+	["keyword", "InstallButtonText"],
+	["keyword", "InstallColors"],
+	["keyword", "InstallDir"],
+	["keyword", "InstallDirRegKey"],
+	["keyword", "InstProgressFlags"],
+	["keyword", "InstType"],
+	["keyword", "InstTypeGetText"],
+	["keyword", "InstTypeSetText"],
+	["keyword", "Int64Cmp"],
+	["keyword", "Int64CmpU"],
+	["keyword", "Int64Fmt"],
+	["keyword", "IntCmp"],
+	["keyword", "IntCmpU"],
+	["keyword", "IntFmt"],
+	["keyword", "IntOp"],
+	["keyword", "IntPtrCmp"],
+	["keyword", "IntPtrCmpU"],
+	["keyword", "IntPtrOp"],
+	["keyword", "IsWindow"],
+	["keyword", "LangDLL"],
+	["keyword", "LangString"],
+	["keyword", "LicenseBkColor"],
+	["keyword", "LicenseData"],
+	["keyword", "LicenseForceSelection"],
+	["keyword", "LicenseLangString"],
+	["keyword", "LicenseText"],
+	["keyword", "LoadLanguageFile"],
+	["keyword", "LockWindow"],
+	["keyword", "LogSet"],
+	["keyword", "LogText"],
+	["keyword", "ManifestDPIAware"],
+	["keyword", "ManifestSupportedOS"],
+	["keyword", "Math"],
+	["keyword", "MessageBox"],
+	["keyword", "MiscButtonText"],
+	["keyword", "Name"],
+	["keyword", "Nop"],
+	["keyword", "nsDialogs"],
+	["keyword", "nsExec"],
+	["keyword", "NSISdl"],
+	["keyword", "OutFile"],
+	["keyword", "Page"],
+	["keyword", "PageCallbacks"],
+	["keyword", "PEDllCharacteristics"],
+	["keyword", "PESubsysVer"],
+	["keyword", "Pop"],
+	["keyword", "Push"],
+	["keyword", "Quit"],
+	["keyword", "ReadEnvStr"],
+	["keyword", "ReadINIStr"],
+	["keyword", "ReadRegDWORD"],
+	["keyword", "ReadRegStr"],
+	["keyword", "Reboot"],
+	["keyword", "RegDLL"],
+	["keyword", "Rename"],
+	["keyword", "RequestExecutionLevel"],
+	["keyword", "ReserveFile"],
+	["keyword", "Return"],
+	["keyword", "RMDir"],
+	["keyword", "SearchPath"],
+	["keyword", "Section"],
+	["keyword", "SectionEnd"],
+	["keyword", "SectionGetFlags"],
+	["keyword", "SectionGetInstTypes"],
+	["keyword", "SectionGetSize"],
+	["keyword", "SectionGetText"],
+	["keyword", "SectionGroup"],
+	["keyword", "SectionIn"],
+	["keyword", "SectionSetFlags"],
+	["keyword", "SectionSetInstTypes"],
+	["keyword", "SectionSetSize"],
+	["keyword", "SectionSetText"],
+	["keyword", "SendMessage"],
+	["keyword", "SetAutoClose"],
+	["keyword", "SetBrandingImage"],
+	["keyword", "SetCompress"],
+	["keyword", "SetCompressor"],
+	["keyword", "SetCompressorDictSize"],
+	["keyword", "SetCtlColors"],
+	["keyword", "SetCurInstType"],
+	["keyword", "SetDatablockOptimize"],
+	["keyword", "SetDateSave"],
+	["keyword", "SetDetailsPrint"],
+	["keyword", "SetDetailsView"],
+	["keyword", "SetErrorLevel"],
+	["keyword", "SetErrors"],
+	["keyword", "SetFileAttributes"],
+	["keyword", "SetFont"],
+	["keyword", "SetOutPath"],
+	["keyword", "SetOverwrite"],
+	["keyword", "SetPluginUnload"],
+	["keyword", "SetRebootFlag"],
+	["keyword", "SetRegView"],
+	["keyword", "SetShellVarContext"],
+	["keyword", "SetSilent"],
+	["keyword", "ShowInstDetails"],
+	["keyword", "ShowUninstDetails"],
+	["keyword", "ShowWindow"],
+	["keyword", "SilentInstall"],
+	["keyword", "SilentUnInstall"],
+	["keyword", "Sleep"],
+	["keyword", "SpaceTexts"],
+	["keyword", "Splash"],
+	["keyword", "StartMenu"],
+	["keyword", "StrCmp"],
+	["keyword", "StrCmpS"],
+	["keyword", "StrCpy"],
+	["keyword", "StrLen"],
+	["keyword", "SubCaption"],
+	["keyword", "System"],
+	["keyword", "Unicode"],
+	["keyword", "UninstallButtonText"],
+	["keyword", "UninstallCaption"],
+	["keyword", "UninstallIcon"],
+	["keyword", "UninstallSubCaption"],
+	["keyword", "UninstallText"],
+	["keyword", "UninstPage"],
+	["keyword", "UnRegDLL"],
+	["keyword", "UserInfo"],
+	["keyword", "Var"],
+	["keyword", "VIAddVersionKey"],
+	["keyword", "VIFileVersion"],
+	["keyword", "VIProductVersion"],
+	["keyword", "VPatch"],
+	["keyword", "WindowIcon"],
+	["keyword", "WriteINIStr"],
+	["keyword", "WriteRegBin"],
+	["keyword", "WriteRegDWORD"],
+	["keyword", "WriteRegExpandStr"],
+	["keyword", "WriteRegMultiStr"],
+	["keyword", "WriteRegNone"],
+	["keyword", "WriteRegStr"],
+	["keyword", "WriteUninstaller"],
+	["keyword", "XPStyle"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

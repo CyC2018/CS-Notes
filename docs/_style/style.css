@@ -1,0 +1,12 @@
+/*隐藏头部的目录*/
+#main>ul:nth-child(1) {
+    display: none;
+}
+
+.markdown-section h1 {
+    margin: 3rem 0 0 0;
+}
+
+/*.anchor span {
+    color: rgb(66, 185, 131);
+}*/

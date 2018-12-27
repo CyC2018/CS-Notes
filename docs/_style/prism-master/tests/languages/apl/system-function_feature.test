@@ -1,0 +1,17 @@
+⎕IO
+⎕WA
+⎕CR
+⎕TCNL
+
+----------------------------------------------------
+
+[
+	["system-function", "⎕IO"],
+	["system-function", "⎕WA"],
+	["system-function", "⎕CR"],
+	["system-function", "⎕TCNL"]
+]
+
+----------------------------------------------------
+
+Checks for system functions.

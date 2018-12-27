@@ -1,0 +1,73 @@
+above
+adjacent to
+back side of
+below
+between
+down
+east
+everywhere
+front side
+here
+in
+inside
+inside from
+north
+northeast
+northwest
+nowhere
+on
+on top of
+other side
+outside
+outside from
+part of
+parts of
+regionally in
+south
+southeast
+southwest
+through
+up
+west
+within
+
+----------------------------------------------------
+
+[
+	["position", "above"],
+	["position", "adjacent to"],
+	["position", "back side of"],
+	["position", "below"],
+	["position", "between"],
+	["position", "down"],
+	["position", "east"],
+	["position", "everywhere"],
+	["position", "front side"],
+	["position", "here"],
+	["position", "in"],
+	["position", "inside"],
+	["position", "inside from"],
+	["position", "north"],
+	["position", "northeast"],
+	["position", "northwest"],
+	["position", "nowhere"],
+	["position", "on"],
+	["position", "on top of"],
+	["position", "other side"],
+	["position", "outside"],
+	["position", "outside from"],
+	["position", "part of"],
+	["position", "parts of"],
+	["position", "regionally in"],
+	["position", "south"],
+	["position", "southeast"],
+	["position", "southwest"],
+	["position", "through"],
+	["position", "up"],
+	["position", "west"],
+	["position", "within"]
+]
+
+----------------------------------------------------
+
+Checks for positions.

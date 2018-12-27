@@ -1,0 +1,46 @@
+/
+
+/ foo
+
+/foo
+ bar
+
+  /foo
+   bar
+
+	/foo
+	 bar
+
+-#
+
+-# foo
+
+-#foo
+ bar
+
+  -#foo
+   bar
+
+	-#foo
+	 bar
+
+----------------------------------------------------
+
+[
+	["multiline-comment", "/"],
+	["multiline-comment", "/ foo"],
+	["multiline-comment", "/foo\r\n bar"],
+	["multiline-comment", "/foo\r\n   bar"],
+	["multiline-comment", "/foo\r\n\t bar"],
+
+	["multiline-comment", "-#"],
+    ["multiline-comment", "-# foo"],
+    ["multiline-comment", "-#foo\r\n bar"],
+    ["multiline-comment", "-#foo\r\n   bar"],
+    ["multiline-comment", "-#foo\r\n\t bar"]
+]
+
+----------------------------------------------------
+
+Checks for multi-line comments, not indented, indented with two spaces and
+indented with one tab.

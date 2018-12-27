@@ -1,0 +1,267 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+	comment */
+/+ Mutli-line
+	/+ nestable +/
+	comment +/</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>0 .. 2_147_483_647
+2_147_483_648 .. 9_223_372_036_854_775_807
+0L .. 9_223_372_036_854_775_807L
+0U .. 4_294_967_296U
+4_294_967_296U .. 18_446_744_073_709_551_615U
+0UL .. 18_446_744_073_709_551_615UL
+0x0 .. 0x7FFF_FFFF
+0x8000_0000 .. 0xFFFF_FFFF
+0x1_0000_0000 .. 0x7FFF_FFFF_FFFF_FFFF
+0x8000_0000_0000_0000 .. 0xFFFF_FFFF_FFFF_FFFF
+0x0L .. 0x7FFF_FFFF_FFFF_FFFFL
+0x8000_0000_0000_0000L .. 0xFFFF_FFFF_FFFF_FFFFL
+0x0U .. 0xFFFF_FFFFU
+0x1_0000_0000U .. 0xFFFF_FFFF_FFFF_FFFFU
+0x0UL .. 0xFFFF_FFFF_FFFF_FFFFUL
+
+123_456.567_8          // 123456.5678
+1_2_3_4_5_6_.5_6_7_8   // 123456.5678
+1_2_3_4_5_6_.5e-6_     // 123456.5e-6
+0x1.FFFFFFFFFFFFFp1023 // double.max
+0x1p-52                // double.epsilon
+1.175494351e-38F       // float.min
+6.3i                   // idouble 6.3
+6.3fi                  // ifloat 6.3
+6.3Li                  // ireal 6.3
+4.5 + 6.2i             // complex number (phased out)</code></pre>
+
+<h2>Strings</h2>
+<pre><code>// WYSIWYG strings
+r"hello"
+r"c:\root\foo.exe"
+r"ab\n"
+`hello`
+`c:\root\foo.exe`
+`ab\n`
+
+// Double-quoted strings
+"hello"
+"c:\\root\\foo.exe"
+"ab\n"
+"ab
+"
+
+// Hex strings
+x"0A"
+x"00 FBCD 32FD 0A"
+
+// String postfix characters
+"hello"c  // string
+"hello"w  // wstring
+"hello"d  // dstring
+
+// Delimited strings
+q"(foo(xxx))"
+q"[foo{]"
+q"EOS
+This
+is a multi-line
+heredoc string
+EOS"
+q"/foo]/"
+
+// Token strings
+q{foo}
+q{/*}*/ }
+q{ foo(q{hello}); }
+q{ __TIME__ }
+
+// Character literals
+'a'
+'\u000A'</code></pre>
+
+<h2>Iasm registers</h2>
+<pre><code>AL AH AX EAX
+BL BH BX EBX
+CL CH CX ECX
+DL DH DX EDX
+BP EBP
+SP ESP
+DI EDI
+SI ESI
+ES CS SS DS GS FS
+CR0 CR2 CR3 CR4
+DR0 DR1 DR2 DR3 DR6 DR7
+TR3 TR4 TR5 TR6 TR7
+ST
+ST(0) ST(1) ST(2) ST(3) ST(4) ST(5) ST(6) ST(7)
+MM0  MM1  MM2  MM3  MM4  MM5  MM6  MM7
+XMM0 XMM1 XMM2 XMM3 XMM4 XMM5 XMM6 XMM7
+
+RAX  RBX  RCX  RDX
+BPL  RBP
+SPL  RSP
+DIL  RDI
+SIL  RSI
+R8B  R8W  R8D  R8
+R9B  R9W  R9D  R9
+R10B R10W R10D R10
+R11B R11W R11D R11
+R12B R12W R12D R12
+R13B R13W R13D R13
+R14B R14W R14D R14
+R15B R15W R15D R15
+XMM8 XMM9 XMM10 XMM11 XMM12 XMM13 XMM14 XMM15
+YMM0 YMM1 YMM2  YMM3  YMM4  YMM5  YMM6  YMM7
+YMM8 YMM9 YMM10 YMM11 YMM12 YMM13 YMM14 YMM15</code></pre>
+
+<h2>Full example</h2>
+<pre><code>#!/usr/bin/dmd -run
+/* sh style script syntax is supported! */
+/* Hello World in D
+   To compile:
+     dmd hello.d
+   or to optimize:
+     dmd -O -inline -release hello.d
+   or to get generated documentation:
+     dmd hello.d -D
+  */
+import std.stdio;  // References to  commonly used I/O routines.
+void main(char[][] args)   // 'void' here means return 0 by default.
+{
+    // Write-Formatted-Line
+     writefln("Hello World, "   // automatic concatenation of string literals
+              "Reloaded");
+     // Strings are denoted as a dynamic array of chars 'char[]'
+     // auto type inference and built-in foreach
+     foreach(argc, argv; args)
+    {
+        // OOP is supported, of course! And automatic type inference.
+         auto cl = new CmdLin(argc, argv);
+
+        // 'writefln' is the improved 'printf' !!
+         // user-defined class properties.
+         writefln(cl.argnum, cl.suffix, " arg: %s", cl.argv);
+        // Garbage Collection or explicit memory management - your choice!!!
+         delete cl;
+    }
+     // Nested structs, classes and functions!
+     struct specs
+    {
+        // all vars. automatically initialized
+         int count, allocated;
+    }
+
+    // Note that declarations read right-to-left.
+    // So that 'char[][]' reads as an array of an array of chars.
+
+    specs argspecs(char[][] args)
+    // Optional (built-in) function contracts.
+     in{
+        assert (args.length > 0); // assert built in
+     }
+    out(result){
+        assert(result.count == CmdLin.total);
+        assert(result.allocated > 0);
+    }
+    body{
+        specs* s = new specs;
+        // no need for '->'
+         s.count = args.length;  // The 'length' property is number of elements.
+         s.allocated = typeof(args).sizeof; // built-in properties for native types
+         foreach(argv; args)
+            s.allocated += argv.length * typeof(argv[0]).sizeof;
+        return *s;
+    }
+
+    // built-in string and common string operations, e.g. '~' is concatenate.
+     char[] argcmsg  = "argc = %d";
+    char[] allocmsg = "allocated = %d";
+    writefln(argcmsg ~ ", " ~ allocmsg,
+         argspecs(args).count,argspecs(args).allocated);
+}
+/**
+   Stores a single command line argument.
+ */
+ class CmdLin
+{
+    private {
+     int _argc;
+     char[] _argv;
+     static uint _totalc;
+    }
+
+ public:
+/************
+      Object constructor.
+      params:
+        argc = ordinal count of this argument.
+        argv = text of the parameter
+  *********/
+     this(int argc, char[] argv)
+    {
+        _argc = argc + 1;
+        _argv = argv;
+        _totalc++;
+    }
+
+    ~this() /// Object destructor
+     {
+        // Doesn't actually do anything for this example.
+     }
+
+     int argnum() /// A property that returns arg number
+     {
+        return _argc;
+    }
+     char[] argv() /// A property  that returns arg text
+     {
+        return _argv;
+    }
+     wchar[] suffix() /// A property  that returns ordinal suffix
+     {
+        wchar[] suffix;  // Built in  Unicode strings (utf8,utf16, utf32)
+         switch(_argc)
+        {
+        case 1:
+            suffix = "st";
+            break;
+        case 2:
+            suffix = "nd";
+            break;
+        case 3:
+            suffix = "rd";
+            break;
+        default:  // 'default' is mandatory with "-w" compile switch.
+             suffix = "th";
+        }
+        return suffix;
+    }
+
+/* **************
+      * A property of the whole class, not just an instance.
+      * returns: The total number of commandline args added.
+      *************/
+     static typeof(_totalc) total()
+    {
+        return _totalc;
+    }
+     // Class invariant, things that must be true after any method is run.
+     invariant
+     {
+         assert(_argc > 0);
+         assert(_totalc >= _argc);
+     }
+}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Comments only support one level of nesting</h3>
+<pre><code>/+ /+ /+ this does not work +/ +/ +/</code></pre>
+
+<h3>Token strings only support one level of nesting</h3>
+<pre><code>q{ q{ q{ this does not work } } }</code></pre>

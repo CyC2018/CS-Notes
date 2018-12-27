@@ -1,0 +1,46 @@
+"$foo ${bar} ${'$'} ${foobar()}"
+"""
+$foo ${bar}
+${'$'} ${foobar()}
+"""
+
+----------------------------------------------------
+
+[
+	["string", [
+		"\"",
+		["interpolation", "$foo"],
+		["interpolation", [
+			["delimiter", "${"], "bar", ["delimiter", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "${"], ["string", ["'$'"]], ["delimiter", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "${"],
+			["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+			["delimiter", "}"]
+		]],
+		"\""
+	]],
+	["raw-string", [
+		"\"\"\"\r\n",
+		["interpolation", "$foo"],
+		["interpolation", [
+			["delimiter", "${"], "bar", ["delimiter", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "${"], ["string", ["'$'"]], ["delimiter", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "${"],
+			["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+			["delimiter", "}"]
+		]],
+		"\r\n\"\"\""
+	]]
+]
+
+----------------------------------------------------
+
+Checks for string interpolation.

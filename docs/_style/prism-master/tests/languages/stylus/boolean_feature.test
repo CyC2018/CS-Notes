@@ -1,0 +1,21 @@
+a = true
+b = false
+
+----------------------------------------------------
+
+[
+	["variable-declaration", [
+		["variable", "a"],
+		["operator", "="],
+		["boolean", "true"]
+	]],
+	["variable-declaration", [
+		["variable", "b"],
+		["operator", "="],
+		["boolean", "false"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for booleans.

@@ -1,0 +1,79 @@
+42
+0
++0
+-0
++99
+-17
+
+1_000
+5_349_221
+
+0xDEADBEEF
+0xdeadbeef
+0xdead_beef
+
+0o0123_4567
+0o755
+
+0b1101_0110
+
++1.0
+3.1415
+-0.01
+5e+22
+1e6
+1e1_000
+-2E-2
+6.626e-34
+9_224_617.445_991_228_313
+
+inf
++inf
+-inf
+nan
++nan
+-nan
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "0"],
+	["number", "+0"],
+	["number", "-0"],
+	["number", "+99"],
+	["number", "-17"],
+
+	["number", "1_000"],
+	["number", "5_349_221"],
+
+	["number", "0xDEADBEEF"],
+	["number", "0xdeadbeef"],
+	["number", "0xdead_beef"],
+
+	["number", "0o0123_4567"],
+	["number", "0o755"],
+
+	["number", "0b1101_0110"],
+
+	["number", "+1.0"],
+	["number", "3.1415"],
+	["number", "-0.01"],
+	["number", "5e+22"],
+	["number", "1e6"],
+	["number", "1e1_000"],
+	["number", "-2E-2"],
+	["number", "6.626e-34"],
+	["number", "9_224_617.445_991_228_313"],
+
+	["number", "inf"],
+	["number", "+inf"],
+	["number", "-inf"],
+	["number", "nan"],
+	["number", "+nan"],
+	["number", "-nan"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

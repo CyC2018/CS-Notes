@@ -1,0 +1,22 @@
+<h2>Full example</h2>
+<pre><code>&lt;%# index.erb %>
+&lt;h1>Listing Books&lt;/h1>
+&lt;table>
+  &lt;tr>
+    &lt;th>Title&lt;/th>
+    &lt;th>Summary&lt;/th>
+    &lt;th>&lt;/th>
+    &lt;th>&lt;/th>
+    &lt;th>&lt;/th>
+  &lt;/tr>
+
+&lt;% @books.each do |book| %>
+  &lt;tr>
+    &lt;td>&lt;%= book.title %>&lt;/td>
+    &lt;td>&lt;%= book.content %>&lt;/td>
+    &lt;td>&lt;%= link_to "Show", book %>&lt;/td>
+    &lt;td>&lt;%= link_to "Edit", edit_book_path(book) %>&lt;/td>
+    &lt;td>&lt;%= link_to "Remove", book, method: :delete, data: { confirm: "Are you sure?" } %>&lt;/td>
+  &lt;/tr>
+&lt;% end %>
+&lt;/table></code></pre>

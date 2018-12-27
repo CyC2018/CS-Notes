@@ -1,0 +1,48 @@
+(C) (TM) (R)
+
+(C) (TM) (R)
+============
+
+['(C) (TM) (R)']
+
+--
+(C) (TM) (R)
+--
+
+|======
+| (C) (TM) (R)
+|======
+
+----------------------------------------------------
+
+[
+	["replacement", "(C)"], ["replacement", "(TM)"], ["replacement", "(R)"],
+	["title", [
+		["replacement", "(C)"], ["replacement", "(TM)"], ["replacement", "(R)"],
+		["punctuation", "============"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["interpreted", [
+			["punctuation", "'"],
+			["replacement", "(C)"], ["replacement", "(TM)"], ["replacement", "(R)"],
+			["punctuation", "'"]
+		]],
+		["punctuation", "]"]
+	]],
+	["other-block", [
+		["punctuation", "--"],
+		["replacement", "(C)"], ["replacement", "(TM)"], ["replacement", "(R)"],
+		["punctuation", "--"]
+	]],
+	["table", [
+		["punctuation", "|======"],
+		["punctuation", "|"],
+		["replacement", "(C)"], ["replacement", "(TM)"], ["replacement", "(R)"],
+		["punctuation", "|======"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for replacements.

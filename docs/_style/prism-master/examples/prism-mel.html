@@ -1,0 +1,137 @@
+<h2>Comments</h2>
+<pre><code>// This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"This is a string"
+"foo \"bar\" baz"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.14159
+0xA2F</code></pre>
+
+<h2>Variables</h2>
+<pre><code>$x
+$floaty5000
+$longDescriptiveName
+$name_with_underscores
+$_line
+
+float $param;
+int $counter;
+string $name;
+vector $position;</code></pre>
+
+<h2>Arrays, vectors and matrices</h2>
+<pre><code>string $array[3] = {"first\n", "second\n", "third\n"};
+print($array[0]); // Prints "first\n"
+print($array[1]); // Prints "second\n"
+print($array[2]); // Prints "third\n"
+
+vector $roger = <<3.0, 7.7, 9.1>>;
+vector $more = <<4.5, 6.789, 9.12356>>;
+// Assign a vector to variable $test:
+vector $test = <<3.0, 7.7, 9.1>>;
+$test = <<$test.x, 5.5, $test.z>>
+// $test is now <<3.0, 5.5, 9.1>>
+
+matrix $a3[3][4] = <<2.5, 4.5, 3.25, 8.05;
+ 1.12, 1.3, 9.5, 5.2;
+ 7.23, 6.006, 2.34, 4.67>></code></pre>
+
+<h2>Commands</h2>
+<pre><code>pickWalk -d down;
+string $mySelection[] = `ls -selection`;
+
+setAttr ($mySelection[0]+".particleRenderType") 5;
+
+addAttr -is true -ln "spriteTwist" -at "float" -min -180 -max 180 -dv 0.0 blue_nParticleShape;</code></pre>
+
+<h2>Full example</h2>
+<pre><code>// From http://help.autodesk.com/view/MAYAUL/2015/ENU/?guid=Example_scripts_Dynamics_Time_Playback
+// Alias Script File
+// MODIFY THIS AT YOUR OWN RISK
+//
+// Creation Date: 8 May 1996
+// Author: rh
+//
+// Description:
+// Playback from frame 0 to frame &lt;n> and return the
+// 		the playback rate in frames/sec. If a negative frame
+// count is given, this indicates silent mode. In silent
+// mode, no output is printed.
+//
+// This version is intended for use in batch tests of dynamics.
+// It requests particle and rigid body positions every frame.
+//
+// RETURN
+// Frame rate in frames/sec
+//
+global proc float dynTimePlayback( float $frames )
+{
+ int $silent;
+ // Get the list of particle shapes.
+ //
+ string $particleObjects[] = `ls -type particle`;
+ int $particleCount = size( $particleObjects );
+ // Get the list of transforms.
+ // This will include rigid bodies.
+ //
+ string $transforms[] = `ls -tr`;
+ int $trCount = size( $transforms );
+ 	// Check for negative $frames. This indicates
+ // $silent mode.
+ //
+ if ($frames < 0)
+ {
+ $silent = 1;
+ $frames = -$frames;
+ }
+ else
+ {
+ $silent = 0;
+ }
+ // Setup the playback options.
+ //
+ playbackOptions -min 1 -max $frames -loop "once";
+ currentTime -edit 0;
+ // Playback the animation using the timerX command
+ // to compute the $elapsed time.
+ //
+ float $startTime, $elapsed;
+ $startTime = `timerX`;
+// play -wait;
+ int $i;
+ for ($i = 1; $i < $frames; $i++ )
+ {
+ // Set time
+ //
+ currentTime -e $i;
+ int $obj;
+ // Request count for every particle object.
+ //
+ for ($obj = 0; $obj < $particleCount; $obj++)
+ {
+			string $cmd = "getAttr " + $particleObjects[$obj]+".count";
+ eval( $cmd );
+ }
+ // Request position for every transform
+		// (includes every rigid body).
+ //
+ for ($obj = 0; $obj < $trCount; $obj++)
+ {
+ string $cmd = "getAttr " + $transforms[$obj]+".translate";
+ eval ($cmd);
+ }
+ }
+ $elapsed = `timerX -st $startTime`;
+ // Compute the playback frame $rate. Print results.
+ //
+ float $rate = ($elapsed == 0 ? 0.0 : $frames / $elapsed) ;
+ if ( ! $silent)
+ {
+ print( "Playback time: " + $elapsed + " secs\n" );
+ print( "Playback $rate: " + $rate + " $frames/sec\n" );
+ }
+ return ( $rate );
+} // timePlayback //</code></pre>

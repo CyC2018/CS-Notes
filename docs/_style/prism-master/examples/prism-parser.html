@@ -1,0 +1,88 @@
+<h2>Comments</h2>
+<pre><code>$foo[bar] # Some comment</code></pre>
+
+<h2>Variables and functions</h2>
+<pre><code>@navigation[]
+$sections[^table::load[sections.cfg]]
+$sections.uri</code></pre>
+
+<h2>Literals</h2>
+<pre><code>$foo(3+$bar)
+^switch[$sMode]{
+	^case[def]{$result(true)}
+}
+^if(in "/news/"){}</code></pre>
+
+<h2>Escape sequences</h2>
+<pre><code>^^
+^"
+^;</code></pre>
+
+<h2>Embedded in markup</h2>
+<pre><code>&lt;nav>
+	&lt;ul>
+	^sections.menu{
+		&lt;li>
+			&lt;a href="$sections.uri">$sections.name&lt;/a>
+		&lt;/li>
+	}
+	&lt;/ul>
+&lt;/nav></code></pre>
+
+<h2>Full example</h2>
+<pre><code>@CLASS
+MyTable
+
+@create[uParam]
+^switch[$uParam.CLASS_NAME]{
+   ^case[string;void]{$t[^table::create{$uParam}]}
+   ^case[table;MyTable]{$t[^table::create[$uParam]]}
+   ^case[DEFAULT]{^throw[MyTable;Unsupported type $uParam.CLASS_NAME]}
+}
+
+# method will return value in different calling contexts
+@GET[sMode]
+^switch[$sMode]{
+   ^case[table]{$result[$t]}
+   ^case[bool]{$result($t!=0)}
+   ^case[def]{$result(true)}
+   ^case[expression;double]{$result($t)}
+   ^case[DEFAULT]{^throw[MyTable;Unsupported mode '$sMode']}
+}
+
+
+# method will handle access to the "columns"
+@GET_DEFAULT[sName]
+$result[$t.$sName]
+
+
+# wrappers for all existing methods are required
+@count[]
+^t.count[]
+
+@menu[jCode;sSeparator]
+^t.menu{$jCode}[$sSeparator]
+
+
+# new functionality
+@remove[iOffset;iLimit]
+$iLimit(^iLimit.int(0))
+$t[^t.select(^t.offset[]<$iOffset || ^t.offset[]>=$iOffset+$iLimit)]</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Code block starting with a comment</h3>
+<pre><code># Doesn't work
+# Does work</code></pre>
+<pre><code> # Does work when prefixed with a space</code></pre>
+
+<h3>Comments inside expressions break literals and operators</h3>
+<pre><code>^if(
+    $age>=4  # not too young
+    && $age<=80  # and not too old
+)</code></pre>

@@ -1,0 +1,22 @@
+color: red !important
+@extend foo !optional
+
+----------------------------------------------------
+
+[
+	["property-declaration", [
+		["property", ["color"]],
+		["punctuation", ":"],
+		" red ",
+		["important", "!important"]
+	]],
+	["atrule-declaration", [
+		["atrule", "@extend"],
+		" foo ",
+		["important", "!optional"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for !important and !optional.

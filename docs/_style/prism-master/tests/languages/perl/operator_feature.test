@@ -1,0 +1,71 @@
+-r -w -x -o -R
+-W -X -O -e -z
+-s -f -d -l -p
+-S -b -c -t -u
+-g -k -T -B -M
+-A -C
+
++ ++ +=
+- -- -= ->
+* ** *= **=
+1 / 2
+1 // 2
+$a /= 2
+$a //= 2
+= == =~ =>
+~ ~~ ~=
+| || |= ||=
+& && &= &&=
+< <= << <<= <=>
+> >= >> >>=
+! !~ !=
+% %=
+^ ^=
+. .= .. ...
+\ ?
+
+lt gt le ge
+eq ne cmp not
+and or xor
+x x=
+
+----------------------------------------------------
+
+[
+
+	["operator", "-r"], ["operator", "-w"], ["operator", "-x"], ["operator", "-o"], ["operator", "-R"],
+	["operator", "-W"], ["operator", "-X"], ["operator", "-O"], ["operator", "-e"], ["operator", "-z"],
+	["operator", "-s"], ["operator", "-f"], ["operator", "-d"], ["operator", "-l"], ["operator", "-p"],
+	["operator", "-S"], ["operator", "-b"], ["operator", "-c"], ["operator", "-t"], ["operator", "-u"],
+	["operator", "-g"], ["operator", "-k"], ["operator", "-T"], ["operator", "-B"], ["operator", "-M"],
+	["operator", "-A"], ["operator", "-C"],
+
+	["operator", "+"], ["operator", "++"], ["operator", "+="],
+	["operator", "-"], ["operator", "--"], ["operator", "-="], ["operator", "->"],
+	["operator", "*"], ["operator", "**"], ["operator", "*="], ["operator", "**="],
+	["number", "1"], ["operator", "/"], ["number", "2"],
+	["number", "1"], ["operator", "//"], ["number", "2"],
+	["variable", "$a"], ["operator", "/="], ["number", "2"],
+	["variable", "$a"], ["operator", "//="], ["number", "2"],
+	["operator", "="], ["operator", "=="], ["operator", "=~"], ["operator", "=>"],
+	["operator", "~"], ["operator", "~~"], ["operator", "~="],
+	["operator", "|"], ["operator", "||"], ["operator", "|="], ["operator", "||="],
+	["operator", "&"], ["operator", "&&"], ["operator", "&="], ["operator", "&&="],
+	["operator", "<"], ["operator", "<="], ["operator", "<<"], ["operator", "<<="], ["operator", "<=>"],
+	["operator", ">"], ["operator", ">="], ["operator", ">>"], ["operator", ">>="],
+	["operator", "!"], ["operator", "!~"], ["operator", "!="],
+	["operator", "%"], ["operator", "%="],
+	["operator", "^"], ["operator", "^="],
+	["operator", "."], ["operator", ".="], ["operator", ".."], ["operator", "..."],
+	["operator", "\\"], ["operator", "?"],
+
+	["operator", "lt"], ["operator", "gt"], ["operator", "le"], ["operator", "ge"],
+	["operator", "eq"], ["operator", "ne"], ["operator", "cmp"], ["operator", "not"],
+	["operator", "and"], ["operator", "or"], ["operator", "xor"],
+	["operator", "x"], ["operator", "x="]
+
+]
+
+----------------------------------------------------
+
+Checks for operators.

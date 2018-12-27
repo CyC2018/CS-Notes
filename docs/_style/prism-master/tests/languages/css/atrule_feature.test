@@ -1,0 +1,47 @@
+@import url(foo.css);
+@media print {}
+@media (min-width: 640px) and (min-height: 1000px) {}
+@main-color: red;
+
+----------------------------------------------------
+
+[
+	["atrule", [
+		["rule", "@import"],
+		["url", "url(foo.css)"],
+		["punctuation", ";"]
+	]],
+	["atrule", [
+		["rule", "@media"],
+		" print"
+	]],
+	["punctuation", "{"],
+	["punctuation", "}"],
+	["atrule", [
+		["rule", "@media"],
+		["punctuation", "("],
+		["property", "min-width"],
+		["punctuation", ":"],
+		" 640px",
+		["punctuation", ")"],
+		" and ",
+		["punctuation", "("],
+        ["property", "min-height"],
+        ["punctuation", ":"],
+        " 1000px",
+        ["punctuation", ")"]
+	]],
+	["punctuation", "{"],
+    ["punctuation", "}"],
+	["atrule", [
+		["rule", "@main-color"],
+		["punctuation", ":"],
+		" red",
+		["punctuation", ";"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for at-rules.
+Also checks for LESS variables.

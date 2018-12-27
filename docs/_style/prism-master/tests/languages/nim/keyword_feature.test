@@ -1,0 +1,123 @@
+addr
+as
+asm
+atomic
+bind
+block
+break
+case
+cast
+concept
+const
+continue
+converter
+defer
+discard
+distinct
+do
+elif
+else
+end
+enum
+except
+export
+finally
+for
+from
+func
+generic
+if
+import
+include
+interface
+iterator
+let
+macro
+method
+mixin
+nil
+object
+out
+proc
+ptr
+raise
+ref
+return
+static
+template
+try
+tuple
+type
+using
+var
+when
+while
+with
+without
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "addr"],
+	["keyword", "as"],
+	["keyword", "asm"],
+	["keyword", "atomic"],
+	["keyword", "bind"],
+	["keyword", "block"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "cast"],
+	["keyword", "concept"],
+	["keyword", "const"],
+	["keyword", "continue"],
+	["keyword", "converter"],
+	["keyword", "defer"],
+	["keyword", "discard"],
+	["keyword", "distinct"],
+	["keyword", "do"],
+	["keyword", "elif"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "enum"],
+	["keyword", "except"],
+	["keyword", "export"],
+	["keyword", "finally"],
+	["keyword", "for"],
+	["keyword", "from"],
+	["keyword", "func"],
+	["keyword", "generic"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "include"],
+	["keyword", "interface"],
+	["keyword", "iterator"],
+	["keyword", "let"],
+	["keyword", "macro"],
+	["keyword", "method"],
+	["keyword", "mixin"],
+	["keyword", "nil"],
+	["keyword", "object"],
+	["keyword", "out"],
+	["keyword", "proc"],
+	["keyword", "ptr"],
+	["keyword", "raise"],
+	["keyword", "ref"],
+	["keyword", "return"],
+	["keyword", "static"],
+	["keyword", "template"],
+	["keyword", "try"],
+	["keyword", "tuple"],
+	["keyword", "type"],
+	["keyword", "using"],
+	["keyword", "var"],
+	["keyword", "when"],
+	["keyword", "while"],
+	["keyword", "with"],
+	["keyword", "without"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

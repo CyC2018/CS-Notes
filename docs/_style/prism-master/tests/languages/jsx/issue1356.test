@@ -1,0 +1,32 @@
+<a href="//localhost">link</a>
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"a"
+		]],
+		["attr-name", ["href"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"//localhost",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "link"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"a"
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for tags containing "//". See #1356.

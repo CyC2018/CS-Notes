@@ -1,0 +1,15 @@
+$port
+${docroot}
+%{REMOTE_HOST}
+
+----------------------------------------------------
+
+[
+	["variable", "$port"],
+	["variable", "${docroot}"],
+	["variable", "%{REMOTE_HOST}"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

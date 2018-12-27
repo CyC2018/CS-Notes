@@ -1,0 +1,58 @@
+script.
+ alert(42);
+
+.
+	script(type='text/javascript').
+
+		if(foo) {
+			bar(1 + 5);
+		}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		"script"
+	]],
+	["punctuation", "."],
+	["multiline-script", [
+		["function", "alert"],
+		["punctuation", "("],
+		["number", "42"],
+		["punctuation", ")"],
+		["punctuation", ";"]
+	]],
+
+	["punctuation", "."],
+
+	["tag", [
+		"script",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "type"],
+			["punctuation", "="],
+			["attr-value", [["string", "'text/javascript'"]]],
+			["punctuation", ")"]
+		]]
+	]],
+	["punctuation", "."],
+	["multiline-script", [
+		["keyword", "if"],
+		["punctuation", "("],
+		"foo",
+		["punctuation", ")"],
+		["punctuation", "{"],
+		["function", "bar"],
+		["punctuation", "("],
+		["number", "1"],
+		["operator", "+"],
+		["number", "5"],
+		["punctuation", ")"],
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for multi-line scripts. The alone dot serves as a separator.

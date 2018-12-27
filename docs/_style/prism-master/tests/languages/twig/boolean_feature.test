@@ -1,0 +1,27 @@
+{{ null }}
+{{- true -}}
+{{ false }}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["boolean", "null"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{-"]]],
+		["boolean", "true"],
+		["rd", [["punctuation", "-}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["boolean", "false"],
+		["rd", [["punctuation", "}}"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for booleans and null.

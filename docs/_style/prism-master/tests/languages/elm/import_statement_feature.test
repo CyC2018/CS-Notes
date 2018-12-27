@@ -1,0 +1,48 @@
+import Foo
+import Foo_42.Bar as Foobar
+import Foo.Bar as Foo.Baz
+import List exposing (map)
+import Json.Decode as Json exposing (Decoder)
+
+----------------------------------------------------
+
+[
+	["import_statement", [
+		["keyword", "import"],
+		" Foo"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		" Foo_42.Bar ",
+		["keyword", "as"],
+		" Foobar"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		" Foo.Bar ",
+		["keyword", "as"],
+		" Foo.Baz"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		" List ",
+		["keyword", "exposing"]
+	]],
+	["punctuation", "("],
+	["hvariable", "map"],
+	["punctuation", ")"],
+	["import_statement", [
+		["keyword", "import"],
+		" Json.Decode ",
+		["keyword", "as"],
+		" Json ",
+		["keyword", "exposing"]
+	]],
+	["punctuation", "("],
+	["constant", "Decoder"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for import statement.

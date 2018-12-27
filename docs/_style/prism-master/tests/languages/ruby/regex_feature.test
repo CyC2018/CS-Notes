@@ -1,0 +1,45 @@
+/[foo]\/bar/gim
+/[bar]/,
+/./i;
+%r!foo?bar#{39+3}!
+%r(foo?bar#{39+3})
+%r{foo?bar#{39+3}}
+%r[foo?bar#{39+3}]
+%r<foo?bar#{39+3}>
+
+----------------------------------------------------
+
+[
+	["regex", "/[foo]\\/bar/gim"],
+	["regex", "/[bar]/"], ["punctuation", ","],
+	["regex", "/./i"], ["punctuation", ";"],
+	["regex", ["%r!foo?bar", ["interpolation", [
+		["delimiter", "#{"],
+		["number", "39"], ["operator", "+"], ["number", "3"],
+		["delimiter", "}"]
+	]], "!"]],
+	["regex", ["%r(foo?bar", ["interpolation", [
+		["delimiter", "#{"],
+		["number", "39"], ["operator", "+"], ["number", "3"],
+		["delimiter", "}"]
+	]], ")"]],
+	["regex", ["%r{foo?bar", ["interpolation", [
+		["delimiter", "#{"],
+		["number", "39"], ["operator", "+"], ["number", "3"],
+		["delimiter", "}"]
+	]], "}"]],
+	["regex", ["%r[foo?bar", ["interpolation", [
+		["delimiter", "#{"],
+		["number", "39"], ["operator", "+"], ["number", "3"],
+		["delimiter", "}"]
+	]], "]"]],
+	["regex", ["%r<foo?bar", ["interpolation", [
+		["delimiter", "#{"],
+		["number", "39"], ["operator", "+"], ["number", "3"],
+		["delimiter", "}"]
+	]], ">"]]
+]
+
+----------------------------------------------------
+
+Checks for regex.

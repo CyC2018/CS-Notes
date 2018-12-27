@@ -1,0 +1,15 @@
+<![CDATA[ foo bar baz ]]>
+<![CDATA[
+foo bar baz
+]]>
+
+----------------------------------------------------
+
+[
+	["cdata", "<![CDATA[ foo bar baz ]]>"],
+	["cdata", "<![CDATA[\r\nfoo bar baz\r\n]]>"]
+]
+
+----------------------------------------------------
+
+Checks for CDATA sections, single-line and multi-line.

@@ -1,0 +1,71 @@
+!foo.png!
+!bar.jpg(Foo bar)!
+!foo.png!:http://prismjs.com
+!bar.jpg(Foo bar)!:http://www.example.com
+
+!<foo.png! !>bar.jpg!
+!(foo)[en]{border:1px solid #ccc}foo.png!
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["image", [
+			["punctuation", "!"],
+			["source", "foo.png"],
+			["punctuation", "!"]
+		]],
+		["image", [
+			["punctuation", "!"],
+			["source", "bar.jpg(Foo bar)"],
+			["punctuation", "!"]
+		]],
+		["image", [
+			["punctuation", "!"],
+			["source", "foo.png"],
+			["punctuation", "!"],
+			["punctuation", ":"],
+			["url", "http://prismjs.com"]
+		]],
+		["image", [
+			["punctuation", "!"],
+			["source", "bar.jpg(Foo bar)"],
+			["punctuation", "!"],
+			["punctuation", ":"],
+			["url", "http://www.example.com"]
+		]]
+	]],
+
+	["phrase", [
+		["image", [
+			["punctuation", "!"],
+			["modifier", [
+				["punctuation", "<"]
+			]],
+			["source", "foo.png"],
+			["punctuation", "!"]
+		]],
+		["image", [
+			["punctuation", "!"],
+			["modifier", [
+				["punctuation", ">"]
+			]],
+			["source", "bar.jpg"],
+			["punctuation", "!"]
+		]],
+		["image", [
+			["punctuation", "!"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"],
+				["css", ["{border:1px solid #ccc}"]]
+			]],
+			["source", "foo.png"],
+			["punctuation", "!"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for images.

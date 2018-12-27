@@ -1,0 +1,17 @@
+|foobar|
+|foo\|b\{a}r|
+|foo { bar } baz|
+
+----------------------------------------------------
+
+[
+	["token-operator", "|"], ["string-template", "foobar"], ["token-operator", "|"],
+	["token-operator", "|"], ["string-template", "foo\\|b\\{a}r"], ["token-operator", "|"],
+	["token-operator", "|"], ["string-template", "foo "], ["token-operator", "{"],
+	" bar ",
+	["token-operator", "}"], ["string-template", " baz"], ["token-operator", "|"]
+]
+
+----------------------------------------------------
+
+Checks for string templates.

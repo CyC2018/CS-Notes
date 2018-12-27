@@ -1,0 +1,309 @@
+ABS
+ACCESS
+ACOS
+ANGLE
+AREA
+ARITHMETIC
+ARRAY
+ASIN
+ASK
+AT
+ATN
+BASE
+BEGIN
+BREAK
+CAUSE
+CEIL
+CHR
+CLIP
+COLLATE
+COLOR
+CON
+COS
+COSH
+COT
+CSC
+DATE
+DATUM
+DEBUG
+DECIMAL
+DEF
+DEG
+DEGREES
+DELETE
+DET
+DEVICE
+DISPLAY
+DOT
+ELAPSED
+EPS
+ERASABLE
+EXLINE
+EXP
+EXTERNAL
+EXTYPE
+FILETYPE
+FIXED
+FP
+GO
+GRAPH
+HANDLER
+IDN
+IMAGE
+IN
+INT
+INTERNAL
+IP
+IS
+KEYED
+LBOUND
+LCASE
+LEFT
+LEN
+LENGTH
+LET
+LINE
+LINES
+LOG
+LOG10
+LOG2
+LTRIM
+MARGIN
+MAT
+MAX
+MAXNUM
+MID
+MIN
+MISSING
+MOD
+NATIVE
+NUL
+NUMERIC
+OF
+OPTION
+ORD
+ORGANIZATION
+OUTIN
+OUTPUT
+PI
+POINT
+POINTER
+POINTS
+POS
+PRINT
+PROGRAM
+PROMPT
+RAD
+RADIANS
+RANDOMIZE
+RECORD
+RECSIZE
+RECTYPE
+RELATIVE
+REMAINDER
+REPEAT
+REST
+RETRY
+REWRITE
+RIGHT
+RND
+ROUND
+RTRIM
+SAME
+SEC
+SELECT
+SEQUENTIAL
+SET
+SETTER
+SGN
+SIN
+SINH
+SIZE
+SKIP
+SQR
+STANDARD
+STATUS
+STR
+STREAM
+STYLE
+TAB
+TAN
+TANH
+TEMPLATE
+TEXT
+THERE
+TIME
+TIMEOUT
+TRACE
+TRANSFORM
+TRUNCATE
+UBOUND
+UCASE
+USE
+VAL
+VARIABLE
+VIEWPORT
+WHEN
+WINDOW
+WITH
+ZER
+ZONEWIDTH
+
+----------------------------------------------------
+
+[
+	["function", "ABS"],
+	["function", "ACCESS"],
+	["function", "ACOS"],
+	["function", "ANGLE"],
+	["function", "AREA"],
+	["function", "ARITHMETIC"],
+	["function", "ARRAY"],
+	["function", "ASIN"],
+	["function", "ASK"],
+	["function", "AT"],
+	["function", "ATN"],
+	["function", "BASE"],
+	["function", "BEGIN"],
+	["function", "BREAK"],
+	["function", "CAUSE"],
+	["function", "CEIL"],
+	["function", "CHR"],
+	["function", "CLIP"],
+	["function", "COLLATE"],
+	["function", "COLOR"],
+	["function", "CON"],
+	["function", "COS"],
+	["function", "COSH"],
+	["function", "COT"],
+	["function", "CSC"],
+	["function", "DATE"],
+	["function", "DATUM"],
+	["function", "DEBUG"],
+	["function", "DECIMAL"],
+	["function", "DEF"],
+	["function", "DEG"],
+	["function", "DEGREES"],
+	["function", "DELETE"],
+	["function", "DET"],
+	["function", "DEVICE"],
+	["function", "DISPLAY"],
+	["function", "DOT"],
+	["function", "ELAPSED"],
+	["function", "EPS"],
+	["function", "ERASABLE"],
+	["function", "EXLINE"],
+	["function", "EXP"],
+	["function", "EXTERNAL"],
+	["function", "EXTYPE"],
+	["function", "FILETYPE"],
+	["function", "FIXED"],
+	["function", "FP"],
+	["function", "GO"],
+	["function", "GRAPH"],
+	["function", "HANDLER"],
+	["function", "IDN"],
+	["function", "IMAGE"],
+	["function", "IN"],
+	["function", "INT"],
+	["function", "INTERNAL"],
+	["function", "IP"],
+	["function", "IS"],
+	["function", "KEYED"],
+	["function", "LBOUND"],
+	["function", "LCASE"],
+	["function", "LEFT"],
+	["function", "LEN"],
+	["function", "LENGTH"],
+	["function", "LET"],
+	["function", "LINE"],
+	["function", "LINES"],
+	["function", "LOG"],
+	["function", "LOG10"],
+	["function", "LOG2"],
+	["function", "LTRIM"],
+	["function", "MARGIN"],
+	["function", "MAT"],
+	["function", "MAX"],
+	["function", "MAXNUM"],
+	["function", "MID"],
+	["function", "MIN"],
+	["function", "MISSING"],
+	["function", "MOD"],
+	["function", "NATIVE"],
+	["function", "NUL"],
+	["function", "NUMERIC"],
+	["function", "OF"],
+	["function", "OPTION"],
+	["function", "ORD"],
+	["function", "ORGANIZATION"],
+	["function", "OUTIN"],
+	["function", "OUTPUT"],
+	["function", "PI"],
+	["function", "POINT"],
+	["function", "POINTER"],
+	["function", "POINTS"],
+	["function", "POS"],
+	["function", "PRINT"],
+	["function", "PROGRAM"],
+	["function", "PROMPT"],
+	["function", "RAD"],
+	["function", "RADIANS"],
+	["function", "RANDOMIZE"],
+	["function", "RECORD"],
+	["function", "RECSIZE"],
+	["function", "RECTYPE"],
+	["function", "RELATIVE"],
+	["function", "REMAINDER"],
+	["function", "REPEAT"],
+	["function", "REST"],
+	["function", "RETRY"],
+	["function", "REWRITE"],
+	["function", "RIGHT"],
+	["function", "RND"],
+	["function", "ROUND"],
+	["function", "RTRIM"],
+	["function", "SAME"],
+	["function", "SEC"],
+	["function", "SELECT"],
+	["function", "SEQUENTIAL"],
+	["function", "SET"],
+	["function", "SETTER"],
+	["function", "SGN"],
+	["function", "SIN"],
+	["function", "SINH"],
+	["function", "SIZE"],
+	["function", "SKIP"],
+	["function", "SQR"],
+	["function", "STANDARD"],
+	["function", "STATUS"],
+	["function", "STR"],
+	["function", "STREAM"],
+	["function", "STYLE"],
+	["function", "TAB"],
+	["function", "TAN"],
+	["function", "TANH"],
+	["function", "TEMPLATE"],
+	["function", "TEXT"],
+	["function", "THERE"],
+	["function", "TIME"],
+	["function", "TIMEOUT"],
+	["function", "TRACE"],
+	["function", "TRANSFORM"],
+	["function", "TRUNCATE"],
+	["function", "UBOUND"],
+	["function", "UCASE"],
+	["function", "USE"],
+	["function", "VAL"],
+	["function", "VARIABLE"],
+	["function", "VIEWPORT"],
+	["function", "WHEN"],
+	["function", "WINDOW"],
+	["function", "WITH"],
+	["function", "ZER"],
+	["function", "ZONEWIDTH"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

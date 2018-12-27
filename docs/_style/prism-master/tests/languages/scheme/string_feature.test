@@ -1,0 +1,17 @@
+""
+"fo\"obar"
+'turkey
+(define a 'foo)
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"obar\""],
+	["string", "'turkey"],
+	["punctuation", "("], ["keyword", "define"], " a ", ["string","'foo"], ["punctuation",")"]
+]
+
+----------------------------------------------------
+
+Checks for strings and symbols.

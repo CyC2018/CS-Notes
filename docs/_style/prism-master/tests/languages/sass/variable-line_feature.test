@@ -1,0 +1,29 @@
+$width: 5em
+$foo: $bar + $baz
+$bar: #{$baz}
+
+----------------------------------------------------
+
+[
+	["variable-line", [
+		["variable", "$width"],
+		["punctuation", ":"],
+		" 5em"
+	]],
+	["variable-line", [
+		["variable", "$foo"],
+		["punctuation", ":"],
+		["variable", "$bar"],
+		["operator", "+"],
+		["variable", "$baz"]
+	]],
+	["variable-line", [
+		["variable", "$bar"],
+		["punctuation", ":"],
+		["variable", "#{$baz}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for variable declarations.

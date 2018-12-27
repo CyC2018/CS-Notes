@@ -1,0 +1,20 @@
+{}
+{ }
+[]
+],
+},
+,
+
+----------------------------------------------------
+
+[
+	["punctuation", "{"],  ["punctuation", "}"],
+	["punctuation", "{"],  ["punctuation", "}"],
+	["punctuation", "["],  ["punctuation", "]"],
+	["punctuation", "]"],  ["punctuation", ","],
+	["punctuation", "}"],  ["punctuation", ","],
+	["punctuation", ","]
+]
+----------------------------------------------------
+
+Checks for punctuation.

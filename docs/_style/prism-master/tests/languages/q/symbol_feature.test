@@ -1,0 +1,17 @@
+`
+`foobar
+`:www.example.com:8888
+`.foo
+
+----------------------------------------------------
+
+[
+	["symbol", "`"],
+	["symbol", "`foobar"],
+	["symbol", "`:www.example.com:8888"],
+	["symbol", "`.foo"]
+]
+
+----------------------------------------------------
+
+Checks for symbols.

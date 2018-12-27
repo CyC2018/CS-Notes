@@ -1,0 +1,196 @@
+Ability: foobar
+baz
+Ahoy matey!:
+Arwedd: foobar
+Aspekt: foobar
+Besigheid Behoefte: foobar
+Business Need: foobar
+Caracteristica: foobar
+Característica: foobar
+Egenskab: foobar
+Egenskap: foobar
+Eiginleiki: foobar
+Feature: foobar
+Fīča: foobar
+Fitur: foobar
+Fonctionnalité: foobar
+Fonksyonalite: foobar
+Funcionalidade: foobar
+Funcionalitat: foobar
+Functionalitate: foobar
+Funcţionalitate: foobar
+Funcționalitate: foobar
+Functionaliteit: foobar
+Fungsi: foobar
+Funkcia: foobar
+Funkcija: foobar
+Funkcionalitāte: foobar
+Funkcionalnost: foobar
+Funkcja: foobar
+Funksie: foobar
+Funktionalität: foobar
+Funktionalitéit: foobar
+Funzionalità: foobar
+Hwaet: foobar
+Hwæt: foobar
+Jellemző: foobar
+Karakteristik: foobar
+laH: foobar
+Lastnost: foobar
+Mak: foobar
+Mogucnost: foobar
+Mogućnost: foobar
+Moznosti: foobar
+Možnosti: foobar
+OH HAI: foobar
+Omadus: foobar
+Ominaisuus: foobar
+Osobina: foobar
+Özellik: foobar
+perbogh: foobar
+poQbogh malja': foobar
+Potrzeba biznesowa: foobar
+Požadavek: foobar
+Požiadavka: foobar
+Pretty much: foobar
+Qap: foobar
+Qu'meH 'ut: foobar
+Savybė: foobar
+Tính năng: foobar
+Trajto: foobar
+Vermoë: foobar
+Vlastnosť: foobar
+Właściwość: foobar
+Značilnost: foobar
+Δυνατότητα: foobar
+Λειτουργία: foobar
+Могућност: foobar
+Мөмкинлек: foobar
+Особина: foobar
+Свойство: foobar
+Үзенчәлеклелек: foobar
+Функционал: foobar
+Функционалност: foobar
+Функция: foobar
+Функціонал: foobar
+תכונה: foobar
+خاصية: foobar
+خصوصیت: foobar
+صلاحیت: foobar
+کاروبار کی ضرورت: foobar
+وِیژگی: foobar
+रूप लेख: foobar
+ਖਾਸੀਅਤ: foobar
+ਨਕਸ਼ ਨੁਹਾਰ: foobar
+ਮੁਹਾਂਦਰਾ: foobar
+గుణము: foobar
+ಹೆಚ್ಚಳ: foobar
+ความต้องการทางธุรกิจ: foobar
+ความสามารถ: foobar
+โครงหลัก: foobar
+기능: foobar
+フィーチャ: foobar
+功能: foobar
+機能: foobar
+
+----------------------------------------------------
+
+[
+	["feature", [["keyword", "Ability:"], ["important", " foobar"], "\r\nbaz\r\n"]],
+	["feature", [["keyword", "Ahoy matey!:"]]],
+	["feature", [["keyword", "Arwedd:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Aspekt:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Besigheid Behoefte:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Business Need:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Caracteristica:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Característica:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Egenskab:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Egenskap:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Eiginleiki:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Feature:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Fīča:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Fitur:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Fonctionnalité:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Fonksyonalite:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funcionalidade:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funcionalitat:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Functionalitate:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funcţionalitate:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funcționalitate:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Functionaliteit:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Fungsi:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funkcia:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funkcija:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funkcionalitāte:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funkcionalnost:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funkcja:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funksie:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funktionalität:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funktionalitéit:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Funzionalità:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Hwaet:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Hwæt:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Jellemző:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Karakteristik:"], ["important", " foobar"]]],
+	["feature", [["keyword", "laH:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Lastnost:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Mak:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Mogucnost:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Mogućnost:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Moznosti:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Možnosti:"], ["important", " foobar"]]],
+	["feature", [["keyword", "OH HAI:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Omadus:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Ominaisuus:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Osobina:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Özellik:"], ["important", " foobar"]]],
+	["feature", [["keyword", "perbogh:"], ["important", " foobar"]]],
+	["feature", [["keyword", "poQbogh malja':"], ["important", " foobar"]]],
+	["feature", [["keyword", "Potrzeba biznesowa:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Požadavek:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Požiadavka:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Pretty much:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Qap:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Qu'meH 'ut:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Savybė:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Tính năng:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Trajto:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Vermoë:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Vlastnosť:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Właściwość:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Značilnost:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Δυνατότητα:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Λειτουργία:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Могућност:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Мөмкинлек:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Особина:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Свойство:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Үзенчәлеклелек:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Функционал:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Функционалност:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Функция:"], ["important", " foobar"]]],
+	["feature", [["keyword", "Функціонал:"], ["important", " foobar"]]],
+	["feature", [["keyword", "תכונה:"], ["important", " foobar"]]],
+	["feature", [["keyword", "خاصية:"], ["important", " foobar"]]],
+	["feature", [["keyword", "خصوصیت:"], ["important", " foobar"]]],
+	["feature", [["keyword", "صلاحیت:"], ["important", " foobar"]]],
+	["feature", [["keyword", "کاروبار کی ضرورت:"], ["important", " foobar"]]],
+	["feature", [["keyword", "وِیژگی:"], ["important", " foobar"]]],
+	["feature", [["keyword", "रूप लेख:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ਖਾਸੀਅਤ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ਨਕਸ਼ ਨੁਹਾਰ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ਮੁਹਾਂਦਰਾ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "గుణము:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ಹೆಚ್ಚಳ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ความต้องการทางธุรกิจ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "ความสามารถ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "โครงหลัก:"], ["important", " foobar"]]],
+	["feature", [["keyword", "기능:"], ["important", " foobar"]]],
+	["feature", [["keyword", "フィーチャ:"], ["important", " foobar"]]],
+	["feature", [["keyword", "功能:"], ["important", " foobar"]]],
+	["feature", [["keyword", "機能:"], ["important", " foobar"]]]
+]
+
+----------------------------------------------------
+
+Checks for features in all languages.

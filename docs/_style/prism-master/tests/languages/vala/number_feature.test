@@ -1,0 +1,27 @@
+42
+3.14159
+5ul
+0.75f
+4e10
+2.1e-10
+0.4e+2
+0xbabe
+0xBABE
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "5ul"],
+	["number", "0.75f"],
+	["number", "4e10"],
+	["number", "2.1e-10"],
+	["number", "0.4e+2"],
+	["number", "0xbabe"],
+	["number", "0xBABE"]
+]
+
+----------------------------------------------------
+
+Checks for decimal numbers and hexadecimal numbers.

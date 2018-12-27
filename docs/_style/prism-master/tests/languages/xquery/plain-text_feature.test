@@ -1,0 +1,71 @@
+return <ul>
+<!-- {concat(" List of ", $count, " products ")} -->
+plaintext
+{comment{concat(" List of ", $count, " products ")}}
+</ul>
+
+<h1>data($prod/name){data($prod/name)}{{data($prod/name)}}</h1>
+
+----------------------------------------------------
+
+[
+	["keyword", "return"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"ul"
+		]],
+		["punctuation", ">"]
+	]],
+	["comment", "<!-- {concat(\" List of \", $count, \" products \")} -->"],
+	["plain-text", "\r\nplaintext\r\n"],
+	["punctuation", "{"],
+	["builtin", "comment"],
+	["punctuation", "{"],
+	["function", "concat"],
+	["punctuation", "("],
+	["string", "\" List of \""],
+	["punctuation", ","],
+	["variable", "$count"],
+	["punctuation", ","],
+	["string", "\" products \""],
+	["punctuation", ")"],
+	["punctuation", "}"],
+	["punctuation", "}"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"ul"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"h1"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "data($prod/name)"],
+	["punctuation", "{"],
+	["function", "data"],
+	["punctuation", "("],
+	["variable", "$prod"],
+	["punctuation", "/"],
+	"name",
+	["punctuation", ")"],
+	["punctuation", "}"],
+	["plain-text", "{{data($prod/name)}}"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"h1"
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for plain-text between tags.

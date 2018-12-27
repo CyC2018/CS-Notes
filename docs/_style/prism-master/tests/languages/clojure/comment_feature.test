@@ -1,0 +1,13 @@
+;; this is comment
+; this is another comment
+
+----------------------------------------------------
+
+[
+	["comment", ";; this is comment"],
+	["comment", "; this is another comment"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

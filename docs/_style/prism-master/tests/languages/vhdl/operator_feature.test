@@ -1,0 +1,29 @@
+> >=
+< <=
+:=
++ -
+* /
+& =
+abs not mod rem
+sll srl sla sra
+rol ror and or
+nand xnor xor nor
+
+----------------------------------------------------
+
+[
+	["operator", ">"], ["operator", ">="],
+	["operator", "<"], ["operator", "<="],
+	["operator", ":="],
+	["operator", "+"], ["operator", "-"],
+	["operator", "*"], ["operator", "/"],
+	["operator", "&"], ["operator", "="],
+	["operator", "abs"], ["operator", "not"], ["operator", "mod"], ["operator", "rem"],
+	["operator", "sll"], ["operator", "srl"], ["operator", "sla"], ["operator", "sra"],
+	["operator", "rol"], ["operator", "ror"], ["operator", "and"], ["operator", "or"],
+	["operator", "nand"], ["operator", "xnor"], ["operator", "xor"], ["operator", "nor"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

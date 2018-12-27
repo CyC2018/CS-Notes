@@ -1,0 +1,53 @@
+<CodeView title={<span title={123}>2</span>}>for of as</CodeView>
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			["class-name", "CodeView"]
+		]],
+		["attr-name", ["title"]],
+		["script", [
+			["script-punctuation", "="],
+			["punctuation", "{"],
+			["tag", [
+				["tag", [
+					["punctuation", "<"],
+					"span"
+				]],
+				["attr-name", ["title"]],
+				["script", [
+					["script-punctuation", "="],
+					["punctuation", "{"],
+					["number", "123"],
+					["punctuation", "}"]
+				]],
+				["punctuation", ">"]
+			]],
+			["plain-text", "2"],
+			["tag", [
+				["tag", [
+					["punctuation", "</"],
+					"span"
+				]],
+				["punctuation", ">"]
+			]],
+			["punctuation", "}"]
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "for of as"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			["class-name", "CodeView"]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for nested tag with JSX inside another tag with JSX. See #1342

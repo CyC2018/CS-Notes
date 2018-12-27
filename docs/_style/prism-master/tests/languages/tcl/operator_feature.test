@@ -1,0 +1,45 @@
++
+-
+~
+! !=
+* **
+/
+%
+< <= <<
+> >= >>
+==
+& &&
+| ||
+?
+^
+eq
+ne
+in
+ni
+
+----------------------------------------------------
+
+[
+	["operator", "+"],
+	["operator", "-"],
+	["operator", "~"],
+	["operator", "!"], ["operator", "!="],
+	["operator", "*"], ["operator", "**"],
+	["operator", "/"],
+	["operator", "%"],
+	["operator", "<"], ["operator", "<="], ["operator", "<<"],
+	["operator", ">"], ["operator", ">="], ["operator", ">>"],
+	["operator", "=="],
+	["operator", "&"], ["operator", "&&"],
+	["operator", "|"], ["operator", "||"],
+	["operator", "?"],
+	["operator", "^"],
+	["operator", "eq"],
+	["operator", "ne"],
+	["operator", "in"],
+	["operator", "ni"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

@@ -1,0 +1,21 @@
+var FOO;
+const FOO_BAR;
+const BAZ42;
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	["constant", "FOO"],
+	["punctuation", ";"],
+	["keyword", "const"],
+	["constant", "FOO_BAR"],
+	["punctuation", ";"],
+	["keyword", "const"],
+	["constant", "BAZ42"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for constants.

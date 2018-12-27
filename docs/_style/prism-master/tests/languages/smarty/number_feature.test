@@ -1,0 +1,45 @@
+{0xBadFace}
+{42}
+{3.14159}
+{4e7}
+{5.4E-3}
+{2.0e+10}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["number", "0xBadFace"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["number", "42"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["number", "3.14159"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["number", "4e7"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["number", "5.4E-3"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["number", "2.0e+10"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

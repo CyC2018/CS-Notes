@@ -1,0 +1,17 @@
+P:
+CQC_THE1:
+PRE_FF:
+NAT_1:
+
+----------------------------------------------------
+
+[
+	["variable", "P"], ["punctuation", ":"],
+	["variable", "CQC_THE1"], ["punctuation", ":"],
+	["variable", "PRE_FF"], ["punctuation", ":"],
+	["variable", "NAT_1"], ["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for variables.
