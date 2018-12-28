@@ -182,7 +182,7 @@
 
 #### BookList
 
-本仓库参考的书目：[BOOKLIST](https://github.com/CyC2018/Interview-Notebook/blob/master/BOOKLIST.md)。
+本仓库参考的资料：[LEARNING.md](https://github.com/CyC2018/Interview-Notebook/blob/master/LEARNING.md)。
 
 #### Typesetting
 
