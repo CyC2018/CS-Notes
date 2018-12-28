@@ -225,7 +225,7 @@ Redis 作为内存型键值对非关系型数据库，主要作为缓存使用�
 - [[前端经典面试题: 从输入 URL 到页面加载发生了什么？][具体问题]](https://segmentfault.com/a/1190000006879700)
 - [[秒杀系统架构分析与实战][具体问题]](https://my.oschina.net/xianggao/blog/524943)
 - [[微信二维码登录原理][具体问题]](https://zhuanlan.zhihu.com/p/22325152?refer=bittiger)
-- [[Create a TinyURL System][具体问题]](https://github.com/CyC2018/CS-Notes)
+- [[Create a TinyURL System][具体问题]](http://blog.gainlo.co/index.php/2016/03/08/system-design-interview-question-create-tinyurl-system/)
 - [[Design a Key-Value Store (Part I)][具体问题]](http://blog.gainlo.co/index.php/2016/06/14/design-a-key-value-store-part-i/)
 - [[坦率地讲 服务熔断 & 服务降级][知识点]](http://lexuslee.me/2018/02/01/2018-01-18-Service-fallback/)
 - [[理解 HTTP 幂等性][知识点]](https://www.cnblogs.com/weidagang2046/archive/2011/06/04/idempotence.html)
