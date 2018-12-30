@@ -1,6 +1,6 @@
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
-    * [URL](#url)
+    * [URI](#uri)
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
     * [GET](#get)
@@ -58,9 +58,9 @@
 
 # 一 、基础概念
 
-## URL
+## URI
 
-URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
+URI 包含 URL 和 URN。
 
 - URI（Uniform Resource Identifier，统一资源标识符）
 - URL（Uniform Resource Locator，统一资源定位符）
@@ -92,7 +92,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 > 获取报文首部
 
-和 GET 方法一样，但是不返回报文实体主体部分。
+和 GET 方法类似，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
 
@@ -151,7 +151,7 @@ DELETE /file.html HTTP/1.1
 
 查询指定的 URL 能够支持的方法。
 
-会返回 Allow: GET, POST, HEAD, OPTIONS 这样的内容。
+会返回 `Allow: GET, POST, HEAD, OPTIONS` 这样的内容。
 
 ## CONNECT
 
@@ -174,11 +174,12 @@ CONNECT www.example.com:443 HTTP/1.1
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪）。
+
 # 三、HTTP 状态码
 
 服务器返回的  **响应报文**  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
-| 状态码 | 类别 | 原因短语 |
+| 状态码 | 类别 | 含义 |
 | :---: | :---: | :---: |
 | 1XX | Informational（信息性状态码） | 接收的请求正在处理 |
 | 2XX | Success（成功状态码） | 请求正常处理完毕 |
@@ -762,17 +763,11 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 详细内容请见上文
 
 - 默认是长连接
-
 - 支持流水线
-
 - 支持同时打开多个 TCP 连接
-
 - 支持虚拟主机
-
 - 新增状态码 100
-
 - 支持分块传输编码
-
 - 新增缓存处理指令 max-age
 
 # 九、GET 和 POST 比较
@@ -856,8 +851,6 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 - 在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
 - 而 GET 方法 Header 和 Data 会一起发送。
-
-
 
 # 参考资料
 
