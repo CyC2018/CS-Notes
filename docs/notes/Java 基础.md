@@ -163,7 +163,7 @@ public final class String
 ```java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
-    /** The value is used for character storage. */    
+    /** The value is used for character storage. */
     private final byte[] value;
 
     /** The identifier of the encoding used to encode the bytes in {@code value}. */
