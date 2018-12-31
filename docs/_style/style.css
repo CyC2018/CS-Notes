@@ -10,7 +10,9 @@
 .content,
 .sidebar,
 .markdown-section,
-body {
+body,
+.search input,
+.sidebar-toggle {
     background-color: rgba(243, 242, 238, 1) !important;
 }
 
