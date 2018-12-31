@@ -137,20 +137,16 @@
 - [Docker](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Docker.md)
 
   Docker 基本原理。
+  
+  - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
+
+  构建工具的基本概念、主流构建工具介绍。
 
 - [正则表达式](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/正则表达式.md)
 
   正则表达式基本语法。
 
-- [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
-
-  构建工具的基本概念、主流构建工具介绍。
-
 ### :speak_no_evil: 编码实践 
-
-- [重构](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/重构.md)
-
-  参考 重构 改善既有代码的设计。
 
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码可读性.md)
 
