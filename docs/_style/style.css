@@ -29,8 +29,8 @@ body {
 }
 
 .markdown-section pre>code {
-    font-family: Consolas, Roboto Mono, Monaco, courier, monospace;
-    font-size: .9rem;
+    font-family: Consolas, Roboto Mono, Monaco, courier, monospace !important;
+    font-size: .9rem !important;
 
 }
 
