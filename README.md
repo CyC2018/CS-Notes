@@ -7,7 +7,7 @@
 <div align="center">
     <img src="other/LogoMakr_0zpEzN.png" width="150px">
     <br>
-    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/_-read-4ab8a1.svg"></a>  <a href="other/Group.md"> <img src="https://img.shields.io/badge/>-group-4ab8a1.svg"></a> 
+    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="other/Group.md"> <img src="https://img.shields.io/badge/_-group-4ab8a1.svg"></a> 
 </div> 
 
 ### :pencil2: 算法
