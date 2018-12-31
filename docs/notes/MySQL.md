@@ -42,7 +42,7 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 在 B+ Tree 中，一个节点中的 key 从左到右非递减排列，如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为 null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>。
 
-<div align="center"> <img src="pics/061c88c1-572f-424f-b580-9cbce903a3fe.png"/> </div><br>
+<div align="center"> <img src="pics/d5ce91a7-45f9-4560-9917-0dccd4900826.png" width="400px"> </div><br>
 
 ### 2. 操作
 
@@ -56,15 +56,15 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 （一）更少的查找次数
 
-平衡树查找操作的时间复杂度等于树高 h，而树高大致为 O(h)=O(log<sub>d</sub>N)，其中 d 为每个节点的出度。
+平衡树查找操作的时间复杂度和树高 h 相关，O(h)=O(log<sub>d</sub>N)，其中 d 为每个节点的出度。
 
 红黑树的出度为 2，而 B+ Tree 的出度一般都非常大，所以红黑树的树高 h 很明显比 B+ Tree 大非常多，查找的次数也就更多。
 
 （二）利用磁盘预读特性
 
-为了减少磁盘 I/O，磁盘往往不是严格按需读取，而是每次都会预读。预读过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的旋转时间，速度会非常快。
+为了减少磁盘 I/O 操作，磁盘往往不是严格按需读取，而是每次都会预读。预读过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的旋转时间，速度会非常快。
 
-操作系统一般将内存和磁盘分割成固态大小的块，每一块称为一页，内存与磁盘以页为单位交换数据。数据库系统将索引的一个节点的大小设置为页的大小，使得一次 I/O 就能完全载入一个节点。并且可以利用预读特性，相邻的节点也能够被预先载入。
+操作系统一般将内存和磁盘分割成固定大小的块，每一块称为一页，内存与磁盘以页为单位交换数据。数据库系统将索引的一个节点的大小设置为页的大小，使得一次 I/O 就能完全载入一个节点。并且可以利用预读特性，相邻的节点也能够被预先载入。
 
 ## MySQL 索引
 
@@ -84,11 +84,11 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 InnoDB 的 B+Tree 索引分为主索引和辅助索引。主索引的叶子节点 data 域记录着完整的数据记录，这种索引方式被称为聚簇索引。因为无法把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引。
 
-<div align="center"> <img src="pics/c28c6fbc-2bc1-47d9-9b2e-cf3d4034f877.jpg"/> </div><br>
+<div align="center"> <img src="pics/0f6f92e8-f15e-4c09-8562-b9c6114df9ce.png" width="400px"> </div><br>
 
 辅助索引的叶子节点的 data 域记录着主键的值，因此在使用辅助索引进行查找时，需要先查找到主键值，然后再到主索引中进行查找。
 
-<div align="center"> <img src="pics/7ab8ca28-2a41-4adf-9502-cc0a21e63b51.jpg"/> </div><br>
+<div align="center"> <img src="pics/1e74234e-d70b-411c-9333-226bcbb9c8f0.png" width="400px"> </div><br>
 
 ### 2. 哈希索引
 
@@ -420,3 +420,4 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
 - [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
 - [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
+- [B + 树](https://zh.wikipedia.org/wiki/B%2B%E6%A0%91)
