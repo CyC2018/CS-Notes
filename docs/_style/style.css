@@ -7,6 +7,17 @@
     margin: 3rem 0 0 0;
 }
 
+.content,
+.sidebar,
+.markdown-section,
+body {
+    background-color: rgba(243, 242, 238, 1);
+}
+
+    {
+    background-color: rgba(243, 242, 238, 1) !important;
+}
+
 /*.anchor span {
     color: rgb(66, 185, 131);
 }*/
