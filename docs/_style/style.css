@@ -11,10 +11,6 @@
 .sidebar,
 .markdown-section,
 body {
-    background-color: rgba(243, 242, 238, 1);
-}
-
-    {
     background-color: rgba(243, 242, 238, 1) !important;
 }
 
