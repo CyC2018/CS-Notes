@@ -24,8 +24,8 @@ body {
     /*font-family: Microsoft YaHei, Source Sans Pro, Helvetica Neue, Arial, sans-serif !important;*/
 }
 
-.markdown-section>* {
-    font-size: 15px !important;
+.markdown-section>p {
+    font-size: 16px !important;
 }
 
 .markdown-section pre>code {
