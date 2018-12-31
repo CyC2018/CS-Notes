@@ -4,7 +4,11 @@
 }
 
 .markdown-section h1 {
-    margin: 3rem 0 0 0;
+    margin: 3rem 0 2rem 0;
+}
+
+.markdown-section h2 {
+    margin: 2rem 0 1rem;
 }
 
 .content,
@@ -22,6 +26,12 @@ body {
 
 .markdown-section>* {
     font-size: 15px !important;
+}
+
+.markdown-section pre>code {
+    font-family: Consolas, Roboto Mono, Monaco, courier, monospace;
+    font-size: .9rem;
+
 }
 
 /*.anchor span {
