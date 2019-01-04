@@ -138,7 +138,7 @@
 
   Docker 基本原理。
   
-  - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
+- [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
 
   构建工具的基本概念、主流构建工具介绍。
 
