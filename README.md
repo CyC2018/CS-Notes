@@ -174,11 +174,11 @@
 
 #### 2018 年总结
 
-[2018 这一年.md](other/2018%20这一年.md)。
+[2018 这一年.md](other/2018%20这一年.md)
 
 #### 学习资源
 
-[LEARNING.md](other/LEARNING.md)。
+[LEARNING.md](other/LEARNING.md)
 
 #### 专栏
 
