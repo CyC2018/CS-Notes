@@ -158,13 +158,13 @@
 
 ### :memo: 后记 
 
-#### About
+#### 关于
 
 本仓库主要是根据计算机经典书籍以及官方技术文档进行总结的学习笔记，希望对大家有所帮助。
 
 学习笔记不是从网上到处拼凑而来，除了少部分引用书上和技术文档的原文，其余都是笔者的原创。在您引用本仓库内容或者对内容进行修改演绎时，请遵循文末的开源协议，谢谢。
 
-#### How To Contribute
+#### 如何贡献
 
 笔记内容是笔者一个字一个字打上去的，难免会有一些笔误，如果发现笔误可直接对相应文档进行编辑修改。
 
@@ -172,35 +172,33 @@
 
 欢迎在 Issue 中提交对本仓库的改进建议~
 
-#### 2018 Summary
+#### 2018 年总结
 
 [2018 这一年.md](other/2018%20这一年.md)。
 
-#### LEARNING
+#### 学习资源
 
-学习资料推荐：[LEARNING.md](other/LEARNING.md)。
+[LEARNING.md](other/LEARNING.md)。
 
-#### Column
+#### 专栏
 
 因为想写一些面试相关的内容，但是又很难加到已有的内容中，所以再开了一个专栏。
 
 [后端技术面试指南](https://xiaozhuanlan.com/CyC2018)
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/column.png" width="100px">
+#### QQ 交流群
 
-#### Group
+创建 QQ 群的主要目的是为了给大家提供一个实时交流的平台。
 
-创建交流群的主要目的是为了给大家提供一个实时交流的平台。
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group.png" width="200px">
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group.png" width="150px">
-
-#### Planet
+#### 知识星球
 
 知识星球为大家提供一个高质量的学习交流平台，这个平台旨在建立一个一起努力和成长的氛围。在这里你可以提问在学习或求职过程中遇到的疑惑，能够得到星主以及不同人的回答以及建议。
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet.jpg" width="150px">
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet.jpg" width="200px">
 
-#### Typesetting
+#### 排版
 
 笔记内容按照 [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
 
@@ -208,7 +206,7 @@
 
 笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
-#### Uploading
+#### 上传方案
 
 笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
 
@@ -220,11 +218,11 @@
 
 Power by [logomakr](https://logomakr.com/).
 
-#### Statement
+#### 声明
 
 本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 
-#### Acknowledgements
+#### 致谢
 
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与笔者联系。
 
@@ -255,7 +253,6 @@ Power by [logomakr](https://logomakr.com/).
 <a href="https://github.com/yanglbme">
 ​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
-
 
 #### License
 
