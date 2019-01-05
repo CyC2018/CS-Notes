@@ -172,13 +172,13 @@
 
 欢迎在 Issue 中提交对本仓库的改进建议~
 
-#### BookList
-
-本仓库参考的资料：[LEARNING.md](other/LEARNING.md)。
-
 #### 2018 Summary
 
 [2018 这一年.md](other/2018%20这一年.md)。
+
+#### LEARNING
+
+学习资料推荐：[LEARNING.md](other/LEARNING.md)。
 
 #### Typesetting
 
