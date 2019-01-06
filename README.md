@@ -170,9 +170,7 @@
 
 如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
 
-欢迎在 Issue 中提交对本仓库的改进建议~
-
-#### 2018 年总结
+#### 秋招经历
 
 [2018 这一年.md](other/2018%20这一年.md)
 
@@ -180,15 +178,15 @@
 
 [LEARNING.md](other/LEARNING.md)
 
-#### 专栏
+#### 面试专栏
 
 因为想写一些面试相关的内容，但是又很难加到已有的内容中，所以再开了一个专栏。
 
 [后端技术面试指南](https://xiaozhuanlan.com/CyC2018)
 
-#### QQ 交流群
+#### 交流群
 
-创建 QQ 群的主要目的是为了给大家提供一个实时交流的平台。
+创建 QQ 群是为了给大家提供一个实时交流的平台。
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group.png" width="200px">
 
@@ -200,27 +198,17 @@
 
 #### 排版
 
-笔记内容按照 [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
-
-笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
-
-笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
+笔记内容按照 [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Markdown-Typesetting)。
 
 #### 上传方案
 
-笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。
-
-进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
+笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
 笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 #### Logo
 
 Power by [logomakr](https://logomakr.com/).
-
-#### 声明
-
-本仓库不参与商业行为，不向读者收取任何费用。(This repository is not engaging in business activities, and does not charge readers any fee.)
 
 #### 致谢
 
