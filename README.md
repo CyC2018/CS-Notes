@@ -194,7 +194,7 @@
 
 知识星球为大家提供一个高质量的学习交流平台，这个平台旨在建立一个一起努力和成长的氛围。在这里你可以提问在学习或求职过程中遇到的疑惑，能够得到星主以及不同人的回答以及建议。
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet.jpg" width="200px">
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet1.png" width="200px">
 
 #### 排版
 
