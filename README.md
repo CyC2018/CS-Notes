@@ -1,14 +1,20 @@
-| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
-| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) |
+|               Ⅰ                |                    Ⅱ                     |             Ⅲ              |                  Ⅳ                   |                     Ⅴ                      |
+| :----------------------------: | :--------------------------------------: | :------------------------: | :----------------------------------: | :----------------------------------------: |
+| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统) | 网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) | 数据库[:floppy_disk:](#floppy_disk-数据库) |
+
+|               Ⅵ               |                Ⅶ                 |              Ⅷ               |                         Ⅸ                          |            Ⅹ             |
+| :---------------------------: | :------------------------------: | :--------------------------: | :------------------------------------------------: | :----------------------: |
+| Java [:coffee:](#coffee-java) | 系统设计[:bulb:](#bulb-系统设计) | 工具[:hammer:](#hammer-工具) | 编码实践[:speak_no_evil:](#speak_no_evil-编码实践) | 后记[:memo:](#memo-后记) |
+
 
 <br>
 
 <div align="center">
-    <img src="other/LogoMakr_0zpEzN.png" width="150px">
+    <img src="other/LogoMakr_0zpEzN.png" width="180px">
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
 </div> 
+
 
 ### :pencil2: 算法
 
@@ -19,7 +25,7 @@
 - [Leetcode 题解](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Leetcode%20题解.md)
 
   对题目做了一个大致分类，并对每种题型的解题思路做了总结。
-  
+
  - [算法](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/算法.md)
 
    排序、并查集、栈和队列、红黑树、散列表。
@@ -137,7 +143,7 @@
 - [Docker](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Docker.md)
 
   Docker 基本原理。
-  
+
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
 
   构建工具的基本概念、主流构建工具介绍。
@@ -239,4 +245,3 @@ Power by [logomakr](https://logomakr.com/).
 在对本作品进行演绎时，请署名并以相同方式共享。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
