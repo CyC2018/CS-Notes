@@ -188,7 +188,7 @@
 
 创建 QQ 群是为了给大家提供一个实时交流的平台。
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group.png" width="200px">
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
 
 #### 知识星球
 
