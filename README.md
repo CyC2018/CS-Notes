@@ -180,21 +180,23 @@
 
 #### 面试专栏
 
-因为想写一些面试相关的内容，但是又很难加到已有的内容中，所以再开了一个专栏。
+考虑到本仓库的内容已经非常多了，但是笔者又想写一些面试相关的内容，很难将这些内容添加到仓库中，因此新开了一个专门针对面试的专栏。该专栏不仅会新增一些面试必备知识，也会对本仓库已有内容做梳理，使得这些内容更适合作为面试资料。
 
-[后端技术面试指南](https://xiaozhuanlan.com/CyC2018)
+https://xiaozhuanlan.com/CyC2018
+
+#### 内推信息
+
+https://github.com/CyC2018/Job-Recommend
 
 #### 交流群
 
-创建 QQ 群是为了给大家提供一个实时交流的平台。
+形式：QQ 群
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="150px">
+面向用户：正在找工作，以及已经工作并且想持续学习的小伙伴。
 
-#### 知识星球
+你能得到什么：为了给大家提供一个实时学习交流平台，这个平台旨在建立一个一起努力和成长的氛围。在这里你可以提问在学习或求职过程中遇到的疑惑，能够得到群主以及不同人的回答以及建议。也会带你走进不止于技术的程序世界。
 
-知识星球为大家提供一个高质量的学习交流平台，这个平台旨在建立一个一起努力和成长的氛围。在这里你可以提问在学习或求职过程中遇到的疑惑，能够得到星主以及不同人的回答以及建议。
-
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet1.png" width="150px">
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
 
 #### 排版
 
@@ -209,6 +211,12 @@
 #### Logo
 
 Power by [logomakr](https://logomakr.com/).
+
+#### License
+
+在对本作品进行演绎时，请署名并以相同方式共享。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
 #### 致谢
 
@@ -241,10 +249,3 @@ Power by [logomakr](https://logomakr.com/).
 <a href="https://github.com/yanglbme">
 ​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
-
-#### License
-
-在对本作品进行演绎时，请署名并以相同方式共享。
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
