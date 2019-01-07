@@ -182,11 +182,11 @@
 
 考虑到本仓库的内容已经非常多了，但是笔者又想写一些面试相关的内容，很难将这些内容添加到仓库中，因此新开了一个专门针对面试的专栏。该专栏不仅会新增一些面试必备知识，也会对本仓库已有内容做梳理，使得这些内容更适合作为面试资料。
 
-https://xiaozhuanlan.com/CyC2018
+[🍉](https://xiaozhuanlan.com/CyC2018)
 
 #### 内推信息
 
-https://github.com/CyC2018/Job-Recommend
+[🔎](https://github.com/CyC2018/Job-Recommend)
 
 #### 交流群
 
