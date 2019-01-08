@@ -4,87 +4,87 @@
 
 # 数据结构与算法
 
-> [算法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/算法.md)
+> [算法](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/算法.md)
 
 整理自《算法 第四版》，主要整理了面试常问的排序和查找算法。
 
-> [剑指 Offer 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/剑指%20offer%20题解.md)
+> [剑指 Offer 题解](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/剑指%20offer%20题解.md)
 
 目录按《剑指 Offer 第二版》编排，在牛客网在线编程中出现的题目都已 AC。
 
-> [Leetcode 题解](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Leetcode%20题解.md)
+> [Leetcode 题解](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/Leetcode%20题解.md)
 
 对题目做了一个分类，并对每种题型的解题思路做了总结。已经整理了 300+ 的题目，基本涵盖所有经典题目。
 
 # 网络
 
-> [计算机网络](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机网络.md)
+> [计算机网络](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/计算机网络.md)
 
 整理自《计算机网络 第七版》，重点内容会在标题之后加 \*。
 
-> [HTTP](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/HTTP.md)
+> [HTTP](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/HTTP.md)
 
 整理自《图解 HTTP》
 
 # 操作系统
 
-> [计算机操作系统](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/计算机操作系统.md)
+> [计算机操作系统](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/计算机操作系统.md)
 
 整理自《现代操作系统》和《计算机操作系统》
 
-> [Linux](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Linux.md)
+> [Linux](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/Linux.md)
 
 整理自《鸟哥的 Linux 私房菜》
 
 # 面向对象
 
-> [设计模式](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/设计模式.md)
+> [设计模式](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/设计模式.md)
 
 整理自《Head First 设计模式》
 
-> [面向对象思想](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/面向对象思想.md)
+> [面向对象思想](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/面向对象思想.md)
 
 一些面向对象思想和原则。
 
 # 数据库
 
-> [SQL 语法](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL%20语法.md)
+> [SQL 语法](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/SQL%20语法.md)
 
 整理自《SQL 必知必会》
 
-> [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
+> [MySQL](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/MySQL.md)
 
 整理自《高性能 MySQL》，整理了一些重点内容。
 
 # Java
 
-> [JVM](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/JVM.md)
+> [JVM](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/JVM.md)
 
 整理自《深入理解 Java 虚拟机》，主要整理了内存模型、垃圾回收以及类加载机制。
 
-> [Java 容器](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20容器.md)
+> [Java 容器](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/Java%20容器.md)
 
 容器的一些总结，包含容器源码的分析。
 
-> [Java IO](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20IO.md)
+> [Java IO](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/Java%20IO.md)
 
 File、InputStream 和 OutputStream、Reader 和 Writer、Serializable、Socket 以及 NIO
 
-> [Java 基础](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Java%20基础.md)
+> [Java 基础](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/Java%20基础.md)
 
 整理了一些常见考点。
 
 # 编码实践
 
-> [重构](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/重构.md)
+> [重构](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/重构.md)
 
 重构是对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
 
-> [代码可读性](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码可读性.md)
+> [代码可读性](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/代码可读性.md)
 
 编程有很大一部分时间是在阅读代码，可读性良好的代码能够大大提高编程效率。
 
-> [代码风格规范](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/代码风格规范.md)
+> [代码风格规范](https://github.com/qaz734913414/Interview-Notebook/blob/master/notes/代码风格规范.md)
 
 Google 开源项目的代码风格规范。
 
