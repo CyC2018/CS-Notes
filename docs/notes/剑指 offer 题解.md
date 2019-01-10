@@ -88,6 +88,10 @@
 - [ProcessOn](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)
 - [DrawIO](https://drive.google.com/file/d/1nSSCpPUC05MFoeFuf_aeTtkm7dG5-bJ1/view?usp=sharing)
 
+本文内容可在微信小程序中阅读：
+
+<div align="center"> <img src="pics/gh_a68199af85d6_258_20_282_29.jpg"/> </div><br>
+
 # 2. 实现 Singleton
 
 [单例模式](设计模式.md)
@@ -1853,7 +1857,7 @@ private void backtracking(char[] chars, boolean[] hasUsed, StringBuilder s) {
 
 多数投票问题，可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。
 
-使用 cnt 来统计一个元素出现的次数，cnt 初始为 0。算法依次遍历数组中的数字，遍历到一个元素时，若 cnt 为 0，则令统计元素为遍历到的该元素，并置 cnt 为 1。若 cnt 不为 0，且当遍历到的元素和统计元素相等时，令 cnt++，否则令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素相等时，令 cnt++，否则令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2 ，因为如果多于 i / 2 的话 cnt 就一定不会为 0 。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
 
 ```java
 public int MoreThanHalfNum_Solution(int[] nums) {

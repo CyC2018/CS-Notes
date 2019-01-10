@@ -4243,7 +4243,7 @@ public boolean isPalindrome(ListNode head) {
         slow = slow.next;
         fast = fast.next.next;
     }
-    if (fast != null) slow = slow.next;  // 链表节点个数为奇数，让 slow 指向下一个节点
+    if (fast != null) slow = slow.next;  // 偶数节点，让 slow 指向下一个节点
     cut(head, slow);                     // 切成两个链表
     return isEqual(head, reverse(slow));
 }
