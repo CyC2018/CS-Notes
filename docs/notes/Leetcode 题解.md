@@ -256,7 +256,7 @@ Output:
 "apple"
 ```
 
-题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回字典序的最大字符串。
+题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回字典序的最小字符串。
 
 ```java
 public String findLongestWord(String s, List<String> d) {
@@ -4243,7 +4243,7 @@ public boolean isPalindrome(ListNode head) {
         slow = slow.next;
         fast = fast.next.next;
     }
-    if (fast != null) slow = slow.next;  // 链表节点个数为奇数，让 slow 指向下一个节点
+    if (fast != null) slow = slow.next;  // 偶数节点，让 slow 指向下一个节点
     cut(head, slow);                     // 切成两个链表
     return isEqual(head, reverse(slow));
 }
