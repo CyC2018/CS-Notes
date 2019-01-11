@@ -10,7 +10,7 @@ Coursera 上有配套视频课程可学习：[Algorithms](https://www.coursera.o
 
 > **数据结构**
 
-[豆瓣](https://book.douban.com/subject/25859528/) 9.4 分，139 分。
+[豆瓣](https://book.douban.com/subject/25859528/) 9.4 分，139 人评分。
 
 C++ 实现，可以结合配套视频观看：[清华大学 数据结构](https://www.xuetangx.com/courses/course-v1:TsinghuaX+30240184+sp/about)
 
@@ -198,6 +198,36 @@ Redis 作为内存型键值对非关系型数据库，主要作为缓存使用�
 
 [我的笔记](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md) 简单实现了每种设计模式，如果觉得看 Head First 设计模式 太慢，可以看看我的实现。
 
+# Java
+
+> **Java 编程思想**
+
+[豆瓣](https://book.douban.com/subject/2130190/) 9.1 分，3268 人评价。
+
+> **Effective java 中文版**
+
+[豆瓣](https://book.douban.com/subject/3360807/) 9.0 分，1452 人评价。
+
+> **深入 Java 虚拟机 **
+
+[豆瓣](https://book.douban.com/subject/1138768/) 8.7 分，563 人评价。
+
+> **深入理解 Java 虚拟机**
+
+[豆瓣](https://book.douban.com/subject/24722612/) 8.9 分，1102 人评价。
+
+> **Java 并发编程实战**
+
+[豆瓣](https://book.douban.com/subject/10484692/) 9.0，919 人评价。
+
+> **精通 Spring 4.x**
+
+[豆瓣](https://book.douban.com/subject/26952826/) 8.2 分，73 人评价。
+
+> **Spring 揭秘**
+
+[豆瓣](https://book.douban.com/subject/3897837/) 9.1 分，228 人评价。
+
 # 系统设计
 
 > **大型网站技术架构**
@@ -218,18 +248,18 @@ Redis 作为内存型键值对非关系型数据库，主要作为缓存使用�
 
 > **其它**
 
-- [[system-design-primer\][Github]](https://github.com/donnemartin/system-design-primer)
-- [[Leetcode / Interview Questions\][题集]](https://leetcode.com/discuss/interview-question/?orderBy=most_votes)
-- [[系统设计面试题精选\][Gitbook]](https://soulmachine.gitbooks.io/system-design/content/cn/)
-- [[海量数据面试题\]](https://samanthachen.github.io/2016/08/01/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E9%9D%A2%E8%AF%95%E9%A2%98/)
-- [[前端经典面试题: 从输入 URL 到页面加载发生了什么？\][具体问题]](https://segmentfault.com/a/1190000006879700)
-- [[秒杀系统架构分析与实战\][具体问题]](https://my.oschina.net/xianggao/blog/524943)
-- [[微信二维码登录原理\][具体问题]](https://zhuanlan.zhihu.com/p/22325152?refer=bittiger)
-- [[Create a TinyURL System\][具体问题]](http://blog.gainlo.co/index.php/2016/03/08/system-design-interview-question-create-tinyurl-system/)
-- [[Design a Key-Value Store (Part I)\][具体问题]](http://blog.gainlo.co/index.php/2016/06/14/design-a-key-value-store-part-i/)
-- [[坦率地讲 服务熔断 & 服务降级\][知识点]](http://lexuslee.me/2018/02/01/2018-01-18-Service-fallback/)
-- [[理解 HTTP 幂等性\][知识点]](https://www.cnblogs.com/weidagang2046/archive/2011/06/04/idempotence.html)
-- [[接口限流算法\][知识点]](https://blog.csdn.net/ljj821061514/article/details/52512943)
-- [[微服务学习资料汇总\][知识点]](https://www.infoq.cn/article/2014%2F07%2Fmicroservice-learning-resources)
-- [[理解 RESTful 架构\][知识点]](http://www.ruanyifeng.com/blog/2011/09/restful.html)
-- [[MapReduce 算法\][知识点]](https://github.com/xuelangZF/CS_Offer/blob/master/Others/Hadoop_Spark.md)
+- [[system-design-primer][Github]](https://github.com/donnemartin/system-design-primer)
+- [[Leetcode / Interview Questions][题集]](https://leetcode.com/discuss/interview-question/?orderBy=most_votes)
+- [[系统设计面试题精选][Gitbook]](https://soulmachine.gitbooks.io/system-design/content/cn/)
+- [[海量数据面试题]](https://samanthachen.github.io/2016/08/01/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E9%9D%A2%E8%AF%95%E9%A2%98/)
+- [[前端经典面试题: 从输入 URL 到页面加载发生了什么？][具体问题]](https://segmentfault.com/a/1190000006879700)
+- [[秒杀系统架构分析与实战][具体问题]](https://my.oschina.net/xianggao/blog/524943)
+- [[微信二维码登录原理][具体问题]](https://zhuanlan.zhihu.com/p/22325152?refer=bittiger)
+- [[Create a TinyURL System][具体问题]](http://blog.gainlo.co/index.php/2016/03/08/system-design-interview-question-create-tinyurl-system/)
+- [[Design a Key-Value Store (Part I)][具体问题]](http://blog.gainlo.co/index.php/2016/06/14/design-a-key-value-store-part-i/)
+- [[坦率地讲 服务熔断 & 服务降级][知识点]](http://lexuslee.me/2018/02/01/2018-01-18-Service-fallback/)
+- [[理解 HTTP 幂等性][知识点]](https://www.cnblogs.com/weidagang2046/archive/2011/06/04/idempotence.html)
+- [[接口限流算法][知识点]](https://blog.csdn.net/ljj821061514/article/details/52512943)
+- [[微服务学习资料汇总][知识点]](https://www.infoq.cn/article/2014%2F07%2Fmicroservice-learning-resources)
+- [[理解 RESTful 架构][知识点]](http://www.ruanyifeng.com/blog/2011/09/restful.html)
+- [[MapReduce 算法][知识点]](https://github.com/xuelangZF/CS_Offer/blob/master/Others/Hadoop_Spark.md)
