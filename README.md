@@ -1,7 +1,7 @@
 
 <!--  | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) | -->
+| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)|  专栏[:watermelon:](#:watermelon:-专栏)| 后记[:memo:](#memo-后记) | -->
 
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |
 | :--------: | :---------: | :---------: | :---------: | :---------: |
@@ -9,7 +9,7 @@
 
 | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 |:---------:| :---------: | :-------: | :-------:| :------:|
-| &emsp;&emsp;&emsp;Java&emsp;&emsp;&emsp;<br>[:coffee:](#coffee-java) | &emsp;&emsp;&emsp;系统设计&emsp;&emsp;&emsp;<br>[:bulb:](#bulb-系统设计) | &emsp;&emsp;&emsp;&emsp;工具&emsp;&emsp;&emsp;&emsp;<br>[:hammer:](#hammer-工具) | &emsp;&emsp;&emsp;编码实践&emsp;&emsp;&emsp;<br>[:speak_no_evil:](#speak_no_evil-编码实践) | &emsp;&emsp;&emsp;后记 &emsp;&emsp;&emsp;<br>[:memo:](#memo-后记) |
+| &emsp;&emsp;&emsp;Java&emsp;&emsp;&emsp;<br>[:coffee:](#coffee-java) | &emsp;&emsp;&emsp;系统设计&emsp;&emsp;&emsp;<br>[:bulb:](#bulb-系统设计) | &emsp;&emsp;&emsp;&emsp;工具&emsp;&emsp;&emsp;&emsp;<br>[:hammer:](#hammer-工具) | &emsp;&emsp;&emsp;专栏&emsp;&emsp;&emsp;<br>[:watermelon:](#watermelon-专栏) | &emsp;&emsp;&emsp;后记 &emsp;&emsp;&emsp;<br>[:memo:](#memo-后记) |
 
 <br>
 
@@ -73,6 +73,10 @@
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
 - [正则表达式](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/正则表达式.md)
 
+### :watermelon: 专栏
+
+ - [后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
+
 ### :speak_no_evil: 编码实践 
 
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码可读性.md)
@@ -92,23 +96,17 @@
 
 如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
 
-#### 面试进阶指南
+#### 交流群
 
-本仓库内容偏向于基础，而下面的专栏内容偏向于进阶。
+这是一个实时学习交流平台，在这里你可以自由地和笔者以及其他人进行技术上的讨论。
 
-[🍉](https://xiaozhuanlan.com/CyC2018)
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
 
 #### 知识星球
 
 想要向笔者提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
 
 [🎓](other/Planet.md)
-
-#### 交流群
-
-这是一个实时学习交流平台，在这里你可以自由地和笔者以及其他人进行技术上的讨论。
-
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
 
 #### 内推信息
 
