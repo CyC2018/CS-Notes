@@ -8,7 +8,7 @@
 
 # ⭐️ 加入方式
 
-可以用微信直接扫下面的二维码直接，或者订阅专栏 https://xiaozhuanlan.com/CyC2018 ，加星主微信 zhengyochuan，备注 “你的姓名 + 已订阅专栏想要加入知识星球”，成功通过好友申请后，凭订阅截图即可免费加入。 
+可以用微信直接扫下面的二维码直接加入，或者订阅专栏 https://xiaozhuanlan.com/CyC2018 ，加星主微信 zhengyochuan，备注 “你的姓名 + 已订阅专栏想要加入知识星球”，成功通过好友申请后，凭订阅截图即可免费加入。 
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet1.png" width="200px">
 
