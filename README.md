@@ -94,13 +94,9 @@
 
 #### 面试进阶指南
 
-本仓库内容偏向于基础，而下面的专栏内容偏向于进阶，适合想要参加 BAT 等大厂招聘的同学。
+本仓库内容偏向于基础，而下面的专栏内容偏向于进阶。
 
 [🍉](https://xiaozhuanlan.com/CyC2018)
-
-#### 内推信息
-
-[🔎](https://github.com/CyC2018/Job-Recommend)
 
 #### 知识星球
 
@@ -113,6 +109,10 @@
 这是一个实时学习交流平台，在这里你可以自由地和笔者以及其他人进行技术上的讨论。
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
+
+#### 内推信息
+
+[🔎](https://github.com/CyC2018/Job-Recommend)
 
 #### 排版
 
