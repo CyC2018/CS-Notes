@@ -14,7 +14,6 @@
 <br>
 
 <div align="center">
-    <h1> CS-Notes </h2>
     <img src="other/LogoMakr_0zpEzN.png" width="180px">
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
