@@ -1,0 +1,19 @@
+_
+iota
+nil
+true
+false
+
+----------------------------------------------------
+
+[
+	["boolean", "_"],
+	["boolean", "iota"],
+	["boolean", "nil"],
+	["boolean", "true"],
+	["boolean", "false"]
+]
+
+----------------------------------------------------
+
+Checks for all boolean values.

@@ -1,0 +1,12 @@
+script-src example.com;
+
+----------------------------------------------------
+
+[
+	["directive", "script-src "],
+	"example.com;"
+]
+
+----------------------------------------------------
+
+Checks for CSP directive followed by a source expression.

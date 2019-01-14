@@ -1,0 +1,60 @@
+42
+42d
+42L
+
+1.2e3f
+0.1E-4f
+0.2e+1f
+
+0xBadFace
+
+0x1.8p1
+0xa.fp-2
+0xa.fp+2
+0xa.p+3f
+0x.fp+3f
+
+0b11110000
+
+1_2_3
+1_2.3_4e-5_6
+
+0x1_2
+0x0_1__2_3
+
+0b1_1_1_1__0_0_0_0
+
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "42d"],
+	["number", "42L"],
+
+	["number", "1.2e3f"],
+	["number", "0.1E-4f"],
+	["number", "0.2e+1f"],
+
+	["number", "0xBadFace"],
+
+	["number", "0x1.8p1"],
+	["number", "0xa.fp-2"],
+	["number", "0xa.fp+2"],
+	["number", "0xa.p+3f"],
+	["number", "0x.fp+3f"],
+
+	["number", "0b11110000"],
+
+	["number", "1_2_3"],
+	["number", "1_2.3_4e-5_6"],
+
+	["number", "0x1_2"],
+	["number", "0x0_1__2_3"],
+
+	["number", "0b1_1_1_1__0_0_0_0"]
+]
+
+----------------------------------------------------
+
+Checks for binary, hexadecimal and decimal numbers.

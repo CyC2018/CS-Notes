@@ -1,0 +1,31 @@
+as assert async await
+break class;
+continue def;
+del elif else
+except exec finally
+for from global if
+import in is lambda
+pass print raise return
+try while with yield
+nonlocal
+and not or
+
+----------------------------------------------------
+
+[
+	["keyword", "as"], ["keyword", "assert"], ["keyword", "async"], ["keyword", "await"],
+	["keyword", "break"], ["keyword", "class"], ["punctuation", ";"],
+	["keyword", "continue"], ["keyword", "def"], ["punctuation", ";"],
+	["keyword", "del"], ["keyword", "elif"], ["keyword", "else"],
+	["keyword", "except"], ["keyword", "exec"], ["keyword", "finally"],
+	["keyword", "for"], ["keyword", "from"], ["keyword", "global"], ["keyword", "if"],
+	["keyword", "import"], ["keyword", "in"], ["keyword", "is"], ["keyword", "lambda"],
+	["keyword", "pass"], ["keyword", "print"], ["keyword", "raise"], ["keyword", "return"],
+	["keyword", "try"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"],
+	["keyword", "nonlocal"],
+	["keyword", "and"], ["keyword", "not"], ["keyword", "or"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

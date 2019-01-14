@@ -1,0 +1,16 @@
+// foobar
+(**)
+(* foo
+bar *)
+
+----------------------------------------------------
+
+[
+	["comment", "// foobar"],
+	["comment", "(**)"],
+	["comment", "(* foo\r\nbar *)"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

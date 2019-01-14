@@ -1,0 +1,61 @@
+<h2>Comments</h2>
+<pre><code># This is a comment
+# -*- coding: &lt;encoding-name> -*-</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+""" "Multi-line" strings
+are supported."""
+''' 'Multi-line' strings
+are supported.'''</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>7
+2147483647
+0o177
+0b100110111
+3
+79228162514264337593543950336
+0o377
+0x100000000
+0xdeadbeef
+3.14
+10.
+.001
+1e100
+3.14e-10
+0e0
+3.14j
+10.j
+10j
+.001j
+1e100j
+3.14e-10j
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>def median(pool):
+    '''Statistical median to demonstrate doctest.
+    >>> median([2, 9, 9, 7, 9, 2, 4, 5, 8])
+    7
+    '''
+    copy = sorted(pool)
+    size = len(copy)
+    if size % 2 == 1:
+        return copy[(size - 1) / 2]
+    else:
+        return (copy[size/2 - 1] + copy[size/2]) / 2
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Interpolation expressions containing strings with <code>{</code> or <code>}</code></h3>
+<pre><code>f"{'}'}"</code></pre>

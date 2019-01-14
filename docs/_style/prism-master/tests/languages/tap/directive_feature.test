@@ -1,0 +1,15 @@
+ok # SKIP test not written
+ok 42 this is the description # TODO write test
+
+----------------------------------------------------
+
+[
+	["pass", "ok " ],
+	["directive", "# SKIP test not written"],
+	["pass", "ok 42 this is the description "],
+	["directive", "# TODO write test"]
+]
+
+----------------------------------------------------
+
+Checks directives

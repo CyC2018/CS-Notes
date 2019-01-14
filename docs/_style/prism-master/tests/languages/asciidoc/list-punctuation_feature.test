@@ -1,0 +1,77 @@
+- Foo
+* Foo
+** Foo bar
+*** Foo
+	1. Foo
+	2. Foo bar
+	42. Foo
+**** Foo
+***** Foo bar
+
+. Foo
+.. Foo
+    a. Foo
+    b. Foo
+    z. Foo
+... Foo bar
+.... Foo
+	i) Foo
+	vi) Bar
+	xxvii) Baz
+..... Foo
+
+____
+. 1
+.. 2
+____
+
+|===
+|
+xi) a
+xii) b
+|===
+
+----------------------------------------------------
+
+[
+	["list-punctuation", "-"], " Foo\r\n",
+	["list-punctuation", "*"], " Foo\r\n",
+	["list-punctuation", "**"], " Foo bar\r\n",
+	["list-punctuation", "***"], " Foo\r\n\t",
+	["list-punctuation", "1."], " Foo\r\n\t",
+	["list-punctuation", "2."], " Foo bar\r\n\t",
+	["list-punctuation", "42."], " Foo\r\n",
+	["list-punctuation", "****"], " Foo\r\n",
+	["list-punctuation", "*****"], " Foo bar\r\n\r\n",
+
+	["list-punctuation", "."], " Foo\r\n",
+	["list-punctuation", ".."], " Foo\r\n    ",
+	["list-punctuation", "a."], " Foo\r\n    ",
+	["list-punctuation", "b."], " Foo\r\n    ",
+	["list-punctuation", "z."], " Foo\r\n",
+	["list-punctuation", "..."], " Foo bar\r\n",
+	["list-punctuation", "...."], " Foo\r\n\t",
+	["list-punctuation", "i)"], " Foo\r\n\t",
+	["list-punctuation", "vi)"], " Bar\r\n\t",
+	["list-punctuation", "xxvii)"], " Baz\r\n",
+	["list-punctuation", "....."], " Foo\r\n\r\n",
+
+	["other-block", [
+		["punctuation", "____"],
+		["list-punctuation", "."], " 1\r\n",
+		["list-punctuation", ".."], " 2\r\n",
+		["punctuation", "____"]
+	]],
+
+	["table", [
+		["punctuation", "|==="],
+		["punctuation", "|"],
+		["list-punctuation", "xi)"], " a\r\n",
+		["list-punctuation", "xii)"], " b\r\n",
+		["punctuation", "|==="]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for list punctuation.

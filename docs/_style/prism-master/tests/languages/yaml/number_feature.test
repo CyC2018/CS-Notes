@@ -1,0 +1,38 @@
+---
+foo: 0xBadFace
+bar: 0o754
+baz: 42
+foo: 3.14159
+bar: 4e8
+baz: 3.1E-7
+foo: 0.4e+2
+bar: -0xFF
+baz: +0o123
+
+----------------------------------------------------
+
+[
+	["punctuation", "---"],
+	["key", "foo"], ["punctuation", ":"],
+	["number", "0xBadFace"],
+	["key", "bar"], ["punctuation", ":"],
+	["number", "0o754"],
+	["key", "baz"], ["punctuation", ":"],
+	["number", "42"],
+	["key", "foo"], ["punctuation", ":"],
+	["number", "3.14159"],
+	["key", "bar"], ["punctuation", ":"],
+	["number", "4e8"],
+	["key", "baz"], ["punctuation", ":"],
+	["number", "3.1E-7"],
+	["key", "foo"], ["punctuation", ":"],
+	["number", "0.4e+2"],
+	["key", "bar"], ["punctuation", ":"],
+	["number", "-0xFF"],
+	["key", "baz"], ["punctuation", ":"],
+	["number", "+0o123"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

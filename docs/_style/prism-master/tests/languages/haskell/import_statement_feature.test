@@ -1,0 +1,35 @@
+import Foo
+import qualified Foobar
+import Foo_42.Bar as Foobar
+import Foo.Bar as Foo.Baz hiding
+
+----------------------------------------------------
+
+[
+	["import_statement", [
+		["keyword", "import"],
+		" Foo"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		["keyword", "qualified"],
+		" Foobar"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		" Foo_42.Bar ",
+		["keyword", "as"],
+		" Foobar"
+	]],
+	["import_statement", [
+		["keyword", "import"],
+		" Foo.Bar ",
+		["keyword", "as"],
+		" Foo.Baz ",
+		["keyword", "hiding"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for import statement.

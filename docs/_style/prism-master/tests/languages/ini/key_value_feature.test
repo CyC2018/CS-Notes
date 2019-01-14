@@ -1,0 +1,21 @@
+foo=Bar Baz
+foobar=42
+
+----------------------------------------------------
+
+[
+	["constant", "foo"],
+	["attr-value", [
+		["punctuation", "="],
+		"Bar Baz"
+	]],
+	["constant", "foobar"],
+	["attr-value", [
+		["punctuation", "="],
+		"42"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for key/value pairs.

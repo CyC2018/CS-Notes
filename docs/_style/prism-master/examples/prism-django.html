@@ -1,0 +1,31 @@
+<h2>Comment</h2>
+<pre><code>{# This is a comment #}</code></pre>
+
+<h2>Variable</h2>
+<pre><code>{{ some_variable }}</code></pre>
+
+<h2>Template Tag</h2>
+<pre><code>{% if some_condition %}
+Conditional block
+{% endif %}
+</code></pre>
+
+<h2>Full Example</h2>
+<pre><code>{# This a Django template example #}
+{% extends "base_generic.html" %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+&lt;h1&gt;{{ section.title }}&lt;/h1&gt;
+
+{% for story in story_list %}
+&lt;h2&gt;
+  &lt;a href="{{ story.get_absolute_url }}"&gt;
+    {{ story.headline|upper }}
+  &lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;{{ story.tease|truncatewords:"100" }}&lt;/p&gt;
+{% endfor %}
+{% endblock %}
+</code></pre>

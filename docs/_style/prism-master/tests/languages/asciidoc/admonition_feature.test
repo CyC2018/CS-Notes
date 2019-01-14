@@ -1,0 +1,19 @@
+TIP: Foobar
+NOTE: Foo bar baz
+IMPORTANT: Foobar
+WARNING: Foo bar baz
+CAUTION: Foobar
+
+----------------------------------------------------
+
+[
+	["admonition", "TIP:"], " Foobar\r\n",
+	["admonition", "NOTE:"], " Foo bar baz\r\n",
+	["admonition", "IMPORTANT:"], " Foobar\r\n",
+	["admonition", "WARNING:"], " Foo bar baz\r\n",
+	["admonition", "CAUTION:"], " Foobar"
+]
+
+----------------------------------------------------
+
+Checks for admonitions.

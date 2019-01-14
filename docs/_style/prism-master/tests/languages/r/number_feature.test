@@ -1,0 +1,39 @@
+NaN Inf
+0xBadFace
+0xf4.42
+0x21.2p2
+0xffP+4
+0xeap-1
+42
+42L
+3.14159
+3.2E4
+4e+8
+0.1e-12
+2i
+4.1i
+1e-2i
+
+----------------------------------------------------
+
+[
+	["number", "NaN"], ["number", "Inf"],
+	["number", "0xBadFace"],
+	["number", "0xf4.42"],
+	["number", "0x21.2p2"],
+	["number", "0xffP+4"],
+	["number", "0xeap-1"],
+	["number", "42"],
+	["number", "42L"],
+	["number", "3.14159"],
+	["number", "3.2E4"],
+	["number", "4e+8"],
+	["number", "0.1e-12"],
+	["number", "2i"],
+	["number", "4.1i"],
+	["number", "1e-2i"]
+]
+
+----------------------------------------------------
+
+Checks for hexadecimal, decimal and complex numbers.

@@ -1,0 +1,307 @@
+AddHandler
+AddressOf
+Alias
+And
+AndAlso
+As
+Boolean
+ByRef
+Byte
+ByVal
+Call
+Case
+Catch
+CBool
+CByte
+CChar
+CDate
+CDbl
+CDec
+Char
+CInt
+Class
+CLng
+CObj
+Const
+Continue
+CSByte
+CShort
+CSng
+CStr
+CType
+CUInt
+CULng
+CUShort
+Date
+Decimal
+Declare
+Default
+Delegate
+Dim
+DirectCast
+Do
+Double
+Each
+Else
+ElseIf
+End
+EndIf
+Enum
+Erase
+Error
+Event
+Exit
+Finally
+For
+Friend
+Function
+Get
+GetType
+GetXMLNamespace
+Global
+GoSub
+GoTo
+Handles
+If
+Implements
+Imports
+In
+Inherits
+Integer
+Interface
+Is
+IsNot
+Let
+Lib
+Like
+Long
+Loop
+Me
+Mod
+Module
+MustInherit
+MustOverride
+MyBase
+MyClass
+Namespace
+Narrowing
+New
+Next
+Not
+NotInheritable
+NotOverridable
+Object
+Of
+On
+Operator
+Option
+Optional
+Or
+OrElse
+Out
+Overloads
+Overridable
+Overrides
+ParamArray
+Partial
+Private
+Property
+Protected
+Public
+RaiseEvent
+ReadOnly
+ReDim
+RemoveHandler
+Resume
+Return
+SByte
+Select
+Set
+Shadows
+Shared
+short
+Single
+Static
+Step
+Stop
+String
+Structure
+Sub
+SyncLock
+Then
+Throw
+To
+Try
+TryCast
+TypeOf
+UInteger
+ULong
+UShort
+Using
+Variant
+Wend
+When
+While
+Widening
+With
+WithEvents
+WriteOnly
+Xor
+
+----------------------------------------------------
+
+[
+	["keyword", "AddHandler"],
+	["keyword", "AddressOf"],
+	["keyword", "Alias"],
+	["keyword", "And"],
+	["keyword", "AndAlso"],
+	["keyword", "As"],
+	["keyword", "Boolean"],
+	["keyword", "ByRef"],
+	["keyword", "Byte"],
+	["keyword", "ByVal"],
+	["keyword", "Call"],
+	["keyword", "Case"],
+	["keyword", "Catch"],
+	["keyword", "CBool"],
+	["keyword", "CByte"],
+	["keyword", "CChar"],
+	["keyword", "CDate"],
+	["keyword", "CDbl"],
+	["keyword", "CDec"],
+	["keyword", "Char"],
+	["keyword", "CInt"],
+	["keyword", "Class"],
+	["keyword", "CLng"],
+	["keyword", "CObj"],
+	["keyword", "Const"],
+	["keyword", "Continue"],
+	["keyword", "CSByte"],
+	["keyword", "CShort"],
+	["keyword", "CSng"],
+	["keyword", "CStr"],
+	["keyword", "CType"],
+	["keyword", "CUInt"],
+	["keyword", "CULng"],
+	["keyword", "CUShort"],
+	["keyword", "Date"],
+	["keyword", "Decimal"],
+	["keyword", "Declare"],
+	["keyword", "Default"],
+	["keyword", "Delegate"],
+	["keyword", "Dim"],
+	["keyword", "DirectCast"],
+	["keyword", "Do"],
+	["keyword", "Double"],
+	["keyword", "Each"],
+	["keyword", "Else"],
+	["keyword", "ElseIf"],
+	["keyword", "End"],
+	["keyword", "EndIf"],
+	["keyword", "Enum"],
+	["keyword", "Erase"],
+	["keyword", "Error"],
+	["keyword", "Event"],
+	["keyword", "Exit"],
+	["keyword", "Finally"],
+	["keyword", "For"],
+	["keyword", "Friend"],
+	["keyword", "Function"],
+	["keyword", "Get"],
+	["keyword", "GetType"],
+	["keyword", "GetXMLNamespace"],
+	["keyword", "Global"],
+	["keyword", "GoSub"],
+	["keyword", "GoTo"],
+	["keyword", "Handles"],
+	["keyword", "If"],
+	["keyword", "Implements"],
+	["keyword", "Imports"],
+	["keyword", "In"],
+	["keyword", "Inherits"],
+	["keyword", "Integer"],
+	["keyword", "Interface"],
+	["keyword", "Is"],
+	["keyword", "IsNot"],
+	["keyword", "Let"],
+	["keyword", "Lib"],
+	["keyword", "Like"],
+	["keyword", "Long"],
+	["keyword", "Loop"],
+	["keyword", "Me"],
+	["keyword", "Mod"],
+	["keyword", "Module"],
+	["keyword", "MustInherit"],
+	["keyword", "MustOverride"],
+	["keyword", "MyBase"],
+	["keyword", "MyClass"],
+	["keyword", "Namespace"],
+	["keyword", "Narrowing"],
+	["keyword", "New"],
+	["keyword", "Next"],
+	["keyword", "Not"],
+	["keyword", "NotInheritable"],
+	["keyword", "NotOverridable"],
+	["keyword", "Object"],
+	["keyword", "Of"],
+	["keyword", "On"],
+	["keyword", "Operator"],
+	["keyword", "Option"],
+	["keyword", "Optional"],
+	["keyword", "Or"],
+	["keyword", "OrElse"],
+	["keyword", "Out"],
+	["keyword", "Overloads"],
+	["keyword", "Overridable"],
+	["keyword", "Overrides"],
+	["keyword", "ParamArray"],
+	["keyword", "Partial"],
+	["keyword", "Private"],
+	["keyword", "Property"],
+	["keyword", "Protected"],
+	["keyword", "Public"],
+	["keyword", "RaiseEvent"],
+	["keyword", "ReadOnly"],
+	["keyword", "ReDim"],
+	["keyword", "RemoveHandler"],
+	["keyword", "Resume"],
+	["keyword", "Return"],
+	["keyword", "SByte"],
+	["keyword", "Select"],
+	["keyword", "Set"],
+	["keyword", "Shadows"],
+	["keyword", "Shared"],
+	["keyword", "short"],
+	["keyword", "Single"],
+	["keyword", "Static"],
+	["keyword", "Step"],
+	["keyword", "Stop"],
+	["keyword", "String"],
+	["keyword", "Structure"],
+	["keyword", "Sub"],
+	["keyword", "SyncLock"],
+	["keyword", "Then"],
+	["keyword", "Throw"],
+	["keyword", "To"],
+	["keyword", "Try"],
+	["keyword", "TryCast"],
+	["keyword", "TypeOf"],
+	["keyword", "UInteger"],
+	["keyword", "ULong"],
+	["keyword", "UShort"],
+	["keyword", "Using"],
+	["keyword", "Variant"],
+	["keyword", "Wend"],
+	["keyword", "When"],
+	["keyword", "While"],
+	["keyword", "Widening"],
+	["keyword", "With"],
+	["keyword", "WithEvents"],
+	["keyword", "WriteOnly"],
+	["keyword", "Xor"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

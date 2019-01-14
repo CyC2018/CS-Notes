@@ -1,0 +1,44 @@
+for i in 1..5
+if a == 3
+z-index: 1 unless @z-index;
+return pair[1] if pair[0] == key for pair in hash
+
+----------------------------------------------------
+
+[
+	["statement", [
+		["keyword", "for"],
+		" i ",
+		["operator", "in"],
+		["number", "1"],
+		["operator", ".."],
+		["number", "5"]
+	]],
+	["statement", [
+		["keyword", "if"],
+		" a ",
+		["operator", "=="],
+		["number", "3"]
+	]],
+	["property-declaration", [
+		["property", ["z-index"]],
+		["punctuation", ":"],
+		["number", "1"],
+		["keyword", "unless"],
+		["keyword", "@z-index"],
+		["punctuation", ";"]
+	]],
+	["statement", [
+		["keyword", "return"], " pair",
+		["punctuation", "["], ["number", "1"], ["punctuation", "]"],
+		["keyword", "if"], " pair",
+		["punctuation", "["], ["number", "0"], ["punctuation", "]"],
+		["operator", "=="], " key ",
+		["keyword", "for"], " pair ",
+		["operator", "in"], " hash"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for statements and keywords.

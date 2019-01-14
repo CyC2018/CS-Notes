@@ -1,0 +1,338 @@
+{\n}
+{\r}
+{\t}
+{alias foo as bar}
+{call}
+{case}
+{css}
+{default}
+{delcall}
+{delpackage}
+{deltemplate}
+{else}
+{elseif}
+{fallbackmsg}
+{for}
+{foreach $i in $foo}
+{if}
+{ifempty}
+{lb}
+{let}
+{literal}{/literal}
+{msg}
+{namespace}
+{nil}
+{param}
+{@param}
+{@param?}
+{rb}
+{sp}
+{switch}
+{template}
+{xid}
+{@param foo: any}
+{@param foo: attributes}
+{@param foo: bool}
+{@param foo: css}
+{@param foo: float}
+{@param foo: int}
+{@param foo: js}
+{@param foo: html}
+{@param foo: list<int>}
+{@param foo: map<int,string>}
+{@param foo: null}
+{@param foo: number}
+{@param foo: string}
+{@param foo: uri}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "\\n"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "\\r"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "\\t"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "alias"],
+		["command-arg", ["foo"]],
+		["keyword", "as"],
+		" bar",
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "call"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "case"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "css"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "default"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "delcall"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "delpackage"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "deltemplate"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "else"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "elseif"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "fallbackmsg"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "for"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "foreach"],
+		["variable", ["$i"]],
+		["keyword", "in"],
+		["variable", ["$foo"]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "if"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "ifempty"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "lb"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{/"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "msg"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "namespace"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "nil"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param?"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "rb"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "sp"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "switch"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "template"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "xid"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "any"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "attributes"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "bool"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "css"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "float"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "int"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "js"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "html"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "list"], ["operator", "<"], ["keyword", "int"], ["operator", ">"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "map"], ["operator", "<"], ["keyword", "int"], ["punctuation", ","], ["keyword", "string"], ["operator", ">"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "null"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "number"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "string"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["keyword", "uri"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

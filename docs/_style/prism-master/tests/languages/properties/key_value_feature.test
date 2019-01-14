@@ -1,0 +1,36 @@
+foo bar
+foo\:\=\ bar bar\:\= \
+baz
+foo = bar
+foo\:\=\ bar = bar\:\= \
+baz
+foo : bar
+foo\:\=\ bar : bar\:\= \
+baz
+
+----------------------------------------------------
+
+[
+	["attr-name", "foo"],
+	["attr-value", "bar"],
+	["attr-name", "foo\\:\\=\\ bar"],
+	["attr-value", "bar\\:\\= \\\r\nbaz"],
+
+	["attr-name", "foo"],
+	["punctuation", "="],
+	["attr-value", "bar"],
+	["attr-name", "foo\\:\\=\\ bar"],
+	["punctuation", "="],
+	["attr-value", "bar\\:\\= \\\r\nbaz"],
+
+	["attr-name", "foo"],
+	["punctuation", ":"],
+	["attr-value", "bar"],
+	["attr-name", "foo\\:\\=\\ bar"],
+	["punctuation", ":"],
+	["attr-value", "bar\\:\\= \\\r\nbaz"]
+]
+
+----------------------------------------------------
+
+Checks for keys and values.

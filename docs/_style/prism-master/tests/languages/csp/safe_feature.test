@@ -1,0 +1,19 @@
+default-src 'none'; style-src 'self' 'strict-dynamic' 'nonce-yeah' 'sha256-EpOpN/ahUF6jhWShDUdy+NvvtaGcu5F7qM6+x2mfkh4=';
+
+----------------------------------------------------
+
+[
+	["directive", "default-src "],
+	["safe", "'none'"],
+	"; ",
+	["directive", "style-src "],
+	["safe", "'self'"],
+	["safe", "'strict-dynamic'"],
+	["safe", "'nonce-yeah'"],
+	["safe", "'sha256-EpOpN/ahUF6jhWShDUdy+NvvtaGcu5F7qM6+x2mfkh4='"],
+	";"
+]
+
+----------------------------------------------------
+
+Checks for source expressions classified as safe.

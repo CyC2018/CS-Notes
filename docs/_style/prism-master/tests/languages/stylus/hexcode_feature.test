@@ -1,0 +1,29 @@
+color: #fff
+color: #FA3
+color: #f7c111
+color: #9F4ABB
+
+----------------------------------------------------
+
+[
+	["property-declaration", [
+		["property", ["color"]], ["punctuation", ":"],
+		["hexcode", "#fff"]
+	]],
+	["property-declaration", [
+		["property", ["color"]], ["punctuation", ":"],
+		["hexcode", "#FA3"]
+	]],
+	["property-declaration", [
+		["property", ["color"]], ["punctuation", ":"],
+		["hexcode", "#f7c111"]
+	]],
+	["property-declaration", [
+		["property", ["color"]], ["punctuation", ":"],
+		["hexcode", "#9F4ABB"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for hexadecimal values.

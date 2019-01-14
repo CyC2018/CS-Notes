@@ -1,0 +1,69 @@
+.. |biohazard| image:: biohazard.png
+.. |Red light| image:: red_light.png
+
+.. |Michael| user:: mjones
+.. |Jon|     user:: jhl
+
+----------------------------------------------------
+
+[
+	["punctuation", ".."],
+	["substitution-def", [
+		["substitution", [
+			["punctuation", "|"],
+			"biohazard",
+			["punctuation", "|"]
+		]],
+		["directive", [
+			"image",
+			["punctuation", "::"]
+		]]
+	]],
+	" biohazard.png\r\n",
+
+	["punctuation", ".."],
+	["substitution-def", [
+		["substitution", [
+			["punctuation", "|"],
+			"Red light",
+			["punctuation", "|"]
+		]],
+		["directive", [
+			"image",
+			["punctuation", "::"]
+		]]
+	]],
+	" red_light.png\r\n\r\n",
+
+	["punctuation", ".."],
+	["substitution-def", [
+		["substitution", [
+			["punctuation", "|"],
+			"Michael",
+			["punctuation", "|"]
+		]],
+		["directive", [
+			"user",
+			["punctuation", "::"]
+		]]
+	]],
+	" mjones\r\n",
+
+	["punctuation", ".."],
+	["substitution-def", [
+		["substitution", [
+			["punctuation", "|"],
+			"Jon",
+			["punctuation", "|"]
+		]],
+		["directive", [
+			"user",
+			["punctuation", "::"]
+		]]
+	]],
+	" jhl"
+]
+
+----------------------------------------------------
+
+Checks for substitution definitions.

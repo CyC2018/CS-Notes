@@ -1,0 +1,19 @@
+(::)
+(: Single line comment :)
+(:Multi
+line
+comment:)
+(: <html> :)
+
+----------------------------------------------------
+
+[
+	["xquery-comment", "(::)"],
+	["xquery-comment", "(: Single line comment :)"],
+	["xquery-comment", "(:Multi\r\nline\r\ncomment:)"],
+	["xquery-comment", "(: <html> :)"]
+]
+
+----------------------------------------------------
+
+Checks for XQuery comments.

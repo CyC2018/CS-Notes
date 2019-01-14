@@ -1,0 +1,38 @@
+.
++ -
+/ * **
+< > <= >=
+= ?= <>
+
+& &&
+
+a-b
+a~b
+a->b
+a=>b
+a|b
+a{b}c
+
+----------------------------------------------------
+
+[
+	["punctuation", "."],
+	["operator", "+"], ["operator", "-"],
+	["operator", "/"], ["operator", "*"], ["operator", "**"],
+	["operator", "<"], ["operator", ">"], ["operator", "<="], ["operator", ">="],
+	["operator", "="], ["operator", "?="], ["operator", "<>"],
+
+	["string-operator", "&"], ["string-operator", "&&"],
+
+	"\r\n\r\na", ["token-operator", "-"],
+	"b\r\na", ["token-operator", "~"],
+	"b\r\na", ["token-operator", "->"],
+	"b\r\na", ["token-operator", "=>"],
+	"b\r\na", ["token-operator", "|"],
+	"b\r\na", ["token-operator", "{"], "b", ["token-operator", "}"], "c"
+]
+
+----------------------------------------------------
+
+Checks for operators, string-operators and token-operators.
+The leading dot serves only because tests are trimmed.

@@ -1,0 +1,36 @@
+- if(foo)
+
+p= 'This code is' + ' <escaped>!'
+
+span
+	!= 'Not escaped'
+
+----------------------------------------------------
+
+[
+	["punctuation", "-"],
+	["code", [
+		["keyword", "if"],
+		["punctuation", "("],
+		"foo",
+		["punctuation", ")"]
+	]],
+
+	["tag", ["p"]],
+	["punctuation", "="],
+	["code", [
+		["string", "'This code is'"],
+		["operator", "+"],
+		["string", "' <escaped>!'"]
+	]],
+
+	["tag", ["span"]],
+	["punctuation", "!="],
+	["code", [
+		["string", "'Not escaped'"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for inline code.

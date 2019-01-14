@@ -1,0 +1,23 @@
+(* foo *)
+(* foo
+bar *)
+{ foo }
+{ foo
+bar }
+//
+// foobar
+
+----------------------------------------------------
+
+[
+	["comment", "(* foo *)"],
+	["comment", "(* foo\r\nbar *)"],
+	["comment", "{ foo }"],
+	["comment", "{ foo\r\nbar }"],
+	["comment", "//"],
+	["comment", "// foobar"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

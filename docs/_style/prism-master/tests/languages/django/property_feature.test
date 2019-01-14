@@ -1,0 +1,64 @@
+{% extends "base_generic.html" %}
+{% block body %}
+<a href="{{ story.get_absolute_url }}">
+{{ story.headline|upper }}
+</a>
+{% endblock %}
+
+----------------------------------------------------
+
+[
+	["property", [
+		"{% ",
+		["keyword", "extends"],
+		["string", "\"base_generic.html\""],
+		" %}"
+	]],
+	["property", [
+		"{% ",
+		["keyword", "block"],
+		["variable", "body"],
+		" %}"
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"a"
+		]],
+		["attr-name", ["href=\""]],
+		["property", [
+			"{{ ",
+			["variable", "story"],
+			["punctuation", "."],
+			["variable", "get_absolute_url"],
+			" }}"
+		]],
+		["attr-name", ["\""]],
+		["punctuation", ">"]
+	]],
+	["property", [
+		"{{ ",
+		["variable", "story"],
+		["punctuation", "."],
+		["variable", "headline"],
+		["keyword", "|"],
+		["function", "upper"],
+		" }}"
+	]],
+	["tag", [
+        ["tag", [
+            ["punctuation", "</"],
+            "a"
+        ]],
+        ["punctuation", ">"]
+    ]],
+    ["property", [
+        "{% ",
+        ["keyword", "endblock"],
+        " %}"
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for properties.

@@ -1,0 +1,35 @@
+""
+"fo\"obar"
+
+b""
+b"fo\"obar"
+
+r#""#
+r#"fo"obar"#
+r###"foo#bar"###
+
+br#""#
+br#"fo"obar"#
+br###"foo#bar"###
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"obar\""],
+
+	["string", "b\"\""],
+	["string", "b\"fo\\\"obar\""],
+
+	["string", "r#\"\"#"],
+	["string", "r#\"fo\"obar\"#"],
+	["string", "r###\"foo#bar\"###"],
+
+	["string", "br#\"\"#"],
+	["string", "br#\"fo\"obar\"#"],
+	["string", "br###\"foo#bar\"###"]
+]
+
+----------------------------------------------------
+
+Checks for strings.

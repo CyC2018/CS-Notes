@@ -1,0 +1,21 @@
+%%
+foo:
+bar_42:
+$@1:
+%%
+
+----------------------------------------------------
+
+[
+	["bison", [
+		["punctuation", "%%"],
+		["property", "foo"], ["punctuation", ":"],
+		["property", "bar_42"], ["punctuation", ":"],
+		["property", "$@1"], ["punctuation", ":"],
+		["punctuation", "%%"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for properties.

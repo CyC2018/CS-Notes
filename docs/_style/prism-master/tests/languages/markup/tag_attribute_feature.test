@@ -1,0 +1,110 @@
+<div class="test" foo bar=baz>
+<div foo='bar'>
+<div class="foo
+bar
+baz">
+<div foo:bar=42>
+<div foo="=\"=">
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", [
+			"class"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"test",
+			["punctuation", "\""]
+		]],
+		["attr-name", [
+			"foo"
+		]],
+		["attr-name", [
+			"bar"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			"baz"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", [
+			"foo"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "'"],
+			"bar",
+			["punctuation", "'"]
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", [
+			"class"
+		]],
+        ["attr-value", [
+            ["punctuation", "="],
+            ["punctuation", "\""],
+            "foo\r\nbar\r\nbaz",
+            ["punctuation", "\""]
+        ]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", [
+			["namespace", "foo:"],
+			"bar"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			"42"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", [
+			"foo"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"=\\\"=",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for single-quoted, double-quoted and unquoted attributes, attributes without value and
+namespaced attributes.

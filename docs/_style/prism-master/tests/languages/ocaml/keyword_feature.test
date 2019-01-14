@@ -1,0 +1,101 @@
+as
+assert
+begin
+class
+constraint
+do
+done
+downto
+else
+end
+exception
+external
+for
+fun
+function
+functor
+if
+in
+include
+inherit
+initializer
+lazy
+let
+match
+method
+module
+mutable
+new
+object
+of
+open
+prefix
+private
+rec
+then
+sig
+struct
+to
+try
+type
+val
+value
+virtual
+where
+while
+with
+
+----------------------------------------------------
+
+[
+	["keyword", "as"],
+	["keyword", "assert"],
+	["keyword", "begin"],
+	["keyword", "class"],
+	["keyword", "constraint"],
+	["keyword", "do"],
+	["keyword", "done"],
+	["keyword", "downto"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "exception"],
+	["keyword", "external"],
+	["keyword", "for"],
+	["keyword", "fun"],
+	["keyword", "function"],
+	["keyword", "functor"],
+	["keyword", "if"],
+	["keyword", "in"],
+	["keyword", "include"],
+	["keyword", "inherit"],
+	["keyword", "initializer"],
+	["keyword", "lazy"],
+	["keyword", "let"],
+	["keyword", "match"],
+	["keyword", "method"],
+	["keyword", "module"],
+	["keyword", "mutable"],
+	["keyword", "new"],
+	["keyword", "object"],
+	["keyword", "of"],
+	["keyword", "open"],
+	["keyword", "prefix"],
+	["keyword", "private"],
+	["keyword", "rec"],
+	["keyword", "then"],
+	["keyword", "sig"],
+	["keyword", "struct"],
+	["keyword", "to"],
+	["keyword", "try"],
+	["keyword", "type"],
+	["keyword", "val"],
+	["keyword", "value"],
+	["keyword", "virtual"],
+	["keyword", "where"],
+	["keyword", "while"],
+	["keyword", "with"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

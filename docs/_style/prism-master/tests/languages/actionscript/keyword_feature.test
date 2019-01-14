@@ -1,0 +1,71 @@
+as; break; case; catch; class;
+const; default; delete; do; else;
+extends; finally; for; function; if;
+implements; import; in; instanceof; interface;
+internal; is; native; new; null;
+package; private; protected; public; return;
+super; switch; this; throw; try;
+typeof; use; var; void; while;
+with; dynamic; each; final; get;
+include; namespace; native; override; set;
+static;
+
+----------------------------------------------------
+
+[
+	["keyword", "as"], ["punctuation", ";"],
+	["keyword", "break"], ["punctuation", ";"],
+	["keyword", "case"], ["punctuation", ";"],
+	["keyword", "catch"], ["punctuation", ";"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"], ["punctuation", ";"],
+	["keyword", "default"], ["punctuation", ";"],
+	["keyword", "delete"], ["punctuation", ";"],
+	["keyword", "do"], ["punctuation", ";"],
+	["keyword", "else"], ["punctuation", ";"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "finally"], ["punctuation", ";"],
+	["keyword", "for"], ["punctuation", ";"],
+	["keyword", "function"], ["punctuation", ";"],
+	["keyword", "if"], ["punctuation", ";"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"], ["punctuation", ";"],
+	["keyword", "in"], ["punctuation", ";"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "internal"], ["punctuation", ";"],
+	["keyword", "is"], ["punctuation", ";"],
+	["keyword", "native"], ["punctuation", ";"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"], ["punctuation", ";"],
+	["keyword", "package"], ["punctuation", ";"],
+	["keyword", "private"], ["punctuation", ";"],
+	["keyword", "protected"], ["punctuation", ";"],
+	["keyword", "public"], ["punctuation", ";"],
+	["keyword", "return"], ["punctuation", ";"],
+	["keyword", "super"], ["punctuation", ";"],
+	["keyword", "switch"], ["punctuation", ";"],
+	["keyword", "this"], ["punctuation", ";"],
+	["keyword", "throw"], ["punctuation", ";"],
+	["keyword", "try"], ["punctuation", ";"],
+	["keyword", "typeof"], ["punctuation", ";"],
+	["keyword", "use"], ["punctuation", ";"],
+	["keyword", "var"], ["punctuation", ";"],
+	["keyword", "void"], ["punctuation", ";"],
+	["keyword", "while"], ["punctuation", ";"],
+	["keyword", "with"], ["punctuation", ";"],
+	["keyword", "dynamic"], ["punctuation", ";"],
+	["keyword", "each"], ["punctuation", ";"],
+	["keyword", "final"], ["punctuation", ";"],
+	["keyword", "get"], ["punctuation", ";"],
+	["keyword", "include"], ["punctuation", ";"],
+	["keyword", "namespace"], ["punctuation", ";"],
+	["keyword", "native"], ["punctuation", ";"],
+	["keyword", "override"], ["punctuation", ";"],
+	["keyword", "set"], ["punctuation", ";"],
+	["keyword", "static"], ["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

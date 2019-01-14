@@ -1,0 +1,35 @@
+[<Foo>]
+[<Bar("bar"); Foo(1, 2)>]
+
+----------------------------------------------------
+
+[
+	["annotation", [
+		["punctuation", "[<"],
+		["class-name", "Foo"],
+		["punctuation", ">]"]
+	]],
+	["annotation", [
+		["punctuation", "[<"],
+		["class-name", "Bar"],
+		["annotation-content", [
+			["punctuation", "("],
+			["string", "\"bar\""],
+			["punctuation", ")"],
+			["punctuation", ";"]
+		]],
+		["class-name", "Foo"],
+		["annotation-content", [
+			["punctuation", "("],
+			["number", "1"],
+			["punctuation", ","],
+			["number", "2"],
+			["punctuation", ")"]
+		]],
+		["punctuation", ">]"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for annotations.

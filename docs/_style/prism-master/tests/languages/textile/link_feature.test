@@ -1,0 +1,44 @@
+"Foo bar":http://prismjs.com
+"Baz":foo
+"Foobar":link-ref
+"(foo)[en]{color:blue;}Foo":bar
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["link", [
+			["punctuation", "\""],
+			["text", "Foo bar"],
+			["punctuation", "\""], ["punctuation", ":"],
+			["url", "http://prismjs.com"]
+		]],
+		["link", [
+			["punctuation", "\""],
+			["text", "Baz"],
+			["punctuation", "\""], ["punctuation", ":"],
+			["url", "foo"]
+		]],
+		["link", [
+			["punctuation", "\""],
+			["text", "Foobar"],
+			["punctuation", "\""], ["punctuation", ":"],
+			["url", "link-ref"]
+		]],
+		["link", [
+			["punctuation", "\""],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"],
+				["css", ["{color:blue;}"]]
+			]],
+			["text", "Foo"],
+			["punctuation", "\""], ["punctuation", ":"],
+			["url", "bar"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for links.

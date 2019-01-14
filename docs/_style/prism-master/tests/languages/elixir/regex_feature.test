@@ -1,0 +1,29 @@
+~r"""foobar"""im
+~R'''foobar'''ux
+~r/fo\/obar/smfr
+~R|fo\|obar|uismxfr
+~r"fo\"obar"x
+~R'fo\'obar's
+~r(fo\)obar)
+~R[fo\]obar]
+~r{fo\}obar}
+~R<fo\>obar>
+
+----------------------------------------------------
+
+[
+	["regex", "~r\"\"\"foobar\"\"\"im"],
+	["regex", "~R'''foobar'''ux"],
+	["regex", "~r/fo\\/obar/smfr"],
+	["regex", "~R|fo\\|obar|uismxfr"],
+	["regex", "~r\"fo\\\"obar\"x"],
+	["regex", "~R'fo\\'obar's"],
+	["regex", "~r(fo\\)obar)"],
+	["regex", "~R[fo\\]obar]"],
+	["regex", "~r{fo\\}obar}"],
+	["regex", "~R<fo\\>obar>"]
+]
+
+----------------------------------------------------
+
+Checks for regexes.

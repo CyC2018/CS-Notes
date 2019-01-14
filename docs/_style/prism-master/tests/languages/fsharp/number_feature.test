@@ -1,0 +1,65 @@
+0xbabe
+0xBABEun
+0xflf
+0xfLF
+
+0b1001
+0b1001y
+0b1001uy
+
+42
+1.5
+2.3E+32
+2.3e-32
+4.14F
+4.14f
+0.7833M
+0.7833m
+
+86y
+86uy
+86s
+86us
+86l
+86u
+86ul
+86L
+86UL
+9999999999999999999999999999I
+
+----------------------------------------------------
+
+[
+	["number", "0xbabe"],
+	["number", "0xBABEun"],
+	["number", "0xflf"],
+	["number", "0xfLF"],
+
+	["number", "0b1001"],
+	["number", "0b1001y"],
+	["number", "0b1001uy"],
+
+	["number", "42"],
+	["number", "1.5"],
+	["number", "2.3E+32"],
+	["number", "2.3e-32"],
+	["number", "4.14F"],
+	["number", "4.14f"],
+	["number", "0.7833M"],
+	["number", "0.7833m"],
+
+	["number", "86y"],
+	["number", "86uy"],
+	["number", "86s"],
+	["number", "86us"],
+	["number", "86l"],
+	["number", "86u"],
+	["number", "86ul"],
+	["number", "86L"],
+	["number", "86UL"],
+	["number", "9999999999999999999999999999I"]
+]
+
+----------------------------------------------------
+
+Checks for decimal, hexadecimal and binary numbers, with all possible suffixes.
