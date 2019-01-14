@@ -19,6 +19,8 @@
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
 </div> 
 
+[🔈 面试进阶专栏限时优惠，更有机会加入知识星球](https://xiaozhuanlan.com/CyC2018)
+
 ### :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/剑指%20offer%20题解.md)
