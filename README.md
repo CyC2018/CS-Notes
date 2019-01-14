@@ -12,7 +12,7 @@
 | &emsp;&emsp;&emsp;Java&emsp;&emsp;&emsp;<br>[:coffee:](#coffee-java) | &emsp;&emsp;&emsp;系统设计&emsp;&emsp;&emsp;<br>[:bulb:](#bulb-系统设计) | &emsp;&emsp;&emsp;&emsp;工具&emsp;&emsp;&emsp;&emsp;<br>[:hammer:](#hammer-工具) | &emsp;&emsp;&emsp;编码实践&emsp;&emsp;&emsp;<br>[:speak_no_evil:](#speak_no_evil-编码实践) | &emsp;&emsp;&emsp;后记 &emsp;&emsp;&emsp;<br>[:memo:](#memo-后记) |
 -->
 
-[面试进阶专栏限时优惠，更有机会加入知识星球](https://xiaozhuanlan.com/CyC2018)
+[面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
 
 <br>
 
