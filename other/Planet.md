@@ -14,12 +14,8 @@
 
 # 🔎 预览
 
-学习和求职建议...
-
 <img src="planet2.jpg" width="400px">
 
 <img src="planet3.jpg" width="400px">
 
-星球里其他同学的分享...
 
-<img src="planet4.jpg" width="400px">
