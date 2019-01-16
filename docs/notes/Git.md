@@ -1,4 +1,5 @@
-<!-- GFM-TOC -->[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+<!-- GFM-TOC -->
 * [集中式与分布式](#集中式与分布式)
 * [中心服务器](#中心服务器)
 * [工作流](#工作流)

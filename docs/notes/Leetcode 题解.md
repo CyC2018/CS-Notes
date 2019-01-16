@@ -1,4 +1,5 @@
-<!-- GFM-TOC -->[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+<!-- GFM-TOC -->
 * [算法思想](#算法思想)
     * [双指针](#双指针)
     * [排序](#排序)
