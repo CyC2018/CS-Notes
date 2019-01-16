@@ -1,4 +1,4 @@
-<!-- GFM-TOC -->
+<!-- GFM-TOC -->[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
 * [1. 前言](#1-前言)
 * [2. 实现 Singleton](#2-实现-singleton)
 * [3. 数组中重复的数字](#3-数组中重复的数字)
