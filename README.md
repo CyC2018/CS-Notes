@@ -14,6 +14,8 @@
 
 <br>
 
+[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+
 <div align="center">
     <img src="other/LogoMakr_0zpEzN.png" width="180px">
     <br>
@@ -21,8 +23,6 @@
 </div> 
 
 <br/>
-
-[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
 
 ### :pencil2: 算法
 
