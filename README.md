@@ -3,13 +3,14 @@
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
 | 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) | -->
 
-| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |
+<!-- | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |
 | :--------: | :---------: | :---------: | :---------: | :---------: |
 | &emsp;&emsp;&emsp;算法&emsp;&emsp;&emsp;<br>[:pencil2:](#pencil2-算法) | &emsp;&emsp;&emsp;操作系统&emsp;&emsp;&emsp;<br>[:computer:](#computer-操作系统) | &emsp;&emsp;&emsp;&emsp;网络&emsp;&emsp;&emsp;&emsp;<br>[:cloud:](#cloud-网络) | &emsp;&emsp;&emsp;面向对象&emsp;&emsp;&emsp;<br>[:couple:](#couple-面向对象) | &emsp;&emsp;&emsp;数据库&emsp;&emsp;<br>[:floppy_disk:](#floppy_disk-数据库)|
 
 | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
 |:---------:| :---------: | :-------: | :-------:| :------:|
 | &emsp;&emsp;&emsp;Java&emsp;&emsp;&emsp;<br>[:coffee:](#coffee-java) | &emsp;&emsp;&emsp;系统设计&emsp;&emsp;&emsp;<br>[:bulb:](#bulb-系统设计) | &emsp;&emsp;&emsp;&emsp;工具&emsp;&emsp;&emsp;&emsp;<br>[:hammer:](#hammer-工具) | &emsp;&emsp;&emsp;编码实践&emsp;&emsp;&emsp;<br>[:speak_no_evil:](#speak_no_evil-编码实践) | &emsp;&emsp;&emsp;后记 &emsp;&emsp;&emsp;<br>[:memo:](#memo-后记) |
+-->
 
 <br>
 
@@ -18,6 +19,8 @@
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
 </div> 
+
+<br/>
 
 ### :pencil2: 算法
 
@@ -92,19 +95,25 @@
 
 如果想要提交一个仓库现在还没有的全新内容，可以先将相应的文档放到 other 目录下。
 
-#### 交流群
 
-面向用户：正在找工作，以及已经工作并且想持续学习的小伙伴。
 
-你能得到什么：这是一个实时学习交流平台，这个平台旨在建立一个一起努力和成长的氛围。在这里你可以提问在学习或求职过程中遇到的疑惑，能够得到群主以及不同人的回答以及建议。也会带你走进不止于技术的程序世界。
+#### 面试进阶指南
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px">
-
-#### 面试专栏
-
-考虑到本仓库的内容已经非常多了，但是笔者又想写一些面试相关的内容，很难将这些内容添加到仓库中，因此新开了一个专门针对面试的专栏。该专栏不仅会新增一些面试必备知识，也会对本仓库已有内容做梳理，使得这些内容更适合作为面试资料。
+零基础不知道如何复习？想要冲刺大厂不知道如何突破？本专栏将会提供学习路线与学习资料，并且针对核心面试考点进行讲解。
 
 [🍉](https://xiaozhuanlan.com/CyC2018)
+
+#### 交流群
+
+为大家提供一个学习交流平台，在这里你可以自由地和笔者以及其他人进行技术上的交流。
+
+[💬](other/Group.md)
+
+#### 知识星球
+
+想要向笔者提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
+
+[🎓](other/Planet.md)
 
 #### 内推信息
 
