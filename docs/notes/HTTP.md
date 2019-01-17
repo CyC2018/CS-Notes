@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏限时优惠，更能加入知识星球](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
     * [URI](#uri)
