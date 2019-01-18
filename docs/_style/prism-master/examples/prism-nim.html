@@ -1,0 +1,222 @@
+<h2>Comments</h2>
+<pre><code># This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"This is a string."
+"This is a string with \"quotes\" in it."
+"""This is
+a "multi-line"
+string."""
+""""A long string within quotes.""""
+R"This is a raw string."
+r"Some ""quotes"" inside a raw string."
+r"""Raw strings
+can also be multi-line."""
+foo"This is a generalized raw string literal."
+bar"""This is also
+a generalized raw string literal."""</code></pre>
+
+<h2>Characters</h2>
+<pre><code>'a'
+'\''
+'\t'
+'\15'
+'\xFC'</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+0xaf
+0xf_2_c
+0o07
+0b1111_0000
+0B0_10001110100_0000101001000111101011101111111011000101001101001001'f64
+9_000'u
+32.
+32.1f32
+32.e-5
+32.2e+2
+2'i16
+2i16
+0xfe'f32</code></pre>
+
+<h2>Full example</h2>
+<pre><code># Example from http://nim-by-example.github.io/oop_macro/
+import macros
+
+macro class*(head: expr, body: stmt): stmt {.immediate.} =
+  # The macro is immediate so that it doesn't
+  # resolve identifiers passed to it
+
+  var typeName, baseName: NimNode
+
+  if head.kind == nnkIdent:
+    # `head` is expression `typeName`
+    # echo head.treeRepr
+    # --------------------
+    # Ident !"Animal"
+    typeName = head
+
+  elif head.kind == nnkInfix and $head[0] == "of":
+    # `head` is expression `typeName of baseClass`
+    # echo head.treeRepr
+    # --------------------
+    # Infix
+    #   Ident !"of"
+    #   Ident !"Animal"
+    #   Ident !"RootObj"
+    typeName = head[1]
+    baseName = head[2]
+
+  else:
+    quit "Invalid node: " & head.lispRepr
+
+  # echo treeRepr(body)
+  # --------------------
+  # StmtList
+  #   VarSection
+  #     IdentDefs
+  #       Ident !"name"
+  #       Ident !"string"
+  #       Empty
+  #     IdentDefs
+  #       Ident !"age"
+  #       Ident !"int"
+  #       Empty
+  #   MethodDef
+  #     Ident !"vocalize"
+  #     Empty
+  #     Empty
+  #     FormalParams
+  #       Ident !"string"
+  #     Empty
+  #     Empty
+  #     StmtList
+  #       StrLit ...
+  #   MethodDef
+  #     Ident !"age_human_yrs"
+  #     Empty
+  #     Empty
+  #     FormalParams
+  #       Ident !"int"
+  #     Empty
+  #     Empty
+  #     StmtList
+  #       DotExpr
+  #         Ident !"this"
+  #         Ident !"age"
+
+  # create a new stmtList for the result
+  result = newStmtList()
+
+  # var declarations will be turned into object fields
+  var recList = newNimNode(nnkRecList)
+
+  # Iterate over the statements, adding `this: T`
+  # to the parameters of functions
+  for node in body.children:
+    case node.kind:
+
+      of nnkMethodDef, nnkProcDef:
+        # inject `this: T` into the arguments
+        let p = copyNimTree(node.params)
+        p.insert(1, newIdentDefs(ident"this", typeName))
+        node.params = p
+        result.add(node)
+
+      of nnkVarSection:
+        # variables get turned into fields of the type.
+        for n in node.children:
+          recList.add(n)
+
+      else:
+        result.add(node)
+
+  # The following prints out the AST structure:
+  #
+  # import macros
+  # dumptree:
+  #   type X = ref object of Y
+  #     z: int
+  # --------------------
+  # TypeSection
+  #   TypeDef
+  #     Ident !"X"
+  #     Empty
+  #     RefTy
+  #       ObjectTy
+  #         Empty
+  #         OfInherit
+  #           Ident !"Y"
+  #         RecList
+  #           IdentDefs
+  #             Ident !"z"
+  #             Ident !"int"
+  #             Empty
+
+  result.insert(0,
+    if baseName == nil:
+      quote do:
+        type `typeName` = ref object of RootObj
+    else:
+      quote do:
+        type `typeName` = ref object of `baseName`
+  )
+  # Inspect the tree structure:
+  #
+  # echo result.treeRepr
+  # --------------------
+  # StmtList
+  #   StmtList
+  #     TypeSection
+  #       TypeDef
+  #         Ident !"Animal"
+  #         Empty
+  #         RefTy
+  #           ObjectTy
+  #             Empty
+  #             OfInherit
+  #               Ident !"RootObj"
+  #             Empty   <= We want to replace this
+  #   MethodDef
+  #   ...
+
+  result[0][0][0][2][0][2] = recList
+
+  # Lets inspect the human-readable version of the output
+  # echo repr(result)
+  # Output:
+  #  type
+  #    Animal = ref object of RootObj
+  #      name: string
+  #      age: int
+  #
+  #  method vocalize(this: Animal): string =
+  #    "..."
+  #
+  #  method age_human_yrs(this: Animal): int =
+  #    this.age
+
+# ---
+
+class Animal of RootObj:
+  var name: string
+  var age: int
+  method vocalize: string = "..."
+  method age_human_yrs: int = this.age # `this` is injected
+
+class Dog of Animal:
+  method vocalize: string = "woof"
+  method age_human_yrs: int = this.age * 7
+
+class Cat of Animal:
+  method vocalize: string = "meow"
+
+# ---
+
+var animals: seq[Animal] = @[]
+animals.add(Dog(name: "Sparky", age: 10))
+animals.add(Cat(name: "Mitten", age: 10))
+
+for a in animals:
+  echo a.vocalize()
+  echo a.age_human_yrs()</code></pre>

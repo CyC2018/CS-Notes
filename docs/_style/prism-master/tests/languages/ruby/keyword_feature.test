@@ -1,0 +1,103 @@
+alias
+and
+BEGIN
+begin
+break
+case
+class;
+def;
+define_method
+defined
+do
+each
+else
+elsif
+END
+end
+ensure
+false
+for
+if
+in
+module
+new;
+next
+nil
+not
+or
+protected
+private
+public
+raise
+redo
+require
+rescue
+retry
+return
+self
+super
+then
+throw
+true
+undef
+unless
+until
+when
+while
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "alias"],
+	["keyword", "and"],
+	["keyword", "BEGIN"],
+	["keyword", "begin"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "def"], ["punctuation", ";"],
+	["keyword", "define_method"],
+	["keyword", "defined"],
+	["keyword", "do"],
+	["keyword", "each"],
+	["keyword", "else"],
+	["keyword", "elsif"],
+	["keyword", "END"],
+	["keyword", "end"],
+	["keyword", "ensure"],
+	["keyword", "false"],
+	["keyword", "for"],
+	["keyword", "if"],
+	["keyword", "in"],
+	["keyword", "module"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "next"],
+	["keyword", "nil"],
+	["keyword", "not"],
+	["keyword", "or"],
+	["keyword", "protected"],
+	["keyword", "private"],
+	["keyword", "public"],
+	["keyword", "raise"],
+	["keyword", "redo"],
+	["keyword", "require"],
+	["keyword", "rescue"],
+	["keyword", "retry"],
+	["keyword", "return"],
+	["keyword", "self"],
+	["keyword", "super"],
+	["keyword", "then"],
+	["keyword", "throw"],
+	["keyword", "true"],
+	["keyword", "undef"],
+	["keyword", "unless"],
+	["keyword", "until"],
+	["keyword", "when"],
+	["keyword", "while"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

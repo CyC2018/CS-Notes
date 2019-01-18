@@ -1,0 +1,23 @@
+---
+foo: >
+	Foo bar
+	baz
+bar: |
+	Foo bar
+	baz
+
+----------------------------------------------------
+
+[
+	["punctuation", "---"],
+	["key", "foo"], ["punctuation", ":"],
+	["punctuation", ">"],
+	["scalar", "\r\n\tFoo bar\r\n\tbaz"],
+	["key", "bar"], ["punctuation", ":"],
+	["punctuation", "|"],
+	["scalar", "\r\n\tFoo bar\r\n\tbaz"]
+]
+
+----------------------------------------------------
+
+Checks for scalars.

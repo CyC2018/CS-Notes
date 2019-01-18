@@ -1,0 +1,12 @@
+{| foo : string |}
+
+----------------------------------------------------
+
+[
+	["flow-punctuation", "{|"], " foo ", ["punctuation", ":"],
+	["type", "string"], ["flow-punctuation", "|}"]
+]
+
+----------------------------------------------------
+
+Checks for Flow specific punctuation.

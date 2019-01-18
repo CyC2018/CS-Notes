@@ -1,0 +1,39 @@
+/*隐藏头部的目录*/
+#main>ul:nth-child(1) {
+    display: none;
+}
+
+.markdown-section h1 {
+    margin: 3rem 0 2rem 0;
+}
+
+.markdown-section h2 {
+    margin: 2rem 0 1rem;
+}
+
+.content,
+.sidebar,
+.markdown-section,
+body,
+.search input,
+.sidebar-toggle {
+    background-color: rgba(243, 242, 238, 1) !important;
+}
+
+body {
+    /*font-family: Microsoft YaHei, Source Sans Pro, Helvetica Neue, Arial, sans-serif !important;*/
+}
+
+.markdown-section>p {
+    font-size: 16px !important;
+}
+
+.markdown-section pre>code {
+    font-family: Consolas, Roboto Mono, Monaco, courier, monospace !important;
+    font-size: .9rem !important;
+
+}
+
+/*.anchor span {
+    color: rgb(66, 185, 131);
+}*/

@@ -1,0 +1,55 @@
+42
+42_000
+42L
+42U
+42UL
+3.14_15_9
+3.2e8
+0.4e-7
+62.14e+4
+
+0xBAD_FACE
+0xFFU
+0xfaL
+0x42UL
+0x2.AFp4
+0xFp-3
+0xFBp+9
+
+0b0000_1111
+
+6.3i
+6.3fi
+6.3Li
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "42_000"],
+	["number", "42L"],
+	["number", "42U"],
+	["number", "42UL"],
+	["number", "3.14_15_9"],
+	["number", "3.2e8"],
+	["number", "0.4e-7"],
+	["number", "62.14e+4"],
+
+	["number", "0xBAD_FACE"],
+	["number", "0xFFU"],
+	["number", "0xfaL"],
+	["number", "0x42UL"],
+	["number", "0x2.AFp4"],
+	["number", "0xFp-3"],
+	["number", "0xFBp+9"],
+
+	["number", "0b0000_1111"],
+
+	["number", "6.3i"],
+	["number", "6.3fi"],
+	["number", "6.3Li"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

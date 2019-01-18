@@ -1,0 +1,59 @@
+break
+catch
+case
+class;
+continue
+default
+else
+extends;
+final
+for
+if
+implements;
+import
+new;
+null
+private
+public
+return
+static
+super
+switch
+this
+try
+void
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "catch"],
+	["keyword", "case"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "continue"],
+	["keyword", "default"],
+	["keyword", "else"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "final"],
+	["keyword", "for"],
+	["keyword", "if"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"],
+	["keyword", "private"],
+	["keyword", "public"],
+	["keyword", "return"],
+	["keyword", "static"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "this"],
+	["keyword", "try"],
+	["keyword", "void"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,213 @@
+applying to
+are
+attacking
+answering
+asking
+be
+being
+burning
+buying
+called
+carries
+carry
+carrying
+climbing
+closing
+conceal
+conceals
+concealing
+consulting
+contain
+contains
+containing
+cutting
+drinking
+dropping
+eating
+enclose
+encloses
+enclosing
+entering
+examining
+exiting
+getting
+giving
+going
+have
+has
+having
+hold
+holds
+holding
+imply
+implies
+incorporate
+incorporates
+incorporating
+inserting
+is
+jumping
+kissing
+listening
+locking
+looking
+mean
+means
+meaning
+opening
+provide
+provides
+providing
+pulling
+pushing
+putting
+relate
+relates
+relating
+removing
+searching
+see
+sees
+seeing
+setting
+showing
+singing
+sleeping
+smelling
+squeezing
+switching
+support
+supports
+supporting
+swearing
+taking
+tasting
+telling
+thinking
+throwing
+touching
+turning
+tying
+unlock
+unlocks
+unlocking
+vary
+varies
+varying
+waiting
+waking
+waving
+wear
+wears
+wearing
+
+----------------------------------------------------
+
+[
+	["verb", "applying to"],
+	["verb", "are"],
+	["verb", "attacking"],
+	["verb", "answering"],
+	["verb", "asking"],
+	["verb", "be"],
+	["verb", "being"],
+	["verb", "burning"],
+	["verb", "buying"],
+	["verb", "called"],
+	["verb", "carries"],
+	["verb", "carry"],
+	["verb", "carrying"],
+	["verb", "climbing"],
+	["verb", "closing"],
+	["verb", "conceal"],
+	["verb", "conceals"],
+	["verb", "concealing"],
+	["verb", "consulting"],
+	["verb", "contain"],
+	["verb", "contains"],
+	["verb", "containing"],
+	["verb", "cutting"],
+	["verb", "drinking"],
+	["verb", "dropping"],
+	["verb", "eating"],
+	["verb", "enclose"],
+	["verb", "encloses"],
+	["verb", "enclosing"],
+	["verb", "entering"],
+	["verb", "examining"],
+	["verb", "exiting"],
+	["verb", "getting"],
+	["verb", "giving"],
+	["verb", "going"],
+	["verb", "have"],
+	["verb", "has"],
+	["verb", "having"],
+	["verb", "hold"],
+	["verb", "holds"],
+	["verb", "holding"],
+	["verb", "imply"],
+	["verb", "implies"],
+	["verb", "incorporate"],
+	["verb", "incorporates"],
+	["verb", "incorporating"],
+	["verb", "inserting"],
+	["verb", "is"],
+	["verb", "jumping"],
+	["verb", "kissing"],
+	["verb", "listening"],
+	["verb", "locking"],
+	["verb", "looking"],
+	["verb", "mean"],
+	["verb", "means"],
+	["verb", "meaning"],
+	["verb", "opening"],
+	["verb", "provide"],
+	["verb", "provides"],
+	["verb", "providing"],
+	["verb", "pulling"],
+	["verb", "pushing"],
+	["verb", "putting"],
+	["verb", "relate"],
+	["verb", "relates"],
+	["verb", "relating"],
+	["verb", "removing"],
+	["verb", "searching"],
+	["verb", "see"],
+	["verb", "sees"],
+	["verb", "seeing"],
+	["verb", "setting"],
+	["verb", "showing"],
+	["verb", "singing"],
+	["verb", "sleeping"],
+	["verb", "smelling"],
+	["verb", "squeezing"],
+	["verb", "switching"],
+	["verb", "support"],
+	["verb", "supports"],
+	["verb", "supporting"],
+	["verb", "swearing"],
+	["verb", "taking"],
+	["verb", "tasting"],
+	["verb", "telling"],
+	["verb", "thinking"],
+	["verb", "throwing"],
+	["verb", "touching"],
+	["verb", "turning"],
+	["verb", "tying"],
+	["verb", "unlock"],
+	["verb", "unlocks"],
+	["verb", "unlocking"],
+	["verb", "vary"],
+	["verb", "varies"],
+	["verb", "varying"],
+	["verb", "waiting"],
+	["verb", "waking"],
+	["verb", "waving"],
+	["verb", "wear"],
+	["verb", "wears"],
+	["verb", "wearing"]
+]
+
+----------------------------------------------------
+
+Checks for verbs.

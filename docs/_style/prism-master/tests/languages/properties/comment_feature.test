@@ -1,0 +1,17 @@
+#
+!
+# Foobar baz
+! Foobar baz
+
+----------------------------------------------------
+
+[
+	["comment", "#"],
+	["comment", "!"],
+	["comment", "# Foobar baz"],
+	["comment", "! Foobar baz"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

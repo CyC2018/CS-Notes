@@ -1,0 +1,89 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+(* Multi-line
+comment *)</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+@"Verbatim strings"
+"""Alternate "verbatim" strings"""
+</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>//8 bit Int
+86y
+0b00000101y
+//Unsigned 8 bit Int
+86uy
+0b00000101uy
+//16 bit Int
+86s
+//Unsigned 16 bit Int
+86us
+//Int
+86
+86l
+0b10000
+0x2A6
+//Unsigned Int
+86u
+86ul
+//unativeint
+0x00002D3Fun
+//Long
+86L
+//Unsigned Long
+86UL
+//Float
+4.14F
+4.14f
+4.f
+4.F
+0x0000000000000000lf
+//Double
+4.14
+2.3E+32
+2.3e+32
+2.3e-32
+2.3e32
+0x0000000000000000LF
+//BigInt
+9999999999999999999999999999I
+//Decimal
+0.7833M
+0.7833m
+3.m
+3.M
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>// The declaration creates a constructor that takes two values, name and age. 
+type Person(name:string, age:int) =
+    // A Person object's age can be changed. The mutable keyword in the 
+    // declaration makes that possible. 
+    let mutable internalAge = age
+
+    // Declare a second constructor that takes only one argument, a name. 
+    // This constructor calls the constructor that requires two arguments, 
+    // sending 0 as the value for age. 
+    new(name:string) = Person(name, 0)
+
+    // A read-only property. 
+    member this.Name = name
+    // A read/write property. 
+    member this.Age
+        with get() = internalAge
+        and set(value) = internalAge &lt;- value
+
+    // Instance methods. 
+    // Increment the person's age. 
+    member this.HasABirthday () = internalAge &lt;- internalAge + 1
+
+    // Check current age against some threshold. 
+    member this.IsOfAge targetAge = internalAge &gt;= targetAge
+
+    // Display the person's name and age. 
+    override this.ToString () = 
+        "Name:  " + name + "\n" + "Age:   " + (string)internalAge
+</code></pre>

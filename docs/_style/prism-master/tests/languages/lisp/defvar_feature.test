@@ -1,0 +1,25 @@
+(defvar foo)
+(defvar foo bar)
+(defvar     foo)
+(defvar)
+(defconst foo)
+(defcustom foo)
+(defgroup foo)
+(defvar defabc)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["defvar", [ ["keyword", "defvar" ], ["variable", "foo"] ]], ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defvar" ], ["variable", "foo"] ]], " bar", ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defvar" ], ["variable", "foo"] ]], ["punctuation", ")"],
+	["punctuation", "("], ["car", "defvar"], ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defconst" ], ["variable", "foo"] ]], ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defcustom" ], ["variable", "foo"] ]], ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defgroup" ], ["variable", "foo"] ]], ["punctuation", ")"],
+	["punctuation", "("], ["defvar", [ ["keyword", "defvar" ], ["variable", "defabc"] ]], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for defvar.

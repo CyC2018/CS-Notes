@@ -1,0 +1,27 @@
+< <= <>
+> >=
++ - *
+/ \ ^
+=
+AddressOf And
+Ctype Is IsA
+Mod New Not
+Or Xor WeakAddressOf
+
+----------------------------------------------------
+
+[
+	["operator", "<"], ["operator", "<="], ["operator", "<>"],
+	["operator", ">"], ["operator", ">="],
+	["operator", "+"], ["operator", "-"], ["operator", "*"],
+	["operator", "/"], ["operator", "\\"], ["operator", "^"],
+	["operator", "="],
+	["operator", "AddressOf"], ["operator", "And"],
+	["operator", "Ctype"], ["operator", "Is"], ["operator", "IsA"],
+	["operator", "Mod"], ["operator", "New"], ["operator", "Not"],
+	["operator", "Or"], ["operator", "Xor"], ["operator", "WeakAddressOf"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

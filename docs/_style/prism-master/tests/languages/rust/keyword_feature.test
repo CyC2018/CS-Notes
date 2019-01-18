@@ -1,0 +1,39 @@
+abstract alignof as
+be box break const
+continue crate do dyn
+else enum extern
+false final fn for
+if impl in let loop
+match mod move mut
+offsetof once override
+priv pub pure ref
+return sizeof static
+self Self struct super
+true trait type typeof
+union unsafe unsized use
+virtual where while
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "alignof"], ["keyword", "as"],
+	["keyword", "be"], ["keyword", "box"], ["keyword", "break"], ["keyword", "const"],
+	["keyword", "continue"], ["keyword", "crate"], ["keyword", "do"], ["keyword", "dyn"],
+	["keyword", "else"], ["keyword", "enum"], ["keyword", "extern"],
+	["keyword", "false"], ["keyword", "final"], ["keyword", "fn"], ["keyword", "for"],
+	["keyword", "if"], ["keyword", "impl"], ["keyword", "in"], ["keyword", "let"], ["keyword", "loop"],
+	["keyword", "match"], ["keyword", "mod"], ["keyword", "move"], ["keyword", "mut"],
+	["keyword", "offsetof"], ["keyword", "once"], ["keyword", "override"],
+	["keyword", "priv"], ["keyword", "pub"], ["keyword", "pure"], ["keyword", "ref"],
+	["keyword", "return"], ["keyword", "sizeof"], ["keyword", "static"],
+	["keyword", "self"], ["keyword", "Self"], ["keyword", "struct"], ["keyword", "super"],
+	["keyword", "true"], ["keyword", "trait"], ["keyword", "type"], ["keyword", "typeof"],
+	["keyword", "union"], ["keyword", "unsafe"], ["keyword", "unsized"], ["keyword", "use"],
+	["keyword", "virtual"], ["keyword", "where"], ["keyword", "while"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

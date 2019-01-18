@@ -1,0 +1,18 @@
+I IZ foobar
+	HOW IZ I foobar
+IZ fooBAR
+
+----------------------------------------------------
+
+[
+	["keyword", "I IZ"],
+	["function", "foobar"],
+	["keyword", "HOW IZ I"],
+	["function", "foobar"],
+	["keyword", "IZ"],
+	["function", "fooBAR"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

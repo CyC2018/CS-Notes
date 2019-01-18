@@ -1,0 +1,77 @@
+<h2>Empty tag</h2>
+<pre><code>&lt;p>&lt;/p></code></pre>
+
+<h2>Tag that spans multiple lines</h2>
+<pre><code>&lt;p
+>hello!
+&lt;/p></code></pre>
+
+<h2>Name-attribute pair</h2>
+<pre><code>&lt;p>&lt;/p></code></pre>
+
+<h2>Name-attribute pair without quotes</h2>
+<pre><code>&lt;p class=prism>&lt;/p></code></pre>
+
+<h2>Attribute without value</h2>
+<pre><code>&lt;p data-foo>&lt;/p>
+&lt;p data-foo >&lt;/p>
+</code></pre>
+
+<h2>Namespaces</h2>
+<pre><code>&lt;html:p foo:bar="baz" foo:weee>&lt;/html:p></code></pre>
+
+<h2>XML prolog</h2>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;svg>&lt;/svg></code></pre>
+
+<h2>DOCTYPE</h2>
+<pre><code>&lt;!DOCTYPE html>
+&lt;html>&lt;/html></code></pre>
+
+<h2>CDATA section</h2>
+<pre><code>&lt;ns1:description>&lt;![CDATA[
+  CDATA is &lt;not> magical.
+]]>&lt;/ns1:description></code></pre>
+
+<h2>Comment</h2>
+<pre><code>&lt;!-- I'm a comment -->
+And i'm not</code></pre>
+
+<h2>Entities</h2>
+<pre><code>&amp;amp; &amp;#x2665; &amp;#160; &amp;#x152;</code></pre>
+
+<h2>Embedded JS and CSS</h2>
+<pre><code>&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+	&lt;meta charset="utf-8" />
+	&lt;title>I can haz embedded CSS and JS&lt;/title>
+	&lt;style>
+		@media print {
+			p { color: red !important; }
+		}
+	&lt;/style>
+&lt;/head>
+&lt;body>
+	&lt;h1>I can haz embedded CSS and JS&lt;/h1>
+	&lt;script>
+	if (true) {
+		console.log('foo');
+	}
+	&lt;/script>
+
+&lt;/body>
+&lt;/html></code></pre>
+
+<h2>Invalid HTML</h2>
+<pre><code>&lt;l &lt;/ul></code></pre>
+
+<h2>Multi-line attribute values</h2>
+<pre><code>&lt;p title="foo
+bar
+baz"></code></pre>
+
+<h2>XML tags with non-ASCII characters</h2>
+<pre><code>&lt;L&auml;ufer&gt;foo&lt;/L&auml;ufer&gt;
+&lt;tag l&auml;ufer="l&auml;ufer"&gt;bar&lt;/tag&gt;
+&lt;l&auml;ufer:tag&gt;baz&lt;/l&auml;ufer:tag&gt;</code></pre>

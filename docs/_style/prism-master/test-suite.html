@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Running the test suite ▲ Prism</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body class="language-javascript">
+
+<header>
+	<div class="intro" data-src="templates/header-main.html" data-type="text/html"></div>
+
+	<h2>Running the test suite</h2>
+	<p>Prism has a test suite, that ensures that the correct tokens are matched.</p>
+</header>
+
+<section id="running-the-test-suite">
+	<h1>Running the test suite</h1>
+
+	<p>Running the test suite is simple: just call <code class="language-bash">npm test</code>.</p>
+	<p>All test files are run in isolation. A new prism instance is created for each test case. This will slow the test runner a bit down, but we can be sure that nothing leaks into the next test case.</p>
+
+	<section id="running-tests-for-specific-languages">
+		<h2>Running tests for specific languages</h2>
+
+		<p>To run the tests only for one language, you can use the <code>language</code> parameter: <code class="language-bash">npm test -- --language=markup</code>.</p>
+		<p>You can even specify multiple languages: <code class="language-bash">npm test -- --language=markup --language=css</code>.</p>
+	</section>
+</section>
+
+<section id="writing-tests">
+	<h1>Writing tests</h1>
+
+	<p>Thank you for writing tests! Tests are awesome! They ensure, that we can improve the codebase without breaking anything. Also, this way, we can ensure that upgrading Prism is as painless as possible for you.</p>
+	<p>You can add new tests by creating a new test case file (with the <code>.test</code> file extension) in the tests directory which is located at <code>/tests/languages/${language}</code>.</p>
+
+	<section id="writing-tests-directories">
+		<h2>Language directories</h2>
+		<p>All tests are sorted into directories in the <code>tests/languages</code> directory. Each directory name encodes, which language you are currently testing.</p>
+		<p><strong>All language names must match the names from the definition in <code>components.js</code>.</strong></p>
+
+		<h3>Example 1: testing a language in isolation (default use case)</h3>
+		<p>Just put your test file into the directory of the language you want to test.</p>
+		<p>So, if you want to test CSS, put your test file in <code>/tests/languages/css</code> to test CSS only. If you create a test case in this directory, the test runner will ensure that the <code>css</code> language definition including all required language definitions are correctly loaded.</p>
+
+		<h3>Example 2: testing language injection</h3>
+		<p>If you want to test language injection, you typically need to load two or more languages where one language is the “main” language that is being tested, with all other languages being injected into it.</p>
+		<p>You need to define multiple languages by separating them using a <code>+</code> sign: <code>markup+php</code>.</p>
+		<p>The languages are loaded in order, so first markup (+ dependencies) is loaded, then php (+ dependencies). The test loader ensures that no language is loaded more than once (for example if two languages have the same dependencies).</p>
+		<p>By default the last language is the main language: <code>php+markup</code> will have <code>markup</code> as main language. This is equal to putting your code in the following code block:</p>
+		<pre><code class="language-markup">...
+&lt;pre>&lt;code class="language-markup">
+	&lt;!-- your code here -->
+&lt;/code>&lt;pre>
+...</code></pre>
+
+		<p>If you need to load the languages in a given order, but you don't want to use the last language as main language, you can mark the main language with an exclamation mark: <code>php!+markup</code>. This will use <code>php</code> as main language. (You can only define one main language. The test runner will fail all tests in directories with more than one main language.)</p>
+
+		<p><em>Note: by loading multiple languages you can do integration tests (ensure that loading two or more languages together won't break anything).</em></p>
+	</section>
+
+	<section id="writing-tests-creating-your-test-case-file">
+		<h2>Creating your test case file</h2>
+		<p>At first you need to create a new file in the language directory, you want to test.</p>
+		<p><strong>Use a proper name for your test case.</strong> Please use one case of the following conventions:</p>
+		<ul>
+			<li><code>issue{issueid}</code>: reference a github issue id (example: <code>issue588.test</code>).</li>
+			<li><code>{featurename}_feature</code>: group all tests to one feature in one file (example: <code>string_interpolation_feature.test</code>).</li>
+			<li><code>{language}_inclusion</code>: test inclusion of one language into the other (example: <code>markup!+css/css_inclusion.test</code> will test CSS inclusion into markup).</li>
+		</ul>
+		<p>You can use all conventions as a prefix, so <code>string_interpolation_feature_inline.test</code> is possible. <strong>But please take a minute or two to think of a proper name of your test case file. You are writing code not only for the computers, but also for your fellow developers.</strong></p>
+	</section>
+
+	<section id="writing-tests-writing-your-test">
+		<h2>Writing your test</h2>
+		<p>The structure of a test case file is as follows:</p>
+		<pre><code>
+... language snippet...
+----
+... the simplified token stream you expect ...</code></pre>
+
+		<p>Your file is built up of two or three sections, separated by ten or more dashes <code>-</code>, starting at the begin of the line:</p>
+		<ol>
+			<li>Your language snippet. The code you want to compile using Prism. (<strong>required</strong>)</li>
+			<li>The simplified token stream you expect. Needs to be valid JSON. (<strong>required</strong>)</li>
+			<li>A comment explaining the test case. (<em>optional</em>)</li>
+		</ol>
+		<p>The easiest way would be to look at an existing test file:</p>
+		<pre><code>var a = 5;
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	" a ",
+	["operator", "="],
+	["number", "5"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+This is a comment explaining this test case.</code></pre>
+	</section>
+
+	<section>
+		<h2>Explaining the simplified token stream</h2>
+		<p>While compiling, Prism transforms your source code into a token stream. This is basically a tree of nested tokens (or arrays, or strings).</p>
+		<p>As these trees are hard to write by hand, the test runner uses a simplified version of it.</p>
+		<p>It uses the following rules:</p>
+		<ul>
+			<li><code>Token</code> objects are transformed into an array: <code>[token.type, token.content]</code> (whereas <code>token.content</code> can be a nested structure).</li>
+			<li>All strings that are either empty or only contain whitespace, are removed from the token stream.</li>
+			<li>All empty structures are removed.</li>
+		</ul>
+		<p>For further information: reading the tests of the test runner (<code>tests/testrunner-tests.js</code>) will help you understand the transformation.</p>
+	</section>
+</section>
+
+<section id="writing-specific-tests">
+	<h1>Writing specific tests</h1>
+
+	<p>Sometimes, using the token stream tests is not powerful enough. By creating a test file with the file extension <code>.js</code> instead of <code>.test</code>, you can make Prism highlight arbitrary pieces of code and check their HTML results.</p>
+	<p>The language is determined by the folder containing the test file lies, as explained in the previous section.</p>
+	<p>The structure of your test file will look like this, for example:</p>
+	<pre><code>module.exports = {
+	'&amp;#x278a;': '&lt;span class="token entity" title="&amp;#x278a;">&amp;amp;#x278a;&lt;/span>',
+	'&amp;#182;': '&lt;span class="token entity" title="&amp;#182;">&amp;amp;#182;&lt;/span>',
+};</code></pre>
+	<p>The keys are the codes which will be highlighted by Prism. The values are the expected results, as HTML.</p>
+</section>
+
+<section id="test-runner-tests">
+	<h1>Test runner tests</h1>
+	<p>The test runner itself is tested in a separate test case. You can find all “test core” related tests in <code>tests/testrunner-tests.js</code>.</p>
+	<p>You shouldn't need to touch this file ever, except you modify the test runner code.</p>
+</section>
+
+<section id="internal-structure">
+	<h1>Internal structure</h1>
+	<p>The global test flow is at follows:</p>
+	<ol>
+		<li>Run all internal tests (test the test runner).</li>
+		<li>Find all language tests.</li>
+		<li>Run all language tests individually.</li>
+		<li>Report the results.</li>
+	</ol>
+</section>
+
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="components/prism-bash.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

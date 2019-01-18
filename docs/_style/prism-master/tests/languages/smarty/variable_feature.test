@@ -1,0 +1,56 @@
+{$foo}
+{$foo_bar42}
+{#pageTitle#}
+{$foo.bar.baz}
+{$foo->bar->baz}
+{$foo[row]}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo_bar42"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "#pageTitle#"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["punctuation", "."],
+		["variable", "bar"],
+		["punctuation", "."],
+		["variable", "baz"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["punctuation", "->"],
+		["variable", "bar"],
+		["punctuation", "->"],
+		["variable", "baz"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["punctuation", "["],
+		["variable", "row"],
+		["punctuation", "]"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

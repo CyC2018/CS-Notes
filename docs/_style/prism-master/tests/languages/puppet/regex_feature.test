@@ -1,0 +1,32 @@
+node /f(o)"o"[b]?a\/r/
+$foo = /foo
+bar # baz
+/m
+$foo = /foo
+bar # baz
+/ixm
+$foo = /@(foo)/
+
+----------------------------------------------------
+
+[
+	["keyword", "node"],
+	["regex", ["/f(o)\"o\"[b]?a\\/r/"]],
+	["variable", ["$foo"]], ["operator", "="],
+	["regex", ["/foo\r\nbar # baz\r\n/m"]],
+	["variable", ["$foo"]], ["operator", "="],
+	["regex", [
+		["extended-regex", [
+			"/foo\r\nbar ",
+			["comment", "# baz"],
+			"\r\n/ixm"
+		]]
+	]],
+	["variable", ["$foo"]], ["operator", "="],
+	["regex", ["/@(foo)/"]]
+]
+
+----------------------------------------------------
+
+Checks for regular expressions.
+Also checks that extended-regex accept inline comments.

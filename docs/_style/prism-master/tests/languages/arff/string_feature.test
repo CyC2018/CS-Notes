@@ -1,0 +1,13 @@
+"double quoted\"' % string"
+'single quoted"\' % string'
+
+----------------------------------------------------
+
+[
+	["string", "\"double quoted\\\"' % string\""],
+	["string", "'single quoted\"\\' % string'"]
+]
+
+----------------------------------------------------
+
+Checks for strings.

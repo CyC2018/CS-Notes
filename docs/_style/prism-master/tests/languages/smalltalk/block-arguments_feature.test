@@ -1,0 +1,26 @@
+[ :i |
+]
+[ :a :b |
+]
+
+----------------------------------------------------
+
+[
+	["punctuation", "["],
+	["block-arguments", [
+		["variable", ":i"],
+		["punctuation", "|"]
+	]],
+	["punctuation", "]"],
+	["punctuation", "["],
+	["block-arguments", [
+		["variable", ":a"],
+		["variable", ":b"],
+		["punctuation", "|"]
+	]],
+	["punctuation", "]"]
+]
+
+----------------------------------------------------
+
+Checks for block arguments.

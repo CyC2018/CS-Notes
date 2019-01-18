@@ -1,0 +1,209 @@
+abstract
+add
+alias
+as
+ascending
+async
+await
+base
+bool
+break
+byte
+case
+catch
+char
+checked
+class;
+const
+continue
+decimal
+default
+delegate
+descending
+do
+double
+dynamic
+else
+enum
+event
+explicit
+extern
+false
+finally
+fixed
+float
+for
+foreach
+from
+get
+global
+goto
+group
+if
+implicit
+in
+int
+interface;
+internal
+into
+is
+join
+let
+lock
+long
+namespace
+new;
+null
+object
+operator
+orderby
+out
+override
+params
+partial
+private
+protected
+public
+readonly
+ref
+remove
+return
+sbyte
+sealed
+select
+set
+short
+sizeof
+stackalloc
+static
+string
+struct
+switch
+this
+throw
+true
+try
+typeof
+uint
+ulong
+unchecked
+unsafe
+ushort
+using
+value
+var
+virtual
+void
+volatile
+where
+while
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"],
+	["keyword", "add"],
+	["keyword", "alias"],
+	["keyword", "as"],
+	["keyword", "ascending"],
+	["keyword", "async"],
+	["keyword", "await"],
+	["keyword", "base"],
+	["keyword", "bool"],
+	["keyword", "break"],
+	["keyword", "byte"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "char"],
+	["keyword", "checked"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"],
+	["keyword", "continue"],
+	["keyword", "decimal"],
+	["keyword", "default"],
+	["keyword", "delegate"],
+	["keyword", "descending"],
+	["keyword", "do"],
+	["keyword", "double"],
+	["keyword", "dynamic"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "event"],
+	["keyword", "explicit"],
+	["keyword", "extern"],
+	["keyword", "false"],
+	["keyword", "finally"],
+	["keyword", "fixed"],
+	["keyword", "float"],
+	["keyword", "for"],
+	["keyword", "foreach"],
+	["keyword", "from"],
+	["keyword", "get"],
+	["keyword", "global"],
+	["keyword", "goto"],
+	["keyword", "group"],
+	["keyword", "if"],
+	["keyword", "implicit"],
+	["keyword", "in"],
+	["keyword", "int"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "internal"],
+	["keyword", "into"],
+	["keyword", "is"],
+	["keyword", "join"],
+	["keyword", "let"],
+	["keyword", "lock"],
+	["keyword", "long"],
+	["keyword", "namespace"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"],
+	["keyword", "object"],
+	["keyword", "operator"],
+	["keyword", "orderby"],
+	["keyword", "out"],
+	["keyword", "override"],
+	["keyword", "params"],
+	["keyword", "partial"],
+	["keyword", "private"],
+	["keyword", "protected"],
+	["keyword", "public"],
+	["keyword", "readonly"],
+	["keyword", "ref"],
+	["keyword", "remove"],
+	["keyword", "return"],
+	["keyword", "sbyte"],
+	["keyword", "sealed"],
+	["keyword", "select"],
+	["keyword", "set"],
+	["keyword", "short"],
+	["keyword", "sizeof"],
+	["keyword", "stackalloc"],
+	["keyword", "static"],
+	["keyword", "string"],
+	["keyword", "struct"],
+	["keyword", "switch"],
+	["keyword", "this"],
+	["keyword", "throw"],
+	["keyword", "true"],
+	["keyword", "try"],
+	["keyword", "typeof"],
+	["keyword", "uint"],
+	["keyword", "ulong"],
+	["keyword", "unchecked"],
+	["keyword", "unsafe"],
+	["keyword", "ushort"],
+	["keyword", "using"],
+	["keyword", "value"],
+	["keyword", "var"],
+	["keyword", "virtual"],
+	["keyword", "void"],
+	["keyword", "volatile"],
+	["keyword", "where"],
+	["keyword", "while"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

@@ -1,0 +1,15 @@
+#quit
+#load
+#load_rec
+
+----------------------------------------------------
+
+[
+	["directive", "#quit"],
+	["directive", "#load"],
+	["directive", "#load_rec"]
+]
+
+----------------------------------------------------
+
+Checks for directives.

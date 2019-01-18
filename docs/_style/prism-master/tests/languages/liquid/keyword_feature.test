@@ -1,0 +1,29 @@
+comment endcomment
+if else elsif endif
+unless endunless
+for endfor in break
+case endcase when
+assign continue
+limit offset range reversed
+raw endraw
+capture endcapture
+tablerow endtablerow
+
+----------------------------------------------------
+
+[
+	["keyword", "comment"], ["keyword", "endcomment"],
+	["keyword", "if"], ["keyword", "else"], ["keyword", "elsif"], ["keyword", "endif"],
+	["keyword", "unless"], ["keyword", "endunless"],
+	["keyword", "for"], ["keyword", "endfor"], ["keyword", "in"], ["keyword", "break"],
+	["keyword", "case"], ["keyword", "endcase"], ["keyword", "when"],
+	["keyword", "assign"], ["keyword", "continue"],
+	["keyword", "limit"], ["keyword", "offset"], ["keyword", "range"], ["keyword", "reversed"],
+	["keyword", "raw"], ["keyword", "endraw"],
+	["keyword", "capture"], ["keyword", "endcapture"],
+	["keyword", "tablerow"], ["keyword", "endtablerow"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Line Numbers ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/line-numbers/prism-line-numbers.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+  <div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+  <h2>Line Numbers</h2>
+  <p>Line number at the beginning of code lines.</p>
+</header>
+
+<section class="language-markup">
+  <h1>How to use</h1>
+
+  <p>Obviously, this is supposed to work only for code blocks (<code>&lt;pre>&lt;code></code>) and not for inline code.</p>
+  <p>Add class <strong>line-numbers</strong> to your desired <code>&lt;pre></code> and line-numbers plugin will take care.</p>
+  <p>Optional: You can specify the <code>data-start</code> (Number) attribute on the <code>&lt;pre></code> element. It will shift the line counter.</p>
+  <p>Optional: To support multiline line numbers using soft wrap add css <code>white-space</code> to <code>pre-line</code> or <code>pre-wrap</code>.</p>
+</section>
+
+<section>
+  <h1>Examples</h1>
+
+  <h2>JavaScript</h2>
+  <pre class="line-numbers" data-src="plugins/line-numbers/prism-line-numbers.js"></pre>
+
+  <h2>CSS</h2>
+  <pre class="line-numbers" data-src="plugins/line-numbers/prism-line-numbers.css"></pre>
+
+  <h2>HTML</h2>
+  <p>Please note the <code>data-start="-5"</code> in the code below.</p>
+  <pre class="line-numbers" data-src="plugins/line-numbers/index.html" data-start="-5"></pre>
+
+  <h2>Unknown languages</h2>
+  <pre class="language-none line-numbers"><code>This raw text
+is not highlighted
+but it still has
+lines numbers</code></pre>
+
+  <h2>Soft wrap support</h2>
+  <pre class="line-numbers" data-src="plugins/line-numbers/index.html" data-start="-5" style="white-space:pre-wrap;"></pre>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/line-numbers/prism-line-numbers.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

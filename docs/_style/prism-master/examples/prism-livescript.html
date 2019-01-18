@@ -1,0 +1,84 @@
+<h2>Comments</h2>
+<pre><code># This is a single line comment
+/* This is a
+multi line comment */</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+42km
+3.754km_2
+16~BadFace
+36~azertyuiop0123456789</code></pre>
+
+<h2>Strings and interpolation</h2>
+<pre><code>''
+''''''
+""
+""""""
+'Foo \' bar
+	baz'
+'''Foo \''' bar
+	bar'''
+"Foo #bar \"
+	#{2 + 2}\""
+"""#foobar \""" #{ if /test/ == 'test' then 3 else 4}
+	baz"""</code></pre>
+
+<h2>Regex</h2>
+<pre><code>/foobar/ig
+//
+^foo # foo
+[bar]*bA?z # barbaz
+//m</code></pre>
+
+<h2>Full example</h2>
+<pre><code># example from Str.ls
+
+split = (sep, str) -->
+  str.split sep
+
+join = (sep, xs) -->
+  xs.join sep
+
+lines = (str) ->
+  return [] unless str.length
+  str.split '\n'
+
+unlines = (.join '\n')
+
+words = (str) ->
+  return [] unless str.length
+  str.split /[ ]+/
+
+unwords = (.join ' ')
+
+chars = (.split '')
+
+unchars = (.join '')
+
+reverse = (str) ->
+  str.split '' .reverse!.join ''
+
+repeat = (n, str) -->
+  result = ''
+  for til n
+    result += str
+  result
+
+capitalize = (str) ->
+  (str.char-at 0).to-upper-case! + str.slice 1
+
+camelize = (.replace /[-_]+(.)?/g, (, c) -> (c ? '').to-upper-case!)
+
+# convert camelCase to camel-case, and setJSON to set-JSON
+dasherize = (str) ->
+    str
+      .replace /([^-A-Z])([A-Z]+)/g, (, lower, upper) ->
+         "#{lower}-#{if upper.length > 1 then upper else upper.to-lower-case!}"
+      .replace /^([A-Z]+)/, (, upper) ->
+         if upper.length > 1 then "#upper-" else upper.to-lower-case!
+
+module.exports = {
+  split, join, lines, unlines, words, unwords, chars, unchars, reverse,
+  repeat, capitalize, camelize, dasherize,
+}</code></pre>

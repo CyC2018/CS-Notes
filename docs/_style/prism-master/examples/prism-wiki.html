@@ -1,0 +1,165 @@
+<h2>Embedded markup</h2>
+<pre><code>Paragraphs can be forced in lists by using HTML tags.
+Two line break symbols, &lt;code>&lt;nowiki>&lt;br />&lt;br />&lt;/nowiki>&lt;/code>, will create the desired effect. So will enclosing all but the first paragraph with &lt;code>&lt;nowiki>&lt;p>...&lt;/p>&lt;/nowiki>&lt;/code></code></pre>
+
+<h2>Headings</h2>
+<pre><code>= Header 1 =
+== Header 2 ==
+=== Header 3 ===
+==== Header 4 ====
+===== Header 5 =====
+====== Header 6 ======</code></pre>
+
+<h2>Bold and italic</h2>
+<pre><code>'''''Both bold and italic'''''
+'''Only bold'''
+''Only italic''</code></pre>
+
+<h2>Links and Magic links</h2>
+<pre><code>[[w:en:Formal_grammar|Formal grammar]]
+[http://www.cl.cam.ac.uk/~mgk25/iso-ebnf.html EBNF help]
+
+ISBN 1234567890
+ISBN 123456789x
+ISBN      1 2 3-4-5 6789 X
+ISBN 978-9999999999
+
+RFC 822
+PMID 822</code></pre>
+
+<h2>Magic words and special symbols</h2>
+<pre><code>#REDIRECT [[somewhere]]
+
+{{SITENAME}}
+{{PAGESINCATEGORY:category}}
+{{#dateformat:2009-12-25|mdy}}
+
+__NOTOC__
+
+{{!}}
+
+~~~ ~~~~ ~~~~~</code></pre>
+
+<h2>Lists</h2>
+<pre><code>* Lists are easy to do:
+** start every line
+* with a star
+** more stars mean
+*** deeper levels
+
+# Numbered lists are good
+## very organized
+## easy to follow
+
+; Definition lists
+; item : definition
+; semicolon plus term
+: colon plus definition
+
+* Or create mixed lists
+*# and nest them
+*#* like this
+*#*; definitions
+*#*: work:
+*#*; apple
+*#*; banana
+*#*: fruits</code></pre>
+
+<h2>Tables</h2>
+<pre><code>{|
+|Orange
+|Apple
+|-
+|Bread
+|Pie
+|-
+|Butter
+|Ice cream
+|}
+
+{|
+|Lorem ipsum dolor sit amet,
+consetetur sadipscing elitr,
+sed diam nonumy eirmod tempor invidunt
+ut labore et dolore magna aliquyam erat,
+sed diam voluptua.
+
+At vero eos et accusam et justo duo dolores
+et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum
+dolor sit amet.
+|
+* Lorem ipsum dolor sit amet
+* consetetur sadipscing elitr
+* sed diam nonumy eirmod tempor invidunt
+|}
+
+{|
+|  Orange    ||   Apple   ||   more
+|-
+|   Bread    ||   Pie     ||   more
+|-
+|   Butter   || Ice cream ||  and more
+|}
+
+{|
+! style="text-align:left;"| Item
+! Amount
+! Cost
+|-
+|Orange
+|10
+|7.00
+|-
+|Bread
+|4
+|3.00
+|-
+|Butter
+|1
+|5.00
+|-
+!Total
+|
+|15.00
+|}
+
+{|
+! style="text-align:left;"| Item !! style="color:red;"| Amount !! Cost
+|-
+|Orange
+|10
+|7.00
+|-
+| style="text-align:right;"| Bread
+|4
+|3.00
+|-
+|Butter
+|1
+|5.00
+|-
+!Total
+|
+|15.00
+|}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nested magic words are not supported</h3>
+
+<pre><code>{{#switch:{{PAGENAME}}
+| L'Aquila = No translation
+| L = Not OK
+| L&apos;Aquila = Entity escaping
+| L&#39;Aquila = Numeric char encoding
+}}</code></pre>
+
+<h3>Nesting of bold and italic is not supported</h3>
+<pre><code>''Italic with '''bold''' inside''</code></pre>
+

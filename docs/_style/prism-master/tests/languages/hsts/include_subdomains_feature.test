@@ -1,0 +1,11 @@
+includeSubDomains
+
+----------------------------------------------------
+
+[
+	["directive", "includeSubDomains"]
+]
+
+----------------------------------------------------
+
+Checks for HSTS with the includeSubDomains directive.

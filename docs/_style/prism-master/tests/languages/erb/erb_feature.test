@@ -1,0 +1,36 @@
+<%# comment %>
+<%= render @products || "empty_list" %>
+<% @books.each do |book| %>
+
+----------------------------------------------------
+
+[
+	["erb", [
+		["delimiter", "<%"],
+		["comment", "# comment "],
+		["delimiter", "%>"]
+	]],
+	["erb", [
+		["delimiter", "<%="],
+		" render ",
+		["variable", "@products"],
+		["operator", "||"],
+		["string", ["\"empty_list\""]],
+		["delimiter", "%>"]
+	]],
+	["erb", [
+		["delimiter", "<%"],
+		["variable", "@books"],
+		["punctuation", "."],
+		["keyword", "each"],
+		["keyword", "do"],
+		["operator", "|"],
+		"book",
+		["operator", "|"],
+		["delimiter", "%>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for ERB tags.

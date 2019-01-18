@@ -1,0 +1,80 @@
+package java.lang;
+
+import java.lang.Math;
+import java.lang.*;
+
+import static java.lang.Math.PI;
+import static java.lang.Math.sin;
+import static java.lang.Math.*;
+
+----------------------------------------------------
+
+[
+	["keyword", "package"],
+	["namespace", [
+		"java",
+		["punctuation", "."],
+		"lang"
+	]],
+	["punctuation", ";"],
+
+	["keyword", "import"],
+	["namespace", [
+		"java",
+		["punctuation", "."],
+		"lang"
+	]],
+	["punctuation", "."],
+	["class-name", "Math"],
+	["punctuation", ";"],
+
+	["keyword", "import"],
+	["namespace", [
+		"java",
+		["punctuation", "."],
+		"lang"
+	]],
+	["punctuation", "."],
+	"*",
+	["punctuation", ";"],
+
+	["keyword", "import"],
+	["keyword", "static"],
+	["namespace", [
+		"java",
+		["punctuation", "."],
+		"lang"
+	]],
+	["punctuation", "."],
+	["class-name", "Math"],
+	["punctuation", "."],
+	"PI",
+	["punctuation", ";"],
+
+	["keyword", "import"],
+	["keyword", "static"],
+	["namespace", [
+		"java",
+		["punctuation", "."],
+		"lang"
+	]],
+	["punctuation", "."],
+	["class-name", "Math"],
+	["punctuation", "."],
+	"sin",
+	["punctuation", ";"],
+	["keyword", "import"],
+	["keyword", "static"],
+	["namespace", [
+		"java",
+		["punctuation", "."], "lang"
+	]], ["punctuation", "."],
+	["class-name", "Math"],
+	["punctuation", "."],
+	"*",
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for packages.

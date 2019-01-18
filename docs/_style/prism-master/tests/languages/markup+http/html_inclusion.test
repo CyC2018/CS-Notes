@@ -1,0 +1,30 @@
+Content-type: text/html
+
+<b></b>
+
+----------------------------------------------------
+
+[
+	["header-name", "Content-type:"],
+	" text/html",
+	["text/html", [
+		["tag", [
+			["tag", [
+				["punctuation", "<"],
+				"b"
+			]],
+			["punctuation", ">"]
+		]],
+		["tag", [
+			["tag", [
+				["punctuation", "</"],
+				"b"
+			]],
+			["punctuation", ">"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for HTML content in HTTP.

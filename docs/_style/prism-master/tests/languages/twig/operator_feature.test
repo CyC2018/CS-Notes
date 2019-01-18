@@ -1,0 +1,179 @@
+{% set a = 4 %}
+{{ a == 4 }}
+{{ b != c }}
+{{ c < d }}
+{{ d <= e }}
+{{ e > f }}
+{{ f >= g }}
+{{ g + h }}
+{{ h - i }}
+{{ i ~ j }}
+{{ j * k }}
+{{ k ** l }}
+{{ l / m }}
+{{ m // n }}
+{{ n % o }}
+{{ o|default('foo') }}
+{{ p ? q : r }}
+{{ s ?: t }}
+
+{% if a and b or not c %}
+{% for p in foo %}
+{% if d b-and e and f b-xor g or h b-or i %}
+{% if j starts with 'h' %}
+{% if i ends with 'j' %}
+{% if k is same as false %}
+{% if l matches '/f[o]{2,}(?:bar)?' %}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "set"]]],
+		["property", "a"], ["operator", "="], ["number", "4"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "a"], ["operator", "=="], ["number", "4"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "b"], ["operator", "!="], ["property", "c"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "c"], ["operator", "<"], ["property", "d"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "d"], ["operator", "<="], ["property", "e"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "e"], ["operator", ">"], ["property", "f"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "f"], ["operator", ">="], ["property", "g"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "g"], ["operator", "+"], ["property", "h"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "h"], ["operator", "-"], ["property", "i"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "i"], ["operator", "~"], ["property", "j"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "j"], ["operator", "*"], ["property", "k"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "k"], ["operator", "**"], ["property", "l"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "l"], ["operator", "/"], ["property", "m"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "m"], ["operator", "//"], ["property", "n"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "n"], ["operator", "%"], ["property", "o"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "o"],
+		["operator", "|"],
+		["property", "default"],
+		["punctuation", "("],
+		["string", [["punctuation", "'"], "foo", ["punctuation", "'"]]],
+		["punctuation", ")"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "p"], ["operator", "?"],
+		["property", "q"], ["punctuation", ":"],
+		["property", "r"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["property", "s"], ["operator", "?:"], ["property", "t"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "a"], ["operator", "and"], ["property", "b"],
+		["operator", "or"], ["operator", "not"], ["property", "c"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "for"]]],
+		["property", "p"], ["operator", "in"], ["property", "foo"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "d"], ["operator", "b-and"],
+		["property", "e"], ["operator", "and"],
+		["property", "f"], ["operator", "b-xor"],
+		["property", "g"], ["operator", "or"],
+		["property", "h"], ["operator", "b-or"],
+		["property", "i"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "j"],
+		["operator", "starts with"],
+		["string", [["punctuation", "'"], "h", ["punctuation", "'"]]],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "i"],
+		["operator", "ends with"],
+		["string", [["punctuation", "'"], "j", ["punctuation", "'"]]],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "k"], ["operator", "is"],
+		["operator", "same as"], ["boolean", "false"],
+		["rd", [["punctuation", "%}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{%"], ["keyword", "if"]]],
+		["property", "l"], ["operator", "matches"],
+		["string", [["punctuation", "'"], "/f[o]{2,}(?:bar)?", ["punctuation", "'"]]],
+		["rd", [["punctuation", "%}"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for operators.

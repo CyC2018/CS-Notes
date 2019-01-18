@@ -1,0 +1,75 @@
+AL AH AX EAX
+BL BH BX EBX
+CL CH CX ECX
+DL DH DX EDX
+BP EBP
+SP ESP
+DI EDI
+SI ESI
+ES CS SS DS GS FS
+CR0 CR2 CR3 CR4
+DR0 DR1 DR2 DR3 DR6 DR7
+TR3 TR4 TR5 TR6 TR7
+ST
+ST(0) ST(1) ST(2) ST(3) ST(4) ST(5) ST(6) ST(7)
+MM0  MM1  MM2  MM3  MM4  MM5  MM6  MM7
+XMM0 XMM1 XMM2 XMM3 XMM4 XMM5 XMM6 XMM7
+
+RAX  RBX  RCX  RDX
+BPL  RBP
+SPL  RSP
+DIL  RDI
+SIL  RSI
+R8B  R8W  R8D  R8
+R9B  R9W  R9D  R9
+R10B R10W R10D R10
+R11B R11W R11D R11
+R12B R12W R12D R12
+R13B R13W R13D R13
+R14B R14W R14D R14
+R15B R15W R15D R15
+XMM8 XMM9 XMM10 XMM11 XMM12 XMM13 XMM14 XMM15
+YMM0 YMM1 YMM2  YMM3  YMM4  YMM5  YMM6  YMM7
+YMM8 YMM9 YMM10 YMM11 YMM12 YMM13 YMM14 YMM15
+
+----------------------------------------------------
+
+[
+	["register", "AL"], ["register", "AH"], ["register", "AX"], ["register", "EAX"],
+	["register", "BL"], ["register", "BH"], ["register", "BX"], ["register", "EBX"],
+	["register", "CL"], ["register", "CH"], ["register", "CX"], ["register", "ECX"],
+	["register", "DL"], ["register", "DH"], ["register", "DX"], ["register", "EDX"],
+	["register", "BP"], ["register", "EBP"],
+	["register", "SP"], ["register", "ESP"],
+	["register", "DI"], ["register", "EDI"],
+	["register", "SI"], ["register", "ESI"],
+	["register", "ES"], ["register", "CS"], ["register", "SS"], ["register", "DS"], ["register", "GS"], ["register", "FS"],
+	["register", "CR0"], ["register", "CR2"], ["register", "CR3"], ["register", "CR4"],
+	["register", "DR0"], ["register", "DR1"], ["register", "DR2"], ["register", "DR3"], ["register", "DR6"], ["register", "DR7"],
+	["register", "TR3"], ["register", "TR4"], ["register", "TR5"], ["register", "TR6"], ["register", "TR7"],
+	["register", "ST"],
+	["register", "ST(0)"], ["register", "ST(1)"], ["register", "ST(2)"], ["register", "ST(3)"], ["register", "ST(4)"], ["register", "ST(5)"], ["register", "ST(6)"], ["register", "ST(7)"],
+	["register", "MM0"],  ["register", "MM1"],  ["register", "MM2"],  ["register", "MM3"],  ["register", "MM4"],  ["register", "MM5"],  ["register", "MM6"],  ["register", "MM7"],
+	["register", "XMM0"], ["register", "XMM1"], ["register", "XMM2"], ["register", "XMM3"], ["register", "XMM4"], ["register", "XMM5"], ["register", "XMM6"], ["register", "XMM7"],
+
+	["register", "RAX"],  ["register", "RBX"],  ["register", "RCX"],  ["register", "RDX"],
+	["register", "BPL"],  ["register", "RBP"],
+	["register", "SPL"],  ["register", "RSP"],
+	["register", "DIL"],  ["register", "RDI"],
+	["register", "SIL"],  ["register", "RSI"],
+	["register", "R8B"],  ["register", "R8W"],  ["register", "R8D"],  ["register", "R8"],
+	["register", "R9B"],  ["register", "R9W"],  ["register", "R9D"],  ["register", "R9"],
+	["register", "R10B"], ["register", "R10W"], ["register", "R10D"], ["register", "R10"],
+	["register", "R11B"], ["register", "R11W"], ["register", "R11D"], ["register", "R11"],
+	["register", "R12B"], ["register", "R12W"], ["register", "R12D"], ["register", "R12"],
+	["register", "R13B"], ["register", "R13W"], ["register", "R13D"], ["register", "R13"],
+	["register", "R14B"], ["register", "R14W"], ["register", "R14D"], ["register", "R14"],
+	["register", "R15B"], ["register", "R15W"], ["register", "R15D"], ["register", "R15"],
+	["register", "XMM8"], ["register", "XMM9"], ["register", "XMM10"], ["register", "XMM11"], ["register", "XMM12"], ["register", "XMM13"], ["register", "XMM14"], ["register", "XMM15"],
+	["register", "YMM0"], ["register", "YMM1"], ["register", "YMM2"],  ["register", "YMM3"],  ["register", "YMM4"],  ["register", "YMM5"],  ["register", "YMM6"],  ["register", "YMM7"],
+	["register", "YMM8"], ["register", "YMM9"], ["register", "YMM10"], ["register", "YMM11"], ["register", "YMM12"], ["register", "YMM13"], ["register", "YMM14"], ["register", "YMM15"]
+]
+
+----------------------------------------------------
+
+Checks for Iasm registers.

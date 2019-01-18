@@ -1,0 +1,27 @@
+(
+""
+"foo
+bar"
+"\"foo\""
+"foo\tbar"
+"`foo'"
+"FOO."
+)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("],
+	["string", [ "\"\"" ]],
+	["string", [ "\"foo\r\nbar\"" ]],
+	["string", [ "\"\\\"foo\\\"\"" ]],
+	["string", [ "\"foo\\tbar\"" ]],
+	["string", [ "\"", ["symbol", "`foo'"], "\"" ]],
+	["string", [ "\"", ["argument", "FOO"], ".\"" ]],
+	["punctuation", ")"]
+
+]
+
+----------------------------------------------------
+
+Checks for all string variations.

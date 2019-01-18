@@ -1,0 +1,48 @@
+@foo[]
+@GET_foo[]
+@SET_foo[]
+^foo[]
+^Foo::create[]
+^date::now[]
+^foo_bar.menu{}
+
+(^foo[])
+
+<div class="^foo[]">
+
+----------------------------------------------------
+
+[
+	["function", ["@foo"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["@", ["keyword", "GET_"], "foo"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["@", ["keyword", "SET_"], "foo"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["^foo"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["^Foo", ["punctuation", "::"], "create"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["^date", ["punctuation", "::"], "now"]], ["punctuation", "["], ["punctuation", "]"],
+	["function", ["^foo_bar", ["punctuation", "."], "menu"]], ["punctuation", "{"], ["punctuation", "}"],
+
+	["expression", [
+		["punctuation", "("],
+		["function", ["^foo"]], ["punctuation", "["], ["punctuation", "]"],
+		["punctuation", ")"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["function", ["^foo"]], ["parser-punctuation", "["], ["parser-punctuation", "]"],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for functions and methods.

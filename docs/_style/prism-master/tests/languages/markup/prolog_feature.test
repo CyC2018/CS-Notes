@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="tei2html.xsl"
+type="text/xsl"?>
+
+----------------------------------------------------
+
+[
+	["prolog", "<?xml version=\"1.0\"?>"],
+	["prolog", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"],
+	["prolog", "<?xml-stylesheet href=\"tei2html.xsl\"\r\ntype=\"text/xsl\"?>"]
+]
+
+----------------------------------------------------
+
+Checks for different XML prologs, single-line and multi-line.

@@ -1,0 +1,15 @@
+foo!
+foo_bar!
+foo_bar_42!
+
+----------------------------------------------------
+
+[
+	["macro-rules", "foo!"],
+	["macro-rules", "foo_bar!"],
+	["macro-rules", "foo_bar_42!"]
+]
+
+----------------------------------------------------
+
+Checks for macro rules.

@@ -1,0 +1,18 @@
+[System.String]::Empty;
+[Foo.Bar+Baz]::Abc;
+[int] 42;
+[string[]]
+[OutputType([System.Collections.Generic.List[int]])]
+
+----------------------------------------------------
+
+[
+	["namespace", "[System.String]"],"::Empty",["punctuation", ";"],
+	["namespace", "[Foo.Bar+Baz]"],"::Abc",["punctuation", ";"],
+	["namespace", "[int]"]," 42",["punctuation", ";"],
+	["namespace", "[string[]]"],
+	["namespace", "[OutputType([System.Collections.Generic.List[int]])]"]
+]
+----------------------------------------------------
+
+Testing namespaces

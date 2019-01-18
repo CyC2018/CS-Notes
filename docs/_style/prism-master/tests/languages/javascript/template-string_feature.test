@@ -1,0 +1,49 @@
+`foo bar`
+`foo
+bar`
+`40+2=${40+2}`
+`${foo()}`
+"foo `a` `b` `c` `d` bar"
+"test // test" `template`
+
+----------------------------------------------------
+
+[
+	["template-string", [
+		["string", "`foo bar`"]
+	]],
+	["template-string", [
+		["string", "`foo\r\nbar`"]
+	]],
+	["template-string", [
+		["string", "`40+2="],
+		["interpolation", [
+			["interpolation-punctuation", "${"],
+			["number", "40"],
+			["operator", "+"],
+			["number", "2"],
+			["interpolation-punctuation", "}"]
+		]],
+		["string", "`"]
+	]],
+	["template-string", [
+        ["string", "`"],
+        ["interpolation", [
+            ["interpolation-punctuation", "${"],
+            ["function", "foo"],
+            ["punctuation", "("],
+            ["punctuation", ")"],
+            ["interpolation-punctuation", "}"]
+        ]],
+        ["string", "`"]
+    ]],
+    ["string", "\"foo `a` `b` `c` `d` bar\""],
+    ["string", "\"test // test\""],
+    ["template-string", [
+        ["string", "`template`"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line template strings.

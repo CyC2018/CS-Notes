@@ -1,0 +1,19 @@
+//
+// Foobar
+#!/usr/bin/env io
+/* multiline
+comment
+*/
+
+----------------------------------------------------
+
+[
+	["comment", "//"],
+	["comment", "// Foobar"],
+	["comment", "#!/usr/bin/env io"],
+	["comment", "/* multiline\ncomment\n*/"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

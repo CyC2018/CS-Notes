@@ -1,0 +1,27 @@
+{
+	// Line comment
+	"//": "//",
+
+	/* Block comment */
+	"/*": "*/"
+}
+
+----------------------------------------------------
+
+[
+	["punctuation", "{"],
+	["comment", "// Line comment"],
+	["property", "\"//\""],
+	["operator", ":"],
+	["string", "\"//\""],
+	["punctuation", ","],
+	["comment", "/* Block comment */"],
+	["property", "\"/*\""],
+	["operator", ":"],
+	["string", "\"*/\""],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

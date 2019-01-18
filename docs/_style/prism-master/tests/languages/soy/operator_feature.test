@@ -1,0 +1,121 @@
+{let $foo: $a ? 0 : 1 /}
+{let $foo: $a ?: 1 /}
+{let $foo: 1 < 2 and 2 <= 3 /}
+{let $foo: 1 > 2 or 2 >= 3 /}
+{let $foo: 1 == 1 and 1 != 2 /}
+{let $foo: ((1 + 2) / 3 * 4) % 5 - 6 /}
+{let $foo: not $bar /}
+{let $foo kind="text"}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["variable", ["$a"]],
+		["operator", "?"],
+		["number", "0"],
+		["punctuation", ":"],
+		["number", "1"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["variable", ["$a"]],
+		["operator", "?:"],
+		["number", "1"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["number", "1"],
+		["operator", "<"],
+		["number", "2"],
+		["operator", "and"],
+		["number", "2"],
+		["operator", "<="],
+		["number", "3"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["number", "1"],
+		["operator", ">"],
+		["number", "2"],
+		["operator", "or"],
+		["number", "2"],
+		["operator", ">="],
+		["number", "3"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["number", "1"],
+		["operator", "=="],
+		["number", "1"],
+		["operator", "and"],
+		["number", "1"],
+		["operator", "!="],
+		["number", "2"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["punctuation", "("],
+		["punctuation", "("],
+		["number", "1"],
+		["operator", "+"],
+		["number", "2"],
+		["punctuation", ")"],
+		["operator", "/"],
+		["number", "3"],
+		["operator", "*"],
+		["number", "4"],
+		["punctuation", ")"],
+		["operator", "%"],
+		["number", "5"],
+		["operator", "-"],
+		["number", "6"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["punctuation", ":"],
+		["operator", "not"],
+		["variable", ["$bar"]],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$foo"]],
+		["property", "kind"],
+		["operator", "="],
+		["string", "\"text\""],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for operators.

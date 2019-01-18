@@ -1,0 +1,115 @@
+~s/foobar/
+~s/foo#{42}bar/
+~S|foobar|
+~c"foobar"
+~c"foo#{42}bar"
+~C'foobar'
+~w(foobar)c
+~w(foo#{42}bar)s
+~W[foobar]a
+~s{foobar}
+~s{foo#{42}bar}
+~S<foobar>
+
+"""
+Foo bar
+"""
+
+'''
+Foo bar
+'''
+
+~S"""
+Foo bar
+"""
+
+~c"""
+Foo bar
+"""
+
+~w"""
+Foo bar
+"""
+
+""
+"foo"
+"fo\"o\
+#{42}bar"
+''
+'foo'
+'fo\'o\
+bar'
+
+----------------------------------------------------
+
+[
+	["string", ["~s/foobar/"]],
+	["string", [
+		"~s/foo",
+		["interpolation", [
+			["delimiter", "#{"],
+			["number", "42"],
+			["delimiter", "}"]
+		]],
+		"bar/"
+	]],
+	["string", ["~S|foobar|"]],
+	["string", ["~c\"foobar\""]],
+	["string", [
+		"~c\"foo",
+		["interpolation", [
+			["delimiter", "#{"],
+			["number", "42"],
+			["delimiter", "}"]
+		]],
+		"bar\""
+	]],
+	["string", ["~C'foobar'"]],
+	["string", ["~w(foobar)c"]],
+	["string", [
+		"~w(foo",
+		["interpolation", [
+			["delimiter", "#{"],
+			["number", "42"],
+			["delimiter", "}"]
+		]],
+		"bar)s"
+	]],
+	["string", ["~W[foobar]a"]],
+	["string", ["~s{foobar}"]],
+	["string", [
+		"~s{foo",
+		["interpolation", [
+			["delimiter", "#{"],
+			["number", "42"],
+			["delimiter", "}"]
+		]],
+		"bar}"
+	]],
+	["string", ["~S<foobar>"]],
+
+	["string", ["\"\"\"\r\nFoo bar\r\n\"\"\""]],
+	["string", ["'''\r\nFoo bar\r\n'''"]],
+	["string", ["~S\"\"\"\r\nFoo bar\r\n\"\"\""]],
+	["string", ["~c\"\"\"\r\nFoo bar\r\n\"\"\""]],
+	["string", ["~w\"\"\"\r\nFoo bar\r\n\"\"\""]],
+
+	["string", ["\"\""]],
+	["string", ["\"foo\""]],
+	["string", [
+		"\"fo\\\"o\\\r\n",
+		["interpolation", [
+			["delimiter", "#{"],
+			["number", "42"],
+			["delimiter", "}"]
+		]],
+		"bar\""
+	]],
+	["string", ["''"]],
+	["string", ["'foo'"]],
+	["string", ["'fo\\'o\\\r\nbar'"]]
+]
+
+----------------------------------------------------
+
+Checks for strings.

@@ -1,0 +1,28 @@
+@if @else if @else
+@for @each @while
+@import @extend
+@debug @warn @mixin
+@include @function
+@return @content
+
+@for $i from 1 through 3
+
+----------------------------------------------------
+
+[
+	["keyword", "@if"], ["keyword", "@else if"], ["keyword", "@else"],
+	["keyword", "@for"], ["keyword", "@each"], ["keyword", "@while"],
+	["keyword", "@import"], ["keyword", "@extend"],
+	["keyword", "@debug"], ["keyword", "@warn"], ["keyword", "@mixin"],
+	["keyword", "@include"], ["keyword", "@function"],
+	["keyword", "@return"], ["keyword", "@content"],
+
+	["keyword", "@for"],
+	["variable", "$i"],
+	["keyword", "from"],
+	" 1 ",
+	["keyword", "through"],
+	" 3"
+]
+
+----------------------------------------------------

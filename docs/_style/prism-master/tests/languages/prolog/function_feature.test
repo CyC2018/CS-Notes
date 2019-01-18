@@ -1,0 +1,17 @@
+foobar(
+foo_bar_42(
+abs/1
+atan/2
+
+----------------------------------------------------
+
+[
+	["function", "foobar"], ["punctuation", "("],
+	["function", "foo_bar_42"], ["punctuation", "("],
+	["function", "abs/1"],
+	["function", "atan/2"]
+]
+
+----------------------------------------------------
+
+Checks for functions.
