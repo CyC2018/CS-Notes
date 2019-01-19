@@ -14,7 +14,7 @@
 
 <br>
 
-[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶指南已上线](https://xiaozhuanlan.com/CyC2018)
 
 <div align="center">
     <img src="other/LogoMakr_0zpEzN.png" width="190px">
