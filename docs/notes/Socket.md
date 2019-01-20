@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶指南已上线](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、I/O 模型](#一io-模型)
     * [阻塞式 I/O](#阻塞式-io)
