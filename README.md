@@ -79,7 +79,7 @@
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
 - [正则表达式](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/正则表达式.md)
 
-### :speak_no_evil: 编码实践 
+### :mag_right: 编码实践 
 
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码风格规范.md)
