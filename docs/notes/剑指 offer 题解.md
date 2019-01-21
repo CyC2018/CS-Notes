@@ -116,18 +116,8 @@ Output:
 
 以 (2, 3, 1, 0, 2, 5) 为例，遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复：
 
-<div align="center"> <img src="pics/1.gif" width="350px"> </div><br>
+<div align="center"> <img src="pics/11548084848123.gif" width="250px"> </div><br>
 
-```text
-position-0 : (2,3,1,0,2,5) // 2 <-> 1
-             (1,3,2,0,2,5) // 1 <-> 3
-             (3,1,2,0,2,5) // 3 <-> 0
-             (0,1,2,3,2,5) // already in position
-position-1 : (0,1,2,3,2,5) // already in position
-position-2 : (0,1,2,3,2,5) // already in position
-position-3 : (0,1,2,3,2,5) // already in position
-position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
-```
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
