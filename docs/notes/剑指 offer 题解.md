@@ -116,7 +116,7 @@ Output:
 
 以 (2, 3, 1, 0, 2, 5) 为例，遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复：
 
-<div align="center"> <img src="https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/pics/11548084848123.gif" width="250px"> </div><br>
+<div align="center"> <img src="https://github.com/CyC2018/CS-Notes/raw/master/docs/notes/pics/11548084848123.gif" width="250px"> </div><br>
 
 
 ```java
