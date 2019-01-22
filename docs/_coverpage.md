@@ -2,7 +2,7 @@
 
 # CS-Notes
 
-> Computer Sicence Learning Notes.
+> Computer Science Learning Notes.
 
 - Algorithm
 - Computer Networks
