@@ -1,0 +1,43 @@
+Aggregates: First, Second with Third
+Redirects: First => Second, Third => Fourth
+Jolie: "logger.ol" in LoggerService
+log@LoggerService( new )();
+println @ Console( "none" )()
+----------------------------------------------------
+ [
+ [ "keyword", "Aggregates" ],
+ [ "operator", ":" ],
+ [ "aggregates", [
+	[ "function", "First" ], [ "punctuation", ","],
+ 	[ "function", "Second" ],
+ 	[ "withExtension", [
+		[ "keyword", "with" ], " Third" ]
+		]
+	]
+ ],
+ [ "keyword", "Redirects" ],
+ [ "operator", ":" ],
+ [ "redirects",
+  [
+   [ "function", "First" ],
+   [ "symbol", "=>" ],
+   [ "function", "Second" ], [ "punctuation", ","],
+   [ "function", "Third" ],
+   [ "symbol", "=>" ],
+   [ "function", "Fourth" ]
+  ]
+ ],
+ [ "keyword", "Jolie" ],
+ [ "operator", ":" ],
+ [ "string", "\"logger.ol\"" ],
+ [ "keyword", "in" ],
+ [ "function", "LoggerService" ], 
+ "\nlog", [ "symbol", "@" ], [ "function", "LoggerService" ],	
+ 		"( ", [ "keyword", "new" ], " )()", [ "symbol", ";" ], 
+ "\nprintln ", [ "symbol", "@" ], [ "function", "Console" ], 
+ 		"( ", [ "string", "\"none\"" ], " )()"
+]
+
+----------------------------------------------------
+
+Checks for outputPorts and Aggregates and Redirect constructs.

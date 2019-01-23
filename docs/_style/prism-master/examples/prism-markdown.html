@@ -1,0 +1,86 @@
+<h2>Titles</h2>
+<pre><code>Title 1
+==
+
+Title 2
+-------
+
+# Title 1
+## Title 2
+### Title 3
+#### Title 4
+##### Title 5
+###### Title 6
+</code></pre>
+
+<h2>Bold and italic</h2>
+<pre><code>*Italic*
+**Bold on
+multiple lines**
+*Italic on
+multiple lines too*
+__It also works with underscores__
+_It also works with underscores_
+
+__An empty line
+
+is not allowed__
+</code></pre>
+
+<h2>Links</h2>
+<pre><code>[Prism](http://www.prismjs.com)
+[Prism](http://www.prismjs.com "Prism")
+
+[prism link]: http://www.prismjs.com (Prism)
+[Prism] [prism link]
+</code></pre>
+
+<h2>Lists and quotes</h2>
+<pre><code>* This is
+* an unordered list
+
+1. This is an
+2. ordered list
+
+* *List item in italic*
+* **List item in bold**
+* [List item as a link](http://example.com "This is an example")
+
+> This is a quotation
+>> With another quotation inside
+> _italic here_, __bold there__
+> And a [link](http://example.com)
+</code></pre>
+
+<h2>Code</h2>
+<pre><code>Inline code between backticks `&lt;p>Paragraph&lt;/p>`
+
+    some_code(); /* Indented
+    with four spaces */
+
+	some_code(); /* Indented
+	with a tab */
+</code></pre>
+
+<h2>Raw HTML</h2>
+<pre><code>> This is a quotation
+> Containing &lt;strong>raw HTML&lt;/strong>
+
+&lt;p>*Italic text inside HTML tag*&lt;/p></code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nesting of elements is not fully supported</h3>
+<pre><code>_ **bold** inside italic DOESN'T work _
+__ but *italic* inside bold DOES work __
+
+[Link partially *italic* DOESN'T work](http://example.com)
+_ [But link inside italic DOES work](http://example.com) _
+
+[Link partially **bold** DOESN'T work](http://example.com)
+__ [But link inside bold DOES work](http://example.com) __</code></pre>

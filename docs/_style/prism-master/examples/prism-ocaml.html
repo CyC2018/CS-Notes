@@ -1,0 +1,59 @@
+<h2>Comments</h2>
+<pre><code>(* Simple comment *)
+(* Multi-line
+comment *)</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.14159
+42.
+2.4E+2
+10_452_102
+0xf4 0xff_10_41
+0o427
+0b1100_1111_0000</code></pre>
+
+<h2>Strings and characters</h2>
+<pre><code>"Simple string."
+"String with \"quotes\" in it."
+'c' `c`
+'\'' `\``
+'\123' `\123`
+'\xf4'</code></pre>
+
+<h2>Full example</h2>
+<pre><code>module Make_interval(Endpoint : Comparable) = struct
+
+    type t = | Interval of Endpoint.t * Endpoint.t
+             | Empty
+
+    (** [create low high] creates a new interval from [low] to
+        [high].  If [low > high], then the interval is empty *)
+    let create low high =
+      if Endpoint.compare low high > 0 then Empty
+      else Interval (low,high)
+
+    (** Returns true iff the interval is empty *)
+    let is_empty = function
+      | Empty -> true
+      | Interval _ -> false
+
+    (** [contains t x] returns true iff [x] is contained in the
+        interval [t] *)
+    let contains t x =
+      match t with
+      | Empty -> false
+      | Interval (l,h) ->
+        Endpoint.compare x l >= 0 && Endpoint.compare x h <= 0
+
+    (** [intersect t1 t2] returns the intersection of the two input
+        intervals *)
+    let intersect t1 t2 =
+      let min x y = if Endpoint.compare x y <= 0 then x else y in
+      let max x y = if Endpoint.compare x y >= 0 then x else y in
+      match t1,t2 with
+      | Empty, _ | _, Empty -> Empty
+      | Interval (l1,h1), Interval (l2,h2) ->
+        create (max l1 l2) (min h1 h2)
+
+  end ;;</code></pre>

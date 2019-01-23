@@ -1,0 +1,29 @@
+_Alignas _Alignof _Atomic _Bool
+_Complex _Generic _Imaginary
+_Noreturn _Static_assert _Thread_local
+asm typeof inline auto break
+case char const continue default
+do double else enum extern
+float for goto if int
+long register return short signed
+sizeof static struct switch typedef
+union unsigned void volatile while
+
+----------------------------------------------------
+
+[
+	["keyword", "_Alignas"], ["keyword", "_Alignof"], ["keyword", "_Atomic"], ["keyword", "_Bool"],
+    ["keyword", "_Complex"], ["keyword", "_Generic"], ["keyword", "_Imaginary"],
+    ["keyword", "_Noreturn"], ["keyword", "_Static_assert"], ["keyword", "_Thread_local"],
+	["keyword", "asm"], ["keyword", "typeof"], ["keyword", "inline"], ["keyword", "auto"], ["keyword", "break"],
+	["keyword", "case"], ["keyword", "char"], ["keyword", "const"], ["keyword", "continue"], ["keyword", "default"],
+	["keyword", "do"], ["keyword", "double"], ["keyword", "else"], ["keyword", "enum"], ["keyword", "extern"],
+	["keyword", "float"], ["keyword", "for"], ["keyword", "goto"], ["keyword", "if"], ["keyword", "int"],
+	["keyword", "long"], ["keyword", "register"], ["keyword", "return"], ["keyword", "short"], ["keyword", "signed"],
+	["keyword", "sizeof"], ["keyword", "static"], ["keyword", "struct"], ["keyword", "switch"], ["keyword", "typedef"],
+	["keyword", "union"], ["keyword", "unsigned"], ["keyword", "void"], ["keyword", "volatile"], ["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

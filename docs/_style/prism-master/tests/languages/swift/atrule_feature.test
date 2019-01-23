@@ -1,0 +1,33 @@
+@IBOutlet
+@IBDesignable
+@IBAction
+@IBInspectable
+@class_protocol
+@exported
+@noreturn
+@NSCopying
+@NSManaged
+@objc
+@UIApplicationMain
+@auto_closure
+
+----------------------------------------------------
+
+[
+	["atrule", "@IBOutlet"],
+	["atrule", "@IBDesignable"],
+	["atrule", "@IBAction"],
+	["atrule", "@IBInspectable"],
+	["atrule", "@class_protocol"],
+	["atrule", "@exported"],
+	["atrule", "@noreturn"],
+	["atrule", "@NSCopying"],
+	["atrule", "@NSManaged"],
+	["atrule", "@objc"],
+	["atrule", "@UIApplicationMain"],
+	["atrule", "@auto_closure"]
+]
+
+----------------------------------------------------
+
+Checks for at-rules.

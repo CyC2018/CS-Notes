@@ -1,0 +1,333 @@
+::
+! Foo
+!! Bar
+! Baz
+
+Foobar ::
+" Foo
+" Bar
+"" Baz
+
+::
+# Foo
+# Bar
+
+::
+$ Foo
+$ Bar
+
+::
+% Foo
+% Bar
+
+::
+& Foo
+& Bar
+
+::
+' Foo
+' Bar
+
+::
+( Foo
+( Bar
+
+::
+) Foo
+) Bar
+
+::
+* Foo
+* Bar
+
+::
++ Foo
++ Bar
+
+::
+, Foo
+, Bar
+
+::
+- Foo
+- Bar
+
+::
+. Foo
+. Bar
+
+::
+/ Foo
+/ Bar
+
+::
+: Foo
+: Bar
+
+::
+; Foo
+; Bar
+
+::
+< Foo
+< Bar
+
+::
+= Foo
+= Bar
+
+::
+> Foo
+> Bar
+
+::
+? Foo
+? Bar
+
+::
+@ Foo
+@ Bar
+
+::
+[ Foo
+[ Bar
+
+::
+\ Foo
+\ Bar
+
+::
+] Foo
+] Bar
+
+::
+^ Foo
+^ Bar
+
+::
+_ Foo
+_ Bar
+
+::
+` Foo
+` Bar
+
+::
+{ Foo
+{ Bar
+
+::
+| Foo
+| Bar
+
+::
+} Foo
+} Bar
+
+::
+~ Foo
+~ Bar
+
+
+----------------------------------------------------
+
+[
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "!"], " Foo\r\n",
+		["literal-block-punctuation", "!!"], " Bar\r\n",
+		["literal-block-punctuation", "!"], " Baz"
+	]],
+	
+	"\r\n\r\nFoobar ",
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "\""], " Foo\r\n",
+		["literal-block-punctuation", "\""], " Bar\r\n",
+		["literal-block-punctuation", "\"\""], " Baz"
+	]],
+	
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "#"], " Foo\r\n",
+		["literal-block-punctuation", "#"], " Bar"
+	]],
+	
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "$"], " Foo\r\n",
+		["literal-block-punctuation", "$"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "%"], " Foo\r\n",
+		["literal-block-punctuation", "%"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "&"], " Foo\r\n",
+		["literal-block-punctuation", "&"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "'"], " Foo\r\n",
+		["literal-block-punctuation", "'"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "("], " Foo\r\n",
+		["literal-block-punctuation", "("], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", ")"], " Foo\r\n",
+		["literal-block-punctuation", ")"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "*"], " Foo\r\n",
+		["literal-block-punctuation", "*"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "+"], " Foo\r\n",
+		["literal-block-punctuation", "+"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", ","], " Foo\r\n",
+		["literal-block-punctuation", ","], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "-"], " Foo\r\n",
+		["literal-block-punctuation", "-"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "."], " Foo\r\n",
+		["literal-block-punctuation", "."], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "/"], " Foo\r\n",
+		["literal-block-punctuation", "/"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", ":"], " Foo\r\n",
+		["literal-block-punctuation", ":"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", ";"], " Foo\r\n",
+		["literal-block-punctuation", ";"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "<"], " Foo\r\n",
+		["literal-block-punctuation", "<"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "="], " Foo\r\n",
+		["literal-block-punctuation", "="], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", ">"], " Foo\r\n",
+		["literal-block-punctuation", ">"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "?"], " Foo\r\n",
+		["literal-block-punctuation", "?"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "@"], " Foo\r\n",
+		["literal-block-punctuation", "@"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "["], " Foo\r\n",
+		["literal-block-punctuation", "["], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "\\"], " Foo\r\n",
+		["literal-block-punctuation", "\\"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "]"], " Foo\r\n",
+		["literal-block-punctuation", "]"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "^"], " Foo\r\n",
+		["literal-block-punctuation", "^"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "_"], " Foo\r\n",
+		["literal-block-punctuation", "_"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "`"], " Foo\r\n",
+		["literal-block-punctuation", "`"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "{"], " Foo\r\n",
+		["literal-block-punctuation", "{"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "|"], " Foo\r\n",
+		["literal-block-punctuation", "|"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "}"], " Foo\r\n",
+		["literal-block-punctuation", "}"], " Bar"
+	]],
+
+	["quoted-literal-block", [
+		["literal-block-punctuation", "::"],
+		["literal-block-punctuation", "~"], " Foo\r\n",
+		["literal-block-punctuation", "~"], " Bar"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for quoted literal blocks, with every possible character.

@@ -1,0 +1,34 @@
+class Foo
+interface BarBaz
+class Foo : Bar
+[Foobar]
+void Foo(Bar bar, Baz baz)
+
+----------------------------------------------------
+
+[
+	["keyword", "class"],
+	["class-name", ["Foo"]],
+	["keyword", "interface"],
+	["class-name", ["BarBaz"]],
+	["keyword", "class"],
+	["class-name", ["Foo"]],
+	["punctuation", ":"],
+	["class-name", ["Bar"]],
+	["punctuation", "["],
+	["class-name", ["Foobar"]],
+	["punctuation", "]"],
+	["keyword", "void"],
+	["function", "Foo"],
+	["punctuation", "("],
+	["class-name", ["Bar"]],
+	" bar",
+	["punctuation", ","],
+	["class-name", ["Baz"]],
+	" baz",
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for class names.

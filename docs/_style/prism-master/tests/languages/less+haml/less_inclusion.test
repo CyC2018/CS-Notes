@@ -1,0 +1,32 @@
+:less
+	.foo { .bar; }
+
+~
+	:less
+	  .foo { .bar; }
+
+----------------------------------------------------
+
+[
+	["filter-less", [
+		["filter-name", ":less"],
+		["selector", [".foo"]],
+		["punctuation", "{"],
+		["mixin-usage", ".bar"],
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]],
+	["punctuation", "~"],
+	["filter-less", [
+		["filter-name", ":less"],
+		["selector", [".foo"]],
+		["punctuation", "{"],
+		["mixin-usage", ".bar"],
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for Less filter in Haml. The tilde serves only as a separator.

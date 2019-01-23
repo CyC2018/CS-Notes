@@ -1,0 +1,35 @@
+@mixin foobar
+@media (min-width: 600px)
+	@include foobar
+
+=foobar
++foobar
+
+----------------------------------------------------
+
+[
+	["atrule-line", [
+		["atrule", "@mixin"],
+		" foobar"
+	]],
+	["atrule-line", [
+		["atrule", "@media"],
+		" (min-width: 600px)"
+	]],
+	["atrule-line", [
+		["atrule", "@include"],
+		" foobar"
+	]],
+	["atrule-line", [
+		["atrule", "="],
+		"foobar"
+	]],
+	["atrule-line", [
+		["atrule", "+"],
+		"foobar"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for at-rules.

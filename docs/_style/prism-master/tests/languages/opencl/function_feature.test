@@ -1,0 +1,601 @@
+abs
+abs_diff
+acos
+acosh
+acospi
+add_sat
+aligned
+all
+and
+any
+asin
+asinh
+asinpi
+async
+async_work_group_copy
+async_work_group_strided_copy
+atan
+atan2
+atan2pi
+atanh
+atanpi
+atom_add
+atom_and
+atom_cmpxchg
+atom_dec
+atom_inc
+atom_max
+atom_min
+atom_or
+atom_sub
+atom_xchg
+atom_xor
+barrier
+bitselect
+cbrt
+ceil
+clamp
+clz
+copies
+copysign
+cos
+cosh
+cospi
+cross
+degrees
+distance
+dot
+endian
+erf
+erfc
+exp
+exp10
+exp2
+expm1
+fabs
+fast_distance
+fast_length
+fast_normalize
+fdim
+floor
+fma
+fmax
+fmin
+fract
+frexp
+fro
+from
+get_global_id
+get_global_offset
+get_global_size
+get_group_id
+get_image_channel_data_type
+get_image_channel_order
+get_image_depth
+get_image_dim
+get_image_height
+get_image_width
+get_local_id
+get_local_size
+get_num_groups
+get_work_dim
+hadd
+half_cos
+half_divide
+half_exp
+half_exp10
+half_exp2
+half_log
+half_log10
+half_log2
+half_powr
+half_recip
+half_rsqrt
+half_sin
+half_sqrt
+half_tan
+hypot
+ilogb
+isequal
+isfinite
+isgreater
+isgreaterequal
+isinf
+isless
+islessequal
+islessgreater
+isnan
+isnormal
+isnotequal
+isordered
+isunordered
+ldexp
+length
+lgamma
+lgamma_r
+log
+log10
+log1p
+log2
+logb
+mad
+mad24
+mad_hi
+mad_sat
+max
+mem
+mem_fence
+min
+mix
+modf
+mul24
+mul_hi
+nan
+native_cos
+native_divide
+native_exp
+native_exp10
+native_exp2
+native_log
+native_log10
+native_log2
+native_powr
+native_recip
+native_rsqrt
+native_sin
+native_sqrt
+native_tan
+nextafter
+normalize
+pow
+pown
+powr
+prefetch
+radians
+read_imagef
+read_imageh
+read_imagei
+read_imageui
+read_mem_fence
+remainder
+remquo
+reqd_work_group_size
+rhadd
+rint
+rootn
+rotate
+round
+rsqrt
+select
+shuffle
+shuffle2
+sign
+signbit
+sin
+sincos
+sinh
+sinpi
+smoothstep
+sqrt
+step
+sub_sat
+tan
+tanh
+tanpi
+tgamma
+to
+trunc
+upsample
+vec_step
+vec_type_hint
+vload16
+vload2
+vload3
+vload4
+vload8
+vload_half
+vload_half16
+vload_half2
+vload_half3
+vload_half4
+vload_half8
+vloada_half16
+vloada_half16_rte
+vloada_half16_rtp
+vloada_half16_rtz
+vloada_half2
+vloada_half2_rte
+vloada_half2_rtp
+vloada_half2_rtz
+vloada_half3
+vloada_half3_rte
+vloada_half3_rtp
+vloada_half3_rtz
+vloada_half4
+vloada_half4_rte
+vloada_half4_rtp
+vloada_half4_rtz
+vloada_half8
+vloada_half8_rte
+vloada_half8_rtp
+vloada_half8_rtz
+vstore16
+vstore2
+vstore3
+vstore4
+vstore8
+vstore_half
+vstore_half16
+vstore_half16_rte
+vstore_half16_rtn
+vstore_half16_rtp
+vstore_half16_rtz
+vstore_half2
+vstore_half2_rte
+vstore_half2_rtn
+vstore_half2_rtp
+vstore_half2_rtz
+vstore_half3
+vstore_half3_rte
+vstore_half3_rtn
+vstore_half3_rtp
+vstore_half3_rtz
+vstore_half4
+vstore_half4_rte
+vstore_half4_rtn
+vstore_half4_rtp
+vstore_half4_rtz
+vstore_half8
+vstore_half8_rte
+vstore_half8_rtn
+vstore_half8_rtp
+vstore_half8_rtz
+vstore_half_rte
+vstore_half_rtn
+vstore_half_rtp
+vstore_half_rtz
+vstore_rte
+vstore_rtn
+vstore_rtp
+vstore_rtz
+vstorea_half16
+vstorea_half16_rte
+vstorea_half16_rtn
+vstorea_half16_rtp
+vstorea_half16_rtz
+vstorea_half2
+vstorea_half2_rte
+vstorea_half2_rtn
+vstorea_half2_rtp
+vstorea_half2_rtz
+vstorea_half3
+vstorea_half3_rte
+vstorea_half3_rtn
+vstorea_half3_rtp
+vstorea_half3_rtz
+vstorea_half4
+vstorea_half4_rte
+vstorea_half4_rtn
+vstorea_half4_rtp
+vstorea_half4_rtz
+vstorea_half8
+vstorea_half8_rte
+vstorea_half8_rtn
+vstorea_half8_rtp
+vstorea_half8_rtz
+vstorea_half_rte
+vstorea_half_rtn
+vstorea_half_rtp
+vstorea_half_rtz
+wait_group_events
+work_group_size_hint
+write_imagef
+write_imageh
+write_imagei
+write_imageui
+write_mem_fence
+
+----------------------------------------------------
+
+[
+	["function-opencl-kernel", "abs"],
+	["function-opencl-kernel", "abs_diff"],
+	["function-opencl-kernel", "acos"],
+	["function-opencl-kernel", "acosh"],
+	["function-opencl-kernel", "acospi"],
+	["function-opencl-kernel", "add_sat"],
+	["function-opencl-kernel", "aligned"],
+	["function-opencl-kernel", "all"],
+	["function-opencl-kernel", "and"],
+	["function-opencl-kernel", "any"],
+	["function-opencl-kernel", "asin"],
+	["function-opencl-kernel", "asinh"],
+	["function-opencl-kernel", "asinpi"],
+	["function-opencl-kernel", "async"],
+	["function-opencl-kernel", "async_work_group_copy"],
+	["function-opencl-kernel", "async_work_group_strided_copy"],
+	["function-opencl-kernel", "atan"],
+	["function-opencl-kernel", "atan2"],
+	["function-opencl-kernel", "atan2pi"],
+	["function-opencl-kernel", "atanh"],
+	["function-opencl-kernel", "atanpi"],
+	["function-opencl-kernel", "atom_add"],
+	["function-opencl-kernel", "atom_and"],
+	["function-opencl-kernel", "atom_cmpxchg"],
+	["function-opencl-kernel", "atom_dec"],
+	["function-opencl-kernel", "atom_inc"],
+	["function-opencl-kernel", "atom_max"],
+	["function-opencl-kernel", "atom_min"],
+	["function-opencl-kernel", "atom_or"],
+	["function-opencl-kernel", "atom_sub"],
+	["function-opencl-kernel", "atom_xchg"],
+	["function-opencl-kernel", "atom_xor"],
+	["function-opencl-kernel", "barrier"],
+	["function-opencl-kernel", "bitselect"],
+	["function-opencl-kernel", "cbrt"],
+	["function-opencl-kernel", "ceil"],
+	["function-opencl-kernel", "clamp"],
+	["function-opencl-kernel", "clz"],
+	["function-opencl-kernel", "copies"],
+	["function-opencl-kernel", "copysign"],
+	["function-opencl-kernel", "cos"],
+	["function-opencl-kernel", "cosh"],
+	["function-opencl-kernel", "cospi"],
+	["function-opencl-kernel", "cross"],
+	["function-opencl-kernel", "degrees"],
+	["function-opencl-kernel", "distance"],
+	["function-opencl-kernel", "dot"],
+	["function-opencl-kernel", "endian"],
+	["function-opencl-kernel", "erf"],
+	["function-opencl-kernel", "erfc"],
+	["function-opencl-kernel", "exp"],
+	["function-opencl-kernel", "exp10"],
+	["function-opencl-kernel", "exp2"],
+	["function-opencl-kernel", "expm1"],
+	["function-opencl-kernel", "fabs"],
+	["function-opencl-kernel", "fast_distance"],
+	["function-opencl-kernel", "fast_length"],
+	["function-opencl-kernel", "fast_normalize"],
+	["function-opencl-kernel", "fdim"],
+	["function-opencl-kernel", "floor"],
+	["function-opencl-kernel", "fma"],
+	["function-opencl-kernel", "fmax"],
+	["function-opencl-kernel", "fmin"],
+	["function-opencl-kernel", "fract"],
+	["function-opencl-kernel", "frexp"],
+	["function-opencl-kernel", "fro"],
+	["function-opencl-kernel", "from"],
+	["function-opencl-kernel", "get_global_id"],
+	["function-opencl-kernel", "get_global_offset"],
+	["function-opencl-kernel", "get_global_size"],
+	["function-opencl-kernel", "get_group_id"],
+	["function-opencl-kernel", "get_image_channel_data_type"],
+	["function-opencl-kernel", "get_image_channel_order"],
+	["function-opencl-kernel", "get_image_depth"],
+	["function-opencl-kernel", "get_image_dim"],
+	["function-opencl-kernel", "get_image_height"],
+	["function-opencl-kernel", "get_image_width"],
+	["function-opencl-kernel", "get_local_id"],
+	["function-opencl-kernel", "get_local_size"],
+	["function-opencl-kernel", "get_num_groups"],
+	["function-opencl-kernel", "get_work_dim"],
+	["function-opencl-kernel", "hadd"],
+	["function-opencl-kernel", "half_cos"],
+	["function-opencl-kernel", "half_divide"],
+	["function-opencl-kernel", "half_exp"],
+	["function-opencl-kernel", "half_exp10"],
+	["function-opencl-kernel", "half_exp2"],
+	["function-opencl-kernel", "half_log"],
+	["function-opencl-kernel", "half_log10"],
+	["function-opencl-kernel", "half_log2"],
+	["function-opencl-kernel", "half_powr"],
+	["function-opencl-kernel", "half_recip"],
+	["function-opencl-kernel", "half_rsqrt"],
+	["function-opencl-kernel", "half_sin"],
+	["function-opencl-kernel", "half_sqrt"],
+	["function-opencl-kernel", "half_tan"],
+	["function-opencl-kernel", "hypot"],
+	["function-opencl-kernel", "ilogb"],
+	["function-opencl-kernel", "isequal"],
+	["function-opencl-kernel", "isfinite"],
+	["function-opencl-kernel", "isgreater"],
+	["function-opencl-kernel", "isgreaterequal"],
+	["function-opencl-kernel", "isinf"],
+	["function-opencl-kernel", "isless"],
+	["function-opencl-kernel", "islessequal"],
+	["function-opencl-kernel", "islessgreater"],
+	["function-opencl-kernel", "isnan"],
+	["function-opencl-kernel", "isnormal"],
+	["function-opencl-kernel", "isnotequal"],
+	["function-opencl-kernel", "isordered"],
+	["function-opencl-kernel", "isunordered"],
+	["function-opencl-kernel", "ldexp"],
+	["function-opencl-kernel", "length"],
+	["function-opencl-kernel", "lgamma"],
+	["function-opencl-kernel", "lgamma_r"],
+	["function-opencl-kernel", "log"],
+	["function-opencl-kernel", "log10"],
+	["function-opencl-kernel", "log1p"],
+	["function-opencl-kernel", "log2"],
+	["function-opencl-kernel", "logb"],
+	["function-opencl-kernel", "mad"],
+	["function-opencl-kernel", "mad24"],
+	["function-opencl-kernel", "mad_hi"],
+	["function-opencl-kernel", "mad_sat"],
+	["function-opencl-kernel", "max"],
+	["function-opencl-kernel", "mem"],
+	["function-opencl-kernel", "mem_fence"],
+	["function-opencl-kernel", "min"],
+	["function-opencl-kernel", "mix"],
+	["function-opencl-kernel", "modf"],
+	["function-opencl-kernel", "mul24"],
+	["function-opencl-kernel", "mul_hi"],
+	["function-opencl-kernel", "nan"],
+	["function-opencl-kernel", "native_cos"],
+	["function-opencl-kernel", "native_divide"],
+	["function-opencl-kernel", "native_exp"],
+	["function-opencl-kernel", "native_exp10"],
+	["function-opencl-kernel", "native_exp2"],
+	["function-opencl-kernel", "native_log"],
+	["function-opencl-kernel", "native_log10"],
+	["function-opencl-kernel", "native_log2"],
+	["function-opencl-kernel", "native_powr"],
+	["function-opencl-kernel", "native_recip"],
+	["function-opencl-kernel", "native_rsqrt"],
+	["function-opencl-kernel", "native_sin"],
+	["function-opencl-kernel", "native_sqrt"],
+	["function-opencl-kernel", "native_tan"],
+	["function-opencl-kernel", "nextafter"],
+	["function-opencl-kernel", "normalize"],
+	["function-opencl-kernel", "pow"],
+	["function-opencl-kernel", "pown"],
+	["function-opencl-kernel", "powr"],
+	["function-opencl-kernel", "prefetch"],
+	["function-opencl-kernel", "radians"],
+	["function-opencl-kernel", "read_imagef"],
+	["function-opencl-kernel", "read_imageh"],
+	["function-opencl-kernel", "read_imagei"],
+	["function-opencl-kernel", "read_imageui"],
+	["function-opencl-kernel", "read_mem_fence"],
+	["function-opencl-kernel", "remainder"],
+	["function-opencl-kernel", "remquo"],
+	["function-opencl-kernel", "reqd_work_group_size"],
+	["function-opencl-kernel", "rhadd"],
+	["function-opencl-kernel", "rint"],
+	["function-opencl-kernel", "rootn"],
+	["function-opencl-kernel", "rotate"],
+	["function-opencl-kernel", "round"],
+	["function-opencl-kernel", "rsqrt"],
+	["function-opencl-kernel", "select"],
+	["function-opencl-kernel", "shuffle"],
+	["function-opencl-kernel", "shuffle2"],
+	["function-opencl-kernel", "sign"],
+	["function-opencl-kernel", "signbit"],
+	["function-opencl-kernel", "sin"],
+	["function-opencl-kernel", "sincos"],
+	["function-opencl-kernel", "sinh"],
+	["function-opencl-kernel", "sinpi"],
+	["function-opencl-kernel", "smoothstep"],
+	["function-opencl-kernel", "sqrt"],
+	["function-opencl-kernel", "step"],
+	["function-opencl-kernel", "sub_sat"],
+	["function-opencl-kernel", "tan"],
+	["function-opencl-kernel", "tanh"],
+	["function-opencl-kernel", "tanpi"],
+	["function-opencl-kernel", "tgamma"],
+	["function-opencl-kernel", "to"],
+	["function-opencl-kernel", "trunc"],
+	["function-opencl-kernel", "upsample"],
+	["function-opencl-kernel", "vec_step"],
+	["function-opencl-kernel", "vec_type_hint"],
+	["function-opencl-kernel", "vload16"],
+	["function-opencl-kernel", "vload2"],
+	["function-opencl-kernel", "vload3"],
+	["function-opencl-kernel", "vload4"],
+	["function-opencl-kernel", "vload8"],
+	["function-opencl-kernel", "vload_half"],
+	["function-opencl-kernel", "vload_half16"],
+	["function-opencl-kernel", "vload_half2"],
+	["function-opencl-kernel", "vload_half3"],
+	["function-opencl-kernel", "vload_half4"],
+	["function-opencl-kernel", "vload_half8"],
+	["function-opencl-kernel", "vloada_half16"],
+	["function-opencl-kernel", "vloada_half16_rte"],
+	["function-opencl-kernel", "vloada_half16_rtp"],
+	["function-opencl-kernel", "vloada_half16_rtz"],
+	["function-opencl-kernel", "vloada_half2"],
+	["function-opencl-kernel", "vloada_half2_rte"],
+	["function-opencl-kernel", "vloada_half2_rtp"],
+	["function-opencl-kernel", "vloada_half2_rtz"],
+	["function-opencl-kernel", "vloada_half3"],
+	["function-opencl-kernel", "vloada_half3_rte"],
+	["function-opencl-kernel", "vloada_half3_rtp"],
+	["function-opencl-kernel", "vloada_half3_rtz"],
+	["function-opencl-kernel", "vloada_half4"],
+	["function-opencl-kernel", "vloada_half4_rte"],
+	["function-opencl-kernel", "vloada_half4_rtp"],
+	["function-opencl-kernel", "vloada_half4_rtz"],
+	["function-opencl-kernel", "vloada_half8"],
+	["function-opencl-kernel", "vloada_half8_rte"],
+	["function-opencl-kernel", "vloada_half8_rtp"],
+	["function-opencl-kernel", "vloada_half8_rtz"],
+	["function-opencl-kernel", "vstore16"],
+	["function-opencl-kernel", "vstore2"],
+	["function-opencl-kernel", "vstore3"],
+	["function-opencl-kernel", "vstore4"],
+	["function-opencl-kernel", "vstore8"],
+	["function-opencl-kernel", "vstore_half"],
+	["function-opencl-kernel", "vstore_half16"],
+	["function-opencl-kernel", "vstore_half16_rte"],
+	["function-opencl-kernel", "vstore_half16_rtn"],
+	["function-opencl-kernel", "vstore_half16_rtp"],
+	["function-opencl-kernel", "vstore_half16_rtz"],
+	["function-opencl-kernel", "vstore_half2"],
+	["function-opencl-kernel", "vstore_half2_rte"],
+	["function-opencl-kernel", "vstore_half2_rtn"],
+	["function-opencl-kernel", "vstore_half2_rtp"],
+	["function-opencl-kernel", "vstore_half2_rtz"],
+	["function-opencl-kernel", "vstore_half3"],
+	["function-opencl-kernel", "vstore_half3_rte"],
+	["function-opencl-kernel", "vstore_half3_rtn"],
+	["function-opencl-kernel", "vstore_half3_rtp"],
+	["function-opencl-kernel", "vstore_half3_rtz"],
+	["function-opencl-kernel", "vstore_half4"],
+	["function-opencl-kernel", "vstore_half4_rte"],
+	["function-opencl-kernel", "vstore_half4_rtn"],
+	["function-opencl-kernel", "vstore_half4_rtp"],
+	["function-opencl-kernel", "vstore_half4_rtz"],
+	["function-opencl-kernel", "vstore_half8"],
+	["function-opencl-kernel", "vstore_half8_rte"],
+	["function-opencl-kernel", "vstore_half8_rtn"],
+	["function-opencl-kernel", "vstore_half8_rtp"],
+	["function-opencl-kernel", "vstore_half8_rtz"],
+	["function-opencl-kernel", "vstore_half_rte"],
+	["function-opencl-kernel", "vstore_half_rtn"],
+	["function-opencl-kernel", "vstore_half_rtp"],
+	["function-opencl-kernel", "vstore_half_rtz"],
+	["function-opencl-kernel", "vstore_rte"],
+	["function-opencl-kernel", "vstore_rtn"],
+	["function-opencl-kernel", "vstore_rtp"],
+	["function-opencl-kernel", "vstore_rtz"],
+	["function-opencl-kernel", "vstorea_half16"],
+	["function-opencl-kernel", "vstorea_half16_rte"],
+	["function-opencl-kernel", "vstorea_half16_rtn"],
+	["function-opencl-kernel", "vstorea_half16_rtp"],
+	["function-opencl-kernel", "vstorea_half16_rtz"],
+	["function-opencl-kernel", "vstorea_half2"],
+	["function-opencl-kernel", "vstorea_half2_rte"],
+	["function-opencl-kernel", "vstorea_half2_rtn"],
+	["function-opencl-kernel", "vstorea_half2_rtp"],
+	["function-opencl-kernel", "vstorea_half2_rtz"],
+	["function-opencl-kernel", "vstorea_half3"],
+	["function-opencl-kernel", "vstorea_half3_rte"],
+	["function-opencl-kernel", "vstorea_half3_rtn"],
+	["function-opencl-kernel", "vstorea_half3_rtp"],
+	["function-opencl-kernel", "vstorea_half3_rtz"],
+	["function-opencl-kernel", "vstorea_half4"],
+	["function-opencl-kernel", "vstorea_half4_rte"],
+	["function-opencl-kernel", "vstorea_half4_rtn"],
+	["function-opencl-kernel", "vstorea_half4_rtp"],
+	["function-opencl-kernel", "vstorea_half4_rtz"],
+	["function-opencl-kernel", "vstorea_half8"],
+	["function-opencl-kernel", "vstorea_half8_rte"],
+	["function-opencl-kernel", "vstorea_half8_rtn"],
+	["function-opencl-kernel", "vstorea_half8_rtp"],
+	["function-opencl-kernel", "vstorea_half8_rtz"],
+	["function-opencl-kernel", "vstorea_half_rte"],
+	["function-opencl-kernel", "vstorea_half_rtn"],
+	["function-opencl-kernel", "vstorea_half_rtp"],
+	["function-opencl-kernel", "vstorea_half_rtz"],
+	["function-opencl-kernel", "wait_group_events"],
+	["function-opencl-kernel", "work_group_size_hint"],
+	["function-opencl-kernel", "write_imagef"],
+	["function-opencl-kernel", "write_imageh"],
+	["function-opencl-kernel", "write_imagei"],
+	["function-opencl-kernel", "write_imageui"],
+	["function-opencl-kernel", "write_mem_fence"]
+]
+
+----------------------------------------------------
+
+Checks for all reserved function names in OpenCL kernel code.

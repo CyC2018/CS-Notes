@@ -1,0 +1,28 @@
+:css
+	.test {}
+
+~
+	:css
+	  .test {}
+
+----------------------------------------------------
+
+[
+	["filter-css", [
+		["filter-name", ":css"],
+		["selector", ".test"],
+		["punctuation", "{"],
+		["punctuation", "}"]
+	]],
+	["punctuation", "~"],
+	["filter-css", [
+        ["filter-name", ":css"],
+        ["selector", ".test"],
+        ["punctuation", "{"],
+        ["punctuation", "}"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for CSS filter in Haml. The tilde serves only as a separator.

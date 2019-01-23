@@ -1,0 +1,39 @@
+['c']
+["f"]
+[K_SEL]
+[K_KANJI?15]
+[T_SCHWA]
+[U_0259]
+[CTRL 'a']
+[SHIFT "b"]
+[ALT K_C]
+[LCTRL T_D]
+[RCTRL U_E259]
+[LALT K_F]
+[RALT K_G]
+[CAPS K_H]
+[NCAPS K_I]
+
+----------------------------------------------------
+
+[
+	["function", "['c']"],
+	["function", "[\"f\"]"],
+	["function", "[K_SEL]"],
+	["function", "[K_KANJI?15]"],
+	["function", "[T_SCHWA]"],
+	["function", "[U_0259]"],
+	["function", "[CTRL 'a']"],
+	["function", "[SHIFT \"b\"]"],
+	["function", "[ALT K_C]"],
+	["function", "[LCTRL T_D]"],
+	["function", "[RCTRL U_E259]"],
+	["function", "[LALT K_F]"],
+	["function", "[RALT K_G]"],
+	["function", "[CAPS K_H]"],
+	["function", "[NCAPS K_I]"]
+]
+
+----------------------------------------------------
+
+Checks for keys, with all possible modifiers.

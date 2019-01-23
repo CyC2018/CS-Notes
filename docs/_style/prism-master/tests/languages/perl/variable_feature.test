@@ -1,0 +1,47 @@
+$foo
+$#foo
+
+${^POSTMATCH}
+
+$^V
+
+@1
+$42
+
+$$
+$_
+%!
+
+%'foo
+$foo'bar
+
+$::::'foo
+$foo::'bar
+
+----------------------------------------------------
+
+[
+	["variable", "$foo"],
+	["variable", "$#foo"],
+
+	["variable", "${^POSTMATCH}"],
+
+	["variable", "$^V"],
+
+	["variable", "@1"],
+	["variable", "$42"],
+
+	["variable", "$$"],
+	["variable", "$_"],
+	["variable", "%!"],
+
+	["variable", "%'foo"],
+	["variable", "$foo'bar"],
+
+	["variable", "$::::'foo"],
+	["variable", "$foo::'bar"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

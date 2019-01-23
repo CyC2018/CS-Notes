@@ -1,0 +1,25 @@
+foo
+fooBar42
+foo-bar42-baz
+yes-no
+function-case
+delete-by
+a-b2
+_-a_
+
+----------------------------------------------------
+
+[
+	["identifier", "foo"],
+	["identifier", "fooBar42"],
+	["identifier", "foo-bar42-baz"],
+	["identifier", "yes-no"],
+	["identifier", "function-case"],
+	["identifier", "delete-by"],
+	["identifier", "a-b2"],
+	["identifier", "_-a_"]
+]
+
+----------------------------------------------------
+
+Checks for identifiers.

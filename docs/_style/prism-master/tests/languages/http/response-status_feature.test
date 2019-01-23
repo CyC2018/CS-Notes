@@ -1,0 +1,29 @@
+HTTP/1.0 200 OK
+HTTP/1.1 403 Forbidden
+HTTP/1.1 404 Not Found
+HTTP/1.0 418 I'm a teapot
+
+----------------------------------------------------
+
+[
+	["response-status", [
+		"HTTP/1.0 ",
+		["property", "200 OK"]
+	]],
+	["response-status", [
+		"HTTP/1.1 ",
+		["property", "403 Forbidden"]
+	]],
+	["response-status", [
+		"HTTP/1.1 ",
+		["property", "404 Not Found"]
+	]],
+	["response-status", [
+		"HTTP/1.0 ",
+		["property", "418 I'm a teapot"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for response statuses.

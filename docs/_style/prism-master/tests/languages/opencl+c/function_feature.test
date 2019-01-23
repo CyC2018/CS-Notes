@@ -1,0 +1,227 @@
+clBuildProgram
+clCloneKernel
+clCompileProgram
+clCreateBuffer
+clCreateCommandQueue
+clCreateCommandQueueWithProperties
+clCreateContext
+clCreateContextFromType
+clCreateImage
+clCreateImage2D
+clCreateImage3D
+clCreateKernel
+clCreateKernelsInProgram
+clCreatePipe
+clCreateProgramWithBinary
+clCreateProgramWithBuiltInKernels
+clCreateProgramWithIL
+clCreateProgramWithSource
+clCreateSampler
+clCreateSamplerWithProperties
+clCreateSubBuffer
+clCreateSubDevices
+clCreateUserEvent
+clEnqueueBarrier
+clEnqueueBarrierWithWaitList
+clEnqueueCopyBuffer
+clEnqueueCopyBufferRect
+clEnqueueCopyBufferToImage
+clEnqueueCopyImage
+clEnqueueCopyImageToBuffer
+clEnqueueFillBuffer
+clEnqueueFillImage
+clEnqueueMapBuffer
+clEnqueueMapImage
+clEnqueueMarker
+clEnqueueMarkerWithWaitList
+clEnqueueMigrateMemObjects
+clEnqueueNDRangeKernel
+clEnqueueNativeKernel
+clEnqueueReadBuffer
+clEnqueueReadBufferRect
+clEnqueueReadImage
+clEnqueueSVMFree
+clEnqueueSVMMap
+clEnqueueSVMMemFill
+clEnqueueSVMMemcpy
+clEnqueueSVMMigrateMem
+clEnqueueSVMUnmap
+clEnqueueTask
+clEnqueueUnmapMemObject
+clEnqueueWaitForEvents
+clEnqueueWriteBuffer
+clEnqueueWriteBufferRect
+clEnqueueWriteImage
+clFinish
+clFlush
+clGetCommandQueueInfo
+clGetContextInfo
+clGetDeviceAndHostTimer
+clGetDeviceIDs
+clGetDeviceInfo
+clGetEventInfo
+clGetEventProfilingInfo
+clGetExtensionFunctionAddress
+clGetExtensionFunctionAddressForPlatform
+clGetHostTimer
+clGetImageInfo
+clGetKernelArgInfo
+clGetKernelInfo
+clGetKernelSubGroupInfo
+clGetKernelWorkGroupInfo
+clGetMemObjectInfo
+clGetPipeInfo
+clGetPlatformIDs
+clGetPlatformInfo
+clGetProgramBuildInfo
+clGetProgramInfo
+clGetSamplerInfo
+clGetSupportedImageFormats
+clLinkProgram
+clReleaseCommandQueue
+clReleaseContext
+clReleaseDevice
+clReleaseEvent
+clReleaseKernel
+clReleaseMemObject
+clReleaseProgram
+clReleaseSampler
+clRetainCommandQueue
+clRetainContext
+clRetainDevice
+clRetainEvent
+clRetainKernel
+clRetainMemObject
+clRetainProgram
+clRetainSampler
+clSVMAlloc
+clSVMFree
+clSetCommandQueueProperty
+clSetDefaultDeviceCommandQueue
+clSetEventCallback
+clSetKernelArg
+clSetKernelArgSVMPointer
+clSetKernelExecInfo
+clSetMemObjectDestructorCallback
+clSetUserEventStatus
+clUnloadCompiler
+clUnloadPlatformCompiler
+clWaitForEvents
+
+----------------------------------------------------
+
+[
+	["function-opencl-host", "clBuildProgram"],
+	["function-opencl-host", "clCloneKernel"],
+	["function-opencl-host", "clCompileProgram"],
+	["function-opencl-host", "clCreateBuffer"],
+	["function-opencl-host", "clCreateCommandQueue"],
+	["function-opencl-host", "clCreateCommandQueueWithProperties"],
+	["function-opencl-host", "clCreateContext"],
+	["function-opencl-host", "clCreateContextFromType"],
+	["function-opencl-host", "clCreateImage"],
+	["function-opencl-host", "clCreateImage2D"],
+	["function-opencl-host", "clCreateImage3D"],
+	["function-opencl-host", "clCreateKernel"],
+	["function-opencl-host", "clCreateKernelsInProgram"],
+	["function-opencl-host", "clCreatePipe"],
+	["function-opencl-host", "clCreateProgramWithBinary"],
+	["function-opencl-host", "clCreateProgramWithBuiltInKernels"],
+	["function-opencl-host", "clCreateProgramWithIL"],
+	["function-opencl-host", "clCreateProgramWithSource"],
+	["function-opencl-host", "clCreateSampler"],
+	["function-opencl-host", "clCreateSamplerWithProperties"],
+	["function-opencl-host", "clCreateSubBuffer"],
+	["function-opencl-host", "clCreateSubDevices"],
+	["function-opencl-host", "clCreateUserEvent"],
+	["function-opencl-host", "clEnqueueBarrier"],
+	["function-opencl-host", "clEnqueueBarrierWithWaitList"],
+	["function-opencl-host", "clEnqueueCopyBuffer"],
+	["function-opencl-host", "clEnqueueCopyBufferRect"],
+	["function-opencl-host", "clEnqueueCopyBufferToImage"],
+	["function-opencl-host", "clEnqueueCopyImage"],
+	["function-opencl-host", "clEnqueueCopyImageToBuffer"],
+	["function-opencl-host", "clEnqueueFillBuffer"],
+	["function-opencl-host", "clEnqueueFillImage"],
+	["function-opencl-host", "clEnqueueMapBuffer"],
+	["function-opencl-host", "clEnqueueMapImage"],
+	["function-opencl-host", "clEnqueueMarker"],
+	["function-opencl-host", "clEnqueueMarkerWithWaitList"],
+	["function-opencl-host", "clEnqueueMigrateMemObjects"],
+	["function-opencl-host", "clEnqueueNDRangeKernel"],
+	["function-opencl-host", "clEnqueueNativeKernel"],
+	["function-opencl-host", "clEnqueueReadBuffer"],
+	["function-opencl-host", "clEnqueueReadBufferRect"],
+	["function-opencl-host", "clEnqueueReadImage"],
+	["function-opencl-host", "clEnqueueSVMFree"],
+	["function-opencl-host", "clEnqueueSVMMap"],
+	["function-opencl-host", "clEnqueueSVMMemFill"],
+	["function-opencl-host", "clEnqueueSVMMemcpy"],
+	["function-opencl-host", "clEnqueueSVMMigrateMem"],
+	["function-opencl-host", "clEnqueueSVMUnmap"],
+	["function-opencl-host", "clEnqueueTask"],
+	["function-opencl-host", "clEnqueueUnmapMemObject"],
+	["function-opencl-host", "clEnqueueWaitForEvents"],
+	["function-opencl-host", "clEnqueueWriteBuffer"],
+	["function-opencl-host", "clEnqueueWriteBufferRect"],
+	["function-opencl-host", "clEnqueueWriteImage"],
+	["function-opencl-host", "clFinish"],
+	["function-opencl-host", "clFlush"],
+	["function-opencl-host", "clGetCommandQueueInfo"],
+	["function-opencl-host", "clGetContextInfo"],
+	["function-opencl-host", "clGetDeviceAndHostTimer"],
+	["function-opencl-host", "clGetDeviceIDs"],
+	["function-opencl-host", "clGetDeviceInfo"],
+	["function-opencl-host", "clGetEventInfo"],
+	["function-opencl-host", "clGetEventProfilingInfo"],
+	["function-opencl-host", "clGetExtensionFunctionAddress"],
+	["function-opencl-host", "clGetExtensionFunctionAddressForPlatform"],
+	["function-opencl-host", "clGetHostTimer"],
+	["function-opencl-host", "clGetImageInfo"],
+	["function-opencl-host", "clGetKernelArgInfo"],
+	["function-opencl-host", "clGetKernelInfo"],
+	["function-opencl-host", "clGetKernelSubGroupInfo"],
+	["function-opencl-host", "clGetKernelWorkGroupInfo"],
+	["function-opencl-host", "clGetMemObjectInfo"],
+	["function-opencl-host", "clGetPipeInfo"],
+	["function-opencl-host", "clGetPlatformIDs"],
+	["function-opencl-host", "clGetPlatformInfo"],
+	["function-opencl-host", "clGetProgramBuildInfo"],
+	["function-opencl-host", "clGetProgramInfo"],
+	["function-opencl-host", "clGetSamplerInfo"],
+	["function-opencl-host", "clGetSupportedImageFormats"],
+	["function-opencl-host", "clLinkProgram"],
+	["function-opencl-host", "clReleaseCommandQueue"],
+	["function-opencl-host", "clReleaseContext"],
+	["function-opencl-host", "clReleaseDevice"],
+	["function-opencl-host", "clReleaseEvent"],
+	["function-opencl-host", "clReleaseKernel"],
+	["function-opencl-host", "clReleaseMemObject"],
+	["function-opencl-host", "clReleaseProgram"],
+	["function-opencl-host", "clReleaseSampler"],
+	["function-opencl-host", "clRetainCommandQueue"],
+	["function-opencl-host", "clRetainContext"],
+	["function-opencl-host", "clRetainDevice"],
+	["function-opencl-host", "clRetainEvent"],
+	["function-opencl-host", "clRetainKernel"],
+	["function-opencl-host", "clRetainMemObject"],
+	["function-opencl-host", "clRetainProgram"],
+	["function-opencl-host", "clRetainSampler"],
+	["function-opencl-host", "clSVMAlloc"],
+	["function-opencl-host", "clSVMFree"],
+	["function-opencl-host", "clSetCommandQueueProperty"],
+	["function-opencl-host", "clSetDefaultDeviceCommandQueue"],
+	["function-opencl-host", "clSetEventCallback"],
+	["function-opencl-host", "clSetKernelArg"],
+	["function-opencl-host", "clSetKernelArgSVMPointer"],
+	["function-opencl-host", "clSetKernelExecInfo"],
+	["function-opencl-host", "clSetMemObjectDestructorCallback"],
+	["function-opencl-host", "clSetUserEventStatus"],
+	["function-opencl-host", "clUnloadCompiler"],
+	["function-opencl-host", "clUnloadPlatformCompiler"],
+	["function-opencl-host", "clWaitForEvents"]
+]
+
+----------------------------------------------------
+
+Checks for all reserved function names in OpenCL host code (C-API).

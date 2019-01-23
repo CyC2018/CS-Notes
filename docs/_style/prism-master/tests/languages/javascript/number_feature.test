@@ -1,0 +1,36 @@
+42
+3.14159
+4e10
+3.2E+6
+2.1e-10
+0b1101
+0o571
+0xbabe
+0xBABE
+NaN
+Infinity
+123n
+0x123n
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "4e10"],
+	["number", "3.2E+6"],
+	["number", "2.1e-10"],
+	["number", "0b1101"],
+	["number", "0o571"],
+	["number", "0xbabe"],
+	["number", "0xBABE"],
+	["number", "NaN"],
+	["number", "Infinity"],
+	["number", "123n"],
+	["number", "0x123n"]
+]
+
+----------------------------------------------------
+
+Checks for decimal numbers, binary numbers, octal numbers, hexadecimal numbers.
+Also checks for keywords representing numbers.

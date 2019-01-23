@@ -1,0 +1,29 @@
+Array Bignum Binding
+Class;
+Continuation Dir Exception
+FalseClass File Stat File
+Fixnum Float Hash Integer
+IO MatchData Method Module
+NilClass Numeric Object
+Proc Range Regexp String
+Struct TMS Symbol ThreadGroup
+Thread Time TrueClass
+
+----------------------------------------------------
+
+[
+	["builtin", "Array"], ["builtin", "Bignum"], ["builtin", "Binding"],
+	["builtin", "Class"], ["punctuation", ";"],
+	["builtin", "Continuation"], ["builtin", "Dir"], ["builtin", "Exception"],
+	["builtin", "FalseClass"], ["builtin", "File"], ["builtin", "Stat"], ["builtin", "File"],
+	["builtin", "Fixnum"], ["builtin", "Float"], ["builtin", "Hash"], ["builtin", "Integer"],
+	["builtin", "IO"], ["builtin", "MatchData"], ["builtin", "Method"], ["builtin", "Module"],
+	["builtin", "NilClass"], ["builtin", "Numeric"], ["builtin", "Object"],
+	["builtin", "Proc"], ["builtin", "Range"], ["builtin", "Regexp"], ["builtin", "String"],
+	["builtin", "Struct"], ["builtin", "TMS"], ["builtin", "Symbol"], ["builtin", "ThreadGroup"],
+	["builtin", "Thread"], ["builtin", "Time"], ["builtin", "TrueClass"]
+]
+
+----------------------------------------------------
+
+Checks for all builtins.

@@ -1,0 +1,105 @@
+var myDivElement = <div className="foo" />;
+var myElement = <MyComponent someProperty={true} />;
+<div {...foo} />
+class Test extends Component {
+	render() {
+		return <p onClick={this.clickHandler}>Hello world.</p>;
+	}
+}
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	" myDivElement ",
+	["operator", "="],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["className"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"foo",
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+	["punctuation", ";"],
+
+	["keyword", "var"],
+	" myElement ",
+	["operator", "="],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			["class-name", "MyComponent"]
+		]],
+		["attr-name", ["someProperty"]],
+		["script", [
+			 ["script-punctuation", "="],
+			 ["punctuation", "{"],
+			 ["boolean", "true"],
+			 ["punctuation", "}"]
+		]],
+		["punctuation", "/>"]
+	]],
+	["punctuation", ";"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["spread", [
+			["punctuation", "{"],
+			["punctuation", "..."],
+			["attr-value", "foo"],
+			["punctuation", "}"]
+		]],
+		["punctuation", "/>"]
+	]],
+
+	["keyword",  "class"],
+	["class-name", ["Test"]],
+	["keyword", "extends"],
+	["class-name", ["Component"]],
+	["punctuation", "{"],
+	["function", "render"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["keyword","return"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"p"
+		]],
+		["attr-name", ["onClick"]],
+		["script", [
+			["script-punctuation", "="],
+			["punctuation", "{"],
+			["keyword", "this"],
+			["punctuation", "."],
+			"clickHandler",
+			["punctuation", "}"]
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "Hello world."],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"p"
+		]],
+		["punctuation", ">"]
+	]],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["punctuation","}"]
+]
+
+----------------------------------------------------
+
+Checks for TSX tags.

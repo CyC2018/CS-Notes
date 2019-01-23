@@ -1,0 +1,1801 @@
+SCIENTIFIC_WITH_LEADING_ZERO
+SCALE_PRESERVING_SCIENTIFIC
+RMC_COMMUNICATION_FAILURE
+END-ENHANCEMENT-SECTION
+MULTIPLY-CORRESPONDING
+SUBTRACT-CORRESPONDING
+VERIFICATION-MESSAGE
+DIVIDE-CORRESPONDING
+ENHANCEMENT-SECTION
+CURRENCY_CONVERSION
+RMC_SYSTEM_FAILURE
+START-OF-SELECTION
+MOVE-CORRESPONDING
+RMC_INVALID_STATUS
+CUSTOMER-FUNCTION
+END-OF-DEFINITION
+ENHANCEMENT-POINT
+SYSTEM-EXCEPTIONS
+ADD-CORRESPONDING
+SCALE_PRESERVING
+SELECTION-SCREEN
+CURSOR-SELECTION
+END-OF-SELECTION
+LOAD-OF-PROGRAM
+SCROLL-BOUNDARY
+SELECTION-TABLE
+EXCEPTION-TABLE
+IMPLEMENTATIONS
+PARAMETER-TABLE
+RIGHT-JUSTIFIED
+UNIT_CONVERSION
+AUTHORITY-CHECK
+LIST-PROCESSING
+SIGN_AS_POSTFIX
+COL_BACKGROUND
+IMPLEMENTATION
+INTERFACE-POOL
+TRANSFORMATION
+IDENTIFICATION
+ENDENHANCEMENT
+LINE-SELECTION
+INITIALIZATION
+LEFT-JUSTIFIED
+SELECT-OPTIONS
+SELECTION-SETS
+COMMUNICATION
+CORRESPONDING
+DECIMAL_SHIFT
+PRINT-CONTROL
+VALUE-REQUEST
+CHAIN-REQUEST
+FUNCTION-POOL
+FIELD-SYMBOLS
+FUNCTIONALITY
+INVERTED-DATE
+SELECTION-SET
+CLASS-METHODS
+OUTPUT-LENGTH
+CLASS-CODING
+COL_NEGATIVE
+ERRORMESSAGE
+FIELD-GROUPS
+HELP-REQUEST
+NO-EXTENSION
+NO-TOPOFPAGE
+REDEFINITION
+DISPLAY-MODE
+ENDINTERFACE
+EXIT-COMMAND
+FIELD-SYMBOL
+NO-SCROLLING
+SHORTDUMP-ID
+ACCESSPOLICY
+CLASS-EVENTS
+COL_POSITIVE
+DECLARATIONS
+ENHANCEMENTS
+FILTER-TABLE
+SWITCHSTATES
+SYNTAX-CHECK
+TRANSPORTING
+ASYNCHRONOUS
+SYNTAX-TRACE
+TOKENIZATION
+USER-COMMAND
+WITH-HEADING
+ABAP-SOURCE
+BREAK-POINT
+CHAIN-INPUT
+COMPRESSION
+FIXED-POINT
+NEW-SECTION
+NON-UNICODE
+OCCURRENCES
+RESPONSIBLE
+SYSTEM-CALL
+TRACE-TABLE
+ABBREVIATED
+CHAR-TO-HEX
+END-OF-FILE
+ENDFUNCTION
+ENVIRONMENT
+ASSOCIATION
+COL_HEADING
+EDITOR-CALL
+END-OF-PAGE
+ENGINEERING
+IMPLEMENTED
+INTENSIFIED
+RADIOBUTTON
+SYSTEM-EXIT
+TOP-OF-PAGE
+TRANSACTION
+APPLICATION
+CONCATENATE
+DESTINATION
+ENHANCEMENT
+IMMEDIATELY
+NO-GROUPING
+PRECOMPILED
+REPLACEMENT
+TITLE-LINES
+ACTIVATION
+BYTE-ORDER
+CLASS-POOL
+CONNECTION
+CONVERSION
+DEFINITION
+DEPARTMENT
+EXPIRATION
+INHERITING
+MESSAGE-ID
+NO-HEADING
+PERFORMING
+QUEUE-ONLY
+RIGHTSPACE
+SCIENTIFIC
+STATUSINFO
+STRUCTURES
+SYNCPOINTS
+WITH-TITLE
+ATTRIBUTES
+BOUNDARIES
+CLASS-DATA
+COL_NORMAL
+DD/MM/YYYY
+DESCENDING
+INTERFACES
+LINE-COUNT
+MM/DD/YYYY
+NON-UNIQUE
+PRESERVING
+SELECTIONS
+STATEMENTS
+SUBROUTINE
+TRUNCATION
+TYPE-POOLS
+ARITHMETIC
+BACKGROUND
+ENDPROVIDE
+EXCEPTIONS
+IDENTIFIER
+INDEX-LINE
+OBLIGATORY
+PARAMETERS
+PERCENTAGE
+PUSHBUTTON
+RESOLUTION
+COMPONENTS
+DEALLOCATE
+DISCONNECT
+DUPLICATES
+FIRST-LINE
+HEAD-LINES
+NO-DISPLAY
+OCCURRENCE
+RESPECTING
+RETURNCODE
+SUBMATCHES
+TRACE-FILE
+ASCENDING
+BYPASSING
+ENDMODULE
+EXCEPTION
+EXCLUDING
+EXPORTING
+INCREMENT
+MATCHCODE
+PARAMETER
+PARTIALLY
+PREFERRED
+REFERENCE
+REPLACING
+RETURNING
+SELECTION
+SEPARATED
+SPECIFIED
+STATEMENT
+TIMESTAMP
+TYPE-POOL
+ACCEPTING
+APPENDAGE
+ASSIGNING
+COL_GROUP
+COMPARING
+CONSTANTS
+DANGEROUS
+IMPORTING
+INSTANCES
+LEFTSPACE
+LOG-POINT
+QUICKINFO
+READ-ONLY
+SCROLLING
+SQLSCRIPT
+STEP-LOOP
+TOP-LINES
+TRANSLATE
+APPENDING
+AUTHORITY
+CHARACTER
+COMPONENT
+CONDITION
+DIRECTORY
+DUPLICATE
+MESSAGING
+RECEIVING
+SUBSCREEN
+ACCORDING
+COL_TOTAL
+END-LINES
+ENDMETHOD
+ENDSELECT
+EXPANDING
+EXTENSION
+INCLUDING
+INFOTYPES
+INTERFACE
+INTERVALS
+LINE-SIZE
+PF-STATUS
+PROCEDURE
+PROTECTED
+REQUESTED
+RESUMABLE
+RIGHTPLUS
+SAP-SPOOL
+SECONDARY
+STRUCTURE
+SUBSTRING
+TABLEVIEW
+NUMOFCHAR
+ADJACENT
+ANALYSIS
+ASSIGNED
+BACKWARD
+CHANNELS
+CHECKBOX
+CONTINUE
+CRITICAL
+DATAINFO
+DD/MM/YY
+DURATION
+ENCODING
+ENDCLASS
+FUNCTION
+LEFTPLUS
+LINEFEED
+MM/DD/YY
+OVERFLOW
+RECEIVED
+SKIPPING
+SORTABLE
+STANDARD
+SUBTRACT
+SUPPRESS
+TABSTRIP
+TITLEBAR
+TRUNCATE
+UNASSIGN
+WHENEVER
+ANALYZER
+COALESCE
+COMMENTS
+CONDENSE
+DECIMALS
+DEFERRED
+ENDWHILE
+EXPLICIT
+KEYWORDS
+MESSAGES
+POSITION
+PRIORITY
+RECEIVER
+RENAMING
+TIMEZONE
+TRAILING
+ALLOCATE
+CENTERED
+CIRCULAR
+CONTROLS
+CURRENCY
+DELETING
+DESCRIBE
+DISTANCE
+ENDCATCH
+EXPONENT
+EXTENDED
+GENERATE
+IGNORING
+INCLUDES
+INTERNAL
+MAJOR-ID
+MODIFIER
+NEW-LINE
+OPTIONAL
+PROPERTY
+ROLLBACK
+STARTING
+SUPPLIED
+ABSTRACT
+CHANGING
+CONTEXTS
+CREATING
+CUSTOMER
+DATABASE
+DAYLIGHT
+DEFINING
+DISTINCT
+DIVISION
+ENABLING
+ENDCHAIN
+ESCAPING
+HARMLESS
+IMPLICIT
+INACTIVE
+LANGUAGE
+MINOR-ID
+MULTIPLY
+NEW-PAGE
+NO-TITLE
+POS_HIGH
+SEPARATE
+TEXTPOOL
+TRANSFER
+SELECTOR
+DBMAXLEN
+ITERATOR
+SELECTOR
+ARCHIVE
+BIT-XOR
+BYTE-CO
+COLLECT
+COMMENT
+CURRENT
+DEFAULT
+DISPLAY
+ENDFORM
+EXTRACT
+LEADING
+LISTBOX
+LOCATOR
+MEMBERS
+METHODS
+NESTING
+POS_LOW
+PROCESS
+PROVIDE
+RAISING
+RESERVE
+SECONDS
+SUMMARY
+VISIBLE
+BETWEEN
+BIT-AND
+BYTE-CS
+CLEANUP
+COMPUTE
+CONTROL
+CONVERT
+DATASET
+ENDCASE
+FORWARD
+HEADERS
+HOTSPOT
+INCLUDE
+INVERSE
+KEEPING
+NO-ZERO
+OBJECTS
+OVERLAY
+PADDING
+PATTERN
+PROGRAM
+REFRESH
+SECTION
+SUMMING
+TESTING
+VERSION
+WINDOWS
+WITHOUT
+BIT-NOT
+BYTE-CA
+BYTE-NA
+CASTING
+CONTEXT
+COUNTRY
+DYNAMIC
+ENABLED
+ENDLOOP
+EXECUTE
+FRIENDS
+HANDLER
+HEADING
+INITIAL
+ *-INPUT
+LOGFILE
+MAXIMUM
+MINIMUM
+NO-GAPS
+NO-SIGN
+PRAGMAS
+PRIMARY
+PRIVATE
+REDUCED
+REPLACE
+REQUEST
+RESULTS
+UNICODE
+WARNING
+ALIASES
+BYTE-CN
+BYTE-NS
+CALLING
+COL_KEY
+COLUMNS
+CONNECT
+ENDEXEC
+ENTRIES
+EXCLUDE
+FILTERS
+FURTHER
+HELP-ID
+LOGICAL
+MAPPING
+MESSAGE
+NAMETAB
+OPTIONS
+PACKAGE
+PERFORM
+RECEIVE
+STATICS
+VARYING
+BINDING
+CHARLEN
+GREATER
+XSTRLEN
+ACCEPT
+APPEND
+DETAIL
+ELSEIF
+ENDING
+ENDTRY
+FORMAT
+FRAMES
+GIVING
+HASHED
+HEADER
+IMPORT
+INSERT
+MARGIN
+MODULE
+NATIVE
+OBJECT
+OFFSET
+REMOTE
+RESUME
+SAVING
+SIMPLE
+SUBMIT
+TABBED
+TOKENS
+UNIQUE
+UNPACK
+UPDATE
+WINDOW
+YELLOW
+ACTUAL
+ASPECT
+CENTER
+CURSOR
+DELETE
+DIALOG
+DIVIDE
+DURING
+ERRORS
+EVENTS
+EXTEND
+FILTER
+HANDLE
+HAVING
+IGNORE
+LITTLE
+MEMORY
+NO-GAP
+OCCURS
+OPTION
+PERSON
+PLACES
+PUBLIC
+REDUCE
+REPORT
+RESULT
+SINGLE
+SORTED
+SWITCH
+SYNTAX
+TARGET
+VALUES
+WRITER
+ASSERT
+BLOCKS
+BOUNDS
+BUFFER
+CHANGE
+COLUMN
+COMMIT
+CONCAT
+COPIES
+CREATE
+DDMMYY
+DEFINE
+ENDIAN
+ESCAPE
+EXPAND
+KERNEL
+LAYOUT
+LEGACY
+LEVELS
+MMDDYY
+NUMBER
+OUTPUT
+RANGES
+READER
+RETURN
+SCREEN
+SEARCH
+SELECT
+SHARED
+SOURCE
+STABLE
+STATIC
+SUBKEY
+SUFFIX
+TABLES
+UNWIND
+YYMMDD
+ASSIGN
+BACKUP
+BEFORE
+BINARY
+BIT-OR
+BLANKS
+CLIENT
+CODING
+COMMON
+DEMAND
+DYNPRO
+EXCEPT
+EXISTS
+EXPORT
+FIELDS
+GLOBAL
+GROUPS
+LENGTH
+LOCALE
+MEDIUM
+METHOD
+MODIFY
+NESTED
+OTHERS
+REJECT
+SCROLL
+SUPPLY
+SYMBOL
+ENDFOR
+STRLEN
+ALIGN
+BEGIN
+BOUND
+ENDAT
+ENTRY
+EVENT
+FINAL
+FLUSH
+GRANT
+INNER
+SHORT
+USING
+WRITE
+AFTER
+BLACK
+BLOCK
+CLOCK
+COLOR
+COUNT
+DUMMY
+EMPTY
+ENDDO
+ENDON
+GREEN
+INDEX
+INOUT
+LEAVE
+LEVEL
+LINES
+MODIF
+ORDER
+OUTER
+RANGE
+RESET
+RETRY
+RIGHT
+SMART
+SPLIT
+STYLE
+TABLE
+THROW
+UNDER
+UNTIL
+UPPER
+UTF-8
+WHERE
+ALIAS
+BLANK
+CLEAR
+CLOSE
+EXACT
+FETCH
+FIRST
+FOUND
+GROUP
+LLANG
+LOCAL
+OTHER
+REGEX
+SPOOL
+TITLE
+TYPES
+VALID
+WHILE
+ALPHA
+BOXED
+CATCH
+CHAIN
+CHECK
+CLASS
+COVER
+ENDIF
+EQUIV
+FIELD
+FLOOR
+FRAME
+INPUT
+LOWER
+MATCH
+NODES
+PAGES
+PRINT
+RAISE
+ROUND
+SHIFT
+SPACE
+SPOTS
+STAMP
+STATE
+TASKS
+TIMES
+TRMAC
+ULINE
+UNION
+VALUE
+WIDTH
+EQUAL
+LOG10
+TRUNC
+BLOB
+CASE
+CEIL
+CLOB
+COND
+EXIT
+FILE
+GAPS
+HOLD
+INCL
+INTO
+KEEP
+KEYS
+LAST
+LINE
+LONG
+LPAD
+MAIL
+MODE
+OPEN
+PINK
+READ
+ROWS
+TEST
+THEN
+ZERO
+AREA
+BACK
+BADI
+BYTE
+CAST
+EDIT
+EXEC
+FAIL
+FIND
+FKEQ
+FONT
+FREE
+GKEQ
+HIDE
+INIT
+ITNO
+LATE
+LOOP
+MAIN
+MARK
+MOVE
+NEXT
+NULL
+RISK
+ROLE
+UNIT
+WAIT
+ZONE
+BASE
+CALL
+CODE
+DATA
+DATE
+FKGE
+GKGE
+HIGH
+KIND
+LEFT
+LIST
+MASK
+MESH
+NAME
+NODE
+PACK
+PAGE
+POOL
+SEND
+SIGN
+SIZE
+SOME
+STOP
+TASK
+TEXT
+TIME
+USER
+VARY
+WITH
+WORD
+BLUE
+CONV
+COPY
+DEEP
+ELSE
+FORM
+FROM
+HINT
+ICON
+JOIN
+LIKE
+LOAD
+ONLY
+PART
+SCAN
+SKIP
+SORT
+TYPE
+UNIX
+VIEW
+WHEN
+WORK
+ACOS
+ASIN
+ATAN
+COSH
+EACH
+FRAC
+LESS
+RTTI
+SINH
+SQRT
+TANH
+AVG
+BIT
+DIV
+ISO
+LET
+OUT
+PAD
+SQL
+ALL
+CI_
+CPI
+END
+LOB
+LPI
+MAX
+MIN
+NEW
+OLE
+RUN
+SET
+?TO
+YES
+ABS
+ADD
+AND
+BIG
+FOR
+HDB
+JOB
+LOW
+NOT
+SAP
+TRY
+VIA
+XML
+ANY
+GET
+IDS
+KEY
+MOD
+OFF
+PUT
+RAW
+RED
+REF
+SUM
+TAB
+XSD
+CNT
+COS
+EXP
+LOG
+SIN
+TAN
+XOR
+AT
+CO
+CP
+DO
+GT
+ID
+IF
+NS
+OR
+BT
+CA
+CS
+GE
+NA
+NB
+EQ
+IN
+LT
+NE
+NO
+OF
+ON
+PF
+TO
+AS
+BY
+CN
+IS
+LE
+NP
+UP
+E
+I
+M
+O
+Z
+C
+X
+
+----------------------------------------------------
+
+[
+	["keyword", "SCIENTIFIC_WITH_LEADING_ZERO"],
+	["keyword", "SCALE_PRESERVING_SCIENTIFIC"],
+	["keyword", "RMC_COMMUNICATION_FAILURE"],
+	["keyword", "END-ENHANCEMENT-SECTION"],
+	["keyword", "MULTIPLY-CORRESPONDING"],
+	["keyword", "SUBTRACT-CORRESPONDING"],
+	["keyword", "VERIFICATION-MESSAGE"],
+	["keyword", "DIVIDE-CORRESPONDING"],
+	["keyword", "ENHANCEMENT-SECTION"],
+	["keyword", "CURRENCY_CONVERSION"],
+	["keyword", "RMC_SYSTEM_FAILURE"],
+	["keyword", "START-OF-SELECTION"],
+	["keyword", "MOVE-CORRESPONDING"],
+	["keyword", "RMC_INVALID_STATUS"],
+	["keyword", "CUSTOMER-FUNCTION"],
+	["keyword", "END-OF-DEFINITION"],
+	["keyword", "ENHANCEMENT-POINT"],
+	["keyword", "SYSTEM-EXCEPTIONS"],
+	["keyword", "ADD-CORRESPONDING"],
+	["keyword", "SCALE_PRESERVING"],
+	["keyword", "SELECTION-SCREEN"],
+	["keyword", "CURSOR-SELECTION"],
+	["keyword", "END-OF-SELECTION"],
+	["keyword", "LOAD-OF-PROGRAM"],
+	["keyword", "SCROLL-BOUNDARY"],
+	["keyword", "SELECTION-TABLE"],
+	["keyword", "EXCEPTION-TABLE"],
+	["keyword", "IMPLEMENTATIONS"],
+	["keyword", "PARAMETER-TABLE"],
+	["keyword", "RIGHT-JUSTIFIED"],
+	["keyword", "UNIT_CONVERSION"],
+	["keyword", "AUTHORITY-CHECK"],
+	["keyword", "LIST-PROCESSING"],
+	["keyword", "SIGN_AS_POSTFIX"],
+	["keyword", "COL_BACKGROUND"],
+	["keyword", "IMPLEMENTATION"],
+	["keyword", "INTERFACE-POOL"],
+	["keyword", "TRANSFORMATION"],
+	["keyword", "IDENTIFICATION"],
+	["keyword", "ENDENHANCEMENT"],
+	["keyword", "LINE-SELECTION"],
+	["keyword", "INITIALIZATION"],
+	["keyword", "LEFT-JUSTIFIED"],
+	["keyword", "SELECT-OPTIONS"],
+	["keyword", "SELECTION-SETS"],
+	["keyword", "COMMUNICATION"],
+	["keyword", "CORRESPONDING"],
+	["keyword", "DECIMAL_SHIFT"],
+	["keyword", "PRINT-CONTROL"],
+	["keyword", "VALUE-REQUEST"],
+	["keyword", "CHAIN-REQUEST"],
+	["keyword", "FUNCTION-POOL"],
+	["keyword", "FIELD-SYMBOLS"],
+	["keyword", "FUNCTIONALITY"],
+	["keyword", "INVERTED-DATE"],
+	["keyword", "SELECTION-SET"],
+	["keyword", "CLASS-METHODS"],
+	["keyword", "OUTPUT-LENGTH"],
+	["keyword", "CLASS-CODING"],
+	["keyword", "COL_NEGATIVE"],
+	["keyword", "ERRORMESSAGE"],
+	["keyword", "FIELD-GROUPS"],
+	["keyword", "HELP-REQUEST"],
+	["keyword", "NO-EXTENSION"],
+	["keyword", "NO-TOPOFPAGE"],
+	["keyword", "REDEFINITION"],
+	["keyword", "DISPLAY-MODE"],
+	["keyword", "ENDINTERFACE"],
+	["keyword", "EXIT-COMMAND"],
+	["keyword", "FIELD-SYMBOL"],
+	["keyword", "NO-SCROLLING"],
+	["keyword", "SHORTDUMP-ID"],
+	["keyword", "ACCESSPOLICY"],
+	["keyword", "CLASS-EVENTS"],
+	["keyword", "COL_POSITIVE"],
+	["keyword", "DECLARATIONS"],
+	["keyword", "ENHANCEMENTS"],
+	["keyword", "FILTER-TABLE"],
+	["keyword", "SWITCHSTATES"],
+	["keyword", "SYNTAX-CHECK"],
+	["keyword", "TRANSPORTING"],
+	["keyword", "ASYNCHRONOUS"],
+	["keyword", "SYNTAX-TRACE"],
+	["keyword", "TOKENIZATION"],
+	["keyword", "USER-COMMAND"],
+	["keyword", "WITH-HEADING"],
+	["keyword", "ABAP-SOURCE"],
+	["keyword", "BREAK-POINT"],
+	["keyword", "CHAIN-INPUT"],
+	["keyword", "COMPRESSION"],
+	["keyword", "FIXED-POINT"],
+	["keyword", "NEW-SECTION"],
+	["keyword", "NON-UNICODE"],
+	["keyword", "OCCURRENCES"],
+	["keyword", "RESPONSIBLE"],
+	["keyword", "SYSTEM-CALL"],
+	["keyword", "TRACE-TABLE"],
+	["keyword", "ABBREVIATED"],
+	["keyword", "CHAR-TO-HEX"],
+	["keyword", "END-OF-FILE"],
+	["keyword", "ENDFUNCTION"],
+	["keyword", "ENVIRONMENT"],
+	["keyword", "ASSOCIATION"],
+	["keyword", "COL_HEADING"],
+	["keyword", "EDITOR-CALL"],
+	["keyword", "END-OF-PAGE"],
+	["keyword", "ENGINEERING"],
+	["keyword", "IMPLEMENTED"],
+	["keyword", "INTENSIFIED"],
+	["keyword", "RADIOBUTTON"],
+	["keyword", "SYSTEM-EXIT"],
+	["keyword", "TOP-OF-PAGE"],
+	["keyword", "TRANSACTION"],
+	["keyword", "APPLICATION"],
+	["keyword", "CONCATENATE"],
+	["keyword", "DESTINATION"],
+	["keyword", "ENHANCEMENT"],
+	["keyword", "IMMEDIATELY"],
+	["keyword", "NO-GROUPING"],
+	["keyword", "PRECOMPILED"],
+	["keyword", "REPLACEMENT"],
+	["keyword", "TITLE-LINES"],
+	["keyword", "ACTIVATION"],
+	["keyword", "BYTE-ORDER"],
+	["keyword", "CLASS-POOL"],
+	["keyword", "CONNECTION"],
+	["keyword", "CONVERSION"],
+	["keyword", "DEFINITION"],
+	["keyword", "DEPARTMENT"],
+	["keyword", "EXPIRATION"],
+	["keyword", "INHERITING"],
+	["keyword", "MESSAGE-ID"],
+	["keyword", "NO-HEADING"],
+	["keyword", "PERFORMING"],
+	["keyword", "QUEUE-ONLY"],
+	["keyword", "RIGHTSPACE"],
+	["keyword", "SCIENTIFIC"],
+	["keyword", "STATUSINFO"],
+	["keyword", "STRUCTURES"],
+	["keyword", "SYNCPOINTS"],
+	["keyword", "WITH-TITLE"],
+	["keyword", "ATTRIBUTES"],
+	["keyword", "BOUNDARIES"],
+	["keyword", "CLASS-DATA"],
+	["keyword", "COL_NORMAL"],
+	["keyword", "DD/MM/YYYY"],
+	["keyword", "DESCENDING"],
+	["keyword", "INTERFACES"],
+	["keyword", "LINE-COUNT"],
+	["keyword", "MM/DD/YYYY"],
+	["keyword", "NON-UNIQUE"],
+	["keyword", "PRESERVING"],
+	["keyword", "SELECTIONS"],
+	["keyword", "STATEMENTS"],
+	["keyword", "SUBROUTINE"],
+	["keyword", "TRUNCATION"],
+	["keyword", "TYPE-POOLS"],
+	["keyword", "ARITHMETIC"],
+	["keyword", "BACKGROUND"],
+	["keyword", "ENDPROVIDE"],
+	["keyword", "EXCEPTIONS"],
+	["keyword", "IDENTIFIER"],
+	["keyword", "INDEX-LINE"],
+	["keyword", "OBLIGATORY"],
+	["keyword", "PARAMETERS"],
+	["keyword", "PERCENTAGE"],
+	["keyword", "PUSHBUTTON"],
+	["keyword", "RESOLUTION"],
+	["keyword", "COMPONENTS"],
+	["keyword", "DEALLOCATE"],
+	["keyword", "DISCONNECT"],
+	["keyword", "DUPLICATES"],
+	["keyword", "FIRST-LINE"],
+	["keyword", "HEAD-LINES"],
+	["keyword", "NO-DISPLAY"],
+	["keyword", "OCCURRENCE"],
+	["keyword", "RESPECTING"],
+	["keyword", "RETURNCODE"],
+	["keyword", "SUBMATCHES"],
+	["keyword", "TRACE-FILE"],
+	["keyword", "ASCENDING"],
+	["keyword", "BYPASSING"],
+	["keyword", "ENDMODULE"],
+	["keyword", "EXCEPTION"],
+	["keyword", "EXCLUDING"],
+	["keyword", "EXPORTING"],
+	["keyword", "INCREMENT"],
+	["keyword", "MATCHCODE"],
+	["keyword", "PARAMETER"],
+	["keyword", "PARTIALLY"],
+	["keyword", "PREFERRED"],
+	["keyword", "REFERENCE"],
+	["keyword", "REPLACING"],
+	["keyword", "RETURNING"],
+	["keyword", "SELECTION"],
+	["keyword", "SEPARATED"],
+	["keyword", "SPECIFIED"],
+	["keyword", "STATEMENT"],
+	["keyword", "TIMESTAMP"],
+	["keyword", "TYPE-POOL"],
+	["keyword", "ACCEPTING"],
+	["keyword", "APPENDAGE"],
+	["keyword", "ASSIGNING"],
+	["keyword", "COL_GROUP"],
+	["keyword", "COMPARING"],
+	["keyword", "CONSTANTS"],
+	["keyword", "DANGEROUS"],
+	["keyword", "IMPORTING"],
+	["keyword", "INSTANCES"],
+	["keyword", "LEFTSPACE"],
+	["keyword", "LOG-POINT"],
+	["keyword", "QUICKINFO"],
+	["keyword", "READ-ONLY"],
+	["keyword", "SCROLLING"],
+	["keyword", "SQLSCRIPT"],
+	["keyword", "STEP-LOOP"],
+	["keyword", "TOP-LINES"],
+	["keyword", "TRANSLATE"],
+	["keyword", "APPENDING"],
+	["keyword", "AUTHORITY"],
+	["keyword", "CHARACTER"],
+	["keyword", "COMPONENT"],
+	["keyword", "CONDITION"],
+	["keyword", "DIRECTORY"],
+	["keyword", "DUPLICATE"],
+	["keyword", "MESSAGING"],
+	["keyword", "RECEIVING"],
+	["keyword", "SUBSCREEN"],
+	["keyword", "ACCORDING"],
+	["keyword", "COL_TOTAL"],
+	["keyword", "END-LINES"],
+	["keyword", "ENDMETHOD"],
+	["keyword", "ENDSELECT"],
+	["keyword", "EXPANDING"],
+	["keyword", "EXTENSION"],
+	["keyword", "INCLUDING"],
+	["keyword", "INFOTYPES"],
+	["keyword", "INTERFACE"],
+	["keyword", "INTERVALS"],
+	["keyword", "LINE-SIZE"],
+	["keyword", "PF-STATUS"],
+	["keyword", "PROCEDURE"],
+	["keyword", "PROTECTED"],
+	["keyword", "REQUESTED"],
+	["keyword", "RESUMABLE"],
+	["keyword", "RIGHTPLUS"],
+	["keyword", "SAP-SPOOL"],
+	["keyword", "SECONDARY"],
+	["keyword", "STRUCTURE"],
+	["keyword", "SUBSTRING"],
+	["keyword", "TABLEVIEW"],
+	["keyword", "NUMOFCHAR"],
+	["keyword", "ADJACENT"],
+	["keyword", "ANALYSIS"],
+	["keyword", "ASSIGNED"],
+	["keyword", "BACKWARD"],
+	["keyword", "CHANNELS"],
+	["keyword", "CHECKBOX"],
+	["keyword", "CONTINUE"],
+	["keyword", "CRITICAL"],
+	["keyword", "DATAINFO"],
+	["keyword", "DD/MM/YY"],
+	["keyword", "DURATION"],
+	["keyword", "ENCODING"],
+	["keyword", "ENDCLASS"],
+	["keyword", "FUNCTION"],
+	["keyword", "LEFTPLUS"],
+	["keyword", "LINEFEED"],
+	["keyword", "MM/DD/YY"],
+	["keyword", "OVERFLOW"],
+	["keyword", "RECEIVED"],
+	["keyword", "SKIPPING"],
+	["keyword", "SORTABLE"],
+	["keyword", "STANDARD"],
+	["keyword", "SUBTRACT"],
+	["keyword", "SUPPRESS"],
+	["keyword", "TABSTRIP"],
+	["keyword", "TITLEBAR"],
+	["keyword", "TRUNCATE"],
+	["keyword", "UNASSIGN"],
+	["keyword", "WHENEVER"],
+	["keyword", "ANALYZER"],
+	["keyword", "COALESCE"],
+	["keyword", "COMMENTS"],
+	["keyword", "CONDENSE"],
+	["keyword", "DECIMALS"],
+	["keyword", "DEFERRED"],
+	["keyword", "ENDWHILE"],
+	["keyword", "EXPLICIT"],
+	["keyword", "KEYWORDS"],
+	["keyword", "MESSAGES"],
+	["keyword", "POSITION"],
+	["keyword", "PRIORITY"],
+	["keyword", "RECEIVER"],
+	["keyword", "RENAMING"],
+	["keyword", "TIMEZONE"],
+	["keyword", "TRAILING"],
+	["keyword", "ALLOCATE"],
+	["keyword", "CENTERED"],
+	["keyword", "CIRCULAR"],
+	["keyword", "CONTROLS"],
+	["keyword", "CURRENCY"],
+	["keyword", "DELETING"],
+	["keyword", "DESCRIBE"],
+	["keyword", "DISTANCE"],
+	["keyword", "ENDCATCH"],
+	["keyword", "EXPONENT"],
+	["keyword", "EXTENDED"],
+	["keyword", "GENERATE"],
+	["keyword", "IGNORING"],
+	["keyword", "INCLUDES"],
+	["keyword", "INTERNAL"],
+	["keyword", "MAJOR-ID"],
+	["keyword", "MODIFIER"],
+	["keyword", "NEW-LINE"],
+	["keyword", "OPTIONAL"],
+	["keyword", "PROPERTY"],
+	["keyword", "ROLLBACK"],
+	["keyword", "STARTING"],
+	["keyword", "SUPPLIED"],
+	["keyword", "ABSTRACT"],
+	["keyword", "CHANGING"],
+	["keyword", "CONTEXTS"],
+	["keyword", "CREATING"],
+	["keyword", "CUSTOMER"],
+	["keyword", "DATABASE"],
+	["keyword", "DAYLIGHT"],
+	["keyword", "DEFINING"],
+	["keyword", "DISTINCT"],
+	["keyword", "DIVISION"],
+	["keyword", "ENABLING"],
+	["keyword", "ENDCHAIN"],
+	["keyword", "ESCAPING"],
+	["keyword", "HARMLESS"],
+	["keyword", "IMPLICIT"],
+	["keyword", "INACTIVE"],
+	["keyword", "LANGUAGE"],
+	["keyword", "MINOR-ID"],
+	["keyword", "MULTIPLY"],
+	["keyword", "NEW-PAGE"],
+	["keyword", "NO-TITLE"],
+	["keyword", "POS_HIGH"],
+	["keyword", "SEPARATE"],
+	["keyword", "TEXTPOOL"],
+	["keyword", "TRANSFER"],
+	["keyword", "SELECTOR"],
+	["keyword", "DBMAXLEN"],
+	["keyword", "ITERATOR"],
+	["keyword", "SELECTOR"],
+	["keyword", "ARCHIVE"],
+	["keyword", "BIT-XOR"],
+	["keyword", "BYTE-CO"],
+	["keyword", "COLLECT"],
+	["keyword", "COMMENT"],
+	["keyword", "CURRENT"],
+	["keyword", "DEFAULT"],
+	["keyword", "DISPLAY"],
+	["keyword", "ENDFORM"],
+	["keyword", "EXTRACT"],
+	["keyword", "LEADING"],
+	["keyword", "LISTBOX"],
+	["keyword", "LOCATOR"],
+	["keyword", "MEMBERS"],
+	["keyword", "METHODS"],
+	["keyword", "NESTING"],
+	["keyword", "POS_LOW"],
+	["keyword", "PROCESS"],
+	["keyword", "PROVIDE"],
+	["keyword", "RAISING"],
+	["keyword", "RESERVE"],
+	["keyword", "SECONDS"],
+	["keyword", "SUMMARY"],
+	["keyword", "VISIBLE"],
+	["keyword", "BETWEEN"],
+	["keyword", "BIT-AND"],
+	["keyword", "BYTE-CS"],
+	["keyword", "CLEANUP"],
+	["keyword", "COMPUTE"],
+	["keyword", "CONTROL"],
+	["keyword", "CONVERT"],
+	["keyword", "DATASET"],
+	["keyword", "ENDCASE"],
+	["keyword", "FORWARD"],
+	["keyword", "HEADERS"],
+	["keyword", "HOTSPOT"],
+	["keyword", "INCLUDE"],
+	["keyword", "INVERSE"],
+	["keyword", "KEEPING"],
+	["keyword", "NO-ZERO"],
+	["keyword", "OBJECTS"],
+	["keyword", "OVERLAY"],
+	["keyword", "PADDING"],
+	["keyword", "PATTERN"],
+	["keyword", "PROGRAM"],
+	["keyword", "REFRESH"],
+	["keyword", "SECTION"],
+	["keyword", "SUMMING"],
+	["keyword", "TESTING"],
+	["keyword", "VERSION"],
+	["keyword", "WINDOWS"],
+	["keyword", "WITHOUT"],
+	["keyword", "BIT-NOT"],
+	["keyword", "BYTE-CA"],
+	["keyword", "BYTE-NA"],
+	["keyword", "CASTING"],
+	["keyword", "CONTEXT"],
+	["keyword", "COUNTRY"],
+	["keyword", "DYNAMIC"],
+	["keyword", "ENABLED"],
+	["keyword", "ENDLOOP"],
+	["keyword", "EXECUTE"],
+	["keyword", "FRIENDS"],
+	["keyword", "HANDLER"],
+	["keyword", "HEADING"],
+	["keyword", "INITIAL"],
+	["keyword", "*-INPUT"],
+	["keyword", "LOGFILE"],
+	["keyword", "MAXIMUM"],
+	["keyword", "MINIMUM"],
+	["keyword", "NO-GAPS"],
+	["keyword", "NO-SIGN"],
+	["keyword", "PRAGMAS"],
+	["keyword", "PRIMARY"],
+	["keyword", "PRIVATE"],
+	["keyword", "REDUCED"],
+	["keyword", "REPLACE"],
+	["keyword", "REQUEST"],
+	["keyword", "RESULTS"],
+	["keyword", "UNICODE"],
+	["keyword", "WARNING"],
+	["keyword", "ALIASES"],
+	["keyword", "BYTE-CN"],
+	["keyword", "BYTE-NS"],
+	["keyword", "CALLING"],
+	["keyword", "COL_KEY"],
+	["keyword", "COLUMNS"],
+	["keyword", "CONNECT"],
+	["keyword", "ENDEXEC"],
+	["keyword", "ENTRIES"],
+	["keyword", "EXCLUDE"],
+	["keyword", "FILTERS"],
+	["keyword", "FURTHER"],
+	["keyword", "HELP-ID"],
+	["keyword", "LOGICAL"],
+	["keyword", "MAPPING"],
+	["keyword", "MESSAGE"],
+	["keyword", "NAMETAB"],
+	["keyword", "OPTIONS"],
+	["keyword", "PACKAGE"],
+	["keyword", "PERFORM"],
+	["keyword", "RECEIVE"],
+	["keyword", "STATICS"],
+	["keyword", "VARYING"],
+	["keyword", "BINDING"],
+	["keyword", "CHARLEN"],
+	["keyword", "GREATER"],
+	["keyword", "XSTRLEN"],
+	["keyword", "ACCEPT"],
+	["keyword", "APPEND"],
+	["keyword", "DETAIL"],
+	["keyword", "ELSEIF"],
+	["keyword", "ENDING"],
+	["keyword", "ENDTRY"],
+	["keyword", "FORMAT"],
+	["keyword", "FRAMES"],
+	["keyword", "GIVING"],
+	["keyword", "HASHED"],
+	["keyword", "HEADER"],
+	["keyword", "IMPORT"],
+	["keyword", "INSERT"],
+	["keyword", "MARGIN"],
+	["keyword", "MODULE"],
+	["keyword", "NATIVE"],
+	["keyword", "OBJECT"],
+	["keyword", "OFFSET"],
+	["keyword", "REMOTE"],
+	["keyword", "RESUME"],
+	["keyword", "SAVING"],
+	["keyword", "SIMPLE"],
+	["keyword", "SUBMIT"],
+	["keyword", "TABBED"],
+	["keyword", "TOKENS"],
+	["keyword", "UNIQUE"],
+	["keyword", "UNPACK"],
+	["keyword", "UPDATE"],
+	["keyword", "WINDOW"],
+	["keyword", "YELLOW"],
+	["keyword", "ACTUAL"],
+	["keyword", "ASPECT"],
+	["keyword", "CENTER"],
+	["keyword", "CURSOR"],
+	["keyword", "DELETE"],
+	["keyword", "DIALOG"],
+	["keyword", "DIVIDE"],
+	["keyword", "DURING"],
+	["keyword", "ERRORS"],
+	["keyword", "EVENTS"],
+	["keyword", "EXTEND"],
+	["keyword", "FILTER"],
+	["keyword", "HANDLE"],
+	["keyword", "HAVING"],
+	["keyword", "IGNORE"],
+	["keyword", "LITTLE"],
+	["keyword", "MEMORY"],
+	["keyword", "NO-GAP"],
+	["keyword", "OCCURS"],
+	["keyword", "OPTION"],
+	["keyword", "PERSON"],
+	["keyword", "PLACES"],
+	["keyword", "PUBLIC"],
+	["keyword", "REDUCE"],
+	["keyword", "REPORT"],
+	["keyword", "RESULT"],
+	["keyword", "SINGLE"],
+	["keyword", "SORTED"],
+	["keyword", "SWITCH"],
+	["keyword", "SYNTAX"],
+	["keyword", "TARGET"],
+	["keyword", "VALUES"],
+	["keyword", "WRITER"],
+	["keyword", "ASSERT"],
+	["keyword", "BLOCKS"],
+	["keyword", "BOUNDS"],
+	["keyword", "BUFFER"],
+	["keyword", "CHANGE"],
+	["keyword", "COLUMN"],
+	["keyword", "COMMIT"],
+	["keyword", "CONCAT"],
+	["keyword", "COPIES"],
+	["keyword", "CREATE"],
+	["keyword", "DDMMYY"],
+	["keyword", "DEFINE"],
+	["keyword", "ENDIAN"],
+	["keyword", "ESCAPE"],
+	["keyword", "EXPAND"],
+	["keyword", "KERNEL"],
+	["keyword", "LAYOUT"],
+	["keyword", "LEGACY"],
+	["keyword", "LEVELS"],
+	["keyword", "MMDDYY"],
+	["keyword", "NUMBER"],
+	["keyword", "OUTPUT"],
+	["keyword", "RANGES"],
+	["keyword", "READER"],
+	["keyword", "RETURN"],
+	["keyword", "SCREEN"],
+	["keyword", "SEARCH"],
+	["keyword", "SELECT"],
+	["keyword", "SHARED"],
+	["keyword", "SOURCE"],
+	["keyword", "STABLE"],
+	["keyword", "STATIC"],
+	["keyword", "SUBKEY"],
+	["keyword", "SUFFIX"],
+	["keyword", "TABLES"],
+	["keyword", "UNWIND"],
+	["keyword", "YYMMDD"],
+	["keyword", "ASSIGN"],
+	["keyword", "BACKUP"],
+	["keyword", "BEFORE"],
+	["keyword", "BINARY"],
+	["keyword", "BIT-OR"],
+	["keyword", "BLANKS"],
+	["keyword", "CLIENT"],
+	["keyword", "CODING"],
+	["keyword", "COMMON"],
+	["keyword", "DEMAND"],
+	["keyword", "DYNPRO"],
+	["keyword", "EXCEPT"],
+	["keyword", "EXISTS"],
+	["keyword", "EXPORT"],
+	["keyword", "FIELDS"],
+	["keyword", "GLOBAL"],
+	["keyword", "GROUPS"],
+	["keyword", "LENGTH"],
+	["keyword", "LOCALE"],
+	["keyword", "MEDIUM"],
+	["keyword", "METHOD"],
+	["keyword", "MODIFY"],
+	["keyword", "NESTED"],
+	["keyword", "OTHERS"],
+	["keyword", "REJECT"],
+	["keyword", "SCROLL"],
+	["keyword", "SUPPLY"],
+	["keyword", "SYMBOL"],
+	["keyword", "ENDFOR"],
+	["keyword", "STRLEN"],
+	["keyword", "ALIGN"],
+	["keyword", "BEGIN"],
+	["keyword", "BOUND"],
+	["keyword", "ENDAT"],
+	["keyword", "ENTRY"],
+	["keyword", "EVENT"],
+	["keyword", "FINAL"],
+	["keyword", "FLUSH"],
+	["keyword", "GRANT"],
+	["keyword", "INNER"],
+	["keyword", "SHORT"],
+	["keyword", "USING"],
+	["keyword", "WRITE"],
+	["keyword", "AFTER"],
+	["keyword", "BLACK"],
+	["keyword", "BLOCK"],
+	["keyword", "CLOCK"],
+	["keyword", "COLOR"],
+	["keyword", "COUNT"],
+	["keyword", "DUMMY"],
+	["keyword", "EMPTY"],
+	["keyword", "ENDDO"],
+	["keyword", "ENDON"],
+	["keyword", "GREEN"],
+	["keyword", "INDEX"],
+	["keyword", "INOUT"],
+	["keyword", "LEAVE"],
+	["keyword", "LEVEL"],
+	["keyword", "LINES"],
+	["keyword", "MODIF"],
+	["keyword", "ORDER"],
+	["keyword", "OUTER"],
+	["keyword", "RANGE"],
+	["keyword", "RESET"],
+	["keyword", "RETRY"],
+	["keyword", "RIGHT"],
+	["keyword", "SMART"],
+	["keyword", "SPLIT"],
+	["keyword", "STYLE"],
+	["keyword", "TABLE"],
+	["keyword", "THROW"],
+	["keyword", "UNDER"],
+	["keyword", "UNTIL"],
+	["keyword", "UPPER"],
+	["keyword", "UTF-8"],
+	["keyword", "WHERE"],
+	["keyword", "ALIAS"],
+	["keyword", "BLANK"],
+	["keyword", "CLEAR"],
+	["keyword", "CLOSE"],
+	["keyword", "EXACT"],
+	["keyword", "FETCH"],
+	["keyword", "FIRST"],
+	["keyword", "FOUND"],
+	["keyword", "GROUP"],
+	["keyword", "LLANG"],
+	["keyword", "LOCAL"],
+	["keyword", "OTHER"],
+	["keyword", "REGEX"],
+	["keyword", "SPOOL"],
+	["keyword", "TITLE"],
+	["keyword", "TYPES"],
+	["keyword", "VALID"],
+	["keyword", "WHILE"],
+	["keyword", "ALPHA"],
+	["keyword", "BOXED"],
+	["keyword", "CATCH"],
+	["keyword", "CHAIN"],
+	["keyword", "CHECK"],
+	["keyword", "CLASS"],
+	["keyword", "COVER"],
+	["keyword", "ENDIF"],
+	["keyword", "EQUIV"],
+	["keyword", "FIELD"],
+	["keyword", "FLOOR"],
+	["keyword", "FRAME"],
+	["keyword", "INPUT"],
+	["keyword", "LOWER"],
+	["keyword", "MATCH"],
+	["keyword", "NODES"],
+	["keyword", "PAGES"],
+	["keyword", "PRINT"],
+	["keyword", "RAISE"],
+	["keyword", "ROUND"],
+	["keyword", "SHIFT"],
+	["keyword", "SPACE"],
+	["keyword", "SPOTS"],
+	["keyword", "STAMP"],
+	["keyword", "STATE"],
+	["keyword", "TASKS"],
+	["keyword", "TIMES"],
+	["keyword", "TRMAC"],
+	["keyword", "ULINE"],
+	["keyword", "UNION"],
+	["keyword", "VALUE"],
+	["keyword", "WIDTH"],
+	["keyword", "EQUAL"],
+	["keyword", "LOG10"],
+	["keyword", "TRUNC"],
+	["keyword", "BLOB"],
+	["keyword", "CASE"],
+	["keyword", "CEIL"],
+	["keyword", "CLOB"],
+	["keyword", "COND"],
+	["keyword", "EXIT"],
+	["keyword", "FILE"],
+	["keyword", "GAPS"],
+	["keyword", "HOLD"],
+	["keyword", "INCL"],
+	["keyword", "INTO"],
+	["keyword", "KEEP"],
+	["keyword", "KEYS"],
+	["keyword", "LAST"],
+	["keyword", "LINE"],
+	["keyword", "LONG"],
+	["keyword", "LPAD"],
+	["keyword", "MAIL"],
+	["keyword", "MODE"],
+	["keyword", "OPEN"],
+	["keyword", "PINK"],
+	["keyword", "READ"],
+	["keyword", "ROWS"],
+	["keyword", "TEST"],
+	["keyword", "THEN"],
+	["keyword", "ZERO"],
+	["keyword", "AREA"],
+	["keyword", "BACK"],
+	["keyword", "BADI"],
+	["keyword", "BYTE"],
+	["keyword", "CAST"],
+	["keyword", "EDIT"],
+	["keyword", "EXEC"],
+	["keyword", "FAIL"],
+	["keyword", "FIND"],
+	["keyword", "FKEQ"],
+	["keyword", "FONT"],
+	["keyword", "FREE"],
+	["keyword", "GKEQ"],
+	["keyword", "HIDE"],
+	["keyword", "INIT"],
+	["keyword", "ITNO"],
+	["keyword", "LATE"],
+	["keyword", "LOOP"],
+	["keyword", "MAIN"],
+	["keyword", "MARK"],
+	["keyword", "MOVE"],
+	["keyword", "NEXT"],
+	["keyword", "NULL"],
+	["keyword", "RISK"],
+	["keyword", "ROLE"],
+	["keyword", "UNIT"],
+	["keyword", "WAIT"],
+	["keyword", "ZONE"],
+	["keyword", "BASE"],
+	["keyword", "CALL"],
+	["keyword", "CODE"],
+	["keyword", "DATA"],
+	["keyword", "DATE"],
+	["keyword", "FKGE"],
+	["keyword", "GKGE"],
+	["keyword", "HIGH"],
+	["keyword", "KIND"],
+	["keyword", "LEFT"],
+	["keyword", "LIST"],
+	["keyword", "MASK"],
+	["keyword", "MESH"],
+	["keyword", "NAME"],
+	["keyword", "NODE"],
+	["keyword", "PACK"],
+	["keyword", "PAGE"],
+	["keyword", "POOL"],
+	["keyword", "SEND"],
+	["keyword", "SIGN"],
+	["keyword", "SIZE"],
+	["keyword", "SOME"],
+	["keyword", "STOP"],
+	["keyword", "TASK"],
+	["keyword", "TEXT"],
+	["keyword", "TIME"],
+	["keyword", "USER"],
+	["keyword", "VARY"],
+	["keyword", "WITH"],
+	["keyword", "WORD"],
+	["keyword", "BLUE"],
+	["keyword", "CONV"],
+	["keyword", "COPY"],
+	["keyword", "DEEP"],
+	["keyword", "ELSE"],
+	["keyword", "FORM"],
+	["keyword", "FROM"],
+	["keyword", "HINT"],
+	["keyword", "ICON"],
+	["keyword", "JOIN"],
+	["keyword", "LIKE"],
+	["keyword", "LOAD"],
+	["keyword", "ONLY"],
+	["keyword", "PART"],
+	["keyword", "SCAN"],
+	["keyword", "SKIP"],
+	["keyword", "SORT"],
+	["keyword", "TYPE"],
+	["keyword", "UNIX"],
+	["keyword", "VIEW"],
+	["keyword", "WHEN"],
+	["keyword", "WORK"],
+	["keyword", "ACOS"],
+	["keyword", "ASIN"],
+	["keyword", "ATAN"],
+	["keyword", "COSH"],
+	["keyword", "EACH"],
+	["keyword", "FRAC"],
+	["keyword", "LESS"],
+	["keyword", "RTTI"],
+	["keyword", "SINH"],
+	["keyword", "SQRT"],
+	["keyword", "TANH"],
+	["keyword", "AVG"],
+	["keyword", "BIT"],
+	["keyword", "DIV"],
+	["keyword", "ISO"],
+	["keyword", "LET"],
+	["keyword", "OUT"],
+	["keyword", "PAD"],
+	["keyword", "SQL"],
+	["keyword", "ALL"],
+	["keyword", "CI_"],
+	["keyword", "CPI"],
+	["keyword", "END"],
+	["keyword", "LOB"],
+	["keyword", "LPI"],
+	["keyword", "MAX"],
+	["keyword", "MIN"],
+	["keyword", "NEW"],
+	["keyword", "OLE"],
+	["keyword", "RUN"],
+	["keyword", "SET"],
+	["keyword", "?TO"],
+	["keyword", "YES"],
+	["keyword", "ABS"],
+	["keyword", "ADD"],
+	["keyword", "AND"],
+	["keyword", "BIG"],
+	["keyword", "FOR"],
+	["keyword", "HDB"],
+	["keyword", "JOB"],
+	["keyword", "LOW"],
+	["keyword", "NOT"],
+	["keyword", "SAP"],
+	["keyword", "TRY"],
+	["keyword", "VIA"],
+	["keyword", "XML"],
+	["keyword", "ANY"],
+	["keyword", "GET"],
+	["keyword", "IDS"],
+	["keyword", "KEY"],
+	["keyword", "MOD"],
+	["keyword", "OFF"],
+	["keyword", "PUT"],
+	["keyword", "RAW"],
+	["keyword", "RED"],
+	["keyword", "REF"],
+	["keyword", "SUM"],
+	["keyword", "TAB"],
+	["keyword", "XSD"],
+	["keyword", "CNT"],
+	["keyword", "COS"],
+	["keyword", "EXP"],
+	["keyword", "LOG"],
+	["keyword", "SIN"],
+	["keyword", "TAN"],
+	["keyword", "XOR"],
+	["keyword", "AT"],
+	["keyword", "CO"],
+	["keyword", "CP"],
+	["keyword", "DO"],
+	["keyword", "GT"],
+	["keyword", "ID"],
+	["keyword", "IF"],
+	["keyword", "NS"],
+	["keyword", "OR"],
+	["keyword", "BT"],
+	["keyword", "CA"],
+	["keyword", "CS"],
+	["keyword", "GE"],
+	["keyword", "NA"],
+	["keyword", "NB"],
+	["keyword", "EQ"],
+	["keyword", "IN"],
+	["keyword", "LT"],
+	["keyword", "NE"],
+	["keyword", "NO"],
+	["keyword", "OF"],
+	["keyword", "ON"],
+	["keyword", "PF"],
+	["keyword", "TO"],
+	["keyword", "AS"],
+	["keyword", "BY"],
+	["keyword", "CN"],
+	["keyword", "IS"],
+	["keyword", "LE"],
+	["keyword", "NP"],
+	["keyword", "UP"],
+	["keyword", "E"],
+	["keyword", "I"],
+	["keyword", "M"],
+	["keyword", "O"],
+	["keyword", "Z"],
+	["keyword", "C"],
+	["keyword", "X"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,39 @@
+type
+opaque
+declare
+Class
+$await
+$Diff
+$Exact
+$Keys
+$ObjMap
+$PropertyType
+$Shape
+$Record
+$Supertype
+$Subtype
+$Enum
+
+----------------------------------------------------
+
+[
+	["keyword", "type"],
+	["keyword", "opaque"],
+	["keyword", "declare"],
+	["keyword", "Class"],
+	["keyword", "$await"],
+	["keyword", "$Diff"],
+	["keyword", "$Exact"],
+	["keyword", "$Keys"],
+	["keyword", "$ObjMap"],
+	["keyword", "$PropertyType"],
+	["keyword", "$Shape"],
+	["keyword", "$Record"],
+	["keyword", "$Supertype"],
+	["keyword", "$Subtype"],
+	["keyword", "$Enum"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

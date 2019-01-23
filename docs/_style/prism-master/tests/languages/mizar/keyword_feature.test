@@ -1,0 +1,245 @@
+@proof
+according
+aggregate
+all
+and
+antonym
+are
+as
+associativity
+assume
+asymmetry
+attr
+be
+begin
+being
+by
+canceled
+case
+cases
+cluster
+clusters
+coherence
+commutativity
+compatibility
+connectedness
+consider
+consistency
+constructors
+contradiction
+correctness
+def
+deffunc
+define
+definition
+definitions
+defpred
+do
+does
+equals
+end
+environ
+ex
+exactly
+existence
+for
+from
+func
+given
+hence
+hereby
+holds
+idempotence
+identity
+if
+iff
+implies
+involutiveness
+irreflexivity
+is
+it
+let
+means
+mode
+non
+not
+notation
+notations
+now
+of
+or
+otherwise
+over
+per
+pred
+prefix
+projectivity
+proof
+provided
+qua
+reconsider
+redefine
+reduce
+reducibility
+reflexivity
+registration
+registrations
+requirements
+reserve
+sch
+scheme
+schemes
+section
+selector
+set
+sethood
+st
+struct
+such
+suppose
+symmetry
+synonym
+take
+that
+the
+then
+theorem
+theorems
+thesis
+thus
+to
+transitivity
+uniqueness
+vocabulary
+vocabularies
+when
+where
+with
+wrt
+
+----------------------------------------------------
+
+[
+	["keyword", "@proof"],
+	["keyword", "according"],
+	["keyword", "aggregate"],
+	["keyword", "all"],
+	["keyword", "and"],
+	["keyword", "antonym"],
+	["keyword", "are"],
+	["keyword", "as"],
+	["keyword", "associativity"],
+	["keyword", "assume"],
+	["keyword", "asymmetry"],
+	["keyword", "attr"],
+	["keyword", "be"],
+	["keyword", "begin"],
+	["keyword", "being"],
+	["keyword", "by"],
+	["keyword", "canceled"],
+	["keyword", "case"],
+	["keyword", "cases"],
+	["keyword", "cluster"],
+	["keyword", "clusters"],
+	["keyword", "coherence"],
+	["keyword", "commutativity"],
+	["keyword", "compatibility"],
+	["keyword", "connectedness"],
+	["keyword", "consider"],
+	["keyword", "consistency"],
+	["keyword", "constructors"],
+	["keyword", "contradiction"],
+	["keyword", "correctness"],
+	["keyword", "def"],
+	["keyword", "deffunc"],
+	["keyword", "define"],
+	["keyword", "definition"],
+	["keyword", "definitions"],
+	["keyword", "defpred"],
+	["keyword", "do"],
+	["keyword", "does"],
+	["keyword", "equals"],
+	["keyword", "end"],
+	["keyword", "environ"],
+	["keyword", "ex"],
+	["keyword", "exactly"],
+	["keyword", "existence"],
+	["keyword", "for"],
+	["keyword", "from"],
+	["keyword", "func"],
+	["keyword", "given"],
+	["keyword", "hence"],
+	["keyword", "hereby"],
+	["keyword", "holds"],
+	["keyword", "idempotence"],
+	["keyword", "identity"],
+	["keyword", "if"],
+	["keyword", "iff"],
+	["keyword", "implies"],
+	["keyword", "involutiveness"],
+	["keyword", "irreflexivity"],
+	["keyword", "is"],
+	["keyword", "it"],
+	["keyword", "let"],
+	["keyword", "means"],
+	["keyword", "mode"],
+	["keyword", "non"],
+	["keyword", "not"],
+	["keyword", "notation"],
+	["keyword", "notations"],
+	["keyword", "now"],
+	["keyword", "of"],
+	["keyword", "or"],
+	["keyword", "otherwise"],
+	["keyword", "over"],
+	["keyword", "per"],
+	["keyword", "pred"],
+	["keyword", "prefix"],
+	["keyword", "projectivity"],
+	["keyword", "proof"],
+	["keyword", "provided"],
+	["keyword", "qua"],
+	["keyword", "reconsider"],
+	["keyword", "redefine"],
+	["keyword", "reduce"],
+	["keyword", "reducibility"],
+	["keyword", "reflexivity"],
+	["keyword", "registration"],
+	["keyword", "registrations"],
+	["keyword", "requirements"],
+	["keyword", "reserve"],
+	["keyword", "sch"],
+	["keyword", "scheme"],
+	["keyword", "schemes"],
+	["keyword", "section"],
+	["keyword", "selector"],
+	["keyword", "set"],
+	["keyword", "sethood"],
+	["keyword", "st"],
+	["keyword", "struct"],
+	["keyword", "such"],
+	["keyword", "suppose"],
+	["keyword", "symmetry"],
+	["keyword", "synonym"],
+	["keyword", "take"],
+	["keyword", "that"],
+	["keyword", "the"],
+	["keyword", "then"],
+	["keyword", "theorem"],
+	["keyword", "theorems"],
+	["keyword", "thesis"],
+	["keyword", "thus"],
+	["keyword", "to"],
+	["keyword", "transitivity"],
+	["keyword", "uniqueness"],
+	["keyword", "vocabulary"],
+	["keyword", "vocabularies"],
+	["keyword", "when"],
+	["keyword", "where"],
+	["keyword", "with"],
+	["keyword", "wrt"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

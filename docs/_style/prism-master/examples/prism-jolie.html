@@ -1,0 +1,162 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz";
+'foo \'bar\' baz'</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+42L
+1.2e3
+0.1E-4
+0.2e+1
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>include "console.iol"
+
+type HubType: void {
+  .sid: undefined
+  .nodes[1,*] : NodeType
+}
+
+type NodeType: void {
+  .sid: string
+  .node: string
+  .load?: int
+}
+
+type NetType: HubType | NodeType
+
+interface NetInterface {
+  OneWay: start( string ), addElement( NetType ), removeElement( NetType ), quit( void )
+  RequestResponse: showElements( void )( NetType ) throws SomeFault
+}
+
+type LogType: void {
+  .message: string
+}
+
+interface LoggerInterface {
+  RequestResponse: log( LogType )( void )
+}
+
+outputPort LoggerService {
+    Interfaces: LoggerInterface
+}
+
+embedded {
+  Jolie: "logger.ol" in LoggerService
+}
+
+type AuthenticationData: void {
+    .key:string
+}
+
+interface extender AuthInterfaceExtender {
+    OneWay: *(AuthenticationData)
+}
+
+service SubService 
+{
+  Interfaces: NetInterface
+
+  main
+  {
+     println@Console( "I do nothing" )()
+  }
+}
+
+inputPort ExtLogger {
+  Location: "socket://localhost:9000"
+  Protocol: sodep
+  Interfaces: LoggerInterface
+  Aggregates: LoggerService with AuthInterfaceExtender
+}
+
+courier ExtLogger {
+  [interface LoggerInterface( request )] {
+    if ( key == "secret" ){
+      forward ( request )
+    }
+  }
+}
+
+inputPort In {
+  Location: "socket://localhost:8000"
+  Protocol: http {
+    .debug = true;
+    .debug.showContent = true
+  }
+  Interfaces: NetInterface
+  Aggregates: SubService, 
+              LoggerService
+  Redirects: A => SubService, 
+             B => SubService
+}
+
+cset {
+  sid: HubType.sid NodeType.sid
+}
+
+execution{ concurrent }
+
+define netmodule {
+  if( request.load == 0 || request.load < 1 && 
+      request.load <= 2 || request.load >= 3 && 
+      request.load > 4  || request.load%4 == 2
+  ) {
+    scope( scopeName ) {   
+      // inline comment
+      install( MyFault => println@Console( "Something \"Went\" Wrong" + ' but it\'s ok' )() );
+      /*
+      * Multi-line
+      * Comment
+      */
+      install( this => cH; println@Console( "Something went wrong: " + ^load )() );
+      install( default => comp( scopeName ); println@Console( "Something went wrong" )() );
+      load -> request.( "load" );
+      { ++load | load++ | --load | load-- };
+      throw( MyFault )
+    }
+  } else {
+    foreach ( node -> request.nodes ) {
+      with( node ){
+        while( .load != 100 ) {
+          .load++
+        }   
+      }
+    } 
+  }
+}
+
+main
+{
+  start( sid );
+  synchronized( unneededSync ){
+    csets.sid = sid;
+    undef( sid )
+  };
+  provide
+    [ addElement( request ) ]{
+      if( request instanceof NodeType ) {
+        netmodule
+      }
+    }
+    [ removeElement() ]
+    [ showElements()( response ){
+       /*
+       * assemble response
+       */
+       nullProcess
+     }]{
+       // log the request
+       log@LoggerService( new )();
+       log @ LoggerService( new )()
+     }
+  until
+   [ quit() ]{ exit }
+}</code></pre>

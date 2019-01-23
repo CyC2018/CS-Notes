@@ -1,0 +1,45 @@
+# include <stdio.h>
+  #define PG_locked 0
+
+#defined
+#elif
+#else
+#endif
+#error
+#ifdef
+#ifndef
+#if
+#import
+#include
+#line
+#pragma
+#undef
+#using
+
+----------------------------------------------------
+
+[
+	["macro", [
+		"# ", ["directive", "include"],
+		["string", "<stdio.h>"]
+	]],
+	["macro", ["#", ["directive", "define"], " PG_locked 0"]],
+	["macro", ["#", ["directive", "defined"]]],
+	["macro", ["#", ["directive", "elif"]]],
+	["macro", ["#", ["directive", "else"]]],
+    ["macro", ["#", ["directive", "endif"]]],
+    ["macro", ["#", ["directive", "error"]]],
+    ["macro", ["#", ["directive", "ifdef"]]],
+    ["macro", ["#", ["directive", "ifndef"]]],
+    ["macro", ["#", ["directive", "if"]]],
+    ["macro", ["#", ["directive", "import"]]],
+    ["macro", ["#", ["directive", "include"]]],
+    ["macro", ["#", ["directive", "line"]]],
+    ["macro", ["#", ["directive", "pragma"]]],
+    ["macro", ["#", ["directive", "undef"]]],
+    ["macro", ["#", ["directive", "using"]]]
+]
+
+----------------------------------------------------
+
+Checks for macros and paths inside include statements.

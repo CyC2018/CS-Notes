@@ -1,0 +1,53 @@
+Foo
+Bar
+
+abs advance alignof alignofValue
+assert contains count countElements
+debugPrint debugPrintln distance
+dropFirst dropLast dump enumerate
+equal filter find first getVaList
+indices isEmpty join last
+lexicographicalCompare map max
+maxElement min minElement numericCast
+overlaps partition print
+println reduce reflect reverse
+sizeof sizeofValue sort sorted
+split startsWith stride strideof
+strideofValue suffix swap toDebugString
+toString transcode underestimateCount
+unsafeBitCast withExtendedLifetime
+withUnsafeMutablePointer
+withUnsafeMutablePointers
+withUnsafePointer withUnsafePointers
+withVaList
+
+----------------------------------------------------
+
+[
+	["builtin", "Foo"],
+	["builtin", "Bar"],
+
+	["builtin", "abs"], ["builtin", "advance"], ["builtin", "alignof"], ["builtin", "alignofValue"],
+	["builtin", "assert"], ["builtin", "contains"], ["builtin", "count"], ["builtin", "countElements"],
+	["builtin", "debugPrint"], ["builtin", "debugPrintln"], ["builtin", "distance"],
+	["builtin", "dropFirst"], ["builtin", "dropLast"], ["builtin", "dump"], ["builtin", "enumerate"],
+	["builtin", "equal"], ["builtin", "filter"], ["builtin", "find"], ["builtin", "first"], ["builtin", "getVaList"],
+	["builtin", "indices"], ["builtin", "isEmpty"], ["builtin", "join"], ["builtin", "last"],
+	["builtin", "lexicographicalCompare"], ["builtin", "map"], ["builtin", "max"],
+	["builtin", "maxElement"], ["builtin", "min"], ["builtin", "minElement"], ["builtin", "numericCast"],
+	["builtin", "overlaps"], ["builtin", "partition"], ["builtin", "print"],
+	["builtin", "println"], ["builtin", "reduce"], ["builtin", "reflect"], ["builtin", "reverse"],
+	["builtin", "sizeof"], ["builtin", "sizeofValue"], ["builtin", "sort"], ["builtin", "sorted"],
+	["builtin", "split"], ["builtin", "startsWith"], ["builtin", "stride"], ["builtin", "strideof"],
+	["builtin", "strideofValue"], ["builtin", "suffix"], ["builtin", "swap"], ["builtin", "toDebugString"],
+	["builtin", "toString"], ["builtin", "transcode"], ["builtin", "underestimateCount"],
+	["builtin", "unsafeBitCast"], ["builtin", "withExtendedLifetime"],
+	["builtin", "withUnsafeMutablePointer"],
+	["builtin", "withUnsafeMutablePointers"],
+	["builtin", "withUnsafePointer"], ["builtin", "withUnsafePointers"],
+	["builtin", "withVaList"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

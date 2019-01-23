@@ -1,0 +1,19 @@
+case class data deriving
+do else if in infixl
+infixr instance let
+module newtype of
+primitive then type where
+
+----------------------------------------------------
+
+[
+	["keyword", "case"], ["keyword", "class"], ["keyword", "data"], ["keyword", "deriving"],
+	["keyword", "do"], ["keyword", "else"], ["keyword", "if"], ["keyword", "in"], ["keyword", "infixl"],
+	["keyword", "infixr"], ["keyword", "instance"], ["keyword", "let"],
+	["keyword", "module"], ["keyword", "newtype"], ["keyword", "of"],
+	["keyword", "primitive"], ["keyword", "then"], ["keyword", "type"], ["keyword", "where"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

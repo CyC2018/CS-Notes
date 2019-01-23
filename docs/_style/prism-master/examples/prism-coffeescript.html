@@ -1,0 +1,61 @@
+<h2>Comments</h2>
+<pre><code># This is a comment
+### This is a
+multi-line comment###</code></pre>
+
+<h2>Strings</h2>
+<pre><code>'foo \'bar\' baz'
+"foo \"bar\" baz"
+'Multi-line
+strings are supported'
+"Multi-line
+strings are supported"
+''' 'Block strings'
+are supported too'''
+""" "Block strings"
+are supported too"""</code></pre>
+
+<h2>String interpolation</h2>
+<pre><code>"String #{interpolation} is supported"
+'This works #{only} between double-quoted strings'</code></pre>
+
+<h2>Object properties</h2>
+<pre><code>kids =
+  brother:
+    name: "Max"
+    age:  11
+  sister:
+    name: "Ida"
+    age:  9</code></pre>
+
+<h2>Regexps</h2>
+<pre><code>/normal [r]egexp?/;
+/// ^(
+  mul\t[i-l]ine
+  regexp          # with embedded comment
+) ///</code></pre>
+
+<h2>Classes</h2>
+<pre><code>class Animal
+  constructor: (@name) ->
+  move: (meters) ->
+    alert @name + " moved #{meters}m."
+
+class Snake extends Animal
+  move: ->
+    alert "Slithering..."
+    super 5
+
+class Horse extends Animal
+  move: ->
+    alert "Galloping..."
+    super 45
+
+sam = new Snake "Sammy the Python"
+tom = new Horse "Tommy the Palomino"
+
+sam.move()
+tom.move()</code></pre>
+
+<h2>Inline JavaScript</h2>
+<pre><code>`alert("foo")`</code></pre>

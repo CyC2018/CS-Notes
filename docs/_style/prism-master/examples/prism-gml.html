@@ -1,0 +1,29 @@
+<h2>Comments</h2>
+<pre><code>// This is a comment
+/* This is a comment
+on multiple lines */</code></pre>
+
+<h2>Functions</h2>
+<pre><code>variable_instance_set(_inst,_var_name,_start+_change);</code></pre>
+
+<h2>Full example</h2>
+<pre><code>if(instance_exists(_inst) || _inst==global){
+	if(_delay<=0){
+		_time+=1;
+		if(_time&lt;_duration){
+			event_user(0);
+		}else{
+			if(_inst!=global){
+				variable_instance_set(_inst,_var_name,_start+_change);
+			}else{
+				variable_global_set(_var_name,_start+_change);
+			}
+			instance_destroy();
+		}
+	}else{
+		_delay-=1;
+	}
+}else{
+	instance_destroy();
+}
+</code></pre>

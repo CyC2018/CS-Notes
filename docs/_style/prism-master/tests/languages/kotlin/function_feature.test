@@ -1,0 +1,16 @@
+foo()
+foo_Bar_42()
+list.filter {}
+
+----------------------------------------------------
+
+[
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "foo_Bar_42"], ["punctuation", "("], ["punctuation", ")"],
+	"\r\nlist", ["punctuation", "."],
+	["function", "filter"], ["punctuation", "{"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

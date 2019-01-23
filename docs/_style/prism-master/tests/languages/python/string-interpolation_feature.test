@@ -1,0 +1,147 @@
+f'The value is {value}.'
+
+f"The value is {'4'}."
+
+f'input={value!s:#06x}'
+
+f'{{{4*10}}}'
+
+fr'x={4*10}\n'
+
+f'''{x
++1}'''
+
+f'mapping is { {a:b for (a, b) in ((1, 2), (3, 4))} }'
+
+f'{(lambda x: x*2)(3)}'
+
+----------------------------------------------------
+
+[
+	["string-interpolation", [
+		["string", "f'The value is "],
+		["interpolation", [
+			["punctuation", "{"],
+			"value",
+			["punctuation", "}"]
+		]],
+		["string", ".'"]
+	]],
+
+	["string-interpolation", [
+		["string", "f\"The value is "],
+		["interpolation", [
+			["punctuation", "{"],
+			["string", "'4'"],
+			["punctuation", "}"]
+		]],
+		["string", ".\""]
+	]],
+
+	["string-interpolation", [
+		["string", "f'input="],
+		["interpolation", [
+			["punctuation", "{"],
+			"value",
+			["conversion-option", "!s"],
+			["punctuation", ":"],
+			["format-spec", "#06x"],
+			["punctuation", "}"]
+		]],
+		["string", "'"]
+	]],
+
+	["string-interpolation", [
+		["string", "f'{{"],
+		["interpolation", [
+			["punctuation", "{"],
+			["number", "4"],
+			["operator", "*"],
+			["number", "10"],
+			["punctuation", "}"]
+		]],
+		["string", "}}'"]
+	]],
+
+	["string-interpolation", [
+		["string", "fr'x="],
+		["interpolation", [
+			["punctuation", "{"],
+			["number", "4"],
+			["operator", "*"],
+			["number", "10"],
+			["punctuation", "}"]
+		]],
+		["string", "\\n'"]
+	]],
+
+	["string-interpolation", [
+		["string", "f'''"],
+		["interpolation", [
+			["punctuation", "{"],
+			"x\r\n",
+			["operator", "+"],
+			["number", "1"],
+			["punctuation", "}"]
+		]],
+		["string", "'''"]
+	]],
+
+	["string-interpolation", [
+		["string", "f'mapping is "],
+		["interpolation", [
+			["punctuation", "{"],
+			["punctuation", "{"],
+			"a",
+			["punctuation", ":"],
+			"b ",
+			["keyword", "for"],
+			["punctuation", "("],
+			"a",
+			["punctuation", ","],
+			" b",
+			["punctuation", ")"],
+			["keyword", "in"],
+			["punctuation", "("],
+			["punctuation", "("],
+			["number", "1"],
+			["punctuation", ","],
+			["number", "2"],
+			["punctuation", ")"],
+			["punctuation", ","],
+			["punctuation", "("],
+			["number", "3"],
+			["punctuation", ","],
+			["number", "4"],
+			["punctuation", ")"],
+			["punctuation", ")"],
+			["punctuation", "}"],
+			["punctuation", "}"]
+		]],
+		["string", "'"]
+	]],
+
+	["string-interpolation", [
+		["string", "f'"],
+		["interpolation", [
+			["punctuation", "{"],
+			["punctuation", "("],
+			["keyword", "lambda"],
+			" x",
+			["punctuation", ":"],
+			" x",
+			["operator", "*"],
+			["number", "2"],
+			["punctuation", ")"],
+			["punctuation", "("],
+			["number", "3"],
+			["punctuation", ")"],
+			["punctuation", "}"]
+		]],
+		["string", "'"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for string interpolation.
