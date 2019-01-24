@@ -246,11 +246,13 @@ public String replaceSpace(StringBuffer str) {
 
 从尾到头反过来打印出每个结点的值。
 
-<div align="center"> <img src="pics/d99dc9e2-197c-4085-813d-7195da1c6762.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293972480.gif" width="250px"> </div><br>
 
 ## 解题思路
 
 ### 使用栈
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293773431.gif" width="500px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -267,6 +269,8 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 ```
 
 ### 使用递归
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548294571338.gif" width="200px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -288,6 +292,8 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 - 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
 - 第一个节点就是链表的第一个真正存储值的节点。
 
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif"/> </div><br>
+
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
     // 头插法构建逆序链表
@@ -305,20 +311,6 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         ret.add(head.val);
         head = head.next;
     }
-    return ret;
-}
-```
-
-### 使用 Collections.reverse()
-
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (listNode != null) {
-        ret.add(listNode.val);
-        listNode = listNode.next;
-    }
-    Collections.reverse(ret);
     return ret;
 }
 ```
