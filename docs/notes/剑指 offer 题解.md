@@ -1,7 +1,5 @@
 [🎉 面试进阶指南已上线](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
-* [1. 前言](#1-前言)
-* [2. 实现 Singleton](#2-实现-singleton)
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
 * [5. 替换空格](#5-替换空格)
@@ -81,16 +79,6 @@
 * [参考文献](#参考文献)
 <!-- GFM-TOC -->
 
-
-# 1. 前言
-
-本文内容可在微信小程序中阅读：
-
-<div align="center"> <img src="pics/gh_a68199af85d6_258_20_282_29.jpg"/> </div><br>
-
-# 2. 实现 Singleton
-
-[单例模式](设计模式.md)
 
 # 3. 数组中重复的数字
 
@@ -250,24 +238,6 @@ public String replaceSpace(StringBuffer str) {
 
 ## 解题思路
 
-### 使用栈
-
-<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293773431.gif" width="500px"> </div><br>
-
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    Stack<Integer> stack = new Stack<>();
-    while (listNode != null) {
-        stack.add(listNode.val);
-        listNode = listNode.next;
-    }
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (!stack.isEmpty())
-        ret.add(stack.pop());
-    return ret;
-}
-```
-
 ### 使用递归
 
 <div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548294571338.gif" width="200px"> </div><br>
@@ -292,7 +262,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 - 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
 - 第一个节点就是链表的第一个真正存储值的节点。
 
-<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif"/> </div><br>
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif" width="300px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -311,6 +281,24 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         ret.add(head.val);
         head = head.next;
     }
+    return ret;
+}
+```
+
+### 使用栈
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293773431.gif" width="500px"> </div><br>
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    Stack<Integer> stack = new Stack<>();
+    while (listNode != null) {
+        stack.add(listNode.val);
+        listNode = listNode.next;
+    }
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (!stack.isEmpty())
+        ret.add(stack.pop());
     return ret;
 }
 ```
