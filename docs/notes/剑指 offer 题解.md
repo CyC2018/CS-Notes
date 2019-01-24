@@ -240,7 +240,7 @@ public String replaceSpace(StringBuffer str) {
 
 ### 使用递归
 
-<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548294571338.gif" width="200px"> </div><br>
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548296249372.gif" width="200px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
