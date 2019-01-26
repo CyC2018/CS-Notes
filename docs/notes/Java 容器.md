@@ -1,4 +1,4 @@
-[⭐️ 面试进阶专栏 ⭐️](https://xiaozhuanlan.com/CyC2018)
+[💦 面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、概览](#一概览)
     * [Collection](#collection)
