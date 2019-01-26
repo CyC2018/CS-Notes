@@ -287,7 +287,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ### 使用栈
 
-<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293773431.gif" width="500px"> </div><br>
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548503461113.gif" width="500px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -372,11 +372,11 @@ public class TreeLinkNode {
 
 ① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="pics/cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u4E8C_u53C9_u6811_u7684_u4E0B_.gif" width="250"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="pics/e143f6da-d114-4ba4-8712-f65299047fa2.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u4E8C_u53C9_u6811_u7684_u4E0B_1548504426508.gif" width="250"/> </div><br>
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
