@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+[🍉 面试进阶专栏 🍉](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)

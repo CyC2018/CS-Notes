@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
+[🍉 面试进阶专栏 🍉](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [595. Big Countries](#595-big-countries)
 * [627. Swap Salary](#627-swap-salary)
