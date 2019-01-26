@@ -1,4 +1,4 @@
-[🎉 面试进阶指南已上线](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、线程状态转换](#一线程状态转换)
     * [新建（New）](#新建new)

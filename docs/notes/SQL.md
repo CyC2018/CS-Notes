@@ -1,4 +1,4 @@
-[🎉 面试进阶指南已上线](https://xiaozhuanlan.com/CyC2018)
+[🎉 面试进阶专栏已上线](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、基础](#一基础)
 * [二、创建表](#二创建表)
