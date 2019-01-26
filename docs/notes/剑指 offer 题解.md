@@ -316,11 +316,13 @@ preorder = [3,9,20,15,7]
 inorder =  [9,3,15,20,7]
 ```
 
-<div align="center"> <img src="pics/8a4c6ad4-a816-47d1-b93f-7ca4f78ab67a.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-1.gif" width="200"/> </div><br>
 
 ## 解题思路
 
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
+
+<div align="center"> <img src="pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-21548502782193.gif"/> </div><br>
 
 ```java
 // 缓存中序遍历数组每个值对应的索引
