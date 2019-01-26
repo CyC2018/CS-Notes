@@ -409,7 +409,8 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，先进入的元素先退出，这就是队列的顺序。
 
-<div align="center"> <img src="pics/5acf7550-86c5-4c5b-b912-8ce70ef9c34e.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/_u7528_u4E24_u4E2A_u6808_u5B9E_.gif" width="500"/> </div><br>
+
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
@@ -445,7 +446,8 @@ public int pop() throws Exception {
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="pics/faecea49-9974-40db-9821-c8636137df61.jpg" width="300"/> </div><br>
+<div align="center"> <img src="pics/_u6590_u6CE2_u90A3_u5951_u6570_u5217.gif" width="400"/> </div><br>
+
 
 递归是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，从而避免重复求解子问题。
 
