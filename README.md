@@ -3,10 +3,10 @@
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
     <br> <br>
-    
+    本仓库包含了技术面试必备的基础知识，这些内容是我从众多计算机经典书籍总结而来，内容浅显易懂，你不需要花很长的时间去阅读和理解成堆的技术书籍就可以快速掌握这些内容，从而节省宝贵的面试复习时间。如果你觉得本仓库对你有帮助，可以考虑订阅我的 <a href="https://xiaozhuanlan.com/CyC2018">专栏</a>，包含了学习指导和面试技巧，让你更轻松拿到满意的 Offer。
 </div> 
 
-<br/>
+<br>
 
 ## :pencil2: 算法
 
@@ -69,21 +69,15 @@
 
 ## :memo: 后记 
 
-### 关于
-
-
-
-
-
 ### QQ 群
 
-为大家提供一个学习交流平台，在这里你可以自由地和笔者以及其他人进行技术上的交流。
+为大家提供一个学习交流平台，在这里你可以自由地和我以及其他人进行技术上的交流。
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
 
 ### 知识星球
 
-想要向笔者提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
+想要向我提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
 
 [🎓](other/Planet.md)
 
@@ -93,13 +87,15 @@
 
 ### 排版
 
-笔记内容按照 中文文案排版指北 进行排版，以保证内容的可读性。笔记不使用 ![]() 这种方式来引用图片，而是用 <img> 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。笔者将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：Text-Typesetting。
+笔记内容按照 中文文案排版指北 进行排版，以保证内容的可读性。笔记不使用 ![]() 这种方式来引用图片，而是用 <img> 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
+
+我将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
 
 ### 上传方案
 
-笔者在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
+我在本地使用为知笔记软件进行书写，为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括文本文件的导出、提取图片、Markdown 文档转换、Git 同步。进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
-笔者将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：GFM-Converter。
+我将自己实现文档转换功能提取出来，方便大家在需要将本地 Markdown 上传到 Github，或者制作项目 README 文档时生成目录时使用：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 ### License
 
