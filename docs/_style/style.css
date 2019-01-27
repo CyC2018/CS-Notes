@@ -45,3 +45,7 @@ body {
 section.cover h1 {
     margin ： 0;
 }
+
+body>section>div.cover-main>ul>li>a {
+    color: #42b983;
+}
