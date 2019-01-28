@@ -71,7 +71,7 @@
 
 ### QQ 群
 
-为大家提供一个学习交流平台，在这里你可以自由地和我以及其他人进行技术上的交流。
+为大家提供一个学习交流平台，在这里你可以自由地和。
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
 
@@ -87,7 +87,7 @@
 
 ### 排版
 
-笔记内容按照 中文文案排版指北 进行排版，以保证内容的可读性。笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
+笔记内容按照 [文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 进行排版，以保证内容的可读性。笔记不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 GFM 不支持 `<center> ![]() </center>` 让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
 我将自己实现的文档排版功能提取出来，放在 Github Page 中，无需下载安装即可免费使用：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
 
