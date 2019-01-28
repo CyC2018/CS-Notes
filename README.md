@@ -71,7 +71,7 @@
 
 ### QQ 群
 
-为大家提供一个学习交流平台，在这里你可以自由地和。
+为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
 
