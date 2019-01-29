@@ -73,7 +73,7 @@ java -Xss512M HackTheJava
 
 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
-可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+可以通过 -Xms 和 -Xmx 这两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
 java -Xms1M -Xmx2M HackTheJava
@@ -99,7 +99,7 @@ Class 文件中的常量池（编译器生成的字面量和符号引用）会�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
+在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
 
 # 二、垃圾收集
 
@@ -113,25 +113,25 @@ Class 文件中的常量池（编译器生成的字面量和符号引用）会�
 
 为对象添加一个引用计数器，当对象增加一个引用时计数器加 1，引用失效时计数器减 1。引用计数为 0 的对象可被回收。
 
-两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
+在两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
 
 ```java
-public class ReferenceCountingGC {
+public class Test {
 
     public Object instance = null;
 
     public static void main(String[] args) {
-        ReferenceCountingGC objectA = new ReferenceCountingGC();
-        ReferenceCountingGC objectB = new ReferenceCountingGC();
-        objectA.instance = objectB;
-        objectB.instance = objectA;
+        Test a = new Test();
+        Test b = new Test();
+        a.instance = b;
+        b.instance = a;
     }
 }
 ```
 
 ### 2. 可达性分析算法
 
-通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
+将 GC Roots 作为起始点进行搜索，可达的对象都是存活的，不可达的对象可被回收。
 
 Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
 
@@ -144,7 +144,7 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 ### 3. 方法区的回收
 
-因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，因此在方法区上进行回收性价比不高。
+因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，所以在方法区上进行回收性价比不高。
 
 主要是对常量池的回收和对类的卸载。
 
@@ -158,9 +158,9 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 ### 4. finalize()
 
-finalize() 类似 C++ 的析构函数，用于关闭外部资源。但是 try-finally 等方式可以做的更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
+类似 C++ 的析构函数，用于关闭外部资源。try-finally 等方式可以做的更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
 
-当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会调用 finalize() 方法。
+当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会再调用该方法。
 
 ## 引用类型
 
@@ -194,7 +194,7 @@ obj = null;  // 使对象只被软引用关联
 
 被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾回收发生之前。
 
-使用 WeakReference 类来实现弱引用。
+使用 WeakReference 类来创建弱引用。
 
 ```java
 Object obj = new Object();
@@ -208,7 +208,7 @@ obj = null;
 
 为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。
 
-使用 PhantomReference 来实现虚引用。
+使用 PhantomReference 来创建虚引用。
 
 ```java
 Object obj = new Object();
