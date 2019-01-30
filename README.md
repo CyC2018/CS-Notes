@@ -62,18 +62,16 @@
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/构建工具.md)
 - [正则表达式](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/正则表达式.md)
 
-## :mag_right: 编码实践 
+## :art: 编码实践 
 
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/代码风格规范.md)
 
 ## :memo: 后记 
 
-### QQ 群
+### 内推信息
 
-为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
-
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
+[🔎](https://github.com/CyC2018/Job-Recommend)
 
 ### 知识星球
 
@@ -81,9 +79,11 @@
 
 [🎓](other/Planet.md)
 
-### 内推信息
+### QQ 群
 
-[🔎](https://github.com/CyC2018/Job-Recommend)
+为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
+
+<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
 
 ### 排版
 
