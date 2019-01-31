@@ -71,13 +71,17 @@
 
 ### 内推信息
 
-[🔎 Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+
+### 专栏
+
+[面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
 ### 知识星球
 
 想要向我提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
 
-[🎓 知识星球](other/Planet.md)
+[知识星球](other/Planet.md)
 
 ### QQ 群
 
