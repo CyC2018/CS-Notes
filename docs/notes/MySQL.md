@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、索引](#一索引)
     * [B+ Tree 原理](#b-tree-原理)

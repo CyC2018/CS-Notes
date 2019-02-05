@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
@@ -31,7 +31,7 @@
 
 # 一、运行时数据区域
 
-<div align="center"> <img src="pics/ab701824-e308-4284-88b6-596cc606fadb.png" width="450"/> </div><br>
+<div align="center"> <img src="pics/11548742157520.gif" width="450"/> </div><br>
 
 ## 程序计数器
 
@@ -41,7 +41,7 @@
 
 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="pics/28ab96b4-82ea-4d99-99fb-b320f60d0a58.png" width="500"/> </div><br>
+<div align="center"> <img src="pics/11548741556940.gif" width="500"/> </div><br>
 
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小：
 
@@ -60,7 +60,8 @@ java -Xss512M HackTheJava
 
 本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
-<div align="center"> <img src="pics/JNI-Java-Native-Interface.jpg" width="350"/> </div><br>
+
+<div align="center"> <img src="pics/11548742010310.gif"/> </div><br>
 
 ## 堆
 
@@ -73,7 +74,7 @@ java -Xss512M HackTheJava
 
 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
-可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+可以通过 -Xms 和 -Xmx 这两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
 ```java
 java -Xms1M -Xmx2M HackTheJava
@@ -99,7 +100,7 @@ Class 文件中的常量池（编译器生成的字面量和符号引用）会�
 
 ## 直接内存
 
-在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
+在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
 
 # 二、垃圾收集
 
@@ -113,25 +114,25 @@ Class 文件中的常量池（编译器生成的字面量和符号引用）会�
 
 为对象添加一个引用计数器，当对象增加一个引用时计数器加 1，引用失效时计数器减 1。引用计数为 0 的对象可被回收。
 
-两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
+在两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
 
 ```java
-public class ReferenceCountingGC {
+public class Test {
 
     public Object instance = null;
 
     public static void main(String[] args) {
-        ReferenceCountingGC objectA = new ReferenceCountingGC();
-        ReferenceCountingGC objectB = new ReferenceCountingGC();
-        objectA.instance = objectB;
-        objectB.instance = objectA;
+        Test a = new Test();
+        Test b = new Test();
+        a.instance = b;
+        b.instance = a;
     }
 }
 ```
 
 ### 2. 可达性分析算法
 
-通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
+将 GC Roots 作为起始点进行搜索，可达的对象都是存活的，不可达的对象可被回收。
 
 Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
 
@@ -140,11 +141,11 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 - 方法区中类静态属性引用的对象
 - 方法区中的常量引用的对象
 
-<div align="center"> <img src="pics/0635cbe8.png" width=""/> </div><br>
+<div align="center"> <img src="pics/11548742505541.gif"/> </div><br>
 
 ### 3. 方法区的回收
 
-因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，因此在方法区上进行回收性价比不高。
+因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，所以在方法区上进行回收性价比不高。
 
 主要是对常量池的回收和对类的卸载。
 
@@ -158,9 +159,9 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 ### 4. finalize()
 
-finalize() 类似 C++ 的析构函数，用于关闭外部资源。但是 try-finally 等方式可以做的更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
+类似 C++ 的析构函数，用于关闭外部资源。try-finally 等方式可以做的更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
 
-当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会调用 finalize() 方法。
+当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会再调用该方法。
 
 ## 引用类型
 
@@ -194,7 +195,7 @@ obj = null;  // 使对象只被软引用关联
 
 被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾回收发生之前。
 
-使用 WeakReference 类来实现弱引用。
+使用 WeakReference 类来创建弱引用。
 
 ```java
 Object obj = new Object();
@@ -208,7 +209,7 @@ obj = null;
 
 为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。
 
-使用 PhantomReference 来实现虚引用。
+使用 PhantomReference 来创建虚引用。
 
 ```java
 Object obj = new Object();
@@ -220,7 +221,7 @@ obj = null;
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/11548743021625.gif"/> </div><br>
 
 标记要回收的对象，然后清除。
 
@@ -231,21 +232,21 @@ obj = null;
 
 ### 2. 标记 - 整理
 
-<div align="center"> <img src="pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/11548743193273.gif"/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 ### 3. 复制
 
-<div align="center"> <img src="pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/11548743457272.gif"/> </div><br>
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
 主要不足是只使用了内存的一半。
 
-现在的商业虚拟机都采用这种收集算法回收新生代，但是并不是划分为大小相等的两块，而是一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象全部复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。
+现在的商业虚拟机都采用这种收集算法回收新生代，但是并不是划分为大小相等的两块，而是一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象全部复制到另一块 Survivor 上，最后清理 Eden 和使用过的那一块 Survivor。
 
-HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行空间分配担保，也就是借用老年代的空间存储放不下的对象。
+HotSpot 虚拟机的 Eden 和 Survivor 大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 就不够用了，此时需要依赖于老年代进行空间分配担保，也就是借用老年代的空间存储放不下的对象。
 
 ### 4. 分代收集
 
@@ -262,7 +263,7 @@ HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了�
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
-- 单线程与多线程：单线程指的是垃圾收集器只使用一个线程进行收集，而多线程使用多个线程；
+- 单线程与多线程：单线程指的是垃圾收集器只使用一个线程，而多线程使用多个线程；
 - 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
 
 ### 1. Serial 收集器
@@ -275,7 +276,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 它的优点是简单高效，对于单个 CPU 环境来说，由于没有线程交互的开销，因此拥有最高的单线程收集效率。
 
-它是 Client 模式下的默认新生代收集器，因为在该应用场景下内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的新生代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
+它是 Client 模式下的默认新生代收集器，因为在该应用场景下内存一般来说不会很大。它收集几十兆甚至一两百兆的新生代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿时间是可以接受的。
 
 ### 2. ParNew 收集器
 
@@ -284,8 +285,6 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 它是 Serial 收集器的多线程版本。
 
 是 Server 模式下首选的新生代收集器，除了性能原因外，主要是因为除了 Serial 收集器，只有它能与 CMS 收集器配合工作。
-
-默认开启的线程数量与 CPU 数量相同，可以使用 -XX:ParallelGCThreads 参数来设置线程数。
 
 ### 3. Parallel Scavenge 收集器
 
@@ -441,7 +440,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ## 类的生命周期
 
-<div align="center"> <img src="pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/11548744140733.gif"/> </div><br>
 
 包括以下 7 个阶段：
 
@@ -583,7 +582,7 @@ System.out.println(ConstClass.HELLOWORLD);
 
 ## 类与类加载器
 
-两个类相等需要类本身相等，并且使用同一个类加载器进行加载。这是因为每一个类加载器都拥有一个独立的类名称空间。
+两个类相等，需要类本身相等，并且使用同一个类加载器进行加载。这是因为每一个类加载器都拥有一个独立的类名称空间。
 
 这里的相等，包括类的 Class 对象的 equals() 方法、isAssignableFrom() 方法、isInstance() 方法的返回结果为 true，也包括使用 instanceof 关键字做对象所属关系判定结果为 true。
 
@@ -591,9 +590,9 @@ System.out.println(ConstClass.HELLOWORLD);
 
 从 Java 虚拟机的角度来讲，只存在以下两种不同的类加载器：
 
-- 启动类加载器（Bootstrap ClassLoader），这个类加载器用 C++ 实现，是虚拟机自身的一部分；
+- 启动类加载器（Bootstrap ClassLoader），使用 C++ 实现，是虚拟机自身的一部分；
 
-- 所有其他类的加载器，这些类由 Java 实现，独立于虚拟机外部，并且全都继承自抽象类 java.lang.ClassLoader。
+- 所有其它类的加载器，使用 Java 实现，独立于虚拟机，继承自抽象类 java.lang.ClassLoader。
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
@@ -607,13 +606,13 @@ System.out.println(ConstClass.HELLOWORLD);
 
 应用程序都是由三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。
 
-下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
+下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都要有自己的父类加载器。这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
 
 <div align="center"> <img src="pics/class_loader_hierarchy.png" width="600"/> </div><br>
 
 ### 1. 工作过程
 
-一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载。
+一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试自己加载。
 
 ### 2. 好处
 

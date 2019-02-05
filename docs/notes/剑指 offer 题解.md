@@ -1,7 +1,5 @@
-[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
-* [1. 前言](#1-前言)
-* [2. 实现 Singleton](#2-实现-singleton)
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
 * [5. 替换空格](#5-替换空格)
@@ -82,21 +80,6 @@
 <!-- GFM-TOC -->
 
 
-# 1. 前言
-
-本文的绘图可通过以下途径免费获得并使用：
-
-- [ProcessOn](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)
-- [DrawIO](https://drive.google.com/file/d/1nSSCpPUC05MFoeFuf_aeTtkm7dG5-bJ1/view?usp=sharing)
-
-本文内容可在微信小程序中阅读：
-
-<div align="center"> <img src="pics/gh_a68199af85d6_258_20_282_29.jpg"/> </div><br>
-
-# 2. 实现 Singleton
-
-[单例模式](设计模式.md)
-
 # 3. 数组中重复的数字
 
 [NowCoder](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
@@ -115,24 +98,13 @@ Output:
 
 ## 解题思路
 
-要求复杂度为 O(N) + O(1)，也就是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。牛客网讨论区这一题的首票答案使用 nums[i] + length 来将元素标记，这么做会有加法溢出问题。
+要求是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
 
-这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素调整到第 i 个位置上。
+对于这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素调整到第 i 个位置上进行求解。
 
-以 (2, 3, 1, 0, 2, 5) 为例：
+以 (2, 3, 1, 0, 2, 5) 为例，遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复：
 
-```text
-position-0 : (2,3,1,0,2,5) // 2 <-> 1
-             (1,3,2,0,2,5) // 1 <-> 3
-             (3,1,2,0,2,5) // 3 <-> 0
-             (0,1,2,3,2,5) // already in position
-position-1 : (0,1,2,3,2,5) // already in position
-position-2 : (0,1,2,3,2,5) // already in position
-position-3 : (0,1,2,3,2,5) // already in position
-position-4 : (0,1,2,3,2,5) // nums[i] == nums[nums[i]], exit
-```
-
-遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复。
+<div align="center"> <img src="pics/_u6570_u7EC4_u4E2D_u91CD_u590D_1548260392361.gif" width="250px"> </div><br>
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
@@ -163,7 +135,7 @@ private void swap(int[] nums, int i, int j) {
 
 ## 题目描述
 
-在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+给定一个二维数组，其每一行从左到右递增排序，从上到下也是递增排序。给定一个数，判断这个数是否在该二维数组中。
 
 ```html
 Consider the following matrix:
@@ -181,13 +153,11 @@ Given target = 20, return false.
 
 ## 解题思路
 
-从右上角开始查找。矩阵中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间。
+要求时间复杂度 O(M + N)，空间复杂度 O(1)。
 
-复杂度：O(M + N) + O(1)
+该二维数组中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间，当前元素的查找区间为左下角的所有元素。
 
-当前元素的查找区间为左下角的所有元素，例如元素 12 的查找区间如下：
-
-<div align="center"> <img src="pics/f94389e9-55b1-4f49-9d37-00ed05900ae0.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u4E8C_u7EF4_u6570_u7EC4_u4E2D_.gif"/> </div><br>
 
 ```java
 public boolean Find(int target, int[][] matrix) {
@@ -218,10 +188,10 @@ public boolean Find(int target, int[][] matrix) {
 
 ```text
 Input:
-"We Are Happy"
+"A B"
 
 Output:
-"We%20Are%20Happy"
+"A%20B"
 ```
 
 ## 解题思路
@@ -231,6 +201,8 @@ Output:
 令 P1 指向字符串原来的末尾位置，P2 指向字符串现在的末尾位置。P1 和 P2 从后向前遍历，当 P1 遍历到一个空格时，就需要令 P2 指向的位置依次填充 02%（注意是逆序的），否则就填充上 P1 指向字符的值。
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
+
+<div align="center"> <img src="pics/_u66FF_u6362_u7A7A_u683C.gif"/> </div><br>
 
 ```java
 public String replaceSpace(StringBuffer str) {
@@ -260,29 +232,15 @@ public String replaceSpace(StringBuffer str) {
 
 ## 题目描述
 
-输入链表的第一个节点，从尾到头反过来打印出每个结点的值。
+从尾到头反过来打印出每个结点的值。
 
-<div align="center"> <img src="pics/d99dc9e2-197c-4085-813d-7195da1c6762.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293972480.gif" width="250px"> </div><br>
 
 ## 解题思路
 
-### 使用栈
-
-```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    Stack<Integer> stack = new Stack<>();
-    while (listNode != null) {
-        stack.add(listNode.val);
-        listNode = listNode.next;
-    }
-    ArrayList<Integer> ret = new ArrayList<>();
-    while (!stack.isEmpty())
-        ret.add(stack.pop());
-    return ret;
-}
-```
-
 ### 使用递归
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548296249372.gif" width="200px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -303,6 +261,8 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 - 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
 - 第一个节点就是链表的第一个真正存储值的节点。
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif" width="300px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -325,16 +285,20 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-### 使用 Collections.reverse()
+### 使用栈
+
+<div align="center"> <img src="pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548503461113.gif" width="500px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
+    Stack<Integer> stack = new Stack<>();
     while (listNode != null) {
-        ret.add(listNode.val);
+        stack.add(listNode.val);
         listNode = listNode.next;
     }
-    Collections.reverse(ret);
+    ArrayList<Integer> ret = new ArrayList<>();
+    while (!stack.isEmpty())
+        ret.add(stack.pop());
     return ret;
 }
 ```
@@ -352,11 +316,13 @@ preorder = [3,9,20,15,7]
 inorder =  [9,3,15,20,7]
 ```
 
-<div align="center"> <img src="pics/8a4c6ad4-a816-47d1-b93f-7ca4f78ab67a.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-1.gif" width="200"/> </div><br>
 
 ## 解题思路
 
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
+
+<div align="center"> <img src="pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-21548502782193.gif"/> </div><br>
 
 ```java
 // 缓存中序遍历数组每个值对应的索引
@@ -406,11 +372,11 @@ public class TreeLinkNode {
 
 ① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="pics/cb0ed469-27ab-471b-a830-648b279103c8.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u4E8C_u53C9_u6811_u7684_u4E0B_.gif" width="250"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="pics/e143f6da-d114-4ba4-8712-f65299047fa2.png" width="250"/> </div><br>
+<div align="center"> <img src="pics/_u4E8C_u53C9_u6811_u7684_u4E0B_1548504426508.gif" width="250"/> </div><br>
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
@@ -443,7 +409,8 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，先进入的元素先退出，这就是队列的顺序。
 
-<div align="center"> <img src="pics/5acf7550-86c5-4c5b-b912-8ce70ef9c34e.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/_u7528_u4E24_u4E2A_u6808_u5B9E_.gif" width="500"/> </div><br>
+
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
@@ -479,7 +446,8 @@ public int pop() throws Exception {
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="pics/faecea49-9974-40db-9821-c8636137df61.jpg" width="300"/> </div><br>
+<div align="center"> <img src="pics/_u6590_u6CE2_u90A3_u5951_u6570_u5217.gif" width="400"/> </div><br>
+
 
 递归是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，从而避免重复求解子问题。
 

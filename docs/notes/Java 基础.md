@@ -1,4 +1,4 @@
-[🎉 面试进阶专栏限时优惠](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
 <!-- GFM-TOC -->
 * [一、数据类型](#一数据类型)
     * [包装类型](#包装类型)
