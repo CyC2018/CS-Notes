@@ -8,6 +8,8 @@
 
 # ⭐️ 加入方式
 
+可以用微信直接扫下面的二维码直接加入，或者订阅专栏 https://xiaozhuanlan.com/CyC2018 ，加微信 zhengyochuan，备注 “已订阅专栏加星球”。 
+
 <img src="https://github.com/CyC2018/CS-Notes/raw/master/other/planet1.png" width="200px">
 
 # 🔎 预览
