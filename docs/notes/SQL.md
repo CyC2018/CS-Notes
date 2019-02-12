@@ -1,4 +1,4 @@
-[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/topic/2167809435)
 <!-- GFM-TOC -->
 * [一、基础](#一基础)
 * [二、创建表](#二创建表)
