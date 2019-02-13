@@ -79,6 +79,16 @@
 
 ## :memo: 后记 
 
+### 内推信息
+
+[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+
+### QQ 群
+
+为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
+
+<img src="assets/group1.png" width="200px"></br>
+
 ### 关于我
 
 <a href="https://www.zhihu.com/people/xiao-shi-guang-33/activities">
@@ -93,16 +103,6 @@
 <a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
     <img src="assets/知识星球.png" width="50px">
 </a> 
-
-### 内推信息
-
-[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-
-### QQ 群
-
-为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
-
-<img src="assets/group1.png" width="200px"></br>
 
 ### 排版
 
