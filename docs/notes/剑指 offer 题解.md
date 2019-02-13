@@ -244,11 +244,10 @@ public String replaceSpace(StringBuffer str) {
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> ret = new ArrayList<>();
-    if (listNode != null) {
-        ret.addAll(printListFromTailToHead(listNode.next));
-        ret.add(listNode.val);
-    }
+    if (listNode == null) 
+        return new ArrayList<>();
+    ArrayList<Integer> ret = printListFromTailToHead(listNode.next);
+    ret.add(listNode.val);
     return ret;
 }
 ```
