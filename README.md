@@ -4,12 +4,12 @@
 
 | &nbsp;&nbsp;&nbsp;算法&nbsp;&nbsp;&nbsp; | 操作系统 | &nbsp;&nbsp;&nbsp;网络&nbsp;&nbsp;&nbsp; | 面向对象 | &nbsp;&nbsp;数据库&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | 系统设计 | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; | 编码实践 | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统)|[:cloud:](#cloud-网络) | [:art:](#art-面向对象) |[:floppy_disk:](#floppy_disk-数据库)|  [:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计)| [:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践)| [:memo:](#memo-后记) | 
+| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统)|[:cloud:](#cloud-网络) | [:art:](#art-面向对象) |[:floppy_disk:](#floppy_disk-数据库)|  [:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计)| [:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践)| [:memo:](#memo-后记) |
 
 <br>
 
 <div align="center">
-    <img src="other/LogoMakr_0zpEzN.png" width="200px">
+    <img src="assets/LogoMakr_0zpEzN.png" width="200px">
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
     <br> <br>
@@ -79,25 +79,30 @@
 
 ## :memo: 后记 
 
+### 关于我
+
+<a href="https://www.zhihu.com/people/xiao-shi-guang-33/activities">
+    <img src="assets/知乎.jpg" width="50px">
+</a> 
+<a href="https://www.nowcoder.com/profile/124213">
+    <img src="assets/牛客网.png" width="50px">
+</a> 
+<a href="https://xiaozhuanlan.com/CyC2018">
+    <img src="assets/小专栏.jpg" width="50px">
+</a> 
+<a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
+    <img src="assets/知识星球.png" width="50px">
+</a> 
+
 ### 内推信息
 
 [Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-
-### 专栏
-
-[面试进阶指南](https://xiaozhuanlan.com/topic/2167809435)
-
-### 知识星球
-
-想要向我提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
-
-[知识星球](other/Planet.md)
 
 ### QQ 群
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
-<img src="https://github.com/CyC2018/CS-Notes/raw/master/other/group1.png" width="200px"></br>
+<img src="assets/group1.png" width="200px"></br>
 
 ### 排版
 
@@ -154,19 +159,3 @@ Power by [logomakr](https://logomakr.com/).
 ​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
 
-
-
-<!--  | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
-| :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| 算法[:pencil2:](#pencil2-算法) | 操作系统[:computer:](#computer-操作系统)|网络[:cloud:](#cloud-网络) | 面向对象[:couple:](#couple-面向对象) |数据库[:floppy_disk:](#floppy_disk-数据库)| Java [:coffee:](#coffee-java)| 系统设计[:bulb:](#bulb-系统设计)| 工具[:hammer:](#hammer-工具)| 编码实践[:speak_no_evil:](#speak_no_evil-编码实践)| 后记[:memo:](#memo-后记) | -->
-
-<!-- | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |
-| :--------: | :---------: | :---------: | :---------: | :---------: |
-| &emsp;&emsp;&emsp;算法&emsp;&emsp;&emsp;<br>[:pencil2:](#pencil2-算法) | &emsp;&emsp;&emsp;操作系统&emsp;&emsp;&emsp;<br>[:computer:](#computer-操作系统) | &emsp;&emsp;&emsp;&emsp;网络&emsp;&emsp;&emsp;&emsp;<br>[:cloud:](#cloud-网络) | &emsp;&emsp;&emsp;面向对象&emsp;&emsp;&emsp;<br>[:couple:](#couple-面向对象) | &emsp;&emsp;&emsp;数据库&emsp;&emsp;<br>[:floppy_disk:](#floppy_disk-数据库)|
-
-| Ⅵ | Ⅶ | Ⅷ | Ⅸ | Ⅹ |
-|:---------:| :---------: | :-------: | :-------:| :------:|
-| &emsp;&emsp;&emsp;Java&emsp;&emsp;&emsp;<br>[:coffee:](#coffee-java) | &emsp;&emsp;&emsp;系统设计&emsp;&emsp;&emsp;<br>[:bulb:](#bulb-系统设计) | &emsp;&emsp;&emsp;&emsp;工具&emsp;&emsp;&emsp;&emsp;<br>[:hammer:](#hammer-工具) | &emsp;&emsp;&emsp;编码实践&emsp;&emsp;&emsp;<br>[:speak_no_evil:](#speak_no_evil-编码实践) | &emsp;&emsp;&emsp;后记 &emsp;&emsp;&emsp;<br>[:memo:](#memo-后记) |
--->
-
-<br>
