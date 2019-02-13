@@ -1,4 +1,4 @@
-[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [一、运行时数据区域](#一运行时数据区域)
     * [程序计数器](#程序计数器)
