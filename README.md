@@ -97,7 +97,7 @@
 <a href="https://www.nowcoder.com/profile/124213">
     <img src="assets/牛客网.png" width="80px">
 </a> 
-<a href="https://xiaozhuanlan.com/u/3713614770">
+<a href="https://xiaozhuanlan.com/CyC2018">
     <img src="assets/小专栏.jpg" width="80px">
 </a> 
 <a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
