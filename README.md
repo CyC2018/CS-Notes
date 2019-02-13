@@ -83,10 +83,6 @@
 
 [Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 
-### 专栏
-
-[面试进阶指南](https://xiaozhuanlan.com/topic/2167809435)
-
 ### 知识星球
 
 想要向我提问关于学习和求职方面的建议？来知识星球，你的每个提问我都会认真回答。
