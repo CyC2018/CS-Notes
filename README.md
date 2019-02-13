@@ -92,16 +92,16 @@
 ### 关于我
 
 <a href="https://www.zhihu.com/people/xiao-shi-guang-33/activities">
-    <img src="assets/知乎.jpg" width="50px">
+    <img src="assets/知乎.jpg" width="80px">
 </a> 
 <a href="https://www.nowcoder.com/profile/124213">
-    <img src="assets/牛客网.png" width="50px">
+    <img src="assets/牛客网.png" width="80px">
 </a> 
 <a href="https://xiaozhuanlan.com/u/3713614770">
-    <img src="assets/小专栏.jpg" width="50px">
+    <img src="assets/小专栏.jpg" width="80px">
 </a> 
 <a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
-    <img src="assets/知识星球.png" width="50px">
+    <img src="assets/知识星球.png" width="80px">
 </a> 
 
 ### 排版
