@@ -50,7 +50,7 @@ body>section>div.cover-main>ul>li>a {
     color: #42b983;
 }
 
-img {
+.markdown-section img {
     box-shadow: 7px 9px 10px #aaa !important;
 }
 
