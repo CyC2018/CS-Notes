@@ -55,5 +55,6 @@ img {
 }
 
 code {
-    box-shadow: 2px 1px 20px 8px #aaa !important
+    box-shadow: 2px 1px 20px 2px #aaa;
+    border-radius: 20px !important;
 }
