@@ -49,3 +49,11 @@ section.cover h1 {
 body>section>div.cover-main>ul>li>a {
     color: #42b983;
 }
+
+img {
+    box-shadow: 7px 9px 10px #aaa !important;
+}
+
+code {
+    box-shadow: 2px 1px 20px 8px #aaa !important
+}
