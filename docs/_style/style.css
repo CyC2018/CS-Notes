@@ -56,6 +56,10 @@ img {
 
 code {
     box-shadow: 2px 1px 20px 2px #aaa;
-    border-radius: 20px !important;
+    border-radius: 10px !important;
     padding-left: 20px !important;
+}
+
+pre {
+    background-color: #f3f2ee !important;
 }
