@@ -62,7 +62,7 @@ pre {
 @media (min-width:600px) {
     code {
         box-shadow: 2px 1px 20px 2px #aaa;
-        border-radius: 10px !important;
+        /*border-radius: 10px !important;*/
         padding-left: 20px !important;
     }
 }
