@@ -54,12 +54,22 @@ body>section>div.cover-main>ul>li>a {
     box-shadow: 7px 9px 10px #aaa !important;
 }
 
-code {
-    box-shadow: 2px 1px 20px 2px #aaa;
-    border-radius: 10px !important;
-    padding-left: 20px !important;
-}
 
 pre {
     background-color: #f3f2ee !important;
+}
+
+@media (min-width:600px) {
+    code {
+        box-shadow: 2px 1px 20px 2px #aaa;
+        border-radius: 10px !important;
+        padding-left: 20px !important;
+    }
+}
+
+@media (max-width:600px) {
+    pre {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
 }
