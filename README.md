@@ -93,13 +93,10 @@
 
 <a href="https://www.zhihu.com/people/xiao-shi-guang-33/activities">
     <img src="assets/知乎.jpg" width="80px">
-</a> 
-<a href="https://www.nowcoder.com/profile/124213">
-    <img src="assets/牛客网.png" width="80px">
-</a> 
+</a> &nbsp;&nbsp;
 <a href="https://xiaozhuanlan.com/CyC2018">
     <img src="assets/小专栏.jpg" width="80px">
-</a> 
+</a> &nbsp;&nbsp;
 <a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
     <img src="assets/知识星球.png" width="80px">
 </a> 
