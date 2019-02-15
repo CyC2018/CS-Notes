@@ -87,18 +87,18 @@
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
-<img src="assets/group1.png" width="200px"></br>
+<img src="assets/group1.png" width="150px"></br>
 
 ### 关于我
 
 <a href="https://www.zhihu.com/people/xiao-shi-guang-33/activities">
-    <img src="assets/知乎.jpg" width="80px">
+    <img src="assets/知乎.jpg" width="60px">
 </a> &nbsp;&nbsp;
 <a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="assets/小专栏.jpg" width="80px">
+    <img src="assets/小专栏.jpg" width="60px">
 </a> &nbsp;&nbsp;
 <a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
-    <img src="assets/知识星球.png" width="80px">
+    <img src="assets/知识星球.png" width="60px">
 </a> 
 
 ### 排版
