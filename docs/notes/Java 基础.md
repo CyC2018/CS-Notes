@@ -676,67 +676,65 @@ SuperExtendExample.func()
 
 应该注意的是，返回值不同，其它都相同不算是重载。
 
-**3. 重写与重载的例子**
+**3. 实例** 
 
-类定义如下:
 ```java
-class A{
-    public String show(D obj){
+class A {
+    public String show(D obj) {
         return ("A and D");
     }
-    public String show(A obj){
 
+    public String show(A obj) {
         return ("A and A");
     }
 }
 
-class B extends A{
-    public String show(B obj){
+class B extends A {
+    public String show(B obj) {
         return ("B and B");
     }
-    public String show(A obj){
+
+    public String show(A obj) {
         return ("B and A");
     }
 }
-class C extends B{}
-class D extends B{}
-```
 
-main方法如下:
+class C extends B {
+}
+
+class D extends B {
+}
+```
 
 ```java
-A a1 = new A();
-A a2 = new B();
-B b = new B();
-C c = new C();
-D d = new D();
-System.out.println(a1.show(b));
-System.out.println(a1.show(c));
-System.out.println(a1.show(d));
-System.out.println(a2.show(b));
-System.out.println(a2.show(c));
-System.out.println(a2.show(d));
-System.out.println(b.show(b));
-System.out.println(b.show(c));
-System.out.println(b.show(d));
+public class Test {
+
+    public static void main(String[] args) {
+        A a1 = new A();
+        A a2 = new B();
+        B b = new B();
+        C c = new C();
+        D d = new D();
+        System.out.println(a1.show(b)); // A and A
+        System.out.println(a1.show(c)); // A and A
+        System.out.println(a1.show(d)); // A and D
+        System.out.println(a2.show(b)); // B and A
+        System.out.println(a2.show(c)); // B and A
+        System.out.println(a2.show(d)); // A and D
+        System.out.println(b.show(b));  // B and B
+        System.out.println(b.show(c));  // B and B
+        System.out.println(b.show(d));  // A and D
+    }
+}
 ```
 
-请问输出是什么？
+涉及到重写时，方法调用的优先级为：
 
-实际上这里涉及方法调用的优先级问题 ，优先级由高到低依次为：this.show(O)、super.show(O)、this.show((super)O)、super.show((super)O)。
+- this.show(O)
+- super.show(O)
+- this.show((super)O)
+- super.show((super)O)
 
-以a2.show(b)为例，a2是一个引用变量，类型为A，则this为a2，b是B的一个实例，于是它到类A里面找show(B obj)方法，没有找到，于是到A的super(超类)找，而A没有超类，因此转到第三优先级this.show((super)O)，this仍然是a2，这里O为B，(super)O即(super)B即A，因此它到类A里面找show(A obj)的方法，类A有这个方法，但是由于a2引用的是类B的一个对象，B覆盖了A的show(A obj)方法，因此最终锁定到类B的show(A obj)，输出为"B and A”。
-
-所以答案分别是:
-- A and A
-- A and A
-- A and D
-- B and A
-- B and A
-- A and D
-- B and B
-- B and B
-- A and D
 # 五、Object 通用方法
 
 ## 概览
