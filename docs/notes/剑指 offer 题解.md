@@ -80,6 +80,8 @@
 <!-- GFM-TOC -->
 
 
+部分绘图文件可以在这里免费下载：[剑指 Offer](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)，后续会慢慢把所有题目都配上 GIF 演示图。
+
 # 3. 数组中重复的数字
 
 [NowCoder](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
