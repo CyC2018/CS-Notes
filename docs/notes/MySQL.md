@@ -43,7 +43,7 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 在 B+ Tree 中，一个节点中的 key 从左到右非递减排列，如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为 null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>。
 
-<div align="center"> <img src="pics/d5ce91a7-45f9-4560-9917-0dccd4900826.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/10a6d3ee-04b2-46b4-b171-d596e5ab0f84.jpg"/> </div><br>
 
 ### 2. 操作
 
@@ -85,11 +85,11 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 InnoDB 的 B+Tree 索引分为主索引和辅助索引。主索引的叶子节点 data 域记录着完整的数据记录，这种索引方式被称为聚簇索引。因为无法把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引。
 
-<div align="center"> <img src="pics/0f6f92e8-f15e-4c09-8562-b9c6114df9ce.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/4f151e62-6160-47f1-9eff-47b1f4dea4e9.jpg"/> </div><br>
 
 辅助索引的叶子节点的 data 域记录着主键的值，因此在使用辅助索引进行查找时，需要先查找到主键值，然后再到主索引中进行查找。
 
-<div align="center"> <img src="pics/1e74234e-d70b-411c-9333-226bcbb9c8f0.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/40f29839-fd56-4ed0-9353-39dfe6f0bba5.jpg"/> </div><br>
 
 ### 2. 哈希索引
 
