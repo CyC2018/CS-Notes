@@ -86,7 +86,7 @@
 | --- | --- |
 | 没有设置 Timeout 参数的 Object.wait() 方法 | Object.notify() / Object.notifyAll() |
 | 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕 |
-| LockSupport.park() 方法 | - |
+| LockSupport.park() 方法 | LockSupport.unpark(Thread) |
 
 ## 限期等待（Timed Waiting）
 
@@ -105,8 +105,8 @@
 | Thread.sleep() 方法 | 时间结束 |
 | 设置了 Timeout 参数的 Object.wait() 方法 | 时间结束 / Object.notify() / Object.notifyAll()  |
 | 设置了 Timeout 参数的 Thread.join() 方法 | 时间结束 / 被调用的线程执行完毕 |
-| LockSupport.parkNanos() 方法 | - |
-| LockSupport.parkUntil() 方法 | - |
+| LockSupport.parkNanos() 方法 | LockSupport.unpark(Thread) |
+| LockSupport.parkUntil() 方法 | LockSupport.unpark(Thread) |
 
 ## 死亡（Terminated）
 
@@ -731,7 +731,7 @@ after
 
 java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
 
-## CountdownLatch
+## CountDownLatch
 
 用来控制一个线程等待多个线程。
 
