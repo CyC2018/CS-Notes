@@ -26,7 +26,7 @@
 
 ## Collection
 
-<div align="center"> <img src="pics/c443e38f-ef06-4944-9ce4-aaf3b348b2e8.png"/> </div><br>
+<div align="center"> <img src="pics/6_200.png"/> </div><br>
 
 ### 1. Set
 
@@ -52,7 +52,7 @@
 
 ## Map
 
-<div align="center"> <img src="pics/88c37fb1-c619-47b0-8345-b1e5b442f50b.png"/> </div><br>
+<div align="center"> <img src="pics/7_200.png"/> </div><br>
 
 - TreeMap：基于红黑树实现。
 
