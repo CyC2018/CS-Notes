@@ -278,7 +278,7 @@ public static void main(String[] args) throws IOException {
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="pics/ClienteServidorSockets1521731145260.jpg"/> </div><br>
+<div align="center"> <img src="pics/f77f06b6-7359-4066-b85d-3f6c09ddf425.jpg"/> </div><br>
 
 ## Datagram
 
@@ -414,7 +414,7 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
-<div align="center"> <img src="pics/4d930e22-f493-49ae-8dff-ea21cd6895dc.png"/> </div><br>
+<div align="center"> <img src="pics/8fdbb8f5-2cf8-41dc-b5f1-99d98abb52d9.jpg"/> </div><br>
 
 ### 1. 创建选择器
 
