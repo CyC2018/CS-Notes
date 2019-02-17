@@ -184,7 +184,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/474e5579-38b1-47d2-8f76-a13ae086b039.jpg"/> </div><br>
 
 **3. 安全性** 
 
