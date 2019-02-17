@@ -49,3 +49,27 @@ section.cover h1 {
 body>section>div.cover-main>ul>li>a {
     color: #42b983;
 }
+
+.markdown-section img {
+    box-shadow: 7px 9px 10px #aaa !important;
+}
+
+
+pre {
+    background-color: #f3f2ee !important;
+}
+
+@media (min-width:600px) {
+    pre code {
+        box-shadow: 2px 1px 20px 2px #aaa;
+        /*border-radius: 10px !important;*/
+        padding-left: 20px !important;
+    }
+}
+
+@media (max-width:600px) {
+    pre {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}

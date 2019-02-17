@@ -1,4 +1,4 @@
-[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
@@ -79,6 +79,8 @@
 * [参考文献](#参考文献)
 <!-- GFM-TOC -->
 
+
+部分绘图文件可以在这里免费下载：[剑指 Offer](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)，后续会慢慢把所有题目都配上 GIF 演示图。
 
 # 3. 数组中重复的数字
 

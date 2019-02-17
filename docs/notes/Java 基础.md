@@ -1,6 +1,7 @@
-[🍉 点击订阅面试进阶专栏 ](https://xiaozhuanlan.com/CyC2018)
+[🍉 点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [一、数据类型](#一数据类型)
+    * [基本类型](#基本类型)
     * [包装类型](#包装类型)
     * [缓存池](#缓存池)
 * [二、String](#二string)
@@ -42,11 +43,8 @@
 
 # 一、数据类型
 
-## 包装类型
+## 基本类型
 
-八个基本类型：
-
-- boolean/1
 - byte/8
 - char/16
 - short/16
@@ -54,6 +52,14 @@
 - float/32
 - long/64
 - double/64
+- boolean/\~
+
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
+
+- [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
+- [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
+
+## 包装类型
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -184,7 +190,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/474e5579-38b1-47d2-8f76-a13ae086b039.jpg"/> </div><br>
 
 **3. 安全性** 
 
@@ -675,6 +681,65 @@ SuperExtendExample.func()
 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。
 
 应该注意的是，返回值不同，其它都相同不算是重载。
+
+**3. 实例** 
+
+```java
+class A {
+    public String show(D obj) {
+        return ("A and D");
+    }
+
+    public String show(A obj) {
+        return ("A and A");
+    }
+}
+
+class B extends A {
+    public String show(B obj) {
+        return ("B and B");
+    }
+
+    public String show(A obj) {
+        return ("B and A");
+    }
+}
+
+class C extends B {
+}
+
+class D extends B {
+}
+```
+
+```java
+public class Test {
+
+    public static void main(String[] args) {
+        A a1 = new A();
+        A a2 = new B();
+        B b = new B();
+        C c = new C();
+        D d = new D();
+        System.out.println(a1.show(b)); // A and A
+        System.out.println(a1.show(c)); // A and A
+        System.out.println(a1.show(d)); // A and D
+        System.out.println(a2.show(b)); // B and A
+        System.out.println(a2.show(c)); // B and A
+        System.out.println(a2.show(d)); // A and D
+        System.out.println(b.show(b));  // B and B
+        System.out.println(b.show(c));  // B and B
+        System.out.println(b.show(d));  // A and D
+    }
+}
+```
+
+涉及到重写时，方法调用的优先级为：
+
+- this.show(O)
+- super.show(O)
+- this.show((super)O)
+- super.show((super)O)
 
 # 五、Object 通用方法
 
