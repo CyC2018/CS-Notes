@@ -1225,7 +1225,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 在一个线程内，在程序前面的操作先行发生于后面的操作。
 
-<div align="center"> <img src="pics/single-thread-rule.png" width=""/> </div><br>
+<div align="center"> <img src="pics/94414cd3-5db9-4aca-a2af-539140955c62.jpg"/> </div><br>
 
 ### 2. 管程锁定规则
 
@@ -1233,7 +1233,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
 
-<div align="center"> <img src="pics/monitor-lock-rule.png" width=""/> </div><br>
+<div align="center"> <img src="pics/de9d8133-4c98-4e07-b39c-302e162784ea.jpg"/> </div><br>
 
 ### 3. volatile 变量规则
 
@@ -1241,7 +1241,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
 
-<div align="center"> <img src="pics/volatile-variable-rule.png" width=""/> </div><br>
+<div align="center"> <img src="pics/5e6e05d6-1028-4f5c-b9bd-1a40b90d6070.jpg"/> </div><br>
 
 ### 4. 线程启动规则
 
@@ -1249,7 +1249,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
 
-<div align="center"> <img src="pics/thread-start-rule.png" width=""/> </div><br>
+<div align="center"> <img src="pics/bc5826f5-014d-47b4-9a76-d86b80968643.jpg"/> </div><br>
 
 ### 5. 线程加入规则
 
@@ -1257,7 +1257,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 Thread 对象的结束先行发生于 join() 方法返回。
 
-<div align="center"> <img src="pics/thread-join-rule.png" width=""/> </div><br>
+<div align="center"> <img src="pics/54e6d499-80df-488e-aa7e-081766c41538.jpg"/> </div><br>
 
 ### 6. 线程中断规则
 
