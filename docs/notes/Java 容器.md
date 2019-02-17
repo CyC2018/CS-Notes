@@ -15,7 +15,6 @@
     * [ConcurrentHashMap](#concurrenthashmap)
     * [LinkedHashMap](#linkedhashmap)
     * [WeakHashMap](#weakhashmap)
-* [附录](#附录)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -52,7 +51,7 @@
 
 ## Map
 
-<div align="center"> <img src="pics/7_200.png"/> </div><br>
+<div align="center"> <img src="pics/2_2001550426232419.png"/> </div><br>
 
 - TreeMap：基于红黑树实现。
 
@@ -1097,90 +1096,6 @@ public final class ConcurrentCache<K, V> {
 }
 ```
 
-# 附录
-
-Collection 绘图源码：
-
-```
-@startuml
-
-interface Collection
-interface Set
-interface List
-interface Queue
-interface SortSet
-
-class HashSet
-class LinkedHashSet
-class TreeSet
-class ArrayList
-class Vector
-class LinkedList
-class PriorityQueue
-
-
-Collection <|-- Set
-Collection <|-- List
-Collection <|-- Queue
-Set <|-- SortSet
-
-Set <|.. HashSet
-Set <|.. LinkedHashSet
-SortSet <|.. TreeSet
-List <|.. ArrayList
-List <|.. Vector
-List <|.. LinkedList
-Queue <|.. LinkedList
-Queue <|.. PriorityQueue
-
-@enduml
-```
-
-Map 绘图源码
-
-```
-@startuml
-
-interface Map
-interface SortMap
-
-class HashTable
-class LinkedHashMap
-class HashMap
-class TreeMap
-
-Map <|.. HashTable
-Map <|.. LinkedHashMap
-Map <|.. HashMap
-Map <|-- SortMap
-SortMap <|.. TreeMap
-
-@enduml
-```
-
-迭代器类图
-
-```
-@startuml
-
-interface Iterable
-interface Collection
-interface List
-interface Set
-interface Queue
-interface Iterator
-interface ListIterator
-
-Iterable <|-- Collection
-Collection <|.. List
-Collection <|.. Set
-Collection <|-- Queue
-Iterator <-- Iterable
-Iterator <|.. ListIterator
-ListIterator <-- List
-
-@enduml
-```
 
 # 参考资料
 
