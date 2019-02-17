@@ -67,7 +67,7 @@
 
 ## 迭代器模式
 
-<div align="center"> <img src="pics/e89848b7-5dc3-419d-ae88-4c930da13306.png"/> </div><br>
+<div align="center"> <img src="pics/5_200.png"/> </div><br>
 
 Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
