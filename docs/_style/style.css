@@ -75,5 +75,7 @@ pre {
 }
 
 .markdown-section pre {
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0px !important;
+    box-shadow: 2px 1px 20px 2px #aaa;
 }
