@@ -25,7 +25,8 @@
 
 ## Collection
 
-<div align="center"> <img src="pics/6_200.png"/> </div><br>
+<div align="center"> <img src="pics/6_2001550476096035.png"/> </div><br>
+
 
 ### 1. Set
 
