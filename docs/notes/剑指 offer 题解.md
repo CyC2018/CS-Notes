@@ -688,7 +688,7 @@ private int minNumber(int[] nums, int l, int h) {
 
 例如下面的矩阵包含了一条 bfce 路径。
 
-<div align="center"> <img src="pics/e31abb94-9201-4e06-9902-61101b92f475.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/2_2001550466182933.png"/> </div><br>
 
 ## 解题思路
 
