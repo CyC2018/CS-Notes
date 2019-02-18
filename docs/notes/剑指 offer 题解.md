@@ -1,4 +1,4 @@
- &nbsp; [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
