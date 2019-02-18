@@ -1115,6 +1115,8 @@ public boolean isNumeric(char[] str) {
 
 需要保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
+<div align="center"> <img src="pics/7_2001550475133282.png"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -1375,7 +1377,7 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 
 下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
-<div align="center"> <img src="pics/6539b9a4-2b24-4d10-8c94-2eb5aba1e296.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/8_2001550475451664.png"/> </div><br>
 
 ## 解题思路
 
