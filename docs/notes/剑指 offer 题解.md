@@ -2859,7 +2859,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
 
-<div align="center"> <img src="pics/3_2001550473624627.png"/> </div><br>
+<div align="center"> <img src="pics/4_2001550473915641.png"/> </div><br>
 
 ## 解题思路
 
@@ -2929,7 +2929,9 @@ public int Add(int a, int b) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/4_2001550473915641.png"/> </div><br>
+给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
+
+<div align="center"> <img src="pics/3_2001550473624627.png"/> </div><br>
 
 ## 解题思路
 
