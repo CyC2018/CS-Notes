@@ -967,6 +967,8 @@ private void printNumber(char[] number) {
 
 <div align="center"> <img src="pics/27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
 
+② 如果链表只有一个节点，那么直接
+
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
 <div align="center"> <img src="pics/280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
@@ -983,10 +985,15 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
         tobeDelete.val = next.val;
         tobeDelete.next = next.next;
     } else {
-        ListNode cur = head;
-        while (cur.next != tobeDelete)
-            cur = cur.next;
-        cur.next = null;
+        if (head == tobeDelete)
+             // 只有一个节点
+            head = null;
+        else {
+            ListNode cur = head;
+            while (cur.next != tobeDelete)
+                cur = cur.next;
+            cur.next = null;
+        }
     }
     return head;
 }
