@@ -220,7 +220,7 @@ obj = null;
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="pics/2_2001550547456403.png"/> </div><br>
+<div align="center"> <img src="pics/3_2001550547558008.png"/> </div><br>
 
 标记要回收的对象，然后清除。
 
@@ -231,7 +231,7 @@ obj = null;
 
 ### 2. 标记 - 整理
 
-<div align="center"> <img src="pics/3_2001550547558008.png"/> </div><br>
+<div align="center"> <img src="pics/2_2001550547456403.png"/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
