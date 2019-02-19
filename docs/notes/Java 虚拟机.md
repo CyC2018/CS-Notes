@@ -60,7 +60,7 @@ java -Xss512M HackTheJava
 
 本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
-<div align="center"> <img src="pics/3034859c-eb5a-402b-b65a-974dcc0c4a46.png"/> </div><br>
+<div align="center"> <img src="pics/1_2001550547261811.png"/> </div><br>
 
 ## 堆
 
@@ -220,7 +220,7 @@ obj = null;
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="pics/3fb6e997-0fc9-4178-a691-5907b67bbeae.png"/> </div><br>
+<div align="center"> <img src="pics/2_2001550547456403.png"/> </div><br>
 
 标记要回收的对象，然后清除。
 
@@ -231,13 +231,13 @@ obj = null;
 
 ### 2. 标记 - 整理
 
-<div align="center"> <img src="pics/fb14b808-734c-4634-9c87-e598b1937996.png"/> </div><br>
+<div align="center"> <img src="pics/3_2001550547558008.png"/> </div><br>
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 ### 3. 复制
 
-<div align="center"> <img src="pics/3f04455c-f4ac-4038-a69f-21df133389e1.png"/> </div><br>
+<div align="center"> <img src="pics/4_2001550547640585.png"/> </div><br>
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
