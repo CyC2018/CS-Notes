@@ -61,7 +61,7 @@ pre {
 
 @media (min-width:600px) {
     pre code {
-        box-shadow: 2px 1px 20px 2px #aaa;
+        /*box-shadow: 2px 1px 20px 2px #aaa;*/
         /*border-radius: 10px !important;*/
         padding-left: 20px !important;
     }
@@ -72,4 +72,10 @@ pre {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
+}
+
+.markdown-section pre {
+    padding-left: 0 !important;
+    padding-right: 0px !important;
+    box-shadow: 2px 1px 20px 2px #aaa;
 }

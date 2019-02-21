@@ -1,4 +1,4 @@
-[🍉 点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [集中式与分布式](#集中式与分布式)
 * [中心服务器](#中心服务器)

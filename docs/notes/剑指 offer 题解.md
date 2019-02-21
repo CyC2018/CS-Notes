@@ -1,4 +1,4 @@
-[🍉 点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [3. 数组中重复的数字](#3-数组中重复的数字)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
@@ -510,6 +510,8 @@ public class Solution {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
+<div align="center"> <img src="pics/1_2001550465428749.png"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -535,6 +537,8 @@ public int JumpFloor(int n) {
 
 我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
 
+<div align="center"> <img src="pics/11550465817827.gif"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -559,6 +563,8 @@ public int RectCover(int n) {
 ## 题目描述
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级... 它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+<div align="center"> <img src="pics/21550465890674.gif"/> </div><br>
 
 ## 解题思路
 
@@ -682,7 +688,7 @@ private int minNumber(int[] nums, int l, int h) {
 
 例如下面的矩阵包含了一条 bfce 路径。
 
-<div align="center"> <img src="pics/e31abb94-9201-4e06-9902-61101b92f475.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/2_2001550466182933.png"/> </div><br>
 
 ## 解题思路
 
@@ -961,6 +967,8 @@ private void printNumber(char[] number) {
 
 <div align="center"> <img src="pics/27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
 
+② 如果链表只有一个节点，那么直接
+
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
 <div align="center"> <img src="pics/280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
@@ -977,10 +985,15 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
         tobeDelete.val = next.val;
         tobeDelete.next = next.next;
     } else {
-        ListNode cur = head;
-        while (cur.next != tobeDelete)
-            cur = cur.next;
-        cur.next = null;
+        if (head == tobeDelete)
+             // 只有一个节点
+            head = null;
+        else {
+            ListNode cur = head;
+            while (cur.next != tobeDelete)
+                cur = cur.next;
+            cur.next = null;
+        }
     }
     return head;
 }
@@ -1108,6 +1121,8 @@ public boolean isNumeric(char[] str) {
 ## 题目描述
 
 需要保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
+
+<div align="center"> <img src="pics/7_2001550475133282.png"/> </div><br>
 
 ## 解题思路
 
@@ -1369,7 +1384,7 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 
 下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
-<div align="center"> <img src="pics/6539b9a4-2b24-4d10-8c94-2eb5aba1e296.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/8_2001550475451664.png"/> </div><br>
 
 ## 解题思路
 
@@ -2719,6 +2734,8 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 把 n 个骰子仍在地上，求点数和为 s 的概率。
 
+<div align="center"> <img src="pics/6_2001550474388460.png"/> </div><br>
+
 ## 解题思路
 
 ### 动态规划解法
@@ -2790,6 +2807,8 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
 
+<div align="center"> <img src="pics/5_2001550474110029.png"/> </div><br>
+
 ## 解题思路
 
 ```java
@@ -2846,6 +2865,8 @@ public int LastRemaining_Solution(int n, int m) {
 ## 题目描述
 
 可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
+
+<div align="center"> <img src="pics/4_2001550473915641.png"/> </div><br>
 
 ## 解题思路
 
@@ -2916,6 +2937,8 @@ public int Add(int a, int b) {
 ## 题目描述
 
 给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
+
+<div align="center"> <img src="pics/3_2001550473624627.png"/> </div><br>
 
 ## 解题思路
 
