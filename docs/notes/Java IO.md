@@ -98,7 +98,7 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 - FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
 - FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
-<div align="center"> <img src="pics/9bae24e9-d2f5-4e1d-af42-1a868a5847cf.jpg"/> </div><br>
+<div align="center"> <img src="pics/c2c2b633-c03a-426e-b436-5719a194667b.png"/> </div><br>
 
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 

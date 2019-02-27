@@ -67,7 +67,7 @@
 ```html
 Input: numbers={2, 7, 11, 15}, target=9
 Output: index1=1, index2=2
-```
+```3
 
 题目描述：在有序数组中找出两个数，使它们的和为 target。
 
@@ -403,8 +403,10 @@ public List<Integer> topKFrequent(int[] nums, int k) {
     }
     List<Integer> topK = new ArrayList<>();
     for (int i = buckets.length - 1; i >= 0 && topK.size() < k; i--) {
-        if (buckets[i] != null) {
+        if (buckets[i].size() <= (k - topK.size())) {
             topK.addAll(buckets[i]);
+        } else {
+            topK.addAll(buckets[i].subList(0, k - topK.size()));
         }
     }
     return topK;
@@ -2316,7 +2318,7 @@ public void solveSudoku(char[][] board) {
             colsUsed[j][num] = true;
             cubesUsed[cubeNum(i, j)][num] = true;
         }
-        backtracking(i, 0);
+        backtracking(0, 0);
 }
 
 private boolean backtracking(int row, int col) {
