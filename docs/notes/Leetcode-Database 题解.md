@@ -497,7 +497,7 @@ https://leetcode.com/problems/customers-who-never-order/description/
 
 ## Description
 
-Curstomers 表：
+Customers 表：
 
 ```html
 +----+-------+
