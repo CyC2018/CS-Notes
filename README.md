@@ -96,10 +96,7 @@
 </a> &nbsp;&nbsp;
 <a href="https://xiaozhuanlan.com/CyC2018">
     <img src="assets/小专栏.jpg" width="60px">
-</a> &nbsp;&nbsp;
-<a href="https://shimo.im/docs/1Vuo5GeWCHMnxMtF/">
-    <img src="assets/知识星球.png" width="60px">
-</a> 
+</a>
 
 ### 排版
 
