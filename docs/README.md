@@ -1,5 +1,5 @@
 
-> [点击阅读面试进阶指南](https://github.com/CyC2018/Backend-Interview-Guide)
+> [点击订阅面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
 ##  ✏️ 算法
 
