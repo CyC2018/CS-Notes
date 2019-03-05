@@ -63,11 +63,7 @@
 
 URI 包含 URL 和 URN。
 
-- URI（Uniform Resource Identifier，统一资源标识符）
-- URL（Uniform Resource Locator，统一资源定位符）
-- URN（Uniform Resource Name，统一资源名称）
-
-<div align="center"> <img src="pics/1_2001550415765493.png" width="500px"> </div><br>
+<div align="center"> <img src="pics/6f1938e5-fc49-4e7b-a383-2b46f0942d70_200.png" width="600px"> </div><br>
 
 ## 请求和响应报文
 
