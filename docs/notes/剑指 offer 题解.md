@@ -8,8 +8,8 @@
 * [8. 二叉树的下一个结点](#8-二叉树的下一个结点)
 * [9. 用两个栈实现队列](#9-用两个栈实现队列)
 * [10.1 斐波那契数列](#101-斐波那契数列)
-* [10.2 跳台阶](#102-跳台阶)
-* [10.3 矩形覆盖](#103-矩形覆盖)
+* [10.2 矩形覆盖](#102-矩形覆盖)
+* [10.3 跳台阶](#103-跳台阶)
 * [10.4 变态跳台阶](#104-变态跳台阶)
 * [11. 旋转数组的最小数字](#11-旋转数组的最小数字)
 * [12. 矩阵中的路径](#12-矩阵中的路径)
@@ -502,34 +502,7 @@ public class Solution {
 }
 ```
 
-# 10.2 跳台阶
-
-[NowCoder](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
-
-## 题目描述
-
-一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
-
-<div align="center"> <img src="pics/1_2001550465428749.png"/> </div><br>
-
-## 解题思路
-
-```java
-public int JumpFloor(int n) {
-    if (n <= 2)
-        return n;
-    int pre2 = 1, pre1 = 2;
-    int result = 1;
-    for (int i = 2; i < n; i++) {
-        result = pre2 + pre1;
-        pre2 = pre1;
-        pre1 = result;
-    }
-    return result;
-}
-```
-
-# 10.3 矩形覆盖
+# 10.2 矩形覆盖
 
 [NowCoder](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -537,7 +510,7 @@ public int JumpFloor(int n) {
 
 我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
 
-<div align="center"> <img src="pics/11550465817827.gif"/> </div><br>
+<div align="center"> <img src="pics/d1ed87eb-da5a-4728-b0dc-e3705aa028ea.gif"/> </div><br>
 
 ## 解题思路
 
@@ -556,6 +529,33 @@ public int RectCover(int n) {
 }
 ```
 
+# 10.3 跳台阶
+
+[NowCoder](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+<div align="center"> <img src="pics/a0e90bd3-747d-4c3a-8fa0-179c59eeded0_200.png"/> </div><br>
+
+## 解题思路
+
+```java
+public int JumpFloor(int n) {
+    if (n <= 2)
+        return n;
+    int pre2 = 1, pre1 = 2;
+    int result = 1;
+    for (int i = 2; i < n; i++) {
+        result = pre2 + pre1;
+        pre2 = pre1;
+        pre1 = result;
+    }
+    return result;
+}
+```
+
 # 10.4 变态跳台阶
 
 [NowCoder](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
@@ -564,7 +564,7 @@ public int RectCover(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级... 它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
-<div align="center"> <img src="pics/21550465890674.gif"/> </div><br>
+<div align="center"> <img src="pics/cbd5f6f6-18de-4711-9e01-0f94e66f81b8_200.png"/> </div><br>
 
 ## 解题思路
 
