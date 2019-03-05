@@ -3199,31 +3199,34 @@ return -1.
 - 物品大小：面额
 - 物品价值：数量
 
-因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将01背包中逆序遍历bp数组改为正序遍历即可。
+因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包中逆序遍历 dp 数组改为正序遍历即可。
 
 ```java
 public int coinChange(int[] coins, int amount) {
-    if(amount == 0) return 0;
-    int[] bp = new int[amount + 1];
-    for(int coin : coins){
-        for(int i = coin; i <= amount; i++){ //将逆序遍历改为正序遍历
-            if(i == coin)
-                bp[i] = 1;
-            else if(bp[i] == 0 && bp[i - coin] != 0)
-                bp[i] = bp[i - coin] + 1;
-            else if(bp[i - coin] != 0)
-                bp[i] = Math.min(bp[i], bp[i - coin] + 1);
+    if (amount == 0 || coins == null || coins.length == 0) {
+        return 0;
+    }
+    int[] dp = new int[amount + 1];
+    for (int coin : coins) {
+        for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
+            if (i == coin) {
+                dp[i] = 1;
+            } else if (dp[i] == 0 && dp[i - coin] != 0) {
+                dp[i] = dp[i - coin] + 1;
+            } else if (dp[i - coin] != 0) {
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            }
         }
     }
-    return bp[amount] == 0 ? -1 : bp[amount];
+    return dp[amount] == 0 ? -1 : dp[amount];
 }
 ```
 
 **找零钱的硬币数组合** 
 
-[518. Coin Change 2 (Medium)](https://leetcode.com/problems/coin-change-2/description/)
+[518\. Coin Change 2 (Medium)](https://leetcode.com/problems/coin-change-2/description/)
 
-```html
+```text-html-basic
 Input: amount = 5, coins = [1, 2, 5]
 Output: 4
 Explanation: there are four ways to make up the amount:
@@ -3233,14 +3236,17 @@ Explanation: there are four ways to make up the amount:
 5=1+1+1+1+1
 ```
 
-完全背包问题，使用dp记录可达成目标的组合数目。
+完全背包问题，使用 dp 记录可达成目标的组合数目。
 
 ```java
 public int change(int amount, int[] coins) {
+    if (amount == 0 || coins == null || coins.length == 0) {
+        return 0;
+    }
     int[] dp = new int[amount + 1];
     dp[0] = 1;
-    for(int coin : coins){
-        for(int i = coin; i <= amount; i++){
+    for (int coin : coins) {
+        for (int i = coin; i <= amount; i++) {
             dp[i] += dp[i - coin];
         }
     }
@@ -3260,7 +3266,7 @@ Return true because "leetcode" can be segmented as "leet code".
 
 dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。该问题涉及到字典中单词的使用顺序，因此可理解为涉及顺序的完全背包问题。
 
-求解该类型问题时，应调整两次循环的顺序，0-1 背包对物品的迭代是在最外层，而涉及顺序的完全背包问题对物品的迭代是在最里层。
+求解顺序的完全背包问题时，对物品的迭代应该放在最里层。
 
 ```java
 public boolean wordBreak(String s, List<String> wordDict) {
@@ -3268,7 +3274,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
     boolean[] dp = new boolean[n + 1];
     dp[0] = true;
     for (int i = 1; i <= n; i++) {
-        for (String word : wordDict) {   // 完全一个物品可以使用多次
+        for (String word : wordDict) {   // 对物品的迭代应该放在最里层
             int len = word.length();
             if (len <= i && word.equals(s.substring(i - len, i))) {
                 dp[i] = dp[i] || dp[i - len];
