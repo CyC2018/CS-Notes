@@ -63,7 +63,7 @@
 
 URI 包含 URL 和 URN。
 
-<div align="center"> <img src="pics/6f1938e5-fc49-4e7b-a383-2b46f0942d70_200.png" width="600px"> </div><br>
+<div align="center"> <img src="pics/417cb02e-853d-4288-a36e-9161ded2c9fd_200.png" width="600px"> </div><br>
 
 ## 请求和响应报文
 
