@@ -403,6 +403,9 @@ public List<Integer> topKFrequent(int[] nums, int k) {
     }
     List<Integer> topK = new ArrayList<>();
     for (int i = buckets.length - 1; i >= 0 && topK.size() < k; i--) {
+        if (buckets[i] == null) {
+            continue;
+        }
         if (buckets[i].size() <= (k - topK.size())) {
             topK.addAll(buckets[i]);
         } else {
