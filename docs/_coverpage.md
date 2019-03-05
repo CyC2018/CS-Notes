@@ -1,4 +1,4 @@
-<img width="150px" src="_media/LogoMakr_1J56bI.png">
+<img width="180px" src="_media/LogoMakr_1J56bI.png">
 
 # CS-Notes
 
