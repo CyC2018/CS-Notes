@@ -54,3 +54,7 @@
 > [Docker](notes/Docker.md) </br>
 > [正则表达式](notes/正则表达式.md) </br>
 > [构建工具](notes/构建工具.md)
+
+欢迎关注 公众号 “CyC2018” ，每天发布一道高频基础知识面试题，让你在闲暇时间也能学习进步！公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
+
+![](https://github.com/CyC2018/CS-Notes/raw/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
