@@ -93,7 +93,7 @@
 ### 后端面试指南
 
 <a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="assets/小专栏.jpg" width="60px">
+    <img src="assets/小专栏.jpg" width="150px">
 </a>
 
 ### 排版
