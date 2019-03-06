@@ -84,19 +84,11 @@
 
 [Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 
-### 公众号
-
-欢迎关注公众号“CyC2018”，每天发布一道高频基础知识面试题，让你在闲暇时间也能学习进步！
-
-公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
-
-<img src="assets/公众号.jpg" width="150px">
-
 ### QQ 群
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
-<img src="assets/group1.png" width="100px">
+<img src="assets/group1.png" width="150px">
 
 ### 后端面试指南
 
