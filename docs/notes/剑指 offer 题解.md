@@ -2998,7 +2998,7 @@ public int StrToInt(String str) {
 
 ### 二叉查找树
 
-<div align="center"> <img src="pics/293d2af9-de1d-403e-bed0-85d029383528.png" width="300"/> </div><br>
+<div align="center"> <img src="pics/b39a085e-e7a2-4657-b75e-ba1652a4b132.jpg" width="300"/> </div><br>
 
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
