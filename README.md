@@ -90,7 +90,7 @@
 
 公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
 
-<img src="assets/公众号.png" width="150px">
+<img src="assets/公众号.jpg" width="150px">
 
 ### QQ 群
 
