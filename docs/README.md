@@ -2,7 +2,7 @@
 
 - [剑指 Offer 题解](notes/剑指%20offer%20题解.md) </br>
 - [Leetcode 题解](notes/Leetcode%20题解) </br>
-- [算法](notes/算法.md)
+- [算法](notes/算法.md) </br>
 - [点击订阅面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
 ## 💻 操作系统
