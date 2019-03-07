@@ -1,0 +1,134 @@
+<h2>Numbers</h2>
+<pre><code>123
+123L
+0x0F
+0b00001011
+123.5
+123.5e10
+123.5f
+123.5F</code></pre>
+
+<h2>Strings and interpolation</h2>
+<pre><code>'2'
+'\uFF00'
+'\''
+
+"foo $bar \"baz"
+"""
+foo ${40 + 2}
+baz${bar()}
+"""</code></pre>
+
+<h2>Labels</h2>
+<pre><code>loop@ for (i in 1..100) {
+  for (j in 1..100) {
+    if (...)
+      break@loop
+  }
+}</code></pre>
+
+<h2>Annotations</h2>
+<pre><code>public class MyTest {
+    lateinit var subject: TestSubject
+
+    @SetUp fun setup() {
+        subject = TestSubject()
+    }
+
+    @Test fun test() {
+        subject.method()  // dereference directly
+    }
+}</code></pre>
+
+<h2>Full example</h2>
+<pre><code>package com.example.html
+
+interface Element {
+    fun render(builder: StringBuilder, indent: String)
+
+    override fun toString(): String {
+        val builder = StringBuilder()
+        render(builder, "")
+        return builder.toString()
+    }
+}
+
+class TextElement(val text: String): Element {
+    override fun render(builder: StringBuilder, indent: String) {
+        builder.append("$indent$text\n")
+    }
+}
+
+abstract class Tag(val name: String): Element {
+    val children = arrayListOf&lt;Element>()
+    val attributes = hashMapOf&lt;String, String>()
+
+    protected fun initTag&lt;T: Element>(tag: T, init: T.() -> Unit): T {
+        tag.init()
+        children.add(tag)
+        return tag
+    }
+
+    override fun render(builder: StringBuilder, indent: String) {
+        builder.append("$indent&lt;$name${renderAttributes()}>\n")
+        for (c in children) {
+            c.render(builder, indent + "  ")
+        }
+        builder.append("$indent&lt;/$name>\n")
+    }
+
+    private fun renderAttributes(): String? {
+        val builder = StringBuilder()
+        for (a in attributes.keySet()) {
+            builder.append(" $a=\"${attributes[a]}\"")
+        }
+        return builder.toString()
+    }
+}
+
+abstract class TagWithText(name: String): Tag(name) {
+    operator fun String.plus() {
+        children.add(TextElement(this))
+    }
+}
+
+class HTML(): TagWithText("html") {
+    fun head(init: Head.() -> Unit) = initTag(Head(), init)
+
+    fun body(init: Body.() -> Unit) = initTag(Body(), init)
+}
+
+class Head(): TagWithText("head") {
+    fun title(init: Title.() -> Unit) = initTag(Title(), init)
+}
+
+class Title(): TagWithText("title")
+
+abstract class BodyTag(name: String): TagWithText(name) {
+    fun b(init: B.() -> Unit) = initTag(B(), init)
+    fun p(init: P.() -> Unit) = initTag(P(), init)
+    fun h1(init: H1.() -> Unit) = initTag(H1(), init)
+    fun a(href: String, init: A.() -> Unit) {
+        val a = initTag(A(), init)
+        a.href = href
+    }
+}
+
+class Body(): BodyTag("body")
+
+class B(): BodyTag("b")
+class P(): BodyTag("p")
+class H1(): BodyTag("h1")
+class A(): BodyTag("a") {
+    public var href: String
+        get() = attributes["href"]!!
+        set(value) {
+            attributes["href"] = value
+        }
+}
+
+fun html(init: HTML.() -> Unit): HTML {
+    val html = HTML()
+    html.init()
+    return html
+}</code></pre>

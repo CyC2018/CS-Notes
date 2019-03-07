@@ -1,0 +1,54 @@
+<h2>Comments</h2>
+<pre><code># This is a comment
+# &lt;VirtualHost *:80>
+</code></pre>
+
+<h2>Directives</h2>
+<pre><code>&lt;Files .htaccess>
+	Order allow,deny
+	Deny from all
+&lt;/Files>
+</code></pre>
+
+<h2>Variables</h2>
+<pre><code>RewriteCond %{REQUEST_FILENAME}.php -f</code></pre>
+
+<h2>Regex</h2>
+<pre><code>^(.*)$
+!^www\.</code></pre>
+
+<h2>Directive flags</h2>
+<pre><code>[NC]
+[RC=301,L]</code></pre>
+
+<h2>Strings</h2>
+<pre><code>AuthName "Fichiers réservés"</code></pre>
+
+<h2>Full example</h2>
+<pre><code>## BASIC PASSWORD PROTECTION
+AuthType basic
+AuthName "prompt"
+AuthUserFile /.htpasswd
+AuthGroupFile /dev/null
+Require valid-user
+
+## ALLOW FROM IP OR VALID PASSWORD
+Require valid-user
+Allow from 192.168.1.23
+Satisfy Any
+
+## PROTECT FILES
+Order Allow,Deny
+Deny from all
+
+## REQUIRE SUBDOMAIN
+RewriteCond %{HTTP_HOST} !^$
+RewriteCond %{HTTP_HOST} !^subdomain\.domain\.tld$ [NC]
+RewriteRule ^/(.*)$ http://subdomain.domain.tld/$1 [L,R=301]
+
+ErrorDocument 403 http://www.example.com/logo.gif
+ErrorDocument 403 /images/you_bad_hotlinker.gif
+
+## REDIRECT UPLOADS
+RewriteCond %{REQUEST_METHOD} ^(PUT|POST)$ [NC]
+RewriteRule ^(.*)$ /cgi-bin/form-upload-processor.cgi?p=$1 [L,QSA]</code></pre>

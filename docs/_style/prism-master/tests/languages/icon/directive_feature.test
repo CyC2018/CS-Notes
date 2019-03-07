@@ -1,0 +1,21 @@
+$include
+$line
+$define
+$undef
+$ifdef
+$ifndef
+
+----------------------------------------------------
+
+[
+	["directive", "$include"],
+	["directive", "$line"],
+	["directive", "$define"],
+	["directive", "$undef"],
+	["directive", "$ifdef"],
+	["directive", "$ifndef"]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor directives.

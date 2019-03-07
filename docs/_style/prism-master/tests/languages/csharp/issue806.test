@@ -1,0 +1,12 @@
+0.3f
+
+----------------------------------------------------
+
+[
+	["number", "0.3f"]
+]
+
+----------------------------------------------------
+
+Checks that "f" prefix is properly highlighted as part of the number.
+See #806.

@@ -1,0 +1,104 @@
+<h2>Comments</h2>
+<pre><code>// Single-line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>C prologue and Bison declarations</h2>
+<pre><code>%{
+  #include &lt;stdio.h>
+  #include &lt;math.h>
+  int yylex (void);
+  void yyerror (char const *);
+%}
+
+%define api.value.type {double}
+%token NUM
+%union { char *string; }
+%%
+%%</code></pre>
+
+<h2>Grammar rules</h2>
+<pre><code>%%
+exp:
+  NUM           { $$ = $1;           }
+| exp exp '+'   { $$ = $1 + $2;      }
+| exp exp '-'   { $$ = $1 - $2;      }
+| exp exp '*'   { $$ = $1 * $2;      }
+| exp exp '/'   { $$ = $1 / $2;      }
+| exp exp '^'   { $$ = pow($1, $2);  }  /* Exponentiation */
+| exp 'n'       { $$ = -$1;          }  /* Unary minus    */
+;
+
+$@1: %empty { a(); };
+$@2: %empty { c(); };
+$@3: %empty { d(); };
+exp: $@1 "b" $@2 $@3 "e" { f(); };
+%%</code></pre>
+
+<h2>Full example</h2>
+<pre><code>/* Mini Calculator */
+/* calc.y */
+
+%{
+#include "heading.h"
+int yyerror(char *s);
+int yylex(void);
+%}
+
+%union{
+  int		int_val;
+  string*	op_val;
+}
+
+%start	input 
+
+%token	&lt;int_val>	INTEGER_LITERAL
+%type	&lt;int_val>	exp
+%left	PLUS
+%left	MULT
+
+%%
+
+input:		/* empty */
+		| exp	{ cout &lt;&lt; "Result: " &lt;&lt; $1 &lt;&lt; endl; }
+		;
+
+exp:		INTEGER_LITERAL	{ $$ = $1; }
+		| exp PLUS exp	{ $$ = $1 + $3; }
+		| exp MULT exp	{ $$ = $1 * $3; }
+		;
+
+%%
+
+int yyerror(string s)
+{
+  extern int yylineno;	// defined and maintained in lex.c
+  extern char *yytext;	// defined and maintained in lex.c
+  
+  cerr &lt;&lt; "ERROR: " &lt;&lt; s &lt;&lt; " at symbol \"" &lt;&lt; yytext;
+  cerr &lt;&lt; "\" on line " &lt;&lt; yylineno &lt;&lt; endl;
+  exit(1);
+}
+
+int yyerror(char *s)
+{
+  return yyerror(string(s));
+}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Two levels of nesting inside C section</h3>
+<pre><code>{
+	if($1) {
+		if($2) {
+
+		}
+	}
+} // <- Broken
+%%
+%%</code></pre>

@@ -1,0 +1,122 @@
+attribute foo
+comment
+document
+element foo
+processing-instruction
+text
+xs:anyAtomicType
+xs:anyType
+xs:anyURI
+xs:base64Binary
+xs:boolean
+xs:byte
+xs:date
+xs:dateTime
+xs:dayTimeDuration
+xs:decimal
+xs:double
+xs:duration
+xs:ENTITIES
+xs:ENTITY
+xs:float
+xs:gDay
+xs:gMonth
+xs:gMonthDay
+xs:gYear
+xs:gYearMonth
+xs:hexBinary
+xs:ID
+xs:IDREF
+xs:IDREFS
+xs:int
+xs:integer
+xs:language
+xs:long
+xs:Name
+xs:NCName
+xs:negativeInteger
+xs:NMTOKEN
+xs:NMTOKENS
+xs:nonNegativeInteger
+xs:nonPositiveInteger
+xs:normalizedString
+xs:NOTATION
+xs:positiveInteger
+xs:QName
+xs:short
+xs:string
+xs:time
+xs:token
+xs:unsignedByte
+xs:unsignedInt
+xs:unsignedLong
+xs:unsignedShort
+xs:untyped
+xs:untypedAtomic
+xs:yearMonthDuration
+
+----------------------------------------------------
+
+[
+	["builtin", "attribute"],
+	["xquery-attribute", "foo"],
+	["builtin", "comment"],
+	["builtin", "document"],
+	["builtin", "element"],
+	["xquery-element", "foo"],
+	["builtin", "processing-instruction"],
+	["builtin", "text"],
+	["builtin", "xs:anyAtomicType"],
+	["builtin", "xs:anyType"],
+	["builtin", "xs:anyURI"],
+	["builtin", "xs:base64Binary"],
+	["builtin", "xs:boolean"],
+	["builtin", "xs:byte"],
+	["builtin", "xs:date"],
+	["builtin", "xs:dateTime"],
+	["builtin", "xs:dayTimeDuration"],
+	["builtin", "xs:decimal"],
+	["builtin", "xs:double"],
+	["builtin", "xs:duration"],
+	["builtin", "xs:ENTITIES"],
+	["builtin", "xs:ENTITY"],
+	["builtin", "xs:float"],
+	["builtin", "xs:gDay"],
+	["builtin", "xs:gMonth"],
+	["builtin", "xs:gMonthDay"],
+	["builtin", "xs:gYear"],
+	["builtin", "xs:gYearMonth"],
+	["builtin", "xs:hexBinary"],
+	["builtin", "xs:ID"],
+	["builtin", "xs:IDREF"],
+	["builtin", "xs:IDREFS"],
+	["builtin", "xs:int"],
+	["builtin", "xs:integer"],
+	["builtin", "xs:language"],
+	["builtin", "xs:long"],
+	["builtin", "xs:Name"],
+	["builtin", "xs:NCName"],
+	["builtin", "xs:negativeInteger"],
+	["builtin", "xs:NMTOKEN"],
+	["builtin", "xs:NMTOKENS"],
+	["builtin", "xs:nonNegativeInteger"],
+	["builtin", "xs:nonPositiveInteger"],
+	["builtin", "xs:normalizedString"],
+	["builtin", "xs:NOTATION"],
+	["builtin", "xs:positiveInteger"],
+	["builtin", "xs:QName"],
+	["builtin", "xs:short"],
+	["builtin", "xs:string"],
+	["builtin", "xs:time"],
+	["builtin", "xs:token"],
+	["builtin", "xs:unsignedByte"],
+	["builtin", "xs:unsignedInt"],
+	["builtin", "xs:unsignedLong"],
+	["builtin", "xs:unsignedShort"],
+	["builtin", "xs:untyped"],
+	["builtin", "xs:untypedAtomic"],
+	["builtin", "xs:yearMonthDuration"]
+]
+
+----------------------------------------------------
+Checks for builtin types.

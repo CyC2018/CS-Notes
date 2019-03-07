@@ -1,0 +1,21 @@
+[% "Hello, $name!" %]
+
+----------------------------------------------------
+
+[
+	["tt2",
+		[
+			["delimiter", "[%"],
+		 	["double-quoted-string", [
+				 "\"Hello, ",
+				 ["variable", "$name"],
+				 "!\""]
+			],
+		 	["delimiter", "%]"]
+		]
+	]
+]
+
+----------------------------------------------------
+
+Checks for interpolation inside strings.

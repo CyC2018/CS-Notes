@@ -1,0 +1,213 @@
+AS
+BEEP
+BLOAD
+BSAVE
+CALL
+CALL ABSOLUTE
+CASE
+CHAIN
+CHDIR
+CLEAR
+CLOSE
+CLS
+COM
+COMMON
+CONST
+DATA
+DECLARE
+DEF FN
+DEF SEG
+DEFDBL
+DEFINT
+DEFLNG
+DEFSNG
+DEFSTR
+DIM
+DO
+DOUBLE
+ELSE
+ELSEIF
+END
+ENVIRON
+ERASE
+ERROR
+EXIT
+FIELD
+FILES
+FOR
+FUNCTION
+GET
+GOSUB
+GOTO
+IF
+INPUT
+INTEGER
+IOCTL
+KEY
+KILL
+LINE INPUT
+LOCATE
+LOCK
+LONG
+LOOP
+LSET
+MKDIR
+NAME
+NEXT
+OFF
+ON
+ON COM
+ON ERROR
+ON KEY
+ON TIMER
+OPEN
+OPTION BASE
+OUT
+POKE
+PUT
+READ
+REDIM
+REM
+RESTORE
+RESUME
+RETURN
+RMDIR
+RSET
+RUN
+SHARED
+SINGLE
+SELECT CASE
+SHELL
+SLEEP
+STATIC
+STEP
+STOP
+STRING
+SUB
+SWAP
+SYSTEM
+THEN
+TIMER
+TO
+TROFF
+TRON
+TYPE
+UNLOCK
+UNTIL
+USING
+VIEW PRINT
+WAIT
+WEND
+WHILE
+WRITE
+
+----------------------------------------------------
+
+[
+	["keyword", "AS"],
+	["keyword", "BEEP"],
+	["keyword", "BLOAD"],
+	["keyword", "BSAVE"],
+	["keyword", "CALL"],
+	["keyword", "CALL ABSOLUTE"],
+	["keyword", "CASE"],
+	["keyword", "CHAIN"],
+	["keyword", "CHDIR"],
+	["keyword", "CLEAR"],
+	["keyword", "CLOSE"],
+	["keyword", "CLS"],
+	["keyword", "COM"],
+	["keyword", "COMMON"],
+	["keyword", "CONST"],
+	["keyword", "DATA"],
+	["keyword", "DECLARE"],
+	["keyword", "DEF FN"],
+	["keyword", "DEF SEG"],
+	["keyword", "DEFDBL"],
+	["keyword", "DEFINT"],
+	["keyword", "DEFLNG"],
+	["keyword", "DEFSNG"],
+	["keyword", "DEFSTR"],
+	["keyword", "DIM"],
+	["keyword", "DO"],
+	["keyword", "DOUBLE"],
+	["keyword", "ELSE"],
+	["keyword", "ELSEIF"],
+	["keyword", "END"],
+	["keyword", "ENVIRON"],
+	["keyword", "ERASE"],
+	["keyword", "ERROR"],
+	["keyword", "EXIT"],
+	["keyword", "FIELD"],
+	["keyword", "FILES"],
+	["keyword", "FOR"],
+	["keyword", "FUNCTION"],
+	["keyword", "GET"],
+	["keyword", "GOSUB"],
+	["keyword", "GOTO"],
+	["keyword", "IF"],
+	["keyword", "INPUT"],
+	["keyword", "INTEGER"],
+	["keyword", "IOCTL"],
+	["keyword", "KEY"],
+	["keyword", "KILL"],
+	["keyword", "LINE INPUT"],
+	["keyword", "LOCATE"],
+	["keyword", "LOCK"],
+	["keyword", "LONG"],
+	["keyword", "LOOP"],
+	["keyword", "LSET"],
+	["keyword", "MKDIR"],
+	["keyword", "NAME"],
+	["keyword", "NEXT"],
+	["keyword", "OFF"],
+	["keyword", "ON"],
+	["keyword", "ON COM"],
+	["keyword", "ON ERROR"],
+	["keyword", "ON KEY"],
+	["keyword", "ON TIMER"],
+	["keyword", "OPEN"],
+	["keyword", "OPTION BASE"],
+	["keyword", "OUT"],
+	["keyword", "POKE"],
+	["keyword", "PUT"],
+	["keyword", "READ"],
+	["keyword", "REDIM"],
+	["keyword", "REM"],
+	["keyword", "RESTORE"],
+	["keyword", "RESUME"],
+	["keyword", "RETURN"],
+	["keyword", "RMDIR"],
+	["keyword", "RSET"],
+	["keyword", "RUN"],
+	["keyword", "SHARED"],
+	["keyword", "SINGLE"],
+	["keyword", "SELECT CASE"],
+	["keyword", "SHELL"],
+	["keyword", "SLEEP"],
+	["keyword", "STATIC"],
+	["keyword", "STEP"],
+	["keyword", "STOP"],
+	["keyword", "STRING"],
+	["keyword", "SUB"],
+	["keyword", "SWAP"],
+	["keyword", "SYSTEM"],
+	["keyword", "THEN"],
+	["keyword", "TIMER"],
+	["keyword", "TO"],
+	["keyword", "TROFF"],
+	["keyword", "TRON"],
+	["keyword", "TYPE"],
+	["keyword", "UNLOCK"],
+	["keyword", "UNTIL"],
+	["keyword", "USING"],
+	["keyword", "VIEW PRINT"],
+	["keyword", "WAIT"],
+	["keyword", "WEND"],
+	["keyword", "WHILE"],
+	["keyword", "WRITE"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

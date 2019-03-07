@@ -1,0 +1,25 @@
+setup:
+given:
+when:
+then:
+and:
+cleanup:
+expect:
+where:
+
+----------------------------------------------------
+
+[
+	["spock-block", "setup:"],
+	["spock-block", "given:"],
+	["spock-block", "when:"],
+	["spock-block", "then:"],
+	["spock-block", "and:"],
+	["spock-block", "cleanup:"],
+	["spock-block", "expect:"],
+	["spock-block", "where:"]
+]
+
+----------------------------------------------------
+
+Checks for all spock blocks.

@@ -1,0 +1,25 @@
+<h2>Comments</h2>
+<pre><code>" This is a comment</code></pre>
+
+<h2>Variables</h2>
+<pre><code>
+set softab = 2
+map &lt;leader>tn :tabnew
+</code></pre>
+
+<h2>Map</h2>
+<pre><code>mystring = :steveT;</code></pre>
+
+<h2>Functions</h2>
+<pre><code>
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc</code></pre>
+
+<h2>Logic</h2>
+<pre><code>
+if has("mac")
+  nmap &lt;D-j> &lt;M-j>
+endif</code></pre>

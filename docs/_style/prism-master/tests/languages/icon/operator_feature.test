@@ -1,0 +1,69 @@
+!
+% %:=
+& &:=
+* *:= ** **:=
++ ++ +:= ++:=
+- -:= -- --:=
+.
+/ /:=
+:= :=:
+< <- <-> <:=
+<< <<:=
+<<= <<=:=
+<= <=:=
+= =:=
+== ==:=
+=== ===:=
+> >:=
+>= >=:=
+>> >>:=
+>>= >>=:=
+? ?:=
+@ @:=
+\
+^ ^:=
+| || ||:=
+||| |||:=
+~ ~= ~=:=
+~== ~==:=
+~=== ~===:=
+: +: -:
+
+----------------------------------------------------
+
+[
+	["operator", "!"],
+	["operator", "%"], ["operator", "%:="],
+	["operator", "&"], ["operator", "&:="],
+	["operator", "*"], ["operator", "*:="], ["operator", "**"], ["operator", "**:="],
+	["operator", "+"], ["operator", "++"], ["operator", "+:="], ["operator", "++:="],
+	["operator", "-"], ["operator", "-:="], ["operator", "--"], ["operator", "--:="],
+	["operator", "."],
+	["operator", "/"], ["operator", "/:="],
+	["operator", ":="], ["operator", ":=:"],
+	["operator", "<"], ["operator", "<-"], ["operator", "<->"], ["operator", "<:="],
+	["operator", "<<"], ["operator", "<<:="],
+	["operator", "<<="], ["operator", "<<=:="],
+	["operator", "<="], ["operator", "<=:="],
+	["operator", "="], ["operator", "=:="],
+	["operator", "=="], ["operator", "==:="],
+	["operator", "==="], ["operator", "===:="],
+	["operator", ">"], ["operator", ">:="],
+	["operator", ">="], ["operator", ">=:="],
+	["operator", ">>"], ["operator", ">>:="],
+	["operator", ">>="], ["operator", ">>=:="],
+	["operator", "?"], ["operator", "?:="],
+	["operator", "@"], ["operator", "@:="],
+	["operator", "\\"],
+	["operator", "^"], ["operator", "^:="],
+	["operator", "|"], ["operator", "||"], ["operator", "||:="],
+	["operator", "|||"], ["operator", "|||:="],
+	["operator", "~"], ["operator", "~="], ["operator", "~=:="],
+	["operator", "~=="], ["operator", "~==:="],
+	["operator", "~==="], ["operator", "~===:="],
+	["operator", ":"], ["operator", "+:"], ["operator", "-:"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

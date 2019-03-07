@@ -1,0 +1,42 @@
+abc = "abc"
+"abc" = "abc"
+"abc".'a"b"c'.abc = "abc"
+	a . b . c = "abc"
+
+a = { b = "b", c = "c" }
+
+----------------------------------------------------
+
+[
+	["key", "abc"],
+	["punctuation", "="],
+	["string", "\"abc\""],
+
+	["key", "\"abc\""],
+	["punctuation", "="],
+	["string", "\"abc\""],
+
+	["key", "\"abc\".'a\"b\"c'.abc"],
+	["punctuation", "="],
+	["string", "\"abc\""],
+
+	["key", "a . b . c"],
+	["punctuation", "="],
+	["string", "\"abc\""],
+
+	["key", "a"],
+	["punctuation", "="],
+	["punctuation", "{"],
+	["key", "b"],
+	["punctuation", "="],
+	["string", "\"b\""],
+	["punctuation", ","],
+	["key", "c"],
+	["punctuation", "="],
+	["string", "\"c\""],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for keys.

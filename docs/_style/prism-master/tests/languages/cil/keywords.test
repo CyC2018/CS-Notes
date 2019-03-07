@@ -1,0 +1,161 @@
+abstract
+ansi
+assembly
+auto
+autochar
+beforefieldinit
+bool
+bstr
+byvalstr
+cil
+char
+class
+currency
+date
+decimal
+default
+enum
+error
+explicit
+extends
+extern
+famandassem
+family
+famorassem
+final
+float32
+float64
+hidebysig
+iant
+idispatch
+import
+initonly
+instance
+int
+int16
+int32
+int64
+int8
+uint
+uint16
+uint32
+uint64
+uint8
+interface
+iunknown
+lpstr
+lpstruct
+lptstr
+lpwstr
+managed
+nativeType
+nested
+newslot
+objectref
+pinvokeimpl
+private
+privatescope
+public
+reqsecobj
+rtspecialname
+sealed
+sequential
+serializable
+specialname
+static
+string
+struct
+syschar
+tbstr
+unicode
+unmanagedexp
+unsigned
+value
+variant
+virtual
+void
+
+--------------------------------------------------------
+
+[
+	[ "keyword", "abstract" ],
+	[ "keyword", "ansi" ],
+	[ "keyword", "assembly" ],
+	[ "keyword", "auto" ],
+	[ "keyword", "autochar" ],
+	[ "keyword", "beforefieldinit" ],
+	[ "keyword", "bool" ],
+	[ "keyword", "bstr" ],
+	[ "keyword", "byvalstr" ],
+	[ "keyword", "cil" ],
+	[ "keyword", "char" ],
+	[ "keyword", "class" ],
+	[ "keyword", "currency" ],
+	[ "keyword", "date" ],
+	[ "keyword", "decimal" ],
+	[ "keyword", "default" ],
+	[ "keyword", "enum" ],
+	[ "keyword", "error" ],
+	[ "keyword", "explicit" ],
+	[ "keyword", "extends" ],
+	[ "keyword", "extern" ],
+	[ "keyword", "famandassem" ],
+	[ "keyword", "family" ],
+	[ "keyword", "famorassem" ],
+	[ "keyword", "final" ],
+	[ "keyword", "float32" ],
+	[ "keyword", "float64" ],
+	[ "keyword", "hidebysig" ],
+	[ "keyword", "iant" ],
+	[ "keyword", "idispatch" ],
+	[ "keyword", "import" ],
+	[ "keyword", "initonly" ],
+	[ "keyword", "instance" ],
+	[ "keyword", "int" ],
+	[ "keyword", "int16" ],
+	[ "keyword", "int32" ],
+	[ "keyword", "int64" ],
+	[ "keyword", "int8" ],
+	[ "keyword", "uint" ],
+	[ "keyword", "uint16" ],
+	[ "keyword", "uint32" ],
+	[ "keyword", "uint64" ],
+	[ "keyword", "uint8" ],
+	[ "keyword", "interface" ],
+	[ "keyword", "iunknown" ],
+	[ "keyword", "lpstr" ],
+	[ "keyword", "lpstruct" ],
+	[ "keyword", "lptstr" ],
+	[ "keyword", "lpwstr" ],
+	[ "keyword", "managed" ],
+	[ "keyword", "nativeType" ],
+	[ "keyword", "nested" ],
+	[ "keyword", "newslot" ],
+	[ "keyword", "objectref" ],
+	[ "keyword", "pinvokeimpl" ],
+	[ "keyword", "private" ],
+	[ "keyword", "privatescope" ],
+	[ "keyword", "public" ],
+	[ "keyword", "reqsecobj" ],
+	[ "keyword", "rtspecialname" ],
+	[ "keyword", "sealed" ],
+	[ "keyword", "sequential" ],
+	[ "keyword", "serializable" ],
+	[ "keyword", "specialname" ],
+	[ "keyword", "static" ],
+	[ "keyword", "string" ],
+	[ "keyword", "struct" ],
+	[ "keyword", "syschar" ],
+	[ "keyword", "tbstr" ],
+	[ "keyword", "unicode" ],
+	[ "keyword", "unmanagedexp" ],
+	[ "keyword", "unsigned" ],
+	[ "keyword", "value" ],
+	[ "keyword", "variant" ],
+	[ "keyword", "virtual" ],
+	[ "keyword", "void"]
+]
+
+--------------------------------------------------------
+
+Tests keywords

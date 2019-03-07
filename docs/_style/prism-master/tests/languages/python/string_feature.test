@@ -1,0 +1,29 @@
+""
+"fo\"obar"
+''
+'fo\'obar'
+"fo\" # comment obar"
+
+r"\n"
+b'foo'
+rb"foo\n"
+u"foo"
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"obar\""],
+	["string", "''"],
+	["string", "'fo\\'obar'"],
+	["string", "\"fo\\\" # comment obar\""],
+
+	["string", "r\"\\n\""],
+	["string", "b'foo'"],
+	["string", "rb\"foo\\n\""],
+	["string", "u\"foo\""]
+]
+
+----------------------------------------------------
+
+Checks for strings.

@@ -1,0 +1,25 @@
+42
+3.14159
+50kg
+100m
+one two three
+four five six
+seven eight nine
+ten eleven twelve
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "50kg"],
+	["number", "100m"],
+	["number", "one"], ["number", "two"], ["number", "three"],
+	["number", "four"], ["number", "five"], ["number", "six"],
+	["number", "seven"], ["number", "eight"], ["number", "nine"],
+	["number", "ten"], ["number", "eleven"], ["number", "twelve"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

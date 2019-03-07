@@ -1,0 +1,19 @@
+:coffee
+	"#{foo}"
+
+----------------------------------------------------
+
+[
+	["filter-coffee", [
+		["filter-name", ":coffee"],
+		["string", [
+			"\"",
+			["interpolation", "#{foo}"],
+			"\""
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for coffee filter (CoffeeScript) in Jade.

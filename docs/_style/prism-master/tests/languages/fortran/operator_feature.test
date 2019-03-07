@@ -1,0 +1,25 @@
+** // =>
+== /= ::
+< <= > >=
++ - * / = %
+.EQ. .NE. .LT. .LE.
+.GT. .GE. .NOT. .AND.
+.OR. .EQV. .NEQV.
+.foobar.
+
+----------------------------------------------------
+
+[
+	["operator", "**"], ["operator", "//"], ["operator", "=>"],
+	["operator", "=="], ["operator", "/="], ["operator", "::"],
+	["operator", "<"], ["operator", "<="], ["operator", ">"], ["operator", ">="],
+	["operator", "+"], ["operator", "-"], ["operator", "*"], ["operator", "/"], ["operator", "="], ["operator", "%"],
+	["operator", ".EQ."], ["operator", ".NE."], ["operator", ".LT."], ["operator", ".LE."],
+	["operator", ".GT."], ["operator", ".GE."], ["operator", ".NOT."], ["operator", ".AND."],
+	["operator", ".OR."], ["operator", ".EQV."], ["operator", ".NEQV."],
+	["operator", ".foobar."]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

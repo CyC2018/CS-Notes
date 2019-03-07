@@ -1,0 +1,47 @@
+break
+case
+continue
+default
+do
+else
+float
+for
+global
+if
+in
+int
+matrix
+proc
+return
+string
+switch
+vector
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "continue"],
+	["keyword", "default"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "float"],
+	["keyword", "for"],
+	["keyword", "global"],
+	["keyword", "if"],
+	["keyword", "in"],
+	["keyword", "int"],
+	["keyword", "matrix"],
+	["keyword", "proc"],
+	["keyword", "return"],
+	["keyword", "string"],
+	["keyword", "switch"],
+	["keyword", "vector"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

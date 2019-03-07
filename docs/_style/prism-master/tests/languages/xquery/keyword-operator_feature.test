@@ -1,0 +1,43 @@
+and
+castable as
+div
+eq
+except
+ge
+gt
+idiv
+instance of
+intersect
+is
+le
+lt
+mod
+ne
+or
+union
+
+----------------------------------------------------
+
+[
+	["keyword-operator", "and"],
+	["keyword-operator", "castable as"],
+	["keyword-operator", "div"],
+	["keyword-operator", "eq"],
+	["keyword-operator", "except"],
+	["keyword-operator", "ge"],
+	["keyword-operator", "gt"],
+	["keyword-operator", "idiv"],
+	["keyword-operator", "instance of"],
+	["keyword-operator", "intersect"],
+	["keyword-operator", "is"],
+	["keyword-operator", "le"],
+	["keyword-operator", "lt"],
+	["keyword-operator", "mod"],
+	["keyword-operator", "ne"],
+	["keyword-operator", "or"],
+	["keyword-operator", "union"]
+]
+
+----------------------------------------------------
+
+Checks for keyword operators.

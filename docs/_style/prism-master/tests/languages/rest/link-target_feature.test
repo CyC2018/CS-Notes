@@ -1,0 +1,90 @@
+.. [1] Foo
+.. [2] Bar
+.. [#] Baz
+.. [#foobar] Foobar
+.. [CIT2002] Foobar
+
+.. _foobar: Foobar
+.. _foo\:bar: Foobar
+.. _`foo:bar`: Foobar
+.. __: Anonymous
+
+----------------------------------------------------
+
+[
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "["],
+		"1",
+		["punctuation", "]"]
+	]],
+	" Foo\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "["],
+		"2",
+		["punctuation", "]"]
+	]],
+	" Bar\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "["],
+		"#",
+		["punctuation", "]"]
+	]],
+	" Baz\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "["],
+		"#foobar",
+		["punctuation", "]"]
+	]],
+	" Foobar\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "["],
+		"CIT2002",
+		["punctuation", "]"]
+	]],
+	" Foobar\r\n\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "_"],
+		"foobar",
+		["punctuation", ":"]
+	]],
+	" Foobar\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "_"],
+		"foo\\:bar",
+		["punctuation", ":"]
+	]],
+	" Foobar\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "_"],
+		"`foo:bar`",
+		["punctuation", ":"]
+	]],
+	" Foobar\r\n",
+
+	["punctuation", ".."],
+	["link-target", [
+		["punctuation", "_"],
+		["punctuation", "_"],
+		["punctuation", ":"]
+	]],
+	" Anonymous"
+]
+
+----------------------------------------------------
+
+Checks for link targets.

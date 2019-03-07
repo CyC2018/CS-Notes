@@ -1,0 +1,21 @@
+url(foo.png)
+url('foo.png')
+url("foo.png")
+url('foo\
+bar.png')
+url("foo\
+bar.png")
+
+----------------------------------------------------
+
+[
+	["url", "url(foo.png)"],
+	["url", "url('foo.png')"],
+	["url", "url(\"foo.png\")"],
+	["url", "url('foo\\\r\nbar.png')"],
+	["url", "url(\"foo\\\r\nbar.png\")"]
+]
+
+----------------------------------------------------
+
+Checks for url(), unquoted, single-quoted and double-quoted.

@@ -1,0 +1,171 @@
+<h2>Comments</h2>
+<pre><code>[This is a comment]
+[This is a
+multi-line comment]</code></pre>
+
+<h2>Texts</h2>
+<pre><code>"This is a string"
+"This is a
+multi-line string"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.14159
+50kg
+100m
+one
+three
+twelve</code></pre>
+
+<h2>Titles</h2>
+<pre><code>Section 2 - Flamsteed's Balloon
+
+Part SR1 - The Physical World Model
+
+Table of Floors</code></pre>
+
+<h2>Standard kinds, verbs and keywords</h2>
+<pre><code>In the Treehouse is a container called the cardboard box.
+The cardboard box is a closed container. The glass bottle is a transparent open container. The box is fixed in place and openable.
+
+Check photographing:
+    if the noun is the camera, say "Sadly impossible." instead.</code></pre>
+
+<h2>Text substitution</h2>
+<pre><code>"[if the player is in Center Ring]A magician's booth stands in the corner, painted dark blue with glittering gold stars.[otherwise if the magician's booth is closed]A crack of light indicates the way back out to the center ring.[otherwise]The door stands open to the outside.[end if]".</code></pre>
+
+<h2>Full example</h2>
+<pre><code>"Lakeside Living"
+
+A volume is a kind of value. 15.9 fl oz specifies a volume with parts ounces and tenths (optional, preamble optional).
+
+A fluid container is a kind of container. A fluid container has a volume called a fluid capacity. A fluid container has a volume called current volume.
+
+The fluid capacity of a fluid container is usually 12.0 fl oz. The current volume of a fluid container is usually 0.0 fl oz.
+
+Liquid is a kind of value. The liquids are water, absinthe, and iced tea. A fluid container has a liquid.
+
+Instead of examining a fluid container:
+    if the noun is empty,
+        say "You catch just a hint of [the liquid of the noun] at the bottom.";
+    otherwise
+        say "[The noun] contains [current volume of the noun in rough terms] of [liquid of the noun]."
+
+To say (amount - a volume) in rough terms:
+    if the amount is less than 0.5 fl oz:
+        say "a swallow or two";
+    otherwise if tenths part of amount is greater than 3 and tenths part of amount is less than 7:
+        let estimate be ounces part of amount;
+        say "[estimate in words] or [estimate plus 1 in words] fluid ounces";
+    otherwise:
+        if tenths part of amount is greater than 6, increase amount by 1.0 fl oz;
+        say "about [ounces part of amount in words] fluid ounce[s]".
+
+Before printing the name of a fluid container (called the target) while not drinking or pouring:
+    if the target is empty:
+        say "empty ";
+    otherwise:
+        do nothing.
+
+After printing the name of a fluid container (called the target) while not examining or pouring:
+    unless the target is empty:
+        say " of [liquid of the target]";
+        omit contents in listing.
+
+Instead of inserting something into a fluid container:
+    say "[The second noun] has too narrow a mouth to accept anything but liquids."
+
+Definition: a fluid container is empty if the current volume of it is 0.0 fl oz. Definition: a fluid container is full if the current volume of it is the fluid capacity of it.
+
+Understand "drink from [fluid container]" as drinking.
+
+Instead of drinking a fluid container:
+    if the noun is empty:
+        say "There is no more [liquid of the noun] within." instead;
+    otherwise:
+        decrease the current volume of the noun by 0.2 fl oz;
+        if the current volume of the noun is less than 0.0 fl oz, now the current volume of the noun is 0.0 fl oz;
+        say "You take a sip of [the liquid of the noun][if the noun is empty], leaving [the noun] empty[end if]."
+
+Part 2 - Filling
+
+Understand the command "fill" as something new.
+
+Understand "fill [fluid container] with/from [full liquid source]" as filling it with. Understand "fill [fluid container] with/from [fluid container]" as filling it with.
+
+Understand "fill [something] with/from [something]" as filling it with.
+
+Filling it with is an action applying to two things. Carry out filling it with: try pouring the second noun into the noun instead.
+
+Understand "pour [fluid container] in/into/on/onto [fluid container]" as pouring it into. Understand "empty [fluid container] into [fluid container]" as pouring it into.
+
+Understand "pour [something] in/into/on/onto [something]" as pouring it into. Understand "empty [something] into [something]" as pouring it into.
+
+Pouring it into is an action applying to two things.
+
+Check pouring it into:
+    if the noun is not a fluid container, say "You can't pour [the noun]." instead;
+    if the second noun is not a fluid container, say "You can't pour liquids into [the second noun]." instead;
+    if the noun is the second noun, say "You can hardly pour [the noun] into itself." instead;
+    if the liquid of the noun is not the liquid of the second noun:
+        if the second noun is empty, now the liquid of the second noun is the liquid of the noun;
+        otherwise say "Mixing [the liquid of the noun] with [the liquid of the second noun] would give unsavory results." instead;
+    if the noun is empty, say "No more [liquid of the noun] remains in [the noun]." instead;
+    if the second noun is full, say "[The second noun] cannot contain any more than it already holds." instead.
+
+Carry out pouring it into:
+    let available capacity be the fluid capacity of the second noun minus the current volume of the second noun;
+    if the available capacity is greater than the current volume of the noun, now the available capacity is the current volume of the noun;
+    increase the current volume of the second noun by available capacity;
+    decrease the current volume of the noun by available capacity.
+
+Report pouring it into:
+    say "[if the noun is empty][The noun] is now empty;[otherwise][The noun] now contains [current volume of the noun in rough terms] of [liquid of the noun]; [end if]";
+    say "[the second noun] contains [current volume of the second noun in rough terms] of [liquid of the second noun][if the second noun is full], and is now full[end if]."
+
+Understand the liquid property as describing a fluid container. Understand "of" as a fluid container.
+
+A liquid source is a kind of fluid container. A liquid source has a liquid. A liquid source is usually scenery. The fluid capacity of a liquid source is usually 3276.7 fl oz. The current volume of a liquid source is usually 3276.7 fl oz. Instead of examining a liquid source: say "[The noun] is full of [liquid of the noun]."
+
+Carry out pouring a liquid source into something: now the current volume of the noun is 3276.7 fl oz.
+
+After pouring a liquid source into a fluid container:
+    say "You fill [the second noun] up with [liquid of the noun] from [the noun]."
+
+Instead of pouring a fluid container into a liquid source:
+    if the noun is empty, say "[The noun] is already empty." instead;
+    now the current volume of the noun is 0.0 fl oz;
+    say "You dump out [the noun] into [the second noun]."
+
+Swimming is an action applying to nothing. Understand "swim" or "dive" as swimming.
+
+Instead of swimming in the presence of a liquid source:
+    say "You don't feel like a dip just now."
+
+Before inserting something into a liquid source: say "[The noun] would get lost and never be seen again." instead.
+
+Part 3 - Scenario
+
+The Lakeside is a room. The Lakeside swing is an enterable supporter in the Lakeside. "Here you are by the lake, enjoying a summery view."
+
+The glass is a fluid container carried by the player. The liquid of the glass is absinthe. The current volume of the glass is 0.8 fl oz.
+
+The pitcher is a fluid container in the Lakeside. The fluid capacity of the pitcher is 32.0 fl oz. The current volume of the pitcher is 20.0 fl oz. The liquid of the pitcher is absinthe.
+
+The lake is a liquid source. It is in the Lakeside.
+
+The player wears a bathing outfit. The description of the bathing outfit is "Stylishly striped in blue and white, and daringly cut to reveal almost all of your calves, and quite a bit of upper arm, as well. You had a moral struggle, purchasing it; but mercifully the lakeshore is sufficiently secluded that no one can see you in this immodest apparel."
+
+Instead of taking off the outfit: say "What odd ideas come into your head sometimes!"
+
+Test me with "fill glass / empty absinthe into lake / fill glass / swim / drink lake / drink / x water / x lake". </code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Names starting with a number</h3>
+<pre><code>The box 1A is a container</code></pre>

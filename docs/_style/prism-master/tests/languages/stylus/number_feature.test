@@ -1,0 +1,32 @@
+z-index 42
+foo = 3.14159
+width: 23%
+bar = 1.5%
+
+----------------------------------------------------
+
+[
+	["property-declaration", [
+		["property", ["z-index"]],
+		["number", "42"]
+	]],
+	["variable-declaration", [
+		["variable", "foo"],
+		["operator", "="],
+		["number", "3.14159"]
+	]],
+	["property-declaration", [
+		["property", ["width"]],
+		["punctuation", ":"],
+		["number", "23%"]
+	]],
+	["variable-declaration", [
+		["variable", "bar"],
+		["operator", "="],
+		["number", "1.5%"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for numbers and percentages.

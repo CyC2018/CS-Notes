@@ -1,0 +1,25 @@
+// Foobar
+/* Foo
+bar */
+%%
+// Foobar
+/* Foo
+bar */
+%%
+
+----------------------------------------------------
+
+[
+	["bison", [
+		["comment", "// Foobar"],
+		["comment", "/* Foo\r\nbar */"],
+		["punctuation", "%%"],
+		["comment", "// Foobar"],
+		["comment", "/* Foo\r\nbar */"],
+		["punctuation", "%%"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for comments.

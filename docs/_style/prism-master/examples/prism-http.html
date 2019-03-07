@@ -1,0 +1,33 @@
+<h2>Request header</h2>
+<pre><code>GET http://localhost:9999/foo.html HTTP/1.1
+Accept-Language: fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate</code></pre>
+
+<h2>Response header</h2>
+<pre><code>HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Mon, 22 Dec 2014 18:25:30 GMT
+Content-Type: text/html; charset=utf-8</code></pre>
+
+<h2>Response body highlighted based on Content-Type</h2>
+<p>This currently supports the following content types :
+	"application/json",
+	"application/xml",
+	"text/xml" and
+	"text/html".</p>
+<pre><code>HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Mon, 22 Dec 2014 18:25:30 GMT
+Content-Type: text/html; charset=utf-8
+Last-Modified: Sun, 21 Dec 2014 20:29:48 GMT
+Transfer-Encoding: chunked
+Expires: Mon, 22 Dec 2014 18:35:30 GMT
+Cache-Control: max-age=600
+Vary: Accept-Encoding
+Content-Encoding: gzip
+
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>&lt;/head>
+&lt;body>&lt;/body>
+&lt;/html></code></pre>

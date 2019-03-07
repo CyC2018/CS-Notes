@@ -1,0 +1,19 @@
+@vsn 2
+@moduledoc """
+foobar
+"""
+@tag :external
+
+----------------------------------------------------
+
+[
+	["attribute", "@vsn"], ["number", "2"],
+	["attribute", "@moduledoc"], ["string", [
+		"\"\"\"\r\nfoobar\r\n\"\"\""
+	]],
+	["attribute", "@tag"], ["atom", ":external"]
+]
+
+----------------------------------------------------
+
+Checks for module attributes.

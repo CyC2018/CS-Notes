@@ -1,0 +1,103 @@
+$
+_
+[]
+at
+attr
+case
+catch
+choice
+class
+cond
+declare
+define
+dis
+else
+elsecase
+elseif
+end
+export
+fail
+false
+feat
+finally
+from
+fun
+functor
+if
+import
+in
+local
+lock
+meth
+nil
+not
+of
+or
+prepare
+proc
+prop
+raise
+require
+self
+skip
+then
+thread
+true
+try
+unit
+
+----------------------------------------------------
+
+[
+	["keyword", "$"],
+	["keyword", "_"],
+	["keyword", "[]"],
+	["keyword", "at"],
+	["keyword", "attr"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "choice"],
+	["keyword", "class"],
+	["keyword", "cond"],
+	["keyword", "declare"],
+	["keyword", "define"],
+	["keyword", "dis"],
+	["keyword", "else"],
+	["keyword", "elsecase"],
+	["keyword", "elseif"],
+	["keyword", "end"],
+	["keyword", "export"],
+	["keyword", "fail"],
+	["keyword", "false"],
+	["keyword", "feat"],
+	["keyword", "finally"],
+	["keyword", "from"],
+	["keyword", "fun"],
+	["keyword", "functor"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "local"],
+	["keyword", "lock"],
+	["keyword", "meth"],
+	["keyword", "nil"],
+	["keyword", "not"],
+	["keyword", "of"],
+	["keyword", "or"],
+	["keyword", "prepare"],
+	["keyword", "proc"],
+	["keyword", "prop"],
+	["keyword", "raise"],
+	["keyword", "require"],
+	["keyword", "self"],
+	["keyword", "skip"],
+	["keyword", "then"],
+	["keyword", "thread"],
+	["keyword", "true"],
+	["keyword", "try"],
+	["keyword", "unit"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

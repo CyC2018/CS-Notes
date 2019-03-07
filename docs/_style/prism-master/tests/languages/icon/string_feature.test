@@ -1,0 +1,22 @@
+""
+"Fo\"obar"
+"Foo_
+bar_
+baz"
+
+''
+'a\'zerty'
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"Fo\\\"obar\""],
+	["string", "\"Foo_\r\nbar_\r\nbaz\""],
+	["string", "''"],
+	["string", "'a\\'zerty'"]
+]
+
+----------------------------------------------------
+
+Checks for strings and csets.

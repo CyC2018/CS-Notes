@@ -1,0 +1,29 @@
+[[w:en:Formal_grammar|Formal grammar]]
+[http://www.cl.cam.ac.uk/~mgk25/iso-ebnf.html EBNF help]
+
+ISBN 1234567890
+ISBN 123456789x
+ISBN      1 2 3-4-5 6789 X
+ISBN 978-9999999999
+
+RFC 822
+PMID 822
+
+----------------------------------------------------
+
+[
+	["url", "[[w:en:Formal_grammar|Formal grammar]]"],
+	["url", "[http://www.cl.cam.ac.uk/~mgk25/iso-ebnf.html EBNF help]"],
+
+	["url", "ISBN 1234567890"],
+	["url", "ISBN 123456789x"],
+	["url", "ISBN      1 2 3-4-5 6789 X"],
+	["url", "ISBN 978-9999999999"],
+
+	["url", "RFC 822"],
+	["url", "PMID 822"]
+]
+
+----------------------------------------------------
+
+Checks for links, ISBN, RFC and PMID.

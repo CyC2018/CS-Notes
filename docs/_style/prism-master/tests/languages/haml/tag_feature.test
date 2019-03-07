@@ -1,0 +1,161 @@
+%one
+	%two
+
+%div#things
+%div.articles
+%div.article.title
+
+%script{:type => "text/javascript",
+        :src  => "javascripts/script_#{42}"}
+
+%div{:id => [@item.type, @item.number]}
+
+%a(title=@title href=href)
+%input(selected)
+
+%html{html_attrs('fr-fr')}
+
+%div[@user, :greeting]
+	%bar[290]/
+
+%div#Article.article.entry{:id => @article.number}
+
+#collection
+	.item
+
+%br/
+%blockquote<
+%img>
+
+----------------------------------------------------
+
+[
+	["tag", ["%one"]],
+	["tag", ["%two"]],
+
+	["tag", ["%div#things"]],
+	["tag", ["%div.articles"]],
+	["tag", ["%div.article.title"]],
+
+	["tag", [
+		"%script",
+		["attributes", [
+			["punctuation", "{"],
+			["symbol", ":type"],
+			["operator", "="], ["operator", ">"],
+			["string", ["\"text/javascript\""]],
+			["punctuation", ","],
+			["symbol", ":src"],
+			["operator", "="], ["operator", ">"],
+			["string", [
+				"\"javascripts/script_",
+				["interpolation", [
+					["delimiter", "#{"],
+					["number", "42"],
+					["delimiter", "}"]
+				]],
+				"\""
+			]],
+			["punctuation", "}"]
+		]]
+	]],
+
+	["tag", [
+		"%div",
+		["attributes", [
+			["punctuation", "{"],
+			["symbol", ":id"],
+			["operator", "="], ["operator", ">"],
+			["punctuation", "["],
+			["variable", "@item"],
+			["punctuation", "."],
+			"type",
+			["punctuation", ","],
+			["variable", "@item"],
+			["punctuation", "."],
+			"number",
+			["punctuation", "]"],
+			["punctuation", "}"]
+		]]
+	]],
+
+	["tag", [
+		"%a",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "title"],
+			["punctuation", "="],
+			["attr-value", "@title"],
+			["attr-name", "href"],
+			["punctuation", "="],
+            ["attr-value", "href"],
+            ["punctuation", ")"]
+		]]
+	]],
+	["tag", [
+		"%input",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "selected"],
+			["punctuation", ")"]
+		]]
+	]],
+
+	["tag", [
+		"%html",
+		["attributes", [
+			["punctuation", "{"],
+			"html_attrs",
+			["punctuation", "("],
+			["string", ["'fr-fr'"]],
+			["punctuation", ")"],
+			["punctuation", "}"]
+		]]
+	]],
+
+	["tag", [
+		"%div",
+		["attributes", [
+			["punctuation", "["],
+			["variable", "@user"],
+			["punctuation", ","],
+			["symbol", ":greeting"],
+			["punctuation", "]"]
+		]]
+	]],
+	["tag", [
+		"%bar",
+		["attributes", [
+			["punctuation", "["],
+			["number", "290"],
+			["punctuation", "]"]
+		]],
+		"/"
+	]],
+
+	["tag", [
+		"%div#Article.article.entry",
+		["attributes", [
+			["punctuation", "{"],
+			["symbol", ":id"],
+			["operator", "="], ["operator", ">"],
+			["variable", "@article"],
+			["punctuation", "."],
+			"number",
+			["punctuation", "}"]
+		]]
+	]],
+
+	["tag", ["#collection"]],
+	["tag", [".item"]],
+
+	["tag", ["%br/"]],
+	["tag", ["%blockquote", ["punctuation", "<"]]],
+	["tag", ["%img", ["punctuation", ">"]]]
+]
+
+----------------------------------------------------
+
+Checks for tags: basic element names, attributes, html-style attributes,
+attribute methods, boolean attributes, class and id shortcuts,
+implicit div elements, empty tags and whitespace removal.

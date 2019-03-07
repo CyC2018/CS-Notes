@@ -1,0 +1,107 @@
+<h2>Null and Boolean</h2>
+<pre><code>---
+A null: null
+A null: ~
+Also a null: # Empty
+Not a null: ""
+Booleans: [ true, True, false, FALSE ]
+</code></pre>
+
+<h2>Numbers and timestamps</h2>
+<pre><code>---
+Integers: [ 0, -0, 3, 0o7, 0x3A, -19 ]
+Floats: [ 0., -0.0, .5, 12e03, +12e03, -2E+05 ]
+Also floats: [ .inf, -.Inf, +.INF, .NAN ]
+Timestamps:
+  canonical: 2001-12-15T02:59:43.1Z
+  iso8601: 2001-12-14t21:59:43.10-05:00
+  spaced: 2001-12-14 21:59:43.10 -5
+  date: 2002-12-14
+  times:
+    - 10:53
+    - 10:53:20.53
+</code></pre>
+
+<h2>Strings</h2>
+<pre><code>---
+product: High Heeled "Ruby" Slippers
+description: "Putting on these \"slippers\" is easy."
+address:
+  city:   East Centerville
+  street: !!str |
+    123 Tornado Alley
+    Suite 16
+
+  specialDelivery:  >
+    Follow the Yellow Brick
+    Road to the Emerald City.
+    #Pay no attention to the
+    man behind the curtain.
+</code></pre>
+
+<h2>Sequences and maps</h2>
+<pre><code>---
+- Casablanca
+- North by Northwest
+- {
+    name: John Smith, age: 33}
+- name: Mary Smith
+  age: 27
+---
+"name": John Smith
+age: 33
+men: [ John Smith,
+    "Bill Jones" ]
+women:
+ - Mary Smith
+ - "Susan Williams"
+</code></pre>
+
+<h2>Tags</h2>
+<pre><code>---
+!!map {
+  ? !!str friends: !!seq [
+    !!map {
+      ? !!str "age"
+      : !!int 33,
+      ? !!str "name"
+      : !!str "John Smith",
+    }
+  ],
+  men:
+    [ !!str "John Smith", !!str "Bill Jones"]
+}
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>%YAML 1.2
+--- !&lt;tag:clarkevans.com,2002:invoice&gt;
+invoice: 34843
+date   : 2001-01-23
+bill-to: &id001
+  given  : Chris
+  family : Dumars
+  address:
+    lines: |
+      458 Walkman Dr.
+      Suite #292
+    city    : Royal Oak
+    state   : MI
+    postal  : 48046
+ship-to:
+  <<: *id001
+  product:
+    - sku         : BL394D
+      quantity    : 4
+      description : Basketball
+      price       : 450.00
+    - sku         : BL4438H
+      quantity    : 1
+      description : Super Hoop
+      price       : 2392.00
+tax  : 251.42
+total: 4443.52
+comments:
+    Late afternoon is best.
+    Backup contact is Nancy
+</code></pre>

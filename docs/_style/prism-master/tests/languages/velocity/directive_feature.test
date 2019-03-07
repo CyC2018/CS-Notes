@@ -1,0 +1,417 @@
+#foreach($mud in $mudsOnSpecial)
+#if($customer.hasPurchased($mud))
+#set($a = "Velocity")
+#set($foo.bar[1] = 3)
+#{set}($map["apple"] = "orange")
+#if($foo == $bar)#end
+#if (!$foo)#end
+#if ($foo && $foo.bar)#end
+#{if}($foo1 || $foo2)#end
+#set( $monkey.Say = ["Not", $my, "fault"] )
+#set( $monkey.Map = {"banana" : "good", "roast beef" : "bad"})
+#set( $result = $query.criteria("address") )
+#set( $result = true )
+#set( $result = false )
+#if( $foo < 10 )
+#elseif( $foo == 10 )
+#else
+#end
+#if( $foo == $bar)it's true!#{else}it's not!#end
+#include( "greetings.txt", $seasonalstock )
+#parse( "me.vm" )
+#{parse}( "me.vm" )
+#break
+#{break}
+#break($macro.topmost)
+#stop('$foo was not in context')
+#{stop}
+#evaluate($dynamicsource)
+#macro( d )
+<tr><td></td></tr>
+#end
+#d()
+#@d()Hello!#end
+\#include( "a.txt" )
+\\#include ( "a.txt" )
+#set($foo=["$10 and ","a pie"])#foreach($a in $foo)$a#end
+#set( $foo = $bar + 3 )
+#set( $foo = $bar - 4 )
+#set( $foo = $bar * 6 )
+#set( $foo = $bar / 2 )
+#set( $foo = $bar % 5 )
+#foreach( $foo in [1..5] )
+
+----------------------------------------------------
+
+[
+	["directive", [
+		["keyword", ["#foreach"]],
+		["punctuation", "("],
+		["variable", ["$mud"]],
+		["keyword", ["in"]],
+		["variable", ["$mudsOnSpecial"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["variable", [
+			"$customer",
+			["punctuation", "."],
+			["function", "hasPurchased"],
+			["punctuation", "("],
+			"$mud",
+			["punctuation", ")"]
+		]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$a"]],
+		["operator", "="],
+		["string", "\"Velocity\""],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", [
+			"$foo",
+			["punctuation", "."],
+			"bar",
+			["punctuation", "["],
+			["number", "1"],
+			["punctuation", "]"]
+		]],
+		["operator", "="],
+		["number", "3"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "set", ["punctuation", "}"]]],
+		["punctuation", "("],
+		["variable", [
+			"$map",
+			["punctuation", "["],
+			["string", "\"apple\""],
+			["punctuation", "]"]
+		]],
+		["operator", "="],
+		["string", "\"orange\""],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "=="],
+		["variable", ["$bar"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["operator", "!"],
+		["variable", ["$foo"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "&&"],
+		["variable", ["$foo", ["punctuation", "."], "bar"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "if", ["punctuation", "}"]]],
+		["punctuation", "("],
+		["variable", ["$foo1"]],
+		["operator", "||"],
+		["variable", ["$foo2"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$monkey", ["punctuation", "."], "Say"]],
+		["operator", "="],
+		["punctuation", "["],
+		["string", "\"Not\""],
+		["punctuation", ","],
+		["variable", ["$my"]],
+		["punctuation", ","],
+		["string", "\"fault\""],
+		["punctuation", "]"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$monkey", ["punctuation", "."], "Map"]],
+		["operator", "="],
+		["punctuation", "{"],
+		["string", "\"banana\""],
+		["punctuation", ":"],
+		["string", "\"good\""],
+		["punctuation", ","],
+		["string", "\"roast beef\""],
+		["punctuation", ":"],
+		["string", "\"bad\""],
+		["punctuation", "}"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$result"]],
+		["operator", "="],
+		["variable", [
+			"$query",
+			["punctuation", "."],
+			["function", "criteria"],
+			["punctuation", "("],
+			["string", "\"address\""],
+			["punctuation", ")"]
+		]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$result"]],
+		["operator", "="],
+		["boolean", "true"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$result"]],
+		["operator", "="],
+		["boolean", "false"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "<"],
+		["number", "10"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#elseif"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "=="],
+		["number", "10"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#else"]]
+	]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#if"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "=="],
+		["variable", ["$bar"]],
+		["punctuation", ")"]
+	]],
+	"it's true!",
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "else", ["punctuation", "}"]]]
+	]],
+	"it's not!",
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#include"]],
+		["punctuation", "("],
+		["string", "\"greetings.txt\""],
+		["punctuation", ","],
+		["variable", ["$seasonalstock"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#parse"]],
+		["punctuation", "("],
+		["string", "\"me.vm\""],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "parse", ["punctuation", "}"]]],
+		["punctuation", "("],
+		["string", "\"me.vm\""],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#break"]]
+	]],
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "break", ["punctuation", "}"]]]
+	]],
+	["directive", [
+		["keyword", ["#break"]],
+		["punctuation", "("],
+		["variable", ["$macro", ["punctuation", "."], "topmost"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#stop"]],
+		["punctuation", "("],
+		["string", "'$foo was not in context'"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#", ["punctuation", "{"], "stop", ["punctuation", "}"]]]
+	]],
+	["directive", [
+		["keyword", ["#evaluate"]],
+		["punctuation", "("],
+		["variable", ["$dynamicsource"]],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#macro"]],
+		["punctuation", "("],
+		" d ",
+		["punctuation", ")"]
+	]],
+	["tag", [["tag", [["punctuation", "<"], "tr"]], ["punctuation", ">"]]],
+	["tag", [["tag", [["punctuation", "<"], "td"]], ["punctuation", ">"]]],
+	["tag", [["tag", [["punctuation", "</"], "td"]], ["punctuation", ">"]]],
+	["tag", [["tag", [["punctuation", "</"], "tr"]], ["punctuation", ">"]]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#d"]],
+		["punctuation", "("],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#@d"]],
+		["punctuation", "("],
+		["punctuation", ")"]
+	]],
+	"Hello!",
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	"\r\n\\#include( \"a.txt\" )\r\n\\\\",
+	["directive", [
+		["keyword", ["#include"]],
+		["punctuation", "("],
+		["string", "\"a.txt\""],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["punctuation", "["],
+		["string", "\"$10 and \""],
+		["punctuation", ","],
+		["string", "\"a pie\""],
+		["punctuation", "]"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#foreach"]],
+		["punctuation", "("],
+		["variable", ["$a"]],
+		["keyword", ["in"]],
+		["variable", ["$foo"]],
+		["punctuation", ")"]
+	]],
+	["variable", ["$a"]],
+	["directive", [
+		["keyword", ["#end"]]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["variable", ["$bar"]],
+		["operator", "+"],
+		["number", "3"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["variable", ["$bar"]],
+		["operator", "-"],
+		["number", "4"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["variable", ["$bar"]],
+		["operator", "*"],
+		["number", "6"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["variable", ["$bar"]],
+		["operator", "/"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#set"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "="],
+		["variable", ["$bar"]],
+		["operator", "%"],
+		["number", "5"],
+		["punctuation", ")"]
+	]],
+	["directive", [
+		["keyword", ["#foreach"]],
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["keyword", ["in"]],
+		["punctuation", "["],
+		["number", "1"],
+		["operator", ".."],
+		["number", "5"],
+		["punctuation", "]"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for directives.

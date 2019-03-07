@@ -1,0 +1,55 @@
+$foo
+$foo[bar]
+$foo_bar[
+	$.baz[foo]
+	$.1[bar]
+]
+$foo.$bar
+$foo.[$bar.baz]
+$math:PI
+
+($foo)
+
+<div class="$foo">
+
+----------------------------------------------------
+
+[
+	["variable", ["$foo"]],
+	["variable", ["$foo"]], ["punctuation", "["], "bar", ["punctuation", "]"],
+	["variable", ["$foo_bar"]], ["punctuation", "["],
+	["variable", ["$", ["punctuation", "."], "baz"]],
+	["punctuation", "["], "foo", ["punctuation", "]"],
+	["variable", ["$", ["punctuation", "."], "1"]],
+	["punctuation", "["], "bar", ["punctuation", "]"],
+	["punctuation", "]"],
+	["variable", ["$foo", ["punctuation", "."]]], ["variable", ["$bar"]],
+	["variable", ["$foo", ["punctuation", "."]]], ["punctuation", "["],
+	["variable", ["$bar", ["punctuation", "."], "baz"]], ["punctuation", "]"],
+	["variable", ["$math", ["punctuation", ":"], "PI"]],
+
+	["expression", [
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["punctuation", ")"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["variable", ["$foo"]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

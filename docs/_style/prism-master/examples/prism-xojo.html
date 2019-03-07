@@ -1,0 +1,63 @@
+<h2>Comments</h2>
+<pre><code>' This is a comment
+// This is a comment too
+Rem This is a remark</code></pre>
+
+<h2>Strings</h2>
+<pre><code>""
+"foo ""bar"" baz"</code></pre>
+
+<h2>Numbers and colors</h2>
+<pre><code>42
+3.14159
+3E4
+&b0110
+&cAABBCCDD
+&hBadFace
+&o777
+&u9</code></pre>
+
+<h2>Example</h2>
+<pre><code>Dim g As Graphics
+Dim yOffSet As Integer
+g = OpenPrinterDialog()
+If g <> Nil Then
+  If MainDishMenu.ListIndex <> -1 Then
+    g.Bold = True
+    g.DrawString("Main Dish:",20,20)
+    g.Bold = False
+    g.DrawString(MainDishMenu.Text,100,20)
+    g.Bold = True
+    g.DrawString("Side Order:",20,40)
+    g.Bold = False
+    If FriesRadio.Value Then
+      g.DrawString(FriesRadio.Caption,100,40)
+    End If
+    If PotatoRadio.Value Then
+      g.DrawString(PotatoRadio.Caption,100,40)
+    End If
+    If OnionRingRadio.Value Then
+      g.DrawString(OnionRingRadio.Caption,100,40)
+    End If
+    yOffSet = 60
+    If CheeseCheckBox.Value Then
+      g.Bold = True
+      g.DrawString("Extra:",20,yOffSet)
+      g.Bold = False
+      g.DrawString(CheeseCheckBox.Caption,100,yOffSet)
+      yOffSet = yOffSet + 20
+    End If
+    If BaconCheckBox.Value Then
+      g.Bold = True
+      g.DrawString("Extra:",20,yOffSet)
+      g.Bold = False
+      g.DrawString(BaconCheckBox.Caption,100,yOffSet)
+      yOffSet = yOffSet + 20
+    End If
+    g.Bold = True
+    g.DrawString("Notes:",20,yOffSet)
+    g.Bold = False
+    g.DrawString(NotesField.Text,100,yOffSet,(g.Width-40))
+  End If
+End If
+</code></pre>

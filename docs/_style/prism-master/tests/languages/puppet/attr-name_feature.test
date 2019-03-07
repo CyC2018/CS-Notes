@@ -1,0 +1,19 @@
+foo {
+  bar => bar,
+  * => {}
+}
+
+----------------------------------------------------
+
+[
+	"foo ", ["punctuation", "{"],
+	["attr-name", "bar"], ["operator", "=>"],
+	" bar", ["punctuation", ","],
+	["attr-name", "*"], ["operator", "=>"],
+	["punctuation", "{"], ["punctuation", "}"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for attributes.

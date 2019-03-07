@@ -1,0 +1,80 @@
+<h2>Comments</h2>
+<pre><code>// this is a comment
+/* this is also a comment,
+but written over multiple lines */
+</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+-23
+3.14159
+0.1
+-273.15
+1.25e-2
+0xC.3p0
+1_000_000
+1_000_000.000_000_1</code></pre>
+
+<h2>Strings</h2>
+<pre><code>let someString = "Some string literal value"
+var emptyString = ""
+// String interpolation
+let multiplier = 3
+"\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"</code></pre>
+
+<h2>Control flow</h2>
+<pre><code>for index in 1...5 {
+	println("\(index) times 5 is \(index * 5)")
+}
+for _ in 1...power {
+	answer *= base
+}
+while square < finalSquare {
+	// roll the dice
+	if ++diceRoll == 7 { diceRoll = 1 }
+	// move by the rolled amount
+	square += diceRoll
+	if square < board.count {
+		// if we're still on the board, move up or down for a snake or a ladder
+		square += board[square]
+	}
+}
+switch someCharacter {
+	case "a", "e", "i", "o", "u":
+		println("\(someCharacter) is a vowel")
+	case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+		"n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+		println("\(someCharacter) is a consonant")
+	default:
+		println("\(someCharacter) is not a vowel or a consonant")
+}
+</code></pre>
+
+<h2>Classes and attributes</h2>
+<pre><code>class MyViewController: UIViewController {
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet var textFields: [UITextField]!
+    @IBAction func buttonTapped(AnyObject) {
+	    println("button tapped!")
+	}
+}
+
+@IBDesignable
+class MyCustomView: UIView {
+    @IBInspectable var textColor: UIColor
+    @IBInspectable var iconHeight: CGFloat
+    /* ... */
+}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nested block comments</h3>
+<pre><code>/* Nested block
+	/* comments
+	are */
+not supported */</code></pre>

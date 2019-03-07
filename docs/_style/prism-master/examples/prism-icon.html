@@ -1,0 +1,172 @@
+<h2>Comments</h2>
+<pre><code>#
+# Foobar</code></pre>
+
+<h2>Strings and csets</h2>
+<pre><code>""
+"Foo\"bar"
+''
+'a\'bcdefg'</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.14159
+5.2E+8
+16rface
+2r1101</code></pre>
+
+<h2>Full example</h2>
+<pre><code># Author: Robert J. Alexander
+global GameObject, Tree, Learn
+record Question(question, yes, no)
+procedure main()
+   GameObject := "animal"
+   Tree := Question("Does it live in water", "goldfish", "canary")
+   Get()                                  # Recall prior knowledge
+   Game()                                 # Play a game
+   return
+end
+#  Game() -- Conducts a game.
+#
+procedure Game()
+   while Confirm("Are you thinking of ", Article(GameObject), " ",
+      GameObject) do Ask(Tree)
+   write("Thanks for a great game.")
+   if \Learn &Confirm("Want to save knowledge learned this session")
+   then Save()
+   return
+end
+#  Confirm() -- Handles yes/no questions and answers.
+#
+procedure Confirm(q[])
+   local answer, s
+   static ok
+   initial {
+      ok := table()
+      every ok["y" | "yes" | "yeah" | "uh huh"] := "yes"
+      every ok["n" | "no"  | "nope" | "uh uh" ] := "no"
+      }
+   while /answer do {
+      every writes(!q)
+      write("?")
+      case s := read() | exit(1) of {
+         #  Commands recognized at a yes/no prompt.
+         #
+         "save":    Save()
+         "get":     Get()
+         "list":    List()
+         "dump":    Output(Tree)
+         default:   {
+            (answer := \ok[map(s, &ucase, &lcase)]) |
+               write("This is a \"yes\" or \"no\" question.")
+            }
+         }
+      }
+   return answer == "yes"
+end
+#  Ask() -- Navigates through the barrage of questions leading to a
+#  guess.
+#
+procedure Ask(node)
+   local guess, question
+   case type(node) of {
+      "string":        {
+         if not Confirm("It must be ", Article(node), " ", node, ", right") then {
+            Learn := "yes"
+            write("What were you thinking of?")
+            guess := read() | exit(1)
+            write("What question would distinguish ", Article(guess), " ",
+               guess, " from ", Article(node), " ", node, "?")
+            question := read() | exit(1)
+            if question[-1] == "?" then question[-1] := ""
+            question[1] := map(question[1], &lcase, &ucase)
+            if Confirm("For ", Article(guess), " ", guess, ", what would the answer be")
+            then return Question(question, guess, node)
+         else return Question(question, node, guess)
+         }
+      }
+      "Question":  {
+         if Confirm(node.question) then node.yes := Ask(node.yes)
+         else node.no := Ask(node.no)
+         }
+      }
+end
+#  Article() -- Come up with the appropriate indefinite article.
+#
+procedure Article(word)
+   return if any('aeiouAEIOU', word) then "an" else "a"
+end
+#  Save() -- Store our acquired knowledge in a disk file name
+#  based on the GameObject.
+#
+procedure Save()
+   local f
+   f := open(GameObject || "s", "w")
+   Output(Tree, f)
+   close(f)
+   return
+end
+#  Output() -- Recursive procedure used to output the knowledge tree.
+#
+procedure Output(node, f, sense)
+   static indent
+   initial indent := 0
+   /f := &output
+   /sense := " "
+   case type(node) of {
+      "string":        write(f, repl(" ", indent), sense, "A: ", node)
+      "Question":  {
+         write(f, repl(" ", indent), sense, "Q: ", node.question)
+         indent +:= 1
+         Output(node.yes, f, "y")
+         Output(node.no, f, "n")
+         indent -:= 1
+         }
+      }
+   return
+end
+#  Get() -- Read in a knowledge base from a file.
+#
+procedure Get()
+   local f
+   f := open(GameObject || "s", "r") | fail
+   Tree := Input(f)
+   close(f)
+   return
+end
+#  Input() -- Recursive procedure used to input the knowledge tree.
+#
+procedure Input(f)
+   local nodetype, s
+   read(f) ? (tab(upto(~' \t')) & =("y" | "n" | "") &
+      nodetype := move(1) & move(2) & s := tab(0))
+   return if nodetype == "Q" then Question(s, Input(f), Input(f)) else s
+end
+#  List() -- Lists the objects in the knowledge base.
+#
+$define Length           78
+procedure List()
+   local lst, line, item
+   lst := Show(Tree, [ ])
+   line := ""
+   every item := !sort(lst) do {
+      if *line + *item > Length then {
+         write(trim(line))
+         line := ""
+         }
+      line ||:= item || ", "
+      }
+   write(line[1:-2])
+   return
+end
+#
+#  Show() -- Recursive procedure used to navigate the knowledge tree.
+#
+procedure Show(node, lst)
+   if type(node) == "Question" then {
+      lst := Show(node.yes, lst)
+      lst := Show(node.no, lst)
+      }
+   else put(lst, node)
+   return lst
+end</code></pre>

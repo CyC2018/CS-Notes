@@ -1,0 +1,61 @@
+<h2>Comments</h2>
+<pre><code class="language-tt2">[%# this entire directive is ignored no
+    matter how many lines it wraps onto
+%]
+[% # this is a comment
+   theta = 20      # so is this
+   rho   = 30      # &lt;aol&gt;me too!&lt;/aol&gt;
+%]
+</code></pre>
+
+<h2>Variables</h2>
+<pre><code class="language-tt2">[% text %]
+[% article.title %]
+[%= eat.whitespace.left %]
+[% eat.whitespace.right =%]
+[%= eat.whitespace.both =%]
+[% object.method() %]</code></pre>
+
+
+<h2>Conditionals and Loops</h2>
+<pre><code class="language-tt2">[% IF foo = bar %]
+this
+[% ELSE %]
+that
+[% END %]
+[% FOREACH post IN q.listPosts(lingua = "de") %]
+  &lt;a href="[% post.permalink %]"&gt;[% post.title | html %]&lt;/a&gt;
+[% END %]</code></pre>
+
+<h2>Multiple Directives</h2>
+<pre><code class="language-tt2">[% IF title;
+      INCLUDE header;
+   ELSE;
+      INCLUDE other/header  title="Some Other Title";
+   END
+%]</code></pre>
+
+<h2>Operators</h2>
+<pre><code class="language-tt2">[% FOREACH post IN q.listPosts(lingua => 'de') %]
+  [% post.title | myfilter(foo = "bar") %]
+[% END %]</code></pre>
+
+<h2>Known Limitations</h2>
+<ul>
+  <li><a href="http://template-toolkit.org/docs/manual/Syntax.html#section_Outline_Tags">
+  Outline tags</a> are not supported.</li>
+  <li>The arguments to
+  <a href="http://template-toolkit.org/docs/manual/Directives.html#section_TAGS">TAGS</a>
+  are usually misinterpreted</li>
+  <li>In TT2, you can use keywords as identifiers where this is
+  unambiguous.  But these keywords will be highlighted as keywords, not
+  as variables here.</li>
+  <li>The
+  <a href="http://template-toolkit.org/docs/manual/Config.html#section_ANYCASE">ANYCASE</a>
+  option is not supported.</li>
+  <li>
+  Any number of backslashes in front of dollar signs inside of double quoted
+  strings are ignored since the behavior of Template Toolkit 2.26 seems to be
+  inconsistent.
+  </li>
+</ul>

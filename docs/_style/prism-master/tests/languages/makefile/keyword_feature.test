@@ -1,0 +1,73 @@
+define else endef endif
+export ifdef ifndef ifeq
+ifneq -include include
+override private sinclude
+undefine unexport vpath
+
+(addsuffix foo) (abspath foo)
+(and foo) (basename foo)
+(call foo) (dir foo) (error foo)
+(eval foo) (file foo) (filter foo)
+(filter-out foo) (findstring foo)
+(firstword foo) (flavor foo)
+(foreach foo) (guile foo)
+(if foo) (info foo) (join foo)
+(lastword foo) (load foo)
+(notdir foo) (or foo) (origin foo)
+(patsubst foo) (realpath foo)
+(shell foo) (sort foo) (strip foo)
+(subst foo) (suffix foo) (value foo)
+(warning foo) (wildcard foo)
+(word foo) (words foo) (wordlist foo)
+
+----------------------------------------------------
+
+[
+	["keyword", "define"], ["keyword", "else"], ["keyword", "endef"], ["keyword", "endif"],
+	["keyword", "export"], ["keyword", "ifdef"], ["keyword", "ifndef"], ["keyword", "ifeq"],
+	["keyword", "ifneq"], ["keyword", "-include"], ["keyword", "include"],
+	["keyword", "override"], ["keyword", "private"], ["keyword", "sinclude"],
+	["keyword", "undefine"], ["keyword", "unexport"], ["keyword", "vpath"],
+
+	["punctuation", "("], ["keyword", "addsuffix"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "abspath"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "and"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "basename"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "call"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "dir"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "error"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "eval"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "file"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "filter"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "filter-out"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "findstring"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "firstword"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "flavor"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "foreach"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "guile"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "if"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "info"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "join"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "lastword"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "load"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "notdir"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "or"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "origin"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "patsubst"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "realpath"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "shell"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "sort"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "strip"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "subst"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "suffix"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "value"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "warning"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "wildcard"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "word"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "words"], " foo", ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "wordlist"], " foo", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for keywords and functions.

@@ -1,0 +1,415 @@
+ACCESS
+AGENT
+AGGREGATE
+ARRAY
+ARROW
+AT
+ATTRIBUTE
+AUDIT
+AUTHID
+BFILE_BASE
+BLOB_BASE
+BLOCK
+BODY
+BOTH
+BOUND
+BYTE
+CALLING
+CHAR_BASE
+CHARSETFORM
+CHARSETID
+CLOB_BASE
+COLAUTH
+COLLECT
+CLUSTER
+CLUSTERS
+COMPILED
+COMPRESS
+CONSTANT
+CONSTRUCTOR
+CONTEXT
+CRASH
+CUSTOMDATUM
+DANGLING
+DATE_BASE
+DEFINE
+DETERMINISTIC
+DURATION
+ELEMENT
+EMPTY
+EXCEPTION
+EXCEPTIONS
+EXCLUSIVE
+EXTERNAL
+FINAL
+FORALL
+FORM
+FOUND
+GENERAL
+HEAP
+HIDDEN
+IDENTIFIED
+IMMEDIATE
+INCLUDING
+INCREMENT
+INDICATOR
+INDEXES
+INDICES
+INFINITE
+INITIAL
+ISOPEN
+INSTANTIABLE
+INTERFACE
+INVALIDATE
+JAVA
+LARGE
+LEADING
+LENGTH
+LIBRARY
+LIKE2
+LIKE4
+LIKEC
+LIMITED
+LONG
+LOOP
+MAP
+MAXEXTENTS
+MAXLEN
+MEMBER
+MINUS
+MLSLABEL
+MULTISET
+NAME
+NAN
+NATIVE
+NEW
+NOAUDIT
+NOCOMPRESS
+NOCOPY
+NOTFOUND
+NOWAIT
+NUMBER
+NUMBER_BASE
+OBJECT
+OCICOLL
+OCIDATE
+OCIDATETIME
+OCIDURATION
+OCIINTERVAL
+OCILOBLOCATOR
+OCINUMBER
+OCIRAW
+OCIREF
+OCIREFCURSOR
+OCIROWID
+OCISTRING
+OCITYPE
+OFFLINE
+ONLINE
+ONLY
+OPAQUE
+OPERATOR
+ORACLE
+ORADATA
+ORGANIZATION
+ORLANY
+ORLVARY
+OTHERS
+OVERLAPS
+OVERRIDING
+PACKAGE
+PARALLEL_ENABLE
+PARAMETER
+PARAMETERS
+PASCAL
+PCTFREE
+PIPE
+PIPELINED
+PRAGMA
+PRIOR
+PRIVATE
+RAISE
+RANGE
+RAW
+RECORD
+REF
+REFERENCE
+REM
+REMAINDER
+RESULT
+RESOURCE
+RETURNING
+REVERSE
+ROWID
+ROWNUM
+ROWTYPE
+SAMPLE
+SB1
+SB2
+SB4
+SEGMENT
+SELF
+SEPARATE
+SEQUENCE
+SHORT
+SIZE
+SIZE_T
+SPARSE
+SQLCODE
+SQLDATA
+SQLNAME
+SQLSTATE
+STANDARD
+STATIC
+STDDEV
+STORED
+STRING
+STRUCT
+STYLE
+SUBMULTISET
+SUBPARTITION
+SUBSTITUTABLE
+SUBTYPE
+SUCCESSFUL
+SYNONYM
+SYSDATE
+TABAUTH
+TDO
+THE
+TIMEZONE_ABBR
+TIMEZONE_HOUR
+TIMEZONE_MINUTE
+TIMEZONE_REGION
+TRAILING
+TRANSAC
+TRANSACTIONAL
+TRUSTED
+UB1
+UB2
+UB4
+UID
+UNDER
+UNTRUSTED
+VALIDATE
+VALIST
+VARCHAR2
+VARIABLE
+VARIANCE
+VARRAY
+VIEWS
+VOID
+WHENEVER
+WRAPPED
+ZONE
+
+----------------------------------------------------
+
+[
+	["keyword", "ACCESS"],
+	["keyword", "AGENT"],
+	["keyword", "AGGREGATE"],
+	["keyword", "ARRAY"],
+	["keyword", "ARROW"],
+	["keyword", "AT"],
+	["keyword", "ATTRIBUTE"],
+	["keyword", "AUDIT"],
+	["keyword", "AUTHID"],
+	["keyword", "BFILE_BASE"],
+	["keyword", "BLOB_BASE"],
+	["keyword", "BLOCK"],
+	["keyword", "BODY"],
+	["keyword", "BOTH"],
+	["keyword", "BOUND"],
+	["keyword", "BYTE"],
+	["keyword", "CALLING"],
+	["keyword", "CHAR_BASE"],
+	["keyword", "CHARSETFORM"],
+	["keyword", "CHARSETID"],
+	["keyword", "CLOB_BASE"],
+	["keyword", "COLAUTH"],
+	["keyword", "COLLECT"],
+	["keyword", "CLUSTER"],
+	["keyword", "CLUSTERS"],
+	["keyword", "COMPILED"],
+	["keyword", "COMPRESS"],
+	["keyword", "CONSTANT"],
+	["keyword", "CONSTRUCTOR"],
+	["keyword", "CONTEXT"],
+	["keyword", "CRASH"],
+	["keyword", "CUSTOMDATUM"],
+	["keyword", "DANGLING"],
+	["keyword", "DATE_BASE"],
+	["keyword", "DEFINE"],
+	["keyword", "DETERMINISTIC"],
+	["keyword", "DURATION"],
+	["keyword", "ELEMENT"],
+	["keyword", "EMPTY"],
+	["keyword", "EXCEPTION"],
+	["keyword", "EXCEPTIONS"],
+	["keyword", "EXCLUSIVE"],
+	["keyword", "EXTERNAL"],
+	["keyword", "FINAL"],
+	["keyword", "FORALL"],
+	["keyword", "FORM"],
+	["keyword", "FOUND"],
+	["keyword", "GENERAL"],
+	["keyword", "HEAP"],
+	["keyword", "HIDDEN"],
+	["keyword", "IDENTIFIED"],
+	["keyword", "IMMEDIATE"],
+	["keyword", "INCLUDING"],
+	["keyword", "INCREMENT"],
+	["keyword", "INDICATOR"],
+	["keyword", "INDEXES"],
+	["keyword", "INDICES"],
+	["keyword", "INFINITE"],
+	["keyword", "INITIAL"],
+	["keyword", "ISOPEN"],
+	["keyword", "INSTANTIABLE"],
+	["keyword", "INTERFACE"],
+	["keyword", "INVALIDATE"],
+	["keyword", "JAVA"],
+	["keyword", "LARGE"],
+	["keyword", "LEADING"],
+	["keyword", "LENGTH"],
+	["keyword", "LIBRARY"],
+	["keyword", "LIKE2"],
+	["keyword", "LIKE4"],
+	["keyword", "LIKEC"],
+	["keyword", "LIMITED"],
+	["keyword", "LONG"],
+	["keyword", "LOOP"],
+	["keyword", "MAP"],
+	["keyword", "MAXEXTENTS"],
+	["keyword", "MAXLEN"],
+	["keyword", "MEMBER"],
+	["keyword", "MINUS"],
+	["keyword", "MLSLABEL"],
+	["keyword", "MULTISET"],
+	["keyword", "NAME"],
+	["keyword", "NAN"],
+	["keyword", "NATIVE"],
+	["keyword", "NEW"],
+	["keyword", "NOAUDIT"],
+	["keyword", "NOCOMPRESS"],
+	["keyword", "NOCOPY"],
+	["keyword", "NOTFOUND"],
+	["keyword", "NOWAIT"],
+	["keyword", "NUMBER"],
+	["keyword", "NUMBER_BASE"],
+	["keyword", "OBJECT"],
+	["keyword", "OCICOLL"],
+	["keyword", "OCIDATE"],
+	["keyword", "OCIDATETIME"],
+	["keyword", "OCIDURATION"],
+	["keyword", "OCIINTERVAL"],
+	["keyword", "OCILOBLOCATOR"],
+	["keyword", "OCINUMBER"],
+	["keyword", "OCIRAW"],
+	["keyword", "OCIREF"],
+	["keyword", "OCIREFCURSOR"],
+	["keyword", "OCIROWID"],
+	["keyword", "OCISTRING"],
+	["keyword", "OCITYPE"],
+	["keyword", "OFFLINE"],
+	["keyword", "ONLINE"],
+	["keyword", "ONLY"],
+	["keyword", "OPAQUE"],
+	["keyword", "OPERATOR"],
+	["keyword", "ORACLE"],
+	["keyword", "ORADATA"],
+	["keyword", "ORGANIZATION"],
+	["keyword", "ORLANY"],
+	["keyword", "ORLVARY"],
+	["keyword", "OTHERS"],
+	["keyword", "OVERLAPS"],
+	["keyword", "OVERRIDING"],
+	["keyword", "PACKAGE"],
+	["keyword", "PARALLEL_ENABLE"],
+	["keyword", "PARAMETER"],
+	["keyword", "PARAMETERS"],
+	["keyword", "PASCAL"],
+	["keyword", "PCTFREE"],
+	["keyword", "PIPE"],
+	["keyword", "PIPELINED"],
+	["keyword", "PRAGMA"],
+	["keyword", "PRIOR"],
+	["keyword", "PRIVATE"],
+	["keyword", "RAISE"],
+	["keyword", "RANGE"],
+	["keyword", "RAW"],
+	["keyword", "RECORD"],
+	["keyword", "REF"],
+	["keyword", "REFERENCE"],
+	["keyword", "REM"],
+	["keyword", "REMAINDER"],
+	["keyword", "RESULT"],
+	["keyword", "RESOURCE"],
+	["keyword", "RETURNING"],
+	["keyword", "REVERSE"],
+	["keyword", "ROWID"],
+	["keyword", "ROWNUM"],
+	["keyword", "ROWTYPE"],
+	["keyword", "SAMPLE"],
+	["keyword", "SB1"],
+	["keyword", "SB2"],
+	["keyword", "SB4"],
+	["keyword", "SEGMENT"],
+	["keyword", "SELF"],
+	["keyword", "SEPARATE"],
+	["keyword", "SEQUENCE"],
+	["keyword", "SHORT"],
+	["keyword", "SIZE"],
+	["keyword", "SIZE_T"],
+	["keyword", "SPARSE"],
+	["keyword", "SQLCODE"],
+	["keyword", "SQLDATA"],
+	["keyword", "SQLNAME"],
+	["keyword", "SQLSTATE"],
+	["keyword", "STANDARD"],
+	["keyword", "STATIC"],
+	["keyword", "STDDEV"],
+	["keyword", "STORED"],
+	["keyword", "STRING"],
+	["keyword", "STRUCT"],
+	["keyword", "STYLE"],
+	["keyword", "SUBMULTISET"],
+	["keyword", "SUBPARTITION"],
+	["keyword", "SUBSTITUTABLE"],
+	["keyword", "SUBTYPE"],
+	["keyword", "SUCCESSFUL"],
+	["keyword", "SYNONYM"],
+	["keyword", "SYSDATE"],
+	["keyword", "TABAUTH"],
+	["keyword", "TDO"],
+	["keyword", "THE"],
+	["keyword", "TIMEZONE_ABBR"],
+	["keyword", "TIMEZONE_HOUR"],
+	["keyword", "TIMEZONE_MINUTE"],
+	["keyword", "TIMEZONE_REGION"],
+	["keyword", "TRAILING"],
+	["keyword", "TRANSAC"],
+	["keyword", "TRANSACTIONAL"],
+	["keyword", "TRUSTED"],
+	["keyword", "UB1"],
+	["keyword", "UB2"],
+	["keyword", "UB4"],
+	["keyword", "UID"],
+	["keyword", "UNDER"],
+	["keyword", "UNTRUSTED"],
+	["keyword", "VALIDATE"],
+	["keyword", "VALIST"],
+	["keyword", "VARCHAR2"],
+	["keyword", "VARIABLE"],
+	["keyword", "VARIANCE"],
+	["keyword", "VARRAY"],
+	["keyword", "VIEWS"],
+	["keyword", "VOID"],
+	["keyword", "WHENEVER"],
+	["keyword", "WRAPPED"],
+	["keyword", "ZONE"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

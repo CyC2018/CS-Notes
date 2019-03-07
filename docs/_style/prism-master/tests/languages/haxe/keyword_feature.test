@@ -1,0 +1,93 @@
+this
+abstract
+as
+break
+case
+cast
+catch
+class
+continue
+default
+do
+dynamic
+else
+enum
+extends
+extern
+from
+for
+function
+if
+implements
+import
+in
+inline
+interface
+macro
+new
+null
+override
+public
+private
+return
+static
+super
+switch
+throw
+to
+try
+typedef
+using
+var
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "this"],
+	["keyword", "abstract"],
+	["keyword", "as"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "cast"],
+	["keyword", "catch"],
+	["keyword", "class"],
+	["keyword", "continue"],
+	["keyword", "default"],
+	["keyword", "do"],
+	["keyword", "dynamic"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "extends"],
+	["keyword", "extern"],
+	["keyword", "from"],
+	["keyword", "for"],
+	["keyword", "function"],
+	["keyword", "if"],
+	["keyword", "implements"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "inline"],
+	["keyword", "interface"],
+	["keyword", "macro"],
+	["keyword", "new"],
+	["keyword", "null"],
+	["keyword", "override"],
+	["keyword", "public"],
+	["keyword", "private"],
+	["keyword", "return"],
+	["keyword", "static"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "throw"],
+	["keyword", "to"],
+	["keyword", "try"],
+	["keyword", "typedef"],
+	["keyword", "using"],
+	["keyword", "var"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,17 @@
+extends :
+imports:
+installer:
+data.ec2.elastic.ip:
+
+----------------------------------------------------
+
+[
+	["property", "extends"], ["punctuation", ":"],
+	["property", "imports"], ["punctuation", ":"],
+	["property", "installer"], ["punctuation", ":"],
+	["property", "data.ec2.elastic.ip"], ["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for properties.
