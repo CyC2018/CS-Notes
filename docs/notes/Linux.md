@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [一、常用操作以及概念](#一常用操作以及概念)
     * [快捷键](#快捷键)
     * [求助](#求助)

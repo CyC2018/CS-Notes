@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [一、概述](#一概述)
 * [二、数据类型](#二数据类型)
     * [STRING](#string)

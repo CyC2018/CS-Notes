@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [原理](#原理)
     * [1. 正常实现](#1-正常实现)
     * [2. 时间复杂度](#2-时间复杂度)

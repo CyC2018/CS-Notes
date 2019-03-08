@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [算法思想](#算法思想)
 * [数据结构相关](#数据结构相关)
 * [参考资料](#参考资料)

@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [原理](#原理)
     * [1. 基本原理](#1-基本原理)
     * [2. mask 计算](#2-mask-计算)

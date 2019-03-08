@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [一、基础](#一基础)
 * [二、创建表](#二创建表)
 * [三、修改表](#三修改表)

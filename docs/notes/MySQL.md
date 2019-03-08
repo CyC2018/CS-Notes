@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [一、索引](#一索引)
     * [B+ Tree 原理](#b-tree-原理)
     * [MySQL 索引](#mysql-索引)

@@ -1,4 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [有序数组的 Two Sum](#有序数组的-two-sum)
 * [两数平方和](#两数平方和)
 * [反转字符串中的元音字符](#反转字符串中的元音字符)
