@@ -162,7 +162,7 @@ FROM mytable
 LIMIT 0, 5;
 ```
 
-返回第 3 \~ 5 行：
+返回第 3 ~ 5 行：
 
 ```sql
 SELECT *

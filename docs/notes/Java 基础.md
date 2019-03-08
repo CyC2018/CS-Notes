@@ -51,7 +51,7 @@
 - float/32
 - long/64
 - double/64
-- boolean/\~
+- boolean/~
 
 boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不直接支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
 
@@ -93,7 +93,7 @@ public static Integer valueOf(int i) {
 }
 ```
 
-在 Java 8 中，Integer 缓存池的大小默认为 -128\~127。
+在 Java 8 中，Integer 缓存池的大小默认为 -128~127。
 
 ```java
 static final int low = -128;

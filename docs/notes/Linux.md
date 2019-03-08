@@ -1242,6 +1242,6 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 - [硬盘](https://zh.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98)
 - [Difference between SAS and SATA](http://www.differencebetween.info/difference-between-sas-and-sata)
 - [BIOS](https://zh.wikipedia.org/wiki/BIOS)
-- [File system design case studies](https://www.cs.rutgers.edu/\~pxk/416/notes/13-fs-studies.html)
+- [File system design case studies](https://www.cs.rutgers.edu/~pxk/416/notes/13-fs-studies.html)
 - [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
 - [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)
