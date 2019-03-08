@@ -57,4 +57,4 @@
 
 欢迎关注 公众号 “CyC2018” ，每天发布一道高频基础知识面试题，让你在闲暇时间也能学习进步！公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
 
-![](https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg?q-sign-algorithm=sha1&q-ak=AKIDxPJJOnou2rq0U1T7FaEOA7bMZbPmAmH8&q-sign-time=1552030913;1552032713&q-key-time=1552030913;1552032713&q-header-list=&q-url-param-list=&q-signature=adea3ea4714049b233841e1f269574c67189d07e&x-cos-security-token=200c96ca5c2b75262020703ca09c983ae490110d10001)
+![](https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
