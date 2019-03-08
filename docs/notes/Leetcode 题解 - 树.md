@@ -649,7 +649,7 @@ Output:
  1
 ```
 
-题目描述：只保留值在 L ~ R 之间的节点
+题目描述：只保留值在 L \~ R 之间的节点
 
 ```java
 public TreeNode trimBST(TreeNode root, int L, int R) {
