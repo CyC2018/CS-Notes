@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [快速选择](#快速选择)
 * [堆排序](#堆排序)
     * [Kth Element](#kth-element)

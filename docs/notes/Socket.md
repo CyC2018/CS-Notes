@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [一、I/O 模型](#一io-模型)
     * [阻塞式 I/O](#阻塞式-io)
     * [非阻塞式 I/O](#非阻塞式-io)

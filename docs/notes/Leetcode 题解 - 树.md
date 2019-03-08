@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [递归](#递归)
     * [树的高度](#树的高度)
     * [平衡树](#平衡树)

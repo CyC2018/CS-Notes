@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [BFS](#bfs)
     * [计算在网格中从原点到特定点的最短路径长度](#计算在网格中从原点到特定点的最短路径长度)
     * [组成整数的最小平方数数量](#组成整数的最小平方数数量)

@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [字符串循环移位包含](#字符串循环移位包含)
 * [字符串循环移位](#字符串循环移位)
 * [字符串中单词的翻转](#字符串中单词的翻转)

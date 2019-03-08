@@ -1,10 +1,9 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
-* [给表达式加括号](#给表达式加括号)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+* [1. 给表达式加括号](#1-给表达式加括号)
 <!-- GFM-TOC -->
 
 
-# 给表达式加括号
+# 1. 给表达式加括号
 
 [241. Different Ways to Add Parentheses (Medium)](https://leetcode.com/problems/different-ways-to-add-parentheses/description/)
 

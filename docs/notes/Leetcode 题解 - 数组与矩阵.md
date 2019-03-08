@@ -1,21 +1,20 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
-* [把数组中的 0 移到末尾](#把数组中的-0-移到末尾)
-* [改变矩阵维度](#改变矩阵维度)
-* [找出数组中最长的连续 1](#找出数组中最长的连续-1)
-* [有序矩阵查找](#有序矩阵查找)
-* [有序矩阵的 Kth Element](#有序矩阵的-kth-element)
-* [一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#一个数组元素在-[1,-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
-* [找出数组中重复的数，数组值在 [1, n] 之间](#找出数组中重复的数，数组值在-[1,-n]-之间)
-* [数组相邻差值的个数](#数组相邻差值的个数)
-* [数组的度](#数组的度)
-* [对角元素相等的矩阵](#对角元素相等的矩阵)
-* [嵌套数组](#嵌套数组)
-* [分隔数组](#分隔数组)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+* [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
+* [2. 改变矩阵维度](#2-改变矩阵维度)
+* [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
+* [4. 有序矩阵查找](#4-有序矩阵查找)
+* [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
+* [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1,-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
+* [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1,-n]-之间)
+* [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
+* [9. 数组的度](#9-数组的度)
+* [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
+* [11. 嵌套数组](#11-嵌套数组)
+* [12. 分隔数组](#12-分隔数组)
 <!-- GFM-TOC -->
 
 
-# 把数组中的 0 移到末尾
+# 1. 把数组中的 0 移到末尾
 
 [283. Move Zeroes (Easy)](https://leetcode.com/problems/move-zeroes/description/)
 
@@ -37,7 +36,7 @@ public void moveZeroes(int[] nums) {
 }
 ```
 
-# 改变矩阵维度
+# 2. 改变矩阵维度
 
 [566. Reshape the Matrix (Easy)](https://leetcode.com/problems/reshape-the-matrix/description/)
 
@@ -73,7 +72,7 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 }
 ```
 
-# 找出数组中最长的连续 1
+# 3. 找出数组中最长的连续 1
 
 [485. Max Consecutive Ones (Easy)](https://leetcode.com/problems/max-consecutive-ones/description/)
 
@@ -88,7 +87,7 @@ public int findMaxConsecutiveOnes(int[] nums) {
 }
 ```
 
-# 有序矩阵查找
+# 4. 有序矩阵查找
 
 [240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
 
@@ -114,7 +113,7 @@ public boolean searchMatrix(int[][] matrix, int target) {
 }
 ```
 
-# 有序矩阵的 Kth Element
+# 5. 有序矩阵的 Kth Element
 
 [378. Kth Smallest Element in a Sorted Matrix ((Medium))](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
 
@@ -180,7 +179,7 @@ class Tuple implements Comparable<Tuple> {
 }
 ```
 
-# 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
+# 6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
 
 [645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
 
@@ -225,7 +224,7 @@ private void swap(int[] nums, int i, int j) {
 - [448. Find All Numbers Disappeared in an Array (Easy)](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/)，寻找所有丢失的元素
 - [442. Find All Duplicates in an Array (Medium)](https://leetcode.com/problems/find-all-duplicates-in-an-array/description/)，寻找所有重复的元素。
 
-# 找出数组中重复的数，数组值在 [1, n] 之间
+# 7. 找出数组中重复的数，数组值在 [1, n] 之间
 
 [287. Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/description/)
 
@@ -267,7 +266,7 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-# 数组相邻差值的个数
+# 8. 数组相邻差值的个数
 
 [667. Beautiful Arrangement II (Medium)](https://leetcode.com/problems/beautiful-arrangement-ii/description/)
 
@@ -295,7 +294,7 @@ public int[] constructArray(int n, int k) {
 }
 ```
 
-# 数组的度
+# 9. 数组的度
 
 [697. Degree of an Array (Easy)](https://leetcode.com/problems/degree-of-an-array/description/)
 
@@ -334,7 +333,7 @@ public int findShortestSubArray(int[] nums) {
 }
 ```
 
-# 对角元素相等的矩阵
+# 10. 对角元素相等的矩阵
 
 [766. Toeplitz Matrix (Easy)](https://leetcode.com/problems/toeplitz-matrix/description/)
 
@@ -372,7 +371,7 @@ private boolean check(int[][] matrix, int expectValue, int row, int col) {
 }
 ```
 
-# 嵌套数组
+# 11. 嵌套数组
 
 [565. Array Nesting (Medium)](https://leetcode.com/problems/array-nesting/description/)
 
@@ -406,7 +405,7 @@ public int arrayNesting(int[] nums) {
 }
 ```
 
-# 分隔数组
+# 12. 分隔数组
 
 [769. Max Chunks To Make Sorted (Medium)](https://leetcode.com/problems/max-chunks-to-make-sorted/description/)
 

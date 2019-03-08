@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [分配饼干](#分配饼干)
 * [不重叠的区间个数](#不重叠的区间个数)
 * [投飞镖刺破气球](#投飞镖刺破气球)

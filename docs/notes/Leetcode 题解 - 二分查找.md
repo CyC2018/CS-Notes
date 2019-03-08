@@ -1,17 +1,17 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [原理](#原理)
     * [1. 正常实现](#1-正常实现)
     * [2. 时间复杂度](#2-时间复杂度)
     * [3. m 计算](#3-m-计算)
     * [4. 返回值](#4-返回值)
     * [5. 变种](#5-变种)
-* [求开方](#求开方)
-* [大于给定元素的最小元素](#大于给定元素的最小元素)
-* [有序数组的 Single Element](#有序数组的-single-element)
-* [第一个错误的版本](#第一个错误的版本)
-* [旋转数组的最小数字](#旋转数组的最小数字)
-* [查找区间](#查找区间)
+* [例题](#例题)
+    * [1. 求开方](#1-求开方)
+    * [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
+    * [3. 有序数组的 Single Element](#3-有序数组的-single-element)
+    * [4. 第一个错误的版本](#4-第一个错误的版本)
+    * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
+    * [6. 查找区间](#6-查找区间)
 <!-- GFM-TOC -->
 
 
@@ -97,7 +97,9 @@ l   m   h
 
 当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
 
-# 求开方
+# 例题
+
+## 1. 求开方
 
 [69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
 
@@ -135,7 +137,7 @@ public int mySqrt(int x) {
 }
 ```
 
-# 大于给定元素的最小元素
+## 2. 大于给定元素的最小元素
 
 [744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
 
@@ -169,7 +171,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 }
 ```
 
-# 有序数组的 Single Element
+## 3. 有序数组的 Single Element
 
 [540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
@@ -204,7 +206,7 @@ public int singleNonDuplicate(int[] nums) {
 }
 ```
 
-# 第一个错误的版本
+## 4. 第一个错误的版本
 
 [278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
 
@@ -229,7 +231,7 @@ public int firstBadVersion(int n) {
 }
 ```
 
-# 旋转数组的最小数字
+## 5. 旋转数组的最小数字
 
 [153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
@@ -253,7 +255,7 @@ public int findMin(int[] nums) {
 }
 ```
 
-# 查找区间
+## 6. 查找区间
 
 [34. Search for a Range (Medium)](https://leetcode.com/problems/search-for-a-range/description/)
 

@@ -1,9 +1,8 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
-* [数组中两个数的和为给定值](#数组中两个数的和为给定值)
-* [判断数组是否含有重复元素](#判断数组是否含有重复元素)
-* [最长和谐序列](#最长和谐序列)
-* [最长连续序列](#最长连续序列)
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
+* [1. 数组中两个数的和为给定值](#1-数组中两个数的和为给定值)
+* [2. 判断数组是否含有重复元素](#2-判断数组是否含有重复元素)
+* [3. 最长和谐序列](#3-最长和谐序列)
+* [4. 最长连续序列](#4-最长连续序列)
 <!-- GFM-TOC -->
 
 
@@ -14,7 +13,7 @@
 - Java 中的  **HashMap**  主要用于映射关系，从而把两个元素联系起来。HashMap 也可以用来对元素进行计数统计，此时键为元素，值为计数。和 HashSet 类似，如果元素有穷并且范围不大，可以用整型数组来进行统计。在对一个内容进行压缩或者其它转换时，利用 HashMap 可以把原始内容和转换后的内容联系起来。例如在一个简化 url 的系统中 [Leetcdoe : 535. Encode and Decode TinyURL (Medium)](https://leetcode.com/problems/encode-and-decode-tinyurl/description/)，利用 HashMap 就可以存储精简后的 url 到原始 url 的映射，使得不仅可以显示简化的 url，也可以根据简化的 url 得到原始 url 从而定位到正确的资源。
 
 
-# 数组中两个数的和为给定值
+# 1. 数组中两个数的和为给定值
 
 [1. Two Sum (Easy)](https://leetcode.com/problems/two-sum/description/)
 
@@ -36,7 +35,7 @@ public int[] twoSum(int[] nums, int target) {
 }
 ```
 
-# 判断数组是否含有重复元素
+# 2. 判断数组是否含有重复元素
 
 [217. Contains Duplicate (Easy)](https://leetcode.com/problems/contains-duplicate/description/)
 
@@ -50,7 +49,7 @@ public boolean containsDuplicate(int[] nums) {
 }
 ```
 
-# 最长和谐序列
+# 3. 最长和谐序列
 
 [594. Longest Harmonious Subsequence (Easy)](https://leetcode.com/problems/longest-harmonious-subsequence/description/)
 
@@ -78,7 +77,7 @@ public int findLHS(int[] nums) {
 }
 ```
 
-# 最长连续序列
+# 4. 最长连续序列
 
 [128. Longest Consecutive Sequence (Hard)](https://leetcode.com/problems/longest-consecutive-sequence/description/)
 

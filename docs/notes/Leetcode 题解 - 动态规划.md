@@ -1,5 +1,4 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
-<!-- GFM-TOC -->
+* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)<!-- GFM-TOC -->
 * [斐波那契数列](#斐波那契数列)
     * [爬楼梯](#爬楼梯)
     * [强盗抢劫](#强盗抢劫)
