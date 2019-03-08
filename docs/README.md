@@ -3,7 +3,7 @@
 ## ✏️ 算法
 
 - [剑指 Offer 题解](notes/剑指%20offer%20题解.md) </br>
-- [Leetcode 题解](notes/Leetcode%20题解) </br>
+- [Leetcode 题解](notes/Leetcode%20题解%20-%20目录.md) </br>
 - [算法](notes/算法.md) </br>
 - [点击订阅面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
