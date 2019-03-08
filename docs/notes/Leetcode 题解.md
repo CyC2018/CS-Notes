@@ -2435,7 +2435,10 @@ private void backtracking(int row) {
 
 第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br>-->
+
+<div align="center"> <img src="pics/75996367-adc2-4be1-a92a-09cc4347638e.png"/> </div><br>
+
 
 考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
@@ -2464,7 +2467,9 @@ public int climbStairs(int n) {
 
 由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])"/></div> <br>-->
+
+<div align="center"> <img src="pics/584b05d4-a101-4bde-a758-f5388cb843c8.jpg"/> </div><br>
 
 ```java
 public int rob(int[] nums) {
@@ -2516,7 +2521,9 @@ private   int rob(int[] nums, int first, int last) {
 
 综上所述，错误装信数量方式数量为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>-->
+
+<div align="center"> <img src="pics/db239936-1237-464a-bb5c-a8eefdd4c361.png"/> </div><br>
 
 **母牛生产** 
 
@@ -2526,7 +2533,9 @@ private   int rob(int[] nums, int first, int last) {
 
 第 i 年成熟的牛的数量为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>-->
+
+<div align="center"> <img src="pics/61d39d7a-c566-40dd-91ba-c6abaefa1a24.png"/> </div><br>
 
 ### 矩阵路径
 
@@ -2767,7 +2776,9 @@ public int numDecodings(String s) {
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>-->
+
+<div align="center"> <img src="pics/56074abd-39d6-42a7-bed8-a360e81a82d8.jpg"/> </div><br>
 
 对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp[i] | 1 <= i <= N} 即为所求。
 
@@ -2932,7 +2943,9 @@ public int wiggleMaxLength(int[] nums) {
 
 综上，最长公共子序列的状态转移方程为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>-->
+
+<div align="center"> <img src="pics/032771e7-f60f-47bf-aa79-f45c32799211.png"/> </div><br>
 
 对于长度为 N 的序列 S<sub>1</sub> 和长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
 
@@ -2970,7 +2983,9 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br>-->
+
+<div align="center"> <img src="pics/7de17ad2-de6e-4496-adaf-b8bc7b2f7f7b.png"/> </div><br>
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
@@ -2993,7 +3008,9 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
-<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>-->
+
+<div align="center"> <img src="pics/e4047473-a274-44d7-809a-c7312f52b55f.jpg"/> </div><br>
 
 因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
