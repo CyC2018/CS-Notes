@@ -32,7 +32,7 @@
 
 ## :cloud: 网络 
 
-- [计算机网络](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/计算机网络.md)
+- [计算机网络](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/计算机网络%20-%20目录.md)
 - [HTTP](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/HTTP.md)
 - [Socket](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Socket.md)
 
