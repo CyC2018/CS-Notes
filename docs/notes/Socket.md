@@ -321,3 +321,5 @@ poll 没有最大描述符数量的限制，如果平台支持并且对实时性
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [select / poll / epoll: practical difference for system architects](http://www.ulduzsoft.com/2014/01/select-poll-epoll-practical-difference-for-system-architects/)
 - [Browse the source code of userspace/glibc/sysdeps/unix/sysv/linux/ online](https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/)
+<div align="center">欢迎关注公众号！</div>
+<div align="center"><img width="150px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
