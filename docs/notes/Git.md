@@ -158,5 +158,5 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 - [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
 - [廖雪峰 : Git 教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 - [Learn Git Branching](https://learngitbranching.js.org/)
-<div align="center">欢迎关注公众号，获取最新文章！</div></br>
+</br></br><div align="center">欢迎关注公众号，获取最新文章！</div></br>
 <div align="center"><img width="150px" src="https://github.com/CyC2018/CS-Notes/raw/master/docs/_media/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

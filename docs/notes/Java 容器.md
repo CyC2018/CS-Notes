@@ -1111,5 +1111,5 @@ public final class ConcurrentCache<K, V> {
 - [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 - [Java Collection Framework – The LinkedList Class](http://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
 
-<div align="center">欢迎关注公众号，获取最新文章！</div></br>
+</br></br><div align="center">欢迎关注公众号，获取最新文章！</div></br>
 <div align="center"><img width="150px" src="https://github.com/CyC2018/CS-Notes/raw/master/docs/_media/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
