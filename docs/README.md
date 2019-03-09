@@ -14,7 +14,7 @@
 
 ## ☁️ 网络
 
-- [计算机网络](notes/计算机网络.md) </br>
+- [计算机网络](notes/计算机网络%20-%20目录1.md) </br>
 - [HTTP](notes/HTTP.md) </br>
 - [Socket](notes/Socket.md)
 
