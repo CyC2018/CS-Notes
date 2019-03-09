@@ -27,7 +27,7 @@
 
 ## :computer: 操作系统
 
-- [计算机操作系统](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/计算机操作系统.md)
+- [计算机操作系统](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/计算机操作系统%20-%20目录.md)
 - [Linux](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Linux.md)
 
 ## :cloud: 网络 
