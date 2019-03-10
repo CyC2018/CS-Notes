@@ -325,11 +325,11 @@ List<String> list = new CopyOnWriteArrayList<>();
 
 ### 读写分离
 
-写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响。
+写操作在一个复制的数组上进行，读操作是在原始数组中进行，读写分离，互不影响。
 
-写操作需要加锁，防止并发写入时导致写入数据丢失。
+写操作需要加锁，防止并发写入时导致写入数据丢失，写操作结束之后需要把原始数组指向新的复制数组。
 
-写操作结束之后需要把原始数组指向新的复制数组。
+
 
 ```java
 public boolean add(E e) {
@@ -411,7 +411,7 @@ transient Node<E> last;
 transient Entry[] table;
 ```
 
-Entry 存储着键值对。它包含了四个字段，从 next 字段我们可以看出 Entry 是一个链表。即数组中的每个位置被当成一个桶，一个桶存放一个链表。HashMap 使用拉链法来解决冲突，同一个链表中存放哈希值相同的 Entry。
+Entry 存储着键值对。它包含了四个字段，从 next 字段我们可以看出 Entry 是一个链表。即数组中的每个位置被当成一个桶，一个桶存放一个链表。HashMap 使用拉链法（还有一个线性探测法）来解决冲突，同一个链表中存放哈希值相同的 Entry。
 
 <div align="center"> <img src="pics/1d2719d5-8d60-4c9b-a4ad-b2df7c7615af.jpg"/> </div><br>
 
@@ -495,10 +495,11 @@ map.put("K3", "V3");
 
 ```java
 public V put(K key, V value) {
+    //表为空，则传入阈值进行初始化
     if (table == EMPTY_TABLE) {
         inflateTable(threshold);
     }
-    // 键为 null 单独处理
+    // 当K为null时
     if (key == null)
         return putForNullKey(value);
     int hash = hash(key);
@@ -507,9 +508,12 @@ public V put(K key, V value) {
     // 先找出是否已经存在键为 key 的键值对，如果存在的话就更新这个键值对的值为 value
     for (Entry<K,V> e = table[i]; e != null; e = e.next) {
         Object k;
+        //判断键值对相等的标准是hash值相同且key相同
         if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            //把oldValue预留下来，给后面return出去
             V oldValue = e.value;
             e.value = value;
+            //该方法在HashMap中暂无实现
             e.recordAccess(this);
             return oldValue;
         }
@@ -631,7 +635,7 @@ y%x : 00000010
 
 我们知道，位运算的代价比求模运算小的多，因此在进行这种计算时用位运算的话能带来更高的性能。
 
-确定桶下标的最后一步是将 key 的 hash 值对桶个数取模：hash%capacity，如果能保证 capacity 为 2 的 n 次方，那么就可以将这个操作转换为位运算。
+确定桶下标的最后一步是将 key 的 hash 值对桶个数取模：当capacity为2的次方时，hash值与capacity相与所得到的结果与和它取模得到的结果一致。
 
 ```java
 static int indexFor(int h, int length) {
@@ -640,6 +644,8 @@ static int indexFor(int h, int length) {
 ```
 
 ### 5. 扩容-基本原理
+
+只有同时满足：当前hashMap的size 大于等于阈值而且发生了哈希碰撞，才会发生扩容，两个条件必须同时满足。
 
 设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的复杂度为 O(N/M)。
 
@@ -734,6 +740,8 @@ new capacity : 00100000
 - 它的哈希值如果在第 5 位上为 0，那么取模得到的结果和之前一样；
 - 如果为 1，那么得到的结果为原来的结果 +16。
 
+<font color='red'>扩容后，元素的下标要么是在原位置，要么是在原位置再移动二次幂的地方。</font>
+
 ### 7. 计算数组容量
 
 HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它可以自动地将传入的容量转换为 2 的 n 次方。
@@ -771,6 +779,12 @@ static final int tableSizeFor(int cap) {
 
 从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
 
+HashMap中有三个关于红黑树的关键参数：
+
+- TREEIFY_THRESHOLD = 8 一个桶的树化阈值
+- UNTREEIFY_THRESHOLD = 6 一个树的还原阈值
+- MIN_TREEIFY_CAPACITY = 64 Hash表的最小树形化容量：当Hash表的容量大于这个值时，桶中的链表才会树化，否则就扩容。
+
 ### 9. 与 HashTable 的比较
 
 - HashTable 使用 synchronized 来进行同步。
@@ -792,6 +806,12 @@ static final class HashEntry<K,V> {
 ```
 
 ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁（Segment），每个分段锁维护着几个桶（HashEntry），多个线程可以同时访问不同分段锁上的桶，从而使其并发度更高（并发度就是 Segment 的个数）。
+
+ConcurrentHashMap的高并发机制是通过一下三点来保证的：
+
+ - 分段所：通过分段锁保证多线程环境下的写操作。
+ - 通过HashEntry的不变性，volatile的可见性和加锁重读机制保证高效、安全的读操作。
+ - 通过加锁和不加锁控制跨段操作的安全性。
 
 Segment 继承自 ReentrantLock。
 
