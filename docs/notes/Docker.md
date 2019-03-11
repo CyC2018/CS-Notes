@@ -90,4 +90,4 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 - [持续集成是什么？](http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
 
 </br></br><div align="center">欢迎关注公众号，获取最新文章！</div></br>
-<div align="center"><img width="150px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
