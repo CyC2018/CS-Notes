@@ -57,6 +57,6 @@
 
 
 
-欢迎关注公众号“CyC2018”，这里有最核心的高频基础知识面试题，后台回复“ziliao”更能领取面试大纲，帮你理清复习重点。
+欢迎关注公众号“CyC2018”，这里有最核心的高频基础知识面试题，后台回复“ziliao”更能领取复习大纲，帮你理清复习重点。
 
 <img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
