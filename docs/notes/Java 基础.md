@@ -53,7 +53,7 @@
 - double/64
 - boolean/\~
 
-boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不直接支持 boolean 数组，而是使用 byte 数组来表示 int 数组。
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不直接支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
 
 - [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
@@ -1398,5 +1398,5 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 
 
-</br><div align="center">欢迎关注公众号，在公众号后台回复 ziliao 可领取复习大纲，帮你理清复习重点。</div></br></br>
+</br><div align="center">公众号 CyC2018，专注于核心基础知识、求职指导、技术成长。在公众号后台回复 ziliao 可领取复习大纲，帮你理清复习重点。</div></br>
 <div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
