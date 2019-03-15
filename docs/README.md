@@ -2,19 +2,19 @@
 
 ## ✏️ 算法
 
-- [剑指 Offer 题解](notes/剑指%20offer%20题解.md) </br>
-- [Leetcode 题解](notes/Leetcode%20题解) </br>
-- [算法](notes/算法.md) </br>
+- [剑指 Offer 题解](notes/剑指%20Offer%20题解%20-%20目录1.md) </br>
+- [Leetcode 题解](notes/Leetcode%20题解%20-%20目录1.md) </br>
+- [算法](notes/算法%20-%20目录1.md) </br>
 - [点击订阅面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
 ## 💻 操作系统
 
-- [计算机操作系统](notes/计算机操作系统.md) </br>
+- [计算机操作系统](notes/计算机操作系统%20-%20目录1.md) </br>
 - [Linux](notes/Linux.md)
 
 ## ☁️ 网络
 
-- [计算机网络](notes/计算机网络.md) </br>
+- [计算机网络](notes/计算机网络%20-%20目录1.md) </br>
 - [HTTP](notes/HTTP.md) </br>
 - [Socket](notes/Socket.md)
 
@@ -55,6 +55,8 @@
 - [正则表达式](notes/正则表达式.md) </br>
 - [构建工具](notes/构建工具.md)
 
-欢迎关注 公众号 “CyC2018” ，每天发布一道高频基础知识面试题，让你在闲暇时间也能学习进步！公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
 
-![](https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
+
+欢迎关注公众号“CyC2018”，这里有最核心的高频基础知识面试题，后台回复“ziliao”更能领取复习大纲，帮你理清复习重点。
+
+<img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
