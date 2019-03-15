@@ -80,6 +80,14 @@
 
 ## :memo: 后记 
 
+### License
+
+本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
+
+转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上我的公众号二维码，[示例](https://github.com/CyC2018/CS-Notes/blob/master/other/%E5%85%AC%E4%BC%97%E5%8F%B7%E8%BD%AC%E8%BD%BD%E7%A4%BA%E4%BE%8B.md)。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+
 ### 内推信息
 
 [Job-Recommend](https://github.com/CyC2018/Job-Recommend)
@@ -109,15 +117,6 @@
 为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括提取图片、Markdown 文档转换、Git 同步。进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
 GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
-
-### License
-
-本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
-
-转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上我的公众号二维码，[示例](https://github.com/CyC2018/CS-Notes/blob/master/other/%E5%85%AC%E4%BC%97%E5%8F%B7%E8%BD%AC%E8%BD%BD%E7%A4%BA%E4%BE%8B.md)。
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
 
 
 ### Logo
