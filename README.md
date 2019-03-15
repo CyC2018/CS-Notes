@@ -112,9 +112,9 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 ### License
 
-本仓库内容不是将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
+本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
 
-转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上我的公众号 [二维码](https://github.com/CyC2018/CS-Notes/blob/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)。
+转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上我的公众号 [二维码](https://github.com/CyC2018/CS-Notes/blob/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)，[示例](https://github.com/CyC2018/CS-Notes/blob/master/other/%E5%85%AC%E4%BC%97%E5%8F%B7%E8%BD%AC%E8%BD%BD%E7%A4%BA%E4%BE%8B.md)。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
