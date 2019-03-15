@@ -57,6 +57,6 @@
 
 
 
-欢迎关注 公众号 “CyC2018” ，每天发布一道高频基础知识面试题，让你在闲暇时间也能学习进步！公众号也提供了一个学习打卡圈子，记录你每天的学习收获，见证你的成长！
+欢迎关注公众号“CyC2018”，这里有最核心的高频基础知识面试题，后台回复“ziliao”更能领取面试大纲，帮你理清复习重点。
 
-![](https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
+<img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
