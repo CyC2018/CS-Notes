@@ -55,7 +55,4 @@
 - [正则表达式](notes/正则表达式.md) </br>
 - [构建工具](notes/构建工具.md)
 
-
-公众号 CyC2018，专注于核心基础知识分享、求职指导、技术成长。在公众号后台回复 ziliao 可领取复习大纲，帮你理清复习重点。
-
-<img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
+<img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7%20%E6%B5%B7%E6%8A%A5.png" width="500px">
