@@ -121,11 +121,11 @@ private void merge(int[] nums, int l, int m, int h) {
             tmp[k] = nums[j++];
         else if (j > h)
             tmp[k] = nums[i++];
-        else if (nums[i] < nums[j])
+        else if (nums[i] <= nums[j])
             tmp[k] = nums[i++];
         else {
             tmp[k] = nums[j++];
-            this.cnt += m - i + 1;  // nums[i] >= nums[j]，说明 nums[i...mid] 都大于 nums[j]
+            this.cnt += m - i + 1;  // nums[i] > nums[j]，说明 nums[i...mid] 都大于 nums[j]
         }
         k++;
     }
