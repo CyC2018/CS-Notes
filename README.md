@@ -13,7 +13,7 @@
     <br>
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
     <br> <br>
-    🎨 本项目包含了技术面试必备的基础知识，内容浅显易懂，你不需要花很长的时间去阅读和理解成堆的技术书籍就可以快速掌握这些知识，从而节省宝贵的面试复习时间。推荐使用 https://cyc2018.github.io/CS-Notes 进行阅读，从而获得更好的阅读体验。你也可以订阅 <a href="https://xiaozhuanlan.com/CyC2018">面试进阶指南</a>，包含了学习指导和面试技巧，让你更轻松拿到满意的 Offer。<br/><br/>欢迎关注我的公众号 CyC2018，这里有最核心的高频基础知识面试题，后台回复关键字 📚 “资料” 更能领取复习大纲 ，帮你理清复习重点。<br/><br/><img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
+    🎨 本项目包含了技术面试必备的基础知识，内容浅显易懂，你不需要花很长的时间去阅读和理解成堆的技术书籍就可以快速掌握这些知识，从而节省宝贵的面试复习时间。推荐使用 https://cyc2018.github.io/CS-Notes 进行阅读，从而获得更好的阅读体验。你也可以订阅 <a href="https://xiaozhuanlan.com/CyC2018">面试进阶指南</a>，包含了学习指导和面试技巧，让你更轻松拿到满意的 Offer。<br/><br/>欢迎关注我的公众号 CyC2018，这里有最核心的高频基础知识面试题，后台回复关键字 📚 “资料” 可领取复习大纲 ，帮你理清多而杂的面试知识点。<br/><br/><img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
 
 </div> 
 
