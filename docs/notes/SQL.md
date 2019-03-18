@@ -769,5 +769,5 @@ SET PASSWROD FOR myuser = Password('new_password');
 
 
 
-</br><div align="center">公众号 CyC2018，专注于核心基础知识分享、求职指导、技术成长。在公众号后台回复 ziliao 可领取复习大纲，帮你理清复习重点。</div></br>
+</br><div align="center">欢迎关注我的公众号 CyC2018，这里有最核心的高频基础知识面试题，后台回复关键字 📚 “资料” 可领取复习大纲 ，帮你理清多而杂的面试知识点。</div></br>
 <div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

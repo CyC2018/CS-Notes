@@ -127,16 +127,12 @@ static {
 }
 ```
 
-编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 如果通过自动装箱创建并且实例值相同且在缓冲池范围内，那么就会引用相同的对象。
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。
 
 ```java
 Integer m = 123;
 Integer n = 123;
 System.out.println(m == n); // true
-
-Integer a = 128;
-Integer b = 128;
-System.out.println(a == b); // false
 ```
 
 基本类型对应的缓冲池如下：
@@ -1402,5 +1398,5 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 
 
-</br><div align="center">公众号 CyC2018，专注于核心基础知识分享、求职指导、技术成长。在公众号后台回复 ziliao 可领取复习大纲，帮你理清复习重点。</div></br>
+</br><div align="center">欢迎关注我的公众号 CyC2018，这里有最核心的高频基础知识面试题，后台回复关键字 📚 “资料” 可领取复习大纲 ，帮你理清多而杂的面试知识点。</div></br>
 <div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
