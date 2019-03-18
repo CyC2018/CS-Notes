@@ -55,4 +55,4 @@
 - [正则表达式](notes/正则表达式.md) </br>
 - [构建工具](notes/构建工具.md)
 
-<img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7%20%E6%B5%B7%E6%8A%A5.png" width="500px">
+欢迎关注我的公众号 CyC2018，这里有最核心的高频基础知识面试题，后台回复关键字 📚 “资料” 可领取复习大纲 ，帮你理清多而杂的面试知识点。<br/><br/><img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
