@@ -132,6 +132,9 @@ Power by [logomakr](https://logomakr.com/).
 </a> 
 <a href="https://github.com/g10guang">
 ​    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
+</a>
+<a href="https://github.com/Sctwang">
+​    <img src="https://avatars3.githubusercontent.com/u/33345444?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/ResolveWang">
 ​    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
