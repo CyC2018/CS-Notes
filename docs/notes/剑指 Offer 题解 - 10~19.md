@@ -58,13 +58,13 @@
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br> -->
 
-<div align="center"> <img src="pics/45be9587-6069-4ab7-b9ac-840db1a53744.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/45be9587-6069-4ab7-b9ac-840db1a53744.jpg"/> </div><br>
 
 ## 解题思路
 
 如果使用递归求解，会重复计算一些子问题。例如，计算 f(10) 需要计算 f(9) 和 f(8)，计算 f(9) 需要计算 f(8) 和 f(7)，可以看到 f(8) 被重复计算了。
 
-<div align="center"> <img src="pics/_u6590_u6CE2_u90A3_u5951_u6570_u5217.gif" width="400"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u6590_u6CE2_u90A3_u5951_u6570_u5217.gif" width="400"/> </div><br>
 
 
 递归是将一个问题划分成多个子问题求解，动态规划也是如此，但是动态规划会把子问题的解缓存起来，从而避免重复求解子问题。
@@ -126,7 +126,7 @@ public class Solution {
 
 我们可以用 2\*1 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 2\*1 的小矩形无重叠地覆盖一个 2\*n 的大矩形，总共有多少种方法？
 
-<div align="center"> <img src="pics/d1ed87eb-da5a-4728-b0dc-e3705aa028ea.gif"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d1ed87eb-da5a-4728-b0dc-e3705aa028ea.gif"/> </div><br>
 
 ## 解题思路
 
@@ -153,7 +153,7 @@ public int RectCover(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
-<div align="center"> <img src="pics/a0e90bd3-747d-4c3a-8fa0-179c59eeded0_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a0e90bd3-747d-4c3a-8fa0-179c59eeded0_200.png"/> </div><br>
 
 ## 解题思路
 
@@ -180,7 +180,7 @@ public int JumpFloor(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级... 它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
-<div align="center"> <img src="pics/cbd5f6f6-18de-4711-9e01-0f94e66f81b8_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/cbd5f6f6-18de-4711-9e01-0f94e66f81b8_200.png"/> </div><br>
 
 ## 解题思路
 
@@ -304,7 +304,7 @@ private int minNumber(int[] nums, int l, int h) {
 
 例如下面的矩阵包含了一条 bfce 路径。
 
-<div align="center"> <img src="pics/2_2001550466182933.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2_2001550466182933.png"/> </div><br>
 
 ## 解题思路
 
@@ -514,7 +514,7 @@ public int NumberOf1(int n) {
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right."/></div> <br>-->
 
-<div align="center"> <img src="pics/48b1d459-8832-4e92-938a-728aae730739.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/48b1d459-8832-4e92-938a-728aae730739.jpg"/> </div><br>
 
 因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每次递归 n 都减小一半，因此整个算法的时间复杂度为 O(logN)。
 
@@ -583,13 +583,13 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="pics/27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
 
 ② 如果链表只有一个节点，那么直接
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
-<div align="center"> <img src="pics/280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
 
 综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个尾节点以 O(N) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
@@ -623,7 +623,7 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/8433fbb2-c35c-45ef-831d-e3ca42aebd51.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8433fbb2-c35c-45ef-831d-e3ca42aebd51.png" width="500"/> </div><br>
 
 ## 解题描述
 

@@ -90,7 +90,7 @@ public boolean isNumeric(char[] str) {
 
 需要保证奇数和奇数，偶数和偶数之间的相对位置不变，这和书本不太一样。
 
-<div align="center"> <img src="pics/7_2001550475133282.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7_2001550475133282.png"/> </div><br>
 
 ## 解题思路
 
@@ -120,7 +120,7 @@ public void reOrderArray(int[] nums) {
 
 设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
 
-<div align="center"> <img src="pics/ea2304ce-268b-4238-9486-4d8f8aea8ca4.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ea2304ce-268b-4238-9486-4d8f8aea8ca4.png" width="500"/> </div><br>
 
 ```java
 public ListNode FindKthToTail(ListNode head, int k) {
@@ -154,7 +154,7 @@ public ListNode FindKthToTail(ListNode head, int k) {
 
 在相遇点，slow 要到环的入口点还需要移动 z 个节点，如果让 fast 重新从头开始移动，并且速度变为每次移动一个节点，那么它到环入口点还需要移动 x 个节点。在上面已经推导出 x=z，因此 fast 和 slow 将在环入口点相遇。
 
-<div align="center"> <img src="pics/d5d3b7ae-2712-412e-98f1-633ce6ec5955.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d5d3b7ae-2712-412e-98f1-633ce6ec5955.png" width="500"/> </div><br>
 
 
 ```java
@@ -216,7 +216,7 @@ public ListNode ReverseList(ListNode head) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/43f2cafa-3568-4a89-a895-4725666b94a6.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/43f2cafa-3568-4a89-a895-4725666b94a6.png" width="500"/> </div><br>
 
 ## 解题思路
 
@@ -268,7 +268,7 @@ public ListNode Merge(ListNode list1, ListNode list2) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/4583e24f-424b-4d50-8a14-2c38a1827d4a.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4583e24f-424b-4d50-8a14-2c38a1827d4a.png" width="500"/> </div><br>
 
 ## 解题思路
 
@@ -296,7 +296,7 @@ private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/a2d13178-f1ef-4811-a240-1fe95b55b1eb.png" width="300"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a2d13178-f1ef-4811-a240-1fe95b55b1eb.png" width="300"/> </div><br>
 
 ## 解题思路
 
@@ -322,7 +322,7 @@ private void swap(TreeNode root) {
 
 ## 题目描述
 
-<div align="center"> <img src="pics/f42443e0-208d-41ea-be44-c7fd97d2e3bf.png" width="300"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f42443e0-208d-41ea-be44-c7fd97d2e3bf.png" width="300"/> </div><br>
 
 ## 解题思路
 
@@ -352,7 +352,7 @@ boolean isSymmetrical(TreeNode t1, TreeNode t2) {
 
 下图的矩阵顺时针打印结果为：1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10
 
-<div align="center"> <img src="pics/8_2001550475451664.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8_2001550475451664.png"/> </div><br>
 
 ## 解题思路
 

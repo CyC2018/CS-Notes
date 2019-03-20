@@ -40,7 +40,7 @@
 
 把 n 个骰子仍在地上，求点数和为 s 的概率。
 
-<div align="center"> <img src="pics/6_2001550474388460.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6_2001550474388460.png"/> </div><br>
 
 ## 解题思路
 
@@ -113,7 +113,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
 
-<div align="center"> <img src="pics/5_2001550474110029.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/5_2001550474110029.png"/> </div><br>
 
 ## 解题思路
 
@@ -172,7 +172,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
 
-<div align="center"> <img src="pics/4_2001550473915641.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4_2001550473915641.png"/> </div><br>
 
 ## 解题思路
 
@@ -244,7 +244,7 @@ public int Add(int a, int b) {
 
 给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
 
-<div align="center"> <img src="pics/3_2001550473624627.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/3_2001550473624627.png"/> </div><br>
 
 ## 解题思路
 
@@ -304,7 +304,7 @@ public int StrToInt(String str) {
 
 ### 二叉查找树
 
-<div align="center"> <img src="pics/b39a085e-e7a2-4657-b75e-ba1652a4b132.jpg" width="300"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b39a085e-e7a2-4657-b75e-ba1652a4b132.jpg" width="300"/> </div><br>
 
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
@@ -324,7 +324,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 普通二叉树
 
-<div align="center"> <img src="pics/37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
 
 [Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 

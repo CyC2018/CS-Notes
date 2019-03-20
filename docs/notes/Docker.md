@@ -14,15 +14,15 @@
 
 Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其他机器中。
 
-<div align="center"> <img src="pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"/> </div><br>
 
 # 二、与虚拟机的比较
 
 虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。
 
-<div align="center"> <img src="pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png" width="250px"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png" width="250px"/> </div><br>
 
-<div align="center"> <img src="pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png" width="250"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png" width="250"/> </div><br>
 
 ## 启动速度
 
@@ -76,7 +76,7 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。
 
-<div align="center"> <img src="pics/docker-filesystems-busyboxrw.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/docker-filesystems-busyboxrw.png"/> </div><br>
 
 # 参考资料
 
