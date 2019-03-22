@@ -1,6 +1,6 @@
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
-    * [URL](#url)
+    * [URI](#uri)
     * [请求和响应报文](#请求和响应报文)
 * [二、HTTP 方法](#二http-方法)
     * [GET](#get)
@@ -34,11 +34,11 @@
     * [多部分对象集合](#多部分对象集合)
     * [虚拟主机](#虚拟主机)
     * [通信数据转发](#通信数据转发)
-* [六、HTTPs](#六https)
+* [六、HTTPS](#六https)
     * [加密](#加密)
     * [认证](#认证)
     * [完整性保护](#完整性保护)
-    * [HTTPs 的缺点](#https-的缺点)
+    * [HTTPS 的缺点](#https-的缺点)
 * [七、HTTP/2.0](#七http20)
     * [HTTP/1.x 缺陷](#http1x-缺陷)
     * [二进制分帧层](#二进制分帧层)
@@ -58,25 +58,21 @@
 
 # 一 、基础概念
 
-## URL
+## URI
 
-URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基本都是 URL。
+URI 包含 URL 和 URN。
 
-- URI（Uniform Resource Identifier，统一资源标识符）
-- URL（Uniform Resource Locator，统一资源定位符）
-- URN（Uniform Resource Name，统一资源名称）
-
-<div align="center"> <img src="pics/urlnuri.jpg" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/417cb02e-853d-4288-a36e-9161ded2c9fd_200.png" width="600px"> </div><br>
 
 ## 请求和响应报文
 
 ### 1. 请求报文
 
-<div align="center"> <img src="pics/HTTP_RequestMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/HTTP_RequestMessageExample.png" width=""/> </div><br>
 
 ### 2. 响应报文
 
-<div align="center"> <img src="pics/HTTP_ResponseMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/HTTP_ResponseMessageExample.png" width=""/> </div><br>
 
 # 二、HTTP 方法
 
@@ -92,7 +88,7 @@ URI 包含 URL 和 URN，目前 WEB 只有 URL 比较流行，所以见到的基
 
 > 获取报文首部
 
-和 GET 方法一样，但是不返回报文实体主体部分。
+和 GET 方法类似，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
 
@@ -151,7 +147,7 @@ DELETE /file.html HTTP/1.1
 
 查询指定的 URL 能够支持的方法。
 
-会返回 Allow: GET, POST, HEAD, OPTIONS 这样的内容。
+会返回 `Allow: GET, POST, HEAD, OPTIONS` 这样的内容。
 
 ## CONNECT
 
@@ -163,7 +159,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="pics/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
 
 ## TRACE
 
@@ -174,11 +170,12 @@ CONNECT www.example.com:443 HTTP/1.1
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪）。
+
 # 三、HTTP 状态码
 
 服务器返回的  **响应报文**  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
-| 状态码 | 类别 | 原因短语 |
+| 状态码 | 类别 | 含义 |
 | :---: | :---: | :---: |
 | 1XX | Informational（信息性状态码） | 接收的请求正在处理 |
 | 2XX | Success（成功状态码） | 请求正常处理完毕 |
@@ -305,7 +302,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 连接管理
 
-<div align="center"> <img src="pics/HTTP1_x_Connections.png" width="800"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/HTTP1_x_Connections.png" width="800"/> </div><br>
 
 ### 1. 短连接与长连接
 
@@ -634,11 +631,11 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 - 用户察觉得到正向代理的存在。
 
-<div align="center"> <img src="pics/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
 
 - 而反向代理一般位于内部网络中，用户察觉不到。
 
-<div align="center"> <img src="pics/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
 
 ### 2. 网关
 
@@ -648,7 +645,7 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 使用 SSL 等加密手段，在客户端和服务器之间建立一条安全的通信线路。
 
-# 六、HTTPs
+# 六、HTTPS
 
 HTTP 有以下安全性问题：
 
@@ -656,11 +653,11 @@ HTTP 有以下安全性问题：
 - 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 - 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPs 使用了隧道进行通信。
+HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPS 使用了隧道进行通信。
 
-通过使用 SSL，HTTPs 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
+通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-<div align="center"> <img src="pics/ssl-offloading.jpg" width="700"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ssl-offloading.jpg" width="700"/> </div><br>
 
 ## 加密
 
@@ -671,7 +668,7 @@ HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：运算速度快；
 - 缺点：无法安全地将密钥传输给通信方。
 
-<div align="center"> <img src="pics/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
 
 ### 2.非对称密钥加密
 
@@ -684,13 +681,13 @@ HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：可以更安全地将公开密钥传输给通信发送方；
 - 缺点：运算速度慢。
 
-<div align="center"> <img src="pics/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
 
-### 3. HTTPs 采用的加密方式
+### 3. HTTPS 采用的加密方式
 
-HTTPs 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。（下图中的 Session Key 就是对称密钥）
+HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。（下图中的 Session Key 就是对称密钥）
 
-<div align="center"> <img src="pics/How-HTTPS-Works.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/How-HTTPS-Works.png" width="600"/> </div><br>
 
 ## 认证
 
@@ -700,11 +697,9 @@ HTTPs 采用混合的加密机制，使用非对称密钥加密用于传输对�
 
 服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
 
-进行 HTTPs 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
+进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
-通信开始时，客户端需要使用服务器的公开密钥将自己的私有密钥传输给服务器，之后再进行对称密钥加密。
-
-<div align="center"> <img src="pics/2017-06-11-ca.png" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2017-06-11-ca.png" width=""/> </div><br>
 
 ## 完整性保护
 
@@ -712,12 +707,13 @@ SSL 提供报文摘要功能来进行完整性保护。
 
 HTTP 也提供了 MD5 报文摘要功能，但不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。
 
-HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。
+HTTPS 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。
 
-## HTTPs 的缺点
+## HTTPS 的缺点
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要支付证书授权的高额费用。
+
 # 七、HTTP/2.0
 
 ## HTTP/1.x 缺陷
@@ -732,7 +728,7 @@ HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-<div align="center"> <img src="pics/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
@@ -740,13 +736,13 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-<div align="center"> <img src="pics/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
 ## 服务端推送
 
 HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
-<div align="center"> <img src="pics/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
 
 ## 首部压缩
 
@@ -756,24 +752,18 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
 
-<div align="center"> <img src="pics/_u4E0B_u8F7D.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 八、HTTP/1.1 新特性
 
 详细内容请见上文
 
 - 默认是长连接
-
 - 支持流水线
-
 - 支持同时打开多个 TCP 连接
-
 - 支持虚拟主机
-
 - 新增状态码 100
-
 - 支持分块传输编码
-
 - 新增缓存处理指令 max-age
 
 # 九、GET 和 POST 比较
@@ -858,8 +848,6 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 - 在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
 - 而 GET 方法 Header 和 Data 会一起发送。
 
-
-
 # 参考资料
 
 - 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
@@ -889,3 +877,9 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
 - [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+
+
+
+
+</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
+<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

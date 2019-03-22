@@ -1,5 +1,6 @@
 <!-- GFM-TOC -->
 * [一、数据类型](#一数据类型)
+    * [基本类型](#基本类型)
     * [包装类型](#包装类型)
     * [缓存池](#缓存池)
 * [二、String](#二string)
@@ -41,11 +42,8 @@
 
 # 一、数据类型
 
-## 包装类型
+## 基本类型
 
-八个基本类型：
-
-- boolean/1
 - byte/8
 - char/16
 - short/16
@@ -53,6 +51,14 @@
 - float/32
 - long/64
 - double/64
+- boolean/\~
+
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不直接支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
+
+- [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
+- [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
+
+## 包装类型
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -121,7 +127,7 @@ static {
 }
 ```
 
-编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。
 
 ```java
 Integer m = 123;
@@ -163,7 +169,7 @@ public final class String
 ```java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
-    /** The value is used for character storage. */    
+    /** The value is used for character storage. */
     private final byte[] value;
 
     /** The identifier of the encoding used to encode the bytes in {@code value}. */
@@ -183,7 +189,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="pics/f76067a5-7d5f-4135-9549-8199c77d8f1c.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/474e5579-38b1-47d2-8f76-a13ae086b039.jpg"/> </div><br>
 
 **3. 安全性** 
 
@@ -674,6 +680,65 @@ SuperExtendExample.func()
 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。
 
 应该注意的是，返回值不同，其它都相同不算是重载。
+
+**3. 实例** 
+
+```java
+class A {
+    public String show(D obj) {
+        return ("A and D");
+    }
+
+    public String show(A obj) {
+        return ("A and A");
+    }
+}
+
+class B extends A {
+    public String show(B obj) {
+        return ("B and B");
+    }
+
+    public String show(A obj) {
+        return ("B and A");
+    }
+}
+
+class C extends B {
+}
+
+class D extends B {
+}
+```
+
+```java
+public class Test {
+
+    public static void main(String[] args) {
+        A a1 = new A();
+        A a2 = new B();
+        B b = new B();
+        C c = new C();
+        D d = new D();
+        System.out.println(a1.show(b)); // A and A
+        System.out.println(a1.show(c)); // A and A
+        System.out.println(a1.show(d)); // A and D
+        System.out.println(a2.show(b)); // B and A
+        System.out.println(a2.show(c)); // B and A
+        System.out.println(a2.show(d)); // A and D
+        System.out.println(b.show(b));  // B and B
+        System.out.println(b.show(c));  // B and B
+        System.out.println(b.show(d));  // A and D
+    }
+}
+```
+
+涉及到重写时，方法调用的优先级为：
+
+- this.show(O)
+- super.show(O)
+- this.show((super)O)
+- super.show((super)O)
 
 # 五、Object 通用方法
 
@@ -1252,7 +1317,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 -  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
 -  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
 
-<div align="center"> <img src="pics/PPjwP.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/PPjwP.png" width="600"/> </div><br>
 
 - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
 - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
@@ -1329,3 +1394,9 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 - Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
+
+
+
+
+</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
+<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
