@@ -1,0 +1,28 @@
+@some.decorator(foobar)
+def foo(bar):
+    pass
+
+----------------------------------------------------
+
+[
+	["decorator", [
+		"@some",
+		["punctuation", "."],
+		"decorator"]
+	],
+	["punctuation", "("],
+	"foobar",
+	["punctuation", ")"],
+
+	["keyword", "def"],
+	["function", "foo"],
+	["punctuation", "("],
+	"bar",
+	["punctuation", ")"],
+	["punctuation", ":"],
+	["keyword", "pass"]
+]
+
+----------------------------------------------------
+
+Checks for decorators.

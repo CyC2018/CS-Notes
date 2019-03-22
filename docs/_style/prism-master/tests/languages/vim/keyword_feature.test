@@ -1,0 +1,1661 @@
+ab
+abbreviate
+abc
+abclear
+abo
+aboveleft
+al
+all
+arga
+argadd
+argd
+argdelete
+argdo
+arge
+argedit
+argg
+argglobal
+argl
+arglocal
+ar
+args
+argu
+argument
+as
+ascii
+bad
+badd
+ba
+ball
+bd
+bdelete
+be
+bel
+belowright
+bf
+bfirst
+bl
+blast
+bm
+bmodified
+bn
+bnext
+bN
+bNext
+bo
+botright
+bp
+bprevious
+brea
+break
+breaka
+breakadd
+breakd
+breakdel
+breakl
+breaklist
+br
+brewind
+bro
+browse
+bufdo
+b
+buffer
+buffers
+bun
+bunload
+bw
+bwipeout
+ca
+cabbrev
+cabc
+cabclear
+caddb
+caddbuffer
+cad
+caddexpr
+caddf
+caddfile
+cal
+call
+cat
+catch
+cb
+cbuffer
+cc
+ccl
+cclose
+cd
+ce
+center
+cex
+cexpr
+cf
+cfile
+cfir
+cfirst
+cgetb
+cgetbuffer
+cgete
+cgetexpr
+cg
+cgetfile
+c
+change
+changes
+chd
+chdir
+che
+checkpath
+checkt
+checktime
+cla
+clast
+cl
+clist
+clo
+close
+cmapc
+cmapclear
+cnew
+cnewer
+cn
+cnext
+cN
+cNext
+cnf
+cnfile
+cNfcNfile
+cnorea
+cnoreabbrev
+col
+colder
+colo
+colorscheme
+comc
+comclear
+comp
+compiler
+conf
+confirm
+con
+continue
+cope
+copen
+co
+copy
+cpf
+cpfile
+cp
+cprevious
+cq
+cquit
+cr
+crewind
+cuna
+cunabbrev
+cu
+cunmap
+cw
+cwindow
+debugg
+debuggreedy
+delc
+delcommand
+d
+delete
+delf
+delfunction
+delm
+delmarks
+diffg
+diffget
+diffoff
+diffpatch
+diffpu
+diffput
+diffsplit
+diffthis
+diffu
+diffupdate
+dig
+digraphs
+di
+display
+dj
+djump
+dl
+dlist
+dr
+drop
+ds
+dsearch
+dsp
+dsplit
+earlier
+echoe
+echoerr
+echom
+echomsg
+echon
+e
+edit
+el
+else
+elsei
+elseif
+em
+emenu
+endfo
+endfor
+endf
+endfunction
+endfun
+en
+endif
+endt
+endtry
+endw
+endwhile
+ene
+enew
+ex
+exi
+exit
+exu
+exusage
+f
+file
+files
+filetype
+fina
+finally
+fin
+find
+fini
+finish
+fir
+first
+fix
+fixdel
+fo
+fold
+foldc
+foldclose
+folddoc
+folddoclosed
+foldd
+folddoopen
+foldo
+foldopen
+for
+fu
+fun
+function
+go
+goto
+gr
+grep
+grepa
+grepadd
+ha
+hardcopy
+h
+help
+helpf
+helpfind
+helpg
+helpgrep
+helpt
+helptags
+hid
+hide
+his
+history
+ia
+iabbrev
+iabc
+iabclear
+if
+ij
+ijump
+il
+ilist
+imapc
+imapclear
+in
+inorea
+inoreabbrev
+isearch
+isp
+isplit
+iuna
+iunabbrev
+iu
+iunmap
+j
+join
+ju
+jumps
+k
+keepalt
+keepj
+keepjumps
+kee
+keepmarks
+laddb
+laddbuffer
+lad
+laddexpr
+laddf
+laddfile
+lan
+language
+la
+last
+later
+lb
+lbuffer
+lc
+lcd
+lch
+lchdir
+lcl
+lclose
+let
+left
+lefta
+leftabove
+lex
+lexpr
+lf
+lfile
+lfir
+lfirst
+lgetb
+lgetbuffer
+lgete
+lgetexpr
+lg
+lgetfile
+lgr
+lgrep
+lgrepa
+lgrepadd
+lh
+lhelpgrep
+l
+list
+ll
+lla
+llast
+lli
+llist
+lmak
+lmake
+lm
+lmap
+lmapc
+lmapclear
+lnew
+lnewer
+lne
+lnext
+lN
+lNext
+lnf
+lnfile
+lNf
+lNfile
+ln
+lnoremap
+lo
+loadview
+loc
+lockmarks
+lockv
+lockvar
+lol
+lolder
+lop
+lopen
+lpf
+lpfile
+lp
+lprevious
+lr
+lrewind
+ls
+lt
+ltag
+lu
+lunmap
+lv
+lvimgrep
+lvimgrepa
+lvimgrepadd
+lw
+lwindow
+mak
+make
+ma
+mark
+marks
+mat
+match
+menut
+menutranslate
+mk
+mkexrc
+mks
+mksession
+mksp
+mkspell
+mkvie
+mkview
+mkv
+mkvimrc
+mod
+mode
+m
+move
+mzf
+mzfile
+mz
+mzscheme
+nbkey
+new
+n
+next
+N
+Next
+nmapc
+nmapclear
+noh
+nohlsearch
+norea
+noreabbrev
+nu
+number
+nun
+nunmap
+omapc
+omapclear
+on
+only
+o
+open
+opt
+options
+ou
+ounmap
+pc
+pclose
+ped
+pedit
+pe
+perl
+perld
+perldo
+po
+pop
+popu
+popu
+popup
+pp
+ppop
+pre
+preserve
+prev
+previous
+p
+print
+P
+Print
+profd
+profdel
+prof
+profile
+promptf
+promptfind
+promptr
+promptrepl
+ps
+psearch
+pta
+ptag
+ptf
+ptfirst
+ptj
+ptjump
+ptl
+ptlast
+ptn
+ptnext
+ptN
+ptNext
+ptp
+ptprevious
+ptr
+ptrewind
+pts
+ptselect
+pu
+put
+pw
+pwd
+pyf
+pyfile
+py
+python
+qa
+qall
+q
+quit
+quita
+quitall
+r
+read
+rec
+recover
+redi
+redir
+red
+redo
+redr
+redraw
+redraws
+redrawstatus
+reg
+registers
+res
+resize
+ret
+retab
+retu
+return
+rew
+rewind
+ri
+right
+rightb
+rightbelow
+rub
+ruby
+rubyd
+rubydo
+rubyf
+rubyfile
+ru
+runtime
+rv
+rviminfo
+sal
+sall
+san
+sandbox
+sa
+sargument
+sav
+saveas
+sba
+sball
+sbf
+sbfirst
+sbl
+sblast
+sbm
+sbmodified
+sbn
+sbnext
+sbN
+sbNext
+sbp
+sbprevious
+sbr
+sbrewind
+sb
+sbuffer
+scripte
+scriptencoding
+scrip
+scriptnames
+se
+set
+setf
+setfiletype
+setg
+setglobal
+setl
+setlocal
+sf
+sfind
+sfir
+sfirst
+sh
+shell
+sign
+sil
+silent
+sim
+simalt
+sla
+slast
+sl
+sleep
+sm
+smagic
+sm
+smap
+smapc
+smapclear
+sme
+smenu
+sn
+snext
+sN
+sNext
+sni
+sniff
+sno
+snomagic
+snor
+snoremap
+snoreme
+snoremenu
+sor
+sort
+so
+source
+spelld
+spelldump
+spe
+spellgood
+spelli
+spellinfo
+spellr
+spellrepall
+spellu
+spellundo
+spellw
+spellwrong
+sp
+split
+spr
+sprevious
+sre
+srewind
+sta
+stag
+startg
+startgreplace
+star
+startinsert
+startr
+startreplace
+stj
+stjump
+st
+stop
+stopi
+stopinsert
+sts
+stselect
+sun
+sunhide
+sunm
+sunmap
+sus
+suspend
+sv
+sview
+syncbind
+t
+tab
+tabc
+tabclose
+tabd
+tabdo
+tabe
+tabedit
+tabf
+tabfind
+tabfir
+tabfirst
+tabl
+tablast
+tabm
+tabmove
+tabnew
+tabn
+tabnext
+tabN
+tabNext
+tabo
+tabonly
+tabp
+tabprevious
+tabr
+tabrewind
+tabs
+ta
+tag
+tags
+tc
+tcl
+tcld
+tcldo
+tclf
+tclfile
+te
+tearoff
+tf
+tfirst
+th
+throw
+tj
+tjump
+tl
+tlast
+tm
+tm
+tmenu
+tn
+tnext
+tN
+tNext
+to
+topleft
+tp
+tprevious
+tr
+trewind
+try
+ts
+tselect
+tu
+tu
+tunmenu
+una
+unabbreviate
+u
+undo
+undoj
+undojoin
+undol
+undolist
+unh
+unhide
+unlet
+unlo
+unlockvar
+unm
+unmap
+up
+update
+verb
+verbose
+ve
+version
+vert
+vertical
+vie
+view
+vim
+vimgrep
+vimgrepa
+vimgrepadd
+vi
+visual
+viu
+viusage
+vmapc
+vmapclear
+vne
+vnew
+vs
+vsplit
+vu
+vunmap
+wa
+wall
+wh
+while
+winc
+wincmd
+windo
+winp
+winpos
+win
+winsize
+wn
+wnext
+wN
+wNext
+wp
+wprevious
+wq
+wqa
+wqall
+w
+write
+ws
+wsverb
+wv
+wviminfo
+X
+xa
+xall
+x
+xit
+xm
+xmap
+xmapc
+xmapclear
+xme
+xmenu
+XMLent
+XMLns
+xn
+xnoremap
+xnoreme
+xnoremenu
+xu
+xunmap
+y
+yank
+
+----------------------------------------------------
+
+[
+	["keyword", "ab"],
+	["keyword", "abbreviate"],
+	["keyword", "abc"],
+	["keyword", "abclear"],
+	["keyword", "abo"],
+	["keyword", "aboveleft"],
+	["keyword", "al"],
+	["keyword", "all"],
+	["keyword", "arga"],
+	["keyword", "argadd"],
+	["keyword", "argd"],
+	["keyword", "argdelete"],
+	["keyword", "argdo"],
+	["keyword", "arge"],
+	["keyword", "argedit"],
+	["keyword", "argg"],
+	["keyword", "argglobal"],
+	["keyword", "argl"],
+	["keyword", "arglocal"],
+	["keyword", "ar"],
+	["keyword", "args"],
+	["keyword", "argu"],
+	["keyword", "argument"],
+	["keyword", "as"],
+	["keyword", "ascii"],
+	["keyword", "bad"],
+	["keyword", "badd"],
+	["keyword", "ba"],
+	["keyword", "ball"],
+	["keyword", "bd"],
+	["keyword", "bdelete"],
+	["keyword", "be"],
+	["keyword", "bel"],
+	["keyword", "belowright"],
+	["keyword", "bf"],
+	["keyword", "bfirst"],
+	["keyword", "bl"],
+	["keyword", "blast"],
+	["keyword", "bm"],
+	["keyword", "bmodified"],
+	["keyword", "bn"],
+	["keyword", "bnext"],
+	["keyword", "bN"],
+	["keyword", "bNext"],
+	["keyword", "bo"],
+	["keyword", "botright"],
+	["keyword", "bp"],
+	["keyword", "bprevious"],
+	["keyword", "brea"],
+	["keyword", "break"],
+	["keyword", "breaka"],
+	["keyword", "breakadd"],
+	["keyword", "breakd"],
+	["keyword", "breakdel"],
+	["keyword", "breakl"],
+	["keyword", "breaklist"],
+	["keyword", "br"],
+	["keyword", "brewind"],
+	["keyword", "bro"],
+	["keyword", "browse"],
+	["keyword", "bufdo"],
+	["keyword", "b"],
+	["keyword", "buffer"],
+	["keyword", "buffers"],
+	["keyword", "bun"],
+	["keyword", "bunload"],
+	["keyword", "bw"],
+	["keyword", "bwipeout"],
+	["keyword", "ca"],
+	["keyword", "cabbrev"],
+	["keyword", "cabc"],
+	["keyword", "cabclear"],
+	["keyword", "caddb"],
+	["keyword", "caddbuffer"],
+	["keyword", "cad"],
+	["keyword", "caddexpr"],
+	["keyword", "caddf"],
+	["keyword", "caddfile"],
+	["keyword", "cal"],
+	["keyword", "call"],
+	["keyword", "cat"],
+	["keyword", "catch"],
+	["keyword", "cb"],
+	["keyword", "cbuffer"],
+	["keyword", "cc"],
+	["keyword", "ccl"],
+	["keyword", "cclose"],
+	["keyword", "cd"],
+	["keyword", "ce"],
+	["keyword", "center"],
+	["keyword", "cex"],
+	["keyword", "cexpr"],
+	["keyword", "cf"],
+	["keyword", "cfile"],
+	["keyword", "cfir"],
+	["keyword", "cfirst"],
+	["keyword", "cgetb"],
+	["keyword", "cgetbuffer"],
+	["keyword", "cgete"],
+	["keyword", "cgetexpr"],
+	["keyword", "cg"],
+	["keyword", "cgetfile"],
+	["keyword", "c"],
+	["keyword", "change"],
+	["keyword", "changes"],
+	["keyword", "chd"],
+	["keyword", "chdir"],
+	["keyword", "che"],
+	["keyword", "checkpath"],
+	["keyword", "checkt"],
+	["keyword", "checktime"],
+	["keyword", "cla"],
+	["keyword", "clast"],
+	["keyword", "cl"],
+	["keyword", "clist"],
+	["keyword", "clo"],
+	["keyword", "close"],
+	["keyword", "cmapc"],
+	["keyword", "cmapclear"],
+	["keyword", "cnew"],
+	["keyword", "cnewer"],
+	["keyword", "cn"],
+	["keyword", "cnext"],
+	["keyword", "cN"],
+	["keyword", "cNext"],
+	["keyword", "cnf"],
+	["keyword", "cnfile"],
+	["keyword", "cNfcNfile"],
+	["keyword", "cnorea"],
+	["keyword", "cnoreabbrev"],
+	["keyword", "col"],
+	["keyword", "colder"],
+	["keyword", "colo"],
+	["keyword", "colorscheme"],
+	["keyword", "comc"],
+	["keyword", "comclear"],
+	["keyword", "comp"],
+	["keyword", "compiler"],
+	["keyword", "conf"],
+	["keyword", "confirm"],
+	["keyword", "con"],
+	["keyword", "continue"],
+	["keyword", "cope"],
+	["keyword", "copen"],
+	["keyword", "co"],
+	["keyword", "copy"],
+	["keyword", "cpf"],
+	["keyword", "cpfile"],
+	["keyword", "cp"],
+	["keyword", "cprevious"],
+	["keyword", "cq"],
+	["keyword", "cquit"],
+	["keyword", "cr"],
+	["keyword", "crewind"],
+	["keyword", "cuna"],
+	["keyword", "cunabbrev"],
+	["keyword", "cu"],
+	["keyword", "cunmap"],
+	["keyword", "cw"],
+	["keyword", "cwindow"],
+	["keyword", "debugg"],
+	["keyword", "debuggreedy"],
+	["keyword", "delc"],
+	["keyword", "delcommand"],
+	["keyword", "d"],
+	["keyword", "delete"],
+	["keyword", "delf"],
+	["keyword", "delfunction"],
+	["keyword", "delm"],
+	["keyword", "delmarks"],
+	["keyword", "diffg"],
+	["keyword", "diffget"],
+	["keyword", "diffoff"],
+	["keyword", "diffpatch"],
+	["keyword", "diffpu"],
+	["keyword", "diffput"],
+	["keyword", "diffsplit"],
+	["keyword", "diffthis"],
+	["keyword", "diffu"],
+	["keyword", "diffupdate"],
+	["keyword", "dig"],
+	["keyword", "digraphs"],
+	["keyword", "di"],
+	["keyword", "display"],
+	["keyword", "dj"],
+	["keyword", "djump"],
+	["keyword", "dl"],
+	["keyword", "dlist"],
+	["keyword", "dr"],
+	["keyword", "drop"],
+	["keyword", "ds"],
+	["keyword", "dsearch"],
+	["keyword", "dsp"],
+	["keyword", "dsplit"],
+	["keyword", "earlier"],
+	["keyword", "echoe"],
+	["keyword", "echoerr"],
+	["keyword", "echom"],
+	["keyword", "echomsg"],
+	["keyword", "echon"],
+	["keyword", "e"],
+	["keyword", "edit"],
+	["keyword", "el"],
+	["keyword", "else"],
+	["keyword", "elsei"],
+	["keyword", "elseif"],
+	["keyword", "em"],
+	["keyword", "emenu"],
+	["keyword", "endfo"],
+	["keyword", "endfor"],
+	["keyword", "endf"],
+	["keyword", "endfunction"],
+	["keyword", "endfun"],
+	["keyword", "en"],
+	["keyword", "endif"],
+	["keyword", "endt"],
+	["keyword", "endtry"],
+	["keyword", "endw"],
+	["keyword", "endwhile"],
+	["keyword", "ene"],
+	["keyword", "enew"],
+	["keyword", "ex"],
+	["keyword", "exi"],
+	["keyword", "exit"],
+	["keyword", "exu"],
+	["keyword", "exusage"],
+	["keyword", "f"],
+	["keyword", "file"],
+	["keyword", "files"],
+	["keyword", "filetype"],
+	["keyword", "fina"],
+	["keyword", "finally"],
+	["keyword", "fin"],
+	["keyword", "find"],
+	["keyword", "fini"],
+	["keyword", "finish"],
+	["keyword", "fir"],
+	["keyword", "first"],
+	["keyword", "fix"],
+	["keyword", "fixdel"],
+	["keyword", "fo"],
+	["keyword", "fold"],
+	["keyword", "foldc"],
+	["keyword", "foldclose"],
+	["keyword", "folddoc"],
+	["keyword", "folddoclosed"],
+	["keyword", "foldd"],
+	["keyword", "folddoopen"],
+	["keyword", "foldo"],
+	["keyword", "foldopen"],
+	["keyword", "for"],
+	["keyword", "fu"],
+	["keyword", "fun"],
+	["keyword", "function"],
+	["keyword", "go"],
+	["keyword", "goto"],
+	["keyword", "gr"],
+	["keyword", "grep"],
+	["keyword", "grepa"],
+	["keyword", "grepadd"],
+	["keyword", "ha"],
+	["keyword", "hardcopy"],
+	["keyword", "h"],
+	["keyword", "help"],
+	["keyword", "helpf"],
+	["keyword", "helpfind"],
+	["keyword", "helpg"],
+	["keyword", "helpgrep"],
+	["keyword", "helpt"],
+	["keyword", "helptags"],
+	["keyword", "hid"],
+	["keyword", "hide"],
+	["keyword", "his"],
+	["keyword", "history"],
+	["keyword", "ia"],
+	["keyword", "iabbrev"],
+	["keyword", "iabc"],
+	["keyword", "iabclear"],
+	["keyword", "if"],
+	["keyword", "ij"],
+	["keyword", "ijump"],
+	["keyword", "il"],
+	["keyword", "ilist"],
+	["keyword", "imapc"],
+	["keyword", "imapclear"],
+	["keyword", "in"],
+	["keyword", "inorea"],
+	["keyword", "inoreabbrev"],
+	["keyword", "isearch"],
+	["keyword", "isp"],
+	["keyword", "isplit"],
+	["keyword", "iuna"],
+	["keyword", "iunabbrev"],
+	["keyword", "iu"],
+	["keyword", "iunmap"],
+	["keyword", "j"],
+	["keyword", "join"],
+	["keyword", "ju"],
+	["keyword", "jumps"],
+	["keyword", "k"],
+	["keyword", "keepalt"],
+	["keyword", "keepj"],
+	["keyword", "keepjumps"],
+	["keyword", "kee"],
+	["keyword", "keepmarks"],
+	["keyword", "laddb"],
+	["keyword", "laddbuffer"],
+	["keyword", "lad"],
+	["keyword", "laddexpr"],
+	["keyword", "laddf"],
+	["keyword", "laddfile"],
+	["keyword", "lan"],
+	["keyword", "language"],
+	["keyword", "la"],
+	["keyword", "last"],
+	["keyword", "later"],
+	["keyword", "lb"],
+	["keyword", "lbuffer"],
+	["keyword", "lc"],
+	["keyword", "lcd"],
+	["keyword", "lch"],
+	["keyword", "lchdir"],
+	["keyword", "lcl"],
+	["keyword", "lclose"],
+	["keyword", "let"],
+	["keyword", "left"],
+	["keyword", "lefta"],
+	["keyword", "leftabove"],
+	["keyword", "lex"],
+	["keyword", "lexpr"],
+	["keyword", "lf"],
+	["keyword", "lfile"],
+	["keyword", "lfir"],
+	["keyword", "lfirst"],
+	["keyword", "lgetb"],
+	["keyword", "lgetbuffer"],
+	["keyword", "lgete"],
+	["keyword", "lgetexpr"],
+	["keyword", "lg"],
+	["keyword", "lgetfile"],
+	["keyword", "lgr"],
+	["keyword", "lgrep"],
+	["keyword", "lgrepa"],
+	["keyword", "lgrepadd"],
+	["keyword", "lh"],
+	["keyword", "lhelpgrep"],
+	["keyword", "l"],
+	["keyword", "list"],
+	["keyword", "ll"],
+	["keyword", "lla"],
+	["keyword", "llast"],
+	["keyword", "lli"],
+	["keyword", "llist"],
+	["keyword", "lmak"],
+	["keyword", "lmake"],
+	["keyword", "lm"],
+	["keyword", "lmap"],
+	["keyword", "lmapc"],
+	["keyword", "lmapclear"],
+	["keyword", "lnew"],
+	["keyword", "lnewer"],
+	["keyword", "lne"],
+	["keyword", "lnext"],
+	["keyword", "lN"],
+	["keyword", "lNext"],
+	["keyword", "lnf"],
+	["keyword", "lnfile"],
+	["keyword", "lNf"],
+	["keyword", "lNfile"],
+	["keyword", "ln"],
+	["keyword", "lnoremap"],
+	["keyword", "lo"],
+	["keyword", "loadview"],
+	["keyword", "loc"],
+	["keyword", "lockmarks"],
+	["keyword", "lockv"],
+	["keyword", "lockvar"],
+	["keyword", "lol"],
+	["keyword", "lolder"],
+	["keyword", "lop"],
+	["keyword", "lopen"],
+	["keyword", "lpf"],
+	["keyword", "lpfile"],
+	["keyword", "lp"],
+	["keyword", "lprevious"],
+	["keyword", "lr"],
+	["keyword", "lrewind"],
+	["keyword", "ls"],
+	["keyword", "lt"],
+	["keyword", "ltag"],
+	["keyword", "lu"],
+	["keyword", "lunmap"],
+	["keyword", "lv"],
+	["keyword", "lvimgrep"],
+	["keyword", "lvimgrepa"],
+	["keyword", "lvimgrepadd"],
+	["keyword", "lw"],
+	["keyword", "lwindow"],
+	["keyword", "mak"],
+	["keyword", "make"],
+	["keyword", "ma"],
+	["keyword", "mark"],
+	["keyword", "marks"],
+	["keyword", "mat"],
+	["keyword", "match"],
+	["keyword", "menut"],
+	["keyword", "menutranslate"],
+	["keyword", "mk"],
+	["keyword", "mkexrc"],
+	["keyword", "mks"],
+	["keyword", "mksession"],
+	["keyword", "mksp"],
+	["keyword", "mkspell"],
+	["keyword", "mkvie"],
+	["keyword", "mkview"],
+	["keyword", "mkv"],
+	["keyword", "mkvimrc"],
+	["keyword", "mod"],
+	["keyword", "mode"],
+	["keyword", "m"],
+	["keyword", "move"],
+	["keyword", "mzf"],
+	["keyword", "mzfile"],
+	["keyword", "mz"],
+	["keyword", "mzscheme"],
+	["keyword", "nbkey"],
+	["keyword", "new"],
+	["keyword", "n"],
+	["keyword", "next"],
+	["keyword", "N"],
+	["keyword", "Next"],
+	["keyword", "nmapc"],
+	["keyword", "nmapclear"],
+	["keyword", "noh"],
+	["keyword", "nohlsearch"],
+	["keyword", "norea"],
+	["keyword", "noreabbrev"],
+	["keyword", "nu"],
+	["keyword", "number"],
+	["keyword", "nun"],
+	["keyword", "nunmap"],
+	["keyword", "omapc"],
+	["keyword", "omapclear"],
+	["keyword", "on"],
+	["keyword", "only"],
+	["keyword", "o"],
+	["keyword", "open"],
+	["keyword", "opt"],
+	["keyword", "options"],
+	["keyword", "ou"],
+	["keyword", "ounmap"],
+	["keyword", "pc"],
+	["keyword", "pclose"],
+	["keyword", "ped"],
+	["keyword", "pedit"],
+	["keyword", "pe"],
+	["keyword", "perl"],
+	["keyword", "perld"],
+	["keyword", "perldo"],
+	["keyword", "po"],
+	["keyword", "pop"],
+	["keyword", "popu"],
+	["keyword", "popu"],
+	["keyword", "popup"],
+	["keyword", "pp"],
+	["keyword", "ppop"],
+	["keyword", "pre"],
+	["keyword", "preserve"],
+	["keyword", "prev"],
+	["keyword", "previous"],
+	["keyword", "p"],
+	["keyword", "print"],
+	["keyword", "P"],
+	["keyword", "Print"],
+	["keyword", "profd"],
+	["keyword", "profdel"],
+	["keyword", "prof"],
+	["keyword", "profile"],
+	["keyword", "promptf"],
+	["keyword", "promptfind"],
+	["keyword", "promptr"],
+	["keyword", "promptrepl"],
+	["keyword", "ps"],
+	["keyword", "psearch"],
+	["keyword", "pta"],
+	["keyword", "ptag"],
+	["keyword", "ptf"],
+	["keyword", "ptfirst"],
+	["keyword", "ptj"],
+	["keyword", "ptjump"],
+	["keyword", "ptl"],
+	["keyword", "ptlast"],
+	["keyword", "ptn"],
+	["keyword", "ptnext"],
+	["keyword", "ptN"],
+	["keyword", "ptNext"],
+	["keyword", "ptp"],
+	["keyword", "ptprevious"],
+	["keyword", "ptr"],
+	["keyword", "ptrewind"],
+	["keyword", "pts"],
+	["keyword", "ptselect"],
+	["keyword", "pu"],
+	["keyword", "put"],
+	["keyword", "pw"],
+	["keyword", "pwd"],
+	["keyword", "pyf"],
+	["keyword", "pyfile"],
+	["keyword", "py"],
+	["keyword", "python"],
+	["keyword", "qa"],
+	["keyword", "qall"],
+	["keyword", "q"],
+	["keyword", "quit"],
+	["keyword", "quita"],
+	["keyword", "quitall"],
+	["keyword", "r"],
+	["keyword", "read"],
+	["keyword", "rec"],
+	["keyword", "recover"],
+	["keyword", "redi"],
+	["keyword", "redir"],
+	["keyword", "red"],
+	["keyword", "redo"],
+	["keyword", "redr"],
+	["keyword", "redraw"],
+	["keyword", "redraws"],
+	["keyword", "redrawstatus"],
+	["keyword", "reg"],
+	["keyword", "registers"],
+	["keyword", "res"],
+	["keyword", "resize"],
+	["keyword", "ret"],
+	["keyword", "retab"],
+	["keyword", "retu"],
+	["keyword", "return"],
+	["keyword", "rew"],
+	["keyword", "rewind"],
+	["keyword", "ri"],
+	["keyword", "right"],
+	["keyword", "rightb"],
+	["keyword", "rightbelow"],
+	["keyword", "rub"],
+	["keyword", "ruby"],
+	["keyword", "rubyd"],
+	["keyword", "rubydo"],
+	["keyword", "rubyf"],
+	["keyword", "rubyfile"],
+	["keyword", "ru"],
+	["keyword", "runtime"],
+	["keyword", "rv"],
+	["keyword", "rviminfo"],
+	["keyword", "sal"],
+	["keyword", "sall"],
+	["keyword", "san"],
+	["keyword", "sandbox"],
+	["keyword", "sa"],
+	["keyword", "sargument"],
+	["keyword", "sav"],
+	["keyword", "saveas"],
+	["keyword", "sba"],
+	["keyword", "sball"],
+	["keyword", "sbf"],
+	["keyword", "sbfirst"],
+	["keyword", "sbl"],
+	["keyword", "sblast"],
+	["keyword", "sbm"],
+	["keyword", "sbmodified"],
+	["keyword", "sbn"],
+	["keyword", "sbnext"],
+	["keyword", "sbN"],
+	["keyword", "sbNext"],
+	["keyword", "sbp"],
+	["keyword", "sbprevious"],
+	["keyword", "sbr"],
+	["keyword", "sbrewind"],
+	["keyword", "sb"],
+	["keyword", "sbuffer"],
+	["keyword", "scripte"],
+	["keyword", "scriptencoding"],
+	["keyword", "scrip"],
+	["keyword", "scriptnames"],
+	["keyword", "se"],
+	["keyword", "set"],
+	["keyword", "setf"],
+	["keyword", "setfiletype"],
+	["keyword", "setg"],
+	["keyword", "setglobal"],
+	["keyword", "setl"],
+	["keyword", "setlocal"],
+	["keyword", "sf"],
+	["keyword", "sfind"],
+	["keyword", "sfir"],
+	["keyword", "sfirst"],
+	["keyword", "sh"],
+	["keyword", "shell"],
+	["keyword", "sign"],
+	["keyword", "sil"],
+	["keyword", "silent"],
+	["keyword", "sim"],
+	["keyword", "simalt"],
+	["keyword", "sla"],
+	["keyword", "slast"],
+	["keyword", "sl"],
+	["keyword", "sleep"],
+	["keyword", "sm"],
+	["keyword", "smagic"],
+	["keyword", "sm"],
+	["keyword", "smap"],
+	["keyword", "smapc"],
+	["keyword", "smapclear"],
+	["keyword", "sme"],
+	["keyword", "smenu"],
+	["keyword", "sn"],
+	["keyword", "snext"],
+	["keyword", "sN"],
+	["keyword", "sNext"],
+	["keyword", "sni"],
+	["keyword", "sniff"],
+	["keyword", "sno"],
+	["keyword", "snomagic"],
+	["keyword", "snor"],
+	["keyword", "snoremap"],
+	["keyword", "snoreme"],
+	["keyword", "snoremenu"],
+	["keyword", "sor"],
+	["keyword", "sort"],
+	["keyword", "so"],
+	["keyword", "source"],
+	["keyword", "spelld"],
+	["keyword", "spelldump"],
+	["keyword", "spe"],
+	["keyword", "spellgood"],
+	["keyword", "spelli"],
+	["keyword", "spellinfo"],
+	["keyword", "spellr"],
+	["keyword", "spellrepall"],
+	["keyword", "spellu"],
+	["keyword", "spellundo"],
+	["keyword", "spellw"],
+	["keyword", "spellwrong"],
+	["keyword", "sp"],
+	["keyword", "split"],
+	["keyword", "spr"],
+	["keyword", "sprevious"],
+	["keyword", "sre"],
+	["keyword", "srewind"],
+	["keyword", "sta"],
+	["keyword", "stag"],
+	["keyword", "startg"],
+	["keyword", "startgreplace"],
+	["keyword", "star"],
+	["keyword", "startinsert"],
+	["keyword", "startr"],
+	["keyword", "startreplace"],
+	["keyword", "stj"],
+	["keyword", "stjump"],
+	["keyword", "st"],
+	["keyword", "stop"],
+	["keyword", "stopi"],
+	["keyword", "stopinsert"],
+	["keyword", "sts"],
+	["keyword", "stselect"],
+	["keyword", "sun"],
+	["keyword", "sunhide"],
+	["keyword", "sunm"],
+	["keyword", "sunmap"],
+	["keyword", "sus"],
+	["keyword", "suspend"],
+	["keyword", "sv"],
+	["keyword", "sview"],
+	["keyword", "syncbind"],
+	["keyword", "t"],
+	["keyword", "tab"],
+	["keyword", "tabc"],
+	["keyword", "tabclose"],
+	["keyword", "tabd"],
+	["keyword", "tabdo"],
+	["keyword", "tabe"],
+	["keyword", "tabedit"],
+	["keyword", "tabf"],
+	["keyword", "tabfind"],
+	["keyword", "tabfir"],
+	["keyword", "tabfirst"],
+	["keyword", "tabl"],
+	["keyword", "tablast"],
+	["keyword", "tabm"],
+	["keyword", "tabmove"],
+	["keyword", "tabnew"],
+	["keyword", "tabn"],
+	["keyword", "tabnext"],
+	["keyword", "tabN"],
+	["keyword", "tabNext"],
+	["keyword", "tabo"],
+	["keyword", "tabonly"],
+	["keyword", "tabp"],
+	["keyword", "tabprevious"],
+	["keyword", "tabr"],
+	["keyword", "tabrewind"],
+	["keyword", "tabs"],
+	["keyword", "ta"],
+	["keyword", "tag"],
+	["keyword", "tags"],
+	["keyword", "tc"],
+	["keyword", "tcl"],
+	["keyword", "tcld"],
+	["keyword", "tcldo"],
+	["keyword", "tclf"],
+	["keyword", "tclfile"],
+	["keyword", "te"],
+	["keyword", "tearoff"],
+	["keyword", "tf"],
+	["keyword", "tfirst"],
+	["keyword", "th"],
+	["keyword", "throw"],
+	["keyword", "tj"],
+	["keyword", "tjump"],
+	["keyword", "tl"],
+	["keyword", "tlast"],
+	["keyword", "tm"],
+	["keyword", "tm"],
+	["keyword", "tmenu"],
+	["keyword", "tn"],
+	["keyword", "tnext"],
+	["keyword", "tN"],
+	["keyword", "tNext"],
+	["keyword", "to"],
+	["keyword", "topleft"],
+	["keyword", "tp"],
+	["keyword", "tprevious"],
+	["keyword", "tr"],
+	["keyword", "trewind"],
+	["keyword", "try"],
+	["keyword", "ts"],
+	["keyword", "tselect"],
+	["keyword", "tu"],
+	["keyword", "tu"],
+	["keyword", "tunmenu"],
+	["keyword", "una"],
+	["keyword", "unabbreviate"],
+	["keyword", "u"],
+	["keyword", "undo"],
+	["keyword", "undoj"],
+	["keyword", "undojoin"],
+	["keyword", "undol"],
+	["keyword", "undolist"],
+	["keyword", "unh"],
+	["keyword", "unhide"],
+	["keyword", "unlet"],
+	["keyword", "unlo"],
+	["keyword", "unlockvar"],
+	["keyword", "unm"],
+	["keyword", "unmap"],
+	["keyword", "up"],
+	["keyword", "update"],
+	["keyword", "verb"],
+	["keyword", "verbose"],
+	["keyword", "ve"],
+	["keyword", "version"],
+	["keyword", "vert"],
+	["keyword", "vertical"],
+	["keyword", "vie"],
+	["keyword", "view"],
+	["keyword", "vim"],
+	["keyword", "vimgrep"],
+	["keyword", "vimgrepa"],
+	["keyword", "vimgrepadd"],
+	["keyword", "vi"],
+	["keyword", "visual"],
+	["keyword", "viu"],
+	["keyword", "viusage"],
+	["keyword", "vmapc"],
+	["keyword", "vmapclear"],
+	["keyword", "vne"],
+	["keyword", "vnew"],
+	["keyword", "vs"],
+	["keyword", "vsplit"],
+	["keyword", "vu"],
+	["keyword", "vunmap"],
+	["keyword", "wa"],
+	["keyword", "wall"],
+	["keyword", "wh"],
+	["keyword", "while"],
+	["keyword", "winc"],
+	["keyword", "wincmd"],
+	["keyword", "windo"],
+	["keyword", "winp"],
+	["keyword", "winpos"],
+	["keyword", "win"],
+	["keyword", "winsize"],
+	["keyword", "wn"],
+	["keyword", "wnext"],
+	["keyword", "wN"],
+	["keyword", "wNext"],
+	["keyword", "wp"],
+	["keyword", "wprevious"],
+	["keyword", "wq"],
+	["keyword", "wqa"],
+	["keyword", "wqall"],
+	["keyword", "w"],
+	["keyword", "write"],
+	["keyword", "ws"],
+	["keyword", "wsverb"],
+	["keyword", "wv"],
+	["keyword", "wviminfo"],
+	["keyword", "X"],
+	["keyword", "xa"],
+	["keyword", "xall"],
+	["keyword", "x"],
+	["keyword", "xit"],
+	["keyword", "xm"],
+	["keyword", "xmap"],
+	["keyword", "xmapc"],
+	["keyword", "xmapclear"],
+	["keyword", "xme"],
+	["keyword", "xmenu"],
+	["keyword", "XMLent"],
+	["keyword", "XMLns"],
+	["keyword", "xn"],
+	["keyword", "xnoremap"],
+	["keyword", "xnoreme"],
+	["keyword", "xnoremenu"],
+	["keyword", "xu"],
+	["keyword", "xunmap"],
+	["keyword", "y"],
+	["keyword", "yank"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

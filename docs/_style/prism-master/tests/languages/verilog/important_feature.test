@@ -1,0 +1,27 @@
+always_latch
+always_comb
+always_ff
+always
+
+always_latch @
+always_comb @
+always_ff @
+always @
+
+----------------------------------------------------
+
+[
+	["important", "always_latch"],
+	["important", "always_comb"],
+	["important", "always_ff"],
+	["important", "always"],
+
+	["important", "always_latch @"],
+	["important", "always_comb @"],
+	["important", "always_ff @"],
+	["important", "always @"]
+]
+
+----------------------------------------------------
+
+Checks for logic blocks.

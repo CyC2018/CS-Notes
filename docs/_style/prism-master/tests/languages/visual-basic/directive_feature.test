@@ -1,0 +1,23 @@
+#Const DebugCode = True
+#If DebugCode Then
+#End If
+#ExternalSource("c:\wwwroot\inetpub\test.aspx", 30)
+#End ExternalSource
+#ExternalChecksum("c:\wwwroot\inetpub\test.aspx", _
+    "{12345678-1234-1234-1234-123456789abc}", _
+    "1a2b3c4e5f617239a49b9a9c0391849d34950f923fab9484")
+
+----------------------------------------------------
+
+[
+	["directive", "#Const DebugCode = True"],
+	["directive", "#If DebugCode Then"],
+	["directive", "#End If"],
+	["directive", "#ExternalSource(\"c:\\wwwroot\\inetpub\\test.aspx\", 30)"],
+	["directive", "#End ExternalSource"],
+	["directive", "#ExternalChecksum(\"c:\\wwwroot\\inetpub\\test.aspx\", _\r\n    \"{12345678-1234-1234-1234-123456789abc}\", _\r\n    \"1a2b3c4e5f617239a49b9a9c0391849d34950f923fab9484\")"]
+]
+
+----------------------------------------------------
+
+Checks for preprocessing directives.

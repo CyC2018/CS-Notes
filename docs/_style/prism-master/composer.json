@@ -1,0 +1,20 @@
+{
+  "name": "PrismJS/prism",
+  "description": "Lightweight, robust, elegant syntax highlighting. A spin-off project from Dabblet.",
+  "type": "component",
+  "license": "MIT",
+  "extra": {
+    "component": {
+      "scripts": [
+        "prism.js"
+      ],
+      "styles": [
+        "themes/prism.css"
+      ],
+      "files": [
+        "themes/*",
+        "components/*"
+      ]
+    }
+  }
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Normalize Whitespace ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<style type="text/css">
+		code[class*="language-"] mark,
+		pre[class*="language-"] mark {
+			display: inline-block;
+			color: inherit;
+			background: none;
+			border: 1px solid #000;
+			box-shadow: 0 0 2px #fff;
+			padding: 1px;
+			background: rgba(0,0,0,0.2);
+		}
+	</style>
+
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Normalize Whitespace</h2>
+	<p>Supports multiple operations to normalize whitespace in code blocks.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+
+	<p>Obviously, this is supposed to work only for code blocks (<code>&lt;pre>&lt;code></code>) and not for inline code.</p>
+	<p>By default the plugin trims all leading and trailing whitespace of every code block.
+	It also removes extra indents and trailing whitespace on every line.</p>
+
+	<p>The plugin can be disabled for a particular code block by adding the class <code>no-whitespace-normalization</code> to
+	either the <code>&lt;pre></code> or <code>&lt;code></code> tag.</p>
+
+	<p>The default settings can be overridden with the <code class="language-javascript">setDefaults()</code> method
+	like so:</p>
+
+	<pre class="language-javascript"><code>
+Prism.plugins.NormalizeWhitespace.setDefaults({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
+</code></pre>
+
+	<p>The following settings are available:</p>
+
+	<dl>
+		<dt>remove-trailing</dt>
+		<dd>Removes trailing whitespace on all lines.</dd>
+		<dt>remove-indent</dt>
+		<dd>If the whole code block is indented too much it removes the extra indent.</dd>
+		<dt>left-trim</dt>
+		<dd>Removes all whitespace from the top of the code block.</dd>
+		<dt>right-trim</dt>
+		<dd>Removes all whitespace from the bottom of the code block.</dd>
+		<dt>break-lines</dt>
+		<dd>Simple way of breaking long lines at a certain length (default is 80 characters).</dd>
+		<dt>indent</dt>
+		<dd>Adds a certain number of tabs to every line.</dd>
+		<dt>remove-initial-line-feed</dt>
+		<dd>Less aggressive version of left-trim.
+		It only removes a single line feed from the top of the code block.</dd>
+		<dt>tabs-to-spaces</dt>
+		<dd>Converts all tabs to a certain number of spaces (default is 4 spaces).</dd>
+		<dt>spaces-to-tabs</dt>
+		<dd>Converts a certain number of spaces to a tab (default is 4 spaces).</dd>
+	</dl>
+</section>
+
+<section class="language-markup">
+	<h1>Examples</h1>
+
+	<p>The following example demonstrates the use of this plugin:</p>
+
+	<pre data-src="plugins/normalize-whitespace/demo.html"></pre>
+
+	<p>The result looks like this:</p>
+
+<pre class="language-javascript">
+
+	<code>
+
+
+		var example = {
+			foo: true,
+
+			bar: false
+		};
+
+
+	</code>
+
+</pre>
+
+	<p>It is also compatible with the <a href="plugins/keep-markup/">keep-markup</a> plugin:</p>
+
+	<pre>
+
+	<code class="language-css">
+
+
+	@media <mark>screen</mark> {
+		div {
+			<mark>text</mark>-decoration: <mark><mark>under</mark>line</mark>;
+			back<mark>ground: url</mark>('foo.png');
+		}
+	}</code>
+
+
+</pre>
+
+	<p>This plugin can also be used on the server or on the command line with Node.js:</p>
+
+	<pre><code class="language-javascript">
+var Prism = require('prismjs');
+var Normalizer = require('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
+// Create a new Normalizer object
+var nw = new Normalizer({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
+
+// ..or use the default object from Prism
+nw = Prism.plugins.NormalizeWhitespace;
+
+// The code snippet you want to highlight, as a string
+var code = "\t\t\tvar data = 1;    ";
+
+// Removes leading and trailing whitespace
+// and then indents by 1 tab
+code = nw.normalize(code, {
+	// Extra settings
+	indent: 1
+});
+
+// Returns a highlighted HTML string
+var html = Prism.highlight(code, Prism.languages.javascript);
+	</code></pre>
+
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+<script src="plugins/keep-markup/prism-keep-markup.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

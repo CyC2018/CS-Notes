@@ -1,0 +1,178 @@
+<h2>HTML</h2>
+<pre><code>I am &lt;b>very&lt;/b> serious.
+
+&lt;div style="background:#fff">Foo bar&lt;/div></code></pre>
+
+<h2>Blocks</h2>
+<pre><code>h1. Header 1
+
+h2. Header 2
+
+h3. Header 3 written on
+multiple lines
+
+bq. A block quotation
+on multiple lines.</code></pre>
+
+<h2>Footnotes</h2>
+<pre><code>This is covered elsewhere[1].
+
+fn1. Down here, in fact.</code></pre>
+
+<h2>Structural emphasis</h2>
+<pre><code>I _believe_ every word.
+And then? She *fell*!
+
+I __know__.
+I **really** __know__.
+
+??Cat's Cradle?? by Vonnegut
+
+Convert with @r.to_html@
+
+I'm -sure- not sure.
+
+You are a +pleasant+ child.
+
+a ^2^ + b ^2^ = c ^2^
+log ~2~ x</code></pre>
+
+<h2>Block attributes</h2>
+<pre><code>p(example1). An example
+
+p(#big-red). Red here
+
+p(example1#big-red2). Red here
+
+p{color:blue;margin:30px}. Spacey blue
+
+p[fr]. rouge</code></pre>
+
+<h2>Phrase attributes</h2>
+<pre><code>I seriously *{color:red}blushed*
+when I _(big)sprouted_ that
+corn stalk from my
+%[es]cabeza%.</code></pre>
+
+<h2>Phrase alignments and indentation</h2>
+<pre><code>p&lt;. align left
+
+p>. align right
+
+p=. centered
+
+p&lt;>. justified
+
+p(. left ident 1em
+
+p((. left ident 2em
+
+p))). right ident 3em</code></pre>
+
+<h2>Attributes and alignments combined</h2>
+<pre><code>h2()>. Bingo.
+
+h3()>[no]{color:red}. Bingo</code></pre>
+
+<h2>Lists</h2>
+<pre><code># First item
+# Second item
+# Third
+
+# Fuel could be:
+## Coal
+## Gasoline
+## Electricity
+# Humans need only:
+## Water
+## Protein
+
+* First item
+* Second item
+* Third
+
+* Fuel could be:
+** Coal
+** Gasoline
+** Electricity
+* Humans need only:
+** Water
+** Protein
+
+#(foo) List can have attributes too
+#{background: red} Red item</code></pre>
+
+<h2>Links and images</h2>
+<pre><code>I searched "Google":http://google.com.
+
+I am crazy about "Hobix":hobix
+and "it's":hobix "all":hobix I ever
+"link to":hobix!
+
+[hobix]http://hobix.com
+
+And "(some-link)[en]links":# can have attributes too!
+
+!http://redcloth.org/hobix.com/textile/sample.jpg!
+!openwindow1.gif(Bunny.)!
+!openwindow1.gif!:http://hobix.com/
+
+!>obake.gif!
+
+And others sat all round the small
+machine and paid it to sing to them.</code></pre>
+
+<h2>Tables</h2>
+<pre><code>| name | age | sex |
+| joan | 24 | f |
+| archie | 29 | m |
+| bella | 45 | f |
+
+|_. name |_. age |_. sex |
+| joan | 24 | f |
+| archie | 29 | m |
+| bella | 45 | f |
+
+|_. attribute list |
+|&lt;. align left |
+|>. align right|
+|=. center |
+|&lt;>. justify |
+|^. valign top |
+|~. bottom |
+
+|\2. spans two cols |
+| col 1 | col 2 |
+
+|/3. spans 3 rows | a |
+| b |
+| c |
+
+|{background:#ddd}. Grey cell|
+
+table{border:1px solid black}.
+|This|is|a|row|
+|This|is|a|row|
+
+|This|is|a|row|
+{background:#ddd}. |This|is|grey|row|</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nested styles are only partially supported</h3>
+
+<p>Only one level of nesting is supported.</p>
+
+<pre><code>*A bold paragraph %containing a span with broken _italic_ inside%!*</code></pre>
+
+<h3>HTML inside Textile is not supported</h3>
+
+<p>But Textile inside HTML should be just fine.</p>
+
+<pre><code>&lt;strong>This _should_ work properly.&lt;/strong>
+*But this is &lt;em>definitely&lt;/em> broken.*</code></pre>

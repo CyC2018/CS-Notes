@@ -1,0 +1,29 @@
+Bit_vector(7 downto 0)
+DataBus(7)
+function BOOL_TO_SL(X : boolean)
+function "*"(a : resistance; b : capacitance)
+
+----------------------------------------------------
+
+[
+	["function", "Bit_vector"],
+	["punctuation", "("], ["number", "7"],
+	["keyword", "downto"], ["number", "0"], ["punctuation", ")"],
+
+	["function", "DataBus"],
+	["punctuation", "("], ["number", "7"], ["punctuation", ")"],
+
+	["keyword", "function"], ["function", "BOOL_TO_SL"],
+	["punctuation", "("], "X ",
+	["punctuation", ":"], " boolean", ["punctuation", ")"],
+
+	["keyword", "function"], ["quoted-function", "\"*\""],
+	["punctuation", "("], "a ",
+	["punctuation", ":"], " resistance",
+	["punctuation", ";"], " b ",
+	["punctuation", ":"], " capacitance", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions and operator overloading.

@@ -1,0 +1,15 @@
+%
+% Some comment
+% Comment " with ' quotes
+
+----------------------------------------------------
+
+[
+	["comment", "%"],
+	["comment", "% Some comment"],
+	["comment", "% Comment \" with ' quotes"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

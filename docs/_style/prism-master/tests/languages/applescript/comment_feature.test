@@ -1,0 +1,21 @@
+-- foo bar
+# foo bar
+(* foo
+bar *)
+(* foo
+(* bar *)
+*)
+
+----------------------------------------------------
+
+[
+	["comment", "-- foo bar"],
+	["comment", "# foo bar"],
+	["comment", "(* foo\r\nbar *)"],
+	["comment", "(* foo\r\n(* bar *)\r\n*)"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.
+Also checks for one level of nesting.

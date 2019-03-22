@@ -1,0 +1,35 @@
+<h2>Comments</h2>
+<pre><code>; This is a comment</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>#t
+#f</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"two \"quotes\" within"</code></pre>
+
+<h2>Functions</h2>
+<pre><code>(lambda (x) (+ x 3))
+(apply vector 'a 'b '(c d e))
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>;; Calculation of Hofstadter's male and female sequences as a list of pairs
+
+(define (hofstadter-male-female n)
+  (letrec ((female (lambda (n)
+		     (if (= n 0)
+			 1
+			 (- n (male (female (- n 1)))))))
+	   (male (lambda (n)
+		   (if (= n 0)
+		       0
+		       (- n (female (male (- n 1))))))))
+    (let loop ((i 0))
+      (if (> i n)
+	  '()
+	  (cons (cons (female i)
+		      (male i))
+		(loop (+ i 1)))))))
+
+(hofstadter-male-female 8)</code></pre>

@@ -1,0 +1,219 @@
+cl_GLenum
+cl_GLint
+cl_GLuin
+cl_addressing_mode
+cl_bitfield
+cl_bool
+cl_buffer_create_type
+cl_build_status
+cl_channel_order
+cl_channel_type
+cl_char
+cl_char16
+cl_char2
+cl_char3
+cl_char4
+cl_char8
+cl_command_queue
+cl_command_queue_info
+cl_command_queue_properties
+cl_command_type
+cl_context
+cl_context_info
+cl_context_properties
+cl_device_exec_capabilities
+cl_device_fp_config
+cl_device_id
+cl_device_info
+cl_device_local_mem_type
+cl_device_mem_cache_type
+cl_device_type
+cl_double
+cl_double16
+cl_double2
+cl_double3
+cl_double4
+cl_double8
+cl_event
+cl_event_info
+cl_filter_mode
+cl_float
+cl_float16
+cl_float2
+cl_float3
+cl_float4
+cl_float8
+cl_half
+cl_image_info
+cl_int
+cl_int16
+cl_int2
+cl_int3
+cl_int4
+cl_int8
+cl_kernel
+cl_kernel_info
+cl_kernel_work_group_info
+cl_long
+cl_long16
+cl_long2
+cl_long3
+cl_long4
+cl_long8
+cl_map_flags
+cl_mem
+cl_mem_flags
+cl_mem_info
+cl_mem_object_type
+cl_platform_id
+cl_platform_info
+cl_profiling_info
+cl_program
+cl_program_build_info
+cl_program_info
+cl_sampler
+cl_sampler_info
+cl_short
+cl_short16
+cl_short2
+cl_short3
+cl_short4
+cl_short8
+cl_uchar
+cl_uchar16
+cl_uchar2
+cl_uchar3
+cl_uchar4
+cl_uchar8
+cl_uint
+cl_uint16
+cl_uint2
+cl_uint3
+cl_uint4
+cl_uint8
+cl_ulong
+cl_ulong16
+cl_ulong2
+cl_ulong3
+cl_ulong4
+cl_ulong8
+cl_ushort
+cl_ushort16
+cl_ushort2
+cl_ushort3
+cl_ushort4
+cl_ushort8
+
+----------------------------------------------------
+
+[
+	["type-opencl-host", "cl_GLenum"],
+	["type-opencl-host", "cl_GLint"],
+	["type-opencl-host", "cl_GLuin"],
+	["type-opencl-host", "cl_addressing_mode"],
+	["type-opencl-host", "cl_bitfield"],
+	["type-opencl-host", "cl_bool"],
+	["type-opencl-host", "cl_buffer_create_type"],
+	["type-opencl-host", "cl_build_status"],
+	["type-opencl-host", "cl_channel_order"],
+	["type-opencl-host", "cl_channel_type"],
+	["type-opencl-host", "cl_char"],
+	["type-opencl-host", "cl_char16"],
+	["type-opencl-host", "cl_char2"],
+	["type-opencl-host", "cl_char3"],
+	["type-opencl-host", "cl_char4"],
+	["type-opencl-host", "cl_char8"],
+	["type-opencl-host", "cl_command_queue"],
+	["type-opencl-host", "cl_command_queue_info"],
+	["type-opencl-host", "cl_command_queue_properties"],
+	["type-opencl-host", "cl_command_type"],
+	["type-opencl-host", "cl_context"],
+	["type-opencl-host", "cl_context_info"],
+	["type-opencl-host", "cl_context_properties"],
+	["type-opencl-host", "cl_device_exec_capabilities"],
+	["type-opencl-host", "cl_device_fp_config"],
+	["type-opencl-host", "cl_device_id"],
+	["type-opencl-host", "cl_device_info"],
+	["type-opencl-host", "cl_device_local_mem_type"],
+	["type-opencl-host", "cl_device_mem_cache_type"],
+	["type-opencl-host", "cl_device_type"],
+	["type-opencl-host", "cl_double"],
+	["type-opencl-host", "cl_double16"],
+	["type-opencl-host", "cl_double2"],
+	["type-opencl-host", "cl_double3"],
+	["type-opencl-host", "cl_double4"],
+	["type-opencl-host", "cl_double8"],
+	["type-opencl-host", "cl_event"],
+	["type-opencl-host", "cl_event_info"],
+	["type-opencl-host", "cl_filter_mode"],
+	["type-opencl-host", "cl_float"],
+	["type-opencl-host", "cl_float16"],
+	["type-opencl-host", "cl_float2"],
+	["type-opencl-host", "cl_float3"],
+	["type-opencl-host", "cl_float4"],
+	["type-opencl-host", "cl_float8"],
+	["type-opencl-host", "cl_half"],
+	["type-opencl-host", "cl_image_info"],
+	["type-opencl-host", "cl_int"],
+	["type-opencl-host", "cl_int16"],
+	["type-opencl-host", "cl_int2"],
+	["type-opencl-host", "cl_int3"],
+	["type-opencl-host", "cl_int4"],
+	["type-opencl-host", "cl_int8"],
+	["type-opencl-host", "cl_kernel"],
+	["type-opencl-host", "cl_kernel_info"],
+	["type-opencl-host", "cl_kernel_work_group_info"],
+	["type-opencl-host", "cl_long"],
+	["type-opencl-host", "cl_long16"],
+	["type-opencl-host", "cl_long2"],
+	["type-opencl-host", "cl_long3"],
+	["type-opencl-host", "cl_long4"],
+	["type-opencl-host", "cl_long8"],
+	["type-opencl-host", "cl_map_flags"],
+	["type-opencl-host", "cl_mem"],
+	["type-opencl-host", "cl_mem_flags"],
+	["type-opencl-host", "cl_mem_info"],
+	["type-opencl-host", "cl_mem_object_type"],
+	["type-opencl-host", "cl_platform_id"],
+	["type-opencl-host", "cl_platform_info"],
+	["type-opencl-host", "cl_profiling_info"],
+	["type-opencl-host", "cl_program"],
+	["type-opencl-host", "cl_program_build_info"],
+	["type-opencl-host", "cl_program_info"],
+	["type-opencl-host", "cl_sampler"],
+	["type-opencl-host", "cl_sampler_info"],
+	["type-opencl-host", "cl_short"],
+	["type-opencl-host", "cl_short16"],
+	["type-opencl-host", "cl_short2"],
+	["type-opencl-host", "cl_short3"],
+	["type-opencl-host", "cl_short4"],
+	["type-opencl-host", "cl_short8"],
+	["type-opencl-host", "cl_uchar"],
+	["type-opencl-host", "cl_uchar16"],
+	["type-opencl-host", "cl_uchar2"],
+	["type-opencl-host", "cl_uchar3"],
+	["type-opencl-host", "cl_uchar4"],
+	["type-opencl-host", "cl_uchar8"],
+	["type-opencl-host", "cl_uint"],
+	["type-opencl-host", "cl_uint16"],
+	["type-opencl-host", "cl_uint2"],
+	["type-opencl-host", "cl_uint3"],
+	["type-opencl-host", "cl_uint4"],
+	["type-opencl-host", "cl_uint8"],
+	["type-opencl-host", "cl_ulong"],
+	["type-opencl-host", "cl_ulong16"],
+	["type-opencl-host", "cl_ulong2"],
+	["type-opencl-host", "cl_ulong3"],
+	["type-opencl-host", "cl_ulong4"],
+	["type-opencl-host", "cl_ulong8"],
+	["type-opencl-host", "cl_ushort"],
+	["type-opencl-host", "cl_ushort16"],
+	["type-opencl-host", "cl_ushort2"],
+	["type-opencl-host", "cl_ushort3"],
+	["type-opencl-host", "cl_ushort4"],
+	["type-opencl-host", "cl_ushort8"]
+]
+
+----------------------------------------------------
+
+Checks for all reserved types in OpenCL host code (C-API).

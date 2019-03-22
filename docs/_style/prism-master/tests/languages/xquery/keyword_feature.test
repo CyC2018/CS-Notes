@@ -1,0 +1,119 @@
+as
+ascending
+at
+base-uri
+boundary-space
+case
+cast as
+collation
+construction
+copy-namespaces
+declare
+default
+descending
+else
+empty greatest
+empty least
+encoding
+every
+external
+for
+function
+if
+import
+in
+inherit
+lax
+let
+map
+module
+namespace
+no-inherit
+no-preserve
+option
+order
+order by
+ordered
+ordering
+preserve
+return
+satisfies
+schema
+some
+stable
+strict
+strip
+then
+to
+treat as
+typeswitch
+unordered
+validate
+variable
+version
+where
+xquery
+
+----------------------------------------------------
+
+[
+	["keyword", "as"],
+	["keyword", "ascending"],
+	["keyword", "at"],
+	["keyword", "base-uri"],
+	["keyword", "boundary-space"],
+	["keyword", "case"],
+	["keyword", "cast as"],
+	["keyword", "collation"],
+	["keyword", "construction"],
+	["keyword", "copy-namespaces"],
+	["keyword", "declare"],
+	["keyword", "default"],
+	["keyword", "descending"],
+	["keyword", "else"],
+	["keyword", "empty greatest"],
+	["keyword", "empty least"],
+	["keyword", "encoding"],
+	["keyword", "every"],
+	["keyword", "external"],
+	["keyword", "for"],
+	["keyword", "function"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "inherit"],
+	["keyword", "lax"],
+	["keyword", "let"],
+	["keyword", "map"],
+	["keyword", "module"],
+	["keyword", "namespace"],
+	["keyword", "no-inherit"],
+	["keyword", "no-preserve"],
+	["keyword", "option"],
+	["keyword", "order"],
+	["keyword", "order by"],
+	["keyword", "ordered"],
+	["keyword", "ordering"],
+	["keyword", "preserve"],
+	["keyword", "return"],
+	["keyword", "satisfies"],
+	["keyword", "schema"],
+	["keyword", "some"],
+	["keyword", "stable"],
+	["keyword", "strict"],
+	["keyword", "strip"],
+	["keyword", "then"],
+	["keyword", "to"],
+	["keyword", "treat as"],
+	["keyword", "typeswitch"],
+	["keyword", "unordered"],
+	["keyword", "validate"],
+	["keyword", "variable"],
+	["keyword", "version"],
+	["keyword", "where"],
+	["keyword", "xquery"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

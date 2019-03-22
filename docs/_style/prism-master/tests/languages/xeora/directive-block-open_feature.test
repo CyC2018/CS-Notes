@@ -1,0 +1,30 @@
+$C:Control2:{
+$C#1:Control2:{
+$C[ParentControl]:Control2:{
+$C#1[ParentControl]:Control2:{
+$S:Statement:{!NOCACHE
+$H:HttpRequest:{!RENDERONREQUEST
+$C:Control2:{!MESSAGETEMPLATE
+
+----------------------------------------------------
+
+[
+	["directive-block-open", [
+		["punctuation", ["$C:"]], "Control2", ["punctuation", [":"]], ["punctuation", ["{"]]]],
+	["directive-block-open", [
+		["punctuation", ["$C", ["tag", "#1"]]], ["punctuation", [":"]], "Control2", ["punctuation", [":"]], ["punctuation", ["{"]]]],
+	["directive-block-open", [
+		["punctuation", ["$C["]], "ParentControl", ["punctuation", ["]"]], ["punctuation", [":"]], "Control2", ["punctuation", [":"]], ["punctuation", ["{"]]]],
+	["directive-block-open", [
+		["punctuation", ["$C", ["tag", "#1"]]], ["punctuation", ["["]], "ParentControl", ["punctuation", ["]"]], ["punctuation", [":"]], "Control2", ["punctuation", [":"]], ["punctuation", ["{"]]]],
+	["directive-block-open", [
+		["punctuation", ["$S:"]], "Statement", ["punctuation", [":"]], ["punctuation", ["{"]], ["attribute", [["punctuation", "!"], "NOCACHE"]]]],
+	["directive-block-open", [
+		["punctuation", ["$H:"]], "HttpRequest", ["punctuation", [":"]], ["punctuation", ["{"]], ["attribute", [["punctuation", "!"], "RENDERONREQUEST"]]]],
+	["directive-block-open", [
+		["punctuation", ["$C:"]], "Control2", ["punctuation", [":"]], ["punctuation", ["{"]], ["attribute", [["punctuation", "!"], "MESSAGETEMPLATE"]]]]
+]
+
+----------------------------------------------------
+
+Checks for directive-block-opens.

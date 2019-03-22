@@ -1,0 +1,158 @@
+module com.js.prism {
+    exports java.net.http;
+    exports jdk.internal.editor.spi to jdk.jshell;
+
+    requires java.base;
+    requires transitive java.xml;
+
+    uses java.net.ContentHandlerFactory;
+
+    opens java.time.DateTime;
+    opens java.time.LocalDateTime to java.logging;
+
+    provides com.modules.hello.HelloInterface with com.modules.hello.HelloModules;
+
+}
+
+
+----------------------------------------------------
+  [
+  ["keyword", "module"],
+  ["namespace",
+    ["com",
+      ["punctuation", "."],
+      "js",
+      ["punctuation", "."],
+      "prism"
+    ]
+  ],
+  ["punctuation",  "{"],
+  
+  ["keyword", "exports"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "net",
+      ["punctuation", "."],
+      "http"
+    ]
+  ],
+  ["punctuation", ";"],
+  
+  ["keyword",   "exports"],
+  ["namespace", 
+    [
+      "jdk",
+      ["punctuation", "."],
+      "internal",
+      ["punctuation", "."],
+      "editor",
+      ["punctuation", "."],
+      "spi"
+    ]
+  ],
+  ["keyword",   "to"],
+  ["namespace", 
+    [
+      "jdk",
+      ["punctuation", "."],
+      "jshell"
+    ]
+  ],
+  ["punctuation", ";"],
+  
+  ["keyword",   "requires"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "base"
+    ]
+  ],
+  ["punctuation", ";"],
+  
+  ["keyword",   "requires"],
+  ["keyword",   "transitive"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "xml"
+    ]
+  ],
+  ["punctuation", ";"],
+  
+  ["keyword",   "uses"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "net"
+    ]
+  ],
+  ["punctuation", "."],
+  ["class-name",   "ContentHandlerFactory"],
+  ["punctuation", ";"],
+  
+  ["keyword",   "opens"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "time"
+    ]
+  ],
+  ["punctuation", "."],
+  ["class-name",   "DateTime"],
+  ["punctuation", ";"],
+  ["keyword",   "opens"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "time"
+    ]
+  ],
+  ["punctuation", "."],
+  ["class-name",   "LocalDateTime"],
+  ["keyword",   "to"],
+  ["namespace", 
+    [
+      "java",
+      ["punctuation", "."],
+      "logging"
+    ]
+  ],
+  ["punctuation", ";"],
+  ["keyword",   "provides"],
+  ["namespace", 
+    [
+      "com",
+      ["punctuation", "."],
+      "modules",
+      ["punctuation", "."],
+      "hello"
+    ]
+  ],
+  ["punctuation", "."],
+  ["class-name",   "HelloInterface"],
+  ["keyword",   "with"],
+  ["namespace", 
+    [
+      "com",
+      ["punctuation", "."],
+      "modules",
+      ["punctuation", "."],
+      "hello"
+    ]
+  ],
+  ["punctuation", "."],
+  ["class-name",   "HelloModules"],
+  ["punctuation", ";"],
+  ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for module definition.

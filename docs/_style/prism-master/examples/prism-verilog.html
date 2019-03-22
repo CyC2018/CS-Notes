@@ -1,0 +1,103 @@
+<p>Note that this package supports syntax highlighting for both Verilog and System Verilog.</p>
+
+<h2>Comments</h2>
+<pre><code>/* Multiline comments in Verilog
+   look like C comments and // is OK in here. */
+// Single-line comment in Verilog.</code></pre>
+
+<h2>Literals</h2>
+<pre><code>// example code from: http://iroi.seu.edu.cn/books/asics/Book2/CH11/CH11.02.htm
+module declarations;
+  parameter H12_UNSIZED = 'h 12;
+  parameter H12_SIZED = 6'h 12;
+  parameter D42 = 8'B0010_1010;
+  parameter D123 = 123;
+  parameter D63 = 8'o 77;
+  parameter A = 'h x, B = 'o x, C = 8'b x, D = 'h z, E = 16'h ????;
+  reg [3:0] B0011,Bxxx1,Bzzz1;
+  real R1,R2,R3;
+  integer I1,I3,I_3;
+  parameter BXZ = 8'b1x0x1z0z;
+
+  initial begin
+    B0011 = 4'b11; Bxxx1 = 4'bx1; Bzzz1 = 4'bz1;
+    R1 = 0.1e1; R2 = 2.0; R3 = 30E-01;
+    I1 = 1.1; I3 = 2.5; I_3 = -2.5;
+  end
+
+  initial begin #1;
+    $display("H12_UNSIZED, H12_SIZED (hex) = %h, %h",H12_UNSIZED, H12_SIZED);
+    $display("D42 (bin) = %b",D42," (dec) = %d",D42);
+    $display("D123 (hex) = %h",D123," (dec) = %d",D123);
+    $display("D63 (oct) = %o",D63);
+    $display("A (hex) = %h",A," B (hex) = %h",B);
+    $display("C (hex) = %h",C," D (hex) = %h",D," E (hex) = %h",E);
+    $display("BXZ (bin) = %b",BXZ," (hex) = %h",BXZ);
+    $display("B0011, Bxxx1, Bzzz1 (bin) = %b, %b, %b",B0011,Bxxx1,Bzzz1);
+    $display("R1, R2, R3 (e, f, g) = %e, %f, %g", R1, R2, R3);
+    $display("I1, I3, I_3 (d) = %d, %d, %d", I1, I3, I_3);
+  end
+endmodule</code></pre>
+
+<h2>Full example</h2>
+<pre><code>`include "internal_defines.vh"
+
+//*****************************************************************************
+// memory_decoder: a custom module used to handle memory transactions
+//*****************************************************************************
+//
+// out_mem (output) - The output to memory
+// out_reg (output) - The output to the register file
+// mem_we  (output) - Which byte in the word to write too
+// mem_in  (input)  - The input from memory
+// addr_in (input)  - The lowest 2 bits of byte offset to store in memory
+// data_in (input)  - The input from the register file to be stored
+// l_bit   (input)  - The load bit signal (control)
+// b_bit   (input)  - The byte bit signal (control)
+//
+module memory_decoder(out_mem, out_reg, mem_in, data_in, l_bit, b_bit, addr_in,
+                      mem_we);
+
+  output reg  [31:0]  out_mem, out_reg;
+  output reg  [3:0]   mem_we;
+  input       [31:0]  mem_in, data_in;
+  input       [1:0]   addr_in;
+  input               l_bit, b_bit;
+
+  always_comb begin
+    mem_we = 4'b0000;     // dont write memory by default
+    if (l_bit == 1) begin // ldr and ldrb
+      out_mem = mem_in;   // dont change memory!
+      if (b_bit == 1) begin
+        /* figure out which byte to load from memory */
+        case (addr_in)
+          2'b00: out_reg = {24'b00, mem_in[7:0]};
+          2'b01: out_reg = {24'b00, mem_in[15:8]};
+          2'b10: out_reg = {24'b00, mem_in[23:16]};
+          2'b11: out_reg = {24'b00, mem_in[31:24]};
+        endcase
+      end
+      else begin
+        out_reg = mem_in;
+      end
+    end
+    else begin            // str and strb
+      out_reg = `UNKNOWN; // We are not reading from mem
+      if (b_bit == 1) begin
+        /* figure out which byte to write to in memory */
+        out_mem = {4{data_in[7:0]}};
+        case (addr_in)
+          2'b00: mem_we = 4'b1000;
+          2'b01: mem_we = 4'b0100;
+          2'b10: mem_we = 4'b0010;
+          2'b11: mem_we = 4'b0001;
+        endcase
+      end
+      else begin
+        mem_we = 4'b1111; // write to all channels
+        out_mem = data_in;
+      end
+    end
+  end
+
+endmodule</code></pre>

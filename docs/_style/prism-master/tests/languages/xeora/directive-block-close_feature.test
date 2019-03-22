@@ -1,0 +1,12 @@
+}:Control3$
+
+----------------------------------------------------
+
+[
+	["directive-block-close", [
+		["punctuation", "}"], ["punctuation", ":"], "Control3", ["punctuation", "$"]]]
+]
+
+----------------------------------------------------
+
+Checks for directive-block-closes.

@@ -1,0 +1,53 @@
+(cons)
+(car)
+(cdr)
+(null?)
+(pair?)
+(boolean?)
+(eof-object?)
+(char?)
+(procedure?)
+(number?)
+(port?)
+(string?)
+(vector?)
+(symbol?)
+(bytevector?)
+(list)
+(call-with-current-continuation)
+(call/cc)
+(append)
+(abs)
+(apply)
+(eval)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["builtin", "cons"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "car"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "cdr"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "null?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "pair?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "boolean?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "eof-object?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "char?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "procedure?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "number?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "port?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "string?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "vector?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "symbol?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "bytevector?"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "list"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "call-with-current-continuation"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "call/cc"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "append"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "abs"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "apply"], ["punctuation", ")"],
+	["punctuation", "("], ["builtin", "eval"], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

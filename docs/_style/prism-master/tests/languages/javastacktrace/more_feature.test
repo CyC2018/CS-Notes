@@ -1,0 +1,22 @@
+... 6 more
+	... 6 common frames omitted
+
+----------------------------------------------------
+
+[
+	["more", [
+		["punctuation", "..."],
+		["number", "6"],
+		["keyword", "more"]
+	]],
+
+	["more", [
+		["punctuation", "..."],
+		["number", "6"],
+		["keyword", "common frames omitted"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for the message that some frames were omitted.

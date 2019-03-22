@@ -1,0 +1,22 @@
+;;
+;; Foobar
+;; (; foobar ;)
+(;;)
+(;Foobar;)
+(;Foo ;;bar
+baz;)
+
+----------------------------------------------------
+
+[
+	["comment", ";;"],
+	["comment", ";; Foobar"],
+	["comment", ";; (; foobar ;)"],
+	["comment", "(;;)"],
+	["comment", "(;Foobar;)"],
+	["comment", "(;Foo ;;bar\r\nbaz;)"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

@@ -1,0 +1,65 @@
+<h2>Vertex shader example</h2>
+<pre><code>attribute vec3 vertex;
+attribute vec3 normal;
+
+uniform mat4 _mvProj;
+uniform mat3 _norm;
+
+varying vec3 vColor;
+varying vec3 localPos;
+
+#pragma include "light.glsl"
+
+// constants
+vec3 materialColor = vec3(1.0,0.7,0.8);
+vec3 specularColor = vec3(1.0,1.0,1.0);
+
+void main(void) {
+    // compute position
+    gl_Position = _mvProj * vec4(vertex, 1.0);
+    
+    localPos = vertex;
+    
+    // compute light info
+    vec3 n = normalize(_norm * normal);
+    vec3 diffuse;
+    float specular;
+    float glowingSpecular = 50.0;
+    getDirectionalLight(n, _dLight, glowingSpecular, diffuse, specular);
+    vColor = max(diffuse,_ambient.xyz)*materialColor+specular*specularColor+_ambient;
+}</code></pre>
+
+<h2>Fragment shader example</h2>
+<pre><code>#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform vec3 BrickColor, MortarColor;
+uniform vec3 BrickSize;
+uniform vec3 BrickPct;
+
+varying vec3 vColor;
+varying vec3 localPos;
+void main()
+{
+    vec3 color;
+	vec3 position, useBrick;
+	
+
+	position = localPos / BrickSize.xyz;
+
+	if (fract(position.y * 0.5) > 0.5){
+		position.x += 0.5;
+        position.z += 0.5;
+	}
+    
+	position = fract(position);
+
+	useBrick = step(position, BrickPct.xyz);
+
+	color = mix(MortarColor, BrickColor, useBrick.x * useBrick.y * useBrick.z);
+	color *= vColor;
+
+	gl_FragColor = vec4(color, 1.0);
+}
+</code></pre>

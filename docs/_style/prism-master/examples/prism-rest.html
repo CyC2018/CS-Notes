@@ -1,0 +1,329 @@
+<h2>Titles</h2>
+<pre><code>===============
+ Section Title
+===============
+
+---------------
+ Section Title
+---------------
+
+Section Title
+=============
+
+Section Title
+-------------
+
+Section Title
+`````````````
+
+Section Title
+'''''''''''''
+
+Section Title
+.............
+
+Section Title
+~~~~~~~~~~~~~
+
+Section Title
+*************
+
+Section Title
++++++++++++++
+
+Section Title
+^^^^^^^^^^^^^</code></pre>
+
+<h2>Lists</h2>
+<pre><code>- This is the first bullet list item.
+- This is the first paragraph in the second item in the list.
+
+  This is the second paragraph in the second item in the list.
+
+  - This is a sublist.  The bullet lines up with the left edge of
+    the text blocks above.
+
+- This is the third item of the main list.
+
+This paragraph is not part of the list.
+
+1. Item 1 initial text.
+
+   a) Item 1a.
+   b) Item 1b.
+
+2. a) Item 2a.
+   b) Item 2b.</code></pre>
+
+<h2>Field lists</h2>
+<pre><code>:Date: 2001-08-16
+:Version: 1
+:Authors: - Me
+          - Myself
+          - I
+:Indentation: Since the field marker may be quite long, the second
+   and subsequent lines of the field body do not have to line up
+   with the first line, but they must be indented relative to the
+   field name marker, and they must line up with each other.
+:Parameter i: integer</code></pre>
+
+<h2>Option lists</h2>
+<pre><code>-a         Output all.
+-b         Output both (this description is
+           quite long).
+-c arg     Output just arg.
+--long     Output all day long.
+
+-p         This option has two paragraphs in the description.
+           This is the first.
+
+           This is the second.  Blank lines may be omitted between
+           options (as above) or left in (as here and below).
+
+--very-long-option  A VMS-style option.  Note the adjustment for
+                    the required two spaces.
+
+--an-even-longer-option
+           The description can also start on the next line.
+
+-2, --two  This option has two variants.
+
+-f FILE, --file=FILE  These two options are synonyms; both have
+                      arguments.
+
+/V         A VMS/DOS-style option.</code></pre>
+
+<h2>Literal blocks</h2>
+<pre><code>::
+
+    for a in [5,4,3,2,1]:   # this is program code, shown as-is
+        print a
+    print "it's..."
+    # a literal block continues until the indentation ends
+
+John Doe wrote::
+
+>> *Great* idea!
+>
+> Why didn't I think of that?
+
+You just did!  ;-)</code></pre>
+
+<h2>Line blocks</h2>
+<pre><code>| Lend us a couple of bob till Thursday.
+| I'm absolutely skint.
+| But I'm expecting a postal order and I can pay you back
+  as soon as it comes.
+| Love, Ewan.
+
+Take it away, Eric the Orchestra Leader!
+
+    | A one, two, a one two three four
+    |
+    | Half a bee, philosophically,
+    |     must, *ipso facto*, half not be.
+    | But half the bee has got to be,
+    |     *vis a vis* its entity.  D'you see?
+    |
+    | But can a bee be said to be
+    |     or not to be an entire bee,
+    |         when half the bee is not a bee,
+    |             due to some ancient injury?
+    |
+    | Singing...</code></pre>
+
+<h2>Grid tables and simple tables</h2>
+<pre><code>+------------------------+------------+----------+----------+
+| Header row, column 1   | Header 2   | Header 3 | Header 4 |
+| (header rows optional) |            |          |          |
++========================+============+==========+==========+
+| body row 1, column 1   | column 2   | column 3 | column 4 |
++------------------------+------------+----------+----------+
+| body row 2             | Cells may span columns.          |
++------------------------+------------+---------------------+
+| body row 3             | Cells may  | - Table cells       |
++------------------------+ span rows. | - contain           |
+| body row 4             |            | - body elements.    |
++------------------------+------------+---------------------+
+
+	+--------------+----------+-----------+-----------+
+	| row 1, col 1 | column 2 | column 3  | column 4  |
+	+--------------+----------+-----------+-----------+
+	| row 2        |                                  |
+	+--------------+----------+-----------+-----------+
+	| row 3        |          |           |           |
+	+--------------+----------+-----------+-----------+
+
+=====  =====  =======
+  A      B    A and B
+=====  =====  =======
+False  False  False
+True   False  False
+False  True   False
+True   True   True
+=====  =====  =======
+
+	=====  =====  ======
+	   Inputs     Output
+	------------  ------
+	  A      B    A or B
+	=====  =====  ======
+	False  False  False
+	True   False  True
+	False  True   True
+	True   True   True
+	=====  =====  ======</code></pre>
+
+<h2>Footnotes and links</h2>
+<pre><code>.. [1] Body elements go here.
+
+If [#note]_ is the first footnote reference, it will show up as
+"[1]".  We can refer to it again as [#note]_ and again see
+"[1]".  We can also refer to it as note_ (an ordinary internal
+hyperlink reference).
+
+.. [#note] This is the footnote labeled "note".
+
+Here is a symbolic footnote reference: [*]_.
+
+.. [*] This is the footnote.
+
+[2]_ will be "2" (manually numbered),
+[#]_ will be "3" (anonymous auto-numbered), and
+[#label]_ will be "1" (labeled auto-numbered).
+
+.. [2] This footnote is labeled manually, so its number is fixed.
+
+.. [#label] This autonumber-labeled footnote will be labeled "1".
+   It is the first auto-numbered footnote and no other footnote
+   with label "1" exists.  The order of the footnotes is used to
+   determine numbering, not the order of the footnote references.
+
+.. [#] This footnote will be labeled "3".  It is the second
+   auto-numbered footnote, but footnote label "2" is already used.
+
+Here is a citation reference: [CIT2002]_.
+
+.. [CIT2002] This is the citation.  It's just like a footnote,
+   except the label is textual.
+
+.. _hyperlink-name: link-block
+
+.. __: anonymous-hyperlink-target-link-block
+
+__ anonymous-hyperlink-target-link-block
+
+Clicking on this internal hyperlink will take us to the target_
+below.
+
+.. _target:
+
+The hyperlink target above points to this paragraph.</code></pre>
+
+<h2>Directives</h2>
+<pre><code>.. image:: mylogo.jpeg
+
+.. figure:: larch.png
+
+   The larch.
+
+.. note:: This is a paragraph
+
+   - Here is a bullet list.
+
+.. figure:: picture.png
+   :scale: 50 %
+   :alt: map to buried treasure
+
+   This is the caption of the figure (a simple paragraph).
+
+   The legend consists of all elements after the caption.  In this
+   case, the legend consists of this paragraph and the following
+   table:
+
+   +-----------------------+-----------------------+
+   | Symbol                | Meaning               |
+   +=======================+=======================+
+   | .. image:: tent.png   | Campground            |
+   +-----------------------+-----------------------+
+   | .. image:: waves.png  | Lake                  |
+   +-----------------------+-----------------------+
+   | .. image:: peak.png   | Mountain              |
+   +-----------------------+-----------------------+</code></pre>
+
+<h2>Substitutions</h2>
+<pre><code>The |biohazard| symbol must be used on containers used to
+dispose of medical waste.
+
+.. |biohazard| image:: biohazard.png
+
+|Michael| and |Jon| are our widget-wranglers.
+
+.. |Michael| user:: mjones
+.. |Jon|     user:: jhl
+
+West led the |H| 3, covered by dummy's |H| Q, East's |H| K,
+and trumped in hand with the |S| 2.
+
+.. |H| image:: /images/heart.png
+   :height: 11
+   :width: 11
+.. |S| image:: /images/spade.png
+   :height: 11
+   :width: 11
+
+* |Red light| means stop.
+* |Green light| means go.
+* |Yellow light| means go really fast.
+
+.. |Red light|    image:: red_light.png
+.. |Green light|  image:: green_light.png
+.. |Yellow light| image:: yellow_light.png</code></pre>
+
+<h2>Comments</h2>
+<pre><code>.. This is a comment
+
+..
+   _so: is this!
+
+..
+   [and] this!
+
+..
+   this:: too!
+
+..
+   |even| this:: !</code></pre>
+
+<h2>Inline markup</h2>
+<pre><code>This is *emphasized text*.
+This is **strong text**.
+This is `interpreted text`.
+:role:`interpreted text`
+`interpreted text`:role:
+This text is an example of ``inline literals``.
+The regular expression ``[+-]?(\d+(\.\d*)?|\.\d+)`` matches
+floating-point numbers (without exponents).
+
+See the `Python home page &lt;http://www.python.org>`_ for info.
+
+Oh yes, the _`Norwegian Blue`.  What's, um, what's wrong with it?</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nothing is highlighted inside table cells</h3>
+<pre><code>+---------------+----------+
+| column 1     | column 2  |
++--------------+-----------+
+| **bold**?    | *italic*? |
++--------------+-----------+</code></pre>
+
+<h3>The inline markup recognition rules are not as strict as they are in the spec</h3>
+<p>No inline markup should be highlighted in the following code.</p>
+<pre><code>2 * x a ** b (* BOM32_* ` `` _ __ |
+"*" '|' (*) [*] {*} <*> ‘*’ ‚*‘ ‘*‚ ’*’ ‚*’ “*” „*“ “*„ ”*” „*” »*« ›*‹ «*» »*» ›*›</code></pre>

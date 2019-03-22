@@ -1,0 +1,57 @@
+delete!
+require!
+typeof!
+
+and
+by
+delete
+export
+from
+import
+import all
+in
+instanceof
+is
+isnt
+is not
+not
+of
+or
+til
+to
+typeof
+with
+xor
+
+----------------------------------------------------
+
+[
+	["keyword-operator", "delete!"],
+	["keyword-operator", "require!"],
+	["keyword-operator", "typeof!"],
+
+	["keyword-operator", "and"],
+	["keyword-operator", "by"],
+	["keyword-operator", "delete"],
+	["keyword-operator", "export"],
+	["keyword-operator", "from"],
+	["keyword-operator", "import"],
+	["keyword-operator", "import all"],
+	["keyword-operator", "in"],
+	["keyword-operator", "instanceof"],
+	["keyword-operator", "is"],
+	["keyword-operator", "isnt"],
+	["keyword-operator", "is not"],
+	["keyword-operator", "not"],
+	["keyword-operator", "of"],
+	["keyword-operator", "or"],
+	["keyword-operator", "til"],
+	["keyword-operator", "to"],
+	["keyword-operator", "typeof"],
+	["keyword-operator", "with"],
+	["keyword-operator", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for all keyword operators.

@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+- '4'
+- '6'
+- '8'
+- '9'
+# Build all branches
+branches:
+  only:
+  - gh-pages
+  - /.*/
+before_script:
+- npm install -g gulp
+- gulp
+script: npm test
+deploy:
+  provider: npm
+  email: lea@verou.me
+  api_key:
+    secure: TjRcXEr7Y/9KRJ4EOEQbd2Ij8hxKj8c/yOpEROy2lTYv6QH9x46nFDgZEE3VHfp/nnBUYpC47dRaSxiUj8H5rtkMNCZrREZu1n1zahmzP6dI6kCj+H3GiY7yw/Jhdx3uvQZHwknW2TJ/YRsLeQsmMSG2HnJobY9Zn4REX5ccP2E=
+  on:
+    tags: true
+    repo: PrismJS/prism

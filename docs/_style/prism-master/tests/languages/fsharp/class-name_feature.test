@@ -1,0 +1,86 @@
+let func : HttpFunc = handler (Some >> Task.FromResult)
+
+type Base1() =
+    abstract member F : unit -> unit
+    default u.F() =
+        printfn "F Base1"
+
+type Derived1() =
+    inherit Base1()
+    override u.F() =
+        printfn "F Derived1"
+
+let d1 : Derived1 = Derived1()
+
+let base1 = d1 :> Base1
+let derived1 = base1 :?> Derived1
+
+type PersonName =
+    | FirstOnly of string
+    | LastOnly of string
+    | FirstLast of string * string
+
+type Shape =
+    | Rectangle of height : float * width : float
+    | Circle of radius : float
+
+type MyInterface =
+   abstract member Add: int -> int -> int
+   abstract member Pi : float
+
+exception Error1 of string
+exception Error2 of string * int
+
+----------------------------------------------------
+
+[
+	["keyword", "let"], " func ",
+	["punctuation", ":"], ["class-name", ["HttpFunc"]],
+	["operator", "="], " handler ", ["punctuation", "("],
+	"Some ", ["operator", ">>"], " Task", ["punctuation", "."], "FromResult",
+	["punctuation", ")"],
+
+	["keyword", "type"], ["class-name", ["Base1"]], ["punctuation", "("], ["punctuation", ")"], ["operator", "="],
+	["keyword", "abstract"], ["keyword", "member"], " F ", ["punctuation", ":"],
+	["class-name", [
+		"unit ", ["operator", "->"], " unit"]
+	],
+	["keyword", "default"], " u", ["punctuation", "."], ["function", "F"], ["punctuation", "("], ["punctuation", ")"],
+	["operator", "="], "\n        printfn ", ["string", "\"F Base1\""],
+
+	["keyword", "type"], ["class-name", ["Derived1"]], ["punctuation", "("], ["punctuation", ")"], ["operator", "="],
+	["keyword", "inherit"], ["class-name", ["Base1"]], ["punctuation", "("], ["punctuation", ")"],
+	["keyword", "override"], " u", ["punctuation", "."], ["function", "F"], ["punctuation", "("], ["punctuation", ")"], ["operator", "="],
+	"\n        printfn ", ["string", "\"F Derived1\""],
+
+	["keyword", "let"], " d1 ", ["punctuation", ":"], ["class-name", ["Derived1"]], ["operator", "="],
+	["function", "Derived1"], ["punctuation", "("], ["punctuation", ")"],
+
+	["keyword", "let"], " base1 ", ["operator", "="], " d1 ", ["operator", ":>"], ["class-name", ["Base1"]],
+
+	["keyword", "let"], " derived1 ", ["operator", "="], " base1 ", ["operator", ":?>"], ["class-name", ["Derived1"]],
+
+	["keyword", "type"], ["class-name", ["PersonName"]], ["operator", "="],
+	["operator", "|"], " FirstOnly ", ["keyword", "of"], ["class-name", ["string"]],
+	["operator", "|"], " LastOnly ", ["keyword", "of"], ["class-name", ["string"]],
+	["operator", "|"], " FirstLast ", ["keyword", "of"], ["class-name", ["string ", ["operator", "*"], " string"]],
+
+	["keyword", "type"], ["class-name", ["Shape"]], ["operator", "="],
+	["operator", "|"], " Rectangle ", ["keyword", "of"],
+	" height ", ["punctuation", ":"], ["class-name", ["float"]], ["operator", "*"],
+	" width ", ["punctuation", ":"], ["class-name", ["float"]],
+	["operator", "|"], " Circle ", ["keyword", "of"], " radius ", ["punctuation", ":"], ["class-name", ["float"]],
+
+	["keyword", "type"], ["class-name", ["MyInterface"]], ["operator", "="],
+	["keyword", "abstract"], ["keyword", "member"], " Add", ["punctuation", ":"],
+	["class-name", ["int ", ["operator", "->"], " int ", ["operator", "->"], " int"]],
+	["keyword", "abstract"], ["keyword", "member"], " Pi ", ["punctuation", ":"], ["class-name", ["float"]],
+
+	["keyword", "exception"], ["class-name", ["Error1"]], ["keyword", "of"], ["class-name", ["string"]],
+
+	["keyword", "exception"], ["class-name", ["Error2"]], ["keyword", "of"], ["class-name", ["string ", ["operator", "*"], " int"]]
+]
+
+----------------------------------------------------
+
+Checks for class-names.

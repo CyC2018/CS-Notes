@@ -1,0 +1,55 @@
+Foo *emphasis*.
+**Strong** bar.
+This is `interpreted text`.
+:role:`interpreted text`
+`interpreted text`:role:
+``inline literals``
+This is a regexp: ``[+-]?(\d+(\.\d*)?|\.\d+)``
+Usage of |substitution|.
+
+----------------------------------------------------
+
+[
+	"Foo ",
+	["inline", [
+	    ["punctuation", "*"], ["italic", "emphasis"], ["punctuation", "*"]
+    ]],
+    ".\r\n",
+    ["inline", [
+        ["punctuation", "**"], ["bold", "Strong"], ["punctuation", "**"]
+    ]],
+    " bar.\r\nThis is ",
+    ["inline", [
+        ["punctuation", "`"], ["interpreted-text", "interpreted text"], ["punctuation", "`"]
+    ]],
+    ".\r\n",
+    ["inline", [
+        ["role", [
+            ["punctuation", ":"], "role", ["punctuation", ":"]
+        ]],
+        ["punctuation", "`"], ["interpreted-text", "interpreted text"], ["punctuation", "`"]
+    ]],
+    ["inline", [
+        ["punctuation", "`"], ["interpreted-text", "interpreted text"], ["punctuation", "`"],
+        ["role", [
+            ["punctuation", ":"], "role", ["punctuation", ":"]
+        ]]
+    ]],
+    ["inline", [
+        ["punctuation", "``"], ["inline-literal", "inline literals"], ["punctuation", "``"]
+    ]],
+    "\r\nThis is a regexp: ",
+    ["inline", [
+        ["punctuation", "``"], ["inline-literal", "[+-]?(\\d+(\\.\\d*)?|\\.\\d+)"], ["punctuation", "``"]
+    ]],
+    "\r\nUsage of ",
+    ["inline", [
+        ["punctuation", "|"], ["substitution", "substitution"], ["punctuation", "|"]
+    ]],
+    "."
+]
+
+----------------------------------------------------
+
+Checks for most inline markup: emphasis, bold, interpreted text,
+roles, inline literals and substitutions.

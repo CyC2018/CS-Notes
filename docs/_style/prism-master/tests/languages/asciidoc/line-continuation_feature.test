@@ -1,0 +1,18 @@
+Foo +
+bar
+
+* Foo
++
+bar
+
+----------------------------------------------------
+
+[
+	"Foo ", ["line-continuation", "+"], "\r\nbar\r\n\r\n",
+	["list-punctuation", "*"], " Foo\r\n",
+	["line-continuation", "+"], "\r\nbar"
+]
+
+----------------------------------------------------
+
+Checks for line continuations.

@@ -1,0 +1,57 @@
+(define)
+(define-syntax)
+(define-library)
+(define-values)
+(case-lambda)
+(lambda)
+(let)
+(let*)
+(letrec)
+(let-values)
+(let*-values)
+(letrec-values)
+(else)
+(if)
+(cond)
+(begin)
+(delay)
+(delay-force)
+(parameterize)
+(guard)
+(set!)
+(quasi-quote)
+(quote)
+(syntax-rules)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["keyword", "define"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "define-syntax"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "define-library"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "define-values"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "case-lambda"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "lambda"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let*"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "letrec"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let-values"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let*-values"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "letrec-values"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "else"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "if"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "cond"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "begin"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "delay"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "delay-force"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "parameterize"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "guard"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "set!"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "quasi-quote"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "quote"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "syntax-rules"], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

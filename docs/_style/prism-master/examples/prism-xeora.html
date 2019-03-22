@@ -1,0 +1,111 @@
+<h2>Special Constants</h2>
+<pre><code>$DomainContents$
+$PageRenderDuration$</code></pre>
+
+<h2>Operators &amp; Variables</h2>
+<pre><code>$SearchKey$
+$^SearchKey$
+$~SearchKey$
+$-SearchKey$
+$+SearchKey$
+$=SearchKey$
+$#SearchKey$
+$##SearchKey$
+
+$*SearchKey$
+
+$@SearchObject.SearchProperty$
+$@#SearchObject.SearchProperty$
+$@-SearchObject.SearchProperty$</code></pre>
+
+<h2>Controls</h2>
+<pre><code>$C:ControlID$
+$C:ControlID:{ &lt;!-- Something --&gt; }:ControlID$
+$C:ControlID:{ &lt;!-- Something --&gt; }:ControlID:{ &lt;!-- Something (Alternative) --&gt; }:ControlID$
+
+Control with Parent
+$C[Control1]:Control2$
+$C[Control2]:Control3:{ &lt;!-- Something --&gt; }:Control3$
+$C[Control2]:Control3:{ &lt;!-- Something --&gt; }:Control3:{ &lt;!-- Something (Alternative) --&gt; }:Control3$
+
+Control with Parent & Leveling
+$C#1[ParentControlID]:ControlID:{ &lt;!-- Something --&gt; }:ControlID$
+
+All Control Tags has leveling specification;
+$C:LoopControl1:{
+	$#FirstLoopSQLField1$
+
+	$C:ControlID:{ &lt;!-- Something --&gt; }:ControlID$
+
+	$C:LoopControl2:{
+		$##FirstLoopSQLField1$
+		$#SecondLoopSQLField1$
+
+		$C#1:ControlID:{ &lt;!-- Something --&gt; }:ControlID$
+	}:LoopControl2$
+}:LoopControl1$
+
+XML setup on a Control in Controls.xml
+&lt;Control id="[ControlID]"&gt;
+	&lt;Type&gt;[ControlType]&lt;/Type&gt;
+
+	&lt;Bind&gt;[ThemeID|AddonID]?[ControlClass].[FunctionName],SomeOperatorTags(seperated with |)&lt;/Bind&gt;
+
+	&lt;BlockIDsToUpdate localupdate="True|False"&gt;
+		&lt;BlockID&gt;[BlockID]&lt;/BlockID&gt;
+		&lt;BlockID&gt;[BlockID]&lt;/BlockID&gt;
+		&lt;BlockID&gt;[BlockID]&lt;/BlockID&gt;
+	&lt;/BlockIDsToUpdate&gt;
+
+	&lt;DefaultButtonID&gt;[ControlID]&lt;/DefaultButtonID&gt;
+
+	&lt;Text&gt;[TextBox, Password value or Button Text]&lt;/Text&gt;
+
+	&lt;Content&gt;[Textarea Content]&lt;/Content&gt;
+
+	&lt;Source&gt;[Image URL]&lt;/Source&gt;
+
+	&lt;Url&gt;[Link URL]&lt;/Url&gt;
+
+	&lt;Attributes&gt;
+		&lt;Attribute key="[HTMLAttributeKey]"&gt;[AttributeValue]&lt;/Attributes&gt;
+	&lt;/Attributes&gt;
+&lt;/Control&gt;</code></pre>
+
+<h2>Directives</h2>
+<pre><code>$T:TemplateID$
+$L:TranslationID$
+$P:TemplateID$</code></pre>
+
+<h2>Executable Functions</h2>
+<pre><code>$F:AddonLib1?GlobalControls.PrintOutSums$
+$F:AddonLib1?GlobalControls.PrintOut,~FormField$
+$F:AddonLib1?GlobalControls.SumNumbers,~FormField|=5$</code></pre>
+
+<h2>Client Side Function Binding</h2>
+<pre><code>$XF:{AddonLib1?GlobalControls.SumNumbers,~FormField|=5}:XF$</code></pre>
+
+<h2>Inline Statements</h2>
+<pre><code>$S:StatementID:{ &lt;!-- C# Code --&gt; }:StatementID$
+$S:StatementID:{!NOCACHE &lt;!-- C# Code --&gt; }:StatementID$
+
+$S:Statement1:{
+	int intvalue1 = 5;
+	int intvalue2 = Integer.Parse("0" + $~FormValue$);
+
+	return intvalue1 * intvalue2;
+}:Statement1$</code></pre>
+
+<h2>Request Blocks</h2>
+<pre><code>$H:RequestBlockID:{ &lt;!-- Something --&gt; }:RequestBlockID$
+$H:RequestBlockID:{!RENDERONREQUEST &lt;!-- Something --&gt; }:RequestBlockID$</code></pre>
+
+<h2>Cache Block</h2>
+<pre><code>$PC:{ &lt;!-- Page Content Part --&gt; }:PC$</code></pre>
+
+<h2>Message Handling Block</h2>
+<pre><code>$MB:{ &lt;!-- Message Output Content --&gt; }:MB$
+$MB:{
+	$#Message$
+	$#MessageType$
+}:MB$</code></pre>

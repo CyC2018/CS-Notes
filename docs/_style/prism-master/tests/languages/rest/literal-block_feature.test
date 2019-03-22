@@ -1,0 +1,27 @@
+::
+	Foo
+	Bar
+	Baz
+
+Foobar::
+  Foo
+  Bar
+  Baz
+
+----------------------------------------------------
+
+[
+	["literal-block", [
+		["literal-block-punctuation", "::"],
+		"\r\n\tFoo\r\n\tBar\r\n\tBaz"
+	]],
+	"\r\n\r\nFoobar",
+	["literal-block", [
+		["literal-block-punctuation", "::"],
+		"\r\n  Foo\r\n  Bar\r\n  Baz"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for literal blocks.

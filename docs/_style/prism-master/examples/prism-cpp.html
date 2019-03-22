@@ -1,0 +1,61 @@
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+"Multi-line strings ending with a \
+are supported too."</code></pre>
+
+<h2>Macro statements</h2>
+<pre><code># include &lt;stdio.h>
+#define PG_locked   0
+#define PG_error    1
+</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>true;
+false;</code></pre>
+
+<h2>Operators</h2>
+<pre><code>a and b;
+c bitand d;</code></pre>
+
+<h2>Full example</h2>
+<pre><code>/*
+David Cary 2010-09-14
+quick demo for wikibooks
+public domain
+*/
+#include &lt;iostream>
+#include &lt;vector>
+using namespace std;
+
+vector&lt;int> pick_vector_with_biggest_fifth_element(
+    vector&lt;int> left,
+    vector&lt;int> right
+){
+    if( (left[5]) < (right[5]) ){
+        return( right );
+    };
+    // else
+    return( left );
+}
+
+int vector_demo(void){
+    cout << "vector demo" << endl;
+    vector&lt;int> left(7);
+    vector&lt;int> right(7);
+
+    left[5] = 7;
+    right[5] = 8;
+    cout << left[5] << endl;
+    cout << right[5] << endl;
+    vector&lt;int> biggest(
+        pick_vector_with_biggest_fifth_element( left, right )
+    );
+    cout << biggest[5] << endl;
+
+    return 0;
+}
+
+int main(void){
+    vector_demo();
+}</code></pre>

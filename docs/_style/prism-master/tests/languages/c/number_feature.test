@@ -1,0 +1,35 @@
+42
+3.14159
+4e10
+2.1e-10
+0.4e+2
+0xbabe
+0xBABE
+42f
+42F
+42u
+42U
+42l
+42L
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "4e10"],
+	["number", "2.1e-10"],
+	["number", "0.4e+2"],
+	["number", "0xbabe"],
+	["number", "0xBABE"],
+	["number", "42f"],
+	["number", "42F"],
+	["number", "42u"],
+	["number", "42U"],
+	["number", "42l"],
+	["number", "42L"]
+]
+
+----------------------------------------------------
+
+Checks for decimal numbers and hexadecimal numbers.

@@ -1,0 +1,49 @@
+const ALL_CARDS: &'static [&'static char] = &["2"]
+fn foo<'a> (first: &'a str, second: &'a str) => () { }
+
+----------------------------------------------------
+
+[
+	["keyword", "const"],
+	" ALL_CARDS",
+	["punctuation", ":"],
+	["operator", "&"],
+	["lifetime-annotation", "'static"],
+	["punctuation", "["],
+	["operator", "&"],
+	["lifetime-annotation", "'static"],
+	" char",
+	["punctuation", "]"],
+	["operator", "="],
+	["operator", "&"],
+	["punctuation", "["],
+	["string", "\"2\""],
+	["punctuation", "]"],
+	["keyword", "fn"],
+	" foo",
+	["operator", "<"],
+	["lifetime-annotation", "'a"],
+	["operator", ">"],
+	["punctuation", "("],
+	"first",
+	["punctuation", ":"],
+	["operator", "&"],
+	["lifetime-annotation", "'a"],
+	" str",
+	["punctuation", ","],
+	" second",
+	["punctuation", ":"],
+	["operator", "&"],
+	["lifetime-annotation", "'a"],
+	" str",
+	["punctuation", ")"],
+	["operator", "=>"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for lifetime annotations in real-world examples. See #1339.

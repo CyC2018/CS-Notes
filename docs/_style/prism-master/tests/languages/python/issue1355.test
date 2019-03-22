@@ -1,0 +1,24 @@
+print('""#')
+print('"trigger="#T'+str(3))
+
+----------------------------------------------------
+
+[
+	["keyword", "print"],
+	["punctuation", "("],
+	["string", "'\"\"#'"],
+	["punctuation", ")"],
+	["keyword", "print"],
+	["punctuation", "("],
+	["string", "'\"trigger=\"#T'"],
+	["operator", "+"],
+	["builtin", "str"],
+	["punctuation", "("],
+	["number", "3"],
+	["punctuation", ")"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for comment-like substrings. See #1355

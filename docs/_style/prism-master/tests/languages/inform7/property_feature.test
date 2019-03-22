@@ -1,0 +1,157 @@
+adjacent
+carried
+closed
+concealed
+contained
+dark
+described
+edible
+empty
+enclosed
+enterable
+even
+female
+fixed in place
+full
+handled
+held
+improper-named
+incorporated
+inedible
+invisible
+lighted
+lit
+lockable
+locked
+male
+marked for listing
+mentioned
+negative
+neuter
+non-empty
+non-full
+non-recurring
+odd
+opaque
+open
+openable
+plural-named
+portable
+positive
+privately-named
+proper-named
+provided
+publically-named
+pushable between rooms
+recurring
+related
+rubbing
+scenery
+seen
+singular-named
+supported
+swinging
+switchable
+switched
+switched on
+switched off
+touchable
+touched
+transparent
+unconcealed
+undescribed
+unlit
+unlocked
+unmarked for listing
+unmentioned
+unopenable
+untouchable
+unvisited
+variable
+visible
+visited
+wearable
+worn
+
+----------------------------------------------------
+
+[
+	["property", "adjacent"],
+	["property", "carried"],
+	["property", "closed"],
+	["property", "concealed"],
+	["property", "contained"],
+	["property", "dark"],
+	["property", "described"],
+	["property", "edible"],
+	["property", "empty"],
+	["property", "enclosed"],
+	["property", "enterable"],
+	["property", "even"],
+	["property", "female"],
+	["property", "fixed in place"],
+	["property", "full"],
+	["property", "handled"],
+	["property", "held"],
+	["property", "improper-named"],
+	["property", "incorporated"],
+	["property", "inedible"],
+	["property", "invisible"],
+	["property", "lighted"],
+	["property", "lit"],
+	["property", "lockable"],
+	["property", "locked"],
+	["property", "male"],
+	["property", "marked for listing"],
+	["property", "mentioned"],
+	["property", "negative"],
+	["property", "neuter"],
+	["property", "non-empty"],
+	["property", "non-full"],
+	["property", "non-recurring"],
+	["property", "odd"],
+	["property", "opaque"],
+	["property", "open"],
+	["property", "openable"],
+	["property", "plural-named"],
+	["property", "portable"],
+	["property", "positive"],
+	["property", "privately-named"],
+	["property", "proper-named"],
+	["property", "provided"],
+	["property", "publically-named"],
+	["property", "pushable between rooms"],
+	["property", "recurring"],
+	["property", "related"],
+	["property", "rubbing"],
+	["property", "scenery"],
+	["property", "seen"],
+	["property", "singular-named"],
+	["property", "supported"],
+	["property", "swinging"],
+	["property", "switchable"],
+	["property", "switched"],
+	["property", "switched on"],
+	["property", "switched off"],
+	["property", "touchable"],
+	["property", "touched"],
+	["property", "transparent"],
+	["property", "unconcealed"],
+	["property", "undescribed"],
+	["property", "unlit"],
+	["property", "unlocked"],
+	["property", "unmarked for listing"],
+	["property", "unmentioned"],
+	["property", "unopenable"],
+	["property", "untouchable"],
+	["property", "unvisited"],
+	["property", "variable"],
+	["property", "visible"],
+	["property", "visited"],
+	["property", "wearable"],
+	["property", "worn"]
+]
+
+----------------------------------------------------
+
+Checks for properties.

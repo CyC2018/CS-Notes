@@ -1,0 +1,63 @@
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+"Multi-line strings ending with a \
+are supported too."</code></pre>
+
+<h2>Macro statements</h2>
+<pre><code>#include &lt;Bridge.h>
+#define SOME_PIN 11
+</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>true;
+false;</code></pre>
+
+<h2>Operators</h2>
+<pre><code>a < b;
+c &amp;&amp; d;</code></pre>
+
+<h2>Full example</h2>
+<pre><code>#include &lt;Bridge.h>
+
+// pin of the piezo speaker
+int piezo = 8;
+
+/**
+ * setups
+ * runs once before everyhing else
+ */
+void setup() {
+    pinMode(piezo, OUTPUT);     
+}
+
+/**
+ * loop
+ * this will run forever and do what we want
+ */
+void loop() {
+    playMelody(1);
+    delay(1000);
+}
+
+/**
+ * playMelody
+ * will play a simple melody on piezo speaker
+ */
+void playMelody(int times) {
+    int melody[] = { 4699, 4699, 3520, 4699 };
+    int duration = 6;
+
+    for( int t = 0; t &lt; times; t++ ) {
+        for( int i = 0; i &lt; 4; i++ ) {
+            // pass tone to selected pin
+            tone(piezoPin, melody[i], 1000/duration);
+
+            // get a bit of time between the tones
+            delay(1000 / duration * 1.30 + 80);
+
+            // and don't forget to switch of the tone afterwards
+            noTone(piezoPin);
+        }
+    }
+}</code></pre>

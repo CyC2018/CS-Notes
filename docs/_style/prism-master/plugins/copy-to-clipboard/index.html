@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Copy to Clipboard ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<link rel="stylesheet" href="plugins/toolbar/prism-toolbar.css" data-noprefix />
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body class="language-markup">
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Copy to Clipboard</h2>
+	<p>Add a button that copies the code block to the clipboard when clicked.</p>
+</header>
+
+<section>
+	<h1>How to use</h1>
+	<p>In addition to including the plugin file with your PrismJS build, ensure <a href="https://clipboardjs.com/">Clipboard.js</a> is loaded before the plugin.</p>
+
+	<p>The simplest way to include Clipboard.js is to use any of the
+		<a href="https://github.com/zenorocha/clipboard.js/wiki/CDN-Providers">recommended CDNs</a>. If you're using Browserify, Clipboard.js will be loaded auotmatically
+		if it's included in your <code>package.json</code>.
+		If you don't load Clipboard.js yourself, the plugin will load it from a CDN for you.</p>
+
+	<pre data-src="plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></pre>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/toolbar/prism-toolbar.js"></script>
+<script src="plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+{""}
+{"fo\"obar"}
+{''}
+{'fo\'obar'}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["string", "\"\""],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["string", "\"fo\\\"obar\""],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["string", "''"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["string", "'fo\\'obar'"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings.

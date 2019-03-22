@@ -1,0 +1,49 @@
+alignas alignof asm auto bool
+break case catch char char16_t char32_t
+class;
+compl const constexpr
+const_cast continue decltype default
+delete do double dynamic_cast
+else enum explicit export extern
+float for friend goto if
+inline int long mutable namespace
+new noexcept nullptr operator
+private protected public register
+reinterpret_cast return short
+signed sizeof static static_assert
+static_cast struct switch template
+this thread_local throw try
+typedef typeid typename union
+unsigned using virtual void
+volatile wchar_t while
+int8_t int16_t int32_t int64_t
+uint8_t uint16_t uint32_t uint64_t
+
+----------------------------------------------------
+
+[
+	["keyword", "alignas"], ["keyword", "alignof"], ["keyword", "asm"], ["keyword", "auto"], ["keyword", "bool"],
+	["keyword", "break"], ["keyword", "case"], ["keyword", "catch"], ["keyword", "char"], ["keyword", "char16_t"], ["keyword", "char32_t"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "compl"], ["keyword", "const"], ["keyword", "constexpr"],
+	["keyword", "const_cast"], ["keyword", "continue"], ["keyword", "decltype"], ["keyword", "default"],
+	["keyword", "delete"], ["keyword", "do"], ["keyword", "double"], ["keyword", "dynamic_cast"],
+	["keyword", "else"], ["keyword", "enum"], ["keyword", "explicit"], ["keyword", "export"], ["keyword", "extern"],
+	["keyword", "float"], ["keyword", "for"], ["keyword", "friend"], ["keyword", "goto"], ["keyword", "if"],
+	["keyword", "inline"], ["keyword", "int"], ["keyword", "long"], ["keyword", "mutable"], ["keyword", "namespace"],
+	["keyword", "new"], ["keyword", "noexcept"], ["keyword", "nullptr"], ["keyword", "operator"],
+	["keyword", "private"], ["keyword", "protected"], ["keyword", "public"], ["keyword", "register"],
+	["keyword", "reinterpret_cast"], ["keyword", "return"], ["keyword", "short"],
+	["keyword", "signed"], ["keyword", "sizeof"], ["keyword", "static"], ["keyword", "static_assert"],
+	["keyword", "static_cast"], ["keyword", "struct"], ["keyword", "switch"], ["keyword", "template"],
+	["keyword", "this"], ["keyword", "thread_local"], ["keyword", "throw"], ["keyword", "try"],
+	["keyword", "typedef"], ["keyword", "typeid"], ["keyword", "typename"], ["keyword", "union"],
+	["keyword", "unsigned"], ["keyword", "using"], ["keyword", "virtual"], ["keyword", "void"],
+	["keyword", "volatile"], ["keyword", "wchar_t"], ["keyword", "while"],
+	["keyword", "int8_t"], ["keyword", "int16_t"], ["keyword", "int32_t"], ["keyword", "int64_t"],
+	["keyword", "uint8_t"], ["keyword", "uint16_t"], ["keyword", "uint32_t"], ["keyword", "uint64_t"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords
