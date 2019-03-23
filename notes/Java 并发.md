@@ -261,7 +261,7 @@ public void run() {
 
 ## InterruptedException
 
-通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
+通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、有限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
 
 对于以下代码，在 main() 中启动一个线程之后再中断它，由于线程中调用了 Thread.sleep() 方法，因此会抛出一个 InterruptedException，从而提前结束线程，不执行之后的语句。
 
@@ -1176,7 +1176,7 @@ public static void main(String[] args) throws InterruptedException {
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
-主要有有三种实现可见性的方式：
+主要有三种实现可见性的方式：
 
 - volatile
 - synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
