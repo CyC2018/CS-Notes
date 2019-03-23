@@ -1,4 +1,4 @@
-<!-- GFM-TOC -->
+﻿<!-- GFM-TOC -->
 * [20. 表示数值的字符串](#20-表示数值的字符串)
     * [题目描述](#题目描述)
     * [解题思路](#解题思路)
@@ -318,7 +318,7 @@ private void swap(TreeNode root) {
 
 # 28 对称的二叉树
 
-[NowCder](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[NowCoder](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ## 题目描述
 
