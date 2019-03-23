@@ -520,7 +520,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 **（一）服务端驱动型** 
 
-客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Languag，服务器根据这些字段返回特定的资源。
+客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language、Content-Language，服务器根据这些字段返回特定的资源。
 
 它存在以下问题：
 
