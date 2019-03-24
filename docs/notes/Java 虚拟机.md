@@ -240,6 +240,14 @@ obj = null;
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
+优点:
+
+- 不会产生内存碎片
+
+不足:
+
+- 在标记-清除的基础上还需进行对象的移动，成本相对较高
+
 ### 3. 复制
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4_2001550547640585.png"/> </div><br>
