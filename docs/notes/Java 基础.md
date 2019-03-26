@@ -674,22 +674,26 @@ SuperExtendExample.func()
 - 子类方法的返回类型必须是父类方法返回类型或为其子类型。
 - 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。
 
-使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。例如：
-```java
-public class test {
-    class father{
-        protected List<Integer> say() throws Throwable{
-            System.out.println("father");
-            return new ArrayList<>();
-        }
-    }
+使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
 
-    class son extends father{
-        @Override
-        public ArrayList<Integer> say() throws Exception {
-            System.out.println("son");
-            return new ArrayList<>();
-        }
+下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
+
+- 子类方法访问权限为 public，大于父类的 protected。
+- 子类的返回类型为 ArrayList<Integer>，是父类返回类型 List<Integer> 的子类。
+- 子类抛出的异常类型为 Exception，是父类抛出异常 Throwable 的子类。
+- 子类重写方法使用 @Override 注解，从而让编译器自动检查是否满足限制条件。
+
+```java
+class SuperClass {
+    protected List<Integer> func() throws Throwable {
+        return new ArrayList<>();
+    }
+}
+
+class SubClass extends SuperClass {
+    @Override
+    public ArrayList<Integer> func() throws Exception {
+        return new ArrayList<>();
     }
 }
 ```
