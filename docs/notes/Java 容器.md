@@ -114,7 +114,7 @@ List list = Arrays.asList(1, 2, 3);
 
 ### 1. 概览
 
-实现了 RandomAccess 接口，因此支持随机访问。这是理所当然的，因为 ArrayList 是基于数组实现的。
+因为 ArrayList 是基于数组实现的，所以支持快速随机访问。RandomAccess接口标识着该类支持快速随机访问。
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
