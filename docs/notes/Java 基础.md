@@ -668,12 +668,31 @@ SuperExtendExample.func()
 
 存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。
 
-为了满足里式替换原则，重写有有以下两个限制：
+为了满足里式替换原则，重写有以下三个限制：
 
 - 子类方法的访问权限必须大于等于父类方法；
 - 子类方法的返回类型必须是父类方法返回类型或为其子类型。
+- 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。
 
-使用 @Override 注解，可以让编译器帮忙检查是否满足上面的两个限制条件。
+使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。例如：
+```java
+public class test {
+    class father{
+        protected List<Integer> say() throws Throwable{
+            System.out.println("father");
+            return new ArrayList<>();
+        }
+    }
+
+    class son extends father{
+        @Override
+        public ArrayList<Integer> say() throws Exception {
+            System.out.println("son");
+            return new ArrayList<>();
+        }
+    }
+}
+```
 
 **2. 重载（Overload）** 
 
