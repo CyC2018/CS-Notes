@@ -1,4 +1,3 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [集中式与分布式](#集中式与分布式)
 * [中心服务器](#中心服务器)
@@ -19,7 +18,7 @@
 
 Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
-<div align="center"> <img src="pics/fac3dfd6-1656-4329-9a80-7f6c51ef30c5_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/fac3dfd6-1656-4329-9a80-7f6c51ef30c5_200.png"/> </div><br>
 
 集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。
 
@@ -41,45 +40,45 @@ Github 就是一个中心服务器。
 
 Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本库，History 中存有所有分支，使用一个 HEAD 指针指向当前分支。
 
-<div align="center"> <img src="pics/0f9b9d2a-c5cc-4a3f-b138-2c1035950f39_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/0f9b9d2a-c5cc-4a3f-b138-2c1035950f39_200.png"/> </div><br>
 
 - git add files 把文件的修改添加到暂存区
 - git commit 把暂存区的修改提交到当前分支，提交之后暂存区就被清空了
 - git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
-<div align="center"> <img src="pics/11a786f0-5e02-46a6-92f0-f302c9cf6ca3_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/11a786f0-5e02-46a6-92f0-f302c9cf6ca3_200.png" width="400px"> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
 
 - git commit -a 直接把所有文件的修改添加到暂存区然后执行提交
 - git checkout HEAD -- files 取出最后一次修改，可以用来进行回滚操作
 
-<div align="center"> <img src="pics/b48b9a7a-f9f8-4cf9-90f1-5cddd685b782_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b48b9a7a-f9f8-4cf9-90f1-5cddd685b782_200.png" width="600px"> </div><br>
 
 # 分支实现
 
 使用指针将每个提交连接成一条时间线，HEAD 指针指向当前分支指针。
 
-<div align="center"> <img src="pics/84d496d7-54b0-4a9b-9499-ce232057e499_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/84d496d7-54b0-4a9b-9499-ce232057e499_200.png"/> </div><br>
 
 新建分支是新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支表示新分支成为当前分支。
 
-<div align="center"> <img src="pics/7c5bcdbf-e656-4b7c-be82-b247a3589ed5_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7c5bcdbf-e656-4b7c-be82-b247a3589ed5_200.png"/> </div><br>
 
 每次提交只会让当前分支指针向前移动，而其它分支指针不会移动。
 
-<div align="center"> <img src="pics/13783e94-b481-4aea-9fa2-9d1973abd47e_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/13783e94-b481-4aea-9fa2-9d1973abd47e_200.png"/> </div><br>
 
 合并分支也只需要改变指针即可。
 
-<div align="center"> <img src="pics/15699a17-5a69-4fbe-852e-9d2b7cf05e80_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/15699a17-5a69-4fbe-852e-9d2b7cf05e80_200.png"/> </div><br>
 
 # 冲突
 
 当两个分支都对同一个文件的同一行进行了修改，在分支合并时就会产生冲突。
 
-<div align="center"> <img src="pics/7e82ce01-2afb-4c15-b720-b81049c875c2_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7e82ce01-2afb-4c15-b720-b81049c875c2_200.png"/> </div><br>
 
 Git 会使用 <<<<<<< ，======= ，>>>>>>> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
@@ -101,7 +100,7 @@ Creating a new branch is quick AND simple.
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
-<div align="center"> <img src="pics/fa1dc552-8501-439e-b85a-3d9eac704880_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/fa1dc552-8501-439e-b85a-3d9eac704880_200.png"/> </div><br>
 
 # 分支管理策略
 
@@ -109,7 +108,7 @@ master 分支应该是非常稳定的，只用来发布新版本；
 
 日常开发在开发分支 dev 上进行。
 
-<div align="center"> <img src="pics/245fd2fb-209c-4ad5-bc5e-eb5664966a0e.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/245fd2fb-209c-4ad5-bc5e-eb5664966a0e.jpg"/> </div><br>
 
 # 储藏（Stashing）
 
@@ -149,7 +148,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 # Git 命令一览
 
-<div align="center"> <img src="pics/7a29acce-f243-4914-9f00-f2988c528412.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7a29acce-f243-4914-9f00-f2988c528412.jpg"/> </div><br>
 
 比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
 
@@ -159,3 +158,9 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 - [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
 - [廖雪峰 : Git 教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 - [Learn Git Branching](https://learngitbranching.js.org/)
+
+
+
+
+</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
+<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
