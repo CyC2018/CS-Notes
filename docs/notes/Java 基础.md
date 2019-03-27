@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 一、数据类型
 
 ## 基本类型
@@ -17,6 +18,69 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但�
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
 
 ## 包装类型
+=======
+<!-- GFM-TOC -->
+* [一、数据类型](#一数据类型)
+    * [基本类型](#基本类型)
+    * [包装类型](#包装类型)
+    * [缓存池](#缓存池)
+* [二、String](#二string)
+    * [概览](#概览)
+    * [不可变的好处](#不可变的好处)
+    * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
+    * [String Pool](#string-pool)
+    * [new String("abc")](#new-string"abc")
+* [三、运算](#三运算)
+    * [参数传递](#参数传递)
+    * [float 与 double](#float-与-double)
+    * [隐式类型转换](#隐式类型转换)
+    * [switch](#switch)
+* [四、继承](#四继承)
+    * [访问权限](#访问权限)
+    * [抽象类与接口](#抽象类与接口)
+    * [super](#super)
+    * [重写与重载](#重写与重载)
+* [五、Object 通用方法](#五object-通用方法)
+    * [概览](#概览)
+    * [equals()](#equals)
+    * [hashCode()](#hashcode)
+    * [toString()](#tostring)
+    * [clone()](#clone)
+* [六、关键字](#六关键字)
+    * [final](#final)
+    * [static](#static)
+* [七、反射](#七反射)
+* [八、异常](#八异常)
+* [九、泛型](#九泛型)
+* [十、注解](#十注解)
+* [十一、特性](#十一特性)
+    * [Java 各版本的新特性](#java-各版本的新特性)
+    * [Java 与 C++ 的区别](#java-与-c-的区别)
+    * [JRE or JDK](#jre-or-jdk)
+* [参考资料](#参考资料)
+<!-- GFM-TOC -->
+
+
+# 一、数据类型
+
+## 基本类型
+
+- byte/8
+- char/16
+- short/16
+- int/32
+- float/32
+- long/64
+- double/64
+- boolean/\~
+
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
+
+- [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
+- [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
+
+## 包装类型
+>>>>>>> 9f680db0cc99bd992c7f979442ecf458a33f9c1b
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -626,8 +690,9 @@ SuperExtendExample.func()
 
 存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。
 
-为了满足里式替换原则，重写有有以下两个限制：
+为了满足里式替换原则，重写有以下三个限制：
 
+<<<<<<< HEAD
 使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
 
 下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
@@ -649,6 +714,33 @@ class SubClass extends SuperClass {
     public ArrayList<Integer> func() throws Exception {
         return new ArrayList<>();
     }
+=======
+- 子类方法的访问权限必须大于等于父类方法；
+- 子类方法的返回类型必须是父类方法返回类型或为其子类型。
+- 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。
+
+使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
+
+下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
+
+- 子类方法访问权限为 public，大于父类的 protected。
+- 子类的返回类型为 ArrayList<Integer>，是父类返回类型 List<Integer> 的子类。
+- 子类抛出的异常类型为 Exception，是父类抛出异常 Throwable 的子类。
+- 子类重写方法使用 @Override 注解，从而让编译器自动检查是否满足限制条件。
+
+```java
+class SuperClass {
+    protected List<Integer> func() throws Throwable {
+        return new ArrayList<>();
+    }
+}
+
+class SubClass extends SuperClass {
+    @Override
+    public ArrayList<Integer> func() throws Exception {
+        return new ArrayList<>();
+    }
+>>>>>>> 9f680db0cc99bd992c7f979442ecf458a33f9c1b
 }
 ```
 

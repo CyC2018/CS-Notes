@@ -1,8 +1,77 @@
+<<<<<<< HEAD
 # 一、线程状态转换
 
 ![](index_files/96706658-b3f8-4f32-8eb3-dcb7fc8d5381.jpg)
 
 ## 新建（New）
+=======
+﻿<!-- GFM-TOC -->
+* [一、线程状态转换](#一线程状态转换)
+    * [新建（New）](#新建new)
+    * [可运行（Runnable）](#可运行runnable)
+    * [阻塞（Blocking）](#阻塞blocking)
+    * [无限期等待（Waiting）](#无限期等待waiting)
+    * [限期等待（Timed Waiting）](#限期等待timed-waiting)
+    * [死亡（Terminated）](#死亡terminated)
+* [二、使用线程](#二使用线程)
+    * [实现 Runnable 接口](#实现-runnable-接口)
+    * [实现 Callable 接口](#实现-callable-接口)
+    * [继承 Thread 类](#继承-thread-类)
+    * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
+* [三、基础线程机制](#三基础线程机制)
+    * [Executor](#executor)
+    * [Daemon](#daemon)
+    * [sleep()](#sleep)
+    * [yield()](#yield)
+* [四、中断](#四中断)
+    * [InterruptedException](#interruptedexception)
+    * [interrupted()](#interrupted)
+    * [Executor 的中断操作](#executor-的中断操作)
+* [五、互斥同步](#五互斥同步)
+    * [synchronized](#synchronized)
+    * [ReentrantLock](#reentrantlock)
+    * [比较](#比较)
+    * [使用选择](#使用选择)
+* [六、线程之间的协作](#六线程之间的协作)
+    * [join()](#join)
+    * [wait() notify() notifyAll()](#wait-notify-notifyall)
+    * [await() signal() signalAll()](#await-signal-signalall)
+* [七、J.U.C - AQS](#七juc---aqs)
+    * [CountDownLatch](#countdownlatch)
+    * [CyclicBarrier](#cyclicbarrier)
+    * [Semaphore](#semaphore)
+* [八、J.U.C - 其它组件](#八juc---其它组件)
+    * [FutureTask](#futuretask)
+    * [BlockingQueue](#blockingqueue)
+    * [ForkJoin](#forkjoin)
+* [九、线程不安全示例](#九线程不安全示例)
+* [十、Java 内存模型](#十java-内存模型)
+    * [主内存与工作内存](#主内存与工作内存)
+    * [内存间交互操作](#内存间交互操作)
+    * [内存模型三大特性](#内存模型三大特性)
+    * [先行发生原则](#先行发生原则)
+* [十一、线程安全](#十一线程安全)
+    * [不可变](#不可变)
+    * [互斥同步](#互斥同步)
+    * [非阻塞同步](#非阻塞同步)
+    * [无同步方案](#无同步方案)
+* [十二、锁优化](#十二锁优化)
+    * [自旋锁](#自旋锁)
+    * [锁消除](#锁消除)
+    * [锁粗化](#锁粗化)
+    * [轻量级锁](#轻量级锁)
+    * [偏向锁](#偏向锁)
+* [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
+* [参考资料](#参考资料)
+<!-- GFM-TOC -->
+
+
+# 一、线程状态转换
+
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/96706658-b3f8-4f32-8eb3-dcb7fc8d5381.jpg"/> </div><br>
+
+## 新建（New）
+>>>>>>> 9f680db0cc99bd992c7f979442ecf458a33f9c1b
 
 创建后尚未启动。
 
@@ -203,7 +272,11 @@ public void run() {
 
 ## InterruptedException
 
+<<<<<<< HEAD
 通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
+=======
+通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、有限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
+>>>>>>> 9f680db0cc99bd992c7f979442ecf458a33f9c1b
 
 对于以下代码，在 main() 中启动一个线程之后再中断它，由于线程中调用了 Thread.sleep() 方法，因此会抛出一个 InterruptedException，从而提前结束线程，不执行之后的语句。
 
@@ -1508,7 +1581,19 @@ public static String concatString(String s1, String s2, String s3) {
 
 如果一系列的连续操作都对同一个对象反复加锁和解锁，频繁的加锁操作就会导致性能损耗。
 
+<<<<<<< HEAD
 上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
+=======
+上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
+
+## 轻量级锁
+
+JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biased）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
+
+以下是 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。其中 tag bits 对应了五个状态，这些状态在右侧的 state 表格中给出。除了 marked for gc 状态，其它四个状态已经在前面介绍过了。
+
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/bb6a49be-00f2-4f27-a0ce-4ed764bc605c.png" width="500"/> </div><br>
+>>>>>>> 9f680db0cc99bd992c7f979442ecf458a33f9c1b
 
 ## 轻量级锁
 
