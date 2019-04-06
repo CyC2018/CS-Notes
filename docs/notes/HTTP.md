@@ -587,7 +587,7 @@ Accept-Ranges: bytes
 
 ## 分块传输编码
 
-Chunked Transfer Coding，可以把数据分割成多块，让浏览器逐步显示页面。
+Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步显示页面。
 
 ## 多部分对象集合
 
