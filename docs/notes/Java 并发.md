@@ -73,7 +73,7 @@
 
 包含了操作系统线程状态中的 Running 和 Ready。
 
-## 阻塞（Blocking）
+## 阻塞（Blocked）
 
 等待获取一个排它锁，如果其线程释放了锁就会结束此状态。
 
@@ -1198,7 +1198,7 @@ public static void main(String[] args) throws InterruptedException {
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
-主要有有三种实现可见性的方式：
+主要有三种实现可见性的方式：
 
 - volatile
 - synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。

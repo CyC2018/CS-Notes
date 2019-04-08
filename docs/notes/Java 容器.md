@@ -20,6 +20,7 @@
 
 # 一、概览
 
+
 容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。
 
 ## Collection
@@ -114,7 +115,7 @@ List list = Arrays.asList(1, 2, 3);
 
 ### 1. 概览
 
-实现了 RandomAccess 接口，因此支持随机访问。这是理所当然的，因为 ArrayList 是基于数组实现的。
+因为 ArrayList 是基于数组实现的，所以支持快速随机访问。RandomAccess 接口标识着该类支持快速随机访问。
 
 ```java
 public class ArrayList<E> extends AbstractList<E>

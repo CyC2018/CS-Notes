@@ -53,7 +53,7 @@
 - double/64
 - boolean/\~
 
-boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不直接支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
 
 - [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
@@ -670,10 +670,29 @@ SuperExtendExample.func()
 
 为了满足里式替换原则，重写有有以下两个限制：
 
-- 子类方法的访问权限必须大于等于父类方法；
-- 子类方法的返回类型必须是父类方法返回类型或为其子类型。
+使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
 
-使用 @Override 注解，可以让编译器帮忙检查是否满足上面的两个限制条件。
+下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
+
+- 子类方法访问权限为 public，大于父类的 protected。
+- 子类的返回类型为 ArrayList<Integer>，是父类返回类型 List<Integer> 的子类。
+- 子类抛出的异常类型为 Exception，是父类抛出异常 Throwable 的子类。
+- 子类重写方法使用 @Override 注解，从而让编译器自动检查是否满足限制条件。
+
+```java
+class SuperClass {
+    protected List<Integer> func() throws Throwable {
+        return new ArrayList<>();
+    }
+}
+
+class SubClass extends SuperClass {
+    @Override
+    public ArrayList<Integer> func() throws Exception {
+        return new ArrayList<>();
+    }
+}
+```
 
 **2. 重载（Overload）** 
 

@@ -47,14 +47,14 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 - git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/11a786f0-5e02-46a6-92f0-f302c9cf6ca3_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/11a786f0-5e02-46a6-92f0-f302c9cf6ca3_200.png" width="400px"> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
 
 - git commit -a 直接把所有文件的修改添加到暂存区然后执行提交
 - git checkout HEAD -- files 取出最后一次修改，可以用来进行回滚操作
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b48b9a7a-f9f8-4cf9-90f1-5cddd685b782_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b48b9a7a-f9f8-4cf9-90f1-5cddd685b782_200.png" width="600px"> </div><br>
 
 # 分支实现
 
