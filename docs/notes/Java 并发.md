@@ -2,7 +2,7 @@
 * [一、线程状态转换](#一线程状态转换)
     * [新建（New）](#新建new)
     * [可运行（Runnable）](#可运行runnable)
-    * [阻塞（Blocking）](#阻塞blocking)
+    * [阻塞（Blocked）](#阻塞blocked)
     * [无限期等待（Waiting）](#无限期等待waiting)
     * [限期等待（Timed Waiting）](#限期等待timed-waiting)
     * [死亡（Terminated）](#死亡terminated)
@@ -73,7 +73,7 @@
 
 包含了操作系统线程状态中的 Running 和 Ready。
 
-## 阻塞（Blocking）
+## 阻塞（Blocked）
 
 等待获取一个排它锁，如果其线程释放了锁就会结束此状态。
 
