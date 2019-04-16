@@ -276,7 +276,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 ## 查找最大的连通面积
 
-[695. Max Area of Island (Easy)](https://leetcode.com/problems/max-area-of-island/description/)
+[695. Max Area of Island (Medium)](https://leetcode.com/problems/max-area-of-island/description/)
 
 ```html
 [[0,0,1,0,0,0,0,1,0,0,0,0,0],
