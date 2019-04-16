@@ -1,0 +1,21 @@
+$foo
+$foo-bar
+$foo_bar
+#{$foo}
+#{$foo-bar}
+#{$foo_bar}
+
+----------------------------------------------------
+
+[
+	["variable", "$foo"],
+	["variable", "$foo-bar"],
+	["variable", "$foo_bar"],
+	["variable", "#{$foo}"],
+	["variable", "#{$foo-bar}"],
+	["variable", "#{$foo_bar}"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

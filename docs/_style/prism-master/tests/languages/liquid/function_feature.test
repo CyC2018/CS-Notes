@@ -1,0 +1,39 @@
+abs append at_least at_most
+capitalize ceil cols compact concat cycle
+date decrement default divided_by downcase
+escape escape_once
+first floor
+include increment
+join
+last lstrip
+map minus modulo
+newline_to_br
+paginate plus prepend
+remove remove_first replace replace_first reverse round rstrip
+size slice sort sort_natural split strip strip_html strip_newlines
+times truncate truncatewords
+uniq upcase url_decode url_encode
+
+----------------------------------------------------
+
+[
+	["function", "abs"], ["function", "append"], ["function", "at_least"], ["function", "at_most"],
+	["function", "capitalize"], ["function", "ceil"], ["function", "cols"], ["function", "compact"], ["function", "concat"], ["function", "cycle"],
+	["function", "date"], ["function", "decrement"], ["function", "default"], ["function", "divided_by"], ["function", "downcase"],
+	["function", "escape"], ["function", "escape_once"],
+	["function", "first"], ["function", "floor"],
+	["function", "include"], ["function", "increment"],
+	["function", "join"],
+	["function", "last"], ["function", "lstrip"],
+	["function", "map"], ["function", "minus"], ["function", "modulo"],
+	["function", "newline_to_br"],
+	["function", "paginate"], ["function", "plus"], ["function", "prepend"],
+	["function", "remove"], ["function", "remove_first"], ["function", "replace"], ["function", "replace_first"], ["function", "reverse"], ["function", "round"], ["function", "rstrip"],
+	["function", "size"], ["function", "slice"], ["function", "sort"], ["function", "sort_natural"], ["function", "split"], ["function", "strip"], ["function", "strip_html"], ["function", "strip_newlines"],
+	["function", "times"], ["function", "truncate"], ["function", "truncatewords"],
+	["function", "uniq"], ["function", "upcase"], ["function", "url_decode"], ["function", "url_encode"]
+]
+
+----------------------------------------------------
+
+Checks for functions. Also checks for unicode characters in identifiers.

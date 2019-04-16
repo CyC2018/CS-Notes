@@ -1,0 +1,52 @@
+div
+	width 40px
+	color: red
+	background: blue;
+
+div {
+background-{foo}: bar;
+}
+
+div
+	{foo} bar
+
+----------------------------------------------------
+
+[
+	["selector", ["div"]],
+	["property-declaration", [
+		["property", ["width"]], ["number", "40"], "px"
+	]],
+	["property-declaration", [
+		["property", ["color"]], ["punctuation", ":"], " red"
+	]],
+	["property-declaration", [
+		["property", ["background"]], ["punctuation", ":"], " blue", ["punctuation", ";"]
+	]],
+	["selector", ["div ", ["punctuation", "{"]]],
+	["property-declaration", [
+		["property", [
+			"background-",
+			["interpolation", [
+				["delimiter", "{"], "foo", ["delimiter", "}"]
+			]]
+		]],
+		["punctuation", ":"],
+		" bar",
+		["punctuation", ";"]
+	]],
+	["punctuation", "}"],
+	["selector", ["div"]],
+	["property-declaration", [
+		["property", [
+			["interpolation", [
+				["delimiter", "{"], "foo", ["delimiter", "}"]
+			]]
+		]],
+		" bar"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for property declarations.

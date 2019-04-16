@@ -1,0 +1,29 @@
+++++
+.Fo__o__bar *baz*
+Fo(((o)))bar baz
+* Foobar baz
+include::addendum.txt[]
+++++
+
+----------------------------------------------------
+
+[
+	["passthrough-block", [
+		["punctuation", "++++"],
+		"\r\n.Fo__o__bar *baz*\r\nFo(((o)))bar baz\r\n* Foobar baz\r\n",
+		["macro", [
+			["function", "include"],
+			["punctuation", "::"],
+			"addendum.txt",
+			["attributes", [
+				["punctuation", "["], ["punctuation", "]"]
+			]]
+		]],
+		["punctuation", "++++"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for passthrough blocks.
+Also checks that nothing gets highlighted inside expect macros.

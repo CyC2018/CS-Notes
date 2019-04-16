@@ -1,0 +1,115 @@
+admin all auto both
+colored false force
+hide highest lastused
+leave listonly none
+normal notset off
+on open print show
+silent silentlog
+smooth textonly
+true user
+
+ARCHIVE
+FILE_ATTRIBUTE_ARCHIVE
+FILE_ATTRIBUTE_NORMAL
+FILE_ATTRIBUTE_OFFLINE
+FILE_ATTRIBUTE_READONLY
+FILE_ATTRIBUTE_SYSTEM
+FILE_ATTRIBUTE_TEMPORARY
+HKCR HKCU HKLM
+HKCR32 HKCU32 HKLM32
+HKCR64 HKCU64 HKLM64
+HKDD HKPD HKU
+HKEY_CLASSES_ROOT
+HKEY_CURRENT_CONFIG
+HKEY_CURRENT_USER
+HKEY_DYN_DATA
+HKEY_LOCAL_MACHINE
+HKEY_PERFORMANCE_DATA
+HKEY_USERS
+IDABORT IDCANCEL
+IDIGNORE IDNO
+IDOK IDRETRY IDYES
+MB_ABORTRETRYIGNORE
+MB_DEFBUTTON1
+MB_DEFBUTTON2
+MB_DEFBUTTON3
+MB_DEFBUTTON4
+MB_ICONEXCLAMATION
+MB_ICONINFORMATION
+MB_ICONQUESTION
+MB_ICONSTOP
+MB_OK
+MB_OKCANCEL
+MB_RETRYCANCEL
+MB_RIGHT
+MB_RTLREADING
+MB_SETFOREGROUND
+MB_TOPMOST
+MB_USERICON
+MB_YESNO
+NORMAL OFFLINE
+READONLY SHCTX
+SHELL_CONTEXT
+SYSTEM TEMPORARY
+
+----------------------------------------------------
+
+[
+	["property", "admin"], ["property", "all"], ["property", "auto"], ["property", "both"],
+	["property", "colored"], ["property", "false"], ["property", "force"],
+	["property", "hide"], ["property", "highest"], ["property", "lastused"],
+	["property", "leave"], ["property", "listonly"], ["property", "none"],
+	["property", "normal"], ["property", "notset"], ["property", "off"],
+	["property", "on"], ["property", "open"], ["property", "print"], ["property", "show"],
+	["property", "silent"], ["property", "silentlog"],
+	["property", "smooth"], ["property", "textonly"],
+	["property", "true"], ["property", "user"],
+	
+	["property", "ARCHIVE"],
+	["property", "FILE_ATTRIBUTE_ARCHIVE"],
+	["property", "FILE_ATTRIBUTE_NORMAL"],
+	["property", "FILE_ATTRIBUTE_OFFLINE"],
+	["property", "FILE_ATTRIBUTE_READONLY"],
+	["property", "FILE_ATTRIBUTE_SYSTEM"],
+	["property", "FILE_ATTRIBUTE_TEMPORARY"],
+	["property", "HKCR"], ["property", "HKCU"], ["property", "HKLM"],
+	["property", "HKCR32"], ["property", "HKCU32"], ["property", "HKLM32"],
+	["property", "HKCR64"], ["property", "HKCU64"], ["property", "HKLM64"],
+	["property", "HKDD"], ["property", "HKPD"], ["property", "HKU"],
+	["property", "HKEY_CLASSES_ROOT"],
+	["property", "HKEY_CURRENT_CONFIG"],
+	["property", "HKEY_CURRENT_USER"],
+	["property", "HKEY_DYN_DATA"],
+	["property", "HKEY_LOCAL_MACHINE"],
+	["property", "HKEY_PERFORMANCE_DATA"],
+	["property", "HKEY_USERS"],
+	["property", "IDABORT"], ["property", "IDCANCEL"],
+	["property", "IDIGNORE"], ["property", "IDNO"],
+	["property", "IDOK"], ["property", "IDRETRY"], ["property", "IDYES"],
+	["property", "MB_ABORTRETRYIGNORE"],
+	["property", "MB_DEFBUTTON1"],
+	["property", "MB_DEFBUTTON2"],
+	["property", "MB_DEFBUTTON3"],
+	["property", "MB_DEFBUTTON4"],
+	["property", "MB_ICONEXCLAMATION"],
+	["property", "MB_ICONINFORMATION"],
+	["property", "MB_ICONQUESTION"],
+	["property", "MB_ICONSTOP"],
+	["property", "MB_OK"],
+	["property", "MB_OKCANCEL"],
+	["property", "MB_RETRYCANCEL"],
+	["property", "MB_RIGHT"],
+	["property", "MB_RTLREADING"],
+	["property", "MB_SETFOREGROUND"],
+	["property", "MB_TOPMOST"],
+	["property", "MB_USERICON"],
+	["property", "MB_YESNO"],
+	["property", "NORMAL"], ["property", "OFFLINE"],
+	["property", "READONLY"], ["property", "SHCTX"],
+	["property", "SHELL_CONTEXT"],
+	["property", "SYSTEM"], ["property", "TEMPORARY"]
+]
+
+----------------------------------------------------
+
+Checks for all properties.

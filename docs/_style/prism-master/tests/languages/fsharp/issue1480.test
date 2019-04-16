@@ -1,0 +1,36 @@
+let foo' = failWith "foo"
+
+let bar' = failWith "bar"
+
+let map (f: 'a -> 'b) (xs: 'a list): 'b list = failWith "not implemented"
+
+----------------------------------------------------
+
+[
+	["keyword", "let"], " foo' ", ["operator", "="], " failWith ", ["string", "\"foo\""],
+	["keyword", "let"], " bar' ", ["operator", "="], " failWith ", ["string", "\"bar\""],
+
+	["keyword", "let"],
+	" map ",
+	["punctuation", "("],
+	"f",
+	["punctuation", ":"],
+	" 'a ",
+	["operator", "->"],
+	" 'b",
+	["punctuation", ")"],
+	["punctuation", "("],
+	"xs",
+	["punctuation", ":"],
+	" 'a list",
+	["punctuation", ")"],
+	["punctuation", ":"],
+	" 'b list ",
+	["operator", "="],
+	" failWith ",
+	["string", "\"not implemented\""]
+]
+
+----------------------------------------------------
+
+Checks for apostrophes in names. See #1480.

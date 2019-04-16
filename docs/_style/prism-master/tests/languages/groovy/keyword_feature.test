@@ -1,0 +1,61 @@
+as def in abstract
+assert boolean break
+byte case catch char
+class;
+const continue
+default do double else
+enum
+extends;
+final
+finally float for goto
+if
+implements;
+import
+instanceof;
+int
+interface;
+long native
+new;
+package private protected
+public return short
+static strictfp super
+switch synchronized this
+throw throws
+trait;
+transient
+try void volatile while
+
+----------------------------------------------------
+
+[
+	["keyword", "as"], ["keyword", "def"], ["keyword", "in"], ["keyword", "abstract"],
+	["keyword", "assert"], ["keyword", "boolean"], ["keyword", "break"],
+	["keyword", "byte"], ["keyword", "case"], ["keyword", "catch"], ["keyword", "char"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"], ["keyword", "continue"],
+	["keyword", "default"], ["keyword", "do"], ["keyword", "double"], ["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "final"],
+	["keyword", "finally"], ["keyword", "float"], ["keyword", "for"], ["keyword", "goto"],
+	["keyword", "if"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "int"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "long"], ["keyword", "native"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "package"], ["keyword", "private"], ["keyword", "protected"],
+	["keyword", "public"], ["keyword", "return"], ["keyword", "short"],
+	["keyword", "static"], ["keyword", "strictfp"], ["keyword", "super"],
+	["keyword", "switch"], ["keyword", "synchronized"], ["keyword", "this"],
+	["keyword", "throw"], ["keyword", "throws"],
+	["keyword", "trait"], ["punctuation", ";"],
+	["keyword", "transient"],
+	["keyword", "try"], ["keyword", "void"], ["keyword", "volatile"], ["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

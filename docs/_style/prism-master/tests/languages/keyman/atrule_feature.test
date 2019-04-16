@@ -1,0 +1,15 @@
+ansi begin unicode
+group using keys
+match nomatch
+
+----------------------------------------------------
+
+[
+	["atrule", "ansi"], ["atrule", "begin"], ["atrule", "unicode"],
+	["atrule", "group"], ["atrule", "using keys"],
+	["atrule", "match"], ["atrule", "nomatch"]
+]
+
+----------------------------------------------------
+
+Checks for all structural keywords.

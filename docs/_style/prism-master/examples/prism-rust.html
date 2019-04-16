@@ -1,0 +1,68 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/// Doc comments
+/* Multiline
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>'C'; '\''; '\n'; '\u7FFF'; // Characters
+"foo \"bar\" baz"; // String
+r##"foo #"bar"# baz"##; // Raw string with # pairs
+b'C'; b'\''; b'\n'; // Bytes
+b"foo \"bar\" baz"; // Byte string
+br##"foo #"bar"# baz"##; // Raw byte string with # pairs
+</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>123i;                              // type int
+123u;                              // type uint
+123_u;                             // type uint
+0xff_u8;                           // type u8
+0o70_i16;                          // type i16
+0b1111_1111_1001_0000_i32;         // type i32
+
+123.0f64;        // type f64
+0.1f64;          // type f64
+0.1f32;          // type f32
+12E+99_f64;      // type f64
+</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>true; false;</code></pre>
+
+<h2>Functions and macros</h2>
+<pre><code>println!("x is {}", x);
+fn next_two(x: int) -> (int, int) { (x + 1i, x + 2i) }
+next_two(5i);
+vec![1i, 2, 3];
+</code></pre>
+
+<h2>Attributes</h2>
+<pre><code>#![warn(unstable)]
+#[test]
+fn a_test() {
+	// ...
+}</code></pre>
+
+<h2>Closure parameters and bitwise OR</h2>
+<pre><code>let x = a | b;
+let y = c || d;
+let add_one = |x: int| -> int { 1i + x };
+let printer = || { println!("x is: {}", x); };
+</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nested block comments</h3>
+<pre><code>/* Nested block
+	/* comments
+	are */
+not supported */</code></pre>
+
+<h3>Delimiters of parameters for closures that don't use braces</h3>
+<pre><code>|x| x + 1i;</code></pre>

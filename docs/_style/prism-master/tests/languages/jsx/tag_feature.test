@@ -1,0 +1,83 @@
+var myDivElement = <div className="foo" />;
+var myElement = <MyComponent someProperty={true} />;
+<div {...foo}></div>
+<> </>
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	" myDivElement ",
+	["operator", "="],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["className"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"foo",
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+	["punctuation", ";"],
+
+	["keyword", "var"],
+	" myElement ",
+	["operator", "="],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			["class-name", "MyComponent"]
+		]],
+		["attr-name", ["someProperty"]],
+		["script", [
+			 ["script-punctuation", "="],
+			 ["punctuation", "{"],
+			 ["boolean", "true"],
+			 ["punctuation", "}"]
+		]],
+		["punctuation", "/>"]
+	]],
+	["punctuation", ";"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["spread", [
+			["punctuation", "{"],
+			["punctuation", "..."],
+			["attr-value", "foo"],
+			["punctuation", "}"]
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"]
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", " "],
+	["tag", [
+		["tag", [
+			["punctuation", "</"]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for JSX tags.

@@ -1,0 +1,158 @@
+<h2>Comments</h2>
+<pre><code>/* This is a
+multi-line comment */
+
+* This is a comment too;</code></pre>
+
+<h2>Numbers, dates and times</h2>
+<pre><code>42; 4.5; 4.5e-10; -3; -3.5e2; -4.2e-23;
+0afx; 0123x; abcdefx;
+'1jan2013'd; '01jan09'd;
+'9:25't; '9:25:19pm't;
+'01may12:9:30:00'dt; '18jan2003:9:27:05am'dt;
+'2013-05-17T09:15:30–05:00'dt; '2013-05-17T09:15:30–05'dt;
+'2013-07-20T12:00:00+00:00'dt; '2013-07-20T12:00:00Z'dt;</code></pre>
+
+<h2>Strings</h2>
+<pre><code>'Single quoted string';
+"Double quoted string";
+'String ''quoted'' string "containing" quote';
+"Double ""quoted"" string 'containing' quote";</code></pre>
+
+<h2>Operators</h2>
+<pre><code>A**B;
+'foo'||'bar'!!'baz'¦¦'test';
+A&lt;>B>&lt;C;
+A~=B¬=C^=D>=E<=F;
+a*b/c+d-e&lt;f>g&amp;h|i!j¦k;
+~a;¬b;^c;
+(a eq b) ne (c gt d) lt e ge f le h;
+state in ('NY','NJ','PA');
+not a;</code></pre>
+
+<h2>More examples</h2>
+<pre><code>/* Some examples adapted from the documentation (http://support.sas.com/documentation/cdl/en/basess/64003/PDF/default/basess.pdf) */
+
+data city; * another inline comment;
+
+	input Year 4. @7 ServicesPolice comma6.
+		@15 ServicesFire comma6. @22 ServicesWater_Sewer comma6.
+		@30 AdminLabor comma6. @39 AdminSupplies comma6.
+		@45 AdminUtilities comma6.;
+	ServicesTotal=ServicesPolice+ServicesFire+ServicesWater_Sewer;
+	AdminTotal=AdminLabor+AdminSupplies+AdminUtilities;
+	Total=ServicesTotal+AdminTotal;
+
+	Test='A string '' whith a quote';
+	Test2 = "A string "" whith a quote";
+
+	label   Total='Total Outlays'
+			ServicesTotal='Services: Total'
+			ServicesPolice='Services: Police'
+			ServicesFire='Services: Fire'
+			ServicesWater_Sewer='Services: Water &amp; Sewer'
+			AdminTotal='Administration: Total'
+			AdminLabor='Administration: Labor'
+			AdminSupplies='Administration: Supplies'
+			AdminUtilities='Administration: Utilities';
+	datalines;
+1993 2,819 1,120 422 391 63 98
+1994 2,477 1,160 500 172 47 70
+1995 2,028 1,061 510 269 29 79
+1996 2,754 893 540 227 21 67
+1997 2,195 963 541 214 21 59
+1998 1,877 926 535 198 16 80
+1999 1,727 1,111 535 213 27 70
+2000 1,532 1,220 519 195 11 69
+2001 1,448 1,156 577 225 12 58
+2002 1,500 1,076 606 235 19 62
+2003 1,934 969 646 266 11 63
+2004 2,195 1,002 643 256 24 55
+2005 2,204 964 692 256 28 70
+2006 2,175 1,144 735 241 19 83
+2007 2,556 1,341 813 238 25 97
+2008 2,026 1,380 868 226 24 97
+2009 2,526 1,454 946 317 13 89
+2010 2,027 1,486 1,043 226 . 82
+2011 2,037 1,667 1,152 244 20 88
+2012 2,852 1,834 1,318 270 23 74
+2013 2,787 1,701 1,317 307 26 66
+;
+proc datasets library=work nolist
+;
+contents data=city
+;
+run;
+
+
+data city3;
+	set city(firstobs=10 obs=15);
+run;
+
+data services (keep=ServicesTotal ServicesPolice ServicesFire
+				ServicesWater_Sewer)
+	admin (keep=AdminTotal AdminLabor AdminSupplies
+			AdminUtilities);
+	set city(drop=Total);
+run;
+proc print data=services;
+	title 'City Expenditures: Services';
+run;
+
+data newlength;
+	set mylib.internationaltours;
+	length Remarks $ 30;
+	if Vendor = 'Hispania' then Remarks = 'Bonus for 10+ people';
+	else if Vendor = 'Mundial' then Remarks = 'Bonus points';
+	else if Vendor = 'Major' then Remarks = 'Discount for 30+ people';
+run;
+proc print data=newlength;
+	var Country Vendor Remarks;
+	title 'Information About Vendors';
+run;
+
+libname mylib 'permanent-data-library';
+data mylib.departures;
+	input Country $ 1-9 CitiesInTour 11-12 USGate $ 14-26
+	ArrivalDepartureGates $ 28-48;
+	datalines;
+Japan 5 San Francisco Tokyo, Osaka
+Italy 8 New York Rome, Naples
+Australia 12 Honolulu Sydney, Brisbane
+Venezuela 4 Miami Caracas, Maracaibo
+Brazil 4 Rio de Janeiro, Belem
+;
+proc print data=mylib.departures;
+	title 'Data Set AIR.DEPARTURES';
+run;
+
+data missingval;
+	length Country $ 10 TourGuide $ 10;
+	input Country TourGuide;
+	* lines is an alias for datalines;
+	lines;
+Japan Yamada
+Italy Militello
+Australia Edney
+Venezuela .
+Brazil Cardoso
+;
+
+data inventory_tool;
+	input PartNumber $ Description $ InStock @17
+		ReceivedDate date9. @27 Price;
+	format ReceivedDate date9.;
+	* cards is an alias for datalines;
+	cards;
+K89R seal 34 27jul2010 245.00
+M4J7 sander 98 20jun2011 45.88
+LK43 filter 121 19may2011 10.99
+MN21 brace 43 10aug2012 27.87
+BC85 clamp 80 16aug2012 9.55
+NCF3 valve 198 20mar2012 24.50
+KJ66 cutter 6 18jun2010 19.77
+UYN7 rod 211 09sep2010 11.55
+JD03 switch 383 09jan2013 13.99
+BV1E timer 26 03aug2013 34.50
+;
+run;</code></pre>

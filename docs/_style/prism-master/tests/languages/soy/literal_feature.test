@@ -1,0 +1,73 @@
+{literal}{$noHighlight}{/literal}
+{$highlight}{literal}<div class="{$foo}">
+{if $bar}{$bar}{/if}</div>
+{/literal}
+{literal}/* even comments */{/literal}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	"{$noHighlight}",
+	["soy", [
+		["delimiter", "{/"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", ["$highlight"]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"{$foo}",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	"\r\n{if $bar}{$bar}{/if}",
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["soy", [
+		["delimiter", "{/"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]],
+	"/* even comments */",
+	["soy", [
+		["delimiter", "{/"],
+		["keyword", "literal"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for {literal} command.

@@ -1,0 +1,13 @@
+foobar()
+Foo_Bar_42()
+
+----------------------------------------------------
+
+[
+	["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "Foo_Bar_42"], ["punctuation", "("], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

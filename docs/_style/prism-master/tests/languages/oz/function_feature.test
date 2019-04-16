@@ -1,0 +1,13 @@
+foobar()
+{Foobar}
+
+----------------------------------------------------
+
+[
+	["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+	["punctuation", "{"], ["function", "Foobar"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for functions and procedures.

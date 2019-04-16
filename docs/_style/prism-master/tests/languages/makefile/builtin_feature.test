@@ -1,0 +1,15 @@
+.PHONY:
+.DELETE_ON_ERROR:
+.SECONDEXPANSION:
+
+----------------------------------------------------
+
+[
+	["builtin", ".PHONY"], ["punctuation", ":"],
+	["builtin", ".DELETE_ON_ERROR"], ["punctuation", ":"],
+	["builtin", ".SECONDEXPANSION"], ["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for built-in target names.

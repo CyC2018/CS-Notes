@@ -1,0 +1,73 @@
+abstract and as assert
+base begin
+class;
+default
+delegate do done downcast
+downto elif else end
+exception;
+extern false finally
+for fun function global
+if in inherit; inline
+interface;
+internal lazy let
+let! match member module
+mutable namespace
+new;
+not
+null of; open or override
+private public rec return
+return! select static struct
+then to true try type;
+upcast use use! val void
+when while with yield
+yield! asr land lor lsl
+lsr lxor mod sig atomic
+break checked component
+const constraint constructor
+continue eager event external
+fixed functor include method
+mixin object parallel process
+protected pure sealed tailcall
+trait;
+virtual volatile
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "and"], ["keyword", "as"], ["keyword", "assert"],
+	["keyword", "base"], ["keyword", "begin"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "default"],
+	["keyword", "delegate"], ["keyword", "do"], ["keyword", "done"], ["keyword", "downcast"],
+	["keyword", "downto"], ["keyword", "elif"], ["keyword", "else"], ["keyword", "end"],
+	["keyword", "exception"], ["punctuation", ";"],
+	["keyword", "extern"], ["keyword", "false"], ["keyword", "finally"],
+	["keyword", "for"], ["keyword", "fun"], ["keyword", "function"], ["keyword", "global"],
+	["keyword", "if"], ["keyword", "in"], ["keyword", "inherit"], ["punctuation", ";"], ["keyword", "inline"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "internal"], ["keyword", "lazy"], ["keyword", "let"],
+	["keyword", "let!"], ["keyword", "match"], ["keyword", "member"], ["keyword", "module"],
+	["keyword", "mutable"], ["keyword", "namespace"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "not"],
+	["keyword", "null"], ["keyword", "of"], ["punctuation", ";"], ["keyword", "open"], ["keyword", "or"], ["keyword", "override"],
+	["keyword", "private"], ["keyword", "public"], ["keyword", "rec"], ["keyword", "return"],
+	["keyword", "return!"], ["keyword", "select"], ["keyword", "static"], ["keyword", "struct"],
+	["keyword", "then"], ["keyword", "to"], ["keyword", "true"], ["keyword", "try"], ["keyword", "type"], ["punctuation", ";"],
+	["keyword", "upcast"], ["keyword", "use"], ["keyword", "use!"], ["keyword", "val"], ["keyword", "void"],
+	["keyword", "when"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"],
+	["keyword", "yield!"], ["keyword", "asr"], ["keyword", "land"], ["keyword", "lor"], ["keyword", "lsl"],
+	["keyword", "lsr"], ["keyword", "lxor"], ["keyword", "mod"], ["keyword", "sig"], ["keyword", "atomic"],
+	["keyword", "break"], ["keyword", "checked"], ["keyword", "component"],
+	["keyword", "const"], ["keyword", "constraint"], ["keyword", "constructor"],
+	["keyword", "continue"], ["keyword", "eager"], ["keyword", "event"], ["keyword", "external"],
+	["keyword", "fixed"], ["keyword", "functor"], ["keyword", "include"], ["keyword", "method"],
+	["keyword", "mixin"], ["keyword", "object"], ["keyword", "parallel"], ["keyword", "process"],
+	["keyword", "protected"], ["keyword", "pure"], ["keyword", "sealed"], ["keyword", "tailcall"],
+	["keyword", "trait"], ["punctuation", ";"],
+	["keyword", "virtual"], ["keyword", "volatile"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

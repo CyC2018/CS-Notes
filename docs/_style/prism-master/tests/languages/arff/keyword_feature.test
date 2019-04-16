@@ -1,0 +1,17 @@
+@attribute
+@data
+@end
+@relation
+
+----------------------------------------------------
+
+[
+	["keyword", "@attribute"],
+	["keyword", "@data"],
+	["keyword", "@end"],
+	["keyword", "@relation"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

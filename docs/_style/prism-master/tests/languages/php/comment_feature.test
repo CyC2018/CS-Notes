@@ -1,0 +1,20 @@
+//
+// foobar
+/**/
+/* foo
+bar */
+/* <me@example.com> */
+
+----------------------------------------------------
+
+[
+	["comment", "//"],
+	["comment", "// foobar"],
+	["comment", "/**/"],
+	["comment", "/* foo\r\nbar */"],
+	["comment", "/* <me@example.com> */"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

@@ -1,0 +1,17 @@
+foo?
+bar%
+baz#
+foobar$
+
+----------------------------------------------------
+
+[
+	"foo", ["type-char", "?"],
+	"\r\nbar", ["type-char", "%"],
+	"\r\nbaz", ["type-char", "#"],
+	"\r\nfoobar", ["type-char", "$"]
+]
+
+----------------------------------------------------
+
+Checks for type chars.

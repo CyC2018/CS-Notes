@@ -1,0 +1,371 @@
+\foo
+\foo_bar_42
+
+abs
+acos
+aj
+aj0
+all
+and
+any
+asc
+asin
+asof
+atan
+attr
+avg
+avgs
+bin
+binr
+by
+ceiling
+cols
+cor
+cos
+count
+cov
+cross
+csv
+cut
+delete
+deltas
+desc
+dev
+differ
+distinct
+div
+do
+dsave
+ej
+enlist
+eval
+except
+exec
+exit
+exp
+fby
+fills
+first
+fkeys
+flip
+floor
+from
+get
+getenv
+group
+gtime
+hclose
+hcount
+hdel
+hopen
+hsym
+iasc
+identity
+idesc
+if
+ij
+in
+insert
+inter
+inv
+key
+keys
+last
+like
+list
+lj
+ljf
+load
+log
+lower
+lsq
+ltime
+ltrim
+mavg
+max
+maxs
+mcount
+md5
+mdev
+med
+meta
+min
+mins
+mmax
+mmin
+mmu
+mod
+msum
+neg
+next
+not
+null
+or
+over
+parse
+peach
+pj
+plist
+prd
+prds
+prev
+prior
+rand
+rank
+ratios
+raze
+read0
+read1
+reciprocal
+reval
+reverse
+rload
+rotate
+rsave
+rtrim
+save
+scan
+scov
+sdev
+select
+set
+setenv
+show
+signum
+sin
+sqrt
+ss
+ssr
+string
+sublist
+sum
+sums
+sv
+svar
+system
+tables
+tan
+til
+trim
+txf
+type
+uj
+ungroup
+union
+update
+upper
+upsert
+value
+var
+view
+views
+vs
+wavg
+where
+while
+within
+wj
+wj1
+wsum
+ww
+xasc
+xbar
+xcol
+xcols
+xdesc
+xexp
+xgroup
+xkey
+xlog
+xprev
+xrank
+
+----------------------------------------------------
+
+[
+	["keyword", "\\foo"],
+	["keyword", "\\foo_bar_42"],
+
+	["keyword", "abs"],
+	["keyword", "acos"],
+	["keyword", "aj"],
+	["keyword", "aj0"],
+	["keyword", "all"],
+	["keyword", "and"],
+	["keyword", "any"],
+	["keyword", "asc"],
+	["keyword", "asin"],
+	["keyword", "asof"],
+	["keyword", "atan"],
+	["keyword", "attr"],
+	["keyword", "avg"],
+	["keyword", "avgs"],
+	["keyword", "bin"],
+	["keyword", "binr"],
+	["keyword", "by"],
+	["keyword", "ceiling"],
+	["keyword", "cols"],
+	["keyword", "cor"],
+	["keyword", "cos"],
+	["keyword", "count"],
+	["keyword", "cov"],
+	["keyword", "cross"],
+	["keyword", "csv"],
+	["keyword", "cut"],
+	["keyword", "delete"],
+	["keyword", "deltas"],
+	["keyword", "desc"],
+	["keyword", "dev"],
+	["keyword", "differ"],
+	["keyword", "distinct"],
+	["keyword", "div"],
+	["keyword", "do"],
+	["keyword", "dsave"],
+	["keyword", "ej"],
+	["keyword", "enlist"],
+	["keyword", "eval"],
+	["keyword", "except"],
+	["keyword", "exec"],
+	["keyword", "exit"],
+	["keyword", "exp"],
+	["keyword", "fby"],
+	["keyword", "fills"],
+	["keyword", "first"],
+	["keyword", "fkeys"],
+	["keyword", "flip"],
+	["keyword", "floor"],
+	["keyword", "from"],
+	["keyword", "get"],
+	["keyword", "getenv"],
+	["keyword", "group"],
+	["keyword", "gtime"],
+	["keyword", "hclose"],
+	["keyword", "hcount"],
+	["keyword", "hdel"],
+	["keyword", "hopen"],
+	["keyword", "hsym"],
+	["keyword", "iasc"],
+	["keyword", "identity"],
+	["keyword", "idesc"],
+	["keyword", "if"],
+	["keyword", "ij"],
+	["keyword", "in"],
+	["keyword", "insert"],
+	["keyword", "inter"],
+	["keyword", "inv"],
+	["keyword", "key"],
+	["keyword", "keys"],
+	["keyword", "last"],
+	["keyword", "like"],
+	["keyword", "list"],
+	["keyword", "lj"],
+	["keyword", "ljf"],
+	["keyword", "load"],
+	["keyword", "log"],
+	["keyword", "lower"],
+	["keyword", "lsq"],
+	["keyword", "ltime"],
+	["keyword", "ltrim"],
+	["keyword", "mavg"],
+	["keyword", "max"],
+	["keyword", "maxs"],
+	["keyword", "mcount"],
+	["keyword", "md5"],
+	["keyword", "mdev"],
+	["keyword", "med"],
+	["keyword", "meta"],
+	["keyword", "min"],
+	["keyword", "mins"],
+	["keyword", "mmax"],
+	["keyword", "mmin"],
+	["keyword", "mmu"],
+	["keyword", "mod"],
+	["keyword", "msum"],
+	["keyword", "neg"],
+	["keyword", "next"],
+	["keyword", "not"],
+	["keyword", "null"],
+	["keyword", "or"],
+	["keyword", "over"],
+	["keyword", "parse"],
+	["keyword", "peach"],
+	["keyword", "pj"],
+	["keyword", "plist"],
+	["keyword", "prd"],
+	["keyword", "prds"],
+	["keyword", "prev"],
+	["keyword", "prior"],
+	["keyword", "rand"],
+	["keyword", "rank"],
+	["keyword", "ratios"],
+	["keyword", "raze"],
+	["keyword", "read0"],
+	["keyword", "read1"],
+	["keyword", "reciprocal"],
+	["keyword", "reval"],
+	["keyword", "reverse"],
+	["keyword", "rload"],
+	["keyword", "rotate"],
+	["keyword", "rsave"],
+	["keyword", "rtrim"],
+	["keyword", "save"],
+	["keyword", "scan"],
+	["keyword", "scov"],
+	["keyword", "sdev"],
+	["keyword", "select"],
+	["keyword", "set"],
+	["keyword", "setenv"],
+	["keyword", "show"],
+	["keyword", "signum"],
+	["keyword", "sin"],
+	["keyword", "sqrt"],
+	["keyword", "ss"],
+	["keyword", "ssr"],
+	["keyword", "string"],
+	["keyword", "sublist"],
+	["keyword", "sum"],
+	["keyword", "sums"],
+	["keyword", "sv"],
+	["keyword", "svar"],
+	["keyword", "system"],
+	["keyword", "tables"],
+	["keyword", "tan"],
+	["keyword", "til"],
+	["keyword", "trim"],
+	["keyword", "txf"],
+	["keyword", "type"],
+	["keyword", "uj"],
+	["keyword", "ungroup"],
+	["keyword", "union"],
+	["keyword", "update"],
+	["keyword", "upper"],
+	["keyword", "upsert"],
+	["keyword", "value"],
+	["keyword", "var"],
+	["keyword", "view"],
+	["keyword", "views"],
+	["keyword", "vs"],
+	["keyword", "wavg"],
+	["keyword", "where"],
+	["keyword", "while"],
+	["keyword", "within"],
+	["keyword", "wj"],
+	["keyword", "wj1"],
+	["keyword", "wsum"],
+	["keyword", "ww"],
+	["keyword", "xasc"],
+	["keyword", "xbar"],
+	["keyword", "xcol"],
+	["keyword", "xcols"],
+	["keyword", "xdesc"],
+	["keyword", "xexp"],
+	["keyword", "xgroup"],
+	["keyword", "xkey"],
+	["keyword", "xlog"],
+	["keyword", "xprev"],
+	["keyword", "xrank"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

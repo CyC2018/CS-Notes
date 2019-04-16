@@ -1,0 +1,21 @@
+any baselayout beep
+call context deadkey
+dk if index layer
+notany nul outs
+platform return reset
+save set store use
+
+----------------------------------------------------
+
+[
+	["keyword", "any"], ["keyword", "baselayout"], ["keyword", "beep"],
+	["keyword", "call"], ["keyword", "context"], ["keyword", "deadkey"],
+	["keyword", "dk"], ["keyword", "if"], ["keyword", "index"], ["keyword", "layer"],
+	["keyword", "notany"], ["keyword", "nul"], ["keyword", "outs"],
+	["keyword", "platform"], ["keyword", "return"], ["keyword", "reset"],
+	["keyword", "save"], ["keyword", "set"], ["keyword", "store"], ["keyword", "use"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

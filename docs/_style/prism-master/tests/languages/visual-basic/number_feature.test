@@ -1,0 +1,37 @@
+42
+42S
+42US
+&O157I
+&O157UI
+&HBADFACE42L
+&HBADFACE42UL
+4F
+0.4
+3.1415R
+.24
+4E7D
+12.87E-8
+.369E+14
+
+----------------------------------------------------
+
+[
+	["number", "42"],
+	["number", "42S"],
+	["number", "42US"],
+	["number", "&O157I"],
+	["number", "&O157UI"],
+	["number", "&HBADFACE42L"],
+	["number", "&HBADFACE42UL"],
+	["number", "4F"],
+	["number", "0.4"],
+	["number", "3.1415R"],
+	["number", ".24"],
+	["number", "4E7D"],
+	["number", "12.87E-8"],
+	["number", ".369E+14"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

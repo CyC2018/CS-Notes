@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Examples ▲ Prism</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<style>
+#languages {
+	column-count: 4;
+}
+	#languages > h1 {
+		margin-top: 0;
+		column-span: all;
+	}
+	#languages label {
+		display: block;
+		padding: .2em;
+	}
+	#languages label[data-id="javascript"] {
+		border-bottom: 1px solid #aaa;
+		padding-bottom: 1em;
+		margin-bottom: 1em;
+	}
+	#languages .unavailable {
+		color: #aaa;
+	}
+	#languages input {
+		margin-right: .7em;
+	}
+
+#examples > section {
+	display: block;
+	margin: auto;
+	max-width: 900px;
+}
+	#examples h3 {
+		margin: 1em 0 0.3em;
+	}
+ul {
+	padding-left: 40px;
+}
+</style>
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-main.html" data-type="text/html"></div>
+
+	<h2>Examples</h2>
+	<p>The examples in this page serve a dual purpose: They act as unit tests, making it easy to spot bugs, and at the same time demonstrate what Prism can do, on simple and on edge cases.</p>
+</header>
+
+<section class="language-markup">
+	<h1>Different markup</h1>
+
+	<h2>code.language-css</h2>
+	<code class="language-css">p { color: red; }</code>
+
+	<h2>pre.language-css > code</h2>
+	<pre class="language-css"><code>p { color: red; }</code></pre>
+
+	<h2>pre > code.language-css</h2>
+	<pre><code class="language-css">p { color: red; }</code></pre>
+
+	<h2>pre.language-css > code.language-*</h2>
+	<pre class="language-css"><code class="language-*">p { color: red; }</code></pre>
+
+	<h2>code.lang-css</h2>
+	<code class="lang-css">p { color: red; }</code>
+
+	<h2>pre.lang-css > code</h2>
+	<pre class="lang-css"><code>p { color: red; }</code></pre>
+
+	<h2>pre > code</h2>
+	<p>No language, should inherit .language-markup</p>
+	<pre><code>&lt;p>hi!&lt;/p></code></pre>
+
+	<h2>code.language-*</h2>
+	<p>No language, should inherit .language-markup</p>
+	<code class="language-*">&lt;p>hi!&lt;/p></code>
+
+	<h2>code.language-none</h2>
+	<p>Should not be highlighted.</p>
+	<code class="language-none">&lt;p>hi!&lt;/p></code>
+</section>
+
+<section>
+	<h1>Per language examples</h1>
+	<div id="languages"></div>
+</section>
+<section id="examples"></section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+<script src="vendor/promise.js"></script>
+<script src="examples.js"></script>
+
+</body>
+</html>

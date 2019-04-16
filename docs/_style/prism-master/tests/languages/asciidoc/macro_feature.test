@@ -1,0 +1,250 @@
+footnote:[An example footnote.]
+indexterm:[Tigers,Big cats]
+
+http://www.docbook.org/[DocBook.org]
+include::chapt1.txt[tabsize=2]
+mailto:srackham@gmail.com[]
+
+image:screen-thumbnail.png[height=32,link="screen.png"]
+
+== Foo image:foo.jpg[] ==
+
+--
+footnote:[An example footnote.]
+indexterm:[Tigers,Big cats]
+
+http://www.docbook.org/[DocBook.org]
+include::chapt1.txt[tabsize=2]
+mailto:srackham@gmail.com[]
+
+image:screen-thumbnail.png[height=32,link="screen.png"]
+--
+
+|====
+|
+footnote:[An example footnote.]
+indexterm:[Tigers,Big cats]
+
+http://www.docbook.org/[DocBook.org]
+include::chapt1.txt[tabsize=2]
+mailto:srackham@gmail.com[]
+
+image:screen-thumbnail.png[height=32,link="screen.png"]
+|====
+
+----------------------------------------------------
+
+[
+	["macro", [
+		["function", "footnote"], ["punctuation", ":"],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "An example footnote."],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "indexterm"], ["punctuation", ":"],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "Tigers"],
+			["punctuation", ","],
+			["attr-value", "Big cats"],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "http"], ["punctuation", ":"],
+		"//www.docbook.org/",
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "DocBook.org"],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "include"], ["punctuation", "::"],
+		"chapt1.txt",
+		["attributes", [
+			["punctuation", "["],
+			["variable", "tabsize"],
+			["operator", "="],
+			["attr-value", "2"],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "mailto"], ["punctuation", ":"],
+		"srackham@gmail.com",
+		["attributes", [
+			["punctuation", "["], ["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "image"], ["punctuation", ":"],
+		"screen-thumbnail.png",
+		["attributes", [
+			["punctuation", "["],
+			["variable", "height"],
+			["operator", "="],
+			["attr-value", "32"],
+			["punctuation", ","],
+			["variable", "link"],
+			["operator", "="],
+			["string", "\"screen.png\""],
+			["punctuation", "]"]
+		]]
+	]],
+
+	["title", [
+		["punctuation", "=="],
+		" Foo ",
+		["macro", [
+			["function", "image"], ["punctuation", ":"],
+			"foo.jpg",
+			["attributes", [
+				["punctuation", "["], ["punctuation", "]"]
+			]]
+		]],
+		["punctuation", "=="]
+	]],
+
+	["other-block", [
+		["punctuation", "--"],
+
+		["macro", [
+			["function", "footnote"], ["punctuation", ":"],
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "An example footnote."],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "indexterm"], ["punctuation", ":"],
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "Tigers"],
+				["punctuation", ","],
+				["attr-value", "Big cats"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "http"], ["punctuation", ":"],
+			"//www.docbook.org/",
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "DocBook.org"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "include"], ["punctuation", "::"],
+			"chapt1.txt",
+			["attributes", [
+				["punctuation", "["],
+				["variable", "tabsize"],
+				["operator", "="],
+				["attr-value", "2"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "mailto"], ["punctuation", ":"],
+			"srackham@gmail.com",
+			["attributes", [
+				["punctuation", "["], ["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "image"], ["punctuation", ":"],
+			"screen-thumbnail.png",
+			["attributes", [
+				["punctuation", "["],
+				["variable", "height"],
+				["operator", "="],
+				["attr-value", "32"],
+				["punctuation", ","],
+				["variable", "link"],
+				["operator", "="],
+				["string", "\"screen.png\""],
+				["punctuation", "]"]
+			]]
+		]],
+
+		["punctuation", "--"]
+	]],
+
+	["table", [
+		["punctuation", "|===="],
+		["punctuation", "|"],
+
+		["macro", [
+			["function", "footnote"], ["punctuation", ":"],
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "An example footnote."],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "indexterm"], ["punctuation", ":"],
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "Tigers"],
+				["punctuation", ","],
+				["attr-value", "Big cats"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "http"], ["punctuation", ":"],
+			"//www.docbook.org/",
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "DocBook.org"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "include"], ["punctuation", "::"],
+			"chapt1.txt",
+			["attributes", [
+				["punctuation", "["],
+				["variable", "tabsize"],
+				["operator", "="],
+				["attr-value", "2"],
+				["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "mailto"], ["punctuation", ":"],
+			"srackham@gmail.com",
+			["attributes", [
+				["punctuation", "["], ["punctuation", "]"]
+			]]
+		]],
+		["macro", [
+			["function", "image"], ["punctuation", ":"],
+			"screen-thumbnail.png",
+			["attributes", [
+				["punctuation", "["],
+				["variable", "height"],
+				["operator", "="],
+				["attr-value", "32"],
+				["punctuation", ","],
+				["variable", "link"],
+				["operator", "="],
+				["string", "\"screen.png\""],
+				["punctuation", "]"]
+			]]
+		]],
+
+		["punctuation", "|===="]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for macros.

@@ -1,0 +1,59 @@
+class Test {
+	foo( x, y = 0) {}
+	async bar(x, y = 0 ) {}
+	$ ( ) {}
+	awaitFoo(){}
+}
+
+----------------------------------------------------
+
+[
+	["keyword", "class"],
+	["class-name", ["Test"]],
+	["punctuation", "{"],
+
+	["function", "foo"],
+	["punctuation", "("],
+	["parameter", [
+		"x",
+		["punctuation", ","],
+		" y ",
+		["operator", "="],
+		["number", "0"]
+	]],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["keyword", "async"],
+	["function", "bar"],
+	["punctuation", "("],
+	["parameter", [
+		"x",
+		["punctuation", ","],
+		" y ",
+		["operator", "="],
+		["number", "0"]
+	]],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["function", "$"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["function", "awaitFoo"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for class methods.

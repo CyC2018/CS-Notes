@@ -1,0 +1,16 @@
+<h2>Number literals with underscores and postfix</h2>
+<pre><code>1_u32
+123_456.789e-10_f64</code></pre>
+
+<h2>Attributes</h2>
+<pre><code>@[AlwaysInline]
+def foo
+	1
+end</code></pre>
+
+<h2>Macro expansions</h2>
+<pre><code>{% for key, value in {foo: 100, bar: 20} %}
+	def {{ key.id }}
+		{{ value }}
+	end
+{% end %}</code></pre>

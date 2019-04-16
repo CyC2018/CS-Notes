@@ -1,0 +1,17 @@
+{{ true }}
+{{{ false }}}
+
+----------------------------------------------------
+
+[
+	["handlebars", [
+		["delimiter", "{{"], ["boolean", "true"], ["delimiter", "}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"], ["boolean", "false"], ["delimiter", "}}}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for all booleans.

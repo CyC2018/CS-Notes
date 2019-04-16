@@ -1,0 +1,82 @@
+class Circle
+  def self.of_diameter(diameter)
+    new diameter / 2
+  end
+
+  def initialize(radius)
+    @radius = radius
+  end
+
+  def circumference
+    Math::PI * radius ** 2
+  end
+
+  # Seattle style
+  def grow_by factor:
+    @radius = @radius * factor
+  end
+end
+
+----------------------------------------------------
+
+[
+  ["keyword", "class"],
+  ["class-name", ["Circle"]],
+  ["keyword", "def"],
+  ["method-definition", [
+    ["keyword", "self"],
+    ["punctuation", "."],
+    ["function", "of_diameter"]
+  ]],
+  ["punctuation", "("],
+  "diameter",
+  ["punctuation", ")"],
+  ["keyword", "new"],
+  ["class-name", ["diameter"]],
+  ["operator", "/"],
+  ["number", "2"],
+  ["keyword", "end"],
+  ["keyword", "def"],
+  ["method-definition", [
+    ["function", "initialize"]
+  ]],
+  ["punctuation", "("],
+  "radius",
+  ["punctuation", ")"],
+  ["variable", "@radius"],
+  ["operator", "="],
+  " radius\n  ",
+  ["keyword", "end"],
+  ["keyword", "def"],
+  ["method-definition", [
+    ["function", "circumference"]
+  ]],
+  ["constant", "Math"],
+  ["punctuation", ":"],
+  ["punctuation", ":"],
+  ["constant", "PI"],
+  ["operator", "*"],
+  " radius ",
+  ["operator", "*"],
+  ["operator", "*"],
+  ["number", "2"],
+  ["keyword", "end"],
+  ["comment", "# Seattle style"],
+  ["keyword", "def"],
+  ["method-definition", [
+    ["function", "grow_by"]
+  ]],
+  " factor",
+  ["punctuation", ":"],
+  ["variable", "@radius"],
+  ["operator", "="],
+  ["variable", "@radius"],
+  ["operator", "*"],
+  " factor\n  ",
+  ["keyword", "end"],
+  ["keyword", "end"]
+]
+
+----------------------------------------------------
+
+Checks that method definitions are highlighted correctly

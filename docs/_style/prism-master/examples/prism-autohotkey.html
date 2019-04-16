@@ -1,0 +1,68 @@
+<h2>Comments</h2>
+<pre><code>; This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo ""bar"" baz"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>123
+123.456
+123.456e789
+0xAF</code></pre>
+
+<h2>Full example</h2>
+<pre><code>;----Open the selected favorite
+f_OpenFavorite:
+; Fetch the array element that corresponds to the selected menu item:
+StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
+if f_path =
+    return
+if f_class = #32770    ; It's a dialog.
+{
+    if f_Edit1Pos <>   ; And it has an Edit1 control.
+    {
+        ; Activate the window so that if the user is middle-clicking
+        ; outside the dialog, subsequent clicks will also work:
+        WinActivate ahk_id %f_window_id%
+        ; Retrieve any filename that might already be in the field so
+        ; that it can be restored after the switch to the new folder:
+        ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+        ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+        ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
+        Sleep, 100  ; It needs extra time on some dialogs or in some cases.
+        ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
+        return
+    }
+    ; else fall through to the bottom of the subroutine to take standard action.
+}
+else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
+{
+    if f_Edit1Pos <>   ; And it has an Edit1 control.
+    {
+        ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+        ; Tekl reported the following: "If I want to change to Folder L:\folder
+        ; then the addressbar shows http://www.L:\folder.com. To solve this,
+        ; I added a {right} before {Enter}":
+        ControlSend, Edit1, {Right}{Enter}, ahk_id %f_window_id%
+        return
+    }
+    ; else fall through to the bottom of the subroutine to take standard action.
+}
+else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
+{
+    WinActivate, ahk_id %f_window_id% ; Because sometimes the mclick deactivates it.
+    SetKeyDelay, 0  ; This will be in effect only for the duration of this thread.
+    IfInString, f_path, :  ; It contains a drive letter
+    {
+        StringLeft, f_path_drive, f_path, 1
+        Send %f_path_drive%:{enter}
+    }
+    Send, cd %f_path%{Enter}
+    return
+}
+; Since the above didn't return, one of the following is true:
+; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
+; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
+;    action, so instead do the default action below.
+Run, Explorer %f_path%  ; Might work on more systems without double quotes.
+return</code></pre>

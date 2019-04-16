@@ -1,0 +1,13 @@
+nil true false
+self super new
+
+----------------------------------------------------
+
+[
+	["keyword", "nil"], ["keyword", "true"], ["keyword", "false"],
+	["keyword", "self"], ["keyword", "super"], ["keyword", "new"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

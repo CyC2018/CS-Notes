@@ -1,0 +1,87 @@
+break
+case
+catch
+class
+const
+continue
+default
+do
+else
+extends
+fallthrough
+finally
+for
+for ever
+function
+if
+implements
+it
+let
+loop
+new
+null
+otherwise
+own
+return
+super
+switch
+that
+then
+this
+throw
+try
+unless
+until
+var
+void
+when
+while
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "class"],
+	["keyword", "const"],
+	["keyword", "continue"],
+	["keyword", "default"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "extends"],
+	["keyword", "fallthrough"],
+	["keyword", "finally"],
+	["keyword", "for"],
+	["keyword", "for ever"],
+	["keyword", "function"],
+	["keyword", "if"],
+	["keyword", "implements"],
+	["keyword", "it"],
+	["keyword", "let"],
+	["keyword", "loop"],
+	["keyword", "new"],
+	["keyword", "null"],
+	["keyword", "otherwise"],
+	["keyword", "own"],
+	["keyword", "return"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "that"],
+	["keyword", "then"],
+	["keyword", "this"],
+	["keyword", "throw"],
+	["keyword", "try"],
+	["keyword", "unless"],
+	["keyword", "until"],
+	["keyword", "var"],
+	["keyword", "void"],
+	["keyword", "when"],
+	["keyword", "while"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

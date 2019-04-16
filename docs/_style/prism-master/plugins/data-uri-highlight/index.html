@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Data-URI Highlight ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/autolinker/prism-autolinker.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Data-URI Highlight</h2>
+	<p>Highlights data-URI contents.</p>
+</header>
+
+<section>
+	<h1>How to use</h1>
+	<p>Data-URIs will be highlighted automatically, provided the needed grammar is loaded.
+	The grammar to use is guessed using the MIME type information.</p>
+</section>
+
+<section>
+	<h1>Example</h1>
+	
+	<pre><code class="language-css">div {
+    border: 40px solid transparent;
+    border-image: 33.334% url('data:image/svg+xml,&lt;svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"> \
+                          &lt;circle cx="5" cy="5" r="5" fill="%23ab4"/>&lt;circle cx="15" cy="5" r="5" fill="%23655"/> \
+                          &lt;circle cx="25" cy="5" r="5" fill="%23e07"/>&lt;circle cx="5" cy="15" r="5" fill="%23655"/> \
+                          &lt;circle cx="15" cy="15" r="5" fill="hsl(15, 25%, 75%)"/> \
+                          &lt;circle cx="25" cy="15" r="5" fill="%23655"/>&lt;circle cx="5" cy="25" r="5" fill="%23fb3"/> \
+                          &lt;circle cx="15" cy="25" r="5" fill="%23655"/>&lt;circle cx="25" cy="25" r="5" fill="%2358a"/>&lt;/svg>');
+    padding: 1em;
+    max-width: 20em;
+    font: 130%/1.6 Baskerville, Palatino, serif;
+}</code></pre>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/data-uri-highlight/prism-data-uri-highlight.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+(pair? '(1 2))
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["builtin", "pair?"],
+	["punctuation", "'"], ["punctuation", "("], ["number", "1"], ["number", "2"], ["punctuation", ")"], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Tests that first number of a list is not highlighted as a function. See #1331
