@@ -1,5 +1,6 @@
 <!-- GFM-TOC -->
 * [1. 给表达式加括号](#1-给表达式加括号)
+* [2. 不同的二叉搜索树II](#2-不同的二叉搜索树II)
 <!-- GFM-TOC -->
 
 
@@ -48,6 +49,56 @@ public List<Integer> diffWaysToCompute(String input) {
 }
 ```
 
+# 2. 不同的二叉搜索树II
+
+[95. Unique Binary Search Trees II (Medium)](https://leetcode.com/problems/unique-binary-search-trees-ii/description/)
+
+```html
+Input: 3
+Output:
+[
+  [1,null,3,2],
+  [3,2,null,1],
+  [3,1,null,null,2],
+  [2,1,3],
+  [1,null,2,null,3]
+]
+Explanation:
+The above output corresponds to the 5 unique BST's shown below:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+```
+
+```java
+public List<TreeNode> generateTrees(int n) {
+    return generateSubtrees(1, n);
+}
+
+private List<TreeNode> generateSubtrees(int s, int e) {
+    List<TreeNode> res = new LinkedList<TreeNode>();
+    if (s > e) {
+        res.add(null);
+        return res;
+    }
+    for (int i = s; i <= e; ++i) {
+        List<TreeNode> leftSubtrees = generateSubtrees(s, i - 1);
+        List<TreeNode> rightSubtrees = generateSubtrees(i + 1, e);
+        for (TreeNode left : leftSubtrees) {
+            for (TreeNode right : rightSubtrees) {
+                TreeNode root = new TreeNode(i);
+                root.left = left;
+                root.right = right;
+                res.add(root);
+            }
+        }
+    }
+    return res;
+}
+```
 
 
 
