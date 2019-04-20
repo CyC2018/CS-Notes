@@ -570,23 +570,23 @@ WHERE col5 = val;
 每次只能给一个变量赋值，不支持集合的操作。
 
 ```sql
-DELIMITER //
+delimiter //
 
-CREATE PROCEDURE myprocedure(OUT ret INT)
-    BEGIN
-        DECLARE y INT;
-        SELECT SUM(col1)
-        FROM mytable
-        INTO y;
-        SELECT y*y INTO ret;
-    END //
+create procedure myprocedure( out ret int )
+    begin
+        declare y int;
+        select sum(col1)
+        from mytable
+        into y;
+        select y*y into ret;
+    end //
 
-DELIMITER ;
+delimiter ;
 ```
 
 ```sql
-CALL myprocedure(@ret);
-SELECT @ret;
+call myprocedure(@ret);
+select @ret;
 ```
 
 # 十九、游标
@@ -603,27 +603,26 @@ SELECT @ret;
 4. 关闭游标；
 
 ```sql
-DELIMITER //
-CREATE PROCEDURE myprocedure(OUT ret INT)
-    BEGIN
-        DECLARE done BOOLEAN DEFAULT 0;
+delimiter //
+create procedure myprocedure(out ret int)
+    begin
+        declare done boolean default 0;
 
-        DECLARE mycursor CURSOR
-        FOR
-        SELECT col1 FROM mytable;
+        declare mycursor cursor for
+        select col1 from mytable;
         # 定义了一个 continue handler，当 sqlstate '02000' 这个条件出现时，会执行 set done = 1
-        DECLARE CONTINUE HANDLER FOR sqlstate '02000' SET done = 1;
+        declare continue handler for sqlstate '02000' set done = 1;
 
-        OPEN mycursor;
+        open mycursor;
 
-        REPEAT
-            FETCH mycursor INTO ret;
-            SELECT ret;
-        UNTIL done END REPEAT;
+        repeat
+            fetch mycursor into ret;
+            select ret;
+        until done end repeat;
 
-        CLOSE mycursor;
-    END //
-DELIMITER ;
+        close mycursor;
+    end //
+ delimiter ;
 ```
 
 # 二十、触发器

@@ -1,6 +1,6 @@
 <!-- GFM-TOC -->
 * [1. 给表达式加括号](#1-给表达式加括号)
-* [2. 不同的二叉搜索树II](#2-不同的二叉搜索树II)
+* [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
 <!-- GFM-TOC -->
 
 
@@ -49,9 +49,11 @@ public List<Integer> diffWaysToCompute(String input) {
 }
 ```
 
-# 2. 不同的二叉搜索树II
+# 2. 不同的二叉搜索树
 
 [95. Unique Binary Search Trees II (Medium)](https://leetcode.com/problems/unique-binary-search-trees-ii/description/)
+
+给定一个数字 n，要求生成所有值为 1...n 的二叉搜索树。
 
 ```html
 Input: 3
@@ -99,6 +101,7 @@ private List<TreeNode> generateSubtrees(int s, int e) {
     return res;
 }
 ```
+
 
 
 

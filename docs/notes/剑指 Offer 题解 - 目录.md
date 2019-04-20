@@ -1,24 +1,16 @@
 <!-- GFM-TOC -->
-* [目录](#目录)
-* [参考文献](#参考文献)
 <!-- GFM-TOC -->
 
 
-# 目录
-
-部分绘图文件可以在这里免费下载：[剑指 Offer](https://www.processon.com/view/5a3e4c7be4b0909c1aa18b49)，后续会慢慢把所有题目都配上 GIF 演示图。
-
-- [3\~9](剑指%20Offer%20题解%20-%203\~9.md)
-- [10\~19](剑指%20Offer%20题解%20-%2010\~19.md)
-- [20\~29](剑指%20Offer%20题解%20-%2020\~29.md)
-- [30\~39](剑指%20Offer%20题解%20-%2030\~39.md)
-- [40\~49](剑指%20Offer%20题解%20-%2040\~49.md)
-- [50\~59](剑指%20Offer%20题解%20-%2050\~59.md)
-- [60\~68](剑指%20Offer%20题解%20-%2060\~68.md)
-
-# 参考文献
-
-何海涛. 剑指 Offer[M]. 电子工业出版社, 2012.
+- [目录.md](wiz://open_document?guid=623c5627-b006-4b79-a5ae-c30eef4ac9e0&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [目录1.md](wiz://open_document?guid=a8e2ba94-d912-4e60-9600-c037bd948410&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [3\~9.md](wiz://open_document?guid=600f1a94-9a30-455b-b65d-71cfbecb5d4f&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [10\~19.md](wiz://open_document?guid=50161b0b-f529-4626-aa18-312188217042&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [20\~29.md](wiz://open_document?guid=417f7307-cb54-4cb5-a771-6841bdf35b2a&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [30\~39.md](wiz://open_document?guid=a27a6185-a907-4b8f-bac4-f8fd22c9de02&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [40\~49.md](wiz://open_document?guid=6d39c460-a824-459b-8aa0-d4ada7b7ee1c&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [50\~59.md](wiz://open_document?guid=a1883a29-9d55-4ca9-b157-918220bf2335&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+- [60\~68.md](wiz://open_document?guid=69de366c-5d58-4ce6-a1d2-2e7d3340fba4&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
 
 
 
