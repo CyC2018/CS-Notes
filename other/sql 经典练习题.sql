@@ -203,10 +203,10 @@ ORDER BY RANK;
 -- 19、查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录。
 select *
 from SCORE
-where CNO = '3-105' and DEGREE > ALL (
+where CNO = '3-105' and DEGREE > (
   select DEGREE
   from SCORE
-  where SNO = '109'
+  where SNO = '109' and CNO = '3-105'
 );
 
 set @@global.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
