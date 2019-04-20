@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/vue.css">
     <!-- <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css"> -->
     <!-- <link rel="stylesheet" href="_style/style.css"> -->
-    <!--solarizedlight tomorrow coy-->
     <!-- <link rel="stylesheet" href="_style/prism-master/themes/prism-coy.css"> -->
-
     <!-- 将自定义样式放在 Github 上会导致加载速度变得非常慢，所以采取直接内嵌的方式 -->
     <style type="text/css">
-
     /* 隐藏头部的目录 */
     #main>ul:nth-child(1) {
         display: none;
@@ -73,7 +70,7 @@
 
     /*.anchor span {
     color: rgb(66, 185, 131);
-	}*/
+    }*/
 
     section.cover h1 {
         margin: 0;
@@ -101,8 +98,8 @@
 
     @media (max-width:600px) {
         pre {
-            padding-left : 0px !important;
-            padding-right : 0px !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
         }
     }
 
@@ -347,21 +344,16 @@
 </head>
 
 <body>
-    <!-- <nav>
-    <a href="#/README">HOME</a>
-</nav> -->
     <div id="app"></div>
     <script>
     window.$docsify = {
         maxAge: 100,
         name: 'CS-Notes',
         repo: 'https://github.com/CyC2018/CS-Notes',
-        // ga: 'UA-121566133-2',
         search: {
             paths: 'auto',
             placeholder: '🔍 Type to search ',
             noData: '😞 No Results! ',
-            // Headline depth, 1 - 6
             depth: 6
         },
         // subMaxLevel: 2,
@@ -369,30 +361,14 @@
     }
     </script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/docsify.min.js"></script>
-    <!-- <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script> -->
-    <!-- 上面的基本不可用，无法搜索 -->
     <script src="https://cdn.bootcss.com/docsify/4.5.9/plugins/search.min.js"></script>
-    <!-- <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script> -->
-    <!--  <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>  -->
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/docsify-copy-code.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/prism-java.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/prism-c.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/prism-bash.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/prism-sql.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/zoom-image.min.js"></script>
-    <!-- <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script> -->
-    <!-- <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script> -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <script>
-    const gitalk = new Gitalk({
-        clientID: 'c6c02367e36ca6e2bb2d',
-        clientSecret: '31a2700e3315b21c5e9f2e887709d8cf21f9ff8f',
-        repo: 'Gittalk-Issue',
-        owner: 'CyC2018',
-        admin: ['CyC2018'],
-        // distractionFreeMode: false
-    })
-    </script>
 </body>
 
 </html>
