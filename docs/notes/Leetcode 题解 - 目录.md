@@ -1,25 +1,41 @@
 <!-- GFM-TOC -->
+* [算法思想](#算法思想)
+* [数据结构相关](#数据结构相关)
+* [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-- [目录1.md](wiz://open_document?guid=0363f9be-6c61-4018-a18f-5fb6b69f3ad8&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [目录.md](wiz://open_document?guid=aea0669d-f1e9-45e8-b908-ace138b2b38d&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [位运算.md](wiz://open_document?guid=018d1246-b949-4390-bde8-a408d790b0e6&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [图.md](wiz://open_document?guid=ffdd3935-ceca-44b1-b906-6a55f2c3de27&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [数组与矩阵.md](wiz://open_document?guid=5826916a-29e7-4e8e-b51f-e5e21c57dd5e&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [字符串.md](wiz://open_document?guid=6c1eca79-e4dd-4770-a676-851c7aec98f6&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [哈希表.md](wiz://open_document?guid=ae94469e-e4cf-48de-b617-86ac0b5bb6dc&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [栈和队列.md](wiz://open_document?guid=a72c38a7-9bdd-4812-a606-d05811999957&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [树.md](wiz://open_document?guid=29c197cf-d74f-4a13-95ea-ebfa9ac9a7dd&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [链表.md](wiz://open_document?guid=003cada1-3b15-4ce1-8396-071a507d5574&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [数学.md](wiz://open_document?guid=1f1d9636-fcfd-46cd-9d4e-230a9055bb9b&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [动态规划.md](wiz://open_document?guid=9e63dfb7-9acf-4c7d-bfc1-98ce351322a5&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [搜索.md](wiz://open_document?guid=4d32fd26-25af-45aa-a26f-5f50f6358c47&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [分治.md](wiz://open_document?guid=b54185d5-b004-432f-9e94-0c37813b8206&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [二分查找.md](wiz://open_document?guid=ced206c5-5177-490f-bf8d-a47c161650fc&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [贪心思想.md](wiz://open_document?guid=f748a2ba-825a-4a3f-ac90-95b0095750c6&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [排序.md](wiz://open_document?guid=c9be6460-6e32-4d42-82c7-5b0196d6edcc&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
-- [双指针.md](wiz://open_document?guid=359d008c-0a34-43bd-807d-71bde1afa866&kbguid=&private_kbguid=1b80336d-8ff7-4e8a-a975-5b7e2aeccd20)
+# 算法思想
+
+- [双指针](Leetcode%20题解%20-%20双指针.md)
+- [排序](Leetcode%20题解%20-%20排序.md)
+- [贪心思想](Leetcode%20题解%20-%20贪心思想.md)
+- [二分查找](Leetcode%20题解%20-%20二分查找.md)
+- [分治](Leetcode%20题解%20-%20分治.md)
+- [搜索](Leetcode%20题解%20-%20搜索.md)
+- [动态规划](Leetcode%20题解%20-%20动态规划.md)
+- [数学](Leetcode%20题解%20-%20数学.md)
+
+# 数据结构相关
+
+- [链表](Leetcode%20题解%20-%20链表.md)
+- [树](Leetcode%20题解%20-%20树.md)
+- [栈和队列](Leetcode%20题解%20-%20栈和队列.md)
+- [哈希表](Leetcode%20题解%20-%20哈希表.md)
+- [字符串](Leetcode%20题解%20-%20字符串.md)
+- [数组与矩阵](Leetcode%20题解%20-%20数组与矩阵.md)
+- [图](Leetcode%20题解%20-%20图.md)
+- [位运算](Leetcode%20题解%20-%20位运算.md)
+
+# 参考资料
+
+
+- Leetcode
+- Weiss M A, 冯舜玺. 数据结构与算法分析——C 语言描述[J]. 2004.
+- Sedgewick R. Algorithms[M]. Pearson Education India, 1988.
+- 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
+- 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
+- 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
 
 
 
