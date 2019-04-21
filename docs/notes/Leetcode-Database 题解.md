@@ -1,4 +1,4 @@
-<!-- GFM-TOC -->
+<div class="toc"><!-- GFM-TOC -->
 * [595. Big Countries](#595-big-countries)
 * [627. Swap Salary](#627-swap-salary)
 * [620. Not Boring Movies](#620-not-boring-movies)
@@ -14,7 +14,7 @@
 * [178. Rank Scores](#178-rank-scores)
 * [180. Consecutive Numbers](#180-consecutive-numbers)
 * [626. Exchange Seats](#626-exchange-seats)
-<!-- GFM-TOC -->
+<!-- GFM-TOC --></div>
 
 
 # 595. Big Countries
