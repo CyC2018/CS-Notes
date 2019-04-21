@@ -1,4 +1,4 @@
-<div class="toc"><!-- GFM-TOC -->
+<!-- GFM-TOC -->
 * [一、概览](#一概览)
     * [Collection](#collection)
     * [Map](#map)
@@ -15,7 +15,7 @@
     * [LinkedHashMap](#linkedhashmap)
     * [WeakHashMap](#weakhashmap)
 * [参考资料](#参考资料)
-<!-- GFM-TOC --></div>
+<!-- GFM-TOC -->
 
 
 # 一、概览
