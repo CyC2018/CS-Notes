@@ -85,7 +85,7 @@
 
 man 是 manual 的缩写，将指令的具体信息显示出来。
 
-当执行`man date`时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
+当执行 `man date` 时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
 
 | 代号 | 类型 |
 | :--: | -- |
@@ -138,9 +138,9 @@ sudo 允许一般用户使用 root 可执行的命令，不过只有在 /etc/sud
 RPM 和 DPKG 为最常见的两类软件包管理工具：
 
 - RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为很多 Linux 系统 (RHEL) 的既定软件标准。
-- 与 RPM 进行竞争的是基于 Debian 操作系统 (Ubuntu) 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
+- 与 RPM 竞争的是基于 Debian 操作系统 (Ubuntu) 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
 
-YUM 基于 RPM，具有依赖管理功能，并具有软件升级的功能。
+YUM 基于 RPM，具有依赖管理和软件升级功能。
 
 ## 发行版
 
@@ -201,13 +201,13 @@ SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强�
 
 ### 3. SCSI
 
-SCSI 全称是 Small Computer System Interface（小型机系统接口），经历多代的发展，从早期的 SCSI-II 到目前的 Ultra320 SCSI 以及 Fiber-Channel（光纤通道），接口型式也多种多样。SCSI 硬盘广为工作站级个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
+SCSI 全称是 Small Computer System Interface（小型机系统接口），经历多代的发展，从早期的 SCSI-II 到目前的 Ultra320 SCSI 以及 Fiber-Channel（光纤通道），接口型式也多种多样。SCSI 硬盘广为工作站以及个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
 
 ### 4. SAS
 
-SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也透过缩小连接线改善系统内部空间等。
+SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也通过缩小连接线改善系统内部空间等。
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
 
@@ -292,15 +292,15 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 对于 Ext2 文件系统，当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/83185315-793a-453a-a927-5e8d92b5c0ef.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/18c1ea05-bc12-4d1f-9179-76fda03cfa80_200.png"/> </div><br>
 
 而对于 FAT 文件系统，它没有 inode，每个 block 中存储着下一个 block 的编号。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/075e1977-7846-4928-96c8-bb5b0268693c.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f3131e98-8d20-4ff9-b14b-d6803691555844133783.png"/> </div><br>
 
 ## 磁盘碎片
 
-指一个文件内容所在的 block 过于分散。
+指一个文件内容所在的 block 过于分散，导致磁盘磁头移动距离过大，从而降低磁盘读写性能。
 
 ## block
 
