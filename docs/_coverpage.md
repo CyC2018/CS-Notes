@@ -8,5 +8,5 @@
 
 [![stars](https://badgen.net/github/stars/CyC2018/CS-Notes?icon=github&color=4ab8a1)](https://github.com/CyC2018/CS-Notes) [![forks](https://badgen.net/github/forks/CyC2018/CS-Notes?icon=github&color=4ab8a1)](https://github.com/CyC2018/CS-Notes)
 
-[Get Started](README.md)
+[开始阅读](README.md)
 
