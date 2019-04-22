@@ -61,7 +61,7 @@
 
 # 一、线程状态转换
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/96706658-b3f8-4f32-8eb3-dcb7fc8d5381.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/c80bbac0-72b3-4bd0-a63e-b9a11e88e1b6_200.png" width="800px"> </div><br>
 
 ## 新建（New）
 
@@ -736,7 +736,7 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/912a7886-fb1d-4a05-902d-ab17ea17007f.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/29011257-8390-4792-b0bf-898be001d0bd_200.png" width="300px"> </div><br>
 
 ```java
 public class CountdownLatchExample {
@@ -785,7 +785,7 @@ public CyclicBarrier(int parties) {
 }
 ```
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f944fac3-482b-4ca3-9447-17aec4a3cca0.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ff8812b2-77e8-4bca-b427-4336e0e75af3_200.png" width="300px"> </div><br>
 
 ```java
 public class CyclicBarrierExample {
@@ -1022,7 +1022,7 @@ public class ForkJoinPool extends AbstractExecutorService
 
 ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线程都维护了一个双端队列，用来存储需要执行的任务。工作窃取算法允许空闲的线程从其它线程的双端队列中窃取一个任务来执行。窃取的任务必须是最晚的任务，避免和队列所属线程发生竞争。例如下图中，Thread2 从 Thread1 的队列中拿出最晚的 Task1 任务，Thread1 会拿出 Task2 来执行，这样就避免发生竞争。但是如果队列中只有一个任务时还是会发生竞争。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e19452dd-220a-4a6b-bcb0-91ad5e5c4706.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e19452dd-220a-4a6b-bcb0-91ad5e5c4706.png" width="300px"> </div><br>
 
 # 九、线程不安全示例
 
@@ -1077,13 +1077,13 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d2a12961-2b36-4463-b017-ca46a3308b8e.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6b7f33c4-2dad-4f4b-aa54-d99c0dccc4c1_200.png" width="600px"> </div><br>
 
 所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
 
 线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8162aebb-8fd2-4620-b771-e65751ba7e41.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/c7399ff9-bdfe-48d8-94fe-eff5704b94eb_200.png" width="600px"> </div><br>
 
 ## 内存间交互操作
 
