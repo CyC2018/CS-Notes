@@ -391,7 +391,7 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a79aec4f-aea4-4ee2-87e3-7c7c6049b90c_200.png" width="400px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a79aec4f-aea4-4ee2-87e3-7c7c6049b90c_200.png" width="450px"> </div><br>
 
 ### 2. 与 ArrayList 的比较
 
