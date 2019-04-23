@@ -285,11 +285,11 @@ public int StrToInt(String str) {
 
 ### 二叉查找树
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b39a085e-e7a2-4657-b75e-ba1652a4b132.jpg" width="300"/> </div><br>
-
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
 二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val >= p.val && root.val <= q.val。
+
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/047faac4-a368-4565-8331-2b66253080d3.jpg" width="250"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -305,11 +305,11 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 普通二叉树
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
-
 [Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
+
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d27c99f0-7881-4f2d-9675-c75cbdee3acd.jpg" width="250"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
