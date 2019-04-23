@@ -26,7 +26,7 @@
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right." class="mathjax-pic"/></div> <br> -->
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/45be9587-6069-4ab7-b9ac-840db1a53744.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/45be9587-6069-4ab7-b9ac-840db1a53744.jpg" width="300px"> </div><br>
 
 ## 解题思路
 
@@ -120,7 +120,7 @@ public int RectCover(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a0e90bd3-747d-4c3a-8fa0-179c59eeded0_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9dae7475-934f-42e5-b3b3-12724337170a.png" width="380px"> </div><br>
 
 ## 解题思路
 
@@ -147,7 +147,7 @@ public int JumpFloor(int n) {
 
 一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级... 它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/cbd5f6f6-18de-4711-9e01-0f94e66f81b8_200.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/cd411a94-3786-4c94-9e08-f28320e010d5.png" width="380px"> </div><br>
 
 ## 解题思路
 
@@ -271,7 +271,7 @@ private int minNumber(int[] nums, int l, int h) {
 
 例如下面的矩阵包含了一条 bfce 路径。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2_2001550466182933.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/1db1c7ea-0443-478b-8df9-7e33b1336cc4.png" width="200px"> </div><br>
 
 ## 解题思路
 
@@ -481,7 +481,8 @@ public int NumberOf1(int n) {
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right." class="mathjax-pic"/></div> <br>-->
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/48b1d459-8832-4e92-938a-728aae730739.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/48b1d459-8832-4e92-938a-728aae730739.jpg" width="330px"> </div><br>
+
 
 因为 (x\*x)<sup>n/2</sup> 可以通过递归求解，并且每次递归 n 都减小一半，因此整个算法的时间复杂度为 O(logN)。
 
@@ -550,13 +551,13 @@ private void printNumber(char[] number) {
 
 ① 如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/27ff9548-edb6-4465-92c8-7e6386e0b185.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/1176f9e1-3442-4808-a47a-76fbaea1b806.png" width="600"/> </div><br>
 
 ② 如果链表只有一个节点，那么直接
 
 ② 否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/280f7728-594f-4811-a03a-fa8d32c013da.png" width="600"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4bf8d0ba-36f0-459e-83a0-f15278a5a157.png" width="600"/> </div><br>
 
 综上，如果进行 N 次操作，那么大约需要操作节点的次数为 N-1+N=2N-1，其中 N-1 表示 N-1 个不是尾节点的每个节点以 O(1) 的时间复杂度操作节点的总次数，N 表示 1 个尾节点以 O(N) 的时间复杂度操作节点的总次数。(2N-1)/N \~ 2，因此该算法的平均时间复杂度为 O(1)。
 
@@ -590,7 +591,7 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ## 题目描述
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8433fbb2-c35c-45ef-831d-e3ca42aebd51.png" width="500"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/17e301df-52e8-4886-b593-841a16d13e44.png" width="450"/> </div><br>
 
 ## 解题描述
 
