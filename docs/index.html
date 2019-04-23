@@ -20,7 +20,7 @@
         display: none;
     }
 
-    h1 + ul {
+    h1+ul {
         display: block !important;
     }
 
@@ -66,8 +66,25 @@
 
     .markdown-section pre>code {
         font-family: Consolas, Roboto Mono, Monaco, courier, monospace !important;
-        font-size: .9rem !important;
     }
+
+    @media (min-width:600px) {
+        .markdown-section pre>code {
+            font-size: .9rem !important;
+        }
+    }
+
+    @media (max-width:600px) {
+        .markdown-section pre>code {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        pre:after {
+            content: "" !important;
+        }
+    }
+
 
     /*.anchor span {
     color: rgb(66, 185, 131);
@@ -371,7 +388,6 @@
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/prism-sql.min.js"></script>
     <script src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/zoom-image.min.js"></script>
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 
 </html>
