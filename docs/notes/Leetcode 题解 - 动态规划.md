@@ -57,7 +57,7 @@
 
 第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/14fe1e71-8518-458f-a220-116003061a83.png"/> </div><br>
 
@@ -89,7 +89,7 @@ public int climbStairs(int n) {
 
 由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2de794ca-aa7b-48f3-a556-a0e2708cb976.jpg"/> </div><br>
 
@@ -143,7 +143,7 @@ private   int rob(int[] nums, int first, int last) {
 
 综上所述，错误装信数量方式数量为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/da1f96b9-fd4d-44ca-8925-fb14c5733388.png"/> </div><br>
 
@@ -155,7 +155,7 @@ private   int rob(int[] nums, int first, int last) {
 
 第 i 年成熟的牛的数量为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/879814ee-48b5-4bcb-86f5-dcc400cb81ad.png"/> </div><br>
 
@@ -398,7 +398,7 @@ public int numDecodings(String s) {
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ee994da4-0fc7-443d-ac56-c08caf00a204.jpg"/> </div><br>
 
@@ -565,7 +565,7 @@ public int wiggleMaxLength(int[] nums) {
 
 综上，最长公共子序列的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right."/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right." class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ecd89a22-c075-4716-8423-e0ba89230e9a.jpg"/> </div><br>
 
@@ -605,7 +605,7 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8cb2be66-3d47-41ba-b55b-319fc68940d4.png"/> </div><br>
 
@@ -630,7 +630,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)"/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9ae89f16-7905-4a6f-88a2-874b4cac91f4.jpg"/> </div><br>
 

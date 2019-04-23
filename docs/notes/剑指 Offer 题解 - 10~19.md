@@ -56,7 +56,7 @@
 
 求斐波那契数列的第 n 项，n <= 39。
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right."/></div> <br> -->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right." class="mathjax-pic"/></div> <br> -->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/45be9587-6069-4ab7-b9ac-840db1a53744.jpg"/> </div><br>
 
@@ -511,7 +511,7 @@ public int NumberOf1(int n) {
 
 下面的讨论中 x 代表 base，n 代表 exponent。
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right."/></div> <br>-->
+<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?x^n=\left\{\begin{array}{rcl}(x*x)^{n/2}&&{n\%2=0}\\x*(x*x)^{n/2}&&{n\%2=1}\end{array}\right." class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/48b1d459-8832-4e92-938a-728aae730739.jpg"/> </div><br>
 
