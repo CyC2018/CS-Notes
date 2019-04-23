@@ -1089,7 +1089,7 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b6a7e8af-91bf-44b2-8874-ccc6d9d52afc.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/cb80b6f8-85bc-442c-979c-63f109311d1f_200.png" width="400px"> </div><br>
 
 - read：把一个变量的值从主内存传输到工作内存中
 - load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中
@@ -1112,11 +1112,11 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 下图演示了两个线程同时对 cnt 进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入旧值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/847b9ba1-b3cd-4e52-aa72-dee0222ae09f.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e2d2d90f-95eb-4877-9d36-99d7b93695de_200.png" width="300px"> </div><br>
 
 AtomicInteger 能保证多个线程修改的原子性。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/3144015c-dcfb-47ac-94a5-bab3b78b0f14.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2f1c9839-d582-4f75-863e-8f0a2ac63fb8_200.png" width="300px"> </div><br>
 
 使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现：
 
@@ -1224,7 +1224,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 在一个线程内，在程序前面的操作先行发生于后面的操作。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/94414cd3-5db9-4aca-a2af-539140955c62.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e8454537-5a0c-49a2-8304-abae0b8887e1_200.png" width="180px"> </div><br>
 
 ### 2. 管程锁定规则
 
@@ -1232,7 +1232,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/de9d8133-4c98-4e07-b39c-302e162784ea.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/e49b6fe9-5ad7-4fe9-975d-dceb10ffe5b4_200.png" width="350px"> </div><br>
 
 ### 3. volatile 变量规则
 
@@ -1240,7 +1240,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/5e6e05d6-1028-4f5c-b9bd-1a40b90d6070.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/cc1acfb8-c507-4194-b16a-33388bd1cf82_200.png" width="400px"> </div><br>
 
 ### 4. 线程启动规则
 
@@ -1248,7 +1248,8 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/bc5826f5-014d-47b4-9a76-d86b80968643.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/693426e6-b057-46a8-bfda-2cf681952756_200.png" width="380px"> </div><br>
+
 
 ### 5. 线程加入规则
 
@@ -1256,7 +1257,8 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 Thread 对象的结束先行发生于 join() 方法返回。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/54e6d499-80df-488e-aa7e-081766c41538.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/89a0024a-7485-4164-bc82-ebdea51f59e0_200.png" width="400px"> </div><br>
+
 
 ### 6. 线程中断规则
 
@@ -1474,7 +1476,7 @@ public class ThreadLocalExample1 {
 
 它所对应的底层结构图为：
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/066f9c11-0154-42c3-8685-301a70e9bd39.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4dc11e5e-c1d8-4391-be73-337cda32e155_200.png" width="500px"> </div><br>
 
 每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 对象。
 
