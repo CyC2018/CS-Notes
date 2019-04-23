@@ -33,7 +33,7 @@ Output:
 
 以 (2, 3, 1, 0, 2, 5) 为例，遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复：
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u6570_u7EC4_u4E2D_u91CD_u590D_1548260392361.gif" width="250px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b0f0107a-e35b-4ace-b25e-cacb22b1556035029196.gif" width="250px"> </div><br>
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
