@@ -1214,11 +1214,12 @@ private int cubeNum(int i, int j) {
 
 45 度对角线标记数组的长度为 2 \* n - 1，通过下图可以明确 (r, c) 的位置所在的数组下标为 r + c。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6646db4a-7f43-45e4-96ff-0891a57a9ade.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9c422923-1447-4a3b-a4e1-97e663738187.jpg" width="300px"> </div><br>
+
 
 135 度对角线标记数组的长度也是 2 \* n - 1，(r, c) 的位置所在的数组下标为 n - 1 - (r - c)。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f1ff65ed-bbc2-4b92-8a94-7c5c0874da0f.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7a85e285-e152-4116-b6dc-3fab27ba9437.jpg" width="300px"> </div><br>
 
 ```java
 private List<List<String>> solutions;

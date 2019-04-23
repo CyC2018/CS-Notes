@@ -976,7 +976,7 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/c847d6e4-3610-4f3c-a909-89a5048426e6.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/83acbb02-872a-4178-b22a-c89c3cb60263.jpg" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1017,7 +1017,7 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/79e9a938-43e2-4c5a-8de9-fe55522a14c9.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices, int fee) {
