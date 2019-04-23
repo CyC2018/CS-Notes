@@ -40,7 +40,7 @@
 
 把 n 个骰子仍在地上，求点数和为 s 的概率。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6_2001550474388460.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/195f8693-5ec4-4987-8560-f25e365879dd.png" width="300px"> </div><br>
 
 ## 解题思路
 
@@ -113,7 +113,8 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/5_2001550474110029.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/eaa506b6-0747-4bee-81f8-3cda795d8154.png" width="350px"> </div><br>
+
 
 ## 解题思路
 
@@ -172,7 +173,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4_2001550473915641.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/42661013-750f-420b-b3c1-437e9a11fb65.png" width="220px"> </div><br>
 
 ## 解题思路
 
@@ -244,7 +245,8 @@ public int Add(int a, int b) {
 
 给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/3_2001550473624627.png"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4240a69f-4d51-4d16-b797-2dfe110f30bd.png" width="250px"> </div><br>
+
 
 ## 解题思路
 
