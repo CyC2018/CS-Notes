@@ -933,7 +933,7 @@ private void backtracking(List<Integer> tempCombination, List<List<Integer>> com
 }
 ```
 
-## 含有相同元素的求组合求和
+## 含有相同元素的组合求和
 
 [40. Combination Sum II (Medium)](https://leetcode.com/problems/combination-sum-ii/description/)
 
