@@ -18,7 +18,7 @@
 
 Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/fac3dfd6-1656-4329-9a80-7f6c51ef30c5_200.png" width="600px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/1fe2dc77-9a2d-4643-90b3-bbf50f649bac.png" width="600px"> </div><br>
 
 集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。
 
@@ -40,45 +40,45 @@ Github 就是一个中心服务器。
 
 Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本库，History 中存有所有分支，使用一个 HEAD 指针指向当前分支。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/0f9b9d2a-c5cc-4a3f-b138-2c1035950f39_200.png" width="700px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/71b97a50-a49f-4f1a-81d1-48c3364d61b3.png" width="700px"> </div><br>
 
 - git add files 把文件的修改添加到暂存区
 - git commit 把暂存区的修改提交到当前分支，提交之后暂存区就被清空了
 - git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d95d04b7-896b-4bba-bb43-1a029ef14032.png" width="320px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/603dbb49-dac5-4825-9694-5f1d65cefd44.png" width="320px"> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
 
 - git commit -a 直接把所有文件的修改添加到暂存区然后执行提交
 - git checkout HEAD -- files 取出最后一次修改，可以用来进行回滚操作
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/c3212a02-d010-4e62-834b-5dd26dfb5692.jpg" width="500px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/265bab88-7be9-44c5-a33f-f93d9882c096.png" width="500px"> </div><br>
 
 # 分支实现
 
 使用指针将每个提交连接成一条时间线，HEAD 指针指向当前分支指针。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/84d496d7-54b0-4a9b-9499-ce232057e499_200.png" width="250px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/ec4d7464-7140-46d8-827e-d63634202e1e.png" width="220px"> </div><br>
 
 新建分支是新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支表示新分支成为当前分支。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7c5bcdbf-e656-4b7c-be82-b247a3589ed5_200.png" width="250px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/66d00642-ce37-466c-8f7a-143d0bf84cd6.png" width="220px"> </div><br>
 
 每次提交只会让当前分支指针向前移动，而其它分支指针不会移动。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/13783e94-b481-4aea-9fa2-9d1973abd47e_200.png" width="300px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/72a01242-e6b4-46c5-a285-24e754d63093.png" width="300px"> </div><br>
 
 合并分支也只需要改变指针即可。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/15699a17-5a69-4fbe-852e-9d2b7cf05e80_200.png" width="300px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/94617147-0cbd-4a28-847d-81e52efb1b1e.png" width="300px"> </div><br>
 
 # 冲突
 
 当两个分支都对同一个文件的同一行进行了修改，在分支合并时就会产生冲突。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7e82ce01-2afb-4c15-b720-b81049c875c2_200.png" width="300px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/32b05e81-41b3-414a-8656-736c9604e3d6.png" width="300px"> </div><br>
 
 Git 会使用 <<<<<<< ，======= ，>>>>>>> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
@@ -100,7 +100,7 @@ Creating a new branch is quick AND simple.
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/fa1dc552-8501-439e-b85a-3d9eac704880_200.png" width="350px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9a519773-84b2-4c81-81cf-4e7dd739a97a.png" width="350px"> </div><br>
 
 # 分支管理策略
 
@@ -108,7 +108,7 @@ master 分支应该是非常稳定的，只用来发布新版本；
 
 日常开发在开发分支 dev 上进行。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/245fd2fb-209c-4ad5-bc5e-eb5664966a0e.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/245fd2fb-209c-4ad5-bc5e-eb5664966a0e.jpg" width=""> </div><br>
 
 # 储藏（Stashing）
 
@@ -148,7 +148,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 # Git 命令一览
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7a29acce-f243-4914-9f00-f2988c528412.jpg"/> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/7a29acce-f243-4914-9f00-f2988c528412.jpg" width=""> </div><br>
 
 比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
 
