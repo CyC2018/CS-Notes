@@ -189,7 +189,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8ea6d399-ebcb-4077-b9c7-b2d825fe256c_200.png" width="300px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9112288f-23f5-4e53-b222-a46fdbca1603.png" width="300px"> </div><br>
 
 **3. 安全性** 
 
