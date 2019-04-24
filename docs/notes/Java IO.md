@@ -97,7 +97,7 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 - FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
 - FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/5617aa92-acc2-4b21-bc2a-eb9b0101ac6e_200.png" width="600px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/9709694b-db05-4cce-8d2f-1c8b09f4d921.png" width="650px"> </div><br>
 
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
@@ -277,8 +277,7 @@ public static void main(String[] args) throws IOException {
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/d1e4c8aa-c5da-447e-b1c8-7359114cf977_200.png" width="500px"> </div><br>
-
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6cfdf7b0-ea9d-4371-893f-76e78f004223.png" width="550px"> </div><br>
 
 ## Datagram
 
@@ -414,7 +413,7 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/07e5a8d9-94bb-4d3b-8d53-c138946f1a68_200.png" width="350px"> </div><br>
+<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/093f9e57-429c-413a-83ee-c689ba596cef.png" width="350px"> </div><br>
 
 ### 1. 创建选择器
 
