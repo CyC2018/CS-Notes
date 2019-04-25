@@ -736,30 +736,39 @@ class D extends B {
 public class Test {
 
     public static void main(String[] args) {
-        A a1 = new A();
-        A a2 = new B();
-        B b = new B();
-        C c = new C();
-        D d = new D();
-        System.out.println(a1.show(b)); // A and A
-        System.out.println(a1.show(c)); // A and A
-        System.out.println(a1.show(d)); // A and D
-        System.out.println(a2.show(b)); // B and A
-        System.out.println(a2.show(c)); // B and A
-        System.out.println(a2.show(d)); // A and D
-        System.out.println(b.show(b));  // B and B
-        System.out.println(b.show(c));  // B and B
-        System.out.println(b.show(d));  // A and D
+        /**
+         * 方法调用的分派分为两个阶段：
+         * 静态分派（编译器在编译阶段的选择）：方法接受者的静态类型（引用类型）、参数的静态类型，编译器是根据这两个宗量进行选择的。
+         * 动态分派（JVM在运行阶段的选择）：方法接受者的动态类型（实际对象的类型），JVM是根据这一个宗量进行选择的。
+         *        此时JVM并不关心参数的类型。也就是说，不论是参数的静态类型、还是参数的动态类型，都无法影响JVM的选择。
+         */
+        A aa = new A();
+        A ab = new B();
+        B bb = new B();
+        C cc = new C();
+        D dd = new D();
+        System.out.println(aa.show(bb)); // A and A
+        System.out.println(aa.show(cc)); // A and A
+        System.out.println(aa.show(dd)); // A and D
+        
+        /**
+         * 静态分派：根据方法接受者（ab）的引用类型A、方法参数（bb）的引用类型B，本应选择A.show:(B)java.lang.String方法，但是A中并没有此方法。
+         * 根据继承关系从下往上搜索（越接近上层的优先级越低），确定了优先级最高的A.show:(A)java.lang.String。
+         * 
+         * 动态分派：在运行阶段，由于ab实际所指向的是B的对象，而B中存在show:(A)java.lang.String方法。
+         * 所以选择了B.show:(A)java.lang.String方法。
+         */
+        System.out.println(ab.show(bb)); // B and A
+        System.out.println(ab.show(cc)); // B and A
+        System.out.println(ab.show(dd)); // A and D
+        
+        System.out.println(bb.show(bb)); // B and B
+        System.out.println(bb.show(cc)); // B and B
+        System.out.println(bb.show(dd)); // A and D
+    }
     }
 }
 ```
-
-涉及到重写时，方法调用的优先级为：
-
-- this.show(O)
-- super.show(O)
-- this.show((super)O)
-- super.show((super)O)
 
 # 五、Object 通用方法
 
