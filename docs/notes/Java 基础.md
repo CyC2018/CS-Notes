@@ -720,6 +720,7 @@ class B extends A {
         return ("B and B");
     }
 
+    @Override
     public String show(A obj) {
         return ("B and A");
     }
