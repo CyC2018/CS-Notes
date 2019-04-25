@@ -191,7 +191,7 @@ public String frequencySort(String s) {
 
 它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
 
-<div align="center"> <img src="/pics/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
+<div align="center"> <img src="pics/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
 
 ## 按颜色进行排序
 

@@ -20,7 +20,7 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。
 
-<div align="center"> <img src="/pics/be608a77-7b7f-4f8e-87cc-f2237270bf69.png" width="500"/> </div><br>
+<div align="center"> <img src="pics/be608a77-7b7f-4f8e-87cc-f2237270bf69.png" width="500"/> </div><br>
 
 ## 启动速度
 
@@ -74,7 +74,7 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。
 
-<div align="center"> <img src="/pics/docker-filesystems-busyboxrw.png"/> </div><br>
+<div align="center"> <img src="pics/docker-filesystems-busyboxrw.png"/> </div><br>
 
 # 参考资料
 
