@@ -105,13 +105,12 @@
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
-<img src="assets/group1.png" width="150px">
+<img src="assets/group.png" width="150px">
 
 ### 后端面试指南
 
 <a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="assets/小专栏.jpg" width="80px">
-</a>
+    <img src="assets/小专栏.jpg" width="80px"></a>
 
 ### 排版
 
