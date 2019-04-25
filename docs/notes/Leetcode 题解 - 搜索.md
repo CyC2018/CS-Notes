@@ -1169,7 +1169,7 @@ public void solveSudoku(char[][] board) {
             colsUsed[j][num] = true;
             cubesUsed[cubeNum(i, j)][num] = true;
         }
-        backtracking(0, 0);
+    backtracking(0, 0);
 }
 
 private boolean backtracking(int row, int col) {
