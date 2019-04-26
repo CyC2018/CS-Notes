@@ -797,7 +797,7 @@ FROM
     INNER JOIN Scores S2
     ON S1.score <= S2.score
 GROUP BY
-    S1.id
+    S1.id, S1.score
 ORDER BY
     S1.score DESC;
 ```
