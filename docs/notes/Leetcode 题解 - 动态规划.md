@@ -110,7 +110,7 @@ public int rob(int[] nums) {
 [213. House Robber II (Medium)](https://leetcode.com/problems/house-robber-ii/description/)
 
 ```java
-public  int rob(int[] nums) {
+public int rob(int[] nums) {
     if (nums == null || nums.length == 0) {
         return 0;
     }
@@ -121,7 +121,7 @@ public  int rob(int[] nums) {
     return Math.max(rob(nums, 0, n - 2), rob(nums, 1, n - 1));
 }
 
-private   int rob(int[] nums, int first, int last) {
+private int rob(int[] nums, int first, int last) {
     int pre2 = 0, pre1 = 0;
     for (int i = first; i <= last; i++) {
         int cur = Math.max(pre1, pre2 + nums[i]);
