@@ -90,17 +90,11 @@
 
 ## :memo: 后记 
 
-### License
+### 公众号
 
-本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
+欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
 
-转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上 [CyC2018 公众号二维码海报](https://github.com/CyC2018/CS-Notes/blob/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7%20%E6%B5%B7%E6%8A%A5.png)。
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
-### 内推信息
-
-[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+<img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img>
 
 ### QQ 群
 
@@ -108,10 +102,14 @@
 
 <img src="assets/group.png" width="150px">
 
-### 后端面试指南
+### 后端面试进阶指南
 
 <a href="https://xiaozhuanlan.com/CyC2018">
     <img src="assets/小专栏.jpg" width="80px"></a>
+    
+### 内推信息
+
+[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 
 ### 绘图工具
 
@@ -138,6 +136,14 @@ Power by [logomakr](https://logomakr.com/).
 为了方便将本地笔记内容上传到 Github 上，实现了一整套自动化上传方案，包括提取图片、Markdown 文档转换、Git 同步。进行 Markdown 文档转换是因为 Github 使用的 GFM 不支持 MathJax 公式和 TOC 标记，所以需要替换 MathJax 公式为 CodeCogs 的云服务和重新生成 TOC 目录。
 
 GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
+
+### License
+
+本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
+
+转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上 [CyC2018 公众号二维码海报](https://github.com/CyC2018/CS-Notes/blob/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7%20%E6%B5%B7%E6%8A%A5.png)。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
 ### 致谢
 
