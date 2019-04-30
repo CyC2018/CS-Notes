@@ -132,7 +132,7 @@ Output:
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u66FF_u6362_u7A7A_u683C.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6980aef0-debe-4b4b-8da5-8b1befbc1408.gif" width="230px"> </div><br>
 
 ```java
 public String replaceSpace(StringBuffer str) {
