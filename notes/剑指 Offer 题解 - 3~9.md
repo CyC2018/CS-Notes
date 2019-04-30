@@ -83,11 +83,11 @@ Given target = 20, return false.
 
 ## 解题思路
 
-要求时间复杂度 O(M + N)，空间复杂度 O(1)。
+要求时间复杂度 O(M + N)，空间复杂度 O(1)。其中 M 为行数，N 为 列数。
 
-该二维数组中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间，当前元素的查找区间为左下角的所有元素。
+该二维数组中的一个数，小于它的数一定在其左边，大于它的数一定在其下边。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间，当前元素的查找区间为左下角的所有元素。
 
-<div align="center"> <img src="pics/_u4E8C_u7EF4_u6570_u7EC4_u4E2D_.gif"/> </div><br>
+<div align="center"> <img src="pics/0ad9f7ba-f408-4999-a77a-9b73562c9088.gif" width="200px"> </div><br>
 
 ```java
 public boolean Find(int target, int[][] matrix) {
