@@ -164,14 +164,13 @@ public String replaceSpace(StringBuffer str) {
 
 从尾到头反过来打印出每个结点的值。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4ECE_u5C3E_u5230_u5934_u6253_1548293972480.gif" width="250px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f5792051-d9b2-4ca4-a234-a4a2de3d5a57.png" width="280px"> </div><br>
 
 ## 解题思路
 
 ### 使用递归
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4ECE_u5C3E_u5230_u5934_u6253_1548296249372.gif" width="200px"> </div><br>
-
+要逆序打印链表 1->2->3（3,2,1)，可以先逆序打印链表 2->3(3,2)，最后再打印第一个节点 1。而链表 2->3 可以看成一个新的链表，要逆序打印该链表可以继续使用求解函数，也就是在求解函数中调用自己，这就是递归函数。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -186,15 +185,14 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ### 使用头插法
 
-利用链表头插法为逆序的特点。
+使用头插法可以得到一个逆序的链表。
 
 头结点和第一个节点的区别：
 
 - 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
 - 第一个节点就是链表的第一个真正存储值的节点。
 
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0dae7e93-cfd1-4bd3-97e8-325b032b716f.gif" width="370px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -219,7 +217,9 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ### 使用栈
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4ECE_u5C3E_u5230_u5934_u6253_1548503461113.gif" width="500px"> </div><br>
+栈具有后进先出的特点，在遍历链表时将值按顺序放入栈中，最后出栈的顺序即为逆序。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9d1deeba-4ae1-41dc-98f4-47d85b9831bc.gif" width="300px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
