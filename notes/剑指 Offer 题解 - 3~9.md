@@ -337,8 +337,7 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，先进入的元素先退出，这就是队列的顺序。
 
-<div align="center"> <img src="pics/_u7528_u4E24_u4E2A_u6808_u5B9E_.gif" width="500"/> </div><br>
-
+<div align="center"> <img src="pics/3ea280b5-be7d-471b-ac76-ff020384357c.gif" width="350"/> </div><br>
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
