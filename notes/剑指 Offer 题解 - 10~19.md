@@ -98,11 +98,11 @@ public class Solution {
 
 当 n 为 1 时，只有一种覆盖方法：
 
-<div align="center"> <img src="pics/fec3ba89-115a-4cf9-b165-756757644641.png" width="100px"> </div><br>
+<div align="center"> <img src="pics/f6e146f1-57ad-411b-beb3-770a142164ef.png" width="100px"> </div><br>
 
 当 n 为 2 时，有两种覆盖方法：
 
-<div align="center"> <img src="pics/db85a909-5e11-48b2-85d2-f003e7bb35c0.png" width="200px"> </div><br>
+<div align="center"> <img src="pics/fb3b8f7a-4293-4a38-aae1-62284db979a3.png" width="200px"> </div><br>
 
 要覆盖 2\*n 的大矩形，可以先覆盖 2\*1 的矩形，再覆盖 2\*(n-1) 的矩形；或者先覆盖 2\*2 的矩形，再覆盖 2\*(n-2) 的矩形。而覆盖 2\*(n-1) 和 2\*(n-2) 的矩形可以看成子问题。该问题的递推公式如下：
 
@@ -136,6 +136,18 @@ public int RectCover(int n) {
 <div align="center"> <img src="pics/9dae7475-934f-42e5-b3b3-12724337170a.png" width="380px"> </div><br>
 
 ## 解题思路
+
+当 n = 1 时，只有一种跳法：
+
+<div align="center"> <img src="pics/72aac98a-d5df-4bfa-a71a-4bb16a87474c.png" width="250px"> </div><br>
+
+当 n = 2 时，有两种跳法：
+
+<div align="center"> <img src="pics/1b80288d-1b35-4cd3-aa17-7e27ab9a2389.png" width="300px"> </div><br>
+
+跳 n 阶台阶，可以先跳 1 阶台阶，再跳 n-1 阶台阶；或者先跳 2 阶台阶，再跳 n-2 阶台阶。而 n-1 和 n-2 阶台阶的跳法可以看成子问题，该问题的递推公式为：
+
+<div align="center"> <img src="pics/508c6e52-9f93-44ed-b6b9-e69050e14807.jpg" width="350px"> </div><br>
 
 ```java
 public int JumpFloor(int n) {
