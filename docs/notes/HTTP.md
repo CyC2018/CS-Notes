@@ -823,7 +823,7 @@ POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
 ```
 
-DELETE /idX/delete HTTP/1.1 是幂等的，即便不同的请求接收到的状态码不一样：
+DELETE /idX/delete HTTP/1.1 是幂等的，即使不同的请求接收到的状态码不一样：
 
 ```
 DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
