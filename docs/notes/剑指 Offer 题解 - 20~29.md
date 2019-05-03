@@ -18,7 +18,7 @@
 
 ## 题目描述
 
-```html
+```
 true
 
 "+100"
@@ -26,7 +26,9 @@ true
 "-123"
 "3.1416"
 "-1E-16"
+```
 
+```
 false
 
 "12e"
@@ -44,9 +46,9 @@ false
 ```html
 []  ： 字符集合
 ()  ： 分组
-?   ： 重复 0 ~ 1
-+   ： 重复 1 ~ n
-*   ： 重复 0 ~ n
+?   ： 重复 0 ~ 1 次
++   ： 重复 1 ~ n 次
+*   ： 重复 0 ~ n 次
 .   ： 任意字符
 \\. ： 转义后的 .
 \\d ： 数字
@@ -72,12 +74,14 @@ public boolean isNumeric(char[] str) {
 
 ## 解题思路
 
+方法一：创建一个新数组，时间复杂度 O(N)，空间复杂度 O(N)。
+
 ```java
 public void reOrderArray(int[] nums) {
     // 奇数个数
     int oddCnt = 0;
-    for (int val : nums)
-        if (val % 2 == 1)
+    for (int x : nums)
+        if (!isEven(x))
             oddCnt++;
     int[] copy = nums.clone();
     int i = 0, j = oddCnt;
@@ -88,6 +92,35 @@ public void reOrderArray(int[] nums) {
             nums[j++] = num;
     }
 }
+
+private boolean isEven(int x) {
+    return x % 2 == 0;
+}
+```
+
+方法二：使用冒泡思想，每次都当前偶数上浮到当前最右边。时间复杂度 O(N<sup>2</sup>)，空间复杂度 O(1)，时间换空间。
+
+```java
+public void reOrderArray(int[] nums) {
+    int N = nums.length;
+    for (int i = N - 1; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
+            if (isEven(nums[j]) && !isEven(nums[j + 1])) {
+                swap(nums, j, j + 1);
+            }
+        }
+    }
+}
+
+private boolean isEven(int x) {
+    return x % 2 == 0;
+}
+
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
 ```
 
 # 22. 链表中倒数第 K 个结点
@@ -96,7 +129,7 @@ public void reOrderArray(int[] nums) {
 
 ## 解题思路
 
-设链表的长度为 N。设两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到 N - K 个节点处，该位置就是倒数第 K 个节点。
+设链表的长度为 N。设置两个指针 P1 和 P2，先让 P1 移动 K 个节点，则还有 N - K 个节点可以移动。此时让 P1 和 P2 同时移动，可以知道当 P1 移动到链表结尾时，P2 移动到第 N - K 个节点处，该位置就是倒数第 K 个节点。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6b504f1f-bf76-4aab-a146-a9c7a58c2029.png" width="500"/> </div><br>
 
@@ -173,6 +206,8 @@ public ListNode ReverseList(ListNode head) {
 ```
 
 ### 迭代
+
+使用头插法。
 
 ```java
 public ListNode ReverseList(ListNode head) {
