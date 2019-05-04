@@ -23,7 +23,7 @@
 
 ## 解题思路
 
-### 动态规划解法
+### 动态规划
 
 使用一个二维数组 dp 存储点数出现的次数，其中 dp[i][j] 表示前 i 个骰子产生点数 j 的次数。
 
@@ -52,7 +52,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 }
 ```
 
-### 动态规划解法 + 旋转数组
+### 动态规划 + 旋转数组
 
 空间复杂度：O(N)
 
@@ -90,7 +90,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ## 题目描述
 
-五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
+五张牌，其中大小鬼为癞子，牌面为 0。判断这五张牌是否能组成顺子。
 
 <div align="center"> <img src="pics/eaa506b6-0747-4bee-81f8-3cda795d8154.png" width="350px"> </div><br>
 
@@ -150,7 +150,7 @@ public int LastRemaining_Solution(int n, int m) {
 
 ## 题目描述
 
-可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
+可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
 <div align="center"> <img src="pics/42661013-750f-420b-b3c1-437e9a11fb65.png" width="220px"> </div><br>
 
@@ -289,7 +289,7 @@ public int StrToInt(String str) {
 
 二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val >= p.val && root.val <= q.val。
 
-<div align="center"> <img src="pics/047faac4-a368-4565-8331-2b66253080d3.jpg" width="250"/> </div><br>
+<div align="center"> <img src="pics/047faac4-a368-4565-8331-2b66253080d3.jpg" width="220"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
