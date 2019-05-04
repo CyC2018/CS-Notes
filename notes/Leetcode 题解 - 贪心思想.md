@@ -368,5 +368,5 @@ public int maxProfit(int[] prices) {
 
 
 
-</br><div align="center">🎨 </br> 关注公众号 CyC2018 获取更多精彩内容！在公众号后台回复关键字 **资料** 可领取一份技术面试复习思维导图，帮你理清多而杂的面试知识点。
+</br><div align="center">🎨 </br></br> 关注公众号 CyC2018 获取更多精彩内容！在公众号后台回复关键字 **资料** 可领取一份技术面试复习思维导图，帮你理清多而杂的面试知识点。
 <div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
