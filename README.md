@@ -1,5 +1,5 @@
 <div align="center">
-<a href="">离线阅读版本下载</a>
+<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载</a>
 </div>
 
 <br>
