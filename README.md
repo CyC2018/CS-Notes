@@ -34,6 +34,7 @@
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
 - [Leetcode 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20题解%20-%20目录.md)
 - [算法](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法%20-%20目录.md)
+- [技术面试复习大纲](https://mp.weixin.qq.com/s?__biz=MzU1OTgyMzA2NA==&mid=2247483716&idx=1&sn=c218590cd086d720576d9ab3e2c9bbd3&chksm=fc1020f3cb67a9e58496e16e089fb348df5f0350e9a193dcaa8f118abf0bf75cb2ec07f302c6&mpshare=1&scene=1&srcid=0504ASxBMSWIfWWy5ebtabXO&key=aed6be2b7ed28ff5ceb8ce0d83211153c1af1b62eda5c9df1670180c3f9f1d3a607995f06ad78fe60e2c51bd16e915952bc060a460ebb703cd4664f1a9622c89160294603f33e647b72a021b957bac73&ascene=1&uin=MTAxMDY0OTMwMQ%3D%3D&devicetype=Windows+10&version=62060739&lang=zh_CN&pass_ticket=GlF86tChP256v3ZDmc08pGgs0C13KgF0f%2BgyJ3IY8t28uoxJv2uZE6xmn%2FhDmdj1)
 
 ## :computer: 操作系统
 
