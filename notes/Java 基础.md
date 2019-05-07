@@ -137,13 +137,22 @@ System.out.println(m == n); // true
 
 基本类型对应的缓冲池如下：
 
-- boolean values true and false
-- all byte values
-- short values between -128 and 127
-- int values between -128 and 127
-- char in the range \u0000 to \u007F
+|基本类型|包装类型|包装类型缓冲池|缓冲池内容|
+|:-:|:-:|:-:|:-:|
+|boolean|Boolean|无|无|
+|byte|Byte|ByteCache|Byte类型数据，数值范围[-128, 127]|
+|char|Character|CharacterCache|Character类型数据，数值范围[0, 127]，对应字符内容为整个ASCII码表|
+|short|Short|ShortCache|Short类型数据，数值范围[-128, 127]|
+|int|Integer|IntegerCache|Integer类型数据，数值范围默认[-128, 127]，最大值可调|
+|long|Long|LongCache|Long类型数据，数值范围[-128, 127]|
+|float|Float|无|无|
+|double|Double|无|无|
 
-在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
+在使用这些基本类型对应的包装类型时，如果该数值范围在缓冲池范围内，就可以直接使用缓冲池中的对象。
+
+**Integer缓冲池的特殊性**
+
+在jdk1.8所有的数值类缓冲池中，Integer的缓冲池IntegerCache很特殊，这个缓冲池的下界是-128，上界默认是127，但是这个上界是可调的，在启动jvm的时候，通过`-XX:AutoBoxCacheMax=<size>`来指定这个缓冲池的大小，该选项在JVM初始化的时候会设定一个名为`java.lang.IntegerCache.high`系统属性，然后IntegerCache初始化的时候就会读取该系统属性来决定上界。
 
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
@@ -152,7 +161,7 @@ System.out.println(m == n); // true
 
 ## 概览
 
-String 被声明为 final，因此它不可被继承。
+String 被声明为 final，因此它不可被继承。（注意，所有8种基本类型对应的包装类型全都是由`final`修饰的不可变类）
 
 在 Java 8 中，String 内部使用 char 数组存储数据。
 
