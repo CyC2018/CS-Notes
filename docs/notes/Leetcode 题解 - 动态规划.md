@@ -61,7 +61,6 @@
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/14fe1e71-8518-458f-a220-116003061a83.png" width="200px"> </div><br>
 
-
 考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
 ```java
@@ -92,7 +91,6 @@ public int climbStairs(int n) {
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])" class="mathjax-pic"/></div> <br>-->
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2de794ca-aa7b-48f3-a556-a0e2708cb976.jpg" width="350px"> </div><br>
-
 
 ```java
 public int rob(int[] nums) {
@@ -205,6 +203,8 @@ public int minPathSum(int[][] grid) {
 题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg" width=""> </div><br>
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg"/> </div><br>
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -978,6 +978,7 @@ public int combinationSum4(int[] nums, int target) {
 题目描述：交易之后需要有一天的冷却时间。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/83acbb02-872a-4178-b22a-c89c3cb60263.jpg" width="300px"> </div><br>
+
 
 ```java
 public int maxProfit(int[] prices) {
