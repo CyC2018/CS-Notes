@@ -1,3 +1,9 @@
+# 如何下载
+
+离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在公众号后台回复 **下载** 即可获取下载链接。
+
+<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+
 # 目的
 
 考虑到有部分读者的网络环境较差，有时候在线访问速度很慢，导致阅读体验不佳。另外，PDF 等格式的离线版本相比于网页在线版本更方便做笔记。因此提供离线阅读版本给大家下载。
@@ -7,8 +13,6 @@
 有三种格式的离线版本：PDF、Markdown 和 HTML 。
 
 ## PDF
-
-
 
 优点是方便做笔记；缺点是不能显示 GIF 图片（所以“剑指 Offer 题解”不建议使用 PDF 进行阅读），以及显示效果不佳。
 
@@ -28,8 +32,3 @@
 
 ![](download-html.png)
 
-# 如何下载
-
-离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在公众号后台回复 **下载** 即可获取下载链接。
-
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
