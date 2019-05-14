@@ -77,6 +77,9 @@ The above output corresponds to the 5 unique BST's shown below:
 
 ```java
 public List<TreeNode> generateTrees(int n) {
+    if (n < 1) {
+        return new LinkedList<TreeNode>();
+    }
     return generateSubtrees(1, n);
 }
 
