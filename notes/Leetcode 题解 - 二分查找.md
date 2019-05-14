@@ -1,23 +1,14 @@
 <!-- GFM-TOC -->
-* [原理](#原理)
-    * [1. 正常实现](#1-正常实现)
-    * [2. 时间复杂度](#2-时间复杂度)
-    * [3. m 计算](#3-m-计算)
-    * [4. 未成功查找的返回值](#4-未成功查找的返回值)
-    * [5. 变种](#5-变种)
-* [例题](#例题)
-    * [1. 求开方](#1-求开方)
-    * [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
-    * [3. 有序数组的 Single Element](#3-有序数组的-single-element)
-    * [4. 第一个错误的版本](#4-第一个错误的版本)
-    * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
-    * [6. 查找区间](#6-查找区间)
+* [1. 求开方](#1-求开方)
+* [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
+* [3. 有序数组的 Single Element](#3-有序数组的-single-element)
+* [4. 第一个错误的版本](#4-第一个错误的版本)
+* [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
+* [6. 查找区间](#6-查找区间)
 <!-- GFM-TOC -->
 
 
-# 原理
-
-## 1. 正常实现
+**正常实现** 
 
 ```text
 Input : [1,2,3,4,5]
@@ -42,11 +33,11 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-## 2. 时间复杂度
+**时间复杂度** 
 
 二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
-## 3. m 计算
+**m 计算** 
 
 有两种计算中值 m 的方式：
 
@@ -55,14 +46,14 @@ public int binarySearch(int[] nums, int key) {
 
 l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算法方法。
 
-## 4. 未成功查找的返回值
+**未成功查找的返回值** 
 
 循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
 
 - -1：以一个错误码表示没有查找到 key
 - l：将 key 插入到 nums 中的正确位置
 
-## 5. 变种
+**变种** 
 
 二分查找可以有很多变种，变种实现要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
 
@@ -103,9 +94,7 @@ l   m   h
 
 当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
 
-# 例题
-
-## 1. 求开方
+# 1. 求开方
 
 [69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
 
@@ -143,7 +132,7 @@ public int mySqrt(int x) {
 }
 ```
 
-## 2. 大于给定元素的最小元素
+# 2. 大于给定元素的最小元素
 
 [744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
 
@@ -177,7 +166,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 }
 ```
 
-## 3. 有序数组的 Single Element
+# 3. 有序数组的 Single Element
 
 [540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
 
@@ -214,7 +203,7 @@ public int singleNonDuplicate(int[] nums) {
 }
 ```
 
-## 4. 第一个错误的版本
+# 4. 第一个错误的版本
 
 [278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
 
@@ -239,7 +228,7 @@ public int firstBadVersion(int n) {
 }
 ```
 
-## 5. 旋转数组的最小数字
+# 5. 旋转数组的最小数字
 
 [153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
@@ -263,7 +252,7 @@ public int findMin(int[] nums) {
 }
 ```
 
-## 6. 查找区间
+# 6. 查找区间
 
 [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 

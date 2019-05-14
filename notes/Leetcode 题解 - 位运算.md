@@ -1,28 +1,21 @@
 <!-- GFM-TOC -->
-* [原理](#原理)
-    * [1. 基本原理](#1-基本原理)
-    * [2. mask 计算](#2-mask-计算)
-    * [3. Java 中的位操作](#3-java-中的位操作)
-* [例题](#例题)
-    * [统计两个数的二进制表示有多少位不同](#统计两个数的二进制表示有多少位不同)
-    * [数组中唯一一个不重复的元素](#数组中唯一一个不重复的元素)
-    * [找出数组中缺失的那个数](#找出数组中缺失的那个数)
-    * [数组中不重复的两个元素](#数组中不重复的两个元素)
-    * [翻转一个数的比特位](#翻转一个数的比特位)
-    * [不用额外变量交换两个整数](#不用额外变量交换两个整数)
-    * [判断一个数是不是 2 的 n 次方](#判断一个数是不是-2-的-n-次方)
-    * [判断一个数是不是 4 的 n 次方](#判断一个数是不是-4-的-n-次方)
-    * [判断一个数的位级表示是否不会出现连续的 0 和 1](#判断一个数的位级表示是否不会出现连续的-0-和-1)
-    * [求一个数的补码](#求一个数的补码)
-    * [实现整数的加法](#实现整数的加法)
-    * [字符串数组最大乘积](#字符串数组最大乘积)
-    * [统计从 0 \~ n 每个数的二进制表示中 1 的个数](#统计从-0-\~-n-每个数的二进制表示中-1-的个数)
+* [1. 统计两个数的二进制表示有多少位不同](#1-统计两个数的二进制表示有多少位不同)
+* [2. 数组中唯一一个不重复的元素](#2-数组中唯一一个不重复的元素)
+* [3. 找出数组中缺失的那个数](#3-找出数组中缺失的那个数)
+* [4. 数组中不重复的两个元素](#4-数组中不重复的两个元素)
+* [5. 翻转一个数的比特位](#5-翻转一个数的比特位)
+* [6. 不用额外变量交换两个整数](#6-不用额外变量交换两个整数)
+* [7. 判断一个数是不是 2 的 n 次方](#7-判断一个数是不是-2-的-n-次方)
+* [8.  判断一个数是不是 4 的 n 次方](#8--判断一个数是不是-4-的-n-次方)
+* [9. 判断一个数的位级表示是否不会出现连续的 0 和 1](#9-判断一个数的位级表示是否不会出现连续的-0-和-1)
+* [10. 求一个数的补码](#10-求一个数的补码)
+* [11. 实现整数的加法](#11-实现整数的加法)
+* [12. 字符串数组最大乘积](#12-字符串数组最大乘积)
+* [13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数](#13-统计从-0-\~-n-每个数的二进制表示中-1-的个数)
 <!-- GFM-TOC -->
 
 
-# 原理
-
-## 1. 基本原理
+**基本原理** 
 
 0s 表示一串 0，1s 表示一串 1。
 
@@ -48,7 +41,7 @@ x ^ x = 0       x & x = x       x | x = x
 - \>\>\> n 为无符号右移，左边会补上 0。
 - &lt;&lt; n 为算术左移，相当于乘以 2<sup>n</sup>。
 
-## 2. mask 计算
+** mask 计算** 
 
 要获取 111111111，将 0 取反即可，\~0。
 
@@ -58,7 +51,7 @@ x ^ x = 0       x & x = x       x | x = x
 
 要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~(1&lt;&lt;(i+1)-1)。
 
-## 3. Java 中的位操作
+**Java 中的位操作** 
 
 ```html
 static int Integer.bitCount();           // 统计 1 的数量
@@ -66,9 +59,7 @@ static int Integer.highestOneBit();      // 获得最高位
 static String toBinaryString(int i);     // 转换为二进制表示的字符串
 ```
 
-# 例题
-
-## 统计两个数的二进制表示有多少位不同
+# 1. 统计两个数的二进制表示有多少位不同
 
 [461. Hamming Distance (Easy)](https://leetcode.com/problems/hamming-distance/)
 
@@ -121,7 +112,7 @@ public int hammingDistance(int x, int y) {
 }
 ```
 
-## 数组中唯一一个不重复的元素
+# 2. 数组中唯一一个不重复的元素
 
 [136. Single Number (Easy)](https://leetcode.com/problems/single-number/description/)
 
@@ -140,7 +131,7 @@ public int singleNumber(int[] nums) {
 }
 ```
 
-## 找出数组中缺失的那个数
+# 3. 找出数组中缺失的那个数
 
 [268. Missing Number (Easy)](https://leetcode.com/problems/missing-number/description/)
 
@@ -161,7 +152,7 @@ public int missingNumber(int[] nums) {
 }
 ```
 
-## 数组中不重复的两个元素
+# 4. 数组中不重复的两个元素
 
 [260. Single Number III (Medium)](https://leetcode.com/problems/single-number-iii/description/)
 
@@ -185,7 +176,7 @@ public int[] singleNumber(int[] nums) {
 }
 ```
 
-## 翻转一个数的比特位
+# 5. 翻转一个数的比特位
 
 [190. Reverse Bits (Easy)](https://leetcode.com/problems/reverse-bits/description/)
 
@@ -230,7 +221,7 @@ private int reverseByte(byte b) {
 }
 ```
 
-## 不用额外变量交换两个整数
+# 6. 不用额外变量交换两个整数
 
 [程序员代码面试指南 ：P317](#)
 
@@ -240,7 +231,7 @@ b = a ^ b;
 a = a ^ b;
 ```
 
-## 判断一个数是不是 2 的 n 次方
+# 7. 判断一个数是不是 2 的 n 次方
 
 [231. Power of Two (Easy)](https://leetcode.com/problems/power-of-two/description/)
 
@@ -260,7 +251,7 @@ public boolean isPowerOfTwo(int n) {
 }
 ```
 
-## 判断一个数是不是 4 的 n 次方
+# 8.  判断一个数是不是 4 的 n 次方
 
 [342. Power of Four (Easy)](https://leetcode.com/problems/power-of-four/)
 
@@ -280,7 +271,7 @@ public boolean isPowerOfFour(int num) {
 }
 ```
 
-## 判断一个数的位级表示是否不会出现连续的 0 和 1
+# 9. 判断一个数的位级表示是否不会出现连续的 0 和 1
 
 [693. Binary Number with Alternating Bits (Easy)](https://leetcode.com/problems/binary-number-with-alternating-bits/description/)
 
@@ -305,7 +296,7 @@ public boolean hasAlternatingBits(int n) {
 }
 ```
 
-## 求一个数的补码
+# 10. 求一个数的补码
 
 [476. Number Complement (Easy)](https://leetcode.com/problems/number-complement/description/)
 
@@ -360,7 +351,7 @@ public int findComplement(int num) {
 }
 ```
 
-## 实现整数的加法
+# 11. 实现整数的加法
 
 [371. Sum of Two Integers (Easy)](https://leetcode.com/problems/sum-of-two-integers/description/)
 
@@ -374,7 +365,7 @@ public int getSum(int a, int b) {
 }
 ```
 
-## 字符串数组最大乘积
+# 12. 字符串数组最大乘积
 
 [318. Maximum Product of Word Lengths (Medium)](https://leetcode.com/problems/maximum-product-of-word-lengths/description/)
 
@@ -409,7 +400,7 @@ public int maxProduct(String[] words) {
 }
 ```
 
-## 统计从 0 \~ n 每个数的二进制表示中 1 的个数
+# 13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数
 
 [338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
 

@@ -1,20 +1,20 @@
 <!-- GFM-TOC -->
-* [找出两个链表的交点](#找出两个链表的交点)
-* [链表反转](#链表反转)
-* [归并两个有序的链表](#归并两个有序的链表)
-* [从有序链表中删除重复节点](#从有序链表中删除重复节点)
-* [删除链表的倒数第 n 个节点](#删除链表的倒数第-n-个节点)
-* [交换链表中的相邻结点](#交换链表中的相邻结点)
-* [链表求和](#链表求和)
-* [回文链表](#回文链表)
-* [分隔链表](#分隔链表)
-* [链表元素按奇偶聚集](#链表元素按奇偶聚集)
+* [1. 找出两个链表的交点](#1-找出两个链表的交点)
+* [2. 链表反转](#2-链表反转)
+* [3. 归并两个有序的链表](#3-归并两个有序的链表)
+* [4. 从有序链表中删除重复节点](#4-从有序链表中删除重复节点)
+* [5. 删除链表的倒数第 n 个节点](#5-删除链表的倒数第-n-个节点)
+* [6. 交换链表中的相邻结点](#6-交换链表中的相邻结点)
+* [7. 链表求和](#7-链表求和)
+* [8. 回文链表](#8-回文链表)
+* [9. 分隔链表](#9-分隔链表)
+* [10. 链表元素按奇偶聚集](#10-链表元素按奇偶聚集)
 <!-- GFM-TOC -->
 
 
 链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
 
-#  找出两个链表的交点
+#  1. 找出两个链表的交点
 
 [160. Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
 
@@ -48,7 +48,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 - 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
 - 或者直接比较两个链表的最后一个节点是否相同。
 
-#  链表反转
+#  2. 链表反转
 
 [206. Reverse Linked List (Easy)](https://leetcode.com/problems/reverse-linked-list/description/)
 
@@ -82,7 +82,7 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
-#  归并两个有序的链表
+#  3. 归并两个有序的链表
 
 [21. Merge Two Sorted Lists (Easy)](https://leetcode.com/problems/merge-two-sorted-lists/description/)
 
@@ -100,7 +100,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 }
 ```
 
-#  从有序链表中删除重复节点
+#  4. 从有序链表中删除重复节点
 
 [83. Remove Duplicates from Sorted List (Easy)](https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/)
 
@@ -117,7 +117,7 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
-#  删除链表的倒数第 n 个节点
+#  5. 删除链表的倒数第 n 个节点
 
 [19. Remove Nth Node From End of List (Medium)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/)
 
@@ -143,7 +143,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-#  交换链表中的相邻结点
+#  6. 交换链表中的相邻结点
 
 [24. Swap Nodes in Pairs (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/description/)
 
@@ -171,7 +171,7 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-#  链表求和
+#  7. 链表求和
 
 [445. Add Two Numbers II (Medium)](https://leetcode.com/problems/add-two-numbers-ii/description/)
 
@@ -210,7 +210,7 @@ private Stack<Integer> buildStack(ListNode l) {
 }
 ```
 
-#  回文链表
+#  8. 回文链表
 
 [234. Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/description/)
 
@@ -259,7 +259,7 @@ private boolean isEqual(ListNode l1, ListNode l2) {
 }
 ```
 
-#  分隔链表
+#  9. 分隔链表
 
 [725. Split Linked List in Parts(Medium)](https://leetcode.com/problems/split-linked-list-in-parts/description/)
 
@@ -299,7 +299,7 @@ public ListNode[] splitListToParts(ListNode root, int k) {
 }
 ```
 
-#  链表元素按奇偶聚集
+#  10. 链表元素按奇偶聚集
 
 [328. Odd Even Linked List (Medium)](https://leetcode.com/problems/odd-even-linked-list/description/)
 

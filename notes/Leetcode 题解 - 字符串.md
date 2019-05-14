@@ -1,17 +1,17 @@
 <!-- GFM-TOC -->
-* [字符串循环移位包含](#字符串循环移位包含)
-* [字符串循环移位](#字符串循环移位)
-* [字符串中单词的翻转](#字符串中单词的翻转)
-* [两个字符串包含的字符是否完全相同](#两个字符串包含的字符是否完全相同)
-* [计算一组字符集合可以组成的回文字符串的最大长度](#计算一组字符集合可以组成的回文字符串的最大长度)
-* [字符串同构](#字符串同构)
-* [回文子字符串个数](#回文子字符串个数)
-* [判断一个整数是否是回文数](#判断一个整数是否是回文数)
-* [统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数](#统计二进制字符串中连续-1-和连续-0-数量相同的子字符串个数)
+* [1. 字符串循环移位包含](#1-字符串循环移位包含)
+* [2. 字符串循环移位](#2-字符串循环移位)
+* [3. 字符串中单词的翻转](#3-字符串中单词的翻转)
+* [4. 两个字符串包含的字符是否完全相同](#4-两个字符串包含的字符是否完全相同)
+* [5. 计算一组字符集合可以组成的回文字符串的最大长度](#5-计算一组字符集合可以组成的回文字符串的最大长度)
+* [6. 字符串同构](#6-字符串同构)
+* [7. 回文子字符串个数](#7-回文子字符串个数)
+* [8. 判断一个整数是否是回文数](#8-判断一个整数是否是回文数)
+* [9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数](#9-统计二进制字符串中连续-1-和连续-0-数量相同的子字符串个数)
 <!-- GFM-TOC -->
 
 
-# 字符串循环移位包含
+# 1. 字符串循环移位包含
 
 [编程之美 3.1](#)
 
@@ -24,7 +24,7 @@ Return : true
 
 s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。
 
-# 字符串循环移位
+# 2. 字符串循环移位
 
 [编程之美 2.17](#)
 
@@ -37,7 +37,7 @@ Return "123abcd"
 
 将 abcd123 中的 abcd 和 123 单独翻转，得到 dcba321，然后对整个字符串进行翻转，得到 123abcd。
 
-# 字符串中单词的翻转
+# 3. 字符串中单词的翻转
 
 [程序员代码面试指南](#)
 
@@ -48,7 +48,7 @@ Return "student a am I"
 
 将每个单词翻转，然后将整个字符串翻转。
 
-# 两个字符串包含的字符是否完全相同
+# 4. 两个字符串包含的字符是否完全相同
 
 [242. Valid Anagram (Easy)](https://leetcode.com/problems/valid-anagram/description/)
 
@@ -79,7 +79,7 @@ public boolean isAnagram(String s, String t) {
 }
 ```
 
-# 计算一组字符集合可以组成的回文字符串的最大长度
+# 5. 计算一组字符集合可以组成的回文字符串的最大长度
 
 [409. Longest Palindrome (Easy)](https://leetcode.com/problems/longest-palindrome/description/)
 
@@ -110,7 +110,7 @@ public int longestPalindrome(String s) {
 }
 ```
 
-# 字符串同构
+# 6. 字符串同构
 
 [205. Isomorphic Strings (Easy)](https://leetcode.com/problems/isomorphic-strings/description/)
 
@@ -138,7 +138,7 @@ public boolean isIsomorphic(String s, String t) {
 }
 ```
 
-# 回文子字符串个数
+# 7. 回文子字符串个数
 
 [647. Palindromic Substrings (Medium)](https://leetcode.com/problems/palindromic-substrings/description/)
 
@@ -170,7 +170,7 @@ private void extendSubstrings(String s, int start, int end) {
 }
 ```
 
-# 判断一个整数是否是回文数
+# 8. 判断一个整数是否是回文数
 
 [9. Palindrome Number (Easy)](https://leetcode.com/problems/palindrome-number/description/)
 
@@ -195,7 +195,7 @@ public boolean isPalindrome(int x) {
 }
 ```
 
-# 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数
+# 9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数
 
 [696. Count Binary Substrings (Easy)](https://leetcode.com/problems/count-binary-substrings/description/)
 

@@ -1,11 +1,11 @@
 <!-- GFM-TOC -->
 * [二分图](#二分图)
-    * [判断是否为二分图](#判断是否为二分图)
+    * [1. 判断是否为二分图](#1-判断是否为二分图)
 * [拓扑排序](#拓扑排序)
-    * [课程安排的合法性](#课程安排的合法性)
-    * [课程安排的顺序](#课程安排的顺序)
+    * [1. 课程安排的合法性](#1-课程安排的合法性)
+    * [2. 课程安排的顺序](#2-课程安排的顺序)
 * [并查集](#并查集)
-    * [冗余连接](#冗余连接)
+    * [1. 冗余连接](#1-冗余连接)
 <!-- GFM-TOC -->
 
 
@@ -13,7 +13,7 @@
 
 如果可以用两种颜色对图中的节点进行着色，并且保证相邻的节点颜色不同，那么这个图就是二分图。
 
-## 判断是否为二分图
+## 1. 判断是否为二分图
 
 [785. Is Graph Bipartite? (Medium)](https://leetcode.com/problems/is-graph-bipartite/description/)
 
@@ -72,7 +72,7 @@ private boolean isBipartite(int curNode, int curColor, int[] colors, int[][] gra
 
 常用于在具有先序关系的任务规划中。
 
-## 课程安排的合法性
+## 1. 课程安排的合法性
 
 [207. Course Schedule (Medium)](https://leetcode.com/problems/course-schedule/description/)
 
@@ -130,7 +130,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
 }
 ```
 
-## 课程安排的顺序
+## 2. 课程安排的顺序
 
 [210. Course Schedule II (Medium)](https://leetcode.com/problems/course-schedule-ii/description/)
 
@@ -193,7 +193,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 
 并查集可以动态地连通两个点，并且可以非常快速地判断两个点是否连通。
 
-## 冗余连接
+## 1. 冗余连接
 
 [684. Redundant Connection (Medium)](https://leetcode.com/problems/redundant-connection/description/)
 
