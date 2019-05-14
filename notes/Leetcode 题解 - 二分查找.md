@@ -257,7 +257,7 @@ public int findMin(int[] nums) {
 
 ## 6. 查找区间
 
-[34. Search for a Range (Medium)](https://leetcode.com/problems/search-for-a-range/description/)
+[34. Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ```html
 Input: nums = [5,7,7,8,8,10], target = 8
