@@ -299,6 +299,8 @@ dp[4] = dp[3] + 1 = 3
 
 综上，在 A[i] - A[i-1] == A[i-1] - A[i-2] 时，dp[i] = dp[i-1] + 1。
 
+因为递增子区间不一定以最一个元素为结尾，可以是任意一个元素结尾，因此需要返回 dp 数组累加的结果。
+
 ```java
 public int numberOfArithmeticSlices(int[] A) {
     if (A == null || A.length == 0) {
