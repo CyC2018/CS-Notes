@@ -30,7 +30,7 @@
 
 模式定义了数据如何存储、存储什么样的数据以及数据如何分解等信息，数据库和表都有模式。
 
-主键的值不允许修改，也不允许复用（不能使用已经删除的主键值赋给新数据行的主键）。
+主键的值不允许修改，也不允许复用（不能将已经删除的主键值赋给新数据行的主键）。
 
 SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
 
@@ -57,10 +57,15 @@ USE test;
 
 ```sql
 CREATE TABLE mytable (
+  # int 类型，不为空，自增
   id INT NOT NULL AUTO_INCREMENT,
+  # int 类型，不可为空，默认值为 1，不为空
   col1 INT NOT NULL DEFAULT 1,
+  # 变长字符串类型，最长为 45 个字符，可以为空
   col2 VARCHAR(45) NULL,
+  # 日期类型，可为空
   col3 DATE NULL,
+  # 设置主键为 id
   PRIMARY KEY (`id`));
 ```
 
@@ -268,7 +273,7 @@ FROM mytable;
 
 AVG() 会忽略 NULL 行。
 
-使用 DISTINCT 可以让汇总函数值汇总不同的值。
+使用 DISTINCT 可以汇总不同的值。
 
 ```sql
 SELECT AVG(DISTINCT col1) AS avg_col
@@ -346,7 +351,7 @@ mysql> SELECT NOW();
 
 # 十三、分组
 
-分组就是把具有相同的数据值的行放在同一组中。
+把具有相同的数据值的行放在同一组中。
 
 可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
@@ -433,8 +438,6 @@ SELECT A.value, B.value
 FROM tablea AS A, tableb AS B
 WHERE A.key = B.key;
 ```
-
-在没有条件语句的情况下返回笛卡尔积。
 
 ## 自连接
 
@@ -660,7 +663,7 @@ MySQL 不允许在触发器中使用 CALL 语句，也就是不能调用存储�
 
 MySQL 的事务提交默认是隐式提交，每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
 
-通过设置 autocommit 为 0 可以取消自动提交；autocommit 标记是针对每个连接而不是针对服务器的。
+设置 autocommit 为 0 可以取消自动提交；autocommit 标记是针对每个连接而不是针对服务器的。
 
 如果没有设置保留点，ROLLBACK 会回退到 START TRANSACTION 语句处；如果设置了保留点，并且在 ROLLBACK 中指定该保留点，则会回退到该保留点。
 
@@ -757,7 +760,7 @@ REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 
 **更改密码** 
 
-必须使用 Password() 函数
+必须使用 Password() 函数进行加密。
 
 ```sql
 SET PASSWROD FOR myuser = Password('new_password');

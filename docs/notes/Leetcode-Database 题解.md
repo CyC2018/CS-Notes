@@ -118,6 +118,13 @@ VALUES
 
 ## Solution
 
+使用异或操作，两个相等的数异或的结果为 0，而 0 与任何一个数异或的结果为这个数。
+
+```
+'f' ^ 'm' ^ 'f' = 'm'
+'m' ^ 'm' ^ 'f' = 'f'
+```
+
 ```sql
 UPDATE salary
 SET sex = CHAR ( ASCII(sex) ^ ASCII( 'm' ) ^ ASCII( 'f' ) );
@@ -236,6 +243,8 @@ VALUES
 ```
 
 ## Solution
+
+对 class 列进行分组之后，再使用 count 汇总函数统计数量，统计之后使用 having 进行过滤。
 
 ```sql
 SELECT
