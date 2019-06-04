@@ -1,7 +1,6 @@
 <div align="center">
-<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载</a>
+<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载（Download for offline reading）</a>
 </div>
-
 <br>
 
 | &nbsp;算法&nbsp; | 操作系统 | &nbsp;网络&nbsp; | 面向对象 | &nbsp;&nbsp;数据库&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | 系统设计 | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; | 编码实践 | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
