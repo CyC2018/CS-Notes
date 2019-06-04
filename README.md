@@ -6,7 +6,7 @@
 
 |算法<br>Algorithm| 操作系统<br>Operating<br>System | 网络<br>Computer<br>Networks | 面向<br>对象<br>Object-<br>Oriented | 数据库<br>Database | Java | 系统<br>设计<br>System<br>Design | 工具<br>Tool | 编码<br>实践<br>Practices| 后记<br>After-<br>word |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
-| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统)|[:cloud:](#cloud-网络) | [:art:](#art-面向对象) |[:floppy_disk:](#floppy_disk-数据库)|  [:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计)| [:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践)| [:memo:](#memo-后记) |
+| [:pencil2:](#pencil2-算法-algorithm) | [:computer:](#computer-操作系统-operating-system)|[:cloud:](#cloud-网络-computer-networks) | [:art:](#art-面向对象-object-oriented) |[:floppy_disk:](#floppy_disk-数据库-database)|  [:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计-system-design)| [:wrench:](#wrench-工具-tool)| [:watermelon:](#watermelon-编码实践-practices)| [:memo:](#memo-后记-afterword) |
 
 <br>
 
