@@ -44,11 +44,7 @@
 
 <div align="center"> <img src="pics/8442519f-0b4d-48f4-8229-56f984363c69.png" width="400px"> </div><br>
 
-<<<<<<< HEAD
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，在 JDK 1.4 中默认为 256K，而在 JDK 1.5+ 默认为 1M：
-=======
-可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，默认JDK1.4中是256K，JDK1.5+中是1M:
->>>>>>> e4710d01848ba699c534b91aba04fd05f953afe9
 
 ```java
 java -Xss2M HackTheJava
