@@ -1,10 +1,10 @@
 <div align="center">
-<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载</a>
+<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载 (Offline reading version download)</a>
 </div>
 
 <br>
 
-| &nbsp;算法&nbsp; | 操作系统 | &nbsp;网络&nbsp; | 面向对象 | &nbsp;&nbsp;数据库&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | 系统设计 | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; | 编码实践 | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
+| &nbsp;算法 (algorithm)&nbsp; | 操作系统 (Operating system) | &nbsp;网络 (The internet) &nbsp; | 面向对象 (Object oriented)| &nbsp;&nbsp;数据库(Database) &nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | 系统设计 (System Design) | &nbsp;&nbsp;&nbsp;工具(Tool) &nbsp;&nbsp;&nbsp; | 编码实践 (Coding practice) | &nbsp;&nbsp;&nbsp;后记 (Postscript) &nbsp;&nbsp;&nbsp; |
 | :--------: | :---------: | :---------: | :---------: | :---------: | :---------:| :---------: | :-------: | :-------:| :------:|
 | [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统)|[:cloud:](#cloud-网络) | [:art:](#art-面向对象) |[:floppy_disk:](#floppy_disk-数据库)|  [:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计)| [:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践)| [:memo:](#memo-后记) |
 
@@ -17,29 +17,29 @@
     <br> <br>
 </div>
 
-## :pencil2: 算法
+## :pencil2: 算法 (Algorithm)
 
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
 - [Leetcode 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20题解%20-%20目录.md)
 - [算法](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法%20-%20目录.md)
 
-## :computer: 操作系统
+## :computer: 操作系统 (operating system)
 
 - [计算机操作系统](https://github.com/CyC2018/CS-Notes/blob/master/notes/计算机操作系统%20-%20目录.md)
 - [Linux](https://github.com/CyC2018/CS-Notes/blob/master/notes/Linux.md)
 
-## :cloud: 网络 
+## :cloud: 网络 (The internet)
 
 - [计算机网络](https://github.com/CyC2018/CS-Notes/blob/master/notes/计算机网络%20-%20目录.md)
 - [HTTP](https://github.com/CyC2018/CS-Notes/blob/master/notes/HTTP.md)
 - [Socket](https://github.com/CyC2018/CS-Notes/blob/master/notes/Socket.md)
 
-## :art: 面向对象
+## :art: 面向对象 (Object oriented)
 
 - [设计模式](https://github.com/CyC2018/CS-Notes/blob/master/notes/设计模式.md)
 - [面向对象思想](https://github.com/CyC2018/CS-Notes/blob/master/notes/面向对象思想.md)
 
-## :floppy_disk: 数据库 
+## :floppy_disk: 数据库 (Database)
 
 - [数据库系统原理](https://github.com/CyC2018/CS-Notes/blob/master/notes/数据库系统原理.md)
 - [SQL](https://github.com/CyC2018/CS-Notes/blob/master/notes/SQL.md)
@@ -55,7 +55,7 @@
 - [Java 虚拟机](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20虚拟机.md)
 - [Java I/O](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20IO.md)
 
-## :bulb: 系统设计 
+## :bulb: 系统设计 (System Design)
 
 - [系统设计基础](https://github.com/CyC2018/CS-Notes/blob/master/notes/系统设计基础.md)
 - [分布式](https://github.com/CyC2018/CS-Notes/blob/master/notes/分布式.md)
@@ -64,23 +64,25 @@
 - [缓存](https://github.com/CyC2018/CS-Notes/blob/master/notes/缓存.md)
 - [消息队列](https://github.com/CyC2018/CS-Notes/blob/master/notes/消息队列.md)
 
-## :wrench: 工具 
+## :wrench: 工具 (Tool)
 
 - [Git](https://github.com/CyC2018/CS-Notes/blob/master/notes/Git.md)
 - [Docker](https://github.com/CyC2018/CS-Notes/blob/master/notes/Docker.md)
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/notes/构建工具.md)
 - [正则表达式](https://github.com/CyC2018/CS-Notes/blob/master/notes/正则表达式.md)
 
-## :watermelon: 编码实践 
+## :watermelon: 编码实践 (Coding Practice)
 
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码风格规范.md)
 
-## :memo: 后记 
+## :memo: 后记 (Postscript)
 
-### 公众号
+### 公众号 (No public)
 
 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复 "下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+More exciting content will be released in the public number **CyC2018**, the public number provides an offline reading version of the project, the background reply "download" to receive. Also provided a technical interview review mind map, not only systematically sorted out the interview knowledge points, but also marked the importance of each knowledge point, so as to help you sort out the many interview knowledge points, the background reply "data" receive. I basically followed this mind map for review, and I got a lot of help with getting the BAT headline and other offers. You can completely review the knowledge points listed on the mind map like me. You don't have to look at a lot of unimportant content, you can also know what is important and arrange some review time.
 
 <img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img>
 
@@ -88,18 +90,20 @@
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
+To provide you with a learning exchange platform, where you are free to discuss technical issues.
+
 <img src="assets/group.png" width="180px">
 
-### 后端面试进阶指南
+### 后端面试进阶指南 (Back-end interview advanced guide)
 
 <a href="https://xiaozhuanlan.com/CyC2018">
     <img src="assets/小专栏.jpg" width="80px"></a>
     
-### 内推信息
+### 内推信息 (Introduction information)
 
 [Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 
-### 绘图工具
+### 绘图工具 (Drawing tool)
 
 [draw.io](https://www.draw.io/)
 
@@ -111,9 +115,11 @@
 
 Power by [logomakr](https://logomakr.com/).
 
-### 排版
+### 排版 (typesetting)
 
 笔记内容按照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 进行排版，以保证内容的可读性。
+
+The contents of the notes are in accordance with [Chinese copywriting refers to the north] Make typesetting to ensure readability of the content
 
 不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 [GFM](https://github.github.com/gfm/) 不支持 `<center> ![]() </center>` 这种方法让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
