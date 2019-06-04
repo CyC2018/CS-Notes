@@ -42,6 +42,8 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
     return l1;
 }
 ```
+> 上面的代码默认了链表l1和l2存在交点，在实际的Leetcode代码检测中，是有两个链表没有相交的情况的，所以要先检查是否相交，否则会陷入死循环；
+还要判断链表l1和l2是否传入为空值，否则也会出现问题
 
 如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美 3.6]() 的问题。有两种解法：
 
