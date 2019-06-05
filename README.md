@@ -88,12 +88,12 @@
 
 为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
 
-<img src="../%E5%A4%87%E4%BB%BD/CS-Notes/assets/group.png" width="180px">
+<img src="assets/group.png" width="180px">
 
 ### 后端面试进阶指南
 
 <a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="../%E5%A4%87%E4%BB%BD/CS-Notes/assets/%E5%B0%8F%E4%B8%93%E6%A0%8F.jpg" width="80px"></a>
+    <img src="assets/%E5%B0%8F%E4%B8%93%E6%A0%8F.jpg" width="80px"></a>
     
 
 ### 内推信息
