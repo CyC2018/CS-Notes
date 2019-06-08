@@ -28,6 +28,6 @@
 
 # 如何下载
 
-离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在公众号后台回复 **下载** 即可获取下载链接。
+离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在公众号后台回复 **离线下载** 即可获取下载链接。
 
 <div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>
