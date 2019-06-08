@@ -1638,5 +1638,5 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 
 
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。😊
+</br><div align="center">😊 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。
 <div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>

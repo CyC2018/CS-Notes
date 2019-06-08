@@ -1249,5 +1249,5 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 
 
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。😊
+</br><div align="center">😊 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。
 <div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>

@@ -91,5 +91,5 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 
 
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。😊
+</br><div align="center">😊 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。
 <div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>
