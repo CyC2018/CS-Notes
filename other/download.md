@@ -30,4 +30,4 @@
 
 离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在公众号后台回复 **下载** 即可获取下载链接。
 
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+<div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>
