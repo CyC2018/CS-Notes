@@ -425,5 +425,4 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 
 
-</br><div align="center">😊 </br></br> 更多精彩内容将发布在公众号 **CyC2018**， 后台回复 “离线下载” 以及 “复习大纲” 可领取学习资料。
-<div align="center"><img width="450px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报.png"></img></div>
+<div align="center"><img width="550px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img></div>
