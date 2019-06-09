@@ -78,9 +78,7 @@
 
 ## :memo: 后记 
 
-### 公众号
-
-<img width="620px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img>
+<div align="center"><img width="620px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img></div>
 
 ### 更多内容
 
