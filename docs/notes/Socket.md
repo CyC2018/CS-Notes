@@ -325,4 +325,4 @@ poll 没有最大描述符数量的限制，如果平台支持并且对实时性
 
 
 
-<img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+<img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报2.png"></img>
