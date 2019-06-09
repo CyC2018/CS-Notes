@@ -1,0 +1,537 @@
+Abort
+AboveNormal
+Add
+ahk_class
+ahk_group
+ahk_id
+ahk_pid
+All
+Alnum
+Alpha
+AltSubmit
+AltTab
+AltTabAndMenu
+AltTabMenu
+AltTabMenuDismiss
+AlwaysOnTop
+AutoSize
+Background
+BackgroundTrans
+BelowNormal
+between
+BitAnd
+BitNot
+BitOr
+BitShiftLeft
+BitShiftRight
+BitXOr
+Bold
+Border
+Button
+ByRef
+Checkbox
+Checked
+CheckedGray
+Choose
+ChooseString
+Close
+Color
+ComboBox
+Contains
+ControlList
+Count
+Date
+DateTime
+Days
+DDL
+Default
+DeleteAll
+Delimiter
+Deref
+Destroy
+Digit
+Disable
+Disabled
+DropDownList
+Edit
+Eject
+Else
+Enable
+Enabled
+Error
+Exist
+Expand
+ExStyle
+FileSystem
+First
+Flash
+Float
+FloatFast
+Focus
+Font
+for
+global
+Grid
+Group
+GroupBox
+GuiClose
+GuiContextMenu
+GuiDropFiles
+GuiEscape
+GuiSize
+Hdr
+Hidden
+Hide
+High
+HKCC
+HKCR
+HKCU
+HKEY_CLASSES_ROOT
+HKEY_CURRENT_CONFIG
+HKEY_CURRENT_USER
+HKEY_LOCAL_MACHINE
+HKEY_USERS
+HKLM
+HKU
+Hours
+HScroll
+Icon
+IconSmall
+ID
+IDLast
+If
+IfEqual
+IfExist
+IfGreater
+IfGreaterOrEqual
+IfInString
+IfLess
+IfLessOrEqual
+IfMsgBox
+IfNotEqual
+IfNotExist
+IfNotInString
+IfWinActive
+IfWinExist
+IfWinNotActive
+IfWinNotExist
+Ignore
+ImageList
+in
+Integer
+IntegerFast
+Interrupt
+is
+italic
+Join
+Label
+LastFound
+LastFoundExist
+Limit
+Lines
+List
+ListBox
+ListView
+local
+Lock
+Logoff
+Low
+Lower
+Lowercase
+MainWindow
+Margin
+Maximize
+MaximizeBox
+MaxSize
+Minimize
+MinimizeBox
+MinMax
+MinSize
+Minutes
+MonthCal
+Mouse
+Move
+Multi
+NA
+No
+NoActivate
+NoDefault
+NoHide
+NoIcon
+NoMainWindow
+norm
+Normal
+NoSort
+NoSortHdr
+NoStandard
+Not
+NoTab
+NoTimers
+Number
+Off
+Ok
+On
+OwnDialogs
+Owner
+Parse
+Password
+Picture
+Pixel
+Pos
+Pow
+Priority
+ProcessName
+Radio
+Range
+Read
+ReadOnly
+Realtime
+Redraw
+REG_BINARY
+REG_DWORD
+REG_EXPAND_SZ
+REG_MULTI_SZ
+REG_SZ
+Region
+Relative
+Rename
+Report
+Resize
+Restore
+Retry
+RGB
+Screen
+Seconds
+Section
+Serial
+SetLabel
+ShiftAltTab
+Show
+Single
+Slider
+SortDesc
+Standard
+static
+Status
+StatusBar
+StatusCD
+strike
+Style
+Submit
+SysMenu
+Tab2
+TabStop
+Text
+Theme
+Tile
+ToggleCheck
+ToggleEnable
+ToolWindow
+Top
+Topmost
+TransColor
+Transparent
+Tray
+TreeView
+TryAgain
+Type
+UnCheck
+underline
+Unicode
+Unlock
+UpDown
+Upper
+Uppercase
+UseErrorLevel
+Vis
+VisFirst
+Visible
+VScroll
+Wait
+WaitClose
+WantCtrlA
+WantF2
+WantReturn
+While
+Wrap
+Xdigit
+xm
+xp
+xs
+Yes
+ym
+yp
+ys
+
+----------------------------------------------------
+
+[
+	["keyword", "Abort"],
+	["keyword", "AboveNormal"],
+	["keyword", "Add"],
+	["keyword", "ahk_class"],
+	["keyword", "ahk_group"],
+	["keyword", "ahk_id"],
+	["keyword", "ahk_pid"],
+	["keyword", "All"],
+	["keyword", "Alnum"],
+	["keyword", "Alpha"],
+	["keyword", "AltSubmit"],
+	["keyword", "AltTab"],
+	["keyword", "AltTabAndMenu"],
+	["keyword", "AltTabMenu"],
+	["keyword", "AltTabMenuDismiss"],
+	["keyword", "AlwaysOnTop"],
+	["keyword", "AutoSize"],
+	["keyword", "Background"],
+	["keyword", "BackgroundTrans"],
+	["keyword", "BelowNormal"],
+	["keyword", "between"],
+	["keyword", "BitAnd"],
+	["keyword", "BitNot"],
+	["keyword", "BitOr"],
+	["keyword", "BitShiftLeft"],
+	["keyword", "BitShiftRight"],
+	["keyword", "BitXOr"],
+	["keyword", "Bold"],
+	["keyword", "Border"],
+	["keyword", "Button"],
+	["keyword", "ByRef"],
+	["keyword", "Checkbox"],
+	["keyword", "Checked"],
+	["keyword", "CheckedGray"],
+	["keyword", "Choose"],
+	["keyword", "ChooseString"],
+	["keyword", "Close"],
+	["keyword", "Color"],
+	["keyword", "ComboBox"],
+	["keyword", "Contains"],
+	["keyword", "ControlList"],
+	["keyword", "Count"],
+	["keyword", "Date"],
+	["keyword", "DateTime"],
+	["keyword", "Days"],
+	["keyword", "DDL"],
+	["keyword", "Default"],
+	["keyword", "DeleteAll"],
+	["keyword", "Delimiter"],
+	["keyword", "Deref"],
+	["keyword", "Destroy"],
+	["keyword", "Digit"],
+	["keyword", "Disable"],
+	["keyword", "Disabled"],
+	["keyword", "DropDownList"],
+	["keyword", "Edit"],
+	["keyword", "Eject"],
+	["keyword", "Else"],
+	["keyword", "Enable"],
+	["keyword", "Enabled"],
+	["keyword", "Error"],
+	["keyword", "Exist"],
+	["keyword", "Expand"],
+	["keyword", "ExStyle"],
+	["keyword", "FileSystem"],
+	["keyword", "First"],
+	["keyword", "Flash"],
+	["keyword", "Float"],
+	["keyword", "FloatFast"],
+	["keyword", "Focus"],
+	["keyword", "Font"],
+	["keyword", "for"],
+	["keyword", "global"],
+	["keyword", "Grid"],
+	["keyword", "Group"],
+	["keyword", "GroupBox"],
+	["keyword", "GuiClose"],
+	["keyword", "GuiContextMenu"],
+	["keyword", "GuiDropFiles"],
+	["keyword", "GuiEscape"],
+	["keyword", "GuiSize"],
+	["keyword", "Hdr"],
+	["keyword", "Hidden"],
+	["keyword", "Hide"],
+	["keyword", "High"],
+	["keyword", "HKCC"],
+	["keyword", "HKCR"],
+	["keyword", "HKCU"],
+	["keyword", "HKEY_CLASSES_ROOT"],
+	["keyword", "HKEY_CURRENT_CONFIG"],
+	["keyword", "HKEY_CURRENT_USER"],
+	["keyword", "HKEY_LOCAL_MACHINE"],
+	["keyword", "HKEY_USERS"],
+	["keyword", "HKLM"],
+	["keyword", "HKU"],
+	["keyword", "Hours"],
+	["keyword", "HScroll"],
+	["keyword", "Icon"],
+	["keyword", "IconSmall"],
+	["keyword", "ID"],
+	["keyword", "IDLast"],
+	["keyword", "If"],
+	["keyword", "IfEqual"],
+	["keyword", "IfExist"],
+	["keyword", "IfGreater"],
+	["keyword", "IfGreaterOrEqual"],
+	["keyword", "IfInString"],
+	["keyword", "IfLess"],
+	["keyword", "IfLessOrEqual"],
+	["keyword", "IfMsgBox"],
+	["keyword", "IfNotEqual"],
+	["keyword", "IfNotExist"],
+	["keyword", "IfNotInString"],
+	["keyword", "IfWinActive"],
+	["keyword", "IfWinExist"],
+	["keyword", "IfWinNotActive"],
+	["keyword", "IfWinNotExist"],
+	["keyword", "Ignore"],
+	["keyword", "ImageList"],
+	["keyword", "in"],
+	["keyword", "Integer"],
+	["keyword", "IntegerFast"],
+	["keyword", "Interrupt"],
+	["keyword", "is"],
+	["keyword", "italic"],
+	["keyword", "Join"],
+	["keyword", "Label"],
+	["keyword", "LastFound"],
+	["keyword", "LastFoundExist"],
+	["keyword", "Limit"],
+	["keyword", "Lines"],
+	["keyword", "List"],
+	["keyword", "ListBox"],
+	["keyword", "ListView"],
+	["keyword", "local"],
+	["keyword", "Lock"],
+	["keyword", "Logoff"],
+	["keyword", "Low"],
+	["keyword", "Lower"],
+	["keyword", "Lowercase"],
+	["keyword", "MainWindow"],
+	["keyword", "Margin"],
+	["keyword", "Maximize"],
+	["keyword", "MaximizeBox"],
+	["keyword", "MaxSize"],
+	["keyword", "Minimize"],
+	["keyword", "MinimizeBox"],
+	["keyword", "MinMax"],
+	["keyword", "MinSize"],
+	["keyword", "Minutes"],
+	["keyword", "MonthCal"],
+	["keyword", "Mouse"],
+	["keyword", "Move"],
+	["keyword", "Multi"],
+	["keyword", "NA"],
+	["keyword", "No"],
+	["keyword", "NoActivate"],
+	["keyword", "NoDefault"],
+	["keyword", "NoHide"],
+	["keyword", "NoIcon"],
+	["keyword", "NoMainWindow"],
+	["keyword", "norm"],
+	["keyword", "Normal"],
+	["keyword", "NoSort"],
+	["keyword", "NoSortHdr"],
+	["keyword", "NoStandard"],
+	["keyword", "Not"],
+	["keyword", "NoTab"],
+	["keyword", "NoTimers"],
+	["keyword", "Number"],
+	["keyword", "Off"],
+	["keyword", "Ok"],
+	["keyword", "On"],
+	["keyword", "OwnDialogs"],
+	["keyword", "Owner"],
+	["keyword", "Parse"],
+	["keyword", "Password"],
+	["keyword", "Picture"],
+	["keyword", "Pixel"],
+	["keyword", "Pos"],
+	["keyword", "Pow"],
+	["keyword", "Priority"],
+	["keyword", "ProcessName"],
+	["keyword", "Radio"],
+	["keyword", "Range"],
+	["keyword", "Read"],
+	["keyword", "ReadOnly"],
+	["keyword", "Realtime"],
+	["keyword", "Redraw"],
+	["keyword", "REG_BINARY"],
+	["keyword", "REG_DWORD"],
+	["keyword", "REG_EXPAND_SZ"],
+	["keyword", "REG_MULTI_SZ"],
+	["keyword", "REG_SZ"],
+	["keyword", "Region"],
+	["keyword", "Relative"],
+	["keyword", "Rename"],
+	["keyword", "Report"],
+	["keyword", "Resize"],
+	["keyword", "Restore"],
+	["keyword", "Retry"],
+	["keyword", "RGB"],
+	["keyword", "Screen"],
+	["keyword", "Seconds"],
+	["keyword", "Section"],
+	["keyword", "Serial"],
+	["keyword", "SetLabel"],
+	["keyword", "ShiftAltTab"],
+	["keyword", "Show"],
+	["keyword", "Single"],
+	["keyword", "Slider"],
+	["keyword", "SortDesc"],
+	["keyword", "Standard"],
+	["keyword", "static"],
+	["keyword", "Status"],
+	["keyword", "StatusBar"],
+	["keyword", "StatusCD"],
+	["keyword", "strike"],
+	["keyword", "Style"],
+	["keyword", "Submit"],
+	["keyword", "SysMenu"],
+	["keyword", "Tab2"],
+	["keyword", "TabStop"],
+	["keyword", "Text"],
+	["keyword", "Theme"],
+	["keyword", "Tile"],
+	["keyword", "ToggleCheck"],
+	["keyword", "ToggleEnable"],
+	["keyword", "ToolWindow"],
+	["keyword", "Top"],
+	["keyword", "Topmost"],
+	["keyword", "TransColor"],
+	["keyword", "Transparent"],
+	["keyword", "Tray"],
+	["keyword", "TreeView"],
+	["keyword", "TryAgain"],
+	["keyword", "Type"],
+	["keyword", "UnCheck"],
+	["keyword", "underline"],
+	["keyword", "Unicode"],
+	["keyword", "Unlock"],
+	["keyword", "UpDown"],
+	["keyword", "Upper"],
+	["keyword", "Uppercase"],
+	["keyword", "UseErrorLevel"],
+	["keyword", "Vis"],
+	["keyword", "VisFirst"],
+	["keyword", "Visible"],
+	["keyword", "VScroll"],
+	["keyword", "Wait"],
+	["keyword", "WaitClose"],
+	["keyword", "WantCtrlA"],
+	["keyword", "WantF2"],
+	["keyword", "WantReturn"],
+	["keyword", "While"],
+	["keyword", "Wrap"],
+	["keyword", "Xdigit"],
+	["keyword", "xm"],
+	["keyword", "xp"],
+	["keyword", "xs"],
+	["keyword", "Yes"],
+	["keyword", "ym"],
+	["keyword", "yp"],
+	["keyword", "ys"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

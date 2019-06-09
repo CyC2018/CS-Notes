@@ -1,0 +1,13 @@
+<h2>A complete policy</h2>
+<pre><code>default-src 'none';
+script-src my.cdn.com;
+img-src 'self' data:;
+child-src 'self' data: ms-appx-web:;
+block-all-mixed-content;
+report-uri https://my-reports.com/submit;
+</code></pre>
+
+<h2>An policy with unsafe source expressions</h2>
+<pre><code>script-src 'self' 'unsafe-eval' 'unsafe-inline';
+style-src 'unsafe-inline' 'unsafe-hashed-attributes' 'self';
+</code></pre>

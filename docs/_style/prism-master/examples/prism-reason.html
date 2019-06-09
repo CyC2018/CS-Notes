@@ -1,0 +1,35 @@
+<h2>Comments</h2>
+<pre><code>/* This is a comment */</code></pre>
+
+<h2>Strings and characters</h2>
+<pre><code>"This is a \"string\""
+'a'
+'\\'
+'\o123'
+'\x4a'</code></pre>
+
+<h2>Constructors</h2>
+<pre><code>type response =
+  | Yes
+  | No
+  | PrettyMuch;</code></pre>
+
+<h2>Example</h2>
+<pre><code>type car = {maker: string, model: string};
+type carList =
+  | List car carList
+  | NoMore;
+
+let chevy = {maker: "Chevy", model: "Suburban"};
+let toyota = {maker: "Toyota", model: "Tacoma"};
+let myCarList = List chevy (List toyota NoMore);
+
+let hasExactlyTwoCars = fun lst =>
+  switch lst {
+    | NoMore => false                              /* 0 */
+    | List p NoMore => false                       /* 1 */
+    | List p (List p2 NoMore) => true              /* 2 */
+    | List p (List p2 (List p3 theRest)) => false  /* 3+ */
+  };
+
+let justTwo = hasExactlyTwoCars myCarList;  /* true! */</code></pre>

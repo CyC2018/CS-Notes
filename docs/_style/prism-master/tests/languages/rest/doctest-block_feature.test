@@ -1,0 +1,22 @@
+>>> Foo
+
+>>> foo
+bar
+baz
+
+----------------------------------------------------
+
+[
+	["doctest-block", [
+		["punctuation", ">>>"],
+		" Foo"
+	]],
+	["doctest-block", [
+		["punctuation", ">>>"],
+		" foo\r\nbar\r\nbaz"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for doctest blocks.

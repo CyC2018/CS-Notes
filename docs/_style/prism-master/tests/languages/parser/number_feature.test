@@ -1,0 +1,51 @@
+(42)
+(3.14159)
+(3e5)
+(0.8E-12)
+(3.9e+2)
+(0xbadface)
+(0XBADFACE)
+
+----------------------------------------------------
+
+[
+	["expression", [
+		["punctuation", "("],
+		["number", "42"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "3.14159"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "3e5"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "0.8E-12"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "3.9e+2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "0xbadface"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "0XBADFACE"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for numbers inside expressions.

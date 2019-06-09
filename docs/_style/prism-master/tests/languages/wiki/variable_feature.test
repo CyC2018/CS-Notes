@@ -1,0 +1,19 @@
+__NOTOC__
+{{{1}}}
+{{!}}
+{{SITENAME}}
+{{#ifexists:foo}}
+
+----------------------------------------------------
+
+[
+	["variable", "__NOTOC__"],
+	["variable", "{{{1}}}"],
+	["variable", "{{!}}"],
+	["variable", "{{SITENAME}}"],
+	["variable", "{{#ifexists:foo}}"]
+]
+
+----------------------------------------------------
+
+Checks for variables and magic words.

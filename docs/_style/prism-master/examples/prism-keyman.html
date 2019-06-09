@@ -1,0 +1,107 @@
+<h2>Comments</h2>
+<pre><code>c This is a comment</code></pre>
+
+<h2>Strings, numbers and characters</h2>
+<pre><code>"'this' is a string"
+'and so is "this"'
+U+0041 d65 x41   c these are all the letter A
+</code></pre>
+
+<h2>Prefixes and Virtual Keys</h2>
+
+<pre><code>
+c Match RAlt+E on desktops, Ctrl+Alt+E on web because L/R Alt not consistently supported in browsers.
+$KeymanOnly: + [RALT K_E] > "€"
+$KeymanWeb: + [CTRL ALT K_E] > "€"
+</code></pre>
+
+<h2>Example Code</h2>
+
+<pre><code>c =====================Begin Identity Section===================================================
+c 
+c Mnemonic input method for Amharic script on US-QWERTY
+c keyboards for Keyman version 7.1, compliant with Unicode 4.1 and later.
+c 
+
+store(&amp;VERSION) '9.0'
+store(&amp;Name) "Amharic"
+c store(&amp;MnemonicLayout) "1"
+store(&amp;CapsAlwaysOff) "1"
+store(&amp;Copyright) "Creative Commons Attribution 3.0"
+store(&amp;Message) "This is an Amharic language mnemonic input method for Ethiopic script that requires Unicode 4.1 support."
+store(&amp;WINDOWSLANGUAGES) 'x045E x045E'
+store(&amp;LANGUAGE) 'x045E'
+store(&amp;EthnologueCode) "amh"
+store(&amp;VISUALKEYBOARD) 'gff-amh-7.kvk'
+store(&amp;KMW_EMBEDCSS) 'gff-amh-7.css'
+HOTKEY "^%A"
+c 
+c =====================End Identity Section=====================================================
+
+c =====================Begin Data Section=======================================================
+
+c ---------------------Maps for Numbers---------------------------------------------------------
+store(ArabOnes) '23456789'
+store(ones)     '፪፫፬፭፮፯፰፱'
+store(tens)     '፳፴፵፶፷፸፹፺'
+store(arabNumbers) '123456789'
+store(ethNumbers) '፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻፼'
+store(arabNumbersWithZero) '0123456789'
+store(ColonOrComma) ':,'
+store(ethWordspaceOrComma) '፡፣'
+c ---------------------End Numbers--------------------------------------------------------------
+
+c =====================End Data Section=========================================================
+
+c =====================Begin Functional Section=================================================
+c 
+store(&amp;LAYOUTFILE) 'gff-amh-7_layout.js'
+store(&amp;BITMAP) 'amharic.bmp'
+store(&amp;TARGETS) 'any windows'
+begin Unicode > use(main)
+group(main) using keys    
+
+c ---------------------Input of Numbers---------------------------------------------------------
+
+c Special Rule for Arabic Numerals
+c 
+c The following attempts to auto-correct the use of Ethiopic wordspace and
+c Ethiopic comma within an Arabic numeral context.  Ethiopic wordspace gets
+c used erroneously in time formats and Ethiopic commas as an order of thousands
+c delimiter. The correction context is not known until numerals appear on _both_
+c sides of the punctuation.
+c 
+  any(arabNumbersWithZero) any(ethWordspaceOrComma) + any(arabNumbers) > index(arabNumbersWithZero,1) index(ColonOrComma,2) index(arabNumbers,3)
+
+c Ethiopic Numerals
+
+  "'" + '1' > '፩'
+  "'" + any(ArabOnes) > index(ones,2)
+
+c special cases for multiples of one
+  '፩'  + '0' > '፲'
+  '፲'  + '0' > '፻'
+  '፻'  + '0' > '፲፻'
+  '፲፻' + '0' > '፼'
+  '፼'  + '0' > '፲፼'    
+  '፲፼' + '0' > '፻፼' 
+  '፻፼'  + '0' > '፲፻፼'
+  '፲፻፼' + '0' > '፼፼'
+  '፼፼' + '0' > context beep  c do not go any higher, we could beep here
+
+c upto the order of 100 million
+  any(ones)     + '0' > index(tens,1)
+  any(tens)     + '0' > index(ones,1) '፻'  c Hundreds
+  any(ones)  '፻ '+ '0' > index(tens,1) '፻'  c Thousands
+  any(tens)  '፻' + '0' > index(ones,1) '፼'  c Ten Thousands
+  any(ones)  '፼' + '0' > index(tens,1) '፼'  c Hundred Thousands
+  any(tens)  '፼' + '0' > index(ones,1) '፻፼' c Millions
+  any(ones) '፻፼' + '0' > index(tens,1) '፻፼' c Ten Millions
+  any(tens) '፻፼' + '0' > index(ones,1) '፼፼' c Hundred Millions
+
+c enhance this later, look for something that can copy a match over
+  any(ethNumbers) + any(arabNumbers) > index(ethNumbers,1)  index(ethNumbers,2)
+c ---------------------End Input of Numbers-----------------------------------------------------
+                                            
+c =====================End Functional Section===================================================
+</code></pre>

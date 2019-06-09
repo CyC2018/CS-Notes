@@ -1,0 +1,21 @@
+$foo: "bar" !default;
+@extend .baz !optional;
+
+----------------------------------------------------
+
+[
+	["property", [["variable", "$foo"]]],
+	["punctuation", ":"],
+	["string", "\"bar\""],
+	["statement", "!default"],
+	["punctuation", ";"],
+
+	["keyword", "@extend"],
+	" .baz ",
+	["statement", "!optional"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for statements.

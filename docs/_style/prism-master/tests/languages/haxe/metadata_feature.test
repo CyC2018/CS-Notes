@@ -1,0 +1,15 @@
+@author("Nicolas")
+@debug
+@:noCompletion
+
+----------------------------------------------------
+
+[
+	["metadata", "@author"], ["punctuation", "("], ["string", ["\"Nicolas\""]], ["punctuation", ")"],
+	["metadata", "@debug"],
+	["metadata", "@:noCompletion"]
+]
+
+----------------------------------------------------
+
+Checks for metadata.

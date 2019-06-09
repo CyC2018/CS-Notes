@@ -1,0 +1,31 @@
+<h2>Comments</h2>
+<pre><code># This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>""
+"foo \"bar\" baz"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>0
+42
+3.14159
+-9e-5
+0.9E+7</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>query withFragments {
+  user(id: 4) {
+    friends(first: 10) {
+      ...friendFields
+    }
+    mutualFriends(first: 10) {
+      ...friendFields
+    }
+  }
+}
+
+fragment friendFields on User {
+  id
+  name
+  profilePic(size: 50)
+}</code></pre>

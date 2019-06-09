@@ -1,0 +1,187 @@
+{if $a + $b - $c == $d}
+{if $e * $f / $g % $h === $i}
+{if $j < $k and $l > $m eq $n <= $o and $p >= $q}
+{if !$r != $s && $t || $u}
+{if $v is not even by 3 or $v is even}
+{if $w is div by 2 or $w is not div by 3}
+{if $x is not odd or $x is odd by 4}
+{if $y ne $z or $a neq $b}
+{if $c gt $d or $e lt $f}
+{if $g gte $h or $i ge $j or $k lte $l or $m le $n}
+{if not $o and $p mod 4}
+{foo bar=baz}
+{$foo|upper}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$a"],
+		["operator", "+"],
+		["variable", "$b"],
+		["operator", "-"],
+		["variable", "$c"],
+		["operator", "=="],
+		["variable", "$d"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$e"],
+		["operator", "*"],
+		["variable", "$f"],
+		["operator", "/"],
+		["variable", "$g"],
+		["operator", "%"],
+		["variable", "$h"],
+		["operator", "==="],
+		["variable", "$i"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$j"],
+		["operator", "<"],
+		["variable", "$k"],
+		["operator", "and"],
+		["variable", "$l"],
+		["operator", ">"],
+		["variable", "$m"],
+		["operator", "eq"],
+		["variable", "$n"],
+		["operator", "<="],
+		["variable", "$o"],
+		["operator", "and"],
+		["variable", "$p"],
+		["operator", ">="],
+		["variable", "$q"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["operator", "!"],
+		["variable", "$r"],
+		["operator", "!="],
+		["variable", "$s"],
+		["operator", "&&"],
+		["variable", "$t"],
+		["operator", "||"],
+		["variable", "$u"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$v"],
+		["operator", "is not even by"],
+		["number", "3"],
+		["operator", "or"],
+		["variable", "$v"],
+		["operator", "is even"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$w"],
+		["operator", "is div by"],
+		["number", "2"],
+		["operator", "or"],
+		["variable", "$w"],
+		["operator", "is not div by"],
+		["number", "3"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$x"],
+		["operator", "is not odd"],
+		["operator", "or"],
+		["variable", "$x"],
+		["operator", "is odd by"],
+		["number", "4"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$y"],
+		["operator", "ne"],
+		["variable", "$z"],
+		["operator", "or"],
+		["variable", "$a"],
+		["operator", "neq"],
+		["variable", "$b"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$c"],
+		["operator", "gt"],
+		["variable", "$d"],
+		["operator", "or"],
+		["variable", "$e"],
+		["operator", "lt"],
+		["variable", "$f"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["variable", "$g"],
+		["operator", "gte"],
+		["variable", "$h"],
+		["operator", "or"],
+		["variable", "$i"],
+		["operator", "ge"],
+		["variable", "$j"],
+		["operator", "or"],
+		["variable", "$k"],
+		["operator", "lte"],
+		["variable", "$l"],
+		["operator", "or"],
+		["variable", "$m"],
+		["operator", "le"],
+		["variable", "$n"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["operator", "not"],
+		["variable", "$o"],
+		["operator", "and"],
+		["variable", "$p"],
+		["operator", "mod"],
+		["number", "4"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "foo"],
+		["attr-name", [
+			"bar",
+			["operator", "="],
+			["variable", "baz"]
+		]],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["operator", "|"],
+		["function", "upper"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

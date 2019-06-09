@@ -1,0 +1,15 @@
+%foobar
+%foo-bar
+%foo_bar
+
+----------------------------------------------------
+
+[
+	["placeholder", "%foobar"],
+	["placeholder", "%foo-bar"],
+	["placeholder", "%foo_bar"]
+]
+
+----------------------------------------------------
+
+Checks for placeholders.

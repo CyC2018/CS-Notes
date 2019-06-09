@@ -1,0 +1,443 @@
+alias
+and
+assert
+assign
+assume
+automatic
+before
+begin
+bind
+bins
+binsof
+bit
+break
+buf
+bufif0
+bufif1
+byte
+class
+case
+casex
+casez
+cell
+chandle
+clocking
+cmos
+config
+const
+constraint
+context
+continue
+cover
+covergroup
+coverpoint
+cross
+deassign
+default
+defparam
+design
+disable
+dist
+do
+edge
+else
+end
+endcase
+endclass
+endclocking
+endconfig
+endfunction
+endgenerate
+endgroup
+endinterface
+endmodule
+endpackage
+endprimitive
+endprogram
+endproperty
+endspecify
+endsequence
+endtable
+endtask
+enum
+event
+expect
+export
+extends
+extern
+final
+first_match
+for
+force
+foreach
+forever
+fork
+forkjoin
+function
+generate
+genvar
+highz0
+highz1
+if
+iff
+ifnone
+ignore_bins
+illegal_bins
+import
+incdir
+include
+initial
+inout
+input
+inside
+instance
+int
+integer
+interface
+intersect
+join
+join_any
+join_none
+large
+liblist
+library
+local
+localparam
+logic
+longint
+macromodule
+matches
+medium
+modport
+module
+nand
+negedge
+new
+nmos
+nor
+noshowcancelled
+not
+notif0
+notif1
+null
+or
+output
+package
+packed
+parameter
+pmos
+posedge
+primitive
+priority
+program
+property
+protected
+pull0
+pull1
+pulldown
+pullup
+pulsestyle_onevent
+pulsestyle_ondetect
+pure
+rand
+randc
+randcase
+randsequence
+rcmos
+real
+realtime
+ref
+reg
+release
+repeat
+return
+rnmos
+rpmos
+rtran
+rtranif0
+rtranif1
+scalared
+sequence
+shortint
+shortreal
+showcancelled
+signed
+small
+solve
+specify
+specparam
+static
+string
+strong0
+strong1
+struct
+super
+supply0
+supply1
+table
+tagged
+task
+this
+throughout
+time
+timeprecision
+timeunit
+tran
+tranif0
+tranif1
+tri
+tri0
+tri1
+triand
+trior
+trireg
+type
+typedef
+union
+unique
+unsigned
+use
+uwire
+var
+vectored
+virtual
+void
+wait
+wait_order
+wand
+weak0
+weak1
+while
+wildcard
+wire
+with
+within
+wor
+xnor
+xor
+
+----------------------------------------------------
+
+[
+	["keyword", "alias"],
+	["keyword", "and"],
+	["keyword", "assert"],
+	["keyword", "assign"],
+	["keyword", "assume"],
+	["keyword", "automatic"],
+	["keyword", "before"],
+	["keyword", "begin"],
+	["keyword", "bind"],
+	["keyword", "bins"],
+	["keyword", "binsof"],
+	["keyword", "bit"],
+	["keyword", "break"],
+	["keyword", "buf"],
+	["keyword", "bufif0"],
+	["keyword", "bufif1"],
+	["keyword", "byte"],
+	["keyword", "class"],
+	["keyword", "case"],
+	["keyword", "casex"],
+	["keyword", "casez"],
+	["keyword", "cell"],
+	["keyword", "chandle"],
+	["keyword", "clocking"],
+	["keyword", "cmos"],
+	["keyword", "config"],
+	["keyword", "const"],
+	["keyword", "constraint"],
+	["keyword", "context"],
+	["keyword", "continue"],
+	["keyword", "cover"],
+	["keyword", "covergroup"],
+	["keyword", "coverpoint"],
+	["keyword", "cross"],
+	["keyword", "deassign"],
+	["keyword", "default"],
+	["keyword", "defparam"],
+	["keyword", "design"],
+	["keyword", "disable"],
+	["keyword", "dist"],
+	["keyword", "do"],
+	["keyword", "edge"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "endcase"],
+	["keyword", "endclass"],
+	["keyword", "endclocking"],
+	["keyword", "endconfig"],
+	["keyword", "endfunction"],
+	["keyword", "endgenerate"],
+	["keyword", "endgroup"],
+	["keyword", "endinterface"],
+	["keyword", "endmodule"],
+	["keyword", "endpackage"],
+	["keyword", "endprimitive"],
+	["keyword", "endprogram"],
+	["keyword", "endproperty"],
+	["keyword", "endspecify"],
+	["keyword", "endsequence"],
+	["keyword", "endtable"],
+	["keyword", "endtask"],
+	["keyword", "enum"],
+	["keyword", "event"],
+	["keyword", "expect"],
+	["keyword", "export"],
+	["keyword", "extends"],
+	["keyword", "extern"],
+	["keyword", "final"],
+	["keyword", "first_match"],
+	["keyword", "for"],
+	["keyword", "force"],
+	["keyword", "foreach"],
+	["keyword", "forever"],
+	["keyword", "fork"],
+	["keyword", "forkjoin"],
+	["keyword", "function"],
+	["keyword", "generate"],
+	["keyword", "genvar"],
+	["keyword", "highz0"],
+	["keyword", "highz1"],
+	["keyword", "if"],
+	["keyword", "iff"],
+	["keyword", "ifnone"],
+	["keyword", "ignore_bins"],
+	["keyword", "illegal_bins"],
+	["keyword", "import"],
+	["keyword", "incdir"],
+	["keyword", "include"],
+	["keyword", "initial"],
+	["keyword", "inout"],
+	["keyword", "input"],
+	["keyword", "inside"],
+	["keyword", "instance"],
+	["keyword", "int"],
+	["keyword", "integer"],
+	["keyword", "interface"],
+	["keyword", "intersect"],
+	["keyword", "join"],
+	["keyword", "join_any"],
+	["keyword", "join_none"],
+	["keyword", "large"],
+	["keyword", "liblist"],
+	["keyword", "library"],
+	["keyword", "local"],
+	["keyword", "localparam"],
+	["keyword", "logic"],
+	["keyword", "longint"],
+	["keyword", "macromodule"],
+	["keyword", "matches"],
+	["keyword", "medium"],
+	["keyword", "modport"],
+	["keyword", "module"],
+	["keyword", "nand"],
+	["keyword", "negedge"],
+	["keyword", "new"],
+	["keyword", "nmos"],
+	["keyword", "nor"],
+	["keyword", "noshowcancelled"],
+	["keyword", "not"],
+	["keyword", "notif0"],
+	["keyword", "notif1"],
+	["keyword", "null"],
+	["keyword", "or"],
+	["keyword", "output"],
+	["keyword", "package"],
+	["keyword", "packed"],
+	["keyword", "parameter"],
+	["keyword", "pmos"],
+	["keyword", "posedge"],
+	["keyword", "primitive"],
+	["keyword", "priority"],
+	["keyword", "program"],
+	["keyword", "property"],
+	["keyword", "protected"],
+	["keyword", "pull0"],
+	["keyword", "pull1"],
+	["keyword", "pulldown"],
+	["keyword", "pullup"],
+	["keyword", "pulsestyle_onevent"],
+	["keyword", "pulsestyle_ondetect"],
+	["keyword", "pure"],
+	["keyword", "rand"],
+	["keyword", "randc"],
+	["keyword", "randcase"],
+	["keyword", "randsequence"],
+	["keyword", "rcmos"],
+	["keyword", "real"],
+	["keyword", "realtime"],
+	["keyword", "ref"],
+	["keyword", "reg"],
+	["keyword", "release"],
+	["keyword", "repeat"],
+	["keyword", "return"],
+	["keyword", "rnmos"],
+	["keyword", "rpmos"],
+	["keyword", "rtran"],
+	["keyword", "rtranif0"],
+	["keyword", "rtranif1"],
+	["keyword", "scalared"],
+	["keyword", "sequence"],
+	["keyword", "shortint"],
+	["keyword", "shortreal"],
+	["keyword", "showcancelled"],
+	["keyword", "signed"],
+	["keyword", "small"],
+	["keyword", "solve"],
+	["keyword", "specify"],
+	["keyword", "specparam"],
+	["keyword", "static"],
+	["keyword", "string"],
+	["keyword", "strong0"],
+	["keyword", "strong1"],
+	["keyword", "struct"],
+	["keyword", "super"],
+	["keyword", "supply0"],
+	["keyword", "supply1"],
+	["keyword", "table"],
+	["keyword", "tagged"],
+	["keyword", "task"],
+	["keyword", "this"],
+	["keyword", "throughout"],
+	["keyword", "time"],
+	["keyword", "timeprecision"],
+	["keyword", "timeunit"],
+	["keyword", "tran"],
+	["keyword", "tranif0"],
+	["keyword", "tranif1"],
+	["keyword", "tri"],
+	["keyword", "tri0"],
+	["keyword", "tri1"],
+	["keyword", "triand"],
+	["keyword", "trior"],
+	["keyword", "trireg"],
+	["keyword", "type"],
+	["keyword", "typedef"],
+	["keyword", "union"],
+	["keyword", "unique"],
+	["keyword", "unsigned"],
+	["keyword", "use"],
+	["keyword", "uwire"],
+	["keyword", "var"],
+	["keyword", "vectored"],
+	["keyword", "virtual"],
+	["keyword", "void"],
+	["keyword", "wait"],
+	["keyword", "wait_order"],
+	["keyword", "wand"],
+	["keyword", "weak0"],
+	["keyword", "weak1"],
+	["keyword", "while"],
+	["keyword", "wildcard"],
+	["keyword", "wire"],
+	["keyword", "with"],
+	["keyword", "within"],
+	["keyword", "wor"],
+	["keyword", "xnor"],
+	["keyword", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

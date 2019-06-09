@@ -1,0 +1,35 @@
+#define
+#undef
+#if
+#ifdef
+#ifndef
+#else
+#elif
+#endif
+#error
+#pragma
+#extension
+#version
+#line
+
+----------------------------------------------------
+
+[
+	["preprocessor", "#define"],
+	["preprocessor", "#undef"],
+	["preprocessor", "#if"],
+	["preprocessor", "#ifdef"],
+	["preprocessor", "#ifndef"],
+	["preprocessor", "#else"],
+	["preprocessor", "#elif"],
+	["preprocessor", "#endif"],
+	["preprocessor", "#error"],
+	["preprocessor", "#pragma"],
+	["preprocessor", "#extension"],
+	["preprocessor", "#version"],
+	["preprocessor", "#line"]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor instructions.

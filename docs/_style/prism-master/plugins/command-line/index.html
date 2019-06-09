@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Command Line ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/command-line/prism-command-line.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Command Line</h2>
+	<p>Display a command line with a prompt and, optionally, the output/response from the commands.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+
+	<p>This is intended for code blocks (<code class="language-markup">&lt;pre>&lt;code></code>) and not for inline code.</p>
+
+	<p>Add class <strong>command-line</strong> to your <code class="language-markup">&lt;pre></code>. For a server command line, specify the user and host names using the <code class="language-markup">data-user</code> and <code class="language-markup">data-host</code> attributes. The resulting prompt displays a <strong>#</strong> for the root user and <strong>$</strong> for all other users. For any other command line, such as a Windows prompt, you may specify the entire prompt using the <code class="language-markup">data-prompt</code> attribute.</p>
+
+	<p>Optional: You may specify the lines to be presented as output (no prompt and no highlighting) through the <code class="language-markup">data-output</code> attribute on the <code class="language-markup">&lt;pre></code> element in the following simple format:</p>
+	<ul>
+		<li>A single number refers to the line with that number</li>
+		<li>Ranges are denoted by two numbers, separated with a hyphen (-)</li>
+		<li>Multiple line numbers or ranges are separated by commas.</li>
+		<li>Whitespace is allowed anywhere and will be stripped off.</li>
+	</ul>
+
+	<p>Examples:</p>
+	<dl>
+		<dt>5</dt>
+		<dd>The 5th line</dd>
+
+		<dt>1-5</dt>
+		<dd>Lines 1 through 5</dd>
+
+		<dt>1,4</dt>
+		<dd>Line 1 and line 4</dd>
+
+		<dt>1-2, 5, 9-20</dt>
+		<dd>Lines 1 through 2, line 5, lines 9 through 20</dd>
+	</dl>
+
+	<p>Optional: To automatically present some lines as output, you can prefix those lines with any string and specify the prefix using the <code class="language-markup">data-filter-output</code> attribute on the <code class="language-markup">&lt;pre></code> element. For example, <code class="language-markup">data-filter-output="(out)"</code> will treat lines beginning with <code class="language-markup">(out)</code> as output and remove the prefix.</p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>Root User Without Output</h2>
+<pre class="command-line" data-user="root" data-host="localhost"><code class="language-bash">cd /usr/local/etc
+cp php.ini php.ini.bak
+vi php.ini</code></pre>
+
+	<h2>Non-Root User With Output</h2>
+<pre class="command-line" data-user="chris" data-host="remotehost" data-output="2, 4-8"><code class="language-bash">pwd
+/usr/home/chris/bin
+ls -la
+total 2
+drwxr-xr-x   2 chris  chris     11 Jan 10 16:48 .
+drwxr--r-x  45 chris  chris     92 Feb 14 11:10 ..
+-rwxr-xr-x   1 chris  chris    444 Aug 25  2013 backup
+-rwxr-xr-x   1 chris  chris    642 Jan 17 14:42 deploy</code></pre>
+
+	<h2>Windows PowerShell With Output</h2>
+<pre class="command-line" data-prompt="PS C:\Users\Chris>" data-output="2-19"><code class="language-powershell">dir
+
+
+    Directory: C:\Users\Chris
+
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+d-r--        10/14/2015   5:06 PM            Contacts
+d-r--        12/12/2015   1:47 PM            Desktop
+d-r--         11/4/2015   7:59 PM            Documents
+d-r--        10/14/2015   5:06 PM            Downloads
+d-r--        10/14/2015   5:06 PM            Favorites
+d-r--        10/14/2015   5:06 PM            Links
+d-r--        10/14/2015   5:06 PM            Music
+d-r--        10/14/2015   5:06 PM            Pictures
+d-r--        10/14/2015   5:06 PM            Saved Games
+d-r--        10/14/2015   5:06 PM            Searches
+d-r--        10/14/2015   5:06 PM            Videos</code></pre>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/command-line/prism-command-line.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+<script src="components/prism-bash.js"></script>
+<script src="components/prism-powershell.js"></script>
+
+</body>
+</html>

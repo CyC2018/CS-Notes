@@ -1,0 +1,38 @@
+<h2>Comments</h2>
+<pre><code># This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'</code></pre>
+
+<h2>Full example</h2>
+<pre><code># Goal: To make a latex table with results of an OLS regression.
+
+# Get an OLS --
+x1 = runif(100)
+x2 = runif(100, 0, 2)
+y = 2 + 3*x1 + 4*x2 + rnorm(100)
+m = lm(y ~ x1 + x2)
+
+# and print it out prettily --
+library(xtable)
+# Bare --
+xtable(m)
+xtable(anova(m))
+
+# Better --
+print.xtable(xtable(m, caption="My regression",
+                    label="t:mymodel",
+                    digits=c(0,3,2,2,3)),
+             type="latex",
+             file="xtable_demo_ols.tex",
+             table.placement = "tp",
+             latex.environments=c("center", "footnotesize"))
+
+print.xtable(xtable(anova(m),
+                    caption="ANOVA of my regression",
+                    label="t:anova_mymodel"),
+             type="latex",
+             file="xtable_demo_anova.tex",
+             table.placement = "tp",
+             latex.environments=c("center", "footnotesize"))</code></pre>

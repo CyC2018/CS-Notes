@@ -1,0 +1,113 @@
+ans
+break
+bt
+case
+catch
+cd
+clear
+const
+def
+del
+dump
+else
+end
+exit
+extern
+false
+force
+help
+if
+infix
+infixl
+infixr
+interface
+let
+ls
+mem
+namespace
+nonfix
+NULL
+of
+otherwise
+outfix
+override
+postfix
+prefix
+private
+public
+pwd
+quit
+run
+save
+show
+stats
+then
+throw
+trace
+true
+type
+underride
+using
+when
+with
+
+----------------------------------------------------
+
+[
+	["keyword", "ans"],
+	["keyword", "break"],
+	["keyword", "bt"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "cd"],
+	["keyword", "clear"],
+	["keyword", "const"],
+	["keyword", "def"],
+	["keyword", "del"],
+	["keyword", "dump"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "exit"],
+	["keyword", "extern"],
+	["keyword", "false"],
+	["keyword", "force"],
+	["keyword", "help"],
+	["keyword", "if"],
+	["keyword", "infix"],
+	["keyword", "infixl"],
+	["keyword", "infixr"],
+	["keyword", "interface"],
+	["keyword", "let"],
+	["keyword", "ls"],
+	["keyword", "mem"],
+	["keyword", "namespace"],
+	["keyword", "nonfix"],
+	["keyword", "NULL"],
+	["keyword", "of"],
+	["keyword", "otherwise"],
+	["keyword", "outfix"],
+	["keyword", "override"],
+	["keyword", "postfix"],
+	["keyword", "prefix"],
+	["keyword", "private"],
+	["keyword", "public"],
+	["keyword", "pwd"],
+	["keyword", "quit"],
+	["keyword", "run"],
+	["keyword", "save"],
+	["keyword", "show"],
+	["keyword", "stats"],
+	["keyword", "then"],
+	["keyword", "throw"],
+	["keyword", "trace"],
+	["keyword", "true"],
+	["keyword", "type"],
+	["keyword", "underride"],
+	["keyword", "using"],
+	["keyword", "when"],
+	["keyword", "with"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

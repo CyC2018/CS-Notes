@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Highlight Keywords ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+<style>
+	/*
+	 * Custom keyword styles
+	 */
+	.token.keyword.keyword-return, .token.keyword.keyword-if{
+		color: #f92672;
+	}
+</style>
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Highlight Keywords</h2>
+	<p>This plugin adds special CSS classes for each keyword matched in the code. For example, the keyword <code>if</code> will have the class <code>keyword-if</code> as well. You can have fine grained control over the appearance of each keyword by providing your own CSS rules.</p>
+</header>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>JavaScript</h2>
+	<pre data-src="plugins/highlight-keywords/prism-highlight-keywords.js"></pre>
+
+	<h2>HTML (Markup)</h2>
+	<pre data-src="plugins/highlight-keywords/index.html"></pre>
+</section>
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/highlight-keywords/prism-highlight-keywords.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

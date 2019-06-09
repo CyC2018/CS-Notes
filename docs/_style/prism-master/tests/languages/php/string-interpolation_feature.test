@@ -1,0 +1,140 @@
+"This $variable is interpolated"
+"$foo[2], $bar[-4], $foo[$bar]"
+"$foo->bar"
+"More {$interpolation}"
+"{$arr['key']}, {$arr['foo'][3]}"
+"{${$name}}, but not {\${\$name}}"
+"the return value of getName(): {${getName()}}"
+"the return value of \$object->getName(): {${$object->getName()}}"
+"{$foo->$bar}, {$foo->{$baz[1]}}"
+<<<FOO
+Heredoc strings $also->support {${$string->interpolation()}}
+FOO;
+<<<"FOO_BAR"
+	{${$name}}, but not {\${\$name}}
+FOO_BAR;
+
+----------------------------------------------------
+
+[
+	["double-quoted-string", [
+		"\"This ",
+		["interpolation", [["variable", "$variable"]]],
+		" is interpolated\""
+	]],
+	["double-quoted-string", [
+		"\"",
+		["interpolation", [["variable", "$foo"], ["punctuation", "["], ["number", "2"], ["punctuation", "]"]]],
+		", ",
+		["interpolation", [["variable", "$bar"], ["punctuation", "["], ["operator", "-"], ["number", "4"], ["punctuation", "]"]]],
+		", ",
+		["interpolation", [["variable", "$foo"], ["punctuation", "["], ["variable", "$bar"], ["punctuation", "]"]]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"",
+		["interpolation", [["variable", "$foo"], ["operator", "-"], ["operator", ">"], ["property", "bar"]]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"More ",
+		["interpolation", [["punctuation", "{"], ["variable", "$interpolation"], ["punctuation", "}"]]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"",
+		["interpolation", [
+			["punctuation", "{"],
+			["variable", "$arr"], ["punctuation", "["], ["single-quoted-string", "'key'"], ["punctuation", "]"],
+			["punctuation", "}"]
+		]],
+		", ",
+		["interpolation", [
+			["punctuation", "{"],
+			["variable", "$arr"],
+			["punctuation", "["], ["single-quoted-string", "'foo'"], ["punctuation", "]"],
+			["punctuation", "["], ["number", "3"], ["punctuation", "]"],
+			["punctuation", "}"]
+		]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"",
+		["interpolation", [
+			["punctuation", "{"], ["variable", "$"], ["punctuation", "{"],
+			["variable", "$name"],
+			["punctuation", "}"], ["punctuation", "}"]
+		]],
+		", but not {\\${\\$name}}\""
+	]],
+	["double-quoted-string", [
+		"\"the return value of getName(): ",
+		["interpolation", [
+			["punctuation", "{"], ["variable", "$"], ["punctuation", "{"],
+			["function", "getName"], ["punctuation", "("], ["punctuation", ")"],
+			["punctuation", "}"], ["punctuation", "}"]
+		]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"the return value of \\$object->getName(): ",
+		["interpolation", [
+			["punctuation", "{"], ["variable", "$"], ["punctuation", "{"],
+			["variable", "$object"], ["operator", "-"], ["operator", ">"], ["function", "getName"], ["punctuation", "("], ["punctuation", ")"],
+			["punctuation", "}"], ["punctuation", "}"]
+		]],
+		"\""
+	]],
+	["double-quoted-string", [
+		"\"",
+		["interpolation", [
+			["punctuation", "{"],
+			["variable", "$foo"], ["operator", "-"], ["operator", ">"], ["variable", "$bar"],
+			["punctuation", "}"]
+		]],
+		", ",
+		["interpolation", [
+			["punctuation", "{"],
+			["variable", "$foo"], ["operator", "-"], ["operator", ">"], ["punctuation", "{"],
+			["variable", "$baz"], ["punctuation", "["], ["number", "1"], ["punctuation", "]"],
+			["punctuation", "}"],
+			["punctuation", "}"]
+		]],
+		"\""
+	]],
+	["heredoc-string", [
+		["delimiter", [
+			["punctuation", "<<<"], "FOO"
+		]],
+		"\r\nHeredoc strings ",
+		["interpolation", [
+			["variable", "$also"], ["operator", "-"], ["operator", ">"], ["property", "support"]
+		]],
+		["interpolation", [
+			["punctuation", "{"], ["variable", "$"], ["punctuation", "{"],
+			["variable", "$string"], ["operator", "-"], ["operator", ">"], ["function", "interpolation"], ["punctuation", "("], ["punctuation", ")"],
+			["punctuation", "}"], ["punctuation", "}"]
+		]],
+		["delimiter", [
+			"FOO", ["punctuation", ";"]
+		]]
+	]],
+	["heredoc-string", [
+		["delimiter", [
+			["punctuation", "<<<\""], "FOO_BAR", ["punctuation", "\""]
+		]],
+		["interpolation", [
+			["punctuation", "{"], ["variable", "$"], ["punctuation", "{"],
+			["variable", "$name"],
+			["punctuation", "}"], ["punctuation", "}"]
+		]],
+		", but not {\\${\\$name}}\r\n",
+		["delimiter", [
+			"FOO_BAR", ["punctuation", ";"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for interpolation inside strings.

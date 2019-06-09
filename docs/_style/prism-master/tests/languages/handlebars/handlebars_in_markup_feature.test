@@ -1,0 +1,59 @@
+<div>{{{intro}}}</div>
+<div class="{{foo}}">
+___HANDLEBARS1___{{{intro}}}
+{{!<div></div>}}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"],
+		["variable", "intro"],
+		["delimiter", "}}}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["handlebars", [
+				["delimiter", "{{"],
+				["variable", "foo"],
+				["delimiter", "}}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	"\r\n___HANDLEBARS1___",
+	["handlebars", [
+		["delimiter", "{{{"],
+		["variable", "intro"],
+		["delimiter", "}}}"]
+	]],
+	["handlebars", [
+		["comment", "{{!<div></div>}}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for Handlebars in Markup.

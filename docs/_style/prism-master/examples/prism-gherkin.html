@@ -1,0 +1,74 @@
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+
+"""
+Some Title, Eh?
+===============
+Here is the first paragraph of my blog post.
+Lorem ipsum dolor sit amet, consectetur adipiscing
+elit.
+"""
+</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>Feature: Some terse yet descriptive text of what is desired
+    In order to realize a named business value
+    As an explicit system actor
+    I want to gain some beneficial outcome which furthers the goal
+
+    Additional text...
+
+    Scenario: Some determinable business situation
+    Given some precondition
+    And some other precondition
+    When some action by the actor
+    And some other action
+    And yet another action
+    Then some testable outcome is achieved
+    And something else we can check happens too
+
+    Scenario: A different situation
+    ...</code></pre>
+
+<h2>Comments and tags</h2>
+<pre><code># user.feature
+@users
+Feature: Sign in to the store
+  In order to view my orders list
+  As a visitor
+  I need to be able to log in to the store
+
+  @javascript @login
+  Scenario: Trying to login without credentials
+      Given I am on the store homepage
+        And I follow "Login"
+       When I press "Login"
+       Then I should be on login page
+       # And I should see "Invalid credentials"
+</code></pre>
+
+<h2>Tables and parameters</h2>
+<pre><code>Scenario Outline: Eating
+  Given there are &lt;start&gt; cucumbers
+  When I eat &lt;eat&gt; cucumbers
+  Then I should have &lt;left&gt; cucumbers
+
+  Examples:
+    | start | eat | left |
+    |  12   |  5  |  7   |
+    |  20   |  5  |  15  |</code></pre>
+
+<h2>Localized keywords</h2>
+<pre><code>#language: fr
+Fonctionnalité: Contrôle le format de la valeur saisie d'un champ d'une révision
+  En tant qu'expert ou analyste
+  Je ne dois pas pouvoir soumettre des données au mauvais format
+
+  Contexte:
+    Etant donné que je suis connecté avec le pseudo "p_flore" et le mot de passe "p4flore"
+    Et que la gamme du contrat 27156 supporte les révisions
+    Etant donné que le contrat ayant l'id "27156" a une révision
+    Et je suis sur "/contrat/27156/revision/1"
+    Et que j'attends quelques secondes
+    ...</code></pre>

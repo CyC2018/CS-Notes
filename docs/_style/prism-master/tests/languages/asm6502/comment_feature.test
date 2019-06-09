@@ -1,0 +1,13 @@
+;
+; foo bar baz
+
+-------------------------
+
+[
+  ["comment", ";"],
+  ["comment", "; foo bar baz"]
+]
+
+-------------------------
+
+Check for comments

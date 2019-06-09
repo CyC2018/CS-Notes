@@ -1,0 +1,17 @@
+fo\x9ao(
+class*(
+takeV[T](
+`$`(
+
+----------------------------------------------------
+
+[
+	["function", ["fo\\x9ao"]], ["punctuation", "("],
+	["function", ["class", ["operator", "*"]]], ["punctuation", "("],
+	["function", ["takeV[T]"]], ["punctuation", "("],
+	["function", ["`$`"]], ["punctuation", "("]
+]
+
+----------------------------------------------------
+
+Checks for functions.

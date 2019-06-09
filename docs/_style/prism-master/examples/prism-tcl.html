@@ -1,0 +1,26 @@
+<h2>Comments</h2>
+<pre><code># This is a comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+"foo\
+bar\
+baz"</code></pre>
+
+<h2>Variables</h2>
+<pre><code>$foo
+$foo::bar_42
+$::baz
+${foobar}
+set foo::bar "baz"</code></pre>
+
+<h2>Functions</h2>
+<pre><code>proc foobar {baz} {
+	puts $baz
+}
+
+proc RESTORE/post/:post_id/comment/:comment_id {post_id comment_id} {
+    #| Restore a comment handler
+    comment_restore $comment_id
+    qc::actions redirect [url "/post/$post_id" show_deleted_comment_ids $comment_id]
+}</code></pre>

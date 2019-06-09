@@ -1,0 +1,137 @@
+abstract
+actual
+annotation
+as
+break
+by
+catch
+class
+companion
+const
+constructor
+continue
+crossinline
+data
+do
+dynamic
+else
+enum
+expect
+external
+final
+finally
+for
+fun
+get
+if
+import
+in
+infix
+init
+inline
+inner
+interface
+internal
+is
+lateinit
+noinline
+null
+object
+open
+operator
+out
+override
+package
+private
+protected
+public
+reified
+return
+sealed
+set
+super
+suspend
+tailrec
+this
+throw
+try
+typealias
+val
+var
+vararg
+when
+where
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"],
+	["keyword", "actual"],
+	["keyword", "annotation"],
+	["keyword", "as"],
+	["keyword", "break"],
+	["keyword", "by"],
+	["keyword", "catch"],
+	["keyword", "class"],
+	["keyword", "companion"],
+	["keyword", "const"],
+	["keyword", "constructor"],
+	["keyword", "continue"],
+	["keyword", "crossinline"],
+	["keyword", "data"],
+	["keyword", "do"],
+	["keyword", "dynamic"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "expect"],
+	["keyword", "external"],
+	["keyword", "final"],
+	["keyword", "finally"],
+	["keyword", "for"],
+	["keyword", "fun"],
+	["keyword", "get"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "infix"],
+	["keyword", "init"],
+	["keyword", "inline"],
+	["keyword", "inner"],
+	["keyword", "interface"],
+	["keyword", "internal"],
+	["keyword", "is"],
+	["keyword", "lateinit"],
+	["keyword", "noinline"],
+	["keyword", "null"],
+	["keyword", "object"],
+	["keyword", "open"],
+	["keyword", "operator"],
+	["keyword", "out"],
+	["keyword", "override"],
+	["keyword", "package"],
+	["keyword", "private"],
+	["keyword", "protected"],
+	["keyword", "public"],
+	["keyword", "reified"],
+	["keyword", "return"],
+	["keyword", "sealed"],
+	["keyword", "set"],
+	["keyword", "super"],
+	["keyword", "suspend"],
+	["keyword", "tailrec"],
+	["keyword", "this"],
+	["keyword", "throw"],
+	["keyword", "try"],
+	["keyword", "typealias"],
+	["keyword", "val"],
+	["keyword", "var"],
+	["keyword", "vararg"],
+	["keyword", "when"],
+	["keyword", "where"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

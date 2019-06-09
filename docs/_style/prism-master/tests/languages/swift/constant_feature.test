@@ -1,0 +1,19 @@
+nil
+AB
+FOO_BAR
+kAb
+kFoo_bar
+
+----------------------------------------------------
+
+[
+	["constant", "nil"],
+	["constant", "AB"],
+	["constant", "FOO_BAR"],
+	["constant", "kAb"],
+	["constant", "kFoo_bar"]
+]
+
+----------------------------------------------------
+
+Checks for constants.

@@ -1,0 +1,35 @@
+#define DEBUG
+#if DEBUG
+#endif
+
+#elif
+#else
+#endregion
+#error
+#line
+#pragma
+#region
+#undef
+#warning
+
+----------------------------------------------------
+
+[
+	["preprocessor", ["#", ["directive", "define"], " DEBUG"]],
+	["preprocessor", ["#", ["directive", "if"], " DEBUG"]],
+	["preprocessor", ["#", ["directive", "endif"]]],
+	
+	["preprocessor", ["#", ["directive", "elif"]]],
+    ["preprocessor", ["#", ["directive", "else"]]],
+    ["preprocessor", ["#", ["directive", "endregion"]]],
+    ["preprocessor", ["#", ["directive", "error"]]],
+    ["preprocessor", ["#", ["directive", "line"]]],
+    ["preprocessor", ["#", ["directive", "pragma"]]],
+    ["preprocessor", ["#", ["directive", "region"]]],
+    ["preprocessor", ["#", ["directive", "undef"]]],
+    ["preprocessor", ["#", ["directive", "warning"]]]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor directives.

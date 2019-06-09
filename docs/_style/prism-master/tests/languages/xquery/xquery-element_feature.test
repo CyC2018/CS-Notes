@@ -1,0 +1,18 @@
+element html
+element foo-bar
+element foo:bar
+
+----------------------------------------------------
+
+[
+	["builtin", "element"],
+	["xquery-element", "html"],
+	["builtin", "element"],
+	["xquery-element", "foo-bar"],
+	["builtin", "element"],
+	["xquery-element", "foo:bar"]
+]
+
+----------------------------------------------------
+
+Checks for XQuery element constructors.

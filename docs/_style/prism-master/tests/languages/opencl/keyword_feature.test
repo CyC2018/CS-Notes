@@ -1,0 +1,419 @@
+__attribute__
+__constant
+__global
+__kernel
+__local
+__private
+__read_only
+__read_write
+__write_only
+_cl_command_queue
+_cl_context
+_cl_device_id
+_cl_event
+_cl_kernel
+_cl_mem
+_cl_platform_id
+_cl_program
+_cl_sampler
+auto
+bool
+bool16
+bool2
+bool3
+bool4
+bool8
+break
+case
+char
+char16
+char2
+char3
+char4
+char8
+cl_image_format
+cl_mem_fence_flags
+clk_event_t
+complex
+const
+constant
+continue
+do
+double
+double16
+double16x1
+double16x16
+double16x2
+double16x4
+double16x8
+double1x1
+double1x16
+double1x2
+double1x4
+double1x8
+double2
+double2x1
+double2x16
+double2x2
+double2x4
+double2x8
+double3
+double4
+double4x1
+double4x16
+double4x2
+double4x4
+double4x8
+double8
+double8x1
+double8x16
+double8x2
+double8x4
+double8x8
+else
+enum
+event_t
+extern
+float
+float16
+float16x1
+float16x16
+float16x2
+float16x4
+float16x8
+float1x1
+float1x16
+float1x2
+float1x4
+float1x8
+float2
+float2x1
+float2x16
+float2x2
+float2x4
+float2x8
+float3
+float4
+float4x1
+float4x16
+float4x2
+float4x4
+float4x8
+float8
+float8x1
+float8x16
+float8x2
+float8x4
+float8x8
+for
+global
+half
+half16
+half2
+half3
+half4
+half8
+if
+image1d_array_t
+image1d_buffer_t
+image1d_t
+image2d_array_depth_t
+image2d_array_msaa_depth_t
+image2d_array_msaa_t
+image2d_array_t
+image2d_depth_t
+image2d_msaa_depth_t
+image2d_msaa_t
+image2d_t
+image3d_t
+imaginary
+int
+int16
+int2
+int3
+int4
+int8
+intptr_t
+kernel
+local
+long
+long16
+long2
+long3
+long4
+long8
+ndrange_t
+packed
+pipe
+private
+ptrdiff_t
+quad
+quad16
+quad2
+quad3
+quad4
+quad8
+queue_t
+read_only
+read_write
+register
+reserve_id_t
+restrict
+sampler_t
+short
+short16
+short2
+short3
+short4
+short8
+size_t
+static
+struct
+switch
+typedef
+uchar
+uchar16
+uchar2
+uchar3
+uchar4
+uchar8
+uint
+uint16
+uint2
+uint3
+uint4
+uint8
+uintptr_t
+ulong
+ulong16
+ulong2
+ulong3
+ulong4
+ulong8
+uniform
+union
+unsigned
+ushort
+ushort16
+ushort2
+ushort3
+ushort4
+ushort8
+void
+volatile
+while
+write_only
+
+----------------------------------------------------
+
+[
+	["keyword", "__attribute__"],
+	["keyword", "__constant"],
+	["keyword", "__global"],
+	["keyword", "__kernel"],
+	["keyword", "__local"],
+	["keyword", "__private"],
+	["keyword", "__read_only"],
+	["keyword", "__read_write"],
+	["keyword", "__write_only"],
+	["keyword", "_cl_command_queue"],
+	["keyword", "_cl_context"],
+	["keyword", "_cl_device_id"],
+	["keyword", "_cl_event"],
+	["keyword", "_cl_kernel"],
+	["keyword", "_cl_mem"],
+	["keyword", "_cl_platform_id"],
+	["keyword", "_cl_program"],
+	["keyword", "_cl_sampler"],
+	["keyword", "auto"],
+	["keyword", "bool"],
+	["keyword", "bool16"],
+	["keyword", "bool2"],
+	["keyword", "bool3"],
+	["keyword", "bool4"],
+	["keyword", "bool8"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "char"],
+	["keyword", "char16"],
+	["keyword", "char2"],
+	["keyword", "char3"],
+	["keyword", "char4"],
+	["keyword", "char8"],
+	["keyword", "cl_image_format"],
+	["keyword", "cl_mem_fence_flags"],
+	["keyword", "clk_event_t"],
+	["keyword", "complex"],
+	["keyword", "const"],
+	["keyword", "constant"],
+	["keyword", "continue"],
+	["keyword", "do"],
+	["keyword", "double"],
+	["keyword", "double16"],
+	["keyword", "double16x1"],
+	["keyword", "double16x16"],
+	["keyword", "double16x2"],
+	["keyword", "double16x4"],
+	["keyword", "double16x8"],
+	["keyword", "double1x1"],
+	["keyword", "double1x16"],
+	["keyword", "double1x2"],
+	["keyword", "double1x4"],
+	["keyword", "double1x8"],
+	["keyword", "double2"],
+	["keyword", "double2x1"],
+	["keyword", "double2x16"],
+	["keyword", "double2x2"],
+	["keyword", "double2x4"],
+	["keyword", "double2x8"],
+	["keyword", "double3"],
+	["keyword", "double4"],
+	["keyword", "double4x1"],
+	["keyword", "double4x16"],
+	["keyword", "double4x2"],
+	["keyword", "double4x4"],
+	["keyword", "double4x8"],
+	["keyword", "double8"],
+	["keyword", "double8x1"],
+	["keyword", "double8x16"],
+	["keyword", "double8x2"],
+	["keyword", "double8x4"],
+	["keyword", "double8x8"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "event_t"],
+	["keyword", "extern"],
+	["keyword", "float"],
+	["keyword", "float16"],
+	["keyword", "float16x1"],
+	["keyword", "float16x16"],
+	["keyword", "float16x2"],
+	["keyword", "float16x4"],
+	["keyword", "float16x8"],
+	["keyword", "float1x1"],
+	["keyword", "float1x16"],
+	["keyword", "float1x2"],
+	["keyword", "float1x4"],
+	["keyword", "float1x8"],
+	["keyword", "float2"],
+	["keyword", "float2x1"],
+	["keyword", "float2x16"],
+	["keyword", "float2x2"],
+	["keyword", "float2x4"],
+	["keyword", "float2x8"],
+	["keyword", "float3"],
+	["keyword", "float4"],
+	["keyword", "float4x1"],
+	["keyword", "float4x16"],
+	["keyword", "float4x2"],
+	["keyword", "float4x4"],
+	["keyword", "float4x8"],
+	["keyword", "float8"],
+	["keyword", "float8x1"],
+	["keyword", "float8x16"],
+	["keyword", "float8x2"],
+	["keyword", "float8x4"],
+	["keyword", "float8x8"],
+	["keyword", "for"],
+	["keyword", "global"],
+	["keyword", "half"],
+	["keyword", "half16"],
+	["keyword", "half2"],
+	["keyword", "half3"],
+	["keyword", "half4"],
+	["keyword", "half8"],
+	["keyword", "if"],
+	["keyword", "image1d_array_t"],
+	["keyword", "image1d_buffer_t"],
+	["keyword", "image1d_t"],
+	["keyword", "image2d_array_depth_t"],
+	["keyword", "image2d_array_msaa_depth_t"],
+	["keyword", "image2d_array_msaa_t"],
+	["keyword", "image2d_array_t"],
+	["keyword", "image2d_depth_t"],
+	["keyword", "image2d_msaa_depth_t"],
+	["keyword", "image2d_msaa_t"],
+	["keyword", "image2d_t"],
+	["keyword", "image3d_t"],
+	["keyword", "imaginary"],
+	["keyword", "int"],
+	["keyword", "int16"],
+	["keyword", "int2"],
+	["keyword", "int3"],
+	["keyword", "int4"],
+	["keyword", "int8"],
+	["keyword", "intptr_t"],
+	["keyword", "kernel"],
+	["keyword", "local"],
+	["keyword", "long"],
+	["keyword", "long16"],
+	["keyword", "long2"],
+	["keyword", "long3"],
+	["keyword", "long4"],
+	["keyword", "long8"],
+	["keyword", "ndrange_t"],
+	["keyword", "packed"],
+	["keyword", "pipe"],
+	["keyword", "private"],
+	["keyword", "ptrdiff_t"],
+	["keyword", "quad"],
+	["keyword", "quad16"],
+	["keyword", "quad2"],
+	["keyword", "quad3"],
+	["keyword", "quad4"],
+	["keyword", "quad8"],
+	["keyword", "queue_t"],
+	["keyword", "read_only"],
+	["keyword", "read_write"],
+	["keyword", "register"],
+	["keyword", "reserve_id_t"],
+	["keyword", "restrict"],
+	["keyword", "sampler_t"],
+	["keyword", "short"],
+	["keyword", "short16"],
+	["keyword", "short2"],
+	["keyword", "short3"],
+	["keyword", "short4"],
+	["keyword", "short8"],
+	["keyword", "size_t"],
+	["keyword", "static"],
+	["keyword", "struct"],
+	["keyword", "switch"],
+	["keyword", "typedef"],
+	["keyword", "uchar"],
+	["keyword", "uchar16"],
+	["keyword", "uchar2"],
+	["keyword", "uchar3"],
+	["keyword", "uchar4"],
+	["keyword", "uchar8"],
+	["keyword", "uint"],
+	["keyword", "uint16"],
+	["keyword", "uint2"],
+	["keyword", "uint3"],
+	["keyword", "uint4"],
+	["keyword", "uint8"],
+	["keyword", "uintptr_t"],
+	["keyword", "ulong"],
+	["keyword", "ulong16"],
+	["keyword", "ulong2"],
+	["keyword", "ulong3"],
+	["keyword", "ulong4"],
+	["keyword", "ulong8"],
+	["keyword", "uniform"],
+	["keyword", "union"],
+	["keyword", "unsigned"],
+	["keyword", "ushort"],
+	["keyword", "ushort16"],
+	["keyword", "ushort2"],
+	["keyword", "ushort3"],
+	["keyword", "ushort4"],
+	["keyword", "ushort8"],
+	["keyword", "void"],
+	["keyword", "volatile"],
+	["keyword", "while"],
+	["keyword", "write_only"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords in OpenCL kernel code.

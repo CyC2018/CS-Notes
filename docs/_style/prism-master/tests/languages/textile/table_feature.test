@@ -1,0 +1,177 @@
+|_. foo |<_. bar |>_. baz |
+|<>. foo |(((. bar |)). baz |
+|~. foo |^. bar |=. baz |
+|/2. bar |\2. foo
+bar
+baz |
+|\2~>. foobarbaz |
+
+(foo).|(bar).Baz|
+(#foo).|(#bar).Baz|
+[fr].|[en].Baz|
+{color: blue}.|{font-weight:bold}.Baz|
+(foo#bar){font-style:italic}[fr].|{background:red;}(bar#baz)[en].Baz|
+
+|*bold*|**bold**|_italic_|__italic__|
+|??cite??|@code@|+inserted+|-deleted-|
+|%span%|"foo":http://example.com|!foo.jpg!|bar[2]|
+|\2.CSS(Cascading Style Sheet)|\2.Foo(TM)|
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["table", [
+			["punctuation", "|"],
+			["modifier", [["punctuation", "_"]]],
+			["punctuation", "."],
+			" foo ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", "<"], ["punctuation", "_"]]],
+			["punctuation", "."],
+			" bar ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", ">"], ["punctuation", "_"]]],
+			["punctuation", "."],
+			" baz ", ["punctuation", "|"],
+
+			["punctuation", "|"],
+			["modifier", [["punctuation", "<"], ["punctuation", ">"]]],
+			["punctuation", "."],
+			" foo ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", "("], ["punctuation", "("], ["punctuation", "("]]],
+			["punctuation", "."],
+			" bar ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", ")"], ["punctuation", ")"]]],
+			["punctuation", "."],
+			" baz ", ["punctuation", "|"],
+
+			["punctuation", "|"],
+			["modifier", [["punctuation", "~"]]],
+			["punctuation", "."],
+			" foo ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", "^"]]],
+			["punctuation", "."],
+			" bar ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", "="]]],
+			["punctuation", "."],
+			" baz ", ["punctuation", "|"],
+
+			["punctuation", "|"],
+			["modifier", [["punctuation", "/2"]]],
+			["punctuation", "."],
+			" bar ",
+			["punctuation", "|"],
+			["modifier", [["punctuation", "\\2"]]],
+			["punctuation", "."],
+			" foo\r\nbar\r\nbaz ", ["punctuation", "|"],
+
+			["punctuation", "|"],
+			["modifier", [["punctuation", "\\2"], ["punctuation", "~"], ["punctuation", ">"]]],
+			["punctuation", "."],
+			" foobarbaz ", ["punctuation", "|"]
+		]]
+	]],
+
+	["phrase", [
+		["table", [
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "bar"], ["punctuation", ")"]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"],
+
+			["modifier", [
+				["punctuation", "("], ["class-id", "#foo"], ["punctuation", ")"]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "#bar"], ["punctuation", ")"]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"],
+
+			["modifier", [
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"],
+
+			["modifier", [
+				["css", ["{color: blue}"]]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["css", ["{font-weight:bold}"]]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"],
+
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo#bar"], ["punctuation", ")"],
+				["css", ["{font-style:italic}"]],
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["css", ["{background:red;}"]],
+				["punctuation", "("], ["class-id", "bar#baz"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"]
+		]]
+	]],
+
+	["phrase", [
+		["table", [
+			["punctuation", "|"],
+			["inline", [["punctuation", "*"], ["bold", ["bold"]], ["punctuation", "*"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "**"], ["bold", ["bold"]], ["punctuation", "**"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "_"], ["italic", ["italic"]], ["punctuation", "_"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "__"], ["italic", ["italic"]], ["punctuation", "__"]]],
+			["punctuation", "|"],
+
+			["punctuation", "|"],
+			["inline", [["punctuation", "??"], ["cite", "cite"], ["punctuation", "??"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "@"], ["code", "code"], ["punctuation", "@"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "+"], ["inserted", ["inserted"]], ["punctuation", "+"]]],
+			["punctuation", "|"],
+			["inline", [["punctuation", "-"], ["deleted", ["deleted"]], ["punctuation", "-"]]],
+			["punctuation", "|"],
+
+			["punctuation", "|"],
+			["inline", [["punctuation", "%"], ["span", ["span"]], ["punctuation", "%"]]],
+			["punctuation", "|"],
+			["link", [["punctuation", "\""], ["text", "foo"], ["punctuation", "\""], ["punctuation", ":"], ["url", "http://example.com"]]],
+			["punctuation", "|"],
+			["image", [["punctuation", "!"], ["source", "foo.jpg"], ["punctuation", "!"]]],
+			["punctuation", "|"],
+			"bar", ["footnote", [["punctuation", "["], "2", ["punctuation", "]"]]],
+			["punctuation", "|"],
+
+			["punctuation", "|"], ["modifier", [["punctuation", "\\2"]]], ["punctuation", "."],
+			["acronym", ["CSS", ["punctuation", "("], ["comment", "Cascading Style Sheet"], ["punctuation", ")"]]],
+			["punctuation", "|"], ["modifier", [["punctuation", "\\2"]]], ["punctuation", "."],
+			"Foo", ["mark", [["punctuation", "("], "TM", ["punctuation", ")"]]],
+			["punctuation", "|"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for tables with alignment modifiers and spanning.
+Also checks for nesting inline styles.

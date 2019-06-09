@@ -1,0 +1,27 @@
+$_
+$foo
+$BAR?
+$Baz_42!
+
+@_
+@foo
+@BAR?
+@Baz_42!
+
+----------------------------------------------------
+
+[
+	["variable", "$_"],
+	["variable", "$foo"],
+	["variable", "$BAR?"],
+	["variable", "$Baz_42!"],
+
+	["variable", "@_"],
+	["variable", "@foo"],
+	["variable", "@BAR?"],
+	["variable", "@Baz_42!"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

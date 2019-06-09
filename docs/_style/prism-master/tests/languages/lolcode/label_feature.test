@@ -1,0 +1,15 @@
+IM IN YR foobar
+	IM OUTTA YR fooBAR
+
+----------------------------------------------------
+
+[
+	["keyword", "IM IN YR"],
+	["label", "foobar"],
+	["keyword", "IM OUTTA YR"],
+	["label", "fooBAR"]
+]
+
+----------------------------------------------------
+
+Checks for labels.

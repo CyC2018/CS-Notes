@@ -1,0 +1,457 @@
+add
+add.ovf
+add.ovf.un
+and
+arglist
+beq
+beq.s
+bge
+bge.s
+bge.un
+bge.un.s
+bgt
+bgt.s
+bgt.un
+bgt.un.s
+ble
+ble.s
+ble.un
+ble.un.s
+blt
+blt.s
+blt.un
+blt.un.s
+bne.un
+bne.un.s
+box
+br
+br.s
+break
+brfalse
+brfalse.s
+brinst
+brinst.s
+brnull
+brnull.s
+brtrue
+brtrue.s
+brzero
+brzero.s
+call
+calli
+callvirt
+castclass
+ceq
+cgt
+cgt.un
+ckfinite
+clt
+clt.un
+conv.i
+conv.i1
+conv.i2
+conv.i4
+conv.i8
+conv.ovf.i
+conv.ovf.i.un
+conv.ovf.i1
+conv.ovf.i1.un
+conv.ovf.i2
+conv.ovf.i2.un
+conv.ovf.i4
+conv.ovf.i4.un
+conv.ovf.i8
+conv.ovf.i8.un
+conv.ovf.u
+conv.ovf.u.un
+conv.ovf.u1
+conv.ovf.u1.un
+conv.ovf.u2
+conv.ovf.u2.un
+conv.ovf.u4
+conv.ovf.u4.un
+conv.ovf.u8
+conv.ovf.u8.un
+conv.r.un
+conv.r4
+conv.r8
+conv.u
+conv.u1
+conv.u2
+conv.u4
+conv.u8
+cpblk
+cpobj
+div
+div.un
+dup
+endfault
+endfilter
+endfinally
+initblk
+initobj
+isinst
+jmp
+ldarg
+ldarg.0
+ldarg.1
+ldarg.2
+ldarg.3
+ldarg.s
+ldarga
+ldarga.s
+ldc.i4
+ldc.i4.0
+ldc.i4.1
+ldc.i4.2
+ldc.i4.3
+ldc.i4.4
+ldc.i4.5
+ldc.i4.6
+ldc.i4.7
+ldc.i4.8
+ldc.i4.m1
+ldc.i4.M1
+ldc.i4.s
+ldc.i8
+ldc.r4
+ldc.r8
+ldelem
+ldelem.i
+ldelem.i1
+ldelem.i2
+ldelem.i4
+ldelem.i8
+ldelem.r4
+ldelem.r8
+ldelem.ref
+ldelem.u1
+ldelem.u2
+ldelem.u4
+ldelem.u8
+ldelema
+ldfld
+ldflda
+ldftn
+ldind.i
+ldind.i1
+ldind.i2
+ldind.i4
+ldind.i8
+ldind.r4
+ldind.r8
+ldind.ref
+ldind.u1
+ldind.u2
+ldind.u4
+ldind.u8
+ldlen
+ldloc
+ldloc.0
+ldloc.1
+ldloc.2
+ldloc.3
+ldloc.s
+ldloca
+ldloca.s
+ldnull
+ldobj
+ldsfld
+ldsflda
+ldstr
+ldtoken
+ldvirtftn
+leave
+leave.s
+localloc
+mkrefany
+mul
+mul.ovf
+mul.ovf.un
+neg
+newarr
+newobj
+nop
+not
+or
+pop
+refanytype
+refanyval
+rem
+rem.un
+ret
+rethrow
+shl
+shr
+shr.un
+sizeof
+starg
+starg.s
+stelem
+stelem.i
+stelem.i1
+stelem.i2
+stelem.i4
+stelem.i8
+stelem.r4
+stelem.r8
+stelem.ref
+stfld
+stind.i
+stind.i1
+stind.i2
+stind.i4
+stind.i8
+stind.r4
+stind.r8
+stind.ref
+stloc
+stloc.0
+stloc.1
+stloc.2
+stloc.3
+stloc.s
+stobj
+stsfld
+sub
+sub.ovf
+sub.ovf.un
+switch
+throw
+alignment
+unbox
+unbox.any
+xor
+
+----------------------------------------------------
+
+[
+	["function", "add"],
+	["function", "add.ovf"],
+	["function", "add.ovf.un"],
+	["function", "and"],
+	["function", "arglist"],
+	["function", "beq"],
+	["function", "beq.s"],
+	["function", "bge"],
+	["function", "bge.s"],
+	["function", "bge.un"],
+	["function", "bge.un.s"],
+	["function", "bgt"],
+	["function", "bgt.s"],
+	["function", "bgt.un"],
+	["function", "bgt.un.s"],
+	["function", "ble"],
+	["function", "ble.s"],
+	["function", "ble.un"],
+	["function", "ble.un.s"],
+	["function", "blt"],
+	["function", "blt.s"],
+	["function", "blt.un"],
+	["function", "blt.un.s"],
+	["function", "bne.un"],
+	["function", "bne.un.s"],
+	["function", "box"],
+	["function", "br"],
+	["function", "br.s"],
+	["function", "break"],
+	["function", "brfalse"],
+	["function", "brfalse.s"],
+	["function", "brinst"],
+	["function", "brinst.s"],
+	["function", "brnull"],
+	["function", "brnull.s"],
+	["function", "brtrue"],
+	["function", "brtrue.s"],
+	["function", "brzero"],
+	["function", "brzero.s"],
+	["function", "call"],
+	["function", "calli"],
+	["function", "callvirt"],
+	["function", "castclass"],
+	["function", "ceq"],
+	["function", "cgt"],
+	["function", "cgt.un"],
+	["function", "ckfinite"],
+	["function", "clt"],
+	["function", "clt.un"],
+	["function", "conv.i"],
+	["function", "conv.i1"],
+	["function", "conv.i2"],
+	["function", "conv.i4"],
+	["function", "conv.i8"],
+	["function", "conv.ovf.i"],
+	["function", "conv.ovf.i.un"],
+	["function", "conv.ovf.i1"],
+	["function", "conv.ovf.i1.un"],
+	["function", "conv.ovf.i2"],
+	["function", "conv.ovf.i2.un"],
+	["function", "conv.ovf.i4"],
+	["function", "conv.ovf.i4.un"],
+	["function", "conv.ovf.i8"],
+	["function", "conv.ovf.i8.un"],
+	["function", "conv.ovf.u"],
+	["function", "conv.ovf.u.un"],
+	["function", "conv.ovf.u1"],
+	["function", "conv.ovf.u1.un"],
+	["function", "conv.ovf.u2"],
+	["function", "conv.ovf.u2.un"],
+	["function", "conv.ovf.u4"],
+	["function", "conv.ovf.u4.un"],
+	["function", "conv.ovf.u8"],
+	["function", "conv.ovf.u8.un"],
+	["function", "conv.r.un"],
+	["function", "conv.r4"],
+	["function", "conv.r8"],
+	["function", "conv.u"],
+	["function", "conv.u1"],
+	["function", "conv.u2"],
+	["function", "conv.u4"],
+	["function", "conv.u8"],
+	["function", "cpblk"],
+	["function", "cpobj"],
+	["function", "div"],
+	["function", "div.un"],
+	["function", "dup"],
+	["function", "endfault"],
+	["function", "endfilter"],
+	["function", "endfinally"],
+	["function", "initblk"],
+	["function", "initobj"],
+	["function", "isinst"],
+	["function", "jmp"],
+	["function", "ldarg"],
+	["function", "ldarg.0"],
+	["function", "ldarg.1"],
+	["function", "ldarg.2"],
+	["function", "ldarg.3"],
+	["function", "ldarg.s"],
+	["function", "ldarga"],
+	["function", "ldarga.s"],
+	["function", "ldc.i4"],
+	["function", "ldc.i4.0"],
+	["function", "ldc.i4.1"],
+	["function", "ldc.i4.2"],
+	["function", "ldc.i4.3"],
+	["function", "ldc.i4.4"],
+	["function", "ldc.i4.5"],
+	["function", "ldc.i4.6"],
+	["function", "ldc.i4.7"],
+	["function", "ldc.i4.8"],
+	["function", "ldc.i4.m1"],
+	["function", "ldc.i4.M1"],
+	["function", "ldc.i4.s"],
+	["function", "ldc.i8"],
+	["function", "ldc.r4"],
+	["function", "ldc.r8"],
+	["function", "ldelem"],
+	["function", "ldelem.i"],
+	["function", "ldelem.i1"],
+	["function", "ldelem.i2"],
+	["function", "ldelem.i4"],
+	["function", "ldelem.i8"],
+	["function", "ldelem.r4"],
+	["function", "ldelem.r8"],
+	["function", "ldelem.ref"],
+	["function", "ldelem.u1"],
+	["function", "ldelem.u2"],
+	["function", "ldelem.u4"],
+	["function", "ldelem.u8"],
+	["function", "ldelema"],
+	["function", "ldfld"],
+	["function", "ldflda"],
+	["function", "ldftn"],
+	["function", "ldind.i"],
+	["function", "ldind.i1"],
+	["function", "ldind.i2"],
+	["function", "ldind.i4"],
+	["function", "ldind.i8"],
+	["function", "ldind.r4"],
+	["function", "ldind.r8"],
+	["function", "ldind.ref"],
+	["function", "ldind.u1"],
+	["function", "ldind.u2"],
+	["function", "ldind.u4"],
+	["function", "ldind.u8"],
+	["function", "ldlen"],
+	["function", "ldloc"],
+	["function", "ldloc.0"],
+	["function", "ldloc.1"],
+	["function", "ldloc.2"],
+	["function", "ldloc.3"],
+	["function", "ldloc.s"],
+	["function", "ldloca"],
+	["function", "ldloca.s"],
+	["function", "ldnull"],
+	["function", "ldobj"],
+	["function", "ldsfld"],
+	["function", "ldsflda"],
+	["function", "ldstr"],
+	["function", "ldtoken"],
+	["function", "ldvirtftn"],
+	["function", "leave"],
+	["function", "leave.s"],
+	["function", "localloc"],
+	["function", "mkrefany"],
+	["function", "mul"],
+	["function", "mul.ovf"],
+	["function", "mul.ovf.un"],
+	["function", "neg"],
+	["function", "newarr"],
+	["function", "newobj"],
+	["function", "nop"],
+	["function", "not"],
+	["function", "or"],
+	["function", "pop"],
+	["function", "refanytype"],
+	["function", "refanyval"],
+	["function", "rem"],
+	["function", "rem.un"],
+	["function", "ret"],
+	["function", "rethrow"],
+	["function", "shl"],
+	["function", "shr"],
+	["function", "shr.un"],
+	["function", "sizeof"],
+	["function", "starg"],
+	["function", "starg.s"],
+	["function", "stelem"],
+	["function", "stelem.i"],
+	["function", "stelem.i1"],
+	["function", "stelem.i2"],
+	["function", "stelem.i4"],
+	["function", "stelem.i8"],
+	["function", "stelem.r4"],
+	["function", "stelem.r8"],
+	["function", "stelem.ref"],
+	["function", "stfld"],
+	["function", "stind.i"],
+	["function", "stind.i1"],
+	["function", "stind.i2"],
+	["function", "stind.i4"],
+	["function", "stind.i8"],
+	["function", "stind.r4"],
+	["function", "stind.r8"],
+	["function", "stind.ref"],
+	["function", "stloc"],
+	["function", "stloc.0"],
+	["function", "stloc.1"],
+	["function", "stloc.2"],
+	["function", "stloc.3"],
+	["function", "stloc.s"],
+	["function", "stobj"],
+	["function", "stsfld"],
+	["function", "sub"],
+	["function", "sub.ovf"],
+	["function", "sub.ovf.un"],
+	["function", "switch"],
+	["function", "throw"],
+	["function", "alignment"],
+	["function", "unbox"],
+	["function", "unbox.any"],
+	["function", "xor"]
+]
+
+----------------------------------------------------
+
+Tests instruction names

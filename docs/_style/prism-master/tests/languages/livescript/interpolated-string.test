@@ -1,0 +1,57 @@
+""""""
+"""Foo\"""bar"""
+"""Foo
+bar"""
+"""#foobar #{foo + 42}"""
+
+""
+"Foo\"bar"
+"Foo
+bar"
+"#foo #{ if /test/ == 'test' then 3 else 4}"
+
+----------------------------------------------------
+
+[
+	["interpolated-string", [["string", "\"\"\"\"\"\""]]],
+	["interpolated-string", [["string", "\"\"\"Foo\\\"\"\"bar\"\"\""]]],
+	["interpolated-string", [["string", "\"\"\"Foo\r\nbar\"\"\""]]],
+	["interpolated-string", [
+		["string", "\"\"\""],
+		["variable", "#foobar"],
+		["string", " "],
+		["interpolation", [
+			["interpolation-punctuation", "#{"],
+			["identifier", "foo"],
+			["operator", "+"],
+			["number", "42"],
+			["interpolation-punctuation", "}"]
+		]],
+		["string", "\"\"\""]
+	]],
+	["interpolated-string", [["string", "\"\""]]],
+	["interpolated-string", [["string", "\"Foo\\\"bar\""]]],
+	["interpolated-string", [["string", "\"Foo\r\nbar\""]]],
+	["interpolated-string", [
+		["string", "\""],
+		["variable", "#foo"],
+		["string", " "],
+		["interpolation", [
+			["interpolation-punctuation", "#{"],
+			["keyword", "if"],
+			["regex", "/test/"],
+			["operator", "=="],
+			["string", "'test'"],
+			["keyword", "then"],
+			["number", "3"],
+			["keyword", "else"],
+			["number", "4"],
+			["interpolation-punctuation", "}"]
+		]],
+		["string", "\""]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for interpolated strings.

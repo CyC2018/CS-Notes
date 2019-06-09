@@ -1,0 +1,21 @@
+(true)
+(false)
+
+----------------------------------------------------
+
+[
+	["expression", [
+		["punctuation", "("],
+		["boolean", "true"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["boolean", "false"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for booleans inside expressions.

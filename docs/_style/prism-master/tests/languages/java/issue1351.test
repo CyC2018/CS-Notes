@@ -1,0 +1,27 @@
+public class AllChangesIndexer extends SiteIndexer<Change.Id, ChangeData, ChangeIndex> {
+
+----------------------------------------------------
+
+[
+	["keyword", "public"],
+	["keyword", "class"],
+	["class-name", "AllChangesIndexer"],
+	["keyword", "extends"],
+	["class-name", "SiteIndexer"],
+	["generics", [
+		["punctuation", "<"],
+		["class-name", "Change"],
+		["punctuation", "."],
+		["class-name", "Id"],
+		["punctuation", ","],
+		["class-name", "ChangeData"],
+		["punctuation", ","],
+		["class-name", "ChangeIndex"],
+		["punctuation", ">"]
+	]],
+	["punctuation", "{"]
+]
+
+----------------------------------------------------
+
+Checks for generics. See #1351

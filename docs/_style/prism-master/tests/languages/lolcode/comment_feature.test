@@ -1,0 +1,14 @@
+OBTW foo
+bar TLDR
+	BTW foobar
+
+----------------------------------------------------
+
+[
+	["comment", "OBTW foo\r\nbar TLDR"],
+	["comment", "BTW foobar"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

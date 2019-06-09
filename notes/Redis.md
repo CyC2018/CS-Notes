@@ -67,7 +67,7 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 
 ## STRING
 
-<div align="center"> <img src="../pics//6019b2db-bc3e-4408-b6d8-96025f4481d6.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/6019b2db-bc3e-4408-b6d8-96025f4481d6.png" width="400"/> </div><br>
 
 ```html
 > set hello world
@@ -82,7 +82,7 @@ OK
 
 ## LIST
 
-<div align="center"> <img src="../pics//fb327611-7e2b-4f2f-9f5b-38592d408f07.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/fb327611-7e2b-4f2f-9f5b-38592d408f07.png" width="400"/> </div><br>
 
 ```html
 > rpush list-key item
@@ -110,7 +110,7 @@ OK
 
 ## SET
 
-<div align="center"> <img src="../pics//cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png" width="400"/> </div><br>
 
 ```html
 > sadd set-key item
@@ -144,7 +144,7 @@ OK
 
 ## HASH
 
-<div align="center"> <img src="../pics//7bd202a7-93d4-4f3a-a878-af68ae25539a.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/7bd202a7-93d4-4f3a-a878-af68ae25539a.png" width="400"/> </div><br>
 
 ```html
 > hset hash-key sub-key1 value1
@@ -175,7 +175,7 @@ OK
 
 ## ZSET
 
-<div align="center"> <img src="../pics//1202b2d6-9469-4251-bd47-ca6034fb6116.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/1202b2d6-9469-4251-bd47-ca6034fb6116.png" width="400"/> </div><br>
 
 ```html
 > zadd zset-key 728 member1
@@ -317,11 +317,11 @@ int dictRehash(dict *d, int n) {
 
 跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。
 
-<div align="center"> <img src="../pics//beba612e-dc5b-4fc2-869d-0b23408ac90a.png"/> </div><br>
+<div align="center"> <img src="pics/beba612e-dc5b-4fc2-869d-0b23408ac90a.png" width="600px"/> </div><br>
 
 在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。下图演示了查找 22 的过程。
 
-<div align="center"> <img src="../pics//0ea37ee2-c224-4c79-b895-e131c6805c40.png"/> </div><br>
+<div align="center"> <img src="pics/0ea37ee2-c224-4c79-b895-e131c6805c40.png" width="600px"/> </div><br>
 
 与红黑树等平衡树相比，跳跃表具有以下优点：
 
@@ -349,7 +349,7 @@ Redis 这种内存型数据库的读写性能非常高，很适合存储频繁�
 
 ## 消息队列
 
-List 是一个双向链表，可以通过 lpop 和 lpush 写入和读取消息。
+List 是一个双向链表，可以通过 lpush 和 rpop 写入和读取消息
 
 不过最好使用 Kafka、RabbitMQ 等消息中间件。
 
@@ -363,7 +363,7 @@ List 是一个双向链表，可以通过 lpop 和 lpush 写入和读取消息�
 
 在分布式场景下，无法使用单机环境下的锁来对多个节点上的进程进行同步。
 
-可以使用 Reids 自带的 SETNX 命令实现分布式锁，除此之外，还可以使用官方提供的 RedLock 分布式锁实现。
+可以使用 Redis 自带的 SETNX 命令实现分布式锁，除此之外，还可以使用官方提供的 RedLock 分布式锁实现。
 
 ## 其它
 
@@ -405,7 +405,7 @@ Redis 可以为每个键设置过期时间，当键过期时，会自动删除�
 
 可以设置内存最大使用量，当内存使用量超出时，会施行数据淘汰策略。
 
-Reids 具体有 6 种淘汰策略：
+Redis 具体有 6 种淘汰策略：
 
 | 策略 | 描述 |
 | :--: | :--: |
@@ -472,7 +472,7 @@ Redis 服务器是一个事件驱动程序。
 
 Redis 基于 Reactor 模式开发了自己的网络事件处理器，使用 I/O 多路复用程序来同时监听多个套接字，并将到达的事件传送给文件事件分派器，分派器会根据套接字产生的事件类型调用相应的事件处理器。
 
-<div align="center"> <img src="../pics//9ea86eb5-000a-4281-b948-7b567bd6f1d8.png"/> </div><br>
+<div align="center"> <img src="pics/9ea86eb5-000a-4281-b948-7b567bd6f1d8.png" width=""/> </div><br>
 
 ## 时间事件
 
@@ -525,7 +525,7 @@ def main():
 
 从事件处理的角度来看，服务器运行流程如下：
 
-<div align="center"> <img src="../pics//c0a9fa91-da2e-4892-8c9f-80206a6f7047.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/c0a9fa91-da2e-4892-8c9f-80206a6f7047.png" width="350"/> </div><br>
 
 # 十一、复制
 
@@ -545,7 +545,7 @@ def main():
 
 随着负载不断上升，主服务器可能无法很快地更新所有从服务器，或者重新连接和重新同步从服务器将导致系统超载。为了解决这个问题，可以创建一个中间层来分担主服务器的复制工作。中间层的服务器是最上层服务器的从服务器，又是最下层服务器的主服务器。
 
-<div align="center"> <img src="../pics//395a9e83-b1a1-4a1d-b170-d081e7bb5bab.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/395a9e83-b1a1-4a1d-b170-d081e7bb5bab.png" width="600"/> </div><br>
 
 # 十二、Sentinel
 
@@ -555,7 +555,7 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 分片是将数据划分为多个部分的方法，可以将数据存储到多台机器里面，这种方法在解决某些问题时可以获得线性级别的性能提升。
 
-假设有 4 个 Reids 实例 R0，R1，R2，R3，还有很多表示用户的键 user:1，user:2，... ，有不同的方式来选择一个指定的键存储在哪个实例中。
+假设有 4 个 Redis 实例 R0，R1，R2，R3，还有很多表示用户的键 user:1，user:2，... ，有不同的方式来选择一个指定的键存储在哪个实例中。
 
 - 最简单的方式是范围分片，例如用户 id 从 0\~1000 的存储到实例 R0 中，用户 id 从 1001\~2000 的存储到实例 R1 中，等等。但是这样需要维护一张映射范围表，维护操作代价很高。
 - 还有一种方式是哈希分片，使用 CRC32 哈希函数将键转换为一个数字，再对实例数量求模就能知道应该存储的实例。
@@ -580,7 +580,7 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 Redis 没有关系型数据库中的表这一概念来将同种类型的数据存放在一起，而是使用命名空间的方式来实现这一功能。键名的前面部分存储命名空间，后面部分的内容存储 ID，通常使用 : 来进行分隔。例如下面的 HASH 的键名为 article:92617，其中 article 为命名空间，ID 为 92617。
 
-<div align="center"> <img src="../pics//7c54de21-e2ff-402e-bc42-4037de1c1592.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/7c54de21-e2ff-402e-bc42-4037de1c1592.png" width="400"/> </div><br>
 
 ## 点赞功能
 
@@ -588,13 +588,13 @@ Redis 没有关系型数据库中的表这一概念来将同种类型的数据�
 
 为了节约内存，规定一篇文章发布满一周之后，就不能再对它进行投票，而文章的已投票集合也会被删除，可以为文章的已投票集合设置一个一周的过期时间就能实现这个规定。
 
-<div align="center"> <img src="../pics//485fdf34-ccf8-4185-97c6-17374ee719a0.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/485fdf34-ccf8-4185-97c6-17374ee719a0.png" width="400"/> </div><br>
 
 ## 对文章进行排序
 
 为了按发布时间和点赞数进行排序，可以建立一个文章发布时间的有序集合和一个文章点赞数的有序集合。（下图中的 score 就是这里所说的点赞数；下面所示的有序集合分值并不直接是时间和点赞数，而是根据时间和点赞数间接计算出来的）
 
-<div align="center"> <img src="../pics//f7d170a3-e446-4a64-ac2d-cb95028f81a8.png" width="800"/> </div><br>
+<div align="center"> <img src="pics/f7d170a3-e446-4a64-ac2d-cb95028f81a8.png" width="800"/> </div><br>
 
 # 参考资料
 
@@ -606,3 +606,8 @@ Redis 没有关系型数据库中的表这一概念来将同种类型的数据�
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
 - [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
 - [Using Redis as an LRU cache](https://redis.io/topics/lru-cache)
+
+
+
+
+<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>

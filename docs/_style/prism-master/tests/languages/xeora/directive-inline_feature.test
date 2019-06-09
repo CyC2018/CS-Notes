@@ -1,0 +1,21 @@
+$C:Control2$
+$C#1:Control2$
+$C[ParentControl]:Control2$
+$C#1[ParentControl]:Control2$
+
+----------------------------------------------------
+
+[
+	["directive-inline", [
+		["punctuation", ["$C:"]], "Control2", ["punctuation", ["$"]]]],
+	["directive-inline", [
+		["punctuation", ["$C", ["tag", "#1"]]], ["punctuation", [":"]], "Control2", ["punctuation", ["$"]]]],
+	["directive-inline", [
+		["punctuation", ["$C["]], "ParentControl", ["punctuation", ["]"]], ["punctuation", [":"]], "Control2", ["punctuation", ["$"]]]],
+	["directive-inline", [
+		["punctuation", ["$C", ["tag", "#1"]]], ["punctuation", ["["]], "ParentControl", ["punctuation", ["]"]], ["punctuation", [":"]], "Control2", ["punctuation", ["$"]]]]
+]
+
+----------------------------------------------------
+
+Checks for directive-inlines.

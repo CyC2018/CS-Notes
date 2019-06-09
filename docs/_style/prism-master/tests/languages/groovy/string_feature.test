@@ -1,0 +1,60 @@
+""""""
+"""foo"""
+"""foo
+bar"""
+
+''''''
+'''foo'''
+'''foo
+bar'''
+
+""
+"fo\"o"
+''
+'fo\'o'
+
+/foo/
+/fo\/o/
+
+$/fo$/$o/$
+$/foo
+bar/$
+"foo /* comment */ bar"
+'foo // bar'
+'''foo
+/* comment */
+bar'''
+"""foo
+// comment
+bar"""
+
+----------------------------------------------------
+
+[
+	["string", "\"\"\"\"\"\""],
+	["string", "\"\"\"foo\"\"\""],
+	["string", "\"\"\"foo\r\nbar\"\"\""],
+	["string", "''''''"],
+	["string", "'''foo'''"],
+	["string", "'''foo\r\nbar'''"],
+
+	["string", "\"\""],
+	["string", "\"fo\\\"o\""],
+	["string", "''"],
+	["string", "'fo\\'o'"],
+
+	["string", "/foo/"],
+	["string", "/fo\\/o/"],
+
+	["string", "$/fo$/$o/$"],
+	["string", "$/foo\r\nbar/$"],
+	["string", "\"foo /* comment */ bar\""],
+	["string", "'foo // bar'"],
+	["string", "'''foo\r\n/* comment */\r\nbar'''"],
+	["string", "\"\"\"foo\r\n// comment\r\nbar\"\"\""]
+]
+
+----------------------------------------------------
+
+Checks for single quoted, triple single quoted, double quoted,
+triple double quoted, slashy and dollar slashy strings.

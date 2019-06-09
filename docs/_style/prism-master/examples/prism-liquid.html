@@ -1,0 +1,75 @@
+<h2>Comments</h2>
+<pre><code>{% comment %}This is a comment{% endcomment %}</code></pre>
+
+<h2>Control Flow</h2>
+
+Liquid provides multiple control flow statements.
+
+<h3>if</h3>
+<pre><code>
+{% if customer.name == 'kevin' %}
+  Hey Kevin!
+{% elsif customer.name == 'anonymous' %}
+  Hey Anonymous!
+{% else %}
+  Hi Stranger!
+{% endif %}
+</code></pre>
+
+<h3>unless</h3>
+
+The opposite of <code>if</code> – executes a block of code only if a certain condition is not met.
+
+<pre><code>
+{% unless product.title == 'Awesome Shoes' %}
+These shoes are not awesome.
+{% endunless %}
+</code></pre>
+
+<h3>case</h3>
+
+Creates a switch statement to compare a variable with different values. <code>case</code> initializes the switch statement, and <code>when</code> compares its values.
+
+<pre><code>
+{% assign handle = 'cake' %}
+{% case handle %}
+  {% when 'cake' %}
+    This is a cake
+  {% when 'cookie' %}
+    This is a cookie
+  {% else %}
+    This is not a cake nor a cookie
+{% endcase %}
+</code></pre>
+
+<h3>for</h3>
+
+Repeatedly executes a block of code.
+
+break = Causes the loop to stop iterating when it encounters the break tag.
+continue = Causes the loop to skip the current iteration when it encounters the continue tag.
+
+<pre><code>
+{% for i in (1..10) %}
+  {% if i == 4 %}
+    {% break %}
+  {% elsif i == 6 %}
+    {% continue %}
+  {% else %}
+    {{ i }}
+  {% endif %}
+{% endfor %}
+</code></pre>
+
+<h3>range</h3>
+
+<pre><code>
+{% for i in (3..5) %}
+  {{ i }}
+{% endfor %}
+
+{% assign num = 4 %}
+{% for i in (1..num) %}
+  {{ i }}
+{% endfor %}
+</code></pre>

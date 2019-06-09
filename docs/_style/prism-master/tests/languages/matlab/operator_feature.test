@@ -1,0 +1,29 @@
+.' .^
+.* ./ .\
+@ ^ :
++ - ~
+* / \
+< <= > >=
+== ~=
+& &&
+| ||
+A'
+
+----------------------------------------------------
+
+[
+	["operator", ".'"], ["operator", ".^"],
+	["operator", ".*"], ["operator", "./"], ["operator", ".\\"],
+	["operator", "@"], ["operator", "^"], ["operator", ":"],
+	["operator", "+"], ["operator", "-"], ["operator", "~"],
+	["operator", "*"], ["operator", "/"], ["operator", "\\"],
+	["operator", "<"], ["operator", "<="], ["operator", ">"], ["operator", ">="],
+	["operator", "=="], ["operator", "~="],
+	["operator", "&"], ["operator", "&&"],
+	["operator", "|"], ["operator", "||"],
+	"\r\nA", ["operator", "'"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

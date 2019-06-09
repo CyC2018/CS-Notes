@@ -42,7 +42,7 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 在 B+ Tree 中，一个节点中的 key 从左到右非递减排列，如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为 null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>。
 
-<div align="center"> <img src="../pics//061c88c1-572f-424f-b580-9cbce903a3fe.png"/> </div><br>
+<div align="center"> <img src="pics/33576849-9275-47bb-ada7-8ded5f5e7c73.png" width="350px"> </div><br>
 
 ### 2. 操作
 
@@ -56,15 +56,15 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 （一）更少的查找次数
 
-平衡树查找操作的时间复杂度等于树高 h，而树高大致为 O(h)=O(log<sub>d</sub>N)，其中 d 为每个节点的出度。
+平衡树查找操作的时间复杂度和树高 h 相关，O(h)=O(log<sub>d</sub>N)，其中 d 为每个节点的出度。
 
 红黑树的出度为 2，而 B+ Tree 的出度一般都非常大，所以红黑树的树高 h 很明显比 B+ Tree 大非常多，查找的次数也就更多。
 
 （二）利用磁盘预读特性
 
-为了减少磁盘 I/O，磁盘往往不是严格按需读取，而是每次都会预读。预读过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的旋转时间，速度会非常快。
+为了减少磁盘 I/O 操作，磁盘往往不是严格按需读取，而是每次都会预读。预读过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的磁盘旋转时间，速度会非常快。
 
-操作系统一般将内存和磁盘分割成固态大小的块，每一块称为一页，内存与磁盘以页为单位交换数据。数据库系统将索引的一个节点的大小设置为页的大小，使得一次 I/O 就能完全载入一个节点。并且可以利用预读特性，相邻的节点也能够被预先载入。
+操作系统一般将内存和磁盘分割成固定大小的块，每一块称为一页，内存与磁盘以页为单位交换数据。数据库系统将索引的一个节点的大小设置为页的大小，使得一次 I/O 就能完全载入一个节点。并且可以利用预读特性，相邻的节点也能够被预先载入。
 
 ## MySQL 索引
 
@@ -76,7 +76,7 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 因为不再需要进行全表扫描，只需要对树进行搜索即可，所以查找速度快很多。
 
-除了用于查找，还可以用于排序和分组。
+因为 B+ Tree 的有序性，所以除了用于查找，还可以用于排序和分组。
 
 可以指定多个列作为索引列，多个索引列共同组成键。
 
@@ -84,11 +84,11 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 
 InnoDB 的 B+Tree 索引分为主索引和辅助索引。主索引的叶子节点 data 域记录着完整的数据记录，这种索引方式被称为聚簇索引。因为无法把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引。
 
-<div align="center"> <img src="../pics//c28c6fbc-2bc1-47d9-9b2e-cf3d4034f877.jpg"/> </div><br>
+<div align="center"> <img src="pics/45016e98-6879-4709-8569-262b2d6d60b9.png" width="350px"> </div><br>
 
 辅助索引的叶子节点的 data 域记录着主键的值，因此在使用辅助索引进行查找时，需要先查找到主键值，然后再到主索引中进行查找。
 
-<div align="center"> <img src="../pics//7ab8ca28-2a41-4adf-9502-cc0a21e63b51.jpg"/> </div><br>
+<div align="center"> <img src="pics/7c349b91-050b-4d72-a7f8-ec86320307ea.png" width="350px"> </div><br>
 
 ### 2. 哈希索引
 
@@ -140,7 +140,7 @@ WHERE actor_id = 1 AND film_id = 1;
 
 让选择性最强的索引列放在前面。
 
-索引的选择性是指：不重复的索引值和记录总数的比值。最大值为 1，此时每个记录都有唯一的索引与其对应。选择性越高，查询效率也越高。
+索引的选择性是指：不重复的索引值和记录总数的比值。最大值为 1，此时每个记录都有唯一的索引与其对应。选择性越高，每个记录的区分度越高，查询效率也越高。
 
 例如下面显示的结果中 customer_id 的选择性比 staff_id 更高，因此最好把 customer_id 列放在多列索引的前面。
 
@@ -161,7 +161,7 @@ customer_id_selectivity: 0.0373
 
 对于 BLOB、TEXT 和 VARCHAR 类型的列，必须使用前缀索引，只索引开始的部分字符。
 
-对于前缀长度的选取需要根据索引选择性来确定。
+前缀长度的选取需要根据索引选择性来确定。
 
 ### 5. 覆盖索引
 
@@ -177,7 +177,7 @@ customer_id_selectivity: 0.0373
 
 - 大大减少了服务器需要扫描的数据行数。
 
-- 帮助服务器避免进行排序和分组，以及避免创建临时表（B+Tree 索引是有序的，可以用于 ORDER BY 和 GROUP BY 操作。临时表主要是在排序和分组过程中创建，因为不需要排序和分组，也就不需要创建临时表）。
+- 帮助服务器避免进行排序和分组，以及避免创建临时表（B+Tree 索引是有序的，可以用于 ORDER BY 和 GROUP BY 操作。临时表主要是在排序和分组过程中创建，不需要排序和分组，也就不需要创建临时表）。
 
 - 将随机 I/O 变为顺序 I/O（B+Tree 索引是有序的，会将相邻的数据都存储在一起）。
 
@@ -324,11 +324,11 @@ MySQL 提供了两种相似的日期时间类型：DATETIME 和 TIMESTAMP。
 
 ### 1. DATETIME
 
-能够保存从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
+能够保存从 1000 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
 
 它与时区无关。
 
-默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATETIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
+默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATETIME 值，例如“2008-01-16 22<span>:</span>37<span>:</span>08”，这是 ANSI 标准定义的日期和时间表示方法。
 
 ### 2. TIMESTAMP
 
@@ -350,7 +350,7 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
 
-<div align="center"> <img src="../pics//63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg"/> </div><br>
+<div align="center"> <img src="pics/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg" width=""> </div><br>
 
 ## 垂直切分
 
@@ -358,7 +358,7 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库、用户数据库等。
 
-<div align="center"> <img src="../pics//e130e5b8-b19a-4f1e-b860-223040525cf6.jpg"/> </div><br>
+<div align="center"> <img src="pics/e130e5b8-b19a-4f1e-b860-223040525cf6.jpg" width=""> </div><br>
 
 ## Sharding 策略
 
@@ -389,10 +389,10 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 主要涉及三个线程：binlog 线程、I/O 线程和 SQL 线程。
 
 -  **binlog 线程** ：负责将主服务器上的数据更改写入二进制日志（Binary log）中。
--  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的重放日志（Replay log）中。
--  **SQL 线程** ：负责读取重放日志并重放其中的 SQL 语句。
+-  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（Relay log）。
+-  **SQL 线程** ：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（Replay）。
 
-<div align="center"> <img src="../pics//master-slave.png"/> </div><br>
+<div align="center"> <img src="pics/master-slave.png" width=""> </div><br>
 
 ## 读写分离
 
@@ -406,7 +406,7 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 读写分离常用代理方式来实现，代理服务器接收应用层传来的读写请求，然后决定转发到哪个服务器。
 
-<div align="center"> <img src="../pics//master-slave-proxy.png"/> </div><br>
+<div align="center"> <img src="pics/master-slave-proxy.png" width=""> </div><br>
 
 # 参考资料
 
@@ -420,3 +420,9 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
 - [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
 - [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
+- [B + 树](https://zh.wikipedia.org/wiki/B%2B%E6%A0%91)
+
+
+
+
+<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>

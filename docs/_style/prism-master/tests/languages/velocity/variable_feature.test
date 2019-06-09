@@ -1,0 +1,147 @@
+$mud
+$customer.Name
+$flogger.getPromo( $mud )
+$mud-slinger
+$mud_slinger
+$mudSlinger1
+$!mudSlinger_9
+$person.setAttributes( ["Strange", false, "Excited"] )
+$foo[0]
+$foo[$i]
+$foo["bar"]
+$foo.bar[1].junk
+$foo.callMethod()[1]
+$foo["apple"][4]
+${mudSlinger}
+$!{mudSlinger_9}
+${customer.Address}
+${purchase.getTotal()}
+<input value="$email"/>
+<input value="$!{email}"/>
+$\!foo
+$\!{foo}
+$\\!foo
+$\\\!foo
+\$foo
+\$!foo
+\$!{foo}
+\\$!{foo}
+
+----------------------------------------------------
+
+[
+	["variable", ["$mud"]],
+	["variable", ["$customer", ["punctuation", "."], "Name"]],
+	["variable", [
+		"$flogger",
+		["punctuation", "."],
+		["function", "getPromo"],
+		["punctuation", "("],
+		" $mud ",
+		["punctuation", ")"]
+	]],
+	["variable", ["$mud-slinger"]],
+	["variable", ["$mud_slinger"]],
+	["variable", ["$mudSlinger1"]],
+	["variable", ["$!mudSlinger_9"]],
+	["variable", [
+		"$person",
+		["punctuation", "."],
+		["function", "setAttributes"],
+		["punctuation", "("],
+		["punctuation", "["],
+		["string", "\"Strange\""],
+		["punctuation", ","],
+		["boolean", "false"],
+		["punctuation", ","],
+		["string", "\"Excited\""],
+		["punctuation", "]"],
+		["punctuation", ")"]
+	]],
+	["variable", ["$foo", ["punctuation", "["], ["number", "0"], ["punctuation", "]"]]],
+	["variable", ["$foo", ["punctuation", "["], "$i", ["punctuation", "]"]]],
+	["variable", ["$foo", ["punctuation", "["], ["string", "\"bar\""], ["punctuation", "]"]]],
+	["variable", [
+		"$foo",
+		["punctuation", "."],
+		"bar",
+		["punctuation", "["],
+		["number", "1"],
+		["punctuation", "]"],
+		["punctuation", "."],
+		"junk"
+	]],
+	["variable", [
+		"$foo",
+		["punctuation", "."],
+		["function", "callMethod"],
+		["punctuation", "("],
+		["punctuation", ")"],
+		["punctuation", "["],
+		["number", "1"],
+		["punctuation", "]"]
+	]],
+	["variable", [
+		"$foo",
+		["punctuation", "["],
+		["string", "\"apple\""],
+		["punctuation", "]"],
+		["punctuation", "["],
+		["number", "4"],
+		["punctuation", "]"]
+	]],
+	["variable", ["$", ["punctuation", "{"], "mudSlinger", ["punctuation", "}"]]],
+	["variable", ["$!", ["punctuation", "{"], "mudSlinger_9", ["punctuation", "}"]]],
+	["variable", [
+		"$",
+		["punctuation", "{"],
+		"customer",
+		["punctuation", "."],
+		"Address",
+		["punctuation", "}"]
+	]],
+	["variable", [
+		"$",
+		["punctuation", "{"],
+		"purchase",
+		["punctuation", "."],
+		["function", "getTotal"],
+		["punctuation", "("],
+		["punctuation", ")"],
+		["punctuation", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"input"
+		]],
+		["attr-name", ["value"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["variable", ["$email"]],
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"input"
+		]],
+		["attr-name", ["value"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["variable", ["$!", ["punctuation", "{"], "email", ["punctuation", "}"]]],
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+	"\r\n$\\!foo\r\n$\\!{foo}\r\n$\\\\!foo\r\n$\\\\\\!foo\r\n\\$foo\r\n\\$!foo\r\n\\$!{foo}\r\n\\\\",
+	["variable", ["$!", ["punctuation", "{"], "foo", ["punctuation", "}"]]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

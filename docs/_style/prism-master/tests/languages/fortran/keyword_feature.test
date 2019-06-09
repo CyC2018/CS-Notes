@@ -1,0 +1,199 @@
+INTEGER
+REAL
+DOUBLE PRECISION
+DOUBLEPRECISION
+COMPLEX
+CHARACTER
+LOGICAL
+
+ALLOCATABLE
+ALLOCATE
+BACKSPACE
+CALL
+CASE
+CLOSE
+COMMON
+CONTAINS
+CONTINUE
+CYCLE
+DATA
+DEALLOCATE
+DIMENSION
+DO
+END
+EQUIVALENCE
+EXIT
+EXTERNAL
+FORMAT
+GO TO
+GOTO
+IMPLICIT
+IMPLICIT NONE
+INQUIRE
+INTENT
+INTRINSIC
+MODULE PROCEDURE
+NAMELIST
+NULLIFY
+OPEN
+OPTIONAL
+PARAMETER
+POINTER
+PRINT
+PRIVATE
+PUBLIC
+READ
+RETURN
+REWIND
+SAVE
+SELECT
+STOP
+TARGET
+WHILE
+WRITE
+
+BLOCK DATA
+BLOCKDATA
+END BLOCK DATA
+ENDBLOCKDATA
+DO
+ENDDO
+FILE
+FORALL
+FUNCTION
+IF
+END IF
+INTERFACE
+MODULE
+PROGRAM
+SELECT
+SUBROUTINE
+TYPE
+WHERE
+
+ASSIGNMENT
+DEFAULT
+ELEMENTAL
+ELSE
+ELSEWHERE
+ELSEIF
+ENTRY
+IN
+INCLUDE
+INOUT
+KIND
+NULL
+ONLY
+OPERATOR
+OUT
+PURE
+RECURSIVE
+RESULT
+SEQUENCE
+STAT
+THEN
+USE
+
+----------------------------------------------------
+
+[
+	["keyword", "INTEGER"],
+	["keyword", "REAL"],
+	["keyword", "DOUBLE PRECISION"],
+	["keyword", "DOUBLEPRECISION"],
+	["keyword", "COMPLEX"],
+	["keyword", "CHARACTER"],
+	["keyword", "LOGICAL"],
+
+	["keyword", "ALLOCATABLE"],
+	["keyword", "ALLOCATE"],
+	["keyword", "BACKSPACE"],
+	["keyword", "CALL"],
+	["keyword", "CASE"],
+	["keyword", "CLOSE"],
+	["keyword", "COMMON"],
+	["keyword", "CONTAINS"],
+	["keyword", "CONTINUE"],
+	["keyword", "CYCLE"],
+	["keyword", "DATA"],
+	["keyword", "DEALLOCATE"],
+	["keyword", "DIMENSION"],
+	["keyword", "DO"],
+	["keyword", "END"],
+	["keyword", "EQUIVALENCE"],
+	["keyword", "EXIT"],
+	["keyword", "EXTERNAL"],
+	["keyword", "FORMAT"],
+	["keyword", "GO TO"],
+	["keyword", "GOTO"],
+	["keyword", "IMPLICIT"],
+	["keyword", "IMPLICIT NONE"],
+	["keyword", "INQUIRE"],
+	["keyword", "INTENT"],
+	["keyword", "INTRINSIC"],
+	["keyword", "MODULE PROCEDURE"],
+	["keyword", "NAMELIST"],
+	["keyword", "NULLIFY"],
+	["keyword", "OPEN"],
+	["keyword", "OPTIONAL"],
+	["keyword", "PARAMETER"],
+	["keyword", "POINTER"],
+	["keyword", "PRINT"],
+	["keyword", "PRIVATE"],
+	["keyword", "PUBLIC"],
+	["keyword", "READ"],
+	["keyword", "RETURN"],
+	["keyword", "REWIND"],
+	["keyword", "SAVE"],
+	["keyword", "SELECT"],
+	["keyword", "STOP"],
+	["keyword", "TARGET"],
+	["keyword", "WHILE"],
+	["keyword", "WRITE"],
+
+	["keyword", "BLOCK DATA"],
+	["keyword", "BLOCKDATA"],
+	["keyword", "END BLOCK DATA"],
+	["keyword", "ENDBLOCKDATA"],
+	["keyword", "DO"],
+	["keyword", "ENDDO"],
+	["keyword", "FILE"],
+	["keyword", "FORALL"],
+	["keyword", "FUNCTION"],
+	["keyword", "IF"],
+	["keyword", "END IF"],
+	["keyword", "INTERFACE"],
+	["keyword", "MODULE"],
+	["keyword", "PROGRAM"],
+	["keyword", "SELECT"],
+	["keyword", "SUBROUTINE"],
+	["keyword", "TYPE"],
+	["keyword", "WHERE"],
+
+	["keyword", "ASSIGNMENT"],
+	["keyword", "DEFAULT"],
+	["keyword", "ELEMENTAL"],
+	["keyword", "ELSE"],
+	["keyword", "ELSEWHERE"],
+	["keyword", "ELSEIF"],
+	["keyword", "ENTRY"],
+	["keyword", "IN"],
+	["keyword", "INCLUDE"],
+	["keyword", "INOUT"],
+	["keyword", "KIND"],
+	["keyword", "NULL"],
+	["keyword", "ONLY"],
+	["keyword", "OPERATOR"],
+	["keyword", "OUT"],
+	["keyword", "PURE"],
+	["keyword", "RECURSIVE"],
+	["keyword", "RESULT"],
+	["keyword", "SEQUENCE"],
+	["keyword", "STAT"],
+	["keyword", "THEN"],
+	["keyword", "USE"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

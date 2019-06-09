@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Extending Prism ▲ Prism</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body class="language-javascript">
+
+<header>
+	<div class="intro" data-src="templates/header-main.html" data-type="text/html"></div>
+
+	<h2>Extending Prism</h2>
+	<p>Prism is awesome out of the box, but it’s even awesomer when it’s customized to your own needs. This section will help you write new language definitions, plugins and all-around Prism hacking.</p>
+</header>
+
+<section id="language-definitions">
+	<h1>Language definitions</h1>
+
+	<p>Every language is defined as a set of tokens, which are expressed as regular expressions. For example, this is the language definition for CSS:</p>
+	<pre data-src="components/prism-css.js"></pre>
+
+	<p>A regular expression literal is the simplest way to express a token. An alternative way, with more options, is by using an object literal. With that notation, the regular expression describing the token would be the <code>pattern</code> attribute:</p>
+	<pre><code class="language-javascript">...
+'tokenname': {
+	pattern: /regex/
+}
+...</code></pre>
+	<p>So far the functionality is exactly the same between the short and extended notations. However, the extended notation allows for additional options:</p>
+
+	<dl>
+		<dt>inside</dt>
+		<dd>This property accepts another object literal, with tokens that are allowed to be nested in this token.
+		This makes it easier to define certain languages. However, keep in mind that they’re slower and if coded poorly, can even result in infinite recursion.
+		For an example of nested tokens, check out the Markup language definition:
+		<pre data-src="components/prism-markup.js"></pre></dd>
+
+		<dt>lookbehind</dt>
+		<dd>This option mitigates JavaScript’s lack of lookbehind. When set to <code>true</code>,
+		the first capturing group in the regex <code>pattern</code> is discarded when matching this token, so it effectively behaves
+		as if it was lookbehind. For an example of this, check out the C-like language definition, in particular the comment and class-name tokens:
+		<pre data-src="components/prism-clike.js"></pre></dd>
+
+		<dt>rest</dt>
+		<dd>Accepts an object literal with tokens and appends them to the end of the current object literal. Useful for referring to tokens defined elsewhere. For an example where <code>rest</code> is useful, check the Markup definitions above.</dd>
+
+		<dt>alias</dt>
+		<dd>This option can be used to define one or more aliases for the matched token. The result will be, that
+		the styles of the token and its aliases are combined. This can be useful, to combine the styling of a well known
+		token, which is already supported by most of the themes,  with a semantically correct token name. The option
+		can be set to a string literal or an array of string literals. In the following example the token
+		name <code>latex-equation</code> is not supported by any theme, but it will be highlighted the same as a string.
+		<pre><code class="language-javascript">{
+	'latex-equation': {
+		pattern: /\$(\\?.)*?\$/g,
+		alias: 'string'
+	}
+}</code></pre></dd>
+
+		<dt>greedy</dt>
+		<dd>This is a boolean attribute. It is intended to solve a common problem with
+		patterns that match long strings like comments, regex or string literals. For example,
+		comments are parsed first, but if the string <code class="language-javascript">/* foo */</code>
+		appears inside a string, you would not want it to be highlighted as a comment.
+		The greedy-property allows a pattern to ignore previous matches of other patterns, and
+		overwrite them when necessary. Use this flag with restraint, as it incurs a small performance overhead.
+		The following example demonstrates its usage:
+		<pre><code class="language-javascript">'string': {
+	pattern: /(["'])(\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+	greedy: true
+}</code></pre>
+	</dl>
+
+	<p>Unless explicitly allowed through the <code>inside</code> property, each token cannot contain other tokens, so their order is significant. Although per the ECMAScript specification, objects are not required to have a specific ordering of their properties, in practice they do in every modern browser.</p>
+
+	<p>In most languages there are multiple different ways of declaring the same constructs (e.g. comments, strings, ...) and sometimes it is difficult or unpractical to match all of them with one single regular expression. To add multiple regular expressions for one token name an array can be used:</p>
+
+	<pre><code class="language-javascript">...
+'tokenname': [ /regex0/, /regex1/, { pattern: /regex2/ } ]
+...</code></pre>
+
+	<section>
+		<h1><code>Prism.languages.insertBefore(inside, before, insert<span class="optional" title="Default value: Prism.languages">, root</span>)</code></h1>
+
+		<p>This is a helper method to ease modifying existing languages. For example, the CSS language definition not only defines CSS highlighting for CSS documents,
+		but also needs to define highlighting for CSS embedded in HTML through <code class="language-markup">&lt;style></code> elements. To do this, it needs to modify
+		<code>Prism.languages.markup</code> and add the appropriate tokens. However, <code>Prism.languages.markup</code>
+		is a regular JavaScript object literal, so if you do this:</p>
+
+		<pre><code >Prism.languages.markup.style = {
+	/* tokens */
+};</code></pre>
+
+		<p>then the <code>style</code> token will be added (and processed) at the end. <code>Prism.languages.insertBefore</code> allows you to insert
+		tokens <em>before</em> existing tokens. For the CSS example above, you would use it like this:</p>
+
+		<pre><code>Prism.languages.insertBefore('markup', 'cdata', {
+	'style': {
+		/* tokens */
+	}
+});</code></pre>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>inside</dt>
+			<dd>The property of <code>root</code> that contains the object to be modified.</dd>
+
+			<dt>before</dt>
+			<dd>Key to insert before (String)</dd>
+
+			<dt>insert</dt>
+			<dd>An object containing the key-value pairs to be inserted</dd>
+
+			<dt>root</dt>
+			<dd>The root object, i.e. the object that contains the object that will be modified. Optional, default value is <code>Prism.languages</code>.</dd>
+		</dl>
+	</section>
+</section>
+
+<section id="writing-plugins">
+	<h1>Writing plugins</h1>
+
+	<p>Prism’s plugin architecture is fairly simple. To add a callback, you use <code class="language-javascript">Prism.hooks.add(hookname, callback)</code>.
+	<code>hookname</code> is a string with the hook id, that uniquely identifies the hook your code should run at.
+	<code>callback</code> is a function that accepts one parameter: an object with various variables that can be modified, since objects in JavaScript are passed by reference.
+	For example, here’s a plugin from the Markup language definition that adds a tooltip to entity tokens which shows the actual character encoded:
+	<pre><code class="language-javascript">Prism.hooks.add('wrap', function(env) {
+	if (env.token === 'entity') {
+		env.attributes['title'] = env.content.replace(/&amp;amp;/, '&amp;');
+	}
+});</code></pre>
+	<p>Of course, to understand which hooks to use you would have to read Prism’s source. Imagine where you would add your code and then find the appropriate hook.
+	If there is no hook you can use, you may <a href="https://github.com/PrismJS/prism/issues">request one to be added</a>, detailing why you need it there.
+</section>
+
+<section id="api">
+	<h1>API documentation</h1>
+
+	<section id="highlight-all">
+		<h1><code>Prism.highlightAll(async, callback)</code></h1>
+		<p>This is the most high-level function in Prism’s API. It fetches all the elements that have a <code>.language-xxxx</code> class
+		and then calls <code>Prism.highlightElement()</code> on each one of them.</p>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>async</dt>
+			<dd>
+				Whether to use Web Workers to improve performance and avoid blocking the UI when highlighting very large
+				chunks of code. False by default
+				(<a href="faq.html#why-is-asynchronous-highlighting-disabled-by-default">why?</a>).<br />
+				Note: All language definitions required to highlight the code must be included in the main <code>prism.js</code>
+				file for the async highlighting to work. You can build your own bundle on the <a href="download.html">Download page</a>.
+			</dd>
+
+			<dt>callback</dt>
+			<dd>
+				An optional callback to be invoked after the highlighting is done. Mostly useful when <code>async</code>
+				is true, since in that case, the highlighting is done asynchronously.
+			</dd>
+		</dl>
+	</section>
+
+	<section id="highlight-all-under">
+		<h1><code>Prism.highlightAllUnder(element, async, callback)</code></h1>
+		<p>Fetches all the descendants of <code>element</code> that have a <code>.language-xxxx</code> class
+			and then calls <code>Prism.highlightElement()</code> on each one of them.</p>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>element</dt>
+			<dd>The root element, whose descendants that have a <code>.language-xxxx</code> class will be highlighted.</dd>
+
+			<dt>async</dt>
+			<dd>Same as in <a href="#highlight-all"><code>Prism.highlightAll()</code></a></dd>
+
+			<dt>callback</dt>
+			<dd>Same as in <a href="#highlight-all"><code>Prism.highlightAll()</code></a></dd>
+		</dl>
+	</section>
+
+	<section id="highlight-element">
+		<h1><code>Prism.highlightElement(element, async, callback)</code></h1>
+		<p>Highlights the code inside a single element.</p>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>element</dt>
+			<dd>The element containing the code. It must have a class of <code>language-xxxx</code> to be processed, where <code>xxxx</code> is a valid language identifier.</dd>
+
+			<dt>async</dt>
+			<dd>Same as in <a href="#highlight-all"><code>Prism.highlightAll()</code></a></dd>
+			<dt>callback</dt>
+			<dd>Same as in <a href="#highlight-all"><code>Prism.highlightAll()</code></a></dd>
+		</dl>
+	</section>
+
+	<section id="highlight">
+		<h1><code>Prism.highlight(text, grammar)</code></h1>
+		<p>Low-level function, only use if you know what you’re doing.
+		It accepts a string of text as input and the language definitions to use, and returns a string with the HTML produced.</p>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>text</dt>
+			<dd>A string with the code to be highlighted.</dd>
+			<dt>grammar</dt>
+			<dd>An object containing the tokens to use. Usually a language definition like <code>Prism.languages.markup</code></dd>
+		</dl>
+
+		<h2>Returns</h2>
+		<p>The highlighted HTML</p>
+	</section>
+
+	<section id="tokenize">
+		<h1><code>Prism.tokenize(text, grammar)</code></h1>
+		<p>This is the heart of Prism, and the most low-level function you can use. It accepts a string of text as input and the language definitions to use, and returns an array with the tokenized code.
+		When the language definition includes nested tokens, the function is called recursively on each of these tokens. This method could be useful in other contexts as well, as a very crude parser.</p>
+
+		<h2>Parameters</h2>
+		<dl>
+			<dt>text</dt>
+			<dd>A string with the code to be highlighted.</dd>
+			<dt>grammar</dt>
+			<dd>An object containing the tokens to use. Usually a language definition like <code>Prism.languages.markup</code></dd>
+		</dl>
+
+		<h2>Returns</h2>
+		<p>An array of strings, tokens (class <code>Prism.Token</code>) and other arrays.</p>
+	</section>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

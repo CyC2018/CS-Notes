@@ -1,0 +1,18 @@
+:markdown
+  # title
+
+----------------------------------------------------
+
+[
+	["filter-markdown", [
+		["filter-name", ":markdown"],
+		["title", [
+			["punctuation", "#"],
+			" title"
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for markdown filter in Jade.
