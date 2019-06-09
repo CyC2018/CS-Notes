@@ -80,32 +80,20 @@
 
 ### 公众号
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img>
+<img width="620px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img>
 
-### QQ 群
+### 更多内容
 
-<img src="assets/group.png" width="180px">
+- 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+- 知乎：[CyC2018](https://www.zhihu.com/people/xiao-shi-guang-33/activities)
+- 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
+- QQ 交流群：[857210598](assets/group.png)
 
-### 后端面试进阶指南
+### 工具
 
-<a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="assets/%E5%B0%8F%E4%B8%93%E6%A0%8F.jpg" width="80px"></a>    
-
-### 内推信息
-
-[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-
-### 绘图工具
-
-[draw.io](https://www.draw.io/)
-
-### Github Page
-
-[docsify](https://docsify.js.org/#/)
-
-### Logo
-
-Power by [logomakr](https://logomakr.com/).
+- Github Pages：[docsify](https://docsify.js.org/#/)
+- 绘图：[draw.io](https://www.draw.io/)
+- Logo：[logomakr](https://logomakr.com/)
 
 ### 排版
 
