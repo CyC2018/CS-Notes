@@ -4,12 +4,11 @@
     <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://badgen.net/badge/CyC/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB?icon=sourcegraph&color=4ab8a1"></a>
 </div>
 
-
 <br>
 
-|      &nbsp;算法&nbsp;      |             操作系统             |    &nbsp;网络&nbsp;    |        面向对象        |    &nbsp;&nbsp;数据库&nbsp;&nbsp;    | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; |         系统设计         | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; |               编码实践               | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
-| :------------------------: | :------------------------------: | :--------------------: | :--------------------: | :----------------------------------: | :--------------------------------------: | :----------------------: | :--------------------------------------: | :----------------------------------: | :--------------------------------------: |
-| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |         [:coffee:](#coffee-java)         | [:bulb:](#bulb-系统设计) |         [:wrench:](#wrench-工具)         | [:watermelon:](#watermelon-编码实践) |           [:memo:](#memo-后记)           |
+| &nbsp;算法&nbsp; | 操作系统 | &nbsp;网络&nbsp;|面向对象| &nbsp;&nbsp;数据库&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp;|         系统设计| &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; |编码实践| &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
+| :---: | :----: | :---: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |[:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计) |[:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践) |[:memo:](#memo-后记)|
 
 <br>
 
@@ -78,6 +77,8 @@
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码风格规范.md)
 
+<br>
+
 <div align="center"><img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img></div>
 
 ## :memo: 后记 
@@ -95,6 +96,7 @@
 ### 工具
 
 - Github Pages：[docsify](https://docsify.js.org/#/)
+- 云笔记：[为知笔记](http://www.wiz.cn/)
 - 绘图：[draw.io](https://www.draw.io/)
 - Logo：[logomakr](https://logomakr.com/)
 
@@ -116,7 +118,7 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
 
-转载文章请在开头明显处标明该页面地址，公众号等其它转载其联系 zhengyc101@163.com。
+转载文章请在开头明显处标明该页面地址，公众号等其它转载请联系 zhengyc101@163.com。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
