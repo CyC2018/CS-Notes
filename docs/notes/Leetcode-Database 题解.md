@@ -48,6 +48,8 @@ https://leetcode.com/problems/big-countries/description/
 
 ## SQL Schema
 
+SQL Schema 用于在本地环境下创建表结构并导入数据，从而方便在本地环境解答。
+
 ```sql
 DROP TABLE
 IF
@@ -124,6 +126,8 @@ VALUES
 'f' ^ 'm' ^ 'f' = 'm'
 'm' ^ 'm' ^ 'f' = 'f'
 ```
+
+
 
 ```sql
 UPDATE salary
@@ -301,6 +305,8 @@ VALUES
 
 ## Solution
 
+对 Email 进行分组，如果相同 Email 的数量大于等于 2，则表示该 Email 重复。
+
 ```sql
 SELECT
     Email
@@ -324,9 +330,9 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 +----+---------+
 | Id | Email   |
 +----+---------+
-| 1  | a@b.com |
-| 2  | c@d.com |
-| 3  | a@b.com |
+| 1  | john@example.com |
+| 2  | bob@example.com |
+| 3  | john@example.com |
 +----+---------+
 ```
 
@@ -346,6 +352,8 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 与 182 相同。
 
 ## Solution
+
+只保留相同 Email 中 Id 最小的那一个，然后删除其它的。
 
 连接：
 
@@ -437,7 +445,7 @@ VALUES
 
 ## Solution
 
-使用左外连接。
+涉及到 Person 和 Address 两个表，在对这两个表执行连接操作时，因为要保留 Person 表中的信息，即使在 Address 表中没有关联的信息也要保留。此时可以用左外连接，将 Person 表放在 LEFT JOIN 的左边。
 
 ```sql
 SELECT
@@ -797,10 +805,43 @@ VALUES
 
 ## Solution
 
+要统计某个 score 的排名，只要统计大于该 score 的 score 数量，然后加 1。
+
+| score | 大于该 score 的 score 数量 | 排名 |
+| :---: | :---: | :---: |
+| 4.1 | 2 | 3 |
+| 4.2 | 1 | 2 |
+| 4.3 | 0 | 1 |
+
+但是在本题中，相同的 score 只算一个排名：
+
+| score | 排名 |
+| :---: | :---: |
+| 4.1 | 3 |
+| 4.1 | 3 |
+| 4.2 | 2 |
+| 4.2 | 2 |
+| 4.3 | 1 |
+| 4.3 | 1 |
+
+可以按 score 进行分组，将同一个分组中的 score 只当成一个。
+
+但是如果分组字段只有 score 的话，那么相同的 score 最后的结果只会有一个，例如上面的 6 个记录最后只取出 3 个。
+
+| score | 排名 |
+| :---: | :---: |
+| 4.1 | 3 |
+| 4.2 | 2 |
+| 4.3 | 1 |
+
+所以在分组中需要加入 Id，每个记录显示一个结果。综上，需要使用 score 和 id 两个分组字段。
+
+在下面的实现中，首先将 Scores 表根据 score 字段进行自连接，得到一个新表，然后在新表上对 id 和 score 进行分组。
+
 ```sql
 SELECT
-    S1.score,
-    COUNT( DISTINCT S2.score ) Rank
+    S1.score 'Score',
+    COUNT( DISTINCT S2.score ) 'Rank'
 FROM
     Scores S1
     INNER JOIN Scores S2
@@ -931,6 +972,8 @@ VALUES
 使用多个 union。
 
 ```sql
+# 处理偶数 id，让 id 减 1
+# 例如 2,4,6,... 变成 1,3,5,...
 SELECT
     s1.id - 1 AS id,
     s1.student
@@ -938,6 +981,8 @@ FROM
     seat s1
 WHERE
     s1.id MOD 2 = 0 UNION
+# 处理奇数 id，让 id 加 1。但是如果最大的 id 为奇数，则不做处理
+# 例如 1,3,5,... 变成 2,4,6,...
 SELECT
     s2.id + 1 AS id,
     s2.student
@@ -946,6 +991,7 @@ FROM
 WHERE
     s2.id MOD 2 = 1
     AND s2.id != ( SELECT max( s3.id ) FROM seat s3 ) UNION
+# 如果最大的 id 为奇数，单独取出这个数
 SELECT
     s4.id AS id,
     s4.student
