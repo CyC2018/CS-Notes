@@ -86,6 +86,8 @@
 
 - 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 - 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
+- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593)
+- 简历：https://cyc2018.github.io
 - 知乎：[CyC2018](https://www.zhihu.com/people/xiao-shi-guang-33/activities)
 - 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 - QQ 交流群：[857210598](assets/group.png)
