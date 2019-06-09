@@ -2,9 +2,9 @@
     <!-- star -->
     <a href="https://github.com/CyC2018/CS-Notes"> <img src="https://badgen.net/github/stars/CyC2018/CS-Notes?icon=github&color=4ab8a1"></a>
     <!-- 离线下载 -->
-    <a href="other/download.md"> <img src="https://badgen.net/badge/__/%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD?icon=telegram&color=4ab8a1"></a>
+    <a href="other/download.md"> <img src="https://badgen.net/badge/OvO/%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD?icon=telegram&color=4ab8a1"></a>
     <!-- 在线阅读 -->
-    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://badgen.net/badge/-/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB?icon=sourcegraph&color=4ab8a1"></a>
+    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://badgen.net/badge/CyC/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB?icon=sourcegraph&color=4ab8a1"></a>
 <div>
 
 <br>
@@ -17,8 +17,6 @@
 
 <div align="center">
     <img src="assets/LogoMakr_0zpEzN.png" width="200px">
-    <!-- <br>
-    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> -->
     <br> <br>
 </div>
 
