@@ -116,7 +116,7 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
 
-转载文章请在开头明显处标明该页面地址，公众号等其它转载其联系 zhengyc101@163.com。
+转载文章请在开头明显处标明该页面地址，公众号等其它转载请联系 zhengyc101@163.com。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
