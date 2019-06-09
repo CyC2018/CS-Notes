@@ -1,14 +1,13 @@
-
-
 |      &nbsp;算法&nbsp;      |             操作系统             |    &nbsp;网络&nbsp;    |        面向对象        |    &nbsp;&nbsp;数据库&nbsp;&nbsp;    | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; |         系统设计         | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; |               编码实践               | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
 | :------------------------: | :------------------------------: | :--------------------: | :--------------------: | :----------------------------------: | :--------------------------------------: | :----------------------: | :--------------------------------------: | :----------------------------------: | :--------------------------------------: |
 | [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |         [:coffee:](#coffee-java)         | [:bulb:](#bulb-系统设计) |         [:wrench:](#wrench-工具)         | [:watermelon:](#watermelon-编码实践) |           [:memo:](#memo-后记)           |
+
+<br>
 
 <div align="center">
     <img src="assets/LogoMakr_0zpEzN.png" width="200px">
     <br> <br>
 </div>
-
 
 
 ## :pencil2: 算法
@@ -70,14 +69,9 @@
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码风格规范.md)
 
-<<<<<<< HEAD
 <div align="center"><img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img></div>
 
-=======
->>>>>>> parent of 5cd0fb39... auto commit
 ## :memo: 后记 
-
-<div align="center"><img width="620px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/QQ截图20190608120206.png"></img></div>
 
 ### 更多内容
 
@@ -122,38 +116,38 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与我联系。
 
 <a href="https://github.com/linw7">
-​    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/g10guang">
-​    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/Sctwang">
-​    <img src="https://avatars3.githubusercontent.com/u/33345444?s=400&v=4" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/33345444?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/ResolveWang">
-​    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/crossoverJie">
-​    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/jy03078584">
-​    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/kwongtailau">
-​    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
+    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/xiangflight">
-​    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/mafulong">
-​    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/yanglbme">
-​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/OOCZC">
-​    <img src="https://avatars1.githubusercontent.com/u/11623828?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/11623828?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/5renyuebing">
-​    <img src="https://avatars1.githubusercontent.com/u/32872430?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/32872430?s=400&v=4" width="50px">
 </a>
