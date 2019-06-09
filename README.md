@@ -94,6 +94,7 @@
 ### 工具
 
 - Github Pages：[docsify](https://docsify.js.org/#/)
+- 云笔记：[为知笔记](http://www.wiz.cn/)
 - 绘图：[draw.io](https://www.draw.io/)
 - Logo：[logomakr](https://logomakr.com/)
 
