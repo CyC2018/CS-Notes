@@ -1,0 +1,13 @@
+$INTERNET_CACHE
+$LANGUAGE
+
+----------------------------------------------------
+
+[
+    ["variable", "$INTERNET_CACHE"],
+    ["variable", "$LANGUAGE"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

@@ -1,0 +1,25 @@
+<h2>Comments</h2>
+<pre><code># This is a comment</code></pre>
+
+<h2>Variables</h2>
+<pre><code>fastcgi_param SERVER_NAME $server_name;</code></pre>
+
+<h2>Server Block</h2>
+<pre><code>
+server { # simple reverse-proxy
+  listen       80;
+  server_name  domain2.com www.domain2.com;
+  access_log   logs/domain2.access.log  main;
+  
+  # serve static files
+  
+  location ~ ^/(images|javascript|js|css|flash|media|static)/  {
+    root    /var/www/virtual/big.server.com/htdocs;
+    expires 30d;
+  }
+
+  # pass requests for dynamic content to rails/turbogears/zope, et al
+  location / {
+    proxy_pass      http://127.0.0.1:8080;
+  }
+}</code></pre>

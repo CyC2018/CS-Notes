@@ -1,0 +1,17 @@
+(t)
+(nil)
+(foo t)
+[t ]
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["boolean", "t"], ["punctuation", ")"],
+	["punctuation", "("], ["boolean", "nil"], ["punctuation", ")"],
+	["punctuation", "("], ["car", "foo"], ["boolean", "t"], ["punctuation", ")"],
+	["punctuation", "["], ["boolean", "t"], ["punctuation", "]"]
+]
+
+----------------------------------------------------
+
+Checks for booleans.

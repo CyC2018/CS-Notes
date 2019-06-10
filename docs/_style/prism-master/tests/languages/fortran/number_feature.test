@@ -1,0 +1,37 @@
+473
+21_2
+21_SHORT
+1976354279568241_8
+1.6E3
+0.45E-4
+10.93E7_QUAD
+3E4
+B'01110'
+B"010"
+O'047'
+O"642"
+Z'F41A'
+Z"00BC"
+
+----------------------------------------------------
+
+[
+	["number", "473"],
+	["number", "21_2"],
+	["number", "21_SHORT"],
+	["number", "1976354279568241_8"],
+	["number", "1.6E3"],
+	["number", "0.45E-4"],
+	["number", "10.93E7_QUAD"],
+	["number", "3E4"],
+	["quoted-number", "B'01110'"],
+    ["quoted-number", "B\"010\""],
+    ["quoted-number", "O'047'"],
+    ["quoted-number", "O\"642\""],
+    ["quoted-number", "Z'F41A'"],
+    ["quoted-number", "Z\"00BC\""]
+]
+
+----------------------------------------------------
+
+Checks for numbers and quoted numbers.

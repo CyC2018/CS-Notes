@@ -1,0 +1,29 @@
+namespace \foo
+namespace \foo\bar\baz
+use \foo
+use \foo\bar\baz
+
+----------------------------------------------------
+
+[
+	["keyword", "namespace"],
+	["package", [["punctuation", "\\"], "foo"]],
+	["keyword", "namespace"],
+	["package", [
+		["punctuation", "\\"], "foo",
+		["punctuation", "\\"], "bar",
+		["punctuation", "\\"], "baz"
+	]],
+	["keyword", "use"],
+	["package", [["punctuation", "\\"], "foo"]],
+	["keyword", "use"],
+	["package", [
+		["punctuation", "\\"], "foo",
+		["punctuation", "\\"], "bar",
+		["punctuation", "\\"], "baz"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for packages.

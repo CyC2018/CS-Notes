@@ -1,0 +1,129 @@
+m//
+qr!foo\!bar!msix
+m,foo
+bar,aa
+
+qr aa
+m afoob\araaa
+qr pfoo
+barpxpn
+
+m()c
+qr(foo\(\)bar)u
+m(foo
+bar)l
+
+qr{}d
+m{foo\{\}bar}
+qr{foo
+bar}
+
+m[]
+qr[foo\[\]bar]
+m[foo
+bar]
+
+qr<>s
+m<foo\<\>bar>i
+qr<foo
+bar>x
+
+s///
+tr%foo\%bar%baz%c
+y!foo
+bar!foo
+baz!d
+
+s kkkmsix
+tr afoob\arab\azas
+y pfoo
+barpfoo
+bazpr
+
+s()()
+tr(foo\(bar)(ba\)z)
+y(foo
+bar)(foo
+baz)csr
+
+s{}{}
+tr{foo\{bar}{ba\}z}
+y{foo
+bar}{foo
+baz}
+
+y[][]
+s[foo\[bar][ba\]z]u
+y[foo
+bar][foo
+baz]
+
+tr<><>c
+y<foo\<bar><ba\>a>
+s<foo
+bar><foo
+baz>
+
+//
+/foo/gsx
+/foo\/bar/n
+
+----------------------------------------------------
+
+[
+	["regex", "m//"],
+	["regex", "qr!foo\\!bar!msix"],
+	["regex", "m,foo\r\nbar,aa"],
+
+	["regex", "qr aa"],
+	["regex", "m afoob\\araaa"],
+	["regex", "qr pfoo\r\nbarpxpn"],
+
+	["regex", "m()c"],
+	["regex", "qr(foo\\(\\)bar)u"],
+	["regex", "m(foo\r\nbar)l"],
+
+	["regex", "qr{}d"],
+	["regex", "m{foo\\{\\}bar}"],
+	["regex", "qr{foo\r\nbar}"],
+
+	["regex", "m[]"],
+	["regex", "qr[foo\\[\\]bar]"],
+	["regex", "m[foo\r\nbar]"],
+
+	["regex", "qr<>s"],
+	["regex", "m<foo\\<\\>bar>i"],
+	["regex", "qr<foo\r\nbar>x"],
+
+	["regex", "s///"],
+	["regex", "tr%foo\\%bar%baz%c"],
+	["regex", "y!foo\r\nbar!foo\r\nbaz!d"],
+
+	["regex", "s kkkmsix"],
+	["regex", "tr afoob\\arab\\azas"],
+	["regex", "y pfoo\r\nbarpfoo\r\nbazpr"],
+
+	["regex", "s()()"],
+	["regex", "tr(foo\\(bar)(ba\\)z)"],
+	["regex", "y(foo\r\nbar)(foo\r\nbaz)csr"],
+
+	["regex", "s{}{}"],
+	["regex", "tr{foo\\{bar}{ba\\}z}"],
+	["regex", "y{foo\r\nbar}{foo\r\nbaz}"],
+
+	["regex", "y[][]"],
+	["regex", "s[foo\\[bar][ba\\]z]u"],
+	["regex", "y[foo\r\nbar][foo\r\nbaz]"],
+
+	["regex", "tr<><>c"],
+	["regex", "y<foo\\<bar><ba\\>a>"],
+	["regex", "s<foo\r\nbar><foo\r\nbaz>"],
+
+	["regex", "//"],
+	["regex", "/foo/gsx"],
+	["regex", "/foo\\/bar/n"]
+]
+
+----------------------------------------------------
+
+Checks for regex and regex quote-like operators.

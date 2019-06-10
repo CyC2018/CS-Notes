@@ -1,0 +1,47 @@
+<h2>Comments</h2>
+<pre><code>% This is a comment
+%% coding: utf-8</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42.
+$A.
+$\n.
+2#101.
+16#1f.
+2.3.
+2.3e3.
+2.3e-3.</code></pre>
+
+<h2>Functions</h2>
+<pre><code>P = spawn(m, loop, []).
+io:format("I am ~p~n", [self()]).
+'weird function'().
+</code></pre>
+
+<h2>Variables</h2>
+<pre><code>P = {adam,24,{july,29}}.
+M1 = #{name=>adam,age=>24,date=>{july,29}}.
+M2 = maps:update(age,25,M1).
+io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X]).</code></pre>
+
+<h2>Operators</h2>
+<pre><code>1==1.0.
+1=:=1.0.
+1 > a.
++1.
+-1.
+1+1.
+4/2.
+5 div 2.
+5 rem 2.
+2#10 band 2#01.
+2#10 bor 2#01.
+a + 10.
+1 bsl (1 bsl 64).
+not true.
+true and false.
+true xor false.
+true or garbage.</code></pre>

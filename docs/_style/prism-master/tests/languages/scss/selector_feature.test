@@ -1,0 +1,23 @@
+a {}
+p, div {}
+#foobar .foo {}
+&:hover {}
+&-sidebar {}
+#context a%extreme {}
+#{$selector}:before {}
+
+----------------------------------------------------
+
+[
+	["selector", ["a "]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", ["p, div "]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", ["#foobar .foo "]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", [["parent", "&"], ":hover "]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", [["parent", "&"], "-sidebar "]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", ["#context a", ["placeholder", "%extreme"]]], ["punctuation", "{"], ["punctuation", "}"],
+	["selector", [["variable", "#{$selector}"], ":before "]], ["punctuation", "{"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for selectors.

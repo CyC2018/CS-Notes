@@ -1,0 +1,59 @@
+ABS
+ANA
+ASC
+BIN
+BTN
+DEC
+FREE
+HELP
+HEX
+I2CR
+I2CW
+IN
+INKEY
+LEN
+LINE
+PEEK
+RND
+SCR
+SOUND
+STR
+TICK
+USR
+VER
+VPEEK
+ZER
+
+----------------------------------------------------
+
+[
+	["function", "ABS"],
+	["function", "ANA"],
+	["function", "ASC"],
+	["function", "BIN"],
+	["function", "BTN"],
+	["function", "DEC"],
+	["function", "FREE"],
+	["function", "HELP"],
+	["function", "HEX"],
+	["function", "I2CR"],
+	["function", "I2CW"],
+	["function", "IN"],
+	["function", "INKEY"],
+	["function", "LEN"],
+	["function", "LINE"],
+	["function", "PEEK"],
+	["function", "RND"],
+	["function", "SCR"],
+	["function", "SOUND"],
+	["function", "STR"],
+	["function", "TICK"],
+	["function", "USR"],
+	["function", "VER"],
+	["function", "VPEEK"],
+	["function", "ZER"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

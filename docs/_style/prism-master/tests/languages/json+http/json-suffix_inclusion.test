@@ -1,0 +1,21 @@
+Content-type: application/x.foo+bar+json
+
+{"foo":"bar"}
+
+----------------------------------------------------
+
+[
+	["header-name", "Content-type:"],
+	" application/x.foo+bar+json",
+	["application/json", [
+		["punctuation", "{"],
+		["property", "\"foo\""],
+		["operator", ":"],
+		["string", "\"bar\""],
+		["punctuation", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for content with JSON suffix in HTTP.

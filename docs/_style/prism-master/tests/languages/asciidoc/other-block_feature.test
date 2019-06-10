@@ -1,0 +1,45 @@
+****
+Sidebar block <1>
+****
+
+______
+Quote block <2>
+______
+
+========
+Example block <3>
+========
+
+--
+Open block <4>
+--
+
+----------------------------------------------------
+
+[
+	["other-block", [
+		["punctuation", "****"],
+		"\r\nSidebar block <1>\r\n",
+		["punctuation", "****"]
+	]],
+	["other-block", [
+		["punctuation", "______"],
+		"\r\nQuote block <2>\r\n",
+		["punctuation", "______"]
+	]],
+	["other-block", [
+		["punctuation", "========"],
+		"\r\nExample block <3>\r\n",
+		["punctuation", "========"]
+	]],
+	["other-block", [
+		["punctuation", "--"],
+		"\r\nOpen block <4>\r\n",
+		["punctuation", "--"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for sidebar blocks, quote blocks, example blocks and open blocks.
+Also checks that callouts are not highlighted.

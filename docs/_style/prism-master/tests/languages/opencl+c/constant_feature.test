@@ -1,0 +1,859 @@
+CL_A
+CL_ABGR
+CL_ADDRESS_CLAMP
+CL_ADDRESS_CLAMP_TO_EDGE
+CL_ADDRESS_MIRRORED_REPEAT
+CL_ADDRESS_NONE
+CL_ADDRESS_REPEAT
+CL_ARGB
+CL_BGRA
+CL_BLOCKING
+CL_BUFFER_CREATE_TYPE_REGION
+CL_BUILD_ERROR
+CL_BUILD_IN_PROGRESS
+CL_BUILD_NONE
+CL_BUILD_PROGRAM_FAILURE
+CL_BUILD_SUCCESS
+CL_COMMAND_ACQUIRE_GL_OBJECTS
+CL_COMMAND_BARRIER
+CL_COMMAND_COPY_BUFFER
+CL_COMMAND_COPY_BUFFER_RECT
+CL_COMMAND_COPY_BUFFER_TO_IMAGE
+CL_COMMAND_COPY_IMAGE
+CL_COMMAND_COPY_IMAGE_TO_BUFFER
+CL_COMMAND_FILL_BUFFER
+CL_COMMAND_FILL_IMAGE
+CL_COMMAND_MAP_BUFFER
+CL_COMMAND_MAP_IMAGE
+CL_COMMAND_MARKER
+CL_COMMAND_MIGRATE_MEM_OBJECTS
+CL_COMMAND_MIGRATE_SVM_MEM_OBJECTS
+CL_COMMAND_NATIVE_KERNEL
+CL_COMMAND_NDRANGE_KERNEL
+CL_COMMAND_READ_BUFFER
+CL_COMMAND_READ_BUFFER_RECT
+CL_COMMAND_READ_IMAGE
+CL_COMMAND_RELEASE_GL_OBJECTS
+CL_COMMAND_SVM_FREE
+CL_COMMAND_SVM_MAP
+CL_COMMAND_SVM_MEMCPY
+CL_COMMAND_SVM_MEMFILL
+CL_COMMAND_SVM_UNMAP
+CL_COMMAND_TASK
+CL_COMMAND_UNMAP_MEM_OBJECT
+CL_COMMAND_USER
+CL_COMMAND_WRITE_BUFFER
+CL_COMMAND_WRITE_BUFFER_RECT
+CL_COMMAND_WRITE_IMAGE
+CL_COMPILER_NOT_AVAILABLE
+CL_COMPILE_PROGRAM_FAILURE
+CL_COMPLETE
+CL_CONTEXT_DEVICES
+CL_CONTEXT_INTEROP_USER_SYNC
+CL_CONTEXT_NUM_DEVICES
+CL_CONTEXT_PLATFORM
+CL_CONTEXT_PROPERTIES
+CL_CONTEXT_REFERENCE_COUNT
+CL_DEPTH
+CL_DEPTH_STENCIL
+CL_DEVICE_ADDRESS_BITS
+CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE
+CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE
+CL_DEVICE_AFFINITY_DOMAIN_NUMA
+CL_DEVICE_AVAILABLE
+CL_DEVICE_BUILT_IN_KERNELS
+CL_DEVICE_COMPILER_AVAILABLE
+CL_DEVICE_DOUBLE_FP_CONFIG
+CL_DEVICE_ENDIAN_LITTLE
+CL_DEVICE_ERROR_CORRECTION_SUPPORT
+CL_DEVICE_EXECUTION_CAPABILITIES
+CL_DEVICE_EXTENSIONS
+CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE
+CL_DEVICE_GLOBAL_MEM_CACHE_SIZE
+CL_DEVICE_GLOBAL_MEM_CACHE_TYPE
+CL_DEVICE_GLOBAL_MEM_SIZE
+CL_DEVICE_GLOBAL_VARIABLE_PREFERRED_TOTAL_SIZE
+CL_DEVICE_HOST_UNIFIED_MEMORY
+CL_DEVICE_IL_VERSION
+CL_DEVICE_IMAGE2D_MAX_HEIGHT
+CL_DEVICE_IMAGE2D_MAX_WIDTH
+CL_DEVICE_IMAGE3D_MAX_DEPTH
+CL_DEVICE_IMAGE3D_MAX_HEIGHT
+CL_DEVICE_IMAGE3D_MAX_WIDTH
+CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT
+CL_DEVICE_IMAGE_MAX_ARRAY_SIZE
+CL_DEVICE_IMAGE_MAX_BUFFER_SIZE
+CL_DEVICE_IMAGE_PITCH_ALIGNMENT
+CL_DEVICE_IMAGE_SUPPORT
+CL_DEVICE_LINKER_AVAILABLE
+CL_DEVICE_LOCAL_MEM_SIZE
+CL_DEVICE_LOCAL_MEM_TYPE
+CL_DEVICE_MAX_CLOCK_FREQUENCY
+CL_DEVICE_MAX_COMPUTE_UNITS
+CL_DEVICE_MAX_CONSTANT_ARGS
+CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE
+CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE
+CL_DEVICE_MAX_MEM_ALLOC_SIZE
+CL_DEVICE_MAX_NUM_SUB_GROUPS
+CL_DEVICE_MAX_ON_DEVICE_EVENTS
+CL_DEVICE_MAX_ON_DEVICE_QUEUES
+CL_DEVICE_MAX_PARAMETER_SIZE
+CL_DEVICE_MAX_PIPE_ARGS
+CL_DEVICE_MAX_READ_IMAGE_ARGS
+CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS
+CL_DEVICE_MAX_SAMPLERS
+CL_DEVICE_MAX_WORK_GROUP_SIZE
+CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS
+CL_DEVICE_MAX_WORK_ITEM_SIZES
+CL_DEVICE_MAX_WRITE_IMAGE_ARGS
+CL_DEVICE_MEM_BASE_ADDR_ALIGN
+CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE
+CL_DEVICE_NAME
+CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR
+CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE
+CL_DEVICE_NATIVE_VECTOR_WIDTH_FLOAT
+CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF
+CL_DEVICE_NATIVE_VECTOR_WIDTH_INT
+CL_DEVICE_NATIVE_VECTOR_WIDTH_LONG
+CL_DEVICE_NATIVE_VECTOR_WIDTH_SHORT
+CL_DEVICE_NOT_AVAILABLE
+CL_DEVICE_NOT_FOUND
+CL_DEVICE_OPENCL_C_VERSION
+CL_DEVICE_PARENT_DEVICE
+CL_DEVICE_PARTITION_AFFINITY_DOMAIN
+CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN
+CL_DEVICE_PARTITION_BY_COUNTS
+CL_DEVICE_PARTITION_BY_COUNTS_LIST_END
+CL_DEVICE_PARTITION_EQUALLY
+CL_DEVICE_PARTITION_FAILED
+CL_DEVICE_PARTITION_MAX_SUB_DEVICES
+CL_DEVICE_PARTITION_PROPERTIES
+CL_DEVICE_PARTITION_TYPE
+CL_DEVICE_PIPE_MAX_ACTIVE_RESERVATIONS
+CL_DEVICE_PIPE_MAX_PACKET_SIZE
+CL_DEVICE_PLATFORM
+CL_DEVICE_PREFERRED_GLOBAL_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_INTEROP_USER_SYNC
+CL_DEVICE_PREFERRED_LOCAL_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_PLATFORM_ATOMIC_ALIGNMENT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_CHAR
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_INT
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_LONG
+CL_DEVICE_PREFERRED_VECTOR_WIDTH_SHORT
+CL_DEVICE_PRINTF_BUFFER_SIZE
+CL_DEVICE_PROFILE
+CL_DEVICE_PROFILING_TIMER_RESOLUTION
+CL_DEVICE_QUEUE_ON_DEVICE_MAX_SIZE
+CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE
+CL_DEVICE_QUEUE_ON_DEVICE_PROPERTIES
+CL_DEVICE_QUEUE_ON_HOST_PROPERTIES
+CL_DEVICE_QUEUE_PROPERTIES
+CL_DEVICE_REFERENCE_COUNT
+CL_DEVICE_SINGLE_FP_CONFIG
+CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS
+CL_DEVICE_SVM_ATOMICS
+CL_DEVICE_SVM_CAPABILITIES
+CL_DEVICE_SVM_COARSE_GRAIN_BUFFER
+CL_DEVICE_SVM_FINE_GRAIN_BUFFER
+CL_DEVICE_SVM_FINE_GRAIN_SYSTEM
+CL_DEVICE_TYPE
+CL_DEVICE_TYPE_ACCELERATOR
+CL_DEVICE_TYPE_ALL
+CL_DEVICE_TYPE_CPU
+CL_DEVICE_TYPE_CUSTOM
+CL_DEVICE_TYPE_DEFAULT
+CL_DEVICE_TYPE_GPU
+CL_DEVICE_VENDOR
+CL_DEVICE_VENDOR_ID
+CL_DEVICE_VERSION
+CL_DRIVER_VERSION
+CL_EVENT_COMMAND_EXECUTION_STATUS
+CL_EVENT_COMMAND_QUEUE
+CL_EVENT_COMMAND_TYPE
+CL_EVENT_CONTEXT
+CL_EVENT_REFERENCE_COUNT
+CL_EXEC_KERNEL
+CL_EXEC_NATIVE_KERNEL
+CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST
+CL_FILTER_LINEAR
+CL_FILTER_NEAREST
+CL_FLOAT
+CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT
+CL_FP_DENORM
+CL_FP_FMA
+CL_FP_INF_NAN
+CL_FP_ROUND_TO_INF
+CL_FP_ROUND_TO_NEAREST
+CL_FP_ROUND_TO_ZERO
+CL_FP_SOFT_FLOAT
+CL_GLOBAL
+CL_HALF_FLOAT
+CL_IMAGE_ARRAY_SIZE
+CL_IMAGE_BUFFER
+CL_IMAGE_DEPTH
+CL_IMAGE_ELEMENT_SIZE
+CL_IMAGE_FORMAT
+CL_IMAGE_FORMAT_MISMATCH
+CL_IMAGE_FORMAT_NOT_SUPPORTED
+CL_IMAGE_HEIGHT
+CL_IMAGE_NUM_MIP_LEVELS
+CL_IMAGE_NUM_SAMPLES
+CL_IMAGE_ROW_PITCH
+CL_IMAGE_SLICE_PITCH
+CL_IMAGE_WIDTH
+CL_INTENSITY
+CL_INVALID_ARG_INDEX
+CL_INVALID_ARG_SIZE
+CL_INVALID_ARG_VALUE
+CL_INVALID_BINARY
+CL_INVALID_BUFFER_SIZE
+CL_INVALID_BUILD_OPTIONS
+CL_INVALID_COMMAND_QUEUE
+CL_INVALID_COMPILER_OPTIONS
+CL_INVALID_CONTEXT
+CL_INVALID_DEVICE
+CL_INVALID_DEVICE_PARTITION_COUNT
+CL_INVALID_DEVICE_QUEUE
+CL_INVALID_DEVICE_TYPE
+CL_INVALID_EVENT
+CL_INVALID_EVENT_WAIT_LIST
+CL_INVALID_GLOBAL_OFFSET
+CL_INVALID_GLOBAL_WORK_SIZE
+CL_INVALID_GL_OBJECT
+CL_INVALID_HOST_PTR
+CL_INVALID_IMAGE_DESCRIPTOR
+CL_INVALID_IMAGE_FORMAT_DESCRIPTOR
+CL_INVALID_IMAGE_SIZE
+CL_INVALID_KERNEL
+CL_INVALID_KERNEL_ARGS
+CL_INVALID_KERNEL_DEFINITION
+CL_INVALID_KERNEL_NAME
+CL_INVALID_LINKER_OPTIONS
+CL_INVALID_MEM_OBJECT
+CL_INVALID_MIP_LEVEL
+CL_INVALID_OPERATION
+CL_INVALID_PIPE_SIZE
+CL_INVALID_PLATFORM
+CL_INVALID_PROGRAM
+CL_INVALID_PROGRAM_EXECUTABLE
+CL_INVALID_PROPERTY
+CL_INVALID_QUEUE_PROPERTIES
+CL_INVALID_SAMPLER
+CL_INVALID_VALUE
+CL_INVALID_WORK_DIMENSION
+CL_INVALID_WORK_GROUP_SIZE
+CL_INVALID_WORK_ITEM_SIZE
+CL_KERNEL_ARG_ACCESS_NONE
+CL_KERNEL_ARG_ACCESS_QUALIFIER
+CL_KERNEL_ARG_ACCESS_READ_ONLY
+CL_KERNEL_ARG_ACCESS_READ_WRITE
+CL_KERNEL_ARG_ACCESS_WRITE_ONLY
+CL_KERNEL_ARG_ADDRESS_CONSTANT
+CL_KERNEL_ARG_ADDRESS_GLOBAL
+CL_KERNEL_ARG_ADDRESS_LOCAL
+CL_KERNEL_ARG_ADDRESS_PRIVATE
+CL_KERNEL_ARG_ADDRESS_QUALIFIER
+CL_KERNEL_ARG_INFO_NOT_AVAILABLE
+CL_KERNEL_ARG_NAME
+CL_KERNEL_ARG_TYPE_CONST
+CL_KERNEL_ARG_TYPE_NAME
+CL_KERNEL_ARG_TYPE_NONE
+CL_KERNEL_ARG_TYPE_PIPE
+CL_KERNEL_ARG_TYPE_QUALIFIER
+CL_KERNEL_ARG_TYPE_RESTRICT
+CL_KERNEL_ARG_TYPE_VOLATILE
+CL_KERNEL_ATTRIBUTES
+CL_KERNEL_COMPILE_NUM_SUB_GROUPS
+CL_KERNEL_COMPILE_WORK_GROUP_SIZE
+CL_KERNEL_CONTEXT
+CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM
+CL_KERNEL_EXEC_INFO_SVM_PTRS
+CL_KERNEL_FUNCTION_NAME
+CL_KERNEL_GLOBAL_WORK_SIZE
+CL_KERNEL_LOCAL_MEM_SIZE
+CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT
+CL_KERNEL_MAX_NUM_SUB_GROUPS
+CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE
+CL_KERNEL_NUM_ARGS
+CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE
+CL_KERNEL_PRIVATE_MEM_SIZE
+CL_KERNEL_PROGRAM
+CL_KERNEL_REFERENCE_COUNT
+CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE
+CL_KERNEL_WORK_GROUP_SIZE
+CL_LINKER_NOT_AVAILABLE
+CL_LINK_PROGRAM_FAILURE
+CL_LOCAL
+CL_LUMINANCE
+CL_MAP_FAILURE
+CL_MAP_READ
+CL_MAP_WRITE
+CL_MAP_WRITE_INVALIDATE_REGION
+CL_MEM_ALLOC_HOST_PTR
+CL_MEM_ASSOCIATED_MEMOBJECT
+CL_MEM_CONTEXT
+CL_MEM_COPY_HOST_PTR
+CL_MEM_COPY_OVERLAP
+CL_MEM_FLAGS
+CL_MEM_HOST_NO_ACCESS
+CL_MEM_HOST_PTR
+CL_MEM_HOST_READ_ONLY
+CL_MEM_HOST_WRITE_ONLY
+CL_MEM_KERNEL_READ_AND_WRITE
+CL_MEM_MAP_COUNT
+CL_MEM_OBJECT_ALLOCATION_FAILURE
+CL_MEM_OBJECT_BUFFER
+CL_MEM_OBJECT_IMAGE1D
+CL_MEM_OBJECT_IMAGE1D_ARRAY
+CL_MEM_OBJECT_IMAGE1D_BUFFER
+CL_MEM_OBJECT_IMAGE2D
+CL_MEM_OBJECT_IMAGE2D_ARRAY
+CL_MEM_OBJECT_IMAGE3D
+CL_MEM_OBJECT_PIPE
+CL_MEM_OFFSET
+CL_MEM_READ_ONLY
+CL_MEM_READ_WRITE
+CL_MEM_REFERENCE_COUNT
+CL_MEM_SIZE
+CL_MEM_SVM_ATOMICS
+CL_MEM_SVM_FINE_GRAIN_BUFFER
+CL_MEM_TYPE
+CL_MEM_USES_SVM_POINTER
+CL_MEM_USE_HOST_PTR
+CL_MEM_WRITE_ONLY
+CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED
+CL_MIGRATE_MEM_OBJECT_HOST
+CL_MISALIGNED_SUB_BUFFER_OFFSET
+CL_NONE
+CL_NON_BLOCKING
+CL_OUT_OF_HOST_MEMORY
+CL_OUT_OF_RESOURCES
+CL_PIPE_MAX_PACKETS
+CL_PIPE_PACKET_SIZE
+CL_PLATFORM_EXTENSIONS
+CL_PLATFORM_HOST_TIMER_RESOLUTION
+CL_PLATFORM_NAME
+CL_PLATFORM_PROFILE
+CL_PLATFORM_VENDOR
+CL_PLATFORM_VERSION
+CL_PROFILING_COMMAND_COMPLETE
+CL_PROFILING_COMMAND_END
+CL_PROFILING_COMMAND_QUEUED
+CL_PROFILING_COMMAND_START
+CL_PROFILING_COMMAND_SUBMIT
+CL_PROFILING_INFO_NOT_AVAILABLE
+CL_PROGRAM_BINARIES
+CL_PROGRAM_BINARY_SIZES
+CL_PROGRAM_BINARY_TYPE
+CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT
+CL_PROGRAM_BINARY_TYPE_EXECUTABLE
+CL_PROGRAM_BINARY_TYPE_LIBRARY
+CL_PROGRAM_BINARY_TYPE_NONE
+CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE
+CL_PROGRAM_BUILD_LOG
+CL_PROGRAM_BUILD_OPTIONS
+CL_PROGRAM_BUILD_STATUS
+CL_PROGRAM_CONTEXT
+CL_PROGRAM_DEVICES
+CL_PROGRAM_IL
+CL_PROGRAM_KERNEL_NAMES
+CL_PROGRAM_NUM_DEVICES
+CL_PROGRAM_NUM_KERNELS
+CL_PROGRAM_REFERENCE_COUNT
+CL_PROGRAM_SOURCE
+CL_QUEUED
+CL_QUEUE_CONTEXT
+CL_QUEUE_DEVICE
+CL_QUEUE_DEVICE_DEFAULT
+CL_QUEUE_ON_DEVICE
+CL_QUEUE_ON_DEVICE_DEFAULT
+CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+CL_QUEUE_PROFILING_ENABLE
+CL_QUEUE_PROPERTIES
+CL_QUEUE_REFERENCE_COUNT
+CL_QUEUE_SIZE
+CL_R
+CL_RA
+CL_READ_ONLY_CACHE
+CL_READ_WRITE_CACHE
+CL_RG
+CL_RGB
+CL_RGBA
+CL_RGBx
+CL_RGx
+CL_RUNNING
+CL_Rx
+CL_SAMPLER_ADDRESSING_MODE
+CL_SAMPLER_CONTEXT
+CL_SAMPLER_FILTER_MODE
+CL_SAMPLER_LOD_MAX
+CL_SAMPLER_LOD_MIN
+CL_SAMPLER_MIP_FILTER_MODE
+CL_SAMPLER_NORMALIZED_COORDS
+CL_SAMPLER_REFERENCE_COUNT
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_SIGNED_INT8
+CL_SNORM_INT16
+CL_SNORM_INT8
+CL_SUBMITTED
+CL_SUCCESS
+CL_UNORM_INT16
+CL_UNORM_INT24
+CL_UNORM_INT8
+CL_UNORM_INT_101010
+CL_UNORM_INT_101010_2
+CL_UNORM_SHORT_555
+CL_UNORM_SHORT_565
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_UNSIGNED_INT8
+CL_VERSION_1_0
+CL_VERSION_1_1
+CL_VERSION_1_2
+CL_VERSION_2_0
+CL_VERSION_2_1
+CL_sBGRA
+CL_sRGB
+CL_sRGBA
+CL_sRGBx
+
+----------------------------------------------------
+
+[
+	["constant-opencl-host", "CL_A"],
+	["constant-opencl-host", "CL_ABGR"],
+	["constant-opencl-host", "CL_ADDRESS_CLAMP"],
+	["constant-opencl-host", "CL_ADDRESS_CLAMP_TO_EDGE"],
+	["constant-opencl-host", "CL_ADDRESS_MIRRORED_REPEAT"],
+	["constant-opencl-host", "CL_ADDRESS_NONE"],
+	["constant-opencl-host", "CL_ADDRESS_REPEAT"],
+	["constant-opencl-host", "CL_ARGB"],
+	["constant-opencl-host", "CL_BGRA"],
+	["constant-opencl-host", "CL_BLOCKING"],
+	["constant-opencl-host", "CL_BUFFER_CREATE_TYPE_REGION"],
+	["constant-opencl-host", "CL_BUILD_ERROR"],
+	["constant-opencl-host", "CL_BUILD_IN_PROGRESS"],
+	["constant-opencl-host", "CL_BUILD_NONE"],
+	["constant-opencl-host", "CL_BUILD_PROGRAM_FAILURE"],
+	["constant-opencl-host", "CL_BUILD_SUCCESS"],
+	["constant-opencl-host", "CL_COMMAND_ACQUIRE_GL_OBJECTS"],
+	["constant-opencl-host", "CL_COMMAND_BARRIER"],
+	["constant-opencl-host", "CL_COMMAND_COPY_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_COPY_BUFFER_RECT"],
+	["constant-opencl-host", "CL_COMMAND_COPY_BUFFER_TO_IMAGE"],
+	["constant-opencl-host", "CL_COMMAND_COPY_IMAGE"],
+	["constant-opencl-host", "CL_COMMAND_COPY_IMAGE_TO_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_FILL_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_FILL_IMAGE"],
+	["constant-opencl-host", "CL_COMMAND_MAP_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_MAP_IMAGE"],
+	["constant-opencl-host", "CL_COMMAND_MARKER"],
+	["constant-opencl-host", "CL_COMMAND_MIGRATE_MEM_OBJECTS"],
+	["constant-opencl-host", "CL_COMMAND_MIGRATE_SVM_MEM_OBJECTS"],
+	["constant-opencl-host", "CL_COMMAND_NATIVE_KERNEL"],
+	["constant-opencl-host", "CL_COMMAND_NDRANGE_KERNEL"],
+	["constant-opencl-host", "CL_COMMAND_READ_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_READ_BUFFER_RECT"],
+	["constant-opencl-host", "CL_COMMAND_READ_IMAGE"],
+	["constant-opencl-host", "CL_COMMAND_RELEASE_GL_OBJECTS"],
+	["constant-opencl-host", "CL_COMMAND_SVM_FREE"],
+	["constant-opencl-host", "CL_COMMAND_SVM_MAP"],
+	["constant-opencl-host", "CL_COMMAND_SVM_MEMCPY"],
+	["constant-opencl-host", "CL_COMMAND_SVM_MEMFILL"],
+	["constant-opencl-host", "CL_COMMAND_SVM_UNMAP"],
+	["constant-opencl-host", "CL_COMMAND_TASK"],
+	["constant-opencl-host", "CL_COMMAND_UNMAP_MEM_OBJECT"],
+	["constant-opencl-host", "CL_COMMAND_USER"],
+	["constant-opencl-host", "CL_COMMAND_WRITE_BUFFER"],
+	["constant-opencl-host", "CL_COMMAND_WRITE_BUFFER_RECT"],
+	["constant-opencl-host", "CL_COMMAND_WRITE_IMAGE"],
+	["constant-opencl-host", "CL_COMPILER_NOT_AVAILABLE"],
+	["constant-opencl-host", "CL_COMPILE_PROGRAM_FAILURE"],
+	["constant-opencl-host", "CL_COMPLETE"],
+	["constant-opencl-host", "CL_CONTEXT_DEVICES"],
+	["constant-opencl-host", "CL_CONTEXT_INTEROP_USER_SYNC"],
+	["constant-opencl-host", "CL_CONTEXT_NUM_DEVICES"],
+	["constant-opencl-host", "CL_CONTEXT_PLATFORM"],
+	["constant-opencl-host", "CL_CONTEXT_PROPERTIES"],
+	["constant-opencl-host", "CL_CONTEXT_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_DEPTH"],
+	["constant-opencl-host", "CL_DEPTH_STENCIL"],
+	["constant-opencl-host", "CL_DEVICE_ADDRESS_BITS"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE"],
+	["constant-opencl-host", "CL_DEVICE_AFFINITY_DOMAIN_NUMA"],
+	["constant-opencl-host", "CL_DEVICE_AVAILABLE"],
+	["constant-opencl-host", "CL_DEVICE_BUILT_IN_KERNELS"],
+	["constant-opencl-host", "CL_DEVICE_COMPILER_AVAILABLE"],
+	["constant-opencl-host", "CL_DEVICE_DOUBLE_FP_CONFIG"],
+	["constant-opencl-host", "CL_DEVICE_ENDIAN_LITTLE"],
+	["constant-opencl-host", "CL_DEVICE_ERROR_CORRECTION_SUPPORT"],
+	["constant-opencl-host", "CL_DEVICE_EXECUTION_CAPABILITIES"],
+	["constant-opencl-host", "CL_DEVICE_EXTENSIONS"],
+	["constant-opencl-host", "CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_GLOBAL_MEM_CACHE_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_GLOBAL_MEM_CACHE_TYPE"],
+	["constant-opencl-host", "CL_DEVICE_GLOBAL_MEM_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_GLOBAL_VARIABLE_PREFERRED_TOTAL_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_HOST_UNIFIED_MEMORY"],
+	["constant-opencl-host", "CL_DEVICE_IL_VERSION"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE2D_MAX_HEIGHT"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE2D_MAX_WIDTH"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE3D_MAX_DEPTH"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE3D_MAX_HEIGHT"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE3D_MAX_WIDTH"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE_MAX_ARRAY_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE_MAX_BUFFER_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE_PITCH_ALIGNMENT"],
+	["constant-opencl-host", "CL_DEVICE_IMAGE_SUPPORT"],
+	["constant-opencl-host", "CL_DEVICE_LINKER_AVAILABLE"],
+	["constant-opencl-host", "CL_DEVICE_LOCAL_MEM_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_LOCAL_MEM_TYPE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_CLOCK_FREQUENCY"],
+	["constant-opencl-host", "CL_DEVICE_MAX_COMPUTE_UNITS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_CONSTANT_ARGS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_MEM_ALLOC_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_NUM_SUB_GROUPS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_ON_DEVICE_EVENTS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_ON_DEVICE_QUEUES"],
+	["constant-opencl-host", "CL_DEVICE_MAX_PARAMETER_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_PIPE_ARGS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_READ_IMAGE_ARGS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_SAMPLERS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_WORK_GROUP_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS"],
+	["constant-opencl-host", "CL_DEVICE_MAX_WORK_ITEM_SIZES"],
+	["constant-opencl-host", "CL_DEVICE_MAX_WRITE_IMAGE_ARGS"],
+	["constant-opencl-host", "CL_DEVICE_MEM_BASE_ADDR_ALIGN"],
+	["constant-opencl-host", "CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_NAME"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_FLOAT"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_INT"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_LONG"],
+	["constant-opencl-host", "CL_DEVICE_NATIVE_VECTOR_WIDTH_SHORT"],
+	["constant-opencl-host", "CL_DEVICE_NOT_AVAILABLE"],
+	["constant-opencl-host", "CL_DEVICE_NOT_FOUND"],
+	["constant-opencl-host", "CL_DEVICE_OPENCL_C_VERSION"],
+	["constant-opencl-host", "CL_DEVICE_PARENT_DEVICE"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_AFFINITY_DOMAIN"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_BY_COUNTS"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_BY_COUNTS_LIST_END"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_EQUALLY"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_FAILED"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_MAX_SUB_DEVICES"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_PROPERTIES"],
+	["constant-opencl-host", "CL_DEVICE_PARTITION_TYPE"],
+	["constant-opencl-host", "CL_DEVICE_PIPE_MAX_ACTIVE_RESERVATIONS"],
+	["constant-opencl-host", "CL_DEVICE_PIPE_MAX_PACKET_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_PLATFORM"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_GLOBAL_ATOMIC_ALIGNMENT"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_INTEROP_USER_SYNC"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_LOCAL_ATOMIC_ALIGNMENT"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_PLATFORM_ATOMIC_ALIGNMENT"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_CHAR"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_INT"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_LONG"],
+	["constant-opencl-host", "CL_DEVICE_PREFERRED_VECTOR_WIDTH_SHORT"],
+	["constant-opencl-host", "CL_DEVICE_PRINTF_BUFFER_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_PROFILE"],
+	["constant-opencl-host", "CL_DEVICE_PROFILING_TIMER_RESOLUTION"],
+	["constant-opencl-host", "CL_DEVICE_QUEUE_ON_DEVICE_MAX_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE"],
+	["constant-opencl-host", "CL_DEVICE_QUEUE_ON_DEVICE_PROPERTIES"],
+	["constant-opencl-host", "CL_DEVICE_QUEUE_ON_HOST_PROPERTIES"],
+	["constant-opencl-host", "CL_DEVICE_QUEUE_PROPERTIES"],
+	["constant-opencl-host", "CL_DEVICE_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_DEVICE_SINGLE_FP_CONFIG"],
+	["constant-opencl-host", "CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS"],
+	["constant-opencl-host", "CL_DEVICE_SVM_ATOMICS"],
+	["constant-opencl-host", "CL_DEVICE_SVM_CAPABILITIES"],
+	["constant-opencl-host", "CL_DEVICE_SVM_COARSE_GRAIN_BUFFER"],
+	["constant-opencl-host", "CL_DEVICE_SVM_FINE_GRAIN_BUFFER"],
+	["constant-opencl-host", "CL_DEVICE_SVM_FINE_GRAIN_SYSTEM"],
+	["constant-opencl-host", "CL_DEVICE_TYPE"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_ACCELERATOR"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_ALL"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_CPU"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_CUSTOM"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_DEFAULT"],
+	["constant-opencl-host", "CL_DEVICE_TYPE_GPU"],
+	["constant-opencl-host", "CL_DEVICE_VENDOR"],
+	["constant-opencl-host", "CL_DEVICE_VENDOR_ID"],
+	["constant-opencl-host", "CL_DEVICE_VERSION"],
+	["constant-opencl-host", "CL_DRIVER_VERSION"],
+	["constant-opencl-host", "CL_EVENT_COMMAND_EXECUTION_STATUS"],
+	["constant-opencl-host", "CL_EVENT_COMMAND_QUEUE"],
+	["constant-opencl-host", "CL_EVENT_COMMAND_TYPE"],
+	["constant-opencl-host", "CL_EVENT_CONTEXT"],
+	["constant-opencl-host", "CL_EVENT_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_EXEC_KERNEL"],
+	["constant-opencl-host", "CL_EXEC_NATIVE_KERNEL"],
+	["constant-opencl-host", "CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST"],
+	["constant-opencl-host", "CL_FILTER_LINEAR"],
+	["constant-opencl-host", "CL_FILTER_NEAREST"],
+	["constant-opencl-host", "CL_FLOAT"],
+	["constant-opencl-host", "CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT"],
+	["constant-opencl-host", "CL_FP_DENORM"],
+	["constant-opencl-host", "CL_FP_FMA"],
+	["constant-opencl-host", "CL_FP_INF_NAN"],
+	["constant-opencl-host", "CL_FP_ROUND_TO_INF"],
+	["constant-opencl-host", "CL_FP_ROUND_TO_NEAREST"],
+	["constant-opencl-host", "CL_FP_ROUND_TO_ZERO"],
+	["constant-opencl-host", "CL_FP_SOFT_FLOAT"],
+	["constant-opencl-host", "CL_GLOBAL"],
+	["constant-opencl-host", "CL_HALF_FLOAT"],
+	["constant-opencl-host", "CL_IMAGE_ARRAY_SIZE"],
+	["constant-opencl-host", "CL_IMAGE_BUFFER"],
+	["constant-opencl-host", "CL_IMAGE_DEPTH"],
+	["constant-opencl-host", "CL_IMAGE_ELEMENT_SIZE"],
+	["constant-opencl-host", "CL_IMAGE_FORMAT"],
+	["constant-opencl-host", "CL_IMAGE_FORMAT_MISMATCH"],
+	["constant-opencl-host", "CL_IMAGE_FORMAT_NOT_SUPPORTED"],
+	["constant-opencl-host", "CL_IMAGE_HEIGHT"],
+	["constant-opencl-host", "CL_IMAGE_NUM_MIP_LEVELS"],
+	["constant-opencl-host", "CL_IMAGE_NUM_SAMPLES"],
+	["constant-opencl-host", "CL_IMAGE_ROW_PITCH"],
+	["constant-opencl-host", "CL_IMAGE_SLICE_PITCH"],
+	["constant-opencl-host", "CL_IMAGE_WIDTH"],
+	["constant-opencl-host", "CL_INTENSITY"],
+	["constant-opencl-host", "CL_INVALID_ARG_INDEX"],
+	["constant-opencl-host", "CL_INVALID_ARG_SIZE"],
+	["constant-opencl-host", "CL_INVALID_ARG_VALUE"],
+	["constant-opencl-host", "CL_INVALID_BINARY"],
+	["constant-opencl-host", "CL_INVALID_BUFFER_SIZE"],
+	["constant-opencl-host", "CL_INVALID_BUILD_OPTIONS"],
+	["constant-opencl-host", "CL_INVALID_COMMAND_QUEUE"],
+	["constant-opencl-host", "CL_INVALID_COMPILER_OPTIONS"],
+	["constant-opencl-host", "CL_INVALID_CONTEXT"],
+	["constant-opencl-host", "CL_INVALID_DEVICE"],
+	["constant-opencl-host", "CL_INVALID_DEVICE_PARTITION_COUNT"],
+	["constant-opencl-host", "CL_INVALID_DEVICE_QUEUE"],
+	["constant-opencl-host", "CL_INVALID_DEVICE_TYPE"],
+	["constant-opencl-host", "CL_INVALID_EVENT"],
+	["constant-opencl-host", "CL_INVALID_EVENT_WAIT_LIST"],
+	["constant-opencl-host", "CL_INVALID_GLOBAL_OFFSET"],
+	["constant-opencl-host", "CL_INVALID_GLOBAL_WORK_SIZE"],
+	["constant-opencl-host", "CL_INVALID_GL_OBJECT"],
+	["constant-opencl-host", "CL_INVALID_HOST_PTR"],
+	["constant-opencl-host", "CL_INVALID_IMAGE_DESCRIPTOR"],
+	["constant-opencl-host", "CL_INVALID_IMAGE_FORMAT_DESCRIPTOR"],
+	["constant-opencl-host", "CL_INVALID_IMAGE_SIZE"],
+	["constant-opencl-host", "CL_INVALID_KERNEL"],
+	["constant-opencl-host", "CL_INVALID_KERNEL_ARGS"],
+	["constant-opencl-host", "CL_INVALID_KERNEL_DEFINITION"],
+	["constant-opencl-host", "CL_INVALID_KERNEL_NAME"],
+	["constant-opencl-host", "CL_INVALID_LINKER_OPTIONS"],
+	["constant-opencl-host", "CL_INVALID_MEM_OBJECT"],
+	["constant-opencl-host", "CL_INVALID_MIP_LEVEL"],
+	["constant-opencl-host", "CL_INVALID_OPERATION"],
+	["constant-opencl-host", "CL_INVALID_PIPE_SIZE"],
+	["constant-opencl-host", "CL_INVALID_PLATFORM"],
+	["constant-opencl-host", "CL_INVALID_PROGRAM"],
+	["constant-opencl-host", "CL_INVALID_PROGRAM_EXECUTABLE"],
+	["constant-opencl-host", "CL_INVALID_PROPERTY"],
+	["constant-opencl-host", "CL_INVALID_QUEUE_PROPERTIES"],
+	["constant-opencl-host", "CL_INVALID_SAMPLER"],
+	["constant-opencl-host", "CL_INVALID_VALUE"],
+	["constant-opencl-host", "CL_INVALID_WORK_DIMENSION"],
+	["constant-opencl-host", "CL_INVALID_WORK_GROUP_SIZE"],
+	["constant-opencl-host", "CL_INVALID_WORK_ITEM_SIZE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ACCESS_NONE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ACCESS_QUALIFIER"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ACCESS_READ_ONLY"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ACCESS_READ_WRITE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ACCESS_WRITE_ONLY"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ADDRESS_CONSTANT"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ADDRESS_GLOBAL"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ADDRESS_LOCAL"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ADDRESS_PRIVATE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_ADDRESS_QUALIFIER"],
+	["constant-opencl-host", "CL_KERNEL_ARG_INFO_NOT_AVAILABLE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_NAME"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_CONST"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_NAME"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_NONE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_PIPE"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_QUALIFIER"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_RESTRICT"],
+	["constant-opencl-host", "CL_KERNEL_ARG_TYPE_VOLATILE"],
+	["constant-opencl-host", "CL_KERNEL_ATTRIBUTES"],
+	["constant-opencl-host", "CL_KERNEL_COMPILE_NUM_SUB_GROUPS"],
+	["constant-opencl-host", "CL_KERNEL_COMPILE_WORK_GROUP_SIZE"],
+	["constant-opencl-host", "CL_KERNEL_CONTEXT"],
+	["constant-opencl-host", "CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM"],
+	["constant-opencl-host", "CL_KERNEL_EXEC_INFO_SVM_PTRS"],
+	["constant-opencl-host", "CL_KERNEL_FUNCTION_NAME"],
+	["constant-opencl-host", "CL_KERNEL_GLOBAL_WORK_SIZE"],
+	["constant-opencl-host", "CL_KERNEL_LOCAL_MEM_SIZE"],
+	["constant-opencl-host", "CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT"],
+	["constant-opencl-host", "CL_KERNEL_MAX_NUM_SUB_GROUPS"],
+	["constant-opencl-host", "CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE"],
+	["constant-opencl-host", "CL_KERNEL_NUM_ARGS"],
+	["constant-opencl-host", "CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE"],
+	["constant-opencl-host", "CL_KERNEL_PRIVATE_MEM_SIZE"],
+	["constant-opencl-host", "CL_KERNEL_PROGRAM"],
+	["constant-opencl-host", "CL_KERNEL_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE"],
+	["constant-opencl-host", "CL_KERNEL_WORK_GROUP_SIZE"],
+	["constant-opencl-host", "CL_LINKER_NOT_AVAILABLE"],
+	["constant-opencl-host", "CL_LINK_PROGRAM_FAILURE"],
+	["constant-opencl-host", "CL_LOCAL"],
+	["constant-opencl-host", "CL_LUMINANCE"],
+	["constant-opencl-host", "CL_MAP_FAILURE"],
+	["constant-opencl-host", "CL_MAP_READ"],
+	["constant-opencl-host", "CL_MAP_WRITE"],
+	["constant-opencl-host", "CL_MAP_WRITE_INVALIDATE_REGION"],
+	["constant-opencl-host", "CL_MEM_ALLOC_HOST_PTR"],
+	["constant-opencl-host", "CL_MEM_ASSOCIATED_MEMOBJECT"],
+	["constant-opencl-host", "CL_MEM_CONTEXT"],
+	["constant-opencl-host", "CL_MEM_COPY_HOST_PTR"],
+	["constant-opencl-host", "CL_MEM_COPY_OVERLAP"],
+	["constant-opencl-host", "CL_MEM_FLAGS"],
+	["constant-opencl-host", "CL_MEM_HOST_NO_ACCESS"],
+	["constant-opencl-host", "CL_MEM_HOST_PTR"],
+	["constant-opencl-host", "CL_MEM_HOST_READ_ONLY"],
+	["constant-opencl-host", "CL_MEM_HOST_WRITE_ONLY"],
+	["constant-opencl-host", "CL_MEM_KERNEL_READ_AND_WRITE"],
+	["constant-opencl-host", "CL_MEM_MAP_COUNT"],
+	["constant-opencl-host", "CL_MEM_OBJECT_ALLOCATION_FAILURE"],
+	["constant-opencl-host", "CL_MEM_OBJECT_BUFFER"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE1D"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE1D_ARRAY"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE1D_BUFFER"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE2D"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE2D_ARRAY"],
+	["constant-opencl-host", "CL_MEM_OBJECT_IMAGE3D"],
+	["constant-opencl-host", "CL_MEM_OBJECT_PIPE"],
+	["constant-opencl-host", "CL_MEM_OFFSET"],
+	["constant-opencl-host", "CL_MEM_READ_ONLY"],
+	["constant-opencl-host", "CL_MEM_READ_WRITE"],
+	["constant-opencl-host", "CL_MEM_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_MEM_SIZE"],
+	["constant-opencl-host", "CL_MEM_SVM_ATOMICS"],
+	["constant-opencl-host", "CL_MEM_SVM_FINE_GRAIN_BUFFER"],
+	["constant-opencl-host", "CL_MEM_TYPE"],
+	["constant-opencl-host", "CL_MEM_USES_SVM_POINTER"],
+	["constant-opencl-host", "CL_MEM_USE_HOST_PTR"],
+	["constant-opencl-host", "CL_MEM_WRITE_ONLY"],
+	["constant-opencl-host", "CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED"],
+	["constant-opencl-host", "CL_MIGRATE_MEM_OBJECT_HOST"],
+	["constant-opencl-host", "CL_MISALIGNED_SUB_BUFFER_OFFSET"],
+	["constant-opencl-host", "CL_NONE"],
+	["constant-opencl-host", "CL_NON_BLOCKING"],
+	["constant-opencl-host", "CL_OUT_OF_HOST_MEMORY"],
+	["constant-opencl-host", "CL_OUT_OF_RESOURCES"],
+	["constant-opencl-host", "CL_PIPE_MAX_PACKETS"],
+	["constant-opencl-host", "CL_PIPE_PACKET_SIZE"],
+	["constant-opencl-host", "CL_PLATFORM_EXTENSIONS"],
+	["constant-opencl-host", "CL_PLATFORM_HOST_TIMER_RESOLUTION"],
+	["constant-opencl-host", "CL_PLATFORM_NAME"],
+	["constant-opencl-host", "CL_PLATFORM_PROFILE"],
+	["constant-opencl-host", "CL_PLATFORM_VENDOR"],
+	["constant-opencl-host", "CL_PLATFORM_VERSION"],
+	["constant-opencl-host", "CL_PROFILING_COMMAND_COMPLETE"],
+	["constant-opencl-host", "CL_PROFILING_COMMAND_END"],
+	["constant-opencl-host", "CL_PROFILING_COMMAND_QUEUED"],
+	["constant-opencl-host", "CL_PROFILING_COMMAND_START"],
+	["constant-opencl-host", "CL_PROFILING_COMMAND_SUBMIT"],
+	["constant-opencl-host", "CL_PROFILING_INFO_NOT_AVAILABLE"],
+	["constant-opencl-host", "CL_PROGRAM_BINARIES"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_SIZES"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_TYPE"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_TYPE_COMPILED_OBJECT"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_TYPE_EXECUTABLE"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_TYPE_LIBRARY"],
+	["constant-opencl-host", "CL_PROGRAM_BINARY_TYPE_NONE"],
+	["constant-opencl-host", "CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE"],
+	["constant-opencl-host", "CL_PROGRAM_BUILD_LOG"],
+	["constant-opencl-host", "CL_PROGRAM_BUILD_OPTIONS"],
+	["constant-opencl-host", "CL_PROGRAM_BUILD_STATUS"],
+	["constant-opencl-host", "CL_PROGRAM_CONTEXT"],
+	["constant-opencl-host", "CL_PROGRAM_DEVICES"],
+	["constant-opencl-host", "CL_PROGRAM_IL"],
+	["constant-opencl-host", "CL_PROGRAM_KERNEL_NAMES"],
+	["constant-opencl-host", "CL_PROGRAM_NUM_DEVICES"],
+	["constant-opencl-host", "CL_PROGRAM_NUM_KERNELS"],
+	["constant-opencl-host", "CL_PROGRAM_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_PROGRAM_SOURCE"],
+	["constant-opencl-host", "CL_QUEUED"],
+	["constant-opencl-host", "CL_QUEUE_CONTEXT"],
+	["constant-opencl-host", "CL_QUEUE_DEVICE"],
+	["constant-opencl-host", "CL_QUEUE_DEVICE_DEFAULT"],
+	["constant-opencl-host", "CL_QUEUE_ON_DEVICE"],
+	["constant-opencl-host", "CL_QUEUE_ON_DEVICE_DEFAULT"],
+	["constant-opencl-host", "CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE"],
+	["constant-opencl-host", "CL_QUEUE_PROFILING_ENABLE"],
+	["constant-opencl-host", "CL_QUEUE_PROPERTIES"],
+	["constant-opencl-host", "CL_QUEUE_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_QUEUE_SIZE"],
+	["constant-opencl-host", "CL_R"],
+	["constant-opencl-host", "CL_RA"],
+	["constant-opencl-host", "CL_READ_ONLY_CACHE"],
+	["constant-opencl-host", "CL_READ_WRITE_CACHE"],
+	["constant-opencl-host", "CL_RG"],
+	["constant-opencl-host", "CL_RGB"],
+	["constant-opencl-host", "CL_RGBA"],
+	["constant-opencl-host", "CL_RGBx"],
+	["constant-opencl-host", "CL_RGx"],
+	["constant-opencl-host", "CL_RUNNING"],
+	["constant-opencl-host", "CL_Rx"],
+	["constant-opencl-host", "CL_SAMPLER_ADDRESSING_MODE"],
+	["constant-opencl-host", "CL_SAMPLER_CONTEXT"],
+	["constant-opencl-host", "CL_SAMPLER_FILTER_MODE"],
+	["constant-opencl-host", "CL_SAMPLER_LOD_MAX"],
+	["constant-opencl-host", "CL_SAMPLER_LOD_MIN"],
+	["constant-opencl-host", "CL_SAMPLER_MIP_FILTER_MODE"],
+	["constant-opencl-host", "CL_SAMPLER_NORMALIZED_COORDS"],
+	["constant-opencl-host", "CL_SAMPLER_REFERENCE_COUNT"],
+	["constant-opencl-host", "CL_SIGNED_INT16"],
+	["constant-opencl-host", "CL_SIGNED_INT32"],
+	["constant-opencl-host", "CL_SIGNED_INT8"],
+	["constant-opencl-host", "CL_SNORM_INT16"],
+	["constant-opencl-host", "CL_SNORM_INT8"],
+	["constant-opencl-host", "CL_SUBMITTED"],
+	["constant-opencl-host", "CL_SUCCESS"],
+	["constant-opencl-host", "CL_UNORM_INT16"],
+	["constant-opencl-host", "CL_UNORM_INT24"],
+	["constant-opencl-host", "CL_UNORM_INT8"],
+	["constant-opencl-host", "CL_UNORM_INT_101010"],
+	["constant-opencl-host", "CL_UNORM_INT_101010_2"],
+	["constant-opencl-host", "CL_UNORM_SHORT_555"],
+	["constant-opencl-host", "CL_UNORM_SHORT_565"],
+	["constant-opencl-host", "CL_UNSIGNED_INT16"],
+	["constant-opencl-host", "CL_UNSIGNED_INT32"],
+	["constant-opencl-host", "CL_UNSIGNED_INT8"],
+	["constant-opencl-host", "CL_VERSION_1_0"],
+	["constant-opencl-host", "CL_VERSION_1_1"],
+	["constant-opencl-host", "CL_VERSION_1_2"],
+	["constant-opencl-host", "CL_VERSION_2_0"],
+	["constant-opencl-host", "CL_VERSION_2_1"],
+	["constant-opencl-host", "CL_sBGRA"],
+	["constant-opencl-host", "CL_sRGB"],
+	["constant-opencl-host", "CL_sRGBA"],
+	["constant-opencl-host", "CL_sRGBx"]
+]
+
+----------------------------------------------------
+
+Checks for all constants in OpenCL host code (C-API).

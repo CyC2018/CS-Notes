@@ -1,0 +1,33 @@
+0b0011
+0o274
+0xBadFace
+42
+1.23
+1e10
+2.5e-4
+0.5f0
+2.5f-4
+0x1p0
+0x1.8p3
+0x.4p-1
+
+----------------------------------------------------
+
+[
+	["number", "0b0011"],
+	["number", "0o274"],
+	["number", "0xBadFace"],
+	["number", "42"],
+	["number", "1.23"],
+	["number", "1e10"],
+	["number", "2.5e-4"],
+	["number", "0.5f0"],
+	["number", "2.5f-4"],
+	["number", "0x1p0"],
+	["number", "0x1.8p3"],
+	["number", "0x.4p-1"]
+]
+
+----------------------------------------------------
+
+Checks for binary, octal, hexadecimal and decimal numbers.

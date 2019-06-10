@@ -1,0 +1,39 @@
+<h2>Comments</h2>
+<pre><code>; This is a comment</code></pre>
+
+<h2>Labels</h2>
+<pre><code>label1:   ; a label</code></pre>
+
+<h2>Opcodes</h2>
+<pre><code>
+SEI
+CLC
+
+; lowercase
+inx
+bne label1
+</code></pre>
+
+<h2>Assembler directives</h2>
+<pre><code>
+.segment CODE
+.word $07d3
+</code></pre>
+
+<h2>Registers</h2>
+<pre><code>
+ASL A  ; "A"
+LDA label1,x  ; "x"
+</code></pre>
+
+<h2>Strings</h2>
+<pre><code>
+.include "header.asm"
+</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>
+LDA #127
+STA $80f0
+LDY #%01011000
+</code></pre>

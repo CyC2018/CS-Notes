@@ -1,0 +1,13 @@
+foo()
+f o o b a r ( )
+
+----------------------------------------------------
+
+[
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "f o o b a r"], ["punctuation", "("], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions. Also checks that whitespaces are ignored.

@@ -1,0 +1,39 @@
+across agent alias all and
+attached as assign attribute
+check class convert create
+Current debug deferred detachable
+do else elseif end ensure
+expanded export external
+feature from frozen if
+implies inherit inspect
+invariant like local loop
+not note obsolete old
+once or Precursor redefine
+rename require rescue Result
+retry select separate some
+then undefine until variant
+Void when xor
+
+----------------------------------------------------
+
+[
+	["keyword", "across"], ["keyword", "agent"], ["keyword", "alias"], ["keyword", "all"], ["keyword", "and"],
+	["keyword", "attached"], ["keyword", "as"], ["keyword", "assign"], ["keyword", "attribute"],
+	["keyword", "check"], ["keyword", "class"], ["keyword", "convert"], ["keyword", "create"],
+	["keyword", "Current"], ["keyword", "debug"], ["keyword", "deferred"], ["keyword", "detachable"],
+	["keyword", "do"], ["keyword", "else"], ["keyword", "elseif"], ["keyword", "end"], ["keyword", "ensure"],
+	["keyword", "expanded"], ["keyword", "export"], ["keyword", "external"],
+	["keyword", "feature"], ["keyword", "from"], ["keyword", "frozen"], ["keyword", "if"],
+	["keyword", "implies"], ["keyword", "inherit"], ["keyword", "inspect"],
+	["keyword", "invariant"], ["keyword", "like"], ["keyword", "local"], ["keyword", "loop"],
+	["keyword", "not"], ["keyword", "note"], ["keyword", "obsolete"], ["keyword", "old"],
+	["keyword", "once"], ["keyword", "or"], ["keyword", "Precursor"], ["keyword", "redefine"],
+	["keyword", "rename"], ["keyword", "require"], ["keyword", "rescue"], ["keyword", "Result"],
+	["keyword", "retry"], ["keyword", "select"], ["keyword", "separate"], ["keyword", "some"],
+	["keyword", "then"], ["keyword", "undefine"], ["keyword", "until"], ["keyword", "variant"],
+	["keyword", "Void"], ["keyword", "when"], ["keyword", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords

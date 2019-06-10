@@ -1,0 +1,29 @@
+{{ 0xBadFace }}
+{{{ 42 }}}
+{{{ 4e2 }}}
+{{ 3.5e+1 }}
+{{ 0.15e-9 }}
+
+----------------------------------------------------
+
+[
+	["handlebars", [
+		["delimiter", "{{"], ["number", "0xBadFace"], ["delimiter", "}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"], ["number", "42"], ["delimiter", "}}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"], ["number", "4e2"], ["delimiter", "}}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{"], ["number", "3.5e+1"], ["delimiter", "}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{"], ["number", "0.15e-9"], ["delimiter", "}}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for decimal and hexadecimal numbers.

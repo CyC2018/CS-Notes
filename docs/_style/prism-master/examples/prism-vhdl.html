@@ -1,0 +1,92 @@
+<h2>Comments</h2>
+<pre><code>-- I am a comment
+I am not</code></pre>
+
+<h2>Literals</h2>
+<pre><code>constant FREEZE : integer := 32;
+constant TEMP : real := 32.0;
+A_INT <= 16#FF#;
+B_INT <= 2#1010_1010#;
+MONEY := 1_000_000.0;
+FACTOR := 2.2E-6;
+constant DEL1 :time := 10 ns;
+constant DEL2 :time := 2.27 us;
+type MY_LOGIC is ('X','0','1','Z');
+type T_STATE is (IDLE, READ, END_CYC);
+signal CLK : MY_LOGIC := '0';
+signal STATE : T_STATE := IDLE;
+constant FLAG :bit_vector(0 to 7) := "11111111";
+constant MSG : string := "Hello";
+BIT_8_BUS <= B"1111_1111";
+BIT_9_BUS <= O"353";
+BIT_16_BUS <= X"AA55";
+constant TWO_LINE_MSG : string := "Hello" & CR & "World";</code></pre>
+
+<h2>Full example</h2>
+<pre><code>-- example code from: http://www.csee.umbc.edu/portal/help/VHDL/samples/samples.html
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity fadd is               -- full adder stage, interface
+  port(a    : in  std_logic;
+       b    : in  std_logic;
+       cin  : in  std_logic;
+       s    : out std_logic;
+       cout : out std_logic);
+end entity fadd;
+
+architecture circuits of fadd is  -- full adder stage, body
+begin  -- circuits of fadd
+  s <= a xor b xor cin after 1 ns;
+  cout <= (a and b) or (a and cin) or (b and cin) after 1 ns;
+end architecture circuits; -- of fadd
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+entity add32 is             -- simple 32 bit ripple carry adder
+  port(a    : in  std_logic_vector(31 downto 0);
+       b    : in  std_logic_vector(31 downto 0);
+       cin  : in  std_logic;
+       sum  : out std_logic_vector(31 downto 0);
+       cout : out std_logic);
+end entity add32;
+
+architecture circuits of add32 is
+  signal c : std_logic_vector(0 to 30); -- internal carry signals
+begin  -- circuits of add32
+  a0: entity WORK.fadd port map(a(0), b(0), cin, sum(0), c(0));
+  stage: for I in 1 to 30 generate
+             as: entity WORK.fadd port map(a(I), b(I), c(I-1) , sum(I), c(I));
+         end generate stage;
+  a31: entity WORK.fadd port map(a(31), b(31), c(30) , sum(31), cout);
+end architecture circuits;  -- of add32
+
+use STD.textio.all;
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_textio.all;
+
+entity signal_trace is
+end signal_trace;
+
+architecture circuits of signal_trace is
+  signal a:    std_logic_vector(31 downto 0) := x"00000000";
+  signal b:    std_logic_vector(31 downto 0) := x"FFFFFFFF";
+  signal cin:  std_logic := '1';
+  signal cout: std_logic;
+  signal sum:  std_logic_vector(31 downto 0);
+begin  -- circuits of signal_trace
+  adder: entity WORK.add32 port map(a, b, cin, sum, cout); -- parallel circuit
+
+  prtsum: process (sum)
+            variable my_line : LINE;
+            alias swrite is write [line, string, side, width] ;
+          begin
+            swrite(my_line, "sum=");
+            write(my_line, sum);
+            swrite(my_line, ",  at=");
+            write(my_line, now);
+            writeline(output, my_line);
+          end process prtsum;
+
+end architecture circuits; -- of signal_trace</code></pre>

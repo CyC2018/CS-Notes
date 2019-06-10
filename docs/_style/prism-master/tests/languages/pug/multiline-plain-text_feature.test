@@ -1,0 +1,30 @@
+div.
+ foobar
+
+ baz
+.
+	div.
+		foobar
+		baz
+
+----------------------------------------------------
+
+[
+	["tag", [
+		"div"
+	]],
+	["punctuation", "."],
+	["multiline-plain-text", "\r\n foobar\r\n\r\n baz"],
+
+	["punctuation", "."],
+
+	["tag", [
+		"div"
+	]],
+	["punctuation", "."],
+	["multiline-plain-text", "\r\n\t\tfoobar\r\n\t\tbaz"]
+]
+
+----------------------------------------------------
+
+Checks for multi-line plain text.

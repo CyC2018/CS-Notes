@@ -1,0 +1,20 @@
+% foobar
+%{}%
+%{ foo
+bar }%
+% 'test'
+%{ 'test' }%
+
+----------------------------------------------------
+
+[
+	["comment", "% foobar"],
+	["comment", "%{}%"],
+	["comment", "%{ foo\r\nbar }%"],
+	["comment", "% 'test'"],
+	["comment", "%{ 'test' }%"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

@@ -1,0 +1,25 @@
+<CodeView title={{}} />
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			["class-name", "CodeView"]
+		]],
+		["attr-name", ["title"]],
+		["script", [
+			["script-punctuation", "="],
+			["punctuation", "{"],
+			["punctuation", "{"],
+			["punctuation", "}"],
+			["punctuation", "}"]
+		]],
+		["punctuation", "/>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for empty objects in JSX. See #1364

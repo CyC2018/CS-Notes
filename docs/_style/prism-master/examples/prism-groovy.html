@@ -1,0 +1,93 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo 'bar' baz"
+'foo "bar" baz'
+"""Multi-line
+string"""
+'''Multi-line
+string'''
+"String /containing/ slashes"
+</code></pre>
+
+<h2>Slashy strings (regex)</h2>
+<pre><code>/.*foo.*/
+/regex"containing quotes"/
+$/.*"(.*)".*/(.*)/$</code></pre>
+
+<h2>Interpolation inside GStrings and regex</h2>
+<pre><code>"The answer is ${21*2}"
+"The $foxtype ${foxcolor.join()} fox"
+/foo${21*2}baz/
+'No interpolation here : ${21*2}'</code></pre>
+
+<h2>Full example</h2>
+<pre><code>#!/usr/bin/env groovy
+package model
+
+import groovy.transform.CompileStatic
+import java.util.List as MyList
+
+trait Distributable {
+    void distribute(String version) {}
+}
+
+@CompileStatic
+class Distribution implements Distributable {
+    double number = 1234.234 / 567
+    def otherNumber = 3 / 4
+    boolean archivable = condition ?: true
+    def ternary = a ? b : c
+    String name = "Guillaume"
+    Closure description = null
+    List&lt;DownloadPackage> packages = []
+    String regex = ~/.*foo.*/
+    String multi = '''
+        multi line string
+    ''' + """
+        now with double quotes and ${gstring}
+    """ + $/
+        even with dollar slashy strings
+    /$
+
+    /**
+     * description method
+     * @param cl the closure
+     */
+    void description(Closure cl) { this.description = cl }
+
+    void version(String name, Closure versionSpec) {
+        def closure = { println "hi" } as Runnable
+
+        MyList ml = [1, 2, [a: 1, b:2,c :3]]
+        for (ch in "name") {}
+
+        // single line comment
+        DownloadPackage pkg = new DownloadPackage(version: name)
+
+        check that: true
+
+        label:
+        def clone = versionSpec.rehydrate(pkg, pkg, pkg)
+        /*
+            now clone() in a multiline comment
+        */
+        clone()
+        packages.add(pkg)
+
+        assert 4 / 2 == 2
+    }
+}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Two divisions on the same line</h3>
+<pre><code>2 / 3 / 4</code></pre>

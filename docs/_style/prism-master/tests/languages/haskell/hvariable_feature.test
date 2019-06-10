@@ -1,0 +1,15 @@
+foo
+Foo.bar
+Baz.foobar_42
+
+----------------------------------------------------
+
+[
+	["hvariable", "foo"],
+	["hvariable", "Foo.bar"],
+	["hvariable", "Baz.foobar_42"]
+]
+
+----------------------------------------------------
+
+Checks for hvariables.

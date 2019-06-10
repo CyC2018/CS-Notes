@@ -1,0 +1,21 @@
+Content-type: application/javascript
+
+var a = true;
+
+----------------------------------------------------
+
+[
+	["header-name", "Content-type:"],
+	" application/javascript",
+	["application/javascript", [
+		["keyword", "var"],
+		" a ",
+		["operator", "="],
+		["boolean", "true"],
+		["punctuation", ";"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for JavaScript content in HTTP.

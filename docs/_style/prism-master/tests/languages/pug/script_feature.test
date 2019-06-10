@@ -1,0 +1,38 @@
+script alert(42);
+	script(type='text/javascript') alert(42);
+
+----------------------------------------------------
+
+[
+	["tag", [
+		"script"
+	]],
+	["script", [
+		["function", "alert"],
+		["punctuation", "("],
+		["number", "42"],
+		["punctuation", ")"],
+		["punctuation", ";"]
+	]],
+	["tag", [
+		"script",
+		["attributes", [
+			["punctuation", "("],
+			["attr-name", "type"],
+			["punctuation", "="],
+			["attr-value", [["string", "'text/javascript'"]]],
+			["punctuation", ")"]
+		]]
+	]],
+	["script", [
+		["function", "alert"],
+		["punctuation", "("],
+		["number", "42"],
+		["punctuation", ")"],
+		["punctuation", ";"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for single-line scripts.

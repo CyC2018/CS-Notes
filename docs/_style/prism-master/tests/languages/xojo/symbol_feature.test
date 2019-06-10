@@ -1,0 +1,19 @@
+#If
+#Else
+#ElseIf
+#Endif
+#Pragma
+
+----------------------------------------------------
+
+[
+	["symbol", "#If"],
+	["symbol", "#Else"],
+	["symbol", "#ElseIf"],
+	["symbol", "#Endif"],
+	["symbol", "#Pragma"]
+]
+
+----------------------------------------------------
+
+Checks for conditional compilation and pragma.

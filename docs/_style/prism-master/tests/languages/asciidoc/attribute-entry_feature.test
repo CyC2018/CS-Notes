@@ -1,0 +1,58 @@
+:Foo bar: baz
+
+:Foobar: Foo +
+bar +
+baz
+
+:Foo bar!:
+:Foobar!:
+
+=====
+:Foo bar: baz
+
+:Foobar: Foo +
+bar +
+baz
+
+:Foo bar!:
+:Foobar!:
+=====
+
+|=====
+|
+:Foo bar: baz
+
+:Foobar: Foo +
+bar +
+baz
+|=====
+
+----------------------------------------------------
+
+[
+	["attribute-entry", ":Foo bar: baz"],
+	["attribute-entry", ":Foobar: Foo +\r\nbar +\r\nbaz"],
+	["attribute-entry", ":Foo bar!:"],
+	["attribute-entry", ":Foobar!:"],
+
+	["other-block", [
+		["punctuation", "====="],
+		["attribute-entry", ":Foo bar: baz"],
+		["attribute-entry", ":Foobar: Foo +\r\nbar +\r\nbaz"],
+		["attribute-entry", ":Foo bar!:"],
+		["attribute-entry", ":Foobar!:"],
+		["punctuation", "====="]
+	]],
+
+	["table", [
+		["punctuation", "|====="],
+		["punctuation", "|"],
+		["attribute-entry", ":Foo bar: baz"],
+		["attribute-entry", ":Foobar: Foo +\r\nbar +\r\nbaz"],
+		["punctuation", "|====="]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for attribute entries.

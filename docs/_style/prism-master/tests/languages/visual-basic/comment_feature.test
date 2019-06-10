@@ -1,0 +1,25 @@
+'
+' Foo "bar"
+‘
+‘ Foobar
+’
+’ Foobar
+REM
+REM Foobar
+
+----------------------------------------------------
+
+[
+	["comment", ["'"]],
+	["comment", ["' Foo \"bar\""]],
+	["comment", ["‘"]],
+	["comment", ["‘ Foobar"]],
+	["comment", ["’"]],
+	["comment", ["’ Foobar"]],
+	["comment", [["keyword", "REM"]]],
+	["comment", [["keyword", "REM"], " Foobar"]]
+]
+
+----------------------------------------------------
+
+Checks for comments.

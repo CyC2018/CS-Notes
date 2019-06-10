@@ -1,0 +1,41 @@
+..
+< <> <=
+> >=
+=
+:=
++ +=
+- -=
+* *=
+/ /=
+& &=
+~ ~=
+| |=
+Mod Mod=
+Shl Shl=
+Shr Shr=
+And Not Or
+
+----------------------------------------------------
+
+[
+	["operator", ".."],
+	["operator", "<"], ["operator", "<>"], ["operator", "<="],
+	["operator", ">"], ["operator", ">="],
+	["operator", "="],
+	["operator", ":="],
+	["operator", "+"], ["operator", "+="],
+	["operator", "-"], ["operator", "-="],
+	["operator", "*"], ["operator", "*="],
+	["operator", "/"], ["operator", "/="],
+	["operator", "&"], ["operator", "&="],
+	["operator", "~"], ["operator", "~="],
+	["operator", "|"], ["operator", "|="],
+	["operator", "Mod"], ["operator", "Mod="],
+	["operator", "Shl"], ["operator", "Shl="],
+	["operator", "Shr"], ["operator", "Shr="],
+	["operator", "And"], ["operator", "Not"], ["operator", "Or"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

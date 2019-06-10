@@ -1,0 +1,72 @@
+<h2>Comments</h2>
+<pre><code>-- A comment
+</code></pre>
+
+<h2>Simple string and character</h2>
+<pre><code>"A simple string with %"double quotes%""
+'a'
+</code></pre>
+
+<h2>Verbatim-strings</h2>
+<pre><code>"[
+  A aligned verbatim string
+]"
+"{
+  A non-aligned verbatim string
+}"
+</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>1_000
+1_000.
+1_000.e+1_000
+1_000.1_000e-1_000
+.1
+0b1010_0001
+0xAF_5B
+0c75_22
+</code></pre>
+
+<h2>Class names</h2>
+<pre><code>deferred class
+    A [G]
+
+feature
+    items: G
+        deferred  end
+
+end
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>note
+  description: "Represents a person."
+
+class
+  PERSON
+
+create
+  make, make_unknown
+
+feature {NONE} -- Creation
+
+  make (a_name: like name)
+      -- Create a person with `a_name' as `name'.
+    do
+      name := a_name
+    ensure
+      name = a_name
+    end
+
+    make_unknown
+    do ensure
+      name = Void
+      end
+
+feature -- Access
+
+  name: detachable STRING
+      -- Full name or Void if unknown.
+
+end
+</code></pre>

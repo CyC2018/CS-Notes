@@ -1,0 +1,15 @@
+foo:
+foo_bar :
+
+----------------------------------------------------
+
+[
+	["property", "foo"],
+	["punctuation", ":"],
+	["property", "foo_bar"],
+	["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for object properties.

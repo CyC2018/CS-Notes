@@ -1,0 +1,54 @@
+element {
+	--foo: green;
+}
+
+var(--color-primary)
+var(--level-3)
+var(--foo, red)
+calc(100% - var(--margin-size) * 2)
+
+----------------------------------------------------
+
+[
+	["selector", ["element"]],
+	["punctuation", "{"],
+	["variable", "--foo"],
+	["punctuation", ":"],
+	" green",
+	["punctuation", ";"],
+	["punctuation", "}"],
+
+	["function", "var"],
+	["punctuation", "("],
+	["variable", "--color-primary"],
+	["punctuation", ")"],
+
+	["function", "var"],
+	["punctuation", "("],
+	["variable", "--level-3"],
+	["punctuation", ")"],
+
+	["function", "var"],
+	["punctuation", "("],
+	["variable", "--foo"],
+	["punctuation", ","],
+	" red",
+	["punctuation", ")"],
+
+	["function", "calc"],
+	["punctuation", "("],
+	["number", "100"],
+	["unit", "%"],
+	["operator", "-"],
+	["function", "var"],
+	["punctuation", "("],
+	["variable", "--margin-size"],
+	["punctuation", ")"],
+	["operator", "*"],
+	["number", "2"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

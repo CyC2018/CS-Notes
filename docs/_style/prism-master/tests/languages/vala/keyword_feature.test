@@ -1,0 +1,189 @@
+bool
+char
+double
+float
+null
+size_t
+ssize_t
+string
+unichar
+void
+int
+int8
+int16
+int32
+int64
+long
+short
+uchar
+uint
+uint8
+uint16
+uint32
+uint64
+ulong
+ushort
+class
+delegate
+enum
+errordomain
+interface
+namespace
+struct
+break
+continue
+do
+for
+foreach
+return
+while
+else
+if
+switch
+assert
+case
+default
+abstract
+const
+dynamic
+ensures
+extern
+inline
+internal
+override
+private
+protected
+public
+requires
+signal
+static
+virtual
+volatile
+weak
+async
+owned
+unowned
+try
+catch
+finally
+throw
+as
+base
+construct
+delete
+get
+in
+is
+lock
+new
+out
+params
+ref
+sizeof
+set
+this
+throws
+typeof
+using
+value
+var
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "bool"],
+	["keyword", "char"],
+	["keyword", "double"],
+	["keyword", "float"],
+	["keyword", "null"],
+	["keyword", "size_t"],
+	["keyword", "ssize_t"],
+	["keyword", "string"],
+	["keyword", "unichar"],
+	["keyword", "void"],
+	["keyword", "int"],
+	["keyword", "int8"],
+	["keyword", "int16"],
+	["keyword", "int32"],
+	["keyword", "int64"],
+	["keyword", "long"],
+	["keyword", "short"],
+	["keyword", "uchar"],
+	["keyword", "uint"],
+	["keyword", "uint8"],
+	["keyword", "uint16"],
+	["keyword", "uint32"],
+	["keyword", "uint64"],
+	["keyword", "ulong"],
+	["keyword", "ushort"],
+	["keyword", "class"],
+	["keyword", "delegate"],
+	["keyword", "enum"],
+	["keyword", "errordomain"],
+	["keyword", "interface"],
+	["keyword", "namespace"],
+	["keyword", "struct"],
+	["keyword", "break"],
+	["keyword", "continue"],
+	["keyword", "do"],
+	["keyword", "for"],
+	["keyword", "foreach"],
+	["keyword", "return"],
+	["keyword", "while"],
+	["keyword", "else"],
+	["keyword", "if"],
+	["keyword", "switch"],
+	["keyword", "assert"],
+	["keyword", "case"],
+	["keyword", "default"],
+	["keyword", "abstract"],
+	["keyword", "const"],
+	["keyword", "dynamic"],
+	["keyword", "ensures"],
+	["keyword", "extern"],
+	["keyword", "inline"],
+	["keyword", "internal"],
+	["keyword", "override"],
+	["keyword", "private"],
+	["keyword", "protected"],
+	["keyword", "public"],
+	["keyword", "requires"],
+	["keyword", "signal"],
+	["keyword", "static"],
+	["keyword", "virtual"],
+	["keyword", "volatile"],
+	["keyword", "weak"],
+	["keyword", "async"],
+	["keyword", "owned"],
+	["keyword", "unowned"],
+	["keyword", "try"],
+	["keyword", "catch"],
+	["keyword", "finally"],
+	["keyword", "throw"],
+	["keyword", "as"],
+	["keyword", "base"],
+	["keyword", "construct"],
+	["keyword", "delete"],
+	["keyword", "get"],
+	["keyword", "in"],
+	["keyword", "is"],
+	["keyword", "lock"],
+	["keyword", "new"],
+	["keyword", "out"],
+	["keyword", "params"],
+	["keyword", "ref"],
+	["keyword", "sizeof"],
+	["keyword", "set"],
+	["keyword", "this"],
+	["keyword", "throws"],
+	["keyword", "typeof"],
+	["keyword", "using"],
+	["keyword", "value"],
+	["keyword", "var"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

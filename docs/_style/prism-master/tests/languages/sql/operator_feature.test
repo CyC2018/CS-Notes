@@ -1,0 +1,49 @@
++ - * /
+= % ^ ~
+| ||
+& &&
+! !=
+< <= << <> <=>
+> >= >>
+
+AND
+BETWEEN
+IN
+LIKE
+NOT
+OR
+IS
+DIV
+REGEXP
+RLIKE
+SOUNDS LIKE
+XOR
+
+----------------------------------------------------
+
+[
+	["operator", "+"], ["operator", "-"], ["operator", "*"], ["operator", "/"],
+	["operator", "="], ["operator", "%"], ["operator", "^"], ["operator", "~"],
+	["operator", "|"], ["operator", "||"],
+	["operator", "&"], ["operator", "&&"],
+	["operator", "!"], ["operator", "!="],
+	["operator", "<"], ["operator", "<="], ["operator", "<<"], ["operator", "<>"], ["operator", "<=>"],
+	["operator", ">"], ["operator", ">="], ["operator", ">>"],
+	
+	["operator", "AND"],
+	["operator", "BETWEEN"],
+	["operator", "IN"],
+	["operator", "LIKE"],
+	["operator", "NOT"],
+	["operator", "OR"],
+	["operator", "IS"],
+	["operator", "DIV"],
+	["operator", "REGEXP"],
+	["operator", "RLIKE"],
+	["operator", "SOUNDS LIKE"],
+	["operator", "XOR"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

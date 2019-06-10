@@ -1,0 +1,22 @@
+#
+# foobar
+=begin
+foo bar baz
+=end
+=begin
+=end
+#{comment}
+
+----------------------------------------------------
+
+[
+	["comment", "#"],
+	["comment", "# foobar"],
+	["comment", "=begin\r\nfoo bar baz\r\n=end"],
+	["comment", "=begin\r\n=end"],
+	["comment", "#{comment}"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

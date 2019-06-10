@@ -1,0 +1,31 @@
+""
+''
+"f\"oo"
+'b\'ar'
+"foo\
+bar"
+'foo\
+bar'
+"foo /* comment */ bar"
+'foo // bar'
+'foo // bar' //comment
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "''"],
+	["string", "\"f\\\"oo\""],
+	["string", "'b\\'ar'"],
+	["string", "\"foo\\\r\nbar\""],
+	["string", "'foo\\\r\nbar'"],
+	["string", "\"foo /* comment */ bar\""],
+	["string", "'foo // bar'"],
+	["string", "'foo // bar'"],
+	["comment", "//comment"]
+]
+
+----------------------------------------------------
+
+Checks for empty strings, single-line strings and
+multi-line strings, both single-quoted and double-quoted.
