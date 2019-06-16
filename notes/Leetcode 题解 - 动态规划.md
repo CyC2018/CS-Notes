@@ -201,8 +201,6 @@ public int minPathSum(int[][] grid) {
 
 <div align="center"> <img src="pics/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg" width=""> </div><br>
 
-<div align="center"> <img src="pics/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg"/> </div><br>
-
 ```java
 public int uniquePaths(int m, int n) {
     int[] dp = new int[n];
