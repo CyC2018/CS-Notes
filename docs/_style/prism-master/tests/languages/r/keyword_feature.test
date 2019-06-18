@@ -1,0 +1,25 @@
+if else repeat
+while function
+for in next
+break NULL NA
+NA_integer_
+NA_real_
+NA_complex_
+NA_character_
+
+----------------------------------------------------
+
+[
+	["keyword", "if"], ["keyword", "else"], ["keyword", "repeat"],
+	["keyword", "while"], ["keyword", "function"],
+	["keyword", "for"], ["keyword", "in"], ["keyword", "next"],
+	["keyword", "break"], ["keyword", "NULL"], ["keyword", "NA"],
+	["keyword", "NA_integer_"],
+	["keyword", "NA_real_"],
+	["keyword", "NA_complex_"],
+	["keyword", "NA_character_"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

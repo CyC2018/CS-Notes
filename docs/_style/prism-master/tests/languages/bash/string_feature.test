@@ -1,0 +1,67 @@
+""
+''
+"foo"
+'foo'
+"foo
+bar"
+'foo
+bar'
+"'foo'"
+'"bar"'
+"$@"
+"${foo}"
+<< STRING_END
+foo
+bar
+STRING_END
+<<   EOF
+foo $@
+bar
+EOF
+<< 'EOF'
+'single quoted string'
+"double quoted string"
+EOF
+<< "EOF"
+foo
+bar
+EOF
+<< STRING_END
+# comment
+STRING_END
+"  # comment  "
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["''"]],
+	["string", ["\"foo\""]],
+	["string", ["'foo'"]],
+	["string", ["\"foo\r\nbar\""]],
+	["string", ["'foo\r\nbar'"]],
+	["string", ["\"'foo'\""]],
+	["string", ["'\"bar\"'"]],
+	["string", [
+		"\"", ["variable", "$@"], "\""
+	]],
+	["string", [
+		"\"", ["variable", "${foo}"], "\""
+	]],
+	["operator", "<<"],
+	["string", ["STRING_END\r\nfoo\r\nbar\r\nSTRING_END"]],
+	["operator", "<<"],
+	["string", ["EOF\r\nfoo ", ["variable", "$@"], "\r\nbar\r\nEOF"]],
+	["operator", "<<"],
+	["string", ["'EOF'\r\n'single quoted string'\r\n\"double quoted string\"\r\nEOF"]],
+	["operator", "<<"],
+	["string", ["\"EOF\"\r\nfoo\r\nbar\r\nEOF"]],
+	["operator", "<<"],
+	["string", ["STRING_END\r\n# comment\r\nSTRING_END"]],
+	["string", ["\"  # comment  \""]]
+]
+
+----------------------------------------------------
+
+Checks for single-quoted and double-quoted strings.
+Also checks for variables in strings.

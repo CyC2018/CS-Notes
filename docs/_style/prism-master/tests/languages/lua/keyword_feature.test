@@ -1,0 +1,53 @@
+and
+break
+do
+else
+elseif
+end
+false
+for
+function
+goto
+if
+in
+local
+nil
+not
+or
+repeat
+return
+then
+true
+until
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "and"],
+	["keyword", "break"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "elseif"],
+	["keyword", "end"],
+	["keyword", "false"],
+	["keyword", "for"],
+	["keyword", "function"],
+	["keyword", "goto"],
+	["keyword", "if"],
+	["keyword", "in"],
+	["keyword", "local"],
+	["keyword", "nil"],
+	["keyword", "not"],
+	["keyword", "or"],
+	["keyword", "repeat"],
+	["keyword", "return"],
+	["keyword", "then"],
+	["keyword", "true"],
+	["keyword", "until"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

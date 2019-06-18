@@ -1,0 +1,45 @@
+<h2>Full example</h2>
+
+<pre><code>:: Example from http://webdocs.cs.ualberta.ca/~piotr/Mizar/Dagstuhl97/
+environ
+vocabulary SCM;
+constructors ARYTHM, PRE_FF, NAT_1, REAL_1;
+notation ARYTHM, PRE_FF, NAT_1;
+requirements ARYTHM;
+theorems REAL_1, PRE_FF, NAT_1, AXIOMS, CQC_THE1;
+schemes NAT_1;
+begin
+
+P: for k being Nat
+	st for n being Nat st n < k holds Fib (n+1) ≥ n
+		holds Fib (k+1) ≥ k
+proof let k be Nat; assume
+IH: for n being Nat st n < k holds Fib (n+1) ≥ n;
+	per cases;
+		suppose k ≤ 1; then k = 0 or k = 0+1 by CQC_THE1:2;
+			hence Fib (k+1) ≥ k by PRE_FF:1;
+		suppose 1 < k; then
+			1+1 ≤ k by NAT_1:38; then
+			consider m being Nat such that
+		A: k = 1+1+m by NAT_1:28;
+			thus Fib (k+1) ≥ k proof
+				per cases by NAT_1:19;
+				suppose S1: m = 0;
+					Fib (0+1+1+1) = Fib(0+1) + Fib(0+1+1) by PRE_FF:1
+					              = 1 + 1 by PRE_FF:1;
+					hence Fib (k+1) ≥ k by A, S1;
+				suppose m > 0; then
+					m+1 > 0+1 by REAL_1:59; then
+					m ≥ 1 by NAT_1:38; then
+				B: m+(m+1) ≥ m+1+1 by REAL_1:49;
+				C: k = m+1+1 by A, AXIOMS:13;
+				   m < m+1 & m+1 < m+1+1 by REAL_1:69; then
+				   m < k & m+1 < k by C, AXIOMS:22; then
+				D: Fib (m+1) ≥ m & Fib (m+1+1) ≥ m+1 by IH;
+				   Fib (m+1+1+1) = Fib (m+1) + Fib (m+1+1) by PRE_FF:1; then
+				   Fib (m+1+1+1) ≥ m+(m+1) by D, REAL_1:55;
+		hence Fib(k+1) ≥ k by C, B, AXIOMS:22;
+	end;
+end;
+
+for n being Nat holds Fib(n+1) ≥ n from Comp_Ind(P);</code></pre>

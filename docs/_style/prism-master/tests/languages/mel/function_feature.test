@@ -1,0 +1,2453 @@
+foobar()
+foo_bar_42()
+
+about
+abs
+addAttr
+addAttributeEditorNodeHelp
+addDynamic
+addNewShelfTab
+addPP
+addPanelCategory
+addPrefixToName
+advanceToNextDrivenKey
+affectedNet
+affects
+aimConstraint
+air
+alias
+aliasAttr
+align
+alignCtx
+alignCurve
+alignSurface
+allViewFit
+ambientLight
+angle
+angleBetween
+animCone
+animCurveEditor
+animDisplay
+animView
+annotate
+appendStringArray
+applicationName
+applyAttrPreset
+applyTake
+arcLenDimContext
+arcLengthDimension
+arclen
+arrayMapper
+art3dPaintCtx
+artAttrCtx
+artAttrPaintVertexCtx
+artAttrSkinPaintCtx
+artAttrTool
+artBuildPaintMenu
+artFluidAttrCtx
+artPuttyCtx
+artSelectCtx
+artSetPaintCtx
+artUserPaintCtx
+assignCommand
+assignInputDevice
+assignViewportFactories
+attachCurve
+attachDeviceAttr
+attachSurface
+attrColorSliderGrp
+attrCompatibility
+attrControlGrp
+attrEnumOptionMenu
+attrEnumOptionMenuGrp
+attrFieldGrp
+attrFieldSliderGrp
+attrNavigationControlGrp
+attrPresetEditWin
+attributeExists
+attributeInfo
+attributeMenu
+attributeQuery
+autoKeyframe
+autoPlace
+bakeClip
+bakeFluidShading
+bakePartialHistory
+bakeResults
+bakeSimulation
+basename
+basenameEx
+batchRender
+bessel
+bevel
+bevelPlus
+binMembership
+bindSkin
+blend2
+blendShape
+blendShapeEditor
+blendShapePanel
+blendTwoAttr
+blindDataType
+boneLattice
+boundary
+boxDollyCtx
+boxZoomCtx
+bufferCurve
+buildBookmarkMenu
+buildKeyframeMenu
+button
+buttonManip
+CBG
+cacheFile
+cacheFileCombine
+cacheFileMerge
+cacheFileTrack
+camera
+cameraView
+canCreateManip
+canvas
+capitalizeString
+catch
+catchQuiet
+ceil
+changeSubdivComponentDisplayLevel
+changeSubdivRegion
+channelBox
+character
+characterMap
+characterOutlineEditor
+characterize
+chdir
+checkBox
+checkBoxGrp
+checkDefaultRenderGlobals
+choice
+circle
+circularFillet
+clamp
+clear
+clearCache
+clip
+clipEditor
+clipEditorCurrentTimeCtx
+clipSchedule
+clipSchedulerOutliner
+clipTrimBefore
+closeCurve
+closeSurface
+cluster
+cmdFileOutput
+cmdScrollFieldExecuter
+cmdScrollFieldReporter
+cmdShell
+coarsenSubdivSelectionList
+collision
+color
+colorAtPoint
+colorEditor
+colorIndex
+colorIndexSliderGrp
+colorSliderButtonGrp
+colorSliderGrp
+columnLayout
+commandEcho
+commandLine
+commandPort
+compactHairSystem
+componentEditor
+compositingInterop
+computePolysetVolume
+condition
+cone
+confirmDialog
+connectAttr
+connectControl
+connectDynamic
+connectJoint
+connectionInfo
+constrain
+constrainValue
+constructionHistory
+container
+containsMultibyte
+contextInfo
+control
+convertFromOldLayers
+convertIffToPsd
+convertLightmap
+convertSolidTx
+convertTessellation
+convertUnit
+copyArray
+copyFlexor
+copyKey
+copySkinWeights
+cos
+cpButton
+cpCache
+cpClothSet
+cpCollision
+cpConstraint
+cpConvClothToMesh
+cpForces
+cpGetSolverAttr
+cpPanel
+cpProperty
+cpRigidCollisionFilter
+cpSeam
+cpSetEdit
+cpSetSolverAttr
+cpSolver
+cpSolverTypes
+cpTool
+cpUpdateClothUVs
+createDisplayLayer
+createDrawCtx
+createEditor
+createLayeredPsdFile
+createMotionField
+createNewShelf
+createNode
+createRenderLayer
+createSubdivRegion
+cross
+crossProduct
+ctxAbort
+ctxCompletion
+ctxEditMode
+ctxTraverse
+currentCtx
+currentTime
+currentTimeCtx
+currentUnit
+curve
+curveAddPtCtx
+curveCVCtx
+curveEPCtx
+curveEditorCtx
+curveIntersect
+curveMoveEPCtx
+curveOnSurface
+curveSketchCtx
+cutKey
+cycleCheck
+cylinder
+dagPose
+date
+defaultLightListCheckBox
+defaultNavigation
+defineDataServer
+defineVirtualDevice
+deformer
+deg_to_rad
+delete
+deleteAttr
+deleteShadingGroupsAndMaterials
+deleteShelfTab
+deleteUI
+deleteUnusedBrushes
+delrandstr
+detachCurve
+detachDeviceAttr
+detachSurface
+deviceEditor
+devicePanel
+dgInfo
+dgdirty
+dgeval
+dgtimer
+dimWhen
+directKeyCtx
+directionalLight
+dirmap
+dirname
+disable
+disconnectAttr
+disconnectJoint
+diskCache
+displacementToPoly
+displayAffected
+displayColor
+displayCull
+displayLevelOfDetail
+displayPref
+displayRGBColor
+displaySmoothness
+displayStats
+displayString
+displaySurface
+distanceDimContext
+distanceDimension
+doBlur
+dolly
+dollyCtx
+dopeSheetEditor
+dot
+dotProduct
+doubleProfileBirailSurface
+drag
+dragAttrContext
+draggerContext
+dropoffLocator
+duplicate
+duplicateCurve
+duplicateSurface
+dynCache
+dynControl
+dynExport
+dynExpression
+dynGlobals
+dynPaintEditor
+dynParticleCtx
+dynPref
+dynRelEdPanel
+dynRelEditor
+dynamicLoad
+editAttrLimits
+editDisplayLayerGlobals
+editDisplayLayerMembers
+editRenderLayerAdjustment
+editRenderLayerGlobals
+editRenderLayerMembers
+editor
+editorTemplate
+effector
+emit
+emitter
+enableDevice
+encodeString
+endString
+endsWith
+env
+equivalent
+equivalentTol
+erf
+error
+eval
+evalDeferred
+evalEcho
+event
+exactWorldBoundingBox
+exclusiveLightCheckBox
+exec
+executeForEachObject
+exists
+exp
+expression
+expressionEditorListen
+extendCurve
+extendSurface
+extrude
+fcheck
+fclose
+feof
+fflush
+fgetline
+fgetword
+file
+fileBrowserDialog
+fileDialog
+fileExtension
+fileInfo
+filetest
+filletCurve
+filter
+filterCurve
+filterExpand
+filterStudioImport
+findAllIntersections
+findAnimCurves
+findKeyframe
+findMenuItem
+findRelatedSkinCluster
+finder
+firstParentOf
+fitBspline
+flexor
+floatEq
+floatField
+floatFieldGrp
+floatScrollBar
+floatSlider
+floatSlider2
+floatSliderButtonGrp
+floatSliderGrp
+floor
+flow
+fluidCacheInfo
+fluidEmitter
+fluidVoxelInfo
+flushUndo
+fmod
+fontDialog
+fopen
+formLayout
+format
+fprint
+frameLayout
+fread
+freeFormFillet
+frewind
+fromNativePath
+fwrite
+gamma
+gauss
+geometryConstraint
+getApplicationVersionAsFloat
+getAttr
+getClassification
+getDefaultBrush
+getFileList
+getFluidAttr
+getInputDeviceRange
+getMayaPanelTypes
+getModifiers
+getPanel
+getParticleAttr
+getPluginResource
+getenv
+getpid
+glRender
+glRenderEditor
+globalStitch
+gmatch
+goal
+gotoBindPose
+grabColor
+gradientControl
+gradientControlNoAttr
+graphDollyCtx
+graphSelectContext
+graphTrackCtx
+gravity
+grid
+gridLayout
+group
+groupObjectsByName
+HfAddAttractorToAS
+HfAssignAS
+HfBuildEqualMap
+HfBuildFurFiles
+HfBuildFurImages
+HfCancelAFR
+HfConnectASToHF
+HfCreateAttractor
+HfDeleteAS
+HfEditAS
+HfPerformCreateAS
+HfRemoveAttractorFromAS
+HfSelectAttached
+HfSelectAttractors
+HfUnAssignAS
+hardenPointCurve
+hardware
+hardwareRenderPanel
+headsUpDisplay
+headsUpMessage
+help
+helpLine
+hermite
+hide
+hilite
+hitTest
+hotBox
+hotkey
+hotkeyCheck
+hsv_to_rgb
+hudButton
+hudSlider
+hudSliderButton
+hwReflectionMap
+hwRender
+hwRenderLoad
+hyperGraph
+hyperPanel
+hyperShade
+hypot
+iconTextButton
+iconTextCheckBox
+iconTextRadioButton
+iconTextRadioCollection
+iconTextScrollList
+iconTextStaticLabel
+ikHandle
+ikHandleCtx
+ikHandleDisplayScale
+ikSolver
+ikSplineHandleCtx
+ikSystem
+ikSystemInfo
+ikfkDisplayMethod
+illustratorCurves
+image
+imfPlugins
+inheritTransform
+insertJoint
+insertJointCtx
+insertKeyCtx
+insertKnotCurve
+insertKnotSurface
+instance
+instanceable
+instancer
+intField
+intFieldGrp
+intScrollBar
+intSlider
+intSliderGrp
+interToUI
+internalVar
+intersect
+iprEngine
+isAnimCurve
+isConnected
+isDirty
+isParentOf
+isSameObject
+isTrue
+isValidObjectName
+isValidString
+isValidUiName
+isolateSelect
+itemFilter
+itemFilterAttr
+itemFilterRender
+itemFilterType
+joint
+jointCluster
+jointCtx
+jointDisplayScale
+jointLattice
+keyTangent
+keyframe
+keyframeOutliner
+keyframeRegionCurrentTimeCtx
+keyframeRegionDirectKeyCtx
+keyframeRegionDollyCtx
+keyframeRegionInsertKeyCtx
+keyframeRegionMoveKeyCtx
+keyframeRegionScaleKeyCtx
+keyframeRegionSelectKeyCtx
+keyframeRegionSetKeyCtx
+keyframeRegionTrackCtx
+keyframeStats
+lassoContext
+lattice
+latticeDeformKeyCtx
+launch
+launchImageEditor
+layerButton
+layeredShaderPort
+layeredTexturePort
+layout
+layoutDialog
+lightList
+lightListEditor
+lightListPanel
+lightlink
+lineIntersection
+linearPrecision
+linstep
+listAnimatable
+listAttr
+listCameras
+listConnections
+listDeviceAttachments
+listHistory
+listInputDeviceAxes
+listInputDeviceButtons
+listInputDevices
+listMenuAnnotation
+listNodeTypes
+listPanelCategories
+listRelatives
+listSets
+listTransforms
+listUnselected
+listerEditor
+loadFluid
+loadNewShelf
+loadPlugin
+loadPluginLanguageResources
+loadPrefObjects
+localizedPanelLabel
+lockNode
+loft
+log
+longNameOf
+lookThru
+ls
+lsThroughFilter
+lsType
+lsUI
+Mayatomr
+mag
+makeIdentity
+makeLive
+makePaintable
+makeRoll
+makeSingleSurface
+makeTubeOn
+makebot
+manipMoveContext
+manipMoveLimitsCtx
+manipOptions
+manipRotateContext
+manipRotateLimitsCtx
+manipScaleContext
+manipScaleLimitsCtx
+marker
+match
+max
+memory
+menu
+menuBarLayout
+menuEditor
+menuItem
+menuItemToShelf
+menuSet
+menuSetPref
+messageLine
+min
+minimizeApp
+mirrorJoint
+modelCurrentTimeCtx
+modelEditor
+modelPanel
+mouse
+movIn
+movOut
+move
+moveIKtoFK
+moveKeyCtx
+moveVertexAlongDirection
+multiProfileBirailSurface
+mute
+nParticle
+nameCommand
+nameField
+namespace
+namespaceInfo
+newPanelItems
+newton
+nodeCast
+nodeIconButton
+nodeOutliner
+nodePreset
+nodeType
+noise
+nonLinear
+normalConstraint
+normalize
+nurbsBoolean
+nurbsCopyUVSet
+nurbsCube
+nurbsEditUV
+nurbsPlane
+nurbsSelect
+nurbsSquare
+nurbsToPoly
+nurbsToPolygonsPref
+nurbsToSubdiv
+nurbsToSubdivPref
+nurbsUVSet
+nurbsViewDirectionVector
+objExists
+objectCenter
+objectLayer
+objectType
+objectTypeUI
+obsoleteProc
+oceanNurbsPreviewPlane
+offsetCurve
+offsetCurveOnSurface
+offsetSurface
+openGLExtension
+openMayaPref
+optionMenu
+optionMenuGrp
+optionVar
+orbit
+orbitCtx
+orientConstraint
+outlinerEditor
+outlinerPanel
+overrideModifier
+paintEffectsDisplay
+pairBlend
+palettePort
+paneLayout
+panel
+panelConfiguration
+panelHistory
+paramDimContext
+paramDimension
+paramLocator
+parent
+parentConstraint
+particle
+particleExists
+particleInstancer
+particleRenderInfo
+partition
+pasteKey
+pathAnimation
+pause
+pclose
+percent
+performanceOptions
+pfxstrokes
+pickWalk
+picture
+pixelMove
+planarSrf
+plane
+play
+playbackOptions
+playblast
+plugAttr
+plugNode
+pluginInfo
+pluginResourceUtil
+pointConstraint
+pointCurveConstraint
+pointLight
+pointMatrixMult
+pointOnCurve
+pointOnSurface
+pointPosition
+poleVectorConstraint
+polyAppend
+polyAppendFacetCtx
+polyAppendVertex
+polyAutoProjection
+polyAverageNormal
+polyAverageVertex
+polyBevel
+polyBlendColor
+polyBlindData
+polyBoolOp
+polyBridgeEdge
+polyCacheMonitor
+polyCheck
+polyChipOff
+polyClipboard
+polyCloseBorder
+polyCollapseEdge
+polyCollapseFacet
+polyColorBlindData
+polyColorDel
+polyColorPerVertex
+polyColorSet
+polyCompare
+polyCone
+polyCopyUV
+polyCrease
+polyCreaseCtx
+polyCreateFacet
+polyCreateFacetCtx
+polyCube
+polyCut
+polyCutCtx
+polyCylinder
+polyCylindricalProjection
+polyDelEdge
+polyDelFacet
+polyDelVertex
+polyDuplicateAndConnect
+polyDuplicateEdge
+polyEditUV
+polyEditUVShell
+polyEvaluate
+polyExtrudeEdge
+polyExtrudeFacet
+polyExtrudeVertex
+polyFlipEdge
+polyFlipUV
+polyForceUV
+polyGeoSampler
+polyHelix
+polyInfo
+polyInstallAction
+polyLayoutUV
+polyListComponentConversion
+polyMapCut
+polyMapDel
+polyMapSew
+polyMapSewMove
+polyMergeEdge
+polyMergeEdgeCtx
+polyMergeFacet
+polyMergeFacetCtx
+polyMergeUV
+polyMergeVertex
+polyMirrorFace
+polyMoveEdge
+polyMoveFacet
+polyMoveFacetUV
+polyMoveUV
+polyMoveVertex
+polyNormal
+polyNormalPerVertex
+polyNormalizeUV
+polyOptUvs
+polyOptions
+polyOutput
+polyPipe
+polyPlanarProjection
+polyPlane
+polyPlatonicSolid
+polyPoke
+polyPrimitive
+polyPrism
+polyProjection
+polyPyramid
+polyQuad
+polyQueryBlindData
+polyReduce
+polySelect
+polySelectConstraint
+polySelectConstraintMonitor
+polySelectCtx
+polySelectEditCtx
+polySeparate
+polySetToFaceNormal
+polySewEdge
+polyShortestPathCtx
+polySmooth
+polySoftEdge
+polySphere
+polySphericalProjection
+polySplit
+polySplitCtx
+polySplitEdge
+polySplitRing
+polySplitVertex
+polyStraightenUVBorder
+polySubdivideEdge
+polySubdivideFacet
+polyToSubdiv
+polyTorus
+polyTransfer
+polyTriangulate
+polyUVSet
+polyUnite
+polyWedgeFace
+popen
+popupMenu
+pose
+pow
+preloadRefEd
+print
+progressBar
+progressWindow
+projFileViewer
+projectCurve
+projectTangent
+projectionContext
+projectionManip
+promptDialog
+propModCtx
+propMove
+psdChannelOutliner
+psdEditTextureFile
+psdExport
+psdTextureFile
+putenv
+pwd
+python
+querySubdiv
+quit
+rad_to_deg
+radial
+radioButton
+radioButtonGrp
+radioCollection
+radioMenuItemCollection
+rampColorPort
+rand
+randomizeFollicles
+randstate
+rangeControl
+readTake
+rebuildCurve
+rebuildSurface
+recordAttr
+recordDevice
+redo
+reference
+referenceEdit
+referenceQuery
+refineSubdivSelectionList
+refresh
+refreshAE
+registerPluginResource
+rehash
+reloadImage
+removeJoint
+removeMultiInstance
+removePanelCategory
+rename
+renameAttr
+renameSelectionList
+renameUI
+render
+renderGlobalsNode
+renderInfo
+renderLayerButton
+renderLayerParent
+renderLayerPostProcess
+renderLayerUnparent
+renderManip
+renderPartition
+renderQualityNode
+renderSettings
+renderThumbnailUpdate
+renderWindowEditor
+renderWindowSelectContext
+renderer
+reorder
+reorderDeformers
+requires
+reroot
+resampleFluid
+resetAE
+resetPfxToPolyCamera
+resetTool
+resolutionNode
+retarget
+reverseCurve
+reverseSurface
+revolve
+rgb_to_hsv
+rigidBody
+rigidSolver
+roll
+rollCtx
+rootOf
+rot
+rotate
+rotationInterpolation
+roundConstantRadius
+rowColumnLayout
+rowLayout
+runTimeCommand
+runup
+sampleImage
+saveAllShelves
+saveAttrPreset
+saveFluid
+saveImage
+saveInitialState
+saveMenu
+savePrefObjects
+savePrefs
+saveShelf
+saveToolSettings
+scale
+scaleBrushBrightness
+scaleComponents
+scaleConstraint
+scaleKey
+scaleKeyCtx
+sceneEditor
+sceneUIReplacement
+scmh
+scriptCtx
+scriptEditorInfo
+scriptJob
+scriptNode
+scriptTable
+scriptToShelf
+scriptedPanel
+scriptedPanelType
+scrollField
+scrollLayout
+sculpt
+searchPathArray
+seed
+selLoadSettings
+select
+selectContext
+selectCurveCV
+selectKey
+selectKeyCtx
+selectKeyframeRegionCtx
+selectMode
+selectPref
+selectPriority
+selectType
+selectedNodes
+selectionConnection
+separator
+setAttr
+setAttrEnumResource
+setAttrMapping
+setAttrNiceNameResource
+setConstraintRestPosition
+setDefaultShadingGroup
+setDrivenKeyframe
+setDynamic
+setEditCtx
+setEditor
+setFluidAttr
+setFocus
+setInfinity
+setInputDeviceMapping
+setKeyCtx
+setKeyPath
+setKeyframe
+setKeyframeBlendshapeTargetWts
+setMenuMode
+setNodeNiceNameResource
+setNodeTypeFlag
+setParent
+setParticleAttr
+setPfxToPolyCamera
+setPluginResource
+setProject
+setStampDensity
+setStartupMessage
+setState
+setToolTo
+setUITemplate
+setXformManip
+sets
+shadingConnection
+shadingGeometryRelCtx
+shadingLightRelCtx
+shadingNetworkCompare
+shadingNode
+shapeCompare
+shelfButton
+shelfLayout
+shelfTabLayout
+shellField
+shortNameOf
+showHelp
+showHidden
+showManipCtx
+showSelectionInTitle
+showShadingGroupAttrEditor
+showWindow
+sign
+simplify
+sin
+singleProfileBirailSurface
+size
+sizeBytes
+skinCluster
+skinPercent
+smoothCurve
+smoothTangentSurface
+smoothstep
+snap2to2
+snapKey
+snapMode
+snapTogetherCtx
+snapshot
+soft
+softMod
+softModCtx
+sort
+sound
+soundControl
+source
+spaceLocator
+sphere
+sphrand
+spotLight
+spotLightPreviewPort
+spreadSheetEditor
+spring
+sqrt
+squareSurface
+srtContext
+stackTrace
+startString
+startsWith
+stitchAndExplodeShell
+stitchSurface
+stitchSurfacePoints
+strcmp
+stringArrayCatenate
+stringArrayContains
+stringArrayCount
+stringArrayInsertAtIndex
+stringArrayIntersector
+stringArrayRemove
+stringArrayRemoveAtIndex
+stringArrayRemoveDuplicates
+stringArrayRemoveExact
+stringArrayToString
+stringToStringArray
+strip
+stripPrefixFromName
+stroke
+subdAutoProjection
+subdCleanTopology
+subdCollapse
+subdDuplicateAndConnect
+subdEditUV
+subdListComponentConversion
+subdMapCut
+subdMapSewMove
+subdMatchTopology
+subdMirror
+subdToBlind
+subdToPoly
+subdTransferUVsToCache
+subdiv
+subdivCrease
+subdivDisplaySmoothness
+substitute
+substituteAllString
+substituteGeometry
+substring
+surface
+surfaceSampler
+surfaceShaderList
+swatchDisplayPort
+switchTable
+symbolButton
+symbolCheckBox
+sysFile
+system
+tabLayout
+tan
+tangentConstraint
+texLatticeDeformContext
+texManipContext
+texMoveContext
+texMoveUVShellContext
+texRotateContext
+texScaleContext
+texSelectContext
+texSelectShortestPathCtx
+texSmudgeUVContext
+texWinToolCtx
+text
+textCurves
+textField
+textFieldButtonGrp
+textFieldGrp
+textManip
+textScrollList
+textToShelf
+textureDisplacePlane
+textureHairColor
+texturePlacementContext
+textureWindow
+threadCount
+threePointArcCtx
+timeControl
+timePort
+timerX
+toNativePath
+toggle
+toggleAxis
+toggleWindowVisibility
+tokenize
+tokenizeList
+tolerance
+tolower
+toolButton
+toolCollection
+toolDropped
+toolHasOptions
+toolPropertyWindow
+torus
+toupper
+trace
+track
+trackCtx
+transferAttributes
+transformCompare
+transformLimits
+translator
+trim
+trunc
+truncateFluidCache
+truncateHairCache
+tumble
+tumbleCtx
+turbulence
+twoPointArcCtx
+uiRes
+uiTemplate
+unassignInputDevice
+undo
+undoInfo
+ungroup
+uniform
+unit
+unloadPlugin
+untangleUV
+untitledFileName
+untrim
+upAxis
+updateAE
+userCtx
+uvLink
+uvSnapshot
+validateShelfName
+vectorize
+view2dToolCtx
+viewCamera
+viewClipPlane
+viewFit
+viewHeadOn
+viewLookAt
+viewManip
+viewPlace
+viewSet
+visor
+volumeAxis
+vortex
+waitCursor
+warning
+webBrowser
+webBrowserPrefs
+whatIs
+window
+windowPref
+wire
+wireContext
+workspace
+wrinkle
+wrinkleContext
+writeTake
+xbmLangPathList
+xform
+
+----------------------------------------------------
+
+[
+	["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "foo_bar_42"], ["punctuation", "("], ["punctuation", ")"],
+
+	["function", "about"],
+	["function", "abs"],
+	["function", "addAttr"],
+	["function", "addAttributeEditorNodeHelp"],
+	["function", "addDynamic"],
+	["function", "addNewShelfTab"],
+	["function", "addPP"],
+	["function", "addPanelCategory"],
+	["function", "addPrefixToName"],
+	["function", "advanceToNextDrivenKey"],
+	["function", "affectedNet"],
+	["function", "affects"],
+	["function", "aimConstraint"],
+	["function", "air"],
+	["function", "alias"],
+	["function", "aliasAttr"],
+	["function", "align"],
+	["function", "alignCtx"],
+	["function", "alignCurve"],
+	["function", "alignSurface"],
+	["function", "allViewFit"],
+	["function", "ambientLight"],
+	["function", "angle"],
+	["function", "angleBetween"],
+	["function", "animCone"],
+	["function", "animCurveEditor"],
+	["function", "animDisplay"],
+	["function", "animView"],
+	["function", "annotate"],
+	["function", "appendStringArray"],
+	["function", "applicationName"],
+	["function", "applyAttrPreset"],
+	["function", "applyTake"],
+	["function", "arcLenDimContext"],
+	["function", "arcLengthDimension"],
+	["function", "arclen"],
+	["function", "arrayMapper"],
+	["function", "art3dPaintCtx"],
+	["function", "artAttrCtx"],
+	["function", "artAttrPaintVertexCtx"],
+	["function", "artAttrSkinPaintCtx"],
+	["function", "artAttrTool"],
+	["function", "artBuildPaintMenu"],
+	["function", "artFluidAttrCtx"],
+	["function", "artPuttyCtx"],
+	["function", "artSelectCtx"],
+	["function", "artSetPaintCtx"],
+	["function", "artUserPaintCtx"],
+	["function", "assignCommand"],
+	["function", "assignInputDevice"],
+	["function", "assignViewportFactories"],
+	["function", "attachCurve"],
+	["function", "attachDeviceAttr"],
+	["function", "attachSurface"],
+	["function", "attrColorSliderGrp"],
+	["function", "attrCompatibility"],
+	["function", "attrControlGrp"],
+	["function", "attrEnumOptionMenu"],
+	["function", "attrEnumOptionMenuGrp"],
+	["function", "attrFieldGrp"],
+	["function", "attrFieldSliderGrp"],
+	["function", "attrNavigationControlGrp"],
+	["function", "attrPresetEditWin"],
+	["function", "attributeExists"],
+	["function", "attributeInfo"],
+	["function", "attributeMenu"],
+	["function", "attributeQuery"],
+	["function", "autoKeyframe"],
+	["function", "autoPlace"],
+	["function", "bakeClip"],
+	["function", "bakeFluidShading"],
+	["function", "bakePartialHistory"],
+	["function", "bakeResults"],
+	["function", "bakeSimulation"],
+	["function", "basename"],
+	["function", "basenameEx"],
+	["function", "batchRender"],
+	["function", "bessel"],
+	["function", "bevel"],
+	["function", "bevelPlus"],
+	["function", "binMembership"],
+	["function", "bindSkin"],
+	["function", "blend2"],
+	["function", "blendShape"],
+	["function", "blendShapeEditor"],
+	["function", "blendShapePanel"],
+	["function", "blendTwoAttr"],
+	["function", "blindDataType"],
+	["function", "boneLattice"],
+	["function", "boundary"],
+	["function", "boxDollyCtx"],
+	["function", "boxZoomCtx"],
+	["function", "bufferCurve"],
+	["function", "buildBookmarkMenu"],
+	["function", "buildKeyframeMenu"],
+	["function", "button"],
+	["function", "buttonManip"],
+	["function", "CBG"],
+	["function", "cacheFile"],
+	["function", "cacheFileCombine"],
+	["function", "cacheFileMerge"],
+	["function", "cacheFileTrack"],
+	["function", "camera"],
+	["function", "cameraView"],
+	["function", "canCreateManip"],
+	["function", "canvas"],
+	["function", "capitalizeString"],
+	["function", "catch"],
+	["function", "catchQuiet"],
+	["function", "ceil"],
+	["function", "changeSubdivComponentDisplayLevel"],
+	["function", "changeSubdivRegion"],
+	["function", "channelBox"],
+	["function", "character"],
+	["function", "characterMap"],
+	["function", "characterOutlineEditor"],
+	["function", "characterize"],
+	["function", "chdir"],
+	["function", "checkBox"],
+	["function", "checkBoxGrp"],
+	["function", "checkDefaultRenderGlobals"],
+	["function", "choice"],
+	["function", "circle"],
+	["function", "circularFillet"],
+	["function", "clamp"],
+	["function", "clear"],
+	["function", "clearCache"],
+	["function", "clip"],
+	["function", "clipEditor"],
+	["function", "clipEditorCurrentTimeCtx"],
+	["function", "clipSchedule"],
+	["function", "clipSchedulerOutliner"],
+	["function", "clipTrimBefore"],
+	["function", "closeCurve"],
+	["function", "closeSurface"],
+	["function", "cluster"],
+	["function", "cmdFileOutput"],
+	["function", "cmdScrollFieldExecuter"],
+	["function", "cmdScrollFieldReporter"],
+	["function", "cmdShell"],
+	["function", "coarsenSubdivSelectionList"],
+	["function", "collision"],
+	["function", "color"],
+	["function", "colorAtPoint"],
+	["function", "colorEditor"],
+	["function", "colorIndex"],
+	["function", "colorIndexSliderGrp"],
+	["function", "colorSliderButtonGrp"],
+	["function", "colorSliderGrp"],
+	["function", "columnLayout"],
+	["function", "commandEcho"],
+	["function", "commandLine"],
+	["function", "commandPort"],
+	["function", "compactHairSystem"],
+	["function", "componentEditor"],
+	["function", "compositingInterop"],
+	["function", "computePolysetVolume"],
+	["function", "condition"],
+	["function", "cone"],
+	["function", "confirmDialog"],
+	["function", "connectAttr"],
+	["function", "connectControl"],
+	["function", "connectDynamic"],
+	["function", "connectJoint"],
+	["function", "connectionInfo"],
+	["function", "constrain"],
+	["function", "constrainValue"],
+	["function", "constructionHistory"],
+	["function", "container"],
+	["function", "containsMultibyte"],
+	["function", "contextInfo"],
+	["function", "control"],
+	["function", "convertFromOldLayers"],
+	["function", "convertIffToPsd"],
+	["function", "convertLightmap"],
+	["function", "convertSolidTx"],
+	["function", "convertTessellation"],
+	["function", "convertUnit"],
+	["function", "copyArray"],
+	["function", "copyFlexor"],
+	["function", "copyKey"],
+	["function", "copySkinWeights"],
+	["function", "cos"],
+	["function", "cpButton"],
+	["function", "cpCache"],
+	["function", "cpClothSet"],
+	["function", "cpCollision"],
+	["function", "cpConstraint"],
+	["function", "cpConvClothToMesh"],
+	["function", "cpForces"],
+	["function", "cpGetSolverAttr"],
+	["function", "cpPanel"],
+	["function", "cpProperty"],
+	["function", "cpRigidCollisionFilter"],
+	["function", "cpSeam"],
+	["function", "cpSetEdit"],
+	["function", "cpSetSolverAttr"],
+	["function", "cpSolver"],
+	["function", "cpSolverTypes"],
+	["function", "cpTool"],
+	["function", "cpUpdateClothUVs"],
+	["function", "createDisplayLayer"],
+	["function", "createDrawCtx"],
+	["function", "createEditor"],
+	["function", "createLayeredPsdFile"],
+	["function", "createMotionField"],
+	["function", "createNewShelf"],
+	["function", "createNode"],
+	["function", "createRenderLayer"],
+	["function", "createSubdivRegion"],
+	["function", "cross"],
+	["function", "crossProduct"],
+	["function", "ctxAbort"],
+	["function", "ctxCompletion"],
+	["function", "ctxEditMode"],
+	["function", "ctxTraverse"],
+	["function", "currentCtx"],
+	["function", "currentTime"],
+	["function", "currentTimeCtx"],
+	["function", "currentUnit"],
+	["function", "curve"],
+	["function", "curveAddPtCtx"],
+	["function", "curveCVCtx"],
+	["function", "curveEPCtx"],
+	["function", "curveEditorCtx"],
+	["function", "curveIntersect"],
+	["function", "curveMoveEPCtx"],
+	["function", "curveOnSurface"],
+	["function", "curveSketchCtx"],
+	["function", "cutKey"],
+	["function", "cycleCheck"],
+	["function", "cylinder"],
+	["function", "dagPose"],
+	["function", "date"],
+	["function", "defaultLightListCheckBox"],
+	["function", "defaultNavigation"],
+	["function", "defineDataServer"],
+	["function", "defineVirtualDevice"],
+	["function", "deformer"],
+	["function", "deg_to_rad"],
+	["function", "delete"],
+	["function", "deleteAttr"],
+	["function", "deleteShadingGroupsAndMaterials"],
+	["function", "deleteShelfTab"],
+	["function", "deleteUI"],
+	["function", "deleteUnusedBrushes"],
+	["function", "delrandstr"],
+	["function", "detachCurve"],
+	["function", "detachDeviceAttr"],
+	["function", "detachSurface"],
+	["function", "deviceEditor"],
+	["function", "devicePanel"],
+	["function", "dgInfo"],
+	["function", "dgdirty"],
+	["function", "dgeval"],
+	["function", "dgtimer"],
+	["function", "dimWhen"],
+	["function", "directKeyCtx"],
+	["function", "directionalLight"],
+	["function", "dirmap"],
+	["function", "dirname"],
+	["function", "disable"],
+	["function", "disconnectAttr"],
+	["function", "disconnectJoint"],
+	["function", "diskCache"],
+	["function", "displacementToPoly"],
+	["function", "displayAffected"],
+	["function", "displayColor"],
+	["function", "displayCull"],
+	["function", "displayLevelOfDetail"],
+	["function", "displayPref"],
+	["function", "displayRGBColor"],
+	["function", "displaySmoothness"],
+	["function", "displayStats"],
+	["function", "displayString"],
+	["function", "displaySurface"],
+	["function", "distanceDimContext"],
+	["function", "distanceDimension"],
+	["function", "doBlur"],
+	["function", "dolly"],
+	["function", "dollyCtx"],
+	["function", "dopeSheetEditor"],
+	["function", "dot"],
+	["function", "dotProduct"],
+	["function", "doubleProfileBirailSurface"],
+	["function", "drag"],
+	["function", "dragAttrContext"],
+	["function", "draggerContext"],
+	["function", "dropoffLocator"],
+	["function", "duplicate"],
+	["function", "duplicateCurve"],
+	["function", "duplicateSurface"],
+	["function", "dynCache"],
+	["function", "dynControl"],
+	["function", "dynExport"],
+	["function", "dynExpression"],
+	["function", "dynGlobals"],
+	["function", "dynPaintEditor"],
+	["function", "dynParticleCtx"],
+	["function", "dynPref"],
+	["function", "dynRelEdPanel"],
+	["function", "dynRelEditor"],
+	["function", "dynamicLoad"],
+	["function", "editAttrLimits"],
+	["function", "editDisplayLayerGlobals"],
+	["function", "editDisplayLayerMembers"],
+	["function", "editRenderLayerAdjustment"],
+	["function", "editRenderLayerGlobals"],
+	["function", "editRenderLayerMembers"],
+	["function", "editor"],
+	["function", "editorTemplate"],
+	["function", "effector"],
+	["function", "emit"],
+	["function", "emitter"],
+	["function", "enableDevice"],
+	["function", "encodeString"],
+	["function", "endString"],
+	["function", "endsWith"],
+	["function", "env"],
+	["function", "equivalent"],
+	["function", "equivalentTol"],
+	["function", "erf"],
+	["function", "error"],
+	["function", "eval"],
+	["function", "evalDeferred"],
+	["function", "evalEcho"],
+	["function", "event"],
+	["function", "exactWorldBoundingBox"],
+	["function", "exclusiveLightCheckBox"],
+	["function", "exec"],
+	["function", "executeForEachObject"],
+	["function", "exists"],
+	["function", "exp"],
+	["function", "expression"],
+	["function", "expressionEditorListen"],
+	["function", "extendCurve"],
+	["function", "extendSurface"],
+	["function", "extrude"],
+	["function", "fcheck"],
+	["function", "fclose"],
+	["function", "feof"],
+	["function", "fflush"],
+	["function", "fgetline"],
+	["function", "fgetword"],
+	["function", "file"],
+	["function", "fileBrowserDialog"],
+	["function", "fileDialog"],
+	["function", "fileExtension"],
+	["function", "fileInfo"],
+	["function", "filetest"],
+	["function", "filletCurve"],
+	["function", "filter"],
+	["function", "filterCurve"],
+	["function", "filterExpand"],
+	["function", "filterStudioImport"],
+	["function", "findAllIntersections"],
+	["function", "findAnimCurves"],
+	["function", "findKeyframe"],
+	["function", "findMenuItem"],
+	["function", "findRelatedSkinCluster"],
+	["function", "finder"],
+	["function", "firstParentOf"],
+	["function", "fitBspline"],
+	["function", "flexor"],
+	["function", "floatEq"],
+	["function", "floatField"],
+	["function", "floatFieldGrp"],
+	["function", "floatScrollBar"],
+	["function", "floatSlider"],
+	["function", "floatSlider2"],
+	["function", "floatSliderButtonGrp"],
+	["function", "floatSliderGrp"],
+	["function", "floor"],
+	["function", "flow"],
+	["function", "fluidCacheInfo"],
+	["function", "fluidEmitter"],
+	["function", "fluidVoxelInfo"],
+	["function", "flushUndo"],
+	["function", "fmod"],
+	["function", "fontDialog"],
+	["function", "fopen"],
+	["function", "formLayout"],
+	["function", "format"],
+	["function", "fprint"],
+	["function", "frameLayout"],
+	["function", "fread"],
+	["function", "freeFormFillet"],
+	["function", "frewind"],
+	["function", "fromNativePath"],
+	["function", "fwrite"],
+	["function", "gamma"],
+	["function", "gauss"],
+	["function", "geometryConstraint"],
+	["function", "getApplicationVersionAsFloat"],
+	["function", "getAttr"],
+	["function", "getClassification"],
+	["function", "getDefaultBrush"],
+	["function", "getFileList"],
+	["function", "getFluidAttr"],
+	["function", "getInputDeviceRange"],
+	["function", "getMayaPanelTypes"],
+	["function", "getModifiers"],
+	["function", "getPanel"],
+	["function", "getParticleAttr"],
+	["function", "getPluginResource"],
+	["function", "getenv"],
+	["function", "getpid"],
+	["function", "glRender"],
+	["function", "glRenderEditor"],
+	["function", "globalStitch"],
+	["function", "gmatch"],
+	["function", "goal"],
+	["function", "gotoBindPose"],
+	["function", "grabColor"],
+	["function", "gradientControl"],
+	["function", "gradientControlNoAttr"],
+	["function", "graphDollyCtx"],
+	["function", "graphSelectContext"],
+	["function", "graphTrackCtx"],
+	["function", "gravity"],
+	["function", "grid"],
+	["function", "gridLayout"],
+	["function", "group"],
+	["function", "groupObjectsByName"],
+	["function", "HfAddAttractorToAS"],
+	["function", "HfAssignAS"],
+	["function", "HfBuildEqualMap"],
+	["function", "HfBuildFurFiles"],
+	["function", "HfBuildFurImages"],
+	["function", "HfCancelAFR"],
+	["function", "HfConnectASToHF"],
+	["function", "HfCreateAttractor"],
+	["function", "HfDeleteAS"],
+	["function", "HfEditAS"],
+	["function", "HfPerformCreateAS"],
+	["function", "HfRemoveAttractorFromAS"],
+	["function", "HfSelectAttached"],
+	["function", "HfSelectAttractors"],
+	["function", "HfUnAssignAS"],
+	["function", "hardenPointCurve"],
+	["function", "hardware"],
+	["function", "hardwareRenderPanel"],
+	["function", "headsUpDisplay"],
+	["function", "headsUpMessage"],
+	["function", "help"],
+	["function", "helpLine"],
+	["function", "hermite"],
+	["function", "hide"],
+	["function", "hilite"],
+	["function", "hitTest"],
+	["function", "hotBox"],
+	["function", "hotkey"],
+	["function", "hotkeyCheck"],
+	["function", "hsv_to_rgb"],
+	["function", "hudButton"],
+	["function", "hudSlider"],
+	["function", "hudSliderButton"],
+	["function", "hwReflectionMap"],
+	["function", "hwRender"],
+	["function", "hwRenderLoad"],
+	["function", "hyperGraph"],
+	["function", "hyperPanel"],
+	["function", "hyperShade"],
+	["function", "hypot"],
+	["function", "iconTextButton"],
+	["function", "iconTextCheckBox"],
+	["function", "iconTextRadioButton"],
+	["function", "iconTextRadioCollection"],
+	["function", "iconTextScrollList"],
+	["function", "iconTextStaticLabel"],
+	["function", "ikHandle"],
+	["function", "ikHandleCtx"],
+	["function", "ikHandleDisplayScale"],
+	["function", "ikSolver"],
+	["function", "ikSplineHandleCtx"],
+	["function", "ikSystem"],
+	["function", "ikSystemInfo"],
+	["function", "ikfkDisplayMethod"],
+	["function", "illustratorCurves"],
+	["function", "image"],
+	["function", "imfPlugins"],
+	["function", "inheritTransform"],
+	["function", "insertJoint"],
+	["function", "insertJointCtx"],
+	["function", "insertKeyCtx"],
+	["function", "insertKnotCurve"],
+	["function", "insertKnotSurface"],
+	["function", "instance"],
+	["function", "instanceable"],
+	["function", "instancer"],
+	["function", "intField"],
+	["function", "intFieldGrp"],
+	["function", "intScrollBar"],
+	["function", "intSlider"],
+	["function", "intSliderGrp"],
+	["function", "interToUI"],
+	["function", "internalVar"],
+	["function", "intersect"],
+	["function", "iprEngine"],
+	["function", "isAnimCurve"],
+	["function", "isConnected"],
+	["function", "isDirty"],
+	["function", "isParentOf"],
+	["function", "isSameObject"],
+	["function", "isTrue"],
+	["function", "isValidObjectName"],
+	["function", "isValidString"],
+	["function", "isValidUiName"],
+	["function", "isolateSelect"],
+	["function", "itemFilter"],
+	["function", "itemFilterAttr"],
+	["function", "itemFilterRender"],
+	["function", "itemFilterType"],
+	["function", "joint"],
+	["function", "jointCluster"],
+	["function", "jointCtx"],
+	["function", "jointDisplayScale"],
+	["function", "jointLattice"],
+	["function", "keyTangent"],
+	["function", "keyframe"],
+	["function", "keyframeOutliner"],
+	["function", "keyframeRegionCurrentTimeCtx"],
+	["function", "keyframeRegionDirectKeyCtx"],
+	["function", "keyframeRegionDollyCtx"],
+	["function", "keyframeRegionInsertKeyCtx"],
+	["function", "keyframeRegionMoveKeyCtx"],
+	["function", "keyframeRegionScaleKeyCtx"],
+	["function", "keyframeRegionSelectKeyCtx"],
+	["function", "keyframeRegionSetKeyCtx"],
+	["function", "keyframeRegionTrackCtx"],
+	["function", "keyframeStats"],
+	["function", "lassoContext"],
+	["function", "lattice"],
+	["function", "latticeDeformKeyCtx"],
+	["function", "launch"],
+	["function", "launchImageEditor"],
+	["function", "layerButton"],
+	["function", "layeredShaderPort"],
+	["function", "layeredTexturePort"],
+	["function", "layout"],
+	["function", "layoutDialog"],
+	["function", "lightList"],
+	["function", "lightListEditor"],
+	["function", "lightListPanel"],
+	["function", "lightlink"],
+	["function", "lineIntersection"],
+	["function", "linearPrecision"],
+	["function", "linstep"],
+	["function", "listAnimatable"],
+	["function", "listAttr"],
+	["function", "listCameras"],
+	["function", "listConnections"],
+	["function", "listDeviceAttachments"],
+	["function", "listHistory"],
+	["function", "listInputDeviceAxes"],
+	["function", "listInputDeviceButtons"],
+	["function", "listInputDevices"],
+	["function", "listMenuAnnotation"],
+	["function", "listNodeTypes"],
+	["function", "listPanelCategories"],
+	["function", "listRelatives"],
+	["function", "listSets"],
+	["function", "listTransforms"],
+	["function", "listUnselected"],
+	["function", "listerEditor"],
+	["function", "loadFluid"],
+	["function", "loadNewShelf"],
+	["function", "loadPlugin"],
+	["function", "loadPluginLanguageResources"],
+	["function", "loadPrefObjects"],
+	["function", "localizedPanelLabel"],
+	["function", "lockNode"],
+	["function", "loft"],
+	["function", "log"],
+	["function", "longNameOf"],
+	["function", "lookThru"],
+	["function", "ls"],
+	["function", "lsThroughFilter"],
+	["function", "lsType"],
+	["function", "lsUI"],
+	["function", "Mayatomr"],
+	["function", "mag"],
+	["function", "makeIdentity"],
+	["function", "makeLive"],
+	["function", "makePaintable"],
+	["function", "makeRoll"],
+	["function", "makeSingleSurface"],
+	["function", "makeTubeOn"],
+	["function", "makebot"],
+	["function", "manipMoveContext"],
+	["function", "manipMoveLimitsCtx"],
+	["function", "manipOptions"],
+	["function", "manipRotateContext"],
+	["function", "manipRotateLimitsCtx"],
+	["function", "manipScaleContext"],
+	["function", "manipScaleLimitsCtx"],
+	["function", "marker"],
+	["function", "match"],
+	["function", "max"],
+	["function", "memory"],
+	["function", "menu"],
+	["function", "menuBarLayout"],
+	["function", "menuEditor"],
+	["function", "menuItem"],
+	["function", "menuItemToShelf"],
+	["function", "menuSet"],
+	["function", "menuSetPref"],
+	["function", "messageLine"],
+	["function", "min"],
+	["function", "minimizeApp"],
+	["function", "mirrorJoint"],
+	["function", "modelCurrentTimeCtx"],
+	["function", "modelEditor"],
+	["function", "modelPanel"],
+	["function", "mouse"],
+	["function", "movIn"],
+	["function", "movOut"],
+	["function", "move"],
+	["function", "moveIKtoFK"],
+	["function", "moveKeyCtx"],
+	["function", "moveVertexAlongDirection"],
+	["function", "multiProfileBirailSurface"],
+	["function", "mute"],
+	["function", "nParticle"],
+	["function", "nameCommand"],
+	["function", "nameField"],
+	["function", "namespace"],
+	["function", "namespaceInfo"],
+	["function", "newPanelItems"],
+	["function", "newton"],
+	["function", "nodeCast"],
+	["function", "nodeIconButton"],
+	["function", "nodeOutliner"],
+	["function", "nodePreset"],
+	["function", "nodeType"],
+	["function", "noise"],
+	["function", "nonLinear"],
+	["function", "normalConstraint"],
+	["function", "normalize"],
+	["function", "nurbsBoolean"],
+	["function", "nurbsCopyUVSet"],
+	["function", "nurbsCube"],
+	["function", "nurbsEditUV"],
+	["function", "nurbsPlane"],
+	["function", "nurbsSelect"],
+	["function", "nurbsSquare"],
+	["function", "nurbsToPoly"],
+	["function", "nurbsToPolygonsPref"],
+	["function", "nurbsToSubdiv"],
+	["function", "nurbsToSubdivPref"],
+	["function", "nurbsUVSet"],
+	["function", "nurbsViewDirectionVector"],
+	["function", "objExists"],
+	["function", "objectCenter"],
+	["function", "objectLayer"],
+	["function", "objectType"],
+	["function", "objectTypeUI"],
+	["function", "obsoleteProc"],
+	["function", "oceanNurbsPreviewPlane"],
+	["function", "offsetCurve"],
+	["function", "offsetCurveOnSurface"],
+	["function", "offsetSurface"],
+	["function", "openGLExtension"],
+	["function", "openMayaPref"],
+	["function", "optionMenu"],
+	["function", "optionMenuGrp"],
+	["function", "optionVar"],
+	["function", "orbit"],
+	["function", "orbitCtx"],
+	["function", "orientConstraint"],
+	["function", "outlinerEditor"],
+	["function", "outlinerPanel"],
+	["function", "overrideModifier"],
+	["function", "paintEffectsDisplay"],
+	["function", "pairBlend"],
+	["function", "palettePort"],
+	["function", "paneLayout"],
+	["function", "panel"],
+	["function", "panelConfiguration"],
+	["function", "panelHistory"],
+	["function", "paramDimContext"],
+	["function", "paramDimension"],
+	["function", "paramLocator"],
+	["function", "parent"],
+	["function", "parentConstraint"],
+	["function", "particle"],
+	["function", "particleExists"],
+	["function", "particleInstancer"],
+	["function", "particleRenderInfo"],
+	["function", "partition"],
+	["function", "pasteKey"],
+	["function", "pathAnimation"],
+	["function", "pause"],
+	["function", "pclose"],
+	["function", "percent"],
+	["function", "performanceOptions"],
+	["function", "pfxstrokes"],
+	["function", "pickWalk"],
+	["function", "picture"],
+	["function", "pixelMove"],
+	["function", "planarSrf"],
+	["function", "plane"],
+	["function", "play"],
+	["function", "playbackOptions"],
+	["function", "playblast"],
+	["function", "plugAttr"],
+	["function", "plugNode"],
+	["function", "pluginInfo"],
+	["function", "pluginResourceUtil"],
+	["function", "pointConstraint"],
+	["function", "pointCurveConstraint"],
+	["function", "pointLight"],
+	["function", "pointMatrixMult"],
+	["function", "pointOnCurve"],
+	["function", "pointOnSurface"],
+	["function", "pointPosition"],
+	["function", "poleVectorConstraint"],
+	["function", "polyAppend"],
+	["function", "polyAppendFacetCtx"],
+	["function", "polyAppendVertex"],
+	["function", "polyAutoProjection"],
+	["function", "polyAverageNormal"],
+	["function", "polyAverageVertex"],
+	["function", "polyBevel"],
+	["function", "polyBlendColor"],
+	["function", "polyBlindData"],
+	["function", "polyBoolOp"],
+	["function", "polyBridgeEdge"],
+	["function", "polyCacheMonitor"],
+	["function", "polyCheck"],
+	["function", "polyChipOff"],
+	["function", "polyClipboard"],
+	["function", "polyCloseBorder"],
+	["function", "polyCollapseEdge"],
+	["function", "polyCollapseFacet"],
+	["function", "polyColorBlindData"],
+	["function", "polyColorDel"],
+	["function", "polyColorPerVertex"],
+	["function", "polyColorSet"],
+	["function", "polyCompare"],
+	["function", "polyCone"],
+	["function", "polyCopyUV"],
+	["function", "polyCrease"],
+	["function", "polyCreaseCtx"],
+	["function", "polyCreateFacet"],
+	["function", "polyCreateFacetCtx"],
+	["function", "polyCube"],
+	["function", "polyCut"],
+	["function", "polyCutCtx"],
+	["function", "polyCylinder"],
+	["function", "polyCylindricalProjection"],
+	["function", "polyDelEdge"],
+	["function", "polyDelFacet"],
+	["function", "polyDelVertex"],
+	["function", "polyDuplicateAndConnect"],
+	["function", "polyDuplicateEdge"],
+	["function", "polyEditUV"],
+	["function", "polyEditUVShell"],
+	["function", "polyEvaluate"],
+	["function", "polyExtrudeEdge"],
+	["function", "polyExtrudeFacet"],
+	["function", "polyExtrudeVertex"],
+	["function", "polyFlipEdge"],
+	["function", "polyFlipUV"],
+	["function", "polyForceUV"],
+	["function", "polyGeoSampler"],
+	["function", "polyHelix"],
+	["function", "polyInfo"],
+	["function", "polyInstallAction"],
+	["function", "polyLayoutUV"],
+	["function", "polyListComponentConversion"],
+	["function", "polyMapCut"],
+	["function", "polyMapDel"],
+	["function", "polyMapSew"],
+	["function", "polyMapSewMove"],
+	["function", "polyMergeEdge"],
+	["function", "polyMergeEdgeCtx"],
+	["function", "polyMergeFacet"],
+	["function", "polyMergeFacetCtx"],
+	["function", "polyMergeUV"],
+	["function", "polyMergeVertex"],
+	["function", "polyMirrorFace"],
+	["function", "polyMoveEdge"],
+	["function", "polyMoveFacet"],
+	["function", "polyMoveFacetUV"],
+	["function", "polyMoveUV"],
+	["function", "polyMoveVertex"],
+	["function", "polyNormal"],
+	["function", "polyNormalPerVertex"],
+	["function", "polyNormalizeUV"],
+	["function", "polyOptUvs"],
+	["function", "polyOptions"],
+	["function", "polyOutput"],
+	["function", "polyPipe"],
+	["function", "polyPlanarProjection"],
+	["function", "polyPlane"],
+	["function", "polyPlatonicSolid"],
+	["function", "polyPoke"],
+	["function", "polyPrimitive"],
+	["function", "polyPrism"],
+	["function", "polyProjection"],
+	["function", "polyPyramid"],
+	["function", "polyQuad"],
+	["function", "polyQueryBlindData"],
+	["function", "polyReduce"],
+	["function", "polySelect"],
+	["function", "polySelectConstraint"],
+	["function", "polySelectConstraintMonitor"],
+	["function", "polySelectCtx"],
+	["function", "polySelectEditCtx"],
+	["function", "polySeparate"],
+	["function", "polySetToFaceNormal"],
+	["function", "polySewEdge"],
+	["function", "polyShortestPathCtx"],
+	["function", "polySmooth"],
+	["function", "polySoftEdge"],
+	["function", "polySphere"],
+	["function", "polySphericalProjection"],
+	["function", "polySplit"],
+	["function", "polySplitCtx"],
+	["function", "polySplitEdge"],
+	["function", "polySplitRing"],
+	["function", "polySplitVertex"],
+	["function", "polyStraightenUVBorder"],
+	["function", "polySubdivideEdge"],
+	["function", "polySubdivideFacet"],
+	["function", "polyToSubdiv"],
+	["function", "polyTorus"],
+	["function", "polyTransfer"],
+	["function", "polyTriangulate"],
+	["function", "polyUVSet"],
+	["function", "polyUnite"],
+	["function", "polyWedgeFace"],
+	["function", "popen"],
+	["function", "popupMenu"],
+	["function", "pose"],
+	["function", "pow"],
+	["function", "preloadRefEd"],
+	["function", "print"],
+	["function", "progressBar"],
+	["function", "progressWindow"],
+	["function", "projFileViewer"],
+	["function", "projectCurve"],
+	["function", "projectTangent"],
+	["function", "projectionContext"],
+	["function", "projectionManip"],
+	["function", "promptDialog"],
+	["function", "propModCtx"],
+	["function", "propMove"],
+	["function", "psdChannelOutliner"],
+	["function", "psdEditTextureFile"],
+	["function", "psdExport"],
+	["function", "psdTextureFile"],
+	["function", "putenv"],
+	["function", "pwd"],
+	["function", "python"],
+	["function", "querySubdiv"],
+	["function", "quit"],
+	["function", "rad_to_deg"],
+	["function", "radial"],
+	["function", "radioButton"],
+	["function", "radioButtonGrp"],
+	["function", "radioCollection"],
+	["function", "radioMenuItemCollection"],
+	["function", "rampColorPort"],
+	["function", "rand"],
+	["function", "randomizeFollicles"],
+	["function", "randstate"],
+	["function", "rangeControl"],
+	["function", "readTake"],
+	["function", "rebuildCurve"],
+	["function", "rebuildSurface"],
+	["function", "recordAttr"],
+	["function", "recordDevice"],
+	["function", "redo"],
+	["function", "reference"],
+	["function", "referenceEdit"],
+	["function", "referenceQuery"],
+	["function", "refineSubdivSelectionList"],
+	["function", "refresh"],
+	["function", "refreshAE"],
+	["function", "registerPluginResource"],
+	["function", "rehash"],
+	["function", "reloadImage"],
+	["function", "removeJoint"],
+	["function", "removeMultiInstance"],
+	["function", "removePanelCategory"],
+	["function", "rename"],
+	["function", "renameAttr"],
+	["function", "renameSelectionList"],
+	["function", "renameUI"],
+	["function", "render"],
+	["function", "renderGlobalsNode"],
+	["function", "renderInfo"],
+	["function", "renderLayerButton"],
+	["function", "renderLayerParent"],
+	["function", "renderLayerPostProcess"],
+	["function", "renderLayerUnparent"],
+	["function", "renderManip"],
+	["function", "renderPartition"],
+	["function", "renderQualityNode"],
+	["function", "renderSettings"],
+	["function", "renderThumbnailUpdate"],
+	["function", "renderWindowEditor"],
+	["function", "renderWindowSelectContext"],
+	["function", "renderer"],
+	["function", "reorder"],
+	["function", "reorderDeformers"],
+	["function", "requires"],
+	["function", "reroot"],
+	["function", "resampleFluid"],
+	["function", "resetAE"],
+	["function", "resetPfxToPolyCamera"],
+	["function", "resetTool"],
+	["function", "resolutionNode"],
+	["function", "retarget"],
+	["function", "reverseCurve"],
+	["function", "reverseSurface"],
+	["function", "revolve"],
+	["function", "rgb_to_hsv"],
+	["function", "rigidBody"],
+	["function", "rigidSolver"],
+	["function", "roll"],
+	["function", "rollCtx"],
+	["function", "rootOf"],
+	["function", "rot"],
+	["function", "rotate"],
+	["function", "rotationInterpolation"],
+	["function", "roundConstantRadius"],
+	["function", "rowColumnLayout"],
+	["function", "rowLayout"],
+	["function", "runTimeCommand"],
+	["function", "runup"],
+	["function", "sampleImage"],
+	["function", "saveAllShelves"],
+	["function", "saveAttrPreset"],
+	["function", "saveFluid"],
+	["function", "saveImage"],
+	["function", "saveInitialState"],
+	["function", "saveMenu"],
+	["function", "savePrefObjects"],
+	["function", "savePrefs"],
+	["function", "saveShelf"],
+	["function", "saveToolSettings"],
+	["function", "scale"],
+	["function", "scaleBrushBrightness"],
+	["function", "scaleComponents"],
+	["function", "scaleConstraint"],
+	["function", "scaleKey"],
+	["function", "scaleKeyCtx"],
+	["function", "sceneEditor"],
+	["function", "sceneUIReplacement"],
+	["function", "scmh"],
+	["function", "scriptCtx"],
+	["function", "scriptEditorInfo"],
+	["function", "scriptJob"],
+	["function", "scriptNode"],
+	["function", "scriptTable"],
+	["function", "scriptToShelf"],
+	["function", "scriptedPanel"],
+	["function", "scriptedPanelType"],
+	["function", "scrollField"],
+	["function", "scrollLayout"],
+	["function", "sculpt"],
+	["function", "searchPathArray"],
+	["function", "seed"],
+	["function", "selLoadSettings"],
+	["function", "select"],
+	["function", "selectContext"],
+	["function", "selectCurveCV"],
+	["function", "selectKey"],
+	["function", "selectKeyCtx"],
+	["function", "selectKeyframeRegionCtx"],
+	["function", "selectMode"],
+	["function", "selectPref"],
+	["function", "selectPriority"],
+	["function", "selectType"],
+	["function", "selectedNodes"],
+	["function", "selectionConnection"],
+	["function", "separator"],
+	["function", "setAttr"],
+	["function", "setAttrEnumResource"],
+	["function", "setAttrMapping"],
+	["function", "setAttrNiceNameResource"],
+	["function", "setConstraintRestPosition"],
+	["function", "setDefaultShadingGroup"],
+	["function", "setDrivenKeyframe"],
+	["function", "setDynamic"],
+	["function", "setEditCtx"],
+	["function", "setEditor"],
+	["function", "setFluidAttr"],
+	["function", "setFocus"],
+	["function", "setInfinity"],
+	["function", "setInputDeviceMapping"],
+	["function", "setKeyCtx"],
+	["function", "setKeyPath"],
+	["function", "setKeyframe"],
+	["function", "setKeyframeBlendshapeTargetWts"],
+	["function", "setMenuMode"],
+	["function", "setNodeNiceNameResource"],
+	["function", "setNodeTypeFlag"],
+	["function", "setParent"],
+	["function", "setParticleAttr"],
+	["function", "setPfxToPolyCamera"],
+	["function", "setPluginResource"],
+	["function", "setProject"],
+	["function", "setStampDensity"],
+	["function", "setStartupMessage"],
+	["function", "setState"],
+	["function", "setToolTo"],
+	["function", "setUITemplate"],
+	["function", "setXformManip"],
+	["function", "sets"],
+	["function", "shadingConnection"],
+	["function", "shadingGeometryRelCtx"],
+	["function", "shadingLightRelCtx"],
+	["function", "shadingNetworkCompare"],
+	["function", "shadingNode"],
+	["function", "shapeCompare"],
+	["function", "shelfButton"],
+	["function", "shelfLayout"],
+	["function", "shelfTabLayout"],
+	["function", "shellField"],
+	["function", "shortNameOf"],
+	["function", "showHelp"],
+	["function", "showHidden"],
+	["function", "showManipCtx"],
+	["function", "showSelectionInTitle"],
+	["function", "showShadingGroupAttrEditor"],
+	["function", "showWindow"],
+	["function", "sign"],
+	["function", "simplify"],
+	["function", "sin"],
+	["function", "singleProfileBirailSurface"],
+	["function", "size"],
+	["function", "sizeBytes"],
+	["function", "skinCluster"],
+	["function", "skinPercent"],
+	["function", "smoothCurve"],
+	["function", "smoothTangentSurface"],
+	["function", "smoothstep"],
+	["function", "snap2to2"],
+	["function", "snapKey"],
+	["function", "snapMode"],
+	["function", "snapTogetherCtx"],
+	["function", "snapshot"],
+	["function", "soft"],
+	["function", "softMod"],
+	["function", "softModCtx"],
+	["function", "sort"],
+	["function", "sound"],
+	["function", "soundControl"],
+	["function", "source"],
+	["function", "spaceLocator"],
+	["function", "sphere"],
+	["function", "sphrand"],
+	["function", "spotLight"],
+	["function", "spotLightPreviewPort"],
+	["function", "spreadSheetEditor"],
+	["function", "spring"],
+	["function", "sqrt"],
+	["function", "squareSurface"],
+	["function", "srtContext"],
+	["function", "stackTrace"],
+	["function", "startString"],
+	["function", "startsWith"],
+	["function", "stitchAndExplodeShell"],
+	["function", "stitchSurface"],
+	["function", "stitchSurfacePoints"],
+	["function", "strcmp"],
+	["function", "stringArrayCatenate"],
+	["function", "stringArrayContains"],
+	["function", "stringArrayCount"],
+	["function", "stringArrayInsertAtIndex"],
+	["function", "stringArrayIntersector"],
+	["function", "stringArrayRemove"],
+	["function", "stringArrayRemoveAtIndex"],
+	["function", "stringArrayRemoveDuplicates"],
+	["function", "stringArrayRemoveExact"],
+	["function", "stringArrayToString"],
+	["function", "stringToStringArray"],
+	["function", "strip"],
+	["function", "stripPrefixFromName"],
+	["function", "stroke"],
+	["function", "subdAutoProjection"],
+	["function", "subdCleanTopology"],
+	["function", "subdCollapse"],
+	["function", "subdDuplicateAndConnect"],
+	["function", "subdEditUV"],
+	["function", "subdListComponentConversion"],
+	["function", "subdMapCut"],
+	["function", "subdMapSewMove"],
+	["function", "subdMatchTopology"],
+	["function", "subdMirror"],
+	["function", "subdToBlind"],
+	["function", "subdToPoly"],
+	["function", "subdTransferUVsToCache"],
+	["function", "subdiv"],
+	["function", "subdivCrease"],
+	["function", "subdivDisplaySmoothness"],
+	["function", "substitute"],
+	["function", "substituteAllString"],
+	["function", "substituteGeometry"],
+	["function", "substring"],
+	["function", "surface"],
+	["function", "surfaceSampler"],
+	["function", "surfaceShaderList"],
+	["function", "swatchDisplayPort"],
+	["function", "switchTable"],
+	["function", "symbolButton"],
+	["function", "symbolCheckBox"],
+	["function", "sysFile"],
+	["function", "system"],
+	["function", "tabLayout"],
+	["function", "tan"],
+	["function", "tangentConstraint"],
+	["function", "texLatticeDeformContext"],
+	["function", "texManipContext"],
+	["function", "texMoveContext"],
+	["function", "texMoveUVShellContext"],
+	["function", "texRotateContext"],
+	["function", "texScaleContext"],
+	["function", "texSelectContext"],
+	["function", "texSelectShortestPathCtx"],
+	["function", "texSmudgeUVContext"],
+	["function", "texWinToolCtx"],
+	["function", "text"],
+	["function", "textCurves"],
+	["function", "textField"],
+	["function", "textFieldButtonGrp"],
+	["function", "textFieldGrp"],
+	["function", "textManip"],
+	["function", "textScrollList"],
+	["function", "textToShelf"],
+	["function", "textureDisplacePlane"],
+	["function", "textureHairColor"],
+	["function", "texturePlacementContext"],
+	["function", "textureWindow"],
+	["function", "threadCount"],
+	["function", "threePointArcCtx"],
+	["function", "timeControl"],
+	["function", "timePort"],
+	["function", "timerX"],
+	["function", "toNativePath"],
+	["function", "toggle"],
+	["function", "toggleAxis"],
+	["function", "toggleWindowVisibility"],
+	["function", "tokenize"],
+	["function", "tokenizeList"],
+	["function", "tolerance"],
+	["function", "tolower"],
+	["function", "toolButton"],
+	["function", "toolCollection"],
+	["function", "toolDropped"],
+	["function", "toolHasOptions"],
+	["function", "toolPropertyWindow"],
+	["function", "torus"],
+	["function", "toupper"],
+	["function", "trace"],
+	["function", "track"],
+	["function", "trackCtx"],
+	["function", "transferAttributes"],
+	["function", "transformCompare"],
+	["function", "transformLimits"],
+	["function", "translator"],
+	["function", "trim"],
+	["function", "trunc"],
+	["function", "truncateFluidCache"],
+	["function", "truncateHairCache"],
+	["function", "tumble"],
+	["function", "tumbleCtx"],
+	["function", "turbulence"],
+	["function", "twoPointArcCtx"],
+	["function", "uiRes"],
+	["function", "uiTemplate"],
+	["function", "unassignInputDevice"],
+	["function", "undo"],
+	["function", "undoInfo"],
+	["function", "ungroup"],
+	["function", "uniform"],
+	["function", "unit"],
+	["function", "unloadPlugin"],
+	["function", "untangleUV"],
+	["function", "untitledFileName"],
+	["function", "untrim"],
+	["function", "upAxis"],
+	["function", "updateAE"],
+	["function", "userCtx"],
+	["function", "uvLink"],
+	["function", "uvSnapshot"],
+	["function", "validateShelfName"],
+	["function", "vectorize"],
+	["function", "view2dToolCtx"],
+	["function", "viewCamera"],
+	["function", "viewClipPlane"],
+	["function", "viewFit"],
+	["function", "viewHeadOn"],
+	["function", "viewLookAt"],
+	["function", "viewManip"],
+	["function", "viewPlace"],
+	["function", "viewSet"],
+	["function", "visor"],
+	["function", "volumeAxis"],
+	["function", "vortex"],
+	["function", "waitCursor"],
+	["function", "warning"],
+	["function", "webBrowser"],
+	["function", "webBrowserPrefs"],
+	["function", "whatIs"],
+	["function", "window"],
+	["function", "windowPref"],
+	["function", "wire"],
+	["function", "wireContext"],
+	["function", "workspace"],
+	["function", "wrinkle"],
+	["function", "wrinkleContext"],
+	["function", "writeTake"],
+	["function", "xbmLangPathList"],
+	["function", "xform"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

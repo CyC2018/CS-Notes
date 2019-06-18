@@ -1,0 +1,51 @@
+@("FOO")
+	bar
+	$baz
+FOO
+
+@(FOO BAR/)
+	bar
+	$baz
+	| FOO BAR
+
+@(foo!)
+bar
+|-foo!
+
+@("some text..."/nrts$uL)
+some text
+some text..
+some text...
+
+$foo = @(FOOBAR) == $bar
+	Foobar
+	-FOOBAR
+
+----------------------------------------------------
+
+[
+	["heredoc", ["@(", ["punctuation", "\"FOO\""], ")"]],
+	["heredoc", [
+		"\tbar\r\n\t",
+		["interpolation", ["$baz"]],
+		["punctuation", "FOO"]
+	]],
+	["heredoc", ["@(", ["punctuation", "FOO BAR/"], ")"]],
+	["heredoc", [
+		"\tbar\r\n\t$baz\r\n\t",
+		["punctuation", "| FOO BAR"]
+	]],
+	["heredoc", ["@(", ["punctuation", "foo!"], ")"]],
+	["heredoc", ["bar\r\n", ["punctuation", "|-foo!"]]],
+	["heredoc", ["@(", ["punctuation", "\"some text...\"/nrts$uL"], ")"]],
+	["heredoc", ["some text\r\nsome text..\r\n", ["punctuation", "some text..."]]],
+	["variable", ["$foo"]], ["operator", "="],
+	["heredoc", ["@(", ["punctuation", "FOOBAR"], ")"]],
+	["operator", "=="], ["variable", ["$bar"]],
+	["heredoc", ["\tFoobar\r\n\t", ["punctuation", "-FOOBAR"]]]
+]
+
+----------------------------------------------------
+
+Checks for heredoc strings.
+Also checks that string interpolation applies only inside quoted heredoc strings.

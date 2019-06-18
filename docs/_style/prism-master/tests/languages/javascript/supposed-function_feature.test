@@ -1,0 +1,38 @@
+foo.apply(thisArg, args);
+bar.call(...args);
+fooBar.bind(thisArg);
+
+----------------------------------------------------
+
+[
+	["function", "foo"],
+	["punctuation", "."],
+	["function", "apply"],
+	["punctuation", "("],
+	"thisArg",
+	["punctuation", ","],
+	" args",
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["function", "bar"],
+	["punctuation", "."],
+	["function", "call"],
+	["punctuation", "("],
+	["operator", "..."],
+	"args",
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["function", "fooBar"],
+	["punctuation", "."],
+	["function", "bind"],
+	["punctuation", "("],
+	"thisArg",
+	["punctuation", ")"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for supposed function variables based on standard function invocations or modifications.

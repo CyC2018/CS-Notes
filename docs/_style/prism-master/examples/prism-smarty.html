@@ -1,0 +1,81 @@
+<h2>Comments</h2>
+<pre><code>{* This is a comment with &lt;p>some markup&lt;/p> in it *}
+{* Multi-line
+comment *}</code></pre>
+
+<h2>Variables</h2>
+<pre><code>{$foo}
+{$foo.bar}
+{$foo.$bar}
+{$foo[$bar]}
+{$foo->bar}
+{$foo->bar()}
+{#foo#}
+{$smarty.config.foo}
+{$foo[bar]}
+</code></pre>
+
+<h2>Strings and numbers</h2>
+<pre><code>{$foo[4]}
+{$foo['bar']}</code></pre>
+
+<h2>Tags and filters</h2>
+<pre><code>{assign var=foo value='baa'}
+{include file='header.tpl'}
+{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}
+{$title|truncate:40:'...'}
+{$myArray|@count}
+
+{math equation="height * width / division"
+   height=$row_height
+   width=$row_width
+   division=#col_div#}</code></pre>
+
+<h2>Control flow</h2>
+
+<pre><code>{if ( $amount &lt; 0 or $amount > 1000 ) and $volume >= #minVolAmt#}
+   ...
+{/if}
+{if count($var) gt 0}{/if}
+{if $var is even by 3}
+   ...
+{/if}
+
+{foreach from=$myArray item=i name=foo}
+	{$smarty.foreach.foo.index}|{$smarty.foreach.foo.iteration},
+{/foreach}
+
+&lt;ul>
+{foreach from=$items key=myId item=i}
+  &lt;li>&lt;a href="item.php?id={$myId}">{$i.no}: {$i.label}&lt;/li>
+{/foreach}
+&lt;/ul>
+</code></pre>
+
+<h2>Literal section</h2>
+<pre><code>{literal}
+	&lt;script>
+		(function() { /* This is JS, not Smarty */ } ());
+	&lt;/script>
+{/literal}
+
+&lt;style type="text/css">
+{literal}
+/* this is an intersting idea for this section */
+.madIdea{
+    border: 3px outset #ffffff;
+    margin: 2 3 4 5px;
+    background-color: #001122;
+}
+{/literal}
+&lt;/style></code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Smarty tag in the middle of an HTML tag</h3>
+<pre><code>&lt;div{if $test} class="test"{/if}>&lt;/div></code></pre>

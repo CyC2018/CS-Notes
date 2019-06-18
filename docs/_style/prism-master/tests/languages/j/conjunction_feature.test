@@ -1,0 +1,41 @@
+& &. &.: &:
+
+. .. .:
+: :. ::
+@ @. @:
+
+!. !:
+D. D:
+
+;. d. H. T.
+
+` `:
+
+^: L: S:
+
+"
+
+----------------------------------------------------
+
+[
+	["conjunction", "&"], ["conjunction", "&."], ["conjunction", "&.:"], ["conjunction", "&:"],
+
+	["conjunction", "."], ["conjunction", ".."], ["conjunction", ".:"],
+	["conjunction", ":"], ["conjunction", ":."], ["conjunction", "::"],
+	["conjunction", "@"], ["conjunction", "@."], ["conjunction", "@:"],
+
+	["conjunction", "!."], ["conjunction", "!:"],
+	["conjunction", "D."], ["conjunction", "D:"],
+
+	["conjunction", ";."], ["conjunction", "d."], ["conjunction", "H."], ["conjunction", "T."],
+
+	["conjunction", "`"], ["conjunction", "`:"],
+
+	["conjunction", "^:"], ["conjunction", "L:"], ["conjunction", "S:"],
+
+	["conjunction", "\""]
+]
+
+----------------------------------------------------
+
+Checks for conjunctions.

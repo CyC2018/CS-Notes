@@ -1,0 +1,82 @@
+**foobar**
+**foo
+bar**
+__foobar__
+__foo
+bar__
+
+__foo*bar*baz__
+__foo_bar_baz__
+__foo~bar~baz__
+__foo[bar](baz)__
+
+----------------------------------------------------
+
+[
+	["bold", [
+		["punctuation", "**"],
+		"foobar",
+		["punctuation", "**"]
+	]],
+	["bold", [
+		["punctuation", "**"],
+		"foo\r\nbar",
+		["punctuation", "**"]
+	]],
+	["bold", [
+		["punctuation", "__"],
+		"foobar",
+		["punctuation", "__"]
+	]],
+	["bold", [
+		["punctuation", "__"],
+		"foo\r\nbar",
+		["punctuation", "__"]
+	]],
+
+	["bold", [
+		["punctuation", "__"],
+		"foo",
+		["italic", [
+			["punctuation", "*"],
+			"bar",
+			["punctuation", "*"]
+		]],
+		"baz",
+		["punctuation", "__"]
+	]],
+	["bold", [
+		["punctuation", "__"],
+		"foo",
+		["italic", [
+			["punctuation", "_"],
+			"bar",
+			["punctuation", "_"]
+		]],
+		"baz",
+		["punctuation", "__"]
+	]],
+	["bold", [
+		["punctuation", "__"],
+		"foo",
+		["strike", [
+			["punctuation", "~"],
+			"bar",
+			["punctuation", "~"]
+		]],
+		"baz",
+		["punctuation", "__"]
+	]],
+	["bold", [
+		["punctuation", "__"],
+		"foo",
+		["url", [
+			"[bar](baz)"
+		]],
+		["punctuation", "__"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for bold. Also tests for inclusion of italic, strike, and url.

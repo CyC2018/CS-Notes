@@ -1,0 +1,37 @@
+$foo.foobar
+foo_bar_42()
+
+contain
+debug
+err
+fail
+include
+info
+notice
+realize
+require
+tag
+warning
+
+----------------------------------------------------
+
+[
+	["variable", ["$foo"]], ["punctuation", "."], ["function", "foobar"],
+	["function", "foo_bar_42"], ["punctuation", "("], ["punctuation", ")"],
+
+	["function", "contain"],
+	["function", "debug"],
+	["function", "err"],
+	["function", "fail"],
+	["function", "include"],
+	["function", "info"],
+	["function", "notice"],
+	["function", "realize"],
+	["function", "require"],
+	["function", "tag"],
+	["function", "warning"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

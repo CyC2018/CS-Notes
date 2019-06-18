@@ -1,0 +1,263 @@
+attribute
+const
+uniform
+varying
+buffer
+shared
+coherent
+volatile
+restrict
+readonly
+writeonly
+atomic_uint
+layout
+centroid
+flat
+smooth
+noperspective
+patch
+sample
+break
+continue
+do
+for
+while
+switch
+case
+default
+if
+else
+subroutine
+in
+out
+inout
+float
+double
+int
+void
+bool
+true
+false
+invariant
+precise
+discard
+return
+mat2 mat3 mat4
+mat2x2 mat2x3 mat2x4
+mat3x2 mat3x3 mat3x4
+mat4x2 mat4x3 mat4x4
+dmat2 dmat3 dmat4
+dmat2x2 dmat2x3 dmat2x4
+dmat3x2 dmat3x3 dmat3x4
+dmat4x2 dmat4x3 dmat4x4
+vec2 vec3 vec4
+ivec2 ivec3 ivec4
+bvec2 bvec3 bvec4
+dvec2 dvec3 dvec4
+uvec2 uvec3 uvec4
+uint
+lowp
+mediump
+highp
+precision
+sampler1D sampler2D sampler3D
+isampler1D isampler2D isampler3D
+usampler1D usampler2D usampler3D
+samplerCube isamplerCube usamplerCube
+sampler1DShadow sampler2DShadow
+samplerCubeShadow
+sampler1DArray sampler2DArray
+isampler1DArray isampler2DArray
+usampler1DArray usampler2DArray
+sampler1DArrayShadow sampler2DArrayShadow
+sampler2DRect isampler2DRect usampler2DRect
+sampler2DRectShadow
+samplerBuffer isamplerBuffer usamplerBuffer
+sampler2DMS isampler2DMS usampler2DMS
+sampler2DMSArray isampler2DMSArray usampler2DMSArray
+samplerCubeArray isamplerCubeArray usamplerCubeArray
+samplerCubeArrayShadow
+image1D image2D image3D
+iimage1D iimage2D iimage3D
+uimage1D uimage2D uimage3D
+image2DRect iimage2DRect uimage2DRect
+imageCube iimageCube uimageCube
+imageBuffer iimageBuffer uimageBuffer
+image1DArray image2DArray
+iimage1DArray iimage2DArray
+uimage1DArray uimage2DArray
+imageCubeArray iimageCubeArray uimageCubeArray
+image2DMS iimage2DMS uimage2DMS
+image2DMSArray iimage2DMSArray uimage2DMSArray
+struct
+common
+partition
+active
+asm
+class;
+union
+enum
+typedef
+template
+this
+resource
+goto
+inline
+noinline
+public
+static
+extern
+external
+interface;
+long
+short
+half
+fixed
+unsigned
+superp
+input
+output
+hvec2 hvec3 hvec4
+fvec2 fvec3 fvec4
+sampler3DRect
+filter
+sizeof
+cast
+namespace
+using
+
+----------------------------------------------------
+
+[
+	["keyword", "attribute"],
+	["keyword", "const"],
+	["keyword", "uniform"],
+	["keyword", "varying"],
+	["keyword", "buffer"],
+	["keyword", "shared"],
+	["keyword", "coherent"],
+	["keyword", "volatile"],
+	["keyword", "restrict"],
+	["keyword", "readonly"],
+	["keyword", "writeonly"],
+	["keyword", "atomic_uint"],
+	["keyword", "layout"],
+	["keyword", "centroid"],
+	["keyword", "flat"],
+	["keyword", "smooth"],
+	["keyword", "noperspective"],
+	["keyword", "patch"],
+	["keyword", "sample"],
+	["keyword", "break"],
+	["keyword", "continue"],
+	["keyword", "do"],
+	["keyword", "for"],
+	["keyword", "while"],
+	["keyword", "switch"],
+	["keyword", "case"],
+	["keyword", "default"],
+	["keyword", "if"],
+	["keyword", "else"],
+	["keyword", "subroutine"],
+	["keyword", "in"],
+	["keyword", "out"],
+	["keyword", "inout"],
+	["keyword", "float"],
+	["keyword", "double"],
+	["keyword", "int"],
+	["keyword", "void"],
+	["keyword", "bool"],
+	["keyword", "true"],
+	["keyword", "false"],
+	["keyword", "invariant"],
+	["keyword", "precise"],
+	["keyword", "discard"],
+	["keyword", "return"],
+	["keyword", "mat2"], ["keyword", "mat3"], ["keyword", "mat4"],
+	["keyword", "mat2x2"], ["keyword", "mat2x3"], ["keyword", "mat2x4"],
+	["keyword", "mat3x2"], ["keyword", "mat3x3"], ["keyword", "mat3x4"],
+	["keyword", "mat4x2"], ["keyword", "mat4x3"], ["keyword", "mat4x4"],
+	["keyword", "dmat2"], ["keyword", "dmat3"], ["keyword", "dmat4"],
+	["keyword", "dmat2x2"], ["keyword", "dmat2x3"], ["keyword", "dmat2x4"],
+	["keyword", "dmat3x2"], ["keyword", "dmat3x3"], ["keyword", "dmat3x4"],
+	["keyword", "dmat4x2"], ["keyword", "dmat4x3"], ["keyword", "dmat4x4"],
+	["keyword", "vec2"], ["keyword", "vec3"], ["keyword", "vec4"],
+	["keyword", "ivec2"], ["keyword", "ivec3"], ["keyword", "ivec4"],
+	["keyword", "bvec2"], ["keyword", "bvec3"], ["keyword", "bvec4"],
+	["keyword", "dvec2"], ["keyword", "dvec3"], ["keyword", "dvec4"],
+	["keyword", "uvec2"], ["keyword", "uvec3"], ["keyword", "uvec4"],
+	["keyword", "uint"],
+	["keyword", "lowp"],
+	["keyword", "mediump"],
+	["keyword", "highp"],
+	["keyword", "precision"],
+	["keyword", "sampler1D"], ["keyword", "sampler2D"], ["keyword", "sampler3D"],
+	["keyword", "isampler1D"], ["keyword", "isampler2D"], ["keyword", "isampler3D"],
+	["keyword", "usampler1D"], ["keyword", "usampler2D"], ["keyword", "usampler3D"],
+	["keyword", "samplerCube"], ["keyword", "isamplerCube"], ["keyword", "usamplerCube"],
+	["keyword", "sampler1DShadow"], ["keyword", "sampler2DShadow"],
+	["keyword", "samplerCubeShadow"],
+	["keyword", "sampler1DArray"], ["keyword", "sampler2DArray"],
+	["keyword", "isampler1DArray"], ["keyword", "isampler2DArray"],
+	["keyword", "usampler1DArray"], ["keyword", "usampler2DArray"],
+	["keyword", "sampler1DArrayShadow"], ["keyword", "sampler2DArrayShadow"],
+	["keyword", "sampler2DRect"], ["keyword", "isampler2DRect"], ["keyword", "usampler2DRect"],
+	["keyword", "sampler2DRectShadow"],
+	["keyword", "samplerBuffer"], ["keyword", "isamplerBuffer"], ["keyword", "usamplerBuffer"],
+	["keyword", "sampler2DMS"], ["keyword", "isampler2DMS"], ["keyword", "usampler2DMS"],
+	["keyword", "sampler2DMSArray"], ["keyword", "isampler2DMSArray"], ["keyword", "usampler2DMSArray"],
+	["keyword", "samplerCubeArray"], ["keyword", "isamplerCubeArray"], ["keyword", "usamplerCubeArray"],
+	["keyword", "samplerCubeArrayShadow"],
+	["keyword", "image1D"], ["keyword", "image2D"], ["keyword", "image3D"],
+	["keyword", "iimage1D"], ["keyword", "iimage2D"], ["keyword", "iimage3D"],
+	["keyword", "uimage1D"], ["keyword", "uimage2D"], ["keyword", "uimage3D"],
+	["keyword", "image2DRect"], ["keyword", "iimage2DRect"], ["keyword", "uimage2DRect"],
+	["keyword", "imageCube"], ["keyword", "iimageCube"], ["keyword", "uimageCube"],
+	["keyword", "imageBuffer"], ["keyword", "iimageBuffer"], ["keyword", "uimageBuffer"],
+	["keyword", "image1DArray"], ["keyword", "image2DArray"],
+	["keyword", "iimage1DArray"], ["keyword", "iimage2DArray"],
+	["keyword", "uimage1DArray"], ["keyword", "uimage2DArray"],
+	["keyword", "imageCubeArray"], ["keyword", "iimageCubeArray"], ["keyword", "uimageCubeArray"],
+	["keyword", "image2DMS"], ["keyword", "iimage2DMS"], ["keyword", "uimage2DMS"],
+	["keyword", "image2DMSArray"], ["keyword", "iimage2DMSArray"], ["keyword", "uimage2DMSArray"],
+	["keyword", "struct"],
+	["keyword", "common"],
+	["keyword", "partition"],
+	["keyword", "active"],
+	["keyword", "asm"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "union"],
+	["keyword", "enum"],
+	["keyword", "typedef"],
+	["keyword", "template"],
+	["keyword", "this"],
+	["keyword", "resource"],
+	["keyword", "goto"],
+	["keyword", "inline"],
+	["keyword", "noinline"],
+	["keyword", "public"],
+	["keyword", "static"],
+	["keyword", "extern"],
+	["keyword", "external"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "long"],
+	["keyword", "short"],
+	["keyword", "half"],
+	["keyword", "fixed"],
+	["keyword", "unsigned"],
+	["keyword", "superp"],
+	["keyword", "input"],
+	["keyword", "output"],
+	["keyword", "hvec2"], ["keyword", "hvec3"], ["keyword", "hvec4"],
+	["keyword", "fvec2"], ["keyword", "fvec3"], ["keyword", "fvec4"],
+	["keyword", "sampler3DRect"],
+	["keyword", "filter"],
+	["keyword", "sizeof"],
+	["keyword", "cast"],
+	["keyword", "namespace"],
+	["keyword", "using"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

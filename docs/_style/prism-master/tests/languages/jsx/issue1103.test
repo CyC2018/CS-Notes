@@ -1,0 +1,29 @@
+var myDivElement = <div foo="bar baz" />;
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	" myDivElement ",
+	["operator", "="],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["foo"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"bar baz",
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks that quoted attribute values can contain spaces.
+See #1103.

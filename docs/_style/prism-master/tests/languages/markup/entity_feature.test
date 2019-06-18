@@ -1,0 +1,14 @@
+&amp; &thetasym; &#x26f5; &#160;
+
+----------------------------------------------------
+
+[
+	["entity", "&amp;"],
+	["entity", "&thetasym;"],
+	["entity", "&#x26f5;"],
+	["entity", "&#160;"]
+]
+
+----------------------------------------------------
+
+Checks for HTML/XML character entity references.

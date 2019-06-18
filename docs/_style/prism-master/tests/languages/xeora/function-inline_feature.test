@@ -1,0 +1,31 @@
+$F:Library?ClassName.FuncName$
+$F:Library?ClassName.FuncName,=Param1|~Param2$
+
+----------------------------------------------------
+
+[
+	["function-inline", [
+		["punctuation", "$F:"],
+		"Library",
+		["punctuation", "?"],
+		"ClassName",
+		["punctuation", "."],
+		"FuncName",
+		["punctuation", "$"]
+	]],
+	["function-inline", [
+		["punctuation", "$F:"],
+		"Library",
+		["punctuation", "?"],
+		"ClassName",
+		["punctuation", "."],
+		"FuncName",
+		["variable", [["punctuation", ","], ["operator", "="], "Param1"]],
+		["variable", [["punctuation", "|"], ["operator", "~"], "Param2"]],
+		["punctuation", "$"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for function-inlines.

@@ -1,0 +1,39 @@
+NOT
+BOTH SAEM
+DIFFRINT
+SUM OF
+DIFF OF
+PRODUKT OF
+QUOSHUNT OF
+MOD OF
+BIGGR OF
+SMALLR OF
+BOTH OF
+EITHER OF
+WON OF
+ALL OF
+ANY OF
+
+----------------------------------------------------
+
+[
+	["operator", "NOT"],
+	["operator", "BOTH SAEM"],
+	["operator", "DIFFRINT"],
+	["operator", "SUM OF"],
+	["operator", "DIFF OF"],
+	["operator", "PRODUKT OF"],
+	["operator", "QUOSHUNT OF"],
+	["operator", "MOD OF"],
+	["operator", "BIGGR OF"],
+	["operator", "SMALLR OF"],
+	["operator", "BOTH OF"],
+	["operator", "EITHER OF"],
+	["operator", "WON OF"],
+	["operator", "ALL OF"],
+	["operator", "ANY OF"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

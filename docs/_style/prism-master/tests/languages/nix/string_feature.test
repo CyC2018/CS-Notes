@@ -1,0 +1,56 @@
+""
+"foo\"b\\ar"
+"f''o'o'\"bar"
+"foo
+bar"
+"foo ${ 42 } baz"
+"foo \${ 42 } baz"
+
+''''
+''
+foo
+bar
+''
+''
+f'oo'''ba'r
+foo ${ 42 } baz
+foo ''${ 42 } baz
+''
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"foo\\\"b\\\\ar\""]],
+	["string", ["\"f''o'o'\\\"bar\""]],
+	["string", ["\"foo\r\nbar\""]],
+	["string", [
+		"\"foo ",
+		["interpolation", [
+			["antiquotation", "$"],
+			["punctuation", "{"],
+			["number", "42"],
+			["punctuation", "}"]
+		]],
+		" baz\""
+	]],
+	["string", ["\"foo \\${ 42 } baz\""]],
+
+	["string", ["''''"]],
+	["string", ["''\r\nfoo\r\nbar\r\n''"]],
+	["string", [
+		"''\r\nf'oo'''ba'r\r\nfoo ",
+		["interpolation", [
+			["antiquotation", "$"],
+			["punctuation", "{"],
+			["number", "42"],
+			["punctuation", "}"]
+		]],
+		" baz\r\nfoo ''${ 42 } baz\r\n''"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings and string interpolation.
+Also checks that escaped interpolations are not interpreted.

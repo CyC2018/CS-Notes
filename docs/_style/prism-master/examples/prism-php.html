@@ -1,0 +1,67 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */
+# Shell-like comment</code></pre>
+
+<h2>Strings</h2>
+<pre><code>'foo \'bar\' baz'
+"foo \"bar\" baz"
+"a string # containing an hash"
+$foo = &lt;&lt;&lt;FOO
+    Heredoc strings are supported too!
+FOO;
+$bar = &lt;&lt;&lt;'BAR'
+    And also Nowdoc strings
+BAR;</code></pre>
+
+<h2>Variables</h2>
+<pre><code>$some_var = 5;
+$otherVar = "Some text";
+$null = null;
+$false = false;</code></pre>
+
+<h2>Functions</h2>
+<pre><code>$json = json_encode($my_object);
+$array1 = array("a" => "green", "red", "blue", "red");
+$array2 = array("b" => "green", "yellow", "red");
+$result = array_diff($array1, $array2);</code></pre>
+
+<h2>Constants</h2>
+<pre><code>define('MAXSIZE', 42);
+echo MAXSIZE;
+json_decode($json, false, 512, JSON_BIGINT_AS_STRING)</code></pre>
+
+<h2>PHP 5.3+ support</h2>
+<pre><code>namespace my\name;
+$c = new \my\name\MyClass;
+$arr = [1,2,3];
+trait ezcReflectionReturnInfo {
+    function getReturnType() { /*1*/ }
+    function getReturnDescription() { /*2*/ }
+}
+function gen_one_to_three() {
+    for ($i = 1; $i <= 3; $i++) {
+        // Note that $i is preserved between yields.
+        yield $i;
+    }
+}</code></pre>
+
+<h2>PHP embedded in HTML</h2>
+<pre><code>&lt;div class="&lt;?php echo $a ? 'foo' : 'bar'; ?>">
+&lt;?php if($var &lt; 42) {
+    echo "Something";
+} else {
+    echo "Something else";
+} ?>
+&lt;/div></code></pre>
+
+<h2>String interpolation</h2>
+<pre><code>$str = "This is $great!";
+$foobar = "Another example: {${$foo->bar()}}";
+$a = &lt;&lt;&lt;FOO
+    Hello $world!
+FOO;
+$b = &lt;&lt;&lt;"FOOBAR"
+    Interpolation inside Heredoc strings {$obj->values[3]->name}
+FOOBAR;</code></pre>

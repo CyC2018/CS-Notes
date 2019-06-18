@@ -1,0 +1,23 @@
+""
+''
+"foo"
+'foo'
+"'foo'"
+'"bar"'
+"  # comment  "
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "''"],
+	["string", "\"foo\""],
+	["string", "'foo'"],
+	["string", "\"'foo'\""],
+	["string", "'\"bar\"'"],
+	["string", "\"  # comment  \""]
+]
+
+----------------------------------------------------
+
+Checks for single-quoted and double-quoted strings.

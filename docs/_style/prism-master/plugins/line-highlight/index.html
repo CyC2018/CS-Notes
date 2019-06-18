@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Line highlight ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/line-highlight/prism-line-highlight.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Line highlight</h2>
+	<p>Highlights specific lines and/or line ranges.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+	
+	<p>Obviously, this only works on code blocks (<code>&lt;pre>&lt;code></code>) and not for inline code.
+	
+	<p>You specify the lines to be highlighted through the <code>data-line</code> attribute on the <code>&lt;pre></code> element, in the following simple format:</p>
+	<ul>
+		<li>A single number refers to the line with that number</li>
+		<li>Ranges are denoted by two numbers, separated with a hyphen (-)</li>
+		<li>Multiple line numbers or ranges are separated by commas.</li>
+		<li>Whitespace is allowed anywhere and will be stripped off.</li>
+	</ul>
+	
+	<p>Examples:</p>
+	<dl>
+		<dt>5</dt>
+		<dd>The 5th line</dd>
+		
+		<dt>1-5</dt>
+		<dd>Lines 1 through 5</dd>
+		
+		<dt>1,4</dt>
+		<dd>Line 1 and line 4</dd>
+		
+		<dt>1-2, 5, 9-20</dt>
+		<dd>Lines 1 through 2, line 5, lines 9 through 20</dd>
+	</dl>
+	
+	<p>In case you want the line numbering to be offset by a certain number (for example, you want the 1st line to be number 41 instead of 1, which is an offset of 40), you can additionally use the <code>data-line-offset</code> attribute.
+	
+	<p>You can also link to specific lines on any code snippet, by using the following as a url hash: <code>#{element-id}.{lines}</code> where 
+	<code>{element-id}</code> is the id of the <code>&lt;pre></code> element and <code>{lines}</code> is one or more lines or line ranges that follow the format
+	outlined above. For example, if there is an element with <code>id="play"</code> on the page, you can link to lines 5-6 by linking to <a href="plugins/line-highlight/#play.5-6">#play.5-6</a></p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+	
+	<h2>Line 2</h2>
+	<pre data-line="2" data-src="plugins/line-highlight/prism-line-highlight.js" id="play"></pre>
+	
+	<h2>Lines 15-25</h2>
+	<pre data-line="15-25" data-src="plugins/line-highlight/prism-line-highlight.js"></pre>
+	
+	<h2>Line 1 and lines 3-4 and line 42</h2>
+	<pre data-line="1,3-4,42" data-src="plugins/line-highlight/prism-line-highlight.js"></pre>
+	
+	<h2>Line 43, starting from line 41</h2>
+	<pre data-line="43" data-line-offset="40" data-src="plugins/line-highlight/prism-line-highlight.js"></pre>
+	
+	<p><a href="plugins/line-highlight/#play.50-55,60">Linking example</a></p>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/line-highlight/prism-line-highlight.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+Any
+Array
+Boolean
+Callable
+Catalogentry
+Class
+Collection
+Data
+Default
+Enum
+Float
+Hash
+Integer
+NotUndef
+Numeric
+Optional
+Pattern
+Regexp
+Resource
+Runtime
+Scalar
+String
+Struct
+Tuple
+Type
+Undef
+Variant
+
+----------------------------------------------------
+
+[
+	["datatype", "Any"],
+	["datatype", "Array"],
+	["datatype", "Boolean"],
+	["datatype", "Callable"],
+	["datatype", "Catalogentry"],
+	["datatype", "Class"],
+	["datatype", "Collection"],
+	["datatype", "Data"],
+	["datatype", "Default"],
+	["datatype", "Enum"],
+	["datatype", "Float"],
+	["datatype", "Hash"],
+	["datatype", "Integer"],
+	["datatype", "NotUndef"],
+	["datatype", "Numeric"],
+	["datatype", "Optional"],
+	["datatype", "Pattern"],
+	["datatype", "Regexp"],
+	["datatype", "Resource"],
+	["datatype", "Runtime"],
+	["datatype", "Scalar"],
+	["datatype", "String"],
+	["datatype", "Struct"],
+	["datatype", "Tuple"],
+	["datatype", "Type"],
+	["datatype", "Undef"],
+	["datatype", "Variant"]
+]
+
+----------------------------------------------------
+
+Checks for data types.

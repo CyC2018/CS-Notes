@@ -1,0 +1,17 @@
+Prism(C)
+Foo(TM)
+Foobar(R)
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		"Prism", ["mark", [["punctuation", "("], "C", ["punctuation", ")"]]],
+		"\r\nFoo", ["mark", [["punctuation", "("], "TM", ["punctuation", ")"]]],
+		"\r\nFoobar", ["mark", [["punctuation", "("], "R", ["punctuation", ")"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for marks symbols.

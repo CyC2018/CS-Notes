@@ -1,0 +1,18 @@
+$true $True $TRUE
+$false $False $FALSE
+
+----------------------------------------------------
+
+[
+	["boolean", "$true"],
+	["boolean", "$True"],
+	["boolean", "$TRUE"],
+	
+	["boolean", "$false"],
+	["boolean", "$False"],
+	["boolean", "$FALSE"]
+
+]
+----------------------------------------------------
+
+Testing Booleans

@@ -1,0 +1,27 @@
+{param visible: true /}
+{param visible:false/}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "visible"],
+		["punctuation", ":"],
+		["boolean", "true"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "visible"],
+		["punctuation", ":"],
+		["boolean", "false"],
+		["delimiter", "/}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for booleans.

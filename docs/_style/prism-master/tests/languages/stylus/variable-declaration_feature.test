@@ -1,0 +1,33 @@
+foo = 'bar'
+a = 4
+bar-baz = 5
+a += 8
+
+----------------------------------------------------
+
+[
+	["variable-declaration", [
+		["variable", "foo"],
+		["operator", "="],
+		["string", "'bar'"]
+	]],
+	["variable-declaration", [
+		["variable", "a"],
+		["operator", "="],
+		["number", "4"]
+	]],
+	["variable-declaration", [
+		["variable", "bar-baz"],
+		["operator", "="],
+		["number", "5"]
+	]],
+	["variable-declaration", [
+		["variable", "a"],
+		["operator", "+="],
+		["number", "8"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for variable declarations.

@@ -1,0 +1,34 @@
+'a'
+'\u0041'
+'\n'
+'\t'
+
+""
+"fo\"obar"
+
+"""fo"o
+bar"""
+"""fo"o
+// comment
+bar"""
+"foo /* comment */ bar"
+'foo // bar'
+
+----------------------------------------------------
+
+[
+	["string", "'a'"],
+	["string", "'\\u0041'"],
+	["string", "'\\n'"],
+	["string", "'\\t'"],
+	["string", "\"\""],
+	["string", "\"fo\\\"obar\""],
+	["string", "\"\"\"fo\"o\r\nbar\"\"\""],
+	["string", "\"\"\"fo\"o\r\n// comment\r\nbar\"\"\""],
+	["string", "\"foo /* comment */ bar\""],
+	["string", "'foo // bar'"]
+]
+
+----------------------------------------------------
+
+Checks for characters and strings.

@@ -1,0 +1,13 @@
+#NoTrayIcon
+#OnAutoItStartRegister "Example"
+
+----------------------------------------------------
+
+[
+	["directive", "#NoTrayIcon"],
+	["directive", "#OnAutoItStartRegister"], ["string", ["\"Example\""]]
+]
+
+----------------------------------------------------
+
+Checks for directives.

@@ -1,0 +1,17 @@
+* foobar;
+foo; * foobar;
+/* foo
+bar */
+
+----------------------------------------------------
+
+[
+	["comment", "* foobar;"],
+	"\r\nfoo", ["punctuation", ";"],
+	["comment", "* foobar;"],
+	["comment", "/* foo\r\nbar */"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

@@ -1,0 +1,35 @@
+<- =>
+
+abstract case catch
+class def do else
+extends final finally
+for forSome if
+implicit import lazy
+match new null object
+override package private
+protected return sealed
+self super this throw
+trait try type val
+var while with yield
+
+----------------------------------------------------
+
+[
+	["keyword", "<-"], ["keyword", "=>"],
+
+	["keyword", "abstract"], ["keyword", "case"], ["keyword", "catch"],
+	["keyword", "class"], ["keyword", "def"], ["keyword", "do"], ["keyword", "else"],
+	["keyword", "extends"], ["keyword", "final"], ["keyword", "finally"],
+	["keyword", "for"], ["keyword", "forSome"], ["keyword", "if"],
+	["keyword", "implicit"], ["keyword", "import"], ["keyword", "lazy"],
+	["keyword", "match"], ["keyword", "new"], ["keyword", "null"], ["keyword", "object"],
+	["keyword", "override"], ["keyword", "package"], ["keyword", "private"],
+	["keyword", "protected"], ["keyword", "return"], ["keyword", "sealed"],
+	["keyword", "self"], ["keyword", "super"], ["keyword", "this"], ["keyword", "throw"],
+	["keyword", "trait"], ["keyword", "try"], ["keyword", "type"], ["keyword", "val"],
+	["keyword", "var"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

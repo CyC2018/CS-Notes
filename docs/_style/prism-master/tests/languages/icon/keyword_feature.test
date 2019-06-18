@@ -1,0 +1,67 @@
+break
+by
+case
+create
+default
+do
+else
+end
+every
+fail
+global
+if
+initial
+invocable
+link
+local
+next
+not
+of
+procedure
+record
+repeat
+return
+static
+suspend
+then
+to
+until
+while
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "by"],
+	["keyword", "case"],
+	["keyword", "create"],
+	["keyword", "default"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "end"],
+	["keyword", "every"],
+	["keyword", "fail"],
+	["keyword", "global"],
+	["keyword", "if"],
+	["keyword", "initial"],
+	["keyword", "invocable"],
+	["keyword", "link"],
+	["keyword", "local"],
+	["keyword", "next"],
+	["keyword", "not"],
+	["keyword", "of"],
+	["keyword", "procedure"],
+	["keyword", "record"],
+	["keyword", "repeat"],
+	["keyword", "return"],
+	["keyword", "static"],
+	["keyword", "suspend"],
+	["keyword", "then"],
+	["keyword", "to"],
+	["keyword", "until"],
+	["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Remove initial line feed ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Remove initial line feed</h2>
+	<p>Removes the initial line feed in code blocks.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use (DEPRECATED)</h1>
+
+	<p>This plugin will be removed in the future. Please use the general purpose <a href="plugins/normalize-whitespace/">Normalize Whitespace</a> plugin instead.</p>
+	<p>Obviously, this is supposed to work only for code blocks (<code>&lt;pre>&lt;code></code>) and not for inline code.</p>
+	<p>With this plugin included, any initial line feed will be removed by default.</p>
+	<p>To bypass this behaviour, you may add the class <strong>keep-initial-line-feed</strong> to your desired <code>&lt;pre></code>.</p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>Without adding the class</h2>
+	<pre class="language-markup"><code>
+&lt;div>&lt;/div>
+</code></pre>
+
+	<h2>With the class added</h2>
+	<pre class="language-markup keep-initial-line-feed"><code>
+&lt;div>&lt;/div>
+</code></pre>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/remove-initial-line-feed/prism-remove-initial-line-feed.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

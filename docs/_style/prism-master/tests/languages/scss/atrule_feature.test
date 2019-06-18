@@ -1,0 +1,20 @@
+@media (min-width: 600px) {}
+
+----------------------------------------------------
+
+[
+	["atrule", [
+		["rule", "@media"],
+		["punctuation", "("],
+		["property", ["min-width"]],
+		["punctuation", ":"],
+		" 600px",
+		["punctuation", ")"]
+	]],
+	["punctuation", "{"],
+    ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for at-rules.

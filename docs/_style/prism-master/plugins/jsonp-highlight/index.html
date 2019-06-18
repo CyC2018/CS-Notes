@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>JSONP Highlight ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>JSONP Highlight</h2>
+	<p>Fetch content with JSONP and highlight some interesting content (e.g. GitHub/Gists or Bitbucket API).</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+	
+	<p>Use the <code>data-jsonp</code> attribute on <code>&lt;pre></code> elements, like so:</p>
+	
+	<pre><code>&lt;pre
+  class="language-javascript"
+  data-jsonp="https://api.github.com/repos/leaverou/prism/contents/prism.js">
+&lt;/pre></code></pre>
+	
+	<p>
+		Don't specifiy the <code>callback</code> query parameter in the URL; this will be added
+		automatically. If the API expects a different callback parameter name however, use the
+		<code>data-callback</code> parameter to specify the name:
+	</p>
+	
+	<pre><code>&lt;pre class="&hellip;" data-jsonp="&hellip;" data-callback="cb">&lt;/pre></code></pre>
+
+	<p>
+		The next trick is of course actually extracting something from the JSONP response worth
+		highlighting, which means processing the response to extract the interesting data.
+	</p>	
+
+	<p>The following JSONP APIs are automatically detected and parsed:</p>
+
+	<ul>
+		<li><a href="https://developer.github.com/v3/repos/contents/#get-contents">GitHub</a></li>
+		<li><a href="https://developer.github.com/v3/gists/#get-a-single-gist">GitHub Gists</a></li>
+		<li><a href="https://confluence.atlassian.com/display/BITBUCKET/src+Resources#srcResources-GETrawcontentofanindividualfile">Bitbucket</a></li>
+	</ul>
+
+	<p>If you need to do your own parsing, you can hook your your own data adapters in two ways:</p>
+	<ol>
+		<li>
+			Supply the <code>data-adapter</code> parameter on the <code>&lt;pre></code> element.
+			This must be the name of a globally defined function.
+			The plugin will use <em>only</em> this adapter to parse the response.
+		</li>
+		<li>
+			Register your adapter function by calling
+			<code>Prism.plugins.jsonphighlight.registerAdapter(function(rsp) { &hellip; })</code>.
+			It will be added to the list of inbuilt adapters and used if no other registered
+			adapater (e.g. GitHub/Bitbucket) can parse the response.
+		</li>
+	</ol>
+	
+	<p>
+		In either case, the function must accept at least a single parameter (the JSONP response) and
+		returns a string of the content to highlight. If your adapter cannot parse the response, you
+		must return <code>null</code>. The DOM node that will contain the highlighted code will also
+		be passed in as the second argument, incase you need to use it to query any extra information
+		(maybe you wish to inspect the <code>class</code> or <code>data-jsonp</code> attributes to
+		assist in parsing the response).
+	</p>
+
+	<p>
+		The following example demonstrates both methods of using a custom adapter, to simply return
+		the stringyfied JSONP response (i.e highlight the entire JSONP data):
+	</p>
+
+	<pre><code>&lt;!-- perhaps this is in a .js file elsewhere -->
+&lt;script>
+	function dump_json(rsp) {
+		return "using dump_json: " + JSON.stringify(rsp,null,2);
+	}
+&lt;/script>
+
+&lt;!-- &hellip; include prism.js &hellip; -->
+&lt;script>
+	Prism.plugins.jsonphighlight.registerAdapter(function(rsp) {
+		return "using registerAdapter: " + JSON.stringify(rsp,null,2);
+	})
+&lt;/script>
+</code></pre>
+
+	<p>And later in your HTML:</p>
+
+	<pre><code>&lt;!-- using the data-adapter attribute -->
+&lt;pre class="language-javascript" data-jsonp="&hellip;" data-adapter="dump_json">&lt;/pre>
+
+&lt;!-- using whatever data adapters are available -->
+&lt;pre class="language-javascript" data-jsonp="&hellip;">&lt;/pre>
+</code></pre>
+
+	<p>
+		Finally, unlike like the <a href="/plugins/file-highlight/index.html">File Highlight</a>
+		plugin, you <em>do</em> need to supply the appropriate <code>class</code> with the language
+		to highlight. This could have been auto-detected, but since you're not actually linking to
+		a file it's not always possible (see below in the example using GitHub status).
+		Furthermore, if you're linking to files with a <code>.xaml</code> extension for example,
+		this plugin then needs to somehow map that to highlight as <code>markup</code>, which just
+		means more bloat. You know what you're trying to highlight, just say so :)
+	</p>
+
+	<h2>Caveat for Gists</h2>
+
+	<p>
+		There's a bit of a catch with gists, as they can actually contain multiple files.
+		There are two options to handle this:
+	</p>
+
+	<ol>
+		<li>
+			If your gist only contains one file, you don't need to to anything; the one and only
+			file will automatically be chosen and highlighted
+		</li>
+		<li>
+			If your file contains multiple files, the first one will be chosen by default.
+			However, you can supply the filename in the <code>data-filename</code> attribute, and
+			this file will be highlighted instead:
+			<pre><code>&lt;pre class="&hellip;" data-jsonp="&hellip;" data-filename="mydemo.js">&lt;/pre></code></pre>
+		</li>
+	</ol>
+</section>
+
+<section>
+	<h1>Examples</h1>
+	
+	<p>The plugin’s JS code (from GitHub):</p>
+ 	<pre class="lang-javascript" data-jsonp="https://api.github.com/repos/PrismJS/prism/contents/plugins/jsonp-highlight/prism-jsonp-highlight.js"></pre>
+
+	<p>GitHub Gist (gist contains a single file, automatically selected):</p>
+ 	<pre class="lang-javascript" data-jsonp="https://api.github.com/gists/599a04c05a22f48a292d"></pre>
+
+	<p>GitHub Gist (gist contains a multiple files, file to load specified):</p>
+ 	<pre class="lang-markup" data-jsonp="https://api.github.com/gists/599a04c05a22f48a292d" data-filename="dabblet.html"></pre>
+
+ 	<p>Bitbucket API:</p>
+	<pre class="lang-css" data-jsonp="https://bitbucket.org/!api/1.0/repositories/nauzilus/stylish/src/master/whirlpool/style.css"></pre>
+ 	
+ 	<p>Custom adapter (JSON.stringify showing GitHub <a href="https://status.github.com/api/status.json">status</a>):</p>
+	<pre class="lang-javascript" data-jsonp="https://status.github.com/api/status.json" data-adapter="dump_json"></pre>
+
+	<p>Registered adapter (as above, but without explicitly declaring the <code>data-adapter</code> attribute):</p>
+	<pre class="lang-javascript" data-jsonp="https://status.github.com/api/status.json"></pre>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script>function dump_json(x) { return "using dump_json: " + JSON.stringify(x,null,2); }</script>
+<script src="prism.js"></script>
+<script src="plugins/jsonp-highlight/prism-jsonp-highlight.js"></script>
+<script>Prism.plugins.jsonphighlight.registerAdapter(function (x) { return "using registerAdapter: " + JSON.stringify(x,null,2); })</script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

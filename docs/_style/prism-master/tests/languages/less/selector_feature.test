@@ -1,0 +1,24 @@
+.bordered {}
+.@{foo} {}
+.foo (@bg: #fff, @color: #000) {}
+
+----------------------------------------------------
+
+[
+	["selector", [".bordered"]],
+	["punctuation", "{"], ["punctuation", "}"],
+	["selector", [".@{foo}"]],
+	["punctuation", "{"], ["punctuation", "}"],
+	["selector", [
+		".foo (",
+		["variable", "@bg"],
+		": #fff, ",
+		["variable", "@color"],
+		": #000)"
+	]],
+	["punctuation", "{"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for selectors and mixin declarations.

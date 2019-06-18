@@ -1,0 +1,37 @@
+""
+"Foo
+\"bar\"
+baz"
+"$bar ${4+2}"
+''
+'Foo
+\'bar\'
+baz'
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"Foo\r\n\\\"bar\\\"\r\nbaz\""]],
+	["string", [
+		"\"",
+		["interpolation", [
+			["interpolation", "$bar"]
+		]],
+		["interpolation", [
+			["interpolation", "$"],
+			["punctuation", "{"],
+			["number", "4"],
+			["operator", "+"],
+			["number", "2"],
+			["punctuation", "}"]
+		]],
+		"\""
+	]],
+	["string", ["''"]],
+	["string", ["'Foo\r\n\\'bar\\'\r\nbaz'"]]
+]
+
+----------------------------------------------------
+
+Checks for strings and string interpolation.

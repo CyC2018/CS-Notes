@@ -1,0 +1,56 @@
+r"" x""
+r"fo\"o"c x"00 FBCD"w r"baz"d
+
+q"[fo"o
+bar]"
+q"(fo"o
+bar)"
+q"<fo"o
+bar>"
+q"{fo"o
+bar}"
+
+q"FOO
+Bar "baz"
+FOO"
+
+q"/fo"o
+bar/"
+q"|fo"o
+bar|"
+
+'a' '\'' '\u000A'
+
+""
+"foo"c "bar"w "baz"d
+"fo\"o
+bar"
+`foo`
+
+----------------------------------------------------
+
+[
+	["string", "r\"\""], ["string", "x\"\""],
+	["string", "r\"fo\\\"o\"c"], ["string", "x\"00 FBCD\"w"], ["string", "r\"baz\"d"],
+
+	["string", "q\"[fo\"o\r\nbar]\""],
+	["string", "q\"(fo\"o\r\nbar)\""],
+	["string", "q\"<fo\"o\r\nbar>\""],
+	["string", "q\"{fo\"o\r\nbar}\""],
+
+	["string", "q\"FOO\r\nBar \"baz\"\r\nFOO\""],
+
+	["string", "q\"/fo\"o\r\nbar/\""],
+	["string", "q\"|fo\"o\r\nbar|\""],
+
+	["string", "'a'"], ["string", "'\\''"], ["string", "'\\u000A'"],
+
+	["string", "\"\""],
+	["string", "\"foo\"c"], ["string", "\"bar\"w"], ["string", "\"baz\"d"],
+	["string", "\"fo\\\"o\r\nbar\""],
+	["string", "`foo`"]
+]
+
+----------------------------------------------------
+
+Checks for strings.

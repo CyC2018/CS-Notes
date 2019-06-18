@@ -1,0 +1,18 @@
+!foobar
+REM foobar
+
+'
+'foobar
+
+----------------------------------------------------
+
+[
+	["comment", ["!foobar"]],
+	["comment", [["keyword", "REM"], " foobar"]],
+	["comment", "'"],
+	["comment", "'foobar"]
+]
+
+----------------------------------------------------
+
+Checks for comments

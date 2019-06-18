@@ -1,0 +1,37 @@
+|| &&
+? * / %
++ +=
+- -=
+. .=
+= == =~
+==# =~# ==? =~?
+! != !~
+!=# !~# !=? !~?
+< <=
+<# <=# <? <=?
+> >=
+># >=# >? >=?
+is isnot
+
+----------------------------------------------------
+
+[
+	["operator", "||"], ["operator", "&&"],
+	["operator", "?"], ["operator", "*"], ["operator", "/"], ["operator", "%"],
+	["operator", "+"], ["operator", "+="],
+	["operator", "-"], ["operator", "-="],
+	["operator", "."], ["operator", ".="],
+	["operator", "="], ["operator", "=="], ["operator", "=~"],
+	["operator", "==#"], ["operator", "=~#"], ["operator", "==?"], ["operator", "=~?"],
+	["operator", "!"], ["operator", "!="], ["operator", "!~"],
+	["operator", "!=#"], ["operator", "!~#"], ["operator", "!=?"], ["operator", "!~?"],
+	["operator", "<"], ["operator", "<="],
+	["operator", "<#"], ["operator", "<=#"], ["operator", "<?"], ["operator", "<=?"],
+	["operator", ">"], ["operator", ">="],
+	["operator", ">#"], ["operator", ">=#"], ["operator", ">?"], ["operator", ">=?"],
+	["operator", "is"], ["operator", "isnot"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

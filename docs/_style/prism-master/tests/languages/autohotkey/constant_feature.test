@@ -1,0 +1,275 @@
+a_ahkpath
+a_ahkversion
+a_appdata
+a_appdatacommon
+a_autotrim
+a_batchlines
+a_caretx
+a_carety
+a_computername
+a_controldelay
+a_cursor
+a_dd
+a_ddd
+a_dddd
+a_defaultmousespeed
+a_desktop
+a_desktopcommon
+a_detecthiddentext
+a_detecthiddenwindows
+a_endchar
+a_eventinfo
+a_exitreason
+a_formatfloat
+a_formatinteger
+a_gui
+a_guievent
+a_guicontrol
+a_guicontrolevent
+a_guiheight
+a_guiwidth
+a_guix
+a_guiy
+a_hour
+a_iconfile
+a_iconhidden
+a_iconnumber
+a_icontip
+a_index
+a_ipaddress1
+a_ipaddress2
+a_ipaddress3
+a_ipaddress4
+a_isadmin
+a_iscompiled
+a_iscritical
+a_ispaused
+a_issuspended
+a_isunicode
+a_keydelay
+a_language
+a_lasterror
+a_linefile
+a_linenumber
+a_loopfield
+a_loopfileattrib
+a_loopfiledir
+a_loopfileext
+a_loopfilefullpath
+a_loopfilelongpath
+a_loopfilename
+a_loopfileshortname
+a_loopfileshortpath
+a_loopfilesize
+a_loopfilesizekb
+a_loopfilesizemb
+a_loopfiletimeaccessed
+a_loopfiletimecreated
+a_loopfiletimemodified
+a_loopreadline
+a_loopregkey
+a_loopregname
+a_loopregsubkey
+a_loopregtimemodified
+a_loopregtype
+a_mday
+a_min
+a_mm
+a_mmm
+a_mmmm
+a_mon
+a_mousedelay
+a_msec
+a_mydocuments
+a_now
+a_nowutc
+a_numbatchlines
+a_ostype
+a_osversion
+a_priorhotkey
+programfiles
+a_programfiles
+a_programs
+a_programscommon
+a_screenheight
+a_screenwidth
+a_scriptdir
+a_scriptfullpath
+a_scriptname
+a_sec
+a_space
+a_startmenu
+a_startmenucommon
+a_startup
+a_startupcommon
+a_stringcasesense
+a_tab
+a_temp
+a_thisfunc
+a_thishotkey
+a_thislabel
+a_thismenu
+a_thismenuitem
+a_thismenuitempos
+a_tickcount
+a_timeidle
+a_timeidlephysical
+a_timesincepriorhotkey
+a_timesincethishotkey
+a_titlematchmode
+a_titlematchmodespeed
+a_username
+a_wday
+a_windelay
+a_windir
+a_workingdir
+a_yday
+a_year
+a_yweek
+a_yyyy
+clipboard
+clipboardall
+comspec
+errorlevel
+
+----------------------------------------------------
+
+[
+	["constant", "a_ahkpath"],
+	["constant", "a_ahkversion"],
+	["constant", "a_appdata"],
+	["constant", "a_appdatacommon"],
+	["constant", "a_autotrim"],
+	["constant", "a_batchlines"],
+	["constant", "a_caretx"],
+	["constant", "a_carety"],
+	["constant", "a_computername"],
+	["constant", "a_controldelay"],
+	["constant", "a_cursor"],
+	["constant", "a_dd"],
+	["constant", "a_ddd"],
+	["constant", "a_dddd"],
+	["constant", "a_defaultmousespeed"],
+	["constant", "a_desktop"],
+	["constant", "a_desktopcommon"],
+	["constant", "a_detecthiddentext"],
+	["constant", "a_detecthiddenwindows"],
+	["constant", "a_endchar"],
+	["constant", "a_eventinfo"],
+	["constant", "a_exitreason"],
+	["constant", "a_formatfloat"],
+	["constant", "a_formatinteger"],
+	["constant", "a_gui"],
+	["constant", "a_guievent"],
+	["constant", "a_guicontrol"],
+	["constant", "a_guicontrolevent"],
+	["constant", "a_guiheight"],
+	["constant", "a_guiwidth"],
+	["constant", "a_guix"],
+	["constant", "a_guiy"],
+	["constant", "a_hour"],
+	["constant", "a_iconfile"],
+	["constant", "a_iconhidden"],
+	["constant", "a_iconnumber"],
+	["constant", "a_icontip"],
+	["constant", "a_index"],
+	["constant", "a_ipaddress1"],
+	["constant", "a_ipaddress2"],
+	["constant", "a_ipaddress3"],
+	["constant", "a_ipaddress4"],
+	["constant", "a_isadmin"],
+	["constant", "a_iscompiled"],
+	["constant", "a_iscritical"],
+	["constant", "a_ispaused"],
+	["constant", "a_issuspended"],
+	["constant", "a_isunicode"],
+	["constant", "a_keydelay"],
+	["constant", "a_language"],
+	["constant", "a_lasterror"],
+	["constant", "a_linefile"],
+	["constant", "a_linenumber"],
+	["constant", "a_loopfield"],
+	["constant", "a_loopfileattrib"],
+	["constant", "a_loopfiledir"],
+	["constant", "a_loopfileext"],
+	["constant", "a_loopfilefullpath"],
+	["constant", "a_loopfilelongpath"],
+	["constant", "a_loopfilename"],
+	["constant", "a_loopfileshortname"],
+	["constant", "a_loopfileshortpath"],
+	["constant", "a_loopfilesize"],
+	["constant", "a_loopfilesizekb"],
+	["constant", "a_loopfilesizemb"],
+	["constant", "a_loopfiletimeaccessed"],
+	["constant", "a_loopfiletimecreated"],
+	["constant", "a_loopfiletimemodified"],
+	["constant", "a_loopreadline"],
+	["constant", "a_loopregkey"],
+	["constant", "a_loopregname"],
+	["constant", "a_loopregsubkey"],
+	["constant", "a_loopregtimemodified"],
+	["constant", "a_loopregtype"],
+	["constant", "a_mday"],
+	["constant", "a_min"],
+	["constant", "a_mm"],
+	["constant", "a_mmm"],
+	["constant", "a_mmmm"],
+	["constant", "a_mon"],
+	["constant", "a_mousedelay"],
+	["constant", "a_msec"],
+	["constant", "a_mydocuments"],
+	["constant", "a_now"],
+	["constant", "a_nowutc"],
+	["constant", "a_numbatchlines"],
+	["constant", "a_ostype"],
+	["constant", "a_osversion"],
+	["constant", "a_priorhotkey"],
+	["constant", "programfiles"],
+	["constant", "a_programfiles"],
+	["constant", "a_programs"],
+	["constant", "a_programscommon"],
+	["constant", "a_screenheight"],
+	["constant", "a_screenwidth"],
+	["constant", "a_scriptdir"],
+	["constant", "a_scriptfullpath"],
+	["constant", "a_scriptname"],
+	["constant", "a_sec"],
+	["constant", "a_space"],
+	["constant", "a_startmenu"],
+	["constant", "a_startmenucommon"],
+	["constant", "a_startup"],
+	["constant", "a_startupcommon"],
+	["constant", "a_stringcasesense"],
+	["constant", "a_tab"],
+	["constant", "a_temp"],
+	["constant", "a_thisfunc"],
+	["constant", "a_thishotkey"],
+	["constant", "a_thislabel"],
+	["constant", "a_thismenu"],
+	["constant", "a_thismenuitem"],
+	["constant", "a_thismenuitempos"],
+	["constant", "a_tickcount"],
+	["constant", "a_timeidle"],
+	["constant", "a_timeidlephysical"],
+	["constant", "a_timesincepriorhotkey"],
+	["constant", "a_timesincethishotkey"],
+	["constant", "a_titlematchmode"],
+	["constant", "a_titlematchmodespeed"],
+	["constant", "a_username"],
+	["constant", "a_wday"],
+	["constant", "a_windelay"],
+	["constant", "a_windir"],
+	["constant", "a_workingdir"],
+	["constant", "a_yday"],
+	["constant", "a_year"],
+	["constant", "a_yweek"],
+	["constant", "a_yyyy"],
+	["constant", "clipboard"],
+	["constant", "clipboardall"],
+	["constant", "comspec"],
+	["constant", "errorlevel"]
+]
+
+----------------------------------------------------
+
+Checks for all constants.

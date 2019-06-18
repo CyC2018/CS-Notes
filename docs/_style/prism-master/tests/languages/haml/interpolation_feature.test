@@ -1,0 +1,21 @@
+#{ 42 }
+#{ "foobar" }
+
+----------------------------------------------------
+
+[
+	["interpolation", [
+		["delimiter", "#{"],
+		["number", "42"],
+		["delimiter", "}"]
+	]],
+	["interpolation", [
+		["delimiter", "#{"],
+		["string", ["\"foobar\""]],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for interpolation in plain text.

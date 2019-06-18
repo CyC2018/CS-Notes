@@ -1,0 +1,35 @@
+fetch('some-resource.json')
+	.then(response => response.json())
+	.catch(console.error);
+
+----------------------------------------------------
+
+[
+	["function", "fetch"],
+	["punctuation", "("],
+	["string", "'some-resource.json'"],
+	["punctuation", ")"],
+	["punctuation", "."],
+	["function", "then"],
+	["punctuation", "("],
+	["parameter", ["response"]],
+	["operator", "=>"],
+	" response",
+	["punctuation", "."],
+	["function", "json"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", ")"],
+	["punctuation", "."],
+	["function", "catch"],
+	["punctuation", "("],
+	"console",
+	["punctuation", "."],
+	"error",
+	["punctuation", ")"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for catch function which is not a keyword. See #1526

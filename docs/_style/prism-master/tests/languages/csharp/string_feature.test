@@ -1,0 +1,32 @@
+""
+"fo\"o"
+
+@""
+@"foo"
+@"fo""o"
+@"foo
+bar"
+
+'a'
+'\''
+'\\'
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"o\""],
+
+	["string", "@\"\""],
+	["string", "@\"foo\""],
+	["string", "@\"fo\"\"o\""],
+	["string", "@\"foo\r\nbar\""],
+	["string", "'a'"],
+	["string", "'\\''"],
+	["string", "'\\\\'"]
+]
+
+----------------------------------------------------
+
+Checks for normal and verbatim strings.
+Also checks for single quoted characters.

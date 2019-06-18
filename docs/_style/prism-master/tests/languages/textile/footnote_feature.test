@@ -1,0 +1,15 @@
+Foo[1]
+Bar[42]
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		"Foo", ["footnote", [["punctuation", "["], "1", ["punctuation", "]"]]],
+		"\r\nBar", ["footnote", [["punctuation", "["], "42", ["punctuation", "]"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for footnotes.

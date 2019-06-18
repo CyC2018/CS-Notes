@@ -1,0 +1,25 @@
+| foo |
+| x y myVar z cnt |
+
+----------------------------------------------------
+
+[
+	["temporary-variables", [
+		["punctuation", "|"],
+		["variable", "foo"],
+		["punctuation", "|"]
+	]],
+	["temporary-variables", [
+		["punctuation", "|"],
+		["variable", "x"],
+		["variable", "y"],
+		["variable", "myVar"],
+		["variable", "z"],
+		["variable", "cnt"],
+		["punctuation", "|"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for temporary variables.

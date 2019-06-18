@@ -1,0 +1,47 @@
+<h2>Comments</h2>
+<pre><code>/* This comment will appear in the CSS output.
+  This is nested beneath the comment,
+  so it's part of it
+
+// This comment will not appear in the CSS output.
+  This is nested beneath the comment as well,
+  so it also won't appear</code></pre>
+
+<h2>At-rules and shortcuts</h2>
+<pre><code>@mixin large-text
+  color: #ff0000
+
+@media (min-width: 600px)
+  h1
+    @include large-text
+
+=large-text
+  color: #ff0000
+
+h1
+  +large-text</code></pre>
+
+<h2>Variables</h2>
+<pre><code>$width: 5em
+#main
+  width: $width
+</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+    There are always such cases in every regex-based syntax highlighter.
+    However, Prism dares to be open and honest about them.
+    If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Deprecated Sass syntax is not supported</h3>
+<pre><code>.page
+  color = 5px + 9px
+
+!width = 13px
+.icon
+  width = !width</code></pre>
+
+<h3>Selectors with pseudo classes are highlighted as property/value pairs</h3>
+<pre><code>a:hover
+  text-decoration: underline</code></pre>

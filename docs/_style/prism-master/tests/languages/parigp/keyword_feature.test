@@ -1,0 +1,103 @@
+break
+breakpoint
+dbg_down
+dbg_err
+dbg_up
+dbg_x
+for
+forcomposite
+fordiv
+forell
+forpart
+forprime
+forstep
+forsubgroup
+forvec
+if
+iferr
+local
+my
+next
+return
+until
+while
+
+br e ak
+break point
+d b g_down
+dbg_e r r
+dbg _ up
+db g _x
+f o r
+for composite
+for div
+for ell
+for part
+for prime
+for step
+for subgroup
+for vec
+i f
+if err
+l o c a l
+m y
+ne xt
+re tu rn
+u nti l
+whi le
+
+----------------------------------------------------
+
+[
+	["keyword", "break"],
+	["keyword", "breakpoint"],
+	["keyword", "dbg_down"],
+	["keyword", "dbg_err"],
+	["keyword", "dbg_up"],
+	["keyword", "dbg_x"],
+	["keyword", "for"],
+	["keyword", "forcomposite"],
+	["keyword", "fordiv"],
+	["keyword", "forell"],
+	["keyword", "forpart"],
+	["keyword", "forprime"],
+	["keyword", "forstep"],
+	["keyword", "forsubgroup"],
+	["keyword", "forvec"],
+	["keyword", "if"],
+	["keyword", "iferr"],
+	["keyword", "local"],
+	["keyword", "my"],
+	["keyword", "next"],
+	["keyword", "return"],
+	["keyword", "until"],
+	["keyword", "while"],
+
+	["keyword", "br e ak"],
+	["keyword", "break point"],
+	["keyword", "d b g_down"],
+	["keyword", "dbg_e r r"],
+	["keyword", "dbg _ up"],
+	["keyword", "db g _x"],
+	["keyword", "f o r"],
+	["keyword", "for composite"],
+	["keyword", "for div"],
+	["keyword", "for ell"],
+	["keyword", "for part"],
+	["keyword", "for prime"],
+	["keyword", "for step"],
+	["keyword", "for subgroup"],
+	["keyword", "for vec"],
+	["keyword", "i f"],
+	["keyword", "if err"],
+	["keyword", "l o c a l"],
+	["keyword", "m y"],
+	["keyword", "ne xt"],
+	["keyword", "re tu rn"],
+	["keyword", "u nti l"],
+	["keyword", "whi le"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords. Also checks that whitespaces are ignored.

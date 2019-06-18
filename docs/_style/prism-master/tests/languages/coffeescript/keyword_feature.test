@@ -1,0 +1,41 @@
+and break by catch
+class;
+continue debugger delete
+do each else extend
+extends;
+false finally for if in
+instanceof;
+is isnt let
+loop namespace
+new;
+no not null of off on
+or own return super
+switch then this throw
+true try typeof undefined
+unless until when while
+window with yes yield
+
+----------------------------------------------------
+
+[
+	["keyword", "and"], ["keyword", "break"], ["keyword", "by"], ["keyword", "catch"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "continue"], ["keyword", "debugger"], ["keyword", "delete"],
+	["keyword", "do"], ["keyword", "each"], ["keyword", "else"], ["keyword", "extend"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "false"], ["keyword", "finally"], ["keyword", "for"], ["keyword", "if"], ["keyword", "in"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "is"], ["keyword", "isnt"], ["keyword", "let"],
+	["keyword", "loop"], ["keyword", "namespace"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "no"], ["keyword", "not"], ["keyword", "null"], ["keyword", "of"], ["keyword", "off"], ["keyword", "on"],
+	["keyword", "or"], ["keyword", "own"], ["keyword", "return"], ["keyword", "super"],
+	["keyword", "switch"], ["keyword", "then"], ["keyword", "this"], ["keyword", "throw"],
+	["keyword", "true"], ["keyword", "try"], ["keyword", "typeof"], ["keyword", "undefined"],
+	["keyword", "unless"], ["keyword", "until"], ["keyword", "when"], ["keyword", "while"],
+	["keyword", "window"], ["keyword", "with"], ["keyword", "yes"], ["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

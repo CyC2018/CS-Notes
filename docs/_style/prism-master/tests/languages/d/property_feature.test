@@ -1,0 +1,17 @@
+@property int data()
+@disable this();
+
+----------------------------------------------------
+
+[
+	["property", "@property"],
+	["keyword", "int"],
+	["function", "data"], ["punctuation", "("], ["punctuation", ")"],
+	["property", "@disable"],
+	["keyword", "this"], ["punctuation", "("], ["punctuation", ")"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Check for properties.

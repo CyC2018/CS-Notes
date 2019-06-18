@@ -1,0 +1,14 @@
+${42}
+
+----------------------------------------------------
+
+[
+	["antiquotation", "$"],
+	["punctuation", "{"],
+	["number", "42"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for antiquotations outside of strings.

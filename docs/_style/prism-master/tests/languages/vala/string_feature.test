@@ -1,0 +1,64 @@
+""
+"fo\"o"
+
+"""Multi line
+string"""
+
+@"foo $bar"
+@"foo $(bar)"
+
+'a'
+'\''
+'\\'
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"o\""],
+
+	["raw-string", "\"\"\"Multi line\r\nstring\"\"\""],
+	["template-string", 
+		[
+			["string", "@\"foo "],
+			[
+				"interpolation",
+				[
+					[
+						"delimiter", "$"
+					],
+					"bar"
+				]
+			],
+			["string", "\""]
+		]
+	],
+	["template-string",
+		[
+			["string", "@\"foo "],
+			[
+				"interpolation",
+				[
+					[
+						"delimiter",
+						"$("
+					],
+					"bar",
+					[
+						"delimiter",
+						")"
+					]
+				]
+			],
+			["string", "\""]
+		]
+	],
+	["string", "'a'"],
+	["string", "'\\''"],
+	["string", "'\\\\'"]
+]
+
+----------------------------------------------------
+
+Checks for normal and verbatim strings.
+Also checks for single quoted characters.

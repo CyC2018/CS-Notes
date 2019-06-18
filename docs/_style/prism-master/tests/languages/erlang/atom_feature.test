@@ -1,0 +1,17 @@
+foo
+foo@_bar
+'foo bar'
+'\'\\'
+
+----------------------------------------------------
+
+[
+	["atom", "foo"],
+	["atom", "foo@_bar"],
+	["quoted-atom", "'foo bar'"],
+    ["quoted-atom", "'\\'\\\\'"]
+]
+
+----------------------------------------------------
+
+Checks for atoms and quoted atoms.

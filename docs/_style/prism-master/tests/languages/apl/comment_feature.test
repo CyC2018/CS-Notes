@@ -1,0 +1,15 @@
+⍝
+⍝ Foobar
+#!/usr/bin/env runapl
+
+----------------------------------------------------
+
+[
+	["comment", "⍝"],
+	["comment", "⍝ Foobar"],
+	["comment", "#!/usr/bin/env runapl"]
+]
+
+----------------------------------------------------
+
+Checks for comments.
