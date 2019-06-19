@@ -85,7 +85,7 @@
 
 <br>
 
-<div align="center"><img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报2.png"></img></div>
+<div align="center"><img width="500px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报2.png"></img></div>
 
 ### 更多内容
 
