@@ -721,7 +721,7 @@ CREATE USER myuser IDENTIFIED BY 'mypassword';
 **修改账户名** 
 
 ```sql
-RENAME myuser TO newuser;
+RENAME USER myuser TO newuser;
 ```
 
 **删除账户** 
