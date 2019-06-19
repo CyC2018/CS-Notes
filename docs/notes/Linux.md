@@ -771,7 +771,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命名别名：例如 lm 是 ls -al 的别名
+- 命名别名：例如 ll 是 ls -al 的别名
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
@@ -1162,7 +1162,7 @@ dmtsai lines: 5 columns: 9
 | R | running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。|
 | D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
-| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是不可被其父进程获取信息。|
+| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
 | T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
 <br>
 

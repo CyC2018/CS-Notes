@@ -84,12 +84,12 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 ## 五大 I/O 模型比较
 
-- 同步 I/O：将数据从内核缓冲区复制到应用进程缓冲区的阶段，应用进程会阻塞。
-- 异步 I/O：不会阻塞。
+- 同步 I/O：将数据从内核缓冲区复制到应用进程缓冲区的阶段（第二阶段），应用进程会阻塞。
+- 异步 I/O：第二阶段应用进程不会阻塞。
 
-阻塞式 I/O、非阻塞式 I/O、I/O 复用和信号驱动 I/O 都是同步 I/O，它们的主要区别在第一个阶段。阻塞式 I/O 在第一阶段阻塞。
+同步 I/O 包括阻塞式 I/O、非阻塞式 I/O、I/O 复用和信号驱动 I/O ，它们的主要区别在第一个阶段。
 
-非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。异步 I/O 在第二阶段也不会阻塞。
+非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492928105791_3.png"/> </div><br>
 
