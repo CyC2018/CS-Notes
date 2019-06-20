@@ -223,7 +223,7 @@ public static void main(String[] args) {
 
 main() 属于非守护线程。
 
-使用 setDaemon() 方法将一个线程设置为守护线程。
+在线程启动之前使用 setDaemon() 方法可以将一个线程设置为守护线程。
 
 ```java
 public static void main(String[] args) {
