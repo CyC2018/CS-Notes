@@ -2,14 +2,14 @@
 * [1. 分配饼干](#1-分配饼干)
 * [2. 不重叠的区间个数](#2-不重叠的区间个数)
 * [3. 投飞镖刺破气球](#3-投飞镖刺破气球)
-* [3. 根据身高和序号重组队列](#3-根据身高和序号重组队列)
-* [4. 买卖股票最大的收益](#4-买卖股票最大的收益)
-* [5. 买卖股票的最大收益 II](#5-买卖股票的最大收益-ii)
-* [6. 种植花朵](#6-种植花朵)
-* [7. 判断是否为子序列](#7-判断是否为子序列)
-* [8. 修改一个数成为非递减数组](#8-修改一个数成为非递减数组)
-* [9. 子数组最大的和](#9-子数组最大的和)
-* [10. 分隔字符串使同种字符出现在一起](#10-分隔字符串使同种字符出现在一起)
+* [4. 根据身高和序号重组队列](#4-根据身高和序号重组队列)
+* [5. 买卖股票最大的收益](#5-买卖股票最大的收益)
+* [6. 买卖股票的最大收益 II](#6-买卖股票的最大收益-ii)
+* [7. 种植花朵](#7-种植花朵)
+* [8. 判断是否为子序列](#8-判断是否为子序列)
+* [9. 修改一个数成为非递减数组](#9-修改一个数成为非递减数组)
+* [10. 子数组最大的和](#10-子数组最大的和)
+* [11. 分隔字符串使同种字符出现在一起](#11-分隔字符串使同种字符出现在一起)
 <!-- GFM-TOC -->
 
 
@@ -78,18 +78,18 @@ Explanation: You don't need to remove any of the intervals since they're already
 按区间的结尾进行排序，每次选择结尾最小，并且和前一个区间不重叠的区间。
 
 ```java
-public int eraseOverlapIntervals(Interval[] intervals) {
+public int eraseOverlapIntervals(int[][] intervals) {
     if (intervals.length == 0) {
         return 0;
     }
-    Arrays.sort(intervals, Comparator.comparingInt(o -> o.end));
+    Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
     int cnt = 1;
-    int end = intervals[0].end;
+    int end = intervals[0][1];
     for (int i = 1; i < intervals.length; i++) {
-        if (intervals[i].start < end) {
+        if (intervals[i][0] < end) {
             continue;
         }
-        end = intervals[i].end;
+        end = intervals[i][1];
         cnt++;
     }
     return intervals.length - cnt;
@@ -99,10 +99,10 @@ public int eraseOverlapIntervals(Interval[] intervals) {
 使用 lambda 表示式创建 Comparator 会导致算法运行时间过长，如果注重运行时间，可以修改为普通创建 Comparator 语句：
 
 ```java
-Arrays.sort(intervals, new Comparator<Interval>() {
+Arrays.sort(intervals, new Comparator<int[]>() {
     @Override
-    public int compare(Interval o1, Interval o2) {
-        return o1.end - o2.end;
+    public int compare(int[] o1, int[] o2) {
+        return o1[1] - o2[1];
     }
 });
 ```
@@ -141,7 +141,7 @@ public int findMinArrowShots(int[][] points) {
 }
 ```
 
-# 3. 根据身高和序号重组队列
+# 4. 根据身高和序号重组队列
 
 [406. Queue Reconstruction by Height(Medium)](https://leetcode.com/problems/queue-reconstruction-by-height/description/)
 
@@ -173,7 +173,7 @@ public int[][] reconstructQueue(int[][] people) {
 }
 ```
 
-# 4. 买卖股票最大的收益
+# 5. 买卖股票最大的收益
 
 [121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
 
@@ -196,7 +196,7 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 5. 买卖股票的最大收益 II
+# 6. 买卖股票的最大收益 II
 
 [122. Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
@@ -217,7 +217,7 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 6. 种植花朵
+# 7. 种植花朵
 
 [605. Can Place Flowers (Easy)](https://leetcode.com/problems/can-place-flowers/description/)
 
@@ -247,7 +247,7 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 }
 ```
 
-# 7. 判断是否为子序列
+# 8. 判断是否为子序列
 
 [392. Is Subsequence (Medium)](https://leetcode.com/problems/is-subsequence/description/)
 
@@ -269,7 +269,7 @@ public boolean isSubsequence(String s, String t) {
 }
 ```
 
-# 8. 修改一个数成为非递减数组
+# 9. 修改一个数成为非递减数组
 
 [665. Non-decreasing Array (Easy)](https://leetcode.com/problems/non-decreasing-array/description/)
 
@@ -303,7 +303,7 @@ public boolean checkPossibility(int[] nums) {
 
 
 
-# 9. 子数组最大的和
+# 10. 子数组最大的和
 
 [53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
 
@@ -327,7 +327,7 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
-# 10. 分隔字符串使同种字符出现在一起
+# 11. 分隔字符串使同种字符出现在一起
 
 [763. Partition Labels (Medium)](https://leetcode.com/problems/partition-labels/description/)
 
@@ -370,5 +370,10 @@ private int char2Index(char c) {
 
 
 
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复"下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复"资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<div align="center"><img width="480px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报3.png"></img></div>

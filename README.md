@@ -1,21 +1,22 @@
 <div align="center">
-<a href="https://github.com/CyC2018/CS-Notes/blob/master/other/download.md">离线阅读版本下载</a>
+    <a href="https://gitstar-ranking.com/repositories"> <img src="https://badgen.net/badge/Rank/22?icon=github&color=4ab8a1"></a>
+    <a href="assets/download.md"> <img src="https://badgen.net/badge/OvO/%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD?icon=telegram&color=4ab8a1"></a>
+    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://badgen.net/badge/CyC/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB?icon=sourcegraph&color=4ab8a1"></a>
+    <a href="#微信公众号"> <img src="https://badgen.net/badge/%e5%85%ac%e4%bc%97%e5%8f%b7/CyC2018?icon=rss&color=4ab8a1"></a>
 </div>
-
 <br>
 
-|      &nbsp;算法&nbsp;      |             操作系统             |    &nbsp;网络&nbsp;    |        面向对象        |    &nbsp;&nbsp;数据库&nbsp;&nbsp;    | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; |         系统设计         | &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; |               编码实践               | &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
-| :------------------------: | :------------------------------: | :--------------------: | :--------------------: | :----------------------------------: | :--------------------------------------: | :----------------------: | :--------------------------------------: | :----------------------------------: | :--------------------------------------: |
-| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |         [:coffee:](#coffee-java)         | [:bulb:](#bulb-系统设计) |         [:wrench:](#wrench-工具)         | [:watermelon:](#watermelon-编码实践) |           [:memo:](#memo-后记)           |
+| &nbsp;算法&nbsp; | 操作系统 | &nbsp;网络&nbsp;|面向对象| &nbsp;&nbsp;数据库&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp;|         系统设计| &nbsp;&nbsp;&nbsp;工具&nbsp;&nbsp;&nbsp; |编码实践| &nbsp;&nbsp;&nbsp;后记&nbsp;&nbsp;&nbsp; |
+| :---: | :----: | :---: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |[:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计) |[:wrench:](#wrench-工具)| [:watermelon:](#watermelon-编码实践) |[:memo:](#memo-后记)|
 
 <br>
 
 <div align="center">
     <img src="assets/LogoMakr_0zpEzN.png" width="200px">
-    <br>
-    <a href="https://cyc2018.github.io/CS-Notes"> <img src="https://img.shields.io/badge/>-read-4ab8a1.svg"></a>  <a href="https://xiaozhuanlan.com/CyC2018"> <img src="https://img.shields.io/badge/_-more-4ab8a1.svg"></a> 
-    <br> <br>
 </div>
+
+<br>
 
 ## :pencil2: 算法
 
@@ -76,41 +77,30 @@
 - [代码可读性](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码可读性.md)
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码风格规范.md)
 
-## :memo: 后记 
+## :memo: 后记
 
-### 公众号
+### 微信公众号
 
-更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复 "下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
 
-<img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img>
+<div align="center"><img width="500px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报4.png"></img></div>
 
-### QQ 群
+### 更多内容
 
-为大家提供一个学习交流平台，在这里你可以自由地讨论技术问题。
+- 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+- 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
+- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593)
+- 简历：https://cyc2018.github.io
+- 知乎：[CyC2018](https://www.zhihu.com/people/xiao-shi-guang-33/activities)
+- 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
+- QQ 交流群：[857210598](assets/group.png)
 
-<img src="assets/group.png" width="180px">
+### 工具
 
-### 后端面试进阶指南
-
-<a href="https://xiaozhuanlan.com/CyC2018">
-    <img src="assets/%E5%B0%8F%E4%B8%93%E6%A0%8F.jpg" width="80px"></a>
-    
-
-### 内推信息
-
-[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-
-### 绘图工具
-
-[draw.io](https://www.draw.io/)
-
-### Github Page
-
-[docsify](https://docsify.js.org/#/)
-
-### Logo
-
-Power by [logomakr](https://logomakr.com/).
+- Github Pages：[docsify](https://docsify.js.org/#/)
+- 云笔记：[为知笔记](http://www.wiz.cn/)
+- 绘图：[draw.io](https://www.draw.io/)
+- Logo：[logomakr](https://logomakr.com/)
 
 ### 排版
 
@@ -130,7 +120,7 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 
 本仓库内容 **不是** 将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文，其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
 
-转载文章请在开头明显处标明该页面地址。如果是公众号转载，也请在合适的位置贴上 [CyC2018 公众号二维码海报](https://github.com/CyC2018/CS-Notes/blob/master/assets/%E5%85%AC%E4%BC%97%E5%8F%B7%20%E6%B5%B7%E6%8A%A5.png)。
+转载文章请在开头明显处标明该页面地址，公众号等其它转载请联系 zhengyc101@163.com。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
@@ -139,38 +129,38 @@ GFM 转换工具：[GFM-Converter](https://github.com/CyC2018/GFM-Converter)。
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与我联系。
 
 <a href="https://github.com/linw7">
-​    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/g10guang">
-​    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/Sctwang">
-​    <img src="https://avatars3.githubusercontent.com/u/33345444?s=400&v=4" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/33345444?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/ResolveWang">
-​    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/8018776?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/crossoverJie">
-​    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
 </a> 
 <a href="https://github.com/jy03078584">
-​    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/kwongtailau">
-​    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
+    <img src="https://avatars0.githubusercontent.com/u/22954582?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/xiangflight">
-​    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
+    <img src="https://avatars2.githubusercontent.com/u/10072416?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/mafulong">
-​    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/24795000?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/yanglbme">
-​    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/21008209?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/OOCZC">
-​    <img src="https://avatars1.githubusercontent.com/u/11623828?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/11623828?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/5renyuebing">
-​    <img src="https://avatars1.githubusercontent.com/u/32872430?s=400&v=4" width="50px">
+    <img src="https://avatars1.githubusercontent.com/u/32872430?s=400&v=4" width="50px">
 </a>
