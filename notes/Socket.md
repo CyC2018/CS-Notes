@@ -103,11 +103,13 @@ select/poll/epoll 都是 I/O 多路复用的具体实现，select 出现的最�
 int select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 ```
 
-有三种类型的描述符类型：readset、writeset、exceptset，分别对应读、写、异常条件的描述符集合。fd_set 使用数组实现，数组大小使用 FD_SETSIZE 定义。
+select 允许应用程序监视一组文件描述符，等待一个或者多个描述符成为就绪状态，从而完成 I/O 操作。
 
-timeout 为超时参数，调用 select 会一直阻塞直到有描述符的事件到达或者等待的时间超过 timeout。
+- fd_set 使用数组实现，数组大小使用 FD_SETSIZE 定义，所以只能监听少于 FD_SETSIZE 数量的描述符。有三种类型的描述符类型：readset、writeset、exceptset，分别对应读、写、异常条件的描述符集合。
 
-成功调用返回结果大于 0，出错返回结果为 -1，超时返回结果为 0。
+- timeout 为超时参数，调用 select 会一直阻塞直到有描述符的事件到达或者等待的时间超过 timeout。
+
+- 成功调用返回结果大于 0，出错返回结果为 -1，超时返回结果为 0。
 
 ```c
 fd_set fd_in, fd_out;
@@ -154,7 +156,18 @@ else
 int poll(struct pollfd *fds, unsigned int nfds, int timeout);
 ```
 
-pollfd 使用链表实现。
+poll 的功能与 select 类似，也是等待一组描述符中的一个成为就绪状态。
+
+poll 中的描述符是 pollfd 类型的数组，pollfd 的定义如下：
+
+```c
+struct pollfd {
+               int   fd;         /* file descriptor */
+               short events;     /* requested events */
+               short revents;    /* returned events */
+           };
+```
+
 
 ```c
 // The structure for two events
@@ -195,7 +208,7 @@ else
 select 和 poll 的功能基本相同，不过在一些实现细节上有所不同。
 
 - select 会修改描述符，而 poll 不会；
-- select 的描述符类型使用数组实现，FD_SETSIZE 大小默认为 1024，因此默认只能监听 1024 个描述符。如果要监听更多描述符的话，需要修改 FD_SETSIZE 之后重新编译；而 poll 的描述符类型使用链表实现，没有描述符数量的限制；
+- select 的描述符类型使用数组实现，FD_SETSIZE 大小默认为 1024，因此默认只能监听 1024 个描述符。如果要监听更多描述符的话，需要修改 FD_SETSIZE 之后重新编译；而 poll 没有描述符数量的限制；
 - poll 提供了更多的事件类型，并且对描述符的重复利用上比 select 高。
 - 如果一个线程对某个描述符调用了 select 或者 poll，另一个线程关闭了该描述符，会导致调用结果不确定。
 
@@ -315,6 +328,8 @@ poll 没有最大描述符数量的限制，如果平台支持并且对实时性
 # 参考资料
 
 - Stevens W R, Fenner B, Rudoff A M. UNIX network programming[M]. Addison-Wesley Professional, 2004.
+- http://man7.org/linux/man-pages/man2/select.2.html
+- http://man7.org/linux/man-pages/man2/poll.2.html
 - [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
 - [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
 - [Linux IO 模式及 select、poll、epoll 详解](https://segmentfault.com/a/1190000003063859)
