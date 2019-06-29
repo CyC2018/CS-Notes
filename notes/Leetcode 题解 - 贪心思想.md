@@ -275,7 +275,7 @@ public boolean isSubsequence(String s, String t) {
 
 对于这个后续挑战，因为有10亿以上的S，所以不能每次都去遍历T，而是应该把T的序列保存下来
 
-定义一个dp数组，int [][]dp = new int[t.length()][26]，其中dp[i][j] 表示T的i位置及之后，(j + 'a')对应的字符最早出现的位置
+定义一个dp数组: int [][]dp = new int[t.length()][26]，其中dp[i][j] 表示T的i位置及之后，j + 'a'字符最早出现的位置
 
 之后对S进行遍历，用tIndex记录T所到达的位置，并判断T的tIndex位置及之后是否有S当前位置元素，遍历完成返回true，如果在这期间tIndex越界，则返回false
 
