@@ -269,6 +269,48 @@ public boolean isSubsequence(String s, String t) {
 }
 ```
 
+后续挑战 :
+
+如果有大量输入的 S，称作S1, S2, ... , Sk 其中 k >= 10亿，你需要依次检查它们是否为 T 的子序列。在这种情况下，你会怎样改变代码？
+
+对于这个后续挑战，因为有10亿以上的S，所以不能每次都去遍历T，而是应该把T的序列保存下来
+
+定义一个dp数组，int [][]dp = new int[t.length()][26]，其中dp[i][j] 表示T的i位置及之后，(j + 'a')对应的字符最早出现的位置
+
+之后对S进行遍历，用tIndex记录T所到达的位置，并判断T的tIndex位置及之后是否有S当前位置元素，遍历完成返回true，如果在这期间tIndex越界，则返回false
+
+```java
+public boolean isSubsequence(String s, String t) {
+    int [][]dp = new int[t.length()][26];
+    int []pos = new int[26];
+    for (int i = 0; i < 26; i++) {
+        pos[i] = t.length();
+    }
+
+    for (int i = dp.length - 1; i >= 0; i--) {
+        pos[t.charAt(i) - 'a'] = i;
+        for (int j = 0; j < 26; j++) {
+            dp[i][j] = pos[j];
+        }
+    }
+
+    int tIndex = 0;
+    for (int i = 0; i < s.length(); i++) {
+        if (tIndex >= t.length()) {
+            return false;
+        }
+        tIndex = dp[tIndex][s.charAt(i) - 'a'];
+        if (tIndex >= t.length()) {
+            return false;
+        }
+        tIndex++;
+    }
+
+    return true;
+}
+
+```
+
 # 9. 修改一个数成为非递减数组
 
 [665. Non-decreasing Array (Easy)](https://leetcode.com/problems/non-decreasing-array/description/)
