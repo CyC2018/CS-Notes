@@ -1,0 +1,21 @@
+@[AlwaysInline]
+@[CallConvention("X86_StdCall")]
+
+----------------------------------------------------
+
+[
+	["attribute", [
+		["delimiter", "@["],
+		["constant", "AlwaysInline"],
+		["delimiter", "]"]
+	]],
+	["attribute", [
+		["delimiter", "@["],
+		["constant", "CallConvention"], ["punctuation", "("], ["string", [ "\"X86_StdCall\"" ]], ["punctuation", ")"],
+		["delimiter", "]"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for attributes.

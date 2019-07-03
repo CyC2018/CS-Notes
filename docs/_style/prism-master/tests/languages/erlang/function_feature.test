@@ -1,0 +1,17 @@
+spawn(
+foo@_bar(
+'foo bar'(
+'\'\\'(
+
+----------------------------------------------------
+
+[
+	["function", "spawn"], ["punctuation", "("],
+	["function", "foo@_bar"], ["punctuation", "("],
+	["quoted-function", "'foo bar'"], ["punctuation", "("],
+	["quoted-function", "'\\'\\\\'"], ["punctuation", "("]
+]
+
+----------------------------------------------------
+
+Checks for functions and quoted functions.

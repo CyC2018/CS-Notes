@@ -1,0 +1,26 @@
+::= := = 
+== != >= <=
+&& and || or not
+..
++ - / * **
+%= &= *= += -= /= <<= >>= ^= |=
+? ?? @ @@
+return
+
+-------------------------------------------------------------------------------------------------------------------------
+
+[
+	["operator", "::="    ] , ["operator", ":="  ] , ["operator", "="   ] ,
+	["operator", "=="     ] , ["operator", "!="  ] , ["operator", ">="  ] , ["operator", "<=" ] ,
+	["operator", "&&"     ] , ["operator", "and" ] , ["operator", "||"  ] , ["operator", "or" ] , ["operator", "not" ] ,
+	["operator", ".."     ] ,
+	["operator", "+"      ] , ["operator", "-"   ] , ["operator", "/"   ] , ["operator", "*"  ] , ["operator", "**"  ] ,
+	["operator", "%="     ] , ["operator", "&="  ] , ["operator", "*="  ] , ["operator", "+=" ] , ["operator", "-="  ] ,
+	["operator", "/="     ] , ["operator", "<<=" ] , ["operator", ">>=" ] , ["operator", "^=" ] , ["operator", "|="  ] ,
+	["operator", "?"      ] , ["operator", "??"  ] , ["operator", "@"   ] , ["operator", "@@" ] ,
+	["operator", "return" ]
+]
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Check operators.

@@ -1,0 +1,31 @@
+Number
+number
+String
+string
+Boolean
+boolean
+Function
+any
+mixed
+null
+void
+
+----------------------------------------------------
+
+[
+	["type", "Number"],
+	["type", "number"],
+	["type", "String"],
+	["type", "string"],
+	["type", "Boolean"],
+	["type", "boolean"],
+	["type", "Function"],
+	["type", "any"],
+	["type", "mixed"],
+	["type", "null"],
+	["type", "void"]
+]
+
+----------------------------------------------------
+
+Checks for types.

@@ -1,0 +1,31 @@
+$foo
+$Foobar_42
+$::foo
+$foo::bar42
+
+${foobar}
+
+set foo bar
+set Foobar_42 baz
+set ::foo bar
+set foo::bar42 baz
+
+----------------------------------------------------
+
+[
+	"$", ["variable", "foo"],
+	"\r\n$", ["variable", "Foobar_42"],
+	"\r\n$", ["variable", "::foo"],
+	"\r\n$", ["variable", "foo::bar42"],
+
+	"\r\n\r\n$", ["variable", "{foobar}"],
+
+	["keyword", "set"], ["variable", "foo"], " bar\r\n",
+	["keyword", "set"], ["variable", "Foobar_42"], " baz\r\n",
+	["keyword", "set"], ["variable", "::foo"], " bar\r\n",
+	["keyword", "set"], ["variable", "foo::bar42"], " baz"
+]
+
+----------------------------------------------------
+
+Checks for variables.

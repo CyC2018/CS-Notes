@@ -1,0 +1,27 @@
+(1)
+(12)
+(1.2)
+(1.23)
+(1.)
+(foo 1)
+[1 ]
+(-1)
+(+1)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["number", "1"], ["punctuation", ")"],
+	["punctuation", "("], ["number", "12"], ["punctuation", ")"],
+	["punctuation", "("], ["number", "1.2"], ["punctuation", ")"],
+	["punctuation", "("], ["number", "1.23"], ["punctuation", ")"],
+	["punctuation", "("], ["number", "1."], ["punctuation", ")"],
+	["punctuation", "("], ["car", "foo"], ["number", "1"], ["punctuation", ")"],
+	["punctuation", "["], ["number", "1"], ["punctuation", "]"],
+	["punctuation", "("], ["number", "-1"], ["punctuation", ")"],
+	["punctuation", "("], ["number", "+1"], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

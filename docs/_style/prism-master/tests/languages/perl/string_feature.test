@@ -1,0 +1,130 @@
+q//
+q/foobar/
+q/foo\/bar/
+q/foo
+bar/
+
+qq!!
+qq!foobar!
+qq!foo\!bar!
+qq!foo
+bar!
+
+qw__
+qx_foobar_
+qx_foo\_bar_
+qw_foo
+bar_
+
+qw??
+qw?foobar?
+qw?foo\?bar?
+qw?foo
+bar?
+
+q aa
+q afoob\ara
+q 4foobar4
+q pfoo
+barp
+
+qq()
+qq(foobar)
+qq(foo\(\)bar)
+qq(foo
+bar)
+
+qx{}
+qx{foobar}
+qx{foo\{\}bar}
+qx{foo
+bar}
+
+qw[]
+qw[foobar]
+qw[foo\[\]bar]
+qw[foo
+bar]
+
+q<>
+q<foobar>
+q<foo\<\>bar>
+q<foo
+bar>
+
+""
+"foo\"bar"
+"foo
+bar"
+
+''
+'foo\'bar'
+
+``
+`foo\`bar`
+`foo
+bar`
+
+----------------------------------------------------
+
+[
+	["string", "q//"],
+	["string", "q/foobar/"],
+	["string", "q/foo\\/bar/"],
+	["string", "q/foo\r\nbar/"],
+
+	["string", "qq!!"],
+	["string", "qq!foobar!"],
+	["string", "qq!foo\\!bar!"],
+	["string", "qq!foo\r\nbar!"],
+
+	["string", "qw__"],
+	["string", "qx_foobar_"],
+	["string", "qx_foo\\_bar_"],
+	["string", "qw_foo\r\nbar_"],
+
+	["string", "qw??"],
+	["string", "qw?foobar?"],
+	["string", "qw?foo\\?bar?"],
+	["string", "qw?foo\r\nbar?"],
+
+	["string", "q aa"],
+	["string", "q afoob\\ara"],
+	["string", "q 4foobar4"],
+	["string", "q pfoo\r\nbarp"],
+
+	["string", "qq()"],
+	["string", "qq(foobar)"],
+	["string", "qq(foo\\(\\)bar)"],
+	["string", "qq(foo\r\nbar)"],
+
+	["string", "qx{}"],
+	["string", "qx{foobar}"],
+	["string", "qx{foo\\{\\}bar}"],
+	["string", "qx{foo\r\nbar}"],
+
+	["string", "qw[]"],
+	["string", "qw[foobar]"],
+	["string", "qw[foo\\[\\]bar]"],
+	["string", "qw[foo\r\nbar]"],
+
+	["string", "q<>"],
+	["string", "q<foobar>"],
+	["string", "q<foo\\<\\>bar>"],
+	["string", "q<foo\r\nbar>"],
+
+	["string", "\"\""],
+	["string", "\"foo\\\"bar\""],
+	["string", "\"foo\r\nbar\""],
+
+	["string", "''"],
+	["string", "'foo\\'bar'"],
+
+	["string", "``"],
+	["string", "`foo\\`bar`"],
+	["string", "`foo\r\nbar`"]
+]
+
+----------------------------------------------------
+
+Checks for strings and quote operators.

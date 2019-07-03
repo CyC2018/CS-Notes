@@ -1,0 +1,24 @@
+:javascript
+	0xBadFace
+
+~
+	:javascript
+	  0xBadFace
+
+----------------------------------------------------
+
+[
+	["filter-javascript", [
+		["filter-name", ":javascript"],
+		["number", "0xBadFace"]
+	]],
+	["punctuation", "~"],
+	["filter-javascript", [
+		["filter-name", ":javascript"],
+		["number", "0xBadFace"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for JavaScript filter in Haml. The tilde serves only as a separator.

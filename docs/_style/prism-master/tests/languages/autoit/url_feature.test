@@ -1,0 +1,15 @@
+#include <foo.au3>
+#include "foo.au3"
+
+----------------------------------------------------
+
+[
+	["directive", "#include"],
+	["url", "<foo.au3>"],
+	["directive", "#include"],
+	["url", "\"foo.au3\""]
+]
+
+----------------------------------------------------
+
+Checks for files in includes.

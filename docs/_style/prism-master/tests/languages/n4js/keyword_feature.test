@@ -1,0 +1,121 @@
+any
+Array
+boolean
+break
+case
+catch
+class;
+const
+constructor
+continue
+debugger
+declare
+default
+delete
+do
+else
+enum
+export
+extends;
+false
+finally
+for
+from
+function
+get
+if
+implements;
+import
+in
+instanceof;
+interface;
+let
+module
+new;
+null
+number
+package
+private
+protected
+public
+return
+set
+static
+string
+super
+switch
+this
+throw
+true
+try
+typeof
+var
+void
+while
+with
+yield
+
+----------------------------------------------------
+
+[
+	["keyword", "any"],
+	["keyword", "Array"],
+	["keyword", "boolean"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"],
+	["keyword", "constructor"],
+	["keyword", "continue"],
+	["keyword", "debugger"],
+	["keyword", "declare"],
+	["keyword", "default"],
+	["keyword", "delete"],
+	["keyword", "do"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "export"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "false"],
+	["keyword", "finally"],
+	["keyword", "for"],
+	["keyword", "from"],
+	["keyword", "function"],
+	["keyword", "get"],
+	["keyword", "if"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "let"],
+	["keyword", "module"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"],
+	["keyword", "number"],
+	["keyword", "package"],
+	["keyword", "private"],
+	["keyword", "protected"],
+	["keyword", "public"],
+	["keyword", "return"],
+	["keyword", "set"],
+	["keyword", "static"],
+	["keyword", "string"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "this"],
+	["keyword", "throw"],
+	["keyword", "true"],
+	["keyword", "try"],
+	["keyword", "typeof"],
+	["keyword", "var"],
+	["keyword", "void"],
+	["keyword", "while"],
+	["keyword", "with"],
+	["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Tests N4JS keywords.

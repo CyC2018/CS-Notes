@@ -1,0 +1,38 @@
+4 - 2;
+4 + 2;
+4 * 2;
+4 / 2;
+4 % 2;
+4 == 2;
+4 != 2;
+4 < 2;
+4 <= 2;
+4 > 2;
+4 >= 2;
+true and false
+false or true
+not true
+
+----------------------------------------------------
+
+[
+	"4 ", ["operator", "-"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "+"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "*"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "/"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "%"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "=="], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "!="], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "<"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", "<="], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", ">"], " 2", ["punctuation", ";"],
+	"\r\n4 ", ["operator", ">="], " 2", ["punctuation", ";"],
+
+	["boolean", "true"], ["operator", "and"], ["boolean", "false"],
+	["boolean", "false"], ["operator", "or"], ["boolean", "true"],
+	["operator", "not"], ["boolean", "true"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

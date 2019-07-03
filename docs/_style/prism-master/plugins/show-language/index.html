@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Show Language ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/toolbar/prism-toolbar.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Show Language</h2>
+	<p>Display the highlighted language in code blocks (inline code does not show the label).</p>
+</header>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>JavaScript</h2>
+	<pre data-src="plugins/show-language/prism-show-language.js"></pre>
+
+	<h2>CSS</h2>
+	<pre data-src="plugins/toolbar/prism-toolbar.css"></pre>
+
+	<h2>HTML (Markup)</h2>
+	<pre data-src="plugins/show-language/index.html"></pre>
+
+	<h2>SVG</h2>
+	<p>The <code class="language-markup">data-language</code> attribute can be used to display a specific label whether it has been defined as a language or not.</p>
+	<pre data-language="SVG v1.1" data-src="logo.svg"></pre>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/toolbar/prism-toolbar.js"></script>
+<script src="plugins/show-language/prism-show-language.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

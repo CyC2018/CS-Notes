@@ -1,0 +1,31 @@
+<h2>Comments</h2>
+<pre><code>//
+// Foobar
+#!/usr/bin/env io
+/* multiline
+comment
+*/</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"this is a \"test\".\nThis is only a test."
+"""this is a "test".
+This is only a test."""</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>123
+123.456
+0.456
+123e-4
+123e4
+123.456e-7
+123.456e2
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>"Hello, world!" println
+A := Object clone    // creates a new, empty object named "A"
+factorial := method(n,
+    if(n == 0, return 1)
+    res := 1
+    Range 1 to(n) foreach(i, res = res * i)
+)</code></pre>

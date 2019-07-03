@@ -1,0 +1,46 @@
+----
+== Foobar ==
+Bar _baz_ (TM) <1>
+* Foo <2>
+<1> Foobar
+2> Baz
+----
+
+.......
+.Foo
+. Foobar <1>
+include::addendum.txt <2>
+> Foo
+> Bar
+__Foo__**bar**{baz}
+.......
+
+----------------------------------------------------
+
+[
+	["literal-block", [
+		["punctuation", "----"],
+		"\r\n== Foobar ==\r\nBar _baz_ (TM) ",
+		["callout", "<1>"],
+		"\r\n* Foo ",
+		["callout", "<2>"],
+		["callout", "<1>"], " Foobar\r\n",
+		["callout", "2>"], " Baz\r\n",
+		["punctuation", "----"]
+	]],
+	["literal-block", [
+		["punctuation", "......."],
+		"\r\n.Foo\r\n. Foobar ",
+		["callout", "<1>"],
+		"\r\ninclude::addendum.txt ",
+		["callout", "<2>"],
+		["callout", ">"], " Foo\r\n",
+		["callout", ">"], " Bar\r\n__Foo__**bar**{baz}\r\n",
+		["punctuation", "......."]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for literal blocks and listing blocks.
+Also checks that nothing gets highlighted inside expect callouts.

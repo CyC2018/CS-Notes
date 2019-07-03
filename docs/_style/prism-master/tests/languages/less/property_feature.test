@@ -1,0 +1,19 @@
+font-weight:
+@{foobar} :
+background-@{foo}:
+box-shadow+:
+transform+_:
+
+----------------------------------------------------
+
+[
+	["property", "font-weight"], ["punctuation", ":"],
+	["property", "@{foobar}"], ["punctuation", ":"],
+	["property", "background-@{foo}"], ["punctuation", ":"],
+	["property", "box-shadow+"], ["punctuation", ":"],
+	["property", "transform+_"], ["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for properties.

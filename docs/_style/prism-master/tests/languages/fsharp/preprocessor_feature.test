@@ -1,0 +1,22 @@
+#if foo
+#else
+#endif
+
+#light
+#line
+#nowarn
+
+----------------------------------------------------
+
+[
+	["preprocessor", ["#", ["directive", "if"], " foo"]],
+	["preprocessor", ["#", ["directive", "else"]]],
+	["preprocessor", ["#", ["directive", "endif"]]],
+	["preprocessor", ["#", ["directive", "light"]]],
+	["preprocessor", ["#", ["directive", "line"]]],
+	["preprocessor", ["#", ["directive", "nowarn"]]]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor directives.

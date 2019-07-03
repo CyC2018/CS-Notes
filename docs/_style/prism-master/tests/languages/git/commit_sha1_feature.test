@@ -1,0 +1,15 @@
+commit a11a14ef7e26f2ca62d4b35eac455ce636d0dc09
+commit 87edc4ad8c71b95f6e46f736eb98b742859abd95
+commit 3102416a90c431400d2e2a14e707fb7fd6d9e06d
+
+----------------------------------------------------
+
+[
+	["commit_sha1", "commit a11a14ef7e26f2ca62d4b35eac455ce636d0dc09"],
+	["commit_sha1", "commit 87edc4ad8c71b95f6e46f736eb98b742859abd95"],
+	["commit_sha1", "commit 3102416a90c431400d2e2a14e707fb7fd6d9e06d"]
+]
+
+----------------------------------------------------
+
+Checks for commit SHA1.

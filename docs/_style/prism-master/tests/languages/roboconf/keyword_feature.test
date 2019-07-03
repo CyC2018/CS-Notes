@@ -1,0 +1,19 @@
+facet Foo {}
+instance of Bar {}
+external
+import
+
+----------------------------------------------------
+
+[
+	["keyword", "facet"],
+	["component", "Foo"], ["punctuation", "{"], ["punctuation", "}"],
+	["keyword", "instance of"],
+	["component", "Bar"], ["punctuation", "{"], ["punctuation", "}"],
+	["keyword", "external"],
+	["keyword", "import"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

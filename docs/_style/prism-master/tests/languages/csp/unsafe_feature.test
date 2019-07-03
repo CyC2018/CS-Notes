@@ -1,0 +1,15 @@
+script-src 'unsafe-inline' 'unsafe-eval' 'unsafe-hashed-attributes';
+
+----------------------------------------------------
+
+[
+	["directive", "script-src "],
+	["unsafe", "'unsafe-inline'"],
+	["unsafe", "'unsafe-eval'"],
+	["unsafe", "'unsafe-hashed-attributes'"],
+	";"
+]
+
+----------------------------------------------------
+
+Checks for source expressions classified as unsafe.

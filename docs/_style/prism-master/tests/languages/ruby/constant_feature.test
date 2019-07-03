@@ -1,0 +1,21 @@
+Foobar
+FOO_BAR_42
+F
+FOO
+BAR?
+BAZ!
+
+----------------------------------------------------
+
+[
+	["constant", "Foobar"],
+	["constant", "FOO_BAR_42"],
+	["constant", "F"],
+	["constant", "FOO"],
+	["constant", "BAR?"],
+	["constant", "BAZ!"]
+]
+
+----------------------------------------------------
+
+Checks for constants.

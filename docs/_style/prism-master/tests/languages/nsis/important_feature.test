@@ -1,0 +1,75 @@
+!addincludedir
+!addplugindir
+!appendfile
+!cd
+!define
+!delfile
+!echo
+!else
+!endif
+!error
+!execute
+!finalize
+!getdllversion
+!gettlbversion
+!ifdef
+!ifmacrodef
+!ifmacrondef
+!ifndef
+!if
+!include
+!insertmacro
+!macroend
+!macro
+!makensis
+!packhdr
+!pragma
+!searchparse
+!searchreplace
+!system
+!tempfile
+!undef
+!verbose
+!warning
+
+----------------------------------------------------
+
+[
+	["important", "!addincludedir"],
+	["important", "!addplugindir"],
+	["important", "!appendfile"],
+	["important", "!cd"],
+	["important", "!define"],
+	["important", "!delfile"],
+	["important", "!echo"],
+	["important", "!else"],
+	["important", "!endif"],
+	["important", "!error"],
+	["important", "!execute"],
+	["important", "!finalize"],
+	["important", "!getdllversion"],
+	["important", "!gettlbversion"],
+	["important", "!ifdef"],
+	["important", "!ifmacrodef"],
+	["important", "!ifmacrondef"],
+	["important", "!ifndef"],
+	["important", "!if"],
+	["important", "!include"],
+	["important", "!insertmacro"],
+	["important", "!macroend"],
+	["important", "!macro"],
+	["important", "!makensis"],
+	["important", "!packhdr"],
+	["important", "!pragma"],
+	["important", "!searchparse"],
+	["important", "!searchreplace"],
+	["important", "!system"],
+	["important", "!tempfile"],
+	["important", "!undef"],
+	["important", "!verbose"],
+	["important", "!warning"]
+]
+
+----------------------------------------------------
+
+Checks for compiler instructions.

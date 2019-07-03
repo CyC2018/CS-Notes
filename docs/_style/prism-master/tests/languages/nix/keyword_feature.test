@@ -1,0 +1,15 @@
+assert builtins else if
+in inherit let null
+or then with
+
+----------------------------------------------------
+
+[
+	["keyword", "assert"], ["keyword", "builtins"], ["keyword", "else"], ["keyword", "if"],
+	["keyword", "in"], ["keyword", "inherit"], ["keyword", "let"], ["keyword", "null"],
+	["keyword", "or"], ["keyword", "then"], ["keyword", "with"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

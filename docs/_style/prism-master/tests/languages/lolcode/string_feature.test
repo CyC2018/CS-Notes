@@ -1,0 +1,36 @@
+""
+"foobar"
+"fo:"o"
+"foo:)bar:>baz"
+"foo:{bar}baz"
+"foo BTW bar" BTW and out
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"foobar\""]],
+	["string", [
+		"\"fo",
+		["symbol", ":\""],
+		"o\""
+	]],
+	["string", [
+		"\"foo",
+		["symbol", ":)"],
+		"bar",
+		["symbol", ":>"],
+		"baz\""
+	]],
+	["string", [
+		"\"foo",
+		["variable", ":{bar}"],
+		"baz\""
+	]],
+	["string", ["\"foo BTW bar\""]],
+	["comment", "BTW and out"]
+]
+
+----------------------------------------------------
+
+Checks for strings, with variables and symbols in them.

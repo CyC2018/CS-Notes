@@ -1,0 +1,58 @@
+foo:after {
+foo::first-letter {
+
+foo:nth-child(2n+1) {
+
+foo.bar {
+
+foo#bar {
+
+#foo > .bar:not(baz):after {
+
+div[foo="bar"] {
+
+----------------------------------------------------
+
+[
+	["selector", [
+		"foo",
+		["pseudo-element", ":after"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		"foo",
+		["pseudo-element", "::first-letter"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		"foo",
+		["pseudo-class", ":nth-child(2n+1)"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		"foo",
+		["class", ".bar"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		"foo",
+		["id", "#bar"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		["id", "#foo"],
+		" > ",
+		["class", ".bar"],
+		["pseudo-class", ":not(baz)"],
+		["pseudo-element", ":after"]
+	]], ["punctuation", "{"],
+
+	["selector", [
+		"div",
+		["attribute", "[foo=\"bar\"]"]
+	]], ["punctuation", "{"]
+]
+
+----------------------------------------------------
+
+Checks for pseudo-elements, pseudo-classes, classes and ids inside selectors.

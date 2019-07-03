@@ -1,0 +1,24 @@
+"foo bar"
+'foo bar'
+"%{REMOTE_HOST}"
+
+----------------------------------------------------
+
+[
+	["string", [
+		"\"foo bar\""
+	]],
+	["string", [
+		"'foo bar'"
+	]],
+	["string", [
+		"\"",
+		["variable", "%{REMOTE_HOST}"],
+		"\""
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings.
+Also checks for variables inside strings.

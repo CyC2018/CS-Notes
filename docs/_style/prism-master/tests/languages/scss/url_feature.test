@@ -1,0 +1,19 @@
+url('foo.png')
+font-url('foo.ttf')
+
+----------------------------------------------------
+
+[
+	["url", "url"],
+	["punctuation", "("],
+	["string", "'foo.png'"],
+	["punctuation", ")"],
+	["url", "font-url"],
+	["punctuation", "("],
+	["string", "'foo.ttf'"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for URLs.

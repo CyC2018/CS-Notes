@@ -1,0 +1,13 @@
+Integer'Size
+Character'Val
+
+----------------------------------------------------
+
+[
+	["variable", "Integer"], ["attr-name", "'Size"],
+	["variable", "Character"], ["attr-name", "'Val"]
+]
+
+----------------------------------------------------
+
+Checks for attributes.

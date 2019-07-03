@@ -1,0 +1,21 @@
+!     qt: core
+
+-    qt: core
++    qt: core gui
+
+< qt: core
+> qt: core quick
+
+----------------------------------------------------
+
+[
+	["diff", "!     qt: core"],
+	["deleted", "-    qt: core"],
+	["inserted", "+    qt: core gui"],
+	["deleted", "< qt: core"],
+	["inserted", "> qt: core quick"]
+]
+
+----------------------------------------------------
+
+Checks for deleted, inserted and different lines.

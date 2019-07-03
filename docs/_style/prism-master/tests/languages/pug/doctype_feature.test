@@ -1,0 +1,15 @@
+doctype html
+doctype 1.1
+doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+
+----------------------------------------------------
+
+[
+	["doctype", "doctype html"],
+	["doctype", "doctype 1.1"],
+	["doctype", "doctype html PUBLIC \"-//W3C//DTD XHTML Basic 1.1//EN\""]
+]
+
+----------------------------------------------------
+
+Checks for doctypes.

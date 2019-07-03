@@ -1,0 +1,71 @@
+export default () => (
+	<div>
+		<h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
+		<p>
+			What do I like to do? Lots of course but definitely enjoy building
+			websites.
+		</p>
+	</div>
+);
+
+----------------------------------------------------
+
+[
+	["keyword", "export"],
+	["keyword", "default"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["operator", "=>"], ["punctuation", "("],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "\r\n\t\t"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"h1"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "Hi! I'm building a fake Gatsby site as part of a tutorial!"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"h1"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "\r\n\t\t"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"p"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "\r\n\t\t\tWhat do I like to do? Lots of course but definitely enjoy building\r\n\t\t\twebsites.\r\n\t\t"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"p"
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "\r\n\t"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["punctuation", ")"], ["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+See #1294.

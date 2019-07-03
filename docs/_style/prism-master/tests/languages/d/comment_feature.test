@@ -1,0 +1,27 @@
+#!/usr/bin/env rdmd
+
+/++/
+/+ foo
+bar +/
+/+ foo
+	/+
+	bar +/
+baz +/
+// This q{is} a comment
+// This /* is a */ comment
+
+----------------------------------------------------
+
+[
+	["comment", "#!/usr/bin/env rdmd"],
+	["comment", "/++/"],
+	["comment", "/+ foo\r\nbar +/"],
+	["comment", "/+ foo\r\n\t/+\r\n\tbar +/\r\nbaz +/"],
+	["comment", "// This q{is} a comment"],
+	["comment", "// This /* is a */ comment"]
+]
+
+----------------------------------------------------
+
+Checks for shebang and nestable multi-line comments.
+Other comments are tested in clike.

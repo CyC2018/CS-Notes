@@ -1,0 +1,57 @@
+<script runat="server">#pragma</script>
+<script>/foo/</script>
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["attr-name", [
+			"runat"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"server",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["asp script", [
+		["preprocessor", ["#", ["directive", "pragma"]]]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]],
+	["script", [
+		["regex", "/foo/"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for scripts containing C# code.
+Also checks that those don't break normal JS scripts.
+Note: Markup is loaded before Javascript so that scripts are added into grammar.

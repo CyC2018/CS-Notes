@@ -1,0 +1,29 @@
+foo()
+foo ()
+foo_bar()
+foo_bar ( )
+f42()
+_()
+$()
+ಠ_ಠ()
+Ƞȡ_҇()
+if(notAFunction)
+
+----------------------------------------------------
+
+[
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "foo_bar"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "foo_bar"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "f42"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "_"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "$"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "ಠ_ಠ"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "Ƞȡ_҇"], ["punctuation", "("], ["punctuation", ")"],
+	["keyword", "if"], ["punctuation", "("], "notAFunction", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions. Also checks for unicode characters in identifiers.

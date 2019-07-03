@@ -1,0 +1,43 @@
+<h2>Comments</h2>
+<pre><code>;; Single line comment
+(; Multi-line
+comment ;)</code></pre>
+
+<h2>Strings</h2>
+<pre><code>""
+"Foobar"
+"Foo\"ba\\r"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+3.1415
+0.4E-4
+-3.1_41_5
+0xBADFACE
+0xB_adF_a_c_e
++0x4E.F7
+0xFFp+4
+inf
+nan
+nan:0xf4</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>(func (param i32) (param f32) (local f64)
+  get_local 0
+  get_local 1
+  get_local 2)</code></pre>
+
+<h2>Identifiers</h2>
+<pre><code>$p
+$getAnswer
+$return_i32</code></pre>
+
+<h2>Full example</h2>
+<pre><code>(module
+  (import "js" "memory" (memory 1))
+  (import "js" "table" (table 1 anyfunc))
+  (elem (i32.const 0) $shared0func)
+  (func $shared0func (result i32)
+   i32.const 0
+   i32.load)
+)</code></pre>

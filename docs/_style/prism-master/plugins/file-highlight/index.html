@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>File Highlight ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<link rel="stylesheet" href="plugins/toolbar/prism-toolbar.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>File Highlight</h2>
+	<p>Fetch external files and highlight them with Prism. Used on the Prism website itself.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+	
+	<p>Use the <code>data-src</code> attribute on empty <code>&lt;pre></code> elements, like so:</p>
+	
+	<pre><code>&lt;pre data-src="myfile.js">&lt;/pre></code></pre>
+	
+	<p>You don’t need to specify the language, it’s automatically determined by the file extension.
+	If, however, the language cannot be determined from the file extension or the file extension is incorrect, you may specify a language as well (with the usual class name way).</p>
+	
+	<p>Please note that the files are fetched with XMLHttpRequest. This means that if the file is on a different origin, fetching it will fail, unless CORS is enabled on that website.</p>
+
+	<p>
+		When used in conjunction with the <a href="plugins/toolbar">Toolbar plugin</a>, this plugin can also display a button to download the file.
+		To use it, add a <code>data-download-link</code> attribute on the <code>&lt;pre></code> element.<br />
+		Optionally, the text can also be customized by using a <code>data-download-link-label</code> attribute.
+	</p>
+	<pre><code>&lt;pre data-src="myfile.js" data-download-link data-download-link-label="Download this file">&lt;/pre></code></pre>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<p>The plugin’s JS code:</p>
+	<pre data-src="plugins/file-highlight/prism-file-highlight.js"></pre>
+	
+	<p>This page:</p>
+	<pre data-src="plugins/file-highlight/index.html"></pre>
+
+	<p>File that doesn’t exist:</p>
+	<pre data-src="foobar.js"></pre>
+
+	<p>With a download button:</p>
+	<pre data-src="plugins/file-highlight/prism-file-highlight.js" data-download-link data-download-link-label="Download this file"></pre>
+
+	<p>For more examples, browse around the Prism website. Most large code samples are actually files fetched with this plugin.</p>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<!-- The File Highlight plugin is already included into Prism.js build -->
+<script src="plugins/toolbar/prism-toolbar.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

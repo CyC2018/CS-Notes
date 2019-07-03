@@ -1,0 +1,85 @@
+after
+before
+carry out
+check
+continue the action
+definition :
+do nothing
+else
+end if
+end unless
+end the story
+every turn
+if
+include
+instead
+instead of
+let
+move
+no
+now
+otherwise
+repeat
+report
+resume the story
+rule for
+running through
+say
+saying
+stop the action
+test
+try
+trying
+understand
+unless
+use
+when
+while
+yes
+
+----------------------------------------------------
+
+[
+	["keyword", "after"],
+	["keyword", "before"],
+	["keyword", "carry out"],
+	["keyword", "check"],
+	["keyword", "continue the action"],
+	["keyword", "definition"], ["punctuation", ":"],
+	["keyword", "do nothing"],
+	["keyword", "else"],
+	["keyword", "end if"],
+	["keyword", "end unless"],
+	["keyword", "end the story"],
+	["keyword", "every turn"],
+	["keyword", "if"],
+	["keyword", "include"],
+	["keyword", "instead"],
+	["keyword", "instead of"],
+	["keyword", "let"],
+	["keyword", "move"],
+	["keyword", "no"],
+	["keyword", "now"],
+	["keyword", "otherwise"],
+	["keyword", "repeat"],
+	["keyword", "report"],
+	["keyword", "resume the story"],
+	["keyword", "rule for"],
+	["keyword", "running through"],
+	["keyword", "say"],
+	["keyword", "saying"],
+	["keyword", "stop the action"],
+	["keyword", "test"],
+	["keyword", "try"],
+	["keyword", "trying"],
+	["keyword", "understand"],
+	["keyword", "unless"],
+	["keyword", "use"],
+	["keyword", "when"],
+	["keyword", "while"],
+	["keyword", "yes"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,53 @@
+@Inject
+@Internal
+@Undefined
+@StringBased
+@Final
+@GenerateInjector
+@WithParentInjector
+@Spec
+@Override
+@Promisifiable
+@Promisify
+@This
+@N4JS
+@IgnoreImplementation
+@Global
+@ProvidedByRuntime
+@TestAPI
+@Polyfill
+@StaticPolyfill
+@StaticPolyfillAware
+@StaticPolyfillModule
+@Transient
+
+----------------------------------------------------
+
+[
+	["annotation", "@Inject"],
+	["annotation", "@Internal"],
+	["annotation", "@Undefined"],
+	["annotation", "@StringBased"],
+	["annotation", "@Final"],
+	["annotation", "@GenerateInjector"],
+	["annotation", "@WithParentInjector"],
+	["annotation", "@Spec"],
+	["annotation", "@Override"],
+	["annotation", "@Promisifiable"],
+	["annotation", "@Promisify"],
+	["annotation", "@This"],
+	["annotation", "@N4JS"],
+	["annotation", "@IgnoreImplementation"],
+	["annotation", "@Global"],
+	["annotation", "@ProvidedByRuntime"],
+	["annotation", "@TestAPI"],
+	["annotation", "@Polyfill"],
+	["annotation", "@StaticPolyfill"],
+	["annotation", "@StaticPolyfillAware"],
+	["annotation", "@StaticPolyfillModule"],
+	["annotation", "@Transient"]
+]
+
+----------------------------------------------------
+
+Test for annotations.

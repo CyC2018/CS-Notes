@@ -1,0 +1,403 @@
+Foo [big red yellow-background]#obvious#
+
+[float]
+[quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
+[quote,'&#34;with *an* image&#34; image:foo.png[] (TM)']
+
+[NOTE]
+[icon="./images/icons/wink.png"]
+[icons=None, caption="My Special Note"]
+[start=7]
+
+[cols="e,m,^,>s",width="25%"]
+
+=====
+Foo [big red yellow-background]#obvious#
+
+[float]
+[quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
+[quote,'&#34;with *an* image&#34; image:foo.png[] (TM)']
+
+[NOTE]
+[icon="./images/icons/wink.png"]
+[icons=None, caption="My Special Note"]
+[start=7]
+
+[cols="e,m,^,>s",width="25%"]
+=====
+
+|=====
+|
+Foo [big red yellow-background]#obvious#
+
+[float]
+[quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
+[quote,'&#34;with *an* image&#34; image:foo.png[] (TM)']
+
+[NOTE]
+[icon="./images/icons/wink.png"]
+[icons=None, caption="My Special Note"]
+[start=7]
+
+[cols="e,m,^,>s",width="25%"]
+|=====
+
+
+latexmath:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
+latexmath:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
+
+----------------------------------------------------
+
+[
+	"Foo ",
+	["inline", [
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "big red yellow-background"],
+			["punctuation", "]"]
+		]],
+		["punctuation", "#"], "obvious", ["punctuation", "#"]
+	]],
+
+	["attributes", [
+		["punctuation", "["], ["attr-value", "float"], ["punctuation", "]"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["attr-value", "quote"], ["punctuation", ","],
+		["interpreted", [
+			["punctuation", "'"],
+			["macro", [
+				["function", "http"], ["punctuation", ":"],
+				"//en.wikipedia.org/wiki/Samuel_Johnson",
+				["attributes", [
+					["punctuation", "["],
+					["attr-value", "Samuel Johnson"],
+					["punctuation", "]"]
+				]]
+			]],
+			["punctuation", "'"]
+		]],
+		["punctuation", "]"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["attr-value", "quote"], ["punctuation", ","],
+		["interpreted", [
+			["punctuation", "'"],
+			["entity", "&#34;"],
+			"with ",
+			["inline", [
+				["bold", [
+					["punctuation", "*"], "an", ["punctuation", "*"]
+				]]
+			]],
+			" image",
+			["entity", "&#34;"],
+			["macro", [
+				["function", "image"], ["punctuation", ":"],
+				"foo.png",
+				["attributes", [
+					["punctuation", "["], ["punctuation", "]"]
+				]]
+			]],
+			["replacement", "(TM)"],
+			["punctuation", "'"]
+		]],
+		["punctuation", "]"]
+	]],
+
+	["attributes", [
+		["punctuation", "["], ["attr-value", "NOTE"], ["punctuation", "]"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["variable", "icon"],
+		["operator", "="],
+		["string", "\"./images/icons/wink.png\""],
+		["punctuation", "]"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["variable", "icons"],
+		["operator", "="],
+		["attr-value", "None"],
+		["punctuation", ","],
+		["variable", "caption"],
+		["operator", "="],
+		["string", "\"My Special Note\""],
+		["punctuation", "]"]
+	]],
+	["attributes", [
+		["punctuation", "["],
+		["variable", "start"],
+		["operator", "="],
+		["attr-value", "7"],
+		["punctuation", "]"]
+	]],
+
+	["attributes", [
+		["punctuation", "["],
+		["variable", "cols"],
+		["operator", "="],
+		["string", "\"e,m,^,>s\""],
+		["punctuation", ","],
+		["variable", "width"],
+		["operator", "="],
+		["string", "\"25%\""],
+		["punctuation", "]"]
+	]],
+
+	["other-block", [
+		["punctuation", "====="],
+
+		"\r\nFoo ",
+		["inline", [
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "big red yellow-background"],
+				["punctuation", "]"]
+			]],
+			["punctuation", "#"], "obvious", ["punctuation", "#"]
+		]],
+
+		["attributes", [
+			["punctuation", "["], ["attr-value", "float"], ["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "quote"], ["punctuation", ","],
+			["interpreted", [
+				["punctuation", "'"],
+				["macro", [
+					["function", "http"], ["punctuation", ":"],
+					"//en.wikipedia.org/wiki/Samuel_Johnson",
+					["attributes", [
+						["punctuation", "["],
+						["attr-value", "Samuel Johnson"],
+						["punctuation", "]"]
+					]]
+				]],
+				["punctuation", "'"]
+			]],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "quote"], ["punctuation", ","],
+			["interpreted", [
+				["punctuation", "'"],
+				["entity", "&#34;"],
+				"with ",
+				["inline", [
+					["bold", [
+						["punctuation", "*"], "an", ["punctuation", "*"]
+					]]
+				]],
+				" image",
+				["entity", "&#34;"],
+				["macro", [
+					["function", "image"], ["punctuation", ":"],
+					"foo.png",
+					["attributes", [
+						["punctuation", "["], ["punctuation", "]"]
+					]]
+				]],
+				["replacement", "(TM)"],
+				["punctuation", "'"]
+			]],
+			["punctuation", "]"]
+		]],
+
+		["attributes", [
+			["punctuation", "["], ["attr-value", "NOTE"], ["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "icon"],
+			["operator", "="],
+			["string", "\"./images/icons/wink.png\""],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "icons"],
+			["operator", "="],
+			["attr-value", "None"],
+			["punctuation", ","],
+			["variable", "caption"],
+			["operator", "="],
+			["string", "\"My Special Note\""],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "start"],
+			["operator", "="],
+			["attr-value", "7"],
+			["punctuation", "]"]
+		]],
+
+		["attributes", [
+			["punctuation", "["],
+			["variable", "cols"],
+			["operator", "="],
+			["string", "\"e,m,^,>s\""],
+			["punctuation", ","],
+			["variable", "width"],
+			["operator", "="],
+			["string", "\"25%\""],
+			["punctuation", "]"]
+		]],
+
+		["punctuation", "====="]
+	]],
+
+	["table", [
+		["punctuation", "|====="],
+		["punctuation", "|"],
+
+		"\r\nFoo ",
+		["inline", [
+			["attributes", [
+				["punctuation", "["],
+				["attr-value", "big red yellow-background"],
+				["punctuation", "]"]
+			]],
+			["punctuation", "#"], "obvious", ["punctuation", "#"]
+		]],
+
+		["attributes", [
+			["punctuation", "["], ["attr-value", "float"], ["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "quote"], ["punctuation", ","],
+			["interpreted", [
+				["punctuation", "'"],
+				["macro", [
+					["function", "http"], ["punctuation", ":"],
+					"//en.wikipedia.org/wiki/Samuel_Johnson",
+					["attributes", [
+						["punctuation", "["],
+						["attr-value", "Samuel Johnson"],
+						["punctuation", "]"]
+					]]
+				]],
+				["punctuation", "'"]
+			]],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["attr-value", "quote"], ["punctuation", ","],
+			["interpreted", [
+				["punctuation", "'"],
+				["entity", "&#34;"],
+				"with ",
+				["inline", [
+					["bold", [
+						["punctuation", "*"], "an", ["punctuation", "*"]
+					]]
+				]],
+				" image",
+				["entity", "&#34;"],
+				["macro", [
+					["function", "image"], ["punctuation", ":"],
+					"foo.png",
+					["attributes", [
+						["punctuation", "["], ["punctuation", "]"]
+					]]
+				]],
+				["replacement", "(TM)"],
+				["punctuation", "'"]
+			]],
+			["punctuation", "]"]
+		]],
+
+		["attributes", [
+			["punctuation", "["], ["attr-value", "NOTE"], ["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "icon"],
+			["operator", "="],
+			["string", "\"./images/icons/wink.png\""],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "icons"],
+			["operator", "="],
+			["attr-value", "None"],
+			["punctuation", ","],
+			["variable", "caption"],
+			["operator", "="],
+			["string", "\"My Special Note\""],
+			["punctuation", "]"]
+		]],
+		["attributes", [
+			["punctuation", "["],
+			["variable", "start"],
+			["operator", "="],
+			["attr-value", "7"],
+			["punctuation", "]"]
+		]],
+
+		["attributes", [
+			["punctuation", "["],
+			["variable", "cols"],
+			["operator", "="],
+			["string", "\"e,m,^,>s\""],
+			["punctuation", ","],
+			["variable", "width"],
+			["operator", "="],
+			["string", "\"25%\""],
+			["punctuation", "]"]
+		]],
+
+		["punctuation", "|====="]
+	]],
+
+	["macro", [
+		["function", "latexmath"], ["punctuation", ":"],
+		["attributes", [
+			["punctuation", "["],
+			["quoted", [
+				["punctuation", "$"],
+				"C = \\alpha + \\beta Y^{\\gamma} + \\epsilon",
+				["punctuation", "$"]
+			]],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "asciimath"], ["punctuation", ":"],
+		["attributes", [
+			["punctuation", "["],
+			["quoted", [
+				["punctuation", "`"],
+				"x/x={(1,if x!=0),(text{undefined},if x=0):}",
+				["punctuation", "`"]
+			]],
+			["punctuation", "]"]
+		]]
+	]],
+	["macro", [
+		["function", "latexmath"], ["punctuation", ":"],
+		["attributes", [
+			["punctuation", "["],
+			["quoted", [
+				["punctuation", "$"],
+				"\\sum_{n=1}^\\infty \\frac{1}{2^n}",
+				["punctuation", "$"]
+			]],
+			["punctuation", "]"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for attributes.

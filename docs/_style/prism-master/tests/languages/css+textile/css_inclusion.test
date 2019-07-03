@@ -1,0 +1,117 @@
+h3{color: red}. Baz
+
+h4[fr]{text-decoration:underline;}(#bar). Foobar
+
+*{color:red}bold*
+"(foo)[en]{color:blue;}Foo":bar
+
+#[fr](#foo){background:pink} Foobar
+
+!(foo)[en]{border:1px solid #ccc}foo.png!
+
+{color: blue}.|{font-weight:bold}.Baz|
+(foo#bar){font-style:italic}[fr].|{background:red;}(bar#baz)[en].Baz|
+
+----------------------------------------------------
+
+[
+	["phrase", [
+		["block-tag", [
+			["tag", "h3"],
+			["modifier", [
+				["css", [["punctuation", "{"], ["property", "color"], ["punctuation", ":"], " red", ["punctuation", "}"]]]
+			]],
+			["punctuation", "."]
+		]],
+		" Baz"
+	]],
+	["phrase", [
+		["block-tag", [
+			["tag", "h4"],
+			["modifier", [
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"],
+				["css", [["punctuation", "{"], ["property", "text-decoration"], ["punctuation", ":"], "underline", ["punctuation", ";"], ["punctuation", "}"]]],
+				["punctuation", "("], ["class-id", "#bar"], ["punctuation", ")"]
+			]],
+			["punctuation", "."]
+		]],
+		" Foobar"
+	]],
+
+	["phrase", [
+		["inline", [
+			["punctuation", "*"],
+			["modifier", [
+				["css", [["punctuation", "{"], ["property", "color"], ["punctuation", ":"], "red", ["punctuation", "}"]]]
+			]],
+			["bold", ["bold"]],
+			["punctuation", "*"]
+		]],
+		["link", [
+			["punctuation", "\""],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"],
+				["css", [["punctuation", "{"], ["property", "color"], ["punctuation", ":"], "blue", ["punctuation", ";"], ["punctuation", "}"]]]
+			]],
+			["text", "Foo"],
+			["punctuation", "\""], ["punctuation", ":"],
+			["url", "bar"]
+		]]
+	]],
+
+	["phrase", [
+		["list", [
+			["punctuation", "#"],
+			["modifier", [
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"],
+				["punctuation", "("], ["class-id", "#foo"], ["punctuation", ")"],
+				["css", [["punctuation", "{"], ["property", "background"], ["punctuation", ":"], "pink", ["punctuation", "}"]]]
+			]],
+			" Foobar"
+		]]
+	]],
+
+	["phrase", [
+		["image", [
+			["punctuation", "!"],
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"],
+				["css", [["punctuation", "{"], ["property", "border"], ["punctuation", ":"], "1px solid #ccc", ["punctuation", "}"]]]
+			]],
+			["source", "foo.png"],
+			["punctuation", "!"]
+		]]
+	]],
+
+	["phrase", [
+		["table", [
+			["modifier", [
+				["css", [["punctuation", "{"], ["property", "color"], ["punctuation", ":"], " blue", ["punctuation", "}"]]]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["css", [["punctuation", "{"], ["property", "font-weight"], ["punctuation", ":"], "bold", ["punctuation", "}"]]]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"],
+
+			["modifier", [
+				["punctuation", "("], ["class-id", "foo#bar"], ["punctuation", ")"],
+				["css", [["punctuation", "{"], ["property", "font-style"], ["punctuation", ":"], "italic", ["punctuation", "}"]]],
+				["punctuation", "["], ["lang", "fr"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], ["punctuation", "|"],
+			["modifier", [
+				["css", [["punctuation", "{"], ["property", "background"], ["punctuation", ":"], "red", ["punctuation", ";"], ["punctuation", "}"]]],
+				["punctuation", "("], ["class-id", "bar#baz"], ["punctuation", ")"],
+				["punctuation", "["], ["lang", "en"], ["punctuation", "]"]
+			]],
+			["punctuation", "."], "Baz", ["punctuation", "|"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for CSS modifier.

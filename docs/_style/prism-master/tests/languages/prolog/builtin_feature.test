@@ -1,0 +1,17 @@
+fx
+fy
+xf xfx xfy
+yf yfx
+
+----------------------------------------------------
+
+[
+	["builtin", "fx"],
+	["builtin", "fy"],
+	["builtin", "xf"], ["builtin", "xfx"], ["builtin", "xfy"],
+	["builtin", "yf"], ["builtin", "yfx"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

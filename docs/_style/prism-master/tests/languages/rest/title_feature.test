@@ -1,0 +1,585 @@
+!!!!
+Foo
+!!!!
+
+""""
+Foo
+""""
+
+####
+Foo
+####
+
+$$$$
+Foo
+$$$$
+
+%%%%
+Foo
+%%%%
+
+&&&&
+Foo
+&&&&
+
+''''
+Foo
+''''
+
+((((
+Foo
+((((
+
+))))
+Foo
+))))
+
+****
+Foo
+****
+
+++++
+Foo
+++++
+
+,,,,
+Foo
+,,,,
+
+---
+Foo
+---
+
+....
+Foo
+....
+
+////
+Foo
+////
+
+::::
+Foo
+::::
+
+;;;;
+Foo
+;;;;
+
+<<<<
+Foo
+<<<<
+
+====
+Foo
+====
+
+>>>>
+Foo
+>>>>
+
+????
+Foo
+????
+
+@@@@
+Foo
+@@@@
+
+[[[[
+Foo
+[[[[
+
+\\\\
+Foo
+\\\\
+
+]]]]
+Foo
+]]]]
+
+^^^^
+Foo
+^^^^
+
+____
+Foo
+____
+
+````
+Foo
+````
+
+{{{{
+Foo
+{{{{
+
+||||
+Foo
+||||
+
+}}}}
+Foo
+}}}}
+
+~~~~
+Foo
+~~~~
+
+
+Bar
+!!!!
+
+Bar
+""""
+
+Bar
+####
+
+Bar
+$$$$
+
+Bar
+%%%%
+
+Bar
+&&&&
+
+Bar
+''''
+
+Bar
+((((
+
+Bar
+))))
+
+Bar
+****
+
+Bar
+++++
+
+Bar
+,,,,
+
+Bar
+---
+
+Bar
+....
+
+Bar
+////
+
+Bar
+::::
+
+Bar
+;;;;
+
+Bar
+<<<<
+
+Bar
+====
+
+Bar
+>>>>
+
+Bar
+????
+
+Bar
+@@@@
+
+Bar
+[[[[
+
+Bar
+\\\\
+
+Bar
+]]]]
+
+Bar
+^^^^
+
+Bar
+____
+
+Bar
+````
+
+Bar
+{{{{
+
+Bar
+||||
+
+Bar
+}}}}
+
+Bar
+~~~~
+
+----------------------------------------------------
+
+[
+	["title", [
+		["punctuation", "!!!!"],
+		["important", "Foo"],
+		["punctuation", "!!!!"]
+	]],
+
+	["title", [
+		["punctuation", "\"\"\"\""],
+		["important", "Foo"],
+		["punctuation", "\"\"\"\""]
+	]],
+
+	["title", [
+		["punctuation", "####"],
+		["important", "Foo"],
+		["punctuation", "####"]
+	]],
+
+	["title", [
+		["punctuation", "$$$$"],
+		["important", "Foo"],
+		["punctuation", "$$$$"]
+	]],
+
+	["title", [
+		["punctuation", "%%%%"],
+		["important", "Foo"],
+		["punctuation", "%%%%"]
+	]],
+
+	["title", [
+		["punctuation", "&&&&"],
+		["important", "Foo"],
+		["punctuation", "&&&&"]
+	]],
+
+	["title", [
+		["punctuation", "''''"],
+		["important", "Foo"],
+		["punctuation", "''''"]
+	]],
+
+	["title", [
+		["punctuation", "(((("],
+		["important", "Foo"],
+		["punctuation", "(((("]
+	]],
+
+	["title", [
+		["punctuation", "))))"],
+		["important", "Foo"],
+		["punctuation", "))))"]
+	]],
+
+	["title", [
+		["punctuation", "****"],
+		["important", "Foo"],
+		["punctuation", "****"]
+	]],
+
+	["title", [
+		["punctuation", "++++"],
+		["important", "Foo"],
+		["punctuation", "++++"]
+	]],
+
+	["title", [
+		["punctuation", ",,,,"],
+		["important", "Foo"],
+		["punctuation", ",,,,"]
+	]],
+
+	["title", [
+		["punctuation", "---"],
+		["important", "Foo"],
+		["punctuation", "---"]
+	]],
+
+	["title", [
+		["punctuation", "...."],
+		["important", "Foo"],
+		["punctuation", "...."]
+	]],
+
+	["title", [
+		["punctuation", "////"],
+		["important", "Foo"],
+		["punctuation", "////"]
+	]],
+
+	["title", [
+		["punctuation", "::::"],
+		["important", "Foo"],
+		["punctuation", "::::"]
+	]],
+
+	["title", [
+		["punctuation", ";;;;"],
+		["important", "Foo"],
+		["punctuation", ";;;;"]
+	]],
+
+	["title", [
+		["punctuation", "<<<<"],
+		["important", "Foo"],
+		["punctuation", "<<<<"]
+	]],
+
+	["title", [
+		["punctuation", "===="],
+		["important", "Foo"],
+		["punctuation", "===="]
+	]],
+
+	["title", [
+		["punctuation", ">>>>"],
+		["important", "Foo"],
+		["punctuation", ">>>>"]
+	]],
+
+	["title", [
+		["punctuation", "????"],
+		["important", "Foo"],
+		["punctuation", "????"]
+	]],
+
+	["title", [
+		["punctuation", "@@@@"],
+		["important", "Foo"],
+		["punctuation", "@@@@"]
+	]],
+
+	["title", [
+		["punctuation", "[[[["],
+		["important", "Foo"],
+		["punctuation", "[[[["]
+	]],
+
+	["title", [
+		["punctuation", "\\\\\\\\"],
+		["important", "Foo"],
+		["punctuation", "\\\\\\\\"]
+	]],
+
+	["title", [
+		["punctuation", "]]]]"],
+		["important", "Foo"],
+		["punctuation", "]]]]"]
+	]],
+
+	["title", [
+		["punctuation", "^^^^"],
+		["important", "Foo"],
+		["punctuation", "^^^^"]
+	]],
+
+	["title", [
+		["punctuation", "____"],
+		["important", "Foo"],
+		["punctuation", "____"]
+	]],
+
+	["title", [
+		["punctuation", "````"],
+		["important", "Foo"],
+		["punctuation", "````"]
+	]],
+
+	["title", [
+		["punctuation", "{{{{"],
+		["important", "Foo"],
+		["punctuation", "{{{{"]
+	]],
+
+	["title", [
+		["punctuation", "||||"],
+		["important", "Foo"],
+		["punctuation", "||||"]
+	]],
+
+	["title", [
+		["punctuation", "}}}}"],
+		["important", "Foo"],
+		["punctuation", "}}}}"]
+	]],
+
+	["title", [
+		["punctuation", "~~~~"],
+		["important", "Foo"],
+		["punctuation", "~~~~"]
+	]],
+
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "!!!!"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "\"\"\"\""]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "####"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "$$$$"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "%%%%"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "&&&&"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "''''"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "(((("]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "))))"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "****"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "++++"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", ",,,,"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "---"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "...."]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "////"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "::::"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", ";;;;"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "<<<<"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "===="]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", ">>>>"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "????"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "@@@@"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "[[[["]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "\\\\\\\\"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "]]]]"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "^^^^"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "____"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "````"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "{{{{"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "||||"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "}}}}"]
+	]],
+
+	["title", [
+		["important", "Bar"],
+		["punctuation", "~~~~"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for titles, overlined and underlined or underlined only, with every possible adornments.

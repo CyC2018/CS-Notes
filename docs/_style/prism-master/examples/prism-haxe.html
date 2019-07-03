@@ -1,0 +1,37 @@
+<h2>Strings and string interpolation</h2>
+<pre><code>"Foo
+bar $baz"
+'Foo
+bar'
+"${4 + 2}"</code></pre>
+
+<h2>Regular expressions</h2>
+<pre><code>~/haxe/i
+~/[A-Z0-9._%-]+@[A-Z0-9.-]+.[A-Z][A-Z][A-Z]?/i
+~/(dog|fox)/g</code></pre>
+
+<h2>Conditional compilation</h2>
+<pre><code>#if !debug
+  trace("ok");
+#elseif (debug_level > 3)
+  trace(3);
+#else
+  trace("debug level too low");
+#end</code></pre>
+
+<h2>Metadata</h2>
+<pre><code>@author("Nicolas")
+@debug
+class MyClass {
+  @range(1, 8)
+  var value:Int;
+
+  @broken
+  @:noCompletion
+  static function method() { }
+}</code></pre>
+
+<h2>Reification</h2>
+<pre><code>macro static function add(e:Expr) {
+  return macro $e + $e;
+}</code></pre>

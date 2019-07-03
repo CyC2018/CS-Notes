@@ -1,0 +1,16 @@
+{##}
+{# This a Django template example #}
+{# Multi-line
+comment #}
+
+----------------------------------------------------
+
+[
+	["comment", "{##}"],
+	["comment", "{# This a Django template example #}"],
+	["comment", "{# Multi-line\r\ncomment #}"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

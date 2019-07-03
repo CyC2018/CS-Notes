@@ -1,0 +1,115 @@
+<h2>Comments</h2>
+<pre><code>#! shebang
+// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"This is a string."
+"This is a string with \"quotes\" in it."</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>4711
+4711L
+1.2e-3
+.14
+1000
+0x3e8
+01750
+0b1111101000
+inf
+nan</code></pre>
+
+<h2>Inline code</h2>
+<p>Inline code requires the desired language to be loaded.
+On this page, check C, C++ and Fortran <strong>before</strong> checking Pure should make
+the examples below work properly.</p>
+<pre><code>%<
+int mygcd(int x, int y)
+{
+  if (y == 0)
+    return x;
+  else
+    return mygcd(y, x%y);
+}
+%>
+
+%< -*- Fortran90 -*-
+function fact(n) result(p)
+  integer n, p
+  p = 1
+  do i = 1, n
+     p = p*i
+  end do
+end function fact
+%>
+
+%< -*- C++ -*-
+
+#include &lt;pure/runtime.h>
+#include &lt;string>
+#include &lt;map>
+
+// An STL map mapping strings to Pure expressions.
+
+using namespace std;
+typedef map&lt;string,pure_expr*> exprmap;
+
+// Since we can't directly deal with C++ classes in Pure, provide some C
+// functions to create, destroy and manipulate these objects.
+
+extern "C" exprmap *map_create()
+{
+  return new exprmap;
+}
+
+extern "C" void map_add(exprmap *m, const char *key, pure_expr *x)
+{
+  exprmap::iterator it = m->find(string(key));
+  if (it != m->end()) pure_free(it->second);
+  (*m)[key] = pure_new(x);
+}
+
+extern "C" void map_del(exprmap *m, const char *key)
+{
+  exprmap::iterator it = m->find(key);
+  if (it != m->end()) {
+    pure_free(it->second);
+    m->erase(it);
+  }
+}
+
+extern "C" pure_expr *map_get(exprmap *m, const char *key)
+{
+  exprmap::iterator it = m->find(key);
+  return (it != m->end())?it->second:0;
+}
+
+extern "C" pure_expr *map_keys(exprmap *m)
+{
+  size_t i = 0, n = m->size();
+  pure_expr **xs = new pure_expr*[n];
+  for (exprmap::iterator it = m->begin(); it != m->end(); ++it)
+    xs[i++] = pure_string_dup(it->first.c_str());
+  pure_expr *x = pure_listv(n, xs);
+  delete[] xs;
+  return x;
+}
+
+extern "C" void map_destroy(exprmap *m)
+{
+  for (exprmap::iterator it = m->begin(); it != m->end(); ++it)
+    pure_free(it->second);
+  delete m;
+}
+
+%></code></pre>
+
+<h2>Example</h2>
+<pre><code>queens n       = catch reverse (search n 1 []) with
+  search n i p = throw p if i>n;
+               = void [search n (i+1) ((i,j):p) | j = 1..n; safe (i,j) p];
+  safe (i,j) p = ~any (check (i,j)) p;
+  check (i1,j1) (i2,j2)
+               = i1==i2 || j1==j2 || i1+j1==i2+j2 || i1-j1==i2-j2;
+end;</code></pre>

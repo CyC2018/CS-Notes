@@ -1,0 +1,32 @@
+''''''
+'''Foo\'''bar'''
+'''Foo
+bar'''
+
+''
+'Foo\'bar'
+'Foo
+bar'
+
+<[ foo bar baz ]>
+
+\foo \bar \"({[-!@^+baz
+
+----------------------------------------------------
+
+[
+	["string", "''''''"],
+	["string", "'''Foo\\'''bar'''"],
+	["string", "'''Foo\r\nbar'''"],
+	["string", "''"],
+	["string", "'Foo\\'bar'"],
+	["string", "'Foo\r\nbar'"],
+	["string", "<[ foo bar baz ]>"],
+	["string", "\\foo"],
+	["string", "\\bar"],
+	["string", "\\\"({[-!@^+baz"]
+]
+
+----------------------------------------------------
+
+Checks for strings.
