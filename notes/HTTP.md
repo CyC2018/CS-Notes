@@ -318,7 +318,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 - pipelining 只能适用于 HTTP/1.1，且只有幂等的请求（GET、HEAD、PUT 和 DELETE 等方法）才能使用 pipelining ，非幂等请求比如 POST 不能使用，因为请求之间可能会存在先后依赖关系（[Clients SHOULD NOT pipeline requests using non-idempotent methods or non-idempotent sequences of methods](https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.2.2)）；
 
-- head of line blocking 问题，HTTP/1.1 协议规定：服务器必须按请求收到的顺序依次发送响应（[A server MUST send its responses to those requests in the same order that the requests were received.](https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.2.2)。因此，如果前面的请求堵塞了，后面的请求即使处理完了，也需要等待前面的请求处理完发送后，才能发送给客户端；
+- head of line blocking 问题，HTTP/1.1 协议规定：服务器必须按请求收到的顺序依次发送响应（[A server MUST send its responses to those requests in the same order that the requests were received.](https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.2.2)）。因此，如果前面的请求堵塞了，后面的请求即使处理完了，也需要等待前面的请求处理完发送后，才能发送给客户端；
 
 - 绝大部分的 HTTP 代理服务器不支持 pipelining；
 
