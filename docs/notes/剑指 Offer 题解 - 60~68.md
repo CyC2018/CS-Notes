@@ -17,7 +17,7 @@
 
 ## 题目描述
 
-把 n 个骰子仍在地上，求点数和为 s 的概率。
+把 n 个骰子扔在地上，求点数和为 s 的概率。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/195f8693-5ec4-4987-8560-f25e365879dd.png" width="300px"> </div><br>
 
