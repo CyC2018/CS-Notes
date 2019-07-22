@@ -1,4 +1,3 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [一、常用操作以及概念](#一常用操作以及概念)
     * [快捷键](#快捷键)
@@ -32,7 +31,7 @@
     * [文件属性](#文件属性)
     * [文件与目录的基本操作](#文件与目录的基本操作)
     * [修改权限](#修改权限)
-    * [文件默认权限](#文件默认权限)
+    * [默认权限](#默认权限)
     * [目录的权限](#目录的权限)
     * [链接](#链接)
     * [获取文件内容](#获取文件内容)
@@ -86,7 +85,7 @@
 
 man 是 manual 的缩写，将指令的具体信息显示出来。
 
-当执行`man date`时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
+当执行 `man date` 时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
 
 | 代号 | 类型 |
 | :--: | -- |
@@ -138,10 +137,8 @@ sudo 允许一般用户使用 root 可执行的命令，不过只有在 /etc/sud
 
 RPM 和 DPKG 为最常见的两类软件包管理工具：
 
-- RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为很多 Linux 系统 (RHEL) 的既定软件标准。
-- 与 RPM 进行竞争的是基于 Debian 操作系统 (Ubuntu) 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
-
-YUM 基于 RPM，具有依赖管理功能，并具有软件升级的功能。
+- RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为许多 Linux 系统的既定软件标准。YUM 基于 RPM，具有依赖管理和软件升级功能。
+- 与 RPM 竞争的是基于 Debian 操作系统的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
 
 ## 发行版
 
@@ -158,7 +155,7 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 - 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
 - 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
 
-<div align="center"> <img src="pics/5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b5e9fa4d-78d3-4176-8273-756d970742c7.png" width="500"/> </div><br>
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
@@ -173,7 +170,7 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ## GNU
 
-GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
+GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议（GNU General Public License），包含了以下内容：
 
 - 以任何目的运行此程序的自由；
 - 再复制的自由；
@@ -192,25 +189,25 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 IDE（ATA）全称 Advanced Technology Attachment，接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
 
-<div align="center"> <img src="pics/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
 
 ### 2. SATA
 
-SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强，且对数据线的长度要求比 ATA 低很多，支持热插拔等功能。SATA-II 的接口速度为 300MiB/s，而新的 SATA-III 标准可达到 600MiB/s 的传输速度。SATA 的数据线也比 ATA 的细得多，有利于机箱内的空气流通，整理线材也比较方便。
+SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强，且对数据线的长度要求比 ATA 低很多，支持热插拔等功能。SATA-II 的接口速度为 300MiB/s，而 SATA-III 标准可达到 600MiB/s 的传输速度。SATA 的数据线也比 ATA 的细得多，有利于机箱内的空气流通，整理线材也比较方便。
 
-<div align="center"> <img src="pics/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg" width=""/> </div><br>
 
 ### 3. SCSI
 
-SCSI 全称是 Small Computer System Interface（小型机系统接口），经历多代的发展，从早期的 SCSI-II 到目前的 Ultra320 SCSI 以及 Fiber-Channel（光纤通道），接口型式也多种多样。SCSI 硬盘广为工作站级个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
+SCSI 全称是 Small Computer System Interface（小型机系统接口），SCSI 硬盘广为工作站以及个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
 
-<div align="center"> <img src="pics/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
 
 ### 4. SAS
 
-SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也透过缩小连接线改善系统内部空间等。
+SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也通过缩小连接线改善系统内部空间等。
 
-<div align="center"> <img src="pics/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
 
 ## 磁盘的文件名
 
@@ -231,21 +228,21 @@ Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘�
 
 MBR 中，第一个扇区最重要，里面有主要开机记录（Master boot record, MBR）及分区表（partition table），其中主要开机记录占 446 bytes，分区表占 64 bytes。
 
-分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它使用其它扇区用记录额外的分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
+分区表只有 64 bytes，最多只能存储 4 个分区，这 4 个分区为主分区（Primary）和扩展分区（Extended）。其中扩展分区只有一个，它使用其它扇区来记录额外的分区表，因此通过扩展分区可以分出更多分区，这些分区称为逻辑分区。
 
 Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件名 + 编号，例如 /dev/sda1。注意，逻辑分区的编号从 5 开始。
 
 ### 2. GPT
 
-不同的磁盘有不同的扇区大小，例如 512 bytes 和最新磁盘的 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA），LBA 默认大小为 512 bytes。
+扇区是磁盘的最小存储单位，旧磁盘的扇区大小通常为 512 bytes，而最新的磁盘支持 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA），LBA 默认大小为 512 bytes。
 
 GPT 第 1 个区块记录了主要开机记录（MBR），紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。这 33 个区块第一个为 GPT 表头纪录，这个部份纪录了分区表本身的位置与大小和备份分区的位置，同时放置了分区表的校验码 (CRC32)，操作系统可以根据这个校验码来判断 GPT 是否正确。若有错误，可以使用备份分区进行恢复。
 
-GPT 没有扩展分区概念，都是主分区，每个 LAB 可以分 4 个分区，因此总共可以分 4 * 32 = 128 个分区。
+GPT 没有扩展分区概念，都是主分区，每个 LBA 可以分 4 个分区，因此总共可以分 4 * 32 = 128 个分区。
 
 MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB = 8 ZB。
 
-<div align="center"> <img src="pics/GUID_Partition_Table_Scheme.svg.png" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/GUID_Partition_Table_Scheme.svg.png" width="400"/> </div><br>
 
 ## 开机检测程序
 
@@ -253,15 +250,15 @@ MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB 
 
 BIOS（Basic Input/Output System，基本输入输出系统），它是一个固件（嵌入在硬件中的软件），BIOS 程序存放在断电后内容不会丢失的只读内存中。
 
-<div align="center"> <img src="pics/50831a6f-2777-46ea-a571-29f23c85cc21.jpg"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/50831a6f-2777-46ea-a571-29f23c85cc21.jpg"/> </div><br>
 
 BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的主要开机记录（MBR），由主要开机记录（MBR）执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
-主要开机记录（MBR）中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现了多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动开机管理程序时，就可以通过选单选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
+主要开机记录（MBR）中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动开机管理程序时，就可以通过选单选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
 下图中，第一扇区的主要开机记录（MBR）中的开机管理程序提供了两个选单：M1、M2，M1 指向了 Windows 操作系统，而 M2 指向其它分区的启动扇区，里面包含了另外一个开机管理程序，提供了一个指向 Linux 的选单。
 
-<div align="center"> <img src="pics/f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉主要开机记录（MBR），而 Linux 可以选择将开机管理程序安装在主要开机记录（MBR）或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
@@ -285,23 +282,23 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 除此之外还包括：
 
 - superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
-- block bitmap：记录 block 是否被使用的位域。
+- block bitmap：记录 block 是否被使用的位图。
 
-<div align="center"> <img src="pics/BSD_disk.png" width="800"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/BSD_disk.png" width="800"/> </div><br>
 
 ## 文件读取
 
-对于 Ext2 文件系统，当要读取一个文件的内容时，先在 inode 中去查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
+对于 Ext2 文件系统，当要读取一个文件的内容时，先在 inode 中查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
-<div align="center"> <img src="pics/83185315-793a-453a-a927-5e8d92b5c0ef.jpg"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/12a65cc6-20e0-4706-9fe6-3ba49413d7f6.png" width="500px"> </div><br>
 
 而对于 FAT 文件系统，它没有 inode，每个 block 中存储着下一个 block 的编号。
 
-<div align="center"> <img src="pics/075e1977-7846-4928-96c8-bb5b0268693c.jpg"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5b718e86-7102-4bb6-8ca5-d1dd791530c5.png" width="500px"> </div><br>
 
 ## 磁盘碎片
 
-指一个文件内容所在的 block 过于分散。
+指一个文件内容所在的 block 过于分散，导致磁盘磁头移动距离过大，从而降低磁盘读写性能。
 
 ## block
 
@@ -322,8 +319,8 @@ inode 具体包含以下信息：
 - 拥有者与群组 (owner/group)；
 - 容量；
 - 建立或状态改变的时间 (ctime)；
-- 最近一次的读取时间 (atime)；
-- 最近修改的时间 (mtime)；
+- 最近读取时间 (atime)；
+- 最近修改时间 (mtime)；
 - 定义文件特性的旗标 (flag)，如 SetUID...；
 - 该文件真正内容的指向 (pointer)。
 
@@ -332,15 +329,15 @@ inode 具有以下特点：
 - 每个 inode 大小均固定为 128 bytes (新的 ext4 与 xfs 可设定到 256 bytes)；
 - 每个文件都仅会占用一个 inode。
 
-inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块记录引用信息。
+inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用让 inode 记录的引用 block 块记录引用信息。
 
-<div align="center"> <img src="pics/inode_with_signatures.jpg" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/inode_with_signatures.jpg" width="600"/> </div><br>
 
 ## 目录
 
 建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。
 
-可以看出文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的 w 权限有关。
+可以看到文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的写权限有关。
 
 ## 日志
 
@@ -360,7 +357,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-<div align="center"> <img src="pics/linux-filesystem.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/linux-filesystem.png" width=""/> </div><br>
 
 # 五、文件
 
@@ -368,7 +365,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 用户分为三种：文件拥有者、群组以及其它人，对不同的用户有不同的文件权限。
 
-使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x. 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
+使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
 
 - drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段
 - 3：链接数
@@ -447,17 +444,15 @@ rmdir [-p] 目录名称
 
 ### 6. cp
 
-复制文件。
-
-如果源文件有两个以上，则目的文件一定要是目录才行。
+复制文件。如果源文件有两个以上，则目的文件一定要是目录才行。
 
 ```html
 cp [-adfilprsu] source destination
--a ：相当于 -dr --preserve=all 的意思，至于 dr 请参考下列说明
+-a ：相当于 -dr --preserve=all
 -d ：若来源文件为链接文件，则复制链接文件属性而非文件本身
 -i ：若目标文件已经存在时，在覆盖前会先询问
 -p ：连同文件的属性一起复制过去
--r ：递归持续复制
+-r ：递归复制
 -u ：destination 比 source 旧才更新 destination，或 destination 不存在的情况下才复制
 --preserve=all ：除了 -p 的权限相关参数外，还加入 SELinux 的属性, links, xattr 等也复制了
 ```
@@ -514,12 +509,12 @@ cp [-adfilprsu] source destination
 # chmod a+w .bashrc
 ```
 
-## 文件默认权限
+## 默认权限
 
 - 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
 - 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
-可以通过 umask 设置或者查看文件的默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r--。
+可以通过 umask 设置或者查看默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r--。
 
 ## 目录的权限
 
@@ -529,13 +524,14 @@ cp [-adfilprsu] source destination
 
 ## 链接
 
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e46fd03-0cda-4d60-9b1c-0c256edaf6b2.png" width="450px"> </div><br>
+
+
 ```html
 # ln [-sf] source_filename dist_filename
--s ：默认是 hard link，加 -s 为 symbolic link
+-s ：默认是实体链接，加 -s 为符号链接
 -f ：如果目标文件存在时，先删除目标文件
 ```
-
-<div align="center"> <img src="pics/b8081c84-62c4-4019-b3ee-4bd0e443d647.jpg" width="400px"> </div><br>
 
 ### 1. 实体链接
 
@@ -558,7 +554,7 @@ cp [-adfilprsu] source destination
 
 当源文件被删除了，链接文件就打不开了。
 
-可以为目录建立链接。
+因为记录的是路径，所以可以为目录建立符号链接。
 
 ```html
 # ll -i /etc/crontab /root/crontab2
@@ -656,7 +652,7 @@ example: find . -name "shadow*"
 
 +4、4 和 -4 的指示的时间范围如下：
 
-<div align="center"> <img src="pics/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
 
 **② 与文件拥有者和所属群组有关的选项** 
 
@@ -744,7 +740,7 @@ $ xz [-dtlkc#] filename
 
 ## 打包
 
-压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gip、bzip2、xz 将打包文件进行压缩。
+压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gzip、bzip2、xz 将打包文件进行压缩。
 
 ```html
 $ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
@@ -775,7 +771,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命名别名：例如 lm 是 ls -al 的别名
+- 命名别名：例如 ll 是 ls -al 的别名
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
@@ -1109,7 +1105,7 @@ dmtsai lines: 5 columns: 9
 
 ### 1. ps
 
-查看某个时间点的进程信息
+查看某个时间点的进程信息。
 
 示例一：查看自己的进程
 
@@ -1131,7 +1127,7 @@ dmtsai lines: 5 columns: 9
 
 ### 2. pstree
 
-查看进程树
+查看进程树。
 
 示例：查看所有进程树
 
@@ -1141,7 +1137,7 @@ dmtsai lines: 5 columns: 9
 
 ### 3. top
 
-实时显示进程信息
+实时显示进程信息。
 
 示例：两秒钟刷新一次
 
@@ -1163,13 +1159,14 @@ dmtsai lines: 5 columns: 9
 
 | 状态 | 说明 |
 | :---: | --- |
-| R | running or runnable (on run queue) |
-| D | uninterruptible sleep (usually I/O) |
-| S | interruptible sleep (waiting for an event to complete) |
-| Z | zombie (terminated but not reaped by its parent) |
-| T | stopped (either by a job control signal or because it is being traced) |
+| R | running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。|
+| D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
+| S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
+| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
+| T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
 <br>
-<div align="center"> <img src="pics/76a49594323247f21c9b3a69945445ee.png" width=""/> </div><br>
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png" width="490px"/> </div><br>
 
 ## SIGCHLD
 
@@ -1182,7 +1179,7 @@ dmtsai lines: 5 columns: 9
 
 在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
-<div align="center"> <img src="pics/flow.png" width=""/> </div><br>
+<div align="center"> <!-- <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/flow.png" width=""/> --> </div><br>
 
 ## wait()
 
@@ -1224,7 +1221,7 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 系统所能使用的进程号是有限的，如果产生大量僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
 
-要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程。
+要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 进程所收养，这样 init 进程就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程。
 
 # 参考资料
 
@@ -1246,3 +1243,14 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 - [File system design case studies](https://www.cs.rutgers.edu/\~pxk/416/notes/13-fs-studies.html)
 - [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
 - [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)
+
+
+
+
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>

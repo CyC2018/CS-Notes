@@ -1,4 +1,3 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [一、数据类型](#一数据类型)
     * [基本类型](#基本类型)
@@ -54,7 +53,7 @@
 - double/64
 - boolean/\~
 
-boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 并不支持 boolean 数组，而是使用 byte 数组来表示 int 数组来表示。
+boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
 
 - [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
@@ -128,7 +127,7 @@ static {
 }
 ```
 
-编译器会在自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+编译器会在自动装箱过程调用 valueOf() 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。
 
 ```java
 Integer m = 123;
@@ -144,7 +143,9 @@ System.out.println(m == n); // true
 - int values between -128 and 127
 - char in the range \u0000 to \u007F
 
-在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
+在使用这些基本类型对应的包装类型时，如果该数值范围在缓冲池范围内，就可以直接使用缓冲池中的对象。
+
+在 jdk 1.8 所有的数值类缓冲池中，Integer 的缓冲池 IntegerCache 很特殊，这个缓冲池的下界是 - 128，上界默认是 127，但是这个上界是可调的，在启动 jvm 的时候，通过 -XX:AutoBoxCacheMax=&lt;size&gt; 来指定这个缓冲池的大小，该选项在 JVM 初始化的时候会设定一个名为 java.lang.IntegerCache.high 系统属性，然后 IntegerCache 初始化的时候就会读取该系统属性来决定上界。
 
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
@@ -190,7 +191,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="pics/474e5579-38b1-47d2-8f76-a13ae086b039.jpg"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9112288f-23f5-4e53-b222-a46fdbca1603.png" width="300px"> </div><br>
 
 **3. 安全性** 
 
@@ -468,7 +469,6 @@ public class AccessExample {
 
 可以使用公有的 getter 和 setter 方法来替换公有字段，这样的话就可以控制对字段的修改行为。
 
-
 ```java
 public class AccessExample {
 
@@ -509,7 +509,7 @@ public class AccessWithInnerClassExample {
 
 **1. 抽象类** 
 
-抽象类和抽象方法都使用 abstract 关键字进行声明。抽象类一般会包含抽象方法，抽象方法一定位于抽象类中。
+抽象类和抽象方法都使用 abstract 关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。
 
 抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。
 
@@ -608,8 +608,10 @@ System.out.println(InterfaceExample.x);
 
 在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。
 
+- [Abstract Methods and Classes](https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html)
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+
 
 ## super
 
@@ -669,77 +671,111 @@ SuperExtendExample.func()
 
 存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。
 
-为了满足里式替换原则，重写有有以下两个限制：
+为了满足里式替换原则，重写有以下三个限制：
 
 - 子类方法的访问权限必须大于等于父类方法；
 - 子类方法的返回类型必须是父类方法返回类型或为其子类型。
+- 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。
 
-使用 @Override 注解，可以让编译器帮忙检查是否满足上面的两个限制条件。
+使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
 
-**2. 重载（Overload）** 
+下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
 
-存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。
-
-应该注意的是，返回值不同，其它都相同不算是重载。
-
-**3. 实例** 
+- 子类方法访问权限为 public，大于父类的 protected。
+- 子类的返回类型为 ArrayList<Integer>，是父类返回类型 List<Integer> 的子类。
+- 子类抛出的异常类型为 Exception，是父类抛出异常 Throwable 的子类。
+- 子类重写方法使用 @Override 注解，从而让编译器自动检查是否满足限制条件。
 
 ```java
+class SuperClass {
+    protected List<Integer> func() throws Throwable {
+        return new ArrayList<>();
+    }
+}
+
+class SubClass extends SuperClass {
+    @Override
+    public ArrayList<Integer> func() throws Exception {
+        return new ArrayList<>();
+    }
+}
+```
+
+在调用一个方法时，先从本类中查找看是否有对应的方法，如果没有查找到再到父类中查看，看是否有继承来的方法。否则就要对参数进行转型，转成父类之后看是否有对应的方法。总的来说，方法调用的优先级为：
+
+- this.func(this)
+- super.func(this)
+- this.func(super)
+- super.func(super)
+
+
+```java
+/*
+    A
+    |
+    B
+    |
+    C
+    |
+    D
+ */
+
+
 class A {
-    public String show(D obj) {
-        return ("A and D");
+
+    public void show(A obj) {
+        System.out.println("A.show(A)");
     }
 
-    public String show(A obj) {
-        return ("A and A");
+    public void show(C obj) {
+        System.out.println("A.show(C)");
     }
 }
 
 class B extends A {
-    public String show(B obj) {
-        return ("B and B");
-    }
 
-    public String show(A obj) {
-        return ("B and A");
+    @Override
+    public void show(A obj) {
+        System.out.println("B.show(A)");
     }
 }
 
 class C extends B {
 }
 
-class D extends B {
+class D extends C {
 }
 ```
 
 ```java
-public class Test {
+public static void main(String[] args) {
 
-    public static void main(String[] args) {
-        A a1 = new A();
-        A a2 = new B();
-        B b = new B();
-        C c = new C();
-        D d = new D();
-        System.out.println(a1.show(b)); // A and A
-        System.out.println(a1.show(c)); // A and A
-        System.out.println(a1.show(d)); // A and D
-        System.out.println(a2.show(b)); // B and A
-        System.out.println(a2.show(c)); // B and A
-        System.out.println(a2.show(d)); // A and D
-        System.out.println(b.show(b));  // B and B
-        System.out.println(b.show(c));  // B and B
-        System.out.println(b.show(d));  // A and D
-    }
+    A a = new A();
+    B b = new B();
+    C c = new C();
+    D d = new D();
+
+    // 在 A 中存在 show(A obj)，直接调用
+    a.show(a); // A.show(A)
+    // 在 A 中不存在 show(B obj)，将 B 转型成其父类 A
+    a.show(b); // A.show(A)
+    // 在 B 中存在从 A 继承来的 show(C obj)，直接调用
+    b.show(c); // A.show(C)
+    // 在 B 中不存在 show(D obj)，但是存在从 A 继承来的 show(C obj)，将 D 转型成其父类 C
+    b.show(d); // A.show(C)
+
+    // 引用的还是 B 对象，所以 ba 和 b 的调用结果一样
+    A ba = new B();
+    ba.show(c); // A.show(C)
+    ba.show(d); // A.show(C)
 }
 ```
 
-涉及到重写时，方法调用的优先级为：
+**2. 重载（Overload）** 
 
-- this.show(O)
-- super.show(O)
-- this.show((super)O)
-- super.show((super)O)
+存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。
+
+应该注意的是，返回值不同，其它都相同不算是重载。
 
 # 五、Object 通用方法
 
@@ -861,7 +897,7 @@ hashCode() 返回散列值，而 equals() 是用来判断两个对象是否等�
 
 在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象散列值也相等。
 
-下面的代码中，新建了两个等价的对象，并将它们添加到 HashSet 中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
+下面的代码中，新建了两个等价的对象，并将它们添加到 HashSet 中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为 EqualExample 没有实现 hashCode() 方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
 
 ```java
 EqualExample e1 = new EqualExample(1, 1, 1);
@@ -1289,7 +1325,7 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 -  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
 -  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
--  **Constructor** ：可以用 Constructor 创建新的对象。
+-  **Constructor** ：可以用 Constructor 的 newInstance() 创建新的对象。
 
 **反射的优点：** 
 
@@ -1318,7 +1354,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 -  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
 -  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
 
-<div align="center"> <img src="pics/PPjwP.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
 
 - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
 - [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
@@ -1395,3 +1431,14 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 - Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
+
+
+
+
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>

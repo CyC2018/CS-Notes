@@ -1,4 +1,3 @@
-* [点击阅读面试进阶指南 ](https://github.com/CyC2018/Backend-Interview-Guide)
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
     * [URI](#uri)
@@ -63,17 +62,17 @@
 
 URI 包含 URL 和 URN。
 
-<div align="center"> <img src="pics/417cb02e-853d-4288-a36e-9161ded2c9fd_200.png" width="600px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
 
 ## 请求和响应报文
 
 ### 1. 请求报文
 
-<div align="center"> <img src="pics/HTTP_RequestMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_RequestMessageExample.png" width=""/> </div><br>
 
 ### 2. 响应报文
 
-<div align="center"> <img src="pics/HTTP_ResponseMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_ResponseMessageExample.png" width=""/> </div><br>
 
 # 二、HTTP 方法
 
@@ -160,7 +159,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="pics/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
 
 ## TRACE
 
@@ -303,11 +302,11 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 连接管理
 
-<div align="center"> <img src="pics/HTTP1_x_Connections.png" width="800"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP1_x_Connections.png" width="800"/> </div><br>
 
 ### 1. 短连接与长连接
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问的 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
 
 长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
@@ -316,9 +315,9 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### 2. 流水线
 
-默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于会受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
+默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
 
-流水线是在同一条长连接上发出连续的请求，而不用等待响应返回，这样可以避免连接延迟。
+流水线是在同一条长连接上连续发出请求，而不用等待响应返回，这样可以减少延迟。
 
 ## Cookie
 
@@ -358,7 +357,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ### 3. 分类
 
 - 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
-- 持久性 Cookie：指定一个特定的过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
+- 持久性 Cookie：指定过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
 
 ```html
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
@@ -376,7 +375,7 @@ Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径
 
 ### 5. JavaScript
 
-通过 `document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
+浏览器通过 `document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
 ```html
 document.cookie = "yummy_cookie=choco";
@@ -417,7 +416,7 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 ### 10. Cookie 与 Session 选择
 
-- Cookie 只能存储 ASCII 码字符串，而 Session 则可以存取任何类型的数据，因此在考虑数据复杂性时首选 Session；
+- Cookie 只能存储 ASCII 码字符串，而 Session 则可以存储任何类型的数据，因此在考虑数据复杂性时首选 Session；
 - Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
 - 对于大型网站，如果用户所有的信息都存储在 Session 中，那么开销是非常大的，因此不建议将所有的用户信息都存储到 Session 中。
 
@@ -426,7 +425,7 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 ### 1. 优点
 
 - 缓解服务器压力；
-- 降低客户端获取资源的延迟：缓存通常位于内存中，读取缓存的速度更快。并且缓存在地理位置上也有可能比源服务器来得近，例如浏览器缓存。
+- 降低客户端获取资源的延迟：缓存通常位于内存中，读取缓存的速度更快。并且缓存服务器在地理位置上也有可能比源服务器来得近，例如浏览器缓存。
 
 ### 2. 实现方法
 
@@ -447,7 +446,7 @@ Cache-Control: no-store
 
 **3.2 强制确认缓存** 
 
-no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效才将能使用该缓存对客户端的请求进行响应。
+no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效时才能使用该缓存对客户端的请求进行响应。
 
 ```html
 Cache-Control: no-cache
@@ -455,13 +454,13 @@ Cache-Control: no-cache
 
 **3.3 私有缓存和公共缓存** 
 
-private 指令规定了将资源作为私有缓存，只能被单独用户所使用，一般存储在用户浏览器中。
+private 指令规定了将资源作为私有缓存，只能被单独用户使用，一般存储在用户浏览器中。
 
 ```html
 Cache-Control: private
 ```
 
-public 指令规定了将资源作为公共缓存，可以被多个用户所使用，一般存储在代理服务器中。
+public 指令规定了将资源作为公共缓存，可以被多个用户使用，一般存储在代理服务器中。
 
 ```html
 Cache-Control: public
@@ -469,9 +468,9 @@ Cache-Control: public
 
 **3.4 缓存过期机制** 
 
-max-age 指令出现在请求报文中，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
+max-age 指令出现在请求报文，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
 
-max-age 指令出现在响应报文中，表示缓存资源在缓存服务器中保存的时间。
+max-age 指令出现在响应报文，表示缓存资源在缓存服务器中保存的时间。
 
 ```html
 Cache-Control: max-age=31536000
@@ -500,7 +499,7 @@ ETag: "82e22293907ce725faf67773957acd12"
 If-None-Match: "82e22293907ce725faf67773957acd12"
 ```
 
-Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器，因为只能精确到一秒，所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有消息主体的 304 Not Modified 响应。
+Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器，因为只能精确到一秒，所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
 
 ```html
 Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
@@ -546,7 +545,7 @@ Vary: Accept-Language
 
 常用的内容编码有：gzip、compress、deflate、identity。
 
-浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于该内容协商过程是基于编码类型来选择资源的展现形式的，在响应的 Vary 首部至少要包含 Content-Encoding。
+浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于该内容协商过程是基于编码类型来选择资源的展现形式的，响应报文的 Vary 首部字段至少要包含 Content-Encoding。
 
 ## 范围请求
 
@@ -588,7 +587,7 @@ Accept-Ranges: bytes
 
 ## 分块传输编码
 
-Chunked Transfer Coding，可以把数据分割成多块，让浏览器逐步显示页面。
+Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步显示页面。
 
 ## 多部分对象集合
 
@@ -632,11 +631,11 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 - 用户察觉得到正向代理的存在。
 
-<div align="center"> <img src="pics/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
 
 - 而反向代理一般位于内部网络中，用户察觉不到。
 
-<div align="center"> <img src="pics/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
 
 ### 2. 网关
 
@@ -658,7 +657,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-<div align="center"> <img src="pics/ssl-offloading.jpg" width="700"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ssl-offloading.jpg" width="700"/> </div><br>
 
 ## 加密
 
@@ -669,7 +668,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：运算速度快；
 - 缺点：无法安全地将密钥传输给通信方。
 
-<div align="center"> <img src="pics/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
 
 ### 2.非对称密钥加密
 
@@ -682,13 +681,13 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：可以更安全地将公开密钥传输给通信发送方；
 - 缺点：运算速度慢。
 
-<div align="center"> <img src="pics/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
 
 ### 3. HTTPS 采用的加密方式
 
 HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。（下图中的 Session Key 就是对称密钥）
 
-<div align="center"> <img src="pics/How-HTTPS-Works.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/How-HTTPS-Works.png" width="600"/> </div><br>
 
 ## 认证
 
@@ -700,7 +699,7 @@ HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对�
 
 进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
-<div align="center"> <img src="pics/2017-06-11-ca.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2017-06-11-ca.png" width=""/> </div><br>
 
 ## 完整性保护
 
@@ -729,7 +728,7 @@ HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-<div align="center"> <img src="pics/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
@@ -737,13 +736,13 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-<div align="center"> <img src="pics/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
 ## 服务端推送
 
 HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
-<div align="center"> <img src="pics/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
 
 ## 首部压缩
 
@@ -753,7 +752,7 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
 
-<div align="center"> <img src="pics/_u4E0B_u8F7D.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 八、HTTP/1.1 新特性
 
@@ -777,7 +776,7 @@ GET 用于获取资源，而 POST 用于传输实体主体。
 
 GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体中。不能因为 POST 参数存储在实体主体中就认为它的安全性更高，因为照样可以通过一些抓包工具（Fiddler）查看。
 
-因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 参考支持标准字符集。
+因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 参数支持标准字符集。
 
 ```
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
@@ -824,7 +823,7 @@ POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
 ```
 
-DELETE /idX/delete HTTP/1.1 是幂等的，即便不同的请求接收到的状态码不一样：
+DELETE /idX/delete HTTP/1.1 是幂等的，即使不同的请求接收到的状态码不一样：
 
 ```
 DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
@@ -878,3 +877,14 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
 - [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+
+
+
+
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
