@@ -1,28 +1,11 @@
 <!-- GFM-TOC -->
 * [3. 数组中重复的数字](#3-数组中重复的数字)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [4. 二维数组中的查找](#4-二维数组中的查找)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [5. 替换空格](#5-替换空格)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [6. 从尾到头打印链表](#6-从尾到头打印链表)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
-        * [使用递归](#使用递归)
-        * [使用头插法](#使用头插法)
-        * [使用栈](#使用栈)
 * [7. 重建二叉树](#7-重建二叉树)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [8. 二叉树的下一个结点](#8-二叉树的下一个结点)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [9. 用两个栈实现队列](#9-用两个栈实现队列)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 <!-- GFM-TOC -->
 
 
@@ -44,13 +27,14 @@ Output:
 
 ## 解题思路
 
-要求是时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
+要求时间复杂度 O(N)，空间复杂度 O(1)。因此不能使用排序的方法，也不能使用额外的标记数组。
 
 对于这种数组元素在 [0, n-1] 范围内的问题，可以将值为 i 的元素调整到第 i 个位置上进行求解。
 
 以 (2, 3, 1, 0, 2, 5) 为例，遍历到位置 4 时，该位置上的数为 2，但是第 2 个位置上已经有一个 2 的值了，因此可以知道 2 重复：
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u6570_u7EC4_u4E2D_u91CD_u590D_1548260392361.gif" width="250px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/49d2adc1-b28a-44bf-babb-d44993f4a2e3.gif" width="250px"> </div><br>
+
 
 ```java
 public boolean duplicate(int[] nums, int length, int[] duplication) {
@@ -99,11 +83,11 @@ Given target = 20, return false.
 
 ## 解题思路
 
-要求时间复杂度 O(M + N)，空间复杂度 O(1)。
+要求时间复杂度 O(M + N)，空间复杂度 O(1)。其中 M 为行数，N 为 列数。
 
-该二维数组中的一个数，它左边的数都比它小，下边的数都比它大。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间，当前元素的查找区间为左下角的所有元素。
+该二维数组中的一个数，小于它的数一定在其左边，大于它的数一定在其下边。因此，从右上角开始查找，就可以根据 target 和当前元素的大小关系来缩小查找区间，当前元素的查找区间为左下角的所有元素。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4E8C_u7EF4_u6570_u7EC4_u4E2D_.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0ad9f7ba-f408-4999-a77a-9b73562c9088.gif" width="200px"> </div><br>
 
 ```java
 public boolean Find(int target, int[][] matrix) {
@@ -148,7 +132,7 @@ Output:
 
 从后向前遍是为了在改变 P2 所指向的内容时，不会影响到 P1 遍历原来字符串的内容。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u66FF_u6362_u7A7A_u683C.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6980aef0-debe-4b4b-8da5-8b1befbc1408.gif" width="230px"> </div><br>
 
 ```java
 public String replaceSpace(StringBuffer str) {
@@ -180,14 +164,13 @@ public String replaceSpace(StringBuffer str) {
 
 从尾到头反过来打印出每个结点的值。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548293972480.gif" width="250px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f5792051-d9b2-4ca4-a234-a4a2de3d5a57.png" width="280px"> </div><br>
 
 ## 解题思路
 
 ### 使用递归
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548296249372.gif" width="200px"> </div><br>
-
+要逆序打印链表 1->2->3（3,2,1)，可以先逆序打印链表 2->3(3,2)，最后再打印第一个节点 1。而链表 2->3 可以看成一个新的链表，要逆序打印该链表可以继续使用求解函数，也就是在求解函数中调用自己，这就是递归函数。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -202,15 +185,14 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ### 使用头插法
 
-利用链表头插法为逆序的特点。
+使用头插法可以得到一个逆序的链表。
 
 头结点和第一个节点的区别：
 
 - 头结点是在头插法中使用的一个额外节点，这个节点不存储值；
 - 第一个节点就是链表的第一个真正存储值的节点。
 
-
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548295232667.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0dae7e93-cfd1-4bd3-97e8-325b032b716f.gif" width="370px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -235,7 +217,9 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ### 使用栈
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4ECE_u5C3E_u5230_u5934_u6253_1548503461113.gif" width="500px"> </div><br>
+栈具有后进先出的特点，在遍历链表时将值按顺序放入栈中，最后出栈的顺序即为逆序。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9d1deeba-4ae1-41dc-98f4-47d85b9831bc.gif" width="300px"> </div><br>
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -259,18 +243,14 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 根据二叉树的前序遍历和中序遍历的结果，重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
 
-```html
-preorder = [3,9,20,15,7]
-inorder =  [9,3,15,20,7]
-```
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-1.gif" width="200"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/31d9adce-2af8-4754-8386-0aabb4e500b0.png" width="300"/> </div><br>
 
 ## 解题思路
 
 前序遍历的第一个值为根节点的值，使用这个值将中序遍历结果分成两部分，左部分为树的左子树中序遍历结果，右部分为树的右子树中序遍历的结果。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u91CD_u5EFA_u4E8C_u53C9_u6811-21548502782193.gif"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c269e362-1128-4212-9cf3-d4c12b363b2f.gif" width="330px"> </div><br>
 
 ```java
 // 缓存中序遍历数组每个值对应的索引
@@ -320,11 +300,11 @@ public class TreeLinkNode {
 
 ① 如果一个节点的右子树不为空，那么该节点的下一个节点是右子树的最左节点；
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4E8C_u53C9_u6811_u7684_u4E0B_.gif" width="250"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b0611f89-1e5f-4494-a795-3544bf65042a.gif" width="220px"/> </div><br>
 
 ② 否则，向上找第一个左链接指向的树包含该节点的祖先节点。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u4E8C_u53C9_u6811_u7684_u4E0B_1548504426508.gif" width="250"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/95080fae-de40-463d-a76e-783a0c677fec.gif" width="200px"/> </div><br>
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
@@ -357,8 +337,7 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 in 栈用来处理入栈（push）操作，out 栈用来处理出栈（pop）操作。一个元素进入 in 栈之后，出栈的顺序被反转。当元素要出栈时，需要先进入 out 栈，此时元素出栈顺序再一次被反转，因此出栈顺序就和最开始入栈顺序是相同的，先进入的元素先退出，这就是队列的顺序。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/_u7528_u4E24_u4E2A_u6808_u5B9E_.gif" width="500"/> </div><br>
-
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/3ea280b5-be7d-471b-ac76-ff020384357c.gif" width="350"/> </div><br>
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
@@ -384,5 +363,10 @@ public int pop() throws Exception {
 
 
 
-</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>

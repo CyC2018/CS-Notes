@@ -1,39 +1,16 @@
 <!-- GFM-TOC -->
 * [30. 包含 min 函数的栈](#30-包含-min-函数的栈)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [31. 栈的压入、弹出序列](#31-栈的压入弹出序列)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [32.1 从上往下打印二叉树](#321-从上往下打印二叉树)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [32.2 把二叉树打印成多行](#322-把二叉树打印成多行)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [32.3 按之字形顺序打印二叉树](#323-按之字形顺序打印二叉树)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [33. 二叉搜索树的后序遍历序列](#33-二叉搜索树的后序遍历序列)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [34. 二叉树中和为某一值的路径](#34-二叉树中和为某一值的路径)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [35. 复杂链表的复制](#35-复杂链表的复制)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [36. 二叉搜索树与双向链表](#36-二叉搜索树与双向链表)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [37. 序列化二叉树](#37-序列化二叉树)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [38. 字符串的排列](#38-字符串的排列)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [39. 数组中出现次数超过一半的数字](#39-数组中出现次数超过一半的数字)
-    * [解题思路](#解题思路)
 <!-- GFM-TOC -->
 
 
@@ -110,7 +87,7 @@ public boolean IsPopOrder(int[] pushSequence, int[] popSequence) {
 
 例如，以下二叉树层次遍历的结果为：1,2,3,4,5,6,7
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/348bc2db-582e-4aca-9f88-38c40e9a0e69.png" width="250"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/d5e838cf-d8a2-49af-90df-1b2a714ee676.jpg" width="250"/> </div><br>
 
 ## 解题思路
 
@@ -218,7 +195,7 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 
 例如，下图是后序遍历序列 1,3,2 所对应的二叉搜索树。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/836a4eaf-4798-4e48-b52a-a3dab9435ace.png" width="150"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/13454fa1-23a8-4578-9663-2b13a6af564a.jpg" width="150"/> </div><br>
 
 ## 解题思路
 
@@ -253,7 +230,7 @@ private boolean verify(int[] sequence, int first, int last) {
 
 下图的二叉树有两条和为 22 的路径：10, 5, 7 和 10, 12
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/f5477abd-c246-4851-89ab-6b1cde2549b1.png" width="200"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ed77b0e6-38d9-4a34-844f-724f3ffa2c12.jpg" width="200"/> </div><br>
 
 ## 解题思路
 
@@ -300,21 +277,21 @@ public class RandomListNode {
 }
 ```
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/a01d1516-8168-461a-a24b-620b9cfc40f4.png" width="300"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66a01953-5303-43b1-8646-0c77b825e980.png" width="300"/> </div><br>
 
 ## 解题思路
 
 第一步，在每个节点的后面插入复制的节点。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/2e6c72f5-3b8e-4e32-b87b-9491322628fe.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dfd5d3f8-673c-486b-8ecf-d2082107b67b.png" width="600"/> </div><br>
 
 第二步，对复制节点的 random 链接进行赋值。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/323ffd6c-8b54-4f3e-b361-555a6c8bf218.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/cafbfeb8-7dfe-4c0a-a3c9-750eeb824068.png" width="600"/> </div><br>
 
 第三步，拆分。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/8f3b9519-d705-48fe-87ad-2e4052fc81d2.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e151b5df-5390-4365-b66e-b130cd253c12.png" width="600"/> </div><br>
 
 ```java
 public RandomListNode Clone(RandomListNode pHead) {
@@ -356,7 +333,7 @@ public RandomListNode Clone(RandomListNode pHead) {
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/79b12431-6d9d-4a7d-985b-1b79bc5bf5fb.png" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/05a08f2e-9914-4a77-92ef-aebeaecf4f66.jpg" width="400"/> </div><br>
 
 ## 解题思路
 
@@ -495,5 +472,10 @@ public int MoreThanHalfNum_Solution(int[] nums) {
 
 
 
-</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>

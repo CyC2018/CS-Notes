@@ -1,34 +1,13 @@
 <!-- GFM-TOC -->
 * [60. n 个骰子的点数](#60-n-个骰子的点数)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
-        * [动态规划解法](#动态规划解法)
-        * [动态规划解法 + 旋转数组](#动态规划解法--旋转数组)
 * [61. 扑克牌顺子](#61-扑克牌顺子)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [62. 圆圈中最后剩下的数](#62-圆圈中最后剩下的数)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [63. 股票的最大利润](#63-股票的最大利润)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [64. 求 1+2+3+...+n](#64-求-123n)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [65. 不用加减乘除做加法](#65-不用加减乘除做加法)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [66. 构建乘积数组](#66-构建乘积数组)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [67. 把字符串转换成整数](#67-把字符串转换成整数)
-    * [题目描述](#题目描述)
-    * [解题思路](#解题思路)
 * [68. 树中两个节点的最低公共祖先](#68-树中两个节点的最低公共祖先)
-    * [解题思路](#解题思路)
-        * [二叉查找树](#二叉查找树)
-        * [普通二叉树](#普通二叉树)
 <!-- GFM-TOC -->
 
 
@@ -38,13 +17,13 @@
 
 ## 题目描述
 
-把 n 个骰子仍在地上，求点数和为 s 的概率。
+把 n 个骰子扔在地上，求点数和为 s 的概率。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/6_2001550474388460.png"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/195f8693-5ec4-4987-8560-f25e365879dd.png" width="300px"> </div><br>
 
 ## 解题思路
 
-### 动态规划解法
+### 动态规划
 
 使用一个二维数组 dp 存储点数出现的次数，其中 dp[i][j] 表示前 i 个骰子产生点数 j 的次数。
 
@@ -73,7 +52,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 }
 ```
 
-### 动态规划解法 + 旋转数组
+### 动态规划 + 旋转数组
 
 空间复杂度：O(N)
 
@@ -111,9 +90,10 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ## 题目描述
 
-五张牌，其中大小鬼为癞子，牌面大小为 0。判断这五张牌是否能组成顺子。
+五张牌，其中大小鬼为癞子，牌面为 0。判断这五张牌是否能组成顺子。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/5_2001550474110029.png"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/eaa506b6-0747-4bee-81f8-3cda795d8154.png" width="350px"> </div><br>
+
 
 ## 解题思路
 
@@ -170,9 +150,9 @@ public int LastRemaining_Solution(int n, int m) {
 
 ## 题目描述
 
-可以有一次买入和一次卖出，那么买入必须在前。求最大收益。
+可以有一次买入和一次卖出，买入必须在前。求最大收益。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/4_2001550473915641.png"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/42661013-750f-420b-b3c1-437e9a11fb65.png" width="220px"> </div><br>
 
 ## 解题思路
 
@@ -244,7 +224,8 @@ public int Add(int a, int b) {
 
 给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]\*A[1]\*...\*A[i-1]\*A[i+1]\*...\*A[n-1]。要求不能使用除法。
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/3_2001550473624627.png"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4240a69f-4d51-4d16-b797-2dfe110f30bd.png" width="250px"> </div><br>
+
 
 ## 解题思路
 
@@ -304,11 +285,11 @@ public int StrToInt(String str) {
 
 ### 二叉查找树
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/b39a085e-e7a2-4657-b75e-ba1652a4b132.jpg" width="300"/> </div><br>
-
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
 二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val >= p.val && root.val <= q.val。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/047faac4-a368-4565-8331-2b66253080d3.jpg" width="220"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -324,11 +305,11 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 普通二叉树
 
-<div align="center"> <img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/37a72755-4890-4b42-9eab-b0084e0c54d9.png" width="300"/> </div><br>
-
 [Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/d27c99f0-7881-4f2d-9675-c75cbdee3acd.jpg" width="250"/> </div><br>
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -343,5 +324,10 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 
 
-</br><div align="center">⭐️欢迎关注我的公众号 CyC2018，在公众号后台回复关键字 📚 **资料** 可领取复习大纲，这份大纲是我花了一整年时间整理的面试知识点列表，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。可以说我基本是按照这份大纲来进行复习的，这份大纲对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
