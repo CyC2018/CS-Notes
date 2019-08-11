@@ -768,6 +768,7 @@ static final int tableSizeFor(int cap) {
 ### 8. 链表转红黑树
 
 从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+应该是：从 JDK 1.8 开始， table的长度也就是HashMap的capacity(不是size)不能小于64而且在桶存储的链表长度为8时(准确的说是长度为7并且在继续塞第8个时),转换成红黑树,而不是超过8。
 
 ### 9. 与 HashTable 的比较
 
