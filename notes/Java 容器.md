@@ -650,7 +650,7 @@ static int indexFor(int h, int length) {
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | 键值对数量。 |
 | threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
-| loadFactor | 装载因子，table 能够使用的比例，threshold = capacity * loadFactor。|
+| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(newCapacity * loadFactor)。|
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
