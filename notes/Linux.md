@@ -147,7 +147,7 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 | 基于的包管理工具 | 商业发行版 | 社区发行版 |
 | :--: | :--: | :--: |
 | RPM | Red Hat | Fedora / CentOS |
-| DPKG | Ubuntu | Debian |
+| DPKG | Debian | Ubuntu |
 
 ## VIM 三个模式
 
