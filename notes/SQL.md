@@ -69,6 +69,9 @@ CREATE TABLE mytable (
   PRIMARY KEY (`id`));
 ```
 
+
+查看表结构
+desc mytable;
 # 三、修改表
 
 添加列
@@ -77,6 +80,16 @@ CREATE TABLE mytable (
 ALTER TABLE mytable
 ADD col CHAR(20);
 ```
+
+修改表字段
+
+```sql
+ALTER TABLE [TABLE] MODIFY xxx VARCHAR(100) NOT NULL;
+```
+更改列名
+```sql
+ alter table mytable change view_point view varchar(1000) not null;
+
 
 删除列
 
