@@ -64,8 +64,10 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是�
 
 ```java
 Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
-int y = x;         // 拆箱 调用了 Integer.intValue(x)
+int y = x;         // 拆箱 调用了 X.intValue()
 ```
+
+- [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
 ## 缓存池
 

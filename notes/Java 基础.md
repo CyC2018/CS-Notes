@@ -63,14 +63,11 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是�
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
 ```java
-<<<<<<< HEAD
 Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
-int y = x;         // 拆箱 调用了 Integer.intValue(x)
-=======
-Integer x = 2;     // 装箱  调用了 Integer.valueOf(2);
-int y = x;         // 拆箱  调用了 Integer.intValue(x);
->>>>>>> 7ae8fc396136c44742ab6d5e5a90a3a17fac5af7
+int y = x;         // 拆箱 调用了 X.intValue()
 ```
+
+- [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
 ## 缓存池
 
@@ -83,11 +80,6 @@ new Integer(123) 与 Integer.valueOf(123) 的区别在于：
 Integer x = new Integer(123);
 Integer y = new Integer(123);
 System.out.println(x == y);    // false
-
-Integer x = 123;     //调用了Integer.valueOf(123);
-Integer y = 123;  //如果数值在[-128,127]之间，便返回指向缓冲池中已经存在的对象的引用；否则创建一个新的Integer对象。
-System.out.println(x==y);     //true
-
 Integer z = Integer.valueOf(123);
 Integer k = Integer.valueOf(123);
 System.out.println(z == k);   // true
@@ -164,11 +156,7 @@ System.out.println(m == n); // true
 
 ## 概览
 
-<<<<<<< HEAD
 String 被声明为 final，因此它不可被继承。(Integer 等包装类也不能被继承）
-=======
-String 被声明为 final，因此它不可被继承。(Integer等包装类也不能被继承)
->>>>>>> 7ae8fc396136c44742ab6d5e5a90a3a17fac5af7
 
 在 Java 8 中，String 内部使用 char 数组存储数据。
 

@@ -299,12 +299,53 @@ public synchronized E get(int index) {
 }
 ```
 
-### 2. 与 ArrayList 的比较
+### 2. 扩容
+
+Vector 的构造函数可以传入 capacityIncrement 参数，它的作用是在扩容时使容量 capacity 增长 capacityIncrement。如果这个参数的值小于等于 0，扩容时每次都令 capacity 为原来的两倍。
+
+```java
+public Vector(int initialCapacity, int capacityIncrement) {
+    super();
+    if (initialCapacity < 0)
+        throw new IllegalArgumentException("Illegal Capacity: "+
+                                           initialCapacity);
+    this.elementData = new Object[initialCapacity];
+    this.capacityIncrement = capacityIncrement;
+}
+```
+
+```java
+private void grow(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + ((capacityIncrement > 0) ?
+                                     capacityIncrement : oldCapacity);
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
+        newCapacity = hugeCapacity(minCapacity);
+    elementData = Arrays.copyOf(elementData, newCapacity);
+}
+```
+
+调用没有 capacityIncrement 的构造函数时，capacityIncrement 值被设置为 0，也就是说默认情况下 Vector 每次扩容时容量都会翻倍。
+
+```java
+public Vector(int initialCapacity) {
+    this(initialCapacity, 0);
+}
+
+public Vector() {
+    this(10);
+}
+```
+
+### 3. 与 ArrayList 的比较
 
 - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
-- Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
+- Vector 每次扩容请求其大小的 2 倍（也可以通过构造函数设置增长的容量），而 ArrayList 是 1.5 倍。
 
-### 3. 替代方案
+### 4. 替代方案
 
 可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
@@ -767,12 +808,7 @@ static final int tableSizeFor(int cap) {
 
 ### 8. 链表转红黑树
 
-<<<<<<< HEAD
 从 JDK 1.8 开始，一个桶存储的链表长度大于等于 8 时会将链表转换为红黑树。
-=======
-从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
-应该是：从 JDK 1.8 开始， table的长度也就是HashMap的capacity(不是size)不能小于64而且在桶存储的链表长度为8时(准确的说是长度为7并且在继续塞第8个时),转换成红黑树,而不是超过8。
->>>>>>> 7ae8fc396136c44742ab6d5e5a90a3a17fac5af7
 
 ### 9. 与 HashTable 的比较
 
