@@ -650,7 +650,7 @@ static int indexFor(int h, int length) {
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | 键值对数量。 |
 | threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
-| loadFactor | 装载因子，table 能够使用的比例，threshold = capacity * loadFactor。|
+| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(newCapacity * loadFactor)。|
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -767,7 +767,12 @@ static final int tableSizeFor(int cap) {
 
 ### 8. 链表转红黑树
 
+<<<<<<< HEAD
 从 JDK 1.8 开始，一个桶存储的链表长度大于等于 8 时会将链表转换为红黑树。
+=======
+从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+应该是：从 JDK 1.8 开始， table的长度也就是HashMap的capacity(不是size)不能小于64而且在桶存储的链表长度为8时(准确的说是长度为7并且在继续塞第8个时),转换成红黑树,而不是超过8。
+>>>>>>> 7ae8fc396136c44742ab6d5e5a90a3a17fac5af7
 
 ### 9. 与 HashTable 的比较
 
