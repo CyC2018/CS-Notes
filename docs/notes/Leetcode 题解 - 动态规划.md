@@ -902,9 +902,6 @@ Explanation: there are four ways to make up the amount:
 
 ```java
 public int change(int amount, int[] coins) {
-    if (amount == 0 || coins == null || coins.length == 0) {
-        return 0;
-    }
     int[] dp = new int[amount + 1];
     dp[0] = 1;
     for (int coin : coins) {
