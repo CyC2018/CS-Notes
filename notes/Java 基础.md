@@ -63,9 +63,11 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是�
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
 ```java
-Integer x = 2;     // 装箱
-int y = x;         // 拆箱
+Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
+int y = x;         // 拆箱 调用了 X.intValue()
 ```
+
+- [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
 ## 缓存池
 
@@ -154,7 +156,7 @@ System.out.println(m == n); // true
 
 ## 概览
 
-String 被声明为 final，因此它不可被继承。
+String 被声明为 final，因此它不可被继承。(Integer 等包装类也不能被继承）
 
 在 Java 8 中，String 内部使用 char 数组存储数据。
 
@@ -615,7 +617,7 @@ System.out.println(InterfaceExample.x);
 
 ## super
 
-- 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
+- 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。应该注意到，子类一定会调用父类的构造函数来完成初始化工作，一般是调用父类的默认构造函数，如果子类需要调用父类其它构造函数，那么就可以使用 super 函数。
 - 访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 super 关键字来引用父类的方法实现。
 
 ```java
