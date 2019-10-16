@@ -134,7 +134,7 @@ private int rob(int[] nums, int first, int last) {
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
-- i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
+- i==k，交换 i 和 j 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
 - i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
@@ -869,22 +869,18 @@ return -1.
 
 ```java
 public int coinChange(int[] coins, int amount) {
-    if (amount == 0 || coins == null || coins.length == 0) {
+public int change(int amount, int[] coins) {
+    if (coins == null) {
         return 0;
     }
     int[] dp = new int[amount + 1];
+    dp[0] = 1;
     for (int coin : coins) {
-        for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
-            if (i == coin) {
-                dp[i] = 1;
-            } else if (dp[i] == 0 && dp[i - coin] != 0) {
-                dp[i] = dp[i - coin] + 1;
-            } else if (dp[i - coin] != 0) {
-                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-            }
+        for (int i = coin; i <= amount; i++) {
+            dp[i] += dp[i - coin];
         }
     }
-    return dp[amount] == 0 ? -1 : dp[amount];
+    return dp[amount];
 }
 ```
 
@@ -906,9 +902,6 @@ Explanation: there are four ways to make up the amount:
 
 ```java
 public int change(int amount, int[] coins) {
-    if (amount == 0 || coins == null || coins.length == 0) {
-        return 0;
-    }
     int[] dp = new int[amount + 1];
     dp[0] = 1;
     for (int coin : coins) {
