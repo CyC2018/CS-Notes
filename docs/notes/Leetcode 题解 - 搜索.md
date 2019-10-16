@@ -503,13 +503,12 @@ Return:
 左边和上边是太平洋，右边和下边是大西洋，内部的数字代表海拔，海拔高的地方的水能够流到低的地方，求解水能够流到太平洋和大西洋的所有位置。
 
 ```java
-
 private int m, n;
 private int[][] matrix;
 private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-public List<int[]> pacificAtlantic(int[][] matrix) {
-    List<int[]> ret = new ArrayList<>();
+public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+    List<List<Integer>> ret = new ArrayList<>();
     if (matrix == null || matrix.length == 0) {
         return ret;
     }
@@ -532,7 +531,7 @@ public List<int[]> pacificAtlantic(int[][] matrix) {
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             if (canReachP[i][j] && canReachA[i][j]) {
-                ret.add(new int[]{i, j});
+                ret.add(Arrays.asList(i, j));
             }
         }
     }
