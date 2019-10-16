@@ -994,6 +994,7 @@ public int combinationSum4(int[] nums, int target) {
 
 <div align="center"> <img src="pics/83acbb02-872a-4178-b22a-c89c3cb60263.jpg" width="300px"> </div><br>
 
+
 ```java
 public int maxProfit(int[] prices) {
     if (prices == null || prices.length == 0) {
