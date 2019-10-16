@@ -134,7 +134,7 @@ private int rob(int[] nums, int first, int last) {
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
-- i==k，交换 i 和 k 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
+- i==k，交换 i 和 j 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
 - i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
@@ -200,8 +200,6 @@ public int minPathSum(int[][] grid) {
 题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg" width=""> </div><br>
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg"/> </div><br>
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -632,6 +630,10 @@ public int lengthOfLCS(int[] nums1, int[] nums2) {
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8cb2be66-3d47-41ba-b55b-319fc68940d4.png" width="400px"> </div><br>
 
 ```java
+// W 为背包总体积
+// N 为物品数量
+// weights 数组存储 N 个物品的重量
+// values 数组存储 N 个物品的价值
 public int knapsack(int W, int N, int[] weights, int[] values) {
     int[][] dp = new int[N + 1][W + 1];
     for (int i = 1; i <= N; i++) {
@@ -656,7 +658,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ae89f16-7905-4a6f-88a2-874b4cac91f4.jpg" width="300px"> </div><br>
 
-因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
@@ -863,26 +865,22 @@ return -1.
 - 物品大小：面额
 - 物品价值：数量
 
-因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包中逆序遍历 dp 数组改为正序遍历即可。
+因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包的逆序遍历 dp 数组改为正序遍历即可。
 
 ```java
 public int coinChange(int[] coins, int amount) {
-    if (amount == 0 || coins == null || coins.length == 0) {
+public int change(int amount, int[] coins) {
+    if (coins == null) {
         return 0;
     }
     int[] dp = new int[amount + 1];
+    dp[0] = 1;
     for (int coin : coins) {
-        for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
-            if (i == coin) {
-                dp[i] = 1;
-            } else if (dp[i] == 0 && dp[i - coin] != 0) {
-                dp[i] = dp[i - coin] + 1;
-            } else if (dp[i - coin] != 0) {
-                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-            }
+        for (int i = coin; i <= amount; i++) {
+            dp[i] += dp[i - coin];
         }
     }
-    return dp[amount] == 0 ? -1 : dp[amount];
+    return dp[amount];
 }
 ```
 
@@ -904,9 +902,6 @@ Explanation: there are four ways to make up the amount:
 
 ```java
 public int change(int amount, int[] coins) {
-    if (amount == 0 || coins == null || coins.length == 0) {
-        return 0;
-    }
     int[] dp = new int[amount + 1];
     dp[0] = 1;
     for (int coin : coins) {
@@ -928,9 +923,15 @@ dict = ["leet", "code"].
 Return true because "leetcode" can be segmented as "leet code".
 ```
 
-dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。该问题涉及到字典中单词的使用顺序，因此可理解为涉及顺序的完全背包问题。
+dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。
 
-求解顺序的完全背包问题时，对物品的迭代应该放在最里层。
+该问题涉及到字典中单词的使用顺序，也就是说物品必须按一定顺序放入背包中，例如下面的 dict 就不够组成字符串 "leetcode"：
+
+```html
+["lee", "tc", "cod"]
+```
+
+求解顺序的完全背包问题时，对物品的迭代应该放在最里层，对背包的迭代放在外层，只有这样才能让物品按一定顺序放入背包中。
 
 ```java
 public boolean wordBreak(String s, List<String> wordDict) {
@@ -1246,4 +1247,10 @@ public int minSteps(int n) {
 
 
 
-<img width="580px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报2.png"></img>
+# 微信公众号
+
+
+更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
+
+
+<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>

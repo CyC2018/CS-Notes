@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0">
     <link rel="icon" href=" https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/LogoMakr_1J56bI.png">
     <link rel="stylesheet" href="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/vue.css">
+
     <!-- 将自定义样式放在 Github 上会导致加载速度变得非常慢，所以采取直接内嵌的方式 -->
     <style type="text/css">
+    	
     /* 隐藏头部的目录 */
     #main>ul:nth-child(1) {
         display: none;
@@ -34,8 +36,13 @@
 
     img,
     pre {
-        border-radius: 8px;
+        border-radius: 5px;
     }
+
+    .markdown-section p.tip,
+    .markdown-section tr:nth-child(1n) {
+    	background-color: #f8f8f8 !important;
+	}
 
     .content,
     .sidebar,
@@ -60,6 +67,15 @@
         /*font-family: Microsoft YaHei, Source Sans Pro, Helvetica Neue, Arial, sans-serif !important;*/
     }
 
+    .markdown-section pre>code {
+    	font-size: 13px;
+	}
+
+	code,
+	pre {
+    	background-color: #fff !important;
+	}
+
     .markdown-section>p {
         font-size: 16px !important;
     }
@@ -68,9 +84,18 @@
         font-family: Consolas, Roboto Mono, Monaco, courier, monospace !important;
     }
 
+    p, h1, h2, h3, h4, ol, ul {
+    	letter-spacing: 2px !important;
+	}
+
+	p, ol, ul {
+    	line-height: 30px !important;
+	}
+
     @media (min-width:600px) {
         .markdown-section pre>code {
             font-size: .9rem !important;
+            letter-spacing: 1.1px !important;
         }
     }
 
@@ -78,6 +103,7 @@
         .markdown-section pre>code {
             padding-top: 5px;
             padding-bottom: 5px;
+            padding-left: 15px !important;
         }
 
         pre:after {
@@ -100,7 +126,7 @@
 
     .markdown-section > div > img,
     .markdown-section pre {
-        box-shadow: 2px 2px 20px 6px #ddd !important;
+        box-shadow: 0px 0px 20px 11px #eaeaea;
     }
 
     pre {
@@ -117,9 +143,13 @@
 
     @media (max-width:600px) {
         pre {
-            padding-left: 0px !important;
-            padding-right: 0px !important;
+        	padding-left: 3px !important;
+    		padding-right: 3px !important;
+    		margin-left: -20px !important;
+    		margin-right: -20px !important;
+    		box-shadow: 0px 0px 20px 0px #eee !important;
         }
+
 
         .docsify-copy-code-button {
             display: none;
@@ -247,8 +277,8 @@
 
     /*深蓝加粗*/
     .token.keyword {
-        color: #124363;
-        font-weight: bold;   
+    	color: #333;
+    	font-weight: 700;
     }
 
 
