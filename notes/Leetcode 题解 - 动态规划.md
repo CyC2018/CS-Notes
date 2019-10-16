@@ -869,18 +869,20 @@ return -1.
 
 ```java
 public int coinChange(int[] coins, int amount) {
-public int change(int amount, int[] coins) {
-    if (coins == null) {
-        return 0;
-    }
     int[] dp = new int[amount + 1];
-    dp[0] = 1;
     for (int coin : coins) {
-        for (int i = coin; i <= amount; i++) {
-            dp[i] += dp[i - coin];
+        for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
+            if (i == coin) {
+                dp[i] = 1;
+            } else if (dp[i] == 0 && dp[i - coin] != 0) {
+                dp[i] = dp[i - coin] + 1;
+
+            } else if (dp[i - coin] != 0) {
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            }
         }
     }
-    return dp[amount];
+    return dp[amount] == 0 ? -1 : dp[amount];
 }
 ```
 
