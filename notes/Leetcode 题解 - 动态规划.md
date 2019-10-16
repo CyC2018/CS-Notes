@@ -1002,8 +1002,7 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="pics/83acbb02-872a-4178-b22a-c89c3cb60263.jpg" width="300px"> </div><br>
-
+<div align="center"> <img src="pics/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {

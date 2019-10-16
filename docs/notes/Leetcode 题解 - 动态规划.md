@@ -902,6 +902,9 @@ Explanation: there are four ways to make up the amount:
 
 ```java
 public int change(int amount, int[] coins) {
+    if (amount == 0 || coins == null || coins.length == 0) {
+        return 0;
+    }
     int[] dp = new int[amount + 1];
     dp[0] = 1;
     for (int coin : coins) {
@@ -999,8 +1002,7 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/83acbb02-872a-4178-b22a-c89c3cb60263.jpg" width="300px"> </div><br>
-
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
