@@ -82,10 +82,10 @@
 
 ### 更多内容
 
+- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593?from=cyc_github)
+- 简历：https://cyc2018.github.io
 - 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
 - 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
-- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593)
-- 简历：https://cyc2018.github.io
 - 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 - QQ 群：[1016560771](assets/QQ2群.png)
 
