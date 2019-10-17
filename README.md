@@ -102,7 +102,7 @@
 
 <br>
 
-<div align="center"><img width="600px" src="assets/公众号海报.png"></img></div>
+<div align="center"><img width="550px" src="assets/公众号海报.png"></img></div>
 
 ### 排版
 
