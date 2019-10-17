@@ -306,7 +306,7 @@ epoll 的描述符事件有两种触发模式：LT（level trigger）和 ET（ed
 
 ### 1. select 应用场景
 
-select 的 timeout 参数精度为 1ns，而 poll 和 epoll 为 1ms，因此 select 更加适用于实时性要求比较高的场景，比如核反应堆的控制。
+select 的 timeout 参数精度为微秒，而 poll 和 epoll 为毫秒，因此 select 更加适用于实时性要求比较高的场景，比如核反应堆的控制。
 
 select 可移植性更好，几乎被所有主流平台所支持。
 
