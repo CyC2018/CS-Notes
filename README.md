@@ -23,6 +23,7 @@
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
 - [Leetcode 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20题解%20-%20目录.md)
 - [算法](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法%20-%20目录.md)
+- [互联网笔试题库](https://www.nowcoder.com/intelligentTest?from=cyc_github)
 
 ## :computer: 操作系统
 
@@ -86,7 +87,7 @@
 - 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593)
 - 简历：https://cyc2018.github.io
 - 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
-- QQ 交流群：[857210598](assets/group.png)
+- QQ 群：[1016560771](assets/QQ2群.png)
 
 ### 工具
 
@@ -101,7 +102,7 @@
 
 <br>
 
-<div align="center"><img width="300px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="600px" src="assets/公众号海报.png"></img></div>
 
 ### 排版
 
