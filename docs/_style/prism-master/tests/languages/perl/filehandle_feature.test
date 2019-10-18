@@ -1,0 +1,17 @@
+_
+<>
+<STDIN>
+<FOOBAR>
+
+----------------------------------------------------
+
+[
+	["filehandle", "_"],
+	["filehandle", "<>"],
+	["filehandle", "<STDIN>"],
+	["filehandle", "<FOOBAR>"]
+]
+
+----------------------------------------------------
+
+Checks for file handles.

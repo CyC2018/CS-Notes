@@ -1,0 +1,33 @@
+= Header 1 =
+== Header 2 ==
+=== Header 3 ===
+==== Header 4 ====
+===== Header 5 =====
+====== Header 6 ======
+
+----------------------------------------------------
+
+[
+	["heading", [
+		["punctuation", "="], ["important", " Header 1 "], ["punctuation", "="]
+	]],
+	["heading", [
+		["punctuation", "=="], ["important", " Header 2 "], ["punctuation", "=="]
+	]],
+	["heading", [
+		["punctuation", "==="], ["important", " Header 3 "], ["punctuation", "==="]
+	]],
+	["heading", [
+		["punctuation", "===="], ["important", " Header 4 "], ["punctuation", "===="]
+	]],
+	["heading", [
+		["punctuation", "====="], ["important", " Header 5 "], ["punctuation", "====="]
+	]],
+	["heading", [
+		["punctuation", "======"], ["important", " Header 6 "], ["punctuation", "======"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for titles.

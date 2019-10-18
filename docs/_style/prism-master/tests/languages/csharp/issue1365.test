@@ -1,0 +1,39 @@
+interface ILogger {
+    void Init(SomeClass file);
+	void LogInfo(string message);
+}
+public class SomeClass : BaseClass {}
+
+----------------------------------------------------
+
+[
+	["keyword", "interface"],
+	["class-name", ["ILogger"]],
+	["punctuation", "{"],
+	["keyword", "void"],
+	["function", "Init"],
+	["punctuation", "("],
+	["class-name", ["SomeClass"]],
+	" file",
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["keyword", "void"],
+	["function", "LogInfo"],
+	["punctuation", "("],
+	["keyword", "string"],
+	" message",
+	["punctuation", ")"],
+	["punctuation", ";"],
+	["punctuation", "}"],
+	["keyword", "public"],
+	["keyword", "class"],
+	["class-name", ["SomeClass"]],
+	["punctuation", ":"],
+	["class-name", ["BaseClass"]],
+	["punctuation", "{"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for class names. See #1365

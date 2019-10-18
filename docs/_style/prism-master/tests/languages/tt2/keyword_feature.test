@@ -1,0 +1,130 @@
+[% BLOCK header %]
+[% CALL dbi.disconnect %]
+[% CASE 23 %]
+[% CATCH the.ball %]
+[% CLEAR %]
+[% DEBUG on %]
+[% DEBUG off %]
+[% DEFAULT answer = 42 %]
+[% ELSE %]
+[% ELSIF bar %]
+[% END %]
+[% FILTER html %]
+[% FINAL breathe %]
+[% FOREACH project IN time %]
+[% GET foo %]
+[% IF foo %]
+[% IN %]
+[% INCLUDE "$inc" %]
+[% INSERT filename.html %]
+[% LAST IF exhausted %]
+[% MACRO header INCLUDE header %]
+[% META title = 'Hello!' %]
+[% NEXT IF client %]
+[% PERL %]
+[% PROCESS "functions.tt" %]
+[% RAWPERL %]
+[% RETURN %]
+[% SET answer = 42 %]
+[% STOP %]
+[% SWITCH mday %]
+[% TAGS [@ @] %]
+[% THROW up %]
+[% TRY %]
+[% UNLESS fear %]
+[% USE Plugin %]
+[% WHILE my.guitar.gently.weeps %]
+[% WRAPPER 'html5.html' %]
+
+----------------------------------------------------
+
+[
+	["tt2", [["delimiter", "[%"], ["keyword", "BLOCK"], 
+		 ["variable", "header"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "CALL"], 
+		 ["variable", "dbi.disconnect"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "CASE"], 
+		 ["number", "23"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "CATCH"], 
+		 ["variable", "the.ball"], 
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "CLEAR"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "DEBUG"],
+		 ["variable", "on"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "DEBUG"],
+		 ["variable", "off"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "DEFAULT"], 
+		 ["variable", "answer"], ["operator", "="], ["number", "42"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "ELSE"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "ELSIF"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "END"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "FILTER"], ["variable", "html"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "FINAL"], 
+		 ["variable", "breathe"], 
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "FOREACH"],
+		 ["variable", "project"], ["keyword", "IN"], ["variable", "time"] , 
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "GET"], 
+		 ["variable", "foo"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "IF"], ["variable", "foo"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "IN"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "INCLUDE"],
+		 ["double-quoted-string", ["\"", ["variable", "$inc"], "\""]],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "INSERT"],
+		 ["variable", "filename.html"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "LAST"],
+		 ["keyword", "IF"], ["variable", "exhausted"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "MACRO"], ["variable", "header"],
+		 ["keyword", "INCLUDE"], ["variable", "header"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "META"],
+		 ["variable", "title"], ["operator", "="], ["single-quoted-string", "'Hello!'"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "NEXT"],
+		 ["keyword", "IF"], ["variable", "client"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "PERL"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "PROCESS"],
+		 ["double-quoted-string", ["\"functions.tt\""]],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "RAWPERL"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "RETURN"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "SET"], 
+		 ["variable", "answer"], ["operator", "="], ["number", "42"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "STOP"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "SWITCH"], ["variable", "mday"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "TAGS"],
+		 ["punctuation", "["], "@ @", ["punctuation", "]"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "THROW"], 
+		 ["variable", "up"], 
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "TRY"], ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "UNLESS"], ["variable", "fear"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "USE"], ["variable", "Plugin"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "WHILE"],
+		 ["variable", "my.guitar.gently.weeps"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"], ["keyword", "WRAPPER"],
+		 ["single-quoted-string", "'html5.html'"],
+		 ["delimiter", "%]"]]]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,93 @@
+O HAI IM
+KTHX
+HAI
+KTHXBYE
+I HAS A
+ITZ
+ITZ A
+R
+AN
+MKAY
+SMOOSH
+MAEK
+IS NOW
+IS NOW A
+VISIBLE
+GIMMEH
+O RLY?
+YA RLY
+NO WAI
+OIC
+MEBBE
+WTF?
+OMG
+OMGWTF
+GTFO
+IM IN YR
+IM OUTTA YR
+FOUND YR
+YR
+TIL
+WILE
+UPPIN
+NERFIN
+I IZ
+HOW IZ I foo
+IF U SAY SO
+SRS
+HAS A
+LIEK
+LIEK A
+IZ
+foo'Z
+
+----------------------------------------------------
+
+[
+	["keyword", "O HAI IM"],
+	["keyword", "KTHX"],
+	["keyword", "HAI"],
+	["keyword", "KTHXBYE"],
+	["keyword", "I HAS A"],
+	["keyword", "ITZ"],
+	["keyword", "ITZ A"],
+	["keyword", "R"],
+	["keyword", "AN"],
+	["keyword", "MKAY"],
+	["keyword", "SMOOSH"],
+	["keyword", "MAEK"],
+	["keyword", "IS NOW"],
+	["keyword", "IS NOW A"],
+	["keyword", "VISIBLE"],
+	["keyword", "GIMMEH"],
+	["keyword", "O RLY?"],
+	["keyword", "YA RLY"],
+	["keyword", "NO WAI"],
+	["keyword", "OIC"],
+	["keyword", "MEBBE"],
+	["keyword", "WTF?"],
+	["keyword", "OMG"],
+	["keyword", "OMGWTF"],
+	["keyword", "GTFO"],
+	["keyword", "IM IN YR"],
+	["keyword", "IM OUTTA YR"],
+	["keyword", "FOUND YR"],
+	["keyword", "YR"],
+	["keyword", "TIL"],
+	["keyword", "WILE"],
+	["keyword", "UPPIN"],
+	["keyword", "NERFIN"],
+	["keyword", "I IZ"],
+	["keyword", "HOW IZ I"], ["function", "foo"],
+	["keyword", "IF U SAY SO"],
+	["keyword", "SRS"],
+	["keyword", "HAS A"],
+	["keyword", "LIEK"],
+	["keyword", "LIEK A"],
+	["keyword", "IZ"],
+	"\r\nfoo", ["keyword", "'Z"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

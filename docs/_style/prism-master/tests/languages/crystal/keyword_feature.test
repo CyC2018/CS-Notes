@@ -1,0 +1,37 @@
+abstract alias as asm begin break case
+class;
+def;
+do else elsif
+end ensure enum extend for fun
+if include instance_sizeof
+.is_a?
+lib macro module next of out pointerof
+private protected rescue
+.responds_to?
+return require select self sizeof struct super
+then type typeof uninitialized union unless
+until when while with yield __DIR__ __END_LINE__
+__FILE__ __LINE__
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "alias"], ["keyword", "as"], ["keyword", "asm"], ["keyword", "begin"], ["keyword", "break"], ["keyword", "case"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "def"],  ["punctuation", ";"],
+	["keyword", "do"], ["keyword", "else"], ["keyword", "elsif"],
+	["keyword", "end"], ["keyword", "ensure"], ["keyword", "enum"], ["keyword", "extend"], ["keyword", "for"], ["keyword", "fun"],
+	["keyword", "if"], ["keyword", "include"], ["keyword", "instance_sizeof"],
+	["punctuation", "."], ["keyword", "is_a?"],
+	["keyword", "lib"], ["keyword", "macro"], ["keyword", "module"], ["keyword", "next"], ["keyword", "of"], ["keyword", "out"], ["keyword", "pointerof"],
+	["keyword", "private"], ["keyword", "protected"], ["keyword", "rescue"],
+	["punctuation", "."], ["keyword", "responds_to?"],
+	["keyword", "return"], ["keyword", "require"], ["keyword", "select"], ["keyword", "self"], ["keyword", "sizeof"], ["keyword", "struct"], ["keyword", "super"],
+	["keyword", "then"], ["keyword", "type"], ["keyword", "typeof"], ["keyword", "uninitialized"], ["keyword", "union"], ["keyword", "unless"],
+	["keyword", "until"], ["keyword", "when"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"], ["keyword", "__DIR__"], ["keyword", "__END_LINE__"],
+	["keyword", "__FILE__"], ["keyword", "__LINE__"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

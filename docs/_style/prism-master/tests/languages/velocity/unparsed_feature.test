@@ -1,0 +1,29 @@
+#[[]]#
+#[[This is not parsed]]#
+#[[#if("some quotes" 'some quotes')
+## #* *#
+$dollar
+]]#
+
+----------------------------------------------------
+
+[
+	["unparsed", [
+		["punctuation", "#[["],
+		["punctuation", "]]#"]
+	]],
+	["unparsed", [
+		["punctuation", "#[["],
+		"This is not parsed",
+		["punctuation", "]]#"]
+	]],
+	["unparsed", [
+		["punctuation", "#[["],
+		"#if(\"some quotes\" 'some quotes')\r\n## #* *#\r\n$dollar\r\n",
+		["punctuation", "]]#"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for unparsed sections.

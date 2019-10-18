@@ -1,0 +1,19 @@
+div foo
+	span foo bar
+
+----------------------------------------------------
+
+[
+	["tag", [
+		"div"
+	]],
+	["plain-text", "foo"],
+	["tag", [
+		"span"
+	]],
+	["plain-text", "foo bar"]
+]
+
+----------------------------------------------------
+
+Checks for single-line plain text.

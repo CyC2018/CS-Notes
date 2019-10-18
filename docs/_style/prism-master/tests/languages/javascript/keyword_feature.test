@@ -1,0 +1,73 @@
+catch finally;
+
+as; async; await; break; case;
+class; const; continue; debugger;
+default; delete; do; else; enum;
+export; extends; for;
+from; function; get; if; implements;
+import; in; instanceof; interface; let;
+new; null; of; package; private;
+protected; public; return; set; static;
+super; switch; this; throw; try;
+typeof; var; void; while;
+with; yield;
+
+----------------------------------------------------
+
+[
+	["keyword", "catch"],
+	["keyword", "finally"], ["punctuation", ";"],
+
+	["keyword", "as"], ["punctuation", ";"],
+	["keyword", "async"], ["punctuation", ";"],
+	["keyword", "await"], ["punctuation", ";"],
+	["keyword", "break"], ["punctuation", ";"],
+	["keyword", "case"], ["punctuation", ";"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"], ["punctuation", ";"],
+	["keyword", "continue"], ["punctuation", ";"],
+	["keyword", "debugger"], ["punctuation", ";"],
+	["keyword", "default"], ["punctuation", ";"],
+	["keyword", "delete"], ["punctuation", ";"],
+	["keyword", "do"], ["punctuation", ";"],
+	["keyword", "else"], ["punctuation", ";"],
+	["keyword", "enum"], ["punctuation", ";"],
+	["keyword", "export"], ["punctuation", ";"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "for"], ["punctuation", ";"],
+	["keyword", "from"], ["punctuation", ";"],
+	["keyword", "function"], ["punctuation", ";"],
+	["keyword", "get"], ["punctuation", ";"],
+	["keyword", "if"], ["punctuation", ";"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"], ["punctuation", ";"],
+	["keyword", "in"], ["punctuation", ";"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "let"], ["punctuation", ";"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"], ["punctuation", ";"],
+	["keyword", "of"], ["punctuation", ";"],
+	["keyword", "package"], ["punctuation", ";"],
+	["keyword", "private"], ["punctuation", ";"],
+	["keyword", "protected"], ["punctuation", ";"],
+	["keyword", "public"], ["punctuation", ";"],
+	["keyword", "return"], ["punctuation", ";"],
+	["keyword", "set"], ["punctuation", ";"],
+	["keyword", "static"], ["punctuation", ";"],
+	["keyword", "super"], ["punctuation", ";"],
+	["keyword", "switch"], ["punctuation", ";"],
+	["keyword", "this"], ["punctuation", ";"],
+	["keyword", "throw"], ["punctuation", ";"],
+	["keyword", "try"], ["punctuation", ";"],
+	["keyword", "typeof"], ["punctuation", ";"],
+	["keyword", "var"], ["punctuation", ";"],
+	["keyword", "void"], ["punctuation", ";"],
+	["keyword", "while"], ["punctuation", ";"],
+	["keyword", "with"], ["punctuation", ";"],
+	["keyword", "yield"], ["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

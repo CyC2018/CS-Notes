@@ -1,0 +1,65 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz";
+'foo \'bar\' baz';</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>123
+123.456
+-123.456
+.3f
+1.3e9d
+0xaf
+0xAF
+0xFF.AEP-4
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>import java.util.Scanner;
+
+public class Life {
+
+    @Override @Bind("One")
+    public void show(boolean[][] grid){
+        String s = "";
+        for(boolean[] row : grid){
+            for(boolean val : row)
+                if(val)
+                    s += "*";
+                else
+                    s += ".";
+            s += "\n";
+        }
+        System.out.println(s);
+    }
+
+    public static boolean[][] gen(){
+        boolean[][] grid = new boolean[10][10];
+        for(int r = 0; r < 10; r++)
+            for(int c = 0; c < 10; c++)
+                if( Math.random() > 0.7 )
+                    grid[r][c] = true;
+        return grid;
+    }
+
+    public static void main(String[] args){
+        boolean[][] world = gen();
+        show(world);
+        System.out.println();
+        world = nextGen(world);
+        show(world);
+        Scanner s = new Scanner(System.in);
+        while(s.nextLine().length() == 0){
+            System.out.println();
+            world = nextGen(world);
+            show(world);
+
+        }
+    }
+
+	// [...]
+}</code></pre>

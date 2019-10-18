@@ -1,0 +1,24 @@
+Accept-Language: fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Server: GitHub.com
+Date: Mon, 22 Dec 2014 18:25:30 GMT
+Content-Type: text/html; charset=utf-8
+
+----------------------------------------------------
+
+[
+	["header-name", "Accept-Language:"],
+	" fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3\r\n",
+	["header-name", "Accept-Encoding:"],
+	" gzip, deflate\r\n",
+	["header-name", "Server:"],
+	" GitHub.com\r\n",
+	["header-name", "Date:"],
+	" Mon, 22 Dec 2014 18:25:30 GMT\r\n",
+	["header-name", "Content-Type:"],
+	" text/html; charset=utf-8"
+]
+
+----------------------------------------------------
+
+Checks for header names.

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<link rel="icon" href="favicon.png" />
+<title>Custom Class ▲ Prism plugins</title>
+<base href="../.." />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+<script src="prefixfree.min.js"></script>
+<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body class="language-javascript">
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Custom Class</h2>
+	<p>This plugin allows you to prefix Prism default classes (<code>.comment</code> will become <code>.namespace--comment</code>) or replace them with your defined ones (like <code>.editor__comment</code> or <code>.comment_7sh3a</code>).</p>  
+</header>
+
+<section>
+	<h1>Motivation</h1>
+
+	<p>Prism default classes are sensible but fixed and too generic. This plugin provide some ways to customize those classes to suit your needs. Example usages:</p>
+
+	<ul>
+		<li>
+			 You want to add namespace for all of them (like <code>.prism--comment</code>) to avoid conflict with your existing classes.
+		</li>
+		<li>
+			You use a naming convention (like <a href="https://en.bem.info/method">BEM</a>). You want to write classes like <code>.editor__comment</code>.
+		</li>
+		<li>You use
+			<a href="https://github.com/css-modules/css-modules">CSS Modules</a>. You want to use your hashed classes, like <code>.comment_7sh3a</code>.
+		</li>
+	</ul>
+
+	<h1>Features</h1>
+
+	<p>This plugin currently provides 2 features:</p>
+
+	<h2>1. Prefix all Prism classes with a string</h2>
+
+	<code>Prism.plugins.customClass.prefix('prism--')</code>
+
+	<h2>2. Replace some Prism classes with your defined ones via an object</h2>
+
+	<pre class="language-js"><code>Prism.plugins.customClass.map({
+	keyword: 'special-keyword',
+	string: 'string_ch29s',
+	comment: 'comment_93jsa'
+})</code></pre>
+
+	<p>Object's keys are the tokens you want to replace (eg: <code>comment</code>), with their values being the classes you want to use (eg: <code>my-comment</code>). Tokens which are not specified will stay the same.</p>
+
+	<h1>Notes</h1>
+
+	<ul>
+		<li>
+			<p>Feature functions must be called <strong>AFTER</strong> Prism and this plugin. For example:</p>
+
+			<pre class="language-markup"><code>&lt;!-- 1. load prism --&gt;
+&lt;script src=&quot;prism.js&quot;&gt;&lt;/script&gt;
+&lt;!-- 2. load the plugin if you don't include it inside prism when download --&gt;
+&lt;script src=&quot;plugins/custom-class/custom-class.js&quot;&gt;&lt;/script&gt;
+&lt;!-- 3. call the feature you want to use --&gt;
+&lt;script&gt;
+	Prism.plugins.customClass.map(myClassMap);
+	Prism.plugins.customClass.prefix(myPrefixString);
+&lt;/script&gt;</code></pre>
+
+		</li>
+
+		<li>In most cases, using 1 feature is enough. However, it is possible to use both of them together if you want (Result will be like <code>.my-namespace--comment_93jsa</code>).</li>
+
+		</ul>
+
+		<h2>CSS Modules Usage:</h2>
+
+		<p>The initial purpose of this plugin is to be used with CSS Modules. It works perfectly with the class map object returned by CSS Modules. For example:</p>
+
+		<pre class="language-js"><code>import Prism from 'prismjs';
+import classMap from 'styles/editor-class-map.css';
+Prism.plugins.customClass.map(classMap)</code></pre>
+
+</section>
+
+<section>
+	<h1>Example</h1>
+
+	<h2>Input</h2>
+	<pre class="language-markup"><code>&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code&gt;
+	var foo = 'bar';
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+
+	<h2>Options</h2>
+	<pre class="language-js"><code>Prism.plugins.customClass.map({
+	keyword: 'special-keyword',
+	string: 'my-string'
+});
+Prism.plugins.customClass.prefix('pr-');</code></pre>
+
+	<h2>Output</h2>
+	<pre class="language-markup"><code>&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code&gt;
+	&lt;span class=&quot;pr-token pr-special-keyword&quot;&gt;var&lt;/span&gt;
+	foo
+	&lt;span class=&quot;pr-token pr-operator&quot;&gt;=&lt;/span&gt;
+	&lt;span class=&quot;pr-my-string&quot;&gt;'bar'&lt;/span&gt;
+	&lt;span class=&quot;pr-token pr-punctuation&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</section>
+
+<section>
+	<h1>Todo</h1>
+	<ul>
+		<li>Take a function as the transformation (<a href="https://github.com/PrismJS/prism/pull/950#issuecomment-224289585">Comment in #950</a></li>
+		<li>Allow to custom tokens per language, using nested object (<a href="https://github.com/PrismJS/prism/issues/947#issuecomment-216979932">Comment in #947</a>)</li>
+	</ul>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/custom-class/prism-custom-class.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

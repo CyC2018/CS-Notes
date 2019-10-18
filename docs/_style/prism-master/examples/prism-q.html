@@ -1,0 +1,112 @@
+<h2>Comments</h2>
+<pre><code>foo / This is a comment
+/ This is a comment too
+
+/
+Some multi-line
+comment here
+\
+
+\
+This comment will
+continue until the
+end of code</code></pre>
+
+<h2>Character data and strings</h2>
+<pre><code>"q"
+"\""
+"\\"
+"\142"
+"foo bar baz"</code></pre>
+
+<h2>Symbols</h2>
+<pre><code>`
+`q
+`zaphod
+`:198.162.0.2:5042
+`:www.yourco.com:5042
+`.new</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>42
+b:-123h
+c:1234567890j
+pi:3.14159265
+float1:1f
+r:1.4142e
+2.0
+4.00e
+f:1.23456789e-10
+r:1.2345678e-10e
+bit:0b
+byte:0x2a
+a:42
+bit:1b
+
+0w 0n 0W 0Wh 0Wj</code></pre>
+
+<h2>Dates</h2>
+<pre><code>d:2006.07.04
+t:09:04:59.000
+dt:2006.07.04T09:04:59.000
+mon:2006.07m
+mm:09:04
+sec:09:04:59
+d:2006.07.04
+
+0Nm 0Nd 0Nz 0Nu 0Nv 0Wd 0Wt 0Wz</code></pre>
+
+<h2>Verbs</h2>
+<pre><code>99+L
+x<42|x>98
+(x<42)|x>98
+42~(4 2;(1 0))
+(4 2)~(4; 2*1)</code></pre>
+
+<h2>Adverbs</h2>
+<pre><code>" ," ,/: ("Now";"is";"the";"time")
+L1,/:\:L2
+0+/10 20 30
+(1#) each 1001 1002 1004 1003</code></pre>
+
+<h2>Built-in functions and q-sql</h2>
+<pre><code>string 42
+L1 cross L2
+type c
+select from t where price=(max;price) fby ([]sym;ex)
+ungroup `p xgroup sp
+`instrument insert (`g; `$"Google"; `$"Internet")</code></pre>
+
+<h2>Example</h2>
+<pre><code>/ Example from http://code.kx.com/wiki/Cookbook/CorporateActions
+getCAs:{[caTypes]
+    / handles multiplie corporate actions on one date
+    t:0!select factor:prd factor by date-1,sym from ca where caType in caTypes;
+    t,:update date:1901.01.01,factor:1.0 from ([]sym:distinct t`sym);
+    t:`date xasc t;
+    t:update factor:reverse prds reverse 1 rotate factor by sym from t;
+    :update `g#sym from 0!t;
+  };
+
+adjust:{[t;caTypes]
+    t:0!t;
+    factors:enlist 1.0^aj[`sym`date;([] date:t`date;sym:t`sym);getCAs caTypes]`factor;
+    mc:c where (lower c:cols t) like "*price"; / find columns to multiply
+    dc:c where lower[c] like "*size"; / find columns to divide
+    :![t;();0b;(mc,dc)!((*),/:mc,\:factors),((%),/:dc,\:factors)]; / multiply or divide out the columns
+  };
+
+/ get the adjustment factors considering all corporate actions
+getCAs exec distinct caType from ca
+
+adjust[t;`dividend] / adjust trades for dividends only</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>The global context is highlighted as a verb</h3>
+<pre><code>\d .</code></pre>

@@ -1,0 +1,52 @@
+<h2>Comments</h2>
+<pre><code>; Single-line comment
+#comments-start
+	Multi-line
+	comment
+#comments-end
+#cs
+	Multi-line
+	comment
+#ce
+;#comments-start
+	foo()
+;#comments-end</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo'bar'baz"
+"foo""bar""baz"
+'foo"bar"baz'
+'foo''bar''baz'</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>2
+4.566
+1.5e3
+0x4fff</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>True
+False</code></pre>
+
+<h2>Keywords and variables</h2>
+<pre><code>; Display all the numbers for 1 to 10 but skip displaying  7.
+For $i = 1 To 10
+    If $i = 7 Then
+        ContinueLoop ; Skip displaying the message box when $i is equal to 7.
+    EndIf
+    MsgBox($MB_SYSTEMMODAL, "", "The value of $i is: " & $i)
+Next</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>Nested block comments</h3>
+<pre><code>#cs
+	#cs
+		foo()
+	#ce
+#ce</code></pre>

@@ -1,0 +1,70 @@
+^case
+^eval
+^for
+^if
+^switch
+^throw
+
+@BASE
+@CLASS
+@GET
+@GET_DEFAULT
+@OPTIONS
+@SET_DEFAULT
+@USE
+
+(^eval(2+2))
+
+<div class="^if($foo){bar}{baz}">
+
+----------------------------------------------------
+
+[
+	["keyword", "^case"],
+	["keyword", "^eval"],
+	["keyword", "^for"],
+	["keyword", "^if"],
+	["keyword", "^switch"],
+	["keyword", "^throw"],
+
+	["keyword", "@BASE"],
+	["keyword", "@CLASS"],
+	["keyword", "@GET"],
+	["keyword", "@GET_DEFAULT"],
+	["keyword", "@OPTIONS"],
+	["keyword", "@SET_DEFAULT"],
+	["keyword", "@USE"],
+
+	["expression", [
+		["punctuation", "("],
+		["keyword", "^eval"],
+		["punctuation", "("],
+		["number", "2"], ["operator", "+"], ["number", "2"],
+		["punctuation", ")"],
+		["punctuation", ")"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["keyword", "^if"],
+			["expression", [
+				["punctuation", "("], ["variable", ["$foo"]], ["punctuation", ")"]
+			]],
+			["parser-punctuation", "{"], "bar", ["parser-punctuation", "}"],
+			["parser-punctuation", "{"], "baz", ["parser-punctuation", "}"],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

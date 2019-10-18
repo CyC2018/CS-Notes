@@ -1,0 +1,32 @@
+void foo(int a) {}
+foo(0);
+Bar::foo;
+
+----------------------------------------------------
+
+[
+	["keyword", "void"],
+	["function", "foo"],
+	["punctuation", "("],
+	["keyword", "int"],
+	" a",
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["function", "foo"],
+	["punctuation", "("],
+	["number", "0"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["class-name", "Bar"],
+	["operator", ":"],
+	["operator", ":"],
+	["function", "foo"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

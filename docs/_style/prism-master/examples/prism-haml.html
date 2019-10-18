@@ -1,0 +1,79 @@
+<h2>Comments</h2>
+<pre><code>
+/ This is comment
+    on multiple lines
+/ This is a comment
+but this is not
+-# This is another comment
+    on multiple lines</code></pre>
+
+<h2>Doctype</h2>
+<pre><code>!!! XML
+!!!
+!!! 5</code></pre>
+
+<h2>Tags</h2>
+<pre><code>%div
+	%span
+%span(class="widget_#{@widget.number}")
+%div{:id => [@item.type, @item.number], :class => [@item.type, @item.urgency]}
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en"}
+%html{html_attrs('fr-fr')}
+%div[@user, :greeting]
+%img
+%pre><
+  foo
+  bar
+%img
+</code></pre>
+
+<h2>Markup</h2>
+<pre><code>%div
+  &lt;p id="blah">Blah!&lt;/p></code></pre>
+
+<h2>Inline Ruby</h2>
+<pre><code>= ['hi', 'there', 'reader!'].join " "
+- foo = "hello"
+= link_to_remote "Add to cart",
+    :url => { :action => "add", :id => product.id },
+    :update => { :success => "cart", :failure => "error" }
+~ "Foo\n&lt;pre>Bar\nBaz&lt;/pre>"
+%p
+  - case 2
+  - when 1
+    = "1!"
+  - when 2
+    = "2?"
+  - when 3
+    = "3."
+- (42...47).each do |i|
+  %p= i
+%p See, I can count!
+</code></pre>
+
+<h2>Filters</h2>
+
+<pre><code>%head
+	:css
+		#content: {
+			background: url('img/background.jpg');
+		}
+		div {
+			color: #333;
+		}
+	:javascript
+		(function() {
+			var test = "Do you like Prism?";
+			if(confirm(test)) {
+				do_something_great();
+			}
+		}());
+%body
+</code></pre>
+
+<p>Filters require the desired language to be loaded.
+On this page, check CoffeeScript <strong>before</strong> checking Haml should make
+the example below work properly.</p>
+<pre><code>%script
+  :coffee
+    console.log 'This is coffee script'</code></pre>

@@ -1,0 +1,63 @@
+||
+&&
+++
+--
+.. ...
+=>
+in is
+!in !is
+<< <<=
+>> >>> >>= >>>=
+^^ ^^=
+<> !<> <>= !<>=
+!< !<=
+!> !>=
++ +=
+- -=
+* *=
+/ /=
+% %=
+& &=
+| |=
+^ ^=
+~ ~=
+= ==
+! !=
+< <=
+> >=
+
+----------------------------------------------------
+
+[
+	["operator", "||"],
+	["operator", "&&"],
+	["operator", "++"],
+	["operator", "--"],
+	["operator", ".."], ["operator", "..."],
+	["operator", "=>"],
+	["operator", "in"], ["operator", "is"],
+	["operator", "!in"], ["operator", "!is"],
+	["operator", "<<"], ["operator", "<<="],
+	["operator", ">>"], ["operator", ">>>"], ["operator", ">>="], ["operator", ">>>="],
+	["operator", "^^"], ["operator", "^^="],
+	["operator", "<>"], ["operator", "!<>"], ["operator", "<>="], ["operator", "!<>="],
+	["operator", "!<"], ["operator", "!<="],
+	["operator", "!>"], ["operator", "!>="],
+	["operator", "+"], ["operator", "+="],
+	["operator", "-"], ["operator", "-="],
+	["operator", "*"], ["operator", "*="],
+	["operator", "/"], ["operator", "/="],
+	["operator", "%"], ["operator", "%="],
+	["operator", "&"], ["operator", "&="],
+	["operator", "|"], ["operator", "|="],
+	["operator", "^"], ["operator", "^="],
+	["operator", "~"], ["operator", "~="],
+	["operator", "="], ["operator", "=="],
+	["operator", "!"], ["operator", "!="],
+	["operator", "<"], ["operator", "<="],
+	["operator", ">"], ["operator", ">="]
+]
+
+----------------------------------------------------
+
+Checks for operators.

@@ -1,0 +1,104 @@
+foo = function ( x, y) {}
+{foo: function () {}}
+bar = async function baz (x ) {}
+baz = async(x) => x
+fooBar = x => x
+fooBar = ( x, y ) => x
+ಠ_ಠ = () => {}
+Ƞȡ_҇ = async (ಠ, Ƞ = 2) => {}
+
+----------------------------------------------------
+
+[
+	["function-variable", "foo"],
+	["operator", "="],
+	["keyword", "function"],
+	["punctuation", "("],
+	["parameter", [
+		"x",
+		["punctuation", ","],
+		" y"
+	]],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["punctuation", "{"],
+	["function-variable", "foo"],
+	["punctuation", ":"],
+	["keyword", "function"],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation","}"],
+	["punctuation","}"],
+
+	["function-variable", "bar"],
+	["operator", "="],
+	["keyword", "async"],
+	["keyword", "function"],
+	["function", "baz"],
+	["punctuation", "("],
+	["parameter", [
+		"x"
+	]],
+	["punctuation", ")"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["function-variable", "baz"],
+	["operator", "="],
+	["keyword", "async"],
+	["punctuation", "("],
+	["parameter", [
+		"x"
+	]],
+	["punctuation", ")"],
+	["operator", "=>"], " x\r\n",
+
+	["function-variable", "fooBar"],
+	["operator", "="],
+	["parameter", [
+		"x"
+	]],
+	["operator", "=>"], " x\r\n",
+
+	["function-variable", "fooBar"],
+	["operator", "="],
+	["punctuation", "("],
+	["parameter", [
+		"x",
+		["punctuation", ","],
+		" y"
+	]],
+	["punctuation", ")"],
+	["operator", "=>"], " x\r\n",
+
+	["function-variable", "ಠ_ಠ"],
+	["operator", "="],
+	["punctuation", "("],
+	["punctuation", ")"],
+	["operator", "=>"],
+	["punctuation", "{"],
+	["punctuation", "}"],
+
+	["function-variable", "Ƞȡ_҇"],
+	["operator", "="],
+	["keyword", "async"],
+	["punctuation", "("],
+	["parameter", [
+		"ಠ",
+		["punctuation", ","],
+		" Ƞ ",
+		["operator", "="],
+		["number", "2"]
+	]],
+	["punctuation", ")"],
+	["operator", "=>"],
+	["punctuation", "{"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for variables obviously containing functions.

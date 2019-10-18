@@ -1,0 +1,18 @@
+R"raw(
+test
+)raw"
+R"(no delimiter)"
+R"(foo)"R"(bar)"
+
+----------------------------------------------------
+
+[
+	["raw-string", "R\"raw(\r\ntest\r\n)raw\""],
+	["raw-string", "R\"(no delimiter)\""],
+	["raw-string", "R\"(foo)\""],
+	["raw-string", "R\"(bar)\""]
+]
+
+----------------------------------------------------
+
+Checks for the C++11 raw string feature

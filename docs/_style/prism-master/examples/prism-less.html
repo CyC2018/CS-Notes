@@ -1,0 +1,70 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Variables</h2>
+<pre><code>@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111;</code></pre>
+
+<h2>At-rules</h2>
+<pre><code>@media screen and (min-width: 320px) {}</code></pre>
+
+<h2>Mixins</h2>
+<pre><code>.bordered {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+}
+#menu a {
+  .bordered;
+}
+#header a {
+  color: orange;
+  #bundle > .button;
+}</code></pre>
+
+<h2>Mixins with parameters</h2>
+<pre><code>.foo (@bg: #f5f5f5, @color: #900) {
+  background: @bg;
+  color: @color;
+}
+.bar {
+  .foo();
+}
+.class1 {
+  .mixin(@margin: 20px; @color: #33acfe);
+}
+.class2 {
+  .mixin(#efca44; @padding: 40px);
+}</code></pre>
+
+<h2>Interpolation</h2>
+<pre><code>@mySelector: banner;
+.@{mySelector} {
+  font-weight: bold;
+}
+@property: color;
+.widget {
+  @{property}: #0ee;
+  background-@{property}: #999;
+}</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>At-rules looking like variables</h3>
+<pre><code>@import "some file.less";</code></pre>
+
+<h3>At-rules containing interpolation</h3>
+<pre><code>@import "@{themes}/tidal-wave.less";</code></pre>
+
+<h3>extend is not highlighted consistently</h3>
+<pre><code>nav ul {
+  &:extend(.inline);
+  background: blue;
+}
+.a:extend(.b) {}</code></pre>

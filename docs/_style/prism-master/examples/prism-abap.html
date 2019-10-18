@@ -1,0 +1,65 @@
+<h2>Comments</h2>
+<pre><code>
+* Line Comments
+&quot; End of line comment used as line comment.
+value = 1. &quot; End of line comment
+
+DATA:
+  &quot;! ABAPDoc comment
+  value TYPE i.
+</code></pre>
+
+<h2>Strings</h2>
+
+<pre><code>
+my_string = 'Simple string'.
+my_string = 'String with an escaped '' inside'.
+my_string = |A string template: { nvalue } times|.
+my_string = |A string template: { nvalue } times|.
+my_string = |Characters \|, \{, and \} have to be escaped by \\ in literal text.|. 
+</code></pre>
+
+<h2>Numbers and Operators</h2>
+
+<pre><code>
+value = 001 + 2 - 3 * 4 / 5 ** 6.
+
+IF value &lt; 1 OR
+   value = 2 OR
+   value &gt; 3 OR
+   value &lt;&gt; 4 OR
+   value &lt;= 5 OR
+   value &gt;= 6.
+ENDIF.
+
+" Dynamic object assignment (with type cast check)
+lo_interface ?= lo_class.
+</code></pre>
+
+<h2>Structures and Classes</h2>
+
+<pre><code>
+DATA:
+  BEGIN OF my_structure,
+    scomponent TYPE i,
+  END OF my_structure.
+
+CLASS lcl_my_class DEFINITION.
+  PUBLIC SECTION.
+    METHODS my_method
+      RETURNING
+        VALUE(ret_value) TYPE i.
+ENDCLASS.
+
+CLASS lcl_my_class IMPLEMENTATION.
+  METHOD my_method.
+    ret_value = 1.
+  ENDMETHOD
+ENDCLASS.
+
+DATA lo_instace TYPE REF TO lcl_my_class.
+
+CREATE OBJECT lo_instace.
+
+my_structure-component = lo_instace->my_method( ).
+</code></pre>

@@ -1,0 +1,15 @@
+%% %*% %/%
+%in% %o% %x%
+%foobar%
+
+----------------------------------------------------
+
+[
+	["percent-operator", "%%"], ["percent-operator", "%*%"], ["percent-operator", "%/%"],
+	["percent-operator", "%in%"], ["percent-operator", "%o%"], ["percent-operator", "%x%"],
+	["percent-operator", "%foobar%"]
+]
+
+----------------------------------------------------
+
+Checks for user-defined operators and operators starting with %.

@@ -1,0 +1,37 @@
+* **
+| ||
+! !!
+¦ ¦¦
+< <> <=
+> >< >=
+~ ~=
+¬ ¬=
+^ ^=
+= / +
+- &
+
+eq ne gt lt
+ge le in not
+
+----------------------------------------------------
+
+[
+	["operator", "*"], ["operator", "**"],
+	["operator", "|"], ["operator", "||"],
+	["operator", "!"], ["operator", "!!"],
+	["operator", "¦"], ["operator", "¦¦"],
+	["operator", "<"], ["operator", "<>"], ["operator", "<="],
+	["operator", ">"], ["operator", "><"], ["operator", ">="],
+	["operator", "~"], ["operator", "~="],
+	["operator", "¬"], ["operator", "¬="],
+	["operator", "^"], ["operator", "^="],
+	["operator", "="], ["operator", "/"], ["operator", "+"],
+	["operator", "-"], ["operator", "&"],
+
+	["operator", "eq"], ["operator", "ne"], ["operator", "gt"], ["operator", "lt"],
+	["operator", "ge"], ["operator", "le"], ["operator", "in"], ["operator", "not"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

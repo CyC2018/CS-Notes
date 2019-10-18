@@ -1,0 +1,29 @@
+any break continue
+default delete die
+do else elsif eval
+for foreach given
+goto if last local
+my next our package
+print redo require
+say state sub
+switch undef unless
+until use when while
+
+----------------------------------------------------
+
+[
+	["keyword", "any"], ["keyword", "break"], ["keyword", "continue"],
+	["keyword", "default"], ["keyword", "delete"], ["keyword", "die"],
+	["keyword", "do"], ["keyword", "else"], ["keyword", "elsif"], ["keyword", "eval"],
+	["keyword", "for"], ["keyword", "foreach"], ["keyword", "given"],
+	["keyword", "goto"], ["keyword", "if"], ["keyword", "last"], ["keyword", "local"],
+	["keyword", "my"], ["keyword", "next"], ["keyword", "our"], ["keyword", "package"],
+	["keyword", "print"], ["keyword", "redo"], ["keyword", "require"],
+	["keyword", "say"], ["keyword", "state"], ["keyword", "sub"],
+	["keyword", "switch"], ["keyword", "undef"], ["keyword", "unless"],
+	["keyword", "until"], ["keyword", "use"], ["keyword", "when"], ["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

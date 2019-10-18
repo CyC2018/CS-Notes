@@ -1,0 +1,13 @@
+CL_TRUE
+CL_FALSE
+
+----------------------------------------------------
+
+[
+	["boolean-opencl-host", "CL_TRUE"],
+	["boolean-opencl-host", "CL_FALSE"]
+]
+
+----------------------------------------------------
+
+Checks for reserved boolean types in OpenCL host code (C-API).

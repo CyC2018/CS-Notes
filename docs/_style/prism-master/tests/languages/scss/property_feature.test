@@ -1,0 +1,23 @@
+$bg: background;
+$color: color;
+div {
+	$bg: none;
+	background-#{$color}: blue;
+	#{$bg}-repeat: no-repeat;
+}
+
+----------------------------------------------------
+
+[
+	["property", [["variable", "$bg"]]], ["punctuation", ":"], " background", ["punctuation", ";"],
+	["property", [["variable", "$color"]]], ["punctuation", ":"], " color", ["punctuation", ";"],
+	["selector", ["div "]], ["punctuation", "{"],
+	["property", [["variable", "$bg"]]], ["punctuation", ":"], " none", ["punctuation", ";"],
+	["property", ["background-", ["variable", "#{$color}"]]], ["punctuation", ":"], " blue", ["punctuation", ";"],
+	["property", [["variable", "#{$bg}"], "-repeat"]], ["punctuation", ":"], " no-repeat", ["punctuation", ";"],
+	["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for properties.

@@ -1,0 +1,71 @@
+at Main.main(Main.java:13)
+at Main.main(Main.java:13) Same but with some additional notes
+at com.foo.bar.Main$FooBar.main(Native Method)
+at Main$FooBar.<init>(Unknown Source)
+
+----------------------------------------------------
+
+[
+	["stack-frame", [
+		["keyword", "at"],
+		["class-name", "Main"],
+		["punctuation", "."],
+		["function", "main"],
+		["punctuation", "("],
+		["source", [
+			["file", "Main.java"],
+			["punctuation", ":"],
+			["line-number", "13"]
+		]],
+		["punctuation", ")"]
+	]],
+
+	["stack-frame", [
+		["keyword", "at"],
+		["class-name", "Main"],
+		["punctuation", "."],
+		["function", "main"],
+		["punctuation", "("],
+		["source", [
+			["file", "Main.java"],
+			["punctuation", ":"],
+			["line-number", "13"]
+		]],
+		["punctuation", ")"]
+	]],
+	" Same but with some additional notes\n",
+
+	["stack-frame", [
+		["keyword", "at"],
+		["namespace", "com"],
+		["punctuation", "."],
+		["namespace", "foo"],
+		["punctuation", "."],
+		["namespace", "bar"],
+		["punctuation", "."],
+		["class-name", "Main$FooBar"],
+		["punctuation", "."],
+		["function", "main"],
+		["punctuation", "("],
+		["source", [
+			["keyword", "Native Method"]
+		]],
+		["punctuation", ")"]
+	]],
+
+	["stack-frame", [
+		["keyword", "at"],
+		["class-name", "Main$FooBar"],
+		["punctuation", "."],
+		["function", "<init>"],
+		["punctuation", "("],
+		["source", [
+			["keyword", "Unknown Source"]
+		]],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for stack frames.

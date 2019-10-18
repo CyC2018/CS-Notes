@@ -1,0 +1,29 @@
+color: red;
+background-color: blue;
+-webkit-transform: none;
+--ötökkä: 2;
+
+----------------------------------------------------
+
+[
+	["property", "color"],
+	["punctuation", ":"],
+	" red",
+	["punctuation", ";"],
+	["property", "background-color"],
+	["punctuation", ":"],
+	" blue",
+	["punctuation", ";"],
+	["property", "-webkit-transform"],
+	["punctuation", ":"],
+	" none",
+	["punctuation", ";"],
+	["property", "--ötökkä"],
+	["punctuation", ":"],
+	" 2",
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for properties.

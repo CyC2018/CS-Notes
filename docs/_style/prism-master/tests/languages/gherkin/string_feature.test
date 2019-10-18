@@ -1,0 +1,29 @@
+""
+"foobar"
+"foo<bar>baz"
+''
+'foobar'
+'foo<bar>baz'
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"foobar\""]],
+	["string", [
+		"\"foo",
+		["outline", "<bar>"],
+		"baz\""
+	]],
+	["string", ["''"]],
+	["string", ["'foobar'"]],
+	["string", [
+        "'foo",
+        ["outline", "<bar>"],
+        "baz'"
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for double-quoted and single-quoted strings.

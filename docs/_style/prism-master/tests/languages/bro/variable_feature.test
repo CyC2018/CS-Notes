@@ -1,0 +1,25 @@
+local foo
+global foo
+local bool = T;
+const bar
+local baz = 66;
+
+----------------------------------------------------
+
+[
+	["variable", [["keyword", "local"], " foo"]],
+	["variable", [["keyword", "global"], " foo"]],
+	["variable", [["keyword", "local"], " bool"]],
+	["operator", "="],
+	["boolean", "T"],
+	["punctuation", ";"],
+	["constant", [["keyword", "const"], " bar"]],
+	["variable", [["keyword", "local"], " baz"]],
+	["operator", "="],
+	["number", "66"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for the highlighting of variables

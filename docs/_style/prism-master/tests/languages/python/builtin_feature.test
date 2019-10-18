@@ -1,0 +1,56 @@
+abs all any apply
+ascii basestring bin bool
+buffer bytearray bytes callable
+chr classmethod cmp coerce
+compile complex delattr
+dict dir divmod enumerate
+eval execfile file
+filter float format frozenset
+getattr globals hasattr hash
+help hex id input
+int intern isinstance issubclass
+iter len list locals
+long map max memoryview
+min next object oct
+open ord pow property
+range raw_input reduce reload
+repr reversed round set
+setattr slice sorted staticmethod
+str sum super tuple
+type unichr unicode vars
+xrange()
+zip(
+__import__
+
+
+----------------------------------------------------
+
+[
+	["builtin", "abs"], ["builtin", "all"], ["builtin", "any"], ["builtin", "apply"],
+	["builtin", "ascii"], ["builtin", "basestring"], ["builtin", "bin"], ["builtin", "bool"],
+	["builtin", "buffer"], ["builtin", "bytearray"], ["builtin", "bytes"], ["builtin", "callable"],
+	["builtin", "chr"], ["builtin", "classmethod"], ["builtin", "cmp"], ["builtin", "coerce"],
+	["builtin", "compile"], ["builtin", "complex"], ["builtin", "delattr"],
+	["builtin", "dict"], ["builtin", "dir"], ["builtin", "divmod"], ["builtin", "enumerate"],
+	["builtin", "eval"], ["builtin", "execfile"], ["builtin", "file"],
+	["builtin", "filter"], ["builtin", "float"], ["builtin", "format"], ["builtin", "frozenset"],
+	["builtin", "getattr"], ["builtin", "globals"], ["builtin", "hasattr"], ["builtin", "hash"],
+	["builtin", "help"], ["builtin", "hex"], ["builtin", "id"], ["builtin", "input"],
+	["builtin", "int"], ["builtin", "intern"], ["builtin", "isinstance"], ["builtin", "issubclass"],
+	["builtin", "iter"], ["builtin", "len"], ["builtin", "list"], ["builtin", "locals"],
+	["builtin", "long"], ["builtin", "map"], ["builtin", "max"], ["builtin", "memoryview"],
+	["builtin", "min"], ["builtin", "next"], ["builtin", "object"], ["builtin", "oct"],
+	["builtin", "open"], ["builtin", "ord"], ["builtin", "pow"], ["builtin", "property"],
+	["builtin", "range"], ["builtin", "raw_input"], ["builtin", "reduce"], ["builtin", "reload"],
+	["builtin", "repr"], ["builtin", "reversed"], ["builtin", "round"], ["builtin", "set"],
+	["builtin", "setattr"], ["builtin", "slice"], ["builtin", "sorted"], ["builtin", "staticmethod"],
+	["builtin", "str"], ["builtin", "sum"], ["builtin", "super"], ["builtin", "tuple"],
+	["builtin", "type"], ["builtin", "unichr"], ["builtin", "unicode"], ["builtin", "vars"],
+	["builtin", "xrange"], ["punctuation", "("], ["punctuation", ")"],
+	["builtin", "zip"], ["punctuation", "("],
+	["builtin", "__import__"]
+]
+
+----------------------------------------------------
+
+Checks for all builtins.

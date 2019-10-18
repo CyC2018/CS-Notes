@@ -1,0 +1,74 @@
+<h2>Comments</h2>
+<pre><code>' This is a comment
+
+#Rem            ' This is the start of a comment block
+Some comment    ' We are inside the comment block
+#End</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"Hello World"
+"~qHello World~q"
+"~tIndented~n"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>0
+1234
+$3D0DEAD
+$CAFEBABE
+
+.0
+0.0
+.5
+0.5
+1.0
+1.5
+1.00001
+3.14159265</code></pre>
+
+<h2>Variable types</h2>
+<pre><code>Local myVariable:Bool = True
+Local myVariable? = True
+Local myVariable:Int = 1024
+Local myVariable% = 1024
+Local myVariable:Float = 3.141516
+Local myVariable# = 3.141516
+Local myVariable:String = "Hello world"
+Local myVariable$ = "Hello world"</code></pre>
+
+<h2>Full example</h2>
+<pre><code>Import mojo
+
+Class MyApp Extends App
+
+    Method OnCreate()
+
+        SetUpdateRate 60
+
+    End
+
+    Method OnRender()
+
+        Local date:=GetDate()
+
+        Local months:=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+        Local day:=("0"+date[2])[-2..]
+        Local month:=months[date[1]-1]
+        Local year:=date[0]
+        Local hour:=("0"+date[3])[-2..]
+        Local min:=("0"+date[4])[-2..]
+        Local sec:=("0"+date[5])[-2..] + "." + ("00"+date[6])[-3..]
+
+        Local now:=hour+":"+min+":"+sec+"  "+day+" "+month+" "+year
+
+        Cls
+        DrawText now,DeviceWidth/2,DeviceHeight/2,.5,.5
+    End
+
+End
+
+Function Main()
+
+    New MyApp
+
+End</code></pre>

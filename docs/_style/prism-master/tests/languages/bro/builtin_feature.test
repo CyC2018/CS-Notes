@@ -1,0 +1,29 @@
+@load-sigs
+@load-plugin
+@unload
+@prefixes
+@ifndef
+@ifdef
+@else
+&redef
+&priority
+redef
+
+----------------------------------------------------
+
+[
+	["builtin", "@load-sigs"],
+	["builtin", "@load-plugin"],
+	["builtin", "@unload"],
+	["builtin", "@prefixes"],
+	["builtin", "@ifndef"],
+	["builtin", "@ifdef"],
+	["builtin", "@else"],
+	["builtin", "&redef"],
+	["builtin", "&priority"],
+	["builtin", "redef"]
+]
+
+----------------------------------------------------
+
+Checks for the builtins

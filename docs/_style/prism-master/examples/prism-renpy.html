@@ -1,0 +1,123 @@
+<h2>Comments</h2>
+<pre>
+    <code># This is a comment</code>
+</pre>
+
+<h2>Strings</h2>
+<pre>
+    <code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+""" "Multi-line" strings
+are supported."""
+''' 'Multi-line' strings
+are supported.'''</code>
+</pre>
+
+<h2>Python</h2>
+<pre>
+    <code>class Dog:
+
+    tricks = []             # mistaken use of a class variable
+
+    def __init__(self, name):
+        self.name = name
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)</code>
+</pre>
+
+<h2>Properties</h2>
+<pre>
+    <code>style my_text is text:
+    size 40
+    font "gentium.ttf"</code>
+</pre>
+
+<h2>Configuration</h2>
+<pre>
+    <code>init -1:
+    python hide:
+
+        ## Should we enable the use of developer tools? This should be
+        ## set to False before the game is released, so the user can't
+        ## cheat using developer tools.
+
+        config.developer = True
+
+        ## These control the width and height of the screen.
+
+        config.screen_width = 800
+        config.screen_height = 600
+
+        ## This controls the title of the window, when Ren'Py is
+        ## running in a window.
+
+        config.window_title = u"The Question"</code>
+</pre>
+
+
+<h2>Full example</h2>
+<pre><code># Declare images used by this game.
+image bg lecturehall = "lecturehall.jpg"
+image bg uni = "uni.jpg"
+image bg meadow = "meadow.jpg"
+image bg club = "club.jpg"
+
+image sylvie normal = "sylvie_normal.png"
+image sylvie giggle = "sylvie_giggle.png"
+image sylvie smile = "sylvie_smile.png"
+image sylvie surprised = "sylvie_surprised.png"
+
+image sylvie2 normal = "sylvie2_normal.png"
+image sylvie2 giggle = "sylvie2_giggle.png"
+image sylvie2 smile = "sylvie2_smile.png"
+image sylvie2 surprised = "sylvie2_surprised.png"
+
+# Define characters used by this game.
+define s = Character('Sylvie', color="#c8ffc8")
+define m = Character('Me', color="#c8c8ff")
+
+
+# The game starts here.
+label start:
+
+    $ bl_game = False
+
+    play music "illurock.ogg"
+
+    scene bg lecturehall
+    with fade
+
+    "Well, professor Eileen's lecture was interesting."
+    "But to be honest, I couldn't concentrate on it very much."
+    "I had a lot of other thoughts on my mind."
+    "And they all ended up with a question."
+    "A question, I've been meaning to ask someone."
+
+    scene bg uni
+    with fade
+
+    "When we came out of the university, I saw her."
+
+    show sylvie normal
+    with dissolve
+
+    "She was a wonderful person."
+    "I've known her ever since we were children."
+    "And she's always been a good friend."
+    "But..."
+    "Recently..."
+    "I think..."
+    "... that I wanted more."
+    "More just talking... more than just walking home together when our classes ended."
+    "And I decided..."
+
+    menu:
+
+        "... to ask her right away.":
+
+            jump rightaway
+
+        "... to ask her later.":
+
+            jump later</code></pre>

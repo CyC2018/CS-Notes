@@ -1,0 +1,76 @@
+and or xor array
+as break case
+cfunction
+class;
+const continue
+declare default
+die do else
+elseif enddeclare
+endfor endforeach
+endif endswitch
+endwhile
+extends;
+for foreach function
+include include_once
+global if
+new;
+return
+static switch
+use;
+require require_once
+var while abstract
+interface;
+public
+implements;
+private
+protected parent
+throw null echo
+print trait;
+namespace;
+final yield goto
+instanceof;
+finally
+try catch
+
+----------------------------------------------------
+
+[
+	["keyword", "and"], ["keyword", "or"], ["keyword", "xor"], ["keyword", "array"],
+	["keyword", "as"], ["keyword", "break"], ["keyword", "case"],
+	["keyword", "cfunction"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"], ["keyword", "continue"],
+	["keyword", "declare"], ["keyword", "default"],
+	["keyword", "die"], ["keyword", "do"], ["keyword", "else"],
+	["keyword", "elseif"], ["keyword", "enddeclare"],
+	["keyword", "endfor"], ["keyword", "endforeach"],
+	["keyword", "endif"], ["keyword", "endswitch"],
+	["keyword", "endwhile"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "for"], ["keyword", "foreach"], ["keyword", "function"],
+	["keyword", "include"], ["keyword", "include_once"],
+	["keyword", "global"], ["keyword", "if"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "return"],
+	["keyword", "static"], ["keyword", "switch"],
+	["keyword", "use"], ["punctuation", ";"],
+	["keyword", "require"], ["keyword", "require_once"],
+	["keyword", "var"], ["keyword", "while"], ["keyword", "abstract"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "public"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "private"],
+	["keyword", "protected"], ["keyword", "parent"],
+	["keyword", "throw"], ["keyword", "null"], ["keyword", "echo"],
+	["keyword", "print"],
+	["keyword", "trait"], ["punctuation", ";"],
+	["keyword", "namespace"], ["punctuation", ";"],
+	["keyword", "final"], ["keyword", "yield"], ["keyword", "goto"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "finally"],
+	["keyword", "try"], ["keyword", "catch"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

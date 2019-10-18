@@ -1,0 +1,15 @@
+proc foo
+proc Foobar
+proc foo_bar_42
+
+----------------------------------------------------
+
+[
+	["builtin", "proc"], ["function", "foo"],
+	["builtin", "proc"], ["function", "Foobar"],
+	["builtin", "proc"], ["function", "foo_bar_42"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

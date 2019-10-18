@@ -1,0 +1,71 @@
+width: calc(100% + 20px);
+width: calc(100% - 20px);
+width: calc(5px * 2);
+width: calc(10px / 2);
+height: -20px;
+content: 'this - is not an operator';
+
+----------------------------------------------------
+
+[
+	["property", "width"],
+	["punctuation", ":"],
+	["function", "calc"],
+	["punctuation", "("],
+	["number", "100"],
+	["unit", "%"],
+	["operator", "+"],
+	["number", "20"],
+	["unit", "px"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "width"],
+	["punctuation", ":"],
+	["function", "calc"],
+	["punctuation", "("],
+	["number", "100"],
+	["unit", "%"],
+	["operator", "-"],
+	["number", "20"],
+	["unit", "px"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "width"],
+	["punctuation", ":"],
+	["function", "calc"],
+	["punctuation", "("],
+	["number", "5"],
+	["unit", "px"],
+	["operator", "*"],
+	["number", "2"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "width"],
+	["punctuation", ":"],
+	["function", "calc"],
+	["punctuation", "("],
+	["number", "10"],
+	["unit", "px"],
+	["operator", "/"],
+	["number", "2"],
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "height"],
+	["punctuation", ":"],
+	["number", "-20"],
+	["unit", "px"],
+	["punctuation", ";"],
+
+	["property", "content"],
+	["punctuation", ":"],
+	["string", "'this - is not an operator'"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for operators.
