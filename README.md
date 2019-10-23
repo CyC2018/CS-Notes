@@ -86,6 +86,15 @@
 
 <div align="center"><img width="500px" src="assets/公众号海报7.png"></img></div>
 
+### 更多内容
+
+- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593?from=cyc_github)
+- 简历：https://cyc2018.github.io
+- 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
+- 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
+- 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
+- QQ 群：[1016560771](assets/QQ2群.png)
+
 ### 排版
 
 笔记内容按照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 进行排版，以保证内容的可读性。
@@ -93,15 +102,6 @@
 不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 [GFM](https://github.github.com/gfm/) 不支持 `<center> ![]() </center>` 这种方法让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
 在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
-
-### 更多内容
-
-- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593?from=cyc_github)
-- 简历：https://cyc2018.github.io
-- 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-- 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
-- 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
-- QQ 群：[1016560771](assets/QQ2群.png)
 
 ### License
 
