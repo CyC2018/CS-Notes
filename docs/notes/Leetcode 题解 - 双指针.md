@@ -13,9 +13,9 @@
 
 # 1. 有序数组的 Two Sum
 
-67\. Two Sum II - Input array is sorted (Easy) [Leetcode
+167\. Two Sum II - Input array is sorted (Easy)
 
-<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description" target="_blank">力扣</a>
+<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank">力扣</a>
 
 ```html
 Input: numbers={2, 7, 11, 15}, target=9
