@@ -13,7 +13,9 @@
 
 # 1. 有序数组的 Two Sum
 
-[167\. Two Sum II - Input array is sorted (Easy)](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
+167\. Two Sum II - Input array is sorted (Easy) 
+
+[Leetcode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/)
 
 ```html
 Input: numbers={2, 7, 11, 15}, target=9
@@ -47,7 +49,9 @@ public int[] twoSum(int[] numbers, int target) {
 
 # 2. 两数平方和
 
-[633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
+633. Sum of Square Numbers (Easy) 
+
+[Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
 
 ```html
 Input: 5
@@ -76,7 +80,9 @@ public boolean judgeSquareSum(int c) {
 
 # 3. 反转字符串中的元音字符
 
-[345. Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+345. Reverse Vowels of a String (Easy) 
+
+[Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/)
 
 ```html
 Given s = "leetcode", return "leotcede".
@@ -109,7 +115,9 @@ public String reverseVowels(String s) {
 
 # 4. 回文字符串
 
-[680. Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/description/)
+680. Valid Palindrome II (Easy) 
+
+[Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode-cn.com/problems/valid-palindrome-ii/description/)
 
 ```html
 Input: "abca"
@@ -141,7 +149,9 @@ private boolean isPalindrome(String s, int i, int j) {
 
 # 5. 归并两个有序数组
 
-[88. Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/description/)
+88. Merge Sorted Array (Easy) 
+
+[Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/merge-sorted-array/description/)
 
 ```html
 Input:
@@ -175,7 +185,9 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 # 6. 判断链表是否存在环
 
-[141. Linked List Cycle (Easy)](https://leetcode.com/problems/linked-list-cycle/description/)
+141. Linked List Cycle (Easy) 
+
+[Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
 
 使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
 
@@ -198,7 +210,9 @@ public boolean hasCycle(ListNode head) {
 
 # 7. 最长子序列
 
-[524. Longest Word in Dictionary through Deleting (Medium)](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/)
+524. Longest Word in Dictionary through Deleting (Medium) 
+
+[Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
 
 ```
 Input:
