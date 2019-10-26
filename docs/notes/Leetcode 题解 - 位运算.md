@@ -61,7 +61,9 @@ static String toBinaryString(int i);     // 转换为二进制表示的字符串
 
 # 1. 统计两个数的二进制表示有多少位不同
 
-[461. Hamming Distance (Easy)](https://leetcode.com/problems/hamming-distance/)
+461. Hamming Distance (Easy)
+
+[Leetcode](https://leetcode.com/problems/hamming-distance/) / [力扣](https://leetcode-cn.com/problems/hamming-distance/)
 
 ```html
 Input: x = 1, y = 4
@@ -114,7 +116,9 @@ public int hammingDistance(int x, int y) {
 
 # 2. 数组中唯一一个不重复的元素
 
-[136. Single Number (Easy)](https://leetcode.com/problems/single-number/description/)
+136\. Single Number (Easy)
+
+[Leetcode](https://leetcode.com/problems/single-number/description/) / [力扣](https://leetcode-cn.com/problems/single-number/description/)
 
 ```html
 Input: [4,1,2,1,2]
@@ -133,7 +137,9 @@ public int singleNumber(int[] nums) {
 
 # 3. 找出数组中缺失的那个数
 
-[268. Missing Number (Easy)](https://leetcode.com/problems/missing-number/description/)
+268\. Missing Number (Easy)
+
+[Leetcode](https://leetcode.com/problems/missing-number/description/) / [力扣](https://leetcode-cn.com/problems/missing-number/description/)
 
 ```html
 Input: [3,0,1]
@@ -154,7 +160,9 @@ public int missingNumber(int[] nums) {
 
 # 4. 数组中不重复的两个元素
 
-[260. Single Number III (Medium)](https://leetcode.com/problems/single-number-iii/description/)
+260\. Single Number III (Medium)
+
+[Leetcode](https://leetcode.com/problems/single-number-iii/description/) / [力扣](https://leetcode-cn.com/problems/single-number-iii/description/)
 
 两个不相等的元素在位级表示上必定会有一位存在不同。
 
@@ -178,7 +186,9 @@ public int[] singleNumber(int[] nums) {
 
 # 5. 翻转一个数的比特位
 
-[190. Reverse Bits (Easy)](https://leetcode.com/problems/reverse-bits/description/)
+190\. Reverse Bits (Easy)
+
+[Leetcode](https://leetcode.com/problems/reverse-bits/description/) / [力扣](https://leetcode-cn.com/problems/reverse-bits/description/)
 
 ```java
 public int reverseBits(int n) {
@@ -233,7 +243,9 @@ a = a ^ b;
 
 # 7. 判断一个数是不是 2 的 n 次方
 
-[231. Power of Two (Easy)](https://leetcode.com/problems/power-of-two/description/)
+231\. Power of Two (Easy)
+
+[Leetcode](https://leetcode.com/problems/power-of-two/description/) / [力扣](https://leetcode-cn.com/problems/power-of-two/description/)
 
 二进制表示只有一个 1 存在。
 
@@ -253,7 +265,9 @@ public boolean isPowerOfTwo(int n) {
 
 # 8.  判断一个数是不是 4 的 n 次方
 
-[342. Power of Four (Easy)](https://leetcode.com/problems/power-of-four/)
+342\. Power of Four (Easy)
+
+[Leetcode](https://leetcode.com/problems/power-of-four/) / [力扣](https://leetcode-cn.com/problems/power-of-four/)
 
 这种数在二进制表示中有且只有一个奇数位为 1，例如 16（10000）。
 
@@ -273,7 +287,9 @@ public boolean isPowerOfFour(int num) {
 
 # 9. 判断一个数的位级表示是否不会出现连续的 0 和 1
 
-[693. Binary Number with Alternating Bits (Easy)](https://leetcode.com/problems/binary-number-with-alternating-bits/description/)
+693\. Binary Number with Alternating Bits (Easy)
+
+[Leetcode](https://leetcode.com/problems/binary-number-with-alternating-bits/description/) / [力扣](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/description/)
 
 ```html
 Input: 10
@@ -298,7 +314,9 @@ public boolean hasAlternatingBits(int n) {
 
 # 10. 求一个数的补码
 
-[476. Number Complement (Easy)](https://leetcode.com/problems/number-complement/description/)
+476\. Number Complement (Easy)
+
+[Leetcode](https://leetcode.com/problems/number-complement/description/) / [力扣](https://leetcode-cn.com/problems/number-complement/description/)
 
 ```html
 Input: 5
@@ -353,7 +371,9 @@ public int findComplement(int num) {
 
 # 11. 实现整数的加法
 
-[371. Sum of Two Integers (Easy)](https://leetcode.com/problems/sum-of-two-integers/description/)
+371\. Sum of Two Integers (Easy)
+
+[Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-two-integers/description/)
 
 a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
 
@@ -367,7 +387,9 @@ public int getSum(int a, int b) {
 
 # 12. 字符串数组最大乘积
 
-[318. Maximum Product of Word Lengths (Medium)](https://leetcode.com/problems/maximum-product-of-word-lengths/description/)
+318\. Maximum Product of Word Lengths (Medium)
+
+[Leetcode](https://leetcode.com/problems/maximum-product-of-word-lengths/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/description/)
 
 ```html
 Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
@@ -402,7 +424,9 @@ public int maxProduct(String[] words) {
 
 # 13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数
 
-[338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
+338\. Counting Bits (Medium)
+
+[Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode-cn.com/problems/counting-bits/description/)
 
 对于数字 6(110)，它可以看成是 4(100) 再加一个 2(10)，因此 dp[i] = dp[i&(i-1)] + 1;
 

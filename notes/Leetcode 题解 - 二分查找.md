@@ -96,7 +96,9 @@ l   m   h
 
 # 1. 求开方
 
-[69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
+69\. Sqrt(x) (Easy)
+
+[Leetcode](https://leetcode.com/problems/sqrtx/description/) / [力扣](https://leetcode-cn.com/problems/sqrtx/description/)
 
 ```html
 Input: 4
@@ -134,7 +136,9 @@ public int mySqrt(int x) {
 
 # 2. 大于给定元素的最小元素
 
-[744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
+744\. Find Smallest Letter Greater Than Target (Easy)
+
+[Leetcode](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/) / [力扣](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
 
 ```html
 Input:
@@ -168,7 +172,9 @@ public char nextGreatestLetter(char[] letters, char target) {
 
 # 3. 有序数组的 Single Element
 
-[540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
+540\. Single Element in a Sorted Array (Medium)
+
+[Leetcode](https://leetcode.com/problems/single-element-in-a-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
 Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
@@ -205,7 +211,9 @@ public int singleNonDuplicate(int[] nums) {
 
 # 4. 第一个错误的版本
 
-[278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
+278\. First Bad Version (Easy)
+
+[Leetcode](https://leetcode.com/problems/first-bad-version/description/) / [力扣](https://leetcode-cn.com/problems/first-bad-version/description/)
 
 题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，在第 x 位置开始出现错误版本，导致后面的版本都错误。可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
 
@@ -230,7 +238,9 @@ public int firstBadVersion(int n) {
 
 # 5. 旋转数组的最小数字
 
-[153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
+153\. Find Minimum in Rotated Sorted Array (Medium)
+
+[Leetcode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
 ```html
 Input: [3,4,5,1,2],
@@ -254,7 +264,9 @@ public int findMin(int[] nums) {
 
 # 6. 查找区间
 
-[34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+34\. Find First and Last Position of Element in Sorted Array
+
+[Leetcode](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) / [力扣](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ```html
 Input: nums = [5,7,7,8,8,10], target = 8
