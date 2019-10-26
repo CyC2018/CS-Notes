@@ -15,7 +15,7 @@
 
 167\. Two Sum II - Input array is sorted (Easy)
 
-<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/)
 
 ```html
 Input: numbers={2, 7, 11, 15}, target=9
@@ -51,7 +51,7 @@ public int[] twoSum(int[] numbers, int target) {
 
 633. Sum of Square Numbers (Easy)
 
-<a href="https://leetcode.com/problems/sum-of-square-numbers/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/sum-of-square-numbers/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
 
 ```html
 Input: 5
@@ -82,7 +82,7 @@ public boolean judgeSquareSum(int c) {
 
 345. Reverse Vowels of a String (Easy)
 
-<a href="https://leetcode.com/problems/reverse-vowels-of-a-string/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/)
 
 ```html
 Given s = "leetcode", return "leotcede".
@@ -117,7 +117,7 @@ public String reverseVowels(String s) {
 
 680. Valid Palindrome II (Easy)
 
-<a href="https://leetcode.com/problems/valid-palindrome-ii/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/valid-palindrome-ii/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode-cn.com/problems/valid-palindrome-ii/description/)
 
 ```html
 Input: "abca"
@@ -151,7 +151,7 @@ private boolean isPalindrome(String s, int i, int j) {
 
 88. Merge Sorted Array (Easy)
 
-<a href="https://leetcode.com/problems/merge-sorted-array/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/merge-sorted-array/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/merge-sorted-array/description/)
 
 ```html
 Input:
@@ -187,7 +187,7 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 141. Linked List Cycle (Easy)
 
-<a href="https://leetcode.com/problems/linked-list-cycle/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/linked-list-cycle/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
 
 使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
 
@@ -212,7 +212,7 @@ public boolean hasCycle(ListNode head) {
 
 524. Longest Word in Dictionary through Deleting (Medium)
 
-<a href="https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/" target="_blank">Leetcode</a>  / <a href="https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/" target="_blank">力扣</a>
+[Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
 
 ```
 Input:
