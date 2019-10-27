@@ -91,4 +91,6 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 
 
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>
+
+
+<div align="left"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>
