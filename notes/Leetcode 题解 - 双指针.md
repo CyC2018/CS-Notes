@@ -102,13 +102,23 @@ Explanation: 1 * 1 + 2 * 2 = 5
 Given s = "leetcode", return "leotcede".
 ```
 
-使用双指针指向待反转的两个元音字符，一个指针从头向尾遍历，一个指针从尾到头遍历。
+<div align="center"> <img src="pics/a7cb8423-895d-4975-8ef8-662a0029c772.png" width="400px"> </div><br>
+
+使用双指针，一个指针从头向尾遍历，一个指针从尾到头遍历，当两个指针都遍历到元音字符时，交换这两个元音字符。
+
+为了快速判断一个字符是不是元音字符，我们将全部元音字符添加到集合 HashSet 中，从而以 O(1) 的时间复杂度进行该操作。
+
+- 时间复杂度为 O(N)：只需要遍历所有元素一次
+- 空间复杂度 O(1)：只需要使用两个额外变量
+
+<div align="center"> <img src="pics/399b459d-db9e-4e77-b879-e6492c7d382b.gif" width="400px"> </div><br>
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(
         Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
 
 public String reverseVowels(String s) {
+    if (s == null) return null;
     int i = 0, j = s.length() - 1;
     char[] result = new char[s.length()];
     while (i <= j) {
