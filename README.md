@@ -80,20 +80,15 @@
 
 ## :memo: 后记
 
+### 更多内容
+
+[我的面经](https://www.nowcoder.com/discuss/137593?from=cyc_github) / [简历](https://cyc2018.github.io) / [简历模版](https://github.com/CyC2018/Markdown-Resume) / [内推](https://github.com/CyC2018/Job-Recommend) / [小专栏](https://xiaozhuanlan.com/CyC2018) / [QQ 群](assets/QQ2群.png)
+
 ### 微信公众号
 
 更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
 
-<div align="center"><img width="350px" src="assets/公众号二维码.png"></img></div>
-
-### 更多内容
-
-- 面经：[2018 这一年](https://www.nowcoder.com/discuss/137593?from=cyc_github)
-- 简历：https://cyc2018.github.io
-- 简历模版：[Markdown-Resume](https://github.com/CyC2018/Markdown-Resume)
-- 内推：[Job-Recommend](https://github.com/CyC2018/Job-Recommend)
-- 小专栏：[后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
-- QQ 群：[1016560771](assets/QQ2群.png)
+<div align="center"><img width="320px" src="assets/公众号二维码.png"></img></div>
 
 ### 排版
 
