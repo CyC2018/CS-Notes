@@ -30,8 +30,14 @@ Output: index1=1, index2=2
 - 如果 sum > target，移动较大的元素，使 sum 变小一些；
 - 如果 sum < target，移动较小的元素，使 sum 变大一些。
 
+数组中的元素最多遍历一次，时间复杂度为 O(N)。额外只使用了两个变量，空间复杂度为 
+O(1)。
+
+<div align="center"> <img src="pics/437cb54c-5970-4ba9-b2ef-2541f7d6c81e.gif" width="200px"> </div><br>
+
 ```java
 public int[] twoSum(int[] numbers, int target) {
+    if (numbers == null) return null;
     int i = 0, j = numbers.length - 1;
     while (i < j) {
         int sum = numbers[i] + numbers[j];
@@ -49,7 +55,7 @@ public int[] twoSum(int[] numbers, int target) {
 
 # 2. 两数平方和
 
-633. Sum of Square Numbers (Easy)
+633\. Sum of Square Numbers (Easy)
 
 [Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
 
@@ -80,7 +86,7 @@ public boolean judgeSquareSum(int c) {
 
 # 3. 反转字符串中的元音字符
 
-345. Reverse Vowels of a String (Easy)
+345\. Reverse Vowels of a String (Easy)
 
 [Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/)
 
@@ -115,7 +121,7 @@ public String reverseVowels(String s) {
 
 # 4. 回文字符串
 
-680. Valid Palindrome II (Easy)
+680\. Valid Palindrome II (Easy)
 
 [Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode-cn.com/problems/valid-palindrome-ii/description/)
 
@@ -149,7 +155,7 @@ private boolean isPalindrome(String s, int i, int j) {
 
 # 5. 归并两个有序数组
 
-88. Merge Sorted Array (Easy)
+88\. Merge Sorted Array (Easy)
 
 [Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/merge-sorted-array/description/)
 
@@ -185,7 +191,7 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 # 6. 判断链表是否存在环
 
-141. Linked List Cycle (Easy)
+141\. Linked List Cycle (Easy)
 
 [Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
 
@@ -210,7 +216,7 @@ public boolean hasCycle(ListNode head) {
 
 # 7. 最长子序列
 
-524. Longest Word in Dictionary through Deleting (Medium)
+524\. Longest Word in Dictionary through Deleting (Medium)
 
 [Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
 
