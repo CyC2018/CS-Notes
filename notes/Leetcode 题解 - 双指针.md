@@ -111,7 +111,7 @@ Given s = "leetcode", return "leotcede".
 - 时间复杂度为 O(N)：只需要遍历所有元素一次
 - 空间复杂度 O(1)：只需要使用两个额外变量
 
-<div align="center"> <img src="pics/399b459d-db9e-4e77-b879-e6492c7d382b.gif" width="400px"> </div><br>
+<div align="center"> <img src="pics/ef25ff7c-0f63-420d-8b30-eafbeea35d11.gif" width="400px"> </div><br>
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(
