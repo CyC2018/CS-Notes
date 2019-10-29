@@ -17,7 +17,9 @@
 
 # 1. 分配饼干
 
-[455. Assign Cookies (Easy)](https://leetcode.com/problems/assign-cookies/description/)
+455\. Assign Cookies (Easy)
+
+[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode-cn.com/problems/assign-cookies/description/)
 
 ```html
 Input: [1,2], [1,2,3]
@@ -51,7 +53,9 @@ public int findContentChildren(int[] g, int[] s) {
 
 # 2. 不重叠的区间个数
 
-[435. Non-overlapping Intervals (Medium)](https://leetcode.com/problems/non-overlapping-intervals/description/)
+435\. Non-overlapping Intervals (Medium)
+
+[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
 
 ```html
 Input: [ [1,2], [1,2], [1,2] ]
@@ -109,7 +113,9 @@ Arrays.sort(intervals, new Comparator<int[]>() {
 
 # 3. 投飞镖刺破气球
 
-[452. Minimum Number of Arrows to Burst Balloons (Medium)](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+452\. Minimum Number of Arrows to Burst Balloons (Medium)
+
+[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [力扣](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
 ```
 Input:
@@ -143,7 +149,9 @@ public int findMinArrowShots(int[][] points) {
 
 # 4. 根据身高和序号重组队列
 
-[406. Queue Reconstruction by Height(Medium)](https://leetcode.com/problems/queue-reconstruction-by-height/description/)
+406\. Queue Reconstruction by Height(Medium)
+
+[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
 
 ```html
 Input:
@@ -175,7 +183,9 @@ public int[][] reconstructQueue(int[][] people) {
 
 # 5. 买卖股票最大的收益
 
-[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+121\. Best Time to Buy and Sell Stock (Easy)
+
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/description/)
 
 题目描述：一次股票交易包含买入和卖出，只进行一次交易，求最大收益。
 
@@ -198,7 +208,9 @@ public int maxProfit(int[] prices) {
 
 # 6. 买卖股票的最大收益 II
 
-[122. Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
+122\. Best Time to Buy and Sell Stock II (Easy)
+
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
 题目描述：可以进行多次交易，多次交易之间不能交叉进行，可以进行多次交易。
 
@@ -219,7 +231,9 @@ public int maxProfit(int[] prices) {
 
 # 7. 种植花朵
 
-[605. Can Place Flowers (Easy)](https://leetcode.com/problems/can-place-flowers/description/)
+605\. Can Place Flowers (Easy)
+
+[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode-cn.com/problems/can-place-flowers/description/)
 
 ```html
 Input: flowerbed = [1,0,0,0,1], n = 1
@@ -249,7 +263,9 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 
 # 8. 判断是否为子序列
 
-[392. Is Subsequence (Medium)](https://leetcode.com/problems/is-subsequence/description/)
+392\. Is Subsequence (Medium)
+
+[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/is-subsequence/description/)
 
 ```html
 s = "abc", t = "ahbgdc"
@@ -271,7 +287,9 @@ public boolean isSubsequence(String s, String t) {
 
 # 9. 修改一个数成为非递减数组
 
-[665. Non-decreasing Array (Easy)](https://leetcode.com/problems/non-decreasing-array/description/)
+665\. Non-decreasing Array (Easy)
+
+[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
 
 ```html
 Input: [4,2,3]
@@ -305,7 +323,9 @@ public boolean checkPossibility(int[] nums) {
 
 # 10. 子数组最大的和
 
-[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+53\. Maximum Subarray (Easy)
+
+[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode-cn.com/problems/maximum-subarray/description/)
 
 ```html
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
@@ -329,7 +349,9 @@ public int maxSubArray(int[] nums) {
 
 # 11. 分隔字符串使同种字符出现在一起
 
-[763. Partition Labels (Medium)](https://leetcode.com/problems/partition-labels/description/)
+763\. Partition Labels (Medium)
+
+[Leetcode](https://leetcode.com/problems/partition-labels/description/) / [力扣](https://leetcode-cn.com/problems/partition-labels/description/)
 
 ```html
 Input: S = "ababcbacadefegdehijhklij"
@@ -370,10 +392,6 @@ private int char2Index(char c) {
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
-
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>
