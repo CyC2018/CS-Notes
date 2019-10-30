@@ -80,19 +80,11 @@
 
 ## :memo: 后记
 
-## 微信公众号
-
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点。回复 CyC 即可领取资料。
-
 <div align="center">
-	<br>
+	<a href="https://www.nowcoder.com/discuss/137593?from=cyc_github"> 我的面经 </a> / <a href="https://cyc2018.github.io"> 我的简历 </a> / <a href="https://github.com/CyC2018/Markdown-Resume"> 简历模版 </a> / <a href="https://github.com/CyC2018/Job-Recommend"> 内推 </a> / <a href="https://xiaozhuanlan.com/CyC2018"> 专栏 </a> / <a href="assets/QQ2群.png"> QQ 群</a>
+	<br><br>
     <img width="320px" src="assets/公众号二维码-1.png"></img>
 </div>
-
-
-### 更多内容
-
-<a href="https://www.nowcoder.com/discuss/137593?from=cyc_github"> 我的面经 </a> / <a href="https://cyc2018.github.io"> 我的简历 </a> / <a href="https://github.com/CyC2018/Markdown-Resume"> 简历模版 </a> / <a href="https://github.com/CyC2018/Job-Recommend"> 内推 </a> / <a href="https://xiaozhuanlan.com/CyC2018"> 专栏 </a> / <a href="assets/QQ2群.png"> QQ 群</a>
 
 ### 排版
 
