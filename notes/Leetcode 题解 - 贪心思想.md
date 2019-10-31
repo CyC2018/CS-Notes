@@ -35,7 +35,7 @@ Output: 2
 
 证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
-<div align="center"> <img src="pics/6fb7cf89-71b3-48c1-bc6a-5110e1f1fc15.gif" width="600px"> </div><br>
+<div align="center"> <img src="pics/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
 
 ```java
 public int findContentChildren(int[] grid, int[] size) {
