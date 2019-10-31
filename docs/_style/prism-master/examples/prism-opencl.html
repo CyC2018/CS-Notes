@@ -1,0 +1,83 @@
+<p>
+	To use this language, use the class <code class="language-none">"language-opencl"</code> for OpenCL kernel code.
+	Host code is automatically highlighted in <code class="language-none">"language-c"</code>
+	respectively <code class="language-none">"language-cpp"</code> classes.
+</p>
+
+<h2>OpenCL host code</h2>
+<pre class="language-cpp"><code>// OpenCL functions, constants, etc. are also highlighted in OpenCL host code in the c or cpp language
+cl::Event KernelFilterImages::runSingle(const cl::Image2D& imgSrc, SPImage2D& imgDst)
+{
+	const size_t rows = imgSrc.getImageInfo<CL_IMAGE_HEIGHT>();
+	const size_t cols = imgSrc.getImageInfo<CL_IMAGE_WIDTH>();
+
+	ASSERT(rows > 0 && cols > 0, "The image object seems to be invalid, no rows/cols set");
+	ASSERT(imgSrc.getImageInfo<CL_IMAGE_FORMAT>().image_channel_data_type == CL_FLOAT, "Only float type images are supported");
+	ASSERT(imgSrc.getInfo<CL_MEM_FLAGS>() == CL_MEM_READ_ONLY || imgSrc.getInfo<CL_MEM_FLAGS>() == CL_MEM_READ_WRITE, "Can't read the input image");
+
+	imgDst = std::make_shared<cl::Image2D>(*context, CL_MEM_READ_WRITE, cl::ImageFormat(CL_R, CL_FLOAT), cols, rows);
+
+	cl::Kernel kernel(*program, "filter_single");
+	kernel.setArg(0, imgSrc);
+	kernel.setArg(1, *imgDst);
+	kernel.setArg(2, bufferKernel1);
+	kernel.setArg(3, kernel1.rows);
+	kernel.setArg(4, kernel1.rows / 2);
+	kernel.setArg(5, kernel1.cols);
+	kernel.setArg(6, kernel1.cols / 2);
+	kernel.setArg(7, border);
+
+	cl::Event eventFilter;
+	const cl::NDRange global(cols, rows);
+	queue->enqueueNDRangeKernel(kernel, cl::NullRange, global, cl::NullRange, &events, &eventFilter);
+}</code></pre>
+
+<h2>OpenCL kernel code</h2>
+<pre><code>// CLK_ADDRESS_CLAMP_TO_EDGE = aaa|abcd|ddd
+constant sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;
+typedef float type_single;
+
+type_single filter_sum_single_3x3(read_only image2d_t imgIn,
+                                  constant float* filterKernel,
+                                  const int2 coordBase,
+                                  const int border)
+{
+    type_single sum = (type_single)(0.0f);
+    const int rows = get_image_height(imgIn);
+    const int cols = get_image_width(imgIn);
+    int2 coordCurrent;
+    int2 coordBorder;
+    float color;
+
+    // Image patch is row-wise accessed
+    // Filter kernel is centred in the middle
+    #pragma unroll
+    for (int y = -ROWS_HALF_3x3; y <= ROWS_HALF_3x3; ++y)       // Start at the top left corner of the filter
+    {
+        coordCurrent.y = coordBase.y + y;
+        #pragma unroll
+        for (int x = -COLS_HALF_3x3; x <= COLS_HALF_3x3; ++x)   // And end at the bottom right corner
+        {
+            coordCurrent.x = coordBase.x + x;
+            coordBorder = borderCoordinate(coordCurrent, rows, cols, border);
+            color = read_imagef(imgIn, sampler, coordBorder).x;
+
+            const int idx = (y + ROWS_HALF_3x3) * COLS_3x3 + x + COLS_HALF_3x3;
+            sum += color * filterKernel[idx];
+        }
+    }
+
+    return sum;
+}
+
+kernel void filter_single_3x3(read_only image2d_t imgIn,
+                              write_only image2d_t imgOut,
+                              constant float* filterKernel,
+                              const int border)
+{
+    int2 coordBase = (int2)(get_global_id(0), get_global_id(1));
+
+    type_single sum = filter_sum_single_3x3(imgIn, filterKernel, coordBase, border);
+
+    write_imagef(imgOut, coordBase, sum);
+}</code></pre>

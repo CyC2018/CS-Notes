@@ -1,0 +1,11 @@
+pin-sha256="EpOpN/ahUF6jhWShDUdy+NvvtaGcu5F7qM6+x2mfkh4="
+
+----------------------------------------------------
+
+[
+	["directive", "pin-sha256=\"EpOpN/ahUF6jhWShDUdy+NvvtaGcu5F7qM6+x2mfkh4=\""]
+]
+
+----------------------------------------------------
+
+Checks for HPKP with a sha256 pin.

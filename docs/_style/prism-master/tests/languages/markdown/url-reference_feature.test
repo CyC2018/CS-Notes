@@ -1,0 +1,56 @@
+[foo]: http://prismjs.com
+[foo]: http://prismjs.com "foo\"bar"
+[foo]: http://prismjs.com 'foo\'bar'
+![foo]: http://prismjs.com (foo (bar\) baz)
+[foo]: <http://prismjs.com> "Prism"
+
+----------------------------------------------------
+
+[
+	["url-reference", [
+		["punctuation", "["],
+		["variable", "foo"],
+		["punctuation", "]"],
+		["punctuation", ":"],
+		" http://prismjs.com"
+	]],
+	["url-reference", [
+		["punctuation", "["],
+		["variable", "foo"],
+		["punctuation", "]"],
+		["punctuation", ":"],
+		" http://prismjs.com ",
+		["string", "\"foo\\\"bar\""]
+	]],
+	["url-reference", [
+		["punctuation", "["],
+		["variable", "foo"],
+		["punctuation", "]"],
+		["punctuation", ":"],
+		" http://prismjs.com ",
+		["string", "'foo\\'bar'"]
+	]],
+	["url-reference", [
+		["punctuation", "!"],
+		["punctuation", "["],
+		["variable", "foo"],
+		["punctuation", "]"],
+		["punctuation", ":"],
+		" http://prismjs.com ",
+		["string", "(foo (bar\\) baz)"]
+	]],
+	["url-reference", [
+		["punctuation", "["],
+		["variable", "foo"],
+		["punctuation", "]"],
+		["punctuation", ":"],
+		["punctuation", "<"],
+		"http://prismjs.com",
+		["punctuation", ">"],
+		["string", "\"Prism\""]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for URL references.

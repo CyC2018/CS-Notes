@@ -1,0 +1,46 @@
+*foobar*
+*foo
+bar*
+_foobar_
+_foo
+bar_
+
+_foo[bar](baz)_
+
+----------------------------------------------------
+
+[
+	["italic", [
+		["punctuation", "*"],
+		"foobar",
+		["punctuation", "*"]
+	]],
+	["italic", [
+		["punctuation", "*"],
+		"foo\r\nbar",
+		["punctuation", "*"]
+	]],
+	["italic", [
+		["punctuation", "_"],
+		"foobar",
+		["punctuation", "_"]
+	]],
+	["italic", [
+		["punctuation", "_"],
+		"foo\r\nbar",
+		["punctuation", "_"]
+	]],
+
+	["italic", [
+		["punctuation", "_"],
+		"foo",
+		["url", [
+			"[bar](baz)"
+		]],
+		["punctuation", "_"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for italic. Also tests for inclusion of url.

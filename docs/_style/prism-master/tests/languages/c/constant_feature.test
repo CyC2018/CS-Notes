@@ -1,0 +1,37 @@
+__FILE__
+__LINE__
+__DATE__
+__TIME__
+__TIMESTAMP__
+__func__
+EOF
+NULL
+SEEK_CUR
+SEEK_END
+SEEK_SET
+stdin
+stdout
+stderr
+
+----------------------------------------------------
+
+[
+	["constant", "__FILE__"],
+	["constant", "__LINE__"],
+	["constant", "__DATE__"],
+	["constant", "__TIME__"],
+	["constant", "__TIMESTAMP__"],
+	["constant", "__func__"],
+	["constant", "EOF"],
+	["constant", "NULL"],
+	["constant", "SEEK_CUR"],
+	["constant", "SEEK_END"],
+	["constant", "SEEK_SET"],
+	["constant", "stdin"],
+	["constant", "stdout"],
+	["constant", "stderr"]
+]
+
+----------------------------------------------------
+
+Checks for all constants.

@@ -1,0 +1,13 @@
+Bail out! Couldn't connect to database.
+bail out! Failed to call API.
+
+----------------------------------------------------
+
+[
+	["bailout", "Bail out! Couldn't connect to database."],
+	["bailout", "bail out! Failed to call API."]
+]
+
+----------------------------------------------------
+
+Checks bail out

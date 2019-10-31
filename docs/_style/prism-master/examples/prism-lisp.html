@@ -1,0 +1,46 @@
+<h2>Comments</h2>
+<pre><code>;; (foo bar)</code></pre>
+
+<h2>Strings</h2>
+<pre><code>(foo "bar")</code></pre>
+
+<h3>With nested symbols</h3>
+<pre><code>(foo "A string with a `symbol ")</code></pre>
+
+<h3>With nested arguments</h3>
+<pre><code>(foo "A string with an ARGUMENT ")</code></pre>
+
+<h2>Quoted symbols</h2>
+<pre><code>(foo #'bar)</code></pre>
+
+<h2>Lisp properties</h2>
+<pre><code>(foo :bar)</code></pre>
+
+<h2>Splices</h2>
+<pre><code>(foo ,bar ,@bar)</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>(let foo (bar arg))</code></pre>
+
+<h2>Declarations</h2>
+<pre><code>(declare foo)</code></pre>
+
+<h2>Booleans</h2>
+<pre><code>(foo t)</code></pre>
+<pre><code>(foo nil)</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>(foo 1)</code></pre>
+<pre><code>(foo -1.5)</code></pre>
+
+<h2>Definitions</h2>
+<pre><code>(defvar bar 23)</code></pre>
+<pre><code>(defcustom bar 23)</code></pre>
+
+<h2>Function definitions</h2>
+<pre><code>(defun multiply-by-seven (number)
+       "Multiply NUMBER by seven."
+       (* 7 number))</code></pre>
+
+<h2>Lambda expressions</h2>
+<pre><code>(lambda (number) (* 7 number))</code></pre>

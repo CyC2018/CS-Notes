@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Toolbar ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<link rel="stylesheet" href="plugins/toolbar/prism-toolbar.css" data-noprefix />
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body class="language-markup" data-toolbar-order="select-code,hello-world,label">
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Toolbar</h2>
+	<p>Attach a toolbar for plugins to easily register buttons on the top of a code block.</p>
+</header>
+
+<section>
+	<h1>How to use</h1>
+	<p>The Toolbar plugin allows for several methods to register your button, using the <code>Prism.plugins.toolbar.registerButton</code> function.</p>
+
+	<p>The simplest method is through the HTML API. Add a <code>data-label</code> attribute to the <code>pre</code> element, and the Toolbar
+		plugin will read the value of that attribute and append a label to the code snippet.</p>
+
+	<pre data-label="Hello World!"><code class="language-markup">&lt;pre data-src=&quot;plugins/toolbar/prism-toolbar.js&quot; data-label=&quot;Hello World!&quot;&gt;&lt;/pre&gt;</code></pre>
+
+	<p>If you want to provide arbitrary HTML to the label, create a <code>template</code> element with the HTML you want in the label, and provide the
+		<code>template</code> element's <code>id</code> to <code>data-label</code>. The Toolbar plugin will use the template's content for the button.
+		You can also use to declare your event handlers inline:</p>
+
+	<pre data-label="my-label-button"><code class="language-markup">&lt;pre data-src=&quot;plugins/toolbar/prism-toolbar.js&quot; data-label=&quot;my-label-button&quot;&gt;&lt;/pre&gt;</code></pre>
+
+	<pre><code>&lt;template id=&quot;my-label-button&quot;&gt;&lt;button onclick=&quot;console.log('This is an inline-handler');&quot;&gt;My button&lt;/button&gt;&lt;/template&gt;</code></pre>
+
+	<p>For more flexibility, the Toolbar exposes a JavaScript function that can be used to register new buttons or labels to the Toolbar,
+		<code>Prism.plugins.toolbar.registerButton</code>.</p>
+
+	<p>The function accepts a key for the button and an object with a <code>text</code> property string and an optional
+		<code>onClick</code> function or <code>url</code> string. The <code>onClick</code> function will be called when the button is clicked, while the
+		<code>url</code> property will be set to the anchor tag's <code>href</code>.</p>
+
+	<pre><code class="language-javascript">Prism.plugins.toolbar.registerButton('hello-world', {
+	text: 'Hello World!', // required
+	onClick: function (env) { // optional
+		alert('This code snippet is written in ' + env.language + '.');
+	}
+});</code></pre>
+
+	<p>See how the above code registers the <code>Hello World!</code> button? You can use this in your plugins to register your own buttons with the toolbar.</p>
+
+	<p>If you need more control, you can provide a function to <code>registerButton</code> that returns either a <code>span</code>, <code>a</code>, or
+		<code>button</code> element.</p>
+
+	<pre><code class="language-javascript">Prism.plugins.toolbar.registerButton('select-code', function() {
+	var button = document.createElement('button');
+	button.innerHTML = 'Select Code';
+
+	button.addEventListener('click', function () {
+		// Source: http://stackoverflow.com/a/11128179/2757940
+		if (document.body.createTextRange) { // ms
+			var range = document.body.createTextRange();
+			range.moveToElementText(env.element);
+			range.select();
+		} else if (window.getSelection) { // moz, opera, webkit
+			var selection = window.getSelection();
+			var range = document.createRange();
+			range.selectNodeContents(env.element);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
+	});
+
+	return button;
+});</code></pre>
+
+	<p>The above function creates the Select Code button you see, and when you click it, the code gets highlighted.</p>
+
+	<p>By default, the buttons will be added to the code snippet in the order they were registered. If more control over
+		the order is needed, an HTML attribute can be added to the <code>body</code> tag with a comma-separated string indicating the
+		order.</p>
+
+	<pre><code>&lt;body data-toolbar-order="select-code,hello-world,label"&gt;</code></pre>
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+<template id="my-label-button"><button onclick="console.log('This is an inline-handler');">My button</button></template>
+
+<script src="prism.js"></script>
+<script src="plugins/toolbar/prism-toolbar.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script>
+	Prism.plugins.toolbar.registerButton('hello-world', {
+		text: 'Hello World!', // required
+		onClick: function (env) { // optional
+			alert('This code snippet is written in ' + env.language + '.');
+		}
+	});
+</script>
+<script>
+	Prism.plugins.toolbar.registerButton('select-code', function(env) {
+		var button = document.createElement('button');
+		button.innerHTML = 'Select Code';
+
+		button.addEventListener('click', function () {
+			// Source: http://stackoverflow.com/a/11128179/2757940
+			if (document.body.createTextRange) { // ms
+				var range = document.body.createTextRange();
+				range.moveToElementText(env.element);
+				range.select();
+			} else if (window.getSelection) { // moz, opera, webkit
+				var selection = window.getSelection();
+				var range = document.createRange();
+				range.selectNodeContents(env.element);
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		});
+
+		return button;
+	});
+</script>
+<script src="code.js"></script>
+
+</body>
+</html>

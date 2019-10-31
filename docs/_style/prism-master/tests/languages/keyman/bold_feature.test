@@ -1,0 +1,59 @@
+&baselayout &bitmap &capsononly
+&capsalwaysoff &shiftfreescaps
+&copyright &ethnologuecode
+&hotkey &includecodes
+&keyboardversion &kmw_embedcss
+&kmw_embedjs &kmw_helpfile
+&kmw_helptext &kmw_rtl
+&language &layer &layoutfile
+&message &mnemoniclayout
+&name &oldcharposmatching
+&platform &targets &version
+&visualkeyboard &windowslanguages
+
+bitmap
+bitmaps
+caps on only
+caps always off
+shift frees caps
+copyright
+hotkey
+language
+layout
+message
+name
+version
+
+----------------------------------------------------
+
+[
+	["bold", "&baselayout"], ["bold", "&bitmap"], ["bold", "&capsononly"],
+	["bold", "&capsalwaysoff"], ["bold", "&shiftfreescaps"],
+	["bold", "&copyright"], ["bold", "&ethnologuecode"],
+	["bold", "&hotkey"], ["bold", "&includecodes"],
+	["bold", "&keyboardversion"], ["bold", "&kmw_embedcss"],
+	["bold", "&kmw_embedjs"], ["bold", "&kmw_helpfile"],
+	["bold", "&kmw_helptext"], ["bold", "&kmw_rtl"],
+	["bold", "&language"], ["bold", "&layer"], ["bold", "&layoutfile"],
+	["bold", "&message"], ["bold", "&mnemoniclayout"],
+	["bold", "&name"], ["bold", "&oldcharposmatching"],
+	["bold", "&platform"], ["bold", "&targets"], ["bold", "&version"],
+	["bold", "&visualkeyboard"], ["bold", "&windowslanguages"],
+	
+	["bold", "bitmap"],
+	["bold", "bitmaps"],
+	["bold", "caps on only"],
+	["bold", "caps always off"],
+	["bold", "shift frees caps"],
+	["bold", "copyright"],
+	["bold", "hotkey"],
+	["bold", "language"],
+	["bold", "layout"],
+	["bold", "message"],
+	["bold", "name"],
+	["bold", "version"]
+]
+
+----------------------------------------------------
+
+Checks for header statements, system stores and variable system stores.

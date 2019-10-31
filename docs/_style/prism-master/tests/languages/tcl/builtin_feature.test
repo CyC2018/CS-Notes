@@ -1,0 +1,35 @@
+proc
+return
+class
+error
+eval
+exit
+for
+foreach
+if elseif else
+switch
+while
+break
+continue
+
+----------------------------------------------------
+
+[
+	["builtin", "proc"],
+	["builtin", "return"],
+	["builtin", "class"],
+	["builtin", "error"],
+	["builtin", "eval"],
+	["builtin", "exit"],
+	["builtin", "for"],
+	["builtin", "foreach"],
+	["builtin", "if"], ["builtin", "elseif"], ["builtin", "else"],
+	["builtin", "switch"],
+	["builtin", "while"],
+	["builtin", "break"],
+	["builtin", "continue"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

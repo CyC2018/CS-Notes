@@ -1,0 +1,59 @@
+about above after against
+apart from
+around
+aside from
+at back before beginning behind below
+beneath beside between but by
+considering continue copy
+does eighth else end
+equal error every exit
+false fifth first for fourth
+from front get given global
+if ignoring in
+instead of
+into is it its last
+local me middle my
+ninth of on onto
+out of
+over prop property put
+repeat return returning
+second set seventh since sixth
+some tell tenth that the
+then third through thru timeout
+times to transaction true try
+until where while whose with
+without
+
+----------------------------------------------------
+
+[
+	["keyword", "about"], ["keyword", "above"], ["keyword", "after"], ["keyword", "against"],
+	["keyword", "apart from"],
+	["keyword", "around"],
+	["keyword", "aside from"],
+	["keyword", "at"], ["keyword", "back"], ["keyword", "before"], ["keyword", "beginning"], ["keyword", "behind"], ["keyword", "below"],
+	["keyword", "beneath"], ["keyword", "beside"], ["keyword", "between"], ["keyword", "but"], ["keyword", "by"],
+	["keyword", "considering"], ["keyword", "continue"], ["keyword", "copy"],
+	["keyword", "does"], ["keyword", "eighth"], ["keyword", "else"], ["keyword", "end"],
+	["keyword", "equal"], ["keyword", "error"], ["keyword", "every"], ["keyword", "exit"],
+	["keyword", "false"], ["keyword", "fifth"], ["keyword", "first"], ["keyword", "for"], ["keyword", "fourth"],
+	["keyword", "from"], ["keyword", "front"], ["keyword", "get"], ["keyword", "given"], ["keyword", "global"],
+	["keyword", "if"], ["keyword", "ignoring"], ["keyword", "in"],
+	["keyword", "instead of"],
+	["keyword", "into"], ["keyword", "is"], ["keyword", "it"], ["keyword", "its"], ["keyword", "last"],
+	["keyword", "local"], ["keyword", "me"], ["keyword", "middle"], ["keyword", "my"],
+	["keyword", "ninth"], ["keyword", "of"], ["keyword", "on"], ["keyword", "onto"],
+	["keyword", "out of"],
+	["keyword", "over"], ["keyword", "prop"], ["keyword", "property"], ["keyword", "put"],
+	["keyword", "repeat"], ["keyword", "return"], ["keyword", "returning"],
+	["keyword", "second"], ["keyword", "set"], ["keyword", "seventh"], ["keyword", "since"], ["keyword", "sixth"],
+	["keyword", "some"], ["keyword", "tell"], ["keyword", "tenth"], ["keyword", "that"], ["keyword", "the"],
+	["keyword", "then"], ["keyword", "third"], ["keyword", "through"], ["keyword", "thru"], ["keyword", "timeout"],
+	["keyword", "times"], ["keyword", "to"], ["keyword", "transaction"], ["keyword", "true"], ["keyword", "try"],
+	["keyword", "until"], ["keyword", "where"], ["keyword", "while"], ["keyword", "whose"], ["keyword", "with"],
+	["keyword", "without"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

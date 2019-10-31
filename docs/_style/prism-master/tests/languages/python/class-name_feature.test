@@ -1,0 +1,15 @@
+class Foo
+class foobar_42
+class _
+
+----------------------------------------------------
+
+[
+	["keyword", "class"], ["class-name", "Foo"],
+	["keyword", "class"], ["class-name", "foobar_42"],
+	["keyword", "class"], ["class-name", "_"]
+]
+
+----------------------------------------------------
+
+Checks for class names.

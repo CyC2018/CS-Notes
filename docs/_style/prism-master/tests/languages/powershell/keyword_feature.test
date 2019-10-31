@@ -1,0 +1,46 @@
+Begin Break Catch Class Continue Data Define Do DynamicParam Else ElseIf End
+Exit Filter Finally For ForEach From Function If InlineScript Parallel Param
+Process Return Sequence Switch Throw Trap Try Until Using Var While Workflow
+
+----------------------------------------------------
+
+[
+	["keyword", "Begin"],
+	["keyword", "Break"],
+	["keyword", "Catch"],
+	["keyword", "Class"],
+	["keyword", "Continue"],
+	["keyword", "Data"],
+	["keyword", "Define"],
+	["keyword", "Do"],
+	["keyword", "DynamicParam"],
+	["keyword", "Else"],
+	["keyword", "ElseIf"],
+	["keyword", "End"],
+	["keyword", "Exit"],
+	["keyword", "Filter"],
+	["keyword", "Finally"],
+	["keyword", "For"],
+	["keyword", "ForEach"],
+	["keyword", "From"],
+	["keyword", "Function"],
+	["keyword", "If"],
+	["keyword", "InlineScript"],
+	["keyword", "Parallel"],
+	["keyword", "Param"],
+	["keyword", "Process"],
+	["keyword", "Return"],
+	["keyword", "Sequence"],
+	["keyword", "Switch"],
+	["keyword", "Throw"],
+	["keyword", "Trap"],
+	["keyword", "Try"],
+	["keyword", "Until"],
+	["keyword", "Using"],
+	["keyword", "Var"],
+	["keyword", "While"],
+	["keyword", "Workflow"]
+]
+----------------------------------------------------
+
+Testing keywords

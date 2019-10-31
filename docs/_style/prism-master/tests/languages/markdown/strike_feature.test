@@ -1,0 +1,70 @@
+~~foobar~~
+~~foo
+bar~~
+~foobar~
+~foo
+bar~
+
+~foo*bar*baz~
+~foo__bar__baz~
+~foo[bar](baz)~
+
+----------------------------------------------------
+
+[
+	["strike", [
+		["punctuation", "~~"],
+		"foobar",
+		["punctuation", "~~"]
+	]],
+	["strike", [
+		["punctuation", "~~"],
+		"foo\r\nbar",
+		["punctuation", "~~"]
+	]],
+	["strike", [
+		["punctuation", "~"],
+		"foobar",
+		["punctuation", "~"]
+	]],
+	["strike", [
+		["punctuation", "~"],
+		"foo\r\nbar",
+		["punctuation", "~"]
+	]],
+
+	["strike", [
+		["punctuation", "~"],
+		"foo",
+		["italic", [
+			["punctuation", "*"],
+			"bar",
+			["punctuation", "*"]
+		]],
+		"baz",
+		["punctuation", "~"]
+	]],
+	["strike", [
+		["punctuation", "~"],
+		"foo",
+		["bold", [
+			["punctuation", "__"],
+			"bar",
+			["punctuation", "__"]
+		]],
+		"baz",
+		["punctuation", "~"]
+	]],
+	["strike", [
+		["punctuation", "~"],
+		"foo",
+		["url", [
+			"[bar](baz)"
+		]],
+		["punctuation", "~"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strike. Also tests for inclusion of bold, italic, and url.

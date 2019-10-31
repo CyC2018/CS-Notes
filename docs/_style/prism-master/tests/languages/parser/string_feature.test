@@ -1,0 +1,47 @@
+("")
+("foo^"bar")
+("foo
+bar")
+('')
+('foo^'bar')
+('foo
+bar')
+
+----------------------------------------------------
+
+[
+	["expression", [
+		["punctuation", "("],
+		["string", "\"\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["string", "\"foo^\"bar\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["string", "\"foo\r\nbar\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["string", "''"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["string", "'foo^'bar'"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["string", "'foo\r\nbar'"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings inside expressions.

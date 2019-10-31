@@ -1,0 +1,33 @@
+<h2>Comments</h2>
+<pre><code">// Single line comment
+/** Multi-line
+doc comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code">"foo \"bar\" baz"
+"Multi-line strings ending with a \
+are supported too."
+"""Verbatim strings
+You can create
+multi-line strings like this too."""
+@"Template string with variables $var1 $(var2 * 2)"</code></pre>
+
+<h2>Regex</h2>
+<pre><code">/foo?[ ]*bar/</code></pre>
+
+<h2>Full example</h2>
+<pre><code">using Gtk;
+
+int main (string[] args) {
+	Gtk.init(ref args);
+
+	var window = new Window();
+
+	var button = new Button.with_label("Click me!");
+
+	window.add(button);
+	window.show_all();
+
+	Gtk.main();
+	return 0;
+}</code></pre>

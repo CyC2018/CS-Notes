@@ -1,0 +1,61 @@
+|===
+|1
+|===
+
+|============================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+2*^|8
+|9 2+>|10
+|============================
+
+|==============================================
+|Normal cell
+
+|Cell with nested table
+
+!==============================================
+!Nested table cell 1 !Nested table cell 2
+!==============================================
+
+|==============================================
+
+----------------------------------------------------
+
+[
+	["table", [
+		["punctuation", "|==="],
+		["punctuation", "|"], "1\r\n",
+		["punctuation", "|==="]
+	]],
+
+	["table", [
+		["punctuation", "|============================"],
+		["punctuation", "|"], "1 ",
+		["specifiers", ">s"], ["punctuation", "|"], "2 ",
+		["punctuation", "|"], "3 ",
+		["punctuation", "|"], "4\r\n",
+		["specifiers", "^"], ["punctuation", "|"], "5 ",
+		["specifiers", "2.2+^.^"], ["punctuation", "|"], "6 ",
+		["specifiers", ".3+<.>m"], ["punctuation", "|"], "7\r\n",
+		["specifiers", "2*^"], ["punctuation", "|"], "8\r\n",
+		["punctuation", "|"], "9 ",
+		["specifiers", "2+>"], ["punctuation", "|"], "10\r\n",
+		["punctuation", "|============================"]
+	]],
+
+	["table", [
+		["punctuation", "|=============================================="],
+		["punctuation", "|"], "Normal cell\r\n\r\n",
+		["punctuation", "|"], "Cell with nested table\r\n\r\n",
+		["punctuation", "!=============================================="],
+		["punctuation", "!"], "Nested table cell 1 ",
+		["punctuation", "!"], "Nested table cell 2\r\n",
+		["punctuation", "!=============================================="],
+		["punctuation", "|=============================================="]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for tables.

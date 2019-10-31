@@ -1,0 +1,25 @@
+/**/
+/* Foo "bar" */
+/* Foo //bar
+baz */
+//
+// Foo /* bar */
+// <div></div>
+/* <div>
+</div> */
+
+----------------------------------------------------
+
+[
+	["soy", [["comment", "/**/"]]],
+	["soy", [["comment", "/* Foo \"bar\" */"]]],
+	["soy", [["comment", "/* Foo //bar\r\nbaz */"]]],
+	["soy", [["comment", "//"]]],
+	["soy", [["comment", "// Foo /* bar */"]]],
+	["soy", [["comment", "// <div></div>"]]],
+	["soy", [["comment", "/* <div>\r\n</div> */"]]]
+]
+
+----------------------------------------------------
+
+Checks for comments.

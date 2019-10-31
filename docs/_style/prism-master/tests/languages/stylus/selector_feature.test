@@ -1,0 +1,49 @@
+div
+span[foo=bar]
+  color red
+
+div input,
+input:nth-child(2n)
+  color red
+
+#foo
+  .bar::before
+    color red
+
+#foo
+  .bar {
+color red
+}
+
+{foo} {bar}:hover
+  color red
+
+----------------------------------------------------
+
+[
+	["selector", ["div\r\nspan[foo=bar]"]],
+	["property-declaration", [["property", ["color"]], " red"]],
+	["selector", ["div input", ["punctuation", ","], "\r\ninput:nth-child(2n)"]],
+	["property-declaration", [["property", ["color"]], " red"]],
+	["selector", ["#foo"]],
+	["selector", [".bar::before"]],
+	["property-declaration", [["property", ["color"]], " red"]],
+	["selector", ["#foo"]],
+	["selector", [".bar ", ["punctuation", "{"]]],
+	["property-declaration", [["property", ["color"]], " red"]],
+	["punctuation", "}"],
+	["selector", [
+		["interpolation", [
+			["delimiter", "{"], "foo", ["delimiter", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "{"], "bar", ["delimiter", "}"]
+		]],
+		":hover"
+	]],
+	["property-declaration", [["property", ["color"]], " red"]]
+]
+
+----------------------------------------------------
+
+Checks for selectors.

@@ -1,0 +1,12 @@
+.segment CODE
+
+-------------------------
+
+[
+  ["directive", ".segment"],
+  " CODE"
+]
+
+-------------------------
+
+Check for directives

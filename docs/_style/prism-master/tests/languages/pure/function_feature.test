@@ -1,0 +1,619 @@
+abs
+add_fundef
+add_fundef_at
+add_interface
+add_interface_at
+add_macdef
+add_macdef_at
+add_typedef
+add_typedef_at
+add_addr
+add_constdef
+add_vardef
+all
+any
+appl
+applp
+arity
+bigint
+bigintp
+blob
+blob_crc
+blob_size
+blobp
+bool
+boolp
+byte_matrix
+byte_pointer
+byte_string
+byte_cstring
+byte_string_pointer
+byte_cstring_pointer
+calloc
+cat
+catmap
+ceil
+char
+charp
+chars
+check_ptrtag
+chr
+clear_sentry
+clearsym
+closure
+closurep
+cmatrix
+cmatrixp
+col
+cols
+colcat
+colcatmap
+colmap
+colrev
+colvector
+colvectorp
+colvectorseq
+complex
+complex_float_matrix
+complex_float_pointer
+complex_matrix
+complex_matrix_view
+complex_pointer
+complexp
+conj
+cooked
+cookedp
+cst
+cstring
+cstring_dup
+cstring_list
+cstring_vector
+curry
+curry3
+cycle
+cyclen
+del_constdef
+del_fundef
+del_interface
+del_macdef
+del_typedef
+del_vardef
+delete
+diag
+diagmat
+dim
+dmatrix
+dmatrixp
+do
+double
+double_matrix
+double_matrix_view
+double_pointer
+doublep
+dowith
+dowith3
+drop
+dropwhile
+eval
+evalcmd
+exactp
+filter
+fix
+fixity
+flip
+float_matrix
+float_pointer
+floor
+foldl
+foldl1
+foldr
+foldr1
+frac
+free
+fun
+funp
+function
+functionp
+gcd
+get
+get_byte
+get_constdef
+get_double
+get_float
+get_fundef
+get_int
+get_int64
+get_interface
+get_interface_typedef
+get_long
+get_macdef
+get_pointer
+get_ptrtag
+get_short
+get_sentry
+get_string
+get_typedef
+get_vardef
+globsym
+hash
+head
+id
+im
+imatrix
+imatrixp
+index
+inexactp
+infp
+init
+insert
+int
+int_matrix
+int_matrix_view
+int_pointer
+intp
+int64_matrix
+int64_pointer
+integer
+integerp
+iterate
+iteraten
+iterwhile
+join
+key
+keys
+lambda
+lambdap
+last
+lasterr
+lasterrpos
+lcd
+list
+list2
+listp
+listmap
+make_ptrtag
+malloc
+map
+matcat
+matrix
+matrixp
+max
+member
+min
+nanp
+nargs
+nmatrix
+nmatrixp
+null
+number
+numberp
+ord
+pack
+packed
+pointer
+pointer_cast
+pointer_tag
+pointer_type
+pointerp
+pow
+pred
+ptrtag
+put
+put_byte
+put_double
+put_float
+put_int
+put_int64
+put_long
+put_pointer
+put_short
+put_string
+rational
+rationalp
+re
+real
+realp
+realloc
+record
+recordp
+redim
+reduce
+reduce_with
+ref
+refp
+repeat
+repeatn
+reverse
+rlist
+rlistp
+round
+row
+rows
+rowcat
+rowcatmap
+rowmap
+rowrev
+rowvector
+rowvectorp
+rowvectorseq
+same
+scanl
+scanl1
+scanr
+scanr1
+sentry
+sgn
+short_matrix
+short_pointer
+slice
+smatrix
+smatrixp
+sort
+split
+str
+strcat
+stream
+stride
+string
+string_dup
+string_list
+string_vector
+stringp
+subdiag
+subdiagmat
+submat
+subseq
+subseq2
+substr
+succ
+supdiag
+supdiagmat
+symbol
+symbolp
+tail
+take
+takewhile
+thunk
+thunkp
+transpose
+trunc
+tuple
+tuplep
+typep
+ubyte
+uint
+uint64
+ulong
+uncurry
+uncurry3
+unref
+unzip
+unzip3
+update
+ushort
+val
+vals
+var
+varp
+vector
+vectorp
+vectorseq
+void
+zip
+zip3
+zipwith
+zipwith3
+
+----------------------------------------------------
+
+[
+	["function", "abs"],
+	["function", "add_fundef"],
+	["function", "add_fundef_at"],
+	["function", "add_interface"],
+	["function", "add_interface_at"],
+	["function", "add_macdef"],
+	["function", "add_macdef_at"],
+	["function", "add_typedef"],
+	["function", "add_typedef_at"],
+	["function", "add_addr"],
+	["function", "add_constdef"],
+	["function", "add_vardef"],
+	["function", "all"],
+	["function", "any"],
+	["function", "appl"],
+	["function", "applp"],
+	["function", "arity"],
+	["function", "bigint"],
+	["function", "bigintp"],
+	["function", "blob"],
+	["function", "blob_crc"],
+	["function", "blob_size"],
+	["function", "blobp"],
+	["function", "bool"],
+	["function", "boolp"],
+	["function", "byte_matrix"],
+	["function", "byte_pointer"],
+	["function", "byte_string"],
+	["function", "byte_cstring"],
+	["function", "byte_string_pointer"],
+	["function", "byte_cstring_pointer"],
+	["function", "calloc"],
+	["function", "cat"],
+	["function", "catmap"],
+	["function", "ceil"],
+	["function", "char"],
+	["function", "charp"],
+	["function", "chars"],
+	["function", "check_ptrtag"],
+	["function", "chr"],
+	["function", "clear_sentry"],
+	["function", "clearsym"],
+	["function", "closure"],
+	["function", "closurep"],
+	["function", "cmatrix"],
+	["function", "cmatrixp"],
+	["function", "col"],
+	["function", "cols"],
+	["function", "colcat"],
+	["function", "colcatmap"],
+	["function", "colmap"],
+	["function", "colrev"],
+	["function", "colvector"],
+	["function", "colvectorp"],
+	["function", "colvectorseq"],
+	["function", "complex"],
+	["function", "complex_float_matrix"],
+	["function", "complex_float_pointer"],
+	["function", "complex_matrix"],
+	["function", "complex_matrix_view"],
+	["function", "complex_pointer"],
+	["function", "complexp"],
+	["function", "conj"],
+	["function", "cooked"],
+	["function", "cookedp"],
+	["function", "cst"],
+	["function", "cstring"],
+	["function", "cstring_dup"],
+	["function", "cstring_list"],
+	["function", "cstring_vector"],
+	["function", "curry"],
+	["function", "curry3"],
+	["function", "cycle"],
+	["function", "cyclen"],
+	["function", "del_constdef"],
+	["function", "del_fundef"],
+	["function", "del_interface"],
+	["function", "del_macdef"],
+	["function", "del_typedef"],
+	["function", "del_vardef"],
+	["function", "delete"],
+	["function", "diag"],
+	["function", "diagmat"],
+	["function", "dim"],
+	["function", "dmatrix"],
+	["function", "dmatrixp"],
+	["function", "do"],
+	["function", "double"],
+	["function", "double_matrix"],
+	["function", "double_matrix_view"],
+	["function", "double_pointer"],
+	["function", "doublep"],
+	["function", "dowith"],
+	["function", "dowith3"],
+	["function", "drop"],
+	["function", "dropwhile"],
+	["function", "eval"],
+	["function", "evalcmd"],
+	["function", "exactp"],
+	["function", "filter"],
+	["function", "fix"],
+	["function", "fixity"],
+	["function", "flip"],
+	["function", "float_matrix"],
+	["function", "float_pointer"],
+	["function", "floor"],
+	["function", "foldl"],
+	["function", "foldl1"],
+	["function", "foldr"],
+	["function", "foldr1"],
+	["function", "frac"],
+	["function", "free"],
+	["function", "fun"],
+	["function", "funp"],
+	["function", "function"],
+	["function", "functionp"],
+	["function", "gcd"],
+	["function", "get"],
+	["function", "get_byte"],
+	["function", "get_constdef"],
+	["function", "get_double"],
+	["function", "get_float"],
+	["function", "get_fundef"],
+	["function", "get_int"],
+	["function", "get_int64"],
+	["function", "get_interface"],
+	["function", "get_interface_typedef"],
+	["function", "get_long"],
+	["function", "get_macdef"],
+	["function", "get_pointer"],
+	["function", "get_ptrtag"],
+	["function", "get_short"],
+	["function", "get_sentry"],
+	["function", "get_string"],
+	["function", "get_typedef"],
+	["function", "get_vardef"],
+	["function", "globsym"],
+	["function", "hash"],
+	["function", "head"],
+	["function", "id"],
+	["function", "im"],
+	["function", "imatrix"],
+	["function", "imatrixp"],
+	["function", "index"],
+	["function", "inexactp"],
+	["function", "infp"],
+	["function", "init"],
+	["function", "insert"],
+	["function", "int"],
+	["function", "int_matrix"],
+	["function", "int_matrix_view"],
+	["function", "int_pointer"],
+	["function", "intp"],
+	["function", "int64_matrix"],
+	["function", "int64_pointer"],
+	["function", "integer"],
+	["function", "integerp"],
+	["function", "iterate"],
+	["function", "iteraten"],
+	["function", "iterwhile"],
+	["function", "join"],
+	["function", "key"],
+	["function", "keys"],
+	["function", "lambda"],
+	["function", "lambdap"],
+	["function", "last"],
+	["function", "lasterr"],
+	["function", "lasterrpos"],
+	["function", "lcd"],
+	["function", "list"],
+	["function", "list2"],
+	["function", "listp"],
+	["function", "listmap"],
+	["function", "make_ptrtag"],
+	["function", "malloc"],
+	["function", "map"],
+	["function", "matcat"],
+	["function", "matrix"],
+	["function", "matrixp"],
+	["function", "max"],
+	["function", "member"],
+	["function", "min"],
+	["function", "nanp"],
+	["function", "nargs"],
+	["function", "nmatrix"],
+	["function", "nmatrixp"],
+	["function", "null"],
+	["function", "number"],
+	["function", "numberp"],
+	["function", "ord"],
+	["function", "pack"],
+	["function", "packed"],
+	["function", "pointer"],
+	["function", "pointer_cast"],
+	["function", "pointer_tag"],
+	["function", "pointer_type"],
+	["function", "pointerp"],
+	["function", "pow"],
+	["function", "pred"],
+	["function", "ptrtag"],
+	["function", "put"],
+	["function", "put_byte"],
+	["function", "put_double"],
+	["function", "put_float"],
+	["function", "put_int"],
+	["function", "put_int64"],
+	["function", "put_long"],
+	["function", "put_pointer"],
+	["function", "put_short"],
+	["function", "put_string"],
+	["function", "rational"],
+	["function", "rationalp"],
+	["function", "re"],
+	["function", "real"],
+	["function", "realp"],
+	["function", "realloc"],
+	["function", "record"],
+	["function", "recordp"],
+	["function", "redim"],
+	["function", "reduce"],
+	["function", "reduce_with"],
+	["function", "ref"],
+	["function", "refp"],
+	["function", "repeat"],
+	["function", "repeatn"],
+	["function", "reverse"],
+	["function", "rlist"],
+	["function", "rlistp"],
+	["function", "round"],
+	["function", "row"],
+	["function", "rows"],
+	["function", "rowcat"],
+	["function", "rowcatmap"],
+	["function", "rowmap"],
+	["function", "rowrev"],
+	["function", "rowvector"],
+	["function", "rowvectorp"],
+	["function", "rowvectorseq"],
+	["function", "same"],
+	["function", "scanl"],
+	["function", "scanl1"],
+	["function", "scanr"],
+	["function", "scanr1"],
+	["function", "sentry"],
+	["function", "sgn"],
+	["function", "short_matrix"],
+	["function", "short_pointer"],
+	["function", "slice"],
+	["function", "smatrix"],
+	["function", "smatrixp"],
+	["function", "sort"],
+	["function", "split"],
+	["function", "str"],
+	["function", "strcat"],
+	["function", "stream"],
+	["function", "stride"],
+	["function", "string"],
+	["function", "string_dup"],
+	["function", "string_list"],
+	["function", "string_vector"],
+	["function", "stringp"],
+	["function", "subdiag"],
+	["function", "subdiagmat"],
+	["function", "submat"],
+	["function", "subseq"],
+	["function", "subseq2"],
+	["function", "substr"],
+	["function", "succ"],
+	["function", "supdiag"],
+	["function", "supdiagmat"],
+	["function", "symbol"],
+	["function", "symbolp"],
+	["function", "tail"],
+	["function", "take"],
+	["function", "takewhile"],
+	["function", "thunk"],
+	["function", "thunkp"],
+	["function", "transpose"],
+	["function", "trunc"],
+	["function", "tuple"],
+	["function", "tuplep"],
+	["function", "typep"],
+	["function", "ubyte"],
+	["function", "uint"],
+	["function", "uint64"],
+	["function", "ulong"],
+	["function", "uncurry"],
+	["function", "uncurry3"],
+	["function", "unref"],
+	["function", "unzip"],
+	["function", "unzip3"],
+	["function", "update"],
+	["function", "ushort"],
+	["function", "val"],
+	["function", "vals"],
+	["function", "var"],
+	["function", "varp"],
+	["function", "vector"],
+	["function", "vectorp"],
+	["function", "vectorseq"],
+	["function", "void"],
+	["function", "zip"],
+	["function", "zip3"],
+	["function", "zipwith"],
+	["function", "zipwith3"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

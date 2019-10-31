@@ -1,0 +1,40 @@
+<h2>Comments</h2>
+<pre><code>-- Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Operators</h2>
+<pre><code>l_message  := 'Hello ' || place_in;</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>CREATE OR REPLACE PROCEDURE
+hello_place (place_in IN VARCHAR2)
+IS
+  l_message  VARCHAR2 (100);
+BEGIN
+  l_message  := 'Hello ' || place_in;
+  DBMS_OUTPUT.put_line (l_message);
+END hello_place;
+
+DECLARE
+  l_dept_id
+  employees.department_id%TYPE := 10;
+BEGIN
+  DELETE FROM employees
+       WHERE department_id = l_dept_id;
+
+  DBMS_OUTPUT.put_line (SQL%ROWCOUNT);
+END;
+
+DECLARE
+  l_message   VARCHAR2 (100) := 'Hello';
+  l_message2  VARCHAR2 (100) := ' World!';
+BEGIN
+  IF SYSDATE >= TO_DATE ('01-JAN-2011')
+  THEN
+    l_message2 := l_message || l_message2;
+    DBMS_OUTPUT.put_line (l_message2);
+  ELSE
+    DBMS_OUTPUT.put_line (l_message);
+  END IF;
+END;</code></pre>

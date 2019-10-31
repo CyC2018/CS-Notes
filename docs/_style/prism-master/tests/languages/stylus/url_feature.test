@@ -1,0 +1,21 @@
+background: url('foo.png')
+background: url("foo/bar.jpg")
+
+----------------------------------------------------
+
+[
+	["property-declaration", [
+		["property", ["background"]],
+		["punctuation", ":"],
+		["url", "url('foo.png')"]
+	]],
+	["property-declaration", [
+		["property", ["background"]],
+		["punctuation", ":"],
+		["url", "url(\"foo/bar.jpg\")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for urls.

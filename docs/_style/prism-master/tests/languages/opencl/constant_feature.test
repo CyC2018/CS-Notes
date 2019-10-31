@@ -1,0 +1,185 @@
+CHAR_BIT
+CHAR_MAX
+CHAR_MIN
+CLK_ADDRESS_CLAMP
+CLK_ADDRESS_CLAMP_TO_EDGE
+CLK_ADDRESS_NONE
+CLK_ADDRESS_REPEAT
+CLK_FILTER_LINEAR
+CLK_FILTER_NEAREST
+CLK_GLOBAL_MEM_FENCE
+CLK_LOCAL_MEM_FENCE
+CLK_NORMALIZED_COORDS_FALSE
+CLK_NORMALIZED_COORDS_TRUE
+CL_A
+CL_ARGB
+CL_BGRA
+CL_FLOAT
+CL_HALF_FLOAT
+CL_INTENSITY
+CL_LUMINANCE
+CL_R
+CL_RA
+CL_RG
+CL_RGB
+CL_RGBA
+CL_RGBx
+CL_RGx
+CL_Rx
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+CL_SIGNED_INT8
+CL_SNORM_INT16
+CL_SNORM_INT8
+CL_UNORM_INT16
+CL_UNORM_INT8
+CL_UNORM_INT_101010
+CL_UNORM_SHORT_555
+CL_UNORM_SHORT_565
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+CL_UNSIGNED_INT8
+DBL_DIG
+DBL_EPSILON
+DBL_MANT_DIG
+DBL_MAX
+DBL_MAX_10_EXP
+DBL_MIN
+DBL_MIN_10_EXP
+DBL_MIN_EXP
+FLT_DIG
+FLT_EPSILON
+FLT_MANT_DIG
+FLT_MAX
+FLT_MAX_10_EXP
+FLT_MAX_EXP
+FLT_MIN
+FLT_MIN_10_EXP
+FLT_MIN_EXP
+FLT_RADIX
+HUGE_VALF
+INFINITY
+INT_MAX
+INT_MIN
+LONG_MAX
+LONG_MIN
+MAXFLOAT
+M_1_PI
+M_2_PI
+M_2_SQRTPI
+M_E
+M_LN10
+M_LN2
+M_LOG10E
+M_LOG2E
+M_PI
+M_PI2
+M_PI4
+M_SQRT1_2
+M_SQRT2
+NAN
+SCHAR_MAX
+SCHAR_MIN
+SHRT_MAX
+SHRT_MIN
+UCHAR_MAX
+UCHAR_MIN
+UINT_MAX
+ULONG_MAX
+
+----------------------------------------------------
+
+[
+	["constant-opencl-kernel", "CHAR_BIT"],
+	["constant-opencl-kernel", "CHAR_MAX"],
+	["constant-opencl-kernel", "CHAR_MIN"],
+	["constant-opencl-kernel", "CLK_ADDRESS_CLAMP"],
+	["constant-opencl-kernel", "CLK_ADDRESS_CLAMP_TO_EDGE"],
+	["constant-opencl-kernel", "CLK_ADDRESS_NONE"],
+	["constant-opencl-kernel", "CLK_ADDRESS_REPEAT"],
+	["constant-opencl-kernel", "CLK_FILTER_LINEAR"],
+	["constant-opencl-kernel", "CLK_FILTER_NEAREST"],
+	["constant-opencl-kernel", "CLK_GLOBAL_MEM_FENCE"],
+	["constant-opencl-kernel", "CLK_LOCAL_MEM_FENCE"],
+	["constant-opencl-kernel", "CLK_NORMALIZED_COORDS_FALSE"],
+	["constant-opencl-kernel", "CLK_NORMALIZED_COORDS_TRUE"],
+	["constant-opencl-kernel", "CL_A"],
+	["constant-opencl-kernel", "CL_ARGB"],
+	["constant-opencl-kernel", "CL_BGRA"],
+	["constant-opencl-kernel", "CL_FLOAT"],
+	["constant-opencl-kernel", "CL_HALF_FLOAT"],
+	["constant-opencl-kernel", "CL_INTENSITY"],
+	["constant-opencl-kernel", "CL_LUMINANCE"],
+	["constant-opencl-kernel", "CL_R"],
+	["constant-opencl-kernel", "CL_RA"],
+	["constant-opencl-kernel", "CL_RG"],
+	["constant-opencl-kernel", "CL_RGB"],
+	["constant-opencl-kernel", "CL_RGBA"],
+	["constant-opencl-kernel", "CL_RGBx"],
+	["constant-opencl-kernel", "CL_RGx"],
+	["constant-opencl-kernel", "CL_Rx"],
+	["constant-opencl-kernel", "CL_SIGNED_INT16"],
+	["constant-opencl-kernel", "CL_SIGNED_INT32"],
+	["constant-opencl-kernel", "CL_SIGNED_INT8"],
+	["constant-opencl-kernel", "CL_SNORM_INT16"],
+	["constant-opencl-kernel", "CL_SNORM_INT8"],
+	["constant-opencl-kernel", "CL_UNORM_INT16"],
+	["constant-opencl-kernel", "CL_UNORM_INT8"],
+	["constant-opencl-kernel", "CL_UNORM_INT_101010"],
+	["constant-opencl-kernel", "CL_UNORM_SHORT_555"],
+	["constant-opencl-kernel", "CL_UNORM_SHORT_565"],
+	["constant-opencl-kernel", "CL_UNSIGNED_INT16"],
+	["constant-opencl-kernel", "CL_UNSIGNED_INT32"],
+	["constant-opencl-kernel", "CL_UNSIGNED_INT8"],
+	["constant-opencl-kernel", "DBL_DIG"],
+	["constant-opencl-kernel", "DBL_EPSILON"],
+	["constant-opencl-kernel", "DBL_MANT_DIG"],
+	["constant-opencl-kernel", "DBL_MAX"],
+	["constant-opencl-kernel", "DBL_MAX_10_EXP"],
+	["constant-opencl-kernel", "DBL_MIN"],
+	["constant-opencl-kernel", "DBL_MIN_10_EXP"],
+	["constant-opencl-kernel", "DBL_MIN_EXP"],
+	["constant-opencl-kernel", "FLT_DIG"],
+	["constant-opencl-kernel", "FLT_EPSILON"],
+	["constant-opencl-kernel", "FLT_MANT_DIG"],
+	["constant-opencl-kernel", "FLT_MAX"],
+	["constant-opencl-kernel", "FLT_MAX_10_EXP"],
+	["constant-opencl-kernel", "FLT_MAX_EXP"],
+	["constant-opencl-kernel", "FLT_MIN"],
+	["constant-opencl-kernel", "FLT_MIN_10_EXP"],
+	["constant-opencl-kernel", "FLT_MIN_EXP"],
+	["constant-opencl-kernel", "FLT_RADIX"],
+	["constant-opencl-kernel", "HUGE_VALF"],
+	["constant-opencl-kernel", "INFINITY"],
+	["constant-opencl-kernel", "INT_MAX"],
+	["constant-opencl-kernel", "INT_MIN"],
+	["constant-opencl-kernel", "LONG_MAX"],
+	["constant-opencl-kernel", "LONG_MIN"],
+	["constant-opencl-kernel", "MAXFLOAT"],
+	["constant-opencl-kernel", "M_1_PI"],
+	["constant-opencl-kernel", "M_2_PI"],
+	["constant-opencl-kernel", "M_2_SQRTPI"],
+	["constant-opencl-kernel", "M_E"],
+	["constant-opencl-kernel", "M_LN10"],
+	["constant-opencl-kernel", "M_LN2"],
+	["constant-opencl-kernel", "M_LOG10E"],
+	["constant-opencl-kernel", "M_LOG2E"],
+	["constant-opencl-kernel", "M_PI"],
+	["constant-opencl-kernel", "M_PI2"],
+	["constant-opencl-kernel", "M_PI4"],
+	["constant-opencl-kernel", "M_SQRT1_2"],
+	["constant-opencl-kernel", "M_SQRT2"],
+	["constant-opencl-kernel", "NAN"],
+	["constant-opencl-kernel", "SCHAR_MAX"],
+	["constant-opencl-kernel", "SCHAR_MIN"],
+	["constant-opencl-kernel", "SHRT_MAX"],
+	["constant-opencl-kernel", "SHRT_MIN"],
+	["constant-opencl-kernel", "UCHAR_MAX"],
+	["constant-opencl-kernel", "UCHAR_MIN"],
+	["constant-opencl-kernel", "UINT_MAX"],
+	["constant-opencl-kernel", "ULONG_MAX"]
+]
+
+----------------------------------------------------
+
+Checks for all constant names in OpenCL kernel code.

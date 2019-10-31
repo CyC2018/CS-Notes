@@ -1,0 +1,17 @@
+## comment
+#TODO
+## FIXME
+# XXX
+
+----------------------------------------------------
+
+[
+	["comment", [ "## comment"]],
+	["comment", [ "#", ["italic", "TODO"]]],
+	["comment", [ "## ", ["italic", "FIXME"]]],
+	["comment", [ "# ", ["italic", "XXX"]]]
+]
+
+----------------------------------------------------
+
+Checks for the highlighting of comments

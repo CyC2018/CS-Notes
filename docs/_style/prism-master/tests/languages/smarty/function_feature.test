@@ -1,0 +1,41 @@
+{if count($foo)}
+	{$foo|@count}
+	{$bar|lower}
+{/if}
+
+----------------------------------------------------
+
+[
+	["smarty", [
+		["delimiter", "{"],
+		["function", "if"],
+		["function", "count"],
+		["punctuation", "("],
+		["variable", "$foo"],
+		["punctuation", ")"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$foo"],
+		["operator", "|"],
+		["function", "@count"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["variable", "$bar"],
+		["operator", "|"],
+		["function", "lower"],
+		["delimiter", "}"]
+	]],
+	["smarty", [
+		["delimiter", "{"],
+		["function", "/if"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for tags, filters and functions.

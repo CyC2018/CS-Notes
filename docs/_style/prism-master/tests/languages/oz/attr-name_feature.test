@@ -1,0 +1,14 @@
+menubutton(text:'Test' underline:0)
+
+----------------------------------------------------
+
+[
+	["function", "menubutton"], ["punctuation", "("],
+	["attr-name", "text"], ["punctuation", ":"], ["atom", "'Test'"],
+	["attr-name", "underline"], ["punctuation", ":"], ["number", "0"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for parameter names.

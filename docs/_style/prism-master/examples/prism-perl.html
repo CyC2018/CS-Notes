@@ -1,0 +1,71 @@
+<h2>Comments</h2>
+<pre><code># Single line comment
+=head1 Here There
+	Be Pods!
+=cut</code></pre>
+
+<h2>Strings</h2>
+<pre><code>q/foo bar baz/;
+q awhy not ?a;
+qw(foo bar baz) q{foo bar baz}
+q[foo bar baz] qq&lt;foo bar baz>
+"foo bar baz" 'foo bar baz' `foo bar baz`</code></pre>
+
+<h2>Regex</h2>
+<pre><code>m/foo/ s/foo/bar/
+m zfooz s zfoozbarz
+qr(foo) m{foo} s(foo)(bar) s{foo}{bar}
+m[foo] m&lt;foo> tr[foo][bar] s&lt;foo>&lt;bar>
+/foo/i
+</code></pre>
+
+<h2>Variables</h2>
+<pre><code>${^POSTMATCH}
+$^V
+$element_count = scalar(@whatever);
+keys(%users) = 1000;
+$1, $_, %!;</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>12345
+12345.67
+.23E-10 # a very small number
+3.14_15_92 # a very important number
+4_294_967_296 # underscore for legibility
+0xff # hex
+0xdead_beef # more hex
+0377 # octal (only numbers, begins with 0)
+0b011011 # binary</code></pre>
+
+<h2>Full example</h2>
+<pre><code>sub read_config_file {
+  my ($class, $filename) = @_;
+
+  unless (defined $filename) {
+    my $home  = File::HomeDir->my_home || '.';
+    $filename = File::Spec->catfile($home, '.pause');
+
+    return {} unless -e $filename and -r _;
+  }
+
+  my %conf;
+  if ( eval { require Config::Identity } ) {
+    %conf = Config::Identity->load($filename);
+    $conf{user} = delete $conf{username} unless $conf{user};
+  }
+  else { # Process .pause manually
+    open my $pauserc, '<', $filename
+      or die "can't open $filename for reading: $!";
+
+    while (<$pauserc>) {
+      chomp;
+      next unless $_ and $_ !~ /^\s*#/;
+
+      my ($k, $v) = /^\s*(\w+)\s+(.+)$/;
+      Carp::croak "multiple enties for $k" if $conf{$k};
+      $conf{$k} = $v;
+    }
+  }
+
+  return \%conf;
+}</code></pre>

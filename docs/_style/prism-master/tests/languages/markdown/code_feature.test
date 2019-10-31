@@ -1,0 +1,33 @@
+`foo bar baz`
+``foo `bar` baz``
+
+    foobar
+
+	foobar
+
+``` js
+var a = 0;
+```
+
+----------------------------------------------------
+
+[
+	["code", "`foo bar baz`"],
+	["code", "``foo `bar` baz``"],
+	["code", "    foobar"],
+	["code", "\tfoobar"],
+
+	["code", [
+		["punctuation", "```"],
+		["code-language", " js"],
+		["code-block", "var a = 0;"],
+		["punctuation", "```"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for code blocks and inline code. The first code block is
+indented with 4 spaces, the second one is indented with 1 tab.
+The initial dot is necessary because of the first part being trimmed
+by the test runner.

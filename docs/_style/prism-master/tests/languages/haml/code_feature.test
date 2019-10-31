@@ -1,0 +1,19 @@
+~ 42
+- 42
+= 42
+&= 42
+!= 42
+
+----------------------------------------------------
+
+[
+	["punctuation", "~"], ["code", [["number", "42"]]],
+	["punctuation", "-"], ["code", [["number", "42"]]],
+	["punctuation", "="], ["code", [["number", "42"]]],
+	["punctuation", "&="], ["code", [["number", "42"]]],
+	["punctuation", "!="], ["code", [["number", "42"]]]
+]
+
+----------------------------------------------------
+
+Checks for single-line code.

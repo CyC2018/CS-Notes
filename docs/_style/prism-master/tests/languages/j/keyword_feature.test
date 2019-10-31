@@ -1,0 +1,77 @@
+adverb
+conjunction
+CR
+def
+define
+dyad
+LF
+monad
+noun
+verb
+
+assert.
+break.
+case.
+catch.
+catchd.
+catcht.
+continue.
+do.
+else.
+elseif.
+end.
+fcase.
+for.
+for_foobar.
+goto_foobar.
+if.
+label_foobar.
+return.
+select.
+throw.
+try.
+while.
+whilst.
+
+----------------------------------------------------
+
+[
+	["keyword", "adverb"],
+	["keyword", "conjunction"],
+	["keyword", "CR"],
+	["keyword", "def"],
+	["keyword", "define"],
+	["keyword", "dyad"],
+	["keyword", "LF"],
+	["keyword", "monad"],
+	["keyword", "noun"],
+	["keyword", "verb"],
+
+	["keyword", "assert."],
+	["keyword", "break."],
+	["keyword", "case."],
+	["keyword", "catch."],
+	["keyword", "catchd."],
+	["keyword", "catcht."],
+	["keyword", "continue."],
+	["keyword", "do."],
+	["keyword", "else."],
+	["keyword", "elseif."],
+	["keyword", "end."],
+	["keyword", "fcase."],
+	["keyword", "for."],
+	["keyword", "for_foobar."],
+	["keyword", "goto_foobar."],
+	["keyword", "if."],
+	["keyword", "label_foobar."],
+	["keyword", "return."],
+	["keyword", "select."],
+	["keyword", "throw."],
+	["keyword", "try."],
+	["keyword", "while."],
+	["keyword", "whilst."]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

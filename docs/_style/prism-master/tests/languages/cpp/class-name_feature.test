@@ -1,0 +1,13 @@
+class Foo
+class Foo_bar
+
+----------------------------------------------------
+
+[
+	["keyword", "class"], ["class-name", "Foo"],
+	["keyword", "class"], ["class-name", "Foo_bar"]
+]
+
+----------------------------------------------------
+
+Checks for class names.

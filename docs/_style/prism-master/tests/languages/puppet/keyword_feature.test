@@ -1,0 +1,47 @@
+application
+attr
+case
+class
+consumes
+default
+define
+else
+elsif
+function
+if
+import
+inherits
+node
+private
+produces
+type
+undef
+unless
+
+----------------------------------------------------
+
+[
+	["keyword", "application"],
+	["keyword", "attr"],
+	["keyword", "case"],
+	["keyword", "class"],
+	["keyword", "consumes"],
+	["keyword", "default"],
+	["keyword", "define"],
+	["keyword", "else"],
+	["keyword", "elsif"],
+	["keyword", "function"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "inherits"],
+	["keyword", "node"],
+	["keyword", "private"],
+	["keyword", "produces"],
+	["keyword", "type"],
+	["keyword", "undef"],
+	["keyword", "unless"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

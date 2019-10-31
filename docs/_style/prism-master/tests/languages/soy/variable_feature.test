@@ -1,0 +1,86 @@
+{$name}
+{$folders.0.name}
+{$folders[0].name}
+{$folders[0]['name']}
+{$aaa?.bbb.ccc?[0]}
+{let $category: $categoryList[0] /}
+{let $isEnabled: $isAaa and not $isBbb and $ccc == $ddd + $eee /}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["variable", ["$name"]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", [
+			"$folders",
+			["punctuation", "."], ["number", "0"],
+			["punctuation", "."], "name"
+		]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", [
+			"$folders",
+			["punctuation", "["], ["number", "0"], ["punctuation", "]"],
+			["punctuation", "."], "name"
+		]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", [
+			"$folders",
+			["punctuation", "["], ["number", "0"], ["punctuation", "]"],
+			["punctuation", "["], ["string", "'name'"], ["punctuation", "]"]
+		]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", [
+			"$aaa", ["punctuation", "?"],
+			["punctuation", "."], "bbb",
+			["punctuation", "."], "ccc", ["punctuation", "?"],
+			["punctuation", "["], ["number", "0"], ["punctuation", "]"]
+		]],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$category"]],
+		["punctuation", ":"],
+		["variable", [
+			"$categoryList",
+			["punctuation", "["], ["number", "0"], ["punctuation", "]"]
+		]],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "let"],
+		["variable", ["$isEnabled"]],
+		["punctuation", ":"],
+		["variable", ["$isAaa"]],
+		["operator", "and"],
+		["operator", "not"],
+		["variable", ["$isBbb"]],
+		["operator", "and"],
+		["variable", ["$ccc"]],
+		["operator", "=="],
+		["variable", ["$ddd"]],
+		["operator", "+"],
+		["variable", ["$eee"]],
+		["delimiter", "/}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

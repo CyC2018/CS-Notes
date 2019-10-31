@@ -1,0 +1,75 @@
+each val, index in [1,2,3]
+
+if foo
+else if bar
+else
+
+unless foo
+
+while n < 4
+
+case foo
+	when "bar"
+	default
+
+----------------------------------------------------
+
+[
+	["flow-control", [
+		["each", [
+			["keyword", "each"],
+			" val",
+			["punctuation", ","],
+			" index ",
+			["keyword", "in"]
+		]],
+		["punctuation", "["],
+		["number", "1"],
+		["punctuation", ","],
+		["number", "2"],
+		["punctuation", ","],
+		["number", "3"],
+		["punctuation", "]"]
+	]],
+
+	["flow-control", [
+		["branch", "if"],
+		" foo"
+	]],
+	["flow-control", [
+        ["branch", "else"],
+        ["keyword", "if"],
+        " bar"
+    ]],
+    ["flow-control", [
+        ["branch", "else"]
+    ]],
+
+    ["flow-control", [
+        ["branch", "unless"],
+        " foo"
+    ]],
+
+    ["flow-control", [
+        ["branch", "while"],
+        " n ",
+        ["operator", "<"],
+        ["number", "4"]
+    ]],
+
+    ["flow-control", [
+        ["branch", "case"],
+        " foo"
+    ]],
+    ["flow-control", [
+        ["branch", "when"],
+        ["string", "\"bar\""]
+    ]],
+    ["flow-control", [
+        ["branch", "default"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for all flow-control structures.

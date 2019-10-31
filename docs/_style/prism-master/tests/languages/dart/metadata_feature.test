@@ -1,0 +1,20 @@
+@deprecated
+@override
+@todo('seth', 'make this do something')
+
+----------------------------------------------------
+
+[
+	["metadata", "@deprecated"],
+	["metadata", "@override"],
+	["metadata", "@todo"],
+	["punctuation", "("],
+	["string", "'seth'"],
+	["punctuation", ","],
+	["string", "'make this do something'"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for metadata.

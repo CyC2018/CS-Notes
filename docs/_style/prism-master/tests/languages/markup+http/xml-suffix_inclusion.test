@@ -1,0 +1,30 @@
+Content-type: text/x.anything+something-else+xml
+
+<foo></foo>
+
+----------------------------------------------------
+
+[
+	["header-name", "Content-type:"],
+	" text/x.anything+something-else+xml",
+	["application/xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "<"],
+				"foo"
+			]],
+			["punctuation", ">"]
+		]],
+		["tag", [
+			["tag", [
+				["punctuation", "</"],
+				"foo"
+			]],
+			["punctuation", ">"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for content with XML suffix in HTTP.

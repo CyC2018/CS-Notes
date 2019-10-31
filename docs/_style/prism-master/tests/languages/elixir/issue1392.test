@@ -1,0 +1,16 @@
+String.upcase(@fixed)
+
+----------------------------------------------------
+
+[
+	"String",
+	["punctuation", "."],
+	"upcase",
+	["punctuation", "("],
+	["attribute", "@fixed"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Ensure module attributes don't consume punctuation.

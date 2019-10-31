@@ -1,0 +1,97 @@
+0xBadFace
+0x4f.ab
+0x4p2
+0x2.ap-8
+0x1p+1
+
+0hBadFace
+0h4f.ab
+0h4p2
+0h2.ap-8
+0h1p+1
+42fh
+4ab2x
+
+$4
+$2a4f
+
+0o75
+0q75
+75o
+75q
+
+0b0101
+0y0101
+0101b
+0101y
+
+0d42
+0t42
+42
+3.14159
+4.2e4
+2e-1
+3.1e+2
+42d
+3.14159d
+4.2e4d
+2e-1d
+3.1e+2d
+42t
+3.14159t
+4.2e4t
+2e-1t
+3.1e+2t
+
+----------------------------------------------------
+
+[
+	["number", "0xBadFace"],
+	["number", "0x4f.ab"],
+	["number", "0x4p2"],
+	["number", "0x2.ap-8"],
+	["number", "0x1p+1"],
+
+	["number", "0hBadFace"],
+	["number", "0h4f.ab"],
+	["number", "0h4p2"],
+	["number", "0h2.ap-8"],
+	["number", "0h1p+1"],
+	["number", "42fh"],
+	["number", "4ab2x"],
+
+	["number", "$4"],
+	["number", "$2a4f"],
+
+	["number", "0o75"],
+	["number", "0q75"],
+	["number", "75o"],
+	["number", "75q"],
+
+	["number", "0b0101"],
+	["number", "0y0101"],
+	["number", "0101b"],
+	["number", "0101y"],
+
+	["number", "0d42"],
+	["number", "0t42"],
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "4.2e4"],
+	["number", "2e-1"],
+	["number", "3.1e+2"],
+	["number", "42d"],
+	["number", "3.14159d"],
+	["number", "4.2e4d"],
+	["number", "2e-1d"],
+	["number", "3.1e+2d"],
+	["number", "42t"],
+	["number", "3.14159t"],
+	["number", "4.2e4t"],
+	["number", "2e-1t"],
+	["number", "3.1e+2t"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

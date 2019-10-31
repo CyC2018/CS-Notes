@@ -1,0 +1,469 @@
+<AuthnProviderAlias file file2>
+</AuthnProviderAlias>
+<AuthzProviderAlias ldap-group ldap-group-alias1 "cn=my-group,o=ctx">
+</AuthzProviderAlias>
+<Directory "/webpages/secure">
+</Directory>
+<DirectoryMatch "^/www/(.+/)?[0-9]{3}">
+</DirectoryMatch>
+<Else>
+</Else>
+<ElseIf "-R '10.0.0.0/8'">
+</ElseIf>
+<Files ~ "\.(gif|jpe?g|png)$">
+</Files>
+<FilesMatch ".+\.(gif|jpe?g|png)$">
+</FilesMatch>
+<If "-z req('Host')">
+</If>
+<IfDefine !MemCache>
+</IfDefine>
+<IfModule mod_rewrite.c>
+</IfModule>
+<IfVersion 2.1.0>
+</IfVersion>
+<Limit POST PUT DELETE>
+</Limit>
+<LimitExcept POST GET>
+</LimitExcept>
+<Location /private1>
+</Location>
+<LocationMatch "/(extra|special)/data">
+</LocationMatch>
+<Macro LocalAccessPolicy>
+</Macro>
+<Proxy "*">
+</Proxy>
+<RequireAll>
+</RequireAll>
+<RequireAny>
+</RequireAny>
+<RequireNone>
+</RequireNone>
+<VirtualHost [2001:db8::a00:20ff:fea7:ccea]:80>
+</VirtualHost>
+
+----------------------------------------------------
+
+[
+	["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"AuthnProviderAlias"
+		]],
+		["directive-block-parameter", [
+			" file file2"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+		["directive-block", [
+			["punctuation", "</"],
+			"AuthnProviderAlias"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "<"],
+            "AuthzProviderAlias"
+        ]],
+        ["directive-block-parameter", [
+            " ldap-group ldap-group-alias1 ",
+            ["string", [
+                "\"cn=my-group,o=ctx\""
+            ]]
+        ]],
+        ["punctuation", ">"]
+    ]],
+    ["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "AuthzProviderAlias"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Directory"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"/webpages/secure\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Directory"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"DirectoryMatch"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"^/www/(.+/)?[0-9]{3}\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "DirectoryMatch"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Else"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Else"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"ElseIf"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"-R '10.0.0.0/8'\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "ElseIf"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Files"
+		]],
+		["directive-block-parameter", [
+			" ~ ",
+			["string", [
+				"\"\\.(gif|jpe?g|png)$\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Files"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"FilesMatch"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\".+\\.(gif|jpe?g|png)$\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "FilesMatch"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"If"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"-z req('Host')\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "If"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"IfDefine"
+		]],
+		["directive-block-parameter", [
+			" !MemCache"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "IfDefine"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"IfModule"
+		]],
+		["directive-block-parameter", [
+			" mod_rewrite.c"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "IfModule"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"IfVersion"
+		]],
+		["directive-block-parameter", [
+			" 2.1.0"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "IfVersion"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Limit"
+		]],
+		["directive-block-parameter", [
+			" POST PUT DELETE"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Limit"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"LimitExcept"
+		]],
+		["directive-block-parameter", [
+			" POST GET"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "LimitExcept"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Location"
+		]],
+		["directive-block-parameter", [
+			" /private1"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Location"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"LocationMatch"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"/(extra|special)/data\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "LocationMatch"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Macro"
+		]],
+		["directive-block-parameter", [
+			" LocalAccessPolicy"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Macro"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"Proxy"
+		]],
+		["directive-block-parameter", [
+			["string", [
+				"\"*\""
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "Proxy"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"RequireAll"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "RequireAll"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"RequireAny"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "RequireAny"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"RequireNone"
+		]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "RequireNone"
+        ]],
+        ["punctuation", ">"]
+    ]],
+
+    ["directive-block", [
+		["directive-block", [
+			["punctuation", "<"],
+			"VirtualHost"
+		]],
+		["directive-block-parameter", [
+			" [2001",
+            ["punctuation", ":"],
+            "db8",
+            ["punctuation", ":"],
+            ["punctuation", ":"],
+            "a00",
+            ["punctuation", ":"],
+            "20ff",
+            ["punctuation", ":"],
+            "fea7",
+            ["punctuation", ":"],
+            "ccea]",
+            ["punctuation", ":"],
+            "80"
+        ]],
+		["punctuation", ">"]
+	]],
+	["directive-block", [
+        ["directive-block", [
+            ["punctuation", "</"],
+            "VirtualHost"
+        ]],
+        ["punctuation", ">"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for directive blocks.

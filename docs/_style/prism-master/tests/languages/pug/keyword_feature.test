@@ -1,0 +1,27 @@
+block title
+
+	extends ./foo.pug
+
+include ./bar.pug
+
+block append foo
+append bar
+
+block prepend foo
+prepend bar
+
+----------------------------------------------------
+
+[
+	["keyword", "block title"],
+	["keyword", "extends ./foo.pug"],
+	["keyword", "include ./bar.pug"],
+	["keyword", "block append foo"],
+	["keyword", "append bar"],
+	["keyword", "block prepend foo"],
+	["keyword", "prepend bar"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

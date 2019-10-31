@@ -1,0 +1,17 @@
+# On branch gh-pages
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+
+----------------------------------------------------
+
+[
+	["comment", "# On branch gh-pages"],
+	["comment", "# Changes to be committed:"],
+	["comment", "#   (use \"git reset HEAD <file>...\" to unstage)"],
+	["comment", "#"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

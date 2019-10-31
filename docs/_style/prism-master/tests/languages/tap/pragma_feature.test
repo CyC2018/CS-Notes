@@ -1,0 +1,13 @@
+pragma +strict
+pragma -strict
+
+----------------------------------------------------
+
+[
+	["pragma", "pragma +strict"],
+	["pragma", "pragma -strict"]
+]
+
+----------------------------------------------------
+
+Checks pragma

@@ -1,0 +1,47 @@
+<h2>Comments</h2>
+<pre><code>(::)
+(: Comment :)
+(: Multi-line
+comment :)
+(:~
+: The &lt;b>functx:substring-after-last&lt;/b> function returns the part
+: of &lt;b>$string&lt;/b> that appears after the last occurrence of
+: &lt;b>$delim&lt;/b>. If &lt;b>$string&lt;/b> does not contain
+: &lt;b>$delim&lt;/b>, the entire string is returned.
+:
+: @param $string the string to substring
+: @param $delim the delimiter
+: @return the substring
+:)</code></pre>
+
+<h2>Variables</h2>
+<pre><code>$myProduct
+$foo-bar
+$strings:LetterA</code></pre>
+
+<h2>Functions</h2>
+<pre><code>document-node(schema-element(catalog))
+strings:trim($arg as xs:string?)
+false()</code></pre>
+
+<h2>Keywords</h2>
+<pre><code>xquery version "1.0";
+declare default element namespace "http://datypic.com/cat";
+declare boundary-space preserve;
+declare default collation "http://datypic.com/collation/custom";</code></pre>
+
+<h2>Types</h2>
+<pre><code>xs:anyAtomicType
+element
+xs:double</code></pre>
+
+<h2>Full example</h2>
+<pre><code>&lt;report xmlns="http://datypic.com/report"
+xmlns:cat="http://datypic.com/cat"
+xmlns:prod="http://datypic.com/prod"> {
+for $product in doc("prod_ns.xml")/prod:product
+return &lt;lineItem>
+{$product/prod:number}
+{$product/prod:name}
+&lt;/lineItem>
+} &lt;/report></code></pre>

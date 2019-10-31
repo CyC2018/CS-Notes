@@ -1,0 +1,49 @@
+async* sync* yield*
+abstract assert async await
+break case catch
+class;
+const
+continue default deferred
+do dynamic else enum
+export external
+extends;
+factory final finally for
+get if
+implements;
+import
+in library
+new;
+null
+operator part rethrow return
+set static super switch this
+throw try typedef var
+void while with yield
+
+----------------------------------------------------
+
+[
+	["keyword", "async*"], ["keyword", "sync*"], ["keyword", "yield*"],
+	["keyword", "abstract"], ["keyword", "assert"], ["keyword", "async"], ["keyword", "await"],
+	["keyword", "break"], ["keyword", "case"], ["keyword", "catch"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"],
+	["keyword", "continue"], ["keyword", "default"], ["keyword", "deferred"],
+	["keyword", "do"], ["keyword", "dynamic"], ["keyword", "else"], ["keyword", "enum"],
+	["keyword", "export"], ["keyword", "external"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "factory"], ["keyword", "final"], ["keyword", "finally"], ["keyword", "for"],
+	["keyword", "get"], ["keyword", "if"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"],
+	["keyword", "in"], ["keyword", "library"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "null"],
+	["keyword", "operator"], ["keyword", "part"], ["keyword", "rethrow"], ["keyword", "return"],
+	["keyword", "set"], ["keyword", "static"], ["keyword", "super"], ["keyword", "switch"], ["keyword", "this"],
+	["keyword", "throw"], ["keyword", "try"], ["keyword", "typedef"], ["keyword", "var"],
+	["keyword", "void"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.
