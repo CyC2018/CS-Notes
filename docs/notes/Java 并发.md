@@ -61,7 +61,7 @@
 
 # 一、线程状态转换
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/adfb427d-3b21-40d7-a142-757f4ed73079.png" width="600px"> </div><br>
+<div align="center"> <img src="../../../adfb427d-3b21-40d7-a142-757f4ed73079.png" width="600px"> </div><br>
 
 ## 新建（New）
 
