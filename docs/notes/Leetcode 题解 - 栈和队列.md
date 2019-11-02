@@ -1,4 +1,12 @@
-[TOC]
+<!-- GFM-TOC -->
+* [1. 用栈实现队列](#1-用栈实现队列)
+* [2. 用队列实现栈](#2-用队列实现栈)
+* [3. 最小值栈](#3-最小值栈)
+* [4. 用栈实现括号匹配](#4-用栈实现括号匹配)
+* [5. 数组中元素与下一个比它大的元素之间的距离](#5-数组中元素与下一个比它大的元素之间的距离)
+* [6. 循环数组中比当前元素大的下一个元素](#6-循环数组中比当前元素大的下一个元素)
+<!-- GFM-TOC -->
+
 
 # 1. 用栈实现队列
 
@@ -222,3 +230,10 @@ public int[] nextGreaterElements(int[] nums) {
     return next;
 }
 ```
+
+
+
+
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

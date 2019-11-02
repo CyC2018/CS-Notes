@@ -1,14 +1,24 @@
-[TOC]
+<!-- GFM-TOC -->
+* [快速选择](#快速选择)
+* [堆](#堆)
+    * [1. Kth Element](#1-kth-element)
+* [桶排序](#桶排序)
+    * [1. 出现频率最多的 k 个元素](#1-出现频率最多的-k-个元素)
+    * [2. 按照字符出现次数对字符串排序](#2-按照字符出现次数对字符串排序)
+* [荷兰国旗问题](#荷兰国旗问题)
+    * [1. 按颜色进行排序](#1-按颜色进行排序)
+<!-- GFM-TOC -->
+
 
 # 快速选择
 
-用于求解  **Kth Element**  问题，也就是第 K 个元素的问题。
+用于求解   **Kth Element**   问题，也就是第 K 个元素的问题。
 
 可以使用快速排序的 partition() 进行实现。需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
 
 # 堆
 
-用于求解  **TopK Elements**  问题，也就是 K 个最小元素的问题。可以维护一个大小为 K 的最小堆，最小堆中的元素就是最小元素。最小堆需要使用大顶堆来实现，大顶堆表示堆顶元素是堆中最大元素。这是因为我们要得到 k 个最小的元素，因此当遍历到一个新的元素时，需要知道这个新元素是否比堆中最大的元素更小，更小的话就把堆中最大元素去除，并将新元素添加到堆中。所以我们需要很容易得到最大元素并移除最大元素，大顶堆就能很好满足这个要求。
+用于求解   **TopK Elements**   问题，也就是 K 个最小元素的问题。可以维护一个大小为 K 的最小堆，最小堆中的元素就是最小元素。最小堆需要使用大顶堆来实现，大顶堆表示堆顶元素是堆中最大元素。这是因为我们要得到 k 个最小的元素，因此当遍历到一个新的元素时，需要知道这个新元素是否比堆中最大的元素更小，更小的话就把堆中最大元素去除，并将新元素添加到堆中。所以我们需要很容易得到最大元素并移除最大元素，大顶堆就能很好满足这个要求。
 
 堆也可以用于求解 Kth Element 问题，得到了大小为 k 的最小堆之后，因为使用了大顶堆来实现，因此堆顶元素就是第 k 大的元素。
 
@@ -29,7 +39,7 @@ Output: 5
 
 题目描述：找到倒数第 k 个的元素。
 
-**排序** ：时间复杂度 O(NlogN)，空间复杂度 O(1)
+**排序**  ：时间复杂度 O(NlogN)，空间复杂度 O(1)
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -38,7 +48,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**堆** ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
+**堆**  ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -52,7 +62,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**快速选择** ：时间复杂度 O(N)，空间复杂度 O(1)
+**快速选择**  ：时间复杂度 O(N)，空间复杂度 O(1)
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -190,7 +200,7 @@ public String frequencySort(String s) {
 
 有三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
 
-![](pics/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
 
 
 ## 1. 按颜色进行排序
@@ -226,3 +236,10 @@ private void swap(int[] nums, int i, int j) {
     nums[j] = t;
 }
 ```
+
+
+
+
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

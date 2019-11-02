@@ -1,4 +1,21 @@
-[TOC]
+<!-- GFM-TOC -->
+* [一、I/O 模型](#一io-模型)
+    * [阻塞式 I/O](#阻塞式-io)
+    * [非阻塞式 I/O](#非阻塞式-io)
+    * [I/O 复用](#io-复用)
+    * [信号驱动 I/O](#信号驱动-io)
+    * [异步 I/O](#异步-io)
+    * [五大 I/O 模型比较](#五大-io-模型比较)
+* [二、I/O 复用](#二io-复用)
+    * [select](#select)
+    * [poll](#poll)
+    * [比较](#比较)
+    * [epoll](#epoll)
+    * [工作模式](#工作模式)
+    * [应用场景](#应用场景)
+* [参考资料](#参考资料)
+<!-- GFM-TOC -->
+
 
 # 一、I/O 模型
 
@@ -29,7 +46,7 @@ Unix 有五种 I/O 模型：
 ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);
 ```
 
-![](pics/1492928416812_4.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492928416812_4.png"/> </div><br>
 
 ## 非阻塞式 I/O
 
@@ -37,7 +54,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 由于 CPU 要处理更多的系统调用，因此这种模型的 CPU 利用率比较低。
 
-![](pics/1492929000361_5.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929000361_5.png"/> </div><br>
 
 ## I/O 复用
 
@@ -47,7 +64,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时有几万个连接，那么就需要创建相同数量的线程。相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
 
-![](pics/1492929444818_6.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929444818_6.png"/> </div><br>
 
 ## 信号驱动 I/O
 
@@ -55,7 +72,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 相比于非阻塞式 I/O 的轮询方式，信号驱动 I/O 的 CPU 利用率更高。
 
-![](pics/1492929553651_7.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929553651_7.png"/> </div><br>
 
 ## 异步 I/O
 
@@ -63,7 +80,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 异步 I/O 与信号驱动 I/O 的区别在于，异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。
 
-![](pics/1492930243286_8.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492930243286_8.png"/> </div><br>
 
 ## 五大 I/O 模型比较
 
@@ -74,7 +91,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
-![](pics/1492928105791_3.png)
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492928105791_3.png"/> </div><br>
 
 # 二、I/O 复用
 
@@ -316,3 +333,10 @@ poll 没有最大描述符数量的限制，如果平台支持并且对实时性
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [select / poll / epoll: practical difference for system architects](http://www.ulduzsoft.com/2014/01/select-poll-epoll-practical-difference-for-system-architects/)
 - [Browse the source code of userspace/glibc/sysdeps/unix/sysv/linux/ online](https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/)
+
+
+
+
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

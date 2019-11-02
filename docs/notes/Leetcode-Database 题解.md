@@ -1,4 +1,21 @@
-[TOC]
+<!-- GFM-TOC -->
+* [595. Big Countries](#595-big-countries)
+* [627. Swap Salary](#627-swap-salary)
+* [620. Not Boring Movies](#620-not-boring-movies)
+* [596. Classes More Than 5 Students](#596-classes-more-than-5-students)
+* [182. Duplicate Emails](#182-duplicate-emails)
+* [196. Delete Duplicate Emails](#196-delete-duplicate-emails)
+* [175. Combine Two Tables](#175-combine-two-tables)
+* [181. Employees Earning More Than Their Managers](#181-employees-earning-more-than-their-managers)
+* [183. Customers Who Never Order](#183-customers-who-never-order)
+* [184. Department Highest Salary](#184-department-highest-salary)
+* [176. Second Highest Salary](#176-second-highest-salary)
+* [177. Nth Highest Salary](#177-nth-highest-salary)
+* [178. Rank Scores](#178-rank-scores)
+* [180. Consecutive Numbers](#180-consecutive-numbers)
+* [626. Exchange Seats](#626-exchange-seats)
+<!-- GFM-TOC -->
+
 
 # 595. Big Countries
 
@@ -986,3 +1003,10 @@ WHERE
 ORDER BY
     id;
 ```
+
+
+
+
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>
