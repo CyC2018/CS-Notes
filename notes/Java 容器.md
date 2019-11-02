@@ -618,7 +618,7 @@ int hash = hash(key);
 int i = indexFor(hash, table.length);
 ```
 
-**4.1 计算 hash 值** 
+**4.1 计算 hash 值**  
 
 ```java
 final int hash(Object k) {
@@ -643,7 +643,7 @@ public final int hashCode() {
 }
 ```
 
-**4.2 取模** 
+**4.2 取模**  
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 

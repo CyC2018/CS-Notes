@@ -1,10 +1,4 @@
-<!-- GFM-TOC -->
-* [1. 数组中两个数的和为给定值](#1-数组中两个数的和为给定值)
-* [2. 判断数组是否含有重复元素](#2-判断数组是否含有重复元素)
-* [3. 最长和谐序列](#3-最长和谐序列)
-* [4. 最长连续序列](#4-最长连续序列)
-<!-- GFM-TOC -->
-
+[TOC]
 
 哈希表使用 O(N) 空间复杂度存储数据，并且以 O(1) 时间复杂度求解问题。
 
@@ -131,10 +125,3 @@ private int maxCount(Map<Integer, Integer> countForNum) {
     return max;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

@@ -1,8 +1,4 @@
-<!-- GFM-TOC -->
-* [1. 给表达式加括号](#1-给表达式加括号)
-* [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
-<!-- GFM-TOC -->
-
+[TOC]
 
 # 1. 给表达式加括号
 
@@ -108,10 +104,3 @@ private List<TreeNode> generateSubtrees(int s, int e) {
     return res;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

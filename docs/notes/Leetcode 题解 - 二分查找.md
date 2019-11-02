@@ -1,14 +1,6 @@
-<!-- GFM-TOC -->
-* [1. 求开方](#1-求开方)
-* [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
-* [3. 有序数组的 Single Element](#3-有序数组的-single-element)
-* [4. 第一个错误的版本](#4-第一个错误的版本)
-* [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
-* [6. 查找区间](#6-查找区间)
-<!-- GFM-TOC -->
+[TOC]
 
-
-**正常实现** 
+正常实现** 
 
 ```text
 Input : [1,2,3,4,5]
@@ -301,10 +293,3 @@ private int binarySearch(int[] nums, int target) {
 }
 ```
 
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

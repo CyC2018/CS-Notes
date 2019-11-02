@@ -321,7 +321,7 @@ Only two moves are needed (remember each move increments or decrements one eleme
 
 设数组长度为 N，则可以找到 N/2 对 a 和 b 的组合，使它们都移动到 m 的位置。
 
-**解法 1** 
+**解法 1**  
 
 先排序，时间复杂度：O(NlogN)
 
@@ -339,7 +339,7 @@ public int minMoves2(int[] nums) {
 }
 ```
 
-**解法 2** 
+**解法 2**  
 
 使用快速选择找到中位数，时间复杂度 O(N)
 

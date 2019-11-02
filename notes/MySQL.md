@@ -388,9 +388,9 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 主要涉及三个线程：binlog 线程、I/O 线程和 SQL 线程。
 
--  **binlog 线程** ：负责将主服务器上的数据更改写入二进制日志（Binary log）中。
--  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（Relay log）。
--  **SQL 线程** ：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（Replay）。
+-   **binlog 线程**  ：负责将主服务器上的数据更改写入二进制日志（Binary log）中。
+-   **I/O 线程**  ：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（Relay log）。
+-   **SQL 线程**  ：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（Replay）。
 
 <div align="center"> <img src="pics/master-slave.png" width=""> </div><br>
 

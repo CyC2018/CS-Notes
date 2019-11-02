@@ -1,19 +1,4 @@
-<!-- GFM-TOC -->
-* [50. 第一个只出现一次的字符位置](#50-第一个只出现一次的字符位置)
-* [51. 数组中的逆序对](#51-数组中的逆序对)
-* [52. 两个链表的第一个公共结点](#52-两个链表的第一个公共结点)
-* [53. 数字在排序数组中出现的次数](#53-数字在排序数组中出现的次数)
-* [54. 二叉查找树的第 K 个结点](#54-二叉查找树的第-k-个结点)
-* [55.1 二叉树的深度](#551-二叉树的深度)
-* [55.2 平衡二叉树](#552-平衡二叉树)
-* [56. 数组中只出现一次的数字](#56-数组中只出现一次的数字)
-* [57.1 和为 S 的两个数字](#571-和为-s-的两个数字)
-* [57.2 和为 S 的连续正数序列](#572-和为-s-的连续正数序列)
-* [58.1 翻转单词顺序列](#581-翻转单词顺序列)
-* [58.2 左旋转字符串](#582-左旋转字符串)
-* [59. 滑动窗口的最大值](#59-滑动窗口的最大值)
-<!-- GFM-TOC -->
-
+[TOC]
 
 # 50. 第一个只出现一次的字符位置
 
@@ -120,7 +105,7 @@ private void merge(int[] nums, int l, int m, int h) {
 
 ## 题目描述
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5f1cb999-cb9a-4f6c-a0af-d90377295ab8.png" width="500"/> </div><br>
+<img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5f1cb999-cb9a-4f6c-a0af-d90377295ab8.png" width="500"/>
 
 ## 解题思路
 
@@ -212,7 +197,7 @@ private void inOrder(TreeNode root, int k) {
 
 从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ba355101-4a93-4c71-94fb-1da83639727b.jpg" width="350px"/> </div><br>
+<img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ba355101-4a93-4c71-94fb-1da83639727b.jpg" width="350px"/>
 
 ## 解题思路
 
@@ -230,7 +215,7 @@ public int TreeDepth(TreeNode root) {
 
 平衡二叉树左右子树高度差不超过 1。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/af1d1166-63af-47b6-9aa3-2bf2bd37bd03.jpg" width="250px"/> </div><br>
+<img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/af1d1166-63af-47b6-9aa3-2bf2bd37bd03.jpg" width="250px"/>
 
 ## 解题思路
 
@@ -477,10 +462,3 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
     return ret;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

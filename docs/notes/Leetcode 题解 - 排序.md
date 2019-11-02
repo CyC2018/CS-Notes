@@ -1,14 +1,4 @@
-<!-- GFM-TOC -->
-* [快速选择](#快速选择)
-* [堆](#堆)
-    * [1. Kth Element](#1-kth-element)
-* [桶排序](#桶排序)
-    * [1. 出现频率最多的 k 个元素](#1-出现频率最多的-k-个元素)
-    * [2. 按照字符出现次数对字符串排序](#2-按照字符出现次数对字符串排序)
-* [荷兰国旗问题](#荷兰国旗问题)
-    * [1. 按颜色进行排序](#1-按颜色进行排序)
-<!-- GFM-TOC -->
-
+[TOC]
 
 # 快速选择
 
@@ -200,7 +190,7 @@ public String frequencySort(String s) {
 
 有三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
+![](pics/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png)
 
 
 ## 1. 按颜色进行排序
@@ -236,10 +226,3 @@ private void swap(int[] nums, int i, int j) {
     nums[j] = t;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-1.png"></img></div>

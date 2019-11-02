@@ -641,7 +641,7 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内
 example: find . -name "shadow*"
 ```
 
-**① 与时间有关的选项** 
+**① 与时间有关的选项**  
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -654,7 +654,7 @@ example: find . -name "shadow*"
 
 <div align="center"> <img src="pics/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
 
-**② 与文件拥有者和所属群组有关的选项** 
+**② 与文件拥有者和所属群组有关的选项**  
 
 ```html
 -uid n
@@ -665,7 +665,7 @@ example: find . -name "shadow*"
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-**③ 与文件权限和名称有关的选项** 
+**③ 与文件权限和名称有关的选项**  
 
 ```html
 -name filename
@@ -892,7 +892,7 @@ $ export | cut -c 12-
 
 ## 排序指令
 
-**sort**  用于排序。
+**sort**   用于排序。
 
 ```html
 $ sort [-fbMnrtuk] [file or stdin]
@@ -916,7 +916,7 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq**  可以将重复的数据只取一个。
+**uniq**   可以将重复的数据只取一个。
 
 ```html
 $ uniq [-ic]
@@ -938,7 +938,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 ## 双向输出重定向
 
-输出重定向会将输出内容重定向到文件中，而  **tee**  不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
+输出重定向会将输出内容重定向到文件中，而   **tee**   不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```html
 $ tee [-a] file
@@ -946,7 +946,7 @@ $ tee [-a] file
 
 ## 字符转换指令
 
-**tr**  用来删除一行中的字符，或者对字符进行替换。
+**tr**   用来删除一行中的字符，或者对字符进行替换。
 
 ```html
 $ tr [-ds] SET1 ...
@@ -959,21 +959,21 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
-  **col**  将 tab 字符转为空格字符。
+   **col**   将 tab 字符转为空格字符。
 
 ```html
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand**  将 tab 转换一定数量的空格，默认是 8 个。
+**expand**   将 tab 转换一定数量的空格，默认是 8 个。
 
 ```html
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
-**join**  将有相同数据的那一行合并在一起。
+**join**   将有相同数据的那一行合并在一起。
 
 ```html
 $ join [-ti12] file1 file2
@@ -983,7 +983,7 @@ $ join [-ti12] file1 file2
 -2 ：第二个文件所用的比较字段
 ```
 
-**paste**  直接将两行粘贴在一起。
+**paste**   直接将两行粘贴在一起。
 
 ```html
 $ paste [-d] file1 file2
@@ -992,7 +992,7 @@ $ paste [-d] file1 file2
 
 ## 分区指令
 
-**split**  将一个文件划分成多个文件。
+**split**   将一个文件划分成多个文件。
 
 ```html
 $ split [-bl] file PREFIX
