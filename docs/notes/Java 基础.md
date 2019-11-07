@@ -185,21 +185,21 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 ## 不可变的好处
 
-**1. 可以缓存 hash 值** 
+**1. 可以缓存 hash 值**  
 
 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
 
-**2. String Pool 的需要** 
+**2. String Pool 的需要**  
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9112288f-23f5-4e53-b222-a46fdbca1603.png" width="300px"> </div><br>
 
-**3. 安全性** 
+**3. 安全性**  
 
 String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
 
-**4. 线程安全** 
+**4. 线程安全**  
 
 String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
 
@@ -207,12 +207,12 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 ## String, StringBuffer and StringBuilder
 
-**1. 可变性** 
+**1. 可变性**  
 
 - String 不可变
 - StringBuffer 和 StringBuilder 可变
 
-**2. 线程安全** 
+**2. 线程安全**  
 
 - String 不可变，因此是线程安全的
 - StringBuilder 不是线程安全的
@@ -509,7 +509,7 @@ public class AccessWithInnerClassExample {
 
 ## 抽象类与接口
 
-**1. 抽象类** 
+**1. 抽象类**  
 
 抽象类和抽象方法都使用 abstract 关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。
 
@@ -544,7 +544,7 @@ AbstractClassExample ac2 = new AbstractExtendClassExample();
 ac2.func1();
 ```
 
-**2. 接口** 
+**2. 接口**  
 
 接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。
 
@@ -588,14 +588,14 @@ ie2.func1();
 System.out.println(InterfaceExample.x);
 ```
 
-**3. 比较** 
+**3. 比较**  
 
 - 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
 - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。
 - 接口的成员只能是 public 的，而抽象类的成员可以有多种访问权限。
 
-**4. 使用选择** 
+**4. 使用选择**  
 
 使用接口：
 
@@ -669,7 +669,7 @@ SuperExtendExample.func()
 
 ## 重写与重载
 
-**1. 重写（Override）** 
+**1. 重写（Override）**  
 
 存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。
 
@@ -773,7 +773,7 @@ public static void main(String[] args) {
 }
 ```
 
-**2. 重载（Overload）** 
+**2. 重载（Overload）**  
 
 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。
 
@@ -810,7 +810,7 @@ public final void wait() throws InterruptedException
 
 ## equals()
 
-**1. 等价关系** 
+**1. 等价关系**  
 
 Ⅰ 自反性
 
@@ -847,7 +847,7 @@ x.equals(y) == x.equals(y); // true
 x.equals(null); // false;
 ```
 
-**2. 等价与相等** 
+**2. 等价与相等**  
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
 - 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。
@@ -859,7 +859,7 @@ System.out.println(x.equals(y)); // true
 System.out.println(x == y);      // false
 ```
 
-**3. 实现** 
+**3. 实现**  
 
 - 检查是否为同一个对象的引用，如果是直接返回 true；
 - 检查是否是同一个类型，如果不是，直接返回 false；
@@ -952,7 +952,7 @@ ToStringExample@4554617c
 
 ## clone()
 
-**1. cloneable** 
+**1. cloneable**  
 
 clone() 是 Object 的 protected 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法。
 
@@ -1011,7 +1011,7 @@ public class CloneExample implements Cloneable {
 }
 ```
 
-**2. 浅拷贝** 
+**2. 浅拷贝**  
 
 拷贝对象和原始对象的引用类型引用同一个对象。
 
@@ -1054,7 +1054,7 @@ e1.set(2, 222);
 System.out.println(e2.get(2)); // 222
 ```
 
-**3. 深拷贝** 
+**3. 深拷贝**  
 
 拷贝对象和原始对象的引用类型引用不同对象。
 
@@ -1102,7 +1102,7 @@ e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
 ```
 
-**4. clone() 的替代方案** 
+**4. clone() 的替代方案**  
 
 使用 clone() 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
 
@@ -1146,7 +1146,7 @@ System.out.println(e2.get(2)); // 2
 
 ## final
 
-**1. 数据** 
+**1. 数据**  
 
 声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。
 
@@ -1160,19 +1160,19 @@ final A y = new A();
 y.a = 1;
 ```
 
-**2. 方法** 
+**2. 方法**  
 
 声明方法不能被子类重写。
 
 private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是重写基类方法，而是在子类中定义了一个新的方法。
 
-**3. 类** 
+**3. 类**  
 
 声明类不允许被继承。
 
 ## static
 
-**1. 静态变量** 
+**1. 静态变量**  
 
 - 静态变量：又称为类变量，也就是说这个变量属于类的，类所有的实例都共享静态变量，可以直接通过类名来访问它。静态变量在内存中只存在一份。
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
@@ -1192,7 +1192,7 @@ public class A {
 }
 ```
 
-**2. 静态方法** 
+**2. 静态方法**  
 
 静态方法在类加载的时候就存在了，它不依赖于任何实例。所以静态方法必须有实现，也就是说它不能是抽象方法。
 
@@ -1220,7 +1220,7 @@ public class A {
 }
 ```
 
-**3. 静态语句块** 
+**3. 静态语句块**  
 
 静态语句块在类初始化时运行一次。
 
@@ -1241,7 +1241,7 @@ public class A {
 123
 ```
 
-**4. 静态内部类** 
+**4. 静态内部类**  
 
 非静态内部类依赖于外部类的实例，而静态内部类不需要。
 
@@ -1265,7 +1265,7 @@ public class OuterClass {
 
 静态内部类不能访问外部类的非静态的变量和方法。
 
-**5. 静态导包** 
+**5. 静态导包**  
 
 在使用静态变量和方法时不用再指明 ClassName，从而简化代码，但可读性大大降低。
 
@@ -1273,7 +1273,7 @@ public class OuterClass {
 import static com.xxx.ClassName.*
 ```
 
-**6. 初始化顺序** 
+**6. 初始化顺序**  
 
 静态变量和静态语句块优先于实例变量和普通语句块，静态变量和静态语句块的初始化顺序取决于它们在代码中的顺序。
 
@@ -1317,7 +1317,7 @@ public InitialOrderTest() {
 
 # 七、反射
 
-每个类都有一个  **Class**  对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
+每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
 类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
@@ -1325,25 +1325,25 @@ public InitialOrderTest() {
 
 Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
 
--  **Field** ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
--  **Method** ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
--  **Constructor** ：可以用 Constructor 的 newInstance() 创建新的对象。
+-   **Field**  ：可以使用 get() 和 set() 方法读取和修改 Field 对象关联的字段；
+-   **Method**  ：可以使用 invoke() 方法调用与 Method 对象关联的方法；
+-   **Constructor**  ：可以用 Constructor 的 newInstance() 创建新的对象。
 
-**反射的优点：** 
+**反射的优点：**  
 
-*    **可扩展性**  ：应用程序可以利用全限定名创建可扩展对象的实例，来使用来自外部的用户自定义类。
-*    **类浏览器和可视化开发环境**  ：一个类浏览器需要可以枚举类的成员。可视化开发环境（如 IDE）可以从利用反射中可用的类型信息中受益，以帮助程序员编写正确的代码。
-*    **调试器和测试工具**  ： 调试器需要能够检查一个类里的私有成员。测试工具可以利用反射来自动地调用类里定义的可被发现的 API 定义，以确保一组测试中有较高的代码覆盖率。
+*     **可扩展性**   ：应用程序可以利用全限定名创建可扩展对象的实例，来使用来自外部的用户自定义类。
+*     **类浏览器和可视化开发环境**   ：一个类浏览器需要可以枚举类的成员。可视化开发环境（如 IDE）可以从利用反射中可用的类型信息中受益，以帮助程序员编写正确的代码。
+*     **调试器和测试工具**   ： 调试器需要能够检查一个类里的私有成员。测试工具可以利用反射来自动地调用类里定义的可被发现的 API 定义，以确保一组测试中有较高的代码覆盖率。
 
-**反射的缺点：** 
+**反射的缺点：**  
 
 尽管反射非常强大，但也不能滥用。如果一个功能可以不用反射完成，那么最好就不用。在我们使用反射技术时，下面几条内容应该牢记于心。
 
-*    **性能开销**  ：反射涉及了动态类型的解析，所以 JVM 无法对这些代码进行优化。因此，反射操作的效率要比那些非反射操作低得多。我们应该避免在经常被执行的代码或对性能要求很高的程序中使用反射。
+*     **性能开销**   ：反射涉及了动态类型的解析，所以 JVM 无法对这些代码进行优化。因此，反射操作的效率要比那些非反射操作低得多。我们应该避免在经常被执行的代码或对性能要求很高的程序中使用反射。
 
-*    **安全限制**  ：使用反射技术要求程序必须在一个没有安全限制的环境中运行。如果一个程序必须在有安全限制的环境中运行，如 Applet，那么这就是个问题了。
+*     **安全限制**   ：使用反射技术要求程序必须在一个没有安全限制的环境中运行。如果一个程序必须在有安全限制的环境中运行，如 Applet，那么这就是个问题了。
 
-*    **内部暴露**  ：由于反射允许代码执行一些在正常情况下不被允许的操作（比如访问私有的属性和方法），所以使用反射可能会导致意料之外的副作用，这可能导致代码功能失调并破坏可移植性。反射代码破坏了抽象性，因此当平台发生改变的时候，代码的行为就有可能也随着变化。
+*     **内部暴露**   ：由于反射允许代码执行一些在正常情况下不被允许的操作（比如访问私有的属性和方法），所以使用反射可能会导致意料之外的副作用，这可能导致代码功能失调并破坏可移植性。反射代码破坏了抽象性，因此当平台发生改变的时候，代码的行为就有可能也随着变化。
 
 
 - [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
@@ -1351,10 +1351,10 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 # 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： **Error**  和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：  **Error**   和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
--  **受检异常** ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
--  **非受检异常** ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
+-   **受检异常**  ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
+-   **非受检异常**  ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
 
@@ -1385,7 +1385,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ## Java 各版本的新特性
 
-**New highlights in Java SE 8** 
+**New highlights in Java SE 8**  
 
 1. Lambda Expressions
 2. Pipelines and Streams
@@ -1397,7 +1397,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 8. Parallel operations
 9. PermGen Error Removed
 
-**New highlights in Java SE 7** 
+**New highlights in Java SE 7**  
 
 1. Strings in Switch Statement
 2. Type Inference for Generic Instance Creation
@@ -1420,7 +1420,6 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承。
 - Java 不支持操作符重载，虽然可以对两个 String 对象执行加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
 - Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
-- Java 不支持条件编译，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
 
 [What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
 
@@ -1437,10 +1436,6 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
-
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

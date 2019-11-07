@@ -28,7 +28,7 @@
 <!-- GFM-TOC -->
 
 
-本文大部分内容参考  **周志明《深入理解 Java 虚拟机》** ，想要深入学习的话请看原书。
+本文大部分内容参考   **周志明《深入理解 Java 虚拟机》**  ，想要深入学习的话请看原书。
 
 # 一、运行时数据区域
 
@@ -462,11 +462,11 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 包括以下 7 个阶段：
 
--  **加载（Loading）** 
--  **验证（Verification）** 
--  **准备（Preparation）** 
--  **解析（Resolution）** 
--  **初始化（Initialization）** 
+-   **加载（Loading）**  
+-   **验证（Verification）**  
+-   **准备（Preparation）**  
+-   **解析（Resolution）**  
+-   **初始化（Initialization）**  
 - 使用（Using）
 - 卸载（Unloading）
 
@@ -521,11 +521,9 @@ public static final int value = 123;
 其中解析过程在某些情况下可以在初始化阶段之后再开始，这是为了支持 Java 的动态绑定。
 
 <div data="补充为什么可以支持动态绑定 --> <--"></div>
-
 ### 5. 初始化
 
 <div data="modify -->"></div>
-
 初始化阶段才真正开始执行类中定义的 Java 程序代码。初始化阶段是虚拟机执行类构造器 &lt;clinit>() 方法的过程。在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。
 
 &lt;clinit>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
@@ -624,7 +622,6 @@ System.out.println(ConstClass.HELLOWORLD);
 - 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
 <div data="modify <--"></div>
-
 ## 双亲委派模型
 
 应用程序是由三种类加载器互相配合从而实现类加载，除此之外还可以加入自己定义的类加载器。
@@ -760,10 +757,6 @@ public class FileSystemClassLoader extends ClassLoader {
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
-
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

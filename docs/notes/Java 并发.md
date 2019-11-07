@@ -384,7 +384,7 @@ Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问
 
 ## synchronized
 
-**1. 同步一个代码块** 
+**1. 同步一个代码块**  
 
 ```java
 public void func() {
@@ -441,7 +441,7 @@ public static void main(String[] args) {
 ```
 
 
-**2. 同步一个方法** 
+**2. 同步一个方法**  
 
 ```java
 public synchronized void func () {
@@ -451,7 +451,7 @@ public synchronized void func () {
 
 它和同步代码块一样，作用于同一个对象。
 
-**3. 同步一个类** 
+**3. 同步一个类**  
 
 ```java
 public void func() {
@@ -490,7 +490,7 @@ public static void main(String[] args) {
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-**4. 同步一个静态方法** 
+**4. 同步一个静态方法**  
 
 ```java
 public synchronized static void fun() {
@@ -538,27 +538,27 @@ public static void main(String[] args) {
 
 ## 比较
 
-**1. 锁的实现** 
+**1. 锁的实现**  
 
 synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
 
-**2. 性能** 
+**2. 性能**  
 
 新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
 
-**3. 等待可中断** 
+**3. 等待可中断**  
 
 当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
 
 ReentrantLock 可中断，而 synchronized 不行。
 
-**4. 公平锁** 
+**4. 公平锁**  
 
 公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
 
 synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
 
-**5. 锁绑定多个条件** 
+**5. 锁绑定多个条件**  
 
 一个 ReentrantLock 可以同时绑定多个 Condition 对象。
 
@@ -669,7 +669,7 @@ before
 after
 ```
 
-**wait() 和 sleep() 的区别** 
+**wait() 和 sleep() 的区别**  
 
 - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
 - wait() 会释放锁，sleep() 不会。
@@ -907,12 +907,12 @@ other task is running...
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
--  **FIFO 队列** ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
--  **优先级队列** ：PriorityBlockingQueue
+-   **FIFO 队列**  ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
+-   **优先级队列**  ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
 
-**使用 BlockingQueue 实现生产者消费者问题** 
+**使用 BlockingQueue 实现生产者消费者问题**  
 
 ```java
 public class ProducerConsumer {
@@ -1638,10 +1638,6 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
-
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
