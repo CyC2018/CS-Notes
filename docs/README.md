@@ -31,7 +31,7 @@
 - [MySQL](notes/MySQL.md) </br>
 - [Redis](notes/Redis.md)
 
-## ☕️              Java
+## ☕️    Java  hi
 
 - [Java 基础](notes/Java%20基础.md) </br>
 - [Java 容器](notes/Java%20容器.md) </br>
