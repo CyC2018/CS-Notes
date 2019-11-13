@@ -56,7 +56,7 @@
 
 - HashMap：基于哈希表实现。
 
-- HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。它是遗留类，不应该去使用它。现在可以使用 ConcurrentHashMap 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
+- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 Hashtable 并且不会导致数据不一致。它是遗留类，不应该去使用它。现在可以使用 ConcurrentHashMap 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
@@ -299,12 +299,53 @@ public synchronized E get(int index) {
 }
 ```
 
-### 2. 与 ArrayList 的比较
+### 2. 扩容
+
+Vector 的构造函数可以传入 capacityIncrement 参数，它的作用是在扩容时使容量 capacity 增长 capacityIncrement。如果这个参数的值小于等于 0，扩容时每次都令 capacity 为原来的两倍。
+
+```java
+public Vector(int initialCapacity, int capacityIncrement) {
+    super();
+    if (initialCapacity < 0)
+        throw new IllegalArgumentException("Illegal Capacity: "+
+                                           initialCapacity);
+    this.elementData = new Object[initialCapacity];
+    this.capacityIncrement = capacityIncrement;
+}
+```
+
+```java
+private void grow(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + ((capacityIncrement > 0) ?
+                                     capacityIncrement : oldCapacity);
+    if (newCapacity - minCapacity < 0)
+        newCapacity = minCapacity;
+    if (newCapacity - MAX_ARRAY_SIZE > 0)
+        newCapacity = hugeCapacity(minCapacity);
+    elementData = Arrays.copyOf(elementData, newCapacity);
+}
+```
+
+调用没有 capacityIncrement 的构造函数时，capacityIncrement 值被设置为 0，也就是说默认情况下 Vector 每次扩容时容量都会翻倍。
+
+```java
+public Vector(int initialCapacity) {
+    this(initialCapacity, 0);
+}
+
+public Vector() {
+    this(10);
+}
+```
+
+### 3. 与 ArrayList 的比较
 
 - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
-- Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
+- Vector 每次扩容请求其大小的 2 倍（也可以通过构造函数设置增长的容量），而 ArrayList 是 1.5 倍。
 
-### 3. 替代方案
+### 4. 替代方案
 
 可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
@@ -577,7 +618,7 @@ int hash = hash(key);
 int i = indexFor(hash, table.length);
 ```
 
-**4.1 计算 hash 值** 
+**4.1 计算 hash 值**  
 
 ```java
 final int hash(Object k) {
@@ -602,7 +643,7 @@ public final int hashCode() {
 }
 ```
 
-**4.2 取模** 
+**4.2 取模**  
 
 令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
@@ -650,7 +691,7 @@ static int indexFor(int h, int length) {
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | 键值对数量。 |
 | threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
-| loadFactor | 装载因子，table 能够使用的比例，threshold = capacity * loadFactor。|
+| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(newCapacity * loadFactor)。|
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -718,7 +759,7 @@ void transfer(Entry[] newTable) {
 
 ### 6. 扩容-重新计算桶下标
 
-在进行扩容时，需要把键值对重新放到对应的桶上。HashMap 使用了一个特殊的机制，可以降低重新计算桶下标的操作。
+在进行扩容时，需要把键值对重新计算桶下标，从而放到对应的桶上。在前面提到，HashMap 使用 hash%capacity 来确定桶下标。HashMap capacity 为 2 的 n 次方这一特点能够极大降低重新计算桶下标操作的复杂度。
 
 假设原数组长度 capacity 为 16，扩容之后 new capacity 为 32：
 
@@ -727,10 +768,10 @@ capacity     : 00010000
 new capacity : 00100000
 ```
 
-对于一个 Key，
+对于一个 Key，它的哈希值 hash 在第 5 位：
 
-- 它的哈希值如果在第 5 位上为 0，那么取模得到的结果和之前一样；
-- 如果为 1，那么得到的结果为原来的结果 +16。
+- 为 0，那么 hash%00010000 = hash%00100000，桶位置和原来一致；
+- 为 1，hash%00010000 = hash%00100000 + 16，桶位置是原位置 + 16。
 
 ### 7. 计算数组容量
 
@@ -767,11 +808,11 @@ static final int tableSizeFor(int cap) {
 
 ### 8. 链表转红黑树
 
-从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+从 JDK 1.8 开始，一个桶存储的链表长度大于等于 8 时会将链表转换为红黑树。
 
-### 9. 与 HashTable 的比较
+### 9. 与 Hashtable 的比较
 
-- HashTable 使用 synchronized 来进行同步。
+- Hashtable 使用 synchronized 来进行同步。
 - HashMap 可以插入键为 null 的 Entry。
 - HashMap 的迭代器是 fail-fast 迭代器。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
@@ -1113,4 +1154,6 @@ public final class ConcurrentCache<K, V> {
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

@@ -641,7 +641,7 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内
 example: find . -name "shadow*"
 ```
 
-**① 与时间有关的选项** 
+**① 与时间有关的选项**  
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -654,7 +654,7 @@ example: find . -name "shadow*"
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
 
-**② 与文件拥有者和所属群组有关的选项** 
+**② 与文件拥有者和所属群组有关的选项**  
 
 ```html
 -uid n
@@ -665,7 +665,7 @@ example: find . -name "shadow*"
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-**③ 与文件权限和名称有关的选项** 
+**③ 与文件权限和名称有关的选项**  
 
 ```html
 -name filename
@@ -771,7 +771,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命名别名：例如 lm 是 ls -al 的别名
+- 命名别名：例如 ll 是 ls -al 的别名
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
@@ -892,7 +892,7 @@ $ export | cut -c 12-
 
 ## 排序指令
 
-**sort**  用于排序。
+**sort**   用于排序。
 
 ```html
 $ sort [-fbMnrtuk] [file or stdin]
@@ -916,7 +916,7 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq**  可以将重复的数据只取一个。
+**uniq**   可以将重复的数据只取一个。
 
 ```html
 $ uniq [-ic]
@@ -938,7 +938,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 ## 双向输出重定向
 
-输出重定向会将输出内容重定向到文件中，而  **tee**  不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
+输出重定向会将输出内容重定向到文件中，而   **tee**   不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```html
 $ tee [-a] file
@@ -946,7 +946,7 @@ $ tee [-a] file
 
 ## 字符转换指令
 
-**tr**  用来删除一行中的字符，或者对字符进行替换。
+**tr**   用来删除一行中的字符，或者对字符进行替换。
 
 ```html
 $ tr [-ds] SET1 ...
@@ -959,21 +959,21 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
-  **col**  将 tab 字符转为空格字符。
+   **col**   将 tab 字符转为空格字符。
 
 ```html
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand**  将 tab 转换一定数量的空格，默认是 8 个。
+**expand**   将 tab 转换一定数量的空格，默认是 8 个。
 
 ```html
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
-**join**  将有相同数据的那一行合并在一起。
+**join**   将有相同数据的那一行合并在一起。
 
 ```html
 $ join [-ti12] file1 file2
@@ -983,7 +983,7 @@ $ join [-ti12] file1 file2
 -2 ：第二个文件所用的比较字段
 ```
 
-**paste**  直接将两行粘贴在一起。
+**paste**   直接将两行粘贴在一起。
 
 ```html
 $ paste [-d] file1 file2
@@ -992,7 +992,7 @@ $ paste [-d] file1 file2
 
 ## 分区指令
 
-**split**  将一个文件划分成多个文件。
+**split**   将一个文件划分成多个文件。
 
 ```html
 $ split [-bl] file PREFIX
@@ -1162,7 +1162,7 @@ dmtsai lines: 5 columns: 9
 | R | running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。|
 | D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
-| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是不可被其父进程获取信息。|
+| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
 | T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
 <br>
 
@@ -1247,4 +1247,6 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

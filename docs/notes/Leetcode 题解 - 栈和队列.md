@@ -10,7 +10,9 @@
 
 # 1. 用栈实现队列
 
-[232. Implement Queue using Stacks (Easy)](https://leetcode.com/problems/implement-queue-using-stacks/description/)
+232\. Implement Queue using Stacks (Easy)
+
+[Leetcode](https://leetcode.com/problems/implement-queue-using-stacks/description/) / [力扣](https://leetcode-cn.com/problems/implement-queue-using-stacks/description/)
 
 栈的顺序为后进先出，而队列的顺序为先进先出。使用两个栈实现队列，一个元素需要经过两个栈才能出队列，在经过第一个栈时元素顺序被反转，经过第二个栈时再次被反转，此时就是先进先出顺序。
 
@@ -50,7 +52,9 @@ class MyQueue {
 
 # 2. 用队列实现栈
 
-[225. Implement Stack using Queues (Easy)](https://leetcode.com/problems/implement-stack-using-queues/description/)
+225\. Implement Stack using Queues (Easy)
+
+[Leetcode](https://leetcode.com/problems/implement-stack-using-queues/description/) / [力扣](https://leetcode-cn.com/problems/implement-stack-using-queues/description/)
 
 在将一个元素 x 插入队列时，为了维护原来的后进先出顺序，需要让 x 插入队列首部。而队列的默认插入顺序是队列尾部，因此在将 x 插入队列尾部之后，需要让除了 x 之外的所有元素出队列，再入队列。
 
@@ -87,7 +91,9 @@ class MyStack {
 
 # 3. 最小值栈
 
-[155. Min Stack (Easy)](https://leetcode.com/problems/min-stack/description/)
+155\. Min Stack (Easy)
+
+[Leetcode](https://leetcode.com/problems/min-stack/description/) / [力扣](https://leetcode-cn.com/problems/min-stack/description/)
 
 ```java
 class MinStack {
@@ -128,7 +134,9 @@ class MinStack {
 
 # 4. 用栈实现括号匹配
 
-[20. Valid Parentheses (Easy)](https://leetcode.com/problems/valid-parentheses/description/)
+20\. Valid Parentheses (Easy)
+
+[Leetcode](https://leetcode.com/problems/valid-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/valid-parentheses/description/)
 
 ```html
 "()[]{}"
@@ -161,7 +169,9 @@ public boolean isValid(String s) {
 
 # 5. 数组中元素与下一个比它大的元素之间的距离
 
-[739. Daily Temperatures (Medium)](https://leetcode.com/problems/daily-temperatures/description/)
+739\. Daily Temperatures (Medium)
+
+[Leetcode](https://leetcode.com/problems/daily-temperatures/description/) / [力扣](https://leetcode-cn.com/problems/daily-temperatures/description/)
 
 ```html
 Input: [73, 74, 75, 71, 69, 72, 76, 73]
@@ -188,7 +198,9 @@ public int[] dailyTemperatures(int[] temperatures) {
 
 # 6. 循环数组中比当前元素大的下一个元素
 
-[503. Next Greater Element II (Medium)](https://leetcode.com/problems/next-greater-element-ii/description/)
+503\. Next Greater Element II (Medium)
+
+[Leetcode](https://leetcode.com/problems/next-greater-element-ii/description/) / [力扣](https://leetcode-cn.com/problems/next-greater-element-ii/description/)
 
 ```text
 Input: [1,2,1]
@@ -222,4 +234,6 @@ public int[] nextGreaterElements(int[] nums) {
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

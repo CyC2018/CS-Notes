@@ -223,7 +223,7 @@ public static void main(String[] args) {
 
 main() 属于非守护线程。
 
-使用 setDaemon() 方法将一个线程设置为守护线程。
+在线程启动之前使用 setDaemon() 方法可以将一个线程设置为守护线程。
 
 ```java
 public static void main(String[] args) {
@@ -384,7 +384,7 @@ Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问
 
 ## synchronized
 
-**1. 同步一个代码块** 
+**1. 同步一个代码块**  
 
 ```java
 public void func() {
@@ -441,7 +441,7 @@ public static void main(String[] args) {
 ```
 
 
-**2. 同步一个方法** 
+**2. 同步一个方法**  
 
 ```java
 public synchronized void func () {
@@ -451,7 +451,7 @@ public synchronized void func () {
 
 它和同步代码块一样，作用于同一个对象。
 
-**3. 同步一个类** 
+**3. 同步一个类**  
 
 ```java
 public void func() {
@@ -490,7 +490,7 @@ public static void main(String[] args) {
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-**4. 同步一个静态方法** 
+**4. 同步一个静态方法**  
 
 ```java
 public synchronized static void fun() {
@@ -538,27 +538,27 @@ public static void main(String[] args) {
 
 ## 比较
 
-**1. 锁的实现** 
+**1. 锁的实现**  
 
 synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
 
-**2. 性能** 
+**2. 性能**  
 
 新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
 
-**3. 等待可中断** 
+**3. 等待可中断**  
 
 当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
 
 ReentrantLock 可中断，而 synchronized 不行。
 
-**4. 公平锁** 
+**4. 公平锁**  
 
 公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
 
 synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
 
-**5. 锁绑定多个条件** 
+**5. 锁绑定多个条件**  
 
 一个 ReentrantLock 可以同时绑定多个 Condition 对象。
 
@@ -669,7 +669,7 @@ before
 after
 ```
 
-**wait() 和 sleep() 的区别** 
+**wait() 和 sleep() 的区别**  
 
 - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
 - wait() 会释放锁，sleep() 不会。
@@ -732,7 +732,7 @@ java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.
 
 ## CountDownLatch
 
-用来控制一个线程等待多个线程。
+用来控制一个或者多个线程等待多个线程。
 
 维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
 
@@ -907,12 +907,12 @@ other task is running...
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
--  **FIFO 队列** ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
--  **优先级队列** ：PriorityBlockingQueue
+-   **FIFO 队列**  ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
+-   **优先级队列**  ：PriorityBlockingQueue
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
 
-**使用 BlockingQueue 实现生产者消费者问题** 
+**使用 BlockingQueue 实现生产者消费者问题**  
 
 ```java
 public class ProducerConsumer {
@@ -1329,9 +1329,9 @@ synchronized 和 ReentrantLock。
 
 互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
 
-### 1. CAS
-
 随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。
+
+### 1. CAS
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
 
@@ -1638,4 +1638,6 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

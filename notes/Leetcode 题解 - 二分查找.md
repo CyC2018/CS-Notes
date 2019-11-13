@@ -8,7 +8,7 @@
 <!-- GFM-TOC -->
 
 
-**正常实现** 
+正常实现** 
 
 ```text
 Input : [1,2,3,4,5]
@@ -33,11 +33,11 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-**时间复杂度** 
+**时间复杂度**  
 
 二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
-**m 计算** 
+**m 计算**  
 
 有两种计算中值 m 的方式：
 
@@ -46,14 +46,14 @@ public int binarySearch(int[] nums, int key) {
 
 l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算法方法。
 
-**未成功查找的返回值** 
+**未成功查找的返回值**  
 
 循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
 
 - -1：以一个错误码表示没有查找到 key
 - l：将 key 插入到 nums 中的正确位置
 
-**变种** 
+**变种**  
 
 二分查找可以有很多变种，变种实现要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
 
@@ -96,7 +96,9 @@ l   m   h
 
 # 1. 求开方
 
-[69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
+69\. Sqrt(x) (Easy)
+
+[Leetcode](https://leetcode.com/problems/sqrtx/description/) / [力扣](https://leetcode-cn.com/problems/sqrtx/description/)
 
 ```html
 Input: 4
@@ -134,7 +136,9 @@ public int mySqrt(int x) {
 
 # 2. 大于给定元素的最小元素
 
-[744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
+744\. Find Smallest Letter Greater Than Target (Easy)
+
+[Leetcode](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/) / [力扣](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
 
 ```html
 Input:
@@ -168,7 +172,9 @@ public char nextGreatestLetter(char[] letters, char target) {
 
 # 3. 有序数组的 Single Element
 
-[540. Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/description/)
+540\. Single Element in a Sorted Array (Medium)
+
+[Leetcode](https://leetcode.com/problems/single-element-in-a-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
 Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
@@ -205,7 +211,9 @@ public int singleNonDuplicate(int[] nums) {
 
 # 4. 第一个错误的版本
 
-[278. First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/description/)
+278\. First Bad Version (Easy)
+
+[Leetcode](https://leetcode.com/problems/first-bad-version/description/) / [力扣](https://leetcode-cn.com/problems/first-bad-version/description/)
 
 题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，在第 x 位置开始出现错误版本，导致后面的版本都错误。可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
 
@@ -230,7 +238,9 @@ public int firstBadVersion(int n) {
 
 # 5. 旋转数组的最小数字
 
-[153. Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
+153\. Find Minimum in Rotated Sorted Array (Medium)
+
+[Leetcode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
 ```html
 Input: [3,4,5,1,2],
@@ -254,7 +264,9 @@ public int findMin(int[] nums) {
 
 # 6. 查找区间
 
-[34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+34\. Find First and Last Position of Element in Sorted Array
+
+[Leetcode](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) / [力扣](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ```html
 Input: nums = [5,7,7,8,8,10], target = 8
@@ -293,4 +305,6 @@ private int binarySearch(int[] nums, int target) {
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

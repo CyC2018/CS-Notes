@@ -2,14 +2,14 @@
 * [1. 分配饼干](#1-分配饼干)
 * [2. 不重叠的区间个数](#2-不重叠的区间个数)
 * [3. 投飞镖刺破气球](#3-投飞镖刺破气球)
-* [3. 根据身高和序号重组队列](#3-根据身高和序号重组队列)
-* [4. 买卖股票最大的收益](#4-买卖股票最大的收益)
-* [5. 买卖股票的最大收益 II](#5-买卖股票的最大收益-ii)
-* [6. 种植花朵](#6-种植花朵)
-* [7. 判断是否为子序列](#7-判断是否为子序列)
-* [8. 修改一个数成为非递减数组](#8-修改一个数成为非递减数组)
-* [9. 子数组最大的和](#9-子数组最大的和)
-* [10. 分隔字符串使同种字符出现在一起](#10-分隔字符串使同种字符出现在一起)
+* [4. 根据身高和序号重组队列](#4-根据身高和序号重组队列)
+* [5. 买卖股票最大的收益](#5-买卖股票最大的收益)
+* [6. 买卖股票的最大收益 II](#6-买卖股票的最大收益-ii)
+* [7. 种植花朵](#7-种植花朵)
+* [8. 判断是否为子序列](#8-判断是否为子序列)
+* [9. 修改一个数成为非递减数组](#9-修改一个数成为非递减数组)
+* [10. 子数组最大的和](#10-子数组最大的和)
+* [11. 分隔字符串使同种字符出现在一起](#11-分隔字符串使同种字符出现在一起)
 <!-- GFM-TOC -->
 
 
@@ -17,30 +17,34 @@
 
 # 1. 分配饼干
 
-[455. Assign Cookies (Easy)](https://leetcode.com/problems/assign-cookies/description/)
+455\. Assign Cookies (Easy)
+
+[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode-cn.com/problems/assign-cookies/description/)
 
 ```html
-Input: [1,2], [1,2,3]
+Input: grid[1,3], size[1,2,4]
 Output: 2
-
-Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2.
-You have 3 cookies and their sizes are big enough to gratify all of the children,
-You need to output 2.
 ```
 
-题目描述：每个孩子都有一个满足度，每个饼干都有一个大小，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
+题目描述：每个孩子都有一个满足度 grid，每个饼干都有一个大小 size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
 
-给一个孩子的饼干应当尽量小又能满足该孩子，这样大饼干就能拿来给满足度比较大的孩子。因为最小的孩子最容易得到满足，所以先满足最小的孩子。
+1. 给一个孩子的饼干应当尽量小并且又能满足该孩子，这样大饼干才能拿来给满足度比较大的孩子。
+2. 因为满足度最小的孩子最容易得到满足，所以先满足满足度最小的孩子。
 
-证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+在以上的解法中，我们只在每次分配时饼干时选择一种看起来是当前最优的分配方法，但无法保证这种局部最优的分配方法最后能得到全局最优解。我们假设能得到全局最优解，并使用反证法进行证明，即假设存在一种比我们使用的贪心策略更优的最优策略。如果不存在这种最优策略，表示贪心策略就是最优策略，得到的解也就是全局最优解。
+
+证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
 
 ```java
-public int findContentChildren(int[] g, int[] s) {
-    Arrays.sort(g);
-    Arrays.sort(s);
+public int findContentChildren(int[] grid, int[] size) {
+    if (grid == null || size == null) return 0;
+    Arrays.sort(grid);
+    Arrays.sort(size);
     int gi = 0, si = 0;
-    while (gi < g.length && si < s.length) {
-        if (g[gi] <= s[si]) {
+    while (gi < grid.length && si < size.length) {
+        if (grid[gi] <= size[si]) {
             gi++;
         }
         si++;
@@ -51,7 +55,9 @@ public int findContentChildren(int[] g, int[] s) {
 
 # 2. 不重叠的区间个数
 
-[435. Non-overlapping Intervals (Medium)](https://leetcode.com/problems/non-overlapping-intervals/description/)
+435\. Non-overlapping Intervals (Medium)
+
+[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
 
 ```html
 Input: [ [1,2], [1,2], [1,2] ]
@@ -78,18 +84,18 @@ Explanation: You don't need to remove any of the intervals since they're already
 按区间的结尾进行排序，每次选择结尾最小，并且和前一个区间不重叠的区间。
 
 ```java
-public int eraseOverlapIntervals(Interval[] intervals) {
+public int eraseOverlapIntervals(int[][] intervals) {
     if (intervals.length == 0) {
         return 0;
     }
-    Arrays.sort(intervals, Comparator.comparingInt(o -> o.end));
+    Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
     int cnt = 1;
-    int end = intervals[0].end;
+    int end = intervals[0][1];
     for (int i = 1; i < intervals.length; i++) {
-        if (intervals[i].start < end) {
+        if (intervals[i][0] < end) {
             continue;
         }
-        end = intervals[i].end;
+        end = intervals[i][1];
         cnt++;
     }
     return intervals.length - cnt;
@@ -99,17 +105,19 @@ public int eraseOverlapIntervals(Interval[] intervals) {
 使用 lambda 表示式创建 Comparator 会导致算法运行时间过长，如果注重运行时间，可以修改为普通创建 Comparator 语句：
 
 ```java
-Arrays.sort(intervals, new Comparator<Interval>() {
+Arrays.sort(intervals, new Comparator<int[]>() {
     @Override
-    public int compare(Interval o1, Interval o2) {
-        return o1.end - o2.end;
+    public int compare(int[] o1, int[] o2) {
+        return o1[1] - o2[1];
     }
 });
 ```
 
 # 3. 投飞镖刺破气球
 
-[452. Minimum Number of Arrows to Burst Balloons (Medium)](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+452\. Minimum Number of Arrows to Burst Balloons (Medium)
+
+[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [力扣](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
 ```
 Input:
@@ -141,9 +149,11 @@ public int findMinArrowShots(int[][] points) {
 }
 ```
 
-# 3. 根据身高和序号重组队列
+# 4. 根据身高和序号重组队列
 
-[406. Queue Reconstruction by Height(Medium)](https://leetcode.com/problems/queue-reconstruction-by-height/description/)
+406\. Queue Reconstruction by Height(Medium)
+
+[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
 
 ```html
 Input:
@@ -173,9 +183,11 @@ public int[][] reconstructQueue(int[][] people) {
 }
 ```
 
-# 4. 买卖股票最大的收益
+# 5. 买卖股票最大的收益
 
-[121. Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/)
+121\. Best Time to Buy and Sell Stock (Easy)
+
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/description/)
 
 题目描述：一次股票交易包含买入和卖出，只进行一次交易，求最大收益。
 
@@ -196,9 +208,11 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 5. 买卖股票的最大收益 II
+# 6. 买卖股票的最大收益 II
 
-[122. Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
+122\. Best Time to Buy and Sell Stock II (Easy)
+
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
 题目描述：可以进行多次交易，多次交易之间不能交叉进行，可以进行多次交易。
 
@@ -217,9 +231,11 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 6. 种植花朵
+# 7. 种植花朵
 
-[605. Can Place Flowers (Easy)](https://leetcode.com/problems/can-place-flowers/description/)
+605\. Can Place Flowers (Easy)
+
+[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode-cn.com/problems/can-place-flowers/description/)
 
 ```html
 Input: flowerbed = [1,0,0,0,1], n = 1
@@ -247,9 +263,11 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 }
 ```
 
-# 7. 判断是否为子序列
+# 8. 判断是否为子序列
 
-[392. Is Subsequence (Medium)](https://leetcode.com/problems/is-subsequence/description/)
+392\. Is Subsequence (Medium)
+
+[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/is-subsequence/description/)
 
 ```html
 s = "abc", t = "ahbgdc"
@@ -269,9 +287,11 @@ public boolean isSubsequence(String s, String t) {
 }
 ```
 
-# 8. 修改一个数成为非递减数组
+# 9. 修改一个数成为非递减数组
 
-[665. Non-decreasing Array (Easy)](https://leetcode.com/problems/non-decreasing-array/description/)
+665\. Non-decreasing Array (Easy)
+
+[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
 
 ```html
 Input: [4,2,3]
@@ -281,7 +301,7 @@ Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 
 题目描述：判断一个数组是否能只修改一个数就成为非递减数组。
 
-在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且  **不影响后续的操作** 。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
+在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且   **不影响后续的操作**  。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
 
 ```java
 public boolean checkPossibility(int[] nums) {
@@ -303,9 +323,11 @@ public boolean checkPossibility(int[] nums) {
 
 
 
-# 9. 子数组最大的和
+# 10. 子数组最大的和
 
-[53. Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray/description/)
+53\. Maximum Subarray (Easy)
+
+[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode-cn.com/problems/maximum-subarray/description/)
 
 ```html
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
@@ -327,9 +349,11 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
-# 10. 分隔字符串使同种字符出现在一起
+# 11. 分隔字符串使同种字符出现在一起
 
-[763. Partition Labels (Medium)](https://leetcode.com/problems/partition-labels/description/)
+763\. Partition Labels (Medium)
+
+[Leetcode](https://leetcode.com/problems/partition-labels/description/) / [力扣](https://leetcode-cn.com/problems/partition-labels/description/)
 
 ```html
 Input: S = "ababcbacadefegdehijhklij"
@@ -370,4 +394,6 @@ private int char2Index(char c) {
 
 
 
-<img width="650px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报1.png"></img>
+
+
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
