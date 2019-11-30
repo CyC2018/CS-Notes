@@ -278,12 +278,12 @@ Output: [-1,-1]
 
 题目描述：给定一个有序数组 nums 和一个目标 target，要求找到 target 在 nums 中的第一个位置和最后一个位置。
 
-
+可以用二分查找找出第一个位置和最后一个位置，但是寻找的方法有所不同，需要实现两个二分查找。我们将寻找  target 最后一个位置，转换成寻找 target+1 第一个位置，再往前移动一个位置。这样我们只需要实现一个二分查找代码即可。
 
 ```java
 public int[] searchRange(int[] nums, int target) {
-    int first = binarySearch(nums, target);
-    int last = binarySearch(nums, target + 1) - 1;
+    int first = findFirst(nums, target);
+    int last = findFirst(nums, target + 1) - 1;
     if (first == nums.length || nums[first] != target) {
         return new int[]{-1, -1};
     } else {
@@ -291,7 +291,7 @@ public int[] searchRange(int[] nums, int target) {
     }
 }
 
-private int binarySearch(int[] nums, int target) {
+private int findFirst(int[] nums, int target) {
     int l = 0, h = nums.length; // 注意 h 的初始值
     while (l < h) {
         int m = l + (h - l) / 2;
@@ -305,6 +305,13 @@ private int binarySearch(int[] nums, int target) {
 }
 ```
 
+在寻找第一个位置的二分查找代码中，需要注意 h 的取值为 nums.length，而不是 nums.length - 1。先看以下示例：
+
+```
+nums = [2,2], target = 2
+```
+
+如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findLeft 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3) ，我们希望返回 3 插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以我们需要将 h 取值为 nums.length，从而使得 findFirst返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
 
 
 
