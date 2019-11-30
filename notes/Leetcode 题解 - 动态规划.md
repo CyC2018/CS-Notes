@@ -20,6 +20,7 @@
     * [2. 一组整数对能够构成的最长链](#2-一组整数对能够构成的最长链)
     * [3. 最长摆动子序列](#3-最长摆动子序列)
 * [最长公共子序列](#最长公共子序列)
+    * [1. 最长公共子序列](#1-最长公共子序列)
 * [0-1 背包](#0-1-背包)
     * [1. 划分数组为和相等的两部分](#1-划分数组为和相等的两部分)
     * [2. 改变一组数的正负号使得它们的和为一给定数](#2-改变一组数的正负号使得它们的和为一给定数)
@@ -624,6 +625,12 @@ public int wiggleMaxLength(int[] nums) {
 - 针对的是两个序列，求它们的最长公共子序列。
 - 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>。
 - 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
+
+## 1. 最长公共子序列
+
+1143\. Longest Common Subsequence
+
+[Leetcode](https://leetcode.com/problems/longest-common-subsequence/) / [力扣](https://leetcode-cn.com/problems/longest-common-subsequence/)
 
 ```java
 public int lengthOfLCS(int[] nums1, int[] nums2) {
