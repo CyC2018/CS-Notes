@@ -72,7 +72,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
 
 本题的关键是右指针的初始化，实现剪枝，从而降低时间复杂度。设右指针为 x，左指针固定为 0，为了使 0<sup>2</sup> + x<sup>2</sup> 的值尽可能接近 target，我们可以将 x 取为 sqrt(target)。
 
-因为最多只需要遍历一次 0\~sqrt(target)，所以时间复杂度为 O(log<sub>2</sub>N)。又因为只使用了两个额外的变量，因此空间复杂度为 O(1)。
+因为最多只需要遍历一次 0\~sqrt(target)，所以时间复杂度为 O(sqrt(target))。又因为只使用了两个额外的变量，因此空间复杂度为 O(1)。
 
 ```java
  public boolean judgeSquareSum(int target) {
