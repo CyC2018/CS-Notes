@@ -8,7 +8,7 @@
 <!-- GFM-TOC -->
 
 
-正常实现** 
+**正常实现**  
 
 ```text
 Input : [1,2,3,4,5]
@@ -275,6 +275,10 @@ Output: [3,4]
 Input: nums = [5,7,7,8,8,10], target = 6
 Output: [-1,-1]
 ```
+
+题目描述：给定一个有序数组 nums 和一个目标 target，要求找到 target 在 nums 中的第一个位置和最后一个位置。
+
+
 
 ```java
 public int[] searchRange(int[] nums, int target) {
