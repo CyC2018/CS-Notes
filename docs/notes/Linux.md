@@ -95,7 +95,7 @@ man 是 manual 的缩写，将指令的具体信息显示出来。
 
 ### 3. info
 
-info 与 man 类似，但是 info 将文档分成一个个页面，每个页面可以进行跳转。
+info 与 man 类似，但是 info 将文档分成一个个页面，每个页面可以跳转。
 
 ### 4. doc
 
@@ -109,7 +109,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 
 ### 2. sync
 
-为了加快对磁盘文件的读写速度，位于内存中的文件数据不会立即同步到磁盘上，因此关机之前需要先进行 sync 同步操作。
+为了加快对磁盘文件的读写速度，位于内存中的文件数据不会立即同步到磁盘，因此关机之前需要先进行 sync 同步操作。
 
 ### 3. shutdown
 
@@ -118,7 +118,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 -k ： 不会关机，只是发送警告信息，通知所有在线的用户
 -r ： 将系统的服务停掉后就重新启动
 -h ： 将系统的服务停掉后就立即关机
--c ： 取消已经在进行的 shutdown 指令内容
+-c ： 取消已经在进行的 shutdown
 ```
 
 ## PATH
@@ -1027,10 +1027,10 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-因为 { 和 } 在 shell 是有特殊意义的，因此必须要使用转义字符进行转义。
+示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转移，因为它们在 shell 是有特殊意义的。
 
 ```html
-$ grep -n 'go\{2,5\}g' regular_express.txt
+$ grep -n 'a\{2,5\}' regular_express.txt
 ```
 
 ## printf
@@ -1046,11 +1046,11 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 ## awk
 
-是由 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
+是由 Alfred Aho，Peter Weinberger 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
-示例：取出最近五个登录用户的用户名和 IP
+示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，我们用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
 
 ```html
 $ last -n 5
@@ -1107,19 +1107,19 @@ dmtsai lines: 5 columns: 9
 
 查看某个时间点的进程信息。
 
-示例一：查看自己的进程
+示例：查看自己的进程
 
 ```sh
 # ps -l
 ```
 
-示例二：查看系统所有进程
+示例：查看系统所有进程
 
 ```sh
 # ps aux
 ```
 
-示例三：查看特定的进程
+示例：查看特定的进程
 
 ```sh
 # ps aux | grep threadx
