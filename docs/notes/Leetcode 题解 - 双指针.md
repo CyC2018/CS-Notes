@@ -32,7 +32,7 @@ Output: index1=1, index2=2
 
 数组中的元素最多遍历一次，时间复杂度为 O(N)。只使用了两个额外变量，空间复杂度为  O(1)。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/437cb54c-5970-4ba9-b2ef-2541f7d6c81e.gif" width="200px"> </div><br>
+<div align="center"> <img src="pics/437cb54c-5970-4ba9-b2ef-2541f7d6c81e.gif" width="200px"> </div><br>
 
 ```java
 public int[] twoSum(int[] numbers, int target) {
@@ -102,7 +102,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
 Given s = "leetcode", return "leotcede".
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a7cb8423-895d-4975-8ef8-662a0029c772.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/a7cb8423-895d-4975-8ef8-662a0029c772.png" width="400px"> </div><br>
 
 使用双指针，一个指针从头向尾遍历，一个指针从尾到头遍历，当两个指针都遍历到元音字符时，交换这两个元音字符。
 
@@ -111,7 +111,7 @@ Given s = "leetcode", return "leotcede".
 - 时间复杂度为 O(N)：只需要遍历所有元素一次
 - 空间复杂度 O(1)：只需要使用两个额外变量
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ef25ff7c-0f63-420d-8b30-eafbeea35d11.gif" width="400px"> </div><br>
+<div align="center"> <img src="pics/ef25ff7c-0f63-420d-8b30-eafbeea35d11.gif" width="400px"> </div><br>
 
 ```java
 private final static HashSet<Character> vowels = new HashSet<>(
@@ -155,7 +155,7 @@ Explanation: You could delete the character 'c'.
 
 使用双指针可以很容易判断一个字符串是否是回文字符串：令一个指针从左到右遍历，一个指针从右到左遍历，这两个指针同时移动一个位置，每次都判断两个指针指向的字符是否相同，如果都相同，字符串才是具有左右对称性质的回文字符串。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fcc941ec-134b-4dcd-bc86-1702fd305300.gif" width="250px"> </div><br>
+<div align="center"> <img src="pics/fcc941ec-134b-4dcd-bc86-1702fd305300.gif" width="250px"> </div><br>
 
 本题的关键是处理删除一个字符。在使用双指针遍历字符串时，如果出现两个指针指向的字符不相等的情况，我们就试着删除一个字符，再判断删除完之后的字符串是否是回文字符串。
 
@@ -163,7 +163,7 @@ Explanation: You could delete the character 'c'.
 
 在试着删除字符时，我们既可以删除左指针指向的字符，也可以删除右指针指向的字符。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/db5f30a7-8bfa-4ecc-ab5d-747c77818964.gif" width="300px"> </div><br>
+<div align="center"> <img src="pics/db5f30a7-8bfa-4ecc-ab5d-747c77818964.gif" width="300px"> </div><br>
 
 ```java
 public boolean validPalindrome(String s) {
