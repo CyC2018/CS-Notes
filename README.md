@@ -13,7 +13,7 @@
 <br>
 
 <div align="center">
-    <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/LogoMakr_0zpEzN.png" width="200px">
+    <img src="assets/LogoMakr_0zpEzN.png" width="200px">
 </div>
 
 
@@ -85,7 +85,7 @@
 <div align="center">
 	<a href="https://www.nowcoder.com/discuss/137593?from=cyc_github"> 我的面经 </a> / <a href="https://cyc2018.github.io"> 我的简历 </a> / <a href="https://github.com/CyC2018/Markdown-Resume"> 简历模版 </a> / <a href="https://github.com/CyC2018/Job-Recommend"> 内推 </a> / <a href="https://xiaozhuanlan.com/CyC2018"> 专栏 </a> / <a href="assets/QQ2群.png"> QQ 群</a>
 	<br><br>
-    <img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img>
+    <img width="320px" src="assets/公众号二维码-2.png"></img>
 </div>
 
 
