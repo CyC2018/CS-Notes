@@ -161,11 +161,13 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ## VIM 三个模式
 
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209002818626.png"/> </div><br>
+
+
+
 - 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
 - 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
 - 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b5e9fa4d-78d3-4176-8273-756d970742c7.png" width="500"/> </div><br>
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
