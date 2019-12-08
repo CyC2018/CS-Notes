@@ -60,25 +60,25 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 使用指针将每个提交连接成一条时间线，HEAD 指针指向当前分支指针。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ec4d7464-7140-46d8-827e-d63634202e1e.png" width="220px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203219927.png"/> </div><br>
 
 新建分支是新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支，表示新分支成为当前分支。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66d00642-ce37-466c-8f7a-143d0bf84cd6.png" width="220px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203142527.png"/> </div><br>
 
 每次提交只会让当前分支指针向前移动，而其它分支指针不会移动。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/72a01242-e6b4-46c5-a285-24e754d63093.png" width="300px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203112400.png"/> </div><br>
 
 合并分支也只需要改变指针即可。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/94617147-0cbd-4a28-847d-81e52efb1b1e.png" width="300px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203010540.png"/> </div><br>
 
 # 冲突
 
 当两个分支都对同一个文件的同一行进行了修改，在分支合并时就会产生冲突。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/32b05e81-41b3-414a-8656-736c9604e3d6.png" width="300px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203034705.png"/> </div><br>
 
 Git 会使用 <<<<<<< ，======= ，>>>>>>> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
