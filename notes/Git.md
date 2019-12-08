@@ -18,7 +18,7 @@
 
 Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1fe2dc77-9a2d-4643-90b3-bbf50f649bac.png" width="600px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200656794.png"/> </div><br>
 
 集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。
 
@@ -40,21 +40,21 @@ Github 就是一个中心服务器。
 
 Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本库，History 存储所有分支信息，使用一个 HEAD 指针指向当前分支。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/71b97a50-a49f-4f1a-81d1-48c3364d61b3.png" width="700px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208195941661.png"/> </div><br>
 
 - git add files 把文件的修改添加到暂存区
 - git commit 把暂存区的修改提交到当前分支，提交之后暂存区就被清空了
 - git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/72ee7e9a-194d-42e9-b4d7-29c23417ca18.png" width="320px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200014395.png"/> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
 
 - git commit -a 直接把所有文件的修改添加到暂存区然后执行提交
 - git checkout HEAD -- files 取出最后一次修改，可以用来进行回滚操作
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a4a0a6e6-386b-4bfa-b899-ec33d3310f3e.png" width="500px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200543923.png"/> </div><br>
 
 # 分支实现
 
