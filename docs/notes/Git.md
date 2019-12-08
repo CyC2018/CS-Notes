@@ -5,7 +5,6 @@
 * [分支实现](#分支实现)
 * [冲突](#冲突)
 * [Fast forward](#fast-forward)
-* [分支管理策略](#分支管理策略)
 * [储藏（Stashing）](#储藏stashing)
 * [SSH 传输设置](#ssh-传输设置)
 * [.gitignore 文件](#gitignore-文件)
@@ -100,15 +99,7 @@ Creating a new branch is quick AND simple.
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9a519773-84b2-4c81-81cf-4e7dd739a97a.png" width="350px"> </div><br>
-
-# 分支管理策略
-
-master 分支应该是非常稳定的，只用来发布新版本；
-
-日常开发在开发分支 dev 上进行。
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/245fd2fb-209c-4ad5-bc5e-eb5664966a0e.jpg" width=""> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203639712.png"/> </div><br>
 
 # 储藏（Stashing）
 
