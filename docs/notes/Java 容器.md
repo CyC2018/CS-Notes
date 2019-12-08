@@ -659,9 +659,9 @@ static int indexFor(int h, int length) {
 
 ### 5. 扩容-基本原理
 
-设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的复杂度为 O(N/M)。
+设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此查找的复杂度为 O(N/M)。
 
-为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
+为了让查找的成本降低，应该使 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
 
 和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
 
@@ -670,7 +670,7 @@ static int indexFor(int h, int length) {
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | 键值对数量。 |
 | threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
-| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(newCapacity * loadFactor)。|
+| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(capacity* loadFactor)。 |
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -800,6 +800,8 @@ static final int tableSizeFor(int cap) {
 
 ### 1. 存储结构
 
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209001038024.png"/> </div><br>
+
 ```java
 static final class HashEntry<K,V> {
     final int hash;
@@ -842,8 +844,6 @@ final Segment<K,V>[] segments;
 ```java
 static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 ```
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/db808eff-31d7-4229-a4ad-b8ae71870a3a.png" width="550px"> </div><br>
 
 ### 2. size 操作
 
