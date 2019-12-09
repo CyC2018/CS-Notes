@@ -193,11 +193,11 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
 
 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9112288f-23f5-4e53-b222-a46fdbca1603.png" width="300px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191210004132894.png"/> </div><br>
 
 **3. 安全性**  
 
-String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
+String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 的那一方以为现在连接的是其它主机，而实际情况却不一定是。
 
 **4. 线程安全**  
 
@@ -222,11 +222,11 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 ## String Pool
 
-字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程中将字符串添加到 String Pool 中。
+字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程将字符串添加到 String Pool 中。
 
 当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。
 
-下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 方法取得一个字符串引用。intern() 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 方法取得同一个字符串引用。intern() 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。
 
 ```java
 String s1 = new String("aaa");
@@ -310,7 +310,7 @@ public String(String original) {
 
 Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中使指针引用其它对象，那么这两个指针此时指向的是完全不同的对象，在一方改变其所指向对象的内容时对另一方没有影响。
+以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
 
 ```java
 public class Dog {
@@ -335,6 +335,24 @@ public class Dog {
 }
 ```
 
+在方法中改变对象的字段值会改变原对象该字段值，因为引用的是同一个对象。
+
+```java
+class PassByValueExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("A");
+        func(dog);
+        System.out.println(dog.getName());          // B
+    }
+
+    private static void func(Dog dog) {
+        dog.setName("B");
+    }
+}
+```
+
+但是在方法中将指针引用了其它对象，那么此时方法里和方法外的两个指针指向了不同的对象，在一个指针改变其所指向对象的内容对另一个指针所指向的对象没有影响。
+
 ```java
 public class PassByValueExample {
     public static void main(String[] args) {
@@ -350,22 +368,6 @@ public class PassByValueExample {
         dog = new Dog("B");
         System.out.println(dog.getObjectAddress()); // Dog@74a14482
         System.out.println(dog.getName());          // B
-    }
-}
-```
-
-如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
-
-```java
-class PassByValueExample {
-    public static void main(String[] args) {
-        Dog dog = new Dog("A");
-        func(dog);
-        System.out.println(dog.getName());          // B
-    }
-
-    private static void func(Dog dog) {
-        dog.setName("B");
     }
 }
 ```
@@ -390,18 +392,18 @@ float f = 1.1f;
 
 ## 隐式类型转换
 
-因为字面量 1 是 int 类型，它比 short 类型精度要高，因此不能隐式地将 int 类型下转型为 short 类型。
+因为字面量 1 是 int 类型，它比 short 类型精度要高，因此不能隐式地将 int 类型向下转型为 short 类型。
 
 ```java
 short s1 = 1;
 // s1 = s1 + 1;
 ```
 
-但是使用 += 或者 ++ 运算符可以执行隐式类型转换。
+但是使用 += 或者 ++ 运算符会执行隐式类型转换。
 
 ```java
 s1 += 1;
-// s1++;
+s1++;
 ```
 
 上面的语句相当于将 s1 + 1 的计算结果进行了向下转型：
@@ -428,7 +430,7 @@ switch (s) {
 }
 ```
 
-switch 不支持 long，是因为 switch 的设计初衷是对那些只有少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
+switch 不支持 long，是因为 switch 的设计初衷是对那些只有少数几个值的类型进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
 
 ```java
 // long x = 111;
