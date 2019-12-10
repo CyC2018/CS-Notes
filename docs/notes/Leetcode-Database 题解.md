@@ -230,7 +230,7 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 
 ## Solution
 
-对 class 列进行分组之后，再使用 count 汇总函数统计数量，统计之后使用 having 进行过滤。
+对 class 列进行分组之后，再使用 count 汇总函数统计每个分组的记录个数，之后使用 HAVING 进行筛选。HAVING  针对分组进行筛选，而 WHERE 针对每个记录（行）进行筛选。
 
 ```sql
 SELECT
@@ -293,7 +293,7 @@ https://leetcode.com/problems/duplicate-emails/description/
 
 ## Solution
 
-对 Email 进行分组，如果相同 Email 的数量大于等于 2，则表示该 Email 重复。
+对 Email 进行分组，如果并使用 COUNT 进行计数统计，结果大于等于 2 的表示 Email  重复。
 
 ```sql
 SELECT
@@ -354,7 +354,7 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 
 只保留相同 Email 中 Id 最小的那一个，然后删除其它的。
 
-连接：
+连接查询：
 
 ```sql
 DELETE p1
@@ -373,7 +373,14 @@ DELETE
 FROM
     Person
 WHERE
-    id NOT IN ( SELECT id FROM ( SELECT min( id ) AS id FROM Person GROUP BY email ) AS m );
+    id NOT IN (
+        SELECT id 
+        FROM ( 
+            SELECT min( id ) AS id 
+            FROM Person
+            GROUP BY email
+        ) AS m
+    );
 ```
 
 应该注意的是上述解法额外嵌套了一个 SELECT 语句，如果不这么做，会出现错误：You can't specify target table 'Person' for update in FROM clause。以下演示了这种错误解法。
@@ -383,7 +390,11 @@ DELETE
 FROM
     Person
 WHERE
-    id NOT IN ( SELECT min( id ) AS id FROM Person GROUP BY email );
+    id NOT IN ( 
+        SELECT min( id ) AS id 
+        FROM Person 
+        GROUP BY email 
+    );
 ```
 
 参考：[pMySQL Error 1093 - Can't specify target table for update in FROM clause](https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause)
@@ -391,8 +402,6 @@ WHERE
 ## SQL Schema
 
 与 182 相同。
-
-
 
 # 175. Combine Two Tables
 
