@@ -26,9 +26,9 @@
     * [新建（NEW）](#新建new)
     * [可运行（RUNABLE）](#可运行runable)
     * [阻塞（BLOCKED）](#阻塞blocked)
-    * [无限期等待（Waiting）](#无限期等待waiting)
-    * [限期等待（Timed Waiting）](#限期等待timed-waiting)
-    * [死亡（Terminated）](#死亡terminated)
+    * [无限期等待（WAITING）](#无限期等待waiting)
+    * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
+    * [死亡（TERMINATED）](#死亡terminated)
 * [七、J.U.C - AQS](#七juc---aqs)
     * [CountDownLatch](#countdownlatch)
     * [CyclicBarrier](#cyclicbarrier)
@@ -691,7 +691,7 @@ after
 
 请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态进入从而 RUNABLE 需要其他线程释放 monitor lock。
 
-## 无限期等待（Waiting）
+## 无限期等待（WAITING）
 
 等待其它线程显式地唤醒。
 
@@ -703,7 +703,7 @@ after
 | 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕 |
 | LockSupport.park() 方法 | LockSupport.unpark(Thread) |
 
-## 限期等待（Timed Waiting）
+## 限期等待（TIMED_WAITING）
 
 无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
 
@@ -717,7 +717,7 @@ after
 
 调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
 
-## 死亡（Terminated）
+## 死亡（TERMINATED）
 
 可以是线程结束任务之后自己结束，或者产生了异常而结束。
 
