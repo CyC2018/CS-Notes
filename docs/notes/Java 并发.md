@@ -1,34 +1,34 @@
 <!-- GFM-TOC -->
-* [一、线程状态转换](#一线程状态转换)
-    * [新建（New）](#新建new)
-    * [可运行（Runnable）](#可运行runnable)
-    * [阻塞（Blocked）](#阻塞blocked)
-    * [无限期等待（Waiting）](#无限期等待waiting)
-    * [限期等待（Timed Waiting）](#限期等待timed-waiting)
-    * [死亡（Terminated）](#死亡terminated)
-* [二、使用线程](#二使用线程)
+* [一、使用线程](#一使用线程)
     * [实现 Runnable 接口](#实现-runnable-接口)
     * [实现 Callable 接口](#实现-callable-接口)
     * [继承 Thread 类](#继承-thread-类)
     * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
-* [三、基础线程机制](#三基础线程机制)
+* [二、基础线程机制](#二基础线程机制)
     * [Executor](#executor)
     * [Daemon](#daemon)
     * [sleep()](#sleep)
     * [yield()](#yield)
-* [四、中断](#四中断)
+* [三、中断](#三中断)
     * [InterruptedException](#interruptedexception)
     * [interrupted()](#interrupted)
     * [Executor 的中断操作](#executor-的中断操作)
-* [五、互斥同步](#五互斥同步)
+* [四、互斥同步](#四互斥同步)
     * [synchronized](#synchronized)
     * [ReentrantLock](#reentrantlock)
     * [比较](#比较)
     * [使用选择](#使用选择)
-* [六、线程之间的协作](#六线程之间的协作)
+* [五、线程之间的协作](#五线程之间的协作)
     * [join()](#join)
     * [wait() notify() notifyAll()](#wait-notify-notifyall)
     * [await() signal() signalAll()](#await-signal-signalall)
+* [六、线程状态](#六线程状态)
+    * [新建（NEW）](#新建new)
+    * [可运行（RUNABLE）](#可运行runable)
+    * [阻塞（BLOCKED）](#阻塞blocked)
+    * [无限期等待（Waiting）](#无限期等待waiting)
+    * [限期等待（Timed Waiting）](#限期等待timed-waiting)
+    * [死亡（Terminated）](#死亡terminated)
 * [七、J.U.C - AQS](#七juc---aqs)
     * [CountDownLatch](#countdownlatch)
     * [CyclicBarrier](#cyclicbarrier)
@@ -59,59 +59,8 @@
 <!-- GFM-TOC -->
 
 
-# 一、线程状态转换
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/adfb427d-3b21-40d7-a142-757f4ed73079.png" width="600px"> </div><br>
-
-## 新建（New）
-
-创建后尚未启动。
-
-## 可运行（Runnable）
-
-可能正在运行，也可能正在等待 CPU 时间片。
-
-包含了操作系统线程状态中的 Running 和 Ready。
-
-## 阻塞（Blocked）
-
-等待获取一个排它锁，如果其线程释放了锁就会结束此状态。
-
-## 无限期等待（Waiting）
-
-等待其它线程显式地唤醒，否则不会被分配 CPU 时间片。
-
-| 进入方法 | 退出方法 |
-| --- | --- |
-| 没有设置 Timeout 参数的 Object.wait() 方法 | Object.notify() / Object.notifyAll() |
-| 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕 |
-| LockSupport.park() 方法 | LockSupport.unpark(Thread) |
-
-## 限期等待（Timed Waiting）
-
-无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
-
-调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。
-
-调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。
-
-睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
-
-阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁。而等待是主动的，通过调用 Thread.sleep() 和 Object.wait() 等方法进入。
-
-| 进入方法 | 退出方法 |
-| --- | --- |
-| Thread.sleep() 方法 | 时间结束 |
-| 设置了 Timeout 参数的 Object.wait() 方法 | 时间结束 / Object.notify() / Object.notifyAll()  |
-| 设置了 Timeout 参数的 Thread.join() 方法 | 时间结束 / 被调用的线程执行完毕 |
-| LockSupport.parkNanos() 方法 | LockSupport.unpark(Thread) |
-| LockSupport.parkUntil() 方法 | LockSupport.unpark(Thread) |
-
-## 死亡（Terminated）
-
-可以是线程结束任务之后自己结束，或者产生了异常而结束。
-
-# 二、使用线程
+# 一、使用线程
 
 有三种使用线程的方法：
 
@@ -193,7 +142,7 @@ public static void main(String[] args) {
 - Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
 - 类可能只要求可执行就行，继承整个 Thread 类开销过大。
 
-# 三、基础线程机制
+# 二、基础线程机制
 
 ## Executor
 
@@ -258,7 +207,7 @@ public void run() {
 }
 ```
 
-# 四、中断
+# 三、中断
 
 一个线程执行完毕之后会自动结束，如果在运行过程中发生异常也会提前结束。
 
@@ -378,7 +327,7 @@ Future<?> future = executorService.submit(() -> {
 future.cancel(true);
 ```
 
-# 五、互斥同步
+# 四、互斥同步
 
 Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 synchronized，而另一个是 JDK 实现的 ReentrantLock。
 
@@ -566,7 +515,7 @@ synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非�
 
 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
 
-# 六、线程之间的协作
+# 五、线程之间的协作
 
 当多个线程可以一起工作去解决某个问题时，如果某些部分必须在其它部分之前完成，那么就需要对线程进行协调。
 
@@ -725,6 +674,54 @@ public static void main(String[] args) {
 before
 after
 ```
+
+# 六、线程状态
+
+一个线程只能处于一种状态，并且这里的线程状态特指 Java 虚拟机的线程状态，不能反映线程在特定操作系统下的状态。
+
+## 新建（NEW）
+
+创建后尚未启动。
+
+## 可运行（RUNABLE）
+
+正在 Java 虚拟机中运行。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。
+
+## 阻塞（BLOCKED）
+
+请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态进入从而 RUNABLE 需要其他线程释放 monitor lock。
+
+## 无限期等待（Waiting）
+
+等待其它线程显式地唤醒。
+
+阻塞和等待的区别在于，阻塞是被动的，它是在等待获取 monitor lock。而等待是主动的，通过调用  Object.wait() 等方法进入。
+
+| 进入方法 | 退出方法 |
+| --- | --- |
+| 没有设置 Timeout 参数的 Object.wait() 方法 | Object.notify() / Object.notifyAll() |
+| 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕 |
+| LockSupport.park() 方法 | LockSupport.unpark(Thread) |
+
+## 限期等待（Timed Waiting）
+
+无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
+
+| 进入方法 | 退出方法 |
+| --- | --- |
+| Thread.sleep() 方法 | 时间结束 |
+| 设置了 Timeout 参数的 Object.wait() 方法 | 时间结束 / Object.notify() / Object.notifyAll()  |
+| 设置了 Timeout 参数的 Thread.join() 方法 | 时间结束 / 被调用的线程执行完毕 |
+| LockSupport.parkNanos() 方法 | LockSupport.unpark(Thread) |
+| LockSupport.parkUntil() 方法 | LockSupport.unpark(Thread) |
+
+调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
+
+## 死亡（Terminated）
+
+可以是线程结束任务之后自己结束，或者产生了异常而结束。
+
+[Java SE 9 Enum Thread.State](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.State.html)
 
 # 七、J.U.C - AQS
 
