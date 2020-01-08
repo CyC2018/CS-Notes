@@ -68,21 +68,22 @@
 - 实现 Callable 接口；
 - 继承 Thread 类。
 
-实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
+实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以理解为任务是通过线程驱动从而执行的。
 
 ## 实现 Runnable 接口
 
-需要实现 run() 方法。
-
-通过 Thread 调用 start() 方法来启动线程。
+需要实现接口中的 run() 方法。
 
 ```java
 public class MyRunnable implements Runnable {
+    @Override
     public void run() {
         // ...
     }
 }
 ```
+
+使用 Runnable 实例再创建一个 Thread 实例，然后调用 Thread 实例的 start() 方法来启动线程。
 
 ```java
 public static void main(String[] args) {
