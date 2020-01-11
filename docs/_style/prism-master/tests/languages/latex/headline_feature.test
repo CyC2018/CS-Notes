@@ -1,0 +1,39 @@
+\part{Foobar}
+\chapter{Foobar}
+\section{Foobar}
+\subsection{Foobar}
+\frametitle{Foobar}
+\subsubsection{Foobar}
+\paragraph{Foobar}
+\subparagraph{Foobar}
+\subsubparagraph{Foobar}
+\subsubsubparagraph{Foobar}
+
+----------------------------------------------------
+
+[
+	["function", "\\part"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\chapter"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\section"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\subsection"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\frametitle"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\subsubsection"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\paragraph"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\subparagraph"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\subsubparagraph"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"],
+	["function", "\\subsubsubparagraph"], ["punctuation", "{"],
+	["headline", "Foobar"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for headlines.

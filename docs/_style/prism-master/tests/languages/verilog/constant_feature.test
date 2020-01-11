@@ -1,0 +1,13 @@
+`define
+`UNKNOWN
+
+----------------------------------------------------
+
+[
+	["constant", "`define"],
+	["constant", "`UNKNOWN"]
+]
+
+----------------------------------------------------
+
+Checks for user defined constants.

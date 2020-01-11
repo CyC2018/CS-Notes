@@ -1,0 +1,165 @@
+as
+associativity
+break
+case
+catch
+class;
+continue
+convenience
+default
+defer
+deinit
+didSet
+do
+dynamic
+dynamicType
+else
+enum
+extension
+fallthrough
+final
+for
+func
+get
+guard
+if
+import
+in
+infix
+init
+inout
+internal
+is
+lazy
+left
+let
+mutating
+new;
+none
+nonmutating
+operator
+optional
+override
+postfix
+precedence
+prefix
+private
+protocol
+public
+repeat
+required
+rethrows
+return
+right
+safe
+self
+Self
+set
+static
+struct
+subscript
+super
+switch
+throw
+throws
+try
+Type
+typealias
+unowned
+unsafe
+var
+weak
+where
+while
+willSet
+__COLUMN__
+__FILE__
+__FUNCTION__
+__LINE__
+
+----------------------------------------------------
+
+[
+	["keyword", "as"],
+	["keyword", "associativity"],
+	["keyword", "break"],
+	["keyword", "case"],
+	["keyword", "catch"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "continue"],
+	["keyword", "convenience"],
+	["keyword", "default"],
+	["keyword", "defer"],
+	["keyword", "deinit"],
+	["keyword", "didSet"],
+	["keyword", "do"],
+	["keyword", "dynamic"],
+	["keyword", "dynamicType"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "extension"],
+	["keyword", "fallthrough"],
+	["keyword", "final"],
+	["keyword", "for"],
+	["keyword", "func"],
+	["keyword", "get"],
+	["keyword", "guard"],
+	["keyword", "if"],
+	["keyword", "import"],
+	["keyword", "in"],
+	["keyword", "infix"],
+	["keyword", "init"],
+	["keyword", "inout"],
+	["keyword", "internal"],
+	["keyword", "is"],
+	["keyword", "lazy"],
+	["keyword", "left"],
+	["keyword", "let"],
+	["keyword", "mutating"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "none"],
+	["keyword", "nonmutating"],
+	["keyword", "operator"],
+	["keyword", "optional"],
+	["keyword", "override"],
+	["keyword", "postfix"],
+	["keyword", "precedence"],
+	["keyword", "prefix"],
+	["keyword", "private"],
+	["keyword", "protocol"],
+	["keyword", "public"],
+	["keyword", "repeat"],
+	["keyword", "required"],
+	["keyword", "rethrows"],
+	["keyword", "return"],
+	["keyword", "right"],
+	["keyword", "safe"],
+	["keyword", "self"],
+	["keyword", "Self"],
+	["keyword", "set"],
+	["keyword", "static"],
+	["keyword", "struct"],
+	["keyword", "subscript"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "throw"],
+	["keyword", "throws"],
+	["keyword", "try"],
+	["keyword", "Type"],
+	["keyword", "typealias"],
+	["keyword", "unowned"],
+	["keyword", "unsafe"],
+	["keyword", "var"],
+	["keyword", "weak"],
+	["keyword", "where"],
+	["keyword", "while"],
+	["keyword", "willSet"],
+	["keyword", "__COLUMN__"],
+	["keyword", "__FILE__"],
+	["keyword", "__FUNCTION__"],
+	["keyword", "__LINE__"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

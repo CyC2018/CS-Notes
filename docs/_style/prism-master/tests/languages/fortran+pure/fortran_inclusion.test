@@ -1,0 +1,18 @@
+%< -*- Fortran90 -*-
+21_SHORT
+%>
+
+----------------------------------------------------
+
+[
+	["inline-lang-fortran", [
+		["delimiter", "%< "],
+		["lang", "-*- Fortran90 -*-"],
+		["number", "21_SHORT"],
+		["delimiter", "%>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for Fortran in Pure.

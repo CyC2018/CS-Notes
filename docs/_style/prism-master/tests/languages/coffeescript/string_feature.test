@@ -1,0 +1,64 @@
+''
+'foo'
+'foo\
+bar'
+""
+"foo"
+"foo\
+bar"
+"foo #{interpolation} bar"
+''''''
+'''foo'''
+'''foo
+bar'''
+
+""""""
+"""foo"""
+"""foo
+bar"""
+"""foo #{interpolation} bar"""
+"foo # comment bar"
+'foo # bar'
+"""foo
+#comment
+bar"""
+'''foo
+#comment
+bar'''
+
+----------------------------------------------------
+
+[
+	["string", "''"],
+	["string", "'foo'"],
+	["string", "'foo\\\r\nbar'"],
+	["string", ["\"\""]],
+	["string", ["\"foo\""]],
+	["string", ["\"foo\\\r\nbar\""]],
+	["string", [
+		"\"foo ",
+		["interpolation", "#{interpolation}"],
+		" bar\""
+	]],
+
+	["multiline-string", "''''''"],
+	["multiline-string", "'''foo'''"],
+	["multiline-string", "'''foo\r\nbar'''"],
+	["multiline-string", ["\"\"\"\"\"\""]],
+	["multiline-string", ["\"\"\"foo\"\"\""]],
+	["multiline-string", ["\"\"\"foo\r\nbar\"\"\""]],
+	["multiline-string", [
+		"\"\"\"foo ",
+		["interpolation", "#{interpolation}"],
+		" bar\"\"\""
+	]],
+	["string", ["\"foo # comment bar\""]],
+	["string", "'foo # bar'"],
+	["multiline-string", ["\"\"\"foo\r\n#comment\r\nbar\"\"\""]],
+	["multiline-string", "'''foo\r\n#comment\r\nbar'''"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line strings and block strings.
+Also checks for string interpolation inside double-quoted strings.

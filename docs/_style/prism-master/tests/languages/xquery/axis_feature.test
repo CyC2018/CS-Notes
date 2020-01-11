@@ -1,0 +1,33 @@
+self::
+child::
+descendant::
+descendant-or-self::
+attribute::
+following::
+following-sibling::
+parent::
+ancestor::
+ancestor-or-self::
+preceding::
+preceding-sibling::
+
+----------------------------------------------------
+
+[
+	["axis", "self"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "child"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "descendant"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "descendant-or-self"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "attribute"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "following"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "following-sibling"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "parent"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "ancestor"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "ancestor-or-self"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "preceding"], ["punctuation", ":"], ["punctuation", ":"],
+	["axis", "preceding-sibling"], ["punctuation", ":"], ["punctuation", ":"]
+]
+
+----------------------------------------------------
+
+Checks for axes.

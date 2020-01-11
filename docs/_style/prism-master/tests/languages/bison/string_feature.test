@@ -1,0 +1,21 @@
+%%
+foo: 'foo' "foo";
+bar: '\'' "\"";
+%%
+
+----------------------------------------------------
+
+[
+	["bison", [
+		["punctuation", "%%"],
+		["property", "foo"], ["punctuation", ":"],
+		["string", "'foo'"], ["string", "\"foo\""], ["punctuation", ";"],
+		["property", "bar"], ["punctuation", ":"],
+		["string", "'\\''"], ["string", "\"\\\"\""], ["punctuation", ";"],
+		["punctuation", "%%"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings.

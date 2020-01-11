@@ -1,0 +1,41 @@
+in
+\\
+::
+..
+...
++ ++
+- -- ->
+*
+/
+^
+& &&
+| || |>
+< <= <> <-
+> >=
+! != !==
+= =~ == === =>
+
+----------------------------------------------------
+
+[
+	["operator", "in"],
+	["operator", "\\\\"],
+	["operator", "::"],
+	["operator", ".."],
+	["operator", "..."],
+	["operator", "+"], ["operator", "++"],
+	["operator", "-"], ["operator", "--"], ["operator", "->"],
+	["operator", "*"],
+	["operator", "/"],
+	["operator", "^"],
+	["operator", "&"], ["operator", "&&"],
+	["operator", "|"], ["operator", "||"], ["operator", "|>"],
+	["operator", "<"], ["operator", "<="], ["operator", "<>"], ["operator", "<-"],
+	["operator", ">"], ["operator", ">="],
+	["operator", "!"], ["operator", "!="], ["operator", "!=="],
+	["operator", "="], ["operator", "=~"], ["operator", "=="], ["operator", "==="], ["operator", "=>"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

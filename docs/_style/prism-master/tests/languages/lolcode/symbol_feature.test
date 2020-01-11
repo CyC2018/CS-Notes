@@ -1,0 +1,27 @@
+YARN A YARN
+NUMBR A NUMBR
+NUMBAR A NUMBAR
+TROOF A TROOF
+BUKKIT A BUKKIT
+NOOB A NOOB
+
+----------------------------------------------------
+
+[
+	["symbol", ["YARN"]],
+	["symbol", [["keyword", "A"], " YARN"]],
+	["symbol", ["NUMBR"]],
+	["symbol", [["keyword", "A"], " NUMBR"]],
+	["symbol", ["NUMBAR"]],
+	["symbol", [["keyword", "A"], " NUMBAR"]],
+	["symbol", ["TROOF"]],
+	["symbol", [["keyword", "A"], " TROOF"]],
+	["symbol", ["BUKKIT"]],
+	["symbol", [["keyword", "A"], " BUKKIT"]],
+	["symbol", ["NOOB"]],
+	["symbol", [["keyword", "A"], " NOOB"]]
+]
+
+----------------------------------------------------
+
+Checks for symbols, optionally prefixed by "A ".

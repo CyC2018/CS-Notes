@@ -1,0 +1,251 @@
+$
+abstract
+alias
+align
+asm
+assert
+auto
+body
+bool
+break
+byte
+case
+cast
+catch
+cdouble
+cent
+cfloat
+char
+class;
+const
+continue
+creal
+dchar
+debug
+default
+delegate
+delete
+deprecated
+do
+double
+else
+enum
+export
+extern
+false
+final
+finally
+float
+for
+foreach
+foreach_reverse
+function
+goto
+idouble
+if
+ifloat
+immutable
+import
+inout
+int
+interface;
+invariant
+ireal
+lazy
+long
+macro
+mixin
+module
+new;
+nothrow
+null
+out
+override
+package
+pragma
+private
+protected
+public
+pure
+real
+ref
+return
+scope
+shared
+short
+static
+struct
+super
+switch
+synchronized
+template
+this
+throw
+true
+try
+typedef
+typeid
+typeof
+ubyte
+ucent
+uint
+ulong
+union
+unittest
+ushort
+version
+void
+volatile
+wchar
+while
+with
+__FILE__
+__MODULE__
+__LINE__
+__FUNCTION__
+__PRETTY_FUNCTION__
+__DATE__
+__EOF__
+__TIME__
+__TIMESTAMP__
+__VENDOR__
+__VERSION__
+__gshared
+__traits
+__vector
+__parameters
+string
+wstring
+dstring
+size_t
+ptrdiff_t
+
+----------------------------------------------------
+
+[
+	["keyword", "$"],
+	["keyword", "abstract"],
+	["keyword", "alias"],
+	["keyword", "align"],
+	["keyword", "asm"],
+	["keyword", "assert"],
+	["keyword", "auto"],
+	["keyword", "body"],
+	["keyword", "bool"],
+	["keyword", "break"],
+	["keyword", "byte"],
+	["keyword", "case"],
+	["keyword", "cast"],
+	["keyword", "catch"],
+	["keyword", "cdouble"],
+	["keyword", "cent"],
+	["keyword", "cfloat"],
+	["keyword", "char"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "const"],
+	["keyword", "continue"],
+	["keyword", "creal"],
+	["keyword", "dchar"],
+	["keyword", "debug"],
+	["keyword", "default"],
+	["keyword", "delegate"],
+	["keyword", "delete"],
+	["keyword", "deprecated"],
+	["keyword", "do"],
+	["keyword", "double"],
+	["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "export"],
+	["keyword", "extern"],
+	["keyword", "false"],
+	["keyword", "final"],
+	["keyword", "finally"],
+	["keyword", "float"],
+	["keyword", "for"],
+	["keyword", "foreach"],
+	["keyword", "foreach_reverse"],
+	["keyword", "function"],
+	["keyword", "goto"],
+	["keyword", "idouble"],
+	["keyword", "if"],
+	["keyword", "ifloat"],
+	["keyword", "immutable"],
+	["keyword", "import"],
+	["keyword", "inout"],
+	["keyword", "int"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "invariant"],
+	["keyword", "ireal"],
+	["keyword", "lazy"],
+	["keyword", "long"],
+	["keyword", "macro"],
+	["keyword", "mixin"],
+	["keyword", "module"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "nothrow"],
+	["keyword", "null"],
+	["keyword", "out"],
+	["keyword", "override"],
+	["keyword", "package"],
+	["keyword", "pragma"],
+	["keyword", "private"],
+	["keyword", "protected"],
+	["keyword", "public"],
+	["keyword", "pure"],
+	["keyword", "real"],
+	["keyword", "ref"],
+	["keyword", "return"],
+	["keyword", "scope"],
+	["keyword", "shared"],
+	["keyword", "short"],
+	["keyword", "static"],
+	["keyword", "struct"],
+	["keyword", "super"],
+	["keyword", "switch"],
+	["keyword", "synchronized"],
+	["keyword", "template"],
+	["keyword", "this"],
+	["keyword", "throw"],
+	["keyword", "true"],
+	["keyword", "try"],
+	["keyword", "typedef"],
+	["keyword", "typeid"],
+	["keyword", "typeof"],
+	["keyword", "ubyte"],
+	["keyword", "ucent"],
+	["keyword", "uint"],
+	["keyword", "ulong"],
+	["keyword", "union"],
+	["keyword", "unittest"],
+	["keyword", "ushort"],
+	["keyword", "version"],
+	["keyword", "void"],
+	["keyword", "volatile"],
+	["keyword", "wchar"],
+	["keyword", "while"],
+	["keyword", "with"],
+	["keyword", "__FILE__"],
+	["keyword", "__MODULE__"],
+	["keyword", "__LINE__"],
+	["keyword", "__FUNCTION__"],
+	["keyword", "__PRETTY_FUNCTION__"],
+	["keyword", "__DATE__"],
+	["keyword", "__EOF__"],
+	["keyword", "__TIME__"],
+	["keyword", "__TIMESTAMP__"],
+	["keyword", "__VENDOR__"],
+	["keyword", "__VERSION__"],
+	["keyword", "__gshared"],
+	["keyword", "__traits"],
+	["keyword", "__vector"],
+	["keyword", "__parameters"],
+	["keyword", "string"],
+	["keyword", "wstring"],
+	["keyword", "dstring"],
+	["keyword", "size_t"],
+	["keyword", "ptrdiff_t"]
+]
+
+----------------------------------------------------
+
+Checks for $, keywords, special tokens and globally defined symbols.

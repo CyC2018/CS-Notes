@@ -1,0 +1,21 @@
+http://example.org/foo.tar.bz2
+ftp://ftp.nluug.nl/pub/gnu/hello/hello-2.1.1.tar.gz
+
+/bin/sh
+./builder.sh
+~/foo.bar
+
+----------------------------------------------------
+
+[
+	["url", "http://example.org/foo.tar.bz2"],
+	["url", "ftp://ftp.nluug.nl/pub/gnu/hello/hello-2.1.1.tar.gz"],
+
+	["url", "/bin/sh"],
+	["url", "./builder.sh"],
+	["url", "~/foo.bar"]
+]
+
+----------------------------------------------------
+
+Checks for URLs and paths.

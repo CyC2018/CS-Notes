@@ -1,0 +1,35 @@
+mixin foo
+mixin pet(name)
+
++foo
++pet('cat')
+
+----------------------------------------------------
+
+[
+	["mixin", [
+		["keyword", "mixin"],
+		["function", "foo"]
+	]],
+	["mixin", [
+		["keyword", "mixin"],
+		["function", "pet"],
+		["punctuation", "("],
+		"name",
+		["punctuation", ")"]
+	]],
+
+	["mixin", [
+		["name", "+foo"]
+	]],
+	["mixin", [
+		["name", "+pet"],
+		["punctuation", "("],
+		["string", "'cat'"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for mixins declaration and usage.

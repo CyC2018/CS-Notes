@@ -1,0 +1,14 @@
+-- foo
+{- foo
+bar -}
+
+----------------------------------------------------
+
+[
+	["comment", "-- foo"],
+	["comment", "{- foo\r\nbar -}"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

@@ -1,0 +1,92 @@
+<%@Assembly foo="bar"%>
+<% @Control foo="bar" %>
+<%@ Implements%>
+<%@Import%>
+<%@Master%>
+<%@MasterType%>
+<%@OutputCache%>
+<%@Page%>
+<%@PreviousPageType%>
+<%@Reference%>
+<%@Register%>
+
+----------------------------------------------------
+
+[
+	["page-directive tag", [
+		["page-directive tag", "<%@Assembly"],
+		["attr-name", [
+			"foo"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"bar",
+			["punctuation", "\""]
+		]],
+		["page-directive tag", "%>"]
+	]],
+
+	["page-directive tag", [
+        ["page-directive tag", "<% @Control"],
+        ["attr-name", [
+            "foo"
+        ]],
+        ["attr-value", [
+            ["punctuation", "="],
+            ["punctuation", "\""],
+            "bar",
+            ["punctuation", "\""]
+        ]],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@ Implements"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@Import"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@Master"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@MasterType"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@OutputCache"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@Page"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@PreviousPageType"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@Reference"],
+        ["page-directive tag", "%>"]
+    ]],
+
+    ["page-directive tag", [
+        ["page-directive tag", "<%@Register"],
+        ["page-directive tag", "%>"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for all page directives.

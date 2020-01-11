@@ -1,0 +1,33 @@
+;
+; foo
+#comments-start
+	foobar()
+#comments-end
+#cs
+	foobar()
+#ce
+;#comments-start
+	foobar()
+;#comments-end
+;#cs
+	foobar()
+;#ce
+
+----------------------------------------------------
+
+[
+	["comment", ";"],
+	["comment", "; foo"],
+	["comment", "#comments-start\r\n\tfoobar()\r\n#comments-end"],
+	["comment", "#cs\r\n\tfoobar()\r\n#ce"],
+	["comment", ";#comments-start"],
+	["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+	["comment", ";#comments-end"],
+	["comment", ";#cs"],
+	["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
+	["comment", ";#ce"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

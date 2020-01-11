@@ -1,0 +1,35 @@
+<h2>Strings</h2>
+<pre><code>"foo ""bar"" baz"
+"Multi-line strings are appended with a " &
+"ampersand symbole."</code></pre>
+
+<h2>Ada83 example</h2>
+<pre><code>WITH ADA.TEXT_IO;
+
+--  Comments look like this.
+
+PROCEDURE TEST IS
+BEGIN
+   ADA.TEXT_IO.PUT_LINE ("Hello");   --  Comments look like this.
+END TEST;</code></pre>
+
+<h2>Ada 2012 full example</h2>
+<pre><code>with Ada.Text_IO; Use Ada.Text_IO;
+
+--  Comments look like this.
+procedure Test is
+   procedure Bah with
+    Import        => True,   --  Shows the new aspect feature of the language.
+    Convention    => C,
+    External_Name => "bah";
+
+   type Things is range 1 .. 10;
+begin
+   Put_Line ("Hello");   --  Comments look like this.
+
+   Bah;  -- Call C function.
+
+   for Index in Things'Range loop
+      null;
+   end loop;
+end Test;</code></pre>

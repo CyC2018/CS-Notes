@@ -1,0 +1,49 @@
+""
+"foo"
+"foo
+bar"
+"[if the player is in Center Ring]A magician's booth stands in the corner, painted dark blue with glittering gold stars.[otherwise if the magician's booth is closed]A crack of light indicates the way back out to the center ring.[otherwise]The door stands open to the outside.[end if]"
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"foo\""]],
+	["string", ["\"foo\r\nbar\""]],
+	["string", [
+		"\"",
+		["substitution", [
+			["delimiter", "["],
+			["keyword", "if"], ["text", "the"],
+			["type", "player"], ["verb", "is"],
+			["position", "in"], ["text", "Center Ring"],
+			["delimiter", "]"]
+		]],
+		"A magician's booth stands in the corner, painted dark blue with glittering gold stars.",
+		["substitution", [
+			["delimiter", "["],
+			["keyword", "otherwise"], ["keyword", "if"],
+			["text", "the magician's booth"],
+			["verb", "is"],
+			["property", "closed"],
+			["delimiter", "]"]
+		]],
+		"A crack of light indicates the way back out to the center ring.",
+		["substitution", [
+			["delimiter", "["],
+			["keyword", "otherwise"],
+			["delimiter", "]"]
+		]],
+		"The door stands open to the outside.",
+		["substitution", [
+			["delimiter", "["],
+			["keyword", "end if"],
+			["delimiter", "]"]
+		]],
+		"\""
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings and text substitution.

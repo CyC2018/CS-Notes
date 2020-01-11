@@ -1,0 +1,22 @@
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'
+"Multi-line strings ending with a \
+are supported too."</code></pre>
+
+<h2>Macro statements</h2>
+<pre><code># include &lt;stdio.h>
+#define PG_locked   0
+#define PG_error    1
+</code></pre>
+
+<h2>Full example</h2>
+<pre><code>#include &lt;stdio.h>
+main(int argc, char *argv[])
+{
+   int c;
+   printf("Number of command line arguments passed: %d\n", argc);
+   for ( c = 0 ; c < argc ; c++)
+      printf("%d. Command line argument passed is %s\n", c+1, argv[c]);
+   return 0;
+}</code></pre>

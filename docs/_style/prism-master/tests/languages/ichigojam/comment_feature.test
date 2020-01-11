@@ -1,0 +1,17 @@
+'Foobar
+' Foobar
+REMFoobar
+REM Foobar
+
+----------------------------------------------------
+
+[
+	["comment", "'Foobar"],
+	["comment", "' Foobar"],
+	["comment", "REMFoobar"],
+	["comment", "REM Foobar"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

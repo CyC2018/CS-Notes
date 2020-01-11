@@ -1,0 +1,17 @@
+<h2>Comments</h2>
+<pre><code>::
+:: Foo bar
+REM This is a comment too
+REM Multi-line ^
+comment</code></pre>
+
+<h2>Labels</h2>
+<pre><code>:foobar
+GOTO :EOF</code></pre>
+
+<h2>Commands</h2>
+<pre><code>@ECHO OFF
+FOR /l %%a in (5,-1,1) do (TITLE %title% -- closing in %%as)
+SET title=%~n0
+if /i "%InstSize:~0,1%"=="M" set maxcnt=3
+ping -n 2 -w 1 127.0.0.1</code></pre>

@@ -1,0 +1,33 @@
+content: ""
+content: "foo"
+content: ''
+content: 'foo'
+
+----------------------------------------------------
+
+[
+	["property-declaration", [
+		["property", ["content"]],
+		["punctuation", ":"],
+		["string", "\"\""]
+	]],
+	["property-declaration", [
+		["property", ["content"]],
+		["punctuation", ":"],
+		["string", "\"foo\""]
+	]],
+	["property-declaration", [
+		["property", ["content"]],
+		["punctuation", ":"],
+		["string", "''"]
+	]],
+	["property-declaration", [
+		["property", ["content"]],
+		["punctuation", ":"],
+		["string", "'foo'"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings.

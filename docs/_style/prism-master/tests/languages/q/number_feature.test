@@ -1,0 +1,33 @@
+0w 0n
+0W 0Wh 0Wj
+0N 0Nh 0Nj 0Ne
+
+0xBadFace
+42
+3.14159
+3e8
+0.4e-7
+3.12e+42
+42h 42j 42f
+4.00e 1b
+
+----------------------------------------------------
+
+[
+	["number", "0w"], ["number", "0n"],
+	["number", "0W"], ["number", "0Wh"], ["number", "0Wj"],
+	["number", "0N"], ["number", "0Nh"], ["number", "0Nj"], ["number", "0Ne"],
+
+	["number", "0xBadFace"],
+	["number", "42"],
+	["number", "3.14159"],
+	["number", "3e8"],
+	["number", "0.4e-7"],
+	["number", "3.12e+42"],
+	["number", "42h"], ["number", "42j"], ["number", "42f"],
+	["number", "4.00e"], ["number", "1b"]
+]
+
+----------------------------------------------------
+
+Checks for numbers.

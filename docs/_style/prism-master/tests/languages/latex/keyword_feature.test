@@ -1,0 +1,32 @@
+\begin{foobar}
+\end{foobar}
+\ref{foobar}
+\cite{foobar}
+\label{foobar}
+\usepackage{foobar}
+\documentclass[11px,twoside,a4paper]{foobar}
+
+----------------------------------------------------
+
+[
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\ref"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\cite"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\label"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\usepackage"], ["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"],
+	["function", "\\documentclass"],
+	["punctuation", "["], "11px,twoside,a4paper", ["punctuation", "]"],
+	["punctuation", "{"],
+	["keyword", "foobar"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

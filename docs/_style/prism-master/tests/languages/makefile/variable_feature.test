@@ -1,0 +1,19 @@
+$@
+$$<
+$(@D)
+$(foobar)
+$(2)
+
+----------------------------------------------------
+
+[
+	["variable", "$@"],
+	["variable", "$$<"],
+	["variable", "$(@D)"],
+	["variable", "$"], ["punctuation", "("], "foobar", ["punctuation", ")"],
+	["variable", "$"], ["punctuation", "("], "2", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

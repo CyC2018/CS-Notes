@@ -1,0 +1,68 @@
+<div>{$msg}</div>
+<div class="{$msg}">
+<h{$headingLevel}>
+___SOY1___{$foo}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", ["$msg"]],
+		["delimiter", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"div"
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			["soy", [
+				["delimiter", "{"],
+				["variable", ["$msg"]],
+				["delimiter", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"h",
+			["soy", [
+				["delimiter", "{"],
+				["variable", ["$headingLevel"]],
+				["delimiter", "}"]
+			]]
+		]],
+		["punctuation", ">"]
+	]],
+	"\r\n___SOY1___",
+	["soy", [
+		["delimiter", "{"],
+		["variable", ["$foo"]],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for Soy inside Markup.

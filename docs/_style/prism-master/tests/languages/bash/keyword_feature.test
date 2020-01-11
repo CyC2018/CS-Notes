@@ -1,0 +1,20 @@
+if then else elif fi
+for break continue while
+in case function select
+do done until echo exit
+return set declare
+. :
+----------------------------------------------------
+
+[
+	["keyword", "if"], ["keyword", "then"], ["keyword", "else"], ["keyword", "elif"], ["keyword", "fi"],
+	["keyword", "for"], ["keyword", "break"], ["keyword", "continue"], ["keyword", "while"],
+	["keyword", "in"], ["keyword", "case"], ["keyword", "function"], ["keyword", "select"],
+	["keyword", "do"], ["keyword", "done"], ["keyword", "until"], ["keyword", "echo"], ["keyword", "exit"],
+	["keyword", "return"], ["keyword", "set"], ["keyword", "declare"],
+	["keyword", "."], ["keyword", ":"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

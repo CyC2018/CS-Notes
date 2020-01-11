@@ -1,0 +1,77 @@
+<h2>Variable assignment</h2>
+<pre><code>var foo = "bar", baz = 5;</code></pre>
+
+<h2>Operators</h2>
+<pre><code>(1 + 2 * 3)/4 >= 3 &amp;&amp; 4 &lt; 5 || 6 > 7</code></pre>
+
+<h2>Indented code</h2>
+<pre><code>if (true) {
+	while (true) {
+		doSomething();
+	}
+}</code></pre>
+
+<h2>Regex with slashes</h2>
+<pre><code>var foo = /([^/])\/(\\?.|\[.+?])+?\/[gim]{0,3}/g;</code></pre>
+
+<h2>Regex that ends with double slash</h2>
+<pre><code>var bar = /\/\*[\w\W]*?\*\//g;</code></pre>
+
+<h2>Single line comments &amp; regexes</h2>
+<pre><code>// http://lea.verou.me
+var comment = /\/\*[\w\W]*?\*\//g;</code></pre>
+
+<h2>Link in comment</h2>
+<pre><code>// http://lea.verou.me
+/* http://lea.verou.me */</code></pre>
+
+<h2>Nested strings</h2>
+<pre><code>var foo = "foo", bar = "He \"said\" 'hi'!"</code></pre>
+
+<h2>Strings inside comments</h2>
+<pre><code>// "foo"
+/* "foo" */</code></pre>
+
+<h2>Strings with slashes</h2>
+<pre><code>env.content + '&lt;/' + env.tag + '>'
+var foo = "/" + "/";
+var foo = "http://prismjs.com"; // Strings are strings and comments are comments ;)</code></pre>
+
+<h2>Regex inside single line comment</h2>
+<pre><code>// hey, /this doesn’t fail!/ :D</code></pre>
+
+<h2>Two or more division operators on the same line</h2>
+<pre><code>var foo = 5 / 6 / 7;</code></pre>
+
+<h2>A division operator on the same line as a regex</h2>
+<pre><code>var foo = 1/2, bar = /a/g;
+var foo = /a/, bar = 3/4;</code></pre>
+
+<h2>ES6 features</h2>
+<pre><code>// Regex "y" and "u" flags
+var a = /[a-zA-Z]+/gimyu;
+
+// for..of loops
+for(let x of y) { }
+
+// Modules: import
+import { foo as bar } from "file.js"
+
+// Template strings
+`Only on ${y} one line`
+`This template string ${x} is on
+
+multiple lines.`
+`40 + 2 = ${ 40 + 2 }`
+`The squares of the first 3 natural integers are ${[for (x of [1,2,3]) x*x].join(', ')}`</code></pre>
+
+<h2>Known failures</h2>
+<p>There are certain edge cases where Prism will fail.
+	There are always such cases in every regex-based syntax highlighter.
+	However, Prism dares to be open and honest about them.
+	If a failure is listed here, it doesn’t mean it will never be fixed. This is more of a “known bugs” list, just with a certain type of bug.
+</p>
+
+<h3>String interpolation containing a closing brace</h3>
+<pre><code>`${ {foo:'bar'}.foo }`
+`${ '}' }`</code></pre>

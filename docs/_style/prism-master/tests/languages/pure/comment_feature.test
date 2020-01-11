@@ -1,0 +1,20 @@
+//
+// Foobar
+/**/
+/* Foo
+bar */
+#! --nochecks
+
+----------------------------------------------------
+
+[
+	["comment", "//"],
+	["comment", "// Foobar"],
+	["comment", "/**/"],
+	["comment", "/* Foo\r\nbar */"],
+	["comment", "#! --nochecks"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

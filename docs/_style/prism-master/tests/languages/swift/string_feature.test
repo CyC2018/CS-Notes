@@ -1,0 +1,47 @@
+""
+"fo\"o"
+"foo\
+bar"
+"foo \(42)"
+"foo \(f("bar"))"
+"foo /* comment */ bar"
+'foo // bar'
+"foo\
+/* comment */\
+bar"
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"fo\\\"o\""]],
+	["string", ["\"foo\\\r\nbar\""]],
+	["string", [
+		"\"foo ",
+		["interpolation", [
+			["delimiter", "\\("],
+			["number", "42"],
+			["delimiter", ")"]
+		]],
+		"\""
+	]],
+	["string", [
+		"\"foo ",
+		["interpolation", [
+			["delimiter", "\\("],
+			["function", "f"],
+			["punctuation", "("],
+			["string", ["\"bar\""]],
+			["punctuation", ")"],
+			["delimiter", ")"]
+		]],
+		"\""
+	]],
+	["string", ["\"foo /* comment */ bar\""]],
+	["string", ["'foo // bar'"]],
+	["string", ["\"foo\\\r\n/* comment */\\\r\nbar\""]]
+]
+
+----------------------------------------------------
+
+Checks for strings and string interpolation.

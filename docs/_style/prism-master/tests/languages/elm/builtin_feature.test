@@ -1,0 +1,25 @@
+abs acos always asin atan atan2
+ceiling clamp compare cos curry
+degrees e flip floor fromPolar
+identity isInfinite isNaN
+logBase max min negate never
+not pi radians rem round sin
+sqrt tan toFloat toPolar toString
+truncate turns uncurry xor
+
+----------------------------------------------------
+
+[
+	["builtin", "abs"], ["builtin", "acos"], ["builtin", "always"], ["builtin", "asin"], ["builtin", "atan"], ["builtin", "atan2"],
+	["builtin", "ceiling"], ["builtin", "clamp"], ["builtin", "compare"], ["builtin", "cos"], ["builtin", "curry"],
+	["builtin", "degrees"], ["builtin", "e"], ["builtin", "flip"], ["builtin", "floor"], ["builtin", "fromPolar"],
+	["builtin", "identity"], ["builtin", "isInfinite"], ["builtin", "isNaN"],
+	["builtin", "logBase"], ["builtin", "max"], ["builtin", "min"], ["builtin", "negate"], ["builtin", "never"],
+	["builtin", "not"], ["builtin", "pi"], ["builtin", "radians"], ["builtin", "rem"], ["builtin", "round"], ["builtin", "sin"],
+	["builtin", "sqrt"], ["builtin", "tan"], ["builtin", "toFloat"], ["builtin", "toPolar"], ["builtin", "toString"],
+	["builtin", "truncate"], ["builtin", "turns"], ["builtin", "uncurry"], ["builtin", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for all builtin.

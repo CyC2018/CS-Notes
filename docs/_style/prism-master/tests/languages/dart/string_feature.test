@@ -1,0 +1,25 @@
+"" ''
+r"" r''
+"""""" ''''''
+r"""""" r''''''
+"fo\"o" 'fo\'o'
+"""foo
+bar"""
+'''foo
+bar'''
+
+----------------------------------------------------
+
+[
+	["string", "\"\""], ["string", "''"],
+	["string", "r\"\""], ["string", "r''"],
+	["string", "\"\"\"\"\"\""], ["string", "''''''"],
+	["string", "r\"\"\"\"\"\""], ["string", "r''''''"],
+	["string", "\"fo\\\"o\""], ["string", "'fo\\'o'"],
+	["string", "\"\"\"foo\r\nbar\"\"\""], ["string", "'''foo\r\nbar'''"]
+]
+
+----------------------------------------------------
+
+Checks for single quoted and double quoted strings,
+multi-line strings and "raw" strings.

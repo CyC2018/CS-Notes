@@ -1,0 +1,719 @@
+CONTENT_
+DOCUMENT_
+GATEWAY_
+HTTP_
+HTTPS
+if_not_empty
+PATH_
+QUERY_
+REDIRECT_
+REMOTE_
+REQUEST_
+SCGI
+SCRIPT_
+SERVER_
+http
+server
+events
+location
+include
+accept_mutex
+accept_mutex_delay
+access_log
+add_after_body
+add_before_body
+add_header
+addition_types
+aio
+alias
+allow
+ancient_browser
+ancient_browser_value
+auth
+auth_basic
+auth_basic_user_file
+auth_http
+auth_http_header
+auth_http_timeout
+autoindex
+autoindex_exact_size
+autoindex_localtime
+break
+charset
+charset_map
+charset_types
+chunked_transfer_encoding
+client_body_buffer_size
+client_body_in_file_only
+client_body_in_single_buffer
+client_body_temp_path
+client_body_timeout
+client_header_buffer_size
+client_header_timeout
+client_max_body_size
+connection_pool_size
+create_full_put_path
+daemon
+dav_access
+dav_methods
+debug_connection
+debug_points
+default_type
+deny
+devpoll_changes
+devpoll_events
+directio
+directio_alignment
+disable_symlinks
+empty_gif
+env
+epoll_events
+error_log
+error_page
+expires
+fastcgi_buffer_size
+fastcgi_buffers
+fastcgi_busy_buffers_size
+fastcgi_cache
+fastcgi_cache_bypass
+fastcgi_cache_key
+fastcgi_cache_lock
+fastcgi_cache_lock_timeout
+fastcgi_cache_methods
+fastcgi_cache_min_uses
+fastcgi_cache_path
+fastcgi_cache_purge
+fastcgi_cache_use_stale
+fastcgi_cache_valid
+fastcgi_connect_timeout
+fastcgi_hide_header
+fastcgi_ignore_client_abort
+fastcgi_ignore_headers
+fastcgi_index
+fastcgi_intercept_errors
+fastcgi_keep_conn
+fastcgi_max_temp_file_size
+fastcgi_next_upstream
+fastcgi_no_cache
+fastcgi_param
+fastcgi_pass
+fastcgi_pass_header
+fastcgi_read_timeout
+fastcgi_redirect_errors
+fastcgi_send_timeout
+fastcgi_split_path_info
+fastcgi_store
+fastcgi_store_access
+fastcgi_temp_file_write_size
+fastcgi_temp_path
+flv
+geo
+geoip_city
+geoip_country
+google_perftools_profiles
+gzip
+gzip_buffers
+gzip_comp_level
+gzip_disable
+gzip_http_version
+gzip_min_length
+gzip_proxied
+gzip_static
+gzip_types
+gzip_vary
+if
+if_modified_since
+ignore_invalid_headers
+image_filter
+image_filter_buffer
+image_filter_jpeg_quality
+image_filter_sharpen
+image_filter_transparency
+imap_capabilities
+imap_client_buffer
+include
+index
+internal
+ip_hash
+keepalive
+keepalive_disable
+keepalive_requests
+keepalive_timeout
+kqueue_changes
+kqueue_events
+large_client_header_buffers
+limit_conn
+limit_conn_log_level
+limit_conn_zone
+limit_except
+limit_rate
+limit_rate_after
+limit_req
+limit_req_log_level
+limit_req_zone
+limit_zone
+lingering_close
+lingering_time
+lingering_timeout
+listen
+location
+lock_file
+log_format
+log_format_combined
+log_not_found
+log_subrequest
+map
+map_hash_bucket_size
+map_hash_max_size
+master_process
+max_ranges
+memcached_buffer_size
+memcached_connect_timeout
+memcached_next_upstream
+memcached_pass
+memcached_read_timeout
+memcached_send_timeout
+merge_slashes
+min_delete_depth
+modern_browser
+modern_browser_value
+more_set_headers
+mp4
+mp4_buffer_size
+mp4_max_buffer_size
+msie_padding
+msie_refresh
+multi_accept
+open_file_cache
+open_file_cache_errors
+open_file_cache_min_uses
+open_file_cache_valid
+open_log_file_cache
+optimize_server_names
+override_charset
+pcre_jit
+perl
+perl_modules
+perl_require
+perl_set
+pid
+pop3_auth
+pop3_capabilities
+port_in_redirect
+post_action
+postpone_output
+protocol
+proxy
+proxy_buffer
+proxy_buffer_size
+proxy_buffering
+proxy_buffers
+proxy_busy_buffers_size
+proxy_cache
+proxy_cache_bypass
+proxy_cache_key
+proxy_cache_lock
+proxy_cache_lock_timeout
+proxy_cache_methods
+proxy_cache_min_uses
+proxy_cache_path
+proxy_cache_use_stale
+proxy_cache_valid
+proxy_connect_timeout
+proxy_cookie_domain
+proxy_cookie_path
+proxy_headers_hash_bucket_size
+proxy_headers_hash_max_size
+proxy_hide_header
+proxy_http_version
+proxy_ignore_client_abort
+proxy_ignore_headers
+proxy_intercept_errors
+proxy_max_temp_file_size
+proxy_method
+proxy_next_upstream
+proxy_no_cache
+proxy_pass
+proxy_pass_error_message
+proxy_pass_header
+proxy_pass_request_body
+proxy_pass_request_headers
+proxy_read_timeout
+proxy_redirect
+proxy_redirect_errors
+proxy_send_lowat
+proxy_send_timeout
+proxy_set_body
+proxy_set_header
+proxy_ssl_session_reuse
+proxy_store
+proxy_store_access
+proxy_temp_file_write_size
+proxy_temp_path
+proxy_timeout
+proxy_upstream_fail_timeout
+proxy_upstream_max_fails
+random_index
+read_ahead
+real_ip_header
+recursive_error_pages
+request_pool_size
+reset_timedout_connection
+resolver
+resolver_timeout
+return
+rewrite
+root
+rtsig_overflow_events
+rtsig_overflow_test
+rtsig_overflow_threshold
+rtsig_signo
+satisfy
+satisfy_any
+secure_link_secret
+send_lowat
+send_timeout
+sendfile
+sendfile_max_chunk
+server
+server_name
+server_name_in_redirect
+server_names_hash_bucket_size
+server_names_hash_max_size
+server_tokens
+set
+set_real_ip_from
+smtp_auth
+smtp_capabilities
+so_keepalive
+source_charset
+split_clients
+ssi
+ssi_silent_errors
+ssi_types
+ssi_value_length
+ssl
+ssl_certificate
+ssl_certificate_key
+ssl_ciphers
+ssl_client_certificate
+ssl_crl
+ssl_dhparam
+ssl_early_data
+ssl_ecdh_curve
+ssl_engine
+ssl_prefer_server_ciphers
+ssl_protocols
+ssl_session_cache
+ssl_session_tickets
+ssl_session_timeout
+ssl_stapling
+ssl_stapling_verify
+ssl_trusted_certificate
+ssl_verify_client
+ssl_verify_depth
+starttls
+stub_status
+sub_filter
+sub_filter_once
+sub_filter_types
+tcp_nodelay
+tcp_nopush
+timeout
+timer_resolution
+try_files
+types
+types_hash_bucket_size
+types_hash_max_size
+underscores_in_headers
+uninitialized_variable_warn
+upstream
+use
+user
+userid
+userid_domain
+userid_expires
+userid_name
+userid_p3p
+userid_path
+userid_service
+valid_referers
+variables_hash_bucket_size
+variables_hash_max_size
+worker_connections
+worker_cpu_affinity
+worker_priority
+worker_processes
+worker_rlimit_core
+worker_rlimit_nofile
+worker_rlimit_sigpending
+working_directory
+xclient
+xml_entities
+xslt_entities
+xslt_stylesheet
+xslt_types
+
+----------------------------------------------------
+
+[
+	["keyword", "CONTENT_"],
+	["keyword", "DOCUMENT_"],
+	["keyword", "GATEWAY_"],
+	["keyword", "HTTP_"],
+	["keyword", "HTTPS"],
+	["keyword", "if_not_empty"],
+	["keyword", "PATH_"],
+	["keyword", "QUERY_"],
+	["keyword", "REDIRECT_"],
+	["keyword", "REMOTE_"],
+	["keyword", "REQUEST_"],
+	["keyword", "SCGI"],
+	["keyword", "SCRIPT_"],
+	["keyword", "SERVER_"],
+	["keyword", "http"],
+	["keyword", "server"],
+	["keyword", "events"],
+	["keyword", "location"],
+	["keyword", "include"],
+	["keyword", "accept_mutex"],
+	["keyword", "accept_mutex_delay"],
+	["keyword", "access_log"],
+	["keyword", "add_after_body"],
+	["keyword", "add_before_body"],
+	["keyword", "add_header"],
+	["keyword", "addition_types"],
+	["keyword", "aio"],
+	["keyword", "alias"],
+	["keyword", "allow"],
+	["keyword", "ancient_browser"],
+	["keyword", "ancient_browser_value"],
+	["keyword", "auth"],
+	["keyword", "auth_basic"],
+	["keyword", "auth_basic_user_file"],
+	["keyword", "auth_http"],
+	["keyword", "auth_http_header"],
+	["keyword", "auth_http_timeout"],
+	["keyword", "autoindex"],
+	["keyword", "autoindex_exact_size"],
+	["keyword", "autoindex_localtime"],
+	["keyword", "break"],
+	["keyword", "charset"],
+	["keyword", "charset_map"],
+	["keyword", "charset_types"],
+	["keyword", "chunked_transfer_encoding"],
+	["keyword", "client_body_buffer_size"],
+	["keyword", "client_body_in_file_only"],
+	["keyword", "client_body_in_single_buffer"],
+	["keyword", "client_body_temp_path"],
+	["keyword", "client_body_timeout"],
+	["keyword", "client_header_buffer_size"],
+	["keyword", "client_header_timeout"],
+	["keyword", "client_max_body_size"],
+	["keyword", "connection_pool_size"],
+	["keyword", "create_full_put_path"],
+	["keyword", "daemon"],
+	["keyword", "dav_access"],
+	["keyword", "dav_methods"],
+	["keyword", "debug_connection"],
+	["keyword", "debug_points"],
+	["keyword", "default_type"],
+	["keyword", "deny"],
+	["keyword", "devpoll_changes"],
+	["keyword", "devpoll_events"],
+	["keyword", "directio"],
+	["keyword", "directio_alignment"],
+	["keyword", "disable_symlinks"],
+	["keyword", "empty_gif"],
+	["keyword", "env"],
+	["keyword", "epoll_events"],
+	["keyword", "error_log"],
+	["keyword", "error_page"],
+	["keyword", "expires"],
+	["keyword", "fastcgi_buffer_size"],
+	["keyword", "fastcgi_buffers"],
+	["keyword", "fastcgi_busy_buffers_size"],
+	["keyword", "fastcgi_cache"],
+	["keyword", "fastcgi_cache_bypass"],
+	["keyword", "fastcgi_cache_key"],
+	["keyword", "fastcgi_cache_lock"],
+	["keyword", "fastcgi_cache_lock_timeout"],
+	["keyword", "fastcgi_cache_methods"],
+	["keyword", "fastcgi_cache_min_uses"],
+	["keyword", "fastcgi_cache_path"],
+	["keyword", "fastcgi_cache_purge"],
+	["keyword", "fastcgi_cache_use_stale"],
+	["keyword", "fastcgi_cache_valid"],
+	["keyword", "fastcgi_connect_timeout"],
+	["keyword", "fastcgi_hide_header"],
+	["keyword", "fastcgi_ignore_client_abort"],
+	["keyword", "fastcgi_ignore_headers"],
+	["keyword", "fastcgi_index"],
+	["keyword", "fastcgi_intercept_errors"],
+	["keyword", "fastcgi_keep_conn"],
+	["keyword", "fastcgi_max_temp_file_size"],
+	["keyword", "fastcgi_next_upstream"],
+	["keyword", "fastcgi_no_cache"],
+	["keyword", "fastcgi_param"],
+	["keyword", "fastcgi_pass"],
+	["keyword", "fastcgi_pass_header"],
+	["keyword", "fastcgi_read_timeout"],
+	["keyword", "fastcgi_redirect_errors"],
+	["keyword", "fastcgi_send_timeout"],
+	["keyword", "fastcgi_split_path_info"],
+	["keyword", "fastcgi_store"],
+	["keyword", "fastcgi_store_access"],
+	["keyword", "fastcgi_temp_file_write_size"],
+	["keyword", "fastcgi_temp_path"],
+	["keyword", "flv"],
+	["keyword", "geo"],
+	["keyword", "geoip_city"],
+	["keyword", "geoip_country"],
+	["keyword", "google_perftools_profiles"],
+	["keyword", "gzip"],
+	["keyword", "gzip_buffers"],
+	["keyword", "gzip_comp_level"],
+	["keyword", "gzip_disable"],
+	["keyword", "gzip_http_version"],
+	["keyword", "gzip_min_length"],
+	["keyword", "gzip_proxied"],
+	["keyword", "gzip_static"],
+	["keyword", "gzip_types"],
+	["keyword", "gzip_vary"],
+	["keyword", "if"],
+	["keyword", "if_modified_since"],
+	["keyword", "ignore_invalid_headers"],
+	["keyword", "image_filter"],
+	["keyword", "image_filter_buffer"],
+	["keyword", "image_filter_jpeg_quality"],
+	["keyword", "image_filter_sharpen"],
+	["keyword", "image_filter_transparency"],
+	["keyword", "imap_capabilities"],
+	["keyword", "imap_client_buffer"],
+	["keyword", "include"],
+	["keyword", "index"],
+	["keyword", "internal"],
+	["keyword", "ip_hash"],
+	["keyword", "keepalive"],
+	["keyword", "keepalive_disable"],
+	["keyword", "keepalive_requests"],
+	["keyword", "keepalive_timeout"],
+	["keyword", "kqueue_changes"],
+	["keyword", "kqueue_events"],
+	["keyword", "large_client_header_buffers"],
+	["keyword", "limit_conn"],
+	["keyword", "limit_conn_log_level"],
+	["keyword", "limit_conn_zone"],
+	["keyword", "limit_except"],
+	["keyword", "limit_rate"],
+	["keyword", "limit_rate_after"],
+	["keyword", "limit_req"],
+	["keyword", "limit_req_log_level"],
+	["keyword", "limit_req_zone"],
+	["keyword", "limit_zone"],
+	["keyword", "lingering_close"],
+	["keyword", "lingering_time"],
+	["keyword", "lingering_timeout"],
+	["keyword", "listen"],
+	["keyword", "location"],
+	["keyword", "lock_file"],
+	["keyword", "log_format"],
+	["keyword", "log_format_combined"],
+	["keyword", "log_not_found"],
+	["keyword", "log_subrequest"],
+	["keyword", "map"],
+	["keyword", "map_hash_bucket_size"],
+	["keyword", "map_hash_max_size"],
+	["keyword", "master_process"],
+	["keyword", "max_ranges"],
+	["keyword", "memcached_buffer_size"],
+	["keyword", "memcached_connect_timeout"],
+	["keyword", "memcached_next_upstream"],
+	["keyword", "memcached_pass"],
+	["keyword", "memcached_read_timeout"],
+	["keyword", "memcached_send_timeout"],
+	["keyword", "merge_slashes"],
+	["keyword", "min_delete_depth"],
+	["keyword", "modern_browser"],
+	["keyword", "modern_browser_value"],
+	["keyword", "more_set_headers"],
+	["keyword", "mp4"],
+	["keyword", "mp4_buffer_size"],
+	["keyword", "mp4_max_buffer_size"],
+	["keyword", "msie_padding"],
+	["keyword", "msie_refresh"],
+	["keyword", "multi_accept"],
+	["keyword", "open_file_cache"],
+	["keyword", "open_file_cache_errors"],
+	["keyword", "open_file_cache_min_uses"],
+	["keyword", "open_file_cache_valid"],
+	["keyword", "open_log_file_cache"],
+	["keyword", "optimize_server_names"],
+	["keyword", "override_charset"],
+	["keyword", "pcre_jit"],
+	["keyword", "perl"],
+	["keyword", "perl_modules"],
+	["keyword", "perl_require"],
+	["keyword", "perl_set"],
+	["keyword", "pid"],
+	["keyword", "pop3_auth"],
+	["keyword", "pop3_capabilities"],
+	["keyword", "port_in_redirect"],
+	["keyword", "post_action"],
+	["keyword", "postpone_output"],
+	["keyword", "protocol"],
+	["keyword", "proxy"],
+	["keyword", "proxy_buffer"],
+	["keyword", "proxy_buffer_size"],
+	["keyword", "proxy_buffering"],
+	["keyword", "proxy_buffers"],
+	["keyword", "proxy_busy_buffers_size"],
+	["keyword", "proxy_cache"],
+	["keyword", "proxy_cache_bypass"],
+	["keyword", "proxy_cache_key"],
+	["keyword", "proxy_cache_lock"],
+	["keyword", "proxy_cache_lock_timeout"],
+	["keyword", "proxy_cache_methods"],
+	["keyword", "proxy_cache_min_uses"],
+	["keyword", "proxy_cache_path"],
+	["keyword", "proxy_cache_use_stale"],
+	["keyword", "proxy_cache_valid"],
+	["keyword", "proxy_connect_timeout"],
+	["keyword", "proxy_cookie_domain"],
+	["keyword", "proxy_cookie_path"],
+	["keyword", "proxy_headers_hash_bucket_size"],
+	["keyword", "proxy_headers_hash_max_size"],
+	["keyword", "proxy_hide_header"],
+	["keyword", "proxy_http_version"],
+	["keyword", "proxy_ignore_client_abort"],
+	["keyword", "proxy_ignore_headers"],
+	["keyword", "proxy_intercept_errors"],
+	["keyword", "proxy_max_temp_file_size"],
+	["keyword", "proxy_method"],
+	["keyword", "proxy_next_upstream"],
+	["keyword", "proxy_no_cache"],
+	["keyword", "proxy_pass"],
+	["keyword", "proxy_pass_error_message"],
+	["keyword", "proxy_pass_header"],
+	["keyword", "proxy_pass_request_body"],
+	["keyword", "proxy_pass_request_headers"],
+	["keyword", "proxy_read_timeout"],
+	["keyword", "proxy_redirect"],
+	["keyword", "proxy_redirect_errors"],
+	["keyword", "proxy_send_lowat"],
+	["keyword", "proxy_send_timeout"],
+	["keyword", "proxy_set_body"],
+	["keyword", "proxy_set_header"],
+	["keyword", "proxy_ssl_session_reuse"],
+	["keyword", "proxy_store"],
+	["keyword", "proxy_store_access"],
+	["keyword", "proxy_temp_file_write_size"],
+	["keyword", "proxy_temp_path"],
+	["keyword", "proxy_timeout"],
+	["keyword", "proxy_upstream_fail_timeout"],
+	["keyword", "proxy_upstream_max_fails"],
+	["keyword", "random_index"],
+	["keyword", "read_ahead"],
+	["keyword", "real_ip_header"],
+	["keyword", "recursive_error_pages"],
+	["keyword", "request_pool_size"],
+	["keyword", "reset_timedout_connection"],
+	["keyword", "resolver"],
+	["keyword", "resolver_timeout"],
+	["keyword", "return"],
+	["keyword", "rewrite"],
+	["keyword", "root"],
+	["keyword", "rtsig_overflow_events"],
+	["keyword", "rtsig_overflow_test"],
+	["keyword", "rtsig_overflow_threshold"],
+	["keyword", "rtsig_signo"],
+	["keyword", "satisfy"],
+	["keyword", "satisfy_any"],
+	["keyword", "secure_link_secret"],
+	["keyword", "send_lowat"],
+	["keyword", "send_timeout"],
+	["keyword", "sendfile"],
+	["keyword", "sendfile_max_chunk"],
+	["keyword", "server"],
+	["keyword", "server_name"],
+	["keyword", "server_name_in_redirect"],
+	["keyword", "server_names_hash_bucket_size"],
+	["keyword", "server_names_hash_max_size"],
+	["keyword", "server_tokens"],
+	["keyword", "set"],
+	["keyword", "set_real_ip_from"],
+	["keyword", "smtp_auth"],
+	["keyword", "smtp_capabilities"],
+	["keyword", "so_keepalive"],
+	["keyword", "source_charset"],
+	["keyword", "split_clients"],
+	["keyword", "ssi"],
+	["keyword", "ssi_silent_errors"],
+	["keyword", "ssi_types"],
+	["keyword", "ssi_value_length"],
+	["keyword", "ssl"],
+	["keyword", "ssl_certificate"],
+	["keyword", "ssl_certificate_key"],
+	["keyword", "ssl_ciphers"],
+	["keyword", "ssl_client_certificate"],
+	["keyword", "ssl_crl"],
+	["keyword", "ssl_dhparam"],
+	["keyword", "ssl_early_data"],
+	["keyword", "ssl_ecdh_curve"],
+	["keyword", "ssl_engine"],
+	["keyword", "ssl_prefer_server_ciphers"],
+	["keyword", "ssl_protocols"],
+	["keyword", "ssl_session_cache"],
+	["keyword", "ssl_session_tickets"],
+	["keyword", "ssl_session_timeout"],
+	["keyword", "ssl_stapling"],
+	["keyword", "ssl_stapling_verify"],
+	["keyword", "ssl_trusted_certificate"],
+	["keyword", "ssl_verify_client"],
+	["keyword", "ssl_verify_depth"],
+	["keyword", "starttls"],
+	["keyword", "stub_status"],
+	["keyword", "sub_filter"],
+	["keyword", "sub_filter_once"],
+	["keyword", "sub_filter_types"],
+	["keyword", "tcp_nodelay"],
+	["keyword", "tcp_nopush"],
+	["keyword", "timeout"],
+	["keyword", "timer_resolution"],
+	["keyword", "try_files"],
+	["keyword", "types"],
+	["keyword", "types_hash_bucket_size"],
+	["keyword", "types_hash_max_size"],
+	["keyword", "underscores_in_headers"],
+	["keyword", "uninitialized_variable_warn"],
+	["keyword", "upstream"],
+	["keyword", "use"],
+	["keyword", "user"],
+	["keyword", "userid"],
+	["keyword", "userid_domain"],
+	["keyword", "userid_expires"],
+	["keyword", "userid_name"],
+	["keyword", "userid_p3p"],
+	["keyword", "userid_path"],
+	["keyword", "userid_service"],
+	["keyword", "valid_referers"],
+	["keyword", "variables_hash_bucket_size"],
+	["keyword", "variables_hash_max_size"],
+	["keyword", "worker_connections"],
+	["keyword", "worker_cpu_affinity"],
+	["keyword", "worker_priority"],
+	["keyword", "worker_processes"],
+	["keyword", "worker_rlimit_core"],
+	["keyword", "worker_rlimit_nofile"],
+	["keyword", "worker_rlimit_sigpending"],
+	["keyword", "working_directory"],
+	["keyword", "xclient"],
+	["keyword", "xml_entities"],
+	["keyword", "xslt_entities"],
+	["keyword", "xslt_stylesheet"],
+	["keyword", "xslt_types"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

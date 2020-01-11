@@ -1,0 +1,35 @@
+""
+"Foobar"
+"Foo""bar"
+“”
+“Foo
+bar”
+“Foo""bar”
+““
+””
+”“
+“"
+"Foo”“ba
+r"
+"a"c
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"Foobar\""],
+	["string", "\"Foo\"\"bar\""],
+	["string", "“”"],
+	["string", "“Foo\r\nbar”"],
+	["string", "“Foo\"\"bar”"],
+	["string", "““"],
+	["string", "””"],
+	["string", "”“"],
+	["string", "“\""],
+	["string", "\"Foo”“ba\r\nr\""],
+	["string", "\"a\"c"]
+]
+
+----------------------------------------------------
+
+Checks for strings.

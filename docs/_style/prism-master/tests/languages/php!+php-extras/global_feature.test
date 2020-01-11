@@ -1,0 +1,37 @@
+$GLOBALS
+$_SERVER
+$_GET
+$_POST
+$_FILES
+$_REQUEST
+$_SESSION
+$_ENV
+$_COOKIE
+$php_errormsg
+$HTTP_RAW_POST_DATA
+$http_response_header
+$argc
+$argv
+
+----------------------------------------------------
+
+[
+	["global", "$GLOBALS"],
+	["global", "$_SERVER"],
+	["global", "$_GET"],
+	["global", "$_POST"],
+	["global", "$_FILES"],
+	["global", "$_REQUEST"],
+	["global", "$_SESSION"],
+	["global", "$_ENV"],
+	["global", "$_COOKIE"],
+	["global", "$php_errormsg"],
+	["global", "$HTTP_RAW_POST_DATA"],
+	["global", "$http_response_header"],
+	["global", "$argc"],
+	["global", "$argv"]
+]
+
+----------------------------------------------------
+
+Checks for superglobals.

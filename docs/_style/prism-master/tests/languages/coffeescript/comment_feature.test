@@ -1,0 +1,16 @@
+#foo
+# foo bar
+### foo bar
+baz ###
+
+----------------------------------------------------
+
+[
+	["comment", "#foo"],
+	["comment", "# foo bar"],
+	["multiline-comment", "### foo bar\r\nbaz ###"]
+]
+
+----------------------------------------------------
+
+Checks for single-line and multi-line comments.

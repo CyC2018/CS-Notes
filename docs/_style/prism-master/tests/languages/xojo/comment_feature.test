@@ -1,0 +1,15 @@
+' Foobar
+// Foobar
+Rem Foobar
+
+----------------------------------------------------
+
+[
+	["comment", ["' Foobar"]],
+	["comment", ["// Foobar"]],
+	["comment", [["keyword", "Rem"], " Foobar"]]
+]
+
+----------------------------------------------------
+
+Checks for comments and remarks.

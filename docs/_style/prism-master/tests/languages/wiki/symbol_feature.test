@@ -1,0 +1,17 @@
+#REDIRECT [[somewhere]]
+~~~
+~~~~
+~~~~~
+
+----------------------------------------------------
+
+[
+	["symbol", "#REDIRECT"], ["url", "[[somewhere]]"],
+	["symbol", "~~~"],
+	["symbol", "~~~~"],
+	["symbol", "~~~~~"]
+]
+
+----------------------------------------------------
+
+Checks for redirects and signatures.

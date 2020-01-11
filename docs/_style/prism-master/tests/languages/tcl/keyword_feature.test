@@ -1,0 +1,213 @@
+after
+append
+apply
+array
+auto_execok
+auto_import
+auto_load
+auto_mkindex
+auto_qualify
+auto_reset
+automkindex_old
+bgerror
+binary
+catch
+cd
+chan
+clock
+close
+concat
+dde
+dict
+encoding
+eof
+exec
+expr
+fblocked
+fconfigure
+fcopy
+file
+fileevent
+filename
+flush
+gets
+glob
+history
+http
+incr
+info
+interp
+join
+lappend
+lassign
+lindex
+linsert
+list
+llength
+load
+lrange
+lrepeat
+lreplace
+lreverse
+lsearch
+lset
+lsort
+mathfunc
+mathop
+memory
+msgcat
+namespace
+open
+package
+parray
+pid
+pkg_mkIndex
+platform
+puts
+pwd
+re_syntax
+read
+refchan
+regexp
+registry
+regsub
+rename
+Safe_Base
+scan
+seek
+set
+socket
+source
+split
+string
+subst
+Tcl
+tcl_endOfWord
+tcl_findLibrary
+tclstartOfNextWord
+tclstartOfPreviousWord
+tclwordBreakAfter
+tclwordBreakBefore
+tcltest
+tclvars
+tell
+time
+tm
+trace
+unknown
+unload
+unset
+update
+uplevel
+vwait
+
+----------------------------------------------------
+
+[
+	["keyword", "after"],
+	["keyword", "append"],
+	["keyword", "apply"],
+	["keyword", "array"],
+	["keyword", "auto_execok"],
+	["keyword", "auto_import"],
+	["keyword", "auto_load"],
+	["keyword", "auto_mkindex"],
+	["keyword", "auto_qualify"],
+	["keyword", "auto_reset"],
+	["keyword", "automkindex_old"],
+	["keyword", "bgerror"],
+	["keyword", "binary"],
+	["keyword", "catch"],
+	["keyword", "cd"],
+	["keyword", "chan"],
+	["keyword", "clock"],
+	["keyword", "close"],
+	["keyword", "concat"],
+	["keyword", "dde"],
+	["keyword", "dict"],
+	["keyword", "encoding"],
+	["keyword", "eof"],
+	["keyword", "exec"],
+	["keyword", "expr"],
+	["keyword", "fblocked"],
+	["keyword", "fconfigure"],
+	["keyword", "fcopy"],
+	["keyword", "file"],
+	["keyword", "fileevent"],
+	["keyword", "filename"],
+	["keyword", "flush"],
+	["keyword", "gets"],
+	["keyword", "glob"],
+	["keyword", "history"],
+	["keyword", "http"],
+	["keyword", "incr"],
+	["keyword", "info"],
+	["keyword", "interp"],
+	["keyword", "join"],
+	["keyword", "lappend"],
+	["keyword", "lassign"],
+	["keyword", "lindex"],
+	["keyword", "linsert"],
+	["keyword", "list"],
+	["keyword", "llength"],
+	["keyword", "load"],
+	["keyword", "lrange"],
+	["keyword", "lrepeat"],
+	["keyword", "lreplace"],
+	["keyword", "lreverse"],
+	["keyword", "lsearch"],
+	["keyword", "lset"],
+	["keyword", "lsort"],
+	["keyword", "mathfunc"],
+	["keyword", "mathop"],
+	["keyword", "memory"],
+	["keyword", "msgcat"],
+	["keyword", "namespace"],
+	["keyword", "open"],
+	["keyword", "package"],
+	["keyword", "parray"],
+	["keyword", "pid"],
+	["keyword", "pkg_mkIndex"],
+	["keyword", "platform"],
+	["keyword", "puts"],
+	["keyword", "pwd"],
+	["keyword", "re_syntax"],
+	["keyword", "read"],
+	["keyword", "refchan"],
+	["keyword", "regexp"],
+	["keyword", "registry"],
+	["keyword", "regsub"],
+	["keyword", "rename"],
+	["keyword", "Safe_Base"],
+	["keyword", "scan"],
+	["keyword", "seek"],
+	["keyword", "set"],
+	["keyword", "socket"],
+	["keyword", "source"],
+	["keyword", "split"],
+	["keyword", "string"],
+	["keyword", "subst"],
+	["keyword", "Tcl"],
+	["keyword", "tcl_endOfWord"],
+	["keyword", "tcl_findLibrary"],
+	["keyword", "tclstartOfNextWord"],
+	["keyword", "tclstartOfPreviousWord"],
+	["keyword", "tclwordBreakAfter"],
+	["keyword", "tclwordBreakBefore"],
+	["keyword", "tcltest"],
+	["keyword", "tclvars"],
+	["keyword", "tell"],
+	["keyword", "time"],
+	["keyword", "tm"],
+	["keyword", "trace"],
+	["keyword", "unknown"],
+	["keyword", "unload"],
+	["keyword", "unset"],
+	["keyword", "update"],
+	["keyword", "uplevel"],
+	["keyword", "vwait"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

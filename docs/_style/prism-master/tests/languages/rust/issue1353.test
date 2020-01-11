@@ -1,0 +1,16 @@
+(*e 0 b'a')
+
+----------------------------------------------------
+
+[
+	["punctuation", "("],
+	["operator", "*"],
+	"e ",
+	["number", "0"],
+	["char", "b'a'"],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Makes sure lifetime annotations do not mess with bytes. See #1353.

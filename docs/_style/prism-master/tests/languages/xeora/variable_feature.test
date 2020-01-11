@@ -1,0 +1,36 @@
+$SearchKey$
+$^SearchKey$
+$~SearchKey$
+$-SearchKey$
+$+SearchKey$
+$=SearchKey$
+$#SearchKey$
+$*SearchKey$
+$@SearchObject.SearchProperty$
+
+----------------------------------------------------
+
+[
+	["variable", [
+		["punctuation", "$"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "^"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "~"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "-"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "+"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "="], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "#"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "*"], "SearchKey", ["punctuation", "$"]]],
+	["variable", [
+		["punctuation", "$"], ["operator", "@"], "SearchObject", ["punctuation", "."], "SearchProperty", ["punctuation", "$"]]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

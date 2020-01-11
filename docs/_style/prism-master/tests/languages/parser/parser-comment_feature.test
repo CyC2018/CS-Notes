@@ -1,0 +1,17 @@
+Foo
+#
+# Foobar
+
+----------------------------------------------------
+
+[
+	"Foo\r\n",
+	["parser-comment", "#"],
+	["parser-comment", "# Foobar"]
+]
+
+----------------------------------------------------
+
+Checks for comments.
+The first line of this test is needed, since we require a whitespace before the hash
+and tests are trimmed.

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Keep markup ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+
+	<style type="text/css">
+		code[class*="language-"] mark,
+		pre[class*="language-"] mark {
+			display: inline-block;
+			color: inherit;
+			background: none;
+			border: 1px solid #000;
+			box-shadow: 0 0 2px #fff;
+			padding: 1px;
+			background: rgba(0,0,0,0.2);
+		}
+	</style>
+
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Keep markup</h2>
+	<p>Prevents custom markup from being dropped out during highlighting.</p>
+</header>
+
+<section>
+
+	<h1>How to use</h1>
+	<p>You have nothing to do. With this plugin loaded, all markup inside code will be kept.</p>
+
+	<h1>Examples</h1>
+
+	<p>The following source code</p>
+	<pre><code class="language-markup">&lt;pre>&lt;code class="language-css">
+@media &lt;mark>screen&lt;/mark> {
+	div {
+		&lt;mark>text&lt;/mark>-decoration: &lt;mark>&lt;mark>under&lt;/mark>line&lt;/mark>;
+		back&lt;mark>ground: url&lt;/mark>('foo.png');
+	}
+}&lt;/code>&lt;/pre></code></pre>
+
+	<p>would render like this:</p>
+	<pre><code class="language-css">
+@media <mark>screen</mark> {
+	div {
+		<mark>text</mark>-decoration: <mark><mark>under</mark>line</mark>;
+		back<mark>ground: url</mark>('foo.png');
+	}
+}</code></pre>
+
+	<p>
+		It also works for inline code:
+		<code class="language-javascript">v<mark>ar b</mark>ar = <mark>func</mark>tion () { <mark>/*</mark> foo <mark>*</mark>/ };</code>
+	</p>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="plugins/keep-markup/prism-keep-markup.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+</body>
+</html>

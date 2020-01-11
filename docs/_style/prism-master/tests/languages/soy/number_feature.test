@@ -1,0 +1,63 @@
+{param foo: 42}
+{param foo: 3.14159}
+{param foo: 0.0}
+{param foo: 7e+8}
+{param foo: 2.5E-14}
+{param foo: 0x42BADFACE}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "42"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "3.14159"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "0.0"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "7e+8"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "2.5E-14"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "foo"],
+		["punctuation", ":"],
+		["number", "0x42BADFACE"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for decimal and hexadecimal numbers.

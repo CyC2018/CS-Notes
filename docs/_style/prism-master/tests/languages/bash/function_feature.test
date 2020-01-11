@@ -1,0 +1,101 @@
+alias apropos apt apt-cache apt-get aptitude aspell
+automysqlbackup awk basename bash bc bconsole bg
+builtin bzip2 cal cat cd
+cfdisk chgrp chmod chown chroot
+chkconfig cksum clear cmp comm
+command cp cron crontab csplit
+curl cut date dc dd ddrescue debootstrap
+df diff diff3 dig dir dircolors
+dirname dirs dmesg du
+egrep eject enable env ethtool
+eval exec expand expect
+export expr fdformat fdisk
+fg fgrep file find fmt
+fold format free fsck ftp
+fuser gawk getopts git gparted grep
+groupadd groupdel groupmod groups grub-mkconfig
+gzip halt hash head help hg history host
+hostname htop iconv id ifconfig
+ifdown ifup import install ip jobs
+join kill killall less link ln
+locate logname logout logrotate look lpc lpr
+lprint lprintd lprintq lprm ls
+lsof lynx make man mc mdadm mkconfig mkdir mke2fs mkfifo
+mkfs mkisofs mknod mkswap more most mount
+mtools mtr mutt mv mmv nano nc netstat
+nice nl nohup notify-send nslookup
+open parted op passwd paste pathchk ping
+pkill popd pr printcap printenv
+printf ps pushd pv pwd quota
+quotacheck quotactl ram rar rcp
+read readarray readonly reboot
+rename renice remsync rev rm
+rmdir rpm rsync screen scp sdiff sed sendmail
+seq service sftp shift
+shopt shutdown sleep slocate
+sort source split ssh stat strace
+su sudo sum suspend swapon sync tail tar
+tee test time timeout times
+touch top traceroute trap tr
+tsort tty type ulimit umask
+umount unalias uname unexpand uniq
+units unrar unshar unzip update-grub uptime
+useradd userdel usermod users uuencode
+uudecode vdir vi vim virsh vmstat wait watch
+wc wget whereis which who whoami write
+xargs xdg-open yes zip zypper
+
+----------------------------------------------------
+
+[
+	["function", "alias"], ["function", "apropos"], ["function", "apt"], ["function", "apt-cache"], ["function", "apt-get"], ["function", "aptitude"], ["function", "aspell"],
+	["function", "automysqlbackup"], ["function", "awk"], ["function", "basename"], ["function", "bash"], ["function", "bc"], ["function", "bconsole"], ["function", "bg"],
+	["function", "builtin"], ["function", "bzip2"], ["function", "cal"], ["function", "cat"], ["function", "cd"],
+	["function", "cfdisk"], ["function", "chgrp"], ["function", "chmod"], ["function", "chown"], ["function", "chroot"],
+	["function", "chkconfig"], ["function", "cksum"], ["function", "clear"], ["function", "cmp"], ["function", "comm"],
+	["function", "command"], ["function", "cp"], ["function", "cron"], ["function", "crontab"], ["function", "csplit"],
+	["function", "curl"], ["function", "cut"], ["function", "date"], ["function", "dc"], ["function", "dd"], ["function", "ddrescue"], ["function", "debootstrap"],
+	["function", "df"], ["function", "diff"], ["function", "diff3"], ["function", "dig"], ["function", "dir"], ["function", "dircolors"],
+	["function", "dirname"], ["function", "dirs"], ["function", "dmesg"], ["function", "du"],
+	["function", "egrep"], ["function", "eject"], ["function", "enable"], ["function", "env"], ["function", "ethtool"],
+	["function", "eval"], ["function", "exec"], ["function", "expand"], ["function", "expect"],
+	["function", "export"], ["function", "expr"], ["function", "fdformat"], ["function", "fdisk"],
+	["function", "fg"], ["function", "fgrep"], ["function", "file"], ["function", "find"], ["function", "fmt"],
+	["function", "fold"], ["function", "format"], ["function", "free"], ["function", "fsck"], ["function", "ftp"],
+	["function", "fuser"], ["function", "gawk"], ["function", "getopts"], ["function", "git"], ["function", "gparted"], ["function", "grep"],
+	["function", "groupadd"], ["function", "groupdel"], ["function", "groupmod"], ["function", "groups"], ["function", "grub-mkconfig"],
+	["function", "gzip"], ["function", "halt"], ["function", "hash"], ["function", "head"], ["function", "help"], ["function", "hg"], ["function", "history"], ["function", "host"],
+	["function", "hostname"], ["function", "htop"], ["function", "iconv"], ["function", "id"], ["function", "ifconfig"],
+	["function", "ifdown"], ["function", "ifup"], ["function", "import"], ["function", "install"], ["function", "ip"], ["function", "jobs"],
+	["function", "join"], ["function", "kill"], ["function", "killall"], ["function", "less"], ["function", "link"], ["function", "ln"],
+	["function", "locate"], ["function", "logname"], ["function", "logout"], ["function", "logrotate"], ["function", "look"], ["function", "lpc"], ["function", "lpr"],
+	["function", "lprint"], ["function", "lprintd"], ["function", "lprintq"], ["function", "lprm"], ["function", "ls"],
+	["function", "lsof"], ["function", "lynx"], ["function", "make"], ["function", "man"], ["function", "mc"], ["function", "mdadm"], ["function", "mkconfig"], ["function", "mkdir"], ["function", "mke2fs"], ["function", "mkfifo"],
+	["function", "mkfs"], ["function", "mkisofs"], ["function", "mknod"], ["function", "mkswap"], ["function", "more"], ["function", "most"], ["function", "mount"],
+	["function", "mtools"], ["function", "mtr"], ["function", "mutt"], ["function", "mv"], ["function", "mmv"], ["function", "nano"], ["function", "nc"], ["function", "netstat"],
+	["function", "nice"], ["function", "nl"], ["function", "nohup"], ["function", "notify-send"], ["function", "nslookup"],
+	["function", "open"], ["function", "parted"], ["function", "op"], ["function", "passwd"], ["function", "paste"], ["function", "pathchk"], ["function", "ping"],
+	["function", "pkill"], ["function", "popd"], ["function", "pr"], ["function", "printcap"], ["function", "printenv"],
+	["function", "printf"], ["function", "ps"], ["function", "pushd"], ["function", "pv"], ["function", "pwd"], ["function", "quota"],
+	["function", "quotacheck"], ["function", "quotactl"], ["function", "ram"], ["function", "rar"], ["function", "rcp"],
+	["function", "read"], ["function", "readarray"], ["function", "readonly"], ["function", "reboot"],
+	["function", "rename"], ["function", "renice"], ["function", "remsync"], ["function", "rev"], ["function", "rm"],
+	["function", "rmdir"], ["function", "rpm"], ["function", "rsync"], ["function", "screen"], ["function", "scp"], ["function", "sdiff"], ["function", "sed"], ["function", "sendmail"],
+	["function", "seq"], ["function", "service"], ["function", "sftp"], ["function", "shift"],
+	["function", "shopt"], ["function", "shutdown"], ["function", "sleep"], ["function", "slocate"],
+	["function", "sort"], ["function", "source"], ["function", "split"], ["function", "ssh"], ["function", "stat"], ["function", "strace"],
+	["function", "su"], ["function", "sudo"], ["function", "sum"], ["function", "suspend"], ["function", "swapon"], ["function", "sync"], ["function", "tail"], ["function", "tar"],
+	["function", "tee"], ["function", "test"], ["function", "time"], ["function", "timeout"], ["function", "times"],
+	["function", "touch"], ["function", "top"], ["function", "traceroute"], ["function", "trap"], ["function", "tr"],
+	["function", "tsort"], ["function", "tty"], ["function", "type"], ["function", "ulimit"], ["function", "umask"],
+	["function", "umount"], ["function", "unalias"], ["function", "uname"], ["function", "unexpand"], ["function", "uniq"],
+	["function", "units"], ["function", "unrar"], ["function", "unshar"], ["function", "unzip"], ["function", "update-grub"], ["function", "uptime"],
+	["function", "useradd"], ["function", "userdel"], ["function", "usermod"], ["function", "users"], ["function", "uuencode"],
+	["function", "uudecode"], ["function", "vdir"], ["function", "vi"], ["function", "vim"], ["function", "virsh"],  ["function", "vmstat"], ["function", "wait"], ["function", "watch"],
+	["function", "wc"], ["function", "wget"], ["function", "whereis"], ["function", "which"], ["function", "who"], ["function", "whoami"], ["function", "write"],
+	["function", "xargs"], ["function", "xdg-open"], ["function", "yes"], ["function", "zip"], ["function", "zypper"]
+]
+
+----------------------------------------------------
+
+Checks for all functions.

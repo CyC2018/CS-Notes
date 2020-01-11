@@ -1,0 +1,257 @@
+(~42)
+(+42)
+(-42)
+(4/2)
+(9\2)
+(9%2)
+(!true)
+(4!|2)
+(true!||false)
+(4!=2)
+(4&2)
+(true&&false)
+(4|2)
+(true||false)
+(4==2)
+(4<2)
+(4<=2)
+(4<<2)
+(4>2)
+(4>=2)
+(4>>2)
+(-f "foo")
+(-d "foo")
+(def $foo)
+(4 eq 2)
+(4 ge 2)
+(4 gt 2)
+(in "foo")
+($foo is string)
+(4 le 2)
+(4 lt 2)
+(4 ne 2)
+
+----------------------------------------------------
+
+[
+	["expression", [
+		["punctuation", "("],
+		["operator", "~"],
+		["number", "42"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "+"],
+		["number", "42"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "-"],
+		["number", "42"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "/"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "9"],
+		["operator", "\\"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "9"],
+		["operator", "%"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "!"],
+		["boolean", "true"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "!|"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["boolean", "true"],
+		["operator", "!||"],
+		["boolean", "false"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "!="],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "&"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["boolean", "true"],
+		["operator", "&&"],
+		["boolean", "false"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "|"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["boolean", "true"],
+		["operator", "||"],
+		["boolean", "false"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "=="],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "<"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "<="],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "<<"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", ">"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", ">="],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", ">>"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "-f"],
+		["string", "\"foo\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "-d"],
+		["string", "\"foo\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "def"],
+		["variable", ["$foo"]],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "eq"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "ge"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "gt"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["operator", "in"],
+		["string", "\"foo\""],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["variable", ["$foo"]],
+		["operator", "is"],
+		" string",
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "le"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "lt"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "ne"],
+		["number", "2"],
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for operators inside expressions.

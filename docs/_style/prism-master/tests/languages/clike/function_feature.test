@@ -1,0 +1,23 @@
+foo()
+foo_bar()
+f42()
+
+----------------------------------------------------
+
+[
+	["function", "foo"],
+	["punctuation", "("],
+	["punctuation", ")"],
+
+	["function", "foo_bar"],
+	["punctuation", "("],
+	["punctuation", ")"],
+
+	["function", "f42"],
+	["punctuation", "("],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions.
