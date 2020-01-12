@@ -763,7 +763,7 @@ REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 必须使用 Password() 函数进行加密。
 
 ```sql
-SET PASSWROD FOR myuser = Password('new_password');
+SET PASSWORD FOR myuser = Password('new_password');
 ```
 
 # 参考资料
