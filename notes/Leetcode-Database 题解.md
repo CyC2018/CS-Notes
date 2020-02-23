@@ -827,7 +827,7 @@ https://leetcode.com/problems/rank-scores/description/
 | 2 | 4.2 | 2 | 2 |
 | 3 | 4.3 | 1 | 1 |
 
-使用连接操作找到某个 score 对应的大于其值的记录：
+使用连接操作找到某个 score 对应的大于等于其值的记录：
 
 ```sql
 SELECT
@@ -890,7 +890,7 @@ ORDER BY
 | score | Rank |
 | :---: | :--: |
 |  4.2  |  1   |
-|  4.2  |  2   |
+|  4.2  |  1   |
 |  4.1  |  2   |
 
 连接情况如下：
