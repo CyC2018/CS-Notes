@@ -1021,7 +1021,7 @@ g/re/p（globally search a regular expression and print)，使用正则表示式
 
 ```html
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
--c ： 统计个数
+-c ： 统计匹配到行的个数
 -i ： 忽略大小写
 -n ： 输出行号
 -v ： 反向选择，也就是显示出没有 搜寻字符串 内容的那一行
