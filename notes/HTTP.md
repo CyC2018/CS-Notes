@@ -62,21 +62,21 @@
 
 URI 包含 URL 和 URN。
 
-<div align="center"> <img src="pics/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
 
 ## 请求和响应报文
 
 ### 1. 请求报文
 
-<div align="center"> <img src="pics/HTTP_RequestMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_RequestMessageExample.png" width=""/> </div><br>
 
 ### 2. 响应报文
 
-<div align="center"> <img src="pics/HTTP_ResponseMessageExample.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_ResponseMessageExample.png" width=""/> </div><br>
 
 # 二、HTTP 方法
 
-客户端发送的  **请求报文**  第一行为请求行，包含了方法字段。
+客户端发送的   **请求报文**   第一行为请求行，包含了方法字段。
 
 ## GET
 
@@ -159,7 +159,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="pics/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
 
 ## TRACE
 
@@ -173,7 +173,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 # 三、HTTP 状态码
 
-服务器返回的  **响应报文**  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
+服务器返回的   **响应报文**   中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
 | 状态码 | 类别 | 含义 |
 | :---: | :---: | :---: |
@@ -185,45 +185,45 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 1XX 信息
 
--  **100 Continue** ：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
+-   **100 Continue**  ：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
 
 ## 2XX 成功
 
--  **200 OK** 
+-   **200 OK**  
 
--  **204 No Content** ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
+-   **204 No Content**  ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
 
--  **206 Partial Content** ：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
+-   **206 Partial Content**  ：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
 
 ## 3XX 重定向
 
--  **301 Moved Permanently** ：永久性重定向
+-   **301 Moved Permanently**  ：永久性重定向
 
--  **302 Found** ：临时性重定向
+-   **302 Found**  ：临时性重定向
 
--  **303 See Other** ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
+-   **303 See Other**  ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
 
 - 注：虽然 HTTP 协议规定 301、302 状态下重定向时不允许把 POST 方法改成 GET 方法，但是大多数浏览器都会在 301、302 和 303 状态下的重定向把 POST 方法改成 GET 方法。
 
--  **304 Not Modified** ：如果请求报文首部包含一些条件，例如：If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回 304 状态码。
+-   **304 Not Modified**  ：如果请求报文首部包含一些条件，例如：If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回 304 状态码。
 
--  **307 Temporary Redirect** ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
+-   **307 Temporary Redirect**  ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
 
 ## 4XX 客户端错误
 
--  **400 Bad Request** ：请求报文中存在语法错误。
+-   **400 Bad Request**  ：请求报文中存在语法错误。
 
--  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
+-   **401 Unauthorized**  ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
 
--  **403 Forbidden** ：请求被拒绝。
+-   **403 Forbidden**  ：请求被拒绝。
 
--  **404 Not Found** 
+-   **404 Not Found**  
 
 ## 5XX 服务器错误
 
--  **500 Internal Server Error** ：服务器正在执行请求时发生错误。
+-   **500 Internal Server Error**  ：服务器正在执行请求时发生错误。
 
--  **503 Service Unavailable** ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+-   **503 Service Unavailable**  ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
 
 # 四、HTTP 首部
 
@@ -302,7 +302,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ## 连接管理
 
-<div align="center"> <img src="pics/HTTP1_x_Connections.png" width="800"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP1_x_Connections.png" width="800"/> </div><br>
 
 ### 1. 短连接与长连接
 
@@ -436,7 +436,7 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 HTTP/1.1 通过 Cache-Control 首部字段来控制缓存。
 
-**3.1 禁止进行缓存** 
+**3.1 禁止进行缓存**  
 
 no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 
@@ -444,7 +444,7 @@ no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 Cache-Control: no-store
 ```
 
-**3.2 强制确认缓存** 
+**3.2 强制确认缓存**  
 
 no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效时才能使用该缓存对客户端的请求进行响应。
 
@@ -452,7 +452,7 @@ no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源�
 Cache-Control: no-cache
 ```
 
-**3.3 私有缓存和公共缓存** 
+**3.3 私有缓存和公共缓存**  
 
 private 指令规定了将资源作为私有缓存，只能被单独用户使用，一般存储在用户浏览器中。
 
@@ -466,7 +466,7 @@ public 指令规定了将资源作为公共缓存，可以被多个用户使用�
 Cache-Control: public
 ```
 
-**3.4 缓存过期机制** 
+**3.4 缓存过期机制**  
 
 max-age 指令出现在请求报文，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
 
@@ -515,7 +515,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 ### 1. 类型
 
-**1.1 服务端驱动型** 
+**1.1 服务端驱动型**  
 
 客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language，服务器根据这些字段返回特定的资源。
 
@@ -525,7 +525,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 - 客户端提供的信息相当冗长（HTTP/2 协议的首部压缩机制缓解了这个问题），并且存在隐私风险（HTTP 指纹识别技术）；
 - 给定的资源需要返回不同的展现形式，共享缓存的效率会降低，而服务器端的实现会越来越复杂。
 
-**1.2 代理驱动型** 
+**1.2 代理驱动型**  
 
 服务器返回 300 Multiple Choices 或者 406 Not Acceptable，客户端从中选出最合适的那个资源。
 
@@ -631,11 +631,11 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 - 用户察觉得到正向代理的存在。
 
-<div align="center"> <img src="pics/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
 
 - 而反向代理一般位于内部网络中，用户察觉不到。
 
-<div align="center"> <img src="pics/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
 
 ### 2. 网关
 
@@ -657,7 +657,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-<div align="center"> <img src="pics/ssl-offloading.jpg" width="700"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ssl-offloading.jpg" width="700"/> </div><br>
 
 ## 加密
 
@@ -668,7 +668,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：运算速度快；
 - 缺点：无法安全地将密钥传输给通信方。
 
-<div align="center"> <img src="pics/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
 
 ### 2.非对称密钥加密
 
@@ -681,17 +681,20 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：可以更安全地将公开密钥传输给通信发送方；
 - 缺点：运算速度慢。
 
-<div align="center"> <img src="pics/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
 
 ### 3. HTTPS 采用的加密方式
 
-HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证传输过程的安全性，之后使用对称密钥加密进行通信来保证通信过程的效率。（下图中的 Session Key 就是对称密钥）
+上面提到对称密钥加密方式的传输效率更高，但是无法安全地将密钥 Secret Key 传输给通信方。而非对称密钥加密方式可以保证传输的安全性，因此我们可以利用非对称密钥加密方式将 Secret Key  传输给通信方。HTTPS 采用混合的加密机制，正是利用了上面提到的方案：
 
-<div align="center"> <img src="pics/How-HTTPS-Works.png" width="600"/> </div><br>
+- 使用非对称密钥加密方式，传输对称密钥加密方式所需要的 Secret Key，从而保证安全性;
+- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率。（下图中的 Session Key 就是 Secret Key）
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/How-HTTPS-Works.png" width="600"/> </div><br>
 
 ## 认证
 
-通过使用  **证书**  来对通信方进行认证。
+通过使用   **证书**   来对通信方进行认证。
 
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。
 
@@ -699,7 +702,7 @@ HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对�
 
 进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
-<div align="center"> <img src="pics/2017-06-11-ca.png" width=""/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2017-06-11-ca.png" width=""/> </div><br>
 
 ## 完整性保护
 
@@ -728,7 +731,7 @@ HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-<div align="center"> <img src="pics/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
@@ -736,13 +739,13 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-<div align="center"> <img src="pics/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
 
 ## 服务端推送
 
 HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
-<div align="center"> <img src="pics/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
 
 ## 首部压缩
 
@@ -752,7 +755,7 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
 
-<div align="center"> <img src="pics/_u4E0B_u8F7D.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4E0B_u8F7D.png" width="600"/> </div><br>
 
 # 八、HTTP/1.1 新特性
 
@@ -881,10 +884,6 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
-
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

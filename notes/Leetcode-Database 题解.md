@@ -46,9 +46,22 @@ https://leetcode.com/problems/big-countries/description/
 +--------------+-------------+--------------+
 ```
 
+## Solution
+
+```sql
+SELECT name,
+    population,
+    area
+FROM
+    World
+WHERE
+    area > 3000000
+    OR population > 25000000;
+```
+
 ## SQL Schema
 
-SQL Schema 用于在本地环境下创建表结构并导入数据，从而方便在本地环境解答。
+SQL Schema 用于在本地环境下创建表结构并导入数据，从而方便在本地环境调试。
 
 ```sql
 DROP TABLE
@@ -62,19 +75,6 @@ VALUES
     ( 'Algeria', 'Africa', '2381741', '37100000', '1886810000' ),
     ( 'Andorra', 'Europe', '468', '78115', '37120000' ),
     ( 'Angola', 'Africa', '1246700', '20609294', '1009900000' );
-```
-
-## Solution
-
-```sql
-SELECT name,
-    population,
-    area
-FROM
-    World
-WHERE
-    area > 3000000
-    OR population > 25000000;
 ```
 
 # 627. Swap Salary
@@ -103,6 +103,24 @@ https://leetcode.com/problems/swap-salary/description/
 | 4  | D    | m   | 500    |
 ```
 
+## Solution
+
+两个相等的数异或的结果为 0，而 0 与任何一个数异或的结果为这个数。
+
+sex  字段只有两个取值：'f' 和 'm'，并且有以下规律：
+
+```
+'f' ^ ('m' ^ 'f') = 'm' ^ ('f' ^ 'f') = 'm'
+'m' ^ ('m' ^ 'f') = 'f' ^ ('m' ^ 'm') = 'f'
+```
+
+因此将 sex 字段和 'm' ^ 'f' 进行异或操作，最后就能反转 sex 字段。
+
+```sql
+UPDATE salary
+SET sex = CHAR ( ASCII(sex) ^ ASCII( 'm' ) ^ ASCII( 'f' ) );
+```
+
 ## SQL Schema
 
 ```sql
@@ -116,22 +134,6 @@ VALUES
     ( '2', 'B', 'f', '1500' ),
     ( '3', 'C', 'm', '5500' ),
     ( '4', 'D', 'f', '500' );
-```
-
-## Solution
-
-使用异或操作，两个相等的数异或的结果为 0，而 0 与任何一个数异或的结果为这个数。
-
-```
-'f' ^ 'm' ^ 'f' = 'm'
-'m' ^ 'm' ^ 'f' = 'f'
-```
-
-
-
-```sql
-UPDATE salary
-SET sex = CHAR ( ASCII(sex) ^ ASCII( 'm' ) ^ ASCII( 'f' ) );
 ```
 
 # 620. Not Boring Movies
@@ -164,6 +166,20 @@ https://leetcode.com/problems/not-boring-movies/description/
 +---------+-----------+--------------+-----------+
 ```
 
+## Solution
+
+```sql
+SELECT
+    *
+FROM
+    cinema
+WHERE
+    id % 2 = 1
+    AND description != 'boring'
+ORDER BY
+    rating DESC;
+```
+
 ## SQL Schema
 
 ```sql
@@ -178,20 +194,6 @@ VALUES
     ( 3, 'irish', 'boring', 6.2 ),
     ( 4, 'Ice song', 'Fantacy', 8.6 ),
     ( 5, 'House card', 'Interesting', 9.1 );
-```
-
-## Solution
-
-```sql
-SELECT
-    *
-FROM
-    cinema
-WHERE
-    id % 2 = 1
-    AND description != 'boring'
-ORDER BY
-    rating DESC;
 ```
 
 # 596. Classes More Than 5 Students
@@ -226,6 +228,21 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 +---------+
 ```
 
+## Solution
+
+对 class 列进行分组之后，再使用 count 汇总函数统计每个分组的记录个数，之后使用 HAVING 进行筛选。HAVING  针对分组进行筛选，而 WHERE 针对每个记录（行）进行筛选。
+
+```sql
+SELECT
+    class
+FROM
+    courses
+GROUP BY
+    class
+HAVING
+    count( DISTINCT student ) >= 5;
+```
+
 ## SQL Schema
 
 ```sql
@@ -244,21 +261,6 @@ VALUES
     ( 'G', 'Math' ),
     ( 'H', 'Math' ),
     ( 'I', 'Math' );
-```
-
-## Solution
-
-对 class 列进行分组之后，再使用 count 汇总函数统计数量，统计之后使用 having 进行过滤。
-
-```sql
-SELECT
-    class
-FROM
-    courses
-GROUP BY
-    class
-HAVING
-    count( DISTINCT student ) >= 5;
 ```
 
 # 182. Duplicate Emails
@@ -289,6 +291,21 @@ https://leetcode.com/problems/duplicate-emails/description/
 +---------+
 ```
 
+## Solution
+
+对 Email 进行分组，如果并使用 COUNT 进行计数统计，结果大于等于 2 的表示 Email  重复。
+
+```sql
+SELECT
+    Email
+FROM
+    Person
+GROUP BY
+    Email
+HAVING
+    COUNT( * ) >= 2;
+```
+
 ## SQL Schema
 
 ```sql
@@ -303,20 +320,6 @@ VALUES
     ( 3, 'a@b.com' );
 ```
 
-## Solution
-
-对 Email 进行分组，如果相同 Email 的数量大于等于 2，则表示该 Email 重复。
-
-```sql
-SELECT
-    Email
-FROM
-    Person
-GROUP BY
-    Email
-HAVING
-    COUNT( * ) >= 2;
-```
 
 # 196. Delete Duplicate Emails
 
@@ -347,15 +350,11 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 +----+------------------+
 ```
 
-## SQL Schema
-
-与 182 相同。
-
 ## Solution
 
 只保留相同 Email 中 Id 最小的那一个，然后删除其它的。
 
-连接：
+连接查询：
 
 ```sql
 DELETE p1
@@ -374,7 +373,14 @@ DELETE
 FROM
     Person
 WHERE
-    id NOT IN ( SELECT id FROM ( SELECT min( id ) AS id FROM Person GROUP BY email ) AS m );
+    id NOT IN (
+        SELECT id 
+        FROM ( 
+            SELECT min( id ) AS id 
+            FROM Person
+            GROUP BY email
+        ) AS m
+    );
 ```
 
 应该注意的是上述解法额外嵌套了一个 SELECT 语句，如果不这么做，会出现错误：You can't specify target table 'Person' for update in FROM clause。以下演示了这种错误解法。
@@ -384,10 +390,18 @@ DELETE
 FROM
     Person
 WHERE
-    id NOT IN ( SELECT min( id ) AS id FROM Person GROUP BY email );
+    id NOT IN ( 
+        SELECT min( id ) AS id 
+        FROM Person 
+        GROUP BY email 
+    );
 ```
 
 参考：[pMySQL Error 1093 - Can't specify target table for update in FROM clause](https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause)
+
+## SQL Schema
+
+与 182 相同。
 
 # 175. Combine Two Tables
 
@@ -424,6 +438,22 @@ AddressId is the primary key column for this table.
 
 查找 FirstName, LastName, City, State 数据，而不管一个用户有没有填地址信息。
 
+## Solution
+
+涉及到 Person 和 Address 两个表，在对这两个表执行连接操作时，因为要保留 Person 表中的信息，即使在 Address 表中没有关联的信息也要保留。此时可以用左外连接，将 Person 表放在 LEFT JOIN 的左边。
+
+```sql
+SELECT
+    FirstName,
+    LastName,
+    City,
+    State
+FROM
+    Person P
+    LEFT JOIN Address A
+    ON P.PersonId = A.PersonId;
+```
+
 ## SQL Schema
 
 ```sql
@@ -441,22 +471,6 @@ VALUES
 INSERT INTO Address ( AddressId, PersonId, City, State )
 VALUES
     ( 1, 2, 'New York City', 'New York' );
-```
-
-## Solution
-
-涉及到 Person 和 Address 两个表，在对这两个表执行连接操作时，因为要保留 Person 表中的信息，即使在 Address 表中没有关联的信息也要保留。此时可以用左外连接，将 Person 表放在 LEFT JOIN 的左边。
-
-```sql
-SELECT
-    FirstName,
-    LastName,
-    City,
-    State
-FROM
-    Person P
-    LEFT JOIN Address A
-    ON P.PersonId = A.PersonId;
 ```
 
 # 181. Employees Earning More Than Their Managers
@@ -480,6 +494,18 @@ Employee 表：
 
 查找薪资大于其经理薪资的员工信息。
 
+## Solution
+
+```sql
+SELECT
+    E1.NAME AS Employee
+FROM
+    Employee E1
+    INNER JOIN Employee E2
+    ON E1.ManagerId = E2.Id
+    AND E1.Salary > E2.Salary;
+```
+
 ## SQL Schema
 
 ```sql
@@ -493,18 +519,6 @@ VALUES
     ( 2, 'Henry', 80000, 4 ),
     ( 3, 'Sam', 60000, NULL ),
     ( 4, 'Max', 90000, NULL );
-```
-
-## Solution
-
-```sql
-SELECT
-    E1.NAME AS Employee
-FROM
-    Employee E1
-    INNER JOIN Employee E2
-    ON E1.ManagerId = E2.Id
-    AND E1.Salary > E2.Salary;
 ```
 
 # 183. Customers Who Never Order
@@ -548,29 +562,6 @@ Orders 表：
 +-----------+
 ```
 
-## SQL Schema
-
-```sql
-DROP TABLE
-IF
-    EXISTS Customers;
-CREATE TABLE Customers ( Id INT, NAME VARCHAR ( 255 ) );
-DROP TABLE
-IF
-    EXISTS Orders;
-CREATE TABLE Orders ( Id INT, CustomerId INT );
-INSERT INTO Customers ( Id, NAME )
-VALUES
-    ( 1, 'Joe' ),
-    ( 2, 'Henry' ),
-    ( 3, 'Sam' ),
-    ( 4, 'Max' );
-INSERT INTO Orders ( Id, CustomerId )
-VALUES
-    ( 1, 3 ),
-    ( 2, 1 );
-```
-
 ## Solution
 
 左外链接
@@ -594,7 +585,33 @@ SELECT
 FROM
     Customers
 WHERE
-    Id NOT IN ( SELECT CustomerId FROM Orders );
+    Id NOT IN ( 
+        SELECT CustomerId 
+        FROM Orders 
+    );
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS Customers;
+CREATE TABLE Customers ( Id INT, NAME VARCHAR ( 255 ) );
+DROP TABLE
+IF
+    EXISTS Orders;
+CREATE TABLE Orders ( Id INT, CustomerId INT );
+INSERT INTO Customers ( Id, NAME )
+VALUES
+    ( 1, 'Joe' ),
+    ( 2, 'Henry' ),
+    ( 3, 'Sam' ),
+    ( 4, 'Max' );
+INSERT INTO Orders ( Id, CustomerId )
+VALUES
+    ( 1, 3 ),
+    ( 2, 1 );
 ```
 
 # 184. Department Highest Salary
@@ -638,6 +655,29 @@ Department 表：
 +------------+----------+--------+
 ```
 
+## Solution
+
+创建一个临时表，包含了部门员工的最大薪资。可以对部门进行分组，然后使用 MAX() 汇总函数取得最大薪资。
+
+之后使用连接找到一个部门中薪资等于临时表中最大薪资的员工。
+
+```sql
+SELECT
+    D.NAME Department,
+    E.NAME Employee,
+    E.Salary
+FROM
+    Employee E,
+    Department D,
+    ( SELECT DepartmentId, MAX( Salary ) Salary 
+     FROM Employee 
+     GROUP BY DepartmentId ) M
+WHERE
+    E.DepartmentId = D.Id
+    AND E.DepartmentId = M.DepartmentId
+    AND E.Salary = M.Salary;
+```
+
 ## SQL Schema
 
 ```sql
@@ -657,26 +697,6 @@ VALUES
     ( 2, 'Sales' );
 ```
 
-## Solution
-
-创建一个临时表，包含了部门员工的最大薪资。可以对部门进行分组，然后使用 MAX() 汇总函数取得最大薪资。
-
-之后使用连接找到一个部门中薪资等于临时表中最大薪资的员工。
-
-```sql
-SELECT
-    D.NAME Department,
-    E.NAME Employee,
-    E.Salary
-FROM
-    Employee E,
-    Department D,
-    ( SELECT DepartmentId, MAX( Salary ) Salary FROM Employee GROUP BY DepartmentId ) M
-WHERE
-    E.DepartmentId = D.Id
-    AND E.DepartmentId = M.DepartmentId
-    AND E.Salary = M.Salary;
-```
 
 # 176. Second Highest Salary
 
@@ -706,6 +726,18 @@ https://leetcode.com/problems/second-highest-salary/description/
 
 没有找到返回 null 而不是不返回数据。
 
+## Solution
+
+为了在没有查找到数据时返回 null，需要在查询结果外面再套一层 SELECT。
+
+```sql
+SELECT
+    ( SELECT DISTINCT Salary 
+     FROM Employee 
+     ORDER BY Salary DESC 
+     LIMIT 1, 1 ) SecondHighestSalary;
+```
+
 ## SQL Schema
 
 ```sql
@@ -720,24 +752,11 @@ VALUES
     ( 3, 300 );
 ```
 
-## Solution
-
-为了在没有查找到数据时返回 null，需要在查询结果外面再套一层 SELECT。
-
-```sql
-SELECT
-    ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1 ) SecondHighestSalary;
-```
-
 # 177. Nth Highest Salary
 
 ## Description
 
 查找工资第 N 高的员工。
-
-## SQL Schema
-
-同 176。
 
 ## Solution
 
@@ -745,10 +764,22 @@ SELECT
 CREATE FUNCTION getNthHighestSalary ( N INT ) RETURNS INT BEGIN
 
 SET N = N - 1;
-RETURN ( SELECT ( SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N, 1 ) );
+RETURN ( 
+    SELECT ( 
+        SELECT DISTINCT Salary 
+        FROM Employee 
+        ORDER BY Salary DESC 
+        LIMIT N, 1 
+    ) 
+);
 
 END
 ```
+
+## SQL Schema
+
+同 176。
+
 
 # 178. Rank Scores
 
@@ -786,57 +817,95 @@ https://leetcode.com/problems/rank-scores/description/
 +-------+------+
 ```
 
-## SQL Schema
-
-```sql
-DROP TABLE
-IF
-    EXISTS Scores;
-CREATE TABLE Scores ( Id INT, Score DECIMAL ( 3, 2 ) );
-INSERT INTO Scores ( Id, Score )
-VALUES
-    ( 1, 3.5 ),
-    ( 2, 3.65 ),
-    ( 3, 4.0 ),
-    ( 4, 3.85 ),
-    ( 5, 4.0 ),
-    ( 6, 3.65 );
-```
-
 ## Solution
 
-要统计某个 score 的排名，只要统计大于该 score 的 score 数量，然后加 1。
+要统计某个 score 的排名，只要统计大于等于该 score 的 score 数量。
 
-| score | 大于该 score 的 score 数量 | 排名 |
-| :---: | :---: | :---: |
-| 4.1 | 2 | 3 |
-| 4.2 | 1 | 2 |
-| 4.3 | 0 | 1 |
+| Id | score | 大于等于该 score 的 score 数量 | 排名 |
+| :---: | :---: | :---: | :---: |
+| 1 | 4.1 | 3 | 3 |
+| 2 | 4.2 | 2 | 2 |
+| 3 | 4.3 | 1 | 1 |
 
-但是在本题中，相同的 score 只算一个排名：
+使用连接操作找到某个 score 对应的大于等于其值的记录：
 
-| score | 排名 |
+```sql
+SELECT
+	*
+FROM
+    Scores S1
+    INNER JOIN Scores S2
+    ON S1.score <= S2.score
+ORDER BY
+    S1.score DESC, S1.Id;
+```
+
+| S1.Id | S1.score | S2.Id | S2.score |
+| :---: | :---: | :---: | :---: |
+|3|	4.3|	3	|4.3|
+|2|	4.2|	2|	4.2|
+|2|	4.2	|3	|4.3|
+|1|	4.1	|1|	4.1|
+|1|	4.1	|2|	4.2|
+|1|	4.1	|3|	4.3|
+
+可以看到每个 S1.score 都有对应好几条记录，我们再进行分组，并统计每个分组的数量作为 'Rank'
+
+```sql
+SELECT
+    S1.score 'Score',
+    COUNT(*) 'Rank'
+FROM
+    Scores S1
+    INNER JOIN Scores S2
+    ON S1.score <= S2.score
+GROUP BY
+    S1.id, S1.score
+ORDER BY
+    S1.score DESC, S1.Id;
+```
+
+| score | Rank |
 | :---: | :---: |
-| 4.1 | 3 |
-| 4.1 | 3 |
-| 4.2 | 2 |
-| 4.2 | 2 |
 | 4.3 | 1 |
-| 4.3 | 1 |
+| 4.2 | 2 |
+| 4.1 | 3 |
 
-可以按 score 进行分组，将同一个分组中的 score 只当成一个。
+上面的解法看似没问题，但是对于以下数据，它却得到了错误的结果：
 
-但是如果分组字段只有 score 的话，那么相同的 score 最后的结果只会有一个，例如上面的 6 个记录最后只取出 3 个。
-
-| score | 排名 |
+| Id | score |
 | :---: | :---: |
-| 4.1 | 3 |
-| 4.2 | 2 |
-| 4.3 | 1 |
+| 1 | 4.1 |
+| 2 | 4.2 |
+| 3 | 4.2 |
 
-所以在分组中需要加入 Id，每个记录显示一个结果。综上，需要使用 score 和 id 两个分组字段。
+| score | Rank |
+| :---: | :--: |
+|  4.2  |  2   |
+|  4.2  |  2   |
+|  4.1  |  3   |
 
-在下面的实现中，首先将 Scores 表根据 score 字段进行自连接，得到一个新表，然后在新表上对 id 和 score 进行分组。
+而我们希望的结果为：
+
+| score | Rank |
+| :---: | :--: |
+|  4.2  |  1   |
+|  4.2  |  1   |
+|  4.1  |  2   |
+
+连接情况如下：
+
+| S1.Id | S1.score | S2.Id | S2.score |
+| :---: | :------: | :---: | :------: |
+|   2   |   4.2    |   3   |   4.2    |
+|   2   |   4.2    |   2   |   4.2    |
+|   3   |   4.2    |   3   |   4.2    |
+|   3   |   4.2    |   2   |   4.1    |
+|   1   |   4.1    |   3   |   4.2    |
+|   1   |   4.1    |   2   |   4.3    |
+|   1   |   4.1    |   1   |   4.1    |
+
+我们想要的结果是，把分数相同的放在同一个排名，并且相同分数只占一个位置，例如上面的分数，Id=2 和 Id=3 的记录都有相同的分数，并且最高，他们并列第一。而 Id=1 的记录应该排第二名，而不是第三名。所以在进行 COUNT 计数统计时，我们需要使用 COUNT( DISTINCT S2.score ) 从而只统计一次相同的分数。
 
 ```sql
 SELECT
@@ -850,6 +919,23 @@ GROUP BY
     S1.id, S1.score
 ORDER BY
     S1.score DESC;
+```
+
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS Scores;
+CREATE TABLE Scores ( Id INT, Score DECIMAL ( 3, 2 ) );
+INSERT INTO Scores ( Id, Score )
+VALUES
+    ( 1, 4.1 ),
+    ( 2, 4.1 ),
+    ( 3, 4.2 ),
+    ( 4, 4.2 ),
+    ( 5, 4.3 ),
+    ( 6, 4.3 );
 ```
 
 # 180. Consecutive Numbers
@@ -884,6 +970,21 @@ https://leetcode.com/problems/consecutive-numbers/description/
 +-----------------+
 ```
 
+## Solution
+
+```sql
+SELECT
+    DISTINCT L1.num ConsecutiveNums
+FROM
+    Logs L1,
+    Logs L2,
+    Logs L3
+WHERE L1.id = l2.id - 1
+    AND L2.id = L3.id - 1
+    AND L1.num = L2.num
+    AND l2.num = l3.num;
+```
+
 ## SQL Schema
 
 ```sql
@@ -900,21 +1001,6 @@ VALUES
     ( 5, 1 ),
     ( 6, 2 ),
     ( 7, 2 );
-```
-
-## Solution
-
-```sql
-SELECT
-    DISTINCT L1.num ConsecutiveNums
-FROM
-    Logs L1,
-    Logs L2,
-    Logs L3
-WHERE L1.id = l2.id - 1
-    AND L2.id = L3.id - 1
-    AND L1.num = L2.num
-    AND l2.num = l3.num;
 ```
 
 # 626. Exchange Seats
@@ -949,22 +1035,6 @@ seat 表存储着座位对应的学生。
 |    4    | Emerson |
 |    5    | Jeames  |
 +---------+---------+
-```
-
-## SQL Schema
-
-```sql
-DROP TABLE
-IF
-    EXISTS seat;
-CREATE TABLE seat ( id INT, student VARCHAR ( 255 ) );
-INSERT INTO seat ( id, student )
-VALUES
-    ( '1', 'Abbot' ),
-    ( '2', 'Doris' ),
-    ( '3', 'Emerson' ),
-    ( '4', 'Green' ),
-    ( '5', 'Jeames' );
 ```
 
 ## Solution
@@ -1004,13 +1074,25 @@ ORDER BY
     id;
 ```
 
+## SQL Schema
+
+```sql
+DROP TABLE
+IF
+    EXISTS seat;
+CREATE TABLE seat ( id INT, student VARCHAR ( 255 ) );
+INSERT INTO seat ( id, student )
+VALUES
+    ( '1', 'Abbot' ),
+    ( '2', 'Doris' ),
+    ( '3', 'Emerson' ),
+    ( '4', 'Green' ),
+    ( '5', 'Jeames' );
+```
 
 
 
-# 微信公众号
 
 
-更多精彩内容将发布在微信公众号 CyC2018 上，你也可以在公众号后台和我交流学习和求职相关的问题。另外，公众号提供了该项目的 PDF 等离线阅读版本，后台回复 "下载" 即可领取。公众号也提供了一份技术面试复习大纲，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复 "大纲" 即可领取。我基本是按照这个大纲来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据大纲上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。
 
-
-<br><div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/other/公众号海报6.png"></img></div>
+<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
