@@ -1,0 +1,175 @@
+(def)
+(if)
+(do)
+(let)
+(var)
+(fn)
+(quote)
+(->>)
+(->)
+(loop)
+(recur)
+(throw)
+(try)
+(monitor-enter)
+(.)
+(new)
+(set!)
+(defn)
+(defn-)
+(defmacro)
+(defmulti)
+(defmethod)
+(defstruct)
+(defonce)
+(declare)
+(definline)
+(definterface)
+(defprotocol)
+(defrecord)
+(deftype)
+(defproject)
+(ns)
+(*)
+(+)
+(-)
+(/)
+(<)
+(<=)
+(>=)
+(=)
+(==)
+(..)
+(>)
+(accessor)
+(agent)
+(agent-errors)
+(aget)
+(alength)
+(all-ns)
+(alter)
+(and)
+(append-child)
+(apply)
+(array-map)
+(aset)
+(aset-boolean)
+(aset-byte)
+(aset-char)
+(aset-double)
+(aset-float)
+(aset-int)
+(aset-long)
+(aset-short)
+(assert)
+(assoc)
+(await)
+(await-for)
+(bean)
+(binding)
+(bit-and)
+(bit-not)
+(branch?)
+(contains?)
+(end?)
+(every?)
+(false?)
+(identical?)
+(instance?)
+(keyword?)
+(list*)
+(not-any?)
+(true?)
+(zero?)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["keyword", "def"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "if"],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "do"],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let"],	          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "var"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "fn"],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "quote"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "->>"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "->"],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "loop"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "recur"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "throw"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "try"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "monitor-enter"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "."],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "new"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "set!"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defn"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defn-"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defmacro"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defmulti"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defmethod"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defstruct"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defonce"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "declare"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "definline"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "definterface"],  ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defprotocol"],   ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defrecord"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "deftype"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "defproject"],    ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "ns"],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "*"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "+"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "-"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "/"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "<"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "<="],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", ">="],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "="],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "=="],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", ".."],            ["punctuation", ")"],
+	["punctuation", "("], ["keyword", ">"],             ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "accessor"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "agent"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "agent-errors"],  ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aget"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "alength"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "all-ns"],        ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "alter"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "and"],           ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "append-child"],  ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "apply"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "array-map"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-boolean"],  ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-byte"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-char"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-double"],   ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-float"],    ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-int"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-long"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "aset-short"],    ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "assert"],        ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "assoc"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "await"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "await-for"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "bean"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "binding"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "bit-and"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "bit-not"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "branch?"],       ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "contains?"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "end?"],          ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "every?"],        ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "false?"],        ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "identical?"],    ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "instance?"],     ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "keyword?"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "list*"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "not-any?"],      ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "true?"],         ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "zero?"],         ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

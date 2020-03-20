@@ -1,0 +1,24 @@
+div, span
+.foo .bar + div
+#foobar .baz:first-child
+
+div,
+  .bar
+
+	#foo,
+		.bar,
+		.baz
+
+----------------------------------------------------
+
+[
+	["selector", "div, span"],
+	["selector", ".foo .bar + div"],
+	["selector", "#foobar .baz:first-child"],
+	["selector", "div,\r\n  .bar"],
+	["selector", "#foo,\r\n\t\t.bar,\r\n\t\t.baz"]
+]
+
+----------------------------------------------------
+
+Checks for selectors.

@@ -1,0 +1,37 @@
+""
+"foo""bar"
+"foo %foo% bar $bar$ baz @baz@"
+''
+'foo''bar'
+'foo %foo% bar $bar$ baz @baz@'
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["\"foo\"\"bar\""]],
+	["string", [
+		"\"foo ",
+		["variable", "%foo%"],
+		" bar ",
+		["variable", "$bar$"],
+		" baz ",
+		["variable", "@baz@"],
+		"\""
+	]],
+	["string", ["''"]],
+	["string", ["'foo''bar'"]],
+	["string", [
+		"'foo ",
+		["variable", "%foo%"],
+		" bar ",
+		["variable", "$bar$"],
+		" baz ",
+		["variable", "@baz@"],
+		"'"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings and interpolation.

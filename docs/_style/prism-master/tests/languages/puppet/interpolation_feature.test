@@ -1,0 +1,54 @@
+"$foo ${::foo} ${foo::bar.foobar}
+${foobar(42)} ${::interfaces.split(",")[3]}
+${[1,20,3].filter |$value| { $value < 10 }}"
+
+----------------------------------------------------
+
+[
+	["string", [["double-quoted", [
+		"\"",
+		["interpolation", ["$foo"]],
+		["interpolation", [
+			["delimiter", "$"], ["punctuation", "{"],
+			["short-variable", [["punctuation", "::"], "foo"]],
+			["punctuation", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "$"], ["punctuation", "{"],
+			["short-variable", ["foo", ["punctuation", "::"], "bar"]],
+			["punctuation", "."], ["function", "foobar"],
+			["punctuation", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "$"], ["punctuation", "{"],
+			["function", "foobar"], ["punctuation", "("],
+			["number", "42"], ["punctuation", ")"],
+			["punctuation", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "$"], ["punctuation", "{"],
+			["short-variable", [["punctuation", "::"], "interfaces"]],
+			["punctuation", "."], ["function", "split"],
+			["punctuation", "("], ["string", [["double-quoted", ["\",\""]]]],
+			["punctuation", ")"], ["punctuation", "["],
+			["number", "3"], ["punctuation", "]"],
+			["punctuation", "}"]
+		]],
+		["interpolation", [
+			["delimiter", "$"], ["punctuation", "{"],
+			["punctuation", "["], ["number", "1"],
+			["punctuation", ","], ["number", "20"],
+			["punctuation", ","], ["number", "3"], ["punctuation", "]"],
+			["punctuation", "."], ["function", "filter"],
+			["operator", "|"], ["variable", ["$value"]], ["operator", "|"],
+			["punctuation", "{"], ["variable", ["$value"]],
+			["operator", "<"], ["number", "10"], ["punctuation", "}"],
+			["punctuation", "}"]
+		]],
+		"\""
+	]]]]
+]
+
+----------------------------------------------------
+
+Checks for interpolation.

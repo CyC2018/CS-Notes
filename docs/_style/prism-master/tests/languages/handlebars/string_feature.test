@@ -1,0 +1,25 @@
+{{ "" }}
+{{{''}}}
+{{{"foobar"}}}
+{{ 'foobar' }}
+
+----------------------------------------------------
+
+[
+	["handlebars", [
+		["delimiter", "{{"], ["string", "\"\""], ["delimiter", "}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"], ["string", "''"], ["delimiter", "}}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{{"], ["string", "\"foobar\""], ["delimiter", "}}}"]
+	]],
+	["handlebars", [
+		["delimiter", "{{"], ["string", "'foobar'"], ["delimiter", "}}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings

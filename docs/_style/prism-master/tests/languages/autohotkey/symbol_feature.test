@@ -1,0 +1,347 @@
+alt
+altdown
+altup
+appskey
+backspace
+browser_back
+browser_favorites
+browser_forward
+browser_home
+browser_refresh
+browser_search
+browser_stop
+bs
+capslock
+ctrl
+ctrlbreak
+ctrldown
+ctrlup
+del
+delete
+down
+end
+enter
+esc
+escape
+f1
+f10
+f11
+f12
+f13
+f14
+f15
+f16
+f17
+f18
+f19
+f2
+f20
+f21
+f22
+f23
+f24
+f3
+f4
+f5
+f6
+f7
+f8
+f9
+home
+ins
+insert
+joy1
+joy10
+joy11
+joy12
+joy13
+joy14
+joy15
+joy16
+joy17
+joy18
+joy19
+joy2
+joy20
+joy21
+joy22
+joy23
+joy24
+joy25
+joy26
+joy27
+joy28
+joy29
+joy3
+joy30
+joy31
+joy32
+joy4
+joy5
+joy6
+joy7
+joy8
+joy9
+joyaxes
+joybuttons
+joyinfo
+joyname
+joypov
+joyr
+joyu
+joyv
+joyx
+joyy
+joyz
+lalt
+launch_app1
+launch_app2
+launch_mail
+launch_media
+lbutton
+lcontrol
+lctrl
+left
+lshift
+lwin
+lwindown
+lwinup
+mbutton
+media_next
+media_play_pause
+media_prev
+media_stop
+numlock
+numpad0
+numpad1
+numpad2
+numpad3
+numpad4
+numpad5
+numpad6
+numpad7
+numpad8
+numpad9
+numpadadd
+numpadclear
+numpaddel
+numpaddiv
+numpaddot
+numpaddown
+numpadend
+numpadenter
+numpadhome
+numpadins
+numpadleft
+numpadmult
+numpadpgdn
+numpadpgup
+numpadright
+numpadsub
+numpadup
+pgdn
+pgup
+printscreen
+ralt
+rbutton
+rcontrol
+rctrl
+right
+rshift
+rwin
+rwindown
+rwinup
+scrolllock
+shift
+shiftdown
+shiftup
+space
+tab
+up
+volume_down
+volume_mute
+volume_up
+wheeldown
+wheelleft
+wheelright
+wheelup
+xbutton1
+xbutton2
+
+----------------------------------------------------
+
+[
+	["symbol", "alt"],
+	["symbol", "altdown"],
+	["symbol", "altup"],
+	["symbol", "appskey"],
+	["symbol", "backspace"],
+	["symbol", "browser_back"],
+	["symbol", "browser_favorites"],
+	["symbol", "browser_forward"],
+	["symbol", "browser_home"],
+	["symbol", "browser_refresh"],
+	["symbol", "browser_search"],
+	["symbol", "browser_stop"],
+	["symbol", "bs"],
+	["symbol", "capslock"],
+	["symbol", "ctrl"],
+	["symbol", "ctrlbreak"],
+	["symbol", "ctrldown"],
+	["symbol", "ctrlup"],
+	["symbol", "del"],
+	["symbol", "delete"],
+	["symbol", "down"],
+	["symbol", "end"],
+	["symbol", "enter"],
+	["symbol", "esc"],
+	["symbol", "escape"],
+	["symbol", "f1"],
+	["symbol", "f10"],
+	["symbol", "f11"],
+	["symbol", "f12"],
+	["symbol", "f13"],
+	["symbol", "f14"],
+	["symbol", "f15"],
+	["symbol", "f16"],
+	["symbol", "f17"],
+	["symbol", "f18"],
+	["symbol", "f19"],
+	["symbol", "f2"],
+	["symbol", "f20"],
+	["symbol", "f21"],
+	["symbol", "f22"],
+	["symbol", "f23"],
+	["symbol", "f24"],
+	["symbol", "f3"],
+	["symbol", "f4"],
+	["symbol", "f5"],
+	["symbol", "f6"],
+	["symbol", "f7"],
+	["symbol", "f8"],
+	["symbol", "f9"],
+	["symbol", "home"],
+	["symbol", "ins"],
+	["symbol", "insert"],
+	["symbol", "joy1"],
+	["symbol", "joy10"],
+	["symbol", "joy11"],
+	["symbol", "joy12"],
+	["symbol", "joy13"],
+	["symbol", "joy14"],
+	["symbol", "joy15"],
+	["symbol", "joy16"],
+	["symbol", "joy17"],
+	["symbol", "joy18"],
+	["symbol", "joy19"],
+	["symbol", "joy2"],
+	["symbol", "joy20"],
+	["symbol", "joy21"],
+	["symbol", "joy22"],
+	["symbol", "joy23"],
+	["symbol", "joy24"],
+	["symbol", "joy25"],
+	["symbol", "joy26"],
+	["symbol", "joy27"],
+	["symbol", "joy28"],
+	["symbol", "joy29"],
+	["symbol", "joy3"],
+	["symbol", "joy30"],
+	["symbol", "joy31"],
+	["symbol", "joy32"],
+	["symbol", "joy4"],
+	["symbol", "joy5"],
+	["symbol", "joy6"],
+	["symbol", "joy7"],
+	["symbol", "joy8"],
+	["symbol", "joy9"],
+	["symbol", "joyaxes"],
+	["symbol", "joybuttons"],
+	["symbol", "joyinfo"],
+	["symbol", "joyname"],
+	["symbol", "joypov"],
+	["symbol", "joyr"],
+	["symbol", "joyu"],
+	["symbol", "joyv"],
+	["symbol", "joyx"],
+	["symbol", "joyy"],
+	["symbol", "joyz"],
+	["symbol", "lalt"],
+	["symbol", "launch_app1"],
+	["symbol", "launch_app2"],
+	["symbol", "launch_mail"],
+	["symbol", "launch_media"],
+	["symbol", "lbutton"],
+	["symbol", "lcontrol"],
+	["symbol", "lctrl"],
+	["symbol", "left"],
+	["symbol", "lshift"],
+	["symbol", "lwin"],
+	["symbol", "lwindown"],
+	["symbol", "lwinup"],
+	["symbol", "mbutton"],
+	["symbol", "media_next"],
+	["symbol", "media_play_pause"],
+	["symbol", "media_prev"],
+	["symbol", "media_stop"],
+	["symbol", "numlock"],
+	["symbol", "numpad0"],
+	["symbol", "numpad1"],
+	["symbol", "numpad2"],
+	["symbol", "numpad3"],
+	["symbol", "numpad4"],
+	["symbol", "numpad5"],
+	["symbol", "numpad6"],
+	["symbol", "numpad7"],
+	["symbol", "numpad8"],
+	["symbol", "numpad9"],
+	["symbol", "numpadadd"],
+	["symbol", "numpadclear"],
+	["symbol", "numpaddel"],
+	["symbol", "numpaddiv"],
+	["symbol", "numpaddot"],
+	["symbol", "numpaddown"],
+	["symbol", "numpadend"],
+	["symbol", "numpadenter"],
+	["symbol", "numpadhome"],
+	["symbol", "numpadins"],
+	["symbol", "numpadleft"],
+	["symbol", "numpadmult"],
+	["symbol", "numpadpgdn"],
+	["symbol", "numpadpgup"],
+	["symbol", "numpadright"],
+	["symbol", "numpadsub"],
+	["symbol", "numpadup"],
+	["symbol", "pgdn"],
+	["symbol", "pgup"],
+	["symbol", "printscreen"],
+	["symbol", "ralt"],
+	["symbol", "rbutton"],
+	["symbol", "rcontrol"],
+	["symbol", "rctrl"],
+	["symbol", "right"],
+	["symbol", "rshift"],
+	["symbol", "rwin"],
+	["symbol", "rwindown"],
+	["symbol", "rwinup"],
+	["symbol", "scrolllock"],
+	["symbol", "shift"],
+	["symbol", "shiftdown"],
+	["symbol", "shiftup"],
+	["symbol", "space"],
+	["symbol", "tab"],
+	["symbol", "up"],
+	["symbol", "volume_down"],
+	["symbol", "volume_mute"],
+	["symbol", "volume_up"],
+	["symbol", "wheeldown"],
+	["symbol", "wheelleft"],
+	["symbol", "wheelright"],
+	["symbol", "wheelup"],
+	["symbol", "xbutton1"],
+	["symbol", "xbutton2"]
+]
+
+----------------------------------------------------
+
+Checks for all symbols.

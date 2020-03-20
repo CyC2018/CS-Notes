@@ -1,0 +1,15 @@
+$foobar
+$foo_bar_42
+$Foobar
+
+----------------------------------------------------
+
+[
+	["variable", "$foobar"],
+	["variable", "$foo_bar_42"],
+	["variable", "$Foobar"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

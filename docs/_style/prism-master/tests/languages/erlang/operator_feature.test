@@ -1,0 +1,27 @@
+== /= >= :=
+=:= =/=
++ ++ - --
+= * / !
+<= < >
+bnot div rem band
+bor bxor bsl bsr
+not and or xor
+orelse andalso
+
+----------------------------------------------------
+
+[
+	["operator", "=="], ["operator", "/="], ["operator", ">="], ["operator", ":="],
+	["operator", "=:="], ["operator", "=/="],
+	["operator", "+"], ["operator", "++"], ["operator", "-"], ["operator", "--"],
+	["operator", "="], ["operator", "*"], ["operator", "/"], ["operator", "!"],
+	["operator", "<="], ["operator", "<"], ["operator", ">"],
+	["operator", "bnot"], ["operator", "div"], ["operator", "rem"], ["operator", "band"],
+	["operator", "bor"], ["operator", "bxor"], ["operator", "bsl"], ["operator", "bsr"],
+	["operator", "not"], ["operator", "and"], ["operator", "or"], ["operator", "xor"],
+	["operator", "orelse"], ["operator", "andalso"]
+]
+
+----------------------------------------------------
+
+Checks for all operators.

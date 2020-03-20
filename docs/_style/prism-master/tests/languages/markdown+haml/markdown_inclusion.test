@@ -1,0 +1,32 @@
+:markdown
+ # Title 1
+
+~
+  :markdown
+   # Title 1
+
+----------------------------------------------------
+
+[
+	["filter-markdown", [
+		["filter-name", ":markdown"],
+		["title", [
+			["punctuation", "#"],
+			" Title 1"
+		]]
+	]],
+	["punctuation", "~"],
+	["filter-markdown", [
+		["filter-name", ":markdown"],
+		["title", [
+            ["punctuation", "#"],
+            " Title 1"
+        ]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for Markdown filter in Haml. The tilde serves only as a separator.
+Indentation is intentionally less than 1 tab, otherwise markdown is
+interpreted as code.

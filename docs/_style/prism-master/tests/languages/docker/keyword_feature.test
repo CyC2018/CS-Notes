@@ -1,0 +1,45 @@
+ONBUILD ADD . /app/src
+FROM ubuntu
+MAINTAINER SvenDowideit@home.org.au
+RUN cd /tmp
+EXPOSE 5900
+ENV myName John Doe
+COPY hom* /mydir/
+VOLUME /myvol
+USER daemon
+WORKDIR /a
+HEALTHCHECK CMD echo "foo"
+LABEL version="1.0"
+ENTRYPOINT ["top", "-b"]
+ARG user1
+SHELL ["powershell", "-command"]
+STOPSIGNAL signal
+
+----------------------------------------------------
+
+[
+	["keyword", "ONBUILD"], ["keyword", "ADD"], " . /app/src\r\n",
+	["keyword", "FROM"], " ubuntu\r\n",
+	["keyword", "MAINTAINER"], " SvenDowideit@home.org.au\r\n",
+	["keyword", "RUN"], " cd /tmp\r\n",
+	["keyword", "EXPOSE"], " 5900\r\n",
+	["keyword", "ENV"], " myName John Doe\r\n",
+	["keyword", "COPY"], " hom* /mydir/\r\n",
+	["keyword", "VOLUME"], " /myvol\r\n",
+	["keyword", "USER"], " daemon\r\n",
+	["keyword", "WORKDIR"], " /a\r\n",
+	["keyword", "HEALTHCHECK"], ["keyword", "CMD"], " echo ", ["string", "\"foo\""],
+	["keyword", "LABEL"], " version=", ["string", "\"1.0\""],
+	["keyword", "ENTRYPOINT"],
+	["punctuation", "["], ["string", "\"top\""], ["punctuation", ","],
+	["string", "\"-b\""], ["punctuation", "]"],
+	["keyword", "ARG"], " user1\r\n",
+    ["keyword", "SHELL"],
+    ["punctuation", "["], ["string", "\"powershell\""], ["punctuation", ","],
+    ["string", "\"-command\""], ["punctuation", "]"],
+    ["keyword", "STOPSIGNAL"], " signal"
+]
+
+----------------------------------------------------
+
+Checks for keywords.

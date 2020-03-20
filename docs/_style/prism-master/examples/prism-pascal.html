@@ -1,0 +1,65 @@
+<h2>Comments</h2>
+<pre><code>(* This is an
+old style comment *)
+{ This is a
+Turbo Pascal comment }
+// This is a Delphi comment.</code></pre>
+
+<h2>Strings and characters</h2>
+<pre><code>'This is a pascal string'
+''
+'a'
+^G
+#7
+#$f4
+'A tabulator character: '#9' is easy to embed'</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>123
+123.456
+132.456e-789
+132.456e+789
+$7aff
+&17
+%11110101</code></pre>
+
+<h2>Full example</h2>
+<pre><code>Type
+    Str25    = String[25];
+    TBookRec = Record
+                Title, Author,
+                ISBN  : Str25;
+                Price : Real;
+               End;
+
+Procedure EnterNewBook(var newBook : TBookRec);
+Begin
+ Writeln('Please enter the book details: ');
+ Write('Book Name: ');
+ Readln(newBook.Title);
+ Write('Author: ');
+ Readln(newBook.Author);
+ Write('ISBN: ');
+ Readln(newBook.ISBN);
+ Write('Price: ');
+ Readln(newBook.Price);
+End;
+
+Var
+    bookRecArray : Array[1..10] of TBookRec;
+    i            : 1..10;
+
+Begin
+ For i := 1 to 10 do
+  EnterNewBook(bookRecArray[i]);
+ Writeln('Thanks for entering the book details');
+ Write('Now choose a record to display from 1 to 10: ');
+ Readln(i);
+ Writeln('Here are the book details of record #',i,':');
+ Writeln;
+ Writeln('Title:  ', bookRecArray[i].Title);
+ Writeln('Author: ', bookRecArray[i].Author);
+ Writeln('ISBN:   ', bookRecArray[i].ISBN);
+ Writeln('Price:  ', bookRecArray[i].Price);
+ Readln;
+End.</code></pre>

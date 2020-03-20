@@ -1,0 +1,31 @@
+@media print
+@import "reset.css"
+@font-face {
+@keyframes {
+@media (max-{foo}: bar)
+
+----------------------------------------------------
+
+[
+	["atrule-declaration", [["atrule", "@media"], " print"]],
+	["atrule-declaration", [["atrule", "@import"], ["string", "\"reset.css\""]]],
+	["atrule-declaration", [["atrule", "@font-face"], ["punctuation", "{"]]],
+	["atrule-declaration", [["atrule", "@keyframes"], ["punctuation", "{"]]],
+	["atrule-declaration", [
+		["atrule", "@media"],
+		["punctuation", "("],
+		"max-",
+		["interpolation", [
+			["delimiter", "{"],
+			"foo",
+			["delimiter", "}"]
+		]],
+		["punctuation", ":"],
+		" bar",
+		["punctuation", ")"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for at-rules.

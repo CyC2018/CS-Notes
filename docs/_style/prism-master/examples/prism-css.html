@@ -1,0 +1,34 @@
+<h2>Empty rule</h2>
+<pre><code>*{} * {} p {}</code></pre>
+<pre><code>ul,
+ol {}</code></pre>
+
+<h2>Simple rule</h2>
+<pre><code>p { color: red; }</code></pre>
+
+<h2>Important rule</h2>
+<pre><code>
+p {
+    color: red !important;
+    line-height: normal!important;
+}
+p{position:absolute!important}
+</code></pre>
+
+<h2>@ rule</h2>
+<pre><code>@media screen and (min-width: 100px) {}</code></pre>
+
+<h2>LESS variable</h2>
+<pre><code>@main-color: red;
+.foo {
+	background: @main-color;
+}</code></pre>
+
+<h2>Comment</h2>
+<pre><code>/* Simple comment here */</code></pre>
+
+<h2>String</h2>
+<pre><code>content: 'foo';</code></pre>
+
+<h2>URL</h2>
+<pre><code>content: url(foo.png);</code></pre>

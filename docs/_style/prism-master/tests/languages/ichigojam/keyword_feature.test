@@ -1,0 +1,119 @@
+BEEP
+BPS
+CASE
+CLEAR
+CLK
+CLO
+CLP
+CLS
+CLT
+CLV
+CONT
+COPY
+ELSE
+END
+FILE
+FILES
+FOR
+GOSUB
+GSB
+GOTO
+IF
+INPUT
+KBD
+LED
+LET
+LIST
+LOAD
+LOCATE
+LRUN
+NEW
+NEXT
+OUT
+RIGHT
+PLAY
+POKE
+PRINT
+PWM
+RENUM
+RESET
+RETURN
+RTN
+RUN
+SAVE
+SCROLL
+SLEEP
+SRND
+STEP
+STOP
+SUB
+TEMPO
+THEN
+TO
+UART
+VIDEO
+WAIT
+
+----------------------------------------------------
+
+[
+	["keyword", "BEEP"],
+	["keyword", "BPS"],
+	["keyword", "CASE"],
+	["keyword", "CLEAR"],
+	["keyword", "CLK"],
+	["keyword", "CLO"],
+	["keyword", "CLP"],
+	["keyword", "CLS"],
+	["keyword", "CLT"],
+	["keyword", "CLV"],
+	["keyword", "CONT"],
+	["keyword", "COPY"],
+	["keyword", "ELSE"],
+	["keyword", "END"],
+	["keyword", "FILE"],
+	["keyword", "FILES"],
+	["keyword", "FOR"],
+	["keyword", "GOSUB"],
+	["keyword", "GSB"],
+	["keyword", "GOTO"],
+	["keyword", "IF"],
+	["keyword", "INPUT"],
+	["keyword", "KBD"],
+	["keyword", "LED"],
+	["keyword", "LET"],
+	["keyword", "LIST"],
+	["keyword", "LOAD"],
+	["keyword", "LOCATE"],
+	["keyword", "LRUN"],
+	["keyword", "NEW"],
+	["keyword", "NEXT"],
+	["keyword", "OUT"],
+	["keyword", "RIGHT"],
+	["keyword", "PLAY"],
+	["keyword", "POKE"],
+	["keyword", "PRINT"],
+	["keyword", "PWM"],
+	["keyword", "RENUM"],
+	["keyword", "RESET"],
+	["keyword", "RETURN"],
+	["keyword", "RTN"],
+	["keyword", "RUN"],
+	["keyword", "SAVE"],
+	["keyword", "SCROLL"],
+	["keyword", "SLEEP"],
+	["keyword", "SRND"],
+	["keyword", "STEP"],
+	["keyword", "STOP"],
+	["keyword", "SUB"],
+	["keyword", "TEMPO"],
+	["keyword", "THEN"],
+	["keyword", "TO"],
+	["keyword", "UART"],
+	["keyword", "VIDEO"],
+	["keyword", "WAIT"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

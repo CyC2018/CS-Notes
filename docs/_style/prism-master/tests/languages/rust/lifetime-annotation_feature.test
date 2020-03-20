@@ -1,0 +1,15 @@
+'foo
+'a
+<'a>
+
+----------------------------------------------------
+
+[
+	["lifetime-annotation", "'foo"],
+	["lifetime-annotation", "'a"],
+	["operator", "<"], ["lifetime-annotation", "'a"], ["operator", ">"]
+]
+
+----------------------------------------------------
+
+Checks for lifetime annotations.

@@ -1,0 +1,27 @@
+""
+"fo\"obar"
+"fo""obar"
+"foo\
+bar"
+''
+'fo\'obar'
+'fo''obar'
+'foo\
+bar'
+
+----------------------------------------------------
+
+[
+	["string", "\"\""],
+	["string", "\"fo\\\"obar\""],
+	["string", "\"fo\"\"obar\""],
+	["string", "\"foo\\\r\nbar\""],
+	["string", "''"],
+	["string", "'fo\\'obar'"],
+	["string", "'fo''obar'"],
+	["string", "'foo\\\r\nbar'"]
+]
+
+----------------------------------------------------
+
+Checks for strings.

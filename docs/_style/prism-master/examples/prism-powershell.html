@@ -1,0 +1,19 @@
+<h2>Comments</h2>
+<pre><code># This is a comment
+<# This is a
+multi-line comment #></code></pre>
+
+<h2>Variable Interpolation</h2>
+<pre><code>$Name = "Alice"
+Write-Host "Hello, my name is $Name."</code></pre>
+
+<h2>Full Example</h2>
+<pre><code>Function SayHello([string]$name) {
+    Write-Host "Hello, $name."
+}
+$Names = @("Bob", "Alice")
+
+$Names | ForEach {
+    SayHello $_
+}
+</code></pre>

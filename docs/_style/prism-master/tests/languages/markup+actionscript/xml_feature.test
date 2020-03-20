@@ -1,0 +1,64 @@
+var employees:XML =
+	<employees>
+		<employee ssn="123-123-1234"></employee>
+	</employees>;
+
+----------------------------------------------------
+
+[
+	["keyword", "var"],
+	" employees",
+	["punctuation", ":"],
+	["constant", "XML"],
+	["operator", "="],
+	["xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "<"],
+				"employees"
+			]],
+			["punctuation", ">"]
+		]]
+	]],
+	["xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "<"],
+				"employee"
+			]],
+			["attr-name", [
+				"ssn"
+			]],
+			["attr-value", [
+				["punctuation", "="],
+				["punctuation", "\""],
+				"123-123-1234",
+				["punctuation", "\""]
+			]],
+			["punctuation", ">"]
+		]]
+	]],
+	["xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "</"],
+				"employee"
+			]],
+			["punctuation", ">"]
+		]]
+	]],
+	["xml", [
+		["tag", [
+			["tag", [
+				["punctuation", "</"],
+				"employees"
+			]],
+			["punctuation", ">"]
+		]]
+	]],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for XML variables in ActionScript.

@@ -1,0 +1,45 @@
+{{ 0xBadFace }}
+{{ 42 }}
+{{ 3.14159 }}
+{{ 3e15 }}
+{{ 4.5E-4 }}
+{{ 0.2e+8 }}
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "0xBadFace"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "42"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "3.14159"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "3e15"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "4.5E-4"],
+		["rd", [["punctuation", "}}"]]]
+	]],
+	["tag", [
+		["ld", [["punctuation", "{{"]]],
+		["number", "0.2e+8"],
+		["rd", [["punctuation", "}}"]]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for hexadecimal and decimal numbers.

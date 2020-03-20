@@ -1,0 +1,21 @@
+false
+no
+off
+on
+true
+yes
+
+----------------------------------------------------
+
+[
+	["boolean", "false"],
+	["boolean", "no"],
+	["boolean", "off"],
+	["boolean", "on"],
+	["boolean", "true"],
+	["boolean", "yes"]
+]
+
+----------------------------------------------------
+
+Checks for all boolean aliases.

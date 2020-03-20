@@ -1,0 +1,15 @@
+:Foo
+Foo::Bar
+
+----------------------------------------------------
+
+[
+	["symbol", ":Foo"],
+	["constant", "Foo"],
+	["punctuation", ":"], ["punctuation", ":"],
+	["constant", "Bar"]
+]
+
+----------------------------------------------------
+
+Ensures module syntax is not confused with symbols. See #1336

@@ -1,0 +1,19 @@
+$variable->property
+$foo->bar->baz
+
+----------------------------------------------------
+
+[
+	["variable", "$variable"],
+	["operator", "-"], ["operator", ">"],
+	["property", "property"],
+	["variable", "$foo"],
+	["operator", "-"], ["operator", ">"],
+	["property", "bar"],
+	["operator", "-"], ["operator", ">"],
+	["property", "baz"]
+]
+
+----------------------------------------------------
+
+Checks for properties.

@@ -1,0 +1,53 @@
+(( 4 + 5 ))
+$((5 * 7))
+"foo $((5 * 7)) bar"
+for (( NUM=1 ; NUM<=1000 ; NUM++ ))
+
+----------------------------------------------------
+
+[
+	["variable", [
+		["punctuation", "(("],
+		["number", "4"],
+		["operator", "+"],
+		["number", "5"],
+		["punctuation", "))"]
+	]],
+	["variable", [
+		["variable", "$(("],
+		["number", "5"],
+		["operator", "*"],
+		["number", "7"],
+		["variable", "))"]
+	]],
+	["string", [
+		"\"foo ",
+		["variable", [
+			["variable", "$(("],
+			["number", "5"],
+			["operator", "*"],
+			["number", "7"],
+			["variable", "))"]
+		]],
+		" bar\""
+	]],
+	["keyword", "for"],
+	["variable", [
+		["punctuation", "(("],
+		" NUM",
+		["operator", "="],
+		["number", "1"],
+		["punctuation", ";"],
+		" NUM",
+		["operator", "<="],
+		["number", "1000"],
+		["punctuation", ";"],
+		" NUM",
+		["operator", "++"],
+		["punctuation", "))"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks arithmetic environments

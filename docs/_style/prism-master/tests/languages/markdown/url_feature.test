@@ -1,0 +1,25 @@
+[foo](http://prismjs.com)
+![foo](http://prismjs.com "Foo\"bar")
+[foo] [bar]
+
+----------------------------------------------------
+
+[
+	["url", [
+		"[foo](http://prismjs.com)"
+	]],
+	["url", [
+		"![foo](http://prismjs.com ",
+		["string", "\"Foo\\\"bar\""],
+		")"
+	]],
+	["url", [
+		"[foo] [",
+		["variable", "bar"],
+		"]"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for URLs.

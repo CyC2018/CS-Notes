@@ -1,0 +1,61 @@
+0
+42_147
++42
++4_2
+-3.1415
+-3.1_41_5
+4e2
+4_7e2
+-7E+8
+-7E+1_8
++8.004e-12
++8.0_04e-12
+0xBadFace
+0xB_adF_a_c_e
+-0x4E.F8d
+-0x4_E.F8_d
++0xff
+0xefp4
+0xe_fp4_2
++0x5CP+12
++0x5_CP+12
+-0xef.efp-7
+-0xef_14.00_0_Ap-1_7
+inf
+nan
+nan:0xF_4
+
+----------------------------------------------------
+
+[
+	["number", "0"],
+	["number", "42_147"],
+	["number", "+42"],
+	["number", "+4_2"],
+	["number", "-3.1415"],
+	["number", "-3.1_41_5"],
+	["number", "4e2"],
+	["number", "4_7e2"],
+	["number", "-7E+8"],
+	["number", "-7E+1_8"],
+	["number", "+8.004e-12"],
+	["number", "+8.0_04e-12"],
+	["number", "0xBadFace"],
+	["number", "0xB_adF_a_c_e"],
+	["number", "-0x4E.F8d"],
+	["number", "-0x4_E.F8_d"],
+	["number", "+0xff"],
+	["number", "0xefp4"],
+	["number", "0xe_fp4_2"],
+	["number", "+0x5CP+12"],
+	["number", "+0x5_CP+12"],
+	["number", "-0xef.efp-7"],
+	["number", "-0xef_14.00_0_Ap-1_7"],
+	["number", "inf"],
+	["number", "nan"],
+	["number", "nan:0xF_4"]
+]
+
+----------------------------------------------------
+
+Checks for decimal and hexadecimal numbers.

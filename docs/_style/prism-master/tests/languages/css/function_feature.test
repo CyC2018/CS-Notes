@@ -1,0 +1,41 @@
+transform: translate(-50%);
+background: rgba(0, 0, 0, 0.2);
+filter: opacity(alpha=0);
+
+----------------------------------------------------
+
+[
+	["property", "transform"],
+	["punctuation", ":"],
+	["function", "translate"],
+	["punctuation", "("],
+	"-50%",
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "background"],
+	["punctuation", ":"],
+	["function", "rgba"],
+	["punctuation", "("],
+	"0",
+	["punctuation", ","],
+	" 0",
+	["punctuation", ","],
+	" 0",
+	["punctuation", ","],
+	" 0.2",
+	["punctuation", ")"],
+	["punctuation", ";"],
+
+	["property", "filter"],
+	["punctuation", ":"],
+	["function", "opacity"],
+	["punctuation", "("],
+	"alpha=0",
+	["punctuation", ")"],
+	["punctuation", ";"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

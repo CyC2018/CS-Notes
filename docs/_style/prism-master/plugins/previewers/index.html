@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Previewers ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<link rel="stylesheet" href="plugins/previewers/prism-previewers.css" data-noprefix />
+	<script src="prefixfree.min.js"></script>
+
+	<script>var _gaq = [['_setAccount', 'UA-33746269-1'], ['_trackPageview']];</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+</head>
+<body>
+
+<header>
+	<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+
+	<h2>Previewers</h2>
+	<p>Previewers for angles, colors, gradients, easing and time.</p>
+</header>
+
+<section class="language-markup">
+	<h1>How to use</h1>
+
+	<p>You don't need to do anything. With this plugin loaded, a previewer will appear on hovering some values in code blocks.
+		The following previewers are supported:</p>
+	<ul>
+		<li><code>angle</code> for angles</li>
+		<li><code>color</code> for colors</li>
+		<li><code>gradient</code> for gradients</li>
+		<li><code>easing</code> for easing functions</li>
+		<li><code>time</code> for durations</li>
+	</ul>
+	<p>This plugin is compatible with CSS, Less, Markup attributes, Sass, Scss and Stylus.</p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<h2>CSS</h2>
+	<pre class="language-css"><code>.example-gradient {
+	background: -webkit-linear-gradient(left,     #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* Chrome10+, Safari5.1+ */
+	background:    -moz-linear-gradient(left,     #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* FF3.6+ */
+	background:     -ms-linear-gradient(left,     #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* IE10+ */
+	background:      -o-linear-gradient(left,     #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* Opera 11.10+ */
+	background:         linear-gradient(to right, #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* W3C */
+}
+.example-angle {
+	transform: rotate(10deg);
+}
+.example-color {
+	color: rgba(255, 0, 0, 0.2);
+	background: purple;
+	border: 1px solid hsl(100, 70%, 40%);
+}
+.example-easing {
+	transition-timing-function: linear;
+}
+.example-time {
+	transition-duration: 3s;
+}</code></pre>
+
+	<h2>Markup attributes</h2>
+	<pre class="language-markup"><code>&lt;table bgcolor="#6E5494">
+&lt;tr style="background: lightblue;"></code></pre>
+
+	<h2>Less</h2>
+	<pre class="language-less"><code>@gradient: linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%);
+.example-gradient {
+	background: -webkit-linear-gradient(-45deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* Chrome10+, Safari5.1+ */
+	background:    -moz-linear-gradient(-45deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* FF3.6+ */
+	background:     -ms-linear-gradient(-45deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* IE10+ */
+	background:      -o-linear-gradient(-45deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* Opera 11.10+ */
+	background:         linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* W3C */
+}
+@angle: 3rad;
+.example-angle {
+	transform: rotate(.4turn)
+}
+@nice-blue: #5B83AD;
+.example-color {
+	color: hsla(102, 53%, 42%, 0.4);
+}
+@easing: cubic-bezier(0.1, 0.3, 1, .4);
+.example-easing {
+	transition-timing-function: ease;
+}
+@time: 1s;
+.example-time {
+	transition-duration: 2s;
+}</code></pre>
+
+	<h2>Sass</h2>
+	<pre class="language-sass"><code>$gradient: linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%)
+@mixin example-gradient
+	background: -moz-radial-gradient(center, ellipse cover, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%)
+	background: radial-gradient(ellipse at center, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%)
+$angle: 380grad
+@mixin example-angle
+	transform: rotate(-120deg)
+.example-angle
+	transform: rotate(18rad)
+$color: blue
+@mixin example-color
+	color: rgba(147, 32, 34, 0.8)
+.example-color
+	color: pink
+$easing: ease-out
+.example-easing
+	transition-timing-function: ease-in-out
+$time: 3s
+@mixin example-time
+	transition-duration: 800ms
+.example-time
+	transition-duration: 0.8s
+</code></pre>
+
+	<h2>Scss</h2>
+	<pre class="language-scss"><code>$gradient: linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%);
+$attr: background;
+.example-gradient {
+	#{$attr}-image: repeating-linear-gradient(10deg, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1) 10px, rgba(255, 0, 0, 0) 20px);
+}
+$angle: 1.8turn;
+.example-angle {
+	transform: rotate(-3rad)
+}
+$color: blue;
+.example-color {
+	#{$attr}-color: rgba(255, 255, 0, 0.75);
+}
+$easing: linear;
+.example-easing {
+	transition-timing-function: cubic-bezier(0.9, 0.1, .2, .4);
+}
+$time: 1s;
+.example-time {
+	transition-duration: 10s
+}</code></pre>
+
+	<h2>Stylus</h2>
+	<pre class="language-stylus"><code>gradient = linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%)
+.example-gradient
+	background-image: repeating-radial-gradient(circle, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1) 10px, rgba(255, 0, 0, 0) 20px)
+angle = 357deg
+.example-angle
+	transform: rotate(100grad)
+color = olive
+.example-color
+	color: #000
+easing = ease-in
+.example-easing
+	transition-timing-function: ease-out
+time = 3s
+.example-time
+	transition-duration: 0.5s</code></pre>
+</section>
+
+<section>
+	<h1>Disabling a previewer</h1>
+	<p>All previewers are enabled by default. To enable only a subset of them, a <code>data-previewers</code> attribute
+		can be added on a code block or any ancestor. Its value should be a space-separated list of previewers
+		representing the subset.</p>
+	<p>For example:</p>
+	<pre class="language-markup"><code>&lt;pre class="language-css" data-previewers="color time">&lt;code>div {
+	/* Only the previewer for color and time are enabled */
+	color: red;
+	transition-duration: 1s;
+	/* The previewer for angles is not enabled. */
+	transform: rotate(10deg);
+}&lt;/code>&lt;/pre></code></pre>
+	<p>will give the following result:</p>
+	<pre class="language-css" data-previewers="color time"><code>div {
+	/* Only the previewers for color and time are enabled */
+	color: red;
+	transition-duration: 1s;
+	/* The previewer for angles is not enabled. */
+	transform: rotate(10deg);
+}</code></pre>
+</section>
+
+<section>
+	<h1>API</h1>
+	<p>This plugins provides a constructor that can be accessed through <code class="language-javascript">Prism.plugins.Previewer</code>.</p>
+	<p>Once a previewer has been instantiated, an HTML element is appended to the document body.
+		This element will appear when specific tokens are hovered.</p>
+
+	<h2><code class="language-javascript">new Prism.plugins.Previewer(type, updater, supportedLanguages)</code></h2>
+
+	<ul>
+		<li>
+			<p><code class="language-javascript">type</code>: the token type this previewer is associated to.
+				The previewer will be shown when hovering tokens of this type.</p>
+		</li>
+		<li>
+			<p><code class="language-javascript">updater</code>: the function that will be called each time an associated token is hovered.
+				This function takes the text content of the token as its only parameter.
+				The previewer HTML element can be accessed through the keyword <code class="language-javascript">this</code>.
+				This function must return <code class="language-javascript">true</code> for the previewer to be shown.</p>
+		</li>
+		<li>
+			<p><code class="language-javascript">supportedLanguages</code>: an optional array of supported languages.
+				The previewer will be available only for those.
+				Defaults to <code class="language-javascript">'*'</code>, which means every languages.</p>
+		</li>
+		<li>
+			<p><code class="language-javascript">initializer</code>: an optional function.
+				This function will be called when the previewer is initialized,
+				right after the HTML element has been appended to the document body.</p>
+		</li>
+	</ul>
+
+</section>
+
+<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+<script src="prism.js"></script>
+<script src="components/prism-less.js"></script>
+<script src="components/prism-sass.js"></script>
+<script src="components/prism-scss.js"></script>
+<script src="components/prism-stylus.js"></script>
+<script src="plugins/previewers/prism-previewers.js"></script>
+<script src="utopia.js"></script>
+<script src="components.js"></script>
+<script src="code.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+{param visible: true /}
+{param content kind="html"}
+    <b>{$message}</b>
+{/param}
+{@param name: string}
+{@param? height: int}
+
+----------------------------------------------------
+
+[
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "visible"],
+		["punctuation", ":"],
+		["boolean", "true"],
+		["delimiter", "/}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "param"],
+		["parameter", "content"],
+		["property", "kind"],
+		["operator", "="],
+		["string", "\"html\""],
+		["delimiter", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"b"
+		]],
+		["punctuation", ">"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["variable", ["$message"]],
+		["delimiter", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"b"
+		]],
+		["punctuation", ">"]
+	]],
+	["soy", [
+		["delimiter", "{/"],
+		["keyword", "param"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param"],
+		["parameter", "name"],
+		["punctuation", ":"],
+		["keyword", "string"],
+		["delimiter", "}"]
+	]],
+	["soy", [
+		["delimiter", "{"],
+		["keyword", "@param?"],
+		["parameter", "height"],
+		["punctuation", ":"],
+		["keyword", "int"],
+		["delimiter", "}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for parameters name.

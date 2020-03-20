@@ -1,0 +1,20 @@
+:less
+	@foo: #123;
+
+----------------------------------------------------
+
+[
+	["filter-less", [
+		["filter-name", ":less"],
+		["variable", [
+			"@foo",
+			["punctuation", ":"]
+		]],
+		" #123",
+		["punctuation", ";"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for less filter in Jade.

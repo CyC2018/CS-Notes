@@ -1,0 +1,15 @@
+$foo
+$::foobar_42
+$Foo::Bar_42::baz
+
+----------------------------------------------------
+
+[
+	["variable", ["$foo"]],
+	["variable", ["$", ["punctuation", "::"], "foobar_42"]],
+	["variable", ["$Foo", ["punctuation", "::"], "Bar_42", ["punctuation", "::"], "baz"]]
+]
+
+----------------------------------------------------
+
+Checks for variables.

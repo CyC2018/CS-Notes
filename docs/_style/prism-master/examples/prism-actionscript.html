@@ -1,0 +1,133 @@
+<h2>Comments</h2>
+<pre><code>// Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Literal values</h2>
+<pre><code>17
+"hello"
+-3
+9.4
+null
+true
+false</code></pre>
+
+<h2>Classes</h2>
+<pre><code>class A {}
+class B extends A {}</code></pre>
+
+<h2>Inline XML</h2>
+<pre><code>var employees:XML =
+    &lt;employees>
+        &lt;employee ssn="123-123-1234">
+            &lt;name first="John" last="Doe"/>
+            &lt;address>
+                &lt;city>San Francisco&lt;/city>
+                &lt;state>CA&lt;/state>
+                &lt;zip>98765&lt;/zip>
+            &lt;/address>
+        &lt;/employee>
+        &lt;employee ssn="789-789-7890">
+            &lt;name first="Mary" last="Roe"/>
+            &lt;address>
+                &lt;city>Newton&lt;/city>
+                &lt;state>MA&lt;/state>
+                &lt;zip>01234&lt;/zip>
+            &lt;/address>
+        &lt;/employee>
+    &lt;/employees>;</code></pre>
+
+<h2>Full example</h2>
+<pre><code>package {
+  import flash.display.*;
+  import flash.events.*;
+  import flash.filters.BlurFilter;
+  import flash.geom.*;
+  import flash.ui.*;
+  public class ch23ex2 extends Sprite {
+    protected const BMP_SCALE:Number = 1/2;
+    protected const D:Number = 1.015;
+    protected const DIM_EFFECT:ColorTransform = new ColorTransform(D, D, D);
+    protected const B:int = 16;
+    protected const BLUR_EFFECT:BlurFilter = new BlurFilter(B, B, 1);
+    protected var RLUT:Array, GLUT:Array, BLUT:Array;
+    protected var sourceBmp:BitmapData;
+    protected var colorBmp:BitmapData;
+    protected var touches:Array = new Array();
+    protected var fingerShape:Shape = new Shape();
+    public function ch23ex2() {
+      try {
+        var test:Class = Multitouch;
+        if (Multitouch.supportsTouchEvents) {
+          Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+          init();
+        } else {
+          trace("Sorry, this example requires multitouch.");
+        }
+      } catch (error:ReferenceError) {
+        trace("Sorry, but multitouch is not supported in this runtime.");
+      }
+    }
+    protected function init():void {
+      //create a black-and-white bitmap and a color bitmap, only show the color
+      sourceBmp = new BitmapData(
+        stage.stageWidth*BMP_SCALE, stage.stageHeight*BMP_SCALE, false, 0);
+      colorBmp = sourceBmp.clone();
+      var bitmap:Bitmap = new Bitmap(colorBmp, PixelSnapping.ALWAYS, true);
+      bitmap.width = stage.stageWidth; bitmap.height = stage.stageHeight;
+      addChild(bitmap);
+
+      //create finger shape to paste onto the bitmap under your touches
+      fingerShape.graphics.beginFill(0xffffff, 0.1);
+      fingerShape.graphics.drawEllipse(-15, -20, 30, 40);
+      fingerShape.graphics.endFill();
+
+      //create the palette map from a gradient
+      var gradient:Shape = new Shape();
+      var m:Matrix = new Matrix();
+      m.createGradientBox(256, 10);
+      gradient.graphics.beginGradientFill(GradientType.LINEAR,
+        [0x313ad8, 0x2dce4a, 0xdae234, 0x7a1c1c, 0x0f0303],
+        [1, 1, 1, 1, 1], [0, 0.4*256, 0.75*256, 0.9*256, 255], m);
+      gradient.graphics.drawRect(0, 0, 256, 10);
+      var gradientBmp:BitmapData = new BitmapData(256, 10, false, 0);
+      gradientBmp.draw(gradient);
+      RLUT = new Array(); GLUT = new Array(); BLUT = new Array();
+      for (var i:int = 0; i < 256; i++) {
+        var pixelColor:uint = gradientBmp.getPixel(i, 0);
+        //I drew the gradient backwards, so sue me
+        RLUT[256-i] = pixelColor & 0xff0000;
+        GLUT[256-i] = pixelColor & 0x00ff00;
+        BLUT[256-i] = pixelColor & 0x0000ff;
+      }
+
+      stage.addEventListener(TouchEvent.TOUCH_BEGIN, assignTouch);
+      stage.addEventListener(TouchEvent.TOUCH_MOVE, assignTouch);
+      stage.addEventListener(TouchEvent.TOUCH_END, removeTouch);
+      stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+    }
+    protected function assignTouch(event:TouchEvent):void {
+      touches[event.touchPointID] = event;
+    }
+    protected function removeTouch(event:TouchEvent):void {
+      delete touches[event.touchPointID];
+    }
+    protected function onEnterFrame(event:Event):void {
+      for (var key:String in touches) {
+        var touch:TouchEvent = touches[key] as TouchEvent;
+        if (touch) {
+          //plaster the finger image under your finger
+          var m:Matrix = new Matrix();
+          m.translate(touch.stageX*BMP_SCALE, touch.stageY*BMP_SCALE);
+          sourceBmp.draw(fingerShape, m, null, BlendMode.ADD);
+        }
+      }
+      var O:Point = new Point(0, 0);
+      //blur and ever-so-slightly brighten the image to make the color last
+      sourceBmp.applyFilter(sourceBmp, sourceBmp.rect, O, BLUR_EFFECT);
+      sourceBmp.colorTransform(sourceBmp.rect, DIM_EFFECT);
+      //we've calculated the image in grayscale brightnesses, now make it color
+      colorBmp.paletteMap(sourceBmp, sourceBmp.rect, O, RLUT, GLUT, BLUT, null);
+    }
+  }
+}</code></pre>

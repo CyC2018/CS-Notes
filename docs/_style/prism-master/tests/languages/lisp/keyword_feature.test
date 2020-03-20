@@ -1,0 +1,73 @@
+(let )
+let
+(lexical-let )
+(let* )
+(letf )
+(cl-letf )
+(if )
+(when )
+(while )
+(unless )
+(cons )
+(cl-loop )
+(and )
+(or )
+(not )
+(cond )
+(setq )
+(error )
+(message )
+(null )
+(require )
+(provide )
+(use-package )
+(for )
+(do )
+(collect )
+(return )
+(finally )
+(append )
+(concat )
+(in )
+(by )
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["keyword", "let"], ["punctuation", ")"],
+	"\r\nlet\r\n",
+	["punctuation", "("], ["keyword", "lexical-let"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "let*"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "letf"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "cl-letf"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "if"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "when"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "while"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "unless"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "cons"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "cl-loop"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "and"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "or"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "not"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "cond"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "setq"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "error"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "message"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "null"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "require"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "provide"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "use-package"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "for"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "do"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "collect"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "return"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "finally"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "append"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "concat"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "in"], ["punctuation", ")"],
+	["punctuation", "("], ["keyword", "by"], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for all keyword variations.

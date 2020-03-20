@@ -1,0 +1,20 @@
+[table]
+[[array]]
+
+----------------------------------------------------
+
+[
+	["punctuation", "["],
+	["table", "table"],
+	["punctuation", "]"],
+
+	["punctuation", "["],
+	["punctuation", "["],
+	["table", "array"],
+	["punctuation", "]"],
+	["punctuation", "]"]
+]
+
+----------------------------------------------------
+
+Checks for tables.

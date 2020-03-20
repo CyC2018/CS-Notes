@@ -1,0 +1,58 @@
+((3-(9-2))*4)
+^eval(4+2)
+
+<div class="foo-^eval(4+2)">
+
+----------------------------------------------------
+
+[
+	["expression", [
+		["punctuation", "("],
+		["punctuation", "("],
+		["number", "3"],
+		["operator", "-"],
+		["punctuation", "("],
+		["number", "9"],
+		["operator", "-"],
+		["number", "2"],
+		["punctuation", ")"],
+		["punctuation", ")"],
+		["operator", "*"],
+		["number", "4"],
+		["punctuation", ")"]
+	]],
+	["keyword", "^eval"],
+
+	["expression", [
+		["punctuation", "("],
+		["number", "4"],
+		["operator", "+"],
+		["number", "2"],
+		["punctuation", ")"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"div"
+		]],
+		["attr-name", ["class"]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"foo-",
+			["keyword", "^eval"],
+			["expression", [
+				["punctuation", "("],
+				["number", "4"], ["operator", "+"], ["number", "2"],
+				["punctuation", ")"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for expressions, up to 3 levels of depth.

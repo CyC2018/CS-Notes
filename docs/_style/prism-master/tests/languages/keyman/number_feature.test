@@ -1,0 +1,21 @@
+U+0041
+d67
+d1114111
+x20
+x10FFFF
+4177777
+
+----------------------------------------------------
+
+[
+	["number", "U+0041"],
+	["number", "d67"],
+	["number", "d1114111"],
+	["number", "x20"],
+	["number", "x10FFFF"],
+	["number", "4177777"]
+]
+
+----------------------------------------------------
+
+Checks for unicode, decimal, hexadecimal and octal character codes.

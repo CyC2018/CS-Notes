@@ -1,0 +1,43 @@
+doc("catalog.xml")
+generate-id($prod)
+xs:QName("strings:trim")
+declare function prod:countProds ($prods as element(product)*) as xs:string
+false()
+
+----------------------------------------------------
+
+[
+	["function", "doc"],
+	["punctuation", "("],
+	["string", "\"catalog.xml\""],
+	["punctuation", ")"],
+	["function", "generate-id"],
+	["punctuation", "("],
+	["variable", "$prod"],
+	["punctuation", ")"],
+	["function", "xs:QName"],
+	["punctuation", "("],
+	["string", "\"strings:trim\""],
+	["punctuation", ")"],
+	["keyword", "declare"],
+	["keyword", "function"],
+	["function", "prod:countProds"],
+	["punctuation", "("],
+	["variable", "$prods"],
+	["keyword", "as"],
+	["function", "element"],
+	["punctuation", "("],
+	"product",
+	["punctuation", ")"],
+	["operator", "*"],
+	["punctuation", ")"],
+	["keyword", "as"],
+	["builtin", "xs:string"],
+	["function", "false"],
+	["punctuation", "("],
+	["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

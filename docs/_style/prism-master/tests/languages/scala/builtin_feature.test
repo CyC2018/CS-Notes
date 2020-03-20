@@ -1,0 +1,17 @@
+String Int Long Short
+Byte Boolean Double
+Float Char Any AnyRef
+AnyVal Unit Nothing
+
+----------------------------------------------------
+
+[
+	["builtin", "String"], ["builtin", "Int"], ["builtin", "Long"], ["builtin", "Short"],
+	["builtin", "Byte"], ["builtin", "Boolean"], ["builtin", "Double"],
+	["builtin", "Float"], ["builtin", "Char"], ["builtin", "Any"], ["builtin", "AnyRef"],
+	["builtin", "AnyVal"], ["builtin", "Unit"], ["builtin", "Nothing"]
+]
+
+----------------------------------------------------
+
+Checks for builtins.

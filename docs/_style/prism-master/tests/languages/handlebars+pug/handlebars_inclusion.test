@@ -1,0 +1,15 @@
+:handlebars
+	{{!comment}}
+
+----------------------------------------------------
+
+[
+	["filter-handlebars", [
+		["filter-name", ":handlebars"],
+		["comment", "{{!comment}}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for handlebars filter in Jade.

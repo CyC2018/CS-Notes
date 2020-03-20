@@ -1,0 +1,15 @@
+#
+# Foobar
+#{ This is a comment
+
+----------------------------------------------------
+
+[
+	["comment", "#"],
+	["comment", "# Foobar"],
+	["comment", "#{ This is a comment"]
+]
+
+----------------------------------------------------
+
+Checks for comments.
