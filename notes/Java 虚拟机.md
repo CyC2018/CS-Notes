@@ -521,6 +521,7 @@ public static final int value = 123;
 其中解析过程在某些情况下可以在初始化阶段之后再开始，这是为了支持 Java 的动态绑定。
 
 <div data="补充为什么可以支持动态绑定 --> <--"></div>
+
 ###  5. 初始化
 
 <div data="modify -->"></div>
