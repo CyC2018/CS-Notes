@@ -146,7 +146,8 @@ byte[] bytes = str1.getBytes();
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
 - InputStreamReader 实现从字节流解码成字符流；
-- OutputStreamWriter 实现字符流编码成为字节流。
+- OutputStreamWriter 实现从字节流解码成字符流；
+> `InputStreamReader`和`OutputStreamWriter`分别继承自`Reader`和`Writer`。各自的构造函数参数类型分别是`InputStream`和`OutputStream`。
 
 ## 实现逐行输出文本文件的内容
 
