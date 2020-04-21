@@ -1,0 +1,213 @@
+1、 简述Spring框架
+概念
+Spring致力于Java EE应用的各种解决方案，是一款轻量级框架，大大简化了Java企业级开发，提供了强大、稳定的功能。
+Spring主要有两个目标：一是让先有技术更易于使用，二是促进良好的编程习惯(或者称为最佳实践)
+
+优点
+
+轻量级。 Spring在大小和透明性方面绝对属于轻量级的，基础版本的Spring框架大约只有2MB
+
+控制反转(IOC)。 Spring使用控制反转技术实现了松耦合。依赖被注入到对象，而不是创建或寻找依赖对象。
+
+方便解耦，简化开发
+Spring就是一个大工厂，可以将所有对象创建和依赖关系维护，交给Spring管理
+
+AOP编程的支持
+Spring提供面向切面编程，可以方便的实现对程序进行权限拦截、运行监控等功能
+
+声明式事务的支持
+只需要通过配置就可以完成对事务的管理，而无需手动编程
+
+方便集成各种优秀框架
+Spring不排斥各种优秀的开源框架，其内部提供了对各种优秀框架（如：Struts2、Hibernate、MyBatis、Quartz等）的直接支持
+
+降低JavaEE API的使用难度
+Spring 对JavaEE开发中非常难用的一些API（JDBC、JavaMail、远程调用等），都提供了封装，使这些API应用难度大大降低
+
+2、 Spring七大模块
+Spring Core
+Core封装包是框架的最基础部分，提供IOC和依赖注入特性。这里的基础概念是BeanFactory，它提供对Factory模式的经典实现来消除对程序性单例模式的需要，并真正地允许你从程序逻辑中分离出依赖关系和配置。
+
+Spring Context
+i. 构建于Core封装包基础上的 Context封装包，提供了一种框架式的对象访问方法，有些象JNDI注册器。Context封装包的特性得自于Beans封装包，并添加了对国际化（I18N）的支持（例如资源绑定），事件传播，资源装载的方式和Context的透明创建，比如说通过Servlet容器。
+
+Spring DAO
+i. DAO (Data Access Object)提供了JDBC的抽象层，它可消除冗长的JDBC编码和解析数据库厂商特有的错误代码。 并且，JDBC封装包还提供了一种比编程性更好的声明性事务管理方法，不仅仅是实现了特定接口，而且对所有的POJOs（plain old Java objects）都适用。
+
+Spring ORM
+ORM 封装包提供了常用的“对象/关系”映射APIs的集成层。 其中包括JPA、JDO、Hibernate 和 iBatis 。利用ORM封装包，可以混合使用所有Spring提供的特性进行“对象/关系”映射，如前边提到的简单声明性事务管理。
+
+Spring AOP
+i. Spring的 AOP 封装包提供了符合AOP Alliance规范的面向方面的编程实现，让你可以定义，例如方法拦截器（method-interceptors）和切点（pointcuts），从逻辑上讲，从而减弱代码的功能耦合，清晰的被分离开。而且，利用source-level的元数据功能，还可以将各种行为信息合并到你的代码中。
+
+Spring Web
+Spring中的 Web 包提供了基础的针对Web开发的集成特性，例如多方文件上传，利用Servlet listeners进行IOC容器初始化和针对Web的ApplicationContext。当与WebWork或Struts一起使用Spring时，这个包使Spring可与其他框架结合。
+
+Spring Web MVC
+Spring中的MVC封装包提供了Web应用的Model-View-Controller（MVC）实现。Spring的MVC框架并不是仅仅提供一种传统的实现，它提供了一种清晰的分离模型，在领域模型代码和Web Form之间。并且，还可以借助Spring框架的其他特性。
+
+3、 Spring中的设计模式
+spring中常用的设计模式达到九种，我们举例说明：
+
+第一种：简单工厂
+又叫做静态工厂方法（StaticFactory Method）模式，但不属于23种GOF设计模式之一。 简单工厂模式的实质是由一个工厂类根据传入的参数，动态决定应该创建哪一个产品类。 spring中的BeanFactory就是简单工厂模式的体现，根据传入一个唯一的标识来获得bean对象，但是否是在传入参数后创建还是传入参数前创建这个要根据具体情况来定。
+
+第二种：工厂方法（Factory Method）
+
+通常由应用程序直接使用new创建新的对象，为了将对象的创建和使用相分离，采用工厂模式,即应用程序将对象的创建及初始化职责交给工厂对象。一般情况下,应用程序有自己的工厂对象来创建bean.如果将应用程序自己的工厂对象交给Spring管理,那么Spring管理的就不是普通的bean,而是工厂Bean。
+
+第三种：单例模式（Singleton）
+
+保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+spring中的单例模式完成了后半句话，即提供了全局的访问点BeanFactory。但没有从构造器级别去控制单例，这是因为spring管理的是是任意的java对象。
+
+第四种：适配器（Adapter）
+
+在Spring的Aop中，使用的Advice（通知）来增强被代理类的功能。Spring实现这一AOP功能的原理就使用代理模式（1、JDK动态代理。2、CGLib字节码生成技术代理。）对类进行方法级别的切面增强，即，生成被代理类的代理类， 并在代理类的方法前，设置拦截器，通过执行拦截器重的内容增强了代理方法的功能，实现的面向切面编程。
+
+第五种：包装器（Decorator）
+
+在我们的项目中遇到这样一个问题：我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。我们以往在spring和hibernate框架中总是配置一个数据源，因而sessionFactory的dataSource属性总是指向这个数据源并且恒定不变，所有DAO在使用sessionFactory的时候都是通过这个数据源访问数据库。但是现在，由于项目的需要，我们的DAO在访问sessionFactory的时候都不得不在多个数据源中不断切换，问题就出现了：如何让sessionFactory在执行数据持久化的时候，根据客户的需求能够动态切换不同的数据源？我们能不能在spring的框架下通过少量修改得到解决？是否有什么设计模式可以利用呢？ 首先想到在spring的applicationContext中配置所有的dataSource。这些dataSource可能是各种不同类型的，比如不同的数据库：Oracle、SQL Server、MySQL等，也可能是不同的数据源：比如apache 提供的org.apache.commons.dbcp.BasicDataSource、spring提供的org.springframework.jndi.JndiObjectFactoryBean等。然后sessionFactory根据客户的每次请求，将dataSource属性设置成不同的数据源，以到达切换数据源的目的。
+spring中用到的包装器模式在类名上有两种表现：一种是类名中含有Wrapper，另一种是类名中含有Decorator。基本上都是动态地给一个对象添加一些额外的职责。
+
+第六种：代理（Proxy）
+
+为其他对象提供一种代理以控制对这个对象的访问。 从结构上来看和Decorator模式类似，但Proxy是控制，更像是一种对功能的限制，而Decorator是增加职责。
+spring的Proxy模式在aop中有体现，比如JdkDynamicAopProxy和Cglib2AopProxy。
+
+第七种：观察者（Observer）
+
+定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+spring中Observer模式常用的地方是listener的实现。如ApplicationListener。
+
+第八种：策略（Strategy）
+
+定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。
+
+第九种：模板方法（Template Method）
+
+定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。Template Method使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+Template Method模式一般是需要继承的。这里想要探讨另一种对Template Method的理解。spring中的JdbcTemplate，在用这个类时并不想去继承这个类，因为这个类的方法太多，但是我们还是想用到JdbcTemplate已有的稳定的、公用的数据库连接，那么我们怎么办呢？我们可以把变化的东西抽出来作为一个参数传入JdbcTemplate的方法中。但是变化的东西是一段代码，而且这段代码会用到JdbcTemplate中的变量。怎么办？那我们就用回调对象吧。在这个回调对象中定义一个操纵JdbcTemplate中变量的方法，我们去实现这个方法，就把变化的东西集中到这里了。然后我们再传入这个回调对象到JdbcTemplate，从而完成了调用。这可能是Template Method不需要继承的另一种实现方式吧。
+
+4、 ApplicationContext与BeanFactory的区别
+两者都是通过xml配置文件加载bean,ApplicationContext和BeanFacotry相比,提供了更多的扩展功能，但其主要区别在于后者是延迟加载,如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常；而ApplicationContext则在初始化自身是检验，这样有利于检查所依赖属性是否注入；所以通常情况下我们选择使用ApplicationContext。
+
+BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样，我们就不能发现一些存在的Spring的配置问题。而ApplicationContext则相反，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误。
+
+BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册
+
+5、 如何理解IoC和DI
+1、IOC： IOC就是控制反转，通俗的说就是我们不用自己创建实例对象，这些都交给Spring的bean工厂帮我们创建管理。这也是Spring的核心思想，通过面向接口编程的方式来是实现对业务组件的动态依赖。这就意味着IOC是Spring针对解决程序耦合而存在的。在实际应用中，Spring通过配置文件（xml或者properties）指定需要实例化的java类（类名的完整字符串），包括这些java类的一组初始化值，通过加载读取配置文件，用Spring提供的方法（getBean()）就可以获取到我们想要的根据指定配置进行初始化的实例对象。
+
+优点：IOC或依赖注入减少了应用程序的代码量。它使得应用程序的测试很简单，因为在单元测试中不再需要单例或JNDI查找机制。简单的实现以及较少的干扰机制使得松耦合得以实现。IOC容器支持勤性单例及延迟加载服务。
+
+2、DI：DI—Dependency Injection，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。
+
+6、 AOP相关术语
+切面（Aspect）：一个模块化的横切逻辑(或称横切关注点)，可能会横切多个对象。
+连接点(Join Point)：程序执行中的某个具体的执行点。入原对象的fun()方法就是一个连接点。
+增强处理（Advice）：切面在某个特定连接点上执行的代码逻辑。
+切入点（Ponitcut）：对连接点的特征进行描述，可以使用正则表达式。增强处理和一个切入点
+表达式相关联，并在与这个切入点匹配的某个连接点上运行。
+目标对象（Target object）：被一个或多个切面增强的对象。
+AOP代理（AOP proxy）：由AOP框架所创建的对象，实现执行增强处理方法等功能。
+织入（Weaving）：将增强处理连接到应用程序中的类型或对象上的过程。
+7、 如何理解Spring AOP
+1、概念
+
+面向切面编程。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
+2、 核心思想
+可以在不修改源代码的前提下，对程序进行增强
+
+3、实现原理
+Spring框架的AOP技术底层也是采用的代理技术，所谓的动态代理就是说 AOP 框架不会去修改字节码，而是在内存中临时为方法生成一个 AOP 对象，这个 AOP 对象包含了目标对象的全部方法，并且在特定的切点做了增强处理，并回调原对象的方法 。Spring AOP 中的动态代理主要有两种方式， JDK 动态代理和 CGLIB 动态代理 。
+
+JDK 动态代理通过反射来接收被代理的类，并且要求被代理的类必须实现一个接口 。JDK 动态代理的核心是 InvocationHandler 接口和 Proxy 类 。
+如果目标类没有实现接口，那么 Spring AOP 会选择使用 CGLIB 来动态代理目标类 。CGLIB （ Code Generation Library ），是一个代码生成的类库，可以在运行时动态的生成某个类的子类，注意， CGLIB 是通过继承的方式做的动态代理，因此如果某个类被标记为 final ，那么它是无法使用 CGLIB 做动态代理的 。
+8、 Spring中有哪些增强处理，区别？
+前置增强：org.springframework.aop.BeforeAdvice代表前置增强，表示在目标方法整形前实施增强
+后置增强：org.springframework.aop.AfterReturningAdvice代表后置增强，表示在目标方法执行后实施增强
+环绕增强：org.springframework.aop.MethodInterceptor代表环绕增强，表示在目标方法执行前后实施增强
+异常抛出增强 ：org.springframework.aop.ThrowsAdvice代表抛出异常增强，表示在目标方法抛出异常后实施增强
+引介增强：org.springframework.aop.IntroductionInterceptor代表引介增强，表示在目标类中添加一些新的方法和属性
+9、 Spring多种方式注入值
+依赖注入通常有如下两种：
+i. 设值注入：IoC容器使用属性的setter方法来注入被以依赖的实例
+ii. 构造注入：IoC容器使用构造器来注入被依赖的实例。
+
+设值注入
+i. 设值注入是指IoC容器使用属性的setter方法来注入被依赖的实例。
+Bean与Bean之间的依赖关系有Spring管理，Spring采用setter方法为目标Be阿玛尼注入所依赖的Bean，这种方式被称之为设值注入。从上面的实例我们可以看出，依赖注入以配置文件管理Bean实例之间的耦合，让Bean实例之间的耦合从代码层次分离出来。
+
+构造注入
+构造注入就是利用构造器来设置依赖关系的方式。构造注入的配置文件需要做一些修改。为了使用构造注入，使用元素来指定构造器的参数。
+
+两种注入方式的对比
+i. Spring支持两种依赖注入方式，这两种依赖注入方式并没有好坏之分，只是适合的场景有所不同。
+
+设值注入有如下优点：
+
+与传统的JavaBean的写法更相似，程序开发人员更加容易理解，接受。通过setter方法设定依赖关系显得更加直观、自然。
+对于复杂的依赖关系，如果采用构造注入，会导致构造器过于臃肿，难以阅读。Spring在创建Bean实例时，需要同时实例化其依赖的全部实例，因此导致性能下降。而设值注入，则可以避免这些问题。尤其是在某些属性可选的情况下，多参数的构造器更加笨重。
+但是构造器也有如下优势：
+
+构造注入可以再构造器中决定依赖关系的注入顺序，优先依赖的优先注入。
+对于依赖关系无须变化的Bean，构造注入更有用处。因为没有setter方法，所有的依赖关系全部在构造器中设定，因此，无须担心后续的代码对依赖关系产生破坏。
+依赖关系只能在构造器中设定，则只有组件的创建者才能改变组件的依赖关系。对组件的调用者而言，组件内部的依赖关系完全透明，更加符合高内聚的原则。
+通过上面的对比。所以建议用以设值注入为主，构造注入为辅的注入策略。对于依赖关系无须变化的注入，尽量采用构造注入；而其他的依赖关系，则考虑设值注入。
+
+10、 Spring中支持的Bean作用域
+支持如下五种不同的作用域
+
+Singleton（默认）：在Spring IOC容器中仅存在一个Bean实例，Bean以单实例的方式存在。
+Prototype：一个bean可以定义多个实例
+Request：每次HTTP请求都会创建一个新的Bean。该作用域仅适用于WebApplicationContext环境。
+Session：一个HTTP Session定义一个Bean。该作用域仅适用于WebApplicationContext环境.
+GolbalSession：同一个全局HTTP Session定义一个Bean。该作用域同样仅适用于WebApplicationContext环境.
+11、 如何定义bean的作用域
+在Spring中创建一个bean的时候，我们可以声明它的作用域。只需要在bean定义的时候通过’scope’属性定义即可。例如，当Spring需要产生每次一个新的bean实例时，应该声明bean的scope属性为prototype。如果每次你希望Spring返回一个实例，应该声明bean的scope属性为singleton。
+
+12、Spring框架中的bean的生命周期
+Spring容器读取XML文件中bean的定义并实例化bean。
+Spring根据bean的定义设置属性值。
+如果该Bean实现了BeanNameAware接口，Spring将bean的id传递给setBeanName()方法。
+如果该Bean实现了BeanFactoryAware接口，Spring将beanfactory传递给setBeanFactory()方法。
+如果任何bean BeanPostProcessors 和该bean相关，Spring调用postProcessBeforeInitialization()方法。
+如果该Bean实现了InitializingBean接口，调用Bean中的afterPropertiesSet方法。如果bean有初始化函数声明，调用相应的初始化方法。
+如果任何bean BeanPostProcessors 和该bean相关，调用postProcessAfterInitialization()方法。
+如果该bean实现了DisposableBean，调用destroy()方法。
+13、哪些是最重要的bean声明周期方法，是否能重写它们
+有两个重要的bean生命周期方法。第一个是setup方法，该方法在容器加载bean的时候被调用。第二个是teardown方法，该方法在bean从容器中移除的时候调用。
+bean标签有两个重要的属性(init-method 和 destroy-method)，你可以通过这两个属性定义自己的初始化方法和析构方法。Spring也有相应的注解：@PostConstruct 和 @PreDestroy。
+
+14、spring中自动装配的方式有哪些？
+No：即不启用自动装配。
+
+byName：通过属性的名字的方式查找JavaBean依赖的对象并为其注入。比如说类Computer有个属性printer，指定其autowire属性为byName后，Spring IoC容器会在配置文件中查找id/name属性为printer的bean，然后使用setter方法为其注入。
+
+byType：通过属性的类型查找JavaBean依赖的对象并为其注入。比如类Computer有个属性printer，类型为Printer，那么，指定其autowire属性为byType后，Spring IoC容器会查找Class属性为Printer的bean，使用setter方法为其注入。
+
+constructor：通byType一样，也是通过类型查找依赖对象。与byType的区别在于它不是使用setter方法注入，而是使用构造子注入。
+
+autodetect：在byType和constructor之间自动的选择注入方式。
+
+default：由上级标签的default-autowire属性确定。
+
+15、有几种不同类型的自动代理？
+BeanNameAutoProxyCreator
+DefaultAdvisorAutoProxyCreator
+Metadata autoproxying
+
+16、什么是Spring的内部bean？
+当一个bean仅被用作另一个bean的属性时，它能被声明为一个内部bean，为了定义inner bean，在Spring 的 基于XML的 配置元数据中，可以在 或 元素内使用 元素，内部bean通常是匿名的，它们的Scope一般是prototype。
+
+17、自动装配有哪些局限性?
+重写： 仍需用 和 配置来定义依赖，意味着总要重写自动装配。
+基本数据类型：不能自动装配简单的属性，如基本数据类型，String字符串，和类。
+模糊特性：
+自动装配不如显式装配精确，如果有可能，建议使用显式装配。
+18、Spring框架的事务管理有哪些优点？
+它为不同的事务API 如 JTA,JDBC，Hibernate,JPA 和JDO，提供一个不变的编程模式。
+它为编程式事务管理提供了一套简单的API而不是一些复杂的事务API如
+它支持声明式事务管理。
+它和Spring各种数据访问抽象层很好得集成。
