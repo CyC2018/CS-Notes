@@ -690,7 +690,7 @@ after
 
 ## 阻塞（BLOCKED）
 
-请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态进入从而 RUNABLE 需要其他线程释放 monitor lock。
+请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态从而进入RUNABLE 需要其他线程释放 monitor lock。
 
 ## 无限期等待（WAITING）
 
