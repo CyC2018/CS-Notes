@@ -1141,7 +1141,7 @@ System.out.println(InterfaceExample.x);
 
 使用接口：
 
-- 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
+- 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Comparable 接口中的 compareTo() 方法；
 - 需要使用多重继承。
 
 使用抽象类：

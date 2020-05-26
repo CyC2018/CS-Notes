@@ -139,7 +139,7 @@ private int rob(int[] nums, int first, int last) {
 
 ## 4. 信件错排
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量（所有信封都没有装各自的信）。
+题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -1055,10 +1055,7 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-
-该题为马尔可夫过程，分为A观望，B持股，C冷却三个状态
-状态转移图：A-(观望)->A, A-(买入｜-price)->B, B-(观望)->B, B-(卖出|+price)->C, C-(冷却)->A
-可用维特比算法求解
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1066,17 +1063,19 @@ public int maxProfit(int[] prices) {
         return 0;
     }
     int N = prices.length;
-    int[] A = new int[N];
-    int[] B = new int[N];
-    int[] C = new int[N];
-    A[0] = 0;
-    B[0] = C[0] = -prices[0];
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
     for (int i = 1; i < N; i++) {
-        A[i] = Math.max(A[i - 1], C[i - 1]);
-        B[i] = Math.max(B[i - 1], A[i - 1] - prices[i]);
-        C[i] = B[i - 1] + prices[i];
+        buy[i] = s2[i - 1] - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    return Math.max(A[N - 1], C[N - 1]);
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
@@ -1099,22 +1098,24 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-
-分为A观望，B持股，两个状态
-状态转移图：A-(观望)->A, A-(买入|-price)->B, B-(观望)->B, B-(卖出|+price|-fee)->A
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices, int fee) {
     int N = prices.length;
-    int[] A = new int[N];
-    int[] B = new int[N];
-    A[0] = 0;
-    B[0] = -prices[0];
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
     for (int i = 1; i < N; i++) {
-        A[i] = Math.max(A[i - 1], B[i - 1] + prices[i] -fee);
-        B[i] = Math.max(A[i - 1] - prices[i], B[i - 1]);
+        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    return A[N - 1];
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
