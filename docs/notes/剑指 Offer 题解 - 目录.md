@@ -1,3 +1,10 @@
+# 前言
+
+题目来自《何海涛. 剑指 Offer[M]. 电子工业出版社, 2012.》，刷题网站推荐：
+
+- [牛客网](https://www.nowcoder.com/ta/coding-interviews?from=cyc_github)
+- [Leetcode](https://leetcode-cn.com/problemset/lcof/)
+
 # 目录
 
 
@@ -77,10 +84,6 @@
 - [66. 构建乘积数组](66.%20构建乘积数组.md)
 - [67. 把字符串转换成整数](67.%20把字符串转换成整数.md)
 - [68. 树中两个节点的最低公共祖先](68.%20树中两个节点的最低公共祖先.md)
-
-# 参考文献
-
-何海涛. 剑指 Offer[M]. 电子工业出版社, 2012.
 
 
 

@@ -34,7 +34,7 @@
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/95903878-725b-4ed9-bded-bc4aae0792a9.jpg"/> </div><br>
 
-广度优先搜索一层一层地进行遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
+广度优先搜索一层一层地进行遍历，每层遍历都是以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。需要注意的是，遍历过的节点不能再次被遍历。
 
 第一层：
 
@@ -76,32 +76,38 @@
 
 ```java
 public int shortestPathBinaryMatrix(int[][] grids) {
-    int[][] direction = {{1, -1}, {1, 0}, {1, 1}, {0, -1}, {0, 1}, {-1, -1}, {-1, 0}, {-1, 1}};
-    int m = grids.length, n = grids[0].length;
-    Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
-    queue.add(new Pair<>(0, 0));
-    int pathLength = 0;
-    while (!queue.isEmpty()) {
-        int size = queue.size();
-        pathLength++;
-        while (size-- > 0) {
-            Pair<Integer, Integer> cur = queue.poll();
-            int cr = cur.getKey(), cc = cur.getValue();
-            grids[cr][cc] = 1; // 标记
-            for (int[] d : direction) {
-                int nr = cr + d[0], nc = cc + d[1];
-                if (nr < 0 || nr >= m || nc < 0 || nc >= n || grids[nr][nc] == 1) {
+        if (grids == null || grids.length == 0 || grids[0].length == 0) {
+            return -1;
+        }
+        int[][] direction = {{1, -1}, {1, 0}, {1, 1}, {0, -1}, {0, 1}, {-1, -1}, {-1, 0}, {-1, 1}};
+        int m = grids.length, n = grids[0].length;
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        queue.add(new Pair<>(0, 0));
+        int pathLength = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            pathLength++;
+            while (size-- > 0) {
+                Pair<Integer, Integer> cur = queue.poll();
+                int cr = cur.getKey(), cc = cur.getValue();
+                if (grids[cr][cc] == 1) {
                     continue;
                 }
-                if (nr == m - 1 && nc == n - 1) {
-                    return pathLength + 1;
+                if (cr == m - 1 && cc == n - 1) {
+                    return pathLength;
                 }
-                queue.add(new Pair<>(nr, nc));
+                grids[cr][cc] = 1; // 标记
+                for (int[] d : direction) {
+                    int nr = cr + d[0], nc = cc + d[1];
+                    if (nr < 0 || nr >= m || nc < 0 || nc >= n) {
+                        continue;
+                    }
+                    queue.add(new Pair<>(nr, nc));
+                }
             }
         }
+        return -1;
     }
-    return -1;
-}
 ```
 
 ## 2. 组成整数的最小平方数数量
