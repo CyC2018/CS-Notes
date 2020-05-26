@@ -483,7 +483,7 @@ FROM tablea AS A NATURAL JOIN tableb AS B;
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```sql
-SELECT Customers.cust_id, Orders.order_num
+SELECT Customers.cust_id, Customer.cust_name, Orders.order_id
 FROM Customers LEFT OUTER JOIN Orders
 ON Customers.cust_id = Orders.cust_id;
 ```
