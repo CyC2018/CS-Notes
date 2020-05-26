@@ -1432,8 +1432,9 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ## JRE or JDK
 
-- JRE is the JVM program, Java application need to run on JRE.
-- JDK is a superset of JRE, JRE + tools for developing java programs. e.g, it provides the compiler "javac"
+- JRE：Java Runtime Environment，java运行环境的简称，为java的运行提供了所需的环境。主要包括了JVM的标准实现和一些java基本类库。
+- JDK：Java Development Kit，java开发工具包，提供了java的开发及运行环境。JDK是java开发的核心，集成了JRE以及一些其他的工具，比如编译 java 源码的编译器 javac等。
+- 因此可以这样认为：JDK>JRE>JVM，JRE支持了java程序的运行，而JDK则同时支持了java程序的开发。
 
 # 参考资料
 
