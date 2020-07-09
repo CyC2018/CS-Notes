@@ -78,7 +78,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
  public boolean judgeSquareSum(int target) {
      if (target < 0) return false;
      int i = 0, j = (int) Math.sqrt(target);
-     while (i <= j) {
+     while (i <= j) { //只用判断右大于左
          int powSum = i * i + j * j;
          if (powSum == target) {
              return true;
