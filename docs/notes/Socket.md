@@ -236,7 +236,7 @@ epoll 仅适用于 Linux OS。
 
 epoll 比 select 和 poll 更加灵活而且没有描述符数量限制。
 
-epoll 对多线程编程更有友好，一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生像 select 和 poll 的不确定情况。
+epoll 对多线程编程更友好，一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生像 select 和 poll 的不确定情况。
 
 ```c
 // Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.

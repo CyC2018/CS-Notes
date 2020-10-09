@@ -161,7 +161,13 @@ customer_id_selectivity: 0.0373
 
 ### 4. 前缀索引
 
-对于 BLOB、TEXT 和 VARCHAR 类型的列，必须使用前缀索引，只索引开始的部分字符。
+对于BLOB和TEXT这种文本类型的列，必须使用前缀索引，在创建索引时必须使用col_name(N)来指定索引的前缀长度（键长度），从而只索引开始的部分字符。
+```sql
+CREATE TABLE test (blob_col BLOB, INDEX(blob_col(10)));
+```
+https://dev.mysql.com/doc/refman/5.7/en/column-indexes.html#column-indexes-prefix
+
+对于VARCHAR和CHAR类型的列，不强制要求使用前缀索引，根据业务自行选择即可
 
 前缀长度的选取需要根据索引选择性来确定。
 
