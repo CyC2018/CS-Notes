@@ -8,7 +8,7 @@
     * [不可变的好处](#不可变的好处)
     * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
     * [String Pool](#string-pool)
-    * [new String("abc")](#new-string"abc")
+    * [new String("abc")](#new-stringabc)
 * [三、运算](#三运算)
     * [参数传递](#参数传递)
     * [float 与 double](#float-与-double)
