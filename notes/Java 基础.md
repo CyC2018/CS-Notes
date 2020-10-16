@@ -6,7 +6,7 @@
 * [二、String](#二string)
     * [概览](#概览)
     * [不可变的好处](#不可变的好处)
-    * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
+    * [String, StringBuffer and StringBuilder](#string-stringbuffer-and-stringbuilder)
     * [String Pool](#string-pool)
     * [new String("abc")](#new-string"abc")
 * [三、运算](#三运算)
