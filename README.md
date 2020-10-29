@@ -16,8 +16,6 @@
     <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/LogoMakr_0zpEzN.png" width="200px">
 </div>
 
-
-
 <br>
 
 ## :pencil2: 算法
@@ -80,14 +78,6 @@
 - [代码风格规范](https://github.com/CyC2018/CS-Notes/blob/master/notes/代码风格规范.md)
 
 ## :memo: 后记
-
-<div align="center">
-	<a href="https://github.com/CyC2018/Job-Recommend"> 内推 </a> / <a href="assets/QQ2群.png"> QQ 群</a>
-	<br><br>
-    <img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img>
-</div>
-
-
 
 ### 排版
 
