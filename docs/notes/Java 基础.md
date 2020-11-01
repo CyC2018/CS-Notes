@@ -1092,7 +1092,7 @@ ac2.func1();
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类，让它们都实现新增的方法。
 
-接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。
+接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。从 Java 9 开始，允许将方法定义为 private，这样就能定义某些复用的代码，但是又不会把方法暴露出去。
 
 接口的字段默认都是 static 和 final 的。
 
@@ -1155,6 +1155,7 @@ System.out.println(InterfaceExample.x);
 - [Abstract Methods and Classes](https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html)
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+- [Java 9 Private Methods in Interfaces](https://www.journaldev.com/12850/java-9-private-methods-interfaces)
 
 
 ## super
