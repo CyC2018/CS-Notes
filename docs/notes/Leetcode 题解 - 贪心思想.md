@@ -106,12 +106,14 @@ public int eraseOverlapIntervals(int[][] intervals) {
 
 ```java
 Arrays.sort(intervals, new Comparator<int[]>() {
-    @Override
-    public int compare(int[] o1, int[] o2) {
-        return o1[1] - o2[1];
-    }
+     @Override
+     public int compare(int[] o1, int[] o2) {
+         return (o1[1] < o2[1]) ? -1 : ((o1[1] == o2[1]) ? 0 : 1);
+     }
 });
 ```
+
+实现 compare() 函数时避免使用 `return o1[1] - o2[1];` 这种减法操作，防止溢出。
 
 # 3. 投飞镖刺破气球
 
