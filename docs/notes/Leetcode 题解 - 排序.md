@@ -119,7 +119,7 @@ Given [1,1,1,2,2,3] and k = 2, return [1,2].
 把数都放到桶之后，从后向前遍历桶，最先得到的 k 个数就是出现频率最多的的 k 个数。
 
 ```java
-public List<Integer> topKFrequent(int[] nums, int k) {
+public int[] topKFrequent(int[] nums, int k) {
     Map<Integer, Integer> frequencyForNum = new HashMap<>();
     for (int num : nums) {
         frequencyForNum.put(num, frequencyForNum.getOrDefault(num, 0) + 1);
@@ -143,7 +143,11 @@ public List<Integer> topKFrequent(int[] nums, int k) {
             topK.addAll(buckets[i].subList(0, k - topK.size()));
         }
     }
-    return topK;
+    int[] res = new int[k];
+    for (int i = 0; i < k; i++) {
+        res[i] = topK.get(i);
+    }
+    return res;
 }
 ```
 
