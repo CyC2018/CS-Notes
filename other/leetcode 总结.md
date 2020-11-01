@@ -19,7 +19,7 @@
 
 > **案例模版**
 
-[模版：007. Reverse Integer 反转整数](https://github.com/apachecn/LeetCode/tree/master/docs/Leetcode_Solutions/007._Reverse_Integer.md)
+[模版：007. Reverse Integer 反转整数](https://github.com/apachecn/algo-zh/blob/master/docs/leetcode/java/0007._Reverse_Integer.md)
 
 
 ## 项目贡献者
