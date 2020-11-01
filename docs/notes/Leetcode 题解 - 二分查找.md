@@ -59,7 +59,7 @@ l + h 可能出现加法溢出，也就是说加法的结果大于整型能够�
 
 ```java
 public int binarySearch(int[] nums, int key) {
-    int l = 0, h = nums.length - 1;
+    int l = 0, h = nums.length;
     while (l < h) {
         int m = l + (h - l) / 2;
         if (nums[m] >= key) {
