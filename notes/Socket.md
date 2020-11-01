@@ -273,7 +273,7 @@ else if ( ret == 0 )
 else
 {
     // Check if any events detected
-    for ( int i = 0; i < ret; i++ )
+    for ( int i = 0; i < ready; i++ )
     {
         if ( pevents[i].events & EPOLLIN )
         {
