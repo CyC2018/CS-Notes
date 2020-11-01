@@ -6,7 +6,7 @@
 * [二、String](#二string)
     * [概览](#概览)
     * [不可变的好处](#不可变的好处)
-    * [String, StringBuffer and StringBuilder](#string-stringbuffer-and-stringbuilder)
+    * [String, StringBuffer and StringBuilder	](#string-stringbuffer-and-stringbuilder	)
     * [String Pool](#string-pool)
     * [new String("abc")](#new-stringabc)
 * [三、运算](#三运算)
@@ -205,7 +205,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [Program Creek : Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
-## String, StringBuffer and StringBuilder
+## String, StringBuffer and StringBuilder	
 
 **1. 可变性**  
 
