@@ -1366,7 +1366,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
 
 - [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-- [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+- [Java Exception Interview Questions and Answers](https://www.journaldev.com/2167/java-exception-interview-questions-and-answersl)
 
 # 九、泛型
 
