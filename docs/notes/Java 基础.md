@@ -943,7 +943,7 @@ try {
     e.printStackTrace();
 }
 e1.set(2, 222);
-System.out.println(e2.get(2)); // 222
+System.out.println(e2.get(2)); // 2
 ```
 
 **4. clone() 的替代方案**  
@@ -983,7 +983,7 @@ public class CloneConstructorExample {
 CloneConstructorExample e1 = new CloneConstructorExample();
 CloneConstructorExample e2 = new CloneConstructorExample(e1);
 e1.set(2, 222);
-System.out.println(e2.get(2)); // 222
+System.out.println(e2.get(2)); // 2
 ```
 
 # 六、继承
