@@ -1,7 +1,7 @@
 <!-- GFM-TOC -->
 * [一 、基础概念](#一-基础概念)
-    * [URI](#uri)
     * [请求和响应报文](#请求和响应报文)
+    * [URL](#url)
 * [二、HTTP 方法](#二http-方法)
     * [GET](#get)
     * [HEAD](#head)
@@ -58,21 +58,78 @@
 
 # 一 、基础概念
 
-## URI
+## 请求和响应报文
 
-URI 包含 URL 和 URN。
+客户端发送一个请求报文给服务器，服务器根据请求报文中的信息进行处理，并将处理结果放入响应报文中返回给客户端。
+
+请求报文结构：
+
+- 第一行是包含了请求方法、URL、协议版本；
+- 接下来的多行都是请求首部 Header，每个首部都有一个首部名称，以及对应的值。
+- 一个空行用来分隔首部和内容主体 Body
+- 最后是请求的内容主体
+
+```
+GET http://www.example.com/ HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+Cache-Control: max-age=0
+Host: www.example.com
+If-Modified-Since: Thu, 17 Oct 2019 07:18:26 GMT
+If-None-Match: "3147526947+gzip"
+Proxy-Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 xxx
+
+param1=1&param2=2
+```
+
+响应报文结构：
+
+- 第一行包含协议版本、状态码以及描述，最常见的是 200 OK 表示请求成功了
+- 接下来多行也是首部内容
+- 一个空行分隔首部和内容主体
+- 最后是响应的内容主体
+
+```
+HTTP/1.1 200 OK
+Age: 529651
+Cache-Control: max-age=604800
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: 648
+Content-Type: text/html; charset=UTF-8
+Date: Mon, 02 Nov 2020 17:53:39 GMT
+Etag: "3147526947+ident+gzip"
+Expires: Mon, 09 Nov 2020 17:53:39 GMT
+Keep-Alive: timeout=4
+Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+Proxy-Connection: keep-alive
+Server: ECS (sjc/16DF)
+Vary: Accept-Encoding
+X-Cache: HIT
+
+<!doctype html>
+<html>
+<head>
+    <title>Example Domain</title>
+	// 省略... 
+</body>
+</html>
+
+```
+
+## URL
+
+http 使用 URL（ **U** niform **R**esource **L**ocator，统一资源定位符）来定位资源，它可以认为是是  URI（**U**niform **R**esource **I**dentifier，统一资源标识符）的一个子集，URL 在 URI 的基础上增加了定位能力。URI 除了包含 URL 之外，还包含 URN（Uniform Resource Name，统一资源名称），它知识用来定义一个资源的名称，并不具备定位该资源的能力。例如 urn:isbn:0451450523 用来定义一个书籍，但是却没有表示怎么找到这本书。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
 
-## 请求和响应报文
-
-### 1. 请求报文
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_RequestMessageExample.png" width=""/> </div><br>
-
-### 2. 响应报文
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP_ResponseMessageExample.png" width=""/> </div><br>
+- [wikipedia：统一资源标志符](https://zh.wikipedia.org/wiki/统一资源标志符)
+- [wikipedia: URL](https://en.wikipedia.org/wiki/URL)
+- [rfc2616：3.2.2 http URL](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.2.2)
+- [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
 
 # 二、HTTP 方法
 
@@ -170,6 +227,8 @@ CONNECT www.example.com:443 HTTP/1.1
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪）。
+
+- [rfc2616：9 Method Definitions](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 
 # 三、HTTP 状态码
 
