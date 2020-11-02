@@ -2,7 +2,7 @@
 
 ## ✏️ 算法
 
-- [剑指 Offer 题解](notes/剑指%20Offer%20题解%20-%20目录1.md) </br>
+- [剑指 Offer 题解](notes/剑指%20Offer%20题解%20-%20目录2.md) </br>
 - [Leetcode 题解](notes/Leetcode%20题解%20-%20目录1.md) </br>
 - [算法](notes/算法%20-%20目录1.md) </br>
 
