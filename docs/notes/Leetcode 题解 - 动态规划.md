@@ -1179,6 +1179,48 @@ public int maxProfit(int k, int[] prices) {
 }
 ```
 
+## 5. 能进行任意次数的股票交易 (Easy)
+122\. Best Time to Buy and Sell Stock II
+
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+
+可以有任意次数买入和卖出，求最大收益。
+
+```html
+输入: [7,1,5,3,6,4]
+输出: 7
+解释：
+  - 第二天以1的价格买入，第三天以5的价格卖出.利润就是 5-1 = 4.
+  - 第四天以3的价格买入，第五天以6的价格卖出.利润就是 6-3 = 3.
+  - 所以总共利润就是4+3 = 7.
+```
+
+## 解题思路
+
+使用峰谷策略
+
+TODO: 添加图片 notes/pics/maxprofit2.png
+
+```java
+public int maxProfit(int[] prices) {
+    int i = 0;
+    int valley = prices[0];
+    int peak = prices[0];
+    int maxprofit = 0;
+    while (i < prices.length - 1) {
+        while (i < prices.length - 1 && prices[i] >= prices[i + 1])
+            i++;
+        valley = prices[i];
+        while (i < prices.length - 1 && prices[i] <= prices[i + 1])
+            i++;
+        peak = prices[i];
+        maxprofit += peak - valley;
+    }
+    return maxprofit;
+}
+```
+
+
 # 字符串编辑
 
 ## 1. 删除两个字符串的字符使它们相等
