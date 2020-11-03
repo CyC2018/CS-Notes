@@ -1322,7 +1322,7 @@ public static void main(String[] args) {
 
 应该注意的是，返回值不同，其它都相同不算是重载。
 
-```
+```java
 class OverloadingExample {
     public void show(int x) {
         System.out.println(x);
@@ -1334,7 +1334,7 @@ class OverloadingExample {
 }
 ```
 
-```
+```java
 public static void main(String[] args) {
     OverloadingExample example = new OverloadingExample();
     example.show(1);
