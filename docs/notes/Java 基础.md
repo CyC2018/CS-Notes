@@ -1323,6 +1323,55 @@ public static void main(String[] args) {
 应该注意的是，返回值不同，其它都相同不算是重载。
 
 
+- 方法重载 例子
+```java
+class DisplayOverloading
+{
+    public void disp(char c)
+    {
+         System.out.println(c);
+    }
+    public void disp(char c, int num)  
+    {
+         System.out.println(c + " "+num);
+    }
+}
+class Sample
+{
+   public static void main(String args[])
+   {
+       DisplayOverloading obj = new DisplayOverloading();
+       obj.disp('a');
+       obj.disp('a',10);
+   }
+}
+```
+[Method Overloading](https://beginnersbook.com/2013/05/method-overloading/#:~:text=Method%20Overloading%20is%20a%20feature,constructor%20having%20different%20argument%20lists.)
+
+- 构造重载 例子
+```java
+class DisplayOverloading
+{
+    DisplayOverloading(char c)
+    {
+         System.out.println(c);
+    }
+    DisplayOverloading(char c, int num)  
+    {
+         System.out.println(c + " "+num);
+    }
+}
+class Sample
+{
+   public static void main(String args[])
+   {
+       DisplayOverloading obj = new DisplayOverloading('a');
+       DisplayOverloading obj2 = new DisplayOverloading('a',10);
+   }
+}
+```
+[Constructor Overloading](https://beginnersbook.com/2013/05/constructor-overloading/)
+
 # 七、反射
 
 每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
