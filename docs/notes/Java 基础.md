@@ -1322,6 +1322,25 @@ public static void main(String[] args) {
 
 应该注意的是，返回值不同，其它都相同不算是重载。
 
+```
+class OverloadingExample {
+    public void show(int x) {
+        System.out.println(x);
+    }
+
+    public void show(int x, String y) {
+        System.out.println(x + " " + y);
+    }
+}
+```
+
+```
+public static void main(String[] args) {
+    OverloadingExample example = new OverloadingExample();
+    example.show(1);
+    example.show(1, "2");
+}
+```
 
 # 七、反射
 
