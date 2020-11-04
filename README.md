@@ -36,11 +36,6 @@
 - [HTTP](https://github.com/CyC2018/CS-Notes/blob/master/notes/HTTP.md)
 - [Socket](https://github.com/CyC2018/CS-Notes/blob/master/notes/Socket.md)
 
-## :art: 面向对象
-
-- [面向对象思想](https://github.com/CyC2018/CS-Notes/blob/master/notes/面向对象思想.md)
-- [设计模式](https://github.com/CyC2018/CS-Notes/blob/master/notes/设计模式%20-%20目录.md)
-
 ## :floppy_disk: 数据库
 
 - [数据库系统原理](https://github.com/CyC2018/CS-Notes/blob/master/notes/数据库系统原理.md)
@@ -65,6 +60,11 @@
 - [攻击技术](https://github.com/CyC2018/CS-Notes/blob/master/notes/攻击技术.md)
 - [缓存](https://github.com/CyC2018/CS-Notes/blob/master/notes/缓存.md)
 - [消息队列](https://github.com/CyC2018/CS-Notes/blob/master/notes/消息队列.md)
+
+## :art: 面向对象
+
+- [面向对象思想](https://github.com/CyC2018/CS-Notes/blob/master/notes/面向对象思想.md)
+- [设计模式](https://github.com/CyC2018/CS-Notes/blob/master/notes/设计模式%20-%20目录.md)
 
 ## :wrench: 工具 
 
