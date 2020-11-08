@@ -1346,7 +1346,7 @@ class Sample
    }
 }
 ```
-[Method Overloading](https://beginnersbook.com/2013/05/method-overloading/#:~:text=Method%20Overloading%20is%20a%20feature,constructor%20having%20different%20argument%20lists.)
+[Method Overloading](https://beginnersbook.com/2013/05/method-overloading/)
 
 - 构造重载 例子
 ```java
