@@ -611,6 +611,7 @@ public static void main(String[] args) {
     WaitNotifyExample example = new WaitNotifyExample();
     executorService.execute(() -> example.after());
     executorService.execute(() -> example.before());
+    executorService.shutdown();
 }
 ```
 

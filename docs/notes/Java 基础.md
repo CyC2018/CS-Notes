@@ -1429,7 +1429,7 @@ public class Box<T> {
 }
 ```
 
-- [Java 泛型详解](http://www.importnew.com/24029.html)
+- [Java 泛型详解](https://www.cnblogs.com/Blue-Keroro/p/8875898.html)
 - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
 # 十、注解
