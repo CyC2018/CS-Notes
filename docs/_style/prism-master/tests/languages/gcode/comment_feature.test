@@ -1,0 +1,20 @@
+; foo
+(Home some axes)
+G28 (here come the axes to be homed) X
+
+----------------------------------------------------
+
+[
+	["comment", "; foo"],
+
+	["comment", "(Home some axes)"],
+
+	["keyword", "G28"],
+	["comment", "(here come the axes to be homed)"],
+	["property", "X"]
+
+]
+
+----------------------------------------------------
+
+Checks for comments.

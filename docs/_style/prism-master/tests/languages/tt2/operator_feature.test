@@ -1,0 +1,69 @@
+[% fat => comma %]
+[% foo == bar %]
+[% foo != bar %]
+[% foo <  bar %]
+[% foo <= bar %]
+[% foo >  bar %]
+[% foo >= bar %]
+[% foo =  bar %]
+[% foo && bar %]
+[% foo || bar %]
+[% foo | bar %]
+[% foo ! bar %]
+[% penthouse and pavement %]
+[% sooner or later %]
+[% love not war %]
+
+----------------------------------------------------
+
+[
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "fat"], ["operator", "=>"], ["variable", "comma"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "=="], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "!="], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "<"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "<="], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", ">"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", ">="], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "="], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "&&"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "||"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "|"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "foo"], ["operator", "!"], ["variable", "bar"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "penthouse"], ["operator", "and"], ["variable", "pavement"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "sooner"], ["operator", "or"], ["variable", "later"],
+		 ["delimiter", "%]"]]],
+	["tt2", [["delimiter", "[%"],
+		 ["variable", "love"], ["operator", "not"], ["variable", "war"],
+		 ["delimiter", "%]"]]]
+]
+
+----------------------------------------------------
+
+Checks for operators.

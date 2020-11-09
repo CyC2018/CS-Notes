@@ -1,0 +1,521 @@
+_emphasis_
+``double quotes''
+`single quotes'
+`monospace`
+'emphasis'
+*strong*
++monospace+
+#unquoted#
+
+_foo _ bar baz_
+`foo ' bar baz'
+`foo ` bar baz`
+'foo ' bar baz'
+*foo * bar baz*
++foo + bar baz+
+#foo # bar baz#
+
+_foo
+bar_
+``foo
+bar''
+`foo
+bar'
+`foo
+bar`
+'foo
+bar'
+*foo
+bar*
++foo
+bar+
+#foo
+bar#
+
+foo__emphasis__bar
+foo**strong**bar
+foo++monospace++bar
+foo+++passthrough+++bar
+foo##unquoted##bar
+foo$$passthrough$$bar
+foo~subscript~bar
+foo^superscript^bar
+foo{attribute-reference}bar
+foo[[anchor]]bar
+foo[[[bibliography anchor]]]bar
+foo<<xref>>bar
+foo(((indexes)))bar
+foo((indexes))bar
+
+====
+_emphasis_
+``double quotes''
+`single quotes'
+`monospace`
+'emphasis'
+*strong*
++monospace+
+#unquoted#
+__emphasis__
+**strong**
+++monospace++
++++passthrough+++
+##unquoted##
+$$passthrough$$
+~subscript~
+^superscript^
+{attribute-reference}
+[[anchor]]
+[[[bibliography anchor]]]
+<<xref>>
+(((indexes)))
+((indexes))
+====
+
+|====
+|
+_emphasis_
+``double quotes''
+`single quotes'
+`monospace`
+'emphasis'
+*strong*
++monospace+
+#unquoted#
+__emphasis__
+**strong**
+++monospace++
++++passthrough+++
+##unquoted##
+$$passthrough$$
+~subscript~
+^superscript^
+{attribute-reference}
+[[anchor]]
+[[[bibliography anchor]]]
+<<xref>>
+(((indexes)))
+((indexes))
+|====
+
+['foo *bar* baz']
+
+== foo *bar* baz ==
+
+{names=value}
+{names?value}
+{names!value}
+{names#value}
+{names%value}
+{names@regexp:value1:value2}
+{names$regexp:value1:value2}
+{names$regexp::value}
+{foo,bar=foobar}
+{foo+bar=foobar}
+{counter:attrname}
+
+----------------------------------------------------
+
+[
+	["inline", [
+		["italic", [["punctuation", "_"], "emphasis", ["punctuation", "_"]]]
+	]],
+	["inline", [
+		["punctuation", "``"], "double quotes", ["punctuation", "''"]
+	]],
+	["inline", [
+		["punctuation", "`"], "single quotes", ["punctuation", "'"]
+	]],
+	["inline", [
+		["punctuation", "`"], "monospace", ["punctuation", "`"]
+	]],
+	["inline", [
+		["italic", [["punctuation", "'"], "emphasis", ["punctuation", "'"]]]
+	]],
+	["inline", [
+		["bold", [["punctuation", "*"], "strong", ["punctuation", "*"]]]
+	]],
+	["inline", [
+		["punctuation", "+"], "monospace", ["punctuation", "+"]
+	]],
+	["inline", [
+		["punctuation", "#"], "unquoted", ["punctuation", "#"]
+	]],
+
+	["inline", [
+		["italic", [["punctuation", "_"], "foo _ bar baz", ["punctuation", "_"]]]
+	]],
+	["inline", [
+		["punctuation", "`"], "foo ' bar baz", ["punctuation", "'"]
+	]],
+	["inline", [
+		["punctuation", "`"], "foo ` bar baz", ["punctuation", "`"]
+	]],
+	["inline", [
+		["italic", [["punctuation", "'"], "foo ' bar baz", ["punctuation", "'"]]]
+	]],
+	["inline", [
+		["bold", [["punctuation", "*"], "foo * bar baz", ["punctuation", "*"]]]
+	]],
+	["inline", [
+		["punctuation", "+"], "foo + bar baz", ["punctuation", "+"]
+	]],
+	["inline", [
+		["punctuation", "#"], "foo # bar baz", ["punctuation", "#"]
+	]],
+
+	["inline", [
+		["italic", [["punctuation", "_"], "foo\r\nbar", ["punctuation", "_"]]]
+	]],
+	["inline", [
+		["punctuation", "``"], "foo\r\nbar", ["punctuation", "''"]
+	]],
+	["inline", [
+		["punctuation", "`"], "foo\r\nbar", ["punctuation", "'"]
+	]],
+	["inline", [
+		["punctuation", "`"], "foo\r\nbar", ["punctuation", "`"]
+	]],
+	["inline", [
+		["italic", [["punctuation", "'"], "foo\r\nbar", ["punctuation", "'"]]]
+	]],
+	["inline", [
+		["bold", [["punctuation", "*"], "foo\r\nbar", ["punctuation", "*"]]]
+	]],
+	["inline", [
+		["punctuation", "+"], "foo\r\nbar", ["punctuation", "+"]
+	]],
+	["inline", [
+		["punctuation", "#"], "foo\r\nbar", ["punctuation", "#"]
+	]],
+
+	"\r\n\r\nfoo",
+	["inline", [
+		["italic", [["punctuation", "__"], "emphasis", ["punctuation", "__"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["bold", [["punctuation", "**"], "strong", ["punctuation", "**"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "++"], "monospace", ["punctuation", "++"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "+++"], "passthrough", ["punctuation", "+++"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "##"], "unquoted", ["punctuation", "##"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "$$"], "passthrough", ["punctuation", "$$"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "~"], "subscript", ["punctuation", "~"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "^"], "superscript", ["punctuation", "^"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["attribute-ref", [["punctuation", "{"], ["variable", "attribute-reference"], ["punctuation", "}"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["url", [["punctuation", "[["], "anchor", ["punctuation", "]]"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["url", [["punctuation", "[[["], "bibliography anchor", ["punctuation", "]]]"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["url", [["punctuation", "<<"], "xref", ["punctuation", ">>"]]]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "((("], "indexes", ["punctuation", ")))"]
+	]],
+	"bar\r\nfoo",
+	["inline", [
+		["punctuation", "(("], "indexes", ["punctuation", "))"]
+	]],
+	"bar\r\n\r\n",
+
+	["other-block", [
+		["punctuation", "===="],
+
+		["inline", [
+			["italic", [["punctuation", "_"], "emphasis", ["punctuation", "_"]]]
+		]],
+		["inline", [
+			["punctuation", "``"], "double quotes", ["punctuation", "''"]
+		]],
+		["inline", [
+			["punctuation", "`"], "single quotes", ["punctuation", "'"]
+		]],
+		["inline", [
+			["punctuation", "`"], "monospace", ["punctuation", "`"]
+		]],
+		["inline", [
+			["italic", [["punctuation", "'"], "emphasis", ["punctuation", "'"]]]
+		]],
+		["inline", [
+			["bold", [["punctuation", "*"], "strong", ["punctuation", "*"]]]
+		]],
+		["inline", [
+			["punctuation", "+"], "monospace", ["punctuation", "+"]
+		]],
+		["inline", [
+			["punctuation", "#"], "unquoted", ["punctuation", "#"]
+		]],
+		["inline", [
+			["italic", [["punctuation", "__"], "emphasis", ["punctuation", "__"]]]
+		]],
+		["inline", [
+			["bold", [["punctuation", "**"], "strong", ["punctuation", "**"]]]
+		]],
+		["inline", [
+			["punctuation", "++"], "monospace", ["punctuation", "++"]
+		]],
+		["inline", [
+			["punctuation", "+++"], "passthrough", ["punctuation", "+++"]
+		]],
+		["inline", [
+			["punctuation", "##"], "unquoted", ["punctuation", "##"]
+		]],
+		["inline", [
+			["punctuation", "$$"], "passthrough", ["punctuation", "$$"]
+		]],
+		["inline", [
+			["punctuation", "~"], "subscript", ["punctuation", "~"]
+		]],
+		["inline", [
+			["punctuation", "^"], "superscript", ["punctuation", "^"]
+		]],
+		["inline", [
+			["attribute-ref", [["punctuation", "{"], ["variable", "attribute-reference"], ["punctuation", "}"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "[["], "anchor", ["punctuation", "]]"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "[[["], "bibliography anchor", ["punctuation", "]]]"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "<<"], "xref", ["punctuation", ">>"]]]
+		]],
+		["inline", [
+			["punctuation", "((("], "indexes", ["punctuation", ")))"]
+		]],
+		["inline", [
+			["punctuation", "(("], "indexes", ["punctuation", "))"]
+		]],
+
+		["punctuation", "===="]
+	]],
+
+	["table", [
+		["punctuation", "|===="],
+		["punctuation", "|"],
+
+		["inline", [
+			["italic", [["punctuation", "_"], "emphasis", ["punctuation", "_"]]]
+		]],
+		["inline", [
+			["punctuation", "``"], "double quotes", ["punctuation", "''"]
+		]],
+		["inline", [
+			["punctuation", "`"], "single quotes", ["punctuation", "'"]
+		]],
+		["inline", [
+			["punctuation", "`"], "monospace", ["punctuation", "`"]
+		]],
+		["inline", [
+			["italic", [["punctuation", "'"], "emphasis", ["punctuation", "'"]]]
+		]],
+		["inline", [
+			["bold", [["punctuation", "*"], "strong", ["punctuation", "*"]]]
+		]],
+		["inline", [
+			["punctuation", "+"], "monospace", ["punctuation", "+"]
+		]],
+		["inline", [
+			["punctuation", "#"], "unquoted", ["punctuation", "#"]
+		]],
+		["inline", [
+			["italic", [["punctuation", "__"], "emphasis", ["punctuation", "__"]]]
+		]],
+		["inline", [
+			["bold", [["punctuation", "**"], "strong", ["punctuation", "**"]]]
+		]],
+		["inline", [
+			["punctuation", "++"], "monospace", ["punctuation", "++"]
+		]],
+		["inline", [
+			["punctuation", "+++"], "passthrough", ["punctuation", "+++"]
+		]],
+		["inline", [
+			["punctuation", "##"], "unquoted", ["punctuation", "##"]
+		]],
+		["inline", [
+			["punctuation", "$$"], "passthrough", ["punctuation", "$$"]
+		]],
+		["inline", [
+			["punctuation", "~"], "subscript", ["punctuation", "~"]
+		]],
+		["inline", [
+			["punctuation", "^"], "superscript", ["punctuation", "^"]
+		]],
+		["inline", [
+			["attribute-ref", [["punctuation", "{"], ["variable", "attribute-reference"], ["punctuation", "}"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "[["], "anchor", ["punctuation", "]]"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "[[["], "bibliography anchor", ["punctuation", "]]]"]]]
+		]],
+		["inline", [
+			["url", [["punctuation", "<<"], "xref", ["punctuation", ">>"]]]
+		]],
+		["inline", [
+			["punctuation", "((("], "indexes", ["punctuation", ")))"]
+		]],
+		["inline", [
+			["punctuation", "(("], "indexes", ["punctuation", "))"]
+		]],
+
+		["punctuation", "|===="]
+	]],
+
+	["attributes", [
+		["punctuation", "["],
+		["interpreted", [
+			["punctuation", "'"],
+			"foo ", ["inline", [["bold", [["punctuation", "*"], "bar", ["punctuation", "*"]]]]], " baz",
+			["punctuation", "'"]
+		]],
+		["punctuation", "]"]
+	]],
+
+	["title", [
+		["punctuation", "=="],
+		" foo ", ["inline", [["bold", [["punctuation", "*"], "bar", ["punctuation", "*"]]]]], " baz ",
+		["punctuation", "=="]
+	]],
+
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "="],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "?"],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "!"],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "#"],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "%"],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "@"],
+			"regexp", ["punctuation", ":"],
+			"value1", ["punctuation", ":"],
+			"value2",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "$"],
+			"regexp", ["punctuation", ":"],
+			"value1", ["punctuation", ":"],
+			"value2",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "names"],
+			["operator", "$"],
+			"regexp", ["punctuation", "::"],
+			"value",
+			["punctuation", "}"]
+		]]
+	]],
+    ["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "foo,bar"],
+			["operator", "="],
+			"foobar",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "foo+bar"],
+			["operator", "="],
+			"foobar",
+			["punctuation", "}"]
+		]]
+	]],
+	["inline", [
+		["attribute-ref", [
+			["punctuation", "{"],
+			["variable", "counter"],
+			["punctuation", ":"],
+			"attrname",
+			["punctuation", "}"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for all kinds of inline quoted text.

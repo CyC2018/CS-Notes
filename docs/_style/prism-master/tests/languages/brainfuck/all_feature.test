@@ -1,0 +1,19 @@
+++ foobar
+[
+	>.
+	<-,
+]
+
+----------------------------------------------------
+
+[
+	["increment", "+"], ["increment", "+"], ["comment", "foobar"],
+	["branching", "["],
+	["pointer", ">"], ["operator", "."],
+	["pointer", "<"], ["decrement", "-"], ["operator", ","],
+	["branching", "]"]
+]
+
+----------------------------------------------------
+
+Checks for all patterns.

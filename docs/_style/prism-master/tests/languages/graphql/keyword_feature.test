@@ -1,0 +1,24 @@
+query
+fragment
+mutation
+fragment foo on Bar
+... on Foo
+
+----------------------------------------------------
+
+[
+	["keyword", "query"],
+	["keyword", "fragment"],
+	["keyword", "mutation"],
+	["keyword", "fragment"],
+	" foo ",
+	["keyword", "on"],
+	" Bar\r\n",
+	["operator", "..."],
+	["keyword", "on"],
+	" Foo"
+]
+
+----------------------------------------------------
+
+Checks for keywords.

@@ -1,0 +1,43 @@
+st0 st1
+xmm1 xmm2
+ymm1 ymm2
+zmm1 zmm2
+cr1 dr1 tr1
+r1 r42
+r1b r1w r1d
+ax bx cx dx
+eax ebx ecx edx
+rax rbx rcx rdx
+ah bh ch dh
+al bl cl dl
+bp sp si di
+ebp esp esi edi
+rbp rsp rsi rdi
+cs ds es
+fs gs ss
+
+----------------------------------------------------
+
+[
+	["register", "st0"], ["register", "st1"],
+	["register", "xmm1"], ["register", "xmm2"],
+	["register", "ymm1"], ["register", "ymm2"],
+	["register", "zmm1"], ["register", "zmm2"],
+	["register", "cr1"], ["register", "dr1"], ["register", "tr1"],
+	["register", "r1"], ["register", "r42"],
+	["register", "r1b"], ["register", "r1w"], ["register", "r1d"],
+	["register", "ax"], ["register", "bx"], ["register", "cx"], ["register", "dx"],
+	["register", "eax"], ["register", "ebx"], ["register", "ecx"], ["register", "edx"],
+	["register", "rax"], ["register", "rbx"], ["register", "rcx"], ["register", "rdx"],
+	["register", "ah"], ["register", "bh"], ["register", "ch"], ["register", "dh"],
+	["register", "al"], ["register", "bl"], ["register", "cl"], ["register", "dl"],
+	["register", "bp"], ["register", "sp"], ["register", "si"], ["register", "di"],
+	["register", "ebp"], ["register", "esp"], ["register", "esi"], ["register", "edi"],
+	["register", "rbp"], ["register", "rsp"], ["register", "rsi"], ["register", "rdi"],
+	["register", "cs"], ["register", "ds"], ["register", "es"],
+	["register", "fs"], ["register", "gs"], ["register", "ss"]
+]
+
+----------------------------------------------------
+
+Checks for registers.

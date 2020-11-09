@@ -1,0 +1,71 @@
+<style type="text/css">
+foo {
+	bar: baz;
+}
+</style>
+
+<foo style="bar:baz;">
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"style"
+		]],
+		["attr-name", [
+			"type"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"text/css",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["style", [
+		["selector", "foo"],
+		["punctuation", "{"],
+		["property", "bar"],
+		["punctuation", ":"],
+		" baz",
+		["punctuation", ";"],
+		["punctuation", "}"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"style"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"foo"
+		]],
+		["style-attr", [
+			["attr-name", [
+				["attr-name", [
+					"style"
+				]]
+			]],
+			["punctuation", "=\""],
+			["attr-value", [
+				["property", "bar"],
+				["punctuation", ":"],
+				"baz",
+				["punctuation", ";"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for CSS usage inside Markup, using <style> tag and style attribute.

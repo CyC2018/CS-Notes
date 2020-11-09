@@ -1,0 +1,37 @@
+{{ 1_u32 }}
+{% 2_u32 %}
+{{ { 3_u32 } }}
+{% % 4_u32 % %}
+
+----------------------------------------------------
+
+[
+	["expansion", [
+		["delimiter", "{{"],
+		["number", "1_u32"],
+		["delimiter", "}}"]
+	]],
+	["expansion", [
+		["delimiter", "{%"],
+		["number", "2_u32"],
+		["delimiter", "%}"]
+	]],
+	["expansion", [
+		["delimiter", "{{"],
+		["punctuation", "{"],
+		["number", "3_u32"],
+		["punctuation", "}"],
+		["delimiter", "}}"]
+	]],
+	["expansion", [
+		["delimiter", "{%"],
+		["operator", "%"],
+		["number", "4_u32"],
+		["operator", "%"],
+		["delimiter", "%}"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for macro expansions.

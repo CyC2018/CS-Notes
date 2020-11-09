@@ -1,0 +1,18 @@
+<h2>Comments</h2>
+<pre><code>; Single line comment
+# Single line comment
+/* Multi-line
+comment */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>"foo \"bar\" baz"
+'foo \'bar\' baz'</code></pre>
+
+<h2>Variables</h2>
+<pre><code>LicenseLangString myLicenseData ${LANG_ENGLISH} "bigtest.nsi"
+LicenseData $(myLicenseData)
+StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2</code></pre>
+
+<h2>Compiler commands</h2>
+<pre><code>!define VERSION "1.0.3"
+!insertmacro MyFunc ""</code></pre>

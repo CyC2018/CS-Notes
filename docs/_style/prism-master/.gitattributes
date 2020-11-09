@@ -1,0 +1,4 @@
+* text=auto
+
+# Test files should not have their line endings modified by git
+/tests/languages/**/*.test binary

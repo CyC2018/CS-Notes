@@ -1,0 +1,133 @@
+<li dep="{$prod/@dept}">number: {data($prod/number)
+}, name: {data($prod/name)}</li>
+
+return <item num="{$item/@num}"
+name="{$name}"
+quan="{$item/@quantity}"/>
+
+<li dep="{substring-after($prod/@dept, "-")}"/>
+
+----------------------------------------------------
+
+[
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"li"
+		]],
+		["attr-name", ["dep"]],
+		["attr-value", [
+			["punctuation", "=\""],
+			["expression", [
+				["punctuation", "{"],
+				["variable", "$prod"],
+				["punctuation", "/"],
+				["operator", "@"],
+				"dept",
+				["punctuation", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["plain-text", "number: "],
+	["punctuation", "{"],
+	["function", "data"],
+	["punctuation", "("],
+	["variable", "$prod"],
+	["punctuation", "/"],
+	"number",
+	["punctuation", ")"],
+	["punctuation", "}"],
+	["plain-text", ", name: "],
+	["punctuation", "{"],
+	["function", "data"],
+	["punctuation", "("],
+	["variable", "$prod"],
+	["punctuation", "/"],
+	"name",
+	["punctuation", ")"],
+	["punctuation", "}"],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"li"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["keyword", "return"],
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"item"
+		]],
+		["attr-name", ["num"]],
+		["attr-value", [
+			["punctuation", "=\""],
+			["expression", [
+				["punctuation", "{"],
+				["variable", "$item"],
+				["punctuation", "/"],
+				["operator", "@"],
+				"num",
+				["punctuation", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["attr-name", ["name"]],
+		["attr-value", [
+			["punctuation", "=\""],
+			["expression", [
+				["punctuation", "{"],
+				["variable", "$name"],
+				["punctuation", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["attr-name", ["quan"]],
+		["attr-value", [
+			["punctuation", "=\""],
+			["expression", [
+				["punctuation", "{"],
+				["variable", "$item"],
+				["punctuation", "/"],
+				["operator", "@"],
+				"quantity",
+				["punctuation", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"li"
+		]],
+		["attr-name", ["dep"]],
+		["attr-value", [
+			["punctuation", "=\""],
+			["expression", [
+				["punctuation", "{"],
+				["function", "substring-after"],
+				["punctuation", "("],
+				["variable", "$prod"],
+				["punctuation", "/"],
+				["operator", "@"],
+				"dept",
+				["punctuation", ","],
+				["string", "\"-\""],
+				["punctuation", ")"],
+				["punctuation", "}"]
+			]],
+			["punctuation", "\""]
+		]],
+		["punctuation", "/>"]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for XQuery inside tags.

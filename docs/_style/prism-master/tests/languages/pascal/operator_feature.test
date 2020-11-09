@@ -1,0 +1,31 @@
+.. ** :=
+< << <= > >> >=
++ - * /
++= -= *= /=
+@ ^ =
+
+and as div
+exclude in
+include is
+mod not or
+shl shr xor
+
+----------------------------------------------------
+
+[
+	["operator", ".."], ["operator", "**"], ["operator", ":="],
+	["operator", "<"], ["operator", "<<"], ["operator", "<="], ["operator", ">"], ["operator", ">>"], ["operator", ">="],
+	["operator", "+"], ["operator", "-"], ["operator", "*"], ["operator", "/"],
+	["operator", "+="], ["operator", "-="], ["operator", "*="], ["operator", "/="],
+	["operator", "@"], ["operator", "^"], ["operator", "="],
+
+	["operator", "and"], ["operator", "as"], ["operator", "div"],
+	["operator", "exclude"], ["operator", "in"],
+	["operator", "include"], ["operator", "is"],
+	["operator", "mod"], ["operator", "not"], ["operator", "or"],
+	["operator", "shl"], ["operator", "shr"], ["operator", "xor"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

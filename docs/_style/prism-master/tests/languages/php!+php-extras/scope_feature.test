@@ -1,0 +1,27 @@
+static::foo()
+self::bar()
+parent::baz()
+
+----------------------------------------------------
+
+[
+	["scope", [
+		["keyword", "static"],
+		["punctuation", "::"]
+	]],
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["scope", [
+		["keyword", "self"],
+		["punctuation", "::"]
+	]],
+	["function", "bar"], ["punctuation", "("], ["punctuation", ")"],
+	["scope", [
+		["keyword", "parent"],
+		["punctuation", "::"]
+	]],
+	["function", "baz"], ["punctuation", "("], ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for scopes.

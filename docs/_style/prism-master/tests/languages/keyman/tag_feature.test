@@ -1,0 +1,19 @@
+$keyman:
+$kmfl:
+$weaver:
+$keymanweb:
+$keymanonly:
+
+----------------------------------------------------
+
+[
+	["tag", "$keyman:"],
+	["tag", "$kmfl:"],
+	["tag", "$weaver:"],
+	["tag", "$keymanweb:"],
+	["tag", "$keymanonly:"]
+]
+
+----------------------------------------------------
+
+Checks for all prefixes.

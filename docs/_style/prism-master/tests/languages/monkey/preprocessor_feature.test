@@ -1,0 +1,15 @@
+#If HOST
+#ElseIf
+#Else
+
+----------------------------------------------------
+
+[
+	["preprocessor", "#If HOST"],
+	["preprocessor", "#ElseIf"],
+	["preprocessor", "#Else"]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor directives.

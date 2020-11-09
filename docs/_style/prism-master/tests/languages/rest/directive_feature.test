@@ -1,0 +1,33 @@
+.. image:: mylogo.jpeg
+.. figure:: foo.png
+
+.. note:: This is a paragraph.
+
+----------------------------------------------------
+
+[
+	["punctuation", ".."],
+	["directive", [
+		"image",
+		["punctuation", "::"]
+	]],
+	" mylogo.jpeg\r\n",
+
+	["punctuation", ".."],
+	["directive", [
+		"figure",
+		["punctuation", "::"]
+	]],
+	" foo.png\r\n\r\n",
+
+	["punctuation", ".."],
+	["directive", [
+		"note",
+		["punctuation", "::"]
+	]],
+	" This is a paragraph."
+]
+
+----------------------------------------------------
+
+Checks for directives.

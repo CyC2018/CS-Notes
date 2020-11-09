@@ -1,0 +1,15 @@
+foo()
+Foobar_42{}
+Foo_Bar ! []
+
+----------------------------------------------------
+
+[
+	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
+	["function", "Foobar_42"], ["punctuation", "{"], ["punctuation", "}"],
+	["function", "Foo_Bar"], ["operator", "!"], ["punctuation", "["], ["punctuation", "]"]
+]
+
+----------------------------------------------------
+
+Checks for functions.

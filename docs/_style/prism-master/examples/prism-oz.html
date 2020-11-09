@@ -1,0 +1,89 @@
+<h2>Comments</h2>
+<pre><code>%
+% Foobar
+
+/* Foo
+bar */</code></pre>
+
+<h2>Strings</h2>
+<pre><code>""
+"Foo \"bar\" baz"</code></pre>
+
+<h2>Numbers</h2>
+<pre><code>0
+42
+0154
+0xBadFace
+0B0101
+3.14159
+2e8
+3.E~7
+4.8E12
+&0
+&a
+&\n
+&\124</code></pre>
+
+<h2>Functions and procedures</h2>
+<pre><code>proc {Max X Y Z}
+{Browse Z}
+f(M Y)</code></pre>
+
+<h2>Full example</h2>
+<pre><code>proc {DisMember X Ys}
+   dis Ys = X|_ [] Yr in Ys = _|Yr {DisMember X Yr} end
+end
+
+class DataBase from BaseObject
+   attr d
+   meth init
+      d := {NewDictionary}
+   end
+   meth dic($) @d end
+   meth tell(I)
+      case {IsFree I.1} then
+         raise database(nonground(I)) end
+      else
+         Is = {Dictionary.condGet @d I.1 nil} in
+         {Dictionary.put @d I.1 {Append Is [I]}}
+      end
+   end
+   meth ask(I)
+      case {IsFree I} orelse {IsFree I.1} then
+         {DisMember I {Flatten {Dictionary.items @d}}}
+      else
+         {DisMember I {Dictionary.condGet @d I.1 nil}}
+      end
+   end
+   meth entries($)
+      {Dictionary.entries @d}
+   end
+end
+
+declare
+proc {Dynamic ?Pred}
+   Pred = {New DataBase init}
+end
+proc {Assert P I}
+   {P tell(I)}
+end
+proc {Query P I}
+   {P ask(I)}
+end
+
+EdgeP = {Dynamic}
+{ForAll
+[edge(1 2)
+ edge(2 1)   % Cycle
+ edge(2 3)
+ edge(3 4)
+ edge(2 5)
+ edge(5 6)
+ edge(4 6)
+ edge(6 7)
+ edge(6 8)
+ edge(1 5)
+ edge(5 1)  % Cycle
+]
+proc {$ I} {Assert EdgeP I} end
+}</code></pre>

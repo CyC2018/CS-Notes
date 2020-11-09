@@ -1,0 +1,80 @@
+Foobar
+======
+
+Foobar
+------
+
+Foobar
+~~~~~~
+
+Foobar
+^^^^^^
+
+Foo
++++
+
+= Foo bar baz =
+== Foo bar baz
+=== Foo bar baz ===
+==== Foo bar baz
+===== Foo bar baz =====
+
+.Foo bar baz
+
+----------------------------------------------------
+
+[
+	["title", [
+		"Foobar\r\n",
+		["punctuation", "======"]
+	]],
+	["title", [
+		"Foobar\r\n",
+		["punctuation", "------"]
+	]],
+	["title", [
+		"Foobar\r\n",
+		["punctuation", "~~~~~~"]
+	]],
+	["title", [
+		"Foobar\r\n",
+		["punctuation", "^^^^^^"]
+	]],
+	["title", [
+		"Foo\r\n",
+		["punctuation", "+++"]
+	]],
+
+	["title", [
+		["punctuation", "="],
+		" Foo bar baz ",
+		["punctuation", "="]
+	]],
+	["title", [
+		["punctuation", "=="],
+		" Foo bar baz"
+	]],
+	["title", [
+		["punctuation", "==="],
+		" Foo bar baz ",
+		["punctuation", "==="]
+	]],
+	["title", [
+		["punctuation", "===="],
+		" Foo bar baz"
+	]],
+	["title", [
+		["punctuation", "====="],
+		" Foo bar baz ",
+		["punctuation", "====="]
+	]],
+
+	["title", [
+		["punctuation", "."],
+		"Foo bar baz"
+	]]
+]
+
+----------------------------------------------------
+
+Checks for titles.

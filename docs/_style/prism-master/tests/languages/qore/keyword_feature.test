@@ -1,0 +1,63 @@
+abstract any assert binary
+bool boolean break byte
+case catch char
+class;
+code const continue data
+default do double else
+enum
+extends;
+final finally float for
+goto hash if
+implements;
+import inherits
+instanceof;
+int
+interface;
+long my native
+new;
+nothing null object our
+own private reference
+rethrow return short
+softint softfloat softnumber
+softbool softstring softdate
+softlist static strictfp
+string sub super switch
+synchronized this throw
+throws transient try
+void volatile while
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "any"], ["keyword", "assert"], ["keyword", "binary"],
+	["keyword", "bool"], ["keyword", "boolean"], ["keyword", "break"], ["keyword", "byte"],
+	["keyword", "case"], ["keyword", "catch"], ["keyword", "char"],
+	["keyword", "class"], ["punctuation", ";"],
+	["keyword", "code"], ["keyword", "const"], ["keyword", "continue"], ["keyword", "data"],
+	["keyword", "default"], ["keyword", "do"], ["keyword", "double"], ["keyword", "else"],
+	["keyword", "enum"],
+	["keyword", "extends"], ["punctuation", ";"],
+	["keyword", "final"], ["keyword", "finally"], ["keyword", "float"], ["keyword", "for"],
+	["keyword", "goto"], ["keyword", "hash"], ["keyword", "if"],
+	["keyword", "implements"], ["punctuation", ";"],
+	["keyword", "import"], ["keyword", "inherits"],
+	["keyword", "instanceof"], ["punctuation", ";"],
+	["keyword", "int"],
+	["keyword", "interface"], ["punctuation", ";"],
+	["keyword", "long"], ["keyword", "my"], ["keyword", "native"],
+	["keyword", "new"], ["punctuation", ";"],
+	["keyword", "nothing"], ["keyword", "null"], ["keyword", "object"], ["keyword", "our"],
+	["keyword", "own"], ["keyword", "private"], ["keyword", "reference"],
+	["keyword", "rethrow"], ["keyword", "return"], ["keyword", "short"],
+	["keyword", "softint"], ["keyword", "softfloat"], ["keyword", "softnumber"],
+	["keyword", "softbool"], ["keyword", "softstring"], ["keyword", "softdate"],
+	["keyword", "softlist"], ["keyword", "static"], ["keyword", "strictfp"],
+	["keyword", "string"], ["keyword", "sub"], ["keyword", "super"], ["keyword", "switch"],
+	["keyword", "synchronized"], ["keyword", "this"], ["keyword", "throw"],
+	["keyword", "throws"], ["keyword", "transient"], ["keyword", "try"],
+	["keyword", "void"], ["keyword", "volatile"], ["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

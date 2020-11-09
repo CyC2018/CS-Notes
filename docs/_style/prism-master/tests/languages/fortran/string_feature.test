@@ -1,0 +1,31 @@
+""
+''
+"foo ""bar"" baz"
+'foo ''bar'' baz'
+ITALICS_'foobar'
+"foo &
+	&bar"
+"foo &
+	! Comment
+	&bar"
+
+----------------------------------------------------
+
+[
+	["string", ["\"\""]],
+	["string", ["''"]],
+	["string", ["\"foo \"\"bar\"\" baz\""]],
+	["string", ["'foo ''bar'' baz'"]],
+	["string", ["ITALICS_'foobar'"]],
+	["string", ["\"foo &\r\n\t&bar\""]],
+	["string", [
+		"\"foo &\r\n\t",
+		["comment", "! Comment"],
+		"\r\n\t&bar\""
+	]]
+]
+
+----------------------------------------------------
+
+Checks for strings and line continuation.
+Also checks for comments inside strings.

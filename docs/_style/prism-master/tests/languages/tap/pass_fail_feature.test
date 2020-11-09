@@ -1,0 +1,17 @@
+not ok
+not ok 42 this is the description of the test
+ok
+ok 42 this is the description of the test
+
+----------------------------------------------------
+
+[
+	["fail", "not ok" ],
+	["fail", "not ok 42 this is the description of the test"],
+	["pass", "ok" ],
+	["pass", "ok 42 this is the description of the test"]
+]
+
+----------------------------------------------------
+
+Checks test pass & fail together correctly

@@ -1,0 +1,30 @@
+BITS 16 BITS 32 BITS 64
+[BITS 16] [BITS 32] [BITS 64]
+
+section Foo.bar
+section foobar:
+
+extern _printf
+global _main
+
+CPU 8086
+FLOAT DAZ
+DEFAULT REL
+
+----------------------------------------------------
+
+[
+	["keyword", "BITS 16"], ["keyword", "BITS 32"], ["keyword", "BITS 64"],
+	["keyword", "[BITS 16]"], ["keyword", "[BITS 32]"], ["keyword", "[BITS 64]"],
+	["keyword", "section Foo.bar"],
+	["keyword", "section foobar:"],
+	["keyword", "extern _printf"],
+	["keyword", "global _main"],
+	["keyword", "CPU 8086"],
+	["keyword", "FLOAT DAZ"],
+	["keyword", "DEFAULT REL"]
+]
+
+----------------------------------------------------
+
+Checks for keywords.

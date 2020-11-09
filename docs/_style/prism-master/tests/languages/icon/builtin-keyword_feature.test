@@ -1,0 +1,91 @@
+&allocated
+&ascii
+&clock
+&collections
+&cset
+&current
+&date
+&dateline
+&digits
+&dump
+&e
+&error
+&errornumber
+&errortext
+&errorvalue
+&errout
+&fail
+&features
+&file
+&host
+&input
+&lcase
+&letters
+&level
+&line
+&main
+&null
+&output
+&phi
+&pi
+&pos
+&progname
+&random
+&regions
+&source
+&storage
+&subject
+&time
+&trace
+&ucase
+&version
+
+----------------------------------------------------
+
+[
+	["builtin-keyword", "&allocated"],
+	["builtin-keyword", "&ascii"],
+	["builtin-keyword", "&clock"],
+	["builtin-keyword", "&collections"],
+	["builtin-keyword", "&cset"],
+	["builtin-keyword", "&current"],
+	["builtin-keyword", "&date"],
+	["builtin-keyword", "&dateline"],
+	["builtin-keyword", "&digits"],
+	["builtin-keyword", "&dump"],
+	["builtin-keyword", "&e"],
+	["builtin-keyword", "&error"],
+	["builtin-keyword", "&errornumber"],
+	["builtin-keyword", "&errortext"],
+	["builtin-keyword", "&errorvalue"],
+	["builtin-keyword", "&errout"],
+	["builtin-keyword", "&fail"],
+	["builtin-keyword", "&features"],
+	["builtin-keyword", "&file"],
+	["builtin-keyword", "&host"],
+	["builtin-keyword", "&input"],
+	["builtin-keyword", "&lcase"],
+	["builtin-keyword", "&letters"],
+	["builtin-keyword", "&level"],
+	["builtin-keyword", "&line"],
+	["builtin-keyword", "&main"],
+	["builtin-keyword", "&null"],
+	["builtin-keyword", "&output"],
+	["builtin-keyword", "&phi"],
+	["builtin-keyword", "&pi"],
+	["builtin-keyword", "&pos"],
+	["builtin-keyword", "&progname"],
+	["builtin-keyword", "&random"],
+	["builtin-keyword", "&regions"],
+	["builtin-keyword", "&source"],
+	["builtin-keyword", "&storage"],
+	["builtin-keyword", "&subject"],
+	["builtin-keyword", "&time"],
+	["builtin-keyword", "&trace"],
+	["builtin-keyword", "&ucase"],
+	["builtin-keyword", "&version"]
+]
+
+----------------------------------------------------
+
+Checks for builtin keywords.

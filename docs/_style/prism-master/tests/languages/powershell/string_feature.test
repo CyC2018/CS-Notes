@@ -1,0 +1,78 @@
+"a simple string"
+"has $interpolated variables"
+"has $($nesting -and 'interpolation')"
+"string `"with`" escaping"
+'non-interpolated $string'
+'also ''with'' escaping'
+'''twas also escaped'
+an empty '' string
+'can''t'
+"a simple #comment string"
+"has $interpolated <# variables #>"
+"$($expression)"
+"`$(escaped expression)"
+"$($($exp))"
+
+----------------------------------------------------
+
+[
+	["string", ["\"a simple string\""]],
+	["string", [
+		"\"has ", ["variable", "$interpolated"], " variables\""
+	]],
+	["string", [
+		"\"has ",
+		[
+			"function",
+			[
+				"$",
+				["punctuation", "("],
+				["variable", "$nesting"],
+				["operator", "-and"],
+				["string", "'interpolation'"],
+				["punctuation", ")"]
+			]
+		],
+		"\""
+	]],
+	["string", ["\"string `\"with`\" escaping\""]],
+	["string", "'non-interpolated $string'"],
+	["string", "'also ''with'' escaping'"],
+	["string", "'''twas also escaped'"],
+	"\r\nan empty ", ["string", "''"], " string\r\n",
+	["string", "'can''t'"],
+	["string", ["\"a simple #comment string\""]],
+	["string", [
+		"\"has ", ["variable", "$interpolated"], " <# variables #>\""
+	]],
+	["string", [
+		"\"",
+		["function", [
+			"$",
+			["punctuation", "("],
+			["variable", "$expression"],
+			["punctuation", ")"]
+		]],
+		"\""
+	]],
+	["string", [
+		"\"`$(escaped expression)\""
+	]],
+	["string", [
+		"\"",
+		["function", [
+			"$",
+			["punctuation", "("],
+			"$",
+			["punctuation", "("],
+			["variable", "$exp"],
+			["punctuation", ")"],
+			["punctuation", ")"]
+		]],
+		"\""
+	]]
+]
+
+----------------------------------------------------
+
+Testing strings

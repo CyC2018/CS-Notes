@@ -1,0 +1,18 @@
+::
+:: Foobar
+REM Foobar
+rem foo^
+bar
+
+----------------------------------------------------
+
+[
+	["comment", "::"],
+	["comment", ":: Foobar"],
+	["comment", "REM Foobar"],
+	["comment", "rem foo^\r\nbar"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

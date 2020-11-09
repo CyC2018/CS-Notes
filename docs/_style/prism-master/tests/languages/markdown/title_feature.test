@@ -1,0 +1,42 @@
+title 1
+==
+
+foobar
+======
+
+Überschrift
+===========
+
+Überschrift
+--
+
+title 2
+--
+
+# title 1
+## title 2
+### title 3
+#### title 4
+##### title 5
+###### title 6
+
+----------------------------------------------------
+
+[
+	["title", ["title 1\r\n", ["punctuation", "=="]]],
+	["title", ["foobar\r\n", ["punctuation", "======"]]],
+	["title", ["Überschrift\r\n", ["punctuation", "==========="]]],
+	["title", ["Überschrift\r\n", ["punctuation", "--"]]],
+	["title", ["title 2\r\n", ["punctuation", "--"]]],
+
+	["title", [["punctuation", "#"], " title 1"]],
+	["title", [["punctuation", "##"], " title 2"]],
+	["title", [["punctuation", "###"], " title 3"]],
+	["title", [["punctuation", "####"], " title 4"]],
+	["title", [["punctuation", "#####"], " title 5"]],
+	["title", [["punctuation", "######"], " title 6"]]
+]
+
+----------------------------------------------------
+
+Checks for titles.

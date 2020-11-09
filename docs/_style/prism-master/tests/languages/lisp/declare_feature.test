@@ -1,0 +1,16 @@
+(declare)
+(declare a)
+(declare
+a)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["declare", "declare"], ["punctuation", ")"],
+	["punctuation", "("], ["declare", "declare"], " a", ["punctuation", ")"],
+	["punctuation", "("], ["declare", "declare"], "\r\na", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for declare.

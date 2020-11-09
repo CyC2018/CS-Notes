@@ -1,0 +1,79 @@
+bool
+byte
+complex64
+complex128
+error
+float32
+float64
+rune
+string
+int
+int8
+int16
+int32
+int64
+uint
+uint8
+uint16
+uint32
+uint64
+uintptr
+append
+cap
+close
+complex
+copy
+delete
+imag
+len
+make
+new
+panic
+print
+println
+real
+recover
+
+----------------------------------------------------
+
+[
+	["builtin", "bool"],
+	["builtin", "byte"],
+	["builtin", "complex64"],
+	["builtin", "complex128"],
+	["builtin", "error"],
+	["builtin", "float32"],
+	["builtin", "float64"],
+	["builtin", "rune"],
+	["builtin", "string"],
+	["builtin", "int"],
+	["builtin", "int8"],
+	["builtin", "int16"],
+	["builtin", "int32"],
+	["builtin", "int64"],
+	["builtin", "uint"],
+	["builtin", "uint8"],
+	["builtin", "uint16"],
+	["builtin", "uint32"],
+	["builtin", "uint64"],
+	["builtin", "uintptr"],
+	["builtin", "append"],
+	["builtin", "cap"],
+	["builtin", "close"],
+	["builtin", "complex"],
+	["builtin", "copy"],
+	["builtin", "delete"],
+	["builtin", "imag"],
+	["builtin", "len"],
+	["builtin", "make"],
+	["builtin", "new"],
+	["builtin", "panic"],
+	["builtin", "print"],
+	["builtin", "println"],
+	["builtin", "real"],
+	["builtin", "recover"]
+]
+
+----------------------------------------------------
+
+Checks for all builtins.

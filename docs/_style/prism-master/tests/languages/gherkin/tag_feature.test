@@ -1,0 +1,17 @@
+@important
+@billing @bicker @annoy
+	@foo
+
+----------------------------------------------------
+
+[
+	["tag", "@important"],
+	["tag", "@billing"],
+	["tag", "@bicker"],
+	["tag", "@annoy"],
+	["tag", "@foo"]
+]
+
+----------------------------------------------------
+
+Checks for tags.

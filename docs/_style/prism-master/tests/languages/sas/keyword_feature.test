@@ -1,0 +1,13 @@
+data else format if
+input proc run then
+
+----------------------------------------------------
+
+[
+	["keyword", "data"], ["keyword", "else"], ["keyword", "format"], ["keyword", "if"],
+	["keyword", "input"], ["keyword", "proc run"], ["keyword", "then"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

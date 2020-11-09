@@ -1,0 +1,21 @@
+' Foobar
+#Rem Foo
+Bar 'Baz
+#End
+' This "is" a comment
+#Rem
+This "is" a comment
+#End
+
+----------------------------------------------------
+
+[
+	["comment", "' Foobar"],
+	["comment", "#Rem Foo\r\nBar 'Baz\r\n#End"],
+	["comment", "' This \"is\" a comment"],
+	["comment", "#Rem\r\nThis \"is\" a comment\r\n#End"]
+]
+
+----------------------------------------------------
+
+Checks for comments.

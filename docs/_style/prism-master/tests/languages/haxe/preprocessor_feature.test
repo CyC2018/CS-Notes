@@ -1,0 +1,17 @@
+#if
+#elseif
+#else
+#end
+
+----------------------------------------------------
+
+[
+	["preprocessor", "#if"],
+	["preprocessor", "#elseif"],
+	["preprocessor", "#else"],
+	["preprocessor", "#end"]
+]
+
+----------------------------------------------------
+
+Checks for preprocessor directives.

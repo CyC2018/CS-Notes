@@ -1,0 +1,28 @@
+\begin{verbatim*}
+Foo bar
+\end{verbatim*}
+
+\begin{lstlisting}
+Foo bar
+baz
+\end{lstlisting}
+
+----------------------------------------------------
+
+[
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "verbatim*"], ["punctuation", "}"],
+	["cdata", "\r\nFoo bar\r\n"],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "verbatim*"], ["punctuation", "}"],
+
+	["function", "\\begin"], ["punctuation", "{"],
+	["keyword", "lstlisting"], ["punctuation", "}"],
+	["cdata", "\r\nFoo bar\r\nbaz\r\n"],
+	["function", "\\end"], ["punctuation", "{"],
+	["keyword", "lstlisting"], ["punctuation", "}"]
+]
+
+----------------------------------------------------
+
+Checks for verbatim environment.

@@ -1,0 +1,141 @@
+action
+actions
+activity
+activities
+actor
+actors
+animal
+animals
+backdrop
+backdrops
+container
+containers
+device
+devices
+direction
+directions
+door
+doors
+holder
+holders
+kind
+kinds
+list
+lists
+man
+men
+nobody
+nothing
+noun
+nouns
+number
+numbers
+object
+objects
+people
+person
+persons
+player
+player's holdall
+region
+regions
+relation
+relations
+room
+rooms
+rule
+rules
+rulebook
+rulebooks
+scene
+scenes
+someone
+something
+supporter
+supporters
+table
+tables
+text
+texts
+thing
+things
+time
+vehicle
+vehicles
+woman
+women
+
+----------------------------------------------------
+
+[
+	["type", "action"],
+	["type", "actions"],
+	["type", "activity"],
+	["type", "activities"],
+	["type", "actor"],
+	["type", "actors"],
+	["type", "animal"],
+	["type", "animals"],
+	["type", "backdrop"],
+	["type", "backdrops"],
+	["type", "container"],
+	["type", "containers"],
+	["type", "device"],
+	["type", "devices"],
+	["type", "direction"],
+	["type", "directions"],
+	["type", "door"],
+	["type", "doors"],
+	["type", "holder"],
+	["type", "holders"],
+	["type", "kind"],
+	["type", "kinds"],
+	["type", "list"],
+	["type", "lists"],
+	["type", "man"],
+	["type", "men"],
+	["type", "nobody"],
+	["type", "nothing"],
+	["type", "noun"],
+	["type", "nouns"],
+	["type", "number"],
+	["type", "numbers"],
+	["type", "object"],
+	["type", "objects"],
+	["type", "people"],
+	["type", "person"],
+	["type", "persons"],
+	["type", "player"],
+	["type", "player's holdall"],
+	["type", "region"],
+	["type", "regions"],
+	["type", "relation"],
+	["type", "relations"],
+	["type", "room"],
+	["type", "rooms"],
+	["type", "rule"],
+	["type", "rules"],
+	["type", "rulebook"],
+	["type", "rulebooks"],
+	["type", "scene"],
+	["type", "scenes"],
+	["type", "someone"],
+	["type", "something"],
+	["type", "supporter"],
+	["type", "supporters"],
+	["type", "table"],
+	["type", "tables"],
+	["type", "text"],
+	["type", "texts"],
+	["type", "thing"],
+	["type", "things"],
+	["type", "time"],
+	["type", "vehicle"],
+	["type", "vehicles"],
+	["type", "woman"],
+	["type", "women"]
+]
+
+----------------------------------------------------
+
+Checks for variables.

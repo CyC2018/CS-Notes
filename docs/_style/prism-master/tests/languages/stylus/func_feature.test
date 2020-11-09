@@ -1,0 +1,51 @@
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+form input[type=button]
+  border-radius(5px)
+  color foo()
+
+----------------------------------------------------
+
+[
+	["func", [
+		["function", "border-radius"],
+		["punctuation", "("],
+		"n",
+		["punctuation", ")"]
+	]],
+	["property-declaration", [
+		["property", ["-webkit-border-radius"]],
+		" n"
+	]],
+	["property-declaration", [
+		["property", ["-moz-border-radius"]],
+		" n"
+	]],
+	["property-declaration", [
+		["property", ["border-radius"]],
+		" n"
+	]],
+	["selector", ["form input[type=button]"]],
+	["func", [
+		["function", "border-radius"],
+		["punctuation", "("],
+		["number", "5"],
+		"px",
+		["punctuation", ")"]
+	]],
+	["property-declaration", [
+		["property", ["color"]],
+		["func", [
+			["function", "foo"],
+			["punctuation", "("],
+			["punctuation", ")"]
+		]]
+	]]
+]
+
+----------------------------------------------------
+
+Checks for functions.

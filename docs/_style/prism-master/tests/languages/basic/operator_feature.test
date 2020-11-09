@@ -1,0 +1,21 @@
+< <= <>
+> >=
++ - * /
+^ = &
+AND EQV IMP
+NOT OR XOR
+
+----------------------------------------------------
+
+[
+	["operator", "<"], ["operator", "<="], ["operator", "<>"],
+	["operator", ">"], ["operator", ">="],
+	["operator", "+"], ["operator", "-"], ["operator", "*"], ["operator", "/"],
+	["operator", "^"], ["operator", "="], ["operator", "&"],
+	["operator", "AND"], ["operator", "EQV"], ["operator", "IMP"],
+	["operator", "NOT"], ["operator", "OR"], ["operator", "XOR"]
+]
+
+----------------------------------------------------
+
+Checks for operators.

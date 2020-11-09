@@ -1,0 +1,31 @@
+abstract baremodule begin
+bitstype break catch
+ccall const continue
+do else elseif end
+export finally for
+function global if
+immutable import importall
+let local macro module
+print println quote
+return try type
+typealias using while
+
+----------------------------------------------------
+
+[
+	["keyword", "abstract"], ["keyword", "baremodule"], ["keyword", "begin"],
+	["keyword", "bitstype"], ["keyword", "break"], ["keyword", "catch"],
+	["keyword", "ccall"], ["keyword", "const"], ["keyword", "continue"],
+	["keyword", "do"], ["keyword", "else"], ["keyword", "elseif"], ["keyword", "end"],
+	["keyword", "export"], ["keyword", "finally"], ["keyword", "for"],
+	["keyword", "function"], ["keyword", "global"], ["keyword", "if"],
+	["keyword", "immutable"], ["keyword", "import"], ["keyword", "importall"],
+	["keyword", "let"], ["keyword", "local"], ["keyword", "macro"], ["keyword", "module"],
+	["keyword", "print"], ["keyword", "println"], ["keyword", "quote"],
+	["keyword", "return"], ["keyword", "try"], ["keyword", "type"],
+	["keyword", "typealias"], ["keyword", "using"], ["keyword", "while"]
+]
+
+----------------------------------------------------
+
+Checks for all keywords.

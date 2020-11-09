@@ -1,0 +1,16 @@
+(interactive)
+(interactive a)
+(interactive
+a)
+
+----------------------------------------------------
+
+[
+	["punctuation", "("], ["interactive", "interactive"], ["punctuation", ")"],
+	["punctuation", "("], ["interactive", "interactive"], " a", ["punctuation", ")"],
+	["punctuation", "("], ["interactive", "interactive"], "\r\na", ["punctuation", ")"]
+]
+
+----------------------------------------------------
+
+Checks for declare.
