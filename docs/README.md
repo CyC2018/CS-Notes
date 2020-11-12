@@ -1,11 +1,10 @@
-- [点击订阅面试进阶指南](https://xiaozhuanlan.com/CyC2018)
+- [Github](https://github.com/CyC2018/CS-Notes)
 
 ## ✏️ 算法
 
-- [剑指 Offer 题解](notes/剑指%20Offer%20题解%20-%20目录1.md) </br>
+- [剑指 Offer 题解](notes/剑指%20Offer%20题解%20-%20目录2.md) </br>
 - [Leetcode 题解](notes/Leetcode%20题解%20-%20目录1.md) </br>
 - [算法](notes/算法%20-%20目录1.md) </br>
-- [后端面试进阶指南](https://xiaozhuanlan.com/CyC2018)
 
 ## 💻 操作系统
 
@@ -18,16 +17,11 @@
 - [HTTP](notes/HTTP.md) </br>
 - [Socket](notes/Socket.md)
 
-## 🎨 面向对象
-
-- [设计模式](notes/设计模式%20-%20目录1.md) </br>
-- [面向对象思想](notes/面向对象思想.md)
-
 ## 💾 数据库
 
 - [数据库系统原理](notes/数据库系统原理.md) </br>
-- [SQL](notes/SQL.md) </br>
-- [Leetcode-Database 题解](notes/Leetcode-Database%20题解.md) </br>
+- [SQL 语法](notes/SQL%20语法.md) </br>
+- [SQL 练习](notes/SQL%20练习.md) </br>
 - [MySQL](notes/MySQL.md) </br>
 - [Redis](notes/Redis.md)
 
@@ -48,6 +42,11 @@
 - [缓存](notes/缓存.md) </br>
 - [消息队列](notes/消息队列.md)
 
+## 🎨 面向对象
+
+- [设计模式](notes/设计模式%20-%20目录1.md) </br>
+- [面向对象思想](notes/面向对象思想.md)
+
 ## 🔧 工具
 
 - [Git](notes/Git.md) </br>
@@ -60,5 +59,3 @@
 <div align="center">
   <img src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" width="200px">
 </div> -->
-
-

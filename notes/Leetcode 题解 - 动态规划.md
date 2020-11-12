@@ -912,6 +912,7 @@ return -1.
 
 ```java
 public int coinChange(int[] coins, int amount) {
+    if (amount == 0 || coins == null) return 0;
     int[] dp = new int[amount + 1];
     for (int coin : coins) {
         for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历

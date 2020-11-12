@@ -75,7 +75,7 @@
 题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。
 
 ```java
-		public int shortestPathBinaryMatrix(int[][] grids) {
+public int shortestPathBinaryMatrix(int[][] grids) {
         if (grids == null || grids.length == 0 || grids[0].length == 0) {
             return -1;
         }

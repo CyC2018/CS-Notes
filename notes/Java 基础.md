@@ -6,9 +6,9 @@
 * [二、String](#二string)
     * [概览](#概览)
     * [不可变的好处](#不可变的好处)
-    * [String, StringBuffer and StringBuilder](#string,-stringbuffer-and-stringbuilder)
+    * [String, StringBuffer and StringBuilder	](#string-stringbuffer-and-stringbuilder	)
     * [String Pool](#string-pool)
-    * [new String("abc")](#new-string"abc")
+    * [new String("abc")](#new-stringabc)
 * [三、运算](#三运算)
     * [参数传递](#参数传递)
     * [float 与 double](#float-与-double)
@@ -205,7 +205,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [Program Creek : Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
-## String, StringBuffer and StringBuilder
+## String, StringBuffer and StringBuilder	
 
 **1. 可变性**  
 
@@ -226,14 +226,14 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。
 
-下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 方法取得同一个字符串引用。intern() 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 和 s2.intern() 方法取得同一个字符串引用。intern() 首先把 "aaa" 放到 String Pool 中，然后返回这个字符串引用，因此 s3 和 s4 引用的是同一个字符串。
 
 ```java
 String s1 = new String("aaa");
 String s2 = new String("aaa");
 System.out.println(s1 == s2);           // false
 String s3 = s1.intern();
-String s4 = s1.intern();
+String s4 = s2.intern();
 System.out.println(s3 == s4);           // true
 ```
 
@@ -1092,7 +1092,7 @@ ac2.func1();
 
 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类，让它们都实现新增的方法。
 
-接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。
+接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。从 Java 9 开始，允许将方法定义为 private，这样就能定义某些复用的代码又不会把方法暴露出去。
 
 接口的字段默认都是 static 和 final 的。
 
@@ -1141,7 +1141,7 @@ System.out.println(InterfaceExample.x);
 
 使用接口：
 
-- 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Compareable 接口中的 compareTo() 方法；
+- 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Comparable 接口中的 compareTo() 方法；
 - 需要使用多重继承。
 
 使用抽象类：
@@ -1155,6 +1155,7 @@ System.out.println(InterfaceExample.x);
 - [Abstract Methods and Classes](https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html)
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
+- [Java 9 Private Methods in Interfaces](https://www.journaldev.com/12850/java-9-private-methods-interfaces)
 
 
 ## super
@@ -1321,6 +1322,25 @@ public static void main(String[] args) {
 
 应该注意的是，返回值不同，其它都相同不算是重载。
 
+```java
+class OverloadingExample {
+    public void show(int x) {
+        System.out.println(x);
+    }
+
+    public void show(int x, String y) {
+        System.out.println(x + " " + y);
+    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    OverloadingExample example = new OverloadingExample();
+    example.show(1);
+    example.show(1, "2");
+}
+```
 
 # 七、反射
 
@@ -1365,8 +1385,8 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
 
-- [Java 入门之异常处理](https://www.tianmaying.com/tutorial/Java-Exception)
-- [Java 异常的面试问题及答案 -Part 1](http://www.importnew.com/7383.html)
+- [Java 入门之异常处理](https://www.cnblogs.com/Blue-Keroro/p/8875898.html)
+- [Java Exception Interview Questions and Answers](https://www.journaldev.com/2167/java-exception-interview-questions-and-answersl)
 
 # 九、泛型
 
@@ -1432,8 +1452,8 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ## JRE or JDK
 
-- JRE is the JVM program, Java application need to run on JRE.
-- JDK is a superset of JRE, JRE + tools for developing java programs. e.g, it provides the compiler "javac"
+- JRE：Java Runtime Environment，Java 运行环境的简称，为 Java 的运行提供了所需的环境。它是一个 JVM 程序，主要包括了 JVM 的标准实现和一些 Java 基本类库。
+- JDK：Java Development Kit，Java 开发工具包，提供了 Java 的开发及运行环境。JDK 是 Java 开发的核心，集成了 JRE 以及一些其它的工具，比如编译 Java 源码的编译器 javac 等。
 
 # 参考资料
 
