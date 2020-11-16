@@ -7,5 +7,5 @@
 
 [![stars](https://badgen.net/github/stars/CyC2018/CS-Notes?icon=github&color=4ab8a1)](https://github.com/CyC2018/CS-Notes) [![forks](https://badgen.net/github/forks/CyC2018/CS-Notes?icon=github&color=4ab8a1)](https://github.com/CyC2018/CS-Notes)
 
-[开始阅读](www.cyc2018.xyz)
+[开始阅读](http://www.cyc2018.xyz)
 
