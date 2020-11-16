@@ -1,48 +1,24 @@
+# Java 基础
 <!-- GFM-TOC -->
-* [一、数据类型](#一数据类型)
-    * [基本类型](#基本类型)
-    * [包装类型](#包装类型)
-    * [缓存池](#缓存池)
-* [二、String](#二string)
-    * [概览](#概览)
-    * [不可变的好处](#不可变的好处)
-    * [String, StringBuffer and StringBuilder	](#string-stringbuffer-and-stringbuilder	)
-    * [String Pool](#string-pool)
-    * [new String("abc")](#new-stringabc)
-* [三、运算](#三运算)
-    * [参数传递](#参数传递)
-    * [float 与 double](#float-与-double)
-    * [隐式类型转换](#隐式类型转换)
-    * [switch](#switch)
-* [四、关键字](#四关键字)
-    * [final](#final)
-    * [static](#static)
-* [五、Object 通用方法](#五object-通用方法)
-    * [概览](#概览)
-    * [equals()](#equals)
-    * [hashCode()](#hashcode)
-    * [toString()](#tostring)
-    * [clone()](#clone)
-* [六、继承](#六继承)
-    * [访问权限](#访问权限)
-    * [抽象类与接口](#抽象类与接口)
-    * [super](#super)
-    * [重写与重载](#重写与重载)
-* [七、反射](#七反射)
-* [八、异常](#八异常)
-* [九、泛型](#九泛型)
-* [十、注解](#十注解)
-* [十一、特性](#十一特性)
-    * [Java 各版本的新特性](#java-各版本的新特性)
-    * [Java 与 C++ 的区别](#java-与-c-的区别)
-    * [JRE or JDK](#jre-or-jdk)
-* [参考资料](#参考资料)
+* [Java 基础](#java-基础)
+    * [一、数据类型](#一数据类型)
+    * [二、String](#二string)
+    * [三、运算](#三运算)
+    * [四、关键字](#四关键字)
+    * [五、Object 通用方法](#五object-通用方法)
+    * [六、继承](#六继承)
+    * [七、反射](#七反射)
+    * [八、异常](#八异常)
+    * [九、泛型](#九泛型)
+    * [十、注解](#十注解)
+    * [十一、特性](#十一特性)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-# 一、数据类型
+## 一、数据类型
 
-## 基本类型
+### 基本类型
 
 - byte/8
 - char/16
@@ -58,7 +34,7 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是�
 - [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
 
-## 包装类型
+### 包装类型
 
 基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
@@ -69,7 +45,7 @@ int y = x;         // 拆箱 调用了 X.intValue()
 
 - [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
-## 缓存池
+### 缓存池
 
 new Integer(123) 与 Integer.valueOf(123) 的区别在于：
 
@@ -152,9 +128,9 @@ System.out.println(m == n); // true
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
 
-# 二、String
+## 二、String
 
-## 概览
+### 概览
 
 String 被声明为 final，因此它不可被继承。(Integer 等包装类也不能被继承）
 
@@ -183,7 +159,7 @@ public final class String
 
 value 数组被声明为 final，这意味着 value 数组初始化之后就不能再引用其它数组。并且 String 内部没有改变 value 数组的方法，因此可以保证 String 不可变。
 
-## 不可变的好处
+### 不可变的好处
 
 **1. 可以缓存 hash 值**  
 
@@ -205,7 +181,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [Program Creek : Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
-## String, StringBuffer and StringBuilder	
+### String, StringBuffer and StringBuilder	
 
 **1. 可变性**  
 
@@ -220,7 +196,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [StackOverflow : String, StringBuffer, and StringBuilder](https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder)
 
-## String Pool
+### String Pool
 
 字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程将字符串添加到 String Pool 中。
 
@@ -250,7 +226,7 @@ System.out.println(s5 == s6);  // true
 - [StackOverflow : What is String interning?](https://stackoverflow.com/questions/10578984/what-is-string-interning)
 - [深入解析 String#intern](https://tech.meituan.com/in_depth_understanding_string_intern.html)
 
-## new String("abc")
+### new String("abc")
 
 使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
 
@@ -304,9 +280,9 @@ public String(String original) {
 }
 ```
 
-# 三、运算
+## 三、运算
 
-## 参数传递
+### 参数传递
 
 Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
@@ -374,7 +350,7 @@ public class PassByValueExample {
 
 [StackOverflow: Is Java “pass-by-reference” or “pass-by-value”?](https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value)
 
-## float 与 double
+### float 与 double
 
 Java 不能隐式执行向下转型，因为这会使得精度降低。
 
@@ -390,7 +366,7 @@ Java 不能隐式执行向下转型，因为这会使得精度降低。
 float f = 1.1f;
 ```
 
-## 隐式类型转换
+### 隐式类型转换
 
 因为字面量 1 是 int 类型，它比 short 类型精度要高，因此不能隐式地将 int 类型向下转型为 short 类型。
 
@@ -414,7 +390,7 @@ s1 = (short) (s1 + 1);
 
 [StackOverflow : Why don't Java's +=, -=, *=, /= compound assignment operators require casting?](https://stackoverflow.com/questions/8710619/why-dont-javas-compound-assignment-operators-require-casting)
 
-## switch
+### switch
 
 从 Java 7 开始，可以在 switch 条件判断语句中使用 String 对象。
 
@@ -447,9 +423,9 @@ switch 不支持 long，是因为 switch 的设计初衷是对那些只有少数
 [StackOverflow : Why can't your switch statement data type be long, Java?](https://stackoverflow.com/questions/2676210/why-cant-your-switch-statement-data-type-be-long-java)
 
 
-# 四、关键字
+## 四、关键字
 
-## final
+### final
 
 **1. 数据**  
 
@@ -475,7 +451,7 @@ private 方法隐式地被指定为 final，如果在子类中定义的方法和
 
 声明类不允许被继承。
 
-## static
+### static
 
 **1. 静态变量**  
 
@@ -619,9 +595,9 @@ public InitialOrderTest() {
 - 子类（实例变量、普通语句块）
 - 子类（构造函数）
 
-# 五、Object 通用方法
+## 五、Object 通用方法
 
-## 概览
+### 概览
 
 ```java
 
@@ -648,7 +624,7 @@ public final void wait(long timeout, int nanos) throws InterruptedException
 public final void wait() throws InterruptedException
 ```
 
-## equals()
+### equals()
 
 **1. 等价关系**  
 
@@ -735,7 +711,7 @@ public class EqualExample {
 }
 ```
 
-## hashCode()
+### hashCode()
 
 hashCode() 返回哈希值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价，这是因为计算哈希值具有随机性，两个值不同的对象可能计算出相同的哈希值。
 
@@ -757,7 +733,7 @@ System.out.println(set.size());   // 2
 
 理想的哈希函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的哈希值上。这就要求了哈希函数要把所有域的值都考虑进来。可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。
 
-R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位，最左边的位丢失。并且一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，编译器会自动进行这个优化。
+R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位，最左边的位丢失。并且一个数与 31 相乘可以转换成移位和减法：`31*x == (x\<\<5)-x`，编译器会自动进行这个优化。
 
 ```java
 @Override
@@ -770,7 +746,7 @@ public int hashCode() {
 }
 ```
 
-## toString()
+### toString()
 
 默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
 
@@ -794,7 +770,7 @@ System.out.println(example.toString());
 ToStringExample@4554617c
 ```
 
-## clone()
+### clone()
 
 **1. cloneable**  
 
@@ -986,9 +962,9 @@ e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
 ```
 
-# 六、继承
+## 六、继承
 
-## 访问权限
+### 访问权限
 
 Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见。
 
@@ -1049,7 +1025,7 @@ public class AccessWithInnerClassExample {
 }
 ```
 
-## 抽象类与接口
+### 抽象类与接口
 
 **1. 抽象类**  
 
@@ -1158,7 +1134,7 @@ System.out.println(InterfaceExample.x);
 - [Java 9 Private Methods in Interfaces](https://www.journaldev.com/12850/java-9-private-methods-interfaces)
 
 
-## super
+### super
 
 - 访问父类的构造函数：可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。应该注意到，子类一定会调用父类的构造函数来完成初始化工作，一般是调用父类的默认构造函数，如果子类需要调用父类其它构造函数，那么就可以使用 super() 函数。
 - 访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 super 关键字来引用父类的方法实现。
@@ -1210,7 +1186,7 @@ SuperExtendExample.func()
 
 [Using the Keyword super](https://docs.oracle.com/javase/tutorial/java/IandI/super.html)
 
-## 重写与重载
+### 重写与重载
 
 **1. 重写（Override）**  
 
@@ -1227,7 +1203,7 @@ SuperExtendExample.func()
 下面的示例中，SubClass 为 SuperClass 的子类，SubClass 重写了 SuperClass 的 func() 方法。其中：
 
 - 子类方法访问权限为 public，大于父类的 protected。
-- 子类的返回类型为 ArrayList<Integer>，是父类返回类型 List<Integer> 的子类。
+- 子类的返回类型为 ArrayList\<Integer\>，是父类返回类型 List\<Integer\> 的子类。
 - 子类抛出的异常类型为 Exception，是父类抛出异常 Throwable 的子类。
 - 子类重写方法使用 @Override 注解，从而让编译器自动检查是否满足限制条件。
 
@@ -1342,7 +1318,7 @@ public static void main(String[] args) {
 }
 ```
 
-# 七、反射
+## 七、反射
 
 每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
@@ -1376,7 +1352,7 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 - [Trail: The Reflection API](https://docs.oracle.com/javase/tutorial/reflect/index.html)
 - [深入解析 Java 反射（1）- 基础](http://www.sczyh30.com/posts/Java/java-reflection-1/)
 
-# 八、异常
+## 八、异常
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：  **Error**   和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
@@ -1388,7 +1364,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 - [Java 入门之异常处理](https://www.cnblogs.com/Blue-Keroro/p/8875898.html)
 - [Java Exception Interview Questions and Answers](https://www.journaldev.com/2167/java-exception-interview-questions-and-answersl)
 
-# 九、泛型
+## 九、泛型
 
 ```java
 public class Box<T> {
@@ -1402,15 +1378,15 @@ public class Box<T> {
 - [Java 泛型详解](http://www.importnew.com/24029.html)
 - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
-# 十、注解
+## 十、注解
 
 Java 注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。
 
 [注解 Annotation 实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
-# 十一、特性
+## 十一、特性
 
-## Java 各版本的新特性
+### Java 各版本的新特性
 
 **New highlights in Java SE 8**  
 
@@ -1438,7 +1414,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
 - [Java 8 特性](http://www.importnew.com/19345.html)
 
-## Java 与 C++ 的区别
+### Java 与 C++ 的区别
 
 - Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
 - Java 通过虚拟机从而实现跨平台特性，但是 C++ 依赖于特定的平台。
@@ -1450,19 +1426,12 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 [What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
 
-## JRE or JDK
+### JRE or JDK
 
 - JRE：Java Runtime Environment，Java 运行环境的简称，为 Java 的运行提供了所需的环境。它是一个 JVM 程序，主要包括了 JVM 的标准实现和一些 Java 基本类库。
 - JDK：Java Development Kit，Java 开发工具包，提供了 Java 的开发及运行环境。JDK 是 Java 开发的核心，集成了 JRE 以及一些其它的工具，比如编译 Java 源码的编译器 javac 等。
 
-# 参考资料
+## 参考资料
 
 - Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

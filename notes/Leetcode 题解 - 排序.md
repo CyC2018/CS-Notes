@@ -1,22 +1,24 @@
+# Leetcode 题解 - 排序
 <!-- GFM-TOC -->
-* [快速选择](#快速选择)
-* [堆](#堆)
-    * [1. Kth Element](#1-kth-element)
-* [桶排序](#桶排序)
-    * [1. 出现频率最多的 k 个元素](#1-出现频率最多的-k-个元素)
-    * [2. 按照字符出现次数对字符串排序](#2-按照字符出现次数对字符串排序)
-* [荷兰国旗问题](#荷兰国旗问题)
-    * [1. 按颜色进行排序](#1-按颜色进行排序)
+* [Leetcode 题解 - 排序](#leetcode-题解---排序)
+    * [快速选择](#快速选择)
+    * [堆](#堆)
+        * [1. Kth Element](#1-kth-element)
+    * [桶排序](#桶排序)
+        * [1. 出现频率最多的 k 个元素](#1-出现频率最多的-k-个元素)
+        * [2. 按照字符出现次数对字符串排序](#2-按照字符出现次数对字符串排序)
+    * [荷兰国旗问题](#荷兰国旗问题)
+        * [1. 按颜色进行排序](#1-按颜色进行排序)
 <!-- GFM-TOC -->
 
 
-# 快速选择
+## 快速选择
 
 用于求解   **Kth Element**   问题，也就是第 K 个元素的问题。
 
 可以使用快速排序的 partition() 进行实现。需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
 
-# 堆
+## 堆
 
 用于求解   **TopK Elements**   问题，也就是 K 个最小元素的问题。使用最小堆来实现 TopK 问题，最小堆使用大顶堆来实现，大顶堆的堆顶元素为当前堆的最大元素。实现过程：不断地往大顶堆中插入新元素，当堆中元素的数量大于 k 时，移除堆顶元素，也就是当前堆中最大的元素，剩下的元素都为当前添加过的元素中最小的 K 个元素。插入和移除堆顶元素的时间复杂度都为 log<sub>2</sub>N。
 
@@ -26,7 +28,7 @@
 
 可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
 
-## 1. Kth Element
+### 1. Kth Element
 
 215\. Kth Largest Element in an Array (Medium)
 
@@ -102,9 +104,9 @@ private void swap(int[] a, int i, int j) {
 }
 ```
 
-# 桶排序
+## 桶排序
 
-## 1. 出现频率最多的 k 个元素
+### 1. 出现频率最多的 k 个元素
 
 347\. Top K Frequent Elements (Medium)
 
@@ -151,7 +153,7 @@ public int[] topKFrequent(int[] nums, int k) {
 }
 ```
 
-## 2. 按照字符出现次数对字符串排序
+### 2. 按照字符出现次数对字符串排序
 
 451\. Sort Characters By Frequency (Medium)
 
@@ -198,7 +200,7 @@ public String frequencySort(String s) {
 }
 ```
 
-# 荷兰国旗问题
+## 荷兰国旗问题
 
 荷兰国旗包含三种颜色：红、白、蓝。
 
@@ -207,7 +209,7 @@ public String frequencySort(String s) {
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
 
 
-## 1. 按颜色进行排序
+### 1. 按颜色进行排序
 
 75\. Sort Colors (Medium)
 
@@ -240,10 +242,3 @@ private void swap(int[] nums, int i, int j) {
     nums[j] = t;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

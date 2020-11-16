@@ -223,7 +223,7 @@ WHERE col IS NULL;
 
 通配符也是用在过滤语句中，但它只能用于文本字段。
 
--   **%**   匹配 >=0 个任意字符；
+-   **%**   匹配 \>=0 个任意字符；
 
 -   **\_**   匹配 ==1 个任意字符；
 
@@ -305,7 +305,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 
 - 日期格式：YYYY-MM-DD
-- 时间格式：HH:<zero-width space>MM:SS
+- 时间格式：HH:\<zero-width space\>MM:SS
 
 |函 数 | 说 明|
 | :---: | :---: |
@@ -769,10 +769,3 @@ SET PASSWROD FOR myuser = Password('new_password');
 # 参考资料
 
 - BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

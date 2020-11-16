@@ -188,7 +188,7 @@ public int NumberOf1Between1AndN_Solution(int n) {
 }
 ```
 
-> [Leetcode : 233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/discuss/64381/4+-lines-O(log-n)-C++JavaPython)
+\> [Leetcode : 233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/discuss/64381/4+-lines-O(log-n)-C++JavaPython)
 
 # 44. 数字序列中的某一位数字
 
@@ -255,7 +255,7 @@ private int getDigitAtIndex(int index, int place) {
 
 ## 解题思路
 
-可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 < S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
+可以看成是一个排序问题，在比较两个字符串 S1 和 S2 的大小时，应该比较的是 S1+S2 和 S2+S1 的大小，如果 S1+S2 \< S2+S1，那么应该把 S1 排在前面，否则应该把 S2 排在前面。
 
 ```java
 public String PrintMinNumber(int[] numbers) {
@@ -401,10 +401,3 @@ public int GetUglyNumber_Solution(int N) {
     return dp[N - 1];
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

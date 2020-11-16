@@ -22,7 +22,7 @@
 
 ## 题目描述
 
-求斐波那契数列的第 n 项，n <= 39。
+求斐波那契数列的第 n 项，n \<= 39。
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?f(n)=\left\{\begin{array}{rcl}0&&{n=0}\\1&&{n=1}\\f(n-1)+f(n-2)&&{n>1}\end{array}\right." class="mathjax-pic"/></div> <br> -->
 
@@ -244,7 +244,7 @@ public int JumpFloorII(int target) {
 
 通过修改二分查找算法进行求解（l 代表 low，m 代表 mid，h 代表 high）：
 
-- 当 nums[m] <= nums[h] 时，表示 [m, h] 区间内的数组是非递减数组，[l, m] 区间内的数组是旋转数组，此时令 h = m；
+- 当 nums[m] \<= nums[h] 时，表示 [m, h] 区间内的数组是非递减数组，[l, m] 区间内的数组是旋转数组，此时令 h = m；
 - 否则 [m + 1, h] 区间内的数组是旋转数组，令 l = m + 1。
 
 ```java
@@ -436,7 +436,7 @@ return 36 (10 = 3 + 3 + 4)
 
 尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现。如果出现了，就从已经切好长度为 3 的绳子中拿出一段与长度为 1 的绳子重新组合，把它们切成两段长度为 2 的绳子。
 
-证明：当 n >= 5 时，3(n - 3) - n = 2n - 9 > 0，且 2(n - 2) - n = n - 4 > 0。因此在 n >= 5 的情况下，将绳子剪成一段为 2 或者 3，得到的乘积会更大。又因为 3(n - 3) - 2(n - 2) = n - 5 >= 0，所以剪成一段长度为 3 比长度为 2 得到的乘积更大。
+证明：当 n \>= 5 时，3(n - 3) - n = 2n - 9 \> 0，且 2(n - 2) - n = n - 4 \> 0。因此在 n \>= 5 的情况下，将绳子剪成一段为 2 或者 3，得到的乘积会更大。又因为 3(n - 3) - 2(n - 2) = n - 5 \>= 0，所以剪成一段长度为 3 比长度为 2 得到的乘积更大。
 
 ```java
 public int integerBreak(int n) {
@@ -690,10 +690,3 @@ public boolean match(char[] str, char[] pattern) {
     return dp[m][n];
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

@@ -1,20 +1,22 @@
+# Leetcode 题解 - 链表
 <!-- GFM-TOC -->
-* [1. 找出两个链表的交点](#1-找出两个链表的交点)
-* [2. 链表反转](#2-链表反转)
-* [3. 归并两个有序的链表](#3-归并两个有序的链表)
-* [4. 从有序链表中删除重复节点](#4-从有序链表中删除重复节点)
-* [5. 删除链表的倒数第 n 个节点](#5-删除链表的倒数第-n-个节点)
-* [6. 交换链表中的相邻结点](#6-交换链表中的相邻结点)
-* [7. 链表求和](#7-链表求和)
-* [8. 回文链表](#8-回文链表)
-* [9. 分隔链表](#9-分隔链表)
-* [10. 链表元素按奇偶聚集](#10-链表元素按奇偶聚集)
+* [Leetcode 题解 - 链表](#leetcode-题解---链表)
+    * [1. 找出两个链表的交点](#1-找出两个链表的交点)
+    * [2. 链表反转](#2-链表反转)
+    * [3. 归并两个有序的链表](#3-归并两个有序的链表)
+    * [4. 从有序链表中删除重复节点](#4-从有序链表中删除重复节点)
+    * [5. 删除链表的倒数第 n 个节点](#5-删除链表的倒数第-n-个节点)
+    * [6. 交换链表中的相邻结点](#6-交换链表中的相邻结点)
+    * [7. 链表求和](#7-链表求和)
+    * [8. 回文链表](#8-回文链表)
+    * [9. 分隔链表](#9-分隔链表)
+    * [10. 链表元素按奇偶聚集](#10-链表元素按奇偶聚集)
 <!-- GFM-TOC -->
 
 
 链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
 
-#  1. 找出两个链表的交点
+##  1. 找出两个链表的交点
 
 160\. Intersection of Two Linked Lists (Easy)
 
@@ -66,7 +68,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 - 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
 - 或者直接比较两个链表的最后一个节点是否相同。
 
-#  2. 链表反转
+##  2. 链表反转
 
 206\. Reverse Linked List (Easy)
 
@@ -102,7 +104,7 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
-#  3. 归并两个有序的链表
+##  3. 归并两个有序的链表
 
 21\. Merge Two Sorted Lists (Easy)
 
@@ -122,7 +124,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 }
 ```
 
-#  4. 从有序链表中删除重复节点
+##  4. 从有序链表中删除重复节点
 
 83\. Remove Duplicates from Sorted List (Easy)
 
@@ -141,7 +143,7 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
-#  5. 删除链表的倒数第 n 个节点
+##  5. 删除链表的倒数第 n 个节点
 
 19\. Remove Nth Node From End of List (Medium)
 
@@ -169,7 +171,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-#  6. 交换链表中的相邻结点
+##  6. 交换链表中的相邻结点
 
 24\. Swap Nodes in Pairs (Medium)
 
@@ -199,7 +201,7 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-#  7. 链表求和
+##  7. 链表求和
 
 445\. Add Two Numbers II (Medium)
 
@@ -240,7 +242,7 @@ private Stack<Integer> buildStack(ListNode l) {
 }
 ```
 
-#  8. 回文链表
+##  8. 回文链表
 
 234\. Palindrome Linked List (Easy)
 
@@ -291,7 +293,7 @@ private boolean isEqual(ListNode l1, ListNode l2) {
 }
 ```
 
-#  9. 分隔链表
+##  9. 分隔链表
 
 725\. Split Linked List in Parts(Medium)
 
@@ -333,7 +335,7 @@ public ListNode[] splitListToParts(ListNode root, int k) {
 }
 ```
 
-#  10. 链表元素按奇偶聚集
+##  10. 链表元素按奇偶聚集
 
 328\. Odd Even Linked List (Medium)
 
@@ -361,10 +363,3 @@ public ListNode oddEvenList(ListNode head) {
     return head;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

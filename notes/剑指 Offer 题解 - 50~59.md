@@ -295,8 +295,8 @@ public void FindNumsAppearOnce(int[] nums, int num1[], int num2[]) {
 使用双指针，一个指针指向元素较小的值，一个指针指向元素较大的值。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
 
 - 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
-- 如果 sum > target，移动较大的元素，使 sum 变小一些；
-- 如果 sum < target，移动较小的元素，使 sum 变大一些。
+- 如果 sum \> target，移动较大的元素，使 sum 变小一些；
+- 如果 sum \< target，移动较小的元素，使 sum 变大一些。
 
 ```java
 public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
@@ -477,10 +477,3 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
     return ret;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

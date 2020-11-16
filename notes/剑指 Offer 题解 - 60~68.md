@@ -186,7 +186,7 @@ public int maxProfit(int[] prices) {
 
 条件与 && 具有短路原则，即在第一个条件语句为 false 的情况下不会去执行第二个条件语句。利用这一特性，将递归的返回条件取非然后作为 && 的第一个条件语句，递归的主体转换为第二个条件语句，那么当递归的返回条件为 true 的情况下就不会执行递归的主体部分，递归返回。
 
-本题的递归返回条件为 n <= 0，取非后就是 n > 0；递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) > 0。
+本题的递归返回条件为 n \<= 0，取非后就是 n \> 0；递归的主体部分为 sum += Sum_Solution(n - 1)，转换为条件语句后就是 (sum += Sum_Solution(n - 1)) \> 0。
 
 ```java
 public int Sum_Solution(int n) {
@@ -206,9 +206,9 @@ public int Sum_Solution(int n) {
 
 ## 解题思路
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) \<\< 1 就是进位。
 
-递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+递归会终止的原因是 (a & b) \<\< 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
 public int Add(int a, int b) {
@@ -287,7 +287,7 @@ public int StrToInt(String str) {
 
 [Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
-二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val >= p.val && root.val <= q.val。
+二叉查找树中，两个节点 p, q 的公共祖先 root 满足 root.val \>= p.val && root.val \<= q.val。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/047faac4-a368-4565-8331-2b66253080d3.jpg" width="220"/> </div><br>
 
@@ -320,10 +320,3 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     return left == null ? right : right == null ? left : root;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

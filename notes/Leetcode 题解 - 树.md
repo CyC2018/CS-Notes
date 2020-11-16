@@ -1,48 +1,50 @@
+# Leetcode 题解 - 树
 <!-- GFM-TOC -->
-* [递归](#递归)
-    * [1. 树的高度](#1-树的高度)
-    * [2. 平衡树](#2-平衡树)
-    * [3. 两节点的最长路径](#3-两节点的最长路径)
-    * [4. 翻转树](#4-翻转树)
-    * [5. 归并两棵树](#5-归并两棵树)
-    * [6. 判断路径和是否等于一个数](#6-判断路径和是否等于一个数)
-    * [7. 统计路径和等于一个数的路径数量](#7-统计路径和等于一个数的路径数量)
-    * [8. 子树](#8-子树)
-    * [9. 树的对称](#9-树的对称)
-    * [10. 最小路径](#10-最小路径)
-    * [11. 统计左叶子节点的和](#11-统计左叶子节点的和)
-    * [12. 相同节点值的最大路径长度](#12-相同节点值的最大路径长度)
-    * [13. 间隔遍历](#13-间隔遍历)
-    * [14. 找出二叉树中第二小的节点](#14-找出二叉树中第二小的节点)
-* [层次遍历](#层次遍历)
-    * [1. 一棵树每层节点的平均数](#1-一棵树每层节点的平均数)
-    * [2. 得到左下角的节点](#2-得到左下角的节点)
-* [前中后序遍历](#前中后序遍历)
-    * [1. 非递归实现二叉树的前序遍历](#1-非递归实现二叉树的前序遍历)
-    * [2. 非递归实现二叉树的后序遍历](#2-非递归实现二叉树的后序遍历)
-    * [3. 非递归实现二叉树的中序遍历](#3-非递归实现二叉树的中序遍历)
-* [BST](#bst)
-    * [1. 修剪二叉查找树](#1-修剪二叉查找树)
-    * [2. 寻找二叉查找树的第 k 个元素](#2-寻找二叉查找树的第-k-个元素)
-    * [3. 把二叉查找树每个节点的值都加上比它大的节点的值](#3-把二叉查找树每个节点的值都加上比它大的节点的值)
-    * [4. 二叉查找树的最近公共祖先](#4-二叉查找树的最近公共祖先)
-    * [5. 二叉树的最近公共祖先](#5-二叉树的最近公共祖先)
-    * [6. 从有序数组中构造二叉查找树](#6-从有序数组中构造二叉查找树)
-    * [7. 根据有序链表构造平衡的二叉查找树](#7-根据有序链表构造平衡的二叉查找树)
-    * [8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值](#8-在二叉查找树中寻找两个节点，使它们的和为一个给定值)
-    * [9. 在二叉查找树中查找两个节点之差的最小绝对值](#9-在二叉查找树中查找两个节点之差的最小绝对值)
-    * [10. 寻找二叉查找树中出现次数最多的值](#10-寻找二叉查找树中出现次数最多的值)
-* [Trie](#trie)
-    * [1. 实现一个 Trie](#1-实现一个-trie)
-    * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie，用来求前缀和)
+* [Leetcode 题解 - 树](#leetcode-题解---树)
+    * [递归](#递归)
+        * [1. 树的高度](#1-树的高度)
+        * [2. 平衡树](#2-平衡树)
+        * [3. 两节点的最长路径](#3-两节点的最长路径)
+        * [4. 翻转树](#4-翻转树)
+        * [5. 归并两棵树](#5-归并两棵树)
+        * [6. 判断路径和是否等于一个数](#6-判断路径和是否等于一个数)
+        * [7. 统计路径和等于一个数的路径数量](#7-统计路径和等于一个数的路径数量)
+        * [8. 子树](#8-子树)
+        * [9. 树的对称](#9-树的对称)
+        * [10. 最小路径](#10-最小路径)
+        * [11. 统计左叶子节点的和](#11-统计左叶子节点的和)
+        * [12. 相同节点值的最大路径长度](#12-相同节点值的最大路径长度)
+        * [13. 间隔遍历](#13-间隔遍历)
+        * [14. 找出二叉树中第二小的节点](#14-找出二叉树中第二小的节点)
+    * [层次遍历](#层次遍历)
+        * [1. 一棵树每层节点的平均数](#1-一棵树每层节点的平均数)
+        * [2. 得到左下角的节点](#2-得到左下角的节点)
+    * [前中后序遍历](#前中后序遍历)
+        * [1. 非递归实现二叉树的前序遍历](#1-非递归实现二叉树的前序遍历)
+        * [2. 非递归实现二叉树的后序遍历](#2-非递归实现二叉树的后序遍历)
+        * [3. 非递归实现二叉树的中序遍历](#3-非递归实现二叉树的中序遍历)
+    * [BST](#bst)
+        * [1. 修剪二叉查找树](#1-修剪二叉查找树)
+        * [2. 寻找二叉查找树的第 k 个元素](#2-寻找二叉查找树的第-k-个元素)
+        * [3. 把二叉查找树每个节点的值都加上比它大的节点的值](#3-把二叉查找树每个节点的值都加上比它大的节点的值)
+        * [4. 二叉查找树的最近公共祖先](#4-二叉查找树的最近公共祖先)
+        * [5. 二叉树的最近公共祖先](#5-二叉树的最近公共祖先)
+        * [6. 从有序数组中构造二叉查找树](#6-从有序数组中构造二叉查找树)
+        * [7. 根据有序链表构造平衡的二叉查找树](#7-根据有序链表构造平衡的二叉查找树)
+        * [8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值](#8-在二叉查找树中寻找两个节点，使它们的和为一个给定值)
+        * [9. 在二叉查找树中查找两个节点之差的最小绝对值](#9-在二叉查找树中查找两个节点之差的最小绝对值)
+        * [10. 寻找二叉查找树中出现次数最多的值](#10-寻找二叉查找树中出现次数最多的值)
+    * [Trie](#trie)
+        * [1. 实现一个 Trie](#1-实现一个-trie)
+        * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie，用来求前缀和)
 <!-- GFM-TOC -->
 
 
-# 递归
+## 递归
 
 一棵树要么是空树，要么有两个指针，每个指针指向一棵树。树是一种递归结构，很多树的问题可以使用递归来处理。
 
-## 1. 树的高度
+### 1. 树的高度
 
 104\. Maximum Depth of Binary Tree (Easy)
 
@@ -55,7 +57,7 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
-## 2. 平衡树
+### 2. 平衡树
 
 110\. Balanced Binary Tree (Easy)
 
@@ -88,7 +90,7 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
-## 3. 两节点的最长路径
+### 3. 两节点的最长路径
 
 543\. Diameter of Binary Tree (Easy)
 
@@ -123,7 +125,7 @@ private int depth(TreeNode root) {
 }
 ```
 
-## 4. 翻转树
+### 4. 翻转树
 
 226\. Invert Binary Tree (Easy)
 
@@ -139,7 +141,7 @@ public TreeNode invertTree(TreeNode root) {
 }
 ```
 
-## 5. 归并两棵树
+### 5. 归并两棵树
 
 617\. Merge Two Binary Trees (Easy)
 
@@ -174,7 +176,7 @@ public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 }
 ```
 
-## 6. 判断路径和是否等于一个数
+### 6. 判断路径和是否等于一个数
 
 Leetcdoe : 112. Path Sum (Easy)
 
@@ -204,7 +206,7 @@ public boolean hasPathSum(TreeNode root, int sum) {
 }
 ```
 
-## 7. 统计路径和等于一个数的路径数量
+### 7. 统计路径和等于一个数的路径数量
 
 437\. Path Sum III (Easy)
 
@@ -246,7 +248,7 @@ private int pathSumStartWithRoot(TreeNode root, int sum) {
 }
 ```
 
-## 8. 子树
+### 8. 子树
 
 572\. Subtree of Another Tree (Easy)
 
@@ -299,7 +301,7 @@ private boolean isSubtreeWithRoot(TreeNode s, TreeNode t) {
 }
 ```
 
-## 9. 树的对称
+### 9. 树的对称
 
 101\. Symmetric Tree (Easy)
 
@@ -327,7 +329,7 @@ private boolean isSymmetric(TreeNode t1, TreeNode t2) {
 }
 ```
 
-## 10. 最小路径
+### 10. 最小路径
 
 111\. Minimum Depth of Binary Tree (Easy)
 
@@ -345,7 +347,7 @@ public int minDepth(TreeNode root) {
 }
 ```
 
-## 11. 统计左叶子节点的和
+### 11. 统计左叶子节点的和
 
 404\. Sum of Left Leaves (Easy)
 
@@ -374,7 +376,7 @@ private boolean isLeaf(TreeNode node){
 }
 ```
 
-## 12. 相同节点值的最大路径长度
+### 12. 相同节点值的最大路径长度
 
 687\. Longest Univalue Path (Easy)
 
@@ -409,7 +411,7 @@ private int dfs(TreeNode root){
 }
 ```
 
-## 13. 间隔遍历
+### 13. 间隔遍历
 
 337\. House Robber III (Medium)
 
@@ -435,7 +437,7 @@ public int rob(TreeNode root) {
 }
 ```
 
-## 14. 找出二叉树中第二小的节点
+### 14. 找出二叉树中第二小的节点
 
 671\. Second Minimum Node In a Binary Tree (Easy)
 
@@ -468,11 +470,11 @@ public int findSecondMinimumValue(TreeNode root) {
 }
 ```
 
-# 层次遍历
+## 层次遍历
 
 使用 BFS 进行层次遍历。不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
 
-## 1. 一棵树每层节点的平均数
+### 1. 一棵树每层节点的平均数
 
 637\. Average of Levels in Binary Tree (Easy)
 
@@ -499,7 +501,7 @@ public List<Double> averageOfLevels(TreeNode root) {
 }
 ```
 
-## 2. 得到左下角的节点
+### 2. 得到左下角的节点
 
 513\. Find Bottom Left Tree Value (Easy)
 
@@ -533,7 +535,7 @@ public int findBottomLeftValue(TreeNode root) {
 }
 ```
 
-# 前中后序遍历
+## 前中后序遍历
 
 ```html
     1
@@ -582,7 +584,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-## 1. 非递归实现二叉树的前序遍历
+### 1. 非递归实现二叉树的前序遍历
 
 144\. Binary Tree Preorder Traversal (Medium)
 
@@ -604,13 +606,13 @@ public List<Integer> preorderTraversal(TreeNode root) {
 }
 ```
 
-## 2. 非递归实现二叉树的后序遍历
+### 2. 非递归实现二叉树的后序遍历
 
 145\. Binary Tree Postorder Traversal (Medium)
 
 [Leetcode](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/description/)
 
-前序遍历为 root -> left -> right，后序遍历为 left -> right -> root。可以修改前序遍历成为 root -> right -> left，那么这个顺序就和后序遍历正好相反。
+前序遍历为 root -\> left -\> right，后序遍历为 left -\> right -\> root。可以修改前序遍历成为 root -\> right -\> left，那么这个顺序就和后序遍历正好相反。
 
 ```java
 public List<Integer> postorderTraversal(TreeNode root) {
@@ -629,7 +631,7 @@ public List<Integer> postorderTraversal(TreeNode root) {
 }
 ```
 
-## 3. 非递归实现二叉树的中序遍历
+### 3. 非递归实现二叉树的中序遍历
 
 94\. Binary Tree Inorder Traversal (Medium)
 
@@ -654,13 +656,13 @@ public List<Integer> inorderTraversal(TreeNode root) {
 }
 ```
 
-# BST
+## BST
 
 二叉查找树（BST）：根节点大于等于左子树所有节点，小于等于右子树所有节点。
 
 二叉查找树中序遍历有序。
 
-## 1. 修剪二叉查找树
+### 1. 修剪二叉查找树
 
 669\. Trim a Binary Search Tree (Easy)
 
@@ -702,7 +704,7 @@ public TreeNode trimBST(TreeNode root, int L, int R) {
 }
 ```
 
-## 2. 寻找二叉查找树的第 k 个元素
+### 2. 寻找二叉查找树的第 k 个元素
 
 230\. Kth Smallest Element in a BST (Medium)
 
@@ -748,7 +750,7 @@ private int count(TreeNode node) {
 }
 ```
 
-## 3. 把二叉查找树每个节点的值都加上比它大的节点的值
+### 3. 把二叉查找树每个节点的值都加上比它大的节点的值
 
 Convert BST to Greater Tree (Easy)
 
@@ -787,7 +789,7 @@ private void traver(TreeNode node) {
 }
 ```
 
-## 4. 二叉查找树的最近公共祖先
+### 4. 二叉查找树的最近公共祖先
 
 235\. Lowest Common Ancestor of a Binary Search Tree (Easy)
 
@@ -813,7 +815,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
-## 5. 二叉树的最近公共祖先
+### 5. 二叉树的最近公共祖先
 
 236\. Lowest Common Ancestor of a Binary Tree (Medium) 
 
@@ -840,7 +842,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
-## 6. 从有序数组中构造二叉查找树
+### 6. 从有序数组中构造二叉查找树
 
 108\. Convert Sorted Array to Binary Search Tree (Easy)
 
@@ -861,7 +863,7 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 }
 ```
 
-## 7. 根据有序链表构造平衡的二叉查找树
+### 7. 根据有序链表构造平衡的二叉查找树
 
 109\. Convert Sorted List to Binary Search Tree (Medium)
 
@@ -904,7 +906,7 @@ private ListNode preMid(ListNode head) {
 }
 ```
 
-## 8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值
+### 8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值
 
 653\. Two Sum IV - Input is a BST (Easy)
 
@@ -950,7 +952,7 @@ private void inOrder(TreeNode root, List<Integer> nums) {
 }
 ```
 
-## 9. 在二叉查找树中查找两个节点之差的最小绝对值
+### 9. 在二叉查找树中查找两个节点之差的最小绝对值
 
 530\. Minimum Absolute Difference in BST (Easy)
 
@@ -990,7 +992,7 @@ private void inOrder(TreeNode node) {
 }
 ```
 
-## 10. 寻找二叉查找树中出现次数最多的值
+### 10. 寻找二叉查找树中出现次数最多的值
 
 501\. Find Mode in Binary Search Tree (Easy)
 
@@ -1043,13 +1045,13 @@ private void inOrder(TreeNode node, List<Integer> nums) {
 }
 ```
 
-# Trie
+## Trie
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
 
 Trie，又称前缀树或字典树，用于判断字符串是否存在或者是否具有某种字符串前缀。
 
-## 1. 实现一个 Trie
+### 1. 实现一个 Trie
 
 208\. Implement Trie (Prefix Tree) (Medium)
 
@@ -1113,7 +1115,7 @@ class Trie {
 }
 ```
 
-## 2. 实现一个 Trie，用来求前缀和
+### 2. 实现一个 Trie，用来求前缀和
 
 677\. Map Sum Pairs (Medium)
 
@@ -1180,10 +1182,3 @@ class MapSum {
 }
 ```
 
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
