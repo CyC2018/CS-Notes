@@ -2,17 +2,60 @@
 <!-- GFM-TOC -->
 * [Java 并发](#java-并发)
     * [一、使用线程](#一使用线程)
+        * [实现 Runnable 接口](#实现-runnable-接口)
+        * [实现 Callable 接口](#实现-callable-接口)
+        * [继承 Thread 类](#继承-thread-类)
+        * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
     * [二、基础线程机制](#二基础线程机制)
+        * [Executor](#executor)
+        * [Daemon](#daemon)
+        * [sleep()](#sleep)
+        * [yield()](#yield)
     * [三、中断](#三中断)
+        * [InterruptedException](#interruptedexception)
+        * [interrupted()](#interrupted)
+        * [Executor 的中断操作](#executor-的中断操作)
     * [四、互斥同步](#四互斥同步)
+        * [synchronized](#synchronized)
+        * [ReentrantLock](#reentrantlock)
+        * [比较](#比较)
+        * [使用选择](#使用选择)
     * [五、线程之间的协作](#五线程之间的协作)
+        * [join()](#join)
+        * [wait() notify() notifyAll()](#wait-notify-notifyall)
+        * [await() signal() signalAll()](#await-signal-signalall)
     * [六、线程状态](#六线程状态)
+        * [新建（NEW）](#新建new)
+        * [可运行（RUNABLE）](#可运行runable)
+        * [阻塞（BLOCKED）](#阻塞blocked)
+        * [无限期等待（WAITING）](#无限期等待waiting)
+        * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
+        * [死亡（TERMINATED）](#死亡terminated)
     * [七、J.U.C - AQS](#七juc---aqs)
+        * [CountDownLatch](#countdownlatch)
+        * [CyclicBarrier](#cyclicbarrier)
+        * [Semaphore](#semaphore)
     * [八、J.U.C - 其它组件](#八juc---其它组件)
+        * [FutureTask](#futuretask)
+        * [BlockingQueue](#blockingqueue)
+        * [ForkJoin](#forkjoin)
     * [九、线程不安全示例](#九线程不安全示例)
     * [十、Java 内存模型](#十java-内存模型)
+        * [主内存与工作内存](#主内存与工作内存)
+        * [内存间交互操作](#内存间交互操作)
+        * [内存模型三大特性](#内存模型三大特性)
+        * [先行发生原则](#先行发生原则)
     * [十一、线程安全](#十一线程安全)
+        * [不可变](#不可变)
+        * [互斥同步](#互斥同步)
+        * [非阻塞同步](#非阻塞同步)
+        * [无同步方案](#无同步方案)
     * [十二、锁优化](#十二锁优化)
+        * [自旋锁](#自旋锁)
+        * [锁消除](#锁消除)
+        * [锁粗化](#锁粗化)
+        * [轻量级锁](#轻量级锁)
+        * [偏向锁](#偏向锁)
     * [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -1177,7 +1220,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 #### 1. 单一线程原则
 
-\> Single Thread rule
+> Single Thread rule
 
 在一个线程内，在程序前面的操作先行发生于后面的操作。
 
@@ -1185,7 +1228,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 #### 2. 管程锁定规则
 
-\> Monitor Lock Rule
+> Monitor Lock Rule
 
 一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
 
@@ -1193,7 +1236,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 #### 3. volatile 变量规则
 
-\> Volatile Variable Rule
+> Volatile Variable Rule
 
 对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
 
@@ -1201,7 +1244,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 #### 4. 线程启动规则
 
-\> Thread Start Rule
+> Thread Start Rule
 
 Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
 
@@ -1209,7 +1252,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 #### 5. 线程加入规则
 
-\> Thread Join Rule
+> Thread Join Rule
 
 Thread 对象的结束先行发生于 join() 方法返回。
 
@@ -1217,19 +1260,19 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 #### 6. 线程中断规则
 
-\> Thread Interruption Rule
+> Thread Interruption Rule
 
 对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 interrupted() 方法检测到是否有中断发生。
 
 #### 7. 对象终结规则
 
-\> Finalizer Rule
+> Finalizer Rule
 
 一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
 
 #### 8. 传递性
 
-\> Transitivity
+> Transitivity
 
 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
 
