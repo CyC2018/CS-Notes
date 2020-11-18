@@ -124,7 +124,7 @@ X-Cache: HIT
 
 ### URL
 
-http 使用 URL（ **U** niform **R**esource **L**ocator，统一资源定位符）来定位资源，它可以认为是是  URI（**U**niform **R**esource **I**dentifier，统一资源标识符）的一个子集，URL 在 URI 的基础上增加了定位能力。URI 除了包含 URL 之外，还包含 URN（Uniform Resource Name，统一资源名称），它知识用来定义一个资源的名称，并不具备定位该资源的能力。例如 urn:isbn:0451450523 用来定义一个书籍，但是却没有表示怎么找到这本书。
+HTTP 使用 URL（ **U** niform **R**esource **L**ocator，统一资源定位符）来定位资源，它是  URI（**U**niform **R**esource **I**dentifier，统一资源标识符）的子集，URL 在 URI 的基础上增加了定位能力。URI 除了包含 URL，还包含 URN（Uniform Resource Name，统一资源名称），它只是用来定义一个资源的名称，并不具备定位该资源的能力。例如 urn:isbn:0451450523 用来定义一个书籍名称，但是却没有表示怎么找到这本书。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
 
