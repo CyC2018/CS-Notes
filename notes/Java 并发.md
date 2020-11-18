@@ -1,66 +1,68 @@
+# Java 并发
 <!-- GFM-TOC -->
-* [一、使用线程](#一使用线程)
-    * [实现 Runnable 接口](#实现-runnable-接口)
-    * [实现 Callable 接口](#实现-callable-接口)
-    * [继承 Thread 类](#继承-thread-类)
-    * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
-* [二、基础线程机制](#二基础线程机制)
-    * [Executor](#executor)
-    * [Daemon](#daemon)
-    * [sleep()](#sleep)
-    * [yield()](#yield)
-* [三、中断](#三中断)
-    * [InterruptedException](#interruptedexception)
-    * [interrupted()](#interrupted)
-    * [Executor 的中断操作](#executor-的中断操作)
-* [四、互斥同步](#四互斥同步)
-    * [synchronized](#synchronized)
-    * [ReentrantLock](#reentrantlock)
-    * [比较](#比较)
-    * [使用选择](#使用选择)
-* [五、线程之间的协作](#五线程之间的协作)
-    * [join()](#join)
-    * [wait() notify() notifyAll()](#wait-notify-notifyall)
-    * [await() signal() signalAll()](#await-signal-signalall)
-* [六、线程状态](#六线程状态)
-    * [新建（NEW）](#新建new)
-    * [可运行（RUNABLE）](#可运行runable)
-    * [阻塞（BLOCKED）](#阻塞blocked)
-    * [无限期等待（WAITING）](#无限期等待waiting)
-    * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
-    * [死亡（TERMINATED）](#死亡terminated)
-* [七、J.U.C - AQS](#七juc---aqs)
-    * [CountDownLatch](#countdownlatch)
-    * [CyclicBarrier](#cyclicbarrier)
-    * [Semaphore](#semaphore)
-* [八、J.U.C - 其它组件](#八juc---其它组件)
-    * [FutureTask](#futuretask)
-    * [BlockingQueue](#blockingqueue)
-    * [ForkJoin](#forkjoin)
-* [九、线程不安全示例](#九线程不安全示例)
-* [十、Java 内存模型](#十java-内存模型)
-    * [主内存与工作内存](#主内存与工作内存)
-    * [内存间交互操作](#内存间交互操作)
-    * [内存模型三大特性](#内存模型三大特性)
-    * [先行发生原则](#先行发生原则)
-* [十一、线程安全](#十一线程安全)
-    * [不可变](#不可变)
-    * [互斥同步](#互斥同步)
-    * [非阻塞同步](#非阻塞同步)
-    * [无同步方案](#无同步方案)
-* [十二、锁优化](#十二锁优化)
-    * [自旋锁](#自旋锁)
-    * [锁消除](#锁消除)
-    * [锁粗化](#锁粗化)
-    * [轻量级锁](#轻量级锁)
-    * [偏向锁](#偏向锁)
-* [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
-* [参考资料](#参考资料)
+* [Java 并发](#java-并发)
+    * [一、使用线程](#一使用线程)
+        * [实现 Runnable 接口](#实现-runnable-接口)
+        * [实现 Callable 接口](#实现-callable-接口)
+        * [继承 Thread 类](#继承-thread-类)
+        * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
+    * [二、基础线程机制](#二基础线程机制)
+        * [Executor](#executor)
+        * [Daemon](#daemon)
+        * [sleep()](#sleep)
+        * [yield()](#yield)
+    * [三、中断](#三中断)
+        * [InterruptedException](#interruptedexception)
+        * [interrupted()](#interrupted)
+        * [Executor 的中断操作](#executor-的中断操作)
+    * [四、互斥同步](#四互斥同步)
+        * [synchronized](#synchronized)
+        * [ReentrantLock](#reentrantlock)
+        * [比较](#比较)
+        * [使用选择](#使用选择)
+    * [五、线程之间的协作](#五线程之间的协作)
+        * [join()](#join)
+        * [wait() notify() notifyAll()](#wait-notify-notifyall)
+        * [await() signal() signalAll()](#await-signal-signalall)
+    * [六、线程状态](#六线程状态)
+        * [新建（NEW）](#新建new)
+        * [可运行（RUNABLE）](#可运行runable)
+        * [阻塞（BLOCKED）](#阻塞blocked)
+        * [无限期等待（WAITING）](#无限期等待waiting)
+        * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
+        * [死亡（TERMINATED）](#死亡terminated)
+    * [七、J.U.C - AQS](#七juc---aqs)
+        * [CountDownLatch](#countdownlatch)
+        * [CyclicBarrier](#cyclicbarrier)
+        * [Semaphore](#semaphore)
+    * [八、J.U.C - 其它组件](#八juc---其它组件)
+        * [FutureTask](#futuretask)
+        * [BlockingQueue](#blockingqueue)
+        * [ForkJoin](#forkjoin)
+    * [九、线程不安全示例](#九线程不安全示例)
+    * [十、Java 内存模型](#十java-内存模型)
+        * [主内存与工作内存](#主内存与工作内存)
+        * [内存间交互操作](#内存间交互操作)
+        * [内存模型三大特性](#内存模型三大特性)
+        * [先行发生原则](#先行发生原则)
+    * [十一、线程安全](#十一线程安全)
+        * [不可变](#不可变)
+        * [互斥同步](#互斥同步)
+        * [非阻塞同步](#非阻塞同步)
+        * [无同步方案](#无同步方案)
+    * [十二、锁优化](#十二锁优化)
+        * [自旋锁](#自旋锁)
+        * [锁消除](#锁消除)
+        * [锁粗化](#锁粗化)
+        * [轻量级锁](#轻量级锁)
+        * [偏向锁](#偏向锁)
+    * [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 
-# 一、使用线程
+## 一、使用线程
 
 有三种使用线程的方法：
 
@@ -70,7 +72,7 @@
 
 实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以理解为任务是通过线程驱动从而执行的。
 
-## 实现 Runnable 接口
+### 实现 Runnable 接口
 
 需要实现接口中的 run() 方法。
 
@@ -93,7 +95,7 @@ public static void main(String[] args) {
 }
 ```
 
-## 实现 Callable 接口
+### 实现 Callable 接口
 
 与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
 
@@ -115,7 +117,7 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 }
 ```
 
-## 继承 Thread 类
+### 继承 Thread 类
 
 同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runable 接口。
 
@@ -136,16 +138,16 @@ public static void main(String[] args) {
 }
 ```
 
-## 实现接口 VS 继承 Thread
+### 实现接口 VS 继承 Thread
 
 实现接口会更好一些，因为：
 
 - Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
 - 类可能只要求可执行就行，继承整个 Thread 类开销过大。
 
-# 二、基础线程机制
+## 二、基础线程机制
 
-## Executor
+### Executor
 
 Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。
 
@@ -165,7 +167,7 @@ public static void main(String[] args) {
 }
 ```
 
-## Daemon
+### Daemon
 
 守护线程是程序运行时在后台提供服务的线程，不属于程序中不可或缺的部分。
 
@@ -182,7 +184,7 @@ public static void main(String[] args) {
 }
 ```
 
-## sleep()
+### sleep()
 
 Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
 
@@ -198,7 +200,7 @@ public void run() {
 }
 ```
 
-## yield()
+### yield()
 
 对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。
 
@@ -208,11 +210,11 @@ public void run() {
 }
 ```
 
-# 三、中断
+## 三、中断
 
 一个线程执行完毕之后会自动结束，如果在运行过程中发生异常也会提前结束。
 
-## InterruptedException
+### InterruptedException
 
 通过调用一个线程的 interrupt() 来中断该线程，如果该线程处于阻塞、限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断 I/O 阻塞和 synchronized 锁阻塞。
 
@@ -253,7 +255,7 @@ java.lang.InterruptedException: sleep interrupted
     at java.lang.Thread.run(Thread.java:745)
 ```
 
-## interrupted()
+### interrupted()
 
 如果一个线程的 run() 方法执行一个无限循环，并且没有执行 sleep() 等会抛出 InterruptedException 的操作，那么调用线程的 interrupt() 方法就无法使线程提前结束。
 
@@ -286,7 +288,7 @@ public static void main(String[] args) throws InterruptedException {
 Thread end
 ```
 
-## Executor 的中断操作
+### Executor 的中断操作
 
 调用 Executor 的 shutdown() 方法会等待线程都执行完毕之后再关闭，但是如果调用的是 shutdownNow() 方法，则相当于调用每个线程的 interrupt() 方法。
 
@@ -319,7 +321,7 @@ java.lang.InterruptedException: sleep interrupted
     at java.lang.Thread.run(Thread.java:745)
 ```
 
-如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future<?> 对象，通过调用该对象的 cancel(true) 方法就可以中断线程。
+如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future\<?\> 对象，通过调用该对象的 cancel(true) 方法就可以中断线程。
 
 ```java
 Future<?> future = executorService.submit(() -> {
@@ -328,11 +330,11 @@ Future<?> future = executorService.submit(() -> {
 future.cancel(true);
 ```
 
-# 四、互斥同步
+## 四、互斥同步
 
 Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 synchronized，而另一个是 JDK 实现的 ReentrantLock。
 
-## synchronized
+### synchronized
 
 **1. 同步一个代码块**  
 
@@ -450,7 +452,7 @@ public synchronized static void fun() {
 
 作用于整个类。
 
-## ReentrantLock
+### ReentrantLock
 
 ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁。
 
@@ -486,7 +488,7 @@ public static void main(String[] args) {
 ```
 
 
-## 比较
+### 比较
 
 **1. 锁的实现**  
 
@@ -512,15 +514,15 @@ synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非�
 
 一个 ReentrantLock 可以同时绑定多个 Condition 对象。
 
-## 使用选择
+### 使用选择
 
 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
 
-# 五、线程之间的协作
+## 五、线程之间的协作
 
 当多个线程可以一起工作去解决某个问题时，如果某些部分必须在其它部分之前完成，那么就需要对线程进行协调。
 
-## join()
+### join()
 
 在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待，直到目标线程结束。
 
@@ -576,7 +578,7 @@ A
 B
 ```
 
-## wait() notify() notifyAll()
+### wait() notify() notifyAll()
 
 调用 wait() 使得线程等待某个条件满足，线程在等待时会被挂起，当其他线程的运行使得这个条件满足时，其它线程会调用 notify() 或者 notifyAll() 来唤醒挂起的线程。
 
@@ -624,7 +626,7 @@ after
 - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
 - wait() 会释放锁，sleep() 不会。
 
-## await() signal() signalAll()
+### await() signal() signalAll()
 
 java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。
 
@@ -676,23 +678,23 @@ before
 after
 ```
 
-# 六、线程状态
+## 六、线程状态
 
 一个线程只能处于一种状态，并且这里的线程状态特指 Java 虚拟机的线程状态，不能反映线程在特定操作系统下的状态。
 
-## 新建（NEW）
+### 新建（NEW）
 
 创建后尚未启动。
 
-## 可运行（RUNABLE）
+### 可运行（RUNABLE）
 
 正在 Java 虚拟机中运行。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。
 
-## 阻塞（BLOCKED）
+### 阻塞（BLOCKED）
 
 请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态进入从而 RUNABLE 需要其他线程释放 monitor lock。
 
-## 无限期等待（WAITING）
+### 无限期等待（WAITING）
 
 等待其它线程显式地唤醒。
 
@@ -704,7 +706,7 @@ after
 | 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕 |
 | LockSupport.park() 方法 | LockSupport.unpark(Thread) |
 
-## 限期等待（TIMED_WAITING）
+### 限期等待（TIMED_WAITING）
 
 无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
 
@@ -718,17 +720,17 @@ after
 
 调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
 
-## 死亡（TERMINATED）
+### 死亡（TERMINATED）
 
 可以是线程结束任务之后自己结束，或者产生了异常而结束。
 
 [Java SE 9 Enum Thread.State](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.State.html)
 
-# 七、J.U.C - AQS
+## 七、J.U.C - AQS
 
 java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
 
-## CountDownLatch
+### CountDownLatch
 
 用来控制一个或者多个线程等待多个线程。
 
@@ -760,7 +762,7 @@ public class CountdownLatchExample {
 run..run..run..run..run..run..run..run..run..run..end
 ```
 
-## CyclicBarrier
+### CyclicBarrier
 
 用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
 
@@ -812,7 +814,7 @@ public class CyclicBarrierExample {
 before..before..before..before..before..before..before..before..before..before..after..after..after..after..after..after..after..after..after..after..
 ```
 
-## Semaphore
+### Semaphore
 
 Semaphore 类似于操作系统中的信号量，可以控制对互斥资源的访问线程数。
 
@@ -847,11 +849,11 @@ public class SemaphoreExample {
 2 1 2 2 2 2 2 1 2 2
 ```
 
-# 八、J.U.C - 其它组件
+## 八、J.U.C - 其它组件
 
-## FutureTask
+### FutureTask
 
-在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future<V> 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future<V> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
+在介绍 Callable 时我们知道它可以有返回值，返回值通过 Future\<V\> 进行封装。FutureTask 实现了 RunnableFuture 接口，该接口继承自 Runnable 和 Future\<V\> 接口，这使得 FutureTask 既可以当做一个任务执行，也可以有返回值。
 
 ```java
 public class FutureTask<V> implements RunnableFuture<V>
@@ -901,7 +903,7 @@ other task is running...
 4950
 ```
 
-## BlockingQueue
+### BlockingQueue
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
@@ -965,7 +967,7 @@ public static void main(String[] args) {
 produce..produce..consume..consume..produce..consume..produce..consume..produce..consume..
 ```
 
-## ForkJoin
+### ForkJoin
 
 主要用于并行计算中，和 MapReduce 原理类似，都是把大的计算任务拆分成多个小任务并行计算。
 
@@ -1022,7 +1024,7 @@ ForkJoinPool 实现了工作窃取算法来提高 CPU 的利用率。每个线�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e42f188f-f4a9-4e6f-88fc-45f4682072fb.png" width="300px"> </div><br>
 
-# 九、线程不安全示例
+## 九、线程不安全示例
 
 如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
 
@@ -1065,11 +1067,11 @@ public static void main(String[] args) throws InterruptedException {
 997
 ```
 
-# 十、Java 内存模型
+## 十、Java 内存模型
 
 Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
-## 主内存与工作内存
+### 主内存与工作内存
 
 处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了高速缓存。
 
@@ -1083,7 +1085,7 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/15851555-5abc-497d-ad34-efed10f43a6b.png" width="600px"> </div><br>
 
-## 内存间交互操作
+### 内存间交互操作
 
 Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。
 
@@ -1098,9 +1100,9 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 - lock：作用于主内存的变量
 - unlock
 
-## 内存模型三大特性
+### 内存模型三大特性
 
-### 1. 原子性
+#### 1. 原子性
 
 Java 内存模型保证了 read、load、use、assign、store、write、lock 和 unlock 操作具有原子性，例如对一个 int 类型的变量执行 assign 赋值操作，这个操作就是原子性的。但是 Java 内存模型允许虚拟机将没有被 volatile 修饰的 64 位数据（long，double）的读写操作划分为两次 32 位的操作来进行，即 load、store、read 和 write 操作可以不具备原子性。
 
@@ -1192,7 +1194,7 @@ public static void main(String[] args) throws InterruptedException {
 1000
 ```
 
-### 2. 可见性
+#### 2. 可见性
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
@@ -1204,7 +1206,7 @@ public static void main(String[] args) throws InterruptedException {
 
 对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
 
-### 3. 有序性
+#### 3. 有序性
 
 有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
@@ -1212,11 +1214,11 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 也可以通过 synchronized 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
 
-## 先行发生原则
+### 先行发生原则
 
 上面提到了可以用 volatile 和 synchronized 来保证有序性。除此之外，JVM 还规定了先行发生原则，让一个操作无需控制就能先于另一个操作完成。
 
-### 1. 单一线程原则
+#### 1. 单一线程原则
 
 > Single Thread rule
 
@@ -1224,7 +1226,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/874b3ff7-7c5c-4e7a-b8ab-a82a3e038d20.png" width="180px"> </div><br>
 
-### 2. 管程锁定规则
+#### 2. 管程锁定规则
 
 > Monitor Lock Rule
 
@@ -1232,7 +1234,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8996a537-7c4a-4ec8-a3b7-7ef1798eae26.png" width="350px"> </div><br>
 
-### 3. volatile 变量规则
+#### 3. volatile 变量规则
 
 > Volatile Variable Rule
 
@@ -1240,7 +1242,7 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/942f33c9-8ad9-4987-836f-007de4c21de0.png" width="400px"> </div><br>
 
-### 4. 线程启动规则
+#### 4. 线程启动规则
 
 > Thread Start Rule
 
@@ -1248,7 +1250,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6270c216-7ec0-4db7-94de-0003bce37cd2.png" width="380px"> </div><br>
 
-### 5. 线程加入规则
+#### 5. 线程加入规则
 
 > Thread Join Rule
 
@@ -1256,31 +1258,31 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/233f8d89-31d7-413f-9c02-042f19c46ba1.png" width="400px"> </div><br>
 
-### 6. 线程中断规则
+#### 6. 线程中断规则
 
 > Thread Interruption Rule
 
 对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 interrupted() 方法检测到是否有中断发生。
 
-### 7. 对象终结规则
+#### 7. 对象终结规则
 
 > Finalizer Rule
 
 一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
 
-### 8. 传递性
+#### 8. 传递性
 
 > Transitivity
 
 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
 
-# 十一、线程安全
+## 十一、线程安全
 
 多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。
 
 线程安全有以下几种实现方式：
 
-## 不可变
+### 不可变
 
 不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
 
@@ -1317,11 +1319,11 @@ public V put(K key, V value) {
 }
 ```
 
-## 互斥同步
+### 互斥同步
 
 synchronized 和 ReentrantLock。
 
-## 非阻塞同步
+### 非阻塞同步
 
 互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
 
@@ -1329,11 +1331,11 @@ synchronized 和 ReentrantLock。
 
 随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。
 
-### 1. CAS
+#### 1. CAS
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
 
-### 2. AtomicInteger
+#### 2. AtomicInteger
 
 J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。
 
@@ -1370,17 +1372,17 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-### 3. ABA
+#### 3. ABA
 
 如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
 
 J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
-## 无同步方案
+### 无同步方案
 
 要保证线程安全，并不是一定就要进行同步。如果一个方法本来就不涉及共享数据，那它自然就无须任何同步措施去保证正确性。
 
-### 1. 栈封闭
+#### 1. 栈封闭
 
 多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
 
@@ -1411,7 +1413,7 @@ public static void main(String[] args) {
 100
 ```
 
-### 2. 线程本地存储（Thread Local Storage）
+#### 2. 线程本地存储（Thread Local Storage）
 
 如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
 
@@ -1482,7 +1484,7 @@ public class ThreadLocalExample1 {
 ThreadLocal.ThreadLocalMap threadLocals = null;
 ```
 
-当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 ThreadLocalMap 对象，然后将 ThreadLocal->value 键值对插入到该 Map 中。
+当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 ThreadLocalMap 对象，然后将 ThreadLocal-\>value 键值对插入到该 Map 中。
 
 ```java
 public void set(T value) {
@@ -1517,17 +1519,17 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
 
-### 3. 可重入代码（Reentrant Code）
+#### 3. 可重入代码（Reentrant Code）
 
 这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
 
 可重入代码有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法等。
 
-# 十二、锁优化
+## 十二、锁优化
 
 这里的锁优化主要是指 JVM 对 synchronized 的优化。
 
-## 自旋锁
+### 自旋锁
 
 互斥同步进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。
 
@@ -1535,7 +1537,7 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
-## 锁消除
+### 锁消除
 
 锁消除是指对于被检测出不可能存在竞争的共享数据的锁进行消除。
 
@@ -1563,13 +1565,13 @@ public static String concatString(String s1, String s2, String s3) {
 
 每个 append() 方法中都有一个同步块。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 concatString() 方法内部。也就是说，sb 的所有引用永远不会逃逸到 concatString() 方法之外，其他线程无法访问到它，因此可以进行消除。
 
-## 锁粗化
+### 锁粗化
 
 如果一系列的连续操作都对同一个对象反复加锁和解锁，频繁的加锁操作就会导致性能损耗。
 
 上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
 
-## 轻量级锁
+### 轻量级锁
 
 JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
 
@@ -1589,7 +1591,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 如果 CAS 操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的虚拟机栈，如果是的话说明当前线程已经拥有了这个锁对象，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁。
 
-## 偏向锁
+### 偏向锁
 
 偏向锁的思想是偏向于让第一个获取锁对象的线程，这个线程在之后获取该锁就不再需要进行同步操作，甚至连 CAS 操作也不再需要。
 
@@ -1599,7 +1601,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/390c913b-5f31-444f-bbdb-2b88b688e7ce.jpg" width="600"/> </div><br>
 
-# 十三、多线程开发良好的实践
+## 十三、多线程开发良好的实践
 
 - 给线程起个有意义的名字，这样可以方便找 Bug。
 
@@ -1615,7 +1617,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 - 使用线程池而不是直接创建线程，这是因为创建线程代价很高，线程池可以有效地利用有限的线程来启动任务。
 
-# 参考资料
+## 参考资料
 
 - BruceEckel. Java 编程思想: 第 4 版 [M]. 机械工业出版社, 2007.
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
@@ -1632,10 +1634,3 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 - [JAVA FORK JOIN EXAMPLE](http://www.javacreed.com/java-fork-join-example/ "Java Fork Join Example")
 - [聊聊并发（八）——Fork/Join 框架介绍](http://ifeve.com/talk-concurrency-forkjoin/)
 - [Eliminating SynchronizationRelated Atomic Operations with Biased Locking and Bulk Rebiasing](http://www.oracle.com/technetwork/java/javase/tech/biasedlocking-oopsla2006-preso-150106.pdf)
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
