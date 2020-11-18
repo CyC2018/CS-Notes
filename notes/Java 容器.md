@@ -132,7 +132,7 @@ private static final int DEFAULT_CAPACITY = 10;
 
 #### 2. 扩容
 
-添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity \>\> 1)`，也就是旧容量的 1.5 倍。
+添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，也就是旧容量的 1.5 倍左右，（oldCapacity 为偶数就是 1.5 倍，oldCapacity为奇数就是 1.5 倍-0.5）。奇偶不同，比如 ：8+8/2 = 12, 13+13/2=19，如果是奇数的话会丢掉小数。
 
 扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
 
