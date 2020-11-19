@@ -1077,6 +1077,11 @@ dmtsai tty1 Fri May 29 11:55 - 12:11 (00:15)
 
 ```html
 $ last -n 5 | awk '{print $1 "\t" $3}'
+dmtsai   192.168.1.100
+dmtsai   192.168.1.100
+dmtsai   192.168.1.100
+dmtsai   192.168.1.100
+dmtsai   Fri
 ```
 
 可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
