@@ -1,36 +1,38 @@
+# Leetcode 题解 - 搜索
 <!-- GFM-TOC -->
-* [BFS](#bfs)
-    * [1. 计算在网格中从原点到特定点的最短路径长度](#1-计算在网格中从原点到特定点的最短路径长度)
-    * [2. 组成整数的最小平方数数量](#2-组成整数的最小平方数数量)
-    * [3. 最短单词路径](#3-最短单词路径)
-* [DFS](#dfs)
-    * [1. 查找最大的连通面积](#1-查找最大的连通面积)
-    * [2. 矩阵中的连通分量数目](#2-矩阵中的连通分量数目)
-    * [3. 好友关系的连通分量数目](#3-好友关系的连通分量数目)
-    * [4. 填充封闭区域](#4-填充封闭区域)
-    * [5. 能到达的太平洋和大西洋的区域](#5-能到达的太平洋和大西洋的区域)
-* [Backtracking](#backtracking)
-    * [1. 数字键盘组合](#1-数字键盘组合)
-    * [2. IP 地址划分](#2-ip-地址划分)
-    * [3. 在矩阵中寻找字符串](#3-在矩阵中寻找字符串)
-    * [4. 输出二叉树中所有从根到叶子的路径](#4-输出二叉树中所有从根到叶子的路径)
-    * [5. 排列](#5-排列)
-    * [6. 含有相同元素求排列](#6-含有相同元素求排列)
-    * [7. 组合](#7-组合)
-    * [8. 组合求和](#8-组合求和)
-    * [9. 含有相同元素的组合求和](#9-含有相同元素的组合求和)
-    * [10. 1-9 数字的组合求和](#10-1-9-数字的组合求和)
-    * [11. 子集](#11-子集)
-    * [12. 含有相同元素求子集](#12-含有相同元素求子集)
-    * [13. 分割字符串使得每个部分都是回文数](#13-分割字符串使得每个部分都是回文数)
-    * [14. 数独](#14-数独)
-    * [15. N 皇后](#15-n-皇后)
+* [Leetcode 题解 - 搜索](#leetcode-题解---搜索)
+    * [BFS](#bfs)
+        * [1. 计算在网格中从原点到特定点的最短路径长度](#1-计算在网格中从原点到特定点的最短路径长度)
+        * [2. 组成整数的最小平方数数量](#2-组成整数的最小平方数数量)
+        * [3. 最短单词路径](#3-最短单词路径)
+    * [DFS](#dfs)
+        * [1. 查找最大的连通面积](#1-查找最大的连通面积)
+        * [2. 矩阵中的连通分量数目](#2-矩阵中的连通分量数目)
+        * [3. 好友关系的连通分量数目](#3-好友关系的连通分量数目)
+        * [4. 填充封闭区域](#4-填充封闭区域)
+        * [5. 能到达的太平洋和大西洋的区域](#5-能到达的太平洋和大西洋的区域)
+    * [Backtracking](#backtracking)
+        * [1. 数字键盘组合](#1-数字键盘组合)
+        * [2. IP 地址划分](#2-ip-地址划分)
+        * [3. 在矩阵中寻找字符串](#3-在矩阵中寻找字符串)
+        * [4. 输出二叉树中所有从根到叶子的路径](#4-输出二叉树中所有从根到叶子的路径)
+        * [5. 排列](#5-排列)
+        * [6. 含有相同元素求排列](#6-含有相同元素求排列)
+        * [7. 组合](#7-组合)
+        * [8. 组合求和](#8-组合求和)
+        * [9. 含有相同元素的组合求和](#9-含有相同元素的组合求和)
+        * [10. 1-9 数字的组合求和](#10-1-9-数字的组合求和)
+        * [11. 子集](#11-子集)
+        * [12. 含有相同元素求子集](#12-含有相同元素求子集)
+        * [13. 分割字符串使得每个部分都是回文数](#13-分割字符串使得每个部分都是回文数)
+        * [14. 数独](#14-数独)
+        * [15. N 皇后](#15-n-皇后)
 <!-- GFM-TOC -->
 
 
 深度优先搜索和广度优先搜索广泛运用于树和图中，但是它们的应用远远不止如此。
 
-# BFS
+## BFS
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/95903878-725b-4ed9-bded-bc4aae0792a9.jpg"/> </div><br>
 
@@ -38,19 +40,19 @@
 
 第一层：
 
-- 0 -> {6,2,1,5}
+- 0 -\> {6,2,1,5}
 
 第二层：
 
-- 6 -> {4}
-- 2 -> {}
-- 1 -> {}
-- 5 -> {3}
+- 6 -\> {4}
+- 2 -\> {}
+- 1 -\> {}
+- 5 -\> {3}
 
 第三层：
 
-- 4 -> {}
-- 3 -> {}
+- 4 -\> {}
+- 3 -\> {}
 
 每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等   **最优解**   问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径，无权图是指从一个节点到另一个节点的代价都记为 1。
 
@@ -59,7 +61,7 @@
 - 队列：用来存储每一轮遍历得到的节点；
 - 标记：对于遍历过的节点，应该将它标记，防止重复遍历。
 
-## 1. 计算在网格中从原点到特定点的最短路径长度
+### 1. 计算在网格中从原点到特定点的最短路径长度
 
 1091\. Shortest Path in Binary Matrix(Medium)
 
@@ -75,7 +77,7 @@
 题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。
 
 ```java
-		public int shortestPathBinaryMatrix(int[][] grids) {
+public int shortestPathBinaryMatrix(int[][] grids) {
         if (grids == null || grids.length == 0 || grids[0].length == 0) {
             return -1;
         }
@@ -110,7 +112,7 @@
     }
 ```
 
-## 2. 组成整数的最小平方数数量
+### 2. 组成整数的最小平方数数量
 
 279\. Perfect Squares (Medium)
 
@@ -175,7 +177,7 @@ private List<Integer> generateSquares(int n) {
 }
 ```
 
-## 3. 最短单词路径
+### 3. 最短单词路径
 
 127\. Word Ladder (Medium)
 
@@ -273,7 +275,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 }
 ```
 
-# DFS
+## DFS
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/74dc31eb-6baa-47ea-ab1c-d27a0ca35093.png"/> </div><br>
 
@@ -288,7 +290,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 - 栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。
 - 标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。
 
-## 1. 查找最大的连通面积
+### 1. 查找最大的连通面积
 
 695\. Max Area of Island (Medium)
 
@@ -337,7 +339,7 @@ private int dfs(int[][] grid, int r, int c) {
 }
 ```
 
-## 2. 矩阵中的连通分量数目
+### 2. 矩阵中的连通分量数目
 
 200\. Number of Islands (Medium)
 
@@ -388,7 +390,7 @@ private void dfs(char[][] grid, int i, int j) {
 }
 ```
 
-## 3. 好友关系的连通分量数目
+### 3. 好友关系的连通分量数目
 
 547\. Friend Circles (Medium)
 
@@ -434,7 +436,7 @@ private void dfs(int[][] M, int i, boolean[] hasVisited) {
 }
 ```
 
-## 4. 填充封闭区域
+### 4. 填充封闭区域
 
 130\. Surrounded Regions (Medium)
 
@@ -501,7 +503,7 @@ private void dfs(char[][] board, int r, int c) {
 }
 ```
 
-## 5. 能到达的太平洋和大西洋的区域
+### 5. 能到达的太平洋和大西洋的区域
 
 417\. Pacific Atlantic Water Flow (Medium)
 
@@ -579,7 +581,7 @@ private void dfs(int r, int c, boolean[][] canReach) {
 }
 ```
 
-# Backtracking
+## Backtracking
 
 Backtracking（回溯）属于 DFS。
 
@@ -591,7 +593,7 @@ Backtracking（回溯）属于 DFS。
 - 在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；
 - 但是在递归返回时，需要将元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
 
-## 1. 数字键盘组合
+### 1. 数字键盘组合
 
 17\. Letter Combinations of a Phone Number (Medium)
 
@@ -631,7 +633,7 @@ private void doCombination(StringBuilder prefix, List<String> combinations, fina
 }
 ```
 
-## 2. IP 地址划分
+### 2. IP 地址划分
 
 93\. Restore IP Addresses(Medium)
 
@@ -674,7 +676,7 @@ private void doRestore(int k, StringBuilder tempAddress, List<String> addresses,
 }
 ```
 
-## 3. 在矩阵中寻找字符串
+### 3. 在矩阵中寻找字符串
 
 79\. Word Search (Medium)
 
@@ -745,7 +747,7 @@ private boolean backtracking(int curLen, int r, int c, boolean[][] visited, fina
 }
 ```
 
-## 4. 输出二叉树中所有从根到叶子的路径
+### 4. 输出二叉树中所有从根到叶子的路径
 
 257\. Binary Tree Paths (Easy)
 
@@ -805,7 +807,7 @@ private String buildPath(List<Integer> values) {
 }
 ```
 
-## 5. 排列
+### 5. 排列
 
 46\. Permutations (Medium)
 
@@ -850,7 +852,7 @@ private void backtracking(List<Integer> permuteList, List<List<Integer>> permute
 }
 ```
 
-## 6. 含有相同元素求排列
+### 6. 含有相同元素求排列
 
 47\. Permutations II (Medium)
 
@@ -897,7 +899,7 @@ private void backtracking(List<Integer> permuteList, List<List<Integer>> permute
 }
 ```
 
-## 7. 组合
+### 7. 组合
 
 77\. Combinations (Medium)
 
@@ -936,7 +938,7 @@ private void backtracking(List<Integer> combineList, List<List<Integer>> combina
 }
 ```
 
-## 8. 组合求和
+### 8. 组合求和
 
 39\. Combination Sum (Medium)
 
@@ -972,7 +974,7 @@ private void backtracking(List<Integer> tempCombination, List<List<Integer>> com
 }
 ```
 
-## 9. 含有相同元素的组合求和
+### 9. 含有相同元素的组合求和
 
 40\. Combination Sum II (Medium)
 
@@ -1019,7 +1021,7 @@ private void backtracking(List<Integer> tempCombination, List<List<Integer>> com
 }
 ```
 
-## 10. 1-9 数字的组合求和
+### 10. 1-9 数字的组合求和
 
 216\. Combination Sum III (Medium)
 
@@ -1061,7 +1063,7 @@ private void backtracking(int k, int n, int start,
 }
 ```
 
-## 11. 子集
+### 11. 子集
 
 78\. Subsets (Medium)
 
@@ -1094,7 +1096,7 @@ private void backtracking(int start, List<Integer> tempSubset, List<List<Integer
 }
 ```
 
-## 12. 含有相同元素求子集
+### 12. 含有相同元素求子集
 
 90\. Subsets II (Medium)
 
@@ -1146,7 +1148,7 @@ private void backtracking(int start, List<Integer> tempSubset, List<List<Integer
 }
 ```
 
-## 13. 分割字符串使得每个部分都是回文数
+### 13. 分割字符串使得每个部分都是回文数
 
 131\. Palindrome Partitioning (Medium)
 
@@ -1194,7 +1196,7 @@ private boolean isPalindrome(String s, int begin, int end) {
 }
 ```
 
-## 14. 数独
+### 14. 数独
 
 37\. Sudoku Solver (Hard)
 
@@ -1253,7 +1255,7 @@ private int cubeNum(int i, int j) {
 }
 ```
 
-## 15. N 皇后
+### 15. N 皇后
 
 51\. N-Queens (Hard)
 
@@ -1320,10 +1322,3 @@ private void backtracking(int row) {
     }
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

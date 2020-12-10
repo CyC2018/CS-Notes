@@ -1,17 +1,19 @@
+# Leetcode 题解 - 双指针
 <!-- GFM-TOC -->
-* [1. 有序数组的 Two Sum](#1-有序数组的-two-sum)
-* [2. 两数平方和](#2-两数平方和)
-* [3. 反转字符串中的元音字符](#3-反转字符串中的元音字符)
-* [4. 回文字符串](#4-回文字符串)
-* [5. 归并两个有序数组](#5-归并两个有序数组)
-* [6. 判断链表是否存在环](#6-判断链表是否存在环)
-* [7. 最长子序列](#7-最长子序列)
+* [Leetcode 题解 - 双指针](#leetcode-题解---双指针)
+    * [1. 有序数组的 Two Sum](#1-有序数组的-two-sum)
+    * [2. 两数平方和](#2-两数平方和)
+    * [3. 反转字符串中的元音字符](#3-反转字符串中的元音字符)
+    * [4. 回文字符串](#4-回文字符串)
+    * [5. 归并两个有序数组](#5-归并两个有序数组)
+    * [6. 判断链表是否存在环](#6-判断链表是否存在环)
+    * [7. 最长子序列](#7-最长子序列)
 <!-- GFM-TOC -->
 
 
 双指针主要用于遍历数组，两个指针指向不同的元素，从而协同完成任务。
 
-# 1. 有序数组的 Two Sum
+## 1. 有序数组的 Two Sum
 
 167\. Two Sum II - Input array is sorted (Easy)
 
@@ -27,8 +29,8 @@ Output: index1=1, index2=2
 使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。
 
 - 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
-- 如果 sum > target，移动较大的元素，使 sum 变小一些；
-- 如果 sum < target，移动较小的元素，使 sum 变大一些。
+- 如果 sum \> target，移动较大的元素，使 sum 变小一些；
+- 如果 sum \< target，移动较小的元素，使 sum 变大一些。
 
 数组中的元素最多遍历一次，时间复杂度为 O(N)。只使用了两个额外变量，空间复杂度为  O(1)。
 
@@ -52,7 +54,7 @@ public int[] twoSum(int[] numbers, int target) {
 }
 ```
 
-# 2. 两数平方和
+## 2. 两数平方和
 
 633\. Sum of Square Numbers (Easy)
 
@@ -92,7 +94,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
  }
 ```
 
-# 3. 反转字符串中的元音字符
+## 3. 反转字符串中的元音字符
 
 345\. Reverse Vowels of a String (Easy)
 
@@ -137,7 +139,7 @@ public String reverseVowels(String s) {
 }
 ```
 
-# 4. 回文字符串
+## 4. 回文字符串
 
 680\. Valid Palindrome II (Easy)
 
@@ -185,7 +187,7 @@ private boolean isPalindrome(String s, int i, int j) {
 }
 ```
 
-# 5. 归并两个有序数组
+## 5. 归并两个有序数组
 
 88\. Merge Sorted Array (Easy)
 
@@ -221,7 +223,7 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 }
 ```
 
-# 6. 判断链表是否存在环
+## 6. 判断链表是否存在环
 
 141\. Linked List Cycle (Easy)
 
@@ -246,7 +248,7 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
-# 7. 最长子序列
+## 7. 最长子序列
 
 524\. Longest Word in Dictionary through Deleting (Medium)
 
@@ -290,10 +292,3 @@ private boolean isSubstr(String s, String target) {
     return j == target.length();
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

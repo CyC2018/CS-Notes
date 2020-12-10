@@ -6,14 +6,24 @@
 * [五、更新](#五更新)
 * [六、删除](#六删除)
 * [七、查询](#七查询)
+    * [DISTINCT](#distinct)
+    * [LIMIT](#limit)
 * [八、排序](#八排序)
 * [九、过滤](#九过滤)
 * [十、通配符](#十通配符)
 * [十一、计算字段](#十一计算字段)
 * [十二、函数](#十二函数)
+    * [汇总](#汇总)
+    * [文本处理](#文本处理)
+    * [日期和时间处理](#日期和时间处理)
+    * [数值处理](#数值处理)
 * [十三、分组](#十三分组)
 * [十四、子查询](#十四子查询)
 * [十五、连接](#十五连接)
+    * [内连接](#内连接)
+    * [自连接](#自连接)
+    * [自然连接](#自然连接)
+    * [外连接](#外连接)
 * [十六、组合查询](#十六组合查询)
 * [十七、视图](#十七视图)
 * [十八、存储过程](#十八存储过程)
@@ -223,7 +233,7 @@ WHERE col IS NULL;
 
 通配符也是用在过滤语句中，但它只能用于文本字段。
 
--   **%**   匹配 >=0 个任意字符；
+-   **%**   匹配 \>=0 个任意字符；
 
 -   **\_**   匹配 ==1 个任意字符；
 
@@ -305,7 +315,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 
 - 日期格式：YYYY-MM-DD
-- 时间格式：HH:<zero-width space>MM:SS
+- 时间格式：HH:\<zero-width space\>MM:SS
 
 |函 数 | 说 明|
 | :---: | :---: |
@@ -483,7 +493,7 @@ FROM tablea AS A NATURAL JOIN tableb AS B;
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```sql
-SELECT Customers.cust_id, Orders.order_num
+SELECT Customers.cust_id, Customer.cust_name, Orders.order_id
 FROM Customers LEFT OUTER JOIN Orders
 ON Customers.cust_id = Orders.cust_id;
 ```
@@ -769,10 +779,3 @@ SET PASSWROD FOR myuser = Password('new_password');
 # 参考资料
 
 - BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

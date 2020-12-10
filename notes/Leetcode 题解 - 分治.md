@@ -1,10 +1,12 @@
+# Leetcode 题解 - 分治
 <!-- GFM-TOC -->
-* [1. 给表达式加括号](#1-给表达式加括号)
-* [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
+* [Leetcode 题解 - 分治](#leetcode-题解---分治)
+    * [1. 给表达式加括号](#1-给表达式加括号)
+    * [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
 <!-- GFM-TOC -->
 
 
-# 1. 给表达式加括号
+## 1. 给表达式加括号
 
 241\. Different Ways to Add Parentheses (Medium)
 
@@ -51,7 +53,7 @@ public List<Integer> diffWaysToCompute(String input) {
 }
 ```
 
-# 2. 不同的二叉搜索树
+## 2. 不同的二叉搜索树
 
 95\. Unique Binary Search Trees II (Medium)
 
@@ -108,10 +110,3 @@ private List<TreeNode> generateSubtrees(int s, int e) {
     return res;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

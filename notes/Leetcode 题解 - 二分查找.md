@@ -1,10 +1,12 @@
+# Leetcode 题解 - 二分查找
 <!-- GFM-TOC -->
-* [1. 求开方](#1-求开方)
-* [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
-* [3. 有序数组的 Single Element](#3-有序数组的-single-element)
-* [4. 第一个错误的版本](#4-第一个错误的版本)
-* [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
-* [6. 查找区间](#6-查找区间)
+* [Leetcode 题解 - 二分查找](#leetcode-题解---二分查找)
+    * [1. 求开方](#1-求开方)
+    * [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
+    * [3. 有序数组的 Single Element](#3-有序数组的-single-element)
+    * [4. 第一个错误的版本](#4-第一个错误的版本)
+    * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
+    * [6. 查找区间](#6-查找区间)
 <!-- GFM-TOC -->
 
 
@@ -59,7 +61,7 @@ l + h 可能出现加法溢出，也就是说加法的结果大于整型能够�
 
 ```java
 public int binarySearch(int[] nums, int key) {
-    int l = 0, h = nums.length - 1;
+    int l = 0, h = nums.length;
     while (l < h) {
         int m = l + (h - l) / 2;
         if (nums[m] >= key) {
@@ -75,12 +77,12 @@ public int binarySearch(int[] nums, int key) {
 该实现和正常实现有以下不同：
 
 - h 的赋值表达式为 h = m
-- 循环条件为 l < h
+- 循环条件为 l \< h
 - 最后返回 l 而不是 -1
 
-在 nums[m] >= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
+在 nums[m] \>= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
 
-在 h 的赋值表达式为 h = m 的情况下，如果循环条件为 l <= h，那么会出现循环无法退出的情况，因此循环条件只能是 l < h。以下演示了循环条件为 l <= h 时循环无法退出的情况：
+在 h 的赋值表达式为 h = m 的情况下，如果循环条件为 l \<= h，那么会出现循环无法退出的情况，因此循环条件只能是 l \< h。以下演示了循环条件为 l \<= h 时循环无法退出的情况：
 
 ```text
 nums = {0, 1, 2}, key = 1
@@ -94,7 +96,7 @@ l   m   h
 
 当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
 
-# 1. 求开方
+## 1. 求开方
 
 69\. Sqrt(x) (Easy)
 
@@ -111,7 +113,7 @@ Explanation: The square root of 8 is 2.82842..., and since we want to return an 
 
 一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
 
-对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l <= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
+对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l \<= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
 
 ```java
 public int mySqrt(int x) {
@@ -134,7 +136,7 @@ public int mySqrt(int x) {
 }
 ```
 
-# 2. 大于给定元素的最小元素
+## 2. 大于给定元素的最小元素
 
 744\. Find Smallest Letter Greater Than Target (Easy)
 
@@ -170,7 +172,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 }
 ```
 
-# 3. 有序数组的 Single Element
+## 3. 有序数组的 Single Element
 
 540\. Single Element in a Sorted Array (Medium)
 
@@ -185,11 +187,11 @@ Output: 2
 
 要求以 O(logN) 时间复杂度进行求解，因此不能遍历数组并进行异或操作来求解，这么做的时间复杂度为 O(N)。
 
-令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 < index，那么 nums[m] == nums[m + 1]；m + 1 >= index，那么 nums[m] != nums[m + 1]。
+令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 \< index，那么 nums[m] == nums[m + 1]；m + 1 \>= index，那么 nums[m] != nums[m + 1]。
 
 从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 index 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 index 所在的数组位置为 [l, m]，此时令 h = m。
 
-因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l < h 这种形式。
+因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l \< h 这种形式。
 
 ```java
 public int singleNonDuplicate(int[] nums) {
@@ -209,7 +211,7 @@ public int singleNonDuplicate(int[] nums) {
 }
 ```
 
-# 4. 第一个错误的版本
+## 4. 第一个错误的版本
 
 278\. First Bad Version (Easy)
 
@@ -219,7 +221,7 @@ public int singleNonDuplicate(int[] nums) {
 
 如果第 m 个版本出错，则表示第一个错误的版本在 [l, m] 之间，令 h = m；否则第一个错误的版本在 [m + 1, h] 之间，令 l = m + 1。
 
-因为 h 的赋值表达式为 h = m，因此循环条件为 l < h。
+因为 h 的赋值表达式为 h = m，因此循环条件为 l \< h。
 
 ```java
 public int firstBadVersion(int n) {
@@ -236,7 +238,7 @@ public int firstBadVersion(int n) {
 }
 ```
 
-# 5. 旋转数组的最小数字
+## 5. 旋转数组的最小数字
 
 153\. Find Minimum in Rotated Sorted Array (Medium)
 
@@ -262,7 +264,7 @@ public int findMin(int[] nums) {
 }
 ```
 
-# 6. 查找区间
+## 6. 查找区间
 
 34\. Find First and Last Position of Element in Sorted Array
 
@@ -312,10 +314,3 @@ nums = [2,2], target = 2
 ```
 
 如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findLeft 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3) ，我们希望返回 3 插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以我们需要将 h 取值为 nums.length，从而使得 findFirst返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

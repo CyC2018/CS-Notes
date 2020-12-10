@@ -30,5 +30,4 @@
 
 离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在后台回复 **CyC** 即可获取下载链接。
 
-<div align="center"><img width="350px" src="公众号二维码-1.png"></img></div>
-
+<div align="center"><img width="350px" src="公众号二维码-2.png"></img></div>

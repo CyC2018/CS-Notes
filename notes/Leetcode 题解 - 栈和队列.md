@@ -1,14 +1,16 @@
+# Leetcode 题解 - 栈和队列
 <!-- GFM-TOC -->
-* [1. 用栈实现队列](#1-用栈实现队列)
-* [2. 用队列实现栈](#2-用队列实现栈)
-* [3. 最小值栈](#3-最小值栈)
-* [4. 用栈实现括号匹配](#4-用栈实现括号匹配)
-* [5. 数组中元素与下一个比它大的元素之间的距离](#5-数组中元素与下一个比它大的元素之间的距离)
-* [6. 循环数组中比当前元素大的下一个元素](#6-循环数组中比当前元素大的下一个元素)
+* [Leetcode 题解 - 栈和队列](#leetcode-题解---栈和队列)
+    * [1. 用栈实现队列](#1-用栈实现队列)
+    * [2. 用队列实现栈](#2-用队列实现栈)
+    * [3. 最小值栈](#3-最小值栈)
+    * [4. 用栈实现括号匹配](#4-用栈实现括号匹配)
+    * [5. 数组中元素与下一个比它大的元素之间的距离](#5-数组中元素与下一个比它大的元素之间的距离)
+    * [6. 循环数组中比当前元素大的下一个元素](#6-循环数组中比当前元素大的下一个元素)
 <!-- GFM-TOC -->
 
 
-# 1. 用栈实现队列
+## 1. 用栈实现队列
 
 232\. Implement Queue using Stacks (Easy)
 
@@ -50,7 +52,7 @@ class MyQueue {
 }
 ```
 
-# 2. 用队列实现栈
+## 2. 用队列实现栈
 
 225\. Implement Stack using Queues (Easy)
 
@@ -89,7 +91,7 @@ class MyStack {
 }
 ```
 
-# 3. 最小值栈
+## 3. 最小值栈
 
 155\. Min Stack (Easy)
 
@@ -132,7 +134,7 @@ class MinStack {
 
 对于实现最小值队列问题，可以先将队列使用栈来实现，然后就将问题转换为最小值栈，这个问题出现在 编程之美：3.7。
 
-# 4. 用栈实现括号匹配
+## 4. 用栈实现括号匹配
 
 20\. Valid Parentheses (Easy)
 
@@ -167,7 +169,7 @@ public boolean isValid(String s) {
 }
 ```
 
-# 5. 数组中元素与下一个比它大的元素之间的距离
+## 5. 数组中元素与下一个比它大的元素之间的距离
 
 739\. Daily Temperatures (Medium)
 
@@ -196,7 +198,7 @@ public int[] dailyTemperatures(int[] temperatures) {
 }
 ```
 
-# 6. 循环数组中比当前元素大的下一个元素
+## 6. 循环数组中比当前元素大的下一个元素
 
 503\. Next Greater Element II (Medium)
 
@@ -230,10 +232,3 @@ public int[] nextGreaterElements(int[] nums) {
     return next;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

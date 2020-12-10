@@ -1,53 +1,53 @@
+# Leetcode 题解 - 动态规划
 <!-- GFM-TOC -->
-* [斐波那契数列](#斐波那契数列)
-    * [1. 爬楼梯](#1-爬楼梯)
-    * [2. 强盗抢劫](#2-强盗抢劫)
-    * [3. 强盗在环形街区抢劫](#3-强盗在环形街区抢劫)
-    * [4. 信件错排](#4-信件错排)
-    * [5. 母牛生产](#5-母牛生产)
-* [矩阵路径](#矩阵路径)
-    * [1. 矩阵的最小路径和](#1-矩阵的最小路径和)
-    * [2. 矩阵的总路径数](#2-矩阵的总路径数)
-* [数组区间](#数组区间)
-    * [1. 数组区间和](#1-数组区间和)
-    * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
-* [分割整数](#分割整数)
-    * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
-    * [2. 按平方数来分割整数](#2-按平方数来分割整数)
-    * [3. 分割整数构成字母字符串](#3-分割整数构成字母字符串)
-* [最长递增子序列](#最长递增子序列)
-    * [1. 最长递增子序列](#1-最长递增子序列)
-    * [2. 一组整数对能够构成的最长链](#2-一组整数对能够构成的最长链)
-    * [3. 最长摆动子序列](#3-最长摆动子序列)
-* [最长公共子序列](#最长公共子序列)
-    * [1. 最长公共子序列](#1-最长公共子序列)
-* [0-1 背包](#0-1-背包)
-    * [1. 划分数组为和相等的两部分](#1-划分数组为和相等的两部分)
-    * [2. 改变一组数的正负号使得它们的和为一给定数](#2-改变一组数的正负号使得它们的和为一给定数)
-    * [3. 01 字符构成最多的字符串](#3-01-字符构成最多的字符串)
-    * [4. 找零钱的最少硬币数](#4-找零钱的最少硬币数)
-    * [5. 找零钱的硬币数组合](#5-找零钱的硬币数组合)
-    * [6. 字符串按单词列表分割](#6-字符串按单词列表分割)
-    * [7. 组合总和](#7-组合总和)
-* [股票交易](#股票交易)
-    * [1. 需要冷却期的股票交易](#1-需要冷却期的股票交易)
-    * [2. 需要交易费用的股票交易](#2-需要交易费用的股票交易)
-    * [3. 只能进行两次的股票交易](#3-只能进行两次的股票交易)
-    * [4. 只能进行 k 次的股票交易](#4-只能进行-k-次的股票交易)
-* [字符串编辑](#字符串编辑)
-    * [1. 删除两个字符串的字符使它们相等](#1-删除两个字符串的字符使它们相等)
-    * [2. 编辑距离](#2-编辑距离)
-    * [3. 复制粘贴字符](#3-复制粘贴字符)
+* [Leetcode 题解 - 动态规划](#leetcode-题解---动态规划)
+    * [斐波那契数列](#斐波那契数列)
+        * [1. 爬楼梯](#1-爬楼梯)
+        * [2. 强盗抢劫](#2-强盗抢劫)
+        * [3. 强盗在环形街区抢劫](#3-强盗在环形街区抢劫)
+        * [4. 信件错排](#4-信件错排)
+        * [5. 母牛生产](#5-母牛生产)
+    * [矩阵路径](#矩阵路径)
+        * [1. 矩阵的最小路径和](#1-矩阵的最小路径和)
+        * [2. 矩阵的总路径数](#2-矩阵的总路径数)
+    * [数组区间](#数组区间)
+        * [1. 数组区间和](#1-数组区间和)
+        * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
+    * [分割整数](#分割整数)
+        * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
+        * [2. 按平方数来分割整数](#2-按平方数来分割整数)
+        * [3. 分割整数构成字母字符串](#3-分割整数构成字母字符串)
+    * [最长递增子序列](#最长递增子序列)
+        * [1. 最长递增子序列](#1-最长递增子序列)
+        * [2. 一组整数对能够构成的最长链](#2-一组整数对能够构成的最长链)
+        * [3. 最长摆动子序列](#3-最长摆动子序列)
+    * [最长公共子序列](#最长公共子序列)
+        * [1. 最长公共子序列](#1-最长公共子序列)
+    * [0-1 背包](#0-1-背包)
+        * [1. 划分数组为和相等的两部分](#1-划分数组为和相等的两部分)
+        * [2. 改变一组数的正负号使得它们的和为一给定数](#2-改变一组数的正负号使得它们的和为一给定数)
+        * [3. 01 字符构成最多的字符串](#3-01-字符构成最多的字符串)
+        * [4. 找零钱的最少硬币数](#4-找零钱的最少硬币数)
+        * [5. 找零钱的硬币数组合](#5-找零钱的硬币数组合)
+        * [6. 字符串按单词列表分割](#6-字符串按单词列表分割)
+        * [7. 组合总和](#7-组合总和)
+    * [股票交易](#股票交易)
+        * [1. 需要冷却期的股票交易](#1-需要冷却期的股票交易)
+        * [2. 需要交易费用的股票交易](#2-需要交易费用的股票交易)
+        * [3. 只能进行两次的股票交易](#3-只能进行两次的股票交易)
+        * [4. 只能进行 k 次的股票交易](#4-只能进行-k-次的股票交易)
+    * [字符串编辑](#字符串编辑)
+        * [1. 删除两个字符串的字符使它们相等](#1-删除两个字符串的字符使它们相等)
+        * [2. 编辑距离](#2-编辑距离)
+        * [3. 复制粘贴字符](#3-复制粘贴字符)
 <!-- GFM-TOC -->
-
-
 
 
 递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
 
-# 斐波那契数列
+## 斐波那契数列
 
-## 1. 爬楼梯
+### 1. 爬楼梯
 
 70\. Climbing Stairs (Easy)
 
@@ -80,7 +80,7 @@ public int climbStairs(int n) {
 }
 ```
 
-## 2. 强盗抢劫
+### 2. 强盗抢劫
 
 198\. House Robber (Easy)
 
@@ -108,7 +108,7 @@ public int rob(int[] nums) {
 }
 ```
 
-## 3. 强盗在环形街区抢劫
+### 3. 强盗在环形街区抢劫
 
 213\. House Robber II (Medium)
 
@@ -137,9 +137,9 @@ private int rob(int[] nums, int first, int last) {
 }
 ```
 
-## 4. 信件错排
+### 4. 信件错排
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量（所有信封都没有装各自的信）。
+题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -152,7 +152,7 @@ private int rob(int[] nums, int first, int last) {
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/da1f96b9-fd4d-44ca-8925-fb14c5733388.png" width="350px"> </div><br>
 
-## 5. 母牛生产
+### 5. 母牛生产
 
 [程序员代码面试指南-P181](#)
 
@@ -164,9 +164,9 @@ private int rob(int[] nums, int first, int last) {
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/879814ee-48b5-4bcb-86f5-dcc400cb81ad.png" width="250px"> </div><br>
 
-# 矩阵路径
+## 矩阵路径
 
-## 1. 矩阵的最小路径和
+### 1. 矩阵的最小路径和
 
 64\. Minimum Path Sum (Medium)
 
@@ -204,7 +204,7 @@ public int minPathSum(int[][] grid) {
 }
 ```
 
-## 2. 矩阵的总路径数
+### 2. 矩阵的总路径数
 
 62\. Unique Paths (Medium)
 
@@ -241,9 +241,9 @@ public int uniquePaths(int m, int n) {
 }
 ```
 
-# 数组区间
+## 数组区间
 
-## 1. 数组区间和
+### 1. 数组区间和
 
 303\. Range Sum Query - Immutable (Easy)
 
@@ -277,7 +277,7 @@ class NumArray {
 }
 ```
 
-## 2. 数组中等差递增子区间的个数
+### 2. 数组中等差递增子区间的个数
 
 413\. Arithmetic Slices (Medium)
 
@@ -336,9 +336,9 @@ public int numberOfArithmeticSlices(int[] A) {
 }
 ```
 
-# 分割整数
+## 分割整数
 
-## 1. 分割整数的最大乘积
+### 1. 分割整数的最大乘积
 
 343\. Integer Break (Medim)
 
@@ -359,7 +359,7 @@ public int integerBreak(int n) {
 }
 ```
 
-## 2. 按平方数来分割整数
+### 2. 按平方数来分割整数
 
 279\. Perfect Squares(Medium)
 
@@ -397,7 +397,7 @@ private List<Integer> generateSquareList(int n) {
 }
 ```
 
-## 3. 分割整数构成字母字符串
+### 3. 分割整数构成字母字符串
 
 91\. Decode Ways (Medium)
 
@@ -431,7 +431,7 @@ public int numDecodings(String s) {
 }
 ```
 
-# 最长递增子序列
+## 最长递增子序列
 
 已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>}，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个  **子序列**  。
 
@@ -447,7 +447,7 @@ public int numDecodings(String s) {
 
 对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp[i] | 1 <= i <= N} 即为所求。
 
-## 1. 最长递增子序列
+### 1. 最长递增子序列
 
 300\. Longest Increasing Subsequence (Medium)
 
@@ -485,7 +485,7 @@ return ret;
 定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
-- 如果 tails[i-1] < x <= tails[i]，那么更新 tails[i] = x。
+- 如果 tails[i-1] \< x \<= tails[i]，那么更新 tails[i] = x。
 
 例如对于数组 [4,3,6,5]，有：
 
@@ -531,7 +531,7 @@ private int binarySearch(int[] tails, int len, int key) {
 }
 ```
 
-## 2. 一组整数对能够构成的最长链
+### 2. 一组整数对能够构成的最长链
 
 646\. Maximum Length of Pair Chain (Medium)
 
@@ -543,7 +543,7 @@ Output: 2
 Explanation: The longest chain is [1,2] -> [3,4]
 ```
 
-题目描述：对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
+题目描述：对于 (a, b) 和 (c, d) ，如果 b \< c，则它们可以构成一条链。
 
 ```java
 public int findLongestChain(int[][] pairs) {
@@ -565,7 +565,7 @@ public int findLongestChain(int[][] pairs) {
 }
 ```
 
-## 3. 最长摆动子序列
+### 3. 最长摆动子序列
 
 376\. Wiggle Subsequence (Medium)
 
@@ -603,7 +603,7 @@ public int wiggleMaxLength(int[] nums) {
 }
 ```
 
-# 最长公共子序列
+## 最长公共子序列
 
 对于两个子序列 S1 和 S2，找出它们最长的公共子序列。
 
@@ -626,7 +626,7 @@ public int wiggleMaxLength(int[] nums) {
 - 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>。
 - 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
-## 1. 最长公共子序列
+### 1. 最长公共子序列
 
 1143\. Longest Common Subsequence
 
@@ -649,7 +649,7 @@ public int wiggleMaxLength(int[] nums) {
     }
 ```
 
-# 0-1 背包
+## 0-1 背包
 
 有一个容量为 N 的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
 
@@ -730,7 +730,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 - 其它：物品之间相互约束或者依赖
 
-## 1. 划分数组为和相等的两部分
+### 1. 划分数组为和相等的两部分
 
 416\. Partition Equal Subset Sum (Medium)
 
@@ -772,7 +772,7 @@ private int computeArraySum(int[] nums) {
 }
 ```
 
-## 2. 改变一组数的正负号使得它们的和为一给定数
+### 2. 改变一组数的正负号使得它们的和为一给定数
 
 494\. Target Sum (Medium)
 
@@ -846,7 +846,7 @@ private int findTargetSumWays(int[] nums, int start, int S) {
 }
 ```
 
-## 3. 01 字符构成最多的字符串
+### 3. 01 字符构成最多的字符串
 
 474\. Ones and Zeroes (Medium)
 
@@ -886,7 +886,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 }
 ```
 
-## 4. 找零钱的最少硬币数
+### 4. 找零钱的最少硬币数
 
 322\. Coin Change (Medium)
 
@@ -912,6 +912,7 @@ return -1.
 
 ```java
 public int coinChange(int[] coins, int amount) {
+    if (amount == 0 || coins == null) return 0;
     int[] dp = new int[amount + 1];
     for (int coin : coins) {
         for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
@@ -929,7 +930,7 @@ public int coinChange(int[] coins, int amount) {
 }
 ```
 
-## 5. 找零钱的硬币数组合
+### 5. 找零钱的硬币数组合
 
 518\. Coin Change 2 (Medium)
 
@@ -963,7 +964,7 @@ public int change(int amount, int[] coins) {
 }
 ```
 
-## 6. 字符串按单词列表分割
+### 6. 字符串按单词列表分割
 
 139\. Word Break (Medium)
 
@@ -1002,7 +1003,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
 }
 ```
 
-## 7. 组合总和
+### 7. 组合总和
 
 377\. Combination Sum IV (Medium)
 
@@ -1045,9 +1046,9 @@ public int combinationSum4(int[] nums, int target) {
 }
 ```
 
-# 股票交易
+## 股票交易
 
-## 1. 需要冷却期的股票交易
+### 1. 需要冷却期的股票交易
 
 309\. Best Time to Buy and Sell Stock with Cooldown(Medium)
 
@@ -1055,10 +1056,7 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-
-该题为马尔可夫过程，分为A观望，B持股，C冷却三个状态
-状态转移图：A-(观望)->A, A-(买入｜-price)->B, B-(观望)->B, B-(卖出|+price)->C, C-(冷却)->A
-可用维特比算法求解
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1066,21 +1064,23 @@ public int maxProfit(int[] prices) {
         return 0;
     }
     int N = prices.length;
-    int[] A = new int[N];
-    int[] B = new int[N];
-    int[] C = new int[N];
-    A[0] = 0;
-    B[0] = C[0] = -prices[0];
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
     for (int i = 1; i < N; i++) {
-        A[i] = Math.max(A[i - 1], C[i - 1]);
-        B[i] = Math.max(B[i - 1], A[i - 1] - prices[i]);
-        C[i] = B[i - 1] + prices[i];
+        buy[i] = s2[i - 1] - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    return Math.max(A[N - 1], C[N - 1]);
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
-## 2. 需要交易费用的股票交易
+### 2. 需要交易费用的股票交易
 
 714\. Best Time to Buy and Sell Stock with Transaction Fee (Medium)
 
@@ -1099,27 +1099,29 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-
-分为A观望，B持股，两个状态
-状态转移图：A-(观望)->A, A-(买入|-price)->B, B-(观望)->B, B-(卖出|+price|-fee)->A
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png" width="300px"> </div><br>
 
 ```java
 public int maxProfit(int[] prices, int fee) {
     int N = prices.length;
-    int[] A = new int[N];
-    int[] B = new int[N];
-    A[0] = 0;
-    B[0] = -prices[0];
+    int[] buy = new int[N];
+    int[] s1 = new int[N];
+    int[] sell = new int[N];
+    int[] s2 = new int[N];
+    s1[0] = buy[0] = -prices[0];
+    sell[0] = s2[0] = 0;
     for (int i = 1; i < N; i++) {
-        A[i] = Math.max(A[i - 1], B[i - 1] + prices[i] -fee);
-        B[i] = Math.max(A[i - 1] - prices[i], B[i - 1]);
+        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
+        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
+        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
+        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
     }
-    return A[N - 1];
+    return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
 
 
-## 3. 只能进行两次的股票交易
+### 3. 只能进行两次的股票交易
 
 123\. Best Time to Buy and Sell Stock III (Hard)
 
@@ -1147,7 +1149,7 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-## 4. 只能进行 k 次的股票交易
+### 4. 只能进行 k 次的股票交易
 
 188\. Best Time to Buy and Sell Stock IV (Hard)
 
@@ -1177,9 +1179,9 @@ public int maxProfit(int k, int[] prices) {
 }
 ```
 
-# 字符串编辑
+## 字符串编辑
 
-## 1. 删除两个字符串的字符使它们相等
+### 1. 删除两个字符串的字符使它们相等
 
 583\. Delete Operation for Two Strings (Medium)
 
@@ -1210,7 +1212,7 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-## 2. 编辑距离
+### 2. 编辑距离
 
 72\. Edit Distance (Hard)
 
@@ -1265,7 +1267,7 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
-## 3. 复制粘贴字符
+### 3. 复制粘贴字符
 
 650\. 2 Keys Keyboard (Medium)
 
@@ -1309,10 +1311,3 @@ public int minSteps(int n) {
     return dp[n];
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

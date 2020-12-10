@@ -1,20 +1,22 @@
+# Leetcode 题解 - 数组与矩阵
 <!-- GFM-TOC -->
-* [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
-* [2. 改变矩阵维度](#2-改变矩阵维度)
-* [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
-* [4. 有序矩阵查找](#4-有序矩阵查找)
-* [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
-* [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1,-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
-* [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1,-n]-之间)
-* [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
-* [9. 数组的度](#9-数组的度)
-* [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
-* [11. 嵌套数组](#11-嵌套数组)
-* [12. 分隔数组](#12-分隔数组)
+* [Leetcode 题解 - 数组与矩阵](#leetcode-题解---数组与矩阵)
+    * [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
+    * [2. 改变矩阵维度](#2-改变矩阵维度)
+    * [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
+    * [4. 有序矩阵查找](#4-有序矩阵查找)
+    * [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
+    * [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
+    * [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1-n]-之间)
+    * [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
+    * [9. 数组的度](#9-数组的度)
+    * [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
+    * [11. 嵌套数组](#11-嵌套数组)
+    * [12. 分隔数组](#12-分隔数组)
 <!-- GFM-TOC -->
 
 
-# 1. 把数组中的 0 移到末尾
+## 1. 把数组中的 0 移到末尾
 
 283\. Move Zeroes (Easy)
 
@@ -38,7 +40,7 @@ public void moveZeroes(int[] nums) {
 }
 ```
 
-# 2. 改变矩阵维度
+## 2. 改变矩阵维度
 
 566\. Reshape the Matrix (Easy)
 
@@ -76,7 +78,7 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 }
 ```
 
-# 3. 找出数组中最长的连续 1
+## 3. 找出数组中最长的连续 1
 
 485\. Max Consecutive Ones (Easy)
 
@@ -93,7 +95,7 @@ public int findMaxConsecutiveOnes(int[] nums) {
 }
 ```
 
-# 4. 有序矩阵查找
+## 4. 有序矩阵查找
 
 240\. Search a 2D Matrix II (Medium)
 
@@ -121,7 +123,7 @@ public boolean searchMatrix(int[][] matrix, int target) {
 }
 ```
 
-# 5. 有序矩阵的 Kth Element
+## 5. 有序矩阵的 Kth Element
 
 378\. Kth Smallest Element in a Sorted Matrix ((Medium))
 
@@ -189,7 +191,7 @@ class Tuple implements Comparable<Tuple> {
 }
 ```
 
-# 6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
+## 6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
 
 645\. Set Mismatch (Easy)
 
@@ -231,7 +233,7 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
-# 7. 找出数组中重复的数，数组值在 [1, n] 之间
+## 7. 找出数组中重复的数，数组值在 [1, n] 之间
 
 287\. Find the Duplicate Number (Medium)
 
@@ -275,7 +277,7 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-# 8. 数组相邻差值的个数
+## 8. 数组相邻差值的个数
 
 667\. Beautiful Arrangement II (Medium)
 
@@ -305,7 +307,7 @@ public int[] constructArray(int n, int k) {
 }
 ```
 
-# 9. 数组的度
+## 9. 数组的度
 
 697\. Degree of an Array (Easy)
 
@@ -346,7 +348,7 @@ public int findShortestSubArray(int[] nums) {
 }
 ```
 
-# 10. 对角元素相等的矩阵
+## 10. 对角元素相等的矩阵
 
 766\. Toeplitz Matrix (Easy)
 
@@ -386,7 +388,7 @@ private boolean check(int[][] matrix, int expectValue, int row, int col) {
 }
 ```
 
-# 11. 嵌套数组
+## 11. 嵌套数组
 
 565\. Array Nesting (Medium)
 
@@ -422,7 +424,7 @@ public int arrayNesting(int[] nums) {
 }
 ```
 
-# 12. 分隔数组
+## 12. 分隔数组
 
 769\. Max Chunks To Make Sorted (Medium)
 
@@ -450,10 +452,3 @@ public int maxChunksToSorted(int[] arr) {
     return ret;
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

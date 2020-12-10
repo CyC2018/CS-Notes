@@ -1,21 +1,23 @@
+# Leetcode 题解 - 贪心思想
 <!-- GFM-TOC -->
-* [1. 分配饼干](#1-分配饼干)
-* [2. 不重叠的区间个数](#2-不重叠的区间个数)
-* [3. 投飞镖刺破气球](#3-投飞镖刺破气球)
-* [4. 根据身高和序号重组队列](#4-根据身高和序号重组队列)
-* [5. 买卖股票最大的收益](#5-买卖股票最大的收益)
-* [6. 买卖股票的最大收益 II](#6-买卖股票的最大收益-ii)
-* [7. 种植花朵](#7-种植花朵)
-* [8. 判断是否为子序列](#8-判断是否为子序列)
-* [9. 修改一个数成为非递减数组](#9-修改一个数成为非递减数组)
-* [10. 子数组最大的和](#10-子数组最大的和)
-* [11. 分隔字符串使同种字符出现在一起](#11-分隔字符串使同种字符出现在一起)
+* [Leetcode 题解 - 贪心思想](#leetcode-题解---贪心思想)
+    * [1. 分配饼干](#1-分配饼干)
+    * [2. 不重叠的区间个数](#2-不重叠的区间个数)
+    * [3. 投飞镖刺破气球](#3-投飞镖刺破气球)
+    * [4. 根据身高和序号重组队列](#4-根据身高和序号重组队列)
+    * [5. 买卖股票最大的收益](#5-买卖股票最大的收益)
+    * [6. 买卖股票的最大收益 II](#6-买卖股票的最大收益-ii)
+    * [7. 种植花朵](#7-种植花朵)
+    * [8. 判断是否为子序列](#8-判断是否为子序列)
+    * [9. 修改一个数成为非递减数组](#9-修改一个数成为非递减数组)
+    * [10. 子数组最大的和](#10-子数组最大的和)
+    * [11. 分隔字符串使同种字符出现在一起](#11-分隔字符串使同种字符出现在一起)
 <!-- GFM-TOC -->
 
 
 保证每次操作都是局部最优的，并且最后得到的结果是全局最优的。
 
-# 1. 分配饼干
+## 1. 分配饼干
 
 455\. Assign Cookies (Easy)
 
@@ -33,7 +35,7 @@ Output: 2
 
 在以上的解法中，我们只在每次分配时饼干时选择一种看起来是当前最优的分配方法，但无法保证这种局部最优的分配方法最后能得到全局最优解。我们假设能得到全局最优解，并使用反证法进行证明，即假设存在一种比我们使用的贪心策略更优的最优策略。如果不存在这种最优策略，表示贪心策略就是最优策略，得到的解也就是全局最优解。
 
-证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m < n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m \< n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
 
@@ -53,7 +55,7 @@ public int findContentChildren(int[] grid, int[] size) {
 }
 ```
 
-# 2. 不重叠的区间个数
+## 2. 不重叠的区间个数
 
 435\. Non-overlapping Intervals (Medium)
 
@@ -106,14 +108,16 @@ public int eraseOverlapIntervals(int[][] intervals) {
 
 ```java
 Arrays.sort(intervals, new Comparator<int[]>() {
-    @Override
-    public int compare(int[] o1, int[] o2) {
-        return o1[1] - o2[1];
-    }
+     @Override
+     public int compare(int[] o1, int[] o2) {
+         return (o1[1] < o2[1]) ? -1 : ((o1[1] == o2[1]) ? 0 : 1);
+     }
 });
 ```
 
-# 3. 投飞镖刺破气球
+实现 compare() 函数时避免使用 `return o1[1] - o2[1];` 这种减法操作，防止溢出。
+
+## 3. 投飞镖刺破气球
 
 452\. Minimum Number of Arrows to Burst Balloons (Medium)
 
@@ -149,7 +153,7 @@ public int findMinArrowShots(int[][] points) {
 }
 ```
 
-# 4. 根据身高和序号重组队列
+## 4. 根据身高和序号重组队列
 
 406\. Queue Reconstruction by Height(Medium)
 
@@ -183,7 +187,7 @@ public int[][] reconstructQueue(int[][] people) {
 }
 ```
 
-# 5. 买卖股票最大的收益
+## 5. 买卖股票最大的收益
 
 121\. Best Time to Buy and Sell Stock (Easy)
 
@@ -208,7 +212,7 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 6. 买卖股票的最大收益 II
+## 6. 买卖股票的最大收益 II
 
 122\. Best Time to Buy and Sell Stock II (Easy)
 
@@ -216,7 +220,7 @@ public int maxProfit(int[] prices) {
 
 题目描述：可以进行多次交易，多次交易之间不能交叉进行，可以进行多次交易。
 
-对于 [a, b, c, d]，如果有 a <= b <= c <= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] > 0，那么就把 prices[i] - prices[i-1] 添加到收益中。
+对于 [a, b, c, d]，如果有 a \<= b \<= c \<= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] \> 0，那么就把 prices[i] - prices[i-1] 添加到收益中。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -231,7 +235,7 @@ public int maxProfit(int[] prices) {
 ```
 
 
-# 7. 种植花朵
+## 7. 种植花朵
 
 605\. Can Place Flowers (Easy)
 
@@ -263,7 +267,7 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 }
 ```
 
-# 8. 判断是否为子序列
+## 8. 判断是否为子序列
 
 392\. Is Subsequence (Medium)
 
@@ -287,7 +291,7 @@ public boolean isSubsequence(String s, String t) {
 }
 ```
 
-# 9. 修改一个数成为非递减数组
+## 9. 修改一个数成为非递减数组
 
 665\. Non-decreasing Array (Easy)
 
@@ -301,7 +305,7 @@ Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 
 题目描述：判断一个数组是否能只修改一个数就成为非递减数组。
 
-在出现 nums[i] < nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且   **不影响后续的操作**  。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] < nums[i - 2]，修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
+在出现 nums[i] \< nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且   **不影响后续的操作**  。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] \< nums[i - 2]，修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
 
 ```java
 public boolean checkPossibility(int[] nums) {
@@ -323,7 +327,7 @@ public boolean checkPossibility(int[] nums) {
 
 
 
-# 10. 子数组最大的和
+## 10. 子数组最大的和
 
 53\. Maximum Subarray (Easy)
 
@@ -349,7 +353,7 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
-# 11. 分隔字符串使同种字符出现在一起
+## 11. 分隔字符串使同种字符出现在一起
 
 763\. Partition Labels (Medium)
 
@@ -390,10 +394,3 @@ private int char2Index(char c) {
     return c - 'a';
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>

@@ -1,50 +1,52 @@
+# Leetcode 题解 - 数学
 <!-- GFM-TOC -->
-* [素数分解](#素数分解)
-* [整除](#整除)
-* [最大公约数最小公倍数](#最大公约数最小公倍数)
-    * [1. 生成素数序列](#1-生成素数序列)
-    * [2. 最大公约数](#2-最大公约数)
-    * [3. 使用位操作和减法求解最大公约数](#3-使用位操作和减法求解最大公约数)
-* [进制转换](#进制转换)
-    * [1. 7 进制](#1-7-进制)
-    * [2. 16 进制](#2-16-进制)
-    * [3. 26 进制](#3-26-进制)
-* [阶乘](#阶乘)
-    * [1. 统计阶乘尾部有多少个 0](#1-统计阶乘尾部有多少个-0)
-* [字符串加法减法](#字符串加法减法)
-    * [1. 二进制加法](#1-二进制加法)
-    * [2. 字符串加法](#2-字符串加法)
-* [相遇问题](#相遇问题)
-    * [1. 改变数组元素使所有的数组元素都相等](#1-改变数组元素使所有的数组元素都相等)
-* [多数投票问题](#多数投票问题)
-    * [1. 数组中出现次数多于 n / 2 的元素](#1-数组中出现次数多于-n--2-的元素)
-* [其它](#其它)
-    * [1. 平方数](#1-平方数)
-    * [2. 3 的 n 次方](#2-3-的-n-次方)
-    * [3. 乘积数组](#3-乘积数组)
-    * [4. 找出数组中的乘积最大的三个数](#4-找出数组中的乘积最大的三个数)
+* [Leetcode 题解 - 数学](#leetcode-题解---数学)
+    * [素数分解](#素数分解)
+    * [整除](#整除)
+    * [最大公约数最小公倍数](#最大公约数最小公倍数)
+        * [1. 生成素数序列](#1-生成素数序列)
+        * [2. 最大公约数](#2-最大公约数)
+        * [3. 使用位操作和减法求解最大公约数](#3-使用位操作和减法求解最大公约数)
+    * [进制转换](#进制转换)
+        * [1. 7 进制](#1-7-进制)
+        * [2. 16 进制](#2-16-进制)
+        * [3. 26 进制](#3-26-进制)
+    * [阶乘](#阶乘)
+        * [1. 统计阶乘尾部有多少个 0](#1-统计阶乘尾部有多少个-0)
+    * [字符串加法减法](#字符串加法减法)
+        * [1. 二进制加法](#1-二进制加法)
+        * [2. 字符串加法](#2-字符串加法)
+    * [相遇问题](#相遇问题)
+        * [1. 改变数组元素使所有的数组元素都相等](#1-改变数组元素使所有的数组元素都相等)
+    * [多数投票问题](#多数投票问题)
+        * [1. 数组中出现次数多于 n / 2 的元素](#1-数组中出现次数多于-n--2-的元素)
+    * [其它](#其它)
+        * [1. 平方数](#1-平方数)
+        * [2. 3 的 n 次方](#2-3-的-n-次方)
+        * [3. 乘积数组](#3-乘积数组)
+        * [4. 找出数组中的乘积最大的三个数](#4-找出数组中的乘积最大的三个数)
 <!-- GFM-TOC -->
 
 
-# 素数分解
+## 素数分解
 
 每一个数都可以分解成素数的乘积，例如 84 = 2<sup>2</sup> \* 3<sup>1</sup> \* 5<sup>0</sup> \* 7<sup>1</sup> \* 11<sup>0</sup> \* 13<sup>0</sup> \* 17<sup>0</sup> \* …
 
-# 整除
+## 整除
 
 令 x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
 
 令 y = 2<sup>n0</sup> \* 3<sup>n1</sup> \* 5<sup>n2</sup> \* 7<sup>n3</sup> \* 11<sup>n4</sup> \* …
 
-如果 x 整除 y（y mod x == 0），则对于所有 i，mi <= ni。
+如果 x 整除 y（y mod x == 0），则对于所有 i，mi \<= ni。
 
-# 最大公约数最小公倍数
+## 最大公约数最小公倍数
 
 x 和 y 的最大公约数为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
 
 x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
 
-## 1. 生成素数序列
+### 1. 生成素数序列
 
 204\. Count Primes (Easy)
 
@@ -70,7 +72,7 @@ public int countPrimes(int n) {
 }
 ```
 
-## 2. 最大公约数
+### 2. 最大公约数
 
 ```java
 int gcd(int a, int b) {
@@ -86,7 +88,7 @@ int lcm(int a, int b) {
 }
 ```
 
-## 3. 使用位操作和减法求解最大公约数
+### 3. 使用位操作和减法求解最大公约数
 
 [编程之美：2.7](#)
 
@@ -120,9 +122,9 @@ public int gcd(int a, int b) {
 }
 ```
 
-# 进制转换
+## 进制转换
 
-## 1. 7 进制
+### 1. 7 进制
 
 504\. Base 7 (Easy)
 
@@ -155,7 +157,7 @@ public String convertToBase7(int num) {
 }
 ```
 
-## 2. 16 进制
+### 2. 16 进制
 
 405\. Convert a Number to Hexadecimal (Easy)
 
@@ -190,7 +192,7 @@ public String toHex(int num) {
 }
 ```
 
-## 3. 26 进制
+### 3. 26 进制
 
 168\. Excel Sheet Column Title (Easy)
 
@@ -218,9 +220,9 @@ public String convertToTitle(int n) {
 }
 ```
 
-# 阶乘
+## 阶乘
 
-## 1. 统计阶乘尾部有多少个 0
+### 1. 统计阶乘尾部有多少个 0
 
 172\. Factorial Trailing Zeroes (Easy)
 
@@ -238,9 +240,9 @@ public int trailingZeroes(int n) {
 
 如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 [编程之美：2.2](#) 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
 
-# 字符串加法减法
+## 字符串加法减法
 
-## 1. 二进制加法
+### 1. 二进制加法
 
 67\. Add Binary (Easy)
 
@@ -270,7 +272,7 @@ public String addBinary(String a, String b) {
 }
 ```
 
-## 2. 字符串加法
+### 2. 字符串加法
 
 415\. Add Strings (Easy)
 
@@ -292,9 +294,9 @@ public String addStrings(String num1, String num2) {
 }
 ```
 
-# 相遇问题
+## 相遇问题
 
-## 1. 改变数组元素使所有的数组元素都相等
+### 1. 改变数组元素使所有的数组元素都相等
 
 462\. Minimum Moves to Equal Array Elements II (Medium)
 
@@ -317,7 +319,7 @@ Only two moves are needed (remember each move increments or decrements one eleme
 
 这是个典型的相遇问题，移动距离最小的方式是所有元素都移动到中位数。理由如下：
 
-设 m 为中位数。a 和 b 是 m 两边的两个元素，且 b > a。要使 a 和 b 相等，它们总共移动的次数为 b - a，这个值等于 (b - m) + (m - a)，也就是把这两个数移动到中位数的移动次数。
+设 m 为中位数。a 和 b 是 m 两边的两个元素，且 b \> a。要使 a 和 b 相等，它们总共移动的次数为 b - a，这个值等于 (b - m) + (m - a)，也就是把这两个数移动到中位数的移动次数。
 
 设数组长度为 N，则可以找到 N/2 对 a 和 b 的组合，使它们都移动到 m 的位置。
 
@@ -390,9 +392,9 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
-# 多数投票问题
+## 多数投票问题
 
-## 1. 数组中出现次数多于 n / 2 的元素
+### 1. 数组中出现次数多于 n / 2 的元素
 
 169\. Majority Element (Easy)
 
@@ -420,9 +422,9 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-# 其它
+## 其它
 
-## 1. 平方数
+### 1. 平方数
 
 367\. Valid Perfect Square (Easy)
 
@@ -450,7 +452,7 @@ public boolean isPerfectSquare(int num) {
 }
 ```
 
-## 2. 3 的 n 次方
+### 2. 3 的 n 次方
 
 326\. Power of Three (Easy)
 
@@ -462,7 +464,7 @@ public boolean isPowerOfThree(int n) {
 }
 ```
 
-## 3. 乘积数组
+### 3. 乘积数组
 
 238\. Product of Array Except Self (Medium)
 
@@ -495,7 +497,7 @@ public int[] productExceptSelf(int[] nums) {
 }
 ```
 
-## 4. 找出数组中的乘积最大的三个数
+### 4. 找出数组中的乘积最大的三个数
 
 628\. Maximum Product of Three Numbers (Easy)
 
@@ -531,10 +533,3 @@ public int maximumProduct(int[] nums) {
     return Math.max(max1*max2*max3, max1*min1*min2);
 }
 ```
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
