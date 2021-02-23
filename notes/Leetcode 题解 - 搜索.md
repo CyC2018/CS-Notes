@@ -390,11 +390,11 @@ private void dfs(char[][] grid, int i, int j) {
 }
 ```
 
-### 3. 好友关系的连通分量数目
+### 3. 省份关系的连通分量数目
 
 547\. Friend Circles (Medium)
 
-[Leetcode](https://leetcode.com/problems/friend-circles/description/) / [力扣](https://leetcode-cn.com/problems/friend-circles/description/)
+[Leetcode](https://leetcode.com/problems/number-of-provinces/description/) / [力扣](https://leetcode-cn.com/problems/number-of-provinces/description/)
 
 ```html
 Input:
