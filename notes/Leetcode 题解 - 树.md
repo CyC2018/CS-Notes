@@ -428,12 +428,17 @@ Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
 
 ```java
 public int rob(TreeNode root) {
-    if (root == null) return 0;
-    int val1 = root.val;
-    if (root.left != null) val1 += rob(root.left.left) + rob(root.left.right);
-    if (root.right != null) val1 += rob(root.right.left) + rob(root.right.right);
-    int val2 = rob(root.left) + rob(root.right);
-    return Math.max(val1, val2);
+    int[] num = dfs(root);
+    return Math.max(num[0], num[1]);
+}
+private int[] dfs(TreeNode node) {
+    if (node == null) return new int[2];
+    int[] left = dfs(node.left);
+    int[] right = dfs(node.right);
+    int[] res = new int[2];
+    res[0] = left[1] + right[1] + node.val;
+    res[1] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+    return res;
 }
 ```
 
