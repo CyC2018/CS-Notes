@@ -1,37 +1,39 @@
+# Java IO
 <!-- GFM-TOC -->
-* [一、概览](#一概览)
-* [二、磁盘操作](#二磁盘操作)
-* [三、字节操作](#三字节操作)
-    * [实现文件复制](#实现文件复制)
-    * [装饰者模式](#装饰者模式)
-* [四、字符操作](#四字符操作)
-    * [编码与解码](#编码与解码)
-    * [String 的编码方式](#string-的编码方式)
-    * [Reader 与 Writer](#reader-与-writer)
-    * [实现逐行输出文本文件的内容](#实现逐行输出文本文件的内容)
-* [五、对象操作](#五对象操作)
-    * [序列化](#序列化)
-    * [Serializable](#serializable)
-    * [transient](#transient)
-* [六、网络操作](#六网络操作)
-    * [InetAddress](#inetaddress)
-    * [URL](#url)
-    * [Sockets](#sockets)
-    * [Datagram](#datagram)
-* [七、NIO](#七nio)
-    * [流与块](#流与块)
-    * [通道与缓冲区](#通道与缓冲区)
-    * [缓冲区状态变量](#缓冲区状态变量)
-    * [文件 NIO 实例](#文件-nio-实例)
-    * [选择器](#选择器)
-    * [套接字 NIO 实例](#套接字-nio-实例)
-    * [内存映射文件](#内存映射文件)
-    * [对比](#对比)
-* [八、参考资料](#八参考资料)
+* [Java IO](#java-io)
+    * [一、概览](#一概览)
+    * [二、磁盘操作](#二磁盘操作)
+    * [三、字节操作](#三字节操作)
+        * [实现文件复制](#实现文件复制)
+        * [装饰者模式](#装饰者模式)
+    * [四、字符操作](#四字符操作)
+        * [编码与解码](#编码与解码)
+        * [String 的编码方式](#string-的编码方式)
+        * [Reader 与 Writer](#reader-与-writer)
+        * [实现逐行输出文本文件的内容](#实现逐行输出文本文件的内容)
+    * [五、对象操作](#五对象操作)
+        * [序列化](#序列化)
+        * [Serializable](#serializable)
+        * [transient](#transient)
+    * [六、网络操作](#六网络操作)
+        * [InetAddress](#inetaddress)
+        * [URL](#url)
+        * [Sockets](#sockets)
+        * [Datagram](#datagram)
+    * [七、NIO](#七nio)
+        * [流与块](#流与块)
+        * [通道与缓冲区](#通道与缓冲区)
+        * [缓冲区状态变量](#缓冲区状态变量)
+        * [文件 NIO 实例](#文件-nio-实例)
+        * [选择器](#选择器)
+        * [套接字 NIO 实例](#套接字-nio-实例)
+        * [内存映射文件](#内存映射文件)
+        * [对比](#对比)
+    * [八、参考资料](#八参考资料)
 <!-- GFM-TOC -->
 
 
-# 一、概览
+## 一、概览
 
 Java 的 I/O 大概可以分成以下几类：
 
@@ -42,7 +44,7 @@ Java 的 I/O 大概可以分成以下几类：
 - 网络操作：Socket
 - 新的输入/输出：NIO
 
-# 二、磁盘操作
+## 二、磁盘操作
 
 File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。
 
@@ -65,9 +67,9 @@ public static void listAllFiles(File dir) {
 
 从 Java7 开始，可以使用 Paths 和 Files 代替 File。
 
-# 三、字节操作
+## 三、字节操作
 
-## 实现文件复制
+### 实现文件复制
 
 ```java
 public static void copyFile(String src, String dist) throws IOException {
@@ -89,7 +91,7 @@ public static void copyFile(String src, String dist) throws IOException {
 }
 ```
 
-## 装饰者模式
+### 装饰者模式
 
 Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 
@@ -108,9 +110,9 @@ BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStrea
 
 DataInputStream 装饰者提供了对更多数据类型进行输入的操作，比如 int、double 等基本类型。
 
-# 四、字符操作
+## 四、字符操作
 
-## 编码与解码
+### 编码与解码
 
 编码就是把字符转换为字节，而解码是把字节重新组合成字符。
 
@@ -124,7 +126,7 @@ UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-
 
 Java 的内存编码使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码是为了让一个中文或者一个英文都能使用一个 char 来存储。
 
-## String 的编码方式
+### String 的编码方式
 
 String 可以看成一个字符序列，可以指定一个编码方式将它编码为字节序列，也可以指定一个编码方式将一个字节序列解码为 String。
 
@@ -141,14 +143,14 @@ System.out.println(str2);
 byte[] bytes = str1.getBytes();
 ```
 
-## Reader 与 Writer
+### Reader 与 Writer
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
 - InputStreamReader 实现从字节流解码成字符流；
 - OutputStreamWriter 实现字符流编码成为字节流。
 
-## 实现逐行输出文本文件的内容
+### 实现逐行输出文本文件的内容
 
 ```java
 public static void readFileContent(String filePath) throws IOException {
@@ -168,9 +170,9 @@ public static void readFileContent(String filePath) throws IOException {
 }
 ```
 
-# 五、对象操作
+## 五、对象操作
 
-## 序列化
+### 序列化
 
 序列化就是将一个对象转换成字节序列，方便存储和传输。
 
@@ -179,7 +181,7 @@ public static void readFileContent(String filePath) throws IOException {
 
 不会对静态变量进行序列化，因为序列化只是保存对象的状态，静态变量属于类的状态。
 
-## Serializable
+### Serializable
 
 序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。
 
@@ -216,7 +218,7 @@ private static class A implements Serializable {
 }
 ```
 
-## transient
+### transient
 
 transient 关键字可以使一些属性不会被序列化。
 
@@ -226,7 +228,7 @@ ArrayList 中存储数据的数组 elementData 是用 transient 修饰的，因�
 private transient Object[] elementData;
 ```
 
-# 六、网络操作
+## 六、网络操作
 
 Java 中的网络支持：
 
@@ -235,7 +237,7 @@ Java 中的网络支持：
 - Sockets：使用 TCP 协议实现网络通信；
 - Datagram：使用 UDP 协议实现网络通信。
 
-## InetAddress
+### InetAddress
 
 没有公有的构造函数，只能通过静态方法来创建实例。
 
@@ -244,7 +246,7 @@ InetAddress.getByName(String host);
 InetAddress.getByAddress(byte[] address);
 ```
 
-## URL
+### URL
 
 可以直接从 URL 中读取字节流数据。
 
@@ -271,7 +273,7 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-## Sockets
+### Sockets
 
 - ServerSocket：服务器端类
 - Socket：客户端类
@@ -279,16 +281,16 @@ public static void main(String[] args) throws IOException {
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e6affc4-18e5-4596-96ef-fb84c63bf88a.png" width="550px"> </div><br>
 
-## Datagram
+### Datagram
 
 - DatagramSocket：通信类
 - DatagramPacket：数据包类
 
-# 七、NIO
+## 七、NIO
 
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
 
-## 流与块
+### 流与块
 
 I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。
 
@@ -298,9 +300,9 @@ I/O 与 NIO 最重要的区别是数据打包和传输的方式，I/O 以流的�
 
 I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，java.io.\* 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
-## 通道与缓冲区
+### 通道与缓冲区
 
-### 1. 通道
+#### 1. 通道
 
 通道 Channel 是对原 I/O 包中的流的模拟，可以通过它读取和写入数据。
 
@@ -313,7 +315,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - SocketChannel：通过 TCP 读写网络中数据；
 - ServerSocketChannel：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
 
-### 2. 缓冲区
+#### 2. 缓冲区
 
 发送给一个通道的所有数据都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要先读到缓冲区中。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
 
@@ -329,7 +331,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 - FloatBuffer
 - DoubleBuffer
 
-## 缓冲区状态变量
+### 缓冲区状态变量
 
 - capacity：最大容量；
 - position：当前已经读写的字节数；
@@ -357,7 +359,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
 
-## 文件 NIO 实例
+### 文件 NIO 实例
 
 以下展示了使用 NIO 快速复制文件的实例：
 
@@ -401,7 +403,7 @@ public static void fastCopy(String src, String dist) throws IOException {
 }
 ```
 
-## 选择器
+### 选择器
 
 NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
 
@@ -415,13 +417,13 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/093f9e57-429c-413a-83ee-c689ba596cef.png" width="350px"> </div><br>
 
-### 1. 创建选择器
+#### 1. 创建选择器
 
 ```java
 Selector selector = Selector.open();
 ```
 
-### 2. 将通道注册到选择器上
+#### 2. 将通道注册到选择器上
 
 ```java
 ServerSocketChannel ssChannel = ServerSocketChannel.open();
@@ -453,7 +455,7 @@ public static final int OP_ACCEPT = 1 << 4;
 int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 ```
 
-### 3. 监听事件
+#### 3. 监听事件
 
 ```java
 int num = selector.select();
@@ -461,7 +463,7 @@ int num = selector.select();
 
 使用 select() 来监听到达的事件，它会一直阻塞直到有至少一个事件到达。
 
-### 4. 获取到达的事件
+#### 4. 获取到达的事件
 
 ```java
 Set<SelectionKey> keys = selector.selectedKeys();
@@ -477,7 +479,7 @@ while (keyIterator.hasNext()) {
 }
 ```
 
-### 5. 事件循环
+#### 5. 事件循环
 
 因为一次 select() 调用不能处理完所有的事件，并且服务器端有可能需要一直监听事件，因此服务器端处理事件的代码一般会放在一个死循环内。
 
@@ -498,7 +500,7 @@ while (true) {
 }
 ```
 
-## 套接字 NIO 实例
+### 套接字 NIO 实例
 
 ```java
 public class NIOServer {
@@ -587,7 +589,7 @@ public class NIOClient {
 }
 ```
 
-## 内存映射文件
+### 内存映射文件
 
 内存映射文件 I/O 是一种读和写文件数据的方法，它可以比常规的基于流或者基于通道的 I/O 快得多。
 
@@ -599,14 +601,14 @@ public class NIOClient {
 MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 ```
 
-## 对比
+### 对比
 
 NIO 与普通 I/O 的区别主要有以下两点：
 
 - NIO 是非阻塞的；
 - NIO 面向块，I/O 面向流。
 
-# 八、参考资料
+## 八、参考资料
 
 - Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
@@ -618,10 +620,3 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [NIO 与传统 IO 的区别](http://blog.csdn.net/shimiso/article/details/24990499)
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
 - [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
-
-
-
-
-
-
-<div align="center"><img width="320px" src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/githubio/公众号二维码-2.png"></img></div>
