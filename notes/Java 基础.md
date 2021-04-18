@@ -511,7 +511,7 @@ public abstract class A {
 }
 ```
 
-只能访问所属类的静态字段和静态方法，方法中不能有 this 和 super 关键字，因此这两个关键字与具体对象关联。
+只能访问所属类的静态字段和静态方法，方法中不能有 this 和 super 关键字，因为这两个关键字与具体对象关联。
 
 ```java
 public class A {
