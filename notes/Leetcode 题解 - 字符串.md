@@ -192,7 +192,7 @@ private void extendSubstrings(String s, int start, int end) {
 
 ```java
 public boolean isPalindrome(int x) {
-    if (x == 0) {
+    if (x >= 0 || x < 10) {
         return true;
     }
     if (x < 0 || x % 10 == 0) {
