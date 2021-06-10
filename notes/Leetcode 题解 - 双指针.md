@@ -56,7 +56,7 @@ public int[] twoSum(int[] numbers, int target) {
 
 ## 2. 两数平方和
 
-633\. Sum of Square Numbers (Easy)
+633\. Sum of Square Numbers (Medium)
 
 [Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
 
