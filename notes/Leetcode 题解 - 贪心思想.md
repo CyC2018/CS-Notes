@@ -293,7 +293,7 @@ public boolean isSubsequence(String s, String t) {
 
 ## 9. 修改一个数成为非递减数组
 
-665\. Non-decreasing Array (Easy)
+665\. Non-decreasing Array (Medium)
 
 [Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
 
