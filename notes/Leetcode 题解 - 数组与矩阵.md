@@ -1,22 +1,26 @@
+# Leetcode 题解 - 数组与矩阵
 <!-- GFM-TOC -->
-* [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
-* [2. 改变矩阵维度](#2-改变矩阵维度)
-* [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
-* [4. 有序矩阵查找](#4-有序矩阵查找)
-* [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
-* [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1,-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
-* [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1,-n]-之间)
-* [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
-* [9. 数组的度](#9-数组的度)
-* [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
-* [11. 嵌套数组](#11-嵌套数组)
-* [12. 分隔数组](#12-分隔数组)
+* [Leetcode 题解 - 数组与矩阵](#leetcode-题解---数组与矩阵)
+    * [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
+    * [2. 改变矩阵维度](#2-改变矩阵维度)
+    * [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
+    * [4. 有序矩阵查找](#4-有序矩阵查找)
+    * [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
+    * [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
+    * [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1-n]-之间)
+    * [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
+    * [9. 数组的度](#9-数组的度)
+    * [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
+    * [11. 嵌套数组](#11-嵌套数组)
+    * [12. 分隔数组](#12-分隔数组)
 <!-- GFM-TOC -->
 
 
-# 1. 把数组中的 0 移到末尾
+## 1. 把数组中的 0 移到末尾
 
-[283. Move Zeroes (Easy)](https://leetcode.com/problems/move-zeroes/description/)
+283\. Move Zeroes (Easy)
+
+[Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/move-zeroes/description/)
 
 ```html
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
@@ -36,9 +40,11 @@ public void moveZeroes(int[] nums) {
 }
 ```
 
-# 2. 改变矩阵维度
+## 2. 改变矩阵维度
 
-[566. Reshape the Matrix (Easy)](https://leetcode.com/problems/reshape-the-matrix/description/)
+566\. Reshape the Matrix (Easy)
+
+[Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [力扣](https://leetcode-cn.com/problems/reshape-the-matrix/description/)
 
 ```html
 Input:
@@ -72,9 +78,11 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 }
 ```
 
-# 3. 找出数组中最长的连续 1
+## 3. 找出数组中最长的连续 1
 
-[485. Max Consecutive Ones (Easy)](https://leetcode.com/problems/max-consecutive-ones/description/)
+485\. Max Consecutive Ones (Easy)
+
+[Leetcode](https://leetcode.com/problems/max-consecutive-ones/description/) / [力扣](https://leetcode-cn.com/problems/max-consecutive-ones/description/)
 
 ```java
 public int findMaxConsecutiveOnes(int[] nums) {
@@ -87,9 +95,11 @@ public int findMaxConsecutiveOnes(int[] nums) {
 }
 ```
 
-# 4. 有序矩阵查找
+## 4. 有序矩阵查找
 
-[240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/description/)
+240\. Search a 2D Matrix II (Medium)
+
+[Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
 
 ```html
 [
@@ -113,9 +123,11 @@ public boolean searchMatrix(int[][] matrix, int target) {
 }
 ```
 
-# 5. 有序矩阵的 Kth Element
+## 5. 有序矩阵的 Kth Element
 
-[378. Kth Smallest Element in a Sorted Matrix ((Medium))](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
+378\. Kth Smallest Element in a Sorted Matrix ((Medium))
+
+[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/) / [力扣](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
 
 ```html
 matrix = [
@@ -128,7 +140,7 @@ k = 8,
 return 13.
 ```
 
-解题参考：[Share my thoughts and Clean Java Code](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
+解题参考：[Share my thoughts and Clean Java Code](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
 
 二分查找解法：
 
@@ -179,9 +191,11 @@ class Tuple implements Comparable<Tuple> {
 }
 ```
 
-# 6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
+## 6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数
 
-[645. Set Mismatch (Easy)](https://leetcode.com/problems/set-mismatch/description/)
+645\. Set Mismatch (Easy)
+
+[Leetcode](https://leetcode.com/problems/set-mismatch/description/) / [力扣](https://leetcode-cn.com/problems/set-mismatch/description/)
 
 ```html
 Input: nums = [1,2,2,4]
@@ -219,14 +233,11 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
-类似题目：
+## 7. 找出数组中重复的数，数组值在 [1, n] 之间
 
-- [448. Find All Numbers Disappeared in an Array (Easy)](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/)，寻找所有丢失的元素
-- [442. Find All Duplicates in an Array (Medium)](https://leetcode.com/problems/find-all-duplicates-in-an-array/description/)，寻找所有重复的元素。
+287\. Find the Duplicate Number (Medium)
 
-# 7. 找出数组中重复的数，数组值在 [1, n] 之间
-
-[287. Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/description/)
+[Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [力扣](https://leetcode-cn.com/problems/find-the-duplicate-number/description/)
 
 要求不能修改数组，也不能使用额外的空间。
 
@@ -266,9 +277,11 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-# 8. 数组相邻差值的个数
+## 8. 数组相邻差值的个数
 
-[667. Beautiful Arrangement II (Medium)](https://leetcode.com/problems/beautiful-arrangement-ii/description/)
+667\. Beautiful Arrangement II (Medium)
+
+[Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [力扣](https://leetcode-cn.com/problems/beautiful-arrangement-ii/description/)
 
 ```html
 Input: n = 3, k = 2
@@ -294,9 +307,11 @@ public int[] constructArray(int n, int k) {
 }
 ```
 
-# 9. 数组的度
+## 9. 数组的度
 
-[697. Degree of an Array (Easy)](https://leetcode.com/problems/degree-of-an-array/description/)
+697\. Degree of an Array (Easy)
+
+[Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [力扣](https://leetcode-cn.com/problems/degree-of-an-array/description/)
 
 ```html
 Input: [1,2,2,3,1,4,2]
@@ -333,9 +348,11 @@ public int findShortestSubArray(int[] nums) {
 }
 ```
 
-# 10. 对角元素相等的矩阵
+## 10. 对角元素相等的矩阵
 
-[766. Toeplitz Matrix (Easy)](https://leetcode.com/problems/toeplitz-matrix/description/)
+766\. Toeplitz Matrix (Easy)
+
+[Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/) / [力扣](https://leetcode-cn.com/problems/toeplitz-matrix/description/)
 
 ```html
 1234
@@ -371,9 +388,11 @@ private boolean check(int[][] matrix, int expectValue, int row, int col) {
 }
 ```
 
-# 11. 嵌套数组
+## 11. 嵌套数组
 
-[565. Array Nesting (Medium)](https://leetcode.com/problems/array-nesting/description/)
+565\. Array Nesting (Medium)
+
+[Leetcode](https://leetcode.com/problems/array-nesting/description/) / [力扣](https://leetcode-cn.com/problems/array-nesting/description/)
 
 ```html
 Input: A = [5,4,0,3,1,6,2]
@@ -405,9 +424,11 @@ public int arrayNesting(int[] nums) {
 }
 ```
 
-# 12. 分隔数组
+## 12. 分隔数组
 
-[769. Max Chunks To Make Sorted (Medium)](https://leetcode.com/problems/max-chunks-to-make-sorted/description/)
+769\. Max Chunks To Make Sorted (Medium)
+
+[Leetcode](https://leetcode.com/problems/max-chunks-to-make-sorted/description/) / [力扣](https://leetcode-cn.com/problems/max-chunks-to-make-sorted/description/)
 
 ```html
 Input: arr = [1,0,2,3,4]
@@ -431,9 +452,3 @@ public int maxChunksToSorted(int[] arr) {
     return ret;
 }
 ```
-
-
-
-
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复"下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复"资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

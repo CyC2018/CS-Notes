@@ -1,19 +1,24 @@
+# Leetcode 题解 - 位运算
 <!-- GFM-TOC -->
-* [1. 统计两个数的二进制表示有多少位不同](#1-统计两个数的二进制表示有多少位不同)
-* [2. 数组中唯一一个不重复的元素](#2-数组中唯一一个不重复的元素)
-* [3. 找出数组中缺失的那个数](#3-找出数组中缺失的那个数)
-* [4. 数组中不重复的两个元素](#4-数组中不重复的两个元素)
-* [5. 翻转一个数的比特位](#5-翻转一个数的比特位)
-* [6. 不用额外变量交换两个整数](#6-不用额外变量交换两个整数)
-* [7. 判断一个数是不是 2 的 n 次方](#7-判断一个数是不是-2-的-n-次方)
-* [8.  判断一个数是不是 4 的 n 次方](#8--判断一个数是不是-4-的-n-次方)
-* [9. 判断一个数的位级表示是否不会出现连续的 0 和 1](#9-判断一个数的位级表示是否不会出现连续的-0-和-1)
-* [10. 求一个数的补码](#10-求一个数的补码)
-* [11. 实现整数的加法](#11-实现整数的加法)
-* [12. 字符串数组最大乘积](#12-字符串数组最大乘积)
-* [13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数](#13-统计从-0-\~-n-每个数的二进制表示中-1-的个数)
+* [Leetcode 题解 - 位运算](#leetcode-题解---位运算)
+    * [0. 原理](#0-原理)
+    * [1. 统计两个数的二进制表示有多少位不同](#1-统计两个数的二进制表示有多少位不同)
+    * [2. 数组中唯一一个不重复的元素](#2-数组中唯一一个不重复的元素)
+    * [3. 找出数组中缺失的那个数](#3-找出数组中缺失的那个数)
+    * [4. 数组中不重复的两个元素](#4-数组中不重复的两个元素)
+    * [5. 翻转一个数的比特位](#5-翻转一个数的比特位)
+    * [6. 不用额外变量交换两个整数](#6-不用额外变量交换两个整数)
+    * [7. 判断一个数是不是 2 的 n 次方](#7-判断一个数是不是-2-的-n-次方)
+    * [8.  判断一个数是不是 4 的 n 次方](#8--判断一个数是不是-4-的-n-次方)
+    * [9. 判断一个数的位级表示是否不会出现连续的 0 和 1](#9-判断一个数的位级表示是否不会出现连续的-0-和-1)
+    * [10. 求一个数的补码](#10-求一个数的补码)
+    * [11. 实现整数的加法](#11-实现整数的加法)
+    * [12. 字符串数组最大乘积](#12-字符串数组最大乘积)
+    * [13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数](#13-统计从-0-\~-n-每个数的二进制表示中-1-的个数)
 <!-- GFM-TOC -->
 
+
+## 0. 原理
 
 **基本原理** 
 
@@ -25,33 +30,89 @@ x ^ 1s = ~x     x & 1s = x      x | 1s = 1s
 x ^ x = 0       x & x = x       x | x = x
 ```
 
-- 利用 x ^ 1s = \~x 的特点，可以将位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。
-- 利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
-- 利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。
+利用 x ^ 1s = \~x 的特点，可以将一个数的位级表示翻转；利用 x ^ x = 0 的特点，可以将三个数中重复的两个数去除，只留下另一个数。
 
-位与运算技巧：
+```
+1^1^2 = 2
+```
 
-- n&(n-1) 去除 n 的位级表示中最低的那一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
-- n&(-n) 得到 n 的位级表示中最低的那一位。-n 得到 n 的反码加 1，对于二进制表示 10110100，-n 得到 01001100，相与得到 00000100。
-- n-n&(\~n+1) 去除 n 的位级表示中最高的那一位。
+利用 x & 0s = 0 和 x & 1s = x 的特点，可以实现掩码操作。一个数 num 与 mask：00111100 进行位与操作，只保留 num 中与 mask 的 1 部分相对应的位。
 
-移位运算：
+```
+01011011 &
+00111100
+--------
+00011000
+```
 
-- \>\> n 为算术右移，相当于除以 2<sup>n</sup>；
-- \>\>\> n 为无符号右移，左边会补上 0。
-- &lt;&lt; n 为算术左移，相当于乘以 2<sup>n</sup>。
+利用 x | 0s = x 和 x | 1s = 1s 的特点，可以实现设值操作。一个数 num 与 mask：00111100 进行位或操作，将 num 中与 mask 的 1 部分相对应的位都设置为 1。
 
-** mask 计算** 
+```
+01011011 |
+00111100
+--------
+01111111
+```
+
+**位与运算技巧** 
+
+n&(n-1) 去除 n 的位级表示中最低的那一位 1。例如对于二进制表示 01011011，减去 1 得到 01011010，这两个数相与得到 01011010。
+
+```
+01011011 &
+01011010
+--------
+01011010
+```
+
+n&(-n) 得到 n 的位级表示中最低的那一位 1。-n 得到 n 的反码加 1，也就是 -n=\~n+1。例如对于二进制表示 10110100，-n 得到 01001100，相与得到 00000100。
+
+```
+10110100 &
+01001100
+--------
+00000100
+```
+
+n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1) 效果一样。
+
+**移位运算** 
+
+\\>\\> n 为算术右移，相当于除以 2n，例如 -7 \\>\\> 2 = -2。
+
+```
+11111111111111111111111111111001  >> 2
+--------
+11111111111111111111111111111110
+```
+
+\\>\\>\\> n 为无符号右移，左边会补上 0。例如 -7 \\>\\>\\> 2 = 1073741822。
+
+```
+11111111111111111111111111111001  >>> 2
+--------
+00111111111111111111111111111111
+```
+
+\<\< n 为算术左移，相当于乘以 2n。-7 \<\< 2 = -28。
+
+```
+11111111111111111111111111111001  << 2
+--------
+11111111111111111111111111100100
+```
+
+**mask 计算** 
 
 要获取 111111111，将 0 取反即可，\~0。
 
-要得到只有第 i 位为 1 的 mask，将 1 向左移动 i-1 位即可，1&lt;&lt;(i-1) 。例如 1&lt;&lt;4 得到只有第 5 位为 1 的 mask ：00010000。
+要得到只有第 i 位为 1 的 mask，将 1 向左移动 i-1 位即可，1\<\<(i-1) 。例如 1\<\<4 得到只有第 5 位为 1 的 mask ：00010000。
 
-要得到 1 到 i 位为 1 的 mask，1&lt;&lt;(i+1)-1 即可，例如将 1&lt;&lt;(4+1)-1 = 00010000-1 = 00001111。
+要得到 1 到 i 位为 1 的 mask，(1\<\<i)-1 即可，例如将 (1\<\<4)-1 = 00010000-1 = 00001111。
 
-要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~(1&lt;&lt;(i+1)-1)。
+要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~((1\<\<i)-1)。
 
-**Java 中的位操作** 
+**Java 中的位操作**  
 
 ```html
 static int Integer.bitCount();           // 统计 1 的数量
@@ -59,9 +120,11 @@ static int Integer.highestOneBit();      // 获得最高位
 static String toBinaryString(int i);     // 转换为二进制表示的字符串
 ```
 
-# 1. 统计两个数的二进制表示有多少位不同
+## 1. 统计两个数的二进制表示有多少位不同
 
-[461. Hamming Distance (Easy)](https://leetcode.com/problems/hamming-distance/)
+461. Hamming Distance (Easy)
+
+[Leetcode](https://leetcode.com/problems/hamming-distance/) / [力扣](https://leetcode-cn.com/problems/hamming-distance/)
 
 ```html
 Input: x = 1, y = 4
@@ -112,9 +175,11 @@ public int hammingDistance(int x, int y) {
 }
 ```
 
-# 2. 数组中唯一一个不重复的元素
+## 2. 数组中唯一一个不重复的元素
 
-[136. Single Number (Easy)](https://leetcode.com/problems/single-number/description/)
+136\. Single Number (Easy)
+
+[Leetcode](https://leetcode.com/problems/single-number/description/) / [力扣](https://leetcode-cn.com/problems/single-number/description/)
 
 ```html
 Input: [4,1,2,1,2]
@@ -131,9 +196,11 @@ public int singleNumber(int[] nums) {
 }
 ```
 
-# 3. 找出数组中缺失的那个数
+## 3. 找出数组中缺失的那个数
 
-[268. Missing Number (Easy)](https://leetcode.com/problems/missing-number/description/)
+268\. Missing Number (Easy)
+
+[Leetcode](https://leetcode.com/problems/missing-number/description/) / [力扣](https://leetcode-cn.com/problems/missing-number/description/)
 
 ```html
 Input: [3,0,1]
@@ -152,9 +219,11 @@ public int missingNumber(int[] nums) {
 }
 ```
 
-# 4. 数组中不重复的两个元素
+## 4. 数组中不重复的两个元素
 
-[260. Single Number III (Medium)](https://leetcode.com/problems/single-number-iii/description/)
+260\. Single Number III (Medium)
+
+[Leetcode](https://leetcode.com/problems/single-number-iii/description/) / [力扣](https://leetcode-cn.com/problems/single-number-iii/description/)
 
 两个不相等的元素在位级表示上必定会有一位存在不同。
 
@@ -176,9 +245,11 @@ public int[] singleNumber(int[] nums) {
 }
 ```
 
-# 5. 翻转一个数的比特位
+## 5. 翻转一个数的比特位
 
-[190. Reverse Bits (Easy)](https://leetcode.com/problems/reverse-bits/description/)
+190\. Reverse Bits (Easy)
+
+[Leetcode](https://leetcode.com/problems/reverse-bits/description/) / [力扣](https://leetcode-cn.com/problems/reverse-bits/description/)
 
 ```java
 public int reverseBits(int n) {
@@ -221,7 +292,7 @@ private int reverseByte(byte b) {
 }
 ```
 
-# 6. 不用额外变量交换两个整数
+## 6. 不用额外变量交换两个整数
 
 [程序员代码面试指南 ：P317](#)
 
@@ -231,9 +302,11 @@ b = a ^ b;
 a = a ^ b;
 ```
 
-# 7. 判断一个数是不是 2 的 n 次方
+## 7. 判断一个数是不是 2 的 n 次方
 
-[231. Power of Two (Easy)](https://leetcode.com/problems/power-of-two/description/)
+231\. Power of Two (Easy)
+
+[Leetcode](https://leetcode.com/problems/power-of-two/description/) / [力扣](https://leetcode-cn.com/problems/power-of-two/description/)
 
 二进制表示只有一个 1 存在。
 
@@ -251,9 +324,11 @@ public boolean isPowerOfTwo(int n) {
 }
 ```
 
-# 8.  判断一个数是不是 4 的 n 次方
+## 8.  判断一个数是不是 4 的 n 次方
 
-[342. Power of Four (Easy)](https://leetcode.com/problems/power-of-four/)
+342\. Power of Four (Easy)
+
+[Leetcode](https://leetcode.com/problems/power-of-four/) / [力扣](https://leetcode-cn.com/problems/power-of-four/)
 
 这种数在二进制表示中有且只有一个奇数位为 1，例如 16（10000）。
 
@@ -271,9 +346,11 @@ public boolean isPowerOfFour(int num) {
 }
 ```
 
-# 9. 判断一个数的位级表示是否不会出现连续的 0 和 1
+## 9. 判断一个数的位级表示是否不会出现连续的 0 和 1
 
-[693. Binary Number with Alternating Bits (Easy)](https://leetcode.com/problems/binary-number-with-alternating-bits/description/)
+693\. Binary Number with Alternating Bits (Easy)
+
+[Leetcode](https://leetcode.com/problems/binary-number-with-alternating-bits/description/) / [力扣](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/description/)
 
 ```html
 Input: 10
@@ -296,9 +373,11 @@ public boolean hasAlternatingBits(int n) {
 }
 ```
 
-# 10. 求一个数的补码
+## 10. 求一个数的补码
 
-[476. Number Complement (Easy)](https://leetcode.com/problems/number-complement/description/)
+476\. Number Complement (Easy)
+
+[Leetcode](https://leetcode.com/problems/number-complement/description/) / [力扣](https://leetcode-cn.com/problems/number-complement/description/)
 
 ```html
 Input: 5
@@ -351,13 +430,15 @@ public int findComplement(int num) {
 }
 ```
 
-# 11. 实现整数的加法
+## 11. 实现整数的加法
 
-[371. Sum of Two Integers (Easy)](https://leetcode.com/problems/sum-of-two-integers/description/)
+371\. Sum of Two Integers (Easy)
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
+[Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-two-integers/description/)
 
-递归会终止的原因是 (a & b) << 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) \<\< 1 就是进位。
+
+递归会终止的原因是 (a & b) \<\< 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
 
 ```java
 public int getSum(int a, int b) {
@@ -365,9 +446,11 @@ public int getSum(int a, int b) {
 }
 ```
 
-# 12. 字符串数组最大乘积
+## 12. 字符串数组最大乘积
 
-[318. Maximum Product of Word Lengths (Medium)](https://leetcode.com/problems/maximum-product-of-word-lengths/description/)
+318\. Maximum Product of Word Lengths (Medium)
+
+[Leetcode](https://leetcode.com/problems/maximum-product-of-word-lengths/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/description/)
 
 ```html
 Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
@@ -400,9 +483,11 @@ public int maxProduct(String[] words) {
 }
 ```
 
-# 13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数
+## 13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数
 
-[338. Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/description/)
+338\. Counting Bits (Medium)
+
+[Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode-cn.com/problems/counting-bits/description/)
 
 对于数字 6(110)，它可以看成是 4(100) 再加一个 2(10)，因此 dp[i] = dp[i&(i-1)] + 1;
 
@@ -416,9 +501,3 @@ public int[] countBits(int num) {
 }
 ```
 
-
-
-
-
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复"下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复"资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

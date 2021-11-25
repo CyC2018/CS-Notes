@@ -1,21 +1,25 @@
+# Leetcode 题解 - 图
 <!-- GFM-TOC -->
-* [二分图](#二分图)
-    * [1. 判断是否为二分图](#1-判断是否为二分图)
-* [拓扑排序](#拓扑排序)
-    * [1. 课程安排的合法性](#1-课程安排的合法性)
-    * [2. 课程安排的顺序](#2-课程安排的顺序)
-* [并查集](#并查集)
-    * [1. 冗余连接](#1-冗余连接)
+* [Leetcode 题解 - 图](#leetcode-题解---图)
+    * [二分图](#二分图)
+        * [1. 判断是否为二分图](#1-判断是否为二分图)
+    * [拓扑排序](#拓扑排序)
+        * [1. 课程安排的合法性](#1-课程安排的合法性)
+        * [2. 课程安排的顺序](#2-课程安排的顺序)
+    * [并查集](#并查集)
+        * [1. 冗余连接](#1-冗余连接)
 <!-- GFM-TOC -->
 
 
-# 二分图
+## 二分图
 
 如果可以用两种颜色对图中的节点进行着色，并且保证相邻的节点颜色不同，那么这个图就是二分图。
 
-## 1. 判断是否为二分图
+### 1. 判断是否为二分图
 
-[785. Is Graph Bipartite? (Medium)](https://leetcode.com/problems/is-graph-bipartite/description/)
+785\. Is Graph Bipartite? (Medium)
+
+[Leetcode](https://leetcode.com/problems/is-graph-bipartite/description/) / [力扣](https://leetcode-cn.com/problems/is-graph-bipartite/description/)
 
 ```html
 Input: [[1,3], [0,2], [1,3], [0,2]]
@@ -68,13 +72,15 @@ private boolean isBipartite(int curNode, int curColor, int[] colors, int[][] gra
 }
 ```
 
-# 拓扑排序
+## 拓扑排序
 
 常用于在具有先序关系的任务规划中。
 
-## 1. 课程安排的合法性
+### 1. 课程安排的合法性
 
-[207. Course Schedule (Medium)](https://leetcode.com/problems/course-schedule/description/)
+207\. Course Schedule (Medium)
+
+[Leetcode](https://leetcode.com/problems/course-schedule/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule/description/)
 
 ```html
 2, [[1,0]]
@@ -130,9 +136,11 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
 }
 ```
 
-## 2. 课程安排的顺序
+### 2. 课程安排的顺序
 
-[210. Course Schedule II (Medium)](https://leetcode.com/problems/course-schedule-ii/description/)
+210\. Course Schedule II (Medium)
+
+[Leetcode](https://leetcode.com/problems/course-schedule-ii/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule-ii/description/)
 
 ```html
 4, [[1,0],[2,0],[3,1],[3,2]]
@@ -141,7 +149,7 @@ There are a total of 4 courses to take. To take course 3 you should have finishe
 
 使用 DFS 来实现拓扑排序，使用一个栈存储后序遍历结果，这个栈的逆序结果就是拓扑排序结果。
 
-证明：对于任何先序关系：v->w，后序遍历结果可以保证 w 先进入栈中，因此栈的逆序结果中 v 会在 w 之前。
+证明：对于任何先序关系：v-\>w，后序遍历结果可以保证 w 先进入栈中，因此栈的逆序结果中 v 会在 w 之前。
 
 ```java
 public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -189,13 +197,15 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 }
 ```
 
-# 并查集
+## 并查集
 
 并查集可以动态地连通两个点，并且可以非常快速地判断两个点是否连通。
 
-## 1. 冗余连接
+### 1. 冗余连接
 
-[684. Redundant Connection (Medium)](https://leetcode.com/problems/redundant-connection/description/)
+684\. Redundant Connection (Medium)
+
+[Leetcode](https://leetcode.com/problems/redundant-connection/description/) / [力扣](https://leetcode-cn.com/problems/redundant-connection/description/)
 
 ```html
 Input: [[1,2], [1,3], [2,3]]
@@ -255,9 +265,3 @@ private class UF {
     }
 }
 ```
-
-
-
-
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复"下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复"资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>

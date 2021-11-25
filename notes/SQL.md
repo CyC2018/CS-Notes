@@ -6,14 +6,24 @@
 * [五、更新](#五更新)
 * [六、删除](#六删除)
 * [七、查询](#七查询)
+    * [DISTINCT](#distinct)
+    * [LIMIT](#limit)
 * [八、排序](#八排序)
 * [九、过滤](#九过滤)
 * [十、通配符](#十通配符)
 * [十一、计算字段](#十一计算字段)
 * [十二、函数](#十二函数)
+    * [汇总](#汇总)
+    * [文本处理](#文本处理)
+    * [日期和时间处理](#日期和时间处理)
+    * [数值处理](#数值处理)
 * [十三、分组](#十三分组)
 * [十四、子查询](#十四子查询)
 * [十五、连接](#十五连接)
+    * [内连接](#内连接)
+    * [自连接](#自连接)
+    * [自然连接](#自然连接)
+    * [外连接](#外连接)
 * [十六、组合查询](#十六组合查询)
 * [十七、视图](#十七视图)
 * [十八、存储过程](#十八存储过程)
@@ -130,7 +140,7 @@ DELETE FROM mytable
 WHERE id = 1;
 ```
 
-**TRUNCATE TABLE**  可以清空表，也就是删除所有行。
+**TRUNCATE TABLE**   可以清空表，也就是删除所有行。
 
 ```sql
 TRUNCATE TABLE mytable;
@@ -177,8 +187,8 @@ LIMIT 2, 3;
 
 # 八、排序
 
--  **ASC** ：升序（默认）
--  **DESC** ：降序
+-   **ASC**  ：升序（默认）
+-   **DESC**  ：降序
 
 可以按多个列进行排序，并且为每个列指定不同的排序方式：
 
@@ -213,21 +223,21 @@ WHERE col IS NULL;
 
 应该注意到，NULL 与 0、空字符串都不同。
 
-**AND 和 OR**  用于连接多个过滤条件。优先处理 AND，当一个过滤表达式涉及到多个 AND 和 OR 时，可以使用 () 来决定优先级，使得优先级关系更清晰。
+**AND 和 OR**   用于连接多个过滤条件。优先处理 AND，当一个过滤表达式涉及到多个 AND 和 OR 时，可以使用 () 来决定优先级，使得优先级关系更清晰。
 
-**IN**  操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
+**IN**   操作符用于匹配一组值，其后也可以接一个 SELECT 子句，从而匹配子查询得到的一组值。
 
-**NOT**  操作符用于否定一个条件。
+**NOT**   操作符用于否定一个条件。
 
 # 十、通配符
 
 通配符也是用在过滤语句中，但它只能用于文本字段。
 
--  **%**  匹配 >=0 个任意字符；
+-   **%**   匹配 \>=0 个任意字符；
 
--  **\_**  匹配 ==1 个任意字符；
+-   **\_**   匹配 ==1 个任意字符；
 
--  **[ ]**  可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。
+-   **[ ]**   可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。
 
 使用 Like 来进行通配符匹配。
 
@@ -243,14 +253,14 @@ WHERE col LIKE '[^AB]%'; -- 不以 A 和 B 开头的任意文本
 
 在数据库服务器上完成数据的转换和格式化的工作往往比客户端上快得多，并且转换和格式化后的数据量更少的话可以减少网络通信量。
 
-计算字段通常需要使用  **AS**  来取别名，否则输出的时候字段名为计算表达式。
+计算字段通常需要使用   **AS**   来取别名，否则输出的时候字段名为计算表达式。
 
 ```sql
 SELECT col1 * col2 AS alias
 FROM mytable;
 ```
 
-**CONCAT()**  用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
+**CONCAT()**   用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
 
 ```sql
 SELECT CONCAT(TRIM(col1), '(', TRIM(col2), ')') AS concat_col
@@ -293,7 +303,7 @@ FROM mytable;
 | LENGTH() | 长度 |
 | SOUNDEX() | 转换为语音值 |
 
-其中， **SOUNDEX()**  可以将一个字符串转换为描述其语音表示的字母数字模式。
+其中，  **SOUNDEX()**   可以将一个字符串转换为描述其语音表示的字母数字模式。
 
 ```sql
 SELECT *
@@ -305,7 +315,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 
 - 日期格式：YYYY-MM-DD
-- 时间格式：HH:<zero-width space>MM:SS
+- 时间格式：HH:\<zero-width space\>MM:SS
 
 |函 数 | 说 明|
 | :---: | :---: |
@@ -483,7 +493,7 @@ FROM tablea AS A NATURAL JOIN tableb AS B;
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
 ```sql
-SELECT Customers.cust_id, Orders.order_num
+SELECT Customers.cust_id, Customer.cust_name, Orders.order_id
 FROM Customers LEFT OUTER JOIN Orders
 ON Customers.cust_id = Orders.cust_id;
 ```
@@ -517,7 +527,7 @@ orders 表：
 
 # 十六、组合查询
 
-使用  **UNION**  来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果一般为 M+N 行。
+使用   **UNION**   来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果一般为 M+N 行。
 
 每个查询必须包含相同的列、表达式和聚集函数。
 
@@ -710,7 +720,7 @@ USE mysql;
 SELECT user FROM user;
 ```
 
-**创建账户** 
+**创建账户**  
 
 新创建的账户没有任何权限。
 
@@ -718,25 +728,25 @@ SELECT user FROM user;
 CREATE USER myuser IDENTIFIED BY 'mypassword';
 ```
 
-**修改账户名** 
+**修改账户名**  
 
 ```sql
-RENAME myuser TO newuser;
+RENAME USER myuser TO newuser;
 ```
 
-**删除账户** 
+**删除账户**  
 
 ```sql
 DROP USER myuser;
 ```
 
-**查看权限** 
+**查看权限**  
 
 ```sql
 SHOW GRANTS FOR myuser;
 ```
 
-**授予权限** 
+**授予权限**  
 
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
@@ -744,7 +754,7 @@ SHOW GRANTS FOR myuser;
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-**删除权限** 
+**删除权限**  
 
 GRANT 和 REVOKE 可在几个层次上控制访问权限：
 
@@ -758,7 +768,7 @@ GRANT 和 REVOKE 可在几个层次上控制访问权限：
 REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 ```
 
-**更改密码** 
+**更改密码**  
 
 必须使用 Password() 函数进行加密。
 
@@ -769,9 +779,3 @@ SET PASSWROD FOR myuser = Password('new_password');
 # 参考资料
 
 - BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
-
-
-
-
-</br><div align="center">💡 </br></br> 更多精彩内容将发布在公众号 **CyC2018**，公众号提供了该项目的离线阅读版本，后台回复"下载" 即可领取。也提供了一份技术面试复习思维导图，不仅系统整理了面试知识点，而且标注了各个知识点的重要程度，从而帮你理清多而杂的面试知识点，后台回复"资料" 即可领取。我基本是按照这个思维导图来进行复习的，对我拿到了 BAT 头条等 Offer 起到很大的帮助。你们完全可以和我一样根据思维导图上列的知识点来进行复习，就不用看很多不重要的内容，也可以知道哪些内容很重要从而多安排一些复习时间。</div></br>
-<div align="center"><img width="180px" src="https://cyc-1256109796.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"></img></div>
