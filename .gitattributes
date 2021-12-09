@@ -1,1 +1,2 @@
-*.md linguist-language=java
+*.md linguist-detectable=true
+*.md linguist-documentation=false
