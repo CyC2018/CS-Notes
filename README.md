@@ -96,7 +96,7 @@
 
 转载文章请在开头明显处标明该页面地址，公众号等其它转载请联系 zhengyc101@163.com。
 
-Logo：[logomakr](https://logomakr.com/)
+Logo of CSNOTES：[logomakr](https://logomakr.com/)
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
