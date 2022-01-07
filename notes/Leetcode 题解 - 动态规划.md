@@ -1,47 +1,45 @@
 # Leetcode 题解 - 动态规划
-<!-- GFM-TOC -->
-* [Leetcode 题解 - 动态规划](#leetcode-题解---动态规划)
-    * [斐波那契数列](#斐波那契数列)
-        * [1. 爬楼梯](#1-爬楼梯)
-        * [2. 强盗抢劫](#2-强盗抢劫)
-        * [3. 强盗在环形街区抢劫](#3-强盗在环形街区抢劫)
-        * [4. 信件错排](#4-信件错排)
-        * [5. 母牛生产](#5-母牛生产)
-    * [矩阵路径](#矩阵路径)
-        * [1. 矩阵的最小路径和](#1-矩阵的最小路径和)
-        * [2. 矩阵的总路径数](#2-矩阵的总路径数)
-    * [数组区间](#数组区间)
-        * [1. 数组区间和](#1-数组区间和)
-        * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
-    * [分割整数](#分割整数)
-        * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
-        * [2. 按平方数来分割整数](#2-按平方数来分割整数)
-        * [3. 分割整数构成字母字符串](#3-分割整数构成字母字符串)
-    * [最长递增子序列](#最长递增子序列)
-        * [1. 最长递增子序列](#1-最长递增子序列)
-        * [2. 一组整数对能够构成的最长链](#2-一组整数对能够构成的最长链)
-        * [3. 最长摆动子序列](#3-最长摆动子序列)
-    * [最长公共子序列](#最长公共子序列)
-        * [1. 最长公共子序列](#1-最长公共子序列)
-    * [0-1 背包](#0-1-背包)
-        * [1. 划分数组为和相等的两部分](#1-划分数组为和相等的两部分)
-        * [2. 改变一组数的正负号使得它们的和为一给定数](#2-改变一组数的正负号使得它们的和为一给定数)
-        * [3. 01 字符构成最多的字符串](#3-01-字符构成最多的字符串)
-        * [4. 找零钱的最少硬币数](#4-找零钱的最少硬币数)
-        * [5. 找零钱的硬币数组合](#5-找零钱的硬币数组合)
-        * [6. 字符串按单词列表分割](#6-字符串按单词列表分割)
-        * [7. 组合总和](#7-组合总和)
-    * [股票交易](#股票交易)
-        * [1. 需要冷却期的股票交易](#1-需要冷却期的股票交易)
-        * [2. 需要交易费用的股票交易](#2-需要交易费用的股票交易)
-        * [3. 只能进行两次的股票交易](#3-只能进行两次的股票交易)
-        * [4. 只能进行 k 次的股票交易](#4-只能进行-k-次的股票交易)
-    * [字符串编辑](#字符串编辑)
-        * [1. 删除两个字符串的字符使它们相等](#1-删除两个字符串的字符使它们相等)
-        * [2. 编辑距离](#2-编辑距离)
-        * [3. 复制粘贴字符](#3-复制粘贴字符)
-<!-- GFM-TOC -->
 
+* [Leetcode 题解 - 动态规划](<Leetcode 题解 - 动态规划.md#leetcode-题解---动态规划>)
+  * [斐波那契数列](<Leetcode 题解 - 动态规划.md#斐波那契数列>)
+    * [1. 爬楼梯](<Leetcode 题解 - 动态规划.md#1-爬楼梯>)
+    * [2. 强盗抢劫](<Leetcode 题解 - 动态规划.md#2-强盗抢劫>)
+    * [3. 强盗在环形街区抢劫](<Leetcode 题解 - 动态规划.md#3-强盗在环形街区抢劫>)
+    * [4. 信件错排](<Leetcode 题解 - 动态规划.md#4-信件错排>)
+    * [5. 母牛生产](<Leetcode 题解 - 动态规划.md#5-母牛生产>)
+  * [矩阵路径](<Leetcode 题解 - 动态规划.md#矩阵路径>)
+    * [1. 矩阵的最小路径和](<Leetcode 题解 - 动态规划.md#1-矩阵的最小路径和>)
+    * [2. 矩阵的总路径数](<Leetcode 题解 - 动态规划.md#2-矩阵的总路径数>)
+  * [数组区间](<Leetcode 题解 - 动态规划.md#数组区间>)
+    * [1. 数组区间和](<Leetcode 题解 - 动态规划.md#1-数组区间和>)
+    * [2. 数组中等差递增子区间的个数](<Leetcode 题解 - 动态规划.md#2-数组中等差递增子区间的个数>)
+  * [分割整数](<Leetcode 题解 - 动态规划.md#分割整数>)
+    * [1. 分割整数的最大乘积](<Leetcode 题解 - 动态规划.md#1-分割整数的最大乘积>)
+    * [2. 按平方数来分割整数](<Leetcode 题解 - 动态规划.md#2-按平方数来分割整数>)
+    * [3. 分割整数构成字母字符串](<Leetcode 题解 - 动态规划.md#3-分割整数构成字母字符串>)
+  * [最长递增子序列](<Leetcode 题解 - 动态规划.md#最长递增子序列>)
+    * [1. 最长递增子序列](<Leetcode 题解 - 动态规划.md#1-最长递增子序列>)
+    * [2. 一组整数对能够构成的最长链](<Leetcode 题解 - 动态规划.md#2-一组整数对能够构成的最长链>)
+    * [3. 最长摆动子序列](<Leetcode 题解 - 动态规划.md#3-最长摆动子序列>)
+  * [最长公共子序列](<Leetcode 题解 - 动态规划.md#最长公共子序列>)
+    * [1. 最长公共子序列](<Leetcode 题解 - 动态规划.md#1-最长公共子序列>)
+  * [0-1 背包](<Leetcode 题解 - 动态规划.md#0-1-背包>)
+    * [1. 划分数组为和相等的两部分](<Leetcode 题解 - 动态规划.md#1-划分数组为和相等的两部分>)
+    * [2. 改变一组数的正负号使得它们的和为一给定数](<Leetcode 题解 - 动态规划.md#2-改变一组数的正负号使得它们的和为一给定数>)
+    * [3. 01 字符构成最多的字符串](<Leetcode 题解 - 动态规划.md#3-01-字符构成最多的字符串>)
+    * [4. 找零钱的最少硬币数](<Leetcode 题解 - 动态规划.md#4-找零钱的最少硬币数>)
+    * [5. 找零钱的硬币数组合](<Leetcode 题解 - 动态规划.md#5-找零钱的硬币数组合>)
+    * [6. 字符串按单词列表分割](<Leetcode 题解 - 动态规划.md#6-字符串按单词列表分割>)
+    * [7. 组合总和](<Leetcode 题解 - 动态规划.md#7-组合总和>)
+  * [股票交易](<Leetcode 题解 - 动态规划.md#股票交易>)
+    * [1. 需要冷却期的股票交易](<Leetcode 题解 - 动态规划.md#1-需要冷却期的股票交易>)
+    * [2. 需要交易费用的股票交易](<Leetcode 题解 - 动态规划.md#2-需要交易费用的股票交易>)
+    * [3. 只能进行两次的股票交易](<Leetcode 题解 - 动态规划.md#3-只能进行两次的股票交易>)
+    * [4. 只能进行 k 次的股票交易](<Leetcode 题解 - 动态规划.md#4-只能进行-k-次的股票交易>)
+  * [字符串编辑](<Leetcode 题解 - 动态规划.md#字符串编辑>)
+    * [1. 删除两个字符串的字符使它们相等](<Leetcode 题解 - 动态规划.md#1-删除两个字符串的字符使它们相等>)
+    * [2. 编辑距离](<Leetcode 题解 - 动态规划.md#2-编辑距离>)
+    * [3. 复制粘贴字符](<Leetcode 题解 - 动态规划.md#3-复制粘贴字符>)
 
 递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
 
@@ -55,15 +53,14 @@
 
 题目描述：有 N 阶楼梯，每次可以上一阶或者两阶，求有多少种上楼梯的方法。
 
-定义一个数组 dp 存储上楼梯的方法数（为了方便讨论，数组下标从 1 开始），dp[i] 表示走到第 i 个楼梯的方法数目。
+定义一个数组 dp 存储上楼梯的方法数（为了方便讨论，数组下标从 1 开始），dp\[i] 表示走到第 i 个楼梯的方法数目。
 
 第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/14fe1e71-8518-458f-a220-116003061a83.png)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/14fe1e71-8518-458f-a220-116003061a83.png" width="200px"> </div><br>
 
-考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
+考虑到 dp\[i] 只与 dp\[i - 1] 和 dp\[i - 2] 有关，因此可以只用两个变量来存储 dp\[i - 1] 和 dp\[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
 ```java
 public int climbStairs(int n) {
@@ -88,13 +85,12 @@ public int climbStairs(int n) {
 
 题目描述：抢劫一排住户，但是不能抢邻近的住户，求最大抢劫量。
 
-定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
+定义 dp 数组用来存储最大的抢劫量，其中 dp\[i] 表示抢到第 i 个住户时的最大抢劫量。
 
 由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2de794ca-aa7b-48f3-a556-a0e2708cb976.jpg)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2de794ca-aa7b-48f3-a556-a0e2708cb976.jpg" width="350px"> </div><br>
 
 ```java
 public int rob(int[] nums) {
@@ -141,28 +137,26 @@ private int rob(int[] nums, int first, int last) {
 
 题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
 
-定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
+定义一个数组 dp 存储错误方式数量，dp\[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
-- i==k，交换 i 和 j 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
-- i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
+* i==k，交换 i 和 j 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp\[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp\[i-2] 种错误装信方式。
+* i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp\[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp\[i-1] 种错误装信方式。
 
 综上所述，错误装信数量方式数量为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/da1f96b9-fd4d-44ca-8925-fb14c5733388.png)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/da1f96b9-fd4d-44ca-8925-fb14c5733388.png" width="350px"> </div><br>
 
 ### 5. 母牛生产
 
-[程序员代码面试指南-P181](#)
+[程序员代码面试指南-P181](<Leetcode 题解 - 动态规划.md>)
 
 题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
 第 i 年成熟的牛的数量为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/879814ee-48b5-4bcb-86f5-dcc400cb81ad.png)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/879814ee-48b5-4bcb-86f5-dcc400cb81ad.png" width="250px"> </div><br>
 
 ## 矩阵路径
 
@@ -212,7 +206,8 @@ public int minPathSum(int[][] grid) {
 
 题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg" width=""> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg)\
+
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -257,7 +252,7 @@ sumRange(2, 5) -> -1
 sumRange(0, 5) -> -3
 ```
 
-求区间 i \~ j 的和，可以转换为 sum[j + 1] - sum[i]，其中 sum[i] 为 0 \~ i - 1 的和。
+求区间 i \~ j 的和，可以转换为 sum\[j + 1] - sum\[i]，其中 sum\[i] 为 0 \~ i - 1 的和。
 
 ```java
 class NumArray {
@@ -296,9 +291,9 @@ return: 6, for 3 arithmetic slices in A:
 [2, 3, 4]
 ```
 
-dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
+dp\[i] 表示以 A\[i] 为结尾的等差递增子区间的个数。
 
-当 A[i] - A[i-1] == A[i-1] - A[i-2]，那么 [A[i-2], A[i-1], A[i]] 构成一个等差递增子区间。而且在以 A[i-1] 为结尾的递增子区间的后面再加上一个 A[i]，一样可以构成新的递增子区间。
+当 A\[i] - A\[i-1] == A\[i-1] - A\[i-2]，那么 \[A\[i-2], A\[i-1], A\[i]] 构成一个等差递增子区间。而且在以 A\[i-1] 为结尾的递增子区间的后面再加上一个 A\[i]，一样可以构成新的递增子区间。
 
 ```html
 dp[2] = 1
@@ -312,7 +307,7 @@ dp[4] = dp[3] + 1 = 3
     [2, 3, 4]        // 新的递增子区间
 ```
 
-综上，在 A[i] - A[i-1] == A[i-1] - A[i-2] 时，dp[i] = dp[i-1] + 1。
+综上，在 A\[i] - A\[i-1] == A\[i-1] - A\[i-2] 时，dp\[i] = dp\[i-1] + 1。
 
 因为递增子区间不一定以最后一个元素为结尾，可以是任意一个元素结尾，因此需要返回 dp 数组累加的结果。
 
@@ -433,19 +428,18 @@ public int numDecodings(String s) {
 
 ## 最长递增子序列
 
-已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>}，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个  **子序列**  。
+已知一个序列 {S1, S2,...,Sn}，取出若干数组成新的序列 {Si1, Si2,..., Sim}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个 **子序列** 。
 
-如果在子序列中，当下标 ix > iy 时，S<sub>ix</sub> > S<sub>iy</sub>，称子序列为原序列的一个  **递增子序列**  。
+如果在子序列中，当下标 ix > iy 时，Six > Siy，称子序列为原序列的一个 **递增子序列** 。
 
-定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub>，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
+定义一个数组 dp 存储最长递增子序列的长度，dp\[n] 表示以 Sn 结尾的序列的最长递增子序列长度。对于一个递增子序列 {Si1, Si2,...,Sim}，如果 im < n 并且 Sim < Sn，此时 {Si1, Si2,..., Sim, Sn} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 Sn 就构成了以 Sn 为结尾的最长递增子序列。因此 dp\[n] = max{ dp\[i]+1 | Si < Sn && i < n} 。
 
-因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
+因为在求 dp\[n] 时可能无法找到一个满足条件的递增子序列，此时 {Sn} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp\[n] 最小为 1，即：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ee994da4-0fc7-443d-ac56-c08caf00a204.jpg)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ee994da4-0fc7-443d-ac56-c08caf00a204.jpg" width="350px"> </div><br>
 
-对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp[i] | 1 <= i <= N} 即为所求。
+对于一个长度为 N 的序列，最长递增子序列并不一定会以 SN 为结尾，因此 dp\[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp\[i] | 1 <= i <= N} 即为所求。
 
 ### 1. 最长递增子序列
 
@@ -480,14 +474,14 @@ for (int i = 0; i < n; i++) {
 return ret;
 ```
 
-以上解法的时间复杂度为 O(N<sup>2</sup>)，可以使用二分查找将时间复杂度降低为 O(NlogN)。
+以上解法的时间复杂度为 O(N2)，可以使用二分查找将时间复杂度降低为 O(NlogN)。
 
-定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
+定义一个 tails 数组，其中 tails\[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
 
-- 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
-- 如果 tails[i-1] \< x \<= tails[i]，那么更新 tails[i] = x。
+* 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
+* 如果 tails\[i-1] < x <= tails\[i]，那么更新 tails\[i] = x。
 
-例如对于数组 [4,3,6,5]，有：
+例如对于数组 \[4,3,6,5]，有：
 
 ```html
 tails      len      num
@@ -498,7 +492,7 @@ tails      len      num
 [3,5]      2        null
 ```
 
-可以看出 tails 数组保持有序，因此在查找 S<sub>i</sub> 位于 tails 数组的位置时就可以使用二分查找。
+可以看出 tails 数组保持有序，因此在查找 Si 位于 tails 数组的位置时就可以使用二分查找。
 
 ```java
 public int lengthOfLIS(int[] nums) {
@@ -543,7 +537,7 @@ Output: 2
 Explanation: The longest chain is [1,2] -> [3,4]
 ```
 
-题目描述：对于 (a, b) 和 (c, d) ，如果 b \< c，则它们可以构成一条链。
+题目描述：对于 (a, b) 和 (c, d) ，如果 b < c，则它们可以构成一条链。
 
 ```java
 public int findLongestChain(int[][] pairs) {
@@ -607,24 +601,23 @@ public int wiggleMaxLength(int[] nums) {
 
 对于两个子序列 S1 和 S2，找出它们最长的公共子序列。
 
-定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp[i][j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1<sub>i</sub> 与 S2<sub>j</sub> 值是否相等，分为两种情况：
+定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp\[i]\[j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1i 与 S2j 值是否相等，分为两种情况：
 
-- 当 S1<sub>i</sub>==S2<sub>j</sub> 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1<sub>i</sub> 这个值，最长公共子序列长度加 1，即 dp[i][j] = dp[i-1][j-1] + 1。
-- 当 S1<sub>i</sub> != S2<sub>j</sub> 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，或者 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，取它们的最大者，即 dp[i][j] = max{ dp[i-1][j], dp[i][j-1] }。
+* 当 S1i==S2j 时，那么就能在 S1 的前 i-1 个字符与 S2 的前 j-1 个字符最长公共子序列的基础上再加上 S1i 这个值，最长公共子序列长度加 1，即 dp\[i]\[j] = dp\[i-1]\[j-1] + 1。
+* 当 S1i != S2j 时，此时最长公共子序列为 S1 的前 i-1 个字符和 S2 的前 j 个字符最长公共子序列，或者 S1 的前 i 个字符和 S2 的前 j-1 个字符最长公共子序列，取它们的最大者，即 dp\[i]\[j] = max{ dp\[i-1]\[j], dp\[i]\[j-1] }。
 
 综上，最长公共子序列的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right." class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ecd89a22-c075-4716-8423-e0ba89230e9a.jpg)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ecd89a22-c075-4716-8423-e0ba89230e9a.jpg" width="450px"> </div><br>
 
-对于长度为 N 的序列 S<sub>1</sub> 和长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
+对于长度为 N 的序列 S1 和长度为 M 的序列 S2，dp\[N]\[M] 就是序列 S1 和序列 S2 的最长公共子序列长度。
 
 与最长递增子序列相比，最长公共子序列有以下不同点：
 
-- 针对的是两个序列，求它们的最长公共子序列。
-- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>。
-- 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
+* 针对的是两个序列，求它们的最长公共子序列。
+* 在最长递增子序列中，dp\[i] 表示以 Si 为结尾的最长递增子序列长度，子序列必须包含 Si ；在最长公共子序列中，dp\[i]\[j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1i 和 S2j。
+* 在求最终解时，最长公共子序列中 dp\[N]\[M] 就是最终解，而最长递增子序列中 dp\[N] 不是最终解，因为以 SN 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
 ### 1. 最长公共子序列
 
@@ -653,16 +646,15 @@ public int wiggleMaxLength(int[] nums) {
 
 有一个容量为 N 的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
 
-定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示前 i 件物品体积不超过 j 的情况下能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
+定义一个二维数组 dp 存储最大价值，其中 dp\[i]\[j] 表示前 i 件物品体积不超过 j 的情况下能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
 
-- 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
-- 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
+* 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp\[i]\[j] = dp\[i-1]\[j]。
+* 第 i 件物品添加到背包中，dp\[i]\[j] = dp\[i-1]\[j-w] + v。
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8cb2be66-3d47-41ba-b55b-319fc68940d4.png)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8cb2be66-3d47-41ba-b55b-319fc68940d4.png" width="400px"> </div><br>
 
 ```java
 // W 为背包总体积
@@ -685,15 +677,14 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 }
 ```
 
-**空间优化**  
+**空间优化**
 
-在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
+在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp\[j] 既可以表示 dp\[i-1]\[j] 也可以表示 dp\[i]\[j]。此时，
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)" class="mathjax-pic"/></div> <br>-->
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ae89f16-7905-4a6f-88a2-874b4cac91f4.jpg)\
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ae89f16-7905-4a6f-88a2-874b4cac91f4.jpg" width="300px"> </div><br>
 
-因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+因为 dp\[j-w] 表示 dp\[i-1]\[j-w]，因此不能先求 dp\[i]\[j-w]，防止将 dp\[i-1]\[j-w] 覆盖。也就是说要先计算 dp\[i]\[j] 再计算 dp\[i]\[j-w]，在程序实现时需要按倒序来循环求解。
 
 ```java
 public int knapsack(int W, int N, int[] weights, int[] values) {
@@ -710,25 +701,22 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 }
 ```
 
-**无法使用贪心算法的解释**  
+**无法使用贪心算法的解释**
 
 0-1 背包问题无法使用贪心算法来求解，也就是说不能按照先添加性价比最高的物品来达到最优，这是因为这种方式可能造成背包空间的浪费，从而无法达到最优。考虑下面的物品和一个容量为 5 的背包，如果先添加物品 0 再添加物品 1，那么只能存放的价值为 16，浪费了大小为 2 的空间。最优的方式是存放物品 1 和物品 2，价值为 22.
 
-| id | w | v | v/w |
-| --- | --- | --- | --- |
-| 0 | 1 | 6 | 6 |
-| 1 | 2 | 10 | 5 |
-| 2 | 3 | 12 | 4 |
+| id | w | v  | v/w |
+| -- | - | -- | --- |
+| 0  | 1 | 6  | 6   |
+| 1  | 2 | 10 | 5   |
+| 2  | 3 | 12 | 4   |
 
-**变种**  
+**变种**
 
-- 完全背包：物品数量为无限个
-
-- 多重背包：物品数量有限制
-
-- 多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制
-
-- 其它：物品之间相互约束或者依赖
+* 完全背包：物品数量为无限个
+* 多重背包：物品数量有限制
+* 多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制
+* 其它：物品之间相互约束或者依赖
 
 ### 1. 划分数组为和相等的两部分
 
@@ -904,9 +892,9 @@ return -1.
 
 题目描述：给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得硬币数量最少。硬币可以重复使用。
 
-- 物品：硬币
-- 物品大小：面额
-- 物品价值：数量
+* 物品：硬币
+* 物品大小：面额
+* 物品价值：数量
 
 因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包的逆序遍历 dp 数组改为正序遍历即可。
 
@@ -936,7 +924,7 @@ public int coinChange(int[] coins, int amount) {
 
 [Leetcode](https://leetcode.com/problems/coin-change-2/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-2/description/)
 
-```text-html-basic
+```
 Input: amount = 5, coins = [1, 2, 5]
 Output: 4
 Explanation: there are four ways to make up the amount:
@@ -1056,7 +1044,8 @@ public int combinationSum4(int[] nums, int target) {
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png)\
+
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1099,7 +1088,8 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png" width="300px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png)\
+
 
 ```java
 public int maxProfit(int[] prices, int fee) {
@@ -1119,7 +1109,6 @@ public int maxProfit(int[] prices, int fee) {
     return Math.max(sell[N - 1], s2[N - 1]);
 }
 ```
-
 
 ### 3. 只能进行两次的股票交易
 

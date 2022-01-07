@@ -1,24 +1,22 @@
 # Java 容器
-<!-- GFM-TOC -->
-* [Java 容器](#java-容器)
-    * [一、概览](#一概览)
-        * [Collection](#collection)
-        * [Map](#map)
-    * [二、容器中的设计模式](#二容器中的设计模式)
-        * [迭代器模式](#迭代器模式)
-        * [适配器模式](#适配器模式)
-    * [三、源码分析](#三源码分析)
-        * [ArrayList](#arraylist)
-        * [Vector](#vector)
-        * [CopyOnWriteArrayList](#copyonwritearraylist)
-        * [LinkedList](#linkedlist)
-        * [HashMap](#hashmap)
-        * [ConcurrentHashMap](#concurrenthashmap)
-        * [LinkedHashMap](#linkedhashmap)
-        * [WeakHashMap](#weakhashmap)
-    * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+* [Java 容器](<Java 容器.md#java-容器>)
+  * [一、概览](<Java 容器.md#一概览>)
+    * [Collection](<Java 容器.md#collection>)
+    * [Map](<Java 容器.md#map>)
+  * [二、容器中的设计模式](<Java 容器.md#二容器中的设计模式>)
+    * [迭代器模式](<Java 容器.md#迭代器模式>)
+    * [适配器模式](<Java 容器.md#适配器模式>)
+  * [三、源码分析](<Java 容器.md#三源码分析>)
+    * [ArrayList](<Java 容器.md#arraylist>)
+    * [Vector](<Java 容器.md#vector>)
+    * [CopyOnWriteArrayList](<Java 容器.md#copyonwritearraylist>)
+    * [LinkedList](<Java 容器.md#linkedlist>)
+    * [HashMap](<Java 容器.md#hashmap>)
+    * [ConcurrentHashMap](<Java 容器.md#concurrenthashmap>)
+    * [LinkedHashMap](<Java 容器.md#linkedhashmap>)
+    * [WeakHashMap](<Java 容器.md#weakhashmap>)
+  * [参考资料](<Java 容器.md#参考资料>)
 
 ## 一、概览
 
@@ -26,48 +24,42 @@
 
 ### Collection
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208220948084.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208220948084.png)\
+
 
 #### 1. Set
 
-- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。
-
-- HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
-
-- LinkedHashSet：具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。
+* TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。
+* HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
+* LinkedHashSet：具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。
 
 #### 2. List
 
-- ArrayList：基于动态数组实现，支持随机访问。
-
-- Vector：和 ArrayList 类似，但它是线程安全的。
-
-- LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
+* ArrayList：基于动态数组实现，支持随机访问。
+* Vector：和 ArrayList 类似，但它是线程安全的。
+* LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
 
 #### 3. Queue
 
-- LinkedList：可以用它来实现双向队列。
-
-- PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
+* LinkedList：可以用它来实现双向队列。
+* PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
 
 ### Map
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20201101234335837.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20201101234335837.png)\
 
-- TreeMap：基于红黑树实现。
 
-- HashMap：基于哈希表实现。
-
-- HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
-
-- LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
-
+* TreeMap：基于红黑树实现。
+* HashMap：基于哈希表实现。
+* HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
+* LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
 ## 二、容器中的设计模式
 
 ### 迭代器模式
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208225301973.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208225301973.png)\
+
 
 Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
@@ -112,7 +104,6 @@ List list = Arrays.asList(1, 2, 3);
 
 ### ArrayList
 
-
 #### 1. 概览
 
 因为 ArrayList 是基于数组实现的，所以支持快速随机访问。RandomAccess 接口标识着该类支持快速随机访问。
@@ -128,7 +119,8 @@ public class ArrayList<E> extends AbstractList<E>
 private static final int DEFAULT_CAPACITY = 10;
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208232221265.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208232221265.png)\
+
 
 #### 2. 扩容
 
@@ -258,7 +250,6 @@ modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。代码参考上节序列化中的 writeObject() 方法。
 
-
 ### Vector
 
 #### 1. 同步
@@ -324,8 +315,8 @@ public Vector() {
 
 #### 3. 与 ArrayList 的比较
 
-- Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
-- Vector 每次扩容请求其大小的 2 倍（也可以通过构造函数设置增长的容量），而 ArrayList 是 1.5 倍。
+* Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；
+* Vector 每次扩容请求其大小的 2 倍（也可以通过构造函数设置增长的容量），而 ArrayList 是 1.5 倍。
 
 #### 4. 替代方案
 
@@ -386,8 +377,8 @@ CopyOnWriteArrayList 在写操作的同时允许读操作，大大提高了读�
 
 但是 CopyOnWriteArrayList 有其缺陷：
 
-- 内存占用：在写操作时需要复制一个新的数组，使得内存占用为原来的两倍左右；
-- 数据不一致：读操作不能读取实时性的数据，因为部分写操作的数据还未同步到读数组中。
+* 内存占用：在写操作时需要复制一个新的数组，使得内存占用为原来的两倍左右；
+* 数据不一致：读操作不能读取实时性的数据，因为部分写操作的数据还未同步到读数组中。
 
 所以 CopyOnWriteArrayList 不适合内存敏感以及对实时性要求很高的场景。
 
@@ -412,14 +403,15 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208233940066.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208233940066.png)\
+
 
 #### 2. 与 ArrayList 的比较
 
 ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。ArrayList 和 LinkedList 的区别可以归结为数组和链表的区别：
 
-- 数组支持随机访问，但插入删除的代价很高，需要移动大量元素；
-- 链表不支持随机访问，但插入删除只需要改变指针。
+* 数组支持随机访问，但插入删除的代价很高，需要移动大量元素；
+* 链表不支持随机访问，但插入删除只需要改变指针。
 
 ### HashMap
 
@@ -429,7 +421,8 @@ ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。Array
 
 内部包含了一个 Entry 类型的数组 table。Entry 存储着键值对。它包含了四个字段，从 next 字段我们可以看出 Entry 是一个链表。即数组中的每个位置被当成一个桶，一个桶存放一个链表。HashMap 使用拉链法来解决冲突，同一个链表中存放哈希值和散列桶取模运算结果相同的 Entry。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208234948205.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208234948205.png)\
+
 
 ```java
 transient Entry[] table;
@@ -497,19 +490,20 @@ map.put("K2", "V2");
 map.put("K3", "V3");
 ```
 
-- 新建一个 HashMap，默认大小为 16；
-- 插入 &lt;K1,V1\> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
-- 插入 &lt;K2,V2\> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
-- 插入 &lt;K3,V3\> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2\> 前面。
+* 新建一个 HashMap，默认大小为 16；
+* 插入 \<K1,V1> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
+* 插入 \<K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
+* 插入 \<K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 \<K2,V2> 前面。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。
+应该注意到链表的插入是以头插法方式进行的，例如上面的 \<K3,V3> 不是插在 \<K2,V2> 后面，而是插入在链表头部。
 
 查找需要分成两步进行：
 
-- 计算键值对所在的桶；
-- 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+* 计算键值对所在的桶；
+* 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208235258643.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208235258643.png)\
+
 
 #### 3. put 操作
 
@@ -599,7 +593,7 @@ int hash = hash(key);
 int i = indexFor(hash, table.length);
 ```
 
-**4.1 计算 hash 值**  
+**4.1 计算 hash 值**
 
 ```java
 final int hash(Object k) {
@@ -624,9 +618,9 @@ public final int hashCode() {
 }
 ```
 
-**4.2 取模**  
+**4.2 取模**
 
-令 x = 1\<\<4，即 x 为 2 的 4 次方，它具有以下性质：
+令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
 
 ```
 x   : 00010000
@@ -665,14 +659,14 @@ static int indexFor(int h, int length) {
 
 为了让查找的成本降低，应该使 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
 
-和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
+和扩容相关的参数主要有：capacity、size、threshold 和 load\_factor。
 
-| 参数 | 含义 |
-| :--: | :-- |
-| capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
-| size | 键值对数量。 |
-| threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。 |
-| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(capacity* loadFactor)。 |
+|     参数     | 含义                                                           |
+| :--------: | ------------------------------------------------------------ |
+|  capacity  | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。           |
+|    size    | 键值对数量。                                                       |
+|  threshold | size 的临界值，当 size 大于等于 threshold 就必须进行扩容操作。                   |
+| loadFactor | 装载因子，table 能够使用的比例，threshold = (int)(capacity\* loadFactor)。 |
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -751,8 +745,8 @@ new capacity : 00100000
 
 对于一个 Key，它的哈希值 hash 在第 5 位：
 
-- 为 0，那么 hash%00010000 = hash%00100000，桶位置和原来一致；
-- 为 1，hash%00010000 = hash%00100000 + 16，桶位置是原位置 + 16。
+* 为 0，那么 hash%00010000 = hash%00100000，桶位置和原来一致；
+* 为 1，hash%00010000 = hash%00100000 + 16，桶位置是原位置 + 16。
 
 #### 7. 计算数组容量
 
@@ -793,16 +787,17 @@ static final int tableSizeFor(int cap) {
 
 #### 9. 与 Hashtable 的比较
 
-- Hashtable 使用 synchronized 来进行同步。
-- HashMap 可以插入键为 null 的 Entry。
-- HashMap 的迭代器是 fail-fast 迭代器。
-- HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
+* Hashtable 使用 synchronized 来进行同步。
+* HashMap 可以插入键为 null 的 Entry。
+* HashMap 的迭代器是 fail-fast 迭代器。
+* HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
 ### ConcurrentHashMap
 
 #### 1. 存储结构
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209001038024.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209001038024.png)\
+
 
 ```java
 static final class HashEntry<K,V> {
@@ -863,12 +858,11 @@ transient int count;
 
 ConcurrentHashMap 在执行 size 操作时先尝试不加锁，如果连续两次不加锁操作得到的结果一致，那么可以认为这个结果是正确的。
 
-尝试次数使用 RETRIES_BEFORE_LOCK 定义，该值为 2，retries 初始值为 -1，因此尝试次数为 3。
+尝试次数使用 RETRIES\_BEFORE\_LOCK 定义，该值为 2，retries 初始值为 -1，因此尝试次数为 3。
 
 如果尝试的次数超过 3 次，就需要对每个 Segment 加锁。
 
 ```java
-
 /**
  * Number of unsynchronized retries in size and containsValue
  * methods before resorting to locking. This is used to avoid
@@ -1024,9 +1018,9 @@ protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
 
 以下是使用 LinkedHashMap 实现的一个 LRU 缓存：
 
-- 设定最大缓存空间 MAX_ENTRIES  为 3；
-- 使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LRU 顺序；
-- 覆盖 removeEldestEntry() 方法实现，在节点多于 MAX_ENTRIES 就会将最近最久未使用的数据移除。
+* 设定最大缓存空间 MAX\_ENTRIES 为 3；
+* 使用 LinkedHashMap 的构造函数将 accessOrder 设置为 true，开启 LRU 顺序；
+* 覆盖 removeEldestEntry() 方法实现，在节点多于 MAX\_ENTRIES 就会将最近最久未使用的数据移除。
 
 ```java
 class LRUCache<K, V> extends LinkedHashMap<K, V> {
@@ -1076,10 +1070,10 @@ Tomcat 中的 ConcurrentCache 使用了 WeakHashMap 来实现缓存功能。
 
 ConcurrentCache 采取的是分代缓存：
 
-- 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
-- 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，这些老对象会被垃圾收集器回收。
-- 当调用  get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，从而保证经常被访问的节点不容易被回收。
-- 当调用 put() 方法时，如果 eden 的大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
+* 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
+* 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，这些老对象会被垃圾收集器回收。
+* 当调用 get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，从而保证经常被访问的节点不容易被回收。
+* 当调用 put() 方法时，如果 eden 的大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
 
 ```java
 public final class ConcurrentCache<K, V> {
@@ -1116,18 +1110,16 @@ public final class ConcurrentCache<K, V> {
 }
 ```
 
-
 ## 参考资料
 
-- Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
-- [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
-- [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
-- [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java_hashmap.html)
-- [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
-- [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
-- [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
-- [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
-- [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
-- [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
-- [Java Collection Framework – The LinkedList Class](http://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
-
+* Eckel B. Java 编程思想 \[M]. 机械工业出版社, 2002.
+* [Java Collection Framework](https://www.w3resource.com/java-tutorial/java-collections.php)
+* [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
+* [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java\_hashmap.html)
+* [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
+* [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
+* [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
+* [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
+* [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
+* [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
+* [Java Collection Framework – The LinkedList Class](http://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)

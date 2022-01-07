@@ -1,14 +1,12 @@
 # Docker
-<!-- GFM-TOC -->
-* [Docker](#docker)
-    * [一、解决的问题](#一解决的问题)
-    * [二、与虚拟机的比较](#二与虚拟机的比较)
-    * [三、优势](#三优势)
-    * [四、使用场景](#四使用场景)
-    * [五、镜像与容器](#五镜像与容器)
-    * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+* [Docker](Docker.md#docker)
+  * [一、解决的问题](Docker.md#一解决的问题)
+  * [二、与虚拟机的比较](Docker.md#二与虚拟机的比较)
+  * [三、优势](Docker.md#三优势)
+  * [四、使用场景](Docker.md#四使用场景)
+  * [五、镜像与容器](Docker.md#五镜像与容器)
+  * [参考资料](Docker.md#参考资料)
 
 ## 一、解决的问题
 
@@ -16,13 +14,15 @@
 
 Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其它机器上。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png)\
+
 
 ## 二、与虚拟机的比较
 
 虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/be608a77-7b7f-4f8e-87cc-f2237270bf69.png" width="500"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/be608a77-7b7f-4f8e-87cc-f2237270bf69.png)\
+
 
 ### 启动速度
 
@@ -76,16 +76,16 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/docker-filesystems-busyboxrw.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/docker-filesystems-busyboxrw.png)\
+
 
 ## 参考资料
 
-- [DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP](https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/)
-- [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
-- [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php)
-- [How to Create Docker Container using Dockerfile](https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
-- [理解 Docker（2）：Docker 镜像](http://www.cnblogs.com/sammyliu/p/5877964.html)
-- [为什么要使用 Docker？](https://yeasy.gitbooks.io/docker_practice/introduction/why.html)
-- [What is Docker](https://www.docker.com/what-docker)
-- [持续集成是什么？](http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
-
+* [DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP](https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/)
+* [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
+* [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker\_Container\_vs\_Virtual\_Machine.php)
+* [How to Create Docker Container using Dockerfile](https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
+* [理解 Docker（2）：Docker 镜像](http://www.cnblogs.com/sammyliu/p/5877964.html)
+* [为什么要使用 Docker？](https://yeasy.gitbooks.io/docker\_practice/introduction/why.html)
+* [What is Docker](https://www.docker.com/what-docker)
+* [持续集成是什么？](http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)

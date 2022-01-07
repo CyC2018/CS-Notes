@@ -1,48 +1,46 @@
 # Java IO
-<!-- GFM-TOC -->
-* [Java IO](#java-io)
-    * [一、概览](#一概览)
-    * [二、磁盘操作](#二磁盘操作)
-    * [三、字节操作](#三字节操作)
-        * [实现文件复制](#实现文件复制)
-        * [装饰者模式](#装饰者模式)
-    * [四、字符操作](#四字符操作)
-        * [编码与解码](#编码与解码)
-        * [String 的编码方式](#string-的编码方式)
-        * [Reader 与 Writer](#reader-与-writer)
-        * [实现逐行输出文本文件的内容](#实现逐行输出文本文件的内容)
-    * [五、对象操作](#五对象操作)
-        * [序列化](#序列化)
-        * [Serializable](#serializable)
-        * [transient](#transient)
-    * [六、网络操作](#六网络操作)
-        * [InetAddress](#inetaddress)
-        * [URL](#url)
-        * [Sockets](#sockets)
-        * [Datagram](#datagram)
-    * [七、NIO](#七nio)
-        * [流与块](#流与块)
-        * [通道与缓冲区](#通道与缓冲区)
-        * [缓冲区状态变量](#缓冲区状态变量)
-        * [文件 NIO 实例](#文件-nio-实例)
-        * [选择器](#选择器)
-        * [套接字 NIO 实例](#套接字-nio-实例)
-        * [内存映射文件](#内存映射文件)
-        * [对比](#对比)
-    * [八、参考资料](#八参考资料)
-<!-- GFM-TOC -->
 
+* [Java IO](<Java IO.md#java-io>)
+  * [一、概览](<Java IO.md#一概览>)
+  * [二、磁盘操作](<Java IO.md#二磁盘操作>)
+  * [三、字节操作](<Java IO.md#三字节操作>)
+    * [实现文件复制](<Java IO.md#实现文件复制>)
+    * [装饰者模式](<Java IO.md#装饰者模式>)
+  * [四、字符操作](<Java IO.md#四字符操作>)
+    * [编码与解码](<Java IO.md#编码与解码>)
+    * [String 的编码方式](<Java IO.md#string-的编码方式>)
+    * [Reader 与 Writer](<Java IO.md#reader-与-writer>)
+    * [实现逐行输出文本文件的内容](<Java IO.md#实现逐行输出文本文件的内容>)
+  * [五、对象操作](<Java IO.md#五对象操作>)
+    * [序列化](<Java IO.md#序列化>)
+    * [Serializable](<Java IO.md#serializable>)
+    * [transient](<Java IO.md#transient>)
+  * [六、网络操作](<Java IO.md#六网络操作>)
+    * [InetAddress](<Java IO.md#inetaddress>)
+    * [URL](<Java IO.md#url>)
+    * [Sockets](<Java IO.md#sockets>)
+    * [Datagram](<Java IO.md#datagram>)
+  * [七、NIO](<Java IO.md#七nio>)
+    * [流与块](<Java IO.md#流与块>)
+    * [通道与缓冲区](<Java IO.md#通道与缓冲区>)
+    * [缓冲区状态变量](<Java IO.md#缓冲区状态变量>)
+    * [文件 NIO 实例](<Java IO.md#文件-nio-实例>)
+    * [选择器](<Java IO.md#选择器>)
+    * [套接字 NIO 实例](<Java IO.md#套接字-nio-实例>)
+    * [内存映射文件](<Java IO.md#内存映射文件>)
+    * [对比](<Java IO.md#对比>)
+  * [八、参考资料](<Java IO.md#八参考资料>)
 
 ## 一、概览
 
 Java 的 I/O 大概可以分成以下几类：
 
-- 磁盘操作：File
-- 字节操作：InputStream 和 OutputStream
-- 字符操作：Reader 和 Writer
-- 对象操作：Serializable
-- 网络操作：Socket
-- 新的输入/输出：NIO
+* 磁盘操作：File
+* 字节操作：InputStream 和 OutputStream
+* 字符操作：Reader 和 Writer
+* 对象操作：Serializable
+* 网络操作：Socket
+* 新的输入/输出：NIO
 
 ## 二、磁盘操作
 
@@ -95,11 +93,12 @@ public static void copyFile(String src, String dist) throws IOException {
 
 Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 
-- InputStream 是抽象组件；
-- FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
-- FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
+* InputStream 是抽象组件；
+* FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
+* FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9709694b-db05-4cce-8d2f-1c8b09f4d921.png" width="650px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9709694b-db05-4cce-8d2f-1c8b09f4d921.png)\
+
 
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
@@ -118,9 +117,9 @@ DataInputStream 装饰者提供了对更多数据类型进行输入的操作，�
 
 如果编码和解码过程使用不同的编码方式那么就出现了乱码。
 
-- GBK 编码中，中文字符占 2 个字节，英文字符占 1 个字节；
-- UTF-8 编码中，中文字符占 3 个字节，英文字符占 1 个字节；
-- UTF-16be 编码中，中文字符和英文字符都占 2 个字节。
+* GBK 编码中，中文字符占 2 个字节，英文字符占 1 个字节；
+* UTF-8 编码中，中文字符占 3 个字节，英文字符占 1 个字节；
+* UTF-16be 编码中，中文字符和英文字符都占 2 个字节。
 
 UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-16le，le 指的是 Little Endian，也就是小端。
 
@@ -137,7 +136,7 @@ String str2 = new String(bytes, "UTF-8");
 System.out.println(str2);
 ```
 
-在调用无参数 getBytes() 方法时，默认的编码方式不是 UTF-16be。双字节编码的好处是可以使用一个 char 存储中文和英文，而将 String 转为 bytes[] 字节数组就不再需要这个好处，因此也就不再需要双字节编码。getBytes() 的默认编码方式与平台有关，一般为 UTF-8。
+在调用无参数 getBytes() 方法时，默认的编码方式不是 UTF-16be。双字节编码的好处是可以使用一个 char 存储中文和英文，而将 String 转为 bytes\[] 字节数组就不再需要这个好处，因此也就不再需要双字节编码。getBytes() 的默认编码方式与平台有关，一般为 UTF-8。
 
 ```java
 byte[] bytes = str1.getBytes();
@@ -147,8 +146,8 @@ byte[] bytes = str1.getBytes();
 
 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。
 
-- InputStreamReader 实现从字节流解码成字符流；
-- OutputStreamWriter 实现字符流编码成为字节流。
+* InputStreamReader 实现从字节流解码成字符流；
+* OutputStreamWriter 实现字符流编码成为字节流。
 
 ### 实现逐行输出文本文件的内容
 
@@ -176,8 +175,8 @@ public static void readFileContent(String filePath) throws IOException {
 
 序列化就是将一个对象转换成字节序列，方便存储和传输。
 
-- 序列化：ObjectOutputStream.writeObject()
-- 反序列化：ObjectInputStream.readObject()
+* 序列化：ObjectOutputStream.writeObject()
+* 反序列化：ObjectInputStream.readObject()
 
 不会对静态变量进行序列化，因为序列化只是保存对象的状态，静态变量属于类的状态。
 
@@ -232,10 +231,10 @@ private transient Object[] elementData;
 
 Java 中的网络支持：
 
-- InetAddress：用于表示网络上的硬件资源，即 IP 地址；
-- URL：统一资源定位符；
-- Sockets：使用 TCP 协议实现网络通信；
-- Datagram：使用 UDP 协议实现网络通信。
+* InetAddress：用于表示网络上的硬件资源，即 IP 地址；
+* URL：统一资源定位符；
+* Sockets：使用 TCP 协议实现网络通信；
+* Datagram：使用 UDP 协议实现网络通信。
 
 ### InetAddress
 
@@ -275,16 +274,17 @@ public static void main(String[] args) throws IOException {
 
 ### Sockets
 
-- ServerSocket：服务器端类
-- Socket：客户端类
-- 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
+* ServerSocket：服务器端类
+* Socket：客户端类
+* 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e6affc4-18e5-4596-96ef-fb84c63bf88a.png" width="550px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e6affc4-18e5-4596-96ef-fb84c63bf88a.png)\
+
 
 ### Datagram
 
-- DatagramSocket：通信类
-- DatagramPacket：数据包类
+* DatagramSocket：通信类
+* DatagramPacket：数据包类
 
 ## 七、NIO
 
@@ -310,10 +310,10 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 通道包括以下类型：
 
-- FileChannel：从文件中读写数据；
-- DatagramChannel：通过 UDP 读写网络中数据；
-- SocketChannel：通过 TCP 读写网络中数据；
-- ServerSocketChannel：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
+* FileChannel：从文件中读写数据；
+* DatagramChannel：通过 UDP 读写网络中数据；
+* SocketChannel：通过 TCP 读写网络中数据；
+* ServerSocketChannel：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
 
 #### 2. 缓冲区
 
@@ -323,41 +323,46 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 缓冲区包括以下类型：
 
-- ByteBuffer
-- CharBuffer
-- ShortBuffer
-- IntBuffer
-- LongBuffer
-- FloatBuffer
-- DoubleBuffer
+* ByteBuffer
+* CharBuffer
+* ShortBuffer
+* IntBuffer
+* LongBuffer
+* FloatBuffer
+* DoubleBuffer
 
 ### 缓冲区状态变量
 
-- capacity：最大容量；
-- position：当前已经读写的字节数；
-- limit：还可以读写的字节数。
+* capacity：最大容量；
+* position：当前已经读写的字节数；
+* limit：还可以读写的字节数。
 
 状态变量的改变过程举例：
 
 ① 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 8。capacity 变量不会改变，下面的讨论会忽略它。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png)\
+
 
 ② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 为 5，limit 保持不变。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/80804f52-8815-4096-b506-48eef3eed5c6.png)\
+
 
 ③ 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/952e06bd-5a65-4cab-82e4-dd1536462f38.png)\
+
 
 ④ 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png)\
+
 
 ⑤ 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/67bf5487-c45d-49b6-b9c0-a058d8c68902.png)\
+
 
 ### 文件 NIO 实例
 
@@ -415,7 +420,8 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/093f9e57-429c-413a-83ee-c689ba596cef.png" width="350px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/093f9e57-429c-413a-83ee-c689ba596cef.png)\
+
 
 #### 1. 创建选择器
 
@@ -435,10 +441,10 @@ ssChannel.register(selector, SelectionKey.OP_ACCEPT);
 
 在将通道注册到选择器上时，还需要指定要注册的具体事件，主要有以下几类：
 
-- SelectionKey.OP_CONNECT
-- SelectionKey.OP_ACCEPT
-- SelectionKey.OP_READ
-- SelectionKey.OP_WRITE
+* SelectionKey.OP\_CONNECT
+* SelectionKey.OP\_ACCEPT
+* SelectionKey.OP\_READ
+* SelectionKey.OP\_WRITE
 
 它们在 SelectionKey 的定义如下：
 
@@ -605,18 +611,18 @@ MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 
 NIO 与普通 I/O 的区别主要有以下两点：
 
-- NIO 是非阻塞的；
-- NIO 面向块，I/O 面向流。
+* NIO 是非阻塞的；
+* NIO 面向块，I/O 面向流。
 
 ## 八、参考资料
 
-- Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 [M]. 机械工业出版社, 2002.
-- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
-- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
-- [Java NIO 浅析](https://tech.meituan.com/nio.html)
-- [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
-- [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.html)
-- [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
-- [NIO 与传统 IO 的区别](http://blog.csdn.net/shimiso/article/details/24990499)
-- [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
-- [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
+* Eckel B, 埃克尔, 昊鹏, 等. Java 编程思想 \[M]. 机械工业出版社, 2002.
+* [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+* [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+* [Java NIO 浅析](https://tech.meituan.com/nio.html)
+* [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
+* [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.html)
+* [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
+* [NIO 与传统 IO 的区别](http://blog.csdn.net/shimiso/article/details/24990499)
+* [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
+* [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
