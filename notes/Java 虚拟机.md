@@ -1,40 +1,39 @@
 # Java 虚拟机
-<!-- GFM-TOC -->
-* [Java 虚拟机](#java-虚拟机)
-    * [一、运行时数据区域](#一运行时数据区域)
-        * [程序计数器](#程序计数器)
-        * [Java 虚拟机栈](#java-虚拟机栈)
-        * [本地方法栈](#本地方法栈)
-        * [堆](#堆)
-        * [方法区](#方法区)
-        * [运行时常量池](#运行时常量池)
-        * [直接内存](#直接内存)
-    * [二、垃圾收集](#二垃圾收集)
-        * [判断一个对象是否可被回收](#判断一个对象是否可被回收)
-        * [引用类型](#引用类型)
-        * [垃圾收集算法](#垃圾收集算法)
-        * [垃圾收集器](#垃圾收集器)
-    * [三、内存分配与回收策略](#三内存分配与回收策略)
-        * [Minor GC 和 Full GC](#minor-gc-和-full-gc)
-        * [内存分配策略](#内存分配策略)
-        * [Full GC 的触发条件](#full-gc-的触发条件)
-    * [四、类加载机制](#四类加载机制)
-        * [类的生命周期](#类的生命周期)
-        * [类加载过程](#类加载过程)
-        * [类初始化时机](#类初始化时机)
-        * [类与类加载器](#类与类加载器)
-        * [类加载器分类](#类加载器分类)
-        * [双亲委派模型](#双亲委派模型)
-        * [自定义类加载器实现](#自定义类加载器实现)
-    * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+* [Java 虚拟机](<Java 虚拟机.md#java-虚拟机>)
+  * [一、运行时数据区域](<Java 虚拟机.md#一运行时数据区域>)
+    * [程序计数器](<Java 虚拟机.md#程序计数器>)
+    * [Java 虚拟机栈](<Java 虚拟机.md#java-虚拟机栈>)
+    * [本地方法栈](<Java 虚拟机.md#本地方法栈>)
+    * [堆](<Java 虚拟机.md#堆>)
+    * [方法区](<Java 虚拟机.md#方法区>)
+    * [运行时常量池](<Java 虚拟机.md#运行时常量池>)
+    * [直接内存](<Java 虚拟机.md#直接内存>)
+  * [二、垃圾收集](<Java 虚拟机.md#二垃圾收集>)
+    * [判断一个对象是否可被回收](<Java 虚拟机.md#判断一个对象是否可被回收>)
+    * [引用类型](<Java 虚拟机.md#引用类型>)
+    * [垃圾收集算法](<Java 虚拟机.md#垃圾收集算法>)
+    * [垃圾收集器](<Java 虚拟机.md#垃圾收集器>)
+  * [三、内存分配与回收策略](<Java 虚拟机.md#三内存分配与回收策略>)
+    * [Minor GC 和 Full GC](<Java 虚拟机.md#minor-gc-和-full-gc>)
+    * [内存分配策略](<Java 虚拟机.md#内存分配策略>)
+    * [Full GC 的触发条件](<Java 虚拟机.md#full-gc-的触发条件>)
+  * [四、类加载机制](<Java 虚拟机.md#四类加载机制>)
+    * [类的生命周期](<Java 虚拟机.md#类的生命周期>)
+    * [类加载过程](<Java 虚拟机.md#类加载过程>)
+    * [类初始化时机](<Java 虚拟机.md#类初始化时机>)
+    * [类与类加载器](<Java 虚拟机.md#类与类加载器>)
+    * [类加载器分类](<Java 虚拟机.md#类加载器分类>)
+    * [双亲委派模型](<Java 虚拟机.md#双亲委派模型>)
+    * [自定义类加载器实现](<Java 虚拟机.md#自定义类加载器实现>)
+  * [参考资料](<Java 虚拟机.md#参考资料>)
 
-本文大部分内容参考   **周志明《深入理解 Java 虚拟机》**  ，想要深入学习的话请看原书。
+本文大部分内容参考 **周志明《深入理解 Java 虚拟机》** ，想要深入学习的话请看原书。
 
 ## 一、运行时数据区域
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5778d113-8e13-4c53-b5bf-801e58080b97.png" width="400px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5778d113-8e13-4c53-b5bf-801e58080b97.png)\
+
 
 ### 程序计数器
 
@@ -44,7 +43,8 @@
 
 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8442519f-0b4d-48f4-8229-56f984363c69.png" width="400px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8442519f-0b4d-48f4-8229-56f984363c69.png)\
+
 
 可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，在 JDK 1.4 中默认为 256K，而在 JDK 1.5+ 默认为 1M：
 
@@ -54,8 +54,8 @@ java -Xss2M HackTheJava
 
 该区域可能抛出以下异常：
 
-- 当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；
-- 栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。
+* 当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；
+* 栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。
 
 ### 本地方法栈
 
@@ -63,7 +63,8 @@ java -Xss2M HackTheJava
 
 本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66a6899d-c6b0-4a47-8569-9d08f0baf86c.png" width="300px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66a6899d-c6b0-4a47-8569-9d08f0baf86c.png)\
+
 
 ### 堆
 
@@ -71,8 +72,8 @@ java -Xss2M HackTheJava
 
 现代的垃圾收集器基本都是采用分代收集算法，其主要的思想是针对不同类型的对象采取不同的垃圾回收算法。可以将堆分成两块：
 
-- 新生代（Young Generation）
-- 老年代（Old Generation）
+* 新生代（Young Generation）
+* 老年代（Old Generation）
 
 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
@@ -143,12 +144,12 @@ public class Test {
 
 Java 虚拟机使用该算法来判断对象是否可被回收，GC Roots 一般包含以下内容：
 
-- 虚拟机栈中局部变量表中引用的对象
-- 本地方法栈中 JNI 中引用的对象
-- 方法区中类静态属性引用的对象
-- 方法区中的常量引用的对象
+* 虚拟机栈中局部变量表中引用的对象
+* 本地方法栈中 JNI 中引用的对象
+* 方法区中类静态属性引用的对象
+* 方法区中的常量引用的对象
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/83d909d2-3858-4fe1-8ff4-16471db0b180.png" width="350px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/83d909d2-3858-4fe1-8ff4-16471db0b180.png)\
 
 
 #### 3. 方法区的回收
@@ -161,9 +162,9 @@ Java 虚拟机使用该算法来判断对象是否可被回收，GC Roots 一般
 
 类的卸载条件很多，需要满足以下三个条件，并且满足了条件也不一定会被卸载：
 
-- 该类所有的实例都已经被回收，此时堆中不存在该类的任何实例。
-- 加载该类的 ClassLoader 已经被回收。
-- 该类对应的 Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
+* 该类所有的实例都已经被回收，此时堆中不存在该类的任何实例。
+* 加载该类的 ClassLoader 已经被回收。
+* 该类对应的 Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
 
 #### 4. finalize()
 
@@ -229,7 +230,8 @@ obj = null;
 
 #### 1. 标记 - 清除
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/005b481b-502b-4e3f-985d-d043c2b330aa.png" width="400px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/005b481b-502b-4e3f-985d-d043c2b330aa.png)\
+
 
 在标记阶段，程序会检查每个对象是否为活动对象，如果是活动对象，则程序会在对象头部打上标记。
 
@@ -239,26 +241,28 @@ obj = null;
 
 不足：
 
-- 标记和清除过程效率都不高；
-- 会产生大量不连续的内存碎片，导致无法给大对象分配内存。
+* 标记和清除过程效率都不高；
+* 会产生大量不连续的内存碎片，导致无法给大对象分配内存。
 
 #### 2. 标记 - 整理
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ccd773a5-ad38-4022-895c-7ac318f31437.png" width="400px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ccd773a5-ad38-4022-895c-7ac318f31437.png)\
+
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 优点:
 
-- 不会产生内存碎片
+* 不会产生内存碎片
 
 不足:
 
-- 需要移动大量对象，处理效率比较低。
+* 需要移动大量对象，处理效率比较低。
 
 #### 3. 复制
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b2b77b9e-958c-4016-8ae5-9c6edd83871e.png" width="400px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b2b77b9e-958c-4016-8ae5-9c6edd83871e.png)\
+
 
 将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
 
@@ -274,21 +278,23 @@ HotSpot 虚拟机的 Eden 和 Survivor 大小比例默认为 8:1，保证了内�
 
 一般将堆分为新生代和老年代。
 
-- 新生代使用：复制算法
-- 老年代使用：标记 - 清除 或者 标记 - 整理 算法
+* 新生代使用：复制算法
+* 老年代使用：标记 - 清除 或者 标记 - 整理 算法
 
 ### 垃圾收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg)\
+
 
 以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
-- 单线程与多线程：单线程指的是垃圾收集器只使用一个线程，而多线程使用多个线程；
-- 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+* 单线程与多线程：单线程指的是垃圾收集器只使用一个线程，而多线程使用多个线程；
+* 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
 
 #### 1. Serial 收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg)\
+
 
 Serial 翻译为串行，也就是说它以串行的方式执行。
 
@@ -300,7 +306,8 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 #### 2. ParNew 收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg)\
+
 
 它是 Serial 收集器的多线程版本。
 
@@ -320,16 +327,18 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 #### 4. Serial Old 收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg)\
+
 
 是 Serial 收集器的老年代版本，也是给 Client 场景下的虚拟机使用。如果用在 Server 场景下，它有两大用途：
 
-- 在 JDK 1.5 以及之前版本（Parallel Old 诞生以前）中与 Parallel Scavenge 收集器搭配使用。
-- 作为 CMS 收集器的后备预案，在并发收集发生 Concurrent Mode Failure 时使用。
+* 在 JDK 1.5 以及之前版本（Parallel Old 诞生以前）中与 Parallel Scavenge 收集器搭配使用。
+* 作为 CMS 收集器的后备预案，在并发收集发生 Concurrent Mode Failure 时使用。
 
 #### 5. Parallel Old 收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/278fe431-af88-4a95-a895-9c3b80117de3.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/278fe431-af88-4a95-a895-9c3b80117de3.jpg)\
+
 
 是 Parallel Scavenge 收集器的老年代版本。
 
@@ -337,24 +346,25 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 #### 6. CMS 收集器
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg)\
+
 
 CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 分为以下四个流程：
 
-- 初始标记：仅仅只是标记一下 GC Roots 能直接关联到的对象，速度很快，需要停顿。
-- 并发标记：进行 GC Roots Tracing 的过程，它在整个回收过程中耗时最长，不需要停顿。
-- 重新标记：为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，需要停顿。
-- 并发清除：不需要停顿。
+* 初始标记：仅仅只是标记一下 GC Roots 能直接关联到的对象，速度很快，需要停顿。
+* 并发标记：进行 GC Roots Tracing 的过程，它在整个回收过程中耗时最长，不需要停顿。
+* 重新标记：为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，需要停顿。
+* 并发清除：不需要停顿。
 
 在整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，不需要进行停顿。
 
 具有以下缺点：
 
-- 吞吐量低：低停顿时间是以牺牲吞吐量为代价的，导致 CPU 利用率不够高。
-- 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
-- 标记 - 清除算法导致的空间碎片，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
+* 吞吐量低：低停顿时间是以牺牲吞吐量为代价的，导致 CPU 利用率不够高。
+* 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
+* 标记 - 清除算法导致的空间碎片，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
 
 #### 7. G1 收集器
 
@@ -362,37 +372,39 @@ G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，�
 
 堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4cf711a8-7ab2-4152-b85c-d5c226733807.png)\
+
 
 G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png)\
+
 
 通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
 每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg)\
+
 
 如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：
 
-- 初始标记
-- 并发标记
-- 最终标记：为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程的 Remembered Set Logs 里面，最终标记阶段需要把 Remembered Set Logs 的数据合并到 Remembered Set 中。这阶段需要停顿线程，但是可并行执行。
-- 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。
+* 初始标记
+* 并发标记
+* 最终标记：为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程的 Remembered Set Logs 里面，最终标记阶段需要把 Remembered Set Logs 的数据合并到 Remembered Set 中。这阶段需要停顿线程，但是可并行执行。
+* 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。
 
 具备如下特点：
 
-- 空间整合：整体来看是基于“标记 - 整理”算法实现的收集器，从局部（两个 Region 之间）上来看是基于“复制”算法实现的，这意味着运行期间不会产生内存空间碎片。
-- 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
+* 空间整合：整体来看是基于“标记 - 整理”算法实现的收集器，从局部（两个 Region 之间）上来看是基于“复制”算法实现的，这意味着运行期间不会产生内存空间碎片。
+* 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
 
 ## 三、内存分配与回收策略
 
 ### Minor GC 和 Full GC
 
-- Minor GC：回收新生代，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
-
-- Full GC：回收老年代和新生代，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
+* Minor GC：回收新生代，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
+* Full GC：回收老年代和新生代，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
 
 ### 内存分配策略
 
@@ -406,13 +418,13 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 经常出现大对象会提前触发垃圾收集以获取足够的连续空间分配给大对象。
 
--XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。
+\-XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。
 
 #### 3. 长期存活的对象进入老年代
 
 为对象定义年龄计数器，对象在 Eden 出生并经过 Minor GC 依然存活，将移动到 Survivor 中，年龄就增加 1 岁，增加到一定年龄则移动到老年代中。
 
--XX:MaxTenuringThreshold 用来定义年龄的阈值。
+\-XX:MaxTenuringThreshold 用来定义年龄的阈值。
 
 #### 4. 动态对象年龄判定
 
@@ -460,17 +472,18 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ### 类的生命周期
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/335fe19c-4a76-45ab-9320-88c90d6a0d7e.png" width="600px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/335fe19c-4a76-45ab-9320-88c90d6a0d7e.png)\
+
 
 包括以下 7 个阶段：
 
--   **加载（Loading）**  
--   **验证（Verification）**  
--   **准备（Preparation）**  
--   **解析（Resolution）**  
--   **初始化（Initialization）**  
-- 使用（Using）
-- 卸载（Unloading）
+* **加载（Loading）**
+* **验证（Verification）**
+* **准备（Preparation）**
+* **解析（Resolution）**
+* **初始化（Initialization）**
+* 使用（Using）
+* 卸载（Unloading）
 
 ### 类加载过程
 
@@ -482,17 +495,16 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 加载过程完成以下三件事：
 
-- 通过类的完全限定名称获取定义该类的二进制字节流。
-- 将该字节流表示的静态存储结构转换为方法区的运行时存储结构。
-- 在内存中生成一个代表该类的 Class 对象，作为方法区中该类各种数据的访问入口。
-
+* 通过类的完全限定名称获取定义该类的二进制字节流。
+* 将该字节流表示的静态存储结构转换为方法区的运行时存储结构。
+* 在内存中生成一个代表该类的 Class 对象，作为方法区中该类各种数据的访问入口。
 
 其中二进制字节流可以从以下方式中获取：
 
-- 从 ZIP 包读取，成为 JAR、EAR、WAR 格式的基础。
-- 从网络中获取，最典型的应用是 Applet。
-- 运行时计算生成，例如动态代理技术，在 java.lang.reflect.Proxy 使用 ProxyGenerator.generateProxyClass 的代理类的二进制字节流。
-- 由其他文件生成，例如由 JSP 文件生成对应的 Class 类。
+* 从 ZIP 包读取，成为 JAR、EAR、WAR 格式的基础。
+* 从网络中获取，最典型的应用是 Applet。
+* 运行时计算生成，例如动态代理技术，在 java.lang.reflect.Proxy 使用 ProxyGenerator.generateProxyClass 的代理类的二进制字节流。
+* 由其他文件生成，例如由 JSP 文件生成对应的 Class 类。
 
 #### 2. 验证
 
@@ -524,10 +536,9 @@ public static final int value = 123;
 
 #### 5. 初始化
 
-<div data="modify -->"></div>
-初始化阶段才真正开始执行类中定义的 Java 程序代码。初始化阶段是虚拟机执行类构造器 &lt;clinit\>() 方法的过程。在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。
+初始化阶段才真正开始执行类中定义的 Java 程序代码。初始化阶段是虚拟机执行类构造器 \<clinit\\>() 方法的过程。在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。
 
-&lt;clinit\>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
+\<clinit>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
 
 ```java
 public class Test {
@@ -539,7 +550,7 @@ public class Test {
 }
 ```
 
-由于父类的 &lt;clinit\>() 方法先执行，也就意味着父类中定义的静态语句块的执行要优先于子类。例如以下代码：
+由于父类的 \<clinit>() 方法先执行，也就意味着父类中定义的静态语句块的执行要优先于子类。例如以下代码：
 
 ```java
 static class Parent {
@@ -558,9 +569,9 @@ public static void main(String[] args) {
 }
 ```
 
-接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt;clinit\>() 方法。但接口与类不同的是，执行接口的 &lt;clinit\>() 方法不需要先执行父接口的 &lt;clinit\>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 &lt;clinit\>() 方法。
+接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 \<clinit>() 方法。但接口与类不同的是，执行接口的 \<clinit>() 方法不需要先执行父接口的 \<clinit>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 \<clinit>() 方法。
 
-虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
+虚拟机会保证一个类的 \<clinit>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 \<clinit>() 方法，其它线程都会阻塞等待，直到活动线程执行 \<clinit>() 方法完毕。如果在一个类的 \<clinit>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
 
 ### 类初始化时机
 
@@ -568,33 +579,29 @@ public static void main(String[] args) {
 
 虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列五种情况必须对类进行初始化（加载、验证、准备都会随之发生）：
 
-- 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
-
-- 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
-
-- 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
-
-- 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
-
-- 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic, REF_putStatic, REF_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化；
+* 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
+* 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
+* 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
+* 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
+* 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF\_getStatic, REF\_putStatic, REF\_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化；
 
 #### 2. 被动引用
 
 以上 5 种场景中的行为称为对一个类进行主动引用。除此之外，所有引用类的方式都不会触发初始化，称为被动引用。被动引用的常见例子包括：
 
-- 通过子类引用父类的静态字段，不会导致子类初始化。
+* 通过子类引用父类的静态字段，不会导致子类初始化。
 
 ```java
 System.out.println(SubClass.value);  // value 字段在 SuperClass 中定义
 ```
 
-- 通过数组定义来引用类，不会触发此类的初始化。该过程会对数组类进行初始化，数组类是一个由虚拟机自动生成的、直接继承自 Object 的子类，其中包含了数组的属性和方法。
+* 通过数组定义来引用类，不会触发此类的初始化。该过程会对数组类进行初始化，数组类是一个由虚拟机自动生成的、直接继承自 Object 的子类，其中包含了数组的属性和方法。
 
 ```java
 SuperClass[] sca = new SuperClass[10];
 ```
 
-- 常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，因此不会触发定义常量的类的初始化。
+* 常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，因此不会触发定义常量的类的初始化。
 
 ```java
 System.out.println(ConstClass.HELLOWORLD);
@@ -610,17 +617,14 @@ System.out.println(ConstClass.HELLOWORLD);
 
 从 Java 虚拟机的角度来讲，只存在以下两种不同的类加载器：
 
-- 启动类加载器（Bootstrap ClassLoader），使用 C++ 实现，是虚拟机自身的一部分；
-
-- 所有其它类的加载器，使用 Java 实现，独立于虚拟机，继承自抽象类 java.lang.ClassLoader。
+* 启动类加载器（Bootstrap ClassLoader），使用 C++ 实现，是虚拟机自身的一部分；
+* 所有其它类的加载器，使用 Java 实现，独立于虚拟机，继承自抽象类 java.lang.ClassLoader。
 
 从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
 
-- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JRE_HOME\>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
-
-- 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME\>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
-
-- 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+* 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 \<JRE\_HOME>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+* 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 \<JAVA\_HOME>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+* 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
 ### 双亲委派模型
 
@@ -628,7 +632,8 @@ System.out.println(ConstClass.HELLOWORLD);
 
 下图展示了类加载器之间的层次关系，称为双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其它的类加载器都要有自己的父类加载器。这里的父子关系一般通过组合关系（Composition）来实现，而不是继承关系（Inheritance）。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0dd2d40a-5b2b-4d45-b176-e75a4cd4bdbf.png" width="500px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0dd2d40a-5b2b-4d45-b176-e75a4cd4bdbf.png)\
+
 
 #### 1. 工作过程
 
@@ -739,17 +744,16 @@ public class FileSystemClassLoader extends ClassLoader {
 
 ## 参考资料
 
-- 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
-- [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
-- [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
-[Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
-- [JNI Part1: Java Native Interface Introduction and “Hello World” application](http://electrofriends.com/articles/jni/jni-part1-java-native-interface/)
-- [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
-- [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
-- [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)
-- [深入理解 JVM(2)——GC 算法与内存分配策略](https://crowhawk.github.io/2017/08/10/jvm_2/)
-- [深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm_3/)
-- [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)
-- [深入探讨 Java 类加载器](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html#code6)
-- [Guide to WeakHashMap in Java](http://www.baeldung.com/java-weakhashmap)
-- [Tomcat example source code file (ConcurrentCache.java)](https://alvinalexander.com/java/jwarehouse/apache-tomcat-6.0.16/java/org/apache/el/util/ConcurrentCache.java.shtml)
+* 周志明. 深入理解 Java 虚拟机 \[M]. 机械工业出版社, 2011.
+* [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
+* [Jvm memory](https://www.slideshare.net/benewu/jvm-memory) [Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
+* [JNI Part1: Java Native Interface Introduction and “Hello World” application](http://electrofriends.com/articles/jni/jni-part1-java-native-interface/)
+* [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
+* [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
+* [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)
+* [深入理解 JVM(2)——GC 算法与内存分配策略](https://crowhawk.github.io/2017/08/10/jvm\_2/)
+* [深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm\_3/)
+* [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)
+* [深入探讨 Java 类加载器](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html#code6)
+* [Guide to WeakHashMap in Java](http://www.baeldung.com/java-weakhashmap)
+* [Tomcat example source code file (ConcurrentCache.java)](https://alvinalexander.com/java/jwarehouse/apache-tomcat-6.0.16/java/org/apache/el/util/ConcurrentCache.java.shtml)

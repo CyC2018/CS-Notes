@@ -1,51 +1,49 @@
 # Redis
-<!-- GFM-TOC -->
-* [Redis](#redis)
-    * [一、概述](#一概述)
-    * [二、数据类型](#二数据类型)
-        * [STRING](#string)
-        * [LIST](#list)
-        * [SET](#set)
-        * [HASH](#hash)
-        * [ZSET](#zset)
-    * [三、数据结构](#三数据结构)
-        * [字典](#字典)
-        * [跳跃表](#跳跃表)
-    * [四、使用场景](#四使用场景)
-        * [计数器](#计数器)
-        * [缓存](#缓存)
-        * [查找表](#查找表)
-        * [消息队列](#消息队列)
-        * [会话缓存](#会话缓存)
-        * [分布式锁实现](#分布式锁实现)
-        * [其它](#其它)
-    * [五、Redis 与 Memcached](#五redis-与-memcached)
-        * [数据类型](#数据类型)
-        * [数据持久化](#数据持久化)
-        * [分布式](#分布式)
-        * [内存管理机制](#内存管理机制)
-    * [六、键的过期时间](#六键的过期时间)
-    * [七、数据淘汰策略](#七数据淘汰策略)
-    * [八、持久化](#八持久化)
-        * [RDB 持久化](#rdb-持久化)
-        * [AOF 持久化](#aof-持久化)
-    * [九、事务](#九事务)
-    * [十、事件](#十事件)
-        * [文件事件](#文件事件)
-        * [时间事件](#时间事件)
-        * [事件的调度与执行](#事件的调度与执行)
-    * [十一、复制](#十一复制)
-        * [连接过程](#连接过程)
-        * [主从链](#主从链)
-    * [十二、Sentinel](#十二sentinel)
-    * [十三、分片](#十三分片)
-    * [十四、一个简单的论坛系统分析](#十四一个简单的论坛系统分析)
-        * [文章信息](#文章信息)
-        * [点赞功能](#点赞功能)
-        * [对文章进行排序](#对文章进行排序)
-    * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+* [Redis](Redis.md#redis)
+  * [一、概述](Redis.md#一概述)
+  * [二、数据类型](Redis.md#二数据类型)
+    * [STRING](Redis.md#string)
+    * [LIST](Redis.md#list)
+    * [SET](Redis.md#set)
+    * [HASH](Redis.md#hash)
+    * [ZSET](Redis.md#zset)
+  * [三、数据结构](Redis.md#三数据结构)
+    * [字典](Redis.md#字典)
+    * [跳跃表](Redis.md#跳跃表)
+  * [四、使用场景](Redis.md#四使用场景)
+    * [计数器](Redis.md#计数器)
+    * [缓存](Redis.md#缓存)
+    * [查找表](Redis.md#查找表)
+    * [消息队列](Redis.md#消息队列)
+    * [会话缓存](Redis.md#会话缓存)
+    * [分布式锁实现](Redis.md#分布式锁实现)
+    * [其它](Redis.md#其它)
+  * [五、Redis 与 Memcached](Redis.md#五redis-与-memcached)
+    * [数据类型](Redis.md#数据类型)
+    * [数据持久化](Redis.md#数据持久化)
+    * [分布式](Redis.md#分布式)
+    * [内存管理机制](Redis.md#内存管理机制)
+  * [六、键的过期时间](Redis.md#六键的过期时间)
+  * [七、数据淘汰策略](Redis.md#七数据淘汰策略)
+  * [八、持久化](Redis.md#八持久化)
+    * [RDB 持久化](Redis.md#rdb-持久化)
+    * [AOF 持久化](Redis.md#aof-持久化)
+  * [九、事务](Redis.md#九事务)
+  * [十、事件](Redis.md#十事件)
+    * [文件事件](Redis.md#文件事件)
+    * [时间事件](Redis.md#时间事件)
+    * [事件的调度与执行](Redis.md#事件的调度与执行)
+  * [十一、复制](Redis.md#十一复制)
+    * [连接过程](Redis.md#连接过程)
+    * [主从链](Redis.md#主从链)
+  * [十二、Sentinel](Redis.md#十二sentinel)
+  * [十三、分片](Redis.md#十三分片)
+  * [十四、一个简单的论坛系统分析](Redis.md#十四一个简单的论坛系统分析)
+    * [文章信息](Redis.md#文章信息)
+    * [点赞功能](Redis.md#点赞功能)
+    * [对文章进行排序](Redis.md#对文章进行排序)
+  * [参考资料](Redis.md#参考资料)
 
 ## 一、概述
 
@@ -57,19 +55,20 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 
 ## 二、数据类型
 
-| 数据类型 | 可以存储的值 | 操作 |
-| :--: | :--: | :--: |
-| STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作\</br\> 对整数和浮点数执行自增或者自减操作 |
-| LIST | 列表 | 从两端压入或者弹出元素 \</br\> 对单个或者多个元素进行修剪，\</br\> 只保留一个范围内的元素 |
-| SET | 无序集合 | 添加、获取、移除单个元素\</br\> 检查一个元素是否存在于集合中\</br\> 计算交集、并集、差集\</br\> 从集合里面随机获取元素 |
-| HASH | 包含键值对的无序散列表 | 添加、获取、移除单个键值对\</br\> 获取所有键值对\</br\> 检查某个键是否存在|
-| ZSET | 有序集合 | 添加、获取、删除元素\</br\> 根据分值范围或者成员来获取元素\</br\> 计算一个键的排名 |
+|  数据类型  |    可以存储的值   |                                  操作                                  |
+| :----: | :---------: | :------------------------------------------------------------------: |
+| STRING | 字符串、整数或者浮点数 |             对整个字符串或者字符串的其中一部分执行操作\</br> 对整数和浮点数执行自增或者自减操作            |
+|  LIST  |      列表     |          从两端压入或者弹出元素 \</br> 对单个或者多个元素进行修剪，\</br> 只保留一个范围内的元素         |
+|   SET  |     无序集合    | 添加、获取、移除单个元素\</br> 检查一个元素是否存在于集合中\</br> 计算交集、并集、差集\</br> 从集合里面随机获取元素 |
+|  HASH  | 包含键值对的无序散列表 |              添加、获取、移除单个键值对\</br> 获取所有键值对\</br> 检查某个键是否存在             |
+|  ZSET  |     有序集合    |            添加、获取、删除元素\</br> 根据分值范围或者成员来获取元素\</br> 计算一个键的排名           |
 
 > [What Redis data structures look like](https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/)
 
 ### STRING
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6019b2db-bc3e-4408-b6d8-96025f4481d6.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6019b2db-bc3e-4408-b6d8-96025f4481d6.png)\
+
 
 ```html
 > set hello world
@@ -84,7 +83,8 @@ OK
 
 ### LIST
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fb327611-7e2b-4f2f-9f5b-38592d408f07.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fb327611-7e2b-4f2f-9f5b-38592d408f07.png)\
+
 
 ```html
 > rpush list-key item
@@ -112,7 +112,8 @@ OK
 
 ### SET
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png)\
+
 
 ```html
 > sadd set-key item
@@ -146,7 +147,8 @@ OK
 
 ### HASH
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7bd202a7-93d4-4f3a-a878-af68ae25539a.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7bd202a7-93d4-4f3a-a878-af68ae25539a.png)\
+
 
 ```html
 > hset hash-key sub-key1 value1
@@ -177,7 +179,8 @@ OK
 
 ### ZSET
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1202b2d6-9469-4251-bd47-ca6034fb6116.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1202b2d6-9469-4251-bd47-ca6034fb6116.png)\
+
 
 ```html
 > zadd zset-key 728 member1
@@ -251,7 +254,7 @@ typedef struct dict {
 
 rehash 操作不是一次性完成，而是采用渐进方式，这是为了避免一次性执行过多的 rehash 操作给服务器带来过大的负担。
 
-渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始，然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict[0] rehash 到 dict[1]，这一次会把 dict[0] 上 table[rehashidx] 的键值对 rehash 到 dict[1] 上，dict[0] 的 table[rehashidx] 指向 null，并令 rehashidx++。
+渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始，然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict\[0] rehash 到 dict\[1]，这一次会把 dict\[0] 上 table\[rehashidx] 的键值对 rehash 到 dict\[1] 上，dict\[0] 的 table\[rehashidx] 指向 null，并令 rehashidx++。
 
 在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
 
@@ -319,17 +322,19 @@ int dictRehash(dict *d, int n) {
 
 跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/beba612e-dc5b-4fc2-869d-0b23408ac90a.png" width="600px"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/beba612e-dc5b-4fc2-869d-0b23408ac90a.png)\
+
 
 在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。下图演示了查找 22 的过程。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0ea37ee2-c224-4c79-b895-e131c6805c40.png" width="600px"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0ea37ee2-c224-4c79-b895-e131c6805c40.png)\
+
 
 与红黑树等平衡树相比，跳跃表具有以下优点：
 
-- 插入速度非常快速，因为不需要进行旋转等操作来维护平衡性；
-- 更容易实现；
-- 支持无锁操作。
+* 插入速度非常快速，因为不需要进行旋转等操作来维护平衡性；
+* 更容易实现；
+* 支持无锁操作。
 
 ## 四、使用场景
 
@@ -393,9 +398,8 @@ Redis Cluster 实现了分布式的支持。
 
 ### 内存管理机制
 
-- 在 Redis 中，并不是所有数据都一直存储在内存中，可以将一些很久没用的 value 交换到磁盘，而 Memcached 的数据则会一直在内存中。
-
-- Memcached 将内存分割成特定长度的块来存储数据，以完全解决内存碎片的问题。但是这种方式会使得内存的利用率不高，例如块的大小为 128 bytes，只存储 100 bytes 的数据，那么剩下的 28 bytes 就浪费掉了。
+* 在 Redis 中，并不是所有数据都一直存储在内存中，可以将一些很久没用的 value 交换到磁盘，而 Memcached 的数据则会一直在内存中。
+* Memcached 将内存分割成特定长度的块来存储数据，以完全解决内存碎片的问题。但是这种方式会使得内存的利用率不高，例如块的大小为 128 bytes，只存储 100 bytes 的数据，那么剩下的 28 bytes 就浪费掉了。
 
 ## 六、键的过期时间
 
@@ -409,14 +413,14 @@ Redis 可以为每个键设置过期时间，当键过期时，会自动删除�
 
 Redis 具体有 6 种淘汰策略：
 
-| 策略 | 描述 |
-| :--: | :--: |
-| volatile-lru | 从已设置过期时间的数据集中挑选最近最少使用的数据淘汰 |
-| volatile-ttl | 从已设置过期时间的数据集中挑选将要过期的数据淘汰 |
-|volatile-random | 从已设置过期时间的数据集中任意选择数据淘汰 |
-| allkeys-lru | 从所有数据集中挑选最近最少使用的数据淘汰 |
-| allkeys-random | 从所有数据集中任意选择数据进行淘汰 |
-| noeviction | 禁止驱逐数据 |
+|        策略       |             描述             |
+| :-------------: | :------------------------: |
+|   volatile-lru  | 从已设置过期时间的数据集中挑选最近最少使用的数据淘汰 |
+|   volatile-ttl  |  从已设置过期时间的数据集中挑选将要过期的数据淘汰  |
+| volatile-random |    从已设置过期时间的数据集中任意选择数据淘汰   |
+|   allkeys-lru   |    从所有数据集中挑选最近最少使用的数据淘汰    |
+|  allkeys-random |      从所有数据集中任意选择数据进行淘汰     |
+|    noeviction   |           禁止驱逐数据           |
 
 作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法实际实现上并非针对所有 key，而是抽样一小部分并且从中选出被淘汰的 key。
 
@@ -444,15 +448,15 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 使用 AOF 持久化需要设置同步选项，从而确保写命令同步到磁盘文件上的时机。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。有以下同步选项：
 
-| 选项 | 同步频率 |
-| :--: | :--: |
-| always | 每个写命令都同步 |
-| everysec | 每秒同步一次 |
-| no | 让操作系统来决定何时同步 |
+|    选项    |     同步频率     |
+| :------: | :----------: |
+|  always  |   每个写命令都同步   |
+| everysec |    每秒同步一次    |
+|    no    | 让操作系统来决定何时同步 |
 
-- always 选项会严重减低服务器的性能；
-- everysec 选项比较合适，可以保证系统崩溃时只会丢失一秒左右的数据，并且 Redis 每秒执行一次同步对服务器性能几乎没有任何影响；
-- no 选项并不能给服务器性能带来多大的提升，而且也会增加系统崩溃时数据丢失的数量。
+* always 选项会严重减低服务器的性能；
+* everysec 选项比较合适，可以保证系统崩溃时只会丢失一秒左右的数据，并且 Redis 每秒执行一次同步对服务器性能几乎没有任何影响；
+* no 选项并不能给服务器性能带来多大的提升，而且也会增加系统崩溃时数据丢失的数量。
 
 随着服务器写请求的增多，AOF 文件会越来越大。Redis 提供了一种将 AOF 重写的特性，能够去除 AOF 文件中的冗余写命令。
 
@@ -474,7 +478,8 @@ Redis 服务器是一个事件驱动程序。
 
 Redis 基于 Reactor 模式开发了自己的网络事件处理器，使用 I/O 多路复用程序来同时监听多个套接字，并将到达的事件传送给文件事件分派器，分派器会根据套接字产生的事件类型调用相应的事件处理器。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ea86eb5-000a-4281-b948-7b567bd6f1d8.png" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ea86eb5-000a-4281-b948-7b567bd6f1d8.png)\
+
 
 ### 时间事件
 
@@ -482,8 +487,8 @@ Redis 基于 Reactor 模式开发了自己的网络事件处理器，使用 I/O 
 
 时间事件又分为：
 
-- 定时事件：是让一段程序在指定的时间之内执行一次；
-- 周期性事件：是让一段程序每隔指定时间就执行一次。
+* 定时事件：是让一段程序在指定的时间之内执行一次；
+* 周期性事件：是让一段程序每隔指定时间就执行一次。
 
 Redis 将所有时间事件都放在一个无序链表中，通过遍历整个链表查找出已到达的时间事件，并调用相应的事件处理器。
 
@@ -527,7 +532,8 @@ def main():
 
 从事件处理的角度来看，服务器运行流程如下：
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c0a9fa91-da2e-4892-8c9f-80206a6f7047.png" width="350"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c0a9fa91-da2e-4892-8c9f-80206a6f7047.png)\
+
 
 ## 十一、复制
 
@@ -538,16 +544,15 @@ def main():
 ### 连接过程
 
 1. 主服务器创建快照文件，发送给从服务器，并在发送期间使用缓冲区记录执行的写命令。快照文件发送完毕之后，开始向从服务器发送存储在缓冲区中的写命令；
-
 2. 从服务器丢弃所有旧数据，载入主服务器发来的快照文件，之后从服务器开始接受主服务器发来的写命令；
-
 3. 主服务器每执行一次写命令，就向从服务器发送相同的写命令。
 
 ### 主从链
 
 随着负载不断上升，主服务器可能无法很快地更新所有从服务器，或者重新连接和重新同步从服务器将导致系统超载。为了解决这个问题，可以创建一个中间层来分担主服务器的复制工作。中间层的服务器是最上层服务器的从服务器，又是最下层服务器的主服务器。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/395a9e83-b1a1-4a1d-b170-d081e7bb5bab.png" width="600"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/395a9e83-b1a1-4a1d-b170-d081e7bb5bab.png)\
+
 
 ## 十二、Sentinel
 
@@ -559,22 +564,22 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 假设有 4 个 Redis 实例 R0，R1，R2，R3，还有很多表示用户的键 user:1，user:2，... ，有不同的方式来选择一个指定的键存储在哪个实例中。
 
-- 最简单的方式是范围分片，例如用户 id 从 0\~1000 的存储到实例 R0 中，用户 id 从 1001\~2000 的存储到实例 R1 中，等等。但是这样需要维护一张映射范围表，维护操作代价很高。
-- 还有一种方式是哈希分片，使用 CRC32 哈希函数将键转换为一个数字，再对实例数量求模就能知道应该存储的实例。
+* 最简单的方式是范围分片，例如用户 id 从 0\~1000 的存储到实例 R0 中，用户 id 从 1001\~2000 的存储到实例 R1 中，等等。但是这样需要维护一张映射范围表，维护操作代价很高。
+* 还有一种方式是哈希分片，使用 CRC32 哈希函数将键转换为一个数字，再对实例数量求模就能知道应该存储的实例。
 
 根据执行分片的位置，可以分为三种分片方式：
 
-- 客户端分片：客户端使用一致性哈希等算法决定键应当分布到哪个节点。
-- 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。
-- 服务器分片：Redis Cluster。
+* 客户端分片：客户端使用一致性哈希等算法决定键应当分布到哪个节点。
+* 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。
+* 服务器分片：Redis Cluster。
 
 ## 十四、一个简单的论坛系统分析
 
 该论坛系统功能如下：
 
-- 可以发布文章；
-- 可以对文章进行点赞；
-- 在首页可以按文章的发布时间或者文章的点赞数进行排序显示。
+* 可以发布文章；
+* 可以对文章进行点赞；
+* 在首页可以按文章的发布时间或者文章的点赞数进行排序显示。
 
 ### 文章信息
 
@@ -582,7 +587,8 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 Redis 没有关系型数据库中的表这一概念来将同种类型的数据存放在一起，而是使用命名空间的方式来实现这一功能。键名的前面部分存储命名空间，后面部分的内容存储 ID，通常使用 : 来进行分隔。例如下面的 HASH 的键名为 article:92617，其中 article 为命名空间，ID 为 92617。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7c54de21-e2ff-402e-bc42-4037de1c1592.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7c54de21-e2ff-402e-bc42-4037de1c1592.png)\
+
 
 ### 点赞功能
 
@@ -590,21 +596,23 @@ Redis 没有关系型数据库中的表这一概念来将同种类型的数据�
 
 为了节约内存，规定一篇文章发布满一周之后，就不能再对它进行投票，而文章的已投票集合也会被删除，可以为文章的已投票集合设置一个一周的过期时间就能实现这个规定。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/485fdf34-ccf8-4185-97c6-17374ee719a0.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/485fdf34-ccf8-4185-97c6-17374ee719a0.png)\
+
 
 ### 对文章进行排序
 
 为了按发布时间和点赞数进行排序，可以建立一个文章发布时间的有序集合和一个文章点赞数的有序集合。（下图中的 score 就是这里所说的点赞数；下面所示的有序集合分值并不直接是时间和点赞数，而是根据时间和点赞数间接计算出来的）
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f7d170a3-e446-4a64-ac2d-cb95028f81a8.png" width="800"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f7d170a3-e446-4a64-ac2d-cb95028f81a8.png)\
+
 
 ## 参考资料
 
-- Carlson J L. Redis in Action[J]. Media.johnwiley.com.au, 2013.
-- [黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.](http://redisbook.com/index.html)
-- [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
-- [Skip Lists: Done Right](http://ticki.github.io/blog/skip-lists-done-right/)
-- [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
-- [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
-- [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
-- [Using Redis as an LRU cache](https://redis.io/topics/lru-cache)
+* Carlson J L. Redis in Action\[J]. Media.johnwiley.com.au, 2013.
+* [黄健宏. Redis 设计与实现 \[M\]. 机械工业出版社, 2014.](http://redisbook.com/index.html)
+* [REDIS IN ACTION](https://redislabs.com/ebook/foreword/)
+* [Skip Lists: Done Right](http://ticki.github.io/blog/skip-lists-done-right/)
+* [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
+* [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
+* [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
+* [Using Redis as an LRU cache](https://redis.io/topics/lru-cache)

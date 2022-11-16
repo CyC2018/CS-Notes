@@ -1,91 +1,89 @@
 # Linux
-<!-- GFM-TOC -->
-* [Linux](#linux)
-    * [前言](#前言)
-    * [一、常用操作以及概念](#一常用操作以及概念)
-        * [快捷键](#快捷键)
-        * [求助](#求助)
-        * [关机](#关机)
-        * [PATH](#path)
-        * [sudo](#sudo)
-        * [包管理工具](#包管理工具)
-        * [发行版](#发行版)
-        * [VIM 三个模式](#vim-三个模式)
-        * [GNU](#gnu)
-        * [开源协议](#开源协议)
-    * [二、磁盘](#二磁盘)
-        * [磁盘接口](#磁盘接口)
-        * [磁盘的文件名](#磁盘的文件名)
-    * [三、分区](#三分区)
-        * [分区表](#分区表)
-        * [开机检测程序](#开机检测程序)
-    * [四、文件系统](#四文件系统)
-        * [分区与文件系统](#分区与文件系统)
-        * [组成](#组成)
-        * [文件读取](#文件读取)
-        * [磁盘碎片](#磁盘碎片)
-        * [block](#block)
-        * [inode](#inode)
-        * [目录](#目录)
-        * [日志](#日志)
-        * [挂载](#挂载)
-        * [目录配置](#目录配置)
-    * [五、文件](#五文件)
-        * [文件属性](#文件属性)
-        * [文件与目录的基本操作](#文件与目录的基本操作)
-        * [修改权限](#修改权限)
-        * [默认权限](#默认权限)
-        * [目录的权限](#目录的权限)
-        * [链接](#链接)
-        * [获取文件内容](#获取文件内容)
-        * [指令与文件搜索](#指令与文件搜索)
-    * [六、压缩与打包](#六压缩与打包)
-        * [压缩文件名](#压缩文件名)
-        * [压缩指令](#压缩指令)
-        * [打包](#打包)
-    * [七、Bash](#七bash)
-        * [特性](#特性)
-        * [变量操作](#变量操作)
-        * [指令搜索顺序](#指令搜索顺序)
-        * [数据流重定向](#数据流重定向)
-    * [八、管道指令](#八管道指令)
-        * [提取指令](#提取指令)
-        * [排序指令](#排序指令)
-        * [双向输出重定向](#双向输出重定向)
-        * [字符转换指令](#字符转换指令)
-        * [分区指令](#分区指令)
-    * [九、正则表达式](#九正则表达式)
-        * [grep](#grep)
-        * [printf](#printf)
-        * [awk](#awk)
-    * [十、进程管理](#十进程管理)
-        * [查看进程](#查看进程)
-        * [进程状态](#进程状态)
-        * [SIGCHLD](#sigchld)
-        * [wait()](#wait)
-        * [waitpid()](#waitpid)
-        * [孤儿进程](#孤儿进程)
-        * [僵尸进程](#僵尸进程)
-    * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+* [Linux](Linux.md#linux)
+  * [前言](Linux.md#前言)
+  * [一、常用操作以及概念](Linux.md#一常用操作以及概念)
+    * [快捷键](Linux.md#快捷键)
+    * [求助](Linux.md#求助)
+    * [关机](Linux.md#关机)
+    * [PATH](Linux.md#path)
+    * [sudo](Linux.md#sudo)
+    * [包管理工具](Linux.md#包管理工具)
+    * [发行版](Linux.md#发行版)
+    * [VIM 三个模式](Linux.md#vim-三个模式)
+    * [GNU](Linux.md#gnu)
+    * [开源协议](Linux.md#开源协议)
+  * [二、磁盘](Linux.md#二磁盘)
+    * [磁盘接口](Linux.md#磁盘接口)
+    * [磁盘的文件名](Linux.md#磁盘的文件名)
+  * [三、分区](Linux.md#三分区)
+    * [分区表](Linux.md#分区表)
+    * [开机检测程序](Linux.md#开机检测程序)
+  * [四、文件系统](Linux.md#四文件系统)
+    * [分区与文件系统](Linux.md#分区与文件系统)
+    * [组成](Linux.md#组成)
+    * [文件读取](Linux.md#文件读取)
+    * [磁盘碎片](Linux.md#磁盘碎片)
+    * [block](Linux.md#block)
+    * [inode](Linux.md#inode)
+    * [目录](Linux.md#目录)
+    * [日志](Linux.md#日志)
+    * [挂载](Linux.md#挂载)
+    * [目录配置](Linux.md#目录配置)
+  * [五、文件](Linux.md#五文件)
+    * [文件属性](Linux.md#文件属性)
+    * [文件与目录的基本操作](Linux.md#文件与目录的基本操作)
+    * [修改权限](Linux.md#修改权限)
+    * [默认权限](Linux.md#默认权限)
+    * [目录的权限](Linux.md#目录的权限)
+    * [链接](Linux.md#链接)
+    * [获取文件内容](Linux.md#获取文件内容)
+    * [指令与文件搜索](Linux.md#指令与文件搜索)
+  * [六、压缩与打包](Linux.md#六压缩与打包)
+    * [压缩文件名](Linux.md#压缩文件名)
+    * [压缩指令](Linux.md#压缩指令)
+    * [打包](Linux.md#打包)
+  * [七、Bash](Linux.md#七bash)
+    * [特性](Linux.md#特性)
+    * [变量操作](Linux.md#变量操作)
+    * [指令搜索顺序](Linux.md#指令搜索顺序)
+    * [数据流重定向](Linux.md#数据流重定向)
+  * [八、管道指令](Linux.md#八管道指令)
+    * [提取指令](Linux.md#提取指令)
+    * [排序指令](Linux.md#排序指令)
+    * [双向输出重定向](Linux.md#双向输出重定向)
+    * [字符转换指令](Linux.md#字符转换指令)
+    * [分区指令](Linux.md#分区指令)
+  * [九、正则表达式](Linux.md#九正则表达式)
+    * [grep](Linux.md#grep)
+    * [printf](Linux.md#printf)
+    * [awk](Linux.md#awk)
+  * [十、进程管理](Linux.md#十进程管理)
+    * [查看进程](Linux.md#查看进程)
+    * [进程状态](Linux.md#进程状态)
+    * [SIGCHLD](Linux.md#sigchld)
+    * [wait()](Linux.md#wait)
+    * [waitpid()](Linux.md#waitpid)
+    * [孤儿进程](Linux.md#孤儿进程)
+    * [僵尸进程](Linux.md#僵尸进程)
+  * [参考资料](Linux.md#参考资料)
 
 ## 前言
 
 为了便于理解，本文从常用操作和概念开始讲起。虽然已经尽量做到简化，但是涉及到的内容还是有点多。在面试中，Linux 知识点相对于网络和操作系统等知识点而言不是那么重要，只需要重点掌握一些原理和命令即可。为了方便大家准备面试，在此先将一些比较重要的知识点列出来：
 
-- 能简单使用 cat，grep，cut 等命令进行一些操作；
-- 文件系统相关的原理，inode 和 block 等概念，数据恢复；
-- 硬链接与软链接；
-- 进程管理相关，僵尸进程与孤儿进程，SIGCHLD 。
+* 能简单使用 cat，grep，cut 等命令进行一些操作；
+* 文件系统相关的原理，inode 和 block 等概念，数据恢复；
+* 硬链接与软链接；
+* 进程管理相关，僵尸进程与孤儿进程，SIGCHLD 。
 
 ## 一、常用操作以及概念
 
 ### 快捷键
 
-- Tab：命令和文件名补全；
-- Ctrl+C：中断正在运行的程序；
-- Ctrl+D：结束键盘输入（End Of File，EOF）
+* Tab：命令和文件名补全；
+* Ctrl+C：中断正在运行的程序；
+* Ctrl+D：结束键盘输入（End Of File，EOF）
 
 ### 求助
 
@@ -99,11 +97,11 @@ man 是 manual 的缩写，将指令的具体信息显示出来。
 
 当执行 `man date` 时，有 DATE(1) 出现，其中的数字代表指令的类型，常用的数字及其类型如下：
 
-| 代号 | 类型 |
-| :--: | -- |
-| 1 | 用户在 shell 环境中可以操作的指令或者可执行文件 |
-| 5 | 配置文件 |
-| 8 | 系统管理员可以使用的管理指令 |
+|  代号 | 类型                          |
+| :-: | --------------------------- |
+|  1  | 用户在 shell 环境中可以操作的指令或者可执行文件 |
+|  5  | 配置文件                        |
+|  8  | 系统管理员可以使用的管理指令              |
 
 #### 3. info
 
@@ -149,51 +147,50 @@ sudo 允许一般用户使用 root 可执行的命令，不过只有在 /etc/sud
 
 RPM 和 DPKG 为最常见的两类软件包管理工具：
 
-- RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为许多 Linux 系统的既定软件标准。YUM 基于 RPM，具有依赖管理和软件升级功能。
-- 与 RPM 竞争的是基于 Debian 操作系统的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
+* RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为许多 Linux 系统的既定软件标准。YUM 基于 RPM，具有依赖管理和软件升级功能。
+* 与 RPM 竞争的是基于 Debian 操作系统的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
 
 ### 发行版
 
 Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
-| 基于的包管理工具 | 商业发行版 | 社区发行版 |
-| :--: | :--: | :--: |
-| RPM | Red Hat | Fedora / CentOS |
-| DPKG | Ubuntu | Debian |
+| 基于的包管理工具 |  商业发行版  |      社区发行版      |
+| :------: | :-----: | :-------------: |
+|    RPM   | Red Hat | Fedora / CentOS |
+|   DPKG   |  Ubuntu |      Debian     |
 
 ### VIM 三个模式
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209002818626.png"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209002818626.png)\
 
 
-
-- 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
-- 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
-- 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
+* 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
+* 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
+* 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
-| 命令 | 作用 |
-| :--: | :--: |
-| :w | 写入磁盘|
-| :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
-| :q | 离开 |
-| :q! | 强制离开不保存 |
-| :wq | 写入磁盘后离开 |
-| :wq!| 强制写入磁盘后离开 |
+|  命令  |                  作用                 |
+| :--: | :---------------------------------: |
+|  :w  |                 写入磁盘                |
+|  :w! | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
+|  :q  |                  离开                 |
+|  :q! |               强制离开不保存               |
+|  :wq |               写入磁盘后离开               |
+| :wq! |              强制写入磁盘后离开              |
 
 ### GNU
 
 GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议（GNU General Public License），包含了以下内容：
 
-- 以任何目的运行此程序的自由；
-- 再复制的自由；
-- 改进此程序，并公开发布改进的自由。
+* 以任何目的运行此程序的自由；
+* 再复制的自由；
+* 改进此程序，并公开发布改进的自由。
 
 ### 开源协议
 
-- [Choose an open source license](https://choosealicense.com/)
-- [如何选择开源许可证？](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
+* [Choose an open source license](https://choosealicense.com)
+* [如何选择开源许可证？](http://www.ruanyifeng.com/blog/2011/05/how\_to\_choose\_free\_software\_licenses.html)
 
 ## 二、磁盘
 
@@ -203,32 +200,36 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 IDE（ATA）全称 Advanced Technology Attachment，接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg)\
+
 
 #### 2. SATA
 
 SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强，且对数据线的长度要求比 ATA 低很多，支持热插拔等功能。SATA-II 的接口速度为 300MB/s，而 SATA-III 标准可达到 600MB/s 的传输速度。SATA 的数据线也比 ATA 的细得多，有利于机箱内的空气流通，整理线材也比较方便。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg)\
+
 
 #### 3. SCSI
 
 SCSI 全称是 Small Computer System Interface（小型机系统接口），SCSI 硬盘广为工作站以及个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f0574025-c514-49f5-a591-6d6a71f271f7.jpg)\
+
 
 #### 4. SAS
 
 SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也通过缩小连接线改善系统内部空间等。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg)\
+
 
 ### 磁盘的文件名
 
 Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘接口类型进行命名，常见磁盘的文件名如下：
 
-- IDE 磁盘：/dev/hd[a-d]
-- SATA/SCSI/SAS 磁盘：/dev/sd[a-p]
+* IDE 磁盘：/dev/hd\[a-d]
+* SATA/SCSI/SAS 磁盘：/dev/sd\[a-p]
 
 其中文件名后面的序号的确定与系统检测到磁盘的顺序有关，而与磁盘所插入的插槽位置无关。
 
@@ -252,11 +253,12 @@ Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件�
 
 GPT 第 1 个区块记录了主要开机记录（MBR），紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。这 33 个区块第一个为 GPT 表头纪录，这个部份纪录了分区表本身的位置与大小和备份分区的位置，同时放置了分区表的校验码 (CRC32)，操作系统可以根据这个校验码来判断 GPT 是否正确。若有错误，可以使用备份分区进行恢复。
 
-GPT 没有扩展分区概念，都是主分区，每个 LBA 可以分 4 个分区，因此总共可以分 4 * 32 = 128 个分区。
+GPT 没有扩展分区概念，都是主分区，每个 LBA 可以分 4 个分区，因此总共可以分 4 \* 32 = 128 个分区。
 
-MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB = 8 ZB。
+MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 233 TB = 8 ZB。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/GUID_Partition_Table_Scheme.svg.png" width="400"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/GUID\_Partition\_Table\_Scheme.svg.png)\
+
 
 ### 开机检测程序
 
@@ -264,7 +266,8 @@ MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB 
 
 BIOS（Basic Input/Output System，基本输入输出系统），它是一个固件（嵌入在硬件中的软件），BIOS 程序存放在断电后内容不会丢失的只读内存中。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/50831a6f-2777-46ea-a571-29f23c85cc21.jpg"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/50831a6f-2777-46ea-a571-29f23c85cc21.jpg)\
+
 
 BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的主要开机记录（MBR），由主要开机记录（MBR）执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
@@ -272,7 +275,8 @@ BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可
 
 下图中，第一扇区的主要开机记录（MBR）中的开机管理程序提供了两个选单：M1、M2，M1 指向了 Windows 操作系统，而 M2 指向其它分区的启动扇区，里面包含了另外一个开机管理程序，提供了一个指向 Linux 的选单。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f900f266-a323-42b2-bc43-218fdb8811a8.jpg)\
+
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉主要开机记录（MBR），而 Linux 可以选择将开机管理程序安装在主要开机记录（MBR）或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
@@ -290,25 +294,28 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 最主要的几个组成部分如下：
 
-- inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 编号；
-- block：记录文件的内容，文件太大时，会占用多个 block。
+* inode：一个文件占用一个 inode，记录文件的属性，同时记录此文件的内容所在的 block 编号；
+* block：记录文件的内容，文件太大时，会占用多个 block。
 
 除此之外还包括：
 
-- superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
-- block bitmap：记录 block 是否被使用的位图。
+* superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
+* block bitmap：记录 block 是否被使用的位图。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/BSD_disk.png" width="800"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/BSD\_disk.png)\
+
 
 ### 文件读取
 
 对于 Ext2 文件系统，当要读取一个文件的内容时，先在 inode 中查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/12a65cc6-20e0-4706-9fe6-3ba49413d7f6.png" width="500px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/12a65cc6-20e0-4706-9fe6-3ba49413d7f6.png)\
+
 
 而对于 FAT 文件系统，它没有 inode，每个 block 中存储着下一个 block 的编号。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5b718e86-7102-4bb6-8ca5-d1dd791530c5.png" width="500px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5b718e86-7102-4bb6-8ca5-d1dd791530c5.png)\
+
 
 ### 磁盘碎片
 
@@ -318,10 +325,10 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 在 Ext2 文件系统中所支持的 block 大小有 1K，2K 及 4K 三种，不同的大小限制了单个文件和文件系统的最大大小。
 
-| 大小 | 1KB | 2KB | 4KB |
-| :---: | :---: | :---: | :---: |
-| 最大单一文件 | 16GB | 256GB | 2TB |
-| 最大文件系统 | 2TB | 8TB | 16TB |
+|   大小   |  1KB |  2KB  |  4KB |
+| :----: | :--: | :---: | :--: |
+| 最大单一文件 | 16GB | 256GB |  2TB |
+| 最大文件系统 |  2TB |  8TB  | 16TB |
 
 一个 block 只能被一个文件所使用，未使用的部分直接浪费了。因此如果需要存储大量的小文件，那么最好选用比较小的 block。
 
@@ -329,23 +336,24 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 inode 具体包含以下信息：
 
-- 权限 (read/write/excute)；
-- 拥有者与群组 (owner/group)；
-- 容量；
-- 建立或状态改变的时间 (ctime)；
-- 最近读取时间 (atime)；
-- 最近修改时间 (mtime)；
-- 定义文件特性的旗标 (flag)，如 SetUID...；
-- 该文件真正内容的指向 (pointer)。
+* 权限 (read/write/excute)；
+* 拥有者与群组 (owner/group)；
+* 容量；
+* 建立或状态改变的时间 (ctime)；
+* 最近读取时间 (atime)；
+* 最近修改时间 (mtime)；
+* 定义文件特性的旗标 (flag)，如 SetUID...；
+* 该文件真正内容的指向 (pointer)。
 
 inode 具有以下特点：
 
-- 每个 inode 大小均固定为 128 bytes (新的 ext4 与 xfs 可设定到 256 bytes)；
-- 每个文件都仅会占用一个 inode。
+* 每个 inode 大小均固定为 128 bytes (新的 ext4 与 xfs 可设定到 256 bytes)；
+* 每个文件都仅会占用一个 inode。
 
 inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用让 inode 记录的引用 block 块记录引用信息。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/inode_with_signatures.jpg" width="600"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/inode\_with\_signatures.jpg)\
+
 
 ### 目录
 
@@ -367,11 +375,12 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 为了使不同 Linux 发行版本的目录结构保持一致性，Filesystem Hierarchy Standard (FHS) 规定了 Linux 的目录结构。最基础的三个目录如下：
 
-- / (root, 根目录)
-- /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
-- /var (variable)：存放系统或程序运行过程中的数据文件。
+* / (root, 根目录)
+* /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
+* /var (variable)：存放系统或程序运行过程中的数据文件。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/linux-filesystem.png" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/linux-filesystem.png)\
+
 
 ## 五、文件
 
@@ -381,27 +390,27 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 使用 ls 查看一个文件时，会显示一个文件的信息，例如 `drwxr-xr-x 3 root root 17 May 6 00:14 .config`，对这个信息的解释如下：
 
-- drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段
-- 3：链接数
-- root：文件拥有者
-- root：所属群组
-- 17：文件大小
-- May 6 00:14：文件最后被修改的时间
-- .config：文件名
+* drwxr-xr-x：文件类型以及权限，第 1 位为文件类型字段，后 9 位为文件权限字段
+* 3：链接数
+* root：文件拥有者
+* root：所属群组
+* 17：文件大小
+* May 6 00:14：文件最后被修改的时间
+* .config：文件名
 
 常见的文件类型及其含义有：
 
-- d：目录
-- -：文件
-- l：链接文件
+* d：目录
+* \-：文件
+* l：链接文件
 
 9 位的文件权限字段中，每 3 个为一组，共 3 组，每一组分别代表对文件拥有者、所属群组以及其它人的文件权限。一组权限中的 3 位分别为 r、w、x 权限，表示可读、可写、可执行。
 
 文件时间有以下三种：
 
-- modification time (mtime)：文件的内容更新就会更新；
-- status time (ctime)：文件的状态（权限、属性）更新就会更新；
-- access time (atime)：读取文件时就会更新。
+* modification time (mtime)：文件的内容更新就会更新；
+* status time (ctime)：文件的状态（权限、属性）更新就会更新；
+* access time (atime)：读取文件时就会更新。
 
 ### 文件与目录的基本操作
 
@@ -525,8 +534,8 @@ cp [-adfilprsu] source destination
 
 ### 默认权限
 
-- 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
-- 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
+* 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
+* 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
 可以通过 umask 设置或者查看默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r--。
 
@@ -538,7 +547,7 @@ cp [-adfilprsu] source destination
 
 ### 链接
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e46fd03-0cda-4d60-9b1c-0c256edaf6b2.png" width="450px"> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e46fd03-0cda-4d60-9b1c-0c256edaf6b2.png)\
 
 
 ```html
@@ -655,7 +664,7 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内
 example: find . -name "shadow*"
 ```
 
-**① 与时间有关的选项**  
+**① 与时间有关的选项**
 
 ```html
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
@@ -664,11 +673,12 @@ example: find . -name "shadow*"
 -newer file ： 列出比 file 更新的文件
 ```
 
-+4、4 和 -4 的指示的时间范围如下：
+\+4、4 和 -4 的指示的时间范围如下：
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/658fc5e7-79c0-4247-9445-d69bf194c539.png)\
 
-**② 与文件拥有者和所属群组有关的选项**  
+
+**② 与文件拥有者和所属群组有关的选项**
 
 ```html
 -uid n
@@ -679,7 +689,7 @@ example: find . -name "shadow*"
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-**③ 与文件权限和名称有关的选项**  
+**③ 与文件权限和名称有关的选项**
 
 ```html
 -name filename
@@ -696,17 +706,17 @@ example: find . -name "shadow*"
 
 Linux 底下有很多压缩文件名，常见的如下：
 
-| 扩展名 | 压缩程序 |
-| -- | -- |
-| \*.Z | compress |
-|\*.zip |  zip |
-|\*.gz  | gzip|
-|\*.bz2 |  bzip2 |
-|\*.xz  | xz |
-|\*.tar |  tar 程序打包的数据，没有经过压缩 |
-|\*.tar.gz | tar 程序打包的文件，经过 gzip 的压缩 |
-|\*.tar.bz2 | tar 程序打包的文件，经过 bzip2 的压缩 |
-|\*.tar.xz | tar 程序打包的文件，经过 xz 的压缩 |
+| 扩展名        | 压缩程序                     |
+| ---------- | ------------------------ |
+| \*.Z       | compress                 |
+| \*.zip     | zip                      |
+| \*.gz      | gzip                     |
+| \*.bz2     | bzip2                    |
+| \*.xz      | xz                       |
+| \*.tar     | tar 程序打包的数据，没有经过压缩       |
+| \*.tar.gz  | tar 程序打包的文件，经过 gzip 的压缩  |
+| \*.tar.bz2 | tar 程序打包的文件，经过 bzip2 的压缩 |
+| \*.tar.xz  | tar 程序打包的文件，经过 xz 的压缩    |
 
 ### 压缩指令
 
@@ -771,11 +781,11 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 -C 目录 ： 在特定目录解压缩。
 ```
 
-| 使用方式 | 命令 |
-| :---: | --- |
+| 使用方式 | 命令                                        |
+| :--: | ----------------------------------------- |
 | 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
-| 查 看 | tar -jtv -f filename.tar.bz2 |
-| 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
+|  查 看 | tar -jtv -f filename.tar.bz2              |
+|  解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录   |
 
 ## 七、Bash
 
@@ -783,17 +793,17 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 ### 特性
 
-- 命令历史：记录使用过的命令
-- 命令与文件补全：快捷键：tab
-- 命名别名：例如 ll 是 ls -al 的别名
-- shell scripts
-- 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
+* 命令历史：记录使用过的命令
+* 命令与文件补全：快捷键：tab
+* 命名别名：例如 ll 是 ls -al 的别名
+* shell scripts
+* 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
 ### 变量操作
 
 对一个变量赋值直接使用 =。
 
-对变量取用需要在变量前加上 \$ ，也可以用 \${} 的形式；
+对变量取用需要在变量前加上 $ ，也可以用 ${} 的形式；
 
 输出变量使用 echo 命令。
 
@@ -805,10 +815,10 @@ $ echo ${x}
 
 变量内容如果有空格，必须使用双引号或者单引号。
 
-- 双引号内的特殊字符可以保留原本特性，例如 x="lang is \$LANG"，则 x 的值为 lang is zh_TW.UTF-8；
-- 单引号内的特殊字符就是特殊字符本身，例如 x='lang is \$LANG'，则 x 的值为 lang is \$LANG。
+* 双引号内的特殊字符可以保留原本特性，例如 x="lang is $LANG"，则 x 的值为 lang is zh\_TW.UTF-8；
+* 单引号内的特殊字符就是特殊字符本身，例如 x='lang is $LANG'，则 x 的值为 lang is $LANG。
 
-可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 4.15.0-22-generic。
+可以使用 \`指令\` 或者 $(指令) 的方式将指令的执行结果赋值给变量。例如 version=$(uname -r)，则 version 的值为 4.15.0-22-generic。
 
 可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
 
@@ -822,7 +832,7 @@ $ declare [-aixr] variable
 -r ： 定义为 readonly 类型
 ```
 
-使用 [ ] 来对数组进行索引操作：
+使用 \[ ] 来对数组进行索引操作：
 
 ```bash
 $ array[1]=a
@@ -832,26 +842,26 @@ $ echo ${array[1]}
 
 ### 指令搜索顺序
 
-- 以绝对或相对路径来执行指令，例如 /bin/ls 或者 ./ls ；
-- 由别名找到该指令来执行；
-- 由 Bash 内置的指令来执行；
-- 按 \$PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
+* 以绝对或相对路径来执行指令，例如 /bin/ls 或者 ./ls ；
+* 由别名找到该指令来执行；
+* 由 Bash 内置的指令来执行；
+* 按 $PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
 
 ### 数据流重定向
 
 重定向指的是使用文件代替标准输入、标准输出和标准错误输出。
 
-| 1 | 代码 | 运算符 |
-| :---: | :---: | :---:|
-| 标准输入 (stdin)  | 0 | \< 或 \<\< |
-| 标准输出 (stdout) | 1 | &gt; 或 \>\> |
-| 标准错误输出 (stderr) | 2 | 2\> 或 2\>\> |
+|        1        |  代码 |    运算符   |
+| :-------------: | :-: | :------: |
+|   标准输入 (stdin)  |  0  |  < 或 <<  |
+|  标准输出 (stdout)  |  1  |  > 或 >>  |
+| 标准错误输出 (stderr) |  2  | 2> 或 2>> |
 
 其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
 
 可以将不需要的标准输出以及标准错误输出重定向到 /dev/null，相当于扔进垃圾箱。
 
-如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2\>&1 表示将标准错误输出转换为标准输出。
+如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2>&1 表示将标准错误输出转换为标准输出。
 
 ```bash
 $ find /home -name .bashrc > list 2>&1
@@ -906,7 +916,7 @@ $ export | cut -c 12-
 
 ### 排序指令
 
-**sort**   用于排序。
+**sort** 用于排序。
 
 ```html
 $ sort [-fbMnrtuk] [file or stdin]
@@ -930,7 +940,7 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq**   可以将重复的数据只取一个。
+**uniq** 可以将重复的数据只取一个。
 
 ```html
 $ uniq [-ic]
@@ -952,7 +962,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 ### 双向输出重定向
 
-输出重定向会将输出内容重定向到文件中，而   **tee**   不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
+输出重定向会将输出内容重定向到文件中，而 **tee** 不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```html
 $ tee [-a] file
@@ -960,7 +970,7 @@ $ tee [-a] file
 
 ### 字符转换指令
 
-**tr**   用来删除一行中的字符，或者对字符进行替换。
+**tr** 用来删除一行中的字符，或者对字符进行替换。
 
 ```html
 $ tr [-ds] SET1 ...
@@ -973,21 +983,21 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
-   **col**   将 tab 字符转为空格字符。
+**col** 将 tab 字符转为空格字符。
 
 ```html
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand**   将 tab 转换一定数量的空格，默认是 8 个。
+**expand** 将 tab 转换一定数量的空格，默认是 8 个。
 
 ```html
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
-**join**   将有相同数据的那一行合并在一起。
+**join** 将有相同数据的那一行合并在一起。
 
 ```html
 $ join [-ti12] file1 file2
@@ -997,7 +1007,7 @@ $ join [-ti12] file1 file2
 -2 ：第二个文件所用的比较字段
 ```
 
-**paste**   直接将两行粘贴在一起。
+**paste** 直接将两行粘贴在一起。
 
 ```html
 $ paste [-d] file1 file2
@@ -1006,7 +1016,7 @@ $ paste [-d] file1 file2
 
 ### 分区指令
 
-**split**   将一个文件划分成多个文件。
+**split** 将一个文件划分成多个文件。
 
 ```html
 $ split [-bl] file PREFIX
@@ -1062,9 +1072,9 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 是由 Alfred Aho，Peter Weinberger 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
 
-awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
+awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：$n，n 为字段号，从 1 开始，$0 表示一整行。
 
-示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，我们用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
+示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，我们用 $1 和 $3 就能取出这两个字段，然后用 print 进行打印。
 
 ```html
 $ last -n 5
@@ -1092,7 +1102,7 @@ $ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 
 示例：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
-```text
+```
 $ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
@@ -1101,11 +1111,11 @@ daemon 2
 
 awk 变量：
 
-| 变量名称 | 代表意义 |
-| :--: | -- |
-| NF | 每一行拥有的字段总数 |
-| NR | 目前所处理的是第几行数据 |
-| FS | 目前的分隔字符，默认是空格键 |
+| 变量名称 | 代表意义           |
+| :--: | -------------- |
+|  NF  | 每一行拥有的字段总数     |
+|  NR  | 目前所处理的是第几行数据   |
+|  FS  | 目前的分隔字符，默认是空格键 |
 
 示例：显示正在处理的行号以及每一行有多少字段
 
@@ -1128,19 +1138,19 @@ dmtsai lines: 5 columns: 9
 
 示例：查看自己的进程
 
-```sh
+```
 ## ps -l
 ```
 
 示例：查看系统所有进程
 
-```sh
+```
 ## ps aux
 ```
 
 示例：查看特定的进程
 
-```sh
+```
 ## ps aux | grep threadx
 ```
 
@@ -1150,7 +1160,7 @@ dmtsai lines: 5 columns: 9
 
 示例：查看所有进程树
 
-```sh
+```
 ## pstree -A
 ```
 
@@ -1160,7 +1170,7 @@ dmtsai lines: 5 columns: 9
 
 示例：两秒钟刷新一次
 
-```sh
+```
 ## top -d 2
 ```
 
@@ -1170,35 +1180,37 @@ dmtsai lines: 5 columns: 9
 
 示例：查看特定端口的进程
 
-```sh
+```
 ## netstat -anp | grep port
 ```
 
 ### 进程状态
 
-| 状态 | 说明 |
-| :---: | --- |
-| R | running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。|
-| D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
-| S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
-| Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
-| T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
-<br>
+|      状态     | 说明                                                                                                            |
+| :---------: | ------------------------------------------------------------------------------------------------------------- |
+|      R      | <p>running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。</p>                                           |
+|      D      | <p>uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。</p>                                               |
+|      S      | <p>interruptible sleep (waiting for an event to complete)<br>可中断阻塞，此时进程正在等待某个事件完成。</p>                        |
+|      Z      | <p>zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。</p>                            |
+|      T      | <p>stopped (either by a job control signal or because it is being traced)<br>结束，进程既可以被作业控制信号结束，也可能是正在被追踪。</p> |
+| <p><br></p> |                                                                                                               |
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png" width="490px"/> </div><br>
+![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png)\
+
 
 ### SIGCHLD
 
 当一个子进程改变了它的状态时（停止运行，继续运行或者退出），有两件事会发生在父进程中：
 
-- 得到 SIGCHLD 信号；
-- waitpid() 或者 wait() 调用会返回。
+* 得到 SIGCHLD 信号；
+* waitpid() 或者 wait() 调用会返回。
 
 其中子进程发送的 SIGCHLD 信号包含了子进程的信息，比如进程 ID、进程状态、进程使用 CPU 的时间等。
 
 在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
-<div align="center"> <!-- <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/flow.png" width=""/> --> </div><br>
+\
+
 
 ### wait()
 
@@ -1244,21 +1256,21 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 ## 参考资料
 
-- 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
-- [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
-- [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
-- [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
-- [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
-- [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)
-- [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)
-- [IDE、SATA、SCSI、SAS、FC、SSD 硬盘类型介绍](https://blog.csdn.net/tianlesoftware/article/details/6009110)
-- [Akai IB-301S SCSI Interface for S2800,S3000](http://www.mpchunter.com/s3000/akai-ib-301s-scsi-interface-for-s2800s3000/)
-- [Parallel ATA](https://en.wikipedia.org/wiki/Parallel_ATA)
-- [ADATA XPG SX900 256GB SATA 3 SSD Review – Expanded Capacity and SandForce Driven Speed](http://www.thessdreview.com/our-reviews/adata-xpg-sx900-256gb-sata-3-ssd-review-expanded-capacity-and-sandforce-driven-speed/4/)
-- [Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
-- [硬盘](https://zh.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98)
-- [Difference between SAS and SATA](http://www.differencebetween.info/difference-between-sas-and-sata)
-- [BIOS](https://zh.wikipedia.org/wiki/BIOS)
-- [File system design case studies](https://www.cs.rutgers.edu/\~pxk/416/notes/13-fs-studies.html)
-- [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
-- [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)
+* 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版\[J]. 2009.
+* [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
+* [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+* [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
+* [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
+* [GUID Partition Table](https://en.wikipedia.org/wiki/GUID\_Partition\_Table)
+* [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)
+* [IDE、SATA、SCSI、SAS、FC、SSD 硬盘类型介绍](https://blog.csdn.net/tianlesoftware/article/details/6009110)
+* [Akai IB-301S SCSI Interface for S2800,S3000](http://www.mpchunter.com/s3000/akai-ib-301s-scsi-interface-for-s2800s3000/)
+* [Parallel ATA](https://en.wikipedia.org/wiki/Parallel\_ATA)
+* [ADATA XPG SX900 256GB SATA 3 SSD Review – Expanded Capacity and SandForce Driven Speed](http://www.thessdreview.com/our-reviews/adata-xpg-sx900-256gb-sata-3-ssd-review-expanded-capacity-and-sandforce-driven-speed/4/)
+* [Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
+* [硬盘](https://zh.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98)
+* [Difference between SAS and SATA](http://www.differencebetween.info/difference-between-sas-and-sata)
+* [BIOS](https://zh.wikipedia.org/wiki/BIOS)
+* [File system design case studies](https://www.cs.rutgers.edu/\~pxk/416/notes/13-fs-studies.html)
+* [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
+* [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)
