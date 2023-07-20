@@ -31,16 +31,16 @@ Prism.languages.abap = {
 	'string-operator' : {
 		pattern: /(\s)&&?(?=\s)/,
 		lookbehind: true,
-		/* The official editor highlights */
+		// The official editor highlights 
 		alias: "keyword"
 	},
 	'token-operator' : [{
-		/* Special operators used to access structure components, class methods/attributes, etc. */
+		// Special operators used to access structure components, class methods/attributes, etc. 
 		pattern: /(\w)(?:->?|=>|[~|{}])(?=\w)/,
 		lookbehind: true,
 		alias: "punctuation"
 	}, {
-	    /* Special tokens used do delimit string templates */
+	    // Special tokens used do delimit string templates 
 	    pattern: /[|{}]/,
 		alias: "punctuation"
 	}],
