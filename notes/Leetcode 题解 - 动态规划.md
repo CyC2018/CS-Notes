@@ -807,7 +807,7 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
 ```java
 public int findTargetSumWays(int[] nums, int S) {
     int sum = computeArraySum(nums);
-    if (sum < S || (sum + S) % 2 == 1) {
+    if (sum < Math.abs(S) || (sum + S) % 2 == 1) {
         return 0;
     }
     int W = (sum + S) / 2;
