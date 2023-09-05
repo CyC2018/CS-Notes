@@ -105,7 +105,7 @@ Logo：[logomakr](https://logomakr.com/)
 感谢以下人员对本仓库做出的贡献，当然不仅仅只有这些贡献者，这里就不一一列举了。如果你希望被添加到这个名单中，并且提交过 Issue 或者 PR，请与我联系。
 
 <a href="https://github.com/linw7">
-    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" width="50px">
+    <img src="https://avatars3.githubusercontent.com/u/21679154?s=400&v=4" height ="50px" width="50px">
 </a> 
 <a href="https://github.com/g10guang">
     <img src="https://avatars1.githubusercontent.com/u/18458140?s=400&v=4" width="50px">
