@@ -146,20 +146,26 @@ return 13.
 
 ```java
 public int kthSmallest(int[][] matrix, int k) {
-    int m = matrix.length, n = matrix[0].length;
-    int lo = matrix[0][0], hi = matrix[m - 1][n - 1];
-    while (lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        int cnt = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n && matrix[i][j] <= mid; j++) {
-                cnt++;
+    int n = matrix.length;
+    int low = matrix[0][0], high = matrix[n-1][n-1];
+    while (low < high) {
+        int mid = (low + high) >> 1;
+        int count = 0;
+        for (int i = 0, j = n - 1; i < n && j >= 0;) {
+            if (matrix[i][j] <= mid) {
+                count += j + 1;
+                i++;
+            } else {
+                j--;
             }
         }
-        if (cnt < k) lo = mid + 1;
-        else hi = mid - 1;
+        if (count < k) {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
     }
-    return lo;
+    return high;
 }
 ```
 
