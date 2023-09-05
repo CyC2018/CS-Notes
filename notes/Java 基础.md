@@ -730,9 +730,7 @@ public class EqualExample {
 
         EqualExample that = (EqualExample) o;
 
-        if (x != that.x) return false;
-        if (y != that.y) return false;
-        return z == that.z;
+        return x == that.x && y == that.y && z == that.z;
     }
 }
 ```
