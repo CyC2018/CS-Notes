@@ -1346,6 +1346,8 @@ public static void main(String[] args) {
 
 ## 七、反射
 
+Java的反射是指程序在运行期可以拿到一个对象的所有信息
+
 每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
 
 类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
