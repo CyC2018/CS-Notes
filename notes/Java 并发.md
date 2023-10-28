@@ -34,6 +34,7 @@
     * [七、J.U.C - AQS](#七juc---aqs)
         * [CountDownLatch](#countdownlatch)
         * [CyclicBarrier](#cyclicbarrier)
+        * [Exchanger](#exchanger)
         * [Semaphore](#semaphore)
     * [八、J.U.C - 其它组件](#八juc---其它组件)
         * [FutureTask](#futuretask)
@@ -813,6 +814,13 @@ public class CyclicBarrierExample {
 ```html
 before..before..before..before..before..before..before..before..before..before..after..after..after..after..after..after..after..after..after..after..
 ```
+
+### Exchanger
+Java中的Exchanger类是一个同步工具类，用于在两个线程之间交换数据。它提供了一个exchange()方法，当两个线程都调用该方法时，它们会被阻塞，直到彼此都调用了该方法，然后交换数据并返回。
+
+Exchanger类的实现原理是基于AQS（AbstractQueuedSynchronizer）同步器。当一个线程调用exchange()方法时，它会尝试获取同步器的锁，如果同步器的状态为0，则表示没有其他线程在等待交换数据，该线程会将自己加入到同步器的等待队列中，并阻塞自己。当另一个线程也调用了exchange()方法时，它会尝试获取同步器的锁，如果同步器的状态为1，则表示有一个线程在等待交换数据，该线程会将自己从等待队列中取出，并与另一个线程交换数据，然后释放同步器的锁，使得两个线程都可以继续执行。
+
+需要注意的是，Exchanger类只能用于两个线程之间交换数据，如果需要多个线程之间交换数据，可以使用CyclicBarrier或CountDownLatch等其他同步工具类。
 
 ### Semaphore
 
