@@ -736,7 +736,7 @@ after
 
 [Java SE 9 Enum Thread.State](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.State.html)
 
-<div align="center"><img src="../assets/1641890623956-ani--线程状态转换.jpg width="300px"> </div><br>
+![线程状态转换图]（"../assets/1641890623956-ani--线程状态转换.jpg）
 
 ## 七、J.U.C - AQS(AbstractQueuedSynchornizer)
 
