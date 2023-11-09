@@ -741,6 +741,16 @@ after
 ## 七、J.U.C - AQS(AbstractQueuedSynchornizer)
 
 java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
+ 1. **原子类** 从JDK 1.5开始,并发包下提供了atomic子包,这个包中的原子操作类提供了一种用法简单、性能高效、线程安全地更新一个变量的方式。在atomic包里一共提供了17个类,属于4种类型的原子更新方式,分别是原子更新基本类型、原子更新引用类型、原子更新属性、原子更新数组。 
+ 
+   2. **锁** 从JDK 1.5开始,并发包中新增了Lock接口以及相关实现类用来实现锁功能,它提供了与synchronized关键字类似的同步功能,只是在使用时需要显式地获取和释放锁。虽然它缺少了隐式获取释放锁的便捷性,但是却拥有了多种synchronized关键字所不具备的同步特性,包括：**可中断地获取锁**、**非阻塞地获取锁**、**可超时地获取锁**。 
+ 
+   3. **线程池** 从JDK 1.5开始,并发包下新增了内置的线程池。其中,ThreadPoolExecutor类代表常规的线程池,而它的子类ScheduledThreadPoolExecutor对定时任务提供了支持,在子类中我们可以周期性地重复执行某个任务,也可以延迟若干时间再执行某个任务。此外,Executors是一个用于创建线程池的工具类,由于该类创建出来的是带有无界队列的线程池,所以在使用时要慎重。 
+ 
+   4. **并发容器** 从JDK 1.5开始,并发包下新增了大量高效的并发的容器,这些容器按照实现机制可以分为三类。第一类是以**降低锁粒度来**提高并发性能的容器,它们的类名以Concurrent开头,如ConcurrentHashMap。第二类是采用**写时复制技术实**现的并发容器,它们的类名以CopyOnWrite开头,如CopyOnWriteArrayList。第三类是采用**Lock实现的阻塞队列,内部创建两个Condition分别用于生产者和消费者的等待**,这些类都实现了BlockingQueue接口,如ArrayBlockingQueue。 
+ 
+   5. **同步工具** 从JDK 1.5开始,并发包下新增了几个有用的并发工具类,一样可以保证线程安全。其中,Semaphore类代表信号量,可以控制同时访问特定资源的线程数量；CountDownLatch类则允许一个或多个线程等待其他线程完成操作；CyclicBarrier可以让一组线程到达一个屏障时被阻塞,直到最后一个线程到达屏障时,屏障才会打开,所有被屏障拦截的线程才会继续运行。
+(来自https://www.nowcoder.com/exam/interview/75826387/test?paperId=50270024)
 
 ### CountDownLatch
 
