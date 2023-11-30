@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # 发展历程
 
 1. 早期的物理机
@@ -316,3 +320,66 @@ docker run -d --name=node2 -p 3302:3306 pxc -e MYSQL_ROOT_PASSWORD=hqh666 -v pxc
 docker run -d --name=node3 -p 3303:3306 pxc -e MYSQL_ROOT_PASSWORD=hqh666 -v pxc-v3:/var/lib/mysql -e CLUSTER_NAME=PXC --net=pxc-cluster-net -e XTRBACKUP_PASSWORD=hqh666 -e CLUSTER_JOIN=node1 pxc
 ```
 
+InnoDB cluster: 一主多从
+
+
+
+## docker compose【一步创建多个容器--单台】-->docker  swarm/Meos/kubernetes【一步创建多个容器--多台】
+
+（1）安装docker-compose
+
+```shell
+sudo curl -L "https://github.com/docker/compose/release/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+
+
+（2）定义一个yaml文件
+
+```yaml
+version: "3.9"
+# service <---->container
+services: 
+  # 第一个container名字
+  web:
+    # 本地 image Dockerfile
+    build: .
+    # -p 5000：5000
+    ports:
+      - "8000:5000"
+  # 第二个container名字
+  redis:
+    image: "redis:alpine"
+    
+networks:
+  app-net:
+    driver: bridge
+```
+
+
+
+（3）通过docker compose一键启动
+
+```sh
+docker compose up
+```
+
+
+
+## 容器编排&容器管理
+
+如果是docker单机环境，其实docker compose也就够用了
+
+但是因为一台宿主机器资源毕竟有限，所以肯定是希望多台docker组成的集群环境，就需要一起管理容器。
+
+Docker Swarm、Mesos、Kubernetes
+
+* Docker Swarm
+
+  scheduler——调度、计算   
+
+  network
+
+  health
+
+  discovery——manager要知道work node在哪，w-->信息注册到manager
