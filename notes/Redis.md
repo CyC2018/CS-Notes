@@ -558,7 +558,7 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 **自动故障迁移（Automatic failover** 当一个主服务器不能正常工作时， Sentinel 会开始一次自动故障迁移操作， 它会将失效主服务器的其中一个从服务器升级为新的主服务器， 并让失效主服务器的其他从服务器改为复制新的主服务器； 当客户端试图连接失效的主服务器时， 集群也会向客户端返回新主服务器的地址， 使得集群可以使用新主服务器代替失效服务器。
 **协议** 流言协议（gossip protocols)来接收关于主服务器是否下线的信息， 并使用投票协议（agreement protocols）来决定是否执行自动故障迁移 。
 Redis主从复制 搭建
- https://gper.gupaoedu.com/articles/7e7e7f7ff5g5bgc3
+https://gper.gupaoedu.com/articles/7e7e7f7ff5g5bgc3
 
 ## 十三、分片
 
