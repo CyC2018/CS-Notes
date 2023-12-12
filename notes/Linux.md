@@ -1117,6 +1117,18 @@ dmtsai lines: 3 columns: 10
 dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
 ```
+[netstat命令和awk命令查看并发连接数](https://www.cnblogs.com/wayne173/p/5652043.html)
+```sh
+netstat -n|awk '/^tcp/ {++S[$NF]} END {for(a in S) print a,S[a]}'
+```
+
+> 这个shell命令的作用是查看TCP连接状态的数量统计。
+>
+> 具体解释如下： 
+>
+> 1. `netstat -n`：使用netstat命令查看网络连接状态，其中-n参数表示不将IP地址和端口号转换为对应的域名和服务名称，以便更快地输出结果。
+> 2.  `|`：将netstat命令的输出结果通过管道符号传递给awk命令。 
+> 3.  `awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`：使用awk命令对netstat命令的输出结果进行处理。 - `/^tcp/`：使用正则表达式匹配以tcp开头的行。 - `{++S[$NF]}`：对每个状态进行计数，使用数组S存储计数结果，其中$NF表示每行的最后一个字段，即TCP连接状态。 - `END {for(a in S) print a, S[a]}`：在处理完所有行后，使用for循环遍历数组S，输出每个TCP连接状态和对应的数量。 综上，该命令的输出结果将显示每个TCP连接状态的数量统计。
 
 ## 十、进程管理
 
