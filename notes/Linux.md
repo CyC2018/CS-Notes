@@ -1063,6 +1063,38 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 是由 Alfred Aho，Peter Weinberger 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
+```sh
+Usage: awk [POSIX or GNU style options] [--] 'program' file ...
+POSIX options:          GNU long options: (standard)
+        -f progfile             --file=progfile
+        -F fs                   --field-separator=fs
+        -v var=val              --assign=var=val
+Short options:          GNU long options: (extensions)
+        -b                      --characters-as-bytes
+        -c                      --traditional
+        -C                      --copyright
+        -d[file]                --dump-variables[=file]
+        -D[file]                --debug[=file]
+        -e 'program-text'       --source='program-text'
+        -E file                 --exec=file
+        -g                      --gen-pot
+        -h                      --help
+        -i includefile          --include=includefile
+        -l library              --load=library
+        -L[fatal|invalid|no-ext]        --lint[=fatal|invalid|no-ext]
+        -M                      --bignum
+        -N                      --use-lc-numeric
+        -n                      --non-decimal-data
+        -o[file]                --pretty-print[=file]
+        -O                      --optimize
+        -p[file]                --profile[=file]
+        -P                      --posix
+        -r                      --re-interval
+        -s                      --no-optimize
+        -S                      --sandbox
+        -t                      --lint-old
+        -V                      --version
+```
 
 示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，我们用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
 
@@ -1098,6 +1130,16 @@ root 0
 bin 1
 daemon 2
 ```
+示例： 过滤日志文件中返回码及其个数
+```sh
+awk -F"|" '{print $7}' /opt/logs/interface.log | sort | uniq -c | sort -nrk 1 | awk '{printf "返回码==%-10s , 返回码个数==%s\n",$2,$1}'
+
+示例： 查询某指定文本日志文件中，根据某分隔符的第几个字段的值为指定值的文本在该文本日志件中的打印
+```sh
+grep "example" logfile.txt | awk -F',' '$2=="example" {print}'
+```
+> `grep "example" logfile.txt`：首先使用grep命令查找包含"example"的行，并将结果输出到标准输出。
+> `awk -F',' '$2=="example" {print}'`：然后使用awk命令对grep的输出进行处理。`-F','`指定分隔符为逗号。`$2=="example"`表示只处理第2个字段为"example"的行。`{print}`表示打印符合条件的行。
 
 awk 变量：
 
@@ -1117,6 +1159,18 @@ dmtsai lines: 3 columns: 10
 dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
 ```
+[netstat命令和awk命令查看并发连接数](https://www.cnblogs.com/wayne173/p/5652043.html)
+```sh
+netstat -n|awk '/^tcp/ {++S[$NF]} END {for(a in S) print a,S[a]}'
+```
+
+> 这个shell命令的作用是查看TCP连接状态的数量统计。
+>
+> 具体解释如下： 
+>
+> 1. `netstat -n`：使用netstat命令查看网络连接状态，其中-n参数表示不将IP地址和端口号转换为对应的域名和服务名称，以便更快地输出结果。
+> 2.  `|`：将netstat命令的输出结果通过管道符号传递给awk命令。 
+> 3.  `awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`：使用awk命令对netstat命令的输出结果进行处理。 - `/^tcp/`：使用正则表达式匹配以tcp开头的行。 - `{++S[$NF]}`：对每个状态进行计数，使用数组S存储计数结果，其中$NF表示每行的最后一个字段，即TCP连接状态。 - `END {for(a in S) print a, S[a]}`：在处理完所有行后，使用for循环遍历数组S，输出每个TCP连接状态和对应的数量。 综上，该命令的输出结果将显示每个TCP连接状态的数量统计。
 
 ## 十、进程管理
 

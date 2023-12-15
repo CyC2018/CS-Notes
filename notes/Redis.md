@@ -57,13 +57,14 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 
 ## 二、数据类型
 
-| 数据类型 | 可以存储的值 | 操作 |
-| :--: | :--: | :--: |
-| STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作\</br\> 对整数和浮点数执行自增或者自减操作 |
-| LIST | 列表 | 从两端压入或者弹出元素 \</br\> 对单个或者多个元素进行修剪，\</br\> 只保留一个范围内的元素 |
-| SET | 无序集合 | 添加、获取、移除单个元素\</br\> 检查一个元素是否存在于集合中\</br\> 计算交集、并集、差集\</br\> 从集合里面随机获取元素 |
-| HASH | 包含键值对的无序散列表 | 添加、获取、移除单个键值对\</br\> 获取所有键值对\</br\> 检查某个键是否存在|
-| ZSET | 有序集合 | 添加、获取、删除元素\</br\> 根据分值范围或者成员来获取元素\</br\> 计算一个键的排名 |
+
+| Redis值数据类型                | 底层数据结构                                   | 支持的操作命令                                               | 使用场景                                                     |
+| ------------------------------ | ---------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| String 字符串                  |                                                | set key value/get key/del key                                | 对整个字符串或者字符串的其中一部分执行操作<br />对整数和浮点数执行自增或者自减操作 |
+| List 列表(可存在重复值)        |                                                | rpush list-key item/lpush list-key item/lrange list-key startIdx  endIdx/lindex list-key idx/lpop list-key | 从两端压入或者弹出元素<br />对单个或者多个元素进行修剪<br /> 只保留一个范围内的元素 |
+| Set 集合（不存在重复，非有序） |                                                | sadd set-key item/smembers set-key/sismember set-key item2   | 添加、获取、移除单个元素<br /> 检查一个元素是否存在于集合中<br /> 计算交集、并集、差集<br /> 从集合里面随机获取元素 |
+| Hash 散表列(键值对无序散列表)  | 字典（两个dictht，使用拉链法解决冲突），rehash | hset hash-key sub-key1 value1/hgetall hash-key/hdel hash-key sub-key1 | 添加、获取、移除单个键值对<br />获取所有键值对<br />检查某个键是否存在 |
+| ZSET 有序集合                  | 跳跃表                                         | zadd zset-key 728 member1/zrange zset-key startIdx endIdx withscores/zrangebyscrore zset-eky 0 800 withscores/zrem zset-eky member | 添加、获取、删除元素<br /> 根据分值范围或者成员来获取元素<br />计算一个键的排名 |
 
 > [What Redis data structures look like](https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/)
 
@@ -552,6 +553,12 @@ def main():
 ## 十二、Sentinel
 
 Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入下线状态时，自动从从服务器中选举出新的主服务器。
+**监控（Monitoring)** 不间断检测Redis的运行状态.
+**提醒（Notification** 当监控的Redis出现问题时，通过API向管理员或者其他应用程序 发送通知.
+**自动故障迁移（Automatic failover** 当一个主服务器不能正常工作时， Sentinel 会开始一次自动故障迁移操作， 它会将失效主服务器的其中一个从服务器升级为新的主服务器， 并让失效主服务器的其他从服务器改为复制新的主服务器； 当客户端试图连接失效的主服务器时， 集群也会向客户端返回新主服务器的地址， 使得集群可以使用新主服务器代替失效服务器。
+**协议** 流言协议（gossip protocols)来接收关于主服务器是否下线的信息， 并使用投票协议（agreement protocols）来决定是否执行自动故障迁移 。
+Redis主从复制 搭建
+https://gper.gupaoedu.com/articles/7e7e7f7ff5g5bgc3
 
 ## 十三、分片
 
