@@ -215,13 +215,14 @@ obj = null;
 
 又称为幽灵引用或者幻影引用，一个对象是否有虚引用的存在，不会对其生存时间造成影响，也无法通过虚引用得到一个对象。
 
-为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。
+为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。虚引用需要和引用队列（ReferenceQueue）配合使用，对象被回收时虚引用会被加入队列，程序通过检查队列得知回收的发生。虚引用的 get() 方法总是返回 null。
 
 使用 PhantomReference 来创建虚引用。
 
 ```java
 Object obj = new Object();
-PhantomReference<Object> pf = new PhantomReference<Object>(obj, null);
+ReferenceQueue<Object> queue = new ReferenceQueue<Object>();
+PhantomReference<Object> pf = new PhantomReference<Object>(obj, queue);
 obj = null;
 ```
 
@@ -233,7 +234,7 @@ obj = null;
 
 在标记阶段，程序会检查每个对象是否为活动对象，如果是活动对象，则程序会在对象头部打上标记。
 
-在清除阶段，会进行对象回收并取消标志位，另外，还会判断回收后的分块与前一个空闲分块是否连续，若连续，会合并这两个分块。回收对象就是把对象作为分块，连接到被称为 “空闲链表” 的单向链表，之后进行分配时只需要遍历这个空闲链表，就可以找到分块。
+在清除阶段，会进行对象回收并取消标志位，另外，还会判断回收后的分块与前一个空闲分块是否连续，若连续，会合并这两个分块。回收对象就是把对象占用的内存作为空闲分块，连接到被称为 “空闲链表” 的单向链表，之后进行分配时只需要遍历这个空闲链表，就可以找到分块。
 
 在分配时，程序会搜索空闲链表寻找空间大于等于新对象大小 size 的块 block。如果它找到的块等于 size，会直接返回这个分块；如果找到的块大于 size，会将块分割成大小为 size 与 (block - size) 的两部分，返回大小为 size 的分块，并把大小为 (block - size) 的块返回给空闲链表。
 
@@ -406,7 +407,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 经常出现大对象会提前触发垃圾收集以获取足够的连续空间分配给大对象。
 
--XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。
+-XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。该参数只对 Serial 和 ParNew 收集器有效。
 
 #### 3. 长期存活的对象进入老年代
 
@@ -416,7 +417,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 #### 4. 动态对象年龄判定
 
-虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。
+虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代。HotSpot 会从年龄最小的对象开始累加 Survivor 中各个年龄对象的大小，当累加到某个年龄时总和超过了 Survivor 空间的一半，就取这个年龄和 MaxTenuringThreshold 中较小的值作为晋升阈值，年龄大于或等于该值的对象直接进入老年代。
 
 #### 5. 空间分配担保
 
