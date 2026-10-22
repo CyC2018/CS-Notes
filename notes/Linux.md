@@ -201,7 +201,7 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 #### 1. IDE
 
-IDE（ATA）全称 Advanced Technology Attachment，接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
+IDE（Integrated Drive Electronics）通常也称为 ATA（Advanced Technology Attachment），接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
 
@@ -785,7 +785,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命名别名：例如 ll 是 ls -al 的别名
+- 命令别名：例如 ll 通常是 ls -l 或者 ls -alF 的别名，具体取决于发行版的配置
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
