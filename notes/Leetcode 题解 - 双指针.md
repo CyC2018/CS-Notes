@@ -81,7 +81,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
      if (target < 0) return false;
      int i = 0, j = (int) Math.sqrt(target);
      while (i <= j) {
-         int powSum = i * i + j * j;
+         long powSum = (long) i * i + (long) j * j;
          if (powSum == target) {
              return true;
          } else if (powSum > target) {
@@ -212,8 +212,6 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
     while (index2 >= 0) {
         if (index1 < 0) {
             nums1[indexMerge--] = nums2[index2--];
-        } else if (index2 < 0) {
-            nums1[indexMerge--] = nums1[index1--];
         } else if (nums1[index1] > nums2[index2]) {
             nums1[indexMerge--] = nums1[index1--];
         } else {
