@@ -139,7 +139,7 @@ private int rob(int[] nums, int first, int last) {
 
 ### 4. 信件错排
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
+题目描述：有 N 个信和信封，它们被打乱，求每封信都装错信封的方式数量（错排数）。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -158,7 +158,7 @@ private int rob(int[] nums, int first, int last) {
 
 题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
-第 i 年成熟的牛的数量为：
+第 i 年牛的数量等于第 i-1 年牛的数量加上第 i-3 年牛的数量，这是因为第 i-3 年的牛到第 i 年都已成熟，每头都会生一头小牛：
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]" class="mathjax-pic"/></div> <br>-->
 
@@ -807,7 +807,7 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
 ```java
 public int findTargetSumWays(int[] nums, int S) {
     int sum = computeArraySum(nums);
-    if (sum < S || (sum + S) % 2 == 1) {
+    if (sum < Math.abs(S) || (sum + S) % 2 != 0) {
         return 0;
     }
     int W = (sum + S) / 2;

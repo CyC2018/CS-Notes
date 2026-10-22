@@ -26,7 +26,7 @@
         * [await() signal() signalAll()](#await-signal-signalall)
     * [六、线程状态](#六线程状态)
         * [新建（NEW）](#新建new)
-        * [可运行（RUNABLE）](#可运行runable)
+        * [可运行（RUNNABLE）](#可运行runnable)
         * [阻塞（BLOCKED）](#阻塞blocked)
         * [无限期等待（WAITING）](#无限期等待waiting)
         * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
@@ -526,7 +526,7 @@ synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非�
 
 在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待，直到目标线程结束。
 
-对于以下代码，虽然 b 线程先启动，但是因为在 b 线程中调用了 a 线程的 join() 方法，b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先于 b 线程的输出。
+对于以下代码，b 线程在 run() 中调用了 a 线程的 join() 方法，会等待 a 线程结束才继续执行，因此能够保证 a 线程的输出先于 b 线程的输出。需要注意的是，join() 只对已经启动的线程有效，如果调用 a.join() 时 a 线程还未启动，join() 会立即返回。
 
 ```java
 public class JoinExample {
@@ -560,8 +560,8 @@ public class JoinExample {
     public void test() {
         A a = new A();
         B b = new B(a);
-        b.start();
         a.start();
+        b.start();
     }
 }
 ```
@@ -686,13 +686,13 @@ after
 
 创建后尚未启动。
 
-### 可运行（RUNABLE）
+### 可运行（RUNNABLE）
 
 正在 Java 虚拟机中运行。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。
 
 ### 阻塞（BLOCKED）
 
-请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以出于阻塞状态。要结束该状态进入从而 RUNABLE 需要其他线程释放 monitor lock。
+请求获取 monitor lock 从而进入 synchronized 函数或者代码块，但是其它线程已经占用了该 monitor lock，所以处于阻塞状态。要结束该状态从而进入 RUNNABLE 需要其他线程释放 monitor lock。
 
 ### 无限期等待（WAITING）
 
@@ -1097,8 +1097,8 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 - assign：把一个从执行引擎接收到的值赋给工作内存的变量
 - store：把工作内存的一个变量的值传送到主内存中
 - write：在 store 之后执行，把 store 得到的值放入主内存的变量中
-- lock：作用于主内存的变量
-- unlock
+- lock：作用于主内存的变量，把一个变量标识为一条线程独占的状态
+- unlock：作用于主内存的变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其它线程锁定
 
 ### 内存模型三大特性
 
@@ -1569,7 +1569,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 如果一系列的连续操作都对同一个对象反复加锁和解锁，频繁的加锁操作就会导致性能损耗。
 
-上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
+上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到有这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
 
 ### 轻量级锁
 
