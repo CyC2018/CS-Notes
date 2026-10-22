@@ -224,21 +224,32 @@ Output: [0,0,1,1,2,2]
 
 ```java
 public void sortColors(int[] nums) {
-    int zero = -1, one = 0, two = nums.length;
-    while (one < two) {
-        if (nums[one] == 0) {
-            swap(nums, ++zero, one++);
-        } else if (nums[one] == 2) {
-            swap(nums, --two, one);
-        } else {
-            ++one;
+        int p0=0;
+        int p1=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==1)
+            {
+                int temp=nums[i];
+                nums[i]=nums[p1];
+                nums[p1]=temp;
+                p1++;
+            }
+            else if(nums[i]==0)
+            {
+                int temp=nums[i];
+                nums[i]=nums[p0];
+                nums[p0]=temp;
+                if(p0<p1)
+                {
+                    int k=nums[i];
+                    nums[i]=nums[p1];
+                    nums[p1]=k;
+                    
+                }
+                p0++;
+                p1++;
+            }
         }
     }
-}
-
-private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
-}
 ```
