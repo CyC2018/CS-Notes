@@ -317,7 +317,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 
 
 - 日期格式：YYYY-MM-DD
-- 时间格式：HH:\<zero-width space\>MM:SS
+- 时间格式：HH:MM:SS
 
 |函 数 | 说 明|
 | :---: | :---: |
