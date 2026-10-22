@@ -31,12 +31,12 @@
         * [5. 二叉树的最近公共祖先](#5-二叉树的最近公共祖先)
         * [6. 从有序数组中构造二叉查找树](#6-从有序数组中构造二叉查找树)
         * [7. 根据有序链表构造平衡的二叉查找树](#7-根据有序链表构造平衡的二叉查找树)
-        * [8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值](#8-在二叉查找树中寻找两个节点，使它们的和为一个给定值)
+        * [8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值](#8-在二叉查找树中寻找两个节点使它们的和为一个给定值)
         * [9. 在二叉查找树中查找两个节点之差的最小绝对值](#9-在二叉查找树中查找两个节点之差的最小绝对值)
         * [10. 寻找二叉查找树中出现次数最多的值](#10-寻找二叉查找树中出现次数最多的值)
     * [Trie](#trie)
         * [1. 实现一个 Trie](#1-实现一个-trie)
-        * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie，用来求前缀和)
+        * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie用来求前缀和)
 <!-- GFM-TOC -->
 
 
@@ -239,7 +239,7 @@ public int pathSum(TreeNode root, int sum) {
     return ret;
 }
 
-private int pathSumStartWithRoot(TreeNode root, int sum) {
+private int pathSumStartWithRoot(TreeNode root, long sum) {
     if (root == null) return 0;
     int ret = 0;
     if (root.val == sum) ret++;
@@ -757,7 +757,7 @@ private int count(TreeNode node) {
 
 ### 3. 把二叉查找树每个节点的值都加上比它大的节点的值
 
-Convert BST to Greater Tree (Easy)
+538\. Convert BST to Greater Tree (Easy)
 
 [Leetcode](https://leetcode.com/problems/convert-bst-to-greater-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/description/)
 
