@@ -1,30 +1,34 @@
-# [Prism](http://prismjs.com/)
+# Prism 文档
 
-[![Build Status](https://travis-ci.org/PrismJS/prism.svg?branch=master)](https://travis-ci.org/PrismJS/prism)
+[![构建状态](https://travis-ci.org/PrismJS/prism.svg?branch=master)](https://travis-ci.org/PrismJS/prism)
 
-Prism is a lightweight, robust, elegant syntax highlighting library. It's a spin-off project from [Dabblet](http://dabblet.com/).
+Prism 是一个轻量级、强大而优雅的语法高亮库。它是从 [Dabblet](http://dabblet.com/) 演变而来的项目。
 
-You can learn more on http://prismjs.com/.
+您可以在 http://prismjs.com/ 上了解更多信息。
 
-Why another syntax highlighter?: http://lea.verou.me/2012/07/introducing-prism-an-awesome-new-syntax-highlighter/#more-1841
+## 为什么要另一个语法高亮工具？
 
-More themes for Prism: https://github.com/PrismJS/prism-themes
+您可以阅读更多关于 Prism 的介绍：[介绍 Prism：一个出色的新语法高亮工具](http://lea.verou.me/2012/07/introducing-prism-an-awesome-new-syntax-highlighter/#more-1841)。
 
-## Contribute to Prism!
+## 更多 Prism 主题
 
-Prism depends on community contributions to expand and cover a wider array of use cases. If you like it, considering giving back by sending a pull request. Here are a few tips:
+查看更多可用的主题：[Prism 主题库](https://github.com/PrismJS/prism-themes)。
 
-- Read the [documentation](http://prismjs.com/extending.html). Prism was designed to be extensible.
-- Do not edit `prism.js`, it’s just the version of Prism used by the Prism website and is built automatically. Limit your changes to the unminified files in the components/ folder. The minified files are also generated automatically.
-- The build system uses [gulp](https://github.com/gulpjs/gulp) to minify the files and build `prism.js`. Having gulp installed, you just need to run the command `gulp`.
-- Please follow the code conventions used in the files already. For example, I use [tabs for indentation and spaces for alignment](http://lea.verou.me/2012/01/why-tabs-are-clearly-superior/). Opening braces are on the same line, closing braces on their own line regardless of construct. There is a space before the opening brace. etc etc.
-- Please try to err towards more smaller PRs rather than few huge PRs. If a PR includes changes I want to merge and changes I don't, handling it becomes difficult.
-- My time is very limited these days, so it might take a long time to review longer PRs (short ones are usually merged very quickly), especially those modifying the Prism Core. This doesn't mean your PR is rejected.
-- If you contribute a new language definition, you will be responsible for handling bug reports about that language definition.
-- If you add a new language definition, theme or plugin, you need to add it to `components.json` as well and rebuild Prism by running `gulp`, so that it becomes available to the download build page.
+## 如何为 Prism 做贡献！
 
-Thank you so much for contributing!!
+Prism 依赖社区的贡献来扩展和覆盖更广泛的使用案例。如果您喜欢这个项目，请考虑通过提交拉取请求来回馈社区。以下是一些建议：
 
-## Translations
+- 阅读 [文档](http://prismjs.com/extending.html)。Prism 设计得很灵活，可以轻松扩展。
+- 请勿编辑 `prism.js` 文件，它只是 Prism 网站所使用的版本，自动构建的。请将更改限制在 `components/` 文件夹中的未压缩文件中。压缩文件也是自动生成的。
+- 构建系统使用 [gulp](https://github.com/gulpjs/gulp) 来压缩文件和构建 `prism.js`。安装 gulp 之后，只需运行 `gulp` 命令。
+- 请遵循现有文件中的代码约定。例如，我使用 [制表符用于缩进，空格用于对齐](http://lea.verou.me/2012/01/why-tabs-are-clearly-superior/)。打开的花括号在同一行，关闭的花括号独占一行（无论构造如何）。在打开的花括号之前留有一个空格，等等。
+- 请尽量提交较小的拉取请求，而不是少数几个大的请求。如果一个请求包含我想合并的更改和我不想合并的更改，那么处理起来会很困难。
+- 我的时间非常有限，因此长时间的拉取请求可能会需要很长时间来审查（短请求通常会快速合并），尤其是那些修改 Prism 核心的请求。这并不意味着您的请求被拒绝。
+- 如果您贡献新的语言定义，您将负责处理有关该语言定义的错误报告。
+- 如果添加新的语言定义、主题或插件，您需要将其添加到 `components.json` 中，并通过运行 `gulp` 重建 Prism，以便它能够在下载构建页面中可用。
 
-* [![中文说明](http://awesomes.oss-cn-beijing.aliyuncs.com/readme.png)](http://www.awesomes.cn/repo/PrismJS/prism)
+非常感谢您的贡献！！
+
+## 翻译
+
+若希望进一步提升本翻译内容的清晰度和可理解性，请参考原文，并确保语言的准确性与术语的一致性。所有编辑需以能够直接应用到新文件的格式呈现。
