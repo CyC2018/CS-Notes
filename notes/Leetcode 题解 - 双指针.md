@@ -8,6 +8,7 @@
     * [5. 归并两个有序数组](#5-归并两个有序数组)
     * [6. 判断链表是否存在环](#6-判断链表是否存在环)
     * [7. 最长子序列](#7-最长子序列)
+    * [8. 接雨水](#8-动态规划+双指针)
 <!-- GFM-TOC -->
 
 
@@ -290,3 +291,66 @@ private boolean isSubstr(String s, String target) {
     return j == target.length();
 }
 ```
+
+
+## 8. 接雨水
+42\.Collect rainwater（difficult）
+
+[Leetcode](https://leetcode.cn/problems/trapping-rain-water/description/?envType=study-plan-v2&envId=top-100-liked) / [力扣](https://leetcode.cn/problems/trapping-rain-water/description/?envType=study-plan-v2&envId=top-100-liked)
+
+
+```
+Input:
+height = [0,1,0,2,1,0,1,3,2,1,2,1]
+
+Output:
+6
+```
+题目描述：给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+
+
+```java
+
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        if (n == 0) return 0;
+
+        int[] l = new int[n];
+        int[] r = new int[n];
+
+        l[0] = height[0];
+        r[n - 1] = height[n - 1];
+
+        // 从左到右构建最大高度数组
+        for (int i = 1; i < n; i++) {
+            l[i] = Math.max(height[i], l[i - 1]);
+        }
+
+        // 从右到左构建最大高度数组
+        for (int i = n - 2; i >= 0; i--) {
+            r[i] = Math.max(height[i], r[i + 1]);
+        }
+
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            res += Math.min(l[i], r[i]) - height[i];
+        }
+
+        return res;
+    }
+}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
