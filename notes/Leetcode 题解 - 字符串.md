@@ -12,7 +12,7 @@
     * [9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数](#9-统计二进制字符串中连续-1-和连续-0-数量相同的子字符串个数)
 <!-- GFM-TOC -->
 
-
+字符串问题可以使用HashMap记录每个字母出现的个数，进一步简化为使用array：index是字母的ACII值，index对应的数就是字母出现的个数。
 ## 1. 字符串循环移位包含
 
 [编程之美 3.1](#)
@@ -205,6 +205,25 @@ public boolean isPalindrome(int x) {
     }
     return x == right || x == right / 10;
 }
+```
+我自己的解法（C++）:使用to_string把整数转换成string（带正负符号）。
+``` c++
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        string s=to_string(x);
+        int start=0;
+        int end=s.length()-1;
+        while(start<=end){
+            if (s[start]!=s[end]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+};
 ```
 
 ## 9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数
