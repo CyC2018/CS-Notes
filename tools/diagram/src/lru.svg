@@ -1,50 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="620" height="270" viewBox="0 0 620 270">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="310" y="28" class="title">LRU：HashMap + 双向链表</text>
-  <rect x="32" y="159" width="80" height="36" rx="6" class="shadow"/>
-  <rect x="30" y="157" width="80" height="36" rx="6" fill="#E6E6E6"/>
+  <rect x="30" y="157" width="80" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
   <text x="70" y="179.5" class="c b mono">head</text>
-  <rect x="152" y="159" width="80" height="36" rx="6" class="shadow"/>
-  <rect x="150" y="157" width="80" height="36" rx="6" fill="#B1DDF0"/>
+  <rect x="150" y="157" width="80" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="190" y="179.5" class="c b mono">k2</text>
-  <rect x="272" y="159" width="80" height="36" rx="6" class="shadow"/>
-  <rect x="270" y="157" width="80" height="36" rx="6" fill="#B1DDF0"/>
+  <rect x="270" y="157" width="80" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="310" y="179.5" class="c b mono">k3</text>
-  <rect x="392" y="159" width="80" height="36" rx="6" class="shadow"/>
-  <rect x="390" y="157" width="80" height="36" rx="6" fill="#B1DDF0"/>
+  <rect x="390" y="157" width="80" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="430" y="179.5" class="c b mono">k1</text>
-  <rect x="512" y="159" width="80" height="36" rx="6" class="shadow"/>
-  <rect x="510" y="157" width="80" height="36" rx="6" fill="#E6E6E6"/>
+  <rect x="510" y="157" width="80" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
   <text x="550" y="179.5" class="c b mono">tail</text>
   <line x1="112" y1="169" x2="148" y2="169" class="arrow "/>
   <line x1="148" y1="181" x2="112" y2="181" class="arrow "/>
@@ -56,13 +51,13 @@
   <line x1="508" y1="181" x2="472" y2="181" class="arrow "/>
   <rect x="132" y="52" width="356" height="66" rx="8" class="frame"/>
   <text x="142" y="70" class="b">HashMap</text>
-  <rect x="160" y="72" width="60" height="30" rx="6" fill="#B0E3E6"/>
+  <rect x="160" y="72" width="60" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="190" y="91.5" class="c mono">k2</text>
   <line x1="190" y1="104" x2="190" y2="154" class="arrow dash"/>
-  <rect x="280" y="72" width="60" height="30" rx="6" fill="#B0E3E6"/>
+  <rect x="280" y="72" width="60" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="310" y="91.5" class="c mono">k3</text>
   <line x1="310" y1="104" x2="310" y2="154" class="arrow dash"/>
-  <rect x="400" y="72" width="60" height="30" rx="6" fill="#B0E3E6"/>
+  <rect x="400" y="72" width="60" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="430" y="91.5" class="c mono">k1</text>
   <line x1="430" y1="104" x2="430" y2="154" class="arrow dash"/>
   <text x="70" y="217" class="c sub">哨兵</text>
