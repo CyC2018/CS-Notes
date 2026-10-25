@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="592" viewBox="0 0 640 592">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 13px; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 13px; }
     .head { font-weight: bold; text-anchor: middle; }
     .msg { text-anchor: middle; font-size: 12px; }
     .note { font-size: 12px; fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .life { stroke: #BBB; stroke-width: 1; stroke-dasharray: 4 4; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .reply { stroke-dasharray: 5 4; }
     .lost { stroke: #C0605A; marker-end: url(#x); }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -27,20 +27,15 @@
   <line x1="320" y1="76" x2="320" y2="572" class="life"/>
   <line x1="448" y1="76" x2="448" y2="572" class="life"/>
   <line x1="576" y1="76" x2="576" y2="572" class="life"/>
-  <rect x="14" y="47" width="104" height="30" rx="6" class="shadow"/>
-  <rect x="12" y="45" width="104" height="30" rx="6" fill="#B0E3E6"/>
+  <rect x="12" y="45" width="104" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="64" y="64.5" class="head">Proposer A</text>
-  <rect x="142" y="47" width="104" height="30" rx="6" class="shadow"/>
-  <rect x="140" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <rect x="140" y="45" width="104" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="192" y="64.5" class="head">Acceptor X</text>
-  <rect x="270" y="47" width="104" height="30" rx="6" class="shadow"/>
-  <rect x="268" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <rect x="268" y="45" width="104" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="320" y="64.5" class="head">Acceptor Y</text>
-  <rect x="398" y="47" width="104" height="30" rx="6" class="shadow"/>
-  <rect x="396" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <rect x="396" y="45" width="104" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="448" y="64.5" class="head">Acceptor Z</text>
-  <rect x="526" y="47" width="104" height="30" rx="6" class="shadow"/>
-  <rect x="524" y="45" width="104" height="30" rx="6" fill="#B0E3E6"/>
+  <rect x="524" y="45" width="104" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="576" y="64.5" class="head">Proposer B</text>
   <line x1="68" y1="100" x2="188" y2="100" class="arrow"/>
   <text x="128" y="94" class="msg">Prepare(2)</text>
