@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400" viewBox="0 0 720 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">三级缓存解决 A、B 的循环依赖</text>
+  <text x="430" y="58" class="c b">一级缓存</text>
+  <text x="430" y="74" class="c sub">完整的 Bean</text>
+  <text x="540" y="58" class="c b">二级缓存</text>
+  <text x="540" y="74" class="c sub">提前暴露的对象</text>
+  <text x="650" y="58" class="c b">三级缓存</text>
+  <text x="650" y="74" class="c sub">生成提前引用的工厂</text>
+  <rect x="20" y="90" width="680" height="50" rx="6" fill="#F7F7F7"/>
+  <text x="32" y="120">① 实例化 A，把 A 的工厂放入三级缓存</text>
+  <rect x="602" y="102" width="96" height="26" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="650" y="119.5" class="c sub">A 的工厂</text>
+  <rect x="20" y="146" width="680" height="50" rx="6" fill="#FFFFFF"/>
+  <text x="32" y="176">② 填充 A 的属性时需要 B，实例化 B</text>
+  <rect x="602" y="150" width="96" height="20" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="650" y="164.5" class="c sub">A 的工厂</text>
+  <rect x="602" y="172" width="96" height="20" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="650" y="186.5" class="c sub">B 的工厂</text>
+  <rect x="20" y="202" width="680" height="50" rx="6" fill="#F7F7F7"/>
+  <text x="32" y="222">③ 填充 B 时需要 A：调用 A 的工厂，</text>
+  <text x="54" y="240">得到 A 的提前引用，移入二级缓存</text>
+  <rect x="492" y="214" width="96" height="26" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="540" y="231.5" class="c sub">A（未完成）</text>
+  <rect x="602" y="214" width="96" height="26" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="650" y="231.5" class="c sub">B 的工厂</text>
+  <rect x="20" y="258" width="680" height="50" rx="6" fill="#FFFFFF"/>
+  <text x="32" y="288">④ B 拿到 A，完成初始化</text>
+  <rect x="382" y="270" width="96" height="26" rx="4" fill="#B1DDF0" stroke="#C8C8C8"/>
+  <text x="430" y="287.5" class="c sub">B</text>
+  <rect x="492" y="270" width="96" height="26" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="540" y="287.5" class="c sub">A（未完成）</text>
+  <rect x="20" y="314" width="680" height="50" rx="6" fill="#F7F7F7"/>
+  <text x="32" y="344">⑤ A 拿到 B，完成初始化</text>
+  <rect x="382" y="318" width="96" height="20" rx="4" fill="#B1DDF0" stroke="#C8C8C8"/>
+  <text x="430" y="332.5" class="c sub">A</text>
+  <rect x="382" y="340" width="96" height="20" rx="4" fill="#B1DDF0" stroke="#C8C8C8"/>
+  <text x="430" y="354.5" class="c sub">B</text>
+  <text x="20" y="384" class="sub">A 需要 AOP 代理时，工厂在第 ③ 步直接返回 A 的代理，B 拿到的就是最终放入容器的对象。</text>
+</svg>
