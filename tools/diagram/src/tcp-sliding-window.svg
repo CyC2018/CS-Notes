@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">滑动窗口：A 发送了 31～36，B 收到 31、34、35</text>
+  <text x="20" y="96" class="b">① A 发送</text>
+  <text x="20" y="112" class="sub">31～36</text>
+  <rect x="121" y="84" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="137" y="103" class="c sub mono" style="fill:#888">28</text>
+  <rect x="155" y="84" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="171" y="103" class="c sub mono" style="fill:#888">29</text>
+  <rect x="189" y="84" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="205" y="103" class="c sub mono" style="fill:#888">30</text>
+  <rect x="223" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="239" y="103" class="c sub mono" style="fill:#555">31</text>
+  <rect x="257" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="273" y="103" class="c sub mono" style="fill:#555">32</text>
+  <rect x="291" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="307" y="103" class="c sub mono" style="fill:#555">33</text>
+  <rect x="325" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="341" y="103" class="c sub mono" style="fill:#555">34</text>
+  <rect x="359" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="375" y="103" class="c sub mono" style="fill:#555">35</text>
+  <rect x="393" y="84" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="409" y="103" class="c sub mono" style="fill:#555">36</text>
+  <rect x="427" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="443" y="103" class="c sub mono" style="fill:#555">37</text>
+  <rect x="461" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="477" y="103" class="c sub mono" style="fill:#555">38</text>
+  <rect x="495" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="511" y="103" class="c sub mono" style="fill:#555">39</text>
+  <rect x="529" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="545" y="103" class="c sub mono" style="fill:#555">40</text>
+  <rect x="563" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="579" y="103" class="c sub mono" style="fill:#BBB">41</text>
+  <rect x="597" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="613" y="103" class="c sub mono" style="fill:#BBB">42</text>
+  <rect x="631" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="647" y="103" class="c sub mono" style="fill:#BBB">43</text>
+  <rect x="665" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="681" y="103" class="c sub mono" style="fill:#BBB">44</text>
+  <rect x="699" y="84" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="715" y="103" class="c sub mono" style="fill:#BBB">45</text>
+  <rect x="220" y="78" width="344" height="42" rx="5" fill="none" stroke="#B8B0DE" stroke-width="2"/>
+  <text x="392" y="72" class="c sub" style="fill:#766AA8">A 的发送窗口 10 字节：31～40</text>
+  <text x="222" y="136" class="sub" style="fill:#555">31～36 已发送，等待确认；37～40 还可以发送</text>
+  <text x="20" y="212" class="b">② B 收到</text>
+  <text x="20" y="228" class="sub">31、34、35</text>
+  <rect x="121" y="200" width="32" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="137" y="219" class="c sub mono" style="fill:#555">28</text>
+  <rect x="155" y="200" width="32" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="171" y="219" class="c sub mono" style="fill:#555">29</text>
+  <rect x="189" y="200" width="32" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="205" y="219" class="c sub mono" style="fill:#555">30</text>
+  <rect x="223" y="200" width="32" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="239" y="219" class="c sub mono" style="fill:#555">31</text>
+  <rect x="257" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="273" y="219" class="c sub mono" style="fill:#888">32</text>
+  <rect x="291" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="307" y="219" class="c sub mono" style="fill:#888">33</text>
+  <rect x="325" y="200" width="32" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="341" y="219" class="c sub mono" style="fill:#555">34</text>
+  <rect x="359" y="200" width="32" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="375" y="219" class="c sub mono" style="fill:#555">35</text>
+  <rect x="393" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="409" y="219" class="c sub mono" style="fill:#888">36</text>
+  <rect x="427" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="443" y="219" class="c sub mono" style="fill:#888">37</text>
+  <rect x="461" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="477" y="219" class="c sub mono" style="fill:#888">38</text>
+  <rect x="495" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="511" y="219" class="c sub mono" style="fill:#888">39</text>
+  <rect x="529" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="545" y="219" class="c sub mono" style="fill:#888">40</text>
+  <rect x="563" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="579" y="219" class="c sub mono" style="fill:#888">41</text>
+  <rect x="597" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="613" y="219" class="c sub mono" style="fill:#BBB">42</text>
+  <rect x="631" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="647" y="219" class="c sub mono" style="fill:#BBB">43</text>
+  <rect x="665" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="681" y="219" class="c sub mono" style="fill:#BBB">44</text>
+  <rect x="699" y="200" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="715" y="219" class="c sub mono" style="fill:#BBB">45</text>
+  <rect x="254" y="194" width="344" height="42" rx="5" fill="none" stroke="#B8B0DE" stroke-width="2"/>
+  <text x="426" y="188" class="c sub" style="fill:#766AA8">B 的接收窗口：31 已按序收到，窗口移到 32～41</text>
+  <text x="256" y="252" class="sub" style="fill:#555">32、33、36 未到，34、35 先缓存；只能确认到 31，回复确认号 32、窗口 10</text>
+  <text x="20" y="328" class="b">③ A 收到</text>
+  <text x="20" y="344" class="sub">确认号 32</text>
+  <rect x="121" y="316" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="137" y="335" class="c sub mono" style="fill:#888">28</text>
+  <rect x="155" y="316" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="171" y="335" class="c sub mono" style="fill:#888">29</text>
+  <rect x="189" y="316" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="205" y="335" class="c sub mono" style="fill:#888">30</text>
+  <rect x="223" y="316" width="32" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="239" y="335" class="c sub mono" style="fill:#888">31</text>
+  <rect x="257" y="316" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="273" y="335" class="c sub mono" style="fill:#555">32</text>
+  <rect x="291" y="316" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="307" y="335" class="c sub mono" style="fill:#555">33</text>
+  <rect x="325" y="316" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="341" y="335" class="c sub mono" style="fill:#555">34</text>
+  <rect x="359" y="316" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="375" y="335" class="c sub mono" style="fill:#555">35</text>
+  <rect x="393" y="316" width="32" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="409" y="335" class="c sub mono" style="fill:#555">36</text>
+  <rect x="427" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="443" y="335" class="c sub mono" style="fill:#555">37</text>
+  <rect x="461" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="477" y="335" class="c sub mono" style="fill:#555">38</text>
+  <rect x="495" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="511" y="335" class="c sub mono" style="fill:#555">39</text>
+  <rect x="529" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="545" y="335" class="c sub mono" style="fill:#555">40</text>
+  <rect x="563" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="579" y="335" class="c sub mono" style="fill:#555">41</text>
+  <rect x="597" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="613" y="335" class="c sub mono" style="fill:#BBB">42</text>
+  <rect x="631" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="647" y="335" class="c sub mono" style="fill:#BBB">43</text>
+  <rect x="665" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="681" y="335" class="c sub mono" style="fill:#BBB">44</text>
+  <rect x="699" y="316" width="32" height="30" rx="3" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="715" y="335" class="c sub mono" style="fill:#BBB">45</text>
+  <rect x="254" y="310" width="344" height="42" rx="5" fill="none" stroke="#B8B0DE" stroke-width="2"/>
+  <text x="426" y="304" class="c sub" style="fill:#766AA8">A 的窗口右移 1 字节：32～41，可以再发 37～41</text>
+  <rect x="20" y="390" width="16" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="42" y="403" class="sub">已发送并收到确认</text>
+  <rect x="138" y="390" width="16" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="403" class="sub">已发送未确认</text>
+  <rect x="234" y="390" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="256" y="403" class="sub">窗口内，还可以发送或接收</text>
+  <rect x="396" y="390" width="16" height="16" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="418" y="403" class="sub">按序收到</text>
+  <rect x="470" y="390" width="16" height="16" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="492" y="403" class="sub">未按序收到，先缓存</text>
+  <text x="20" y="446" class="sub">之后 32、33 到达，B 一次确认到 35（确认号 36），A 的窗口随之右移 4 字节；36 要等它到达后才能确认。</text>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" viewBox="0 0 700 360">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="350" y="28" class="title">流量控制与拥塞控制</text>
+  <rect x="55" y="110" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="62" cy="116.5" r="2" fill="#7FB2D6"/>
+  <line x1="69" y1="116.5" x2="98" y2="116.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="55" y="126" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="62" cy="132.5" r="2" fill="#7FB2D6"/>
+  <line x1="69" y1="132.5" x2="98" y2="132.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="55" y="142" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="62" cy="148.5" r="2" fill="#7FB2D6"/>
+  <line x1="69" y1="148.5" x2="98" y2="148.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="80" y="176" class="c b">发送方 A</text>
+  <rect x="10" y="196" width="170" height="50" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="95" y="219" class="c sub">发送窗口 = min(cwnd, rwnd)</text>
+  <text x="95" y="234" class="sub c">= min(8, 20) = 8 个报文段</text>
+  <rect x="215" y="60" width="280" height="200" rx="8" class="frame"/>
+  <text x="225" y="78" class="b">网络</text>
+  <rect x="235" y="116" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="245" y="120" width="22" height="18" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="256" y="133" class="c sub"></text>
+  <rect x="271" y="120" width="22" height="18" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="282" y="133" class="c sub"></text>
+  <rect x="297" y="120" width="22" height="18" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="308" y="133" class="c sub"></text>
+  <rect x="323" y="120" width="22" height="18" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="334" y="133" class="c sub"></text>
+  <text x="295" y="106" class="c sub">路由器缓存已满</text>
+  <circle cx="372" cy="129" r="9" fill="#F3C6C2" stroke="#D99A94" stroke-width="1.2"/>
+  <path d="M367.95,124.95 L376.05,133.05 M376.05,124.95 L367.95,133.05" stroke="#C0605A" stroke-width="2" stroke-linecap="round"/>
+  <text x="386" y="133" class="sub note">丢包</text>
+  <rect x="395" y="164" width="80" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="405" y="168" width="17.3333" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="413.667" y="180" class="c sub"></text>
+  <rect x="426.333" y="168" width="17.3333" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <text x="435" y="180" class="c sub"></text>
+  <rect x="447.667" y="168" width="17.3333" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <line x1="108" y1="130" x2="232" y2="129" class="arrow "/>
+  <line x1="355" y1="146" x2="405" y2="162" class="arrow "/>
+  <line x1="478" y1="176" x2="588" y2="150" class="arrow "/>
+  <text x="232" y="218" class="sub note">拥塞控制：A 根据超时和重复确认</text>
+  <text x="232" y="236" class="sub note">推测网络拥塞，自己维护 cwnd</text>
+  <path d="M226,222 C205,222 200,221 184,221" class="arrow dash red"/>
+  <rect x="595" y="110" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="602" cy="116.5" r="2" fill="#7FB2D6"/>
+  <line x1="609" y1="116.5" x2="638" y2="116.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="595" y="126" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="602" cy="132.5" r="2" fill="#7FB2D6"/>
+  <line x1="609" y1="132.5" x2="638" y2="132.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="595" y="142" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="602" cy="148.5" r="2" fill="#7FB2D6"/>
+  <line x1="609" y1="148.5" x2="638" y2="148.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="620" y="176" class="c b">接收方 B</text>
+  <text x="620" y="194" class="c sub">还能接收 20 个报文段</text>
+  <rect x="290" y="290" width="210" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M290,291 L304,301 L318,291" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="324" y="309" class="sub mono">ACK，窗口 rwnd = 20</text>
+  <path d="M620,204 V305 H504" class="arrow"/>
+  <path d="M286,305 H95 V250" class="arrow"/>
+  <text x="290" y="342" class="sub">流量控制：rwnd 由接收方在确认中告知，保证接收方来得及接收</text>
+</svg>

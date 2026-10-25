@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">TCP 四次挥手</text>
+  <rect x="130" y="46" width="120" height="34" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="190" y="67.5" class="b c">客户端 A</text>
+  <line x1="190" y1="82" x2="190" y2="466" stroke="#BBB" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="390" y="46" width="120" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="450" y="67.5" class="b c">服务器 B</text>
+  <line x1="450" y1="82" x2="450" y2="466" stroke="#BBB" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="186" y="168" width="268" height="124" fill="#E6E3FA" opacity="0.3"/>
+  <text x="198" y="286" class="sub">半关闭：只剩 B → A 方向</text>
+  <rect x="82.6" y="92" width="95.4" height="20" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="130.3" y="106" class="c sub mono" style="fill:#555">ESTABLISHED</text>
+  <rect x="462" y="92" width="95.4" height="20" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="509.7" y="106" class="c sub mono" style="fill:#555">ESTABLISHED</text>
+  <line x1="190" y1="124" x2="450" y2="160" class="arrow "/>
+  <text x="320" y="135" class="c sub mono" transform="rotate(7.88 320 142)" style="fill:#555">FIN=1, seq=3000</text>
+  <rect x="90" y="124" width="88" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="134" y="138" class="c sub mono" style="fill:#555">FIN-WAIT-1</text>
+  <rect x="462" y="154" width="88" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="506" y="168" class="c sub mono" style="fill:#555">CLOSE-WAIT</text>
+  <text x="462" y="190" class="sub">通知应用程序，</text>
+  <text x="462" y="206" class="sub">等它发完数据后调用 close()</text>
+  <line x1="450" y1="176" x2="190" y2="212" class="arrow "/>
+  <text x="320" y="187" class="c sub mono" transform="rotate(-7.88 320 194)" style="fill:#555">ACK=1, ack=3001</text>
+  <rect x="90" y="206" width="88" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="134" y="220" class="c sub mono" style="fill:#555">FIN-WAIT-2</text>
+  <line x1="450" y1="230" x2="190" y2="266" class="arrow "/>
+  <text x="320" y="241" class="c sub" transform="rotate(-7.88 320 248)" style="fill:#555">B 继续发送剩余的数据</text>
+  <line x1="450" y1="312" x2="190" y2="348" class="arrow "/>
+  <text x="320" y="323" class="c sub mono" transform="rotate(-7.88 320 330)" style="fill:#555">FIN=1, ACK=1, seq=9000, ack=3001</text>
+  <rect x="462" y="306" width="73.2" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="498.6" y="320" class="c sub mono" style="fill:#555">LAST-ACK</text>
+  <line x1="190" y1="364" x2="450" y2="400" class="arrow "/>
+  <text x="320" y="375" class="c sub mono" transform="rotate(7.88 320 382)" style="fill:#555">ACK=1, seq=3001, ack=9001</text>
+  <rect x="97.4" y="342" width="80.6" height="20" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="137.7" y="356" class="c sub mono" style="fill:#555">TIME-WAIT</text>
+  <path d="M140,366 V440" class="line dash"/>
+  <circle cx="140" cy="402" r="11" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M140,395.4 V402 L144.95,405.3" fill="none" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="122" y="398" class="sub e">等待 2MSL</text>
+  <text x="122" y="414" class="sub e">Linux 为 60 秒</text>
+  <rect x="119.6" y="444" width="58.4" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="148.8" y="458" class="c sub mono" style="fill:#555">CLOSED</text>
+  <rect x="462" y="394" width="58.4" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="491.2" y="408" class="c sub mono" style="fill:#555">CLOSED</text>
+  <text x="40" y="494" class="sub">主动关闭的一方最后进入 TIME-WAIT；被动关闭的一方在应用调用 close() 之前一直处于 CLOSE-WAIT。</text>
+  <text x="40" y="512" class="sub">如果最后的 ACK 丢失，B 会重传 FIN，A 还在 TIME-WAIT 中，可以再确认一次。</text>
+</svg>
