@@ -10,7 +10,7 @@
     .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
     .reply { stroke-dasharray: 5 4; }
     .lost { stroke: #C0605A; marker-end: url(#x); }
-    .shadow { fill: #C0C0C0; }
+    .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
@@ -26,23 +26,23 @@
   <line x1="230" y1="76" x2="230" y2="428" class="life"/>
   <line x1="370" y1="76" x2="370" y2="428" class="life"/>
   <line x1="510" y1="76" x2="510" y2="428" class="life"/>
-  <rect x="52" y="48" width="82" height="30" rx="6" class="shadow"/>
+  <rect x="51" y="47" width="82" height="30" rx="6" class="shadow"/>
   <rect x="49" y="45" width="82" height="30" rx="6" fill="#B0E3E6"/>
   <text x="90" y="64.5" class="head">客户端 1</text>
-  <rect x="197" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="196" y="47" width="72" height="30" rx="6" class="shadow"/>
   <rect x="194" y="45" width="72" height="30" rx="6" fill="#B1DDF0"/>
   <text x="230" y="64.5" class="head">锁服务</text>
-  <rect x="332" y="48" width="82" height="30" rx="6" class="shadow"/>
+  <rect x="331" y="47" width="82" height="30" rx="6" class="shadow"/>
   <rect x="329" y="45" width="82" height="30" rx="6" fill="#B0E3E6"/>
   <text x="370" y="64.5" class="head">客户端 2</text>
-  <rect x="477" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="476" y="47" width="72" height="30" rx="6" class="shadow"/>
   <rect x="474" y="45" width="72" height="30" rx="6" fill="#B1DDF0"/>
   <text x="510" y="64.5" class="head">存储</text>
   <line x1="94" y1="100" x2="226" y2="100" class="arrow"/>
   <text x="160" y="94" class="msg">获取锁</text>
   <line x1="226" y1="134" x2="94" y2="134" class="arrow reply"/>
   <text x="160" y="128" class="msg">成功，令牌 33</text>
-  <rect x="85" y="158" width="10" height="150" fill="#F3D9A4" stroke="#D9B44A"/>
+  <rect x="85" y="158" width="10" height="150" fill="#DDD7F6" stroke="#9188D8"/>
   <text x="102" y="237" class="note"></text>
   <text x="78" y="172" class="note" text-anchor="end">GC 停顿</text>
   <text x="240" y="206" class="note" text-anchor="start">锁过期</text>

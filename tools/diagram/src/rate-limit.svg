@@ -15,7 +15,7 @@
     .dash { stroke-dasharray: 5 4; }
     .line { stroke: #666; stroke-width: 1.3; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
-    .shadow { fill: #C0C0C0; }
+    .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -53,13 +53,13 @@
   <line x1="430" y1="80" x2="430" y2="108" class="arrow "/>
   <text x="440" y="92" class="sub">固定速率放入令牌</text>
   <path d="M380,110 L392,210 L478,210 L490,110" class="line"/>
-  <circle cx="410" cy="195" r="9" fill="#F3D9A4" stroke="#D9B44A"/>
-  <circle cx="435" cy="195" r="9" fill="#F3D9A4" stroke="#D9B44A"/>
-  <circle cx="460" cy="195" r="9" fill="#F3D9A4" stroke="#D9B44A"/>
-  <circle cx="422" cy="175" r="9" fill="#F3D9A4" stroke="#D9B44A"/>
-  <circle cx="448" cy="175" r="9" fill="#F3D9A4" stroke="#D9B44A"/>
+  <circle cx="410" cy="195" r="9" fill="#DDD7F6" stroke="#9188D8"/>
+  <circle cx="435" cy="195" r="9" fill="#DDD7F6" stroke="#9188D8"/>
+  <circle cx="460" cy="195" r="9" fill="#DDD7F6" stroke="#9188D8"/>
+  <circle cx="422" cy="175" r="9" fill="#DDD7F6" stroke="#9188D8"/>
+  <circle cx="448" cy="175" r="9" fill="#DDD7F6" stroke="#9188D8"/>
   <text x="435" y="140" class="c sub">桶满后不再放入</text>
-  <rect x="513" y="143" width="80" height="30" rx="6" class="shadow"/>
+  <rect x="512" y="142" width="80" height="30" rx="6" class="shadow"/>
   <rect x="510" y="140" width="80" height="30" rx="6" fill="#B0E3E6"/>
   <text x="550" y="159.5" class="b c">请求</text>
   <line x1="507" y1="165" x2="470" y2="190" class="arrow "/>
