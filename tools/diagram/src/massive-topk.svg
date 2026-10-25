@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="312" viewBox="0 0 720 312">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -53,7 +53,7 @@
   <line x1="342" y1="62" x2="342" y2="92" stroke="#BBB" stroke-width="0.8"/>
   <text x="368" y="80" class="sub">HashMap 计数</text>
   <line x1="272" y1="77" x2="316" y2="77" class="arrow "/>
-  <rect x="470" y="66" width="48" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="470" y="66" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="494" y="81" class="c sub">前 10</text>
   <line x1="452" y1="77" x2="466" y2="77" class="arrow "/>
   <line x1="520" y1="77" x2="586" y2="150" class="arrow "/>
@@ -70,7 +70,7 @@
   <line x1="342" y1="132" x2="342" y2="162" stroke="#BBB" stroke-width="0.8"/>
   <text x="368" y="150" class="sub">HashMap 计数</text>
   <line x1="272" y1="147" x2="316" y2="147" class="arrow "/>
-  <rect x="470" y="136" width="48" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="470" y="136" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="494" y="151" class="c sub">前 10</text>
   <line x1="452" y1="147" x2="466" y2="147" class="arrow "/>
   <line x1="520" y1="147" x2="586" y2="150" class="arrow "/>
@@ -87,24 +87,24 @@
   <line x1="342" y1="222" x2="342" y2="252" stroke="#BBB" stroke-width="0.8"/>
   <text x="368" y="240" class="sub">HashMap 计数</text>
   <line x1="272" y1="237" x2="316" y2="237" class="arrow "/>
-  <rect x="470" y="226" width="48" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="470" y="226" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="494" y="241" class="c sub">前 10</text>
   <line x1="452" y1="237" x2="466" y2="237" class="arrow "/>
   <line x1="520" y1="237" x2="586" y2="150" class="arrow "/>
   <text x="204" y="196" class="c b">⋮</text>
-  <line x1="630" y1="126" x2="608" y2="148" stroke="#78BFC4" stroke-width="1.2"/>
-  <line x1="630" y1="126" x2="652" y2="148" stroke="#78BFC4" stroke-width="1.2"/>
-  <line x1="608" y1="148" x2="597" y2="170" stroke="#78BFC4" stroke-width="1.2"/>
-  <line x1="608" y1="148" x2="619" y2="170" stroke="#78BFC4" stroke-width="1.2"/>
-  <line x1="652" y1="148" x2="641" y2="170" stroke="#78BFC4" stroke-width="1.2"/>
-  <line x1="652" y1="148" x2="663" y2="170" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="630" cy="126" r="8" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
-  <circle cx="608" cy="148" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="652" cy="148" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="597" cy="170" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="619" cy="170" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="641" cy="170" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <circle cx="663" cy="170" r="7" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <line x1="630" y1="126" x2="608" y2="148" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="630" y1="126" x2="652" y2="148" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="608" y1="148" x2="597" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="608" y1="148" x2="619" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="652" y1="148" x2="641" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="652" y1="148" x2="663" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="630" cy="126" r="8" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="608" cy="148" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="652" cy="148" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="597" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="619" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="641" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="663" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
   <text x="630" y="196" class="c b">小顶堆</text>
   <text x="630" y="212" class="c sub">全局前 10</text>
   <text x="204" y="278" class="c sub">① 约 1 GB / 份</text>
