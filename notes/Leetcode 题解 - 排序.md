@@ -24,7 +24,7 @@
 
 堆也可以用于求解 Kth Element 问题，得到了大小为 K 的小顶堆之后，堆顶元素就是第 K 大的元素。同理，求 K 个最小元素或者第 K 小的元素时使用大顶堆。
 
-快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有小于等于 Kth Element 的元素都是 TopK Elements。
+快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有大于等于 Kth Element 的元素都是 TopK Elements。
 
 可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
 
