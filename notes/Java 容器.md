@@ -754,6 +754,8 @@ new capacity : 00100000
 - 为 0，那么 hash%00010000 = hash%00100000，桶位置和原来一致；
 - 为 1，hash%00100000 = hash%00010000 + 16，桶位置是原位置 + 16。
 
+<div align="center"> <img src="pics/hashmap-resize.png" width="560px"/> </div><br>
+
 #### 7. 计算数组容量
 
 HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它可以自动地将传入的容量转换为 2 的 n 次方。
