@@ -1,87 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="690" height="330" viewBox="0 0 690 330">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="345" y="28" class="title">多 Agent：主从模式</text>
-  <line x1="336" y1="55" x2="336" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="322" y1="69" x2="368" y2="69" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="345" y1="55" x2="345" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="322" y1="78" x2="368" y2="78" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="354" y1="55" x2="354" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="322" y1="87" x2="368" y2="87" stroke="#78BFC4" stroke-width="1.6"/>
-  <rect x="327" y="60" width="36" height="36" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <rect x="337.08" y="70.08" width="15.84" height="15.84" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <line x1="336" y1="55" x2="336" y2="101" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="322" y1="69" x2="368" y2="69" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="345" y1="55" x2="345" y2="101" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="322" y1="78" x2="368" y2="78" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="354" y1="55" x2="354" y2="101" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="322" y1="87" x2="368" y2="87" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="327" y="60" width="36" height="36" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="337.08" y="70.08" width="15.84" height="15.84" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
   <text x="376" y="74" class="b">主 Agent</text>
   <text x="376" y="92" class="sub">拆分任务、汇总结果，上下文中只有任务和结论</text>
-  <line x1="107.5" y1="164" x2="107.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="95" y1="176.5" x2="135" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="115" y1="164" x2="115" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="95" y1="184" x2="135" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="122.5" y1="164" x2="122.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="95" y1="191.5" x2="135" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <rect x="100" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <rect x="108.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <line x1="107.5" y1="164" x2="107.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="95" y1="176.5" x2="135" y2="176.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="115" y1="164" x2="115" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="95" y1="184" x2="135" y2="184" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="122.5" y1="164" x2="122.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="95" y1="191.5" x2="135" y2="191.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="100" y="169" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="108.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
   <text x="115" y="224" class="c b">子 Agent：调研厂商 A</text>
   <rect x="35" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
-  <rect x="35" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <rect x="35" y="236" width="128" height="12" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="115" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
   <text x="115" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
   <line x1="310.4" y1="102" x2="108" y2="162" class="arrow "/>
   <line x1="122" y1="162" x2="324.4" y2="102" class="arrow green"/>
-  <line x1="337.5" y1="164" x2="337.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="325" y1="176.5" x2="365" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="345" y1="164" x2="345" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="325" y1="184" x2="365" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="352.5" y1="164" x2="352.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="325" y1="191.5" x2="365" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <rect x="330" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <rect x="338.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <line x1="337.5" y1="164" x2="337.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="325" y1="176.5" x2="365" y2="176.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="345" y1="164" x2="345" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="325" y1="184" x2="365" y2="184" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="352.5" y1="164" x2="352.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="325" y1="191.5" x2="365" y2="191.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="330" y="169" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="338.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
   <text x="345" y="224" class="c b">子 Agent：调研厂商 B</text>
   <rect x="265" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
-  <rect x="265" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <rect x="265" y="236" width="128" height="12" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="345" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
   <text x="345" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
   <line x1="338" y1="102" x2="338" y2="162" class="arrow "/>
   <line x1="352" y1="162" x2="352" y2="102" class="arrow green"/>
-  <line x1="567.5" y1="164" x2="567.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="555" y1="176.5" x2="595" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="575" y1="164" x2="575" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="555" y1="184" x2="595" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="582.5" y1="164" x2="582.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
-  <line x1="555" y1="191.5" x2="595" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
-  <rect x="560" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
-  <rect x="568.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <line x1="567.5" y1="164" x2="567.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="555" y1="176.5" x2="595" y2="176.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="575" y1="164" x2="575" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="555" y1="184" x2="595" y2="184" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="582.5" y1="164" x2="582.5" y2="204" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="555" y1="191.5" x2="595" y2="191.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="560" y="169" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="568.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
   <text x="575" y="224" class="c b">子 Agent：调研厂商 C</text>
   <rect x="495" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
-  <rect x="495" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <rect x="495" y="236" width="128" height="12" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="575" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
   <text x="575" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
   <line x1="365.6" y1="102" x2="568" y2="162" class="arrow "/>

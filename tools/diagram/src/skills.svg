@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="690" height="320" viewBox="0 0 690 320">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -35,7 +35,7 @@
   <rect x="30" y="70" width="380" height="92" rx="4" fill="#FFFFFF" stroke="#BBB"/>
   <text x="40" y="88" class="sub">① 启动时：每个 Skill 只加载名称和描述，约 100 Token</text>
   <text x="40" y="111" class="sub">pdf-processing：提取 PDF 中的文字和表格……</text>
-  <rect x="36" y="117" width="368" height="19" fill="#DDD7F6" opacity="0.6"/>
+  <rect x="36" y="117" width="368" height="19" fill="#E6E3FA" opacity="0.6" stroke="#B8B0DE"/>
   <text x="40" y="131" class="sub">weekly-report：按团队模板生成周报，用户要求写周报时使用</text>
   <text x="40" y="151" class="sub">sql-review：检查 SQL 的性能和规范……</text>
   <rect x="30" y="176" width="380" height="50" rx="4" fill="#FFFFFF" stroke="#BBB"/>
@@ -44,8 +44,7 @@
   <rect x="30" y="240" width="380" height="50" rx="4" fill="#FFFFFF" stroke="#BBB"/>
   <text x="40" y="260" class="sub">③ 按需读取模板、运行脚本：</text>
   <text x="40" y="280" class="sub">脚本的代码不进入上下文，只有运行结果进入</text>
-  <rect x="462" y="72" width="210" height="150" rx="6" class="shadow"/>
-  <rect x="460" y="70" width="210" height="150" rx="6" fill="#B1DDF0"/>
+  <rect x="460" y="70" width="210" height="150" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="472" y="92" class="b mono">weekly-report/</text>
   <text x="484" y="120" class="sub mono">SKILL.md</text>
   <text x="484" y="136" class="sub">名称、描述和操作步骤</text>
