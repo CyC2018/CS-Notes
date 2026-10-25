@@ -33,35 +33,60 @@
   <text x="330" y="28" class="title">MCP 的组成</text>
   <rect x="15" y="50" width="250" height="240" rx="8" class="frame"/>
   <text x="25" y="68" class="b">主机 Host（AI 应用）</text>
-  <rect x="47" y="87" width="190" height="40" rx="6" class="shadow"/>
-  <rect x="45" y="85" width="190" height="40" rx="6" fill="#B0E3E6"/>
-  <text x="140" y="109.5" class="b c">大模型</text>
-  <rect x="47" y="167" width="190" height="36" rx="6" class="shadow"/>
-  <rect x="45" y="165" width="190" height="36" rx="6" fill="#B1DDF0"/>
-  <text x="140" y="187.5" class="b c">客户端 Client A</text>
-  <rect x="47" y="237" width="190" height="36" rx="6" class="shadow"/>
-  <rect x="45" y="235" width="190" height="36" rx="6" fill="#B1DDF0"/>
+  <line x1="131" y1="85" x2="131" y2="131" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="117" y1="99" x2="163" y2="99" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="140" y1="85" x2="140" y2="131" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="117" y1="108" x2="163" y2="108" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="149" y1="85" x2="149" y2="131" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="117" y1="117" x2="163" y2="117" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="122" y="90" width="36" height="36" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="132.08" y="100.08" width="15.84" height="15.84" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="170" y="104" class="b">大模型</text>
+  <rect x="45" y="170" width="190" height="34" rx="6" fill="#B1DDF0"/>
+  <text x="140" y="191.5" class="b c">客户端 Client A</text>
+  <rect x="45" y="236" width="190" height="34" rx="6" fill="#B1DDF0"/>
   <text x="140" y="257.5" class="b c">客户端 Client B</text>
-  <line x1="125" y1="129" x2="125" y2="161" class="arrow"/>
-  <line x1="155" y1="161" x2="155" y2="129" class="arrow"/>
-  <text x="118" y="149" class="e sub">选择工具</text>
-  <text x="162" y="149" class="sub">调用结果</text>
-  <rect x="422" y="102" width="220" height="92" rx="6" class="shadow"/>
-  <rect x="420" y="100" width="220" height="92" rx="6" fill="#B1DDF0"/>
-  <text x="530" y="122" class="c b">服务端 Server：文件系统</text>
-  <text x="530" y="142" class="c sub">本地进程</text>
-  <text x="530" y="164" class="c sub mono">read_file、write_file、list_dir</text>
-  <text x="530" y="181" class="c sub">Tools、Resources、Prompts</text>
-  <line x1="238" y1="172" x2="416" y2="135" class="arrow "/>
-  <text x="322" y="138" class="c sub">① tools/list 获取工具列表</text>
-  <line x1="238" y1="192" x2="416" y2="175" class="arrow "/>
-  <text x="330" y="202" class="c sub">② tools/call 调用</text>
-  <text x="330" y="168" class="c b">stdio</text>
-  <rect x="422" y="232" width="220" height="52" rx="6" class="shadow"/>
-  <rect x="420" y="230" width="220" height="52" rx="6" fill="#B1DDF0"/>
-  <text x="530" y="254" class="b c">服务端 Server：GitHub</text>
-  <text x="530" y="269" class="sub c">远程服务</text>
-  <line x1="238" y1="253" x2="416" y2="256" class="arrow "/>
-  <text x="327" y="246" class="c b">Streamable HTTP</text>
-  <text x="330" y="312" class="c sub">消息使用 JSON-RPC 2.0；一个客户端只连接一个服务端</text>
+  <line x1="125" y1="132" x2="125" y2="166" class="arrow"/>
+  <line x1="155" y1="166" x2="155" y2="132" class="arrow"/>
+  <text x="118" y="152" class="e sub">选择工具</text>
+  <text x="162" y="152" class="sub">调用结果</text>
+  <rect x="420" y="70" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="76.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="76.5" x2="453" y2="76.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="420" y="86" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="92.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="92.5" x2="453" y2="92.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="420" y="102" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="108.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="108.5" x2="453" y2="108.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="470" y="82" class="b">服务端：文件系统</text>
+  <text x="470" y="100" class="sub">本地进程</text>
+  <rect x="418" y="128" width="68" height="22" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="452" y="143.5" class="c sub mono">read_file</text>
+  <rect x="492" y="128" width="68" height="22" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="526" y="143.5" class="c sub mono">write_file</text>
+  <rect x="566" y="128" width="68" height="22" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="600" y="143.5" class="c sub mono">list_dir</text>
+  <text x="530" y="168" class="c sub">Tools、Resources、Prompts</text>
+  <rect x="420" y="220" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="226.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="226.5" x2="453" y2="226.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="420" y="236" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="242.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="242.5" x2="453" y2="242.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="420" y="252" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="427" cy="258.5" r="2" fill="#7FB4D0"/>
+  <line x1="434" y1="258.5" x2="453" y2="258.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="470" y="232" class="b">服务端：GitHub</text>
+  <text x="470" y="250" class="sub">远程服务</text>
+  <line x1="238" y1="180" x2="412" y2="112" class="arrow "/>
+  <text x="316" y="126" class="c mono sub">① tools/list</text>
+  <text x="316" y="141" class="c sub">获取工具列表</text>
+  <line x1="238" y1="194" x2="412" y2="140" class="arrow "/>
+  <text x="332" y="184" class="c mono sub">② tools/call</text>
+  <text x="332" y="199" class="c sub">name + arguments</text>
+  <text x="380" y="108" class="c b">stdio</text>
+  <line x1="238" y1="253" x2="412" y2="244" class="arrow "/>
+  <text x="325" y="238" class="c b">Streamable HTTP</text>
+  <text x="330" y="316" class="c sub">消息使用 JSON-RPC 2.0；一个客户端只连接一个服务端</text>
 </svg>

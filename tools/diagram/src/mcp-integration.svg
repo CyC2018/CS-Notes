@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="250" viewBox="0 0 640 250">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="260" viewBox="0 0 640 260">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,50 +31,96 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="320" y="28" class="title">MCP 把 M × N 的适配变成 M + N</text>
-  <text x="160" y="60" class="c b">没有统一协议</text>
-  <rect x="30" y="75" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="70" y="95.5" class="b c">IDE</text>
-  <rect x="30" y="125" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="70" y="145.5" class="b c">聊天应用</text>
-  <rect x="30" y="175" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="70" y="195.5" class="b c">自研 Agent</text>
-  <rect x="210" y="75" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="250" y="95.5" class="b c">GitHub</text>
-  <rect x="210" y="125" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="250" y="145.5" class="b c">数据库</text>
-  <rect x="210" y="175" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="250" y="195.5" class="b c">文件系统</text>
-  <line x1="112" y1="91" x2="208" y2="91" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="91" x2="208" y2="141" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="91" x2="208" y2="191" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="141" x2="208" y2="91" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="141" x2="208" y2="141" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="141" x2="208" y2="191" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="191" x2="208" y2="91" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="191" x2="208" y2="141" stroke="#C0605A" stroke-width="1"/>
-  <line x1="112" y1="191" x2="208" y2="191" stroke="#C0605A" stroke-width="1"/>
-  <text x="160" y="235" class="c note">每个应用分别适配每个工具：3 × 3 = 9 份</text>
-  <line x1="320" y1="55" x2="320" y2="240" stroke="#DDD"/>
-  <text x="480" y="60" class="c b">使用 MCP</text>
-  <rect x="345" y="75" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="385" y="95.5" class="b c">IDE</text>
-  <line x1="427" y1="91" x2="457" y2="91" class="arrow "/>
-  <rect x="345" y="125" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="385" y="145.5" class="b c">聊天应用</text>
-  <line x1="427" y1="141" x2="457" y2="141" class="arrow "/>
-  <rect x="345" y="175" width="80" height="32" rx="6" fill="#B0E3E6"/>
-  <text x="385" y="195.5" class="b c">自研 Agent</text>
-  <line x1="427" y1="191" x2="457" y2="191" class="arrow "/>
-  <rect x="461" y="75" width="36" height="132" rx="6" fill="#DDD7F6"/>
-  <text x="479" y="145" class="c b" transform="rotate(-90 479 141)">MCP</text>
-  <rect x="535" y="75" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="575" y="95.5" class="b c">GitHub</text>
-  <line x1="531" y1="91" x2="501" y2="91" class="arrow "/>
-  <rect x="535" y="125" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="575" y="145.5" class="b c">数据库</text>
-  <line x1="531" y1="141" x2="501" y2="141" class="arrow "/>
-  <rect x="535" y="175" width="80" height="32" rx="6" fill="#B1DDF0"/>
-  <text x="575" y="195.5" class="b c">文件系统</text>
-  <line x1="531" y1="191" x2="501" y2="191" class="arrow "/>
-  <text x="480" y="235" class="c ok">应用实现客户端，工具实现服务端：3 + 3 = 6 份</text>
+  <text x="160" y="56" class="c b">没有统一协议</text>
+  <rect x="20" y="70" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="20" y1="80" x2="104" y2="80" stroke="#BBBBBB"/>
+  <circle cx="27" cy="75" r="1.6" fill="#BBBBBB"/>
+  <circle cx="33" cy="75" r="1.6" fill="#BBBBBB"/>
+  <circle cx="39" cy="75" r="1.6" fill="#BBBBBB"/>
+  <text x="62" y="98" class="c sub">IDE</text>
+  <rect x="194" y="74" width="32" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="201" cy="80.5" r="2" fill="#7FB4D0"/>
+  <line x1="208" y1="80.5" x2="219" y2="80.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="194" y="90" width="32" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="201" cy="96.5" r="2" fill="#7FB4D0"/>
+  <line x1="208" y1="96.5" x2="219" y2="96.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="234" y="94" class="sub">GitHub</text>
+  <rect x="20" y="128" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="20" y1="138" x2="104" y2="138" stroke="#BBBBBB"/>
+  <circle cx="27" cy="133" r="1.6" fill="#BBBBBB"/>
+  <circle cx="33" cy="133" r="1.6" fill="#BBBBBB"/>
+  <circle cx="39" cy="133" r="1.6" fill="#BBBBBB"/>
+  <text x="62" y="156" class="c sub">聊天应用</text>
+  <path d="M194,136 v22 a16,6 0 0 0 32,0 v-22" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <ellipse cx="210" cy="136" rx="16" ry="6" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M194,147 a16,6 0 0 0 32,0" fill="none" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="234" y="152" class="sub">数据库</text>
+  <rect x="20" y="186" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="20" y1="196" x2="104" y2="196" stroke="#BBBBBB"/>
+  <circle cx="27" cy="191" r="1.6" fill="#BBBBBB"/>
+  <circle cx="33" cy="191" r="1.6" fill="#BBBBBB"/>
+  <circle cx="39" cy="191" r="1.6" fill="#BBBBBB"/>
+  <text x="62" y="214" class="c sub">自研 Agent</text>
+  <path d="M197,188 h17 l9,9 v25 h-26 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M214,188 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="203" y1="205" x2="216" y2="205" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="203" y1="212" x2="216" y2="212" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="203" y1="219" x2="216" y2="219" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="234" y="210" class="sub">文件系统</text>
+  <line x1="106" y1="88" x2="190" y2="88" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="88" x2="190" y2="146" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="88" x2="190" y2="204" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="146" x2="190" y2="88" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="146" x2="190" y2="146" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="146" x2="190" y2="204" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="204" x2="190" y2="88" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="204" x2="190" y2="146" stroke="#C0605A" stroke-width="1"/>
+  <line x1="106" y1="204" x2="190" y2="204" stroke="#C0605A" stroke-width="1"/>
+  <text x="160" y="246" class="c note">每个应用分别适配每个工具：3 × 3 = 9 份</text>
+  <line x1="320" y1="50" x2="320" y2="250" stroke="#DDD"/>
+  <text x="480" y="56" class="c b">使用 MCP</text>
+  <rect x="340" y="70" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="340" y1="80" x2="424" y2="80" stroke="#BBBBBB"/>
+  <circle cx="347" cy="75" r="1.6" fill="#BBBBBB"/>
+  <circle cx="353" cy="75" r="1.6" fill="#BBBBBB"/>
+  <circle cx="359" cy="75" r="1.6" fill="#BBBBBB"/>
+  <text x="382" y="98" class="c sub">IDE</text>
+  <line x1="426" y1="88" x2="446" y2="88" class="arrow "/>
+  <rect x="544" y="74" width="32" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="551" cy="80.5" r="2" fill="#7FB4D0"/>
+  <line x1="558" y1="80.5" x2="569" y2="80.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="544" y="90" width="32" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="551" cy="96.5" r="2" fill="#7FB4D0"/>
+  <line x1="558" y1="96.5" x2="569" y2="96.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="584" y="94" class="sub">GitHub</text>
+  <line x1="540" y1="88" x2="494" y2="88" class="arrow "/>
+  <rect x="340" y="128" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="340" y1="138" x2="424" y2="138" stroke="#BBBBBB"/>
+  <circle cx="347" cy="133" r="1.6" fill="#BBBBBB"/>
+  <circle cx="353" cy="133" r="1.6" fill="#BBBBBB"/>
+  <circle cx="359" cy="133" r="1.6" fill="#BBBBBB"/>
+  <text x="382" y="156" class="c sub">聊天应用</text>
+  <line x1="426" y1="146" x2="446" y2="146" class="arrow "/>
+  <path d="M544,136 v22 a16,6 0 0 0 32,0 v-22" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <ellipse cx="560" cy="136" rx="16" ry="6" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M544,147 a16,6 0 0 0 32,0" fill="none" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="584" y="152" class="sub">数据库</text>
+  <line x1="540" y1="146" x2="494" y2="146" class="arrow "/>
+  <rect x="340" y="186" width="84" height="36" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="340" y1="196" x2="424" y2="196" stroke="#BBBBBB"/>
+  <circle cx="347" cy="191" r="1.6" fill="#BBBBBB"/>
+  <circle cx="353" cy="191" r="1.6" fill="#BBBBBB"/>
+  <circle cx="359" cy="191" r="1.6" fill="#BBBBBB"/>
+  <text x="382" y="214" class="c sub">自研 Agent</text>
+  <line x1="426" y1="204" x2="446" y2="204" class="arrow "/>
+  <path d="M547,188 h17 l9,9 v25 h-26 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M564,188 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="553" y1="205" x2="566" y2="205" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="553" y1="212" x2="566" y2="212" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="553" y1="219" x2="566" y2="219" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="584" y="210" class="sub">文件系统</text>
+  <line x1="540" y1="204" x2="494" y2="204" class="arrow "/>
+  <rect x="450" y="70" width="40" height="152" rx="6" fill="#DDD7F6"/>
+  <text x="470" y="150" class="c b" transform="rotate(-90 470 146)">MCP</text>
+  <text x="480" y="246" class="c ok">应用实现客户端，工具实现服务端：3 + 3 = 6 份</text>
 </svg>

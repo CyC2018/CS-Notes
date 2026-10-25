@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="690" height="320" viewBox="0 0 690 320">
+<svg xmlns="http://www.w3.org/2000/svg" width="690" height="330" viewBox="0 0 690 330">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,36 +31,62 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="345" y="28" class="title">多 Agent：主从模式</text>
-  <rect x="32" y="52" width="630" height="50" rx="6" class="shadow"/>
-  <rect x="30" y="50" width="630" height="50" rx="6" fill="#B0E3E6"/>
-  <text x="345" y="73" class="b c">主 Agent</text>
-  <text x="345" y="88" class="sub c">拆分任务、汇总结果，上下文中只有任务和结论</text>
-  <rect x="32" y="162" width="190" height="40" rx="6" class="shadow"/>
-  <rect x="30" y="160" width="190" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="125" y="184.5" class="b c">子 Agent：调研厂商 A</text>
-  <rect x="30" y="214" width="190" height="52" rx="4" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="40" y="234" class="sub">读取 30 个网页、反复搜索</text>
-  <text x="40" y="252" class="sub">自己的上下文用了 8 万 Token</text>
-  <line x1="85" y1="104" x2="85" y2="156" class="arrow "/>
-  <line x1="165" y1="156" x2="165" y2="104" class="arrow green"/>
-  <text x="79" y="134" class="e sub">子任务</text>
-  <text x="171" y="134" class="ok">约 1500 Token</text>
-  <text x="171" y="150" class="ok">的结论</text>
-  <rect x="252" y="162" width="190" height="40" rx="6" class="shadow"/>
-  <rect x="250" y="160" width="190" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="345" y="184.5" class="b c">子 Agent：调研厂商 B</text>
-  <rect x="250" y="214" width="190" height="52" rx="4" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="260" y="234" class="sub">读取 30 个网页、反复搜索</text>
-  <text x="260" y="252" class="sub">自己的上下文用了 8 万 Token</text>
-  <line x1="305" y1="104" x2="305" y2="156" class="arrow "/>
-  <line x1="385" y1="156" x2="385" y2="104" class="arrow green"/>
-  <rect x="472" y="162" width="190" height="40" rx="6" class="shadow"/>
-  <rect x="470" y="160" width="190" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="565" y="184.5" class="b c">子 Agent：调研厂商 C</text>
-  <rect x="470" y="214" width="190" height="52" rx="4" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="480" y="234" class="sub">读取 30 个网页、反复搜索</text>
-  <text x="480" y="252" class="sub">自己的上下文用了 8 万 Token</text>
-  <line x1="525" y1="104" x2="525" y2="156" class="arrow "/>
-  <line x1="605" y1="156" x2="605" y2="104" class="arrow green"/>
-  <text x="345" y="296" class="c sub">子 Agent 的中间过程不进入主 Agent 的上下文；代价是 Token 消耗成倍增加</text>
+  <line x1="336" y1="55" x2="336" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="322" y1="69" x2="368" y2="69" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="345" y1="55" x2="345" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="322" y1="78" x2="368" y2="78" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="354" y1="55" x2="354" y2="101" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="322" y1="87" x2="368" y2="87" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="327" y="60" width="36" height="36" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="337.08" y="70.08" width="15.84" height="15.84" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="376" y="74" class="b">主 Agent</text>
+  <text x="376" y="92" class="sub">拆分任务、汇总结果，上下文中只有任务和结论</text>
+  <line x1="107.5" y1="164" x2="107.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="95" y1="176.5" x2="135" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="115" y1="164" x2="115" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="95" y1="184" x2="135" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="122.5" y1="164" x2="122.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="95" y1="191.5" x2="135" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="100" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="108.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="115" y="224" class="c b">子 Agent：调研厂商 A</text>
+  <rect x="35" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
+  <rect x="35" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <text x="115" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
+  <text x="115" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
+  <line x1="310.4" y1="102" x2="108" y2="162" class="arrow "/>
+  <line x1="122" y1="162" x2="324.4" y2="102" class="arrow green"/>
+  <line x1="337.5" y1="164" x2="337.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="325" y1="176.5" x2="365" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="345" y1="164" x2="345" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="325" y1="184" x2="365" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="352.5" y1="164" x2="352.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="325" y1="191.5" x2="365" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="330" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="338.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="345" y="224" class="c b">子 Agent：调研厂商 B</text>
+  <rect x="265" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
+  <rect x="265" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <text x="345" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
+  <text x="345" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
+  <line x1="338" y1="102" x2="338" y2="162" class="arrow "/>
+  <line x1="352" y1="162" x2="352" y2="102" class="arrow green"/>
+  <line x1="567.5" y1="164" x2="567.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="555" y1="176.5" x2="595" y2="176.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="575" y1="164" x2="575" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="555" y1="184" x2="595" y2="184" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="582.5" y1="164" x2="582.5" y2="204" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="555" y1="191.5" x2="595" y2="191.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="560" y="169" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="568.4" y="177.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="575" y="224" class="c b">子 Agent：调研厂商 C</text>
+  <rect x="495" y="236" width="160" height="12" rx="6" fill="#F2F2F2" stroke="#DDD"/>
+  <rect x="495" y="236" width="128" height="12" rx="6" fill="#B0E3E6"/>
+  <text x="575" y="266" class="c sub">读取 30 个网页、反复搜索，</text>
+  <text x="575" y="282" class="c sub">自己的上下文用了 8 万 Token</text>
+  <line x1="365.6" y1="102" x2="568" y2="162" class="arrow "/>
+  <line x1="582" y1="162" x2="379.6" y2="102" class="arrow green"/>
+  <text x="331" y="138" class="e sub">子任务</text>
+  <text x="362" y="160" class="ok">约 1500 Token 的结论</text>
+  <text x="345" y="316" class="c sub">子 Agent 的中间过程不进入主 Agent 的上下文；代价是 Token 消耗成倍增加</text>
 </svg>
