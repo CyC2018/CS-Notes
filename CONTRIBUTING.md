@@ -31,6 +31,8 @@
 git config core.hooksPath tools/hooks
 ```
 
+PR 中新增或修改的配图如果没有水印，GitHub Actions 的“配图水印检查”会失败并给出提示。
+
 也可以手动执行，依赖 Pillow：
 
 ```bash
