@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="300" viewBox="0 0 680 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">工作流与 Agent</text>
+  <rect x="15" y="45" width="320" height="240" rx="8" class="frame"/>
+  <text x="25" y="63" class="b">工作流：代码决定步骤</text>
+  <rect x="25" y="140" width="70" height="36" rx="6" fill="#DDD7F6"/>
+  <text x="60" y="162.5" class="b c">用户消息</text>
+  <rect x="122" y="138" width="80" height="44" rx="6" class="shadow"/>
+  <rect x="120" y="136" width="80" height="44" rx="6" fill="#B0E3E6"/>
+  <text x="160" y="156" class="b c">大模型</text>
+  <text x="160" y="171" class="sub c">分类</text>
+  <line x1="98" y1="158" x2="116" y2="158" class="arrow "/>
+  <rect x="247" y="82" width="78" height="36" rx="6" class="shadow"/>
+  <rect x="245" y="80" width="78" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="284" y="102.5" class="b c">退款流程</text>
+  <line x1="204" y1="158" x2="241" y2="98" class="arrow "/>
+  <text x="226" y="88" class="c sub">退款</text>
+  <rect x="247" y="142" width="78" height="36" rx="6" class="shadow"/>
+  <rect x="245" y="140" width="78" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="284" y="162.5" class="b c">物流查询</text>
+  <line x1="204" y1="158" x2="241" y2="158" class="arrow "/>
+  <text x="226" y="152" class="c sub">物流</text>
+  <rect x="247" y="202" width="78" height="36" rx="6" class="shadow"/>
+  <rect x="245" y="200" width="78" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="284" y="222.5" class="b c">转人工</text>
+  <line x1="204" y1="158" x2="241" y2="218" class="arrow "/>
+  <text x="226" y="236" class="c sub">其它</text>
+  <text x="175" y="268" class="c ok">可预测、成本可控</text>
+  <rect x="350" y="45" width="315" height="240" rx="8" class="frame"/>
+  <text x="360" y="63" class="b">Agent：大模型决定下一步</text>
+  <rect x="457" y="132" width="100" height="44" rx="6" class="shadow"/>
+  <rect x="455" y="130" width="100" height="44" rx="6" fill="#B0E3E6"/>
+  <text x="505" y="150" class="b c">大模型</text>
+  <text x="505" y="165" class="sub c">循环决策</text>
+  <rect x="382" y="72" width="90" height="32" rx="6" class="shadow"/>
+  <rect x="380" y="70" width="90" height="32" rx="6" fill="#B1DDF0"/>
+  <text x="425" y="90.5" class="b c">查订单</text>
+  <line x1="455" y1="140" x2="445" y2="102" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="562" y="72" width="90" height="32" rx="6" class="shadow"/>
+  <rect x="560" y="70" width="90" height="32" rx="6" fill="#B1DDF0"/>
+  <text x="605" y="90.5" class="b c">查物流</text>
+  <line x1="555" y1="140" x2="585" y2="102" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="382" y="207" width="90" height="32" rx="6" class="shadow"/>
+  <rect x="380" y="205" width="90" height="32" rx="6" fill="#B1DDF0"/>
+  <text x="425" y="225.5" class="b c">退款</text>
+  <line x1="455" y1="164" x2="445" y2="205" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="562" y="207" width="90" height="32" rx="6" class="shadow"/>
+  <rect x="560" y="205" width="90" height="32" rx="6" fill="#B1DDF0"/>
+  <text x="605" y="225.5" class="b c">转人工</text>
+  <line x1="555" y1="164" x2="585" y2="205" class="arrow dash" marker-start="url(#a)"/>
+  <text x="507" y="268" class="c note">灵活，但成本更高、错误会累积</text>
+</svg>

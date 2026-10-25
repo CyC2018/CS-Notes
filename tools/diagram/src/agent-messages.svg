@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="390" viewBox="0 0 720 390">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">Agent 每次调用模型时发送的消息</text>
+  <text x="130" y="58" class="c b">第 1 次调用</text>
+  <rect x="20" y="72" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="28" y="88" class="mono sub">system</text>
+  <text x="94" y="88" class="sub">系统提示词 + 工具列表</text>
+  <rect x="20" y="102" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="28" y="118" class="mono sub">user</text>
+  <text x="94" y="118" class="sub">订单 1024 到哪了？</text>
+  <line x1="130" y1="258" x2="130" y2="284" class="arrow "/>
+  <rect x="22" y="290" width="220" height="44" rx="6" class="shadow"/>
+  <rect x="20" y="288" width="220" height="44" rx="6" fill="#B0E3E6"/>
+  <text x="130" y="306" class="c sub">模型返回</text>
+  <text x="130" y="323" class="c sub">调用 query_order(1024)</text>
+  <text x="365" y="58" class="c b">第 2 次调用</text>
+  <rect x="255" y="72" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="263" y="88" class="mono sub">system</text>
+  <text x="329" y="88" class="sub">系统提示词 + 工具列表</text>
+  <rect x="255" y="102" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="263" y="118" class="mono sub">user</text>
+  <text x="329" y="118" class="sub">订单 1024 到哪了？</text>
+  <rect x="255" y="132" width="220" height="24" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="263" y="148" class="mono sub">assistant</text>
+  <text x="329" y="148" class="sub">调用 query_order(1024)</text>
+  <rect x="255" y="162" width="220" height="24" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="263" y="178" class="mono sub">tool</text>
+  <text x="329" y="178" class="sub">快递单号 SF123，已发货</text>
+  <line x1="365" y1="258" x2="365" y2="284" class="arrow "/>
+  <rect x="257" y="290" width="220" height="44" rx="6" class="shadow"/>
+  <rect x="255" y="288" width="220" height="44" rx="6" fill="#B0E3E6"/>
+  <text x="365" y="306" class="c sub">模型返回</text>
+  <text x="365" y="323" class="c sub">调用 track("SF123")</text>
+  <text x="600" y="58" class="c b">第 3 次调用</text>
+  <rect x="490" y="72" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="498" y="88" class="mono sub">system</text>
+  <text x="564" y="88" class="sub">系统提示词 + 工具列表</text>
+  <rect x="490" y="102" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="498" y="118" class="mono sub">user</text>
+  <text x="564" y="118" class="sub">订单 1024 到哪了？</text>
+  <rect x="490" y="132" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="498" y="148" class="mono sub">assistant</text>
+  <text x="564" y="148" class="sub">调用 query_order(1024)</text>
+  <rect x="490" y="162" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="498" y="178" class="mono sub">tool</text>
+  <text x="564" y="178" class="sub">快递单号 SF123，已发货</text>
+  <rect x="490" y="192" width="220" height="24" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="498" y="208" class="mono sub">assistant</text>
+  <text x="564" y="208" class="sub">调用 track("SF123")</text>
+  <rect x="490" y="222" width="220" height="24" rx="4" fill="#DDD7F6" stroke="#C8C8C8"/>
+  <text x="498" y="238" class="mono sub">tool</text>
+  <text x="564" y="238" class="sub">已到达杭州转运中心</text>
+  <line x1="600" y1="258" x2="600" y2="284" class="arrow "/>
+  <rect x="492" y="290" width="220" height="44" rx="6" class="shadow"/>
+  <rect x="490" y="288" width="220" height="44" rx="6" fill="#B0E3E6"/>
+  <text x="600" y="306" class="c sub">模型返回</text>
+  <text x="600" y="323" class="c b">订单已发货，目前在杭州转运中心</text>
+  <rect x="20" y="342" width="14" height="14" rx="2" fill="#DDD7F6"/>
+  <text x="40" y="353" class="sub">上一步新增的消息：模型的调用请求和应用执行工具的结果</text>
+  <text x="20" y="376" class="sub">模型不保存状态，每次都发送完整的历史；第 3 次模型不再请求调用工具，循环结束。</text>
+</svg>
