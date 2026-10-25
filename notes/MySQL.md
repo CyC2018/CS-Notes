@@ -5,6 +5,7 @@
         * [B+ Tree 原理](#b-tree-原理)
         * [MySQL 索引](#mysql-索引)
         * [索引优化](#索引优化)
+        * [索引失效](#索引失效)
         * [索引的优点](#索引的优点)
         * [索引的使用条件](#索引的使用条件)
     * [二、查询性能优化](#二查询性能优化)
@@ -28,6 +29,10 @@
     * [六、复制](#六复制)
         * [主从复制](#主从复制)
         * [读写分离](#读写分离)
+    * [七、日志](#七日志)
+        * [redo log](#redo-log)
+        * [binlog](#binlog)
+        * [两阶段提交](#两阶段提交)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -73,6 +78,8 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现，它具�
 ### MySQL 索引
 
 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。
+
+下面按数据结构介绍几种索引。按用途还可以分为主键索引、唯一索引、普通索引、联合索引和前缀索引；按叶子节点中存放的是整行还是主键，分为主索引（聚簇索引）和辅助索引（二级索引），见下文的 B+Tree 索引。
 
 #### 1. B+Tree 索引
 
@@ -177,6 +184,37 @@ customer_id_selectivity: 0.0373
 - 一些存储引擎（例如 MyISAM）在内存中只缓存索引，而数据依赖于操作系统来缓存。因此，只访问索引可以不使用系统调用（通常比较费时）。
 - 对于 InnoDB 引擎，若辅助索引能够覆盖查询，则无需访问主索引。
 
+### 索引失效
+
+索引失效指的是查询条件中有索引列，执行计划却没有使用这个索引，或者只用到了联合索引的一部分。下面在一张 200 万行的订单表 orders 上用 Explain 验证，表上有联合索引 idx_user_status_time(user_id, status, create_time)、单列索引 idx_create_time(create_time) 和 idx_order_no(order_no)，其中 order_no 是 VARCHAR 类型：
+
+| 查询条件 | type | 原因 |
+| --- | --- | --- |
+| `status = 1 AND create_time > '2025-01-20'` | ALL | 没有从联合索引最左边的 user_id 开始 |
+| `DATE(create_time) = '2025-01-12'` | ALL | 对索引列使用了函数 |
+| `order_no = 7007` | ALL | 字符串列与数字比较，发生了隐式类型转换 |
+| `order_no LIKE '%7007'` | ALL | 以 % 开头，无法利用索引的顺序 |
+| `user_id = 5 OR amount = 10.99` | ALL | OR 的一侧没有索引，仍然要扫描全表 |
+| `user_id != 5` | ALL | 几乎匹配所有行 |
+
+对应的写法：
+
+- 把函数改写为范围：`create_time >= '2025-01-12' AND create_time < '2025-01-13'`，type 变为 range；
+- 字符串列用字符串比较：`order_no = '7007'`，type 变为 ref。这是因为 '7007'、' 7007'、'7007a' 转换成数字后都等于 7007，没法按索引的顺序查找；反过来，整数列与字符串比较（`id = '1001'`）仍然走主键，因为被转换的是常量而不是列；
+- 只在右边模糊匹配：`LIKE '7007%'`，type 为 range；
+- OR 两侧的列都有索引时，可以分别扫描两个索引再合并结果，type 为 index_merge。
+
+联合索引中出现范围条件时，范围条件之后的列不能再用来缩小扫描的范围。Explain 的 key_len 表示用到了索引的前几列，user_id 为 INT，占 4 字节，status 为 TINYINT，占 1 字节，create_time 为 DATETIME，占 5 字节：
+
+```sql
+WHERE user_id = 5 AND status = 1 AND create_time > '2025-01-05'   -- key_len = 10，三列都用上了
+WHERE user_id = 5 AND status > 0 AND create_time > '2025-01-05'   -- key_len = 5，只用到前两列
+```
+
+不过第二条语句的 Extra 为 Using index condition，也就是索引下推：create_time 虽然不能缩小扫描范围，但仍然在索引上过滤，不满足条件的行不需要回表，所以范围条件之后的列并不是完全没有作用。
+
+需要注意的是，是否使用索引是优化器按成本估算决定的。走二级索引的每一行都要回表，匹配的行越多回表越多，超过一定比例后全表扫描反而更快：`create_time > '2025-01-23'` 匹配 9.9 万行，走 idx_create_time；`create_time > '2025-01-02'` 匹配 191 万行，就选择了全表扫描。IN 也一样，`user_id IN` 5 个值时走索引，3 万多个值时全表扫描。因此同一种写法有时走索引有时不走，可能是因为匹配的数据量不同。
+
 ### 索引的优点
 
 - 大大减少了服务器需要扫描的数据行数。
@@ -191,7 +229,11 @@ customer_id_selectivity: 0.0373
 
 - 对于中到大型的表，索引就非常有效；
 
-- 但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术。
+- 但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术；
+
+- 索引并不是越多越好：插入、删除数据和修改索引列时，要同时维护每个相关的索引，索引也要占用存储空间。在上面的 orders 表上插入 50 万行，没有二级索引时耗时 2.0 s，有 4 个二级索引时耗时 5.5 s，这 4 个索引占用 73 MB，而数据本身是 89 MB；
+
+- 适合建索引的是经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中，并且区分度高的列，区分度很低的列（例如只有几种取值的状态）单独建索引的作用不大。
 
 ## 二、查询性能优化
 
@@ -412,6 +454,65 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/master-slave-proxy.png" width=""> </div><br>
 
+## 七、日志
+
+InnoDB 执行一次修改时，会写下面三种日志：
+
+| 日志 | 由谁写 | 记录的内容 | 作用 |
+| --- | --- | --- | --- |
+| undo log | InnoDB | 修改前的旧版本 | 回滚事务，MVCC 读取旧版本 |
+| redo log | InnoDB | 对数据页的修改 | 崩溃恢复 |
+| binlog | Server 层 | 修改前后的整行（ROW 格式） | 主从复制，恢复到指定时间点 |
+
+undo log 的作用见 [多版本并发控制](数据库系统原理.md#五多版本并发控制)。
+
+### redo log
+
+InnoDB 以 16 KB 的页为单位存储数据，修改数据时先修改内存中缓存的页。如果每次提交都把修改过的页写回磁盘，修改几行数据就要随机写好几个 16 KB 的页。redo log 的做法是：提交时只把对数据页的修改顺序追加到 redo log 并刷盘，数据页之后再由后台线程批量写回。崩溃重启时重放 redo log 中还没有写回数据页的修改，已提交的事务就不会丢失。这种先写日志、后写数据的方式称为预写日志（Write-Ahead Logging, WAL）。
+
+innodb_flush_log_at_trx_commit 控制提交时 redo log 的刷盘方式：
+
+- 1（默认）：每次提交都写入并刷盘，已提交的事务不会丢失；
+- 2：每次提交都写入操作系统的缓存，每秒刷盘一次，MySQL 进程崩溃不会丢失数据，操作系统崩溃或者断电可能丢失最近 1 秒的事务；
+- 0：每秒写入并刷盘一次，MySQL 进程崩溃也可能丢失最近 1 秒的事务。
+
+redo log 的空间是固定的，循环写入：数据页写回磁盘之后，对应的 redo log 就可以被覆盖。MySQL 8.0.30 起由 innodb_redo_log_capacity 控制大小，默认为 100 MB。
+
+### binlog
+
+binlog 由 Server 层记录，与存储引擎无关，用于 [主从复制](#主从复制) 和把数据恢复到指定的时间点。MySQL 8.0 默认使用 ROW 格式，记录每一行修改前后的值。例如执行 UPDATE orders SET status = 3 WHERE id = 1024 后，用 mysqlbinlog 解析 binlog（省略了其它列）：
+
+```text
+### UPDATE `demo`.`orders`
+### WHERE
+###   @1=1024
+###   @4=0
+### SET
+###   @1=1024
+###   @4=3
+... Xid = 341
+COMMIT
+```
+
+redo log 与 binlog 的区别：
+
+- redo log 是 InnoDB 的日志，记录对数据页的修改，空间固定、循环写，用于崩溃恢复；
+- binlog 是 Server 层的日志，记录行的修改或者 SQL 语句，追加写、不会覆盖，可以发送给从库，也可以用来把数据恢复到任意时间点。
+
+### 两阶段提交
+
+一个事务既要写 redo log 又要写 binlog，如果只写成功了一个就崩溃，主库和从库的数据就会不一致。例如 redo log 写了而 binlog 没写，主库重启后保留了这次修改，从库却收不到。因此 MySQL 把提交分为两个阶段：
+
+<div align="center"> <img src="pics/mysql-2pc.png" width="720px"/> </div><br>
+
+1. prepare：写入 redo log 并刷盘，事务处于 prepare 状态；
+2. 写入 binlog 并刷盘，binlog 中记录了事务的 ID（Xid）；
+3. commit：在 redo log 中把事务标记为提交。
+
+崩溃重启时，对于处于 prepare 状态的事务，到 binlog 中查找它的 Xid：找到了说明 binlog 已经写完，就提交这个事务；找不到就回滚。这样主库的数据与 binlog 总是一致的，从库按照 binlog 复制，也就与主库一致。
+
+innodb_flush_log_at_trx_commit 和 sync_binlog 的默认值都是 1，也就是每次提交时两种日志都会刷盘，常被称为“双 1”配置。
+
 ## 参考资料
 
 - Baron Schwartz, Peter Zaitsev, Vadim Tkachenko, 等. 高性能 MySQL[M]. 电子工业出版社, 2013.
@@ -425,3 +526,6 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 - [How Sharding Works](https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6)
 - [大众点评订单系统分库分表实践](https://tech.meituan.com/dianping_order_db_sharding.html)
 - [B + 树](https://zh.wikipedia.org/wiki/B%2B%E6%A0%91)
+- [MySQL 8.0: Type Conversion in Expression Evaluation](https://dev.mysql.com/doc/refman/8.0/en/type-conversion.html)
+- [MySQL 8.0: Redo Log](https://dev.mysql.com/doc/refman/8.0/en/innodb-redo-log.html)
+- [MySQL 8.0: The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)

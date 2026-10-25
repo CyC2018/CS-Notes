@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">两阶段提交与崩溃恢复</text>
+  <rect x="10" y="64" width="124" height="60" rx="6" class="shadow"/>
+  <rect x="8" y="62" width="124" height="60" rx="6" fill="#E6E6E6"/>
+  <text x="70" y="90" class="b c">开始事务</text>
+  <text x="70" y="105" class="sub c">修改内存中的页</text>
+  <rect x="160" y="64" width="124" height="60" rx="6" class="shadow"/>
+  <rect x="158" y="62" width="124" height="60" rx="6" fill="#B1DDF0"/>
+  <text x="220" y="90" class="b c">① prepare</text>
+  <text x="220" y="105" class="sub c">写 redo log 并刷盘</text>
+  <rect x="340" y="64" width="124" height="60" rx="6" class="shadow"/>
+  <rect x="338" y="62" width="124" height="60" rx="6" fill="#B0E3E6"/>
+  <text x="400" y="90" class="b c">② 写 binlog</text>
+  <text x="400" y="105" class="sub c">含 Xid，刷盘</text>
+  <rect x="520" y="64" width="124" height="60" rx="6" class="shadow"/>
+  <rect x="518" y="62" width="124" height="60" rx="6" fill="#DDD7F6"/>
+  <text x="580" y="90" class="b c">③ commit</text>
+  <text x="580" y="105" class="sub c">redo log 标记提交</text>
+  <line x1="134" y1="92" x2="154" y2="92" class="arrow "/>
+  <line x1="284" y1="92" x2="334" y2="92" class="arrow "/>
+  <line x1="464" y1="92" x2="514" y2="92" class="arrow "/>
+  <line x1="310" y1="132" x2="310" y2="172" stroke="#C0605A" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="310" y="190" class="c note">崩溃 A</text>
+  <line x1="490" y1="132" x2="490" y2="172" stroke="#C0605A" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="490" y="190" class="c note">崩溃 B</text>
+  <rect x="200" y="210" width="220" height="54" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="310" y="232" class="c sub">redo log 处于 prepare，binlog 中没有 Xid</text>
+  <text x="310" y="252" class="c ok">重启后回滚，主从都没有这次修改</text>
+  <rect x="430" y="210" width="270" height="54" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="565" y="232" class="c sub">redo log 处于 prepare，binlog 中有 Xid</text>
+  <text x="565" y="252" class="c ok">重启后提交，从库也会通过 binlog 收到修改</text>
+  <line x1="310" y1="196" x2="310" y2="206" class="arrow "/>
+  <line x1="490" y1="196" x2="520" y2="206" class="arrow "/>
+</svg>
