@@ -7,6 +7,7 @@
     * [4. 第一个错误的版本](#4-第一个错误的版本)
     * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
     * [6. 查找区间](#6-查找区间)
+    * [7. 两个有序数组的中位数](#7-两个有序数组的中位数)
 <!-- GFM-TOC -->
 
 
@@ -314,3 +315,42 @@ nums = [2,2], target = 2
 ```
 
 如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findFirst 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3) ，我们希望返回 3 应该插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以我们需要将 h 取值为 nums.length，从而使得 findFirst 返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
+
+## 7. 两个有序数组的中位数
+
+4\. Median of Two Sorted Arrays (Hard)
+
+[Leetcode](https://leetcode.com/problems/median-of-two-sorted-arrays/) / [力扣](https://leetcode.cn/problems/median-of-two-sorted-arrays/)
+
+题目描述：求两个有序数组合并后的中位数，要求时间复杂度为 O(log(m + n))。
+
+把问题转化为求两个数组合并后第 k 小的数。比较两个数组各自的第 k / 2 个元素，较小的那个元素以及它前面的元素都不可能是第 k 小，可以一次排除，然后在剩下的部分里寻找第 k - 排除个数 小的数。k 每轮减半，时间复杂度为 O(log(m + n))。
+
+```java
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int total = nums1.length + nums2.length;
+    if (total % 2 == 1) {
+        return kth(nums1, 0, nums2, 0, total / 2 + 1);
+    }
+    return (kth(nums1, 0, nums2, 0, total / 2) + kth(nums1, 0, nums2, 0, total / 2 + 1)) / 2.0;
+}
+
+// nums1[i..] 和 nums2[j..] 合并后第 k 小的数，k 从 1 开始
+private int kth(int[] nums1, int i, int[] nums2, int j, int k) {
+    if (i == nums1.length) {
+        return nums2[j + k - 1];
+    }
+    if (j == nums2.length) {
+        return nums1[i + k - 1];
+    }
+    if (k == 1) {
+        return Math.min(nums1[i], nums2[j]);
+    }
+    int a = Math.min(i + k / 2, nums1.length) - 1;
+    int b = Math.min(j + k / 2, nums2.length) - 1;
+    if (nums1[a] <= nums2[b]) {
+        return kth(nums1, a + 1, nums2, j, k - (a - i + 1));
+    }
+    return kth(nums1, i, nums2, b + 1, k - (b - j + 1));
+}
+```
