@@ -309,7 +309,7 @@ private int findFirst(int[] nums, int target) {
 
 在寻找第一个位置的二分查找代码中，需要注意 h 的取值为 nums.length，而不是 nums.length - 1。先看以下示例：
 
-```
+```text
 nums = [2,2], target = 2
 ```
 
