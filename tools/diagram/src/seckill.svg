@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,42 +31,48 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="360" y="28" class="title">秒杀：层层过滤请求</text>
-  <rect x="22" y="70" width="96" height="56" rx="6" class="shadow"/>
-  <rect x="20" y="68" width="96" height="56" rx="6" fill="#DDD7F6"/>
-  <text x="68" y="94" class="b c">10 万个请求</text>
-  <text x="68" y="109" class="sub c">同时到达</text>
-  <rect x="152" y="62" width="120" height="72" rx="6" class="shadow"/>
-  <rect x="150" y="60" width="120" height="72" rx="6" fill="#B1DDF0"/>
-  <text x="210" y="86" class="c b">前端与网关</text>
-  <text x="210" y="106" class="c sub">按钮防重复提交</text>
-  <text x="210" y="122" class="c sub">按用户限流</text>
-  <rect x="306" y="62" width="140" height="72" rx="6" class="shadow"/>
-  <rect x="304" y="60" width="140" height="72" rx="6" fill="#B0E3E6"/>
-  <text x="374" y="86" class="c b">Redis + Lua</text>
-  <text x="374" y="106" class="c sub">判断库存和是否已购</text>
-  <text x="374" y="122" class="c sub">原子扣减，库存 100 → 0</text>
-  <rect x="482" y="70" width="90" height="56" rx="6" class="shadow"/>
-  <rect x="480" y="68" width="90" height="56" rx="6" fill="#E6E6E6"/>
-  <text x="525" y="94" class="b c">消息队列</text>
-  <text x="525" y="109" class="sub c">100 条</text>
-  <rect x="606" y="62" width="100" height="72" rx="6" class="shadow"/>
-  <rect x="604" y="60" width="100" height="72" rx="6" fill="#B1DDF0"/>
-  <text x="654" y="86" class="c b">订单服务</text>
-  <text x="654" y="106" class="c sub">扣数据库库存</text>
-  <text x="654" y="122" class="c sub">创建订单</text>
-  <line x1="119" y1="96" x2="146" y2="96" class="arrow "/>
-  <line x1="273" y1="96" x2="300" y2="96" class="arrow "/>
-  <line x1="447" y1="96" x2="476" y2="96" class="arrow green"/>
-  <text x="461" y="88" class="c ok">成功</text>
-  <line x1="573" y1="96" x2="600" y2="96" class="arrow "/>
-  <line x1="374" y1="136" x2="374" y2="172" class="arrow red"/>
-  <text x="382" y="160" class="note">其余请求</text>
-  <rect x="310" y="176" width="128" height="34" rx="6" fill="#F3C6C2"/>
-  <text x="374" y="197.5" class="c sub">直接返回“已抢完”</text>
-  <line x1="210" y1="136" x2="210" y2="172" class="arrow red"/>
-  <rect x="150" y="176" width="120" height="34" rx="6" fill="#F3C6C2"/>
-  <text x="210" y="197.5" class="c sub">拦截重复和超限请求</text>
-  <text x="654" y="156" class="c sub">库存大于 0 才扣减</text>
-  <text x="654" y="174" class="c sub">唯一索引保证一人一单</text>
-  <text x="20" y="236" class="sub">到达数据库的请求接近库存数量；订单最终创建失败时，要把 Redis 中的库存和购买记录恢复。</text>
+  <path d="M20,70 L250,92 L330,120 L700,124 L700,140 L330,144 L250,172 L20,194 Z" fill="#B1DDF0" opacity="0.35"/>
+  <text x="30" y="128" class="b">10 万个请求</text>
+  <text x="30" y="144" class="sub">同时到达</text>
+  <path d="M170,104 L189,113 V124.7 C189,139.88 176,147 170,150 C164,147 151,139.88 151,124.7 V113 Z" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M161,126.08 l6,6 l12,-13" fill="none" stroke="#7FB4D0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="90" class="c b">前端与网关</text>
+  <text x="170" y="74" class="c sub">防重复提交、按用户限流</text>
+  <path d="M307,112 v34 a23,6 0 0 0 46,0 v-34" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <ellipse cx="330" cy="112" rx="23" ry="6" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <path d="M307,129 a23,6 0 0 0 46,0" fill="none" stroke="#78BFC4" stroke-width="1"/>
+  <text x="330" y="90" class="c b">Redis + Lua</text>
+  <text x="330" y="58" class="c sub">判断库存和是否已购，</text>
+  <text x="330" y="74" class="c sub">原子扣减 100 → 0</text>
+  <rect x="430" y="119" width="90" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="440" y="123" width="20.6667" height="18" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="450.333" y="136" class="c sub"></text>
+  <rect x="464.667" y="123" width="20.6667" height="18" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="475" y="136" class="c sub"></text>
+  <rect x="489.333" y="123" width="20.6667" height="18" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="499.667" y="136" class="c sub"></text>
+  <text x="475" y="108" class="c sub">消息队列 100 条</text>
+  <rect x="570" y="108" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="577" cy="114.5" r="2" fill="#7FB4D0"/>
+  <line x1="584" y1="114.5" x2="603" y2="114.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="570" y="124" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="577" cy="130.5" r="2" fill="#7FB4D0"/>
+  <line x1="584" y1="130.5" x2="603" y2="130.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="570" y="140" width="40" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="577" cy="146.5" r="2" fill="#7FB4D0"/>
+  <line x1="584" y1="146.5" x2="603" y2="146.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="590" y="172" class="c b">订单服务</text>
+  <path d="M650,114 v30 a20,6 0 0 0 40,0 v-30" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <ellipse cx="670" cy="114" rx="20" ry="6" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M650,129 a20,6 0 0 0 40,0" fill="none" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="670" y="172" class="c b">MySQL</text>
+  <line x1="522" y1="132" x2="568" y2="132" class="arrow "/>
+  <line x1="612" y1="132" x2="648" y2="132" class="arrow "/>
+  <text x="630" y="192" class="c sub">库存大于 0 才扣减</text>
+  <text x="630" y="208" class="c sub">唯一索引保证一人一单</text>
+  <line x1="330" y1="158" x2="330" y2="214" class="arrow red"/>
+  <text x="330" y="232" class="c note">其余请求直接返回“已抢完”</text>
+  <line x1="170" y1="156" x2="170" y2="214" class="arrow red"/>
+  <text x="170" y="232" class="c note">拦截重复和超限请求</text>
+  <text x="360" y="280" class="c sub">到达数据库的请求接近库存数量；订单最终创建失败时，要把 Redis 中的库存和购买记录恢复。</text>
 </svg>
