@@ -329,7 +329,7 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 inode 具体包含以下信息：
 
-- 权限 (read/write/excute)；
+- 权限 (read/write/execute)；
 - 拥有者与群组 (owner/group)；
 - 容量；
 - 建立或状态改变的时间 (ctime)；
@@ -420,7 +420,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 更换当前目录。
 
-```
+```bash
 cd [相对路径或绝对路径]
 ```
 
@@ -428,7 +428,7 @@ cd [相对路径或绝对路径]
 
 创建目录。
 
-```
+```bash
 ## mkdir [-mp] 目录名称
 -m ：配置目录权限
 -p ：递归创建目录
@@ -564,7 +564,7 @@ cp [-adfilprsu] source destination
 
 #### 2. 符号链接
 
-符号链接文件保存着源文件所在的绝对路径，在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
+符号链接文件保存着源文件的路径（可以是绝对路径，也可以是相对路径），在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
 
 当源文件被删除了，链接文件就打不开了。
 
@@ -639,7 +639,7 @@ cp [-adfilprsu] source destination
 
 文件搜索。可以用关键字或者正则表达式进行搜索。
 
-locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内存中，并且每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
+locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
 
 ```html
 ## locate [-ir] keyword
@@ -1041,7 +1041,7 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为它们在 shell 是有特殊意义的。
+示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为 grep 默认使用基础正则表达式（BRE），其中的 { 和 } 需要转义才表示重复次数。
 
 ```html
 $ grep -n 'a\{2,5\}' regular_express.txt
@@ -1182,7 +1182,7 @@ dmtsai lines: 5 columns: 9
 | D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
 | Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
-| T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
+| T | stopped (either by a job control signal or because it is being traced) <br> 停止，进程可能被作业控制信号暂停，也可能正在被追踪。|
 <br>
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png" width="490px"/> </div><br>
@@ -1206,7 +1206,7 @@ dmtsai lines: 5 columns: 9
 pid_t wait(int *status)
 ```
 
-父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
+父进程调用 wait() 会一直阻塞，直到有一个子进程退出，之后 wait() 会回收该子进程并返回。
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
 
@@ -1220,7 +1220,7 @@ pid_t waitpid(pid_t pid, int *status, int options)
 
 作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
 
-pid 参数指示一个子进程的 ID，表示只关心这个子进程退出的 SIGCHLD 信号。如果 pid=-1 时，那么和 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+pid 参数指示一个子进程的 ID，表示只等待这个子进程退出。如果 pid=-1 时，那么和 wait() 作用相同，等待任意一个子进程退出。
 
 options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
 
@@ -1244,7 +1244,7 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 ## 参考资料
 
-- 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
+- 鸟哥. 鸟哥的 Linux 私房菜：基础篇 第三版 [M]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)

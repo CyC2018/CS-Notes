@@ -71,7 +71,7 @@
 - 一个空行用来分隔首部和内容主体 Body
 - 最后是请求的内容主体
 
-```
+```http
 GET http://www.example.com/ HTTP/1.1
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
 Accept-Encoding: gzip, deflate
@@ -94,7 +94,7 @@ param1=1&param2=2
 - 一个空行分隔首部和内容主体
 - 最后是响应的内容主体
 
-```
+```http
 HTTP/1.1 200 OK
 Age: 529651
 Cache-Control: max-age=604800
@@ -163,7 +163,7 @@ POST 主要用来传输数据，而 GET 主要用来获取资源。
 
 > 上传文件
 
-由于自身不带验证机制，任何人都可以上传文件，因此存在安全性问题，一般不使用该方法。
+PUT 用于创建或者替换目标资源。它自身不带验证机制，需要配合身份认证使用，否则任何人都可以上传文件。
 
 ```html
 PUT /new.html HTTP/1.1
@@ -371,8 +371,8 @@ CONNECT www.example.com:443 HTTP/1.1
 
 长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
-- 从 HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 `Connection : close`；
-- 在 HTTP/1.1 之前默认是短连接的，如果需要使用长连接，则使用 `Connection : Keep-Alive`。
+- 从 HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 `Connection: close`；
+- 在 HTTP/1.1 之前默认是短连接的，如果需要使用长连接，则使用 `Connection: Keep-Alive`。
 
 #### 2. 流水线
 
@@ -382,7 +382,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### Cookie
 
-HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
+HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。可以使用 Cookie 来保存状态信息，Cookie 由 RFC 6265 单独定义，并不是 HTTP/1.1 的一部分。
 
 Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器之后向同一服务器再次发起请求时被携带上，用于告知服务端两个请求是否来自同一浏览器。由于之后每次请求都会需要携带 Cookie 数据，因此会带来额外的性能开销（尤其是在移动环境下）。
 
@@ -780,7 +780,7 @@ HTTPS 的报文摘要功能之所以安全，是因为它结合了加密和认�
 ### HTTPS 的缺点
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
-- 需要支付证书授权的高额费用。
+- 需要申请和维护证书，不过 Let's Encrypt 等机构可以免费签发证书。
 
 ## 七、HTTP/2.0
 
@@ -811,6 +811,8 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+
+需要注意的是，Chrome 106 起默认禁用了服务端推送，其它基于 Chromium 的浏览器也随之跟进。
 
 ### 首部压缩
 
@@ -846,11 +848,11 @@ GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以�
 
 因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 参数支持标准字符集。
 
-```
+```http
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
 ```
 
-```
+```http
 POST /test/demo_form.asp HTTP/1.1
 Host: w3schools.com
 name1=value1&name2=value2
@@ -862,7 +864,7 @@ name1=value1&name2=value2
 
 GET 方法是安全的，而 POST 却不是，因为 POST 的目的是传送实体主体内容，这个内容可能是用户上传的表单数据，上传成功之后，服务器可能把这个数据存储到数据库中，因此状态也就发生了改变。
 
-安全的方法除了 GET 之外还有：HEAD、OPTIONS。
+安全的方法除了 GET 之外还有：HEAD、OPTIONS、TRACE。
 
 不安全的方法除了 POST 之外还有 PUT、DELETE。
 
@@ -876,7 +878,7 @@ GET 方法是安全的，而 POST 却不是，因为 POST 的目的是传送实�
 
 GET /pageX HTTP/1.1 是幂等的，连续调用多次，客户端接收到的结果都是一样的：
 
-```
+```http
 GET /pageX HTTP/1.1
 GET /pageX HTTP/1.1
 GET /pageX HTTP/1.1
@@ -885,7 +887,7 @@ GET /pageX HTTP/1.1
 
 POST /add_row HTTP/1.1 不是幂等的，如果调用多次，就会增加多行记录：
 
-```
+```text
 POST /add_row HTTP/1.1   -> Adds a 1nd row
 POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
@@ -893,7 +895,7 @@ POST /add_row HTTP/1.1   -> Adds a 3rd row
 
 DELETE /idX/delete HTTP/1.1 是幂等的，即使不同的请求接收到的状态码不一样：
 
-```
+```text
 DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
 DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
 DELETE /idX/delete HTTP/1.1   -> Returns 404
@@ -904,7 +906,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 如果要对响应进行缓存，需要满足以下条件：
 
 - 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
-- 响应报文的状态码是可缓存的，包括：200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501。
+- 响应报文的状态码是可缓存的，包括：200、203、204、206、300、301、308、404、405、410、414 和 501。
 - 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
 
 ### XMLHttpRequest

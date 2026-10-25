@@ -343,7 +343,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 mysql> SELECT NOW();
 ```
 
-```
+```text
 2018-4-14 20:25:11
 ```
 
@@ -367,7 +367,7 @@ mysql> SELECT NOW();
 
 可以对同一分组数据使用汇总函数进行处理，例如求分组数据的平均值等。
 
-指定的分组字段除了能按该字段进行分组，也会自动按该字段进行排序。
+MySQL 5.7 及之前的版本在一定条件下会自动按分组字段排序，MySQL 8.0 不再隐式排序，需要排序时应当使用 ORDER BY。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -375,7 +375,7 @@ FROM mytable
 GROUP BY col;
 ```
 
-GROUP BY 自动按分组字段进行排序，ORDER BY 也可以按汇总字段来进行排序。
+ORDER BY 也可以按汇总字段来进行排序。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -405,7 +405,7 @@ HAVING num >= 2;
 
 子查询中只能返回一个字段的数据。
 
-可以将子查询的结果作为 WHRER 语句的过滤条件：
+可以将子查询的结果作为 WHERE 语句的过滤条件：
 
 ```sql
 SELECT *
@@ -660,7 +660,7 @@ DELETE 触发器包含一个名为 OLD 的虚拟表，并且是只读的。
 
 UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中 NEW 是可以被修改的，而 OLD 是只读的。
 
-MySQL 不允许在触发器中使用 CALL 语句，也就是不能调用存储过程。
+MySQL 的触发器可以使用 CALL 语句调用存储过程，但是该存储过程不能向客户端返回数据，也不能使用动态 SQL。
 
 ## 二十一、事务管理
 
@@ -772,12 +772,12 @@ REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 
 **更改密码**  
 
-必须使用 Password() 函数进行加密。
+MySQL 8.0 移除了 Password() 函数，直接指定新密码即可。
 
 ```sql
-SET PASSWROD FOR myuser = Password('new_password');
+SET PASSWORD FOR myuser = 'new_password';
 ```
 
 ## 参考资料
 
-- BenForta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
+- Ben Forta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
