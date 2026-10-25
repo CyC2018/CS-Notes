@@ -234,6 +234,8 @@ epoll_ctl() 用于向内核注册新的描述符或者是改变某个文件描�
 
 从上面的描述可以看出，epoll 只需要将描述符从进程缓冲区向内核缓冲区拷贝一次，并且进程不需要通过轮询来获得事件完成的描述符。
 
+<div align="center"> <img src="pics/epoll.png" width="600px"/> </div><br>
+
 epoll 仅适用于 Linux OS。
 
 epoll 比 select 和 poll 更加灵活而且没有描述符数量限制。
