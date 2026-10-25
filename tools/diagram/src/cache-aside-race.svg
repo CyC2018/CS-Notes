@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="322" viewBox="0 0 520 322">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 13px; }
+    .head { font-weight: bold; text-anchor: middle; }
+    .msg { text-anchor: middle; font-size: 12px; }
+    .note { font-size: 12px; fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .life { stroke: #BBB; stroke-width: 1; stroke-dasharray: 4 4; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .reply { stroke-dasharray: 5 4; }
+    .lost { stroke: #C0605A; marker-end: url(#x); }
+    .shadow { fill: #C0C0C0; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+  <text x="260" y="28" class="title">先删除缓存再更新数据库</text>
+  <line x1="65" y1="76" x2="65" y2="302" class="life"/>
+  <line x1="195" y1="76" x2="195" y2="302" class="life"/>
+  <line x1="325" y1="76" x2="325" y2="302" class="life"/>
+  <line x1="455" y1="76" x2="455" y2="302" class="life"/>
+  <rect x="32" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="29" y="45" width="72" height="30" rx="6" fill="#B0E3E6"/>
+  <text x="65" y="64.5" class="head">写请求</text>
+  <rect x="162" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="159" y="45" width="72" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="195" y="64.5" class="head">缓存</text>
+  <rect x="292" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="289" y="45" width="72" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="325" y="64.5" class="head">数据库</text>
+  <rect x="422" y="48" width="72" height="30" rx="6" class="shadow"/>
+  <rect x="419" y="45" width="72" height="30" rx="6" fill="#B0E3E6"/>
+  <text x="455" y="64.5" class="head">读请求</text>
+  <line x1="69" y1="100" x2="191" y2="100" class="arrow"/>
+  <text x="130" y="94" class="msg">① 删除缓存</text>
+  <line x1="451" y1="136" x2="199" y2="136" class="arrow"/>
+  <text x="380" y="130" class="msg">② 读缓存未命中</text>
+  <line x1="451" y1="172" x2="329" y2="172" class="arrow"/>
+  <text x="390" y="166" class="msg">③ 读到旧值</text>
+  <line x1="69" y1="208" x2="321" y2="208" class="arrow"/>
+  <text x="120" y="202" class="msg">④ 更新为新值</text>
+  <line x1="451" y1="244" x2="199" y2="244" class="arrow"/>
+  <text x="380" y="238" class="msg">⑤ 把旧值写入缓存</text>
+  <text x="260" y="284" class="note" text-anchor="middle">缓存中一直是旧值，直到被删除或过期</text>
+</svg>
