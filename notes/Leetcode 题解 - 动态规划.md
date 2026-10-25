@@ -43,7 +43,7 @@
 <!-- GFM-TOC -->
 
 
-递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
+递归和动态规划都是将原问题拆成多个子问题然后求解，它们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
 
 ## 斐波那契数列
 
@@ -154,7 +154,7 @@ private int rob(int[] nums, int first, int last) {
 
 ### 5. 母牛生产
 
-[程序员代码面试指南-P181](#)
+程序员代码面试指南-P181
 
 题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
@@ -936,7 +936,7 @@ public int coinChange(int[] coins, int amount) {
 
 [Leetcode](https://leetcode.com/problems/coin-change-2/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-2/description/)
 
-```text-html-basic
+```text
 Input: amount = 5, coins = [1, 2, 5]
 Output: 4
 Explanation: there are four ways to make up the amount:
@@ -1275,7 +1275,7 @@ public int minDistance(String word1, String word2) {
 
 题目描述：最开始只有一个字符 A，问需要多少次操作能够得到 n 个字符 A，每次操作可以复制当前所有的字符，或者粘贴。
 
-```
+```text
 Input: 3
 Output: 3
 Explanation:
