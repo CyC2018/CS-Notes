@@ -8,6 +8,7 @@
         * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
     * [二、基础线程机制](#二基础线程机制)
         * [Executor](#executor)
+        * [ThreadPoolExecutor](#threadpoolexecutor)
         * [Daemon](#daemon)
         * [sleep()](#sleep)
         * [yield()](#yield)
@@ -24,6 +25,7 @@
         * [join()](#join)
         * [wait() notify() notifyAll()](#wait-notify-notifyall)
         * [await() signal() signalAll()](#await-signal-signalall)
+        * [交替打印](#交替打印)
     * [六、线程状态](#六线程状态)
         * [新建（NEW）](#新建new)
         * [可运行（RUNNABLE）](#可运行runnable)
@@ -166,6 +168,78 @@ public static void main(String[] args) {
     executorService.shutdown();
 }
 ```
+
+### ThreadPoolExecutor
+
+上面的三种 Executor 都是通过 ThreadPoolExecutor 创建的，它的构造函数有以下参数：
+
+- corePoolSize：核心线程数，核心线程空闲时也不会被回收，除非调用了 allowCoreThreadTimeOut(true)；
+- maximumPoolSize：最大线程数；
+- keepAliveTime 和 unit：线程数超过核心线程数时，多出的线程空闲超过这个时间就会被回收；
+- workQueue：保存等待执行的任务的阻塞队列；
+- threadFactory：创建线程的工厂，常用来给线程起有意义的名字，方便排查问题；
+- handler：拒绝策略，线程数达到最大并且队列已满时，用来处理新提交的任务。
+
+提交一个任务时，线程池按以下顺序处理：
+
+1. 线程数小于核心线程数时，新建线程执行任务，即使其它线程是空闲的；
+2. 否则把任务放入队列；
+3. 队列已满时，如果线程数小于最大线程数，新建线程执行这个任务；
+4. 否则执行拒绝策略。
+
+例如核心线程数为 2、最大线程数为 4、队列容量为 2，依次提交 7 个各执行 1 秒的任务：
+
+<div align="center"> <img src="pics/thread-pool.png" width="700px"/> </div><br>
+
+```java
+ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS,
+        new ArrayBlockingQueue<>(2), new ThreadPoolExecutor.AbortPolicy());
+for (int i = 1; i <= 7; i++) {
+    try {
+        pool.execute(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+        });
+        System.out.println("提交任务 " + i + "：线程数 " + pool.getPoolSize()
+                + "，队列中 " + pool.getQueue().size() + " 个");
+    } catch (RejectedExecutionException e) {
+        System.out.println("提交任务 " + i + "：被拒绝");
+    }
+}
+```
+
+```text
+提交任务 1：线程数 1，队列中 0 个
+提交任务 2：线程数 2，队列中 0 个
+提交任务 3：线程数 2，队列中 1 个
+提交任务 4：线程数 2，队列中 2 个
+提交任务 5：线程数 3，队列中 2 个
+提交任务 6：线程数 4，队列中 2 个
+提交任务 7：被拒绝
+```
+
+需要注意的是，任务 5、6 比先提交的任务 3、4 更早执行：队列满后新建的线程直接执行当前提交的任务，队列中的任务要等有线程空闲后才会被取出。
+
+拒绝策略：
+
+- AbortPolicy：默认策略，抛出 RejectedExecutionException；
+- CallerRunsPolicy：由提交任务的线程自己执行这个任务，提交方被拖慢，从而降低了提交速度；
+- DiscardPolicy：直接丢弃任务；
+- DiscardOldestPolicy：丢弃队列中最早的任务，再重新提交当前任务。
+
+不建议用 Executors 创建线程池，而是直接创建 ThreadPoolExecutor 并使用有界队列：
+
+- newFixedThreadPool() 和 newSingleThreadExecutor() 使用没有容量限制的 LinkedBlockingQueue，任务堆积时可能耗尽内存，最大线程数也不再起作用；
+- newCachedThreadPool() 的最大线程数为 Integer.MAX_VALUE，任务多时会创建大量线程。
+
+线程数可以按任务类型估算：
+
+- CPU 密集型：取 CPU 核数 + 1，多出的一个线程用于在某个线程因缺页等原因暂停时继续使用 CPU；
+- I/O 密集型：线程等待 I/O 时不占用 CPU，可以按 核数 × (1 + 等待时间 / 计算时间) 估算。例如 8 核 CPU，每个任务计算 10 ms、等待数据库 90 ms，约为 8 × (1 + 90 / 10) = 80 个线程。
+
+估算值只是起点，最终要通过压测确定。上线后监控活跃线程数、队列长度和拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整。
 
 ### Daemon
 
@@ -677,6 +751,76 @@ public static void main(String[] args) {
 before
 after
 ```
+
+### 交替打印
+
+多个线程按固定顺序轮流执行是常见的手写题，例如三个线程依次打印 A、B、C，共打印 10 轮。思路是用一个共享变量记录轮到哪个线程：没轮到的线程等待，轮到的线程打印后把轮次交给下一个线程，并唤醒等待的线程。
+
+```java
+public class PrintABC {
+    private final Object lock = new Object();
+    private int turn = 0;    // 轮到第几个线程：0、1、2
+
+    public void print(int id, char c, int times) throws InterruptedException {
+        for (int i = 0; i < times; i++) {
+            synchronized (lock) {
+                while (turn != id) {
+                    lock.wait();
+                }
+                System.out.print(c);
+                turn = (turn + 1) % 3;
+                lock.notifyAll();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        PrintABC p = new PrintABC();
+        for (int i = 0; i < 3; i++) {
+            int id = i;
+            new Thread(() -> {
+                try {
+                    p.print(id, (char) ('A' + id), 10);
+                } catch (InterruptedException ignored) {
+                }
+            }).start();
+        }
+    }
+}
+```
+
+```text
+ABCABCABCABCABCABCABCABCABCABC
+```
+
+有两处容易写错：
+
+- 等待条件要用 while 而不是 if：线程被唤醒时不一定轮到了自己，例如和其它线程一起被 notifyAll() 唤醒，或者发生了虚假唤醒，醒来后必须重新检查条件；
+- 要用 notifyAll() 而不是 notify()：notify() 只唤醒任意一个等待的线程，例如 B 打印完后唤醒的是 A，A 发现没轮到自己又继续等待，C 就再也不会被唤醒，三个线程都在等待。
+
+把上面代码中的 notifyAll() 改成 notify() 后运行 100 次，每次都在打印出几个字母后卡住；把 while 改成 if 后，输出变成了 ABAABAAB 这样的乱序。
+
+用 Semaphore 实现更直观：每个线程对应一个信号量，只有第一个线程的许可为 1。线程打印前获取自己的许可，打印后释放下一个线程的许可，就像传递接力棒：
+
+```java
+Semaphore[] s = {new Semaphore(1), new Semaphore(0), new Semaphore(0)};
+for (int i = 0; i < 3; i++) {
+    int id = i;
+    new Thread(() -> {
+        for (int k = 0; k < 10; k++) {
+            try {
+                s[id].acquire();
+            } catch (InterruptedException e) {
+                return;
+            }
+            System.out.print((char) ('A' + id));
+            s[(id + 1) % 3].release();
+        }
+    }).start();
+}
+```
+
+两个线程交替打印奇偶数也是同样的做法，把轮次改为两个即可。使用 ReentrantLock 时，可以为每个线程创建一个 Condition，打印后只唤醒下一个线程。
 
 ## 六、线程状态
 
@@ -1621,6 +1765,9 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 ## 参考资料
 
+- [Object (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html)
+- Brian Goetz. Java 并发编程实战 [M]. 机械工业出版社, 2012.
+- [ThreadPoolExecutor (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html)
 - BruceEckel. Java 编程思想: 第 4 版 [M]. 机械工业出版社, 2007.
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Threads and Locks](https://docs.oracle.com/javase/specs/jvms/se6/html/Threads.doc.html)
