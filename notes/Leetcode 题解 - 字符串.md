@@ -10,6 +10,9 @@
     * [7. 回文子字符串个数](#7-回文子字符串个数)
     * [8. 判断一个整数是否是回文数](#8-判断一个整数是否是回文数)
     * [9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数](#9-统计二进制字符串中连续-1-和连续-0-数量相同的子字符串个数)
+    * [10. 最长回文子串](#10-最长回文子串)
+    * [11. 字符串相乘](#11-字符串相乘)
+    * [12. 比较版本号](#12-比较版本号)
 <!-- GFM-TOC -->
 
 
@@ -235,5 +238,119 @@ public int countBinarySubstrings(String s) {
         }
     }
     return count;
+}
+```
+
+## 10. 最长回文子串
+
+5\. Longest Palindromic Substring (Medium)
+
+[Leetcode](https://leetcode.com/problems/longest-palindromic-substring/) / [力扣](https://leetcode.cn/problems/longest-palindromic-substring/)
+
+```text
+Input: s = "babad"
+Output: "bab"（"aba" 也是正确答案）
+```
+
+和第 7 题一样从中心扩展：回文串的中心可能是一个字符，也可能是两个字符之间，以每个位置为中心分别向两边扩展，记录最长的回文。时间复杂度为 O(N<sup>2</sup>)，空间复杂度为 O(1)。
+
+```java
+private int start = 0, maxLen = 0;
+
+public String longestPalindrome(String s) {
+    for (int i = 0; i < s.length(); i++) {
+        extend(s, i, i);     // 奇数长度
+        extend(s, i, i + 1); // 偶数长度
+    }
+    return s.substring(start, start + maxLen);
+}
+
+private void extend(String s, int l, int r) {
+    while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
+        l--;
+        r++;
+    }
+    if (r - l - 1 > maxLen) {
+        maxLen = r - l - 1;
+        start = l + 1;
+    }
+}
+```
+
+## 11. 字符串相乘
+
+43\. Multiply Strings (Medium)
+
+[Leetcode](https://leetcode.com/problems/multiply-strings/) / [力扣](https://leetcode.cn/problems/multiply-strings/)
+
+```text
+Input: num1 = "123", num2 = "45"
+Output: "5535"
+```
+
+题目描述：以字符串形式给出两个非负整数，返回它们的乘积，不能把字符串直接转换为整数。
+
+模拟竖式乘法。乘积最多有 m + n 位，用数组 digits 按从高位到低位的顺序保存。num1[i] 与 num2[j] 相乘的结果落在 digits[i + j + 1] 上，先把所有乘积累加到对应位置，最后从低位到高位统一处理进位。
+
+```java
+public String multiply(String num1, String num2) {
+    int m = num1.length(), n = num2.length();
+    int[] digits = new int[m + n];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            digits[i + j + 1] += (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+        }
+    }
+    for (int k = m + n - 1; k > 0; k--) {
+        digits[k - 1] += digits[k] / 10;
+        digits[k] %= 10;
+    }
+    int k = 0;
+    while (k < m + n - 1 && digits[k] == 0) {
+        k++;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (; k < m + n; k++) {
+        sb.append(digits[k]);
+    }
+    return sb.toString();
+}
+```
+
+## 12. 比较版本号
+
+165\. Compare Version Numbers (Medium)
+
+[Leetcode](https://leetcode.com/problems/compare-version-numbers/) / [力扣](https://leetcode.cn/problems/compare-version-numbers/)
+
+```text
+Input: version1 = "1.01", version2 = "1.001"
+Output: 0
+Input: version1 = "1.0.1", version2 = "1"
+Output: 1
+```
+
+题目描述：版本号由 . 分隔的修订号组成，从左到右依次比较修订号的整数值，前导 0 忽略，缺少的修订号视为 0。
+
+用两个指针分别扫描两个字符串，每次各解析出一段修订号的整数值进行比较，不需要先把字符串分割成数组。
+
+```java
+public int compareVersion(String version1, String version2) {
+    int i = 0, j = 0;
+    while (i < version1.length() || j < version2.length()) {
+        int x = 0, y = 0;
+        while (i < version1.length() && version1.charAt(i) != '.') {
+            x = x * 10 + version1.charAt(i++) - '0';
+        }
+        while (j < version2.length() && version2.charAt(j) != '.') {
+            y = y * 10 + version2.charAt(j++) - '0';
+        }
+        if (x != y) {
+            return x > y ? 1 : -1;
+        }
+        i++;
+        j++;
+    }
+    return 0;
 }
 ```
