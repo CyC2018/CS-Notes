@@ -58,7 +58,7 @@
 
 - HashMap：基于哈希表实现。
 
-- HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
+- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
@@ -502,7 +502,7 @@ map.put("K3", "V3");
 - 插入 &lt;K2,V2\> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
 - 插入 &lt;K3,V3\> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2\> 前面。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。
+应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。JDK 1.8 改成了尾插法。
 
 查找需要分成两步进行：
 
@@ -998,7 +998,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 
 #### afterNodeInsertion()
 
-在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最晚的节点，也就是链表首部节点 first。
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最老的节点，也就是链表首部节点 first。
 
 evict 只有在构建 Map 的时候才为 false，在这里为 true。
 
