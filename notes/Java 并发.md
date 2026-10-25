@@ -573,7 +573,7 @@ public static void main(String[] args) {
 }
 ```
 
-```
+```text
 A
 B
 ```
