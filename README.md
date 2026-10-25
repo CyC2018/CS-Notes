@@ -62,6 +62,7 @@
 - [攻击技术](https://github.com/CyC2018/CS-Notes/blob/master/notes/攻击技术.md)
 - [缓存](https://github.com/CyC2018/CS-Notes/blob/master/notes/缓存.md)
 - [消息队列](https://github.com/CyC2018/CS-Notes/blob/master/notes/消息队列.md)
+- [大模型应用](https://github.com/CyC2018/CS-Notes/blob/master/notes/大模型应用.md)
 
 ## :art: 面向对象
 
