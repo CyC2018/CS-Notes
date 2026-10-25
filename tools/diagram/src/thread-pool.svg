@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -34,41 +34,41 @@
   <text x="20" y="56" class="sub">核心线程数 2，最大线程数 4，队列容量 2，依次提交 7 个各执行 1 秒的任务</text>
   <rect x="150" y="70" width="300" height="254" rx="8" class="frame"/>
   <text x="160" y="88" class="b">线程池</text>
-  <rect x="170" y="102" width="260" height="26" rx="13" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <rect x="170" y="102" width="260" height="26" rx="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
   <text x="186" y="119" class="sub">核心线程</text>
-  <rect x="374" y="104" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="374" y="104" width="50" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="399" y="119" class="c sub">任务 1</text>
-  <rect x="170" y="136" width="260" height="26" rx="13" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <rect x="170" y="136" width="260" height="26" rx="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
   <text x="186" y="153" class="sub">核心线程</text>
-  <rect x="374" y="138" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="374" y="138" width="50" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="399" y="153" class="c sub">任务 2</text>
-  <rect x="170" y="236" width="260" height="26" rx="13" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="170" y="236" width="260" height="26" rx="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
   <text x="186" y="253" class="sub">非核心线程</text>
-  <rect x="374" y="238" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="374" y="238" width="50" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="399" y="253" class="c sub">任务 5</text>
-  <rect x="170" y="270" width="260" height="26" rx="13" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="170" y="270" width="260" height="26" rx="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
   <text x="186" y="287" class="sub">非核心线程</text>
-  <rect x="374" y="272" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="374" y="272" width="50" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="399" y="287" class="c sub">任务 6</text>
   <rect x="204" y="178" width="160" height="28" rx="14" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
-  <rect x="214" y="182" width="68" height="20" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="214" y="182" width="68" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="248" y="196" class="c sub">任务 3</text>
-  <rect x="286" y="182" width="68" height="20" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="286" y="182" width="68" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="320" y="196" class="c sub">任务 4</text>
   <text x="372" y="197" class="sub">队列（容量 2）</text>
-  <rect x="30" y="82" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="82" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="97" class="c sub">任务 1</text>
-  <rect x="30" y="120" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="120" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="135" class="c sub">任务 2</text>
-  <rect x="30" y="158" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="158" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="173" class="c sub">任务 3</text>
-  <rect x="30" y="196" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="196" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="211" class="c sub">任务 4</text>
-  <rect x="30" y="234" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="234" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="249" class="c sub">任务 5</text>
-  <rect x="30" y="272" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="272" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="287" class="c sub">任务 6</text>
-  <rect x="30" y="310" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="30" y="310" width="56" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
   <text x="58" y="325" class="c sub">任务 7</text>
   <line x1="88" y1="93" x2="166" y2="115" class="arrow "/>
   <line x1="88" y1="131" x2="166" y2="149" class="arrow "/>
