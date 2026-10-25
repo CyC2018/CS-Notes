@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="342" viewBox="0 0 600 342">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 13px; }
+    .head { font-weight: bold; text-anchor: middle; }
+    .msg { text-anchor: middle; font-size: 12px; }
+    .note { font-size: 12px; fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .life { stroke: #BBB; stroke-width: 1; stroke-dasharray: 4 4; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .reply { stroke-dasharray: 5 4; }
+    .lost { stroke: #C0605A; marker-end: url(#x); }
+    .shadow { fill: #C0C0C0; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+  <text x="300" y="28" class="title">CSRF 攻击过程</text>
+  <line x1="90" y1="76" x2="90" y2="322" class="life"/>
+  <line x1="300" y1="76" x2="300" y2="322" class="life"/>
+  <line x1="510" y1="76" x2="510" y2="322" class="life"/>
+  <rect x="46" y="48" width="94" height="30" rx="6" class="shadow"/>
+  <rect x="43" y="45" width="94" height="30" rx="6" fill="#B0E3E6"/>
+  <text x="90" y="64.5" class="head">用户浏览器</text>
+  <rect x="263" y="48" width="80" height="30" rx="6" class="shadow"/>
+  <rect x="260" y="45" width="80" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="300" y="64.5" class="head">银行网站</text>
+  <rect x="473" y="48" width="80" height="30" rx="6" class="shadow"/>
+  <rect x="470" y="45" width="80" height="30" rx="6" fill="#F3C6C2"/>
+  <text x="510" y="64.5" class="head">恶意网站</text>
+  <line x1="94" y1="100" x2="296" y2="100" class="arrow"/>
+  <text x="195" y="94" class="msg">① 登录</text>
+  <line x1="296" y1="140" x2="94" y2="140" class="arrow reply"/>
+  <text x="195" y="134" class="msg">Set-Cookie：会话 ID</text>
+  <line x1="94" y1="180" x2="506" y2="180" class="arrow"/>
+  <text x="380" y="174" class="msg">② 访问恶意网站</text>
+  <line x1="506" y1="220" x2="94" y2="220" class="arrow reply"/>
+  <text x="405" y="214" class="msg">返回含 &lt;img src="转账 URL"&gt; 的页面</text>
+  <line x1="94" y1="260" x2="296" y2="260" class="arrow"/>
+  <text x="196" y="254" class="msg note">③ 自动请求转账 URL，携带 Cookie</text>
+  <text x="310" y="304" class="note" text-anchor="start">Cookie 有效，执行转账</text>
+</svg>
