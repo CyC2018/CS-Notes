@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="592" viewBox="0 0 640 592">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 13px; }
+    .head { font-weight: bold; text-anchor: middle; }
+    .msg { text-anchor: middle; font-size: 12px; }
+    .note { font-size: 12px; fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .life { stroke: #BBB; stroke-width: 1; stroke-dasharray: 4 4; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .reply { stroke-dasharray: 5 4; }
+    .lost { stroke: #C0605A; marker-end: url(#x); }
+    .shadow { fill: #C0C0C0; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+  <text x="320" y="28" class="title">Paxos 示例</text>
+  <line x1="64" y1="76" x2="64" y2="572" class="life"/>
+  <line x1="192" y1="76" x2="192" y2="572" class="life"/>
+  <line x1="320" y1="76" x2="320" y2="572" class="life"/>
+  <line x1="448" y1="76" x2="448" y2="572" class="life"/>
+  <line x1="576" y1="76" x2="576" y2="572" class="life"/>
+  <rect x="15" y="48" width="104" height="30" rx="6" class="shadow"/>
+  <rect x="12" y="45" width="104" height="30" rx="6" fill="#B0E3E6"/>
+  <text x="64" y="64.5" class="head">Proposer A</text>
+  <rect x="143" y="48" width="104" height="30" rx="6" class="shadow"/>
+  <rect x="140" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="192" y="64.5" class="head">Acceptor X</text>
+  <rect x="271" y="48" width="104" height="30" rx="6" class="shadow"/>
+  <rect x="268" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="320" y="64.5" class="head">Acceptor Y</text>
+  <rect x="399" y="48" width="104" height="30" rx="6" class="shadow"/>
+  <rect x="396" y="45" width="104" height="30" rx="6" fill="#B1DDF0"/>
+  <text x="448" y="64.5" class="head">Acceptor Z</text>
+  <rect x="527" y="48" width="104" height="30" rx="6" class="shadow"/>
+  <rect x="524" y="45" width="104" height="30" rx="6" fill="#B0E3E6"/>
+  <text x="576" y="64.5" class="head">Proposer B</text>
+  <line x1="68" y1="100" x2="188" y2="100" class="arrow"/>
+  <text x="128" y="94" class="msg">Prepare(2)</text>
+  <line x1="68" y1="130" x2="316" y2="130" class="arrow"/>
+  <text x="240" y="124" class="msg">Prepare(2)</text>
+  <line x1="188" y1="160" x2="68" y2="160" class="arrow reply"/>
+  <text x="128" y="154" class="msg">承诺</text>
+  <line x1="316" y1="190" x2="68" y2="190" class="arrow reply"/>
+  <text x="240" y="184" class="msg">承诺</text>
+  <line x1="68" y1="220" x2="188" y2="220" class="arrow"/>
+  <text x="128" y="214" class="msg">Accept(2, 8)</text>
+  <line x1="68" y1="250" x2="316" y2="250" class="arrow"/>
+  <text x="240" y="244" class="msg">Accept(2, 8)</text>
+  <line x1="188" y1="280" x2="68" y2="280" class="arrow reply"/>
+  <text x="128" y="274" class="msg">接受</text>
+  <line x1="316" y1="310" x2="68" y2="310" class="arrow reply"/>
+  <text x="240" y="304" class="msg">接受</text>
+  <text x="320" y="344" class="note ok" text-anchor="middle">X、Y 构成多数派，值 8 已被选定</text>
+  <line x1="572" y1="370" x2="452" y2="370" class="arrow"/>
+  <text x="512" y="364" class="msg">Prepare(4)</text>
+  <line x1="572" y1="400" x2="324" y2="400" class="arrow"/>
+  <text x="400" y="394" class="msg">Prepare(4)</text>
+  <line x1="452" y1="430" x2="572" y2="430" class="arrow reply"/>
+  <text x="512" y="424" class="msg">承诺</text>
+  <line x1="324" y1="460" x2="572" y2="460" class="arrow reply"/>
+  <text x="400" y="454" class="msg">承诺，已接受 [2, 8]</text>
+  <line x1="572" y1="490" x2="452" y2="490" class="arrow"/>
+  <text x="512" y="484" class="msg">Accept(4, 8)</text>
+  <line x1="572" y1="520" x2="324" y2="520" class="arrow"/>
+  <text x="400" y="514" class="msg">Accept(4, 8)</text>
+  <text x="320" y="554" class="note" text-anchor="middle">B 只能沿用值 8，不能使用自己的提议值</text>
+</svg>
