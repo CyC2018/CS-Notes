@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="370" viewBox="0 0 780 370">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">IP 地址不变，MAC 地址逐段改变</text>
+  <rect x="48" y="70" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="52" y="74" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M66,99.92 v5 M74,99.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="58" y="104.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="70" y="124" class="c b">H1</text>
+  <text x="70" y="140" class="c sub mono">192.168.1.10</text>
+  <circle cx="290" cy="92" r="18" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="294.5" y1="96.5" x2="302.6" y2="104.6" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="285.5" y1="87.5" x2="277.4" y2="79.4" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="294.5" y1="87.5" x2="302.6" y2="79.4" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="285.5" y1="96.5" x2="277.4" y2="104.6" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M298.6,104.6 L302.6,104.6 L302.6,100.6" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M281.4,79.4 L277.4,79.4 L277.4,83.4" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M298.5,87.5 L294.5,87.5 L294.5,83.5" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M281.5,96.5 L285.5,96.5 L285.5,100.5" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="290" y="132" class="c b">R1</text>
+  <circle cx="490" cy="92" r="18" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="494.5" y1="96.5" x2="502.6" y2="104.6" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="485.5" y1="87.5" x2="477.4" y2="79.4" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="494.5" y1="87.5" x2="502.6" y2="79.4" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="485.5" y1="96.5" x2="477.4" y2="104.6" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M498.6,104.6 L502.6,104.6 L502.6,100.6" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M481.4,79.4 L477.4,79.4 L477.4,83.4" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M498.5,87.5 L494.5,87.5 L494.5,83.5" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M481.5,96.5 L485.5,96.5 L485.5,100.5" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="490" y="132" class="c b">R2</text>
+  <rect x="688" y="70" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="692" y="74" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M706,99.92 v5 M714,99.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="698" y="104.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="710" y="124" class="c b">H2</text>
+  <text x="710" y="140" class="c sub mono">10.0.2.20</text>
+  <line x1="96" y1="92" x2="268" y2="92" class="line"/>
+  <text x="180" y="84" class="c sub">局域网 1</text>
+  <line x1="316" y1="92" x2="468" y2="92" class="line"/>
+  <text x="390" y="84" class="c sub">链路 2</text>
+  <line x1="516" y1="92" x2="688" y2="92" class="line"/>
+  <text x="600" y="84" class="c sub">局域网 3</text>
+  <text x="258" y="112" class="sub mono e">R1-1</text>
+  <text x="322" y="112" class="sub mono">R1-2</text>
+  <text x="458" y="112" class="sub mono e">R2-1</text>
+  <text x="522" y="112" class="sub mono">R2-2</text>
+  <rect x="88" y="170" width="184" height="88" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="180" y="188" class="c sub">帧首部</text>
+  <rect x="96" y="194" width="168" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="180" y="211" class="c sub mono" style="fill:#555">MAC H1 → R1-1</text>
+  <rect x="96" y="224" width="168" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="180" y="241" class="c sub mono" style="fill:#555">IP .1.10 → 10.0.2.20</text>
+  <line x1="180" y1="100" x2="180" y2="166" stroke="#BBB" stroke-dasharray="3 3"/>
+  <rect x="298" y="170" width="184" height="88" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="390" y="188" class="c sub">帧首部</text>
+  <rect x="306" y="194" width="168" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="390" y="211" class="c sub mono" style="fill:#555">MAC R1-2 → R2-1</text>
+  <rect x="306" y="224" width="168" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="390" y="241" class="c sub mono" style="fill:#555">IP .1.10 → 10.0.2.20</text>
+  <line x1="390" y1="100" x2="390" y2="166" stroke="#BBB" stroke-dasharray="3 3"/>
+  <rect x="508" y="170" width="184" height="88" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="600" y="188" class="c sub">帧首部</text>
+  <rect x="516" y="194" width="168" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="600" y="211" class="c sub mono" style="fill:#555">MAC R2-2 → H2</text>
+  <rect x="516" y="224" width="168" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="600" y="241" class="c sub mono" style="fill:#555">IP .1.10 → 10.0.2.20</text>
+  <line x1="600" y1="100" x2="600" y2="166" stroke="#BBB" stroke-dasharray="3 3"/>
+  <text x="40" y="296" class="sub">淡紫色是帧首部中的 MAC 地址，每经过一段链路就换成这一段两端的地址；</text>
+  <text x="40" y="314" class="sub">浅蓝色是 IP 首部中的地址，从 H1 到 H2 一直不变（.1.10 即 192.168.1.10）。</text>
+  <text x="40" y="340" class="sub">H1 发送前用 ARP 查的是下一跳 R1-1 的 MAC 地址，而不是 H2 的；R1、R2 转发时也各自查下一跳。</text>
+</svg>

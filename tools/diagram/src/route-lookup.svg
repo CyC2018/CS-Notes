@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">路由器 R0 转发分组：最长前缀匹配</text>
+  <text x="40" y="58" class="b">R0 的路由表</text>
+  <rect x="40" y="70" width="150" height="28" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="115" y="88.5" class="c sub b">目的网络</text>
+  <rect x="190" y="70" width="150" height="28" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="265" y="88.5" class="c sub b">下一跳</text>
+  <rect x="40" y="98" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="115" y="116.5" class="c sub mono">192.168.1.0/24</text>
+  <rect x="190" y="98" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="265" y="116.5" class="c sub">直接交付（eth0）</text>
+  <rect x="40" y="126" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="115" y="144.5" class="c sub mono">10.1.0.0/16</text>
+  <rect x="190" y="126" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="265" y="144.5" class="c sub">R2</text>
+  <rect x="40" y="154" width="150" height="28" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="115" y="172.5" class="c sub mono">10.1.4.0/22</text>
+  <rect x="190" y="154" width="150" height="28" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="265" y="172.5" class="c sub">R3</text>
+  <rect x="40" y="182" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="115" y="200.5" class="c sub mono">0.0.0.0/0</text>
+  <rect x="190" y="182" width="150" height="28" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="265" y="200.5" class="c sub">R1（默认路由）</text>
+  <text x="390" y="70" class="b">目的地址 10.1.5.9</text>
+  <text x="390" y="98" class="sub mono">10.1.5.9</text>
+  <text x="476" y="98" class="sub mono"><tspan style="fill:#766AA8">00001010.00000001.000001</tspan><tspan>01.00001001</tspan></text>
+  <text x="390" y="120" class="sub mono">10.1.0.0/16</text>
+  <text x="476" y="120" class="sub mono"><tspan style="fill:#766AA8">00001010.00000001</tspan><tspan>.00000000.00000000</tspan></text>
+  <text x="390" y="142" class="sub mono">10.1.4.0/22</text>
+  <text x="476" y="142" class="sub mono"><tspan style="fill:#766AA8">00001010.00000001.000001</tspan><tspan>00.00000000</tspan></text>
+  <text x="390" y="172" class="sub" style="fill:#555">/16 和 /22 都匹配，选前缀更长的 /22，交给 R3。</text>
+  <text x="390" y="210" class="b">目的地址 8.8.8.8</text>
+  <text x="390" y="230" class="sub" style="fill:#555">只有默认路由 0.0.0.0/0 匹配，交给 R1。</text>
+  <text x="390" y="268" class="b">目的地址 192.168.1.7</text>
+  <text x="390" y="288" class="sub" style="fill:#555">在直接相连的网络中，用 ARP 查出 MAC 地址后直接交付。</text>
+  <text x="40" y="244" class="sub">0.0.0.0/0 的前缀长度为 0，</text>
+  <text x="40" y="262" class="sub">能匹配任何地址，只在没有</text>
+  <text x="40" y="280" class="sub">其它表项匹配时才使用。</text>
+  <text x="40" y="322" class="sub">没有任何表项匹配（也没有默认路由）时，丢弃分组并向源主机发送 ICMP 终点不可达报文。</text>
+</svg>

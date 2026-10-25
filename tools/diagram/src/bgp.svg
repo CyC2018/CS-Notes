@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">BGP：自治系统之间交换路由</text>
+  <path d="M49.2,250 C7.4,250 11.2,205 45.4,202 C41.6,168 106.2,155 121.4,180 C144.2,162 189.8,172 178.4,202 C212.6,206 212.6,250 170.8,250 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="92" y="206" class="c b">AS1</text>
+  <text x="92" y="222" class="c sub">内部用 OSPF</text>
+  <path d="M319.2,136 C277.4,136 281.2,91 315.4,88 C311.6,54 376.2,41 391.4,66 C414.2,48 459.8,58 448.4,88 C482.6,92 482.6,136 440.8,136 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="380" y="84" class="c b">AS2</text>
+  <text x="380" y="100" class="c sub">内部用 OSPF</text>
+  <path d="M589.2,250 C547.4,250 551.2,205 585.4,202 C581.6,168 646.2,155 661.4,180 C684.2,162 729.8,172 718.4,202 C752.6,206 752.6,250 710.8,250 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="668" y="206" class="c b">AS3</text>
+  <text x="668" y="222" class="c sub">内部用 RIP</text>
+  <path d="M319.2,370 C277.4,370 281.2,325 315.4,322 C311.6,288 376.2,275 391.4,300 C414.2,282 459.8,292 448.4,322 C482.6,326 482.6,370 440.8,370 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="380" y="336" class="c b">AS4</text>
+  <text x="380" y="352" class="c sub">内部用 OSPF</text>
+  <line x1="190" y1="210" x2="380" y2="132" stroke="#B8B0DE" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <line x1="380" y1="132" x2="570" y2="210" stroke="#B8B0DE" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <line x1="190" y1="210" x2="380" y2="292" stroke="#B8B0DE" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <line x1="380" y1="292" x2="570" y2="210" stroke="#B8B0DE" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <circle cx="190" cy="210" r="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="193.25" y1="213.25" x2="199.1" y2="219.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="186.75" y1="206.75" x2="180.9" y2="200.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="193.25" y1="206.75" x2="199.1" y2="200.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="186.75" y1="213.25" x2="180.9" y2="219.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M195.1,219.1 L199.1,219.1 L199.1,215.1" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M184.9,200.9 L180.9,200.9 L180.9,204.9" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M197.25,206.75 L193.25,206.75 L193.25,202.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M182.75,213.25 L186.75,213.25 L186.75,217.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="380" cy="132" r="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="383.25" y1="135.25" x2="389.1" y2="141.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="376.75" y1="128.75" x2="370.9" y2="122.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="383.25" y1="128.75" x2="389.1" y2="122.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="376.75" y1="135.25" x2="370.9" y2="141.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M385.1,141.1 L389.1,141.1 L389.1,137.1" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M374.9,122.9 L370.9,122.9 L370.9,126.9" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M387.25,128.75 L383.25,128.75 L383.25,124.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M372.75,135.25 L376.75,135.25 L376.75,139.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="570" cy="210" r="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="573.25" y1="213.25" x2="579.1" y2="219.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="566.75" y1="206.75" x2="560.9" y2="200.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="573.25" y1="206.75" x2="579.1" y2="200.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="566.75" y1="213.25" x2="560.9" y2="219.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M575.1,219.1 L579.1,219.1 L579.1,215.1" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M564.9,200.9 L560.9,200.9 L560.9,204.9" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M577.25,206.75 L573.25,206.75 L573.25,202.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M562.75,213.25 L566.75,213.25 L566.75,217.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="380" cy="292" r="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="383.25" y1="295.25" x2="389.1" y2="301.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="376.75" y1="288.75" x2="370.9" y2="282.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="383.25" y1="288.75" x2="389.1" y2="282.9" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="376.75" y1="295.25" x2="370.9" y2="301.1" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M385.1,301.1 L389.1,301.1 L389.1,297.1" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M374.9,282.9 L370.9,282.9 L370.9,286.9" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M387.25,288.75 L383.25,288.75 L383.25,284.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M372.75,295.25 L376.75,295.25 L376.75,299.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="272" y="160" class="sub e">BGP 会话（TCP 179）</text>
+  <line x1="532" y1="252" x2="447" y2="289" class="arrow "/>
+  <rect x="500" y="290" width="220" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M500,291 L514,301 L528,291" fill="none" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="534" y="308" class="sub">203.0.113.0/24，路径 AS3</text>
+  <text x="610" y="336" class="c sub">① AS3 通告自己的网络</text>
+  <line x1="323" y1="293" x2="238" y2="257" class="arrow "/>
+  <rect x="20" y="290" width="240" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M20,291 L34,301 L48,291" fill="none" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="54" y="308" class="sub">203.0.113.0/24，路径 AS4 AS3</text>
+  <text x="140" y="336" class="c sub">② AS4 把自己加到路径前面再转告</text>
+  <text x="20" y="394" class="sub">浅青色是各 AS 的 BGP 发言人。AS1 从 AS4 和 AS2 都可能收到到 203.0.113.0/24 的路由，按策略和路径长度选一条；</text>
+  <text x="20" y="412" class="sub">路径中出现自己的 AS 号说明有环路，直接丢弃。</text>
+</svg>

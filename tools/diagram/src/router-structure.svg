@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="410" viewBox="0 0 740 410">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">路由器的结构</text>
+  <rect x="180" y="46" width="380" height="96" rx="8" class="frame"/>
+  <text x="190" y="64" class="b">路由选择部分（控制）</text>
+  <line x1="222.5" y1="84" x2="222.5" y2="124" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="210" y1="96.5" x2="250" y2="96.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="230" y1="84" x2="230" y2="124" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="210" y1="104" x2="250" y2="104" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="237.5" y1="84" x2="237.5" y2="124" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="210" y1="111.5" x2="250" y2="111.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="215" y="89" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="223.4" y="97.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="262" y="92" class="sub">路由选择处理机：运行 RIP、OSPF、BGP，</text>
+  <text x="262" y="110" class="sub">与相邻路由器交换信息，计算出路由表，</text>
+  <text x="262" y="128" class="sub">再生成转发表下发到各输入端口</text>
+  <rect x="20" y="168" width="700" height="204" rx="8" class="frame"/>
+  <text x="30" y="186" class="b">分组转发部分（数据）</text>
+  <text x="100" y="212" class="c b">输入端口</text>
+  <text x="185" y="212" class="c sub">转发表</text>
+  <text x="620" y="212" class="c b">输出端口</text>
+  <rect x="40" y="224" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="50" y="228" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="61" y="241" class="c sub"></text>
+  <rect x="76" y="228" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="87" y="241" class="c sub"></text>
+  <rect x="102" y="228" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="128" y="228" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="172" y="227" width="26" height="20" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="172" y1="237" x2="198" y2="237" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="185" y1="227" x2="185" y2="247" stroke="#BBB" stroke-width="0.8"/>
+  <rect x="560" y="224" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="570" y="228" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="581" y="241" class="c sub"></text>
+  <rect x="596" y="228" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="607" y="241" class="c sub"></text>
+  <rect x="622" y="228" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="633" y="241" class="c sub"></text>
+  <rect x="648" y="228" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <line x1="204" y1="237" x2="288" y2="292" class="arrow "/>
+  <line x1="452" y1="292" x2="556" y2="237" class="arrow "/>
+  <rect x="40" y="272" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="50" y="276" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="61" y="289" class="c sub"></text>
+  <rect x="76" y="276" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="87" y="289" class="c sub"></text>
+  <rect x="102" y="276" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="128" y="276" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="172" y="275" width="26" height="20" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="172" y1="285" x2="198" y2="285" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="185" y1="275" x2="185" y2="295" stroke="#BBB" stroke-width="0.8"/>
+  <rect x="560" y="272" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="570" y="276" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="581" y="289" class="c sub"></text>
+  <rect x="596" y="276" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="607" y="289" class="c sub"></text>
+  <rect x="622" y="276" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="633" y="289" class="c sub"></text>
+  <rect x="648" y="276" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <line x1="204" y1="285" x2="288" y2="292" class="arrow "/>
+  <line x1="452" y1="292" x2="556" y2="285" class="arrow "/>
+  <rect x="40" y="320" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="50" y="324" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="61" y="337" class="c sub"></text>
+  <rect x="76" y="324" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="87" y="337" class="c sub"></text>
+  <rect x="102" y="324" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="128" y="324" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="172" y="323" width="26" height="20" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="172" y1="333" x2="198" y2="333" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="185" y1="323" x2="185" y2="343" stroke="#BBB" stroke-width="0.8"/>
+  <rect x="560" y="320" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="570" y="324" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="581" y="337" class="c sub"></text>
+  <rect x="596" y="324" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="607" y="337" class="c sub"></text>
+  <rect x="622" y="324" width="22" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="633" y="337" class="c sub"></text>
+  <rect x="648" y="324" width="22" height="18" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <line x1="204" y1="333" x2="288" y2="292" class="arrow "/>
+  <line x1="452" y1="292" x2="556" y2="333" class="arrow "/>
+  <rect x="290" y="250" width="160" height="84" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="370" y="290" class="b c">交换结构</text>
+  <text x="370" y="305" class="sub c">把分组从输入端口</text>
+  <text x="370" y="324" class="c sub">送到输出端口</text>
+  <path d="M300,142 C300,196 250,206 202,226" class="arrow dash"/>
+  <text x="40" y="396" class="sub">输入端口按目的地址查转发表，决定送往哪个输出端口；分组到达得比处理得快时就在端口排队，队列满了就丢弃。</text>
+</svg>
