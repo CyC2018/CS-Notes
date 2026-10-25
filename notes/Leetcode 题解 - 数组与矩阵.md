@@ -13,6 +13,8 @@
     * [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
     * [11. 嵌套数组](#11-嵌套数组)
     * [12. 分隔数组](#12-分隔数组)
+    * [13. 合并区间](#13-合并区间)
+    * [14. 下一个排列](#14-下一个排列)
 <!-- GFM-TOC -->
 
 
@@ -450,5 +452,85 @@ public int maxChunksToSorted(int[] arr) {
         if (right == i) ret++;
     }
     return ret;
+}
+```
+
+## 13. 合并区间
+
+56\. Merge Intervals (Medium)
+
+[Leetcode](https://leetcode.com/problems/merge-intervals/) / [力扣](https://leetcode.cn/problems/merge-intervals/)
+
+```text
+Input: [[1, 3], [2, 6], [8, 10], [15, 18]]
+Output: [[1, 6], [8, 10], [15, 18]]
+```
+
+按区间的左端点排序后，能合并的区间一定是相邻的。依次检查每个区间：如果它的左端点不超过结果中最后一个区间的右端点，就把两者合并；否则作为一个新区间加入结果。
+
+```java
+public int[][] merge(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+    List<int[]> ret = new ArrayList<>();
+    for (int[] cur : intervals) {
+        if (!ret.isEmpty() && cur[0] <= ret.get(ret.size() - 1)[1]) {
+            int[] last = ret.get(ret.size() - 1);
+            last[1] = Math.max(last[1], cur[1]);
+        } else {
+            ret.add(cur);
+        }
+    }
+    return ret.toArray(new int[ret.size()][]);
+}
+```
+
+## 14. 下一个排列
+
+31\. Next Permutation (Medium)
+
+[Leetcode](https://leetcode.com/problems/next-permutation/) / [力扣](https://leetcode.cn/problems/next-permutation/)
+
+```text
+Input: [1, 2, 3]    Output: [1, 3, 2]
+Input: [3, 2, 1]    Output: [1, 2, 3]
+```
+
+题目描述：把数组原地重排为字典序中下一个更大的排列，如果已经是最大的排列，就重排为最小的排列。
+
+要让排列变大又变得尽量少，应该修改尽量靠右的位置：
+
+- 从右往左找到第一个满足 nums[i] < nums[i + 1] 的位置 i，i 右边是一段降序，已经是这一段能组成的最大排列；
+- 从右往左找到第一个大于 nums[i] 的元素 nums[j]，交换两者，i 位置变大了一点；
+- 交换后 i 右边仍然是降序，把它反转为升序，使这一段尽量小。
+
+```text
+1 5 8 4 7 6 5 3 1
+      i       j
+交换：1 5 8 5 7 6 4 3 1
+反转：1 5 8 5 1 3 4 6 7
+```
+
+```java
+public void nextPermutation(int[] nums) {
+    int i = nums.length - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        i--;
+    }
+    if (i >= 0) {
+        int j = nums.length - 1;
+        while (nums[j] <= nums[i]) {
+            j--;
+        }
+        swap(nums, i, j);
+    }
+    for (int l = i + 1, r = nums.length - 1; l < r; l++, r--) {
+        swap(nums, l, r);
+    }
+}
+
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
 }
 ```
