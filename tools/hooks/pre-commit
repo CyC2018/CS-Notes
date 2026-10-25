@@ -1,0 +1,14 @@
+#!/bin/sh
+# 提交时给 notes/pics 下新增或修改的 PNG、JPEG 配图自动加 CyC2018 浅水印。
+# 启用：git config core.hooksPath tools/hooks
+root=$(git rev-parse --show-toplevel) || exit 1
+files=$(git diff --cached --name-only --diff-filter=AM -- 'notes/pics/*.png' 'notes/pics/*.jpg' 'notes/pics/*.jpeg')
+[ -z "$files" ] && exit 0
+if ! python3 -c "import PIL" 2>/dev/null; then
+    echo "pre-commit: 需要 Pillow 才能给配图加水印，请先执行 pip3 install pillow" >&2
+    exit 1
+fi
+echo "$files" | while IFS= read -r f; do
+    python3 "$root/tools/watermark.py" "$root/$f" || exit 1
+    git add -- "$root/$f"
+done

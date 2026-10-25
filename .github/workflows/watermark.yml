@@ -1,0 +1,32 @@
+# 检查 PR 中新增或修改的配图是否已加 CyC2018 水印，缺少时提示用 tools/watermark.py 补上。
+name: 配图水印检查
+
+on:
+  pull_request:
+    paths:
+      - 'notes/pics/**'
+
+permissions:
+  contents: read
+
+jobs:
+  watermark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - name: 检查配图
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git diff --name-only --diff-filter=AM "origin/$BASE_REF...HEAD" -- 'notes/pics/*.png' 'notes/pics/*.jpg' 'notes/pics/*.jpeg' > files.txt
+          if [ ! -s files.txt ]; then echo "没有新增或修改的 PNG、JPEG 配图"; exit 0; fi
+          if ! xargs -d '\n' python3 tools/watermark.py --check < files.txt; then
+            echo "::error::以上配图缺少水印，请执行 python3 tools/watermark.py <图片> 后重新提交，或启用 git config core.hooksPath tools/hooks"
+            exit 1
+          fi

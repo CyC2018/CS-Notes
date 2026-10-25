@@ -90,6 +90,8 @@
 
 在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
 
+提交 Issue、PR 以及添加配图的约定见 [贡献指南](CONTRIBUTING.md)。
+
 ### License
 
 本仓库的内容不是将网上的资料随意拼凑而来，除了少部分引用书上和技术文档的原文（这部分内容都在末尾的参考链接中加了出处），其余都是我的原创。在您引用本仓库内容或者对内容进行修改演绎时，请署名并以相同方式共享，谢谢。
