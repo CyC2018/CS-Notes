@@ -15,7 +15,7 @@
     .dash { stroke-dasharray: 5 4; }
     .line { stroke: #666; stroke-width: 1.3; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
-    .shadow { fill: #C0C0C0; }
+    .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -33,7 +33,7 @@
   <text x="320" y="28" class="title">select / poll 与 epoll</text>
   <rect x="20" y="50" width="290" height="265" rx="8" class="frame"/>
   <text x="30" y="68" class="b">select / poll</text>
-  <rect x="98" y="83" width="140" height="34" rx="6" class="shadow"/>
+  <rect x="97" y="82" width="140" height="34" rx="6" class="shadow"/>
   <rect x="95" y="80" width="140" height="34" rx="6" fill="#B0E3E6"/>
   <text x="165" y="101.5" class="b c">用户进程</text>
   <line x1="30" y1="150" x2="300" y2="150" class="line dash"/>
@@ -41,7 +41,7 @@
   <text x="300" y="163" class="sub e">内核态</text>
   <rect x="330" y="50" width="290" height="265" rx="8" class="frame"/>
   <text x="340" y="68" class="b">epoll</text>
-  <rect x="408" y="83" width="140" height="34" rx="6" class="shadow"/>
+  <rect x="407" y="82" width="140" height="34" rx="6" class="shadow"/>
   <rect x="405" y="80" width="140" height="34" rx="6" fill="#B0E3E6"/>
   <text x="475" y="101.5" class="b c">用户进程</text>
   <line x1="340" y1="150" x2="610" y2="150" class="line dash"/>
@@ -50,7 +50,7 @@
   <line x1="110" y1="117" x2="110" y2="200" class="arrow "/>
   <text x="104" y="180" class="e sub">每次调用复制</text>
   <text x="104" y="194" class="e sub">全部描述符</text>
-  <rect x="73" y="206" width="160" height="40" rx="6" class="shadow"/>
+  <rect x="72" y="205" width="160" height="40" rx="6" class="shadow"/>
   <rect x="70" y="203" width="160" height="40" rx="6" fill="#B1DDF0"/>
   <text x="150" y="221" class="b c">遍历全部描述符</text>
   <text x="150" y="236" class="sub c">检查是否就绪</text>
@@ -73,10 +73,10 @@
   <circle cx="385" cy="275" r="9" fill="#61646B"/>
   <circle cx="415" cy="275" r="9" fill="#C0605A"/>
   <text x="400" y="300" class="c sub">红黑树：已注册描述符</text>
-  <rect x="535" y="210" width="50" height="20" rx="3" fill="#F3D9A4"/>
-  <rect x="535" y="238" width="50" height="20" rx="3" fill="#F3D9A4"/>
+  <rect x="535" y="210" width="50" height="20" rx="3" fill="#DDD7F6"/>
+  <rect x="535" y="238" width="50" height="20" rx="3" fill="#DDD7F6"/>
   <line x1="560" y1="230" x2="560" y2="237" class="arrow "/>
-  <rect x="535" y="266" width="50" height="20" rx="3" fill="#F3D9A4"/>
+  <rect x="535" y="266" width="50" height="20" rx="3" fill="#DDD7F6"/>
   <line x1="560" y1="258" x2="560" y2="265" class="arrow "/>
   <text x="560" y="297" class="c sub">就绪链表</text>
   <path d="M430,245 C470,245 490,220 532,220" class="arrow dash"/>
