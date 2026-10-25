@@ -481,6 +481,40 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 - Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
 - 对于大型网站，如果用户所有的信息都存储在 Session 中，那么开销是非常大的，因此不建议将所有的用户信息都存储到 Session 中。
 
+#### 11. JWT
+
+JSON Web Token（JWT）是一种自带签名的令牌。用户登录成功后，服务器把用户 ID、过期时间等信息签名后生成 JWT 返回给客户端，客户端之后在请求的 Authorization 首部中携带它。服务器验证签名，就能确认令牌是自己签发的、内容没有被修改，不需要像 Session 那样在服务器保存会话。
+
+JWT 由三部分组成，用 . 连接：
+
+```html
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwMjQsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzY3MjI1NjAwfQ.35OYguRMXfGxb4cYZPiP9KDH3-Ny6vMNwrPe-lNHBBw
+```
+
+- 头部：{"alg":"HS256","typ":"JWT"} 的 Base64URL 编码，表示用 HMAC-SHA256 计算签名；
+- 载荷：{"uid":1024,"role":"user","exp":1767225600} 的 Base64URL 编码，exp 是过期时间 2026-01-01 00:00:00（UTC）；
+- 签名：用只有服务器知道的密钥，对“头部.载荷”计算 HMAC-SHA256。
+
+头部和载荷只是编码而不是加密，任何人都能解码看到内容，所以载荷中不能放密码等敏感信息。签名的作用是防篡改：如果把载荷中的 role 改成 admin，没有密钥就算不出新的签名，服务器按篡改后的内容重新计算的签名与令牌中的不一致，请求会被拒绝：
+
+```text
+令牌中的签名        35OYguRMXfGxb4cYZPiP9KDH3-Ny6vMNwrPe-lNHBBw
+按篡改后的内容计算  Az4UO74FtqslT1MDLrbi7CMlKtd4KICR1jcwA7rJE4U
+```
+
+JWT 与 Session 的区别：
+
+- Session 的状态保存在服务器，删除 Session 就能让用户立即下线；集群中需要共享 Session，见 [集群下的 Session 管理](集群.md#二集群下的-session-管理)；
+- JWT 的状态保存在令牌中，任何持有密钥的服务都能独立验证，适合多个服务共用登录状态；代价是令牌签发后在过期前一直有效，服务器无法主动让它失效。
+
+无法主动失效是 JWT 最常被追问的问题，常用的解决方法是双令牌：访问令牌（Access Token）的有效期很短，例如 15 分钟，每次请求都携带；刷新令牌（Refresh Token）的有效期较长，服务器记录已签发的刷新令牌，只在访问令牌过期时用它换取新的访问令牌。用户退出或者被封禁时撤销刷新令牌，已经发出的访问令牌最多 15 分钟后自然失效。需要立即失效时，可以把令牌的 ID 放入 Redis 黑名单，过期时间设为令牌的剩余有效期，但这又回到了在服务器保存状态。
+
+令牌在浏览器中的存放位置：放在 localStorage 中，页面上的任何脚本都能读取，一旦存在 XSS 漏洞，令牌就会被盗走；放在 HttpOnly 的 Cookie 中，脚本读不到，但浏览器会自动携带 Cookie，需要防范 [跨站请求伪造](攻击技术.md#二跨站请求伪造)。
+
+需要注意的是，服务器验证时要固定使用的签名算法，不能接受头部中 alg 为 none 的令牌；HMAC 的密钥要随机生成，长度不少于 256 位。
+
+JWT 只是令牌的格式，而 OAuth 2.0 是授权框架，规定第三方应用如何获得访问令牌，这个访问令牌可以用 JWT 表示。
+
 ### 缓存
 
 #### 1. 优点
@@ -920,6 +954,9 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 ## 参考资料
 
+- [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)
+- [OWASP: JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)
+- [OWASP: HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html)
 - 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
