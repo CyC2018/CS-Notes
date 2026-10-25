@@ -58,7 +58,7 @@
 
 - HashMap：基于哈希表实现。
 
-- HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
+- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
@@ -502,7 +502,7 @@ map.put("K3", "V3");
 - 插入 &lt;K2,V2\> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
 - 插入 &lt;K3,V3\> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2\> 前面。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。
+应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。JDK 1.8 改成了尾插法。
 
 查找需要分成两步进行：
 
@@ -628,14 +628,14 @@ public final int hashCode() {
 
 令 x = 1\<\<4，即 x 为 2 的 4 次方，它具有以下性质：
 
-```
+```text
 x   : 00010000
 x-1 : 00001111
 ```
 
 令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
 
-```
+```text
 y       : 10110010
 x-1     : 00001111
 y&(x-1) : 00000010
@@ -643,7 +643,7 @@ y&(x-1) : 00000010
 
 这个性质和 y 对 x 取模效果是一样的：
 
-```
+```text
 y   : 10110010
 x   : 00010000
 y%x : 00000010
@@ -760,7 +760,7 @@ HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它
 
 先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
-```
+```text
 mask |= mask >> 1    11011000
 mask |= mask >> 2    11111110
 mask |= mask >> 4    11111111
@@ -768,7 +768,7 @@ mask |= mask >> 4    11111111
 
 mask+1 是大于原始数字的最小的 2 的 n 次方。
 
-```
+```text
 num     10010000
 mask+1 100000000
 ```
@@ -998,7 +998,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 
 #### afterNodeInsertion()
 
-在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最晚的节点，也就是链表首部节点 first。
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最老的节点，也就是链表首部节点 first。
 
 evict 只有在构建 Map 的时候才为 false，在这里为 true。
 

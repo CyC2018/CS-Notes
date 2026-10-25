@@ -8,7 +8,7 @@
     * [二、String](#二string)
         * [概览](#概览)
         * [不可变的好处](#不可变的好处)
-        * [String, StringBuffer and StringBuilder	](#string-stringbuffer-and-stringbuilder	)
+        * [String, StringBuffer and StringBuilder](#string-stringbuffer-and-stringbuilder)
         * [String Pool](#string-pool)
         * [new String("abc")](#new-stringabc)
     * [三、运算](#三运算)
@@ -207,7 +207,7 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 
 [Program Creek : Why String is immutable in Java?](https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/)
 
-### String, StringBuffer and StringBuilder	
+### String, StringBuffer and StringBuilder
 
 **1. 可变性**  
 
@@ -1134,7 +1134,7 @@ System.out.println(InterfaceExample.x);
 
 **3. 比较**  
 
-- 从设计层面上看，抽象类提供了一种 IS-A 关系，需要满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
+- 从设计层面上看，抽象类提供了一种 IS-A 关系，需要满足里氏替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
 - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。
 - 接口的成员只能是 public 的，而抽象类的成员可以有多种访问权限。
@@ -1218,7 +1218,7 @@ SuperExtendExample.func()
 
 存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。
 
-为了满足里式替换原则，重写有以下三个限制：
+为了满足里氏替换原则，重写有以下三个限制：
 
 - 子类方法的访问权限必须大于等于父类方法；
 - 子类方法的返回类型必须是父类方法返回类型或为其子类型。
@@ -1346,7 +1346,7 @@ public static void main(String[] args) {
 
 ## 七、反射
 
-每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。
+每个类都有一个   **Class**   对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件保存着类的字节码，类加载时 JVM 根据它创建对应的 Class 对象。
 
 类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 `Class.forName("com.mysql.jdbc.Driver")` 这种方式来控制类的加载，该方法会返回一个 Class 对象。
 
@@ -1381,8 +1381,8 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：  **Error**   和 **Exception**。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
 
--   **受检异常**  ：需要用 try...catch... 语句捕获并进行处理，并且可以从异常中恢复；
--   **非受检异常**  ：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序崩溃并且无法恢复。
+-   **受检异常**  ：需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，并且可以从异常中恢复；
+-   **非受检异常**  ：是程序运行时错误，例如除 0 会引发 ArithmeticException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
 
@@ -1421,7 +1421,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 3. Date and Time API
 4. Default Methods
 5. Type Annotations
-6. Nashhorn JavaScript Engine
+6. Nashorn JavaScript Engine
 7. Concurrent Accumulators
 8. Parallel operations
 9. PermGen Error Removed

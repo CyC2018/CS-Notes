@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="592" height="245" viewBox="0 0 592 245">
+  <style>
+    text { font-family: Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 11px; fill: #000; }
+    .name { font-weight: bold; text-anchor: middle; }
+    .cls { fill: #fff; stroke: #000; stroke-width: 1; }
+    .shadow { fill: #EBEBEB; }
+    .line { stroke: #000; stroke-width: 1; fill: none; }
+    .dash { stroke-dasharray: 4 3; }
+  </style>
+  <defs>
+    <marker id="open" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,1 L10,5 L0,9" fill="none" stroke="#000" stroke-width="1"/>
+    </marker>
+    <marker id="triangle" viewBox="0 0 12 12" refX="12" refY="6" markerWidth="15" markerHeight="15" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#fff" stroke="#000" stroke-width="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Client -->
+  <rect x="40" y="38" width="137" height="56" class="shadow"/>
+  <rect x="35" y="35" width="137" height="56" class="cls"/>
+  <text x="103.5" y="52" class="name">Client</text>
+  <line x1="35" y1="60" x2="172" y2="60" class="line"/>
+  <line x1="35" y1="70" x2="172" y2="70" class="line"/>
+
+  <!-- Target -->
+  <rect x="288" y="38" width="112" height="56" class="shadow"/>
+  <rect x="283" y="35" width="112" height="56" class="cls"/>
+  <text x="339" y="52" class="name">Target</text>
+  <line x1="283" y1="60" x2="395" y2="60" class="line"/>
+  <line x1="283" y1="70" x2="395" y2="70" class="line"/>
+  <text x="288" y="84">+request()</text>
+
+  <!-- Adapter：实现 Target，内部持有 Adaptee -->
+  <rect x="288" y="166" width="105" height="56" class="shadow"/>
+  <rect x="283" y="163" width="105" height="56" class="cls"/>
+  <text x="335.5" y="180" class="name">Adapter</text>
+  <line x1="283" y1="188" x2="388" y2="188" class="line"/>
+  <line x1="283" y1="198" x2="388" y2="198" class="line"/>
+  <text x="288" y="212">+request()</text>
+
+  <!-- Adaptee：被适配的已有类 -->
+  <rect x="448" y="166" width="121" height="56" class="shadow"/>
+  <rect x="443" y="163" width="121" height="56" class="cls"/>
+  <text x="503.5" y="180" class="name">Adaptee</text>
+  <line x1="443" y1="188" x2="564" y2="188" class="line"/>
+  <line x1="443" y1="198" x2="564" y2="198" class="line"/>
+  <text x="448" y="212">+specificRequest()</text>
+
+  <!-- 注释：Adapter.request() 的实现 -->
+  <path d="M92,187 H250 L260,197 V224 H92 Z" fill="#E0E0E0" stroke="#000" stroke-width="1"/>
+  <path d="M250,187 V197 H260" fill="none" stroke="#000" stroke-width="1"/>
+  <text x="97" y="200">adaptee.specificRequest()</text>
+  <line x1="260" y1="202" x2="283" y2="200" class="line dash"/>
+
+  <!-- 关系 -->
+  <line x1="172" y1="63" x2="283" y2="63" class="line dash" marker-end="url(#open)"/>
+  <line x1="337" y1="163" x2="338" y2="91" class="line" marker-end="url(#triangle)"/>
+  <line x1="388" y1="191" x2="443" y2="191" class="line" marker-end="url(#open)"/>
+</svg>

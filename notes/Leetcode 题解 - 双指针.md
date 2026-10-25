@@ -252,7 +252,7 @@ public boolean hasCycle(ListNode head) {
 
 [Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
 
-```
+```text
 Input:
 s = "abpcplea", d = ["ale","apple","monkey","plea"]
 
