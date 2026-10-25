@@ -17,14 +17,12 @@
   </defs>
 
   <!-- Client -->
-  <rect x="40" y="38" width="137" height="56" class="shadow"/>
   <rect x="35" y="35" width="137" height="56" class="cls"/>
   <text x="103.5" y="52" class="name">Client</text>
   <line x1="35" y1="60" x2="172" y2="60" class="line"/>
   <line x1="35" y1="70" x2="172" y2="70" class="line"/>
 
   <!-- Target -->
-  <rect x="288" y="38" width="112" height="56" class="shadow"/>
   <rect x="283" y="35" width="112" height="56" class="cls"/>
   <text x="339" y="52" class="name">Target</text>
   <line x1="283" y1="60" x2="395" y2="60" class="line"/>
@@ -32,7 +30,6 @@
   <text x="288" y="84">+request()</text>
 
   <!-- Adapter：实现 Target，内部持有 Adaptee -->
-  <rect x="288" y="166" width="105" height="56" class="shadow"/>
   <rect x="283" y="163" width="105" height="56" class="cls"/>
   <text x="335.5" y="180" class="name">Adapter</text>
   <line x1="283" y1="188" x2="388" y2="188" class="line"/>
@@ -40,7 +37,6 @@
   <text x="288" y="212">+request()</text>
 
   <!-- Adaptee：被适配的已有类 -->
-  <rect x="448" y="166" width="121" height="56" class="shadow"/>
   <rect x="443" y="163" width="121" height="56" class="cls"/>
   <text x="503.5" y="180" class="name">Adaptee</text>
   <line x1="443" y1="188" x2="564" y2="188" class="line"/>
