@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="290" viewBox="0 0 600 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">接雨水</text>
+  <text x="78" y="246" class="c sub">0</text>
+  <rect x="98" y="190" width="36" height="40" fill="#9E9E9E"/>
+  <text x="116" y="246" class="c sub">1</text>
+  <rect x="136" y="190" width="36" height="40" fill="#D6EEF8"/>
+  <text x="154" y="246" class="c sub">2</text>
+  <rect x="174" y="150" width="36" height="80" fill="#9E9E9E"/>
+  <text x="192" y="246" class="c sub">3</text>
+  <rect x="212" y="150" width="36" height="40" fill="#D6EEF8"/>
+  <rect x="212" y="190" width="36" height="40" fill="#9E9E9E"/>
+  <text x="230" y="246" class="c sub">4</text>
+  <rect x="250" y="150" width="36" height="80" fill="#D6EEF8"/>
+  <text x="268" y="246" class="c sub">5</text>
+  <rect x="288" y="150" width="36" height="40" fill="#D6EEF8"/>
+  <rect x="288" y="190" width="36" height="40" fill="#9E9E9E"/>
+  <text x="306" y="246" class="c sub">6</text>
+  <rect x="326" y="110" width="36" height="120" fill="#9E9E9E"/>
+  <text x="344" y="246" class="c sub">7</text>
+  <rect x="364" y="150" width="36" height="80" fill="#9E9E9E"/>
+  <text x="382" y="246" class="c sub">8</text>
+  <rect x="402" y="150" width="36" height="40" fill="#D6EEF8"/>
+  <rect x="402" y="190" width="36" height="40" fill="#9E9E9E"/>
+  <text x="420" y="246" class="c sub">9</text>
+  <rect x="440" y="150" width="36" height="80" fill="#9E9E9E"/>
+  <text x="458" y="246" class="c sub">10</text>
+  <rect x="478" y="190" width="36" height="40" fill="#9E9E9E"/>
+  <text x="496" y="246" class="c sub">11</text>
+  <line x1="54" y1="230" x2="516" y2="230" class="line"/>
+  <line x1="174" y1="150" x2="364" y2="150" class="line dash"/>
+  <text x="168" y="144" class="e note">leftMax = 2</text>
+  <text x="368" y="124" class="note">rightMax = 3</text>
+  <line x1="268" y1="86" x2="268" y2="146" class="arrow red"/>
+  <text x="208" y="80" class="c">位置 5 存水 min(2, 3) - 0 = 2</text>
+  <text x="300" y="278" class="c sub">灰色为柱子，浅蓝色为积水，总共 6</text>
+</svg>
