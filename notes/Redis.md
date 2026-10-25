@@ -9,6 +9,7 @@
         * [HASH](#hash)
         * [ZSET](#zset)
     * [三、数据结构](#三数据结构)
+        * [对象编码](#对象编码)
         * [字典](#字典)
         * [跳跃表](#跳跃表)
     * [四、使用场景](#四使用场景)
@@ -39,6 +40,7 @@
         * [主从链](#主从链)
     * [十二、Sentinel](#十二sentinel)
     * [十三、分片](#十三分片)
+        * [Redis Cluster](#redis-cluster)
     * [十四、一个简单的论坛系统分析](#十四一个简单的论坛系统分析)
         * [文章信息](#文章信息)
         * [点赞功能](#点赞功能)
@@ -208,6 +210,20 @@ OK
 ```
 
 ## 三、数据结构
+
+### 对象编码
+
+同一种数据类型会根据元素的数量和大小选择不同的底层结构，称为编码，可以用 OBJECT ENCODING 查看。元素少时使用 listpack，它把所有元素连续地存放在一块内存中，节省内存，查找时虽然要逐个比较，但元素很少时并不慢；元素增多后转换为查找更快的结构。以下是在 Redis 7.4 上用默认配置验证的结果：
+
+| 类型 | 元素少时 | 超过阈值后 | 阈值 |
+| --- | --- | --- | --- |
+| STRING | int（整数）、embstr | raw | 44 字节 |
+| LIST | listpack | quicklist（多个 listpack 组成的链表） | 单个 listpack 超过 8 KB |
+| HASH | listpack | hashtable | 512 个字段，或者有值超过 64 字节 |
+| SET | intset（全是整数）、listpack | hashtable | 整数 512 个，其它 128 个 |
+| ZSET | listpack | skiplist（跳跃表 + 字典） | 128 个成员，或者有成员超过 64 字节 |
+
+例如一个 HASH 有 512 个字段时编码为 listpack，再写入一个字段就变为 hashtable。ZSET 转换后同时使用跳跃表和字典：字典按成员查分数，跳跃表按分数排序和范围查询。
 
 ### 字典
 
@@ -570,6 +586,24 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 - 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。
 - 服务器分片：Redis Cluster，使用 CRC16(key) % 16384 计算键所属的哈希槽，再把 16384 个哈希槽分配给各个节点。
 
+### Redis Cluster
+
+Redis 有三种常见的部署方式，解决的问题不同：
+
+- 主从复制：从服务器复制主服务器的数据，分担读请求，主服务器宕机后需要手动切换；
+- Sentinel：在主从复制的基础上自动监控和故障转移，但仍然只有一个主服务器负责写入，数据量受单机内存限制；
+- Redis Cluster：把数据分散到多个主节点上，每个主节点有自己的从节点，同时解决容量和高可用的问题。
+
+Redis Cluster 把键空间分为 16384 个哈希槽，每个主节点负责一部分槽。下面是在本机创建的 3 主 3 从的集群：
+
+<div align="center"> <img src="pics/redis-cluster.png" width="720px"/> </div><br>
+
+- 客户端向不负责这个槽的节点发送命令时，会收到 MOVED 重定向。例如 user:1001 所在的槽 5712 属于 7002，发给 7001 会收到 MOVED 5712 127.0.0.1:7002。客户端会缓存槽与节点的对应关系，之后直接访问正确的节点；
+- 一条命令涉及多个键时，这些键必须在同一个槽中，否则报错 CROSSSLOT，Lua 脚本也是如此。可以用哈希标签（hash tag）让相关的键落到同一个槽：只有 {} 中的部分参与计算，{user:1001}:cart 和 {user:1001}:orders 都在槽 5712；
+- 主节点宕机后，它的一个从节点会被选为新的主节点。在本机把 cluster-node-timeout 设为 5 秒，停掉一个主节点后，这部分槽约 9 秒无法写入。
+
+需要注意的是，主从之间是异步复制，主节点宕机前刚写入、还没有复制到从节点的数据会丢失，所以 Redis Cluster 不保证强一致性。
+
 ## 十四、一个简单的论坛系统分析
 
 该论坛系统功能如下：
@@ -610,3 +644,4 @@ Redis 没有关系型数据库中的表这一概念来将同种类型的数据�
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
 - [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
 - [Using Redis as an LRU cache](https://redis.io/topics/lru-cache)
+- [Redis: Scale with Redis Cluster](https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/)
