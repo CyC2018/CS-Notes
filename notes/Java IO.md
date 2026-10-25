@@ -335,7 +335,7 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 - capacity：最大容量；
 - position：当前已经读写的字节数；
-- limit：还可以读写的字节数。
+- limit：第一个不能读写的位置，limit - position 就是还可以读写的字节数。
 
 状态变量的改变过程举例：
 
