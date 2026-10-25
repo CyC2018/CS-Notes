@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="330" viewBox="0 0 620 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #C0C0C0; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="310" y="28" class="title">消费者组</text>
+  <rect x="235" y="58" width="150" height="210" rx="8" class="frame"/>
+  <text x="245" y="76" class="b">Topic</text>
+  <rect x="258" y="95" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="255" y="92" width="110" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="310" y="114.5" class="b c">分区 0</text>
+  <rect x="258" y="150" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="255" y="147" width="110" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="310" y="169.5" class="b c">分区 1</text>
+  <rect x="258" y="205" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="255" y="202" width="110" height="36" rx="6" fill="#B1DDF0"/>
+  <text x="310" y="224.5" class="b c">分区 2</text>
+  <rect x="20" y="58" width="160" height="210" rx="8" class="frame"/>
+  <text x="30" y="76" class="b">消费者组 A</text>
+  <rect x="43" y="110" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="40" y="107" width="110" height="36" rx="6" fill="#B0E3E6"/>
+  <text x="95" y="129.5" class="b c">A1</text>
+  <rect x="43" y="190" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="40" y="187" width="110" height="36" rx="6" fill="#B0E3E6"/>
+  <text x="95" y="209.5" class="b c">A2</text>
+  <line x1="253" y1="110" x2="155" y2="120" class="arrow "/>
+  <line x1="253" y1="165" x2="155" y2="130" class="arrow "/>
+  <line x1="253" y1="220" x2="155" y2="205" class="arrow "/>
+  <rect x="440" y="50" width="160" height="262" rx="8" class="frame"/>
+  <text x="450" y="68" class="b">消费者组 B</text>
+  <rect x="468" y="80" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="465" y="77" width="110" height="36" rx="6" fill="#B0E3E6"/>
+  <text x="520" y="99.5" class="b c">B1</text>
+  <rect x="468" y="135" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="465" y="132" width="110" height="36" rx="6" fill="#B0E3E6"/>
+  <text x="520" y="154.5" class="b c">B2</text>
+  <rect x="468" y="190" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="465" y="187" width="110" height="36" rx="6" fill="#B0E3E6"/>
+  <text x="520" y="209.5" class="b c">B3</text>
+  <rect x="468" y="245" width="110" height="36" rx="6" class="shadow"/>
+  <rect x="465" y="242" width="110" height="36" rx="6" fill="#E6E6E6"/>
+  <text x="520" y="258" class="b c">B4</text>
+  <text x="520" y="273" class="sub c">空闲</text>
+  <line x1="370" y1="110" x2="460" y2="95" class="arrow "/>
+  <line x1="370" y1="165" x2="460" y2="150" class="arrow "/>
+  <line x1="370" y1="220" x2="460" y2="205" class="arrow "/>
+  <text x="310" y="300" class="c">同一个组内，每个分区只分配给一个消费者</text>
+  <text x="310" y="318" class="c sub">每个组都会收到 Topic 的全部消息</text>
+</svg>
