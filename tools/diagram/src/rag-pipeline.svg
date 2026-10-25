@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="380" viewBox="0 0 680 380">
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="390" viewBox="0 0 680 390">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,59 +31,68 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="340" y="28" class="title">RAG 的两个阶段</text>
-  <rect x="15" y="45" width="650" height="120" rx="8" class="frame"/>
+  <rect x="15" y="45" width="650" height="128" rx="8" class="frame"/>
   <text x="25" y="63" class="b">离线：建立索引</text>
-  <rect x="30" y="84" width="82" height="50" rx="6" class="shadow"/>
-  <rect x="28" y="82" width="82" height="50" rx="6" fill="#B1DDF0"/>
-  <text x="69" y="105" class="b c">员工手册</text>
-  <text x="69" y="120" class="sub c">PDF、网页</text>
-  <line x1="114" y1="107" x2="184" y2="107" class="arrow "/>
-  <text x="149" y="98" class="c">解析、切片</text>
-  <rect x="190" y="70" width="150" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="197" y="85" class="sub">第 3 章 年假：工作满 1 年…</text>
-  <rect x="190" y="98" width="150" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="197" y="113" class="sub">第 4 章 病假：需提供…</text>
-  <rect x="190" y="126" width="150" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="197" y="141" class="sub">第 5 章 报销：…</text>
-  <line x1="346" y1="107" x2="416" y2="107" class="arrow "/>
-  <text x="381" y="98" class="c">Embedding</text>
-  <text x="422" y="85" class="mono sub">[0.12, -0.53, …]</text>
-  <text x="422" y="113" class="mono sub">[0.80, 0.07, …]</text>
-  <text x="422" y="141" class="mono sub">[-0.31, 0.44, …]</text>
-  <line x1="533" y1="107" x2="549" y2="107" class="arrow "/>
-  <rect x="555" y="84" width="102" height="50" rx="6" class="shadow"/>
-  <rect x="553" y="82" width="102" height="50" rx="6" fill="#DDD7F6"/>
-  <text x="604" y="105" class="b c">向量数据库</text>
-  <text x="604" y="120" class="sub c">并建关键词索引</text>
-  <rect x="15" y="180" width="650" height="185" rx="8" class="frame"/>
-  <text x="25" y="198" class="b">在线：检索并生成</text>
-  <rect x="30" y="222" width="112" height="44" rx="6" class="shadow"/>
-  <rect x="28" y="220" width="112" height="44" rx="6" fill="#B0E3E6"/>
-  <text x="84" y="240" class="b c">问题</text>
-  <text x="84" y="255" class="sub c">工作两年有几天年假？</text>
-  <rect x="168" y="222" width="100" height="44" rx="6" class="shadow"/>
-  <rect x="166" y="220" width="100" height="44" rx="6" fill="#B1DDF0"/>
-  <text x="216" y="240" class="b c">检索</text>
-  <text x="216" y="255" class="sub c">召回、重排</text>
-  <line x1="143" y1="242" x2="162" y2="242" class="arrow "/>
-  <path d="M604,136 C604,190 216,172 216,216" class="arrow dash"/>
-  <text x="612" y="160" class="sub">查询</text>
-  <rect x="298" y="207" width="224" height="110" rx="4" class="shadow"/>
-  <rect x="296" y="205" width="224" height="110" rx="4" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="306" y="224" class="b">提示词</text>
-  <text x="306" y="246" class="sub">根据以下资料回答，并标注来源：</text>
-  <text x="306" y="263" class="sub">[1] 第 3 章 年假：工作满 1 年</text>
-  <text x="325" y="280" class="sub">不满 10 年的，每年 5 天</text>
-  <text x="306" y="297" class="sub">问题：工作两年有几天年假？</text>
-  <line x1="269" y1="242" x2="292" y2="242" class="arrow "/>
-  <rect x="550" y="222" width="100" height="44" rx="6" class="shadow"/>
-  <rect x="548" y="220" width="100" height="44" rx="6" fill="#B0E3E6"/>
-  <text x="598" y="246.5" class="b c">大模型</text>
-  <line x1="524" y1="242" x2="544" y2="242" class="arrow "/>
-  <rect x="540" y="292" width="120" height="44" rx="6" class="shadow"/>
-  <rect x="538" y="290" width="120" height="44" rx="6" fill="#DDD7F6"/>
-  <text x="598" y="310" class="b c">回答</text>
-  <text x="598" y="325" class="sub c">5 天 [1]</text>
-  <line x1="598" y1="268" x2="598" y2="286" class="arrow "/>
-  <text x="296" y="342" class="sub">资料来自检索，回答附上来源，便于核对</text>
+  <path d="M40,76 h31 l9,9 v43 h-40 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M71,76 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="93" x2="73" y2="93" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="100" x2="73" y2="100" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="107" x2="73" y2="107" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="60" y="146" class="c b">员工手册</text>
+  <text x="60" y="161" class="c sub">PDF、网页</text>
+  <line x1="88" y1="102" x2="150" y2="102" class="arrow "/>
+  <text x="119" y="94" class="c">解析、切片</text>
+  <rect x="156" y="70" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="85" class="sub">第 3 章 年假：工作满 1 年…</text>
+  <rect x="156" y="98" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="113" class="sub">第 4 章 病假：需提供…</text>
+  <rect x="156" y="126" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="141" class="sub">第 5 章 报销：…</text>
+  <line x1="336" y1="102" x2="404" y2="102" class="arrow "/>
+  <text x="370" y="94" class="c">Embedding</text>
+  <text x="410" y="85" class="mono sub">[0.12, -0.53, …]</text>
+  <text x="410" y="113" class="mono sub">[0.80, 0.07, …]</text>
+  <text x="410" y="141" class="mono sub">[-0.31, 0.44, …]</text>
+  <line x1="526" y1="102" x2="572" y2="102" class="arrow "/>
+  <path d="M586,80 v44 a26,6 0 0 0 52,0 v-44" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <ellipse cx="612" cy="80" rx="26" ry="6" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <path d="M586,102 a26,6 0 0 0 52,0" fill="none" stroke="#B5B5B5" stroke-width="1"/>
+  <text x="612" y="146" class="c b">向量数据库</text>
+  <text x="612" y="161" class="c sub">并建关键词索引</text>
+  <rect x="15" y="186" width="650" height="190" rx="8" class="frame"/>
+  <text x="25" y="204" class="b">在线：检索并生成</text>
+  <circle cx="52" cy="231" r="9" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <path d="M35,262 q0,-19 17,-19 q17,0 17,19 z" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="52" y="280" class="c b">用户</text>
+  <path d="M26,296 h114 q6,0 6,6 v18 q0,6 -6,6 H38 l-8,8 l0,-8 H26 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="30" y="315" class="sub">工作两年有几天年假？</text>
+  <line x1="205.1" y1="253.1" x2="215.5" y2="263.5" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="196" cy="244" r="13" fill="#FFFFFF" stroke="#888" stroke-width="2"/>
+  <text x="204" y="290" class="c b">检索</text>
+  <text x="204" y="305" class="c sub">召回、重排</text>
+  <line x1="84" y1="250" x2="172" y2="250" class="arrow "/>
+  <path d="M612,168 C612,204 262,184 214,226" class="arrow dash"/>
+  <text x="430" y="202" class="sub">查询</text>
+  <rect x="264" y="212" width="230" height="112" rx="4" class="shadow"/>
+  <rect x="262" y="210" width="230" height="112" rx="4" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="272" y="230" class="b">提示词</text>
+  <text x="272" y="252" class="sub">根据以下资料回答，并标注来源：</text>
+  <text x="272" y="269" class="sub">[1] 第 3 章 年假：工作满 1 年</text>
+  <text x="272" y="286" class="sub">     不满 10 年的，每年 5 天</text>
+  <text x="272" y="303" class="sub">问题：工作两年有几天年假？</text>
+  <line x1="228" y1="250" x2="258" y2="250" class="arrow "/>
+  <line x1="550" y1="221" x2="550" y2="271" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="535" y1="236" x2="585" y2="236" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="560" y1="221" x2="560" y2="271" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="535" y1="246" x2="585" y2="246" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="570" y1="221" x2="570" y2="271" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="535" y1="256" x2="585" y2="256" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="540" y="226" width="40" height="40" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="551.2" y="237.2" width="17.6" height="17.6" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="592" y="250" class="b">大模型</text>
+  <line x1="496" y1="246" x2="532" y2="246" class="arrow "/>
+  <path d="M526,314 h108 q6,0 6,6 v18 q0,6 -6,6 H628 l8,8 l-2,-8 H526 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <text x="530" y="333" class="sub">5 天 [1]</text>
+  <line x1="560" y1="272" x2="560" y2="308" class="arrow "/>
+  <text x="262" y="352" class="sub">资料来自检索，回答附上来源，便于核对</text>
 </svg>

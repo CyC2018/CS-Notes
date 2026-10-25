@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="690" height="340" viewBox="0 0 690 340">
+<svg xmlns="http://www.w3.org/2000/svg" width="690" height="350" viewBox="0 0 690 350">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,33 +31,51 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="345" y="28" class="title">Agent 的长期记忆</text>
-  <rect x="20" y="46" width="300" height="150" rx="8" class="frame"/>
+  <rect x="20" y="46" width="320" height="150" rx="8" class="frame"/>
   <text x="30" y="64" class="b">10 月 1 日的会话</text>
-  <rect x="35" y="76" width="270" height="30" rx="6" fill="#DDD7F6"/>
-  <text x="170" y="95.5" class="c sub">用户：我对花生过敏，推荐个早餐</text>
-  <rect x="35" y="116" width="270" height="30" rx="6" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="170" y="135.5" class="c sub">助手：推荐燕麦粥和鸡蛋……</text>
-  <text x="170" y="176" class="c sub">会话结束后，用模型提取值得保存的信息</text>
-  <rect x="402" y="58" width="270" height="110" rx="6" class="shadow"/>
-  <rect x="400" y="56" width="270" height="110" rx="6" fill="#B1DDF0"/>
-  <text x="410" y="76" class="b">长期记忆（数据库 / 向量库）</text>
-  <text x="410" y="100" class="sub">· 用户对花生过敏（10-01）</text>
-  <text x="410" y="120" class="sub">· 用户住在杭州（09-12）</text>
-  <text x="410" y="140" class="sub">· 用户喜欢简短的回答（08-30）</text>
-  <line x1="320" y1="120" x2="396" y2="110" class="arrow "/>
-  <text x="358" y="106" class="c">写入</text>
-  <rect x="20" y="214" width="650" height="112" rx="8" class="frame"/>
+  <path d="M40,76 h218 q6,0 6,6 v18 q0,6 -6,6 H52 l-8,8 l0,-8 H40 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="44" y="95" class="sub">用户：我对花生过敏，推荐个早餐</text>
+  <path d="M102,120 h218 q6,0 6,6 v18 q0,6 -6,6 H314 l8,8 l-2,-8 H102 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <text x="106" y="139" class="sub">助手：推荐燕麦粥和鸡蛋……</text>
+  <text x="180" y="182" class="c sub">会话结束后，用模型提取值得保存的信息</text>
+  <path d="M384,72 v44 a26,6 0 0 0 52,0 v-44" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <ellipse cx="410" cy="72" rx="26" ry="6" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M384,94 a26,6 0 0 0 52,0" fill="none" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="410" y="140" class="c b">长期记忆</text>
+  <text x="410" y="155" class="c sub">数据库 / 向量库</text>
+  <rect x="470" y="60" width="200" height="90" rx="5" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <rect x="470" y="60" width="200" height="22" rx="5" fill="#B5B5B5" opacity="0.35"/>
+  <text x="570" y="75" class="c b">用户 1024 的记忆</text>
+  <rect x="476" y="88" width="188" height="16" rx="3" fill="#DDD7F6" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="482" y="100" class="sub">对花生过敏（10-01）</text>
+  <rect x="476" y="108" width="188" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="482" y="120" class="sub">住在杭州（09-12）</text>
+  <rect x="476" y="128" width="188" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="482" y="140" class="sub">喜欢简短的回答（08-30）</text>
+  <line x1="342" y1="110" x2="380" y2="98" class="arrow "/>
+  <text x="361" y="92" class="c">写入</text>
+  <rect x="20" y="214" width="650" height="120" rx="8" class="frame"/>
   <text x="30" y="232" class="b">10 月 8 日的新会话</text>
-  <rect x="35" y="246" width="160" height="30" rx="6" fill="#DDD7F6"/>
-  <text x="115" y="265.5" class="c sub">用户：推荐一款零食</text>
-  <rect x="250" y="238" width="190" height="60" rx="4" fill="#FFFFFF" stroke="#BBB"/>
-  <text x="260" y="258" class="b">上下文</text>
-  <text x="260" y="276" class="sub">相关记忆：用户对花生过敏</text>
-  <text x="260" y="292" class="sub">问题：推荐一款零食</text>
-  <line x1="198" y1="261" x2="246" y2="261" class="arrow "/>
-  <path d="M535,170 C535,200 345,205 345,234" class="arrow dash"/>
-  <text x="450" y="210" class="sub">按当前问题检索相关的记忆</text>
-  <rect x="490" y="246" width="165" height="30" rx="6" fill="#B0E3E6"/>
-  <text x="572.5" y="265.5" class="c sub">推荐海苔，不含花生</text>
-  <line x1="443" y1="261" x2="486" y2="261" class="arrow "/>
+  <path d="M40,250 h148 q6,0 6,6 v18 q0,6 -6,6 H52 l-8,8 l0,-8 H40 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="44" y="269" class="sub">用户：推荐一款零食</text>
+  <rect x="240" y="240" width="190" height="62" rx="4" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="250" y="260" class="b">上下文</text>
+  <text x="250" y="278" class="sub">相关记忆：用户对花生过敏</text>
+  <text x="250" y="294" class="sub">问题：推荐一款零食</text>
+  <line x1="198" y1="265" x2="236" y2="265" class="arrow "/>
+  <path d="M440,108 C500,170 400,196 384,236" class="arrow dash"/>
+  <text x="452" y="196" class="sub">按当前问题检索相关的记忆</text>
+  <line x1="472.5" y1="251" x2="472.5" y2="291" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="460" y1="263.5" x2="500" y2="263.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="480" y1="251" x2="480" y2="291" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="460" y1="271" x2="500" y2="271" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="487.5" y1="251" x2="487.5" y2="291" stroke="#78BFC4" stroke-width="1.6"/>
+  <line x1="460" y1="278.5" x2="500" y2="278.5" stroke="#78BFC4" stroke-width="1.6"/>
+  <rect x="465" y="256" width="30" height="30" rx="5" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <rect x="473.4" y="264.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#78BFC4" stroke-width="1"/>
+  <text x="480" y="306" class="c sub">大模型</text>
+  <line x1="434" y1="271" x2="460" y2="271" class="arrow "/>
+  <path d="M526,256 h128 q6,0 6,6 v18 q0,6 -6,6 H648 l8,8 l-2,-8 H526 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <text x="530" y="275" class="sub">推荐海苔，不含花生</text>
+  <line x1="500" y1="271" x2="516" y2="271" class="arrow "/>
 </svg>

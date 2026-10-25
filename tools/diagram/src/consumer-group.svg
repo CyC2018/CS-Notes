@@ -31,46 +31,96 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="310" y="28" class="title">消费者组</text>
-  <rect x="235" y="58" width="150" height="210" rx="8" class="frame"/>
-  <text x="245" y="76" class="b">Topic</text>
-  <rect x="257" y="94" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="255" y="92" width="110" height="36" rx="6" fill="#B1DDF0"/>
-  <text x="310" y="114.5" class="b c">分区 0</text>
-  <rect x="257" y="149" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="255" y="147" width="110" height="36" rx="6" fill="#B1DDF0"/>
-  <text x="310" y="169.5" class="b c">分区 1</text>
-  <rect x="257" y="204" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="255" y="202" width="110" height="36" rx="6" fill="#B1DDF0"/>
-  <text x="310" y="224.5" class="b c">分区 2</text>
-  <rect x="20" y="58" width="160" height="210" rx="8" class="frame"/>
-  <text x="30" y="76" class="b">消费者组 A</text>
-  <rect x="42" y="109" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="40" y="107" width="110" height="36" rx="6" fill="#B0E3E6"/>
-  <text x="95" y="129.5" class="b c">A1</text>
-  <rect x="42" y="189" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="40" y="187" width="110" height="36" rx="6" fill="#B0E3E6"/>
-  <text x="95" y="209.5" class="b c">A2</text>
-  <line x1="253" y1="110" x2="155" y2="120" class="arrow "/>
-  <line x1="253" y1="165" x2="155" y2="130" class="arrow "/>
-  <line x1="253" y1="220" x2="155" y2="205" class="arrow "/>
-  <rect x="440" y="50" width="160" height="262" rx="8" class="frame"/>
-  <text x="450" y="68" class="b">消费者组 B</text>
-  <rect x="467" y="79" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="465" y="77" width="110" height="36" rx="6" fill="#B0E3E6"/>
-  <text x="520" y="99.5" class="b c">B1</text>
-  <rect x="467" y="134" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="465" y="132" width="110" height="36" rx="6" fill="#B0E3E6"/>
-  <text x="520" y="154.5" class="b c">B2</text>
-  <rect x="467" y="189" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="465" y="187" width="110" height="36" rx="6" fill="#B0E3E6"/>
-  <text x="520" y="209.5" class="b c">B3</text>
-  <rect x="467" y="244" width="110" height="36" rx="6" class="shadow"/>
-  <rect x="465" y="242" width="110" height="36" rx="6" fill="#E6E6E6"/>
-  <text x="520" y="258" class="b c">B4</text>
-  <text x="520" y="273" class="sub c">空闲</text>
-  <line x1="370" y1="110" x2="460" y2="95" class="arrow "/>
-  <line x1="370" y1="165" x2="460" y2="150" class="arrow "/>
-  <line x1="370" y1="220" x2="460" y2="205" class="arrow "/>
-  <text x="310" y="300" class="c">同一个组内，每个分区只分配给一个消费者</text>
-  <text x="310" y="318" class="c sub">每个组都会收到 Topic 的全部消息</text>
+  <rect x="205" y="46" width="210" height="214" rx="8" class="frame"/>
+  <text x="215" y="64" class="b">Topic</text>
+  <text x="310" y="78" class="c b">分区 0</text>
+  <rect x="225" y="86" width="170" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="235" y="90" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="248.4" y="102" class="c sub"></text>
+  <rect x="265.8" y="90" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="279.2" y="102" class="c sub"></text>
+  <rect x="296.6" y="90" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="310" y="102" class="c sub"></text>
+  <rect x="327.4" y="90" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="340.8" y="102" class="c sub"></text>
+  <rect x="358.2" y="90" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="371.6" y="102" class="c sub"></text>
+  <text x="310" y="138" class="c b">分区 1</text>
+  <rect x="225" y="146" width="170" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="235" y="150" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="248.4" y="162" class="c sub"></text>
+  <rect x="265.8" y="150" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="279.2" y="162" class="c sub"></text>
+  <rect x="296.6" y="150" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="310" y="162" class="c sub"></text>
+  <rect x="327.4" y="150" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="340.8" y="162" class="c sub"></text>
+  <rect x="358.2" y="150" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="371.6" y="162" class="c sub"></text>
+  <text x="310" y="198" class="c b">分区 2</text>
+  <rect x="225" y="206" width="170" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="235" y="210" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="248.4" y="222" class="c sub"></text>
+  <rect x="265.8" y="210" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="279.2" y="222" class="c sub"></text>
+  <rect x="296.6" y="210" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="310" y="222" class="c sub"></text>
+  <rect x="327.4" y="210" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="340.8" y="222" class="c sub"></text>
+  <rect x="358.2" y="210" width="26.8" height="16" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="371.6" y="222" class="c sub"></text>
+  <rect x="20" y="46" width="160" height="214" rx="8" class="frame"/>
+  <text x="30" y="64" class="b">消费者组 A</text>
+  <rect x="440" y="46" width="160" height="214" rx="8" class="frame"/>
+  <text x="450" y="64" class="b">消费者组 B</text>
+  <rect x="72" y="84" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="79" cy="90.5" r="2" fill="#7FB4D0"/>
+  <line x1="86" y1="90.5" x2="101" y2="90.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="72" y="100" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="79" cy="106.5" r="2" fill="#7FB4D0"/>
+  <line x1="86" y1="106.5" x2="101" y2="106.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="60" y="102" class="e b">A1</text>
+  <rect x="72" y="184" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="79" cy="190.5" r="2" fill="#7FB4D0"/>
+  <line x1="86" y1="190.5" x2="101" y2="190.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="72" y="200" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="79" cy="206.5" r="2" fill="#7FB4D0"/>
+  <line x1="86" y1="206.5" x2="101" y2="206.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="60" y="202" class="e b">A2</text>
+  <rect x="482" y="66" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="72.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="72.5" x2="511" y2="72.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="482" y="82" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="88.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="88.5" x2="511" y2="88.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="526" y="84" class="b">B1</text>
+  <rect x="482" y="114" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="120.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="120.5" x2="511" y2="120.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="482" y="130" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="136.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="136.5" x2="511" y2="136.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="526" y="132" class="b">B2</text>
+  <rect x="482" y="162" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="168.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="168.5" x2="511" y2="168.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="482" y="178" width="36" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="489" cy="184.5" r="2" fill="#7FB4D0"/>
+  <line x1="496" y1="184.5" x2="511" y2="184.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="526" y="180" class="b">B3</text>
+  <rect x="482" y="210" width="36" height="13" rx="3" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <circle cx="489" cy="216.5" r="2" fill="#B5B5B5"/>
+  <line x1="496" y1="216.5" x2="511" y2="216.5" stroke="#B5B5B5" stroke-width="1"/>
+  <rect x="482" y="226" width="36" height="13" rx="3" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <circle cx="489" cy="232.5" r="2" fill="#B5B5B5"/>
+  <line x1="496" y1="232.5" x2="511" y2="232.5" stroke="#B5B5B5" stroke-width="1"/>
+  <text x="526" y="228" class="sub">B4（空闲）</text>
+  <line x1="223" y1="98" x2="112" y2="96" class="arrow "/>
+  <line x1="223" y1="158" x2="112" y2="104" class="arrow "/>
+  <line x1="223" y1="218" x2="112" y2="200" class="arrow "/>
+  <line x1="397" y1="98" x2="478" y2="80" class="arrow "/>
+  <line x1="397" y1="158" x2="478" y2="128" class="arrow "/>
+  <line x1="397" y1="218" x2="478" y2="176" class="arrow "/>
+  <text x="310" y="290" class="c">同一个组内，每个分区只分配给一个消费者</text>
+  <text x="310" y="310" class="c sub">每个组都会收到 Topic 的全部消息；消费者多于分区时，多出的消费者空闲</text>
 </svg>
