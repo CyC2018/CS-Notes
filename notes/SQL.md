@@ -341,7 +341,7 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 mysql> SELECT NOW();
 ```
 
-```
+```text
 2018-4-14 20:25:11
 ```
 
