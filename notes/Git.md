@@ -83,7 +83,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 Git 会使用 \<\<\<\<\<\<\< ，======= ，\>\>\>\>\>\>\> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
-```
+```text
 <<<<<<< HEAD
 Creating a new branch is quick & simple.
 =======
@@ -97,7 +97,7 @@ Creating a new branch is quick AND simple.
 
 可以在合并时加上 --no-ff 参数来禁用 Fast forward 模式，并且加上 -m 参数让合并时产生一个新的 commit。
 
-```
+```bash
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
@@ -109,7 +109,7 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 可以使用 git stash 将当前分支的修改储藏起来，此时当前工作区的所有修改都会被存到栈中，也就是说当前工作区是干净的，没有任何未提交的修改。此时就可以安全的切换到其它分支上了。
 
-```
+```bash
 $ git stash
 Saved working directory and index state \ "WIP on master: 049d078 added the index file"
 HEAD is now at 049d078 added the index file (To restore them type "git stash apply")
@@ -123,7 +123,7 @@ Git 仓库和 Github 中心仓库之间的传输是通过 SSH 加密。
 
 如果用户主目录下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
 
-```
+```bash
 $ ssh-keygen -t rsa -C "youremail@example.com"
 ```
 
