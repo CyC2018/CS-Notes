@@ -178,7 +178,7 @@ public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 
 ### 6. 判断路径和是否等于一个数
 
-Leetcdoe : 112. Path Sum (Easy)
+Leetcode : 112. Path Sum (Easy)
 
 [Leetcode](https://leetcode.com/problems/path-sum/description/) / [力扣](https://leetcode-cn.com/problems/path-sum/description/)
 
