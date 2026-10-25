@@ -10,9 +10,11 @@
     * [矩阵路径](#矩阵路径)
         * [1. 矩阵的最小路径和](#1-矩阵的最小路径和)
         * [2. 矩阵的总路径数](#2-矩阵的总路径数)
+        * [3. 最大正方形](#3-最大正方形)
     * [数组区间](#数组区间)
         * [1. 数组区间和](#1-数组区间和)
         * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
+        * [3. 最长有效括号](#3-最长有效括号)
     * [分割整数](#分割整数)
         * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
         * [2. 按平方数来分割整数](#2-按平方数来分割整数)
@@ -241,6 +243,40 @@ public int uniquePaths(int m, int n) {
 }
 ```
 
+### 3. 最大正方形
+
+221\. Maximal Square (Medium)
+
+[Leetcode](https://leetcode.com/problems/maximal-square/) / [力扣](https://leetcode.cn/problems/maximal-square/)
+
+题目描述：在由 0 和 1 组成的矩阵中，找出只包含 1 的最大正方形的面积。
+
+dp[i][j] 表示以 (i, j) 为右下角、只包含 1 的最大正方形的边长。它的边长受左边、上边和左上角三个方向的限制，取三者的最小值再加 1：
+
+```text
+dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
+
+matrix:  1 1 1       dp:  1 1 1
+         1 1 1            1 2 2
+         1 1 1            1 2 3
+```
+
+```java
+public int maximalSquare(char[][] matrix) {
+    int m = matrix.length, n = matrix[0].length, side = 0;
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (matrix[i - 1][j - 1] == '1') {
+                dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                side = Math.max(side, dp[i][j]);
+            }
+        }
+    }
+    return side * side;
+}
+```
+
 ## 数组区间
 
 ### 1. 数组区间和
@@ -333,6 +369,42 @@ public int numberOfArithmeticSlices(int[] A) {
         total += cnt;
     }
     return total;
+}
+```
+
+### 3. 最长有效括号
+
+32\. Longest Valid Parentheses (Hard)
+
+[Leetcode](https://leetcode.com/problems/longest-valid-parentheses/) / [力扣](https://leetcode.cn/problems/longest-valid-parentheses/)
+
+```text
+Input: ")()())"
+Output: 4
+```
+
+dp[i] 表示以 s[i] 结尾的最长有效括号的长度，只有 s[i] 为 ) 时才可能不为 0。以 s[i - 1] 结尾的有效括号长度为 dp[i - 1]，跳过这一段之后的位置 j = i - dp[i - 1] - 1 如果是 (，就能和 s[i] 配对，长度为 dp[i - 1] + 2，再加上 j 前面紧挨着的有效括号长度 dp[j - 1]。
+
+```text
+s  : ( ) ( ( ) )
+dp : 0 2 0 0 2 6
+```
+
+```java
+public int longestValidParentheses(String s) {
+    int n = s.length(), ret = 0;
+    int[] dp = new int[n];
+    for (int i = 1; i < n; i++) {
+        if (s.charAt(i) != ')') {
+            continue;
+        }
+        int j = i - dp[i - 1] - 1;
+        if (j >= 0 && s.charAt(j) == '(') {
+            dp[i] = dp[i - 1] + 2 + (j > 0 ? dp[j - 1] : 0);
+            ret = Math.max(ret, dp[i]);
+        }
+    }
+    return ret;
 }
 ```
 

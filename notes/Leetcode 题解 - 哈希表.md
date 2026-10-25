@@ -5,6 +5,7 @@
     * [2. 判断数组是否含有重复元素](#2-判断数组是否含有重复元素)
     * [3. 最长和谐序列](#3-最长和谐序列)
     * [4. 最长连续序列](#4-最长连续序列)
+    * [5. 和为 K 的子数组](#5-和为-k-的子数组)
 <!-- GFM-TOC -->
 
 
@@ -131,5 +132,34 @@ private int maxCount(Map<Integer, Integer> countForNum) {
         max = Math.max(max, countForNum.get(num));
     }
     return max;
+}
+```
+
+## 5. 和为 K 的子数组
+
+560\. Subarray Sum Equals K (Medium)
+
+[Leetcode](https://leetcode.com/problems/subarray-sum-equals-k/) / [力扣](https://leetcode.cn/problems/subarray-sum-equals-k/)
+
+```text
+Input: nums = [1, 1, 1], k = 2
+Output: 2
+```
+
+题目描述：统计和为 k 的连续子数组个数，数组元素可能为负数。
+
+用 sum 表示从数组开头到当前位置的前缀和，以当前位置结尾、和为 k 的子数组，对应前面某个位置的前缀和为 sum - k。遍历时用哈希表记录每个前缀和出现的次数即可。数组中有负数，窗口变大时和不一定变大，因此不能用滑动窗口。
+
+```java
+public int subarraySum(int[] nums, int k) {
+    Map<Integer, Integer> cnt = new HashMap<>();
+    cnt.put(0, 1);
+    int sum = 0, ret = 0;
+    for (int num : nums) {
+        sum += num;
+        ret += cnt.getOrDefault(sum - k, 0);
+        cnt.merge(sum, 1, Integer::sum);
+    }
+    return ret;
 }
 ```

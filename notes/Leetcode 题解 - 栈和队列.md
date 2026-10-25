@@ -7,6 +7,8 @@
     * [4. 用栈实现括号匹配](#4-用栈实现括号匹配)
     * [5. 数组中元素与下一个比它大的元素之间的距离](#5-数组中元素与下一个比它大的元素之间的距离)
     * [6. 循环数组中比当前元素大的下一个元素](#6-循环数组中比当前元素大的下一个元素)
+    * [7. 字符串解码](#7-字符串解码)
+    * [8. 基本计算器](#8-基本计算器)
 <!-- GFM-TOC -->
 
 
@@ -230,5 +232,93 @@ public int[] nextGreaterElements(int[] nums) {
         }
     }
     return next;
+}
+```
+
+## 7. 字符串解码
+
+394\. Decode String (Medium)
+
+[Leetcode](https://leetcode.com/problems/decode-string/) / [力扣](https://leetcode.cn/problems/decode-string/)
+
+```text
+Input: "3[a2[c]]"
+Output: "accaccacc"
+```
+
+括号可以嵌套，用栈保存进入括号之前的状态：遇到 [ 时，把重复次数和当前已经得到的字符串分别压栈，然后从头开始记录括号内的字符串；遇到 ] 时弹出重复次数 k 和之前的字符串 prev，当前字符串变为 prev 加上括号内的字符串重复 k 次。
+
+```java
+public String decodeString(String s) {
+    Deque<Integer> counts = new ArrayDeque<>();
+    Deque<StringBuilder> prevs = new ArrayDeque<>();
+    StringBuilder cur = new StringBuilder();
+    int k = 0;
+    for (char c : s.toCharArray()) {
+        if (Character.isDigit(c)) {
+            k = k * 10 + c - '0';
+        } else if (c == '[') {
+            counts.push(k);
+            prevs.push(cur);
+            cur = new StringBuilder();
+            k = 0;
+        } else if (c == ']') {
+            String inner = cur.toString();
+            cur = prevs.pop();
+            for (int n = counts.pop(); n > 0; n--) {
+                cur.append(inner);
+            }
+        } else {
+            cur.append(c);
+        }
+    }
+    return cur.toString();
+}
+```
+
+## 8. 基本计算器
+
+227\. Basic Calculator II (Medium)
+
+[Leetcode](https://leetcode.com/problems/basic-calculator-ii/) / [力扣](https://leetcode.cn/problems/basic-calculator-ii/)
+
+```text
+Input: " 3+5 / 2 "
+Output: 5
+```
+
+题目描述：计算只包含非负整数、+、-、*、/ 和空格的表达式，整数除法向零截断。
+
+乘除的优先级高于加减。读到一个数字之后，先不急着计算，等读到它后面的运算符时，再根据它前面的运算符处理：+ 把数字压栈，- 把相反数压栈，* 和 / 与栈顶元素计算后再放回。最后把栈中所有元素相加。
+
+```java
+public int calculate(String s) {
+    Deque<Integer> stack = new ArrayDeque<>();
+    char op = '+';
+    int num = 0;
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (Character.isDigit(c)) {
+            num = num * 10 + c - '0';
+        }
+        if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
+            if (op == '+') {
+                stack.push(num);
+            } else if (op == '-') {
+                stack.push(-num);
+            } else if (op == '*') {
+                stack.push(stack.pop() * num);
+            } else {
+                stack.push(stack.pop() / num);
+            }
+            op = c;
+            num = 0;
+        }
+    }
+    int ret = 0;
+    for (int x : stack) {
+        ret += x;
+    }
+    return ret;
 }
 ```
