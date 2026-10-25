@@ -111,7 +111,7 @@ https://leetcode.com/problems/swap-salary/description/
 
 sex  字段只有两个取值：'f' 和 'm'，并且有以下规律：
 
-```
+```text
 'f' ^ ('m' ^ 'f') = 'm' ^ ('f' ^ 'f') = 'm'
 'm' ^ ('m' ^ 'f') = 'f' ^ ('m' ^ 'm') = 'f'
 ```
