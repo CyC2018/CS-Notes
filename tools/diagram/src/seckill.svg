@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">秒杀：层层过滤请求</text>
+  <rect x="22" y="70" width="96" height="56" rx="6" class="shadow"/>
+  <rect x="20" y="68" width="96" height="56" rx="6" fill="#DDD7F6"/>
+  <text x="68" y="94" class="b c">10 万个请求</text>
+  <text x="68" y="109" class="sub c">同时到达</text>
+  <rect x="152" y="62" width="120" height="72" rx="6" class="shadow"/>
+  <rect x="150" y="60" width="120" height="72" rx="6" fill="#B1DDF0"/>
+  <text x="210" y="86" class="c b">前端与网关</text>
+  <text x="210" y="106" class="c sub">按钮防重复提交</text>
+  <text x="210" y="122" class="c sub">按用户限流</text>
+  <rect x="306" y="62" width="140" height="72" rx="6" class="shadow"/>
+  <rect x="304" y="60" width="140" height="72" rx="6" fill="#B0E3E6"/>
+  <text x="374" y="86" class="c b">Redis + Lua</text>
+  <text x="374" y="106" class="c sub">判断库存和是否已购</text>
+  <text x="374" y="122" class="c sub">原子扣减，库存 100 → 0</text>
+  <rect x="482" y="70" width="90" height="56" rx="6" class="shadow"/>
+  <rect x="480" y="68" width="90" height="56" rx="6" fill="#E6E6E6"/>
+  <text x="525" y="94" class="b c">消息队列</text>
+  <text x="525" y="109" class="sub c">100 条</text>
+  <rect x="606" y="62" width="100" height="72" rx="6" class="shadow"/>
+  <rect x="604" y="60" width="100" height="72" rx="6" fill="#B1DDF0"/>
+  <text x="654" y="86" class="c b">订单服务</text>
+  <text x="654" y="106" class="c sub">扣数据库库存</text>
+  <text x="654" y="122" class="c sub">创建订单</text>
+  <line x1="119" y1="96" x2="146" y2="96" class="arrow "/>
+  <line x1="273" y1="96" x2="300" y2="96" class="arrow "/>
+  <line x1="447" y1="96" x2="476" y2="96" class="arrow green"/>
+  <text x="461" y="88" class="c ok">成功</text>
+  <line x1="573" y1="96" x2="600" y2="96" class="arrow "/>
+  <line x1="374" y1="136" x2="374" y2="172" class="arrow red"/>
+  <text x="382" y="160" class="note">其余请求</text>
+  <rect x="310" y="176" width="128" height="34" rx="6" fill="#F3C6C2"/>
+  <text x="374" y="197.5" class="c sub">直接返回“已抢完”</text>
+  <line x1="210" y1="136" x2="210" y2="172" class="arrow red"/>
+  <rect x="150" y="176" width="120" height="34" rx="6" fill="#F3C6C2"/>
+  <text x="210" y="197.5" class="c sub">拦截重复和超限请求</text>
+  <text x="654" y="156" class="c sub">库存大于 0 才扣减</text>
+  <text x="654" y="174" class="c sub">唯一索引保证一人一单</text>
+  <text x="20" y="236" class="sub">到达数据库的请求接近库存数量；订单最终创建失败时，要把 Redis 中的库存和购买记录恢复。</text>
+</svg>
