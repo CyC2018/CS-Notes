@@ -26,6 +26,10 @@
         * [类加载器分类](#类加载器分类)
         * [双亲委派模型](#双亲委派模型)
         * [自定义类加载器实现](#自定义类加载器实现)
+    * [五、线上问题排查](#五线上问题排查)
+        * [内存溢出与内存泄漏](#内存溢出与内存泄漏)
+        * [CPU 占用过高](#cpu-占用过高)
+        * [死锁](#死锁)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -738,8 +742,88 @@ public class FileSystemClassLoader extends ClassLoader {
 }
 ```
 
+## 五、线上问题排查
+
+### 内存溢出与内存泄漏
+
+OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有：
+
+- Java heap space：堆中无法再分配对象，可能是堆设置得太小，也可能是内存泄漏；
+- GC overhead limit exceeded：GC 占用了约 98% 的时间，却只回收了不到 2% 的堆，说明存活的对象几乎占满了堆；
+- Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类。
+
+内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收，堆内存持续增长，最终导致内存溢出。常见原因：
+
+- 静态集合只添加不清理，例如用 static Map 做缓存却没有淘汰策略；
+- 线程池中的线程使用 ThreadLocal 后没有调用 remove()，线程一直存活，值也一直无法被回收；
+- 连接、流等资源没有关闭；
+- 注册的监听器、回调没有注销。
+
+排查步骤：
+
+1. 启动参数加上 -XX:+HeapDumpOnOutOfMemoryError，发生内存溢出时自动保存堆转储，用 -XX:HeapDumpPath 指定保存位置；进程还在运行时，可以用 jcmd <pid> GC.heap_dump <文件名> 手动导出；
+2. 用 Eclipse MAT 等工具打开堆转储，找到占用内存最多的对象，查看它们到 GC Roots 的引用链，确定是谁持有了这些对象；
+3. 引用链指向不应该存活的对象（例如上面的静态集合）就是内存泄漏，需要修改代码；否则说明确实需要这么多内存，应该增大堆或者减少一次加载的数据量。
+
+例如下面的程序不断向静态列表中添加 1 MB 的数组，静态变量引用的对象属于 GC Roots，这些数组都无法被回收：
+
+```java
+public class Leak {
+    static final List<byte[]> CACHE = new ArrayList<>();
+
+    public static void main(String[] args) {
+        while (true) {
+            CACHE.add(new byte[1024 * 1024]);
+        }
+    }
+}
+```
+
+```text
+$ java -Xmx32m -XX:+HeapDumpOnOutOfMemoryError Leak
+java.lang.OutOfMemoryError: Java heap space
+Dumping heap to java_pid24607.hprof ...
+Heap dump file created [19154891 bytes in 0.007 secs]
+```
+
+### CPU 占用过高
+
+1. 用 top 找到 CPU 占用高的 Java 进程；
+2. 用 top -H -p <pid> 查看这个进程中每个线程的 CPU 占用，记下占用最高的线程 ID；
+3. 用 jstack <pid> 或者 jcmd <pid> Thread.print 导出所有线程的调用栈，按线程 ID 找到对应的线程；
+4. 查看这个线程正在执行的代码，常见原因有死循环、频繁 GC（这时占用 CPU 的是 GC 线程）。
+
+调用栈中的 nid 就是操作系统中的线程 ID。JDK 18 起 nid 以十进制显示，可以直接和 top 中的线程 ID 对应；更早的版本以 0x 开头的十六进制显示，需要先用 printf '%x\n' <线程 ID> 转换。JDK 11 起每个线程还带有累计占用的 CPU 时间 cpu=。例如一个执行死循环的线程：
+
+```text
+"busy-worker" #20 [26883] prio=5 os_prio=31 cpu=2148.39ms elapsed=2.15s tid=0x000000012f811200 nid=26883 runnable  [0x000000016dfda000]
+   java.lang.Thread.State: RUNNABLE
+        at Busy.lambda$main$0(Busy.java:3)
+```
+
+### 死锁
+
+jstack 会自动检测死锁，在输出的末尾给出互相等待的线程，以及每个线程持有和等待的锁：
+
+```text
+Found one Java-level deadlock:
+=============================
+"t1":
+  waiting to lock monitor 0x0000000140e63bb0 (object 0x000000061fc144c8, a java.lang.Object),
+  which is held by "t2"
+
+"t2":
+  waiting to lock monitor 0x0000000141818190 (object 0x000000061fc144b8, a java.lang.Object),
+  which is held by "t1"
+```
+
+后面还会列出这两个线程的调用栈，指出它们在哪一行获取锁。避免死锁的方法见 [计算机操作系统 - 死锁](计算机操作系统%20-%20死锁.md)。
+
 ## 参考资料
 
+- [Troubleshooting Memory Leaks (Java SE 21)](https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html)
+- [JDK-8268425: Show decimal nid of OSThread instead of hex format one](https://bugs.openjdk.org/browse/JDK-8268425)
+- [JDK-8200720: Print additional information in thread dump](https://bugs.openjdk.org/browse/JDK-8200720)
 - 周志明. 深入理解 Java 虚拟机 [M]. 机械工业出版社, 2011.
 - [Chapter 2. The Structure of the Java Virtual Machine](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
