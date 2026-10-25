@@ -31,47 +31,54 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="370" y="28" class="title">一次 RPC 调用</text>
-  <rect x="282" y="48" width="180" height="48" rx="6" class="shadow"/>
-  <rect x="280" y="46" width="180" height="48" rx="6" fill="#E6E6E6"/>
-  <text x="370" y="68" class="b c">注册中心</text>
-  <text x="370" y="83" class="sub c">库存服务：10.0.0.8、10.0.0.9</text>
-  <line x1="330" y1="98" x2="160" y2="158" class="arrow dash"/>
-  <text x="128" y="126" class="sub">① 订阅地址，缓存在本地</text>
-  <line x1="590" y1="158" x2="410" y2="98" class="arrow dash"/>
-  <text x="500" y="126" class="sub">启动时注册，定期发送心跳</text>
-  <rect x="20" y="164" width="270" height="196" rx="8" class="frame"/>
-  <text x="30" y="182" class="b">订单服务（调用方）</text>
-  <rect x="36" y="194" width="238" height="34" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="155" y="215.5" class="c sub mono">inventoryService.deduct(10086, 2)</text>
-  <rect x="38" y="248" width="238" height="40" rx="6" class="shadow"/>
-  <rect x="36" y="246" width="238" height="40" rx="6" fill="#DDD7F6"/>
-  <text x="155" y="264" class="b c">代理</text>
-  <text x="155" y="279" class="sub c">取得方法名和参数</text>
-  <rect x="38" y="306" width="238" height="40" rx="6" class="shadow"/>
-  <rect x="36" y="304" width="238" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="155" y="322" class="b c">序列化、选择实例</text>
-  <text x="155" y="337" class="sub c">组成带请求 ID 的请求帧</text>
-  <line x1="155" y1="231" x2="155" y2="243" class="arrow "/>
-  <line x1="155" y1="289" x2="155" y2="301" class="arrow "/>
-  <rect x="450" y="164" width="270" height="196" rx="8" class="frame"/>
-  <text x="460" y="182" class="b">库存服务（服务方）</text>
-  <rect x="468" y="306" width="238" height="40" rx="6" class="shadow"/>
-  <rect x="466" y="304" width="238" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="585" y="322" class="b c">解码请求</text>
-  <text x="585" y="337" class="sub c">得到方法名和参数</text>
-  <rect x="468" y="248" width="238" height="40" rx="6" class="shadow"/>
-  <rect x="466" y="246" width="238" height="40" rx="6" fill="#DDD7F6"/>
-  <text x="585" y="264" class="b c">反射调用</text>
-  <text x="585" y="279" class="sub c">InventoryServiceImpl.deduct()</text>
-  <rect x="466" y="194" width="238" height="34" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="585" y="215.5" class="c sub mono">返回 true</text>
-  <line x1="585" y1="301" x2="585" y2="289" class="arrow "/>
-  <line x1="585" y1="243" x2="585" y2="231" class="arrow "/>
-  <line x1="277" y1="324" x2="462" y2="324" class="arrow "/>
-  <text x="370" y="316" class="c sub">② 请求帧</text>
-  <text x="370" y="342" class="c sub">请求 ID 7 + 方法 + 参数</text>
-  <line x1="462" y1="211" x2="277" y2="211" class="arrow dash"/>
-  <text x="370" y="203" class="c sub">③ 响应帧</text>
-  <text x="370" y="229" class="c sub">请求 ID 7 + 结果</text>
-  <text x="370" y="386" class="c sub">注册中心只负责注册和发现，不转发请求；调用方按请求 ID 把响应交给对应的等待线程</text>
+  <rect x="285" y="44" width="170" height="70" rx="5" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <rect x="285" y="44" width="170" height="22" rx="5" fill="#B5B5B5" opacity="0.35"/>
+  <text x="370" y="59" class="c b">注册中心</text>
+  <rect x="291" y="72" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="297" y="84" class="sub">库存服务 10.0.0.8</text>
+  <rect x="291" y="92" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="297" y="104" class="sub">库存服务 10.0.0.9</text>
+  <rect x="20" y="170" width="270" height="190" rx="8" class="frame"/>
+  <text x="30" y="188" class="b">订单服务（调用方）</text>
+  <rect x="34" y="198" width="242" height="40" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="34" y1="212" x2="276" y2="212" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="43" cy="205" r="2.2" fill="#BBBBBB"/>
+  <circle cx="51" cy="205" r="2.2" fill="#BBBBBB"/>
+  <circle cx="59" cy="205" r="2.2" fill="#BBBBBB"/>
+  <text x="43" y="228" class="sub mono">inventoryService.deduct(10086, 2)</text>
+  <text x="40" y="262" class="sub">代理取得方法名和参数，</text>
+  <text x="40" y="280" class="sub">序列化后从缓存的地址中选一个实例</text>
+  <rect x="450" y="170" width="270" height="190" rx="8" class="frame"/>
+  <text x="460" y="188" class="b">库存服务（服务方）</text>
+  <rect x="477" y="214" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="484" cy="220.5" r="2" fill="#7FB4D0"/>
+  <line x1="491" y1="220.5" x2="516" y2="220.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="477" y="230" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="484" cy="236.5" r="2" fill="#7FB4D0"/>
+  <line x1="491" y1="236.5" x2="516" y2="236.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="477" y="246" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="484" cy="252.5" r="2" fill="#7FB4D0"/>
+  <line x1="491" y1="252.5" x2="516" y2="252.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="536" y="226" class="sub">解码请求帧，</text>
+  <text x="536" y="244" class="sub">通过反射调用</text>
+  <text x="536" y="262" class="sub mono">InventoryServiceImpl</text>
+  <text x="536" y="278" class="sub mono">.deduct()</text>
+  <text x="500" y="296" class="c sub mono">返回 true</text>
+  <rect x="300" y="214" width="140" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M300,215 L314,225 L328,215" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="334" y="233" class="sub mono">ID 7 deduct</text>
+  <line x1="278" y1="229" x2="297" y2="229" class="arrow "/>
+  <line x1="442" y1="229" x2="486" y2="229" class="arrow "/>
+  <text x="370" y="206" class="c sub">② 请求帧：请求 ID + 方法 + 参数</text>
+  <rect x="300" y="300" width="140" height="30" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <path d="M300,301 L314,311 L328,301" fill="none" stroke="#A99FD8" stroke-width="1"/>
+  <text x="334" y="319" class="sub mono">ID 7 true</text>
+  <line x1="486" y1="315" x2="442" y2="315" class="arrow "/>
+  <line x1="298" y1="315" x2="278" y2="315" class="arrow "/>
+  <text x="370" y="292" class="c sub">③ 响应帧：请求 ID + 结果</text>
+  <path d="M283,100 C200,110 160,140 155,166" class="arrow dash"/>
+  <text x="110" y="130" class="sub">① 订阅地址，缓存在本地</text>
+  <path d="M590,166 C590,130 520,100 459,92" class="arrow dash"/>
+  <text x="560" y="130" class="sub">启动时注册，定期发送心跳</text>
+  <text x="370" y="388" class="c sub">注册中心只负责注册和发现，不转发请求；调用方按请求 ID 把响应交给对应的等待线程</text>
 </svg>
