@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #888; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">深分页为什么慢</text>
+  <text x="20" y="62" class="b">LIMIT 1000000, 10：从头数过 1000000 条，丢弃后再取 10 条</text>
+  <rect x="20" y="76" width="600" height="26" rx="4" fill="#F2F2F2" stroke="#DDD"/>
+  <rect x="20" y="76" width="560" height="26" rx="4" fill="#E6E6E6"/>
+  <text x="300" y="93" class="c sub">读取后丢弃 1000000 条</text>
+  <rect x="580" y="76" width="12" height="26" fill="#9188D8"/>
+  <line x1="26" y1="116" x2="574" y2="116" class="arrow "/>
+  <text x="630" y="93" class="sub">返回 10 条</text>
+  <text x="20" y="160" class="b">游标分页：从上一页最后一条之后开始，直接定位</text>
+  <path d="M50,210 C220,170 490,170 582,214" class="arrow"/>
+  <text x="310" y="178" class="c sub">沿 B+ 树从根节点向下查找，只读几个节点</text>
+  <rect x="20" y="216" width="600" height="26" rx="4" fill="#F2F2F2" stroke="#DDD"/>
+  <rect x="580" y="216" width="12" height="26" fill="#9188D8"/>
+  <text x="630" y="233" class="sub">返回 10 条</text>
+  <text x="20" y="284" class="sub">200 万行的表上实测：LIMIT 1000000, 10 耗时 1321 ms，游标分页 0.13 ms，并且与翻到第几页无关。</text>
+</svg>

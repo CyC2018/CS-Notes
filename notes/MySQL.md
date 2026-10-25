@@ -11,6 +11,7 @@
         * [使用 Explain 进行分析](#使用-explain-进行分析)
         * [优化数据访问](#优化数据访问)
         * [重构查询方式](#重构查询方式)
+        * [深分页](#深分页)
     * [三、存储引擎](#三存储引擎)
         * [InnoDB](#innodb)
         * [MyISAM](#myisam)
@@ -202,8 +203,14 @@ Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explai
 比较重要的字段有：
 
 - select_type : 查询类型，有简单查询、联合查询、子查询等
+- type : 访问类型，从好到差常见的有 const、eq_ref、ref、range、index、ALL。const 表示通过主键或唯一索引最多匹配一行，ref 表示通过普通索引等值匹配，range 表示索引范围扫描，index 表示扫描整个索引树，ALL 表示全表扫描
 - key : 使用的索引
 - rows : 扫描的行数
+- Extra : 额外信息，Using index 表示使用了覆盖索引，不需要回表；Using index condition 表示使用了索引下推；Using filesort 表示无法利用索引的顺序，需要额外排序；Using temporary 表示使用了临时表，常见于 GROUP BY 和 ORDER BY 的列不一致
+
+出现 ALL、Using filesort 或 Using temporary，并且 rows 很大时，通常需要调整索引或者改写查询。
+
+找出慢查询可以使用慢查询日志：开启 slow_query_log 后，执行时间超过 long_query_time（默认 10 秒）的语句会被记录下来，再用 mysqldumpslow 按执行时间、次数汇总分析。
 
 ### 优化数据访问
 
@@ -257,6 +264,54 @@ SELECT * FROM tag WHERE tag='mysql';
 SELECT * FROM tag_post WHERE tag_id=1234;
 SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 ```
+
+### 深分页
+
+深分页指的是偏移量很大的分页查询。例如 200 万行的订单表 orders，create_time 上有普通索引 idx_create_time，按创建时间翻到第 100001 页：
+
+```sql
+SELECT * FROM orders ORDER BY create_time LIMIT 1000000, 10;
+```
+
+MySQL 没办法直接跳到第 1000001 行，只能先找出排在前面的 1000010 行，丢弃前 1000000 行，再返回最后 10 行，偏移量越大越慢。
+
+<div align="center"> <img src="pics/deep-pagination.png" width="720px"/> </div><br>
+
+这条查询的执行计划中 type 为 ALL、Extra 为 Using filesort，也就是全表扫描后排序。这是因为如果走 idx_create_time，读出的 1000010 条索引项都要回表取整行，产生上百万次随机读，优化器判断这样还不如全表扫描。
+
+延迟关联指的是先在索引上查出这一页的主键，再根据主键回表。子查询只用到 create_time 和 id，idx_create_time 就是覆盖索引（Extra 为 Using index），虽然仍要扫描 1000010 条索引项，但不需要回表，只有最后 10 行需要回表：
+
+```sql
+SELECT o.* FROM orders o
+JOIN (SELECT id FROM orders ORDER BY create_time LIMIT 1000000, 10) t ON o.id = t.id
+ORDER BY o.create_time;
+```
+
+游标分页（也叫书签分页）指的是记住上一页最后一行的排序值，下一页从它之后开始查。这样可以直接在索引上定位到上一页结束的位置，只读 10 行：
+
+```sql
+-- 上一页最后一行：create_time = '2025-01-12 13:46:39'，id = 982321
+SELECT * FROM orders
+WHERE create_time > '2025-01-12 13:46:39'
+   OR (create_time = '2025-01-12 13:46:39' AND id > 982321)
+ORDER BY create_time, id
+LIMIT 10;
+```
+
+排序列的值可能重复，所以要再按主键排序，并把主键也作为游标的一部分，否则时间相同的行会被跳过或者重复返回。游标分页的代价是不能直接跳到任意一页，只能逐页翻，适合 App 下拉加载、按时间浏览记录这类场景。
+
+在 MySQL 8.0 上实测的结果如下（数据全部在内存中，取 5 次中最快的一次），三种写法返回的 10 行相同：
+
+| 写法 | 耗时 | 读取的数据 |
+| --- | --- | --- |
+| LIMIT 0, 10 | 0.05 ms | 10 行 |
+| LIMIT 1000000, 10 | 1321 ms | 全表 200 万行，再排序 |
+| 延迟关联 | 88 ms | 1000010 条索引项，回表 10 次 |
+| 游标分页 | 0.13 ms | 10 行 |
+
+还可以从需求上限制翻页的深度，例如只允许翻到前 100 页。Elasticsearch 默认也不允许 from + size 超过 10000，更深的翻页要用 search_after，原理与游标分页相同。
+
+需要注意的是，分页时常常还要显示总记录数。InnoDB 没有保存表的行数，因为并发的事务看到的行数可能不同，COUNT(*) 需要扫描整个索引，上面的表执行一次需要 136 ms。数据量大时可以缓存总数、显示估算值，或者只提供“下一页”。
 
 ## 三、存储引擎
 
@@ -414,6 +469,10 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 ## 参考资料
 
+- [MySQL 8.0: InnoDB Restrictions and Limitations](https://dev.mysql.com/doc/refman/8.0/en/innodb-restrictions-limitations.html)
+- [Elasticsearch: Paginate search results](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/paginate-search-results)
+- [MySQL 8.0: EXPLAIN Output Format](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html)
+- [MySQL 8.0: The Slow Query Log](https://dev.mysql.com/doc/refman/8.0/en/slow-query-log.html)
 - Baron Schwartz, Peter Zaitsev, Vadim Tkachenko, 等. 高性能 MySQL[M]. 电子工业出版社, 2013.
 - 姜承尧. MySQL 技术内幕: InnoDB 存储引擎 [M]. 机械工业出版社, 2011.
 - [20+ 条 MySQL 性能优化的最佳经验](https://www.jfox.info/20-tiao-mysql-xing-nen-you-hua-de-zui-jia-jing-yan.html)
