@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="620" height="290" viewBox="0 0 620 290">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -36,7 +36,7 @@
   <rect x="190" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="210" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="230" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
-  <rect x="250" y="70" width="20" height="24" fill="#B1DDF0" stroke="#999"/>
+  <rect x="250" y="70" width="20" height="24" fill="#C6E4FB" stroke="#999"/>
   <rect x="270" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="290" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="310" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
@@ -56,7 +56,7 @@
   <rect x="168" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="182" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="196" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
-  <rect x="210" y="220" width="14" height="24" fill="#B1DDF0" stroke="#999"/>
+  <rect x="210" y="220" width="14" height="24" fill="#C6E4FB" stroke="#999"/>
   <rect x="224" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="238" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="252" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
@@ -72,7 +72,7 @@
   <rect x="392" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="406" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="420" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
-  <rect x="434" y="220" width="14" height="24" fill="#B1DDF0" stroke="#999"/>
+  <rect x="434" y="220" width="14" height="24" fill="#C6E4FB" stroke="#999"/>
   <rect x="448" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="462" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
   <rect x="476" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
