@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" viewBox="0 0 700 360">
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
@@ -31,46 +31,60 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="350" y="28" class="title">线程池处理任务的顺序</text>
-  <text x="20" y="58" class="sub">核心线程数 2，最大线程数 4，队列容量 2，依次提交 7 个各执行 1 秒的任务</text>
-  <text x="20" y="94" class="b">① 线程数小于核心线程数</text>
-  <text x="20" y="112" class="sub">新建核心线程执行</text>
-  <line x1="230" y1="98" x2="262" y2="98" class="arrow "/>
-  <rect x="268" y="80" width="200" height="40" rx="6" class="shadow"/>
-  <rect x="266" y="78" width="200" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="278" y="103" class="b">核心线程</text>
-  <rect x="478" y="85" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="510" y="102.5" class="c sub">任务 1</text>
-  <rect x="550" y="85" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="582" y="102.5" class="c sub">任务 2</text>
-  <text x="20" y="150" class="b">② 核心线程已满</text>
-  <text x="20" y="168" class="sub">放入队列等待</text>
-  <line x1="230" y1="154" x2="262" y2="154" class="arrow "/>
-  <rect x="268" y="136" width="200" height="40" rx="6" class="shadow"/>
-  <rect x="266" y="134" width="200" height="40" rx="6" fill="#E6E6E6"/>
-  <text x="278" y="159" class="b">队列（容量 2）</text>
-  <rect x="478" y="141" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="510" y="158.5" class="c sub">任务 3</text>
-  <rect x="550" y="141" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="582" y="158.5" class="c sub">任务 4</text>
-  <text x="20" y="206" class="b">③ 队列已满，线程数小于 4</text>
-  <text x="20" y="224" class="sub">新建非核心线程执行</text>
-  <line x1="230" y1="210" x2="262" y2="210" class="arrow "/>
-  <rect x="268" y="192" width="200" height="40" rx="6" class="shadow"/>
-  <rect x="266" y="190" width="200" height="40" rx="6" fill="#B1DDF0"/>
-  <text x="278" y="215" class="b">非核心线程</text>
-  <rect x="478" y="197" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="510" y="214.5" class="c sub">任务 5</text>
-  <rect x="550" y="197" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="582" y="214.5" class="c sub">任务 6</text>
-  <text x="20" y="262" class="b">④ 线程数已达 4 且队列已满</text>
-  <text x="20" y="280" class="sub">执行拒绝策略</text>
-  <line x1="230" y1="266" x2="262" y2="266" class="arrow "/>
-  <rect x="268" y="248" width="200" height="40" rx="6" class="shadow"/>
-  <rect x="266" y="246" width="200" height="40" rx="6" fill="#F3C6C2"/>
-  <text x="278" y="271" class="b">拒绝</text>
-  <rect x="478" y="253" width="64" height="26" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
-  <text x="510" y="270.5" class="c sub">任务 7</text>
-  <line x1="20" y1="306" x2="680" y2="306" stroke="#DDD"/>
-  <text x="20" y="328" class="sub">实际执行顺序：0 秒时任务 1、2、5、6 开始执行，1 秒后才轮到队列中的任务 3、4。</text>
-  <text x="20" y="348" class="note">队列满后新建的线程直接执行当前提交的任务，所以后提交的任务 5、6 反而先执行。</text>
+  <text x="20" y="56" class="sub">核心线程数 2，最大线程数 4，队列容量 2，依次提交 7 个各执行 1 秒的任务</text>
+  <rect x="150" y="70" width="300" height="254" rx="8" class="frame"/>
+  <text x="160" y="88" class="b">线程池</text>
+  <rect x="170" y="102" width="260" height="26" rx="13" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="186" y="119" class="sub">核心线程</text>
+  <rect x="374" y="104" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="399" y="119" class="c sub">任务 1</text>
+  <rect x="170" y="136" width="260" height="26" rx="13" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <text x="186" y="153" class="sub">核心线程</text>
+  <rect x="374" y="138" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="399" y="153" class="c sub">任务 2</text>
+  <rect x="170" y="236" width="260" height="26" rx="13" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <text x="186" y="253" class="sub">非核心线程</text>
+  <rect x="374" y="238" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="399" y="253" class="c sub">任务 5</text>
+  <rect x="170" y="270" width="260" height="26" rx="13" fill="#B0E3E6" stroke="#78BFC4" stroke-width="1.2"/>
+  <text x="186" y="287" class="sub">非核心线程</text>
+  <rect x="374" y="272" width="50" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="399" y="287" class="c sub">任务 6</text>
+  <rect x="204" y="178" width="160" height="28" rx="14" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="214" y="182" width="68" height="20" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="248" y="196" class="c sub">任务 3</text>
+  <rect x="286" y="182" width="68" height="20" rx="3" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="320" y="196" class="c sub">任务 4</text>
+  <text x="372" y="197" class="sub">队列（容量 2）</text>
+  <rect x="30" y="82" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="97" class="c sub">任务 1</text>
+  <rect x="30" y="120" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="135" class="c sub">任务 2</text>
+  <rect x="30" y="158" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="173" class="c sub">任务 3</text>
+  <rect x="30" y="196" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="211" class="c sub">任务 4</text>
+  <rect x="30" y="234" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="249" class="c sub">任务 5</text>
+  <rect x="30" y="272" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="287" class="c sub">任务 6</text>
+  <rect x="30" y="310" width="56" height="22" rx="4" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <text x="58" y="325" class="c sub">任务 7</text>
+  <line x1="88" y1="93" x2="166" y2="115" class="arrow "/>
+  <line x1="88" y1="131" x2="166" y2="149" class="arrow "/>
+  <line x1="88" y1="169" x2="200" y2="190" class="arrow "/>
+  <line x1="88" y1="207" x2="200" y2="194" class="arrow "/>
+  <line x1="88" y1="245" x2="166" y2="249" class="arrow "/>
+  <line x1="88" y1="283" x2="166" y2="283" class="arrow "/>
+  <circle cx="180" cy="342" r="10" fill="#F3C6C2" stroke="#D99A94" stroke-width="1.2"/>
+  <path d="M175.5,337.5 L184.5,346.5 M184.5,337.5 L175.5,346.5" stroke="#C0605A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="88" y1="321" x2="166" y2="342" class="arrow red"/>
+  <text x="198" y="347" class="note">任务 7 被拒绝（默认抛出异常）</text>
+  <text x="470" y="122" class="sub">① 线程数小于核心线程数，</text>
+  <text x="470" y="138" class="sub">新建核心线程执行</text>
+  <text x="470" y="186" class="sub">② 核心线程已满，放入队列</text>
+  <text x="470" y="252" class="sub">③ 队列已满且线程数小于 4，</text>
+  <text x="470" y="268" class="sub">新建线程直接执行当前任务</text>
+  <text x="470" y="346" class="sub">④ 线程和队列都满，执行拒绝策略</text>
+  <text x="20" y="372" class="sub">0 秒时任务 1、2、5、6 开始执行，1 秒后才轮到队列中的任务 3、4：后提交的任务 5、6 反而先执行。</text>
 </svg>
