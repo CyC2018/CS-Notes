@@ -31,43 +31,69 @@
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="370" y="28" class="title">一次下单请求经过的组件</text>
-  <rect x="22" y="172" width="90" height="56" rx="6" class="shadow"/>
-  <rect x="20" y="170" width="90" height="56" rx="6" fill="#DDD7F6"/>
-  <text x="65" y="196" class="b c">App</text>
-  <text x="65" y="211" class="sub c">带上令牌</text>
-  <rect x="162" y="160" width="150" height="80" rx="6" class="shadow"/>
-  <rect x="160" y="158" width="150" height="80" rx="6" fill="#B1DDF0"/>
-  <text x="235" y="182" class="c b">网关 :8080</text>
-  <text x="235" y="202" class="c sub">校验令牌，加上 X-User-Id</text>
-  <text x="235" y="220" class="c sub">/api/orders/** → 订单服务</text>
-  <rect x="362" y="160" width="150" height="80" rx="6" class="shadow"/>
-  <rect x="360" y="158" width="150" height="80" rx="6" fill="#B1DDF0"/>
-  <text x="435" y="182" class="c b">订单服务 :8090</text>
-  <text x="435" y="202" class="c sub">OpenFeign 调用库存服务</text>
-  <text x="435" y="220" class="c sub">读取 order.max-items</text>
-  <rect x="582" y="132" width="140" height="50" rx="6" class="shadow"/>
-  <rect x="580" y="130" width="140" height="50" rx="6" fill="#B0E3E6"/>
-  <text x="650" y="159.5" class="b c">库存服务 :8081</text>
-  <rect x="582" y="212" width="140" height="50" rx="6" class="shadow"/>
-  <rect x="580" y="210" width="140" height="50" rx="6" fill="#B0E3E6"/>
-  <text x="650" y="239.5" class="b c">库存服务 :8082</text>
-  <line x1="113" y1="198" x2="156" y2="198" class="arrow "/>
-  <line x1="313" y1="198" x2="356" y2="198" class="arrow "/>
-  <line x1="513" y1="190" x2="576" y2="158" class="arrow "/>
-  <line x1="513" y1="206" x2="576" y2="232" class="arrow "/>
-  <text x="545" y="200" class="c sub">轮询</text>
-  <rect x="262" y="52" width="360" height="60" rx="6" class="shadow"/>
-  <rect x="260" y="50" width="360" height="60" rx="6" fill="#E6E6E6"/>
-  <text x="440" y="72" class="c b">Nacos :8848</text>
-  <text x="440" y="92" class="c sub">注册中心：服务名 → 实例列表；配置中心：order-service.yaml</text>
-  <path d="M235,154 C235,130 300,118 330,113" class="arrow dash"/>
-  <text x="180" y="128" class="sub">查询实例</text>
-  <path d="M435,114 L435,154" class="arrow dash"/>
-  <text x="441" y="138" class="sub">实例列表、配置推送</text>
-  <path d="M650,126 C650,100 640,90 624,86" class="arrow dash"/>
-  <text x="656" y="108" class="sub">注册</text>
-  <line x1="160" y1="300" x2="720" y2="300" stroke="#9188D8" stroke-width="2" stroke-dasharray="6 4"/>
-  <text x="160" y="292" class="sub">traceId 6ade5947…74b 随请求头 traceparent 传递，各服务的日志中都带上它</text>
-  <text x="160" y="324" class="sub">订单服务调用库存服务时加上超时和熔断（Sentinel），跨服务的事务用 Seata 或消息保证一致</text>
-  <text x="20" y="380" class="sub">本机实际运行：Nacos 2.5.4，Spring Boot 3.3，Spring Cloud 2023.0，Spring Cloud Alibaba 2023.0.3.4</text>
+  <rect x="270" y="44" width="250" height="90" rx="5" fill="#E6E6E6" stroke="#B5B5B5" stroke-width="1.2"/>
+  <rect x="270" y="44" width="250" height="22" rx="5" fill="#B5B5B5" opacity="0.35"/>
+  <text x="395" y="59" class="c b">Nacos :8848</text>
+  <rect x="276" y="72" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="282" y="84" class="sub">order-service → :8090</text>
+  <rect x="276" y="92" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="282" y="104" class="sub">inventory-service → :8081、:8082</text>
+  <rect x="276" y="112" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#B5B5B5" stroke-width="0.6"/>
+  <text x="282" y="124" class="sub">配置 order-service.yaml</text>
+  <rect x="36" y="178" width="28" height="46" rx="5" fill="#DDD7F6" stroke="#A99FD8" stroke-width="1.2"/>
+  <rect x="40" y="184" width="20" height="30" rx="1.5" fill="#FFFFFF" stroke="#A99FD8" stroke-width="0.8"/>
+  <circle cx="50" cy="219" r="2" fill="#A99FD8"/>
+  <text x="50" y="244" class="c b">App</text>
+  <text x="50" y="259" class="c sub">带上令牌</text>
+  <path d="M190,174 L212,183 V197.4 C212,214.56 196,223 190,226 C184,223 168,214.56 168,197.4 V183 Z" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <path d="M181,198.96 l6,6 l12,-13" fill="none" stroke="#7FB4D0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="190" y="244" class="c b">网关 :8080</text>
+  <text x="190" y="259" class="c sub">校验令牌、按路径转发</text>
+  <rect x="372" y="178" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="379" cy="184.5" r="2" fill="#7FB4D0"/>
+  <line x1="386" y1="184.5" x2="411" y2="184.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="372" y="194" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="379" cy="200.5" r="2" fill="#7FB4D0"/>
+  <line x1="386" y1="200.5" x2="411" y2="200.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="372" y="210" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="379" cy="216.5" r="2" fill="#7FB4D0"/>
+  <line x1="386" y1="216.5" x2="411" y2="216.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="395" y="244" class="c b">订单服务 :8090</text>
+  <text x="395" y="259" class="c sub">OpenFeign 调用库存服务</text>
+  <rect x="607" y="150" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="156.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="156.5" x2="646" y2="156.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="607" y="166" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="172.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="172.5" x2="646" y2="172.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="607" y="182" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="188.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="188.5" x2="646" y2="188.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="630" y="214" class="c sub">:8081</text>
+  <rect x="607" y="236" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="242.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="242.5" x2="646" y2="242.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="607" y="252" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="258.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="258.5" x2="646" y2="258.5" stroke="#7FB4D0" stroke-width="1"/>
+  <rect x="607" y="268" width="46" height="13" rx="3" fill="#B1DDF0" stroke="#7FB4D0" stroke-width="1.2"/>
+  <circle cx="614" cy="274.5" r="2" fill="#7FB4D0"/>
+  <line x1="621" y1="274.5" x2="646" y2="274.5" stroke="#7FB4D0" stroke-width="1"/>
+  <text x="630" y="300" class="c sub">:8082</text>
+  <text x="630" y="318" class="c b">库存服务</text>
+  <line x1="68" y1="200" x2="162" y2="200" class="arrow "/>
+  <line x1="216" y1="200" x2="366" y2="200" class="arrow "/>
+  <line x1="422" y1="194" x2="602" y2="172" class="arrow "/>
+  <line x1="422" y1="206" x2="602" y2="258" class="arrow "/>
+  <text x="520" y="214" class="c sub">轮询</text>
+  <path d="M190,170 C190,140 230,110 266,100" class="arrow dash"/>
+  <text x="160" y="132" class="sub">查询实例</text>
+  <path d="M395,138 L395,174" class="arrow dash"/>
+  <text x="402" y="160" class="sub">实例列表、配置推送</text>
+  <path d="M630,146 C630,110 580,92 524,90" class="arrow dash"/>
+  <text x="640" y="118" class="sub">注册</text>
+  <line x1="160" y1="346" x2="720" y2="346" stroke="#9188D8" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="160" y="338" class="sub">traceId 6ade5947…74b 随请求头 traceparent 传递，各服务的日志中都带上它</text>
+  <text x="160" y="368" class="sub">订单服务调用库存服务时加上超时和熔断（Sentinel），跨服务的事务用 Seata 或消息保证一致</text>
+  <text x="20" y="392" class="sub">本机实际运行：Nacos 2.5.4，Spring Boot 3.3，Spring Cloud 2023.0，Spring Cloud Alibaba 2023.0.3.4</text>
 </svg>
