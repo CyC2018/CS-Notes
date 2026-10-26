@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Raft 选举：选票被瓜分时进入下一个任期</text>
+  <text x="30" y="92" class="b">任期 4</text>
+  <rect x="110" y="70" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="175" y="88" class="c sub b" style="fill:#444">节点 A</text>
+  <text x="175" y="103" class="c sub">投 B</text>
+  <rect x="260" y="70" width="130" height="40" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="325" y="88" class="c sub b" style="fill:#444">节点 B</text>
+  <text x="325" y="103" class="c sub">候选人，2 票</text>
+  <rect x="410" y="70" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="475" y="88" class="c sub b" style="fill:#444">节点 C</text>
+  <text x="475" y="103" class="c sub">投 D</text>
+  <rect x="560" y="70" width="130" height="40" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="625" y="88" class="c sub b" style="fill:#444">节点 D</text>
+  <text x="625" y="103" class="c sub">候选人，2 票</text>
+  <text x="110" y="132" class="sub" style="">B、D 同时超时，各得 2 票，都不足 3 票（4 个节点的多数），没有 Leader</text>
+  <text x="30" y="202" class="b">任期 5</text>
+  <rect x="110" y="180" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="175" y="198" class="c sub b" style="fill:#444">节点 A</text>
+  <text x="175" y="213" class="c sub">投 D</text>
+  <rect x="260" y="180" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="325" y="198" class="c sub b" style="fill:#444">节点 B</text>
+  <text x="325" y="213" class="c sub">投 D</text>
+  <rect x="410" y="180" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="475" y="198" class="c sub b" style="fill:#444">节点 C</text>
+  <text x="475" y="213" class="c sub">投 D</text>
+  <rect x="560" y="180" width="130" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="625" y="198" class="c sub b" style="fill:#444">节点 D</text>
+  <text x="625" y="213" class="c sub">候选人，4 票</text>
+  <text x="110" y="242" class="sub" style="fill:#444">重新随机超时，D 先超时，得到全部选票，成为 Leader</text>
+  <text x="30" y="284" class="sub">淡紫色是候选人，浅青色是当选的 Leader。随机超时让两个节点再次同时超时的概率很低。</text>
+</svg>

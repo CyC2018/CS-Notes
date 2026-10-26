@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">雪花算法：64 位 ID 的组成</text>
+  <rect x="30" y="70" width="34" height="36" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="47" y="92" class="c sub mono" style="fill:#444">0</text>
+  <text x="47" y="62" class="c sub b" style="fill:#444">符号位</text>
+  <text x="47" y="124" class="c sub">1 位，固定为 0</text>
+  <rect x="66" y="70" width="434.6" height="36" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="283.3" y="92" class="c sub mono" style="fill:#444">00001010010110100100001001111001110111101</text>
+  <text x="283.3" y="62" class="c sub b" style="fill:#444">时间戳</text>
+  <text x="283.3" y="124" class="c sub">41 位：距 2024-01-01 的毫秒数</text>
+  <rect x="502.6" y="70" width="106" height="36" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="555.6" y="92" class="c sub mono" style="fill:#444">0000000101</text>
+  <text x="555.6" y="62" class="c sub b" style="fill:#444">机器 ID</text>
+  <text x="555.6" y="124" class="c sub">10 位：0～1023</text>
+  <rect x="610.6" y="70" width="127.2" height="36" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="674.2" y="92" class="c sub mono" style="fill:#444">000000000000</text>
+  <text x="674.2" y="62" class="c sub b" style="fill:#444">序号</text>
+  <text x="674.2" y="124" class="c sub">12 位：同一毫秒内 0～4095</text>
+  <text x="30" y="164" class="sub b" style="fill:#444">本机生成的一个 ID：372990889737342976</text>
+  <text x="30" y="184" class="sub mono" style="fill:#444">时间戳 88927957949 ms → 2026-10-26 06:12:37.949（UTC），机器 ID 5，序号 0</text>
+  <text x="30" y="214" class="sub">41 位毫秒数可以用 69.7 年；每台机器每毫秒最多 4096 个，即每秒约 409 万个。</text>
+  <text x="30" y="232" class="sub">高位是时间，多台机器生成的 ID 整体上按时间递增，作为 InnoDB 主键时基本是顺序插入。</text>
+  <text x="30" y="256" class="sub note">需要注意的是，ID 依赖本机时钟：时钟回拨后可能生成重复的 ID，生成器发现当前时间小于上次的时间时，</text>
+  <text x="30" y="274" class="sub note">回拨很小就等待追上，较大就报错，由运维排查时钟同步。</text>
+</svg>

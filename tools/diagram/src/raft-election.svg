@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="350" viewBox="0 0 760 350">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Raft 选举：A 的竞选计时器最先到期</text>
+  <text x="40" y="84" class="sub b" style="fill:#444">节点 A</text>
+  <text x="40" y="100" class="sub">超时 180 ms</text>
+  <rect x="150" y="72" width="247.5" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="273.75" y="84" class="c sub">Follower，等待心跳</text>
+  <rect x="397.5" y="72" width="22" height="16" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="419.5" y="72" width="280.5" height="16" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="562.5" y="84" class="c sub b" style="fill:#444">Leader，任期 1</text>
+  <text x="40" y="154" class="sub b" style="fill:#444">节点 B</text>
+  <text x="40" y="170" class="sub">超时 260 ms</text>
+  <rect x="150" y="142" width="261.25" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="273.75" y="154" class="c sub">Follower</text>
+  <rect x="419.5" y="142" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="488.25" y="142" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="557" y="142" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="625.75" y="142" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="694.5" y="142" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="507.5" y1="138" x2="507.5" y2="162" stroke="#C0605A" stroke-dasharray="2 2"/>
+  <text x="507.5" y="176" class="c sub">原定 260 ms 超时</text>
+  <text x="40" y="224" class="sub b" style="fill:#444">节点 C</text>
+  <text x="40" y="240" class="sub">超时 230 ms</text>
+  <rect x="150" y="212" width="261.25" height="16" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="273.75" y="224" class="c sub">Follower</text>
+  <rect x="419.5" y="212" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="488.25" y="212" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="557" y="212" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="625.75" y="212" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="694.5" y="212" width="4" height="16" rx="1" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="466.25" y1="208" x2="466.25" y2="232" stroke="#C0605A" stroke-dasharray="2 2"/>
+  <text x="466.25" y="246" class="c sub">原定 230 ms 超时</text>
+  <text x="397.5" y="64" class="sub" style="fill:#766AA8">180 ms 超时：成为候选人，任期加 1，投自己一票，向 B、C 请求投票</text>
+  <line x1="408.5" y1="90" x2="408.5" y2="210" stroke="#B8B0DE" stroke-dasharray="3 3"/>
+  <text x="402.5" y="119" class="sub e">B、C 投票给 A，3 票中得到 3 票</text>
+  <text x="562.5" y="268" class="c sub">浅青色短条是 Leader 当选后立即发出、之后每 50 ms 发一次的心跳，Follower 收到后重新计时</text>
+  <line x1="150" y1="292" x2="700" y2="292" class="line"/>
+  <text x="150" y="310" class="c sub mono">0 ms</text>
+  <text x="287.5" y="310" class="c sub mono">100 ms</text>
+  <text x="425" y="310" class="c sub mono">200 ms</text>
+  <text x="562.5" y="310" class="c sub mono">300 ms</text>
+  <text x="700" y="310" class="c sub mono">400 ms</text>
+  <text x="30" y="338" class="sub">每个节点的竞选超时在 150～300 ms 中随机选取，通常只有一个节点先超时，它在别人超时前就能拿到多数票。</text>
+</svg>
