@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="660" height="280" viewBox="0 0 660 280">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -39,7 +39,7 @@
   <rect x="88" y="142" width="63" height="14" fill="#DDDDDD"/>
   <text x="157" y="153" class="sub">0.35</text>
   <text x="80" y="177" class="e mono">26</text>
-  <rect x="88" y="166" width="54" height="14" fill="#9188D8"/>
+  <rect x="88" y="166" width="54" height="14" fill="#9F94D5"/>
   <text x="148" y="177" class="sub">0.30</text>
   <text x="80" y="201" class="e">二十六</text>
   <rect x="88" y="190" width="27" height="14" fill="#DDDDDD"/>
@@ -48,14 +48,14 @@
   <rect x="88" y="214" width="27" height="14" fill="#DDDDDD"/>
   <text x="121" y="225" class="sub">0.15</text>
   <text x="80" y="249" class="e mono">-</text>
-  <rect x="88" y="238" width="9" height="14" fill="#9188D8"/>
+  <rect x="88" y="238" width="9" height="14" fill="#9F94D5"/>
   <text x="103" y="249" class="sub">0.05</text>
   <text x="480" y="130" class="c b">屏蔽后重新归一化</text>
   <text x="410" y="153" class="e">晴</text>
   <rect x="418" y="142" width="2" height="14" fill="#DDD"/>
   <text x="426" y="153" class="sub" fill="#BBB">屏蔽</text>
   <text x="410" y="177" class="e mono">26</text>
-  <rect x="418" y="166" width="154" height="14" fill="#9188D8"/>
+  <rect x="418" y="166" width="154" height="14" fill="#9F94D5"/>
   <text x="578.286" y="177" class="sub">0.86</text>
   <text x="410" y="201" class="e">二十六</text>
   <rect x="418" y="190" width="2" height="14" fill="#DDD"/>
@@ -64,7 +64,7 @@
   <rect x="418" y="214" width="2" height="14" fill="#DDD"/>
   <text x="426" y="225" class="sub" fill="#BBB">屏蔽</text>
   <text x="410" y="249" class="e mono">-</text>
-  <rect x="418" y="238" width="26" height="14" fill="#9188D8"/>
+  <rect x="418" y="238" width="26" height="14" fill="#9F94D5"/>
   <text x="449.714" y="249" class="sub">0.14</text>
   <line x1="300" y1="190" x2="340" y2="190" class="arrow "/>
 </svg>

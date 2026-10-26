@@ -6,13 +6,13 @@
     .label { fill: #C38F8A; }
     .ok { fill: #6A9F68; }
     .no { fill: #C0605A; }
-    .box { fill: #9BC4CB; }
+    .box { fill: #9CCBC6; }
     .shadow { fill: #B8B8B8; }
     .guide { stroke: #999; stroke-width: 1; stroke-dasharray: 3 3; }
   </style>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#F5F5F5"/>
@@ -22,13 +22,10 @@
   <!-- 创建 ReadView 时未提交的事务列表 -->
   <text x="262" y="80" class="label">TRX_IDs（创建 ReadView 时未提交的事务）</text>
   <rect x="140" y="88" width="244" height="50" rx="9" fill="#C1D8BF" stroke="#666" stroke-dasharray="3 2"/>
-  <rect x="151.5" y="99.5" width="66" height="27" rx="3" class="shadow"/>
   <rect x="150" y="98" width="66" height="27" rx="3" class="box"/>
   <text x="183" y="115.5">TRX_ID_1</text>
-  <rect x="230.5" y="99.5" width="66" height="27" rx="3" class="shadow"/>
   <rect x="229" y="98" width="66" height="27" rx="3" class="box"/>
   <text x="262" y="115.5">TRX_ID_2</text>
-  <rect x="309.5" y="99.5" width="66" height="27" rx="3" class="shadow"/>
   <rect x="308" y="98" width="66" height="27" rx="3" class="box"/>
   <text x="341" y="115.5">TRX_ID_3</text>
 

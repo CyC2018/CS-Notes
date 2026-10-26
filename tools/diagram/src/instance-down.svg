@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="740" height="336" viewBox="0 0 740 336">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
@@ -143,11 +143,11 @@
   <rect x="482.6" y="218" width="23.5" height="18" fill="#E8B4B0"/>
   <rect x="508.5" y="218" width="23.5" height="18" fill="#E8B4B0"/>
   <text x="260" y="252" class="sub">每次 2 s 后失败，约 23 s 后不再调用</text>
-  <line x1="257.1" y1="58" x2="257.1" y2="270" stroke="#9188D8" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="261.05" y="50" class="sub" fill="#7A70C8">Nacos 删除实例 0.6 s</text>
-  <line x1="520.2" y1="58" x2="520.2" y2="270" stroke="#9188D8" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="524.25" y="50" class="sub" fill="#7A70C8">进程卡住时 Nacos 23 s 后才删除</text>
-  <line x1="661.2" y1="58" x2="661.2" y2="270" stroke="#9188D8" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="657.25" y="304" class="sub e" fill="#7A70C8">负载均衡缓存 35 s 过期</text>
+  <line x1="257.1" y1="58" x2="257.1" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="261.05" y="50" class="sub" fill="#766AA8">Nacos 删除实例 0.6 s</text>
+  <line x1="520.2" y1="58" x2="520.2" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="524.25" y="50" class="sub" fill="#766AA8">进程卡住时 Nacos 23 s 后才删除</text>
+  <line x1="661.2" y1="58" x2="661.2" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="657.25" y="304" class="sub e" fill="#766AA8">负载均衡缓存 35 s 过期</text>
   <text x="20" y="322" class="sub">订单服务每 0.2 s 调用一次库存服务，请求在 8081 和 8082 之间轮询；红色为失败的调用</text>
 </svg>

@@ -1,50 +1,46 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="360" y="28" class="title">两阶段提交与崩溃恢复</text>
-  <rect x="10" y="64" width="124" height="60" rx="6" class="shadow"/>
-  <rect x="8" y="62" width="124" height="60" rx="6" fill="#E6E6E6"/>
+  <rect x="8" y="62" width="124" height="60" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
   <text x="70" y="90" class="b c">开始事务</text>
   <text x="70" y="105" class="sub c">修改内存中的页</text>
-  <rect x="160" y="64" width="124" height="60" rx="6" class="shadow"/>
-  <rect x="158" y="62" width="124" height="60" rx="6" fill="#B1DDF0"/>
+  <rect x="158" y="62" width="124" height="60" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
   <text x="220" y="90" class="b c">① prepare</text>
   <text x="220" y="105" class="sub c">写 redo log 并刷盘</text>
-  <rect x="340" y="64" width="124" height="60" rx="6" class="shadow"/>
-  <rect x="338" y="62" width="124" height="60" rx="6" fill="#B0E3E6"/>
+  <rect x="338" y="62" width="124" height="60" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="400" y="90" class="b c">② 写 binlog</text>
   <text x="400" y="105" class="sub c">含 Xid，刷盘</text>
-  <rect x="520" y="64" width="124" height="60" rx="6" class="shadow"/>
-  <rect x="518" y="62" width="124" height="60" rx="6" fill="#DDD7F6"/>
+  <rect x="518" y="62" width="124" height="60" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
   <text x="580" y="90" class="b c">③ commit</text>
   <text x="580" y="105" class="sub c">redo log 标记提交</text>
   <line x1="134" y1="92" x2="154" y2="92" class="arrow "/>

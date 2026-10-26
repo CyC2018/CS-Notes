@@ -1,43 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400">
   <style>
-    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #666; font-size: 12px; }
-    .title { font-weight: bold; font-size: 15px; fill: #777; text-anchor: middle; }
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #888; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
-    .arrow { stroke: #666; stroke-width: 1.3; fill: none; marker-end: url(#a); }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
     .green { stroke: #6A9F68; marker-end: url(#g); }
     .dash { stroke-dasharray: 5 4; }
-    .line { stroke: #666; stroke-width: 1.3; fill: none; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
     .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
     .shadow { fill: #DADADA; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#666" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
     </marker>
     <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#C0605A" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
     </marker>
     <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6A9F68" stroke-width="1.6"/>
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
     </marker>
   </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
 
   <text x="340" y="28" class="title">注意力的计算：以“饿”为例</text>
-  <rect x="30" y="50" width="70" height="24" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="30" y="50" width="70" height="24" fill="#EAE9E7" stroke="#CCC"/>
   <text x="65" y="66" class="c b">Token</text>
-  <rect x="100" y="50" width="70" height="24" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="100" y="50" width="70" height="24" fill="#EAE9E7" stroke="#CCC"/>
   <text x="135" y="66" class="c b">Q</text>
-  <rect x="170" y="50" width="70" height="24" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="170" y="50" width="70" height="24" fill="#EAE9E7" stroke="#CCC"/>
   <text x="205" y="66" class="c b">K</text>
-  <rect x="240" y="50" width="70" height="24" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="240" y="50" width="70" height="24" fill="#EAE9E7" stroke="#CCC"/>
   <text x="275" y="66" class="c b">V</text>
   <rect x="30" y="74" width="70" height="24" fill="#FFFFFF" stroke="#CCC"/>
   <text x="65" y="90" class="c sub">小猫</text>
@@ -55,9 +55,9 @@
   <text x="205" y="114" class="c sub mono">(0, 1)</text>
   <rect x="240" y="98" width="70" height="24" fill="#FFFFFF" stroke="#CCC"/>
   <text x="275" y="114" class="c sub mono">(0, 1)</text>
-  <rect x="30" y="122" width="70" height="24" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="30" y="122" width="70" height="24" fill="#E6E3FA" stroke="#CCC"/>
   <text x="65" y="138" class="c sub">饿</text>
-  <rect x="100" y="122" width="70" height="24" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="100" y="122" width="70" height="24" fill="#E6E3FA" stroke="#CCC"/>
   <text x="135" y="138" class="c sub mono">(2, 0.5)</text>
   <rect x="170" y="122" width="70" height="24" fill="#FFFFFF" stroke="#CCC"/>
   <text x="205" y="138" class="c sub mono">(1, 1)</text>
@@ -69,13 +69,13 @@
   <text x="350" y="112" class="sub mono">很    2×0 + 0.5×1 = 0.5  → 0.35</text>
   <text x="350" y="132" class="sub mono">饿    2×1 + 0.5×1 = 2.5  → 1.77</text>
   <text x="135" y="200" class="c b">① 分数（行：查询，列：键）</text>
-  <rect x="90" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="90" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="115" y="225" class="c sub">小猫</text>
-  <rect x="140" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="140" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="165" y="225" class="c sub">很</text>
-  <rect x="190" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="190" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="215" y="225" class="c sub">饿</text>
-  <rect x="30" y="232" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="30" y="232" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="60" y="247" class="c sub">小猫</text>
   <rect x="90" y="232" width="50" height="22" fill="#FFFFFF" stroke="#CCC"/>
   <text x="115" y="247" class="c sub">1.41</text>
@@ -83,7 +83,7 @@
   <text x="165" y="247" class="c sub">-∞</text>
   <rect x="190" y="232" width="50" height="22" fill="#F2F2F2" stroke="#CCC"/>
   <text x="215" y="247" class="c sub">-∞</text>
-  <rect x="30" y="254" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="30" y="254" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="60" y="269" class="c sub">很</text>
   <rect x="90" y="254" width="50" height="22" fill="#FFFFFF" stroke="#CCC"/>
   <text x="115" y="269" class="c sub">0.00</text>
@@ -91,22 +91,22 @@
   <text x="165" y="269" class="c sub">0.71</text>
   <rect x="190" y="254" width="50" height="22" fill="#F2F2F2" stroke="#CCC"/>
   <text x="215" y="269" class="c sub">-∞</text>
-  <rect x="30" y="276" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="30" y="276" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="60" y="291" class="c sub">饿</text>
-  <rect x="90" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="90" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="115" y="291" class="c sub">2.83</text>
-  <rect x="140" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="140" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="165" y="291" class="c sub">0.35</text>
-  <rect x="190" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="190" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="215" y="291" class="c sub">1.77</text>
   <text x="375" y="200" class="c b">② 每行做 softmax 得到权重</text>
-  <rect x="330" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="330" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="355" y="225" class="c sub">小猫</text>
-  <rect x="380" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="380" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="405" y="225" class="c sub">很</text>
-  <rect x="430" y="210" width="50" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="430" y="210" width="50" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="455" y="225" class="c sub">饿</text>
-  <rect x="270" y="232" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="270" y="232" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="300" y="247" class="c sub">小猫</text>
   <rect x="330" y="232" width="50" height="22" fill="#FFFFFF" stroke="#CCC"/>
   <text x="355" y="247" class="c sub">1.00</text>
@@ -114,7 +114,7 @@
   <text x="405" y="247" class="c sub">0</text>
   <rect x="430" y="232" width="50" height="22" fill="#F2F2F2" stroke="#CCC"/>
   <text x="455" y="247" class="c sub">0</text>
-  <rect x="270" y="254" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="270" y="254" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="300" y="269" class="c sub">很</text>
   <rect x="330" y="254" width="50" height="22" fill="#FFFFFF" stroke="#CCC"/>
   <text x="355" y="269" class="c sub">0.33</text>
@@ -122,13 +122,13 @@
   <text x="405" y="269" class="c sub">0.67</text>
   <rect x="430" y="254" width="50" height="22" fill="#F2F2F2" stroke="#CCC"/>
   <text x="455" y="269" class="c sub">0</text>
-  <rect x="270" y="276" width="60" height="22" fill="#E6E6E6" stroke="#CCC"/>
+  <rect x="270" y="276" width="60" height="22" fill="#EAE9E7" stroke="#CCC"/>
   <text x="300" y="291" class="c sub">饿</text>
-  <rect x="330" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="330" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="355" y="291" class="c sub">0.70</text>
-  <rect x="380" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="380" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="405" y="291" class="c sub">0.06</text>
-  <rect x="430" y="276" width="50" height="22" fill="#DDD7F6" stroke="#CCC"/>
+  <rect x="430" y="276" width="50" height="22" fill="#E6E3FA" stroke="#CCC"/>
   <text x="455" y="291" class="c sub">0.24</text>
   <text x="590" y="200" class="c b">③ 按权重对 V 求和</text>
   <text x="590" y="232" class="c sub mono">0.70 × (1, 0)</text>
