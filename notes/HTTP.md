@@ -36,9 +36,12 @@
         * [多部分对象集合](#多部分对象集合)
         * [虚拟主机](#虚拟主机)
         * [通信数据转发](#通信数据转发)
+        * [WebSocket](#websocket)
+        * [跨域](#跨域)
     * [六、HTTPS](#六https)
         * [加密](#加密)
         * [认证](#认证)
+        * [TLS 握手](#tls-握手)
         * [完整性保护](#完整性保护)
         * [HTTPS 的缺点](#https-的缺点)
     * [七、HTTP/2.0](#七http20)
@@ -46,6 +49,7 @@
         * [二进制分帧层](#二进制分帧层)
         * [服务端推送](#服务端推送)
         * [首部压缩](#首部压缩)
+        * [HTTP/3](#http3)
     * [八、HTTP/1.1 新特性](#八http11-新特性)
     * [九、GET 和 POST 比较](#九get-和-post-比较)
         * [作用](#作用)
@@ -69,7 +73,7 @@
 - 第一行是包含了请求方法、URL、协议版本；
 - 接下来的多行都是请求首部 Header，每个首部都有一个首部名称，以及对应的值。
 - 一个空行用来分隔首部和内容主体 Body
-- 最后是请求的内容主体
+- 最后是请求的内容主体，GET 请求通常没有主体，POST 请求的表单数据、JSON 放在这里
 
 ```http
 GET http://www.example.com/ HTTP/1.1
@@ -84,7 +88,6 @@ Proxy-Connection: keep-alive
 Upgrade-Insecure-Requests: 1
 User-Agent: Mozilla/5.0 xxx
 
-param1=1&param2=2
 ```
 
 响应报文结构：
@@ -218,7 +221,7 @@ DELETE /file.html HTTP/1.1
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc00f70e-c5c8-4d20-baf1-2d70014a97e3.jpg" width=""/> </div><br>
+<div align="center"> <img src="pics/http-connect.png" width="740px"/> </div><br>
 
 ### TRACE
 
@@ -270,6 +273,8 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -   **307 Temporary Redirect**  ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
 
+-   **308 Permanent Redirect**  ：永久重定向，与 301 的含义类似，但不允许改变请求方法。
+
 ### 4XX 客户端错误
 
 -   **400 Bad Request**  ：请求报文中存在语法错误。
@@ -280,11 +285,19 @@ CONNECT www.example.com:443 HTTP/1.1
 
 -   **404 Not Found**  
 
+-   **429 Too Many Requests**  ：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
+
 ### 5XX 服务器错误
 
 -   **500 Internal Server Error**  ：服务器正在执行请求时发生错误。
 
+-   **502 Bad Gateway**  ：作为网关或代理的服务器从上游服务器收到了无效的响应，例如 Nginx 连不上后端，或者后端在返回响应之前断开了连接。
+
 -   **503 Service Unavailable**  ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+
+-   **504 Gateway Timeout**  ：作为网关或代理的服务器没有及时收到上游服务器的响应，例如 Nginx 等待后端的时间超过了 proxy_read_timeout（默认 60 秒）。
+
+502 和 504 都说明问题出在网关后面的服务上：502 是后端出错或者不可达，504 是后端太慢，排查时先看网关的错误日志，再看对应时间后端的日志和耗时。
 
 ## 四、HTTP 首部
 
@@ -363,7 +376,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### 连接管理
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/HTTP1_x_Connections.png" width="800"/> </div><br>
+<div align="center"> <img src="pics/http-connections.png" width="760px"/> </div><br>
 
 #### 1. 短连接与长连接
 
@@ -456,6 +469,8 @@ Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 
 标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
+SameSite 属性控制跨站请求是否携带 Cookie，用于防范跨站请求伪造，见 [设置 Cookie 的 SameSite 属性](攻击技术.md#3-设置-cookie-的-samesite-属性)。
+
 #### 8. Session
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
@@ -514,6 +529,56 @@ JWT 与 Session 的区别：
 需要注意的是，服务器验证时要固定使用的签名算法，不能接受头部中 alg 为 none 的令牌；HMAC 的密钥要随机生成，长度不少于 256 位。
 
 JWT 只是令牌的格式，而 OAuth 2.0 是授权框架，规定第三方应用如何获得访问令牌，这个访问令牌可以用 JWT 表示。
+
+#### 12. 单点登录与 OAuth 2.0
+
+单点登录（Single Sign-On, SSO）指的是在一个地方登录后，访问同一家公司的多个系统都不需要再登录。
+
+多个系统在同一个父域名下时（a.example.com、b.example.com），把会话的 Cookie 设置为 Domain=example.com 就能共享。域名不同时（shop.com、pay.com），Cookie 无法跨域，需要一个统一的认证中心 sso.example.com：
+
+1. 用户访问 pay.com，pay.com 发现没有会话，重定向到 sso.example.com/login?redirect=https://pay.com/；
+2. 用户之前在 shop.com 登录时已经在认证中心登录过，认证中心的域名下有它自己的 Cookie，于是不需要输入密码，直接生成一个一次性的票据，重定向回 https://pay.com/?ticket=ST-1024；
+3. pay.com 的后端拿票据向认证中心验证，得到用户信息后建立 pay.com 自己的会话。
+
+票据经过浏览器的地址栏，可能被记录或截获，所以只能使用一次、有效期很短，并且必须由后端去认证中心验证，而不是直接信任。
+
+OAuth 2.0 解决的是另一个问题：授权第三方应用访问用户在某个服务上的数据，而不把密码交给它，例如笔记网站读取用户在账号中心的昵称和头像。“用微信登录”这类功能就是基于 OAuth 2.0 实现的，最常用的是授权码模式：
+
+<div align="center"> <img src="pics/oauth-code-flow.png" width="760px"/> </div><br>
+
+在本机用 Python 实现了一个最小的授权服务器，按上图运行了一遍，第 ① 步之后浏览器访问的地址和第 ⑥ 步笔记网站后端发送的请求如下（域名已替换，省略了部分字段）：
+
+```text
+GET https://id.example.com/authorize?response_type=code&client_id=notes-app
+    &redirect_uri=https://notes.example.com/callback&scope=profile&state=x7Kp2
+    &code_challenge=RQgc0f_GtuKCUitkJiCz7wNdN-_2JLHQ0JGLD9XxGtg&code_challenge_method=S256
+
+POST https://id.example.com/token
+grant_type=authorization_code&code=R9YdiYheE6HIfYaA0e8LkQ
+    &redirect_uri=https://notes.example.com/callback&client_id=notes-app
+    &code_verifier=notes-demo-verifier-0123456789abcdefghijklmnop
+
+{"access_token": "v-7DlxOYaDNY-ewb8cCXCujdIyR7qdtl", "token_type": "Bearer", "expires_in": 3600}
+```
+
+几个参数的作用：
+
+- code：授权码，经过浏览器传给笔记网站，规范建议最长 10 分钟有效，并且只能使用一次。同一个授权码第二次换令牌时，返回 400 {"error": "invalid_grant"}；
+- code_verifier 和 code_challenge（PKCE）：笔记网站先生成一个随机串 code_verifier，把它的 SHA-256 摘要 code_challenge 放在第一步的地址中，换令牌时再提交原文，授权服务器核对两者是否对应。攻击者即使截获了授权码，没有 code_verifier 也换不到令牌，实测同样返回 invalid_grant；
+- state：笔记网站生成的随机值，回调时检查是否与发出的一致，防止攻击者用自己账号的授权码构造回调地址，让用户登录到攻击者的账号上，这是一种 [CSRF](攻击技术.md#二跨站请求伪造)；
+- access_token：访问令牌，由笔记网站的后端直接向授权服务器换取，不经过浏览器。
+
+早期还有一种隐式模式，授权服务器直接把访问令牌放在重定向的地址中返回，令牌会出现在浏览器历史记录和日志中。RFC 9700（OAuth 2.0 安全最佳实践）规定不应该再使用隐式模式，没有能力保存密钥的客户端（例如单页应用、手机 App）必须使用 PKCE。
+
+OAuth 2.0 本身只负责授权，访问令牌表示“可以读取昵称”，并不说明当前用户是谁。OpenID Connect 在它的基础上增加了 ID Token，这是一个包含用户 ID 的 JWT，专门用于登录，很多“第三方账号登录”使用的就是它。
+
+扫码登录也是类似的思路，把手机上已有的登录状态安全地交给电脑：
+
+1. 电脑网页向服务器申请一个二维码 ID，状态为“等待扫码”，并开始轮询这个 ID 的状态；
+2. 已登录的手机 App 扫码后，带着手机自己的令牌把二维码 ID 发给服务器，状态变为“已扫码”，电脑上显示“请在手机上确认”；
+3. 用户在手机上点击确认，服务器为电脑签发一个新的令牌，状态变为“已确认”，电脑轮询拿到令牌后完成登录。
+
+需要注意的是，电脑拿到的是新签发的令牌，而不是手机的令牌；二维码 ID 有效期很短，确认这一步要求用户在手机上手动点击，防止别人把二维码发给用户诱导扫码。
 
 ### 缓存
 
@@ -604,6 +669,23 @@ Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
 If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 ```
 
+#### 5. 强缓存与协商缓存
+
+浏览器使用缓存分为两种情况：
+
+- 强缓存：缓存还在 max-age 规定的有效期内，直接使用，不发送请求；
+- 协商缓存：缓存已经过期，或者响应中有 no-cache，浏览器带上 If-None-Match 或 If-Modified-Since 向服务器确认，资源没有变化就返回 304，只传输首部，浏览器继续使用本地的缓存。
+
+在本机用 Python 写一个服务器，a.js 返回 Cache-Control: max-age=600，b.js 返回 Cache-Control: no-cache，两者都带 ETag，用 Edge 打开同一个页面两次，服务器收到的请求如下：
+
+```text
+第 1 次  /a.js  无条件请求                 -> 200
+         /b.js  无条件请求                 -> 200
+第 2 次  /b.js  If-None-Match: "b-v1"     -> 304
+```
+
+第 2 次打开时 a.js 没有发出请求，直接使用了强缓存；b.js 每次都要确认，但内容没有变化时只返回 304。常见的做法是 HTML 使用 no-cache，保证总能拿到最新的页面；JS、CSS 的文件名中带上内容的哈希值，例如 app.3f2a1c.js，设置很长的 max-age，内容变化时文件名随之改变，旧的缓存自然不再被使用。
+
 ### 内容协商
 
 通过内容协商返回最合适的内容，例如根据浏览器的默认语言选择返回中文界面还是英文界面。
@@ -638,9 +720,9 @@ Vary: Accept-Language
 
 内容编码将实体主体进行压缩，从而减少传输的数据量。
 
-常用的内容编码有：gzip、compress、deflate、identity。
+常用的内容编码有 gzip、deflate 和 br（Brotli），identity 表示不压缩。本机的 Edge 156 发出的请求中带的是 Accept-Encoding: gzip, deflate, br, zstd，较新的浏览器还支持 zstd。
 
-浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于该内容协商过程是基于编码类型来选择资源的展现形式的，响应报文的 Vary 首部字段至少要包含 Content-Encoding。
+浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于响应的内容取决于请求中的 Accept-Encoding，响应报文的 Vary 首部字段要包含 Accept-Encoding，否则缓存服务器可能把压缩过的内容返回给不支持该算法的客户端。
 
 ### 范围请求
 
@@ -682,7 +764,7 @@ Accept-Ranges: bytes
 
 ### 分块传输编码
 
-Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步显示页面。
+Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步显示页面。响应中带有 Transfer-Encoding: chunked 首部，不需要 Content-Length，每一块先写明长度，再写内容，最后以长度为 0 的块结束，适合事先不知道总长度的场景，例如边生成边返回的页面。HTTP/2 有自己的分帧机制，不再使用分块传输编码。
 
 ### 多部分对象集合
 
@@ -726,11 +808,9 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 - 用户察觉得到正向代理的存在。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a314bb79-5b18-4e63-a976-3448bffa6f1b.png" width=""/> </div><br>
-
 - 而反向代理一般位于内部网络中，用户察觉不到。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2d09a847-b854-439c-9198-b29c65810944.png" width=""/> </div><br>
+<div align="center"> <img src="pics/http-proxy.png" width="760px"/> </div><br>
 
 #### 2. 网关
 
@@ -739,6 +819,68 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 #### 3. 隧道
 
 使用 SSL 等加密手段，在客户端和服务器之间建立一条安全的通信线路。
+
+### WebSocket
+
+HTTP 是请求-响应模式，服务器不能主动给客户端发消息。聊天、实时通知这类场景以前只能轮询：短轮询定时发请求，大部分请求都是空的；长轮询让服务器挂起请求，直到有新消息再响应，但每条消息仍要一次新的请求。WebSocket 在一个 TCP 连接上提供全双工通信，建立连接后双方随时都可以发送消息。
+
+WebSocket 连接由一次 HTTP 请求升级而来：
+
+```text
+GET /chat HTTP/1.1
+Host: www.example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: Y3Mtbm90ZXMtMjAyNi0xMA==
+Sec-WebSocket-Version: 13
+
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: N5dfgp7eKvv+Po1vS+eAAHg5F1I=
+```
+
+Sec-WebSocket-Key 是客户端随机生成的 16 字节的 Base64 编码。服务器在它后面拼上协议规定的 GUID 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，计算 SHA-1 后再做 Base64 编码，作为 Sec-WebSocket-Accept 返回，证明自己确实支持 WebSocket，而不是把请求当作普通的 HTTP 请求处理。之后连接上传输的不再是 HTTP 报文，而是 WebSocket 帧，帧头最短只有 2 字节，不用像 HTTP 那样每次都携带首部。
+
+需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。
+
+SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应，服务器不断地往响应中写入文本事件，只能由服务器发给客户端，浏览器断开后会自动重连。只需要服务器单向推送时（例如大模型逐字输出），SSE 更简单；客户端和服务器都需要随时发消息时（例如聊天、协同编辑），使用 WebSocket。
+
+### 跨域
+
+同源指的是协议、域名和端口都相同。浏览器的同源策略限制网页中的脚本读取其它源的响应，例如 https://shop.example.com 页面中的脚本请求 https://api.example.com/orders，请求能够发出去，但浏览器默认不把响应交给脚本。
+
+跨域资源共享（Cross-Origin Resource Sharing, CORS）指的是服务器通过响应首部声明允许哪些源读取响应：
+
+```text
+GET /orders HTTP/1.1
+Host: api.example.com
+Origin: https://shop.example.com
+
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: https://shop.example.com
+```
+
+GET、HEAD 和表单形式的 POST 这类简单请求直接发送；其它请求，例如 PUT 或者 Content-Type 为 application/json 的 POST，浏览器会先发一个 OPTIONS 预检请求，询问服务器是否允许，允许之后才发送真正的请求：
+
+```text
+OPTIONS /orders/1024 HTTP/1.1
+Origin: https://shop.example.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: content-type
+
+HTTP/1.1 204 No Content
+Access-Control-Allow-Origin: https://shop.example.com
+Access-Control-Allow-Methods: GET, PUT
+Access-Control-Allow-Headers: content-type
+Access-Control-Max-Age: 600
+```
+
+Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间相同的请求不再预检。跨域请求默认不携带 Cookie，前端设置 credentials: 'include' 后，服务器还要返回 Access-Control-Allow-Credentials: true，并且 Access-Control-Allow-Origin 不能是 *，必须写明具体的源。
+
+在本机用两个端口模拟两个源，用 Edge 验证：服务器不返回 Access-Control-Allow-Origin 时，fetch 失败，但服务器的日志显示请求已经执行了；预检请求没有允许 PUT 时，浏览器不再发送 PUT；携带 Cookie 而服务器返回 * 时，fetch 同样失败。
+
+需要注意的是，CORS 只决定浏览器是否把响应交给脚本，并不是安全措施：服务器仍然执行了请求，curl 这类不经过浏览器的工具也完全不受限制，权限要靠认证和 [CSRF 防护](攻击技术.md#二跨站请求伪造) 保证。另一种解决跨域的办法是同源的反向代理，例如由 Nginx 把 https://shop.example.com/api 转发给后端，浏览器看到的就是同源的请求。
 
 ## 六、HTTPS
 
@@ -754,7 +896,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ssl-offloading.jpg" width="700"/> </div><br>
+<div align="center"> <img src="pics/https-layers.png" width="720px"/> </div><br>
 
 ### 加密
 
@@ -765,7 +907,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：运算速度快；
 - 缺点：无法安全地将密钥传输给通信方。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/crypto-symmetric.png" width="720px"/> </div><br>
 
 #### 2.非对称密钥加密
 
@@ -773,23 +915,23 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
 
-非对称密钥除了用来加密，还可以用来进行签名。因为私有密钥无法被其他人获取，因此通信发送方使用其私有密钥进行签名，通信接收方使用发送方的公开密钥对签名进行解密，就能判断这个签名是否正确。
+非对称密钥除了用来加密，还可以用来进行签名。因为私有密钥无法被其他人获取，因此通信发送方使用其私有密钥进行签名，通信接收方使用发送方的公开密钥对签名进行验证，就能判断这个签名是否正确。
 
 - 优点：可以更安全地将公开密钥传输给通信发送方；
 - 缺点：运算速度慢。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/crypto-asymmetric.png" width="720px"/> </div><br>
 
 #### 3. HTTPS 采用的加密方式
 
-上面提到对称密钥加密方式的传输效率更高，但是无法安全地将密钥 Secret Key 传输给通信方。而非对称密钥加密方式可以保证传输的安全性，因此我们可以利用非对称密钥加密方式将 Secret Key  传输给通信方。HTTPS 采用混合的加密机制，正是利用了上面提到的方案：
+上面提到对称密钥加密方式的传输效率更高，但是无法安全地将密钥 Secret Key 传输给通信方。而非对称密钥加密方式可以保证传输的安全性，因此可以利用非对称密钥加密方式将 Secret Key 传输给通信方。HTTPS 采用混合的加密机制，正是利用了上面提到的方案：
 
 - 使用非对称密钥加密方式，传输对称密钥加密方式所需要的 Secret Key，从而保证安全性;
-- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率。（下图中的 Session Key 就是 Secret Key）
+- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率。（下图中的会话密钥就是 Secret Key）
 
 需要注意的是，TLS 1.3 不再用公钥加密传输对称密钥，而是通过 ECDHE 密钥交换协商出会话密钥，非对称密钥只用于签名认证。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/How-HTTPS-Works.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/https-hybrid.png" width="740px"/> </div><br>
 
 ### 认证
 
@@ -801,7 +943,17 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2017-06-11-ca.png" width=""/> </div><br>
+<div align="center"> <img src="pics/cert-chain.png" width="760px"/> </div><br>
+
+### TLS 握手
+
+TLS 握手完成三件事：协商加密算法、验证服务器的证书、协商出会话密钥。目前常用的密钥交换方式是 ECDHE：双方各自临时生成一对椭圆曲线密钥，把公钥发给对方，再用自己的私钥和对方的公钥算出相同的共享密钥。会话密钥本身从不在网络上传输，即使服务器的证书私钥日后泄露，之前录下的通信也无法解密，称为前向安全。服务器还要用证书的私钥对握手内容签名，证明自己就是证书的持有者。
+
+下图是本机用 openssl s_client 连接两个网站时记录的握手报文：
+
+<div align="center"> <img src="pics/tls-handshake.png" width="760px"/> </div><br>
+
+TLS 1.2 要 2 个 RTT 之后才能发送 HTTP 请求。TLS 1.3 把 ECDHE 公钥直接放在 ClientHello 中，服务器回复 ServerHello 时双方就能算出密钥，之后的握手报文（图中花括号内）都已加密，1 个 RTT 后就能发送请求；TLS 1.3 还去掉了 RSA 密钥交换等不安全的算法。
 
 ### 完整性保护
 
@@ -809,7 +961,7 @@ SSL 提供报文摘要功能来进行完整性保护。
 
 HTTP 也提供了 MD5 报文摘要功能，但不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。
 
-HTTPS 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。
+HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了握手协商出的会话密钥（HMAC，或者 AES-GCM 等算法自带的认证标签）。攻击者没有这个密钥，篡改报文之后无法算出正确的摘要，接收方校验失败就会断开连接。
 
 ### HTTPS 的缺点
 
@@ -830,7 +982,7 @@ HTTP/1.x 实现简单是以牺牲性能为代价的：
 
 HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式的。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/86e6a91d-a285-447a-9345-c5484b8d0c47.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/h2-frames.png" width="760px"/> </div><br>
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
@@ -838,13 +990,13 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/af198da1-2480-4043-b07f-a3b91a88b815.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/h2-streams.png" width="760px"/> </div><br>
 
 ### 服务端推送
 
 HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e3f1657c-80fc-4dfa-9643-bf51abd201c6.png" width="800"/> </div><br>
+<div align="center"> <img src="pics/h2-push.png" width="720px"/> </div><br>
 
 需要注意的是，Chrome 106 起默认禁用了服务端推送，其它基于 Chromium 的浏览器也随之跟进。
 
@@ -856,7 +1008,19 @@ HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见�
 
 不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/_u4E0B_u8F7D.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/hpack.png" width="760px"/> </div><br>
+
+### HTTP/3
+
+HTTP/2 在一个 TCP 连接上复用多个流，但 TCP 只保证整个字节流按序到达：一个报文段丢失时，后面已经到达的数据也要等它重传，所有的流都被阻塞，称为队头阻塞。
+
+HTTP/3 改为基于 UDP 的 QUIC 协议：
+
+- 每个流单独保证顺序，一个流丢包不影响其它流；
+- QUIC 内置了 TLS 1.3，传输层握手和加密握手合并，新连接 1 个 RTT 后就能发送请求，恢复之前的会话时可以 0 RTT；
+- 连接用连接 ID 标识，而不是 IP 地址和端口，手机从 Wi-Fi 切换到移动网络时连接不用重建。
+
+浏览器通常先用 HTTP/2 访问，从响应首部 Alt-Svc 得知服务器支持 HTTP/3 后再切换，例如 www.example.com 的响应中有 alt-svc: h3=":443"; ma=86400。
 
 ## 八、HTTP/1.1 新特性
 
@@ -889,6 +1053,8 @@ GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
 ```http
 POST /test/demo_form.asp HTTP/1.1
 Host: w3schools.com
+Content-Type: application/x-www-form-urlencoded
+
 name1=value1&name2=value2
 ```
 
@@ -922,7 +1088,7 @@ GET /pageX HTTP/1.1
 POST /add_row HTTP/1.1 不是幂等的，如果调用多次，就会增加多行记录：
 
 ```text
-POST /add_row HTTP/1.1   -> Adds a 1nd row
+POST /add_row HTTP/1.1   -> Adds a 1st row
 POST /add_row HTTP/1.1   -> Adds a 2nd row
 POST /add_row HTTP/1.1   -> Adds a 3rd row
 ```
@@ -945,42 +1111,46 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 ### XMLHttpRequest
 
-为了阐述 POST 和 GET 的另一个区别，需要先了解 XMLHttpRequest：
+XMLHttpRequest 是浏览器提供的 API，用于在不刷新页面的情况下向服务器发送请求，是 AJAX 的基础，现在更常用的是 fetch()。
 
-> XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
-
-- 在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
-- 而 GET 方法 Header 和 Data 会一起发送。
+网上流传一种说法：XMLHttpRequest 发送 POST 时，会先发送首部，再单独发送请求体，GET 则一次发完。HTTP 规范中没有这样的规定，这只是个别浏览器早期的实现细节，不能作为 GET 和 POST 的区别。在本机用 Edge 记录网络日志（--log-net-log），通过 XMLHttpRequest 发送一个带 21 字节请求体的 POST 请求，首部和请求体是在同一次 socket 写入中发出的，共 723 字节。
 
 ## 参考资料
 
 - [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)
+- [RFC 6749: The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
+- [RFC 7636: Proof Key for Code Exchange (PKCE)](https://www.rfc-editor.org/rfc/rfc7636)
+- [RFC 9700: Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700)
 - [OWASP: JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)
 - [OWASP: HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html)
 - 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [MDN : Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 - [htmlspecialchars](http://php.net/manual/zh/function.htmlspecialchars.php)
-- [Difference between file URI and URL in java](http://java2db.com/java-io/how-to-get-and-the-difference-between-file-uri-and-url-in-java)
+- [Difference between file URI and URL in java](https://web.archive.org/web/20191216080403/http://java2db.com:80/java-io/how-to-get-and-the-difference-between-file-uri-and-url-in-java)
 - [How to Fix SQL Injection Using Java PreparedStatement & CallableStatement](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-using-prepared-callable-statement)
 - [浅谈 HTTP 中 Get 与 Post 的区别](https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html)
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
-- [HTTP (HyperText Transfer Protocol)](https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
+- [HTTP (HyperText Transfer Protocol)](https://www3.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
 - [Web-VPN: Secure Proxies with SPDY & Chrome](https://www.igvita.com/2011/12/01/web-vpn-secure-proxies-with-spdy-chrome/)
 - [File:HTTP persistent connection.svg](http://en.wikipedia.org/wiki/File:HTTP_persistent_connection.svg)
 - [Proxy server](https://en.wikipedia.org/wiki/Proxy_server)
 - [What Is This HTTPS/SSL Thing And Why Should You Care?](https://www.x-cart.com/blog/what-is-https-and-ssl.html)
-- [What is SSL Offloading?](https://securebox.comodo.com/ssl-sniffing/ssl-offloading/)
 - [Sun Directory Server Enterprise Edition 7.0 Reference - Key Encryption](https://docs.oracle.com/cd/E19424-01/820-4811/6ng8i26bn/index.html)
 - [An Introduction to Mutual SSL Authentication](https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
 - [The Difference Between URLs and URIs](https://danielmiessler.com/study/url-uri/)
 - [Cookie 与 Session 的区别](https://juejin.im/entry/5766c29d6be3ff006a31b84e#comment)
 - [COOKIE 和 SESSION 有什么区别](https://www.zhihu.com/question/19786827)
 - [Cookie/Session 的机制与安全](https://harttle.land/2015/08/10/cookie-session.html)
-- [HTTPS 证书原理](https://shijianan.com/2017/06/11/https/)
 - [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
 - [XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
 - [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
 - [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
 - [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+- [RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3](https://www.rfc-editor.org/rfc/rfc8446)
+- [RFC 7541: HPACK: Header Compression for HTTP/2](https://www.rfc-editor.org/rfc/rfc7541)
+- [RFC 9114: HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
+- [RFC 9000: QUIC](https://www.rfc-editor.org/rfc/rfc9000)
+- [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)

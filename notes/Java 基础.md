@@ -256,7 +256,7 @@ System.out.println(s5 == s6);  // true
 
 使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
 
-- "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量；
+- "abc" 属于字符串字面量，编译时记录在 class 文件的常量池中，HotSpot 在运行时第一次执行到对应的 ldc 指令时，才在 String Pool 中创建这个字符串对象，之后再执行就直接复用；
 - 而使用 new 的方式会在堆中创建一个字符串对象。
 
 创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。
@@ -295,7 +295,7 @@ Constant pool:
 // ...
 ```
 
-在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
+在 class 文件的常量池中，#19 存储字符串字面量 "abc"，#3 是 String 类型的常量，它指向 #19；运行时解析 #3 得到的就是 String Pool 中的字符串对象。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
 以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
 
@@ -1384,7 +1384,7 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 -   **受检异常**  ：需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，并且可以从异常中恢复；
 -   **非受检异常**  ：是程序运行时错误，例如除 0 会引发 ArithmeticException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/PPjwP.png" width="600"/> </div><br>
+<div align="center"> <img src="pics/java-exceptions.png" width="760px"/> </div><br>
 
 - [Java Exception Interview Questions and Answers](https://www.journaldev.com/2167/java-exception-interview-questions-and-answers)
 
@@ -1414,35 +1414,44 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 ### Java 各版本的新特性
 
-**New highlights in Java SE 8**  
+目前常用的是长期支持（LTS）版本 8、11、17、21，面试中最常问 Java 8 和 Java 21：
 
-1. Lambda Expressions
-2. Pipelines and Streams
-3. Date and Time API
-4. Default Methods
-5. Type Annotations
-6. Nashorn JavaScript Engine
-7. Concurrent Accumulators
-8. Parallel operations
-9. PermGen Error Removed
+| 版本 | 与上一个长期支持版本相比的主要新特性 |
+| --- | --- |
+| Java 8（2014） | Lambda 表达式、Stream、Optional、新的日期时间 API（java.time）、接口默认方法；永久代被元空间取代 |
+| Java 11（2018） | var 用于 Lambda 参数（var 本身在 Java 10 引入）、标准化的 HttpClient、String 新增 isBlank、strip、repeat 等方法 |
+| Java 17（2021） | 记录类（record）、密封类（sealed）、文本块、instanceof 模式匹配、新的 switch 表达式 |
+| Java 21（2023） | 虚拟线程、switch 模式匹配、记录模式、有序集合接口 SequencedCollection |
 
-**New highlights in Java SE 7**  
+以下代码在 JDK 21 上编译运行，用到了其中的大部分特性：
 
-1. Strings in Switch Statement
-2. Type Inference for Generic Instance Creation
-3. Multiple Exception Handling
-4. Support for Dynamic Languages
-5. Try with Resources
-6. Java nio Package
-7. Binary Literals, Underscore in literals
-8. Diamond Syntax
+```java
+sealed interface Shape permits Circle, Square {}
+record Circle(double r) implements Shape {}
+record Square(double side) implements Shape {}
 
-- [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
-- [Java 8 特性](http://www.importnew.com/19345.html)
+static double area(Shape s) {
+    return switch (s) {                          // switch 模式匹配，编译器检查是否覆盖了所有子类
+        case Circle c -> Math.PI * c.r() * c.r();
+        case Square(double side) -> side * side; // 记录模式，直接取出字段
+    };
+}
+
+var upper = List.of("redis", "mysql", "kafka", "java").stream()
+        .filter(w -> w.length() == 5)
+        .map(String::toUpperCase)
+        .collect(Collectors.toList());           // [REDIS, MYSQL, KAFKA]
+
+Thread.ofVirtual().start(() -> System.out.println(Thread.currentThread().isVirtual()));  // true
+```
+
+Lambda 表达式不会生成匿名内部类的 class 文件。用 javap 查看编译结果，Lambda 的方法体被编译成当前类的私有静态方法 lambda$main$0，调用处是一条 invokedynamic 指令，第一次执行时由 LambdaMetafactory 在运行时生成实现函数式接口的类。
+
+Stream 是惰性求值的：filter、map 等中间操作只是记录下来，遇到 collect、findFirst 等终止操作才开始执行，并且每个元素依次走完整条流水线。上例改为 findFirst() 时，只处理了第一个元素 redis 就返回了，后面的 mysql、kafka 都没有被处理。
 
 ### Java 与 C++ 的区别
 
-- Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
+- Java 的代码都写在类中，除了基本类型之外，所有的对象都继承自 java.lang.Object；C++ 为了兼容 C，既支持面向对象也支持面向过程。
 - Java 通过虚拟机从而实现跨平台特性，但是 C++ 依赖于特定的平台。
 - Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针。
 - Java 支持自动垃圾回收，而 C++ 需要手动回收。
@@ -1451,6 +1460,16 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
 
 [What are the main differences between Java and C++?](http://cs-fundamentals.com/tech-interview/java/differences-between-java-and-cpp.php)
+
+与 Go、Python 相比：
+
+| | Java | Go | Python（CPython） |
+| --- | --- | --- | --- |
+| 执行方式 | 编译为字节码，由 JVM 解释执行，热点代码由 JIT 编译为机器码 | 直接编译为机器码，生成一个可执行文件，启动快 | 编译为字节码，由解释器执行，3.13 起有实验性的 JIT |
+| 类型检查 | 静态类型，编译时检查 | 静态类型，编译时检查 | 动态类型，运行时才发现类型错误 |
+| 并发 | 线程对应操作系统线程，JDK 21 起有虚拟线程 | goroutine 由运行时调度到少量线程上，用 channel 通信 | 有全局解释器锁（GIL），同一时刻只有一个线程执行 Python 代码，CPU 密集型任务要用多进程；3.13 起提供去掉 GIL 的版本，3.14 起正式支持，但不是默认版本 |
+| 内存回收 | 分代的垃圾收集器，可以选择 G1、ZGC 等 | 与程序并发执行的标记清除，不移动对象 | 以引用计数为主，计数为 0 时立即释放，再用垃圾收集器处理循环引用 |
+| 错误处理 | 异常 | 函数返回 error 值，由调用方检查 | 异常 |
 
 ### JRE or JDK
 
@@ -1461,3 +1480,8 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 - Eckel B. Java 编程思想[M]. 机械工业出版社, 2002.
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
+- [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
+- [JEP 444: Virtual Threads](https://openjdk.org/jeps/444)
+- [PEP 703: Making the Global Interpreter Lock Optional in CPython](https://peps.python.org/pep-0703/)
+- [What’s New in Python 3.14](https://docs.python.org/3/whatsnew/3.14.html)
+- [A Guide to the Go Garbage Collector](https://go.dev/doc/gc-guide)
