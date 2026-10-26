@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">CONNECT：通过代理建立隧道</text>
+  <rect x="50" y="46" width="140" height="32" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="120" y="66.5" class="c sub b">浏览器</text>
+  <line x1="120" y1="80" x2="120" y2="270" stroke="#BBB" stroke-dasharray="4 4"/>
+  <rect x="300" y="46" width="140" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="370" y="66.5" class="c sub b">代理 proxy:8080</text>
+  <line x1="370" y1="80" x2="370" y2="270" stroke="#BBB" stroke-dasharray="4 4"/>
+  <rect x="550" y="46" width="140" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="620" y="66.5" class="c sub b">www.example.com:443</text>
+  <line x1="620" y1="80" x2="620" y2="270" stroke="#BBB" stroke-dasharray="4 4"/>
+  <line x1="120" y1="110" x2="370" y2="110" class="arrow "/>
+  <text x="245" y="104" class="c sub mono" style="fill:#444">CONNECT www.example.com:443 HTTP/1.1</text>
+  <line x1="370" y1="140" x2="620" y2="140" class="arrow "/>
+  <text x="495" y="134" class="c sub" style="fill:#444">建立 TCP 连接</text>
+  <line x1="370" y1="170" x2="120" y2="170" class="arrow dash"/>
+  <text x="245" y="164" class="c sub mono" style="fill:#444">HTTP/1.1 200 Connection Established</text>
+  <rect x="120" y="196" width="500" height="34" rx="17" fill="#E6E3FA" fill-opacity="0.5" stroke="#B8B0DE"/>
+  <text x="370" y="218" class="c sub" style="fill:#444">TLS 握手和加密的 HTTP 报文，代理只转发字节，看不到内容</text>
+  <text x="30" y="290" class="sub">代理只知道目标主机和端口；之后它像一根管道，把两端的数据原样转发。</text>
+</svg>

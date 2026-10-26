@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">CPU 缓存：每个核心先读写自己的缓存</text>
+  <rect x="40" y="60" width="100" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="90" y="81.5" class="c sub b">核心 0</text>
+  <rect x="40" y="104" width="100" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="90" y="122" class="b c">L1 数据缓存</text>
+  <text x="90" y="137" class="sub c">128 KB</text>
+  <line x1="90" y1="94" x2="90" y2="104" class="arrow "/>
+  <rect x="160" y="60" width="100" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="210" y="81.5" class="c sub b">核心 1</text>
+  <rect x="160" y="104" width="100" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="210" y="122" class="b c">L1 数据缓存</text>
+  <text x="210" y="137" class="sub c">128 KB</text>
+  <line x1="210" y1="94" x2="210" y2="104" class="arrow "/>
+  <rect x="280" y="60" width="100" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="330" y="81.5" class="c sub b">核心 2</text>
+  <rect x="280" y="104" width="100" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="330" y="122" class="b c">L1 数据缓存</text>
+  <text x="330" y="137" class="sub c">128 KB</text>
+  <line x1="330" y1="94" x2="330" y2="104" class="arrow "/>
+  <rect x="400" y="60" width="100" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="450" y="81.5" class="c sub b">核心 3</text>
+  <rect x="400" y="104" width="100" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="450" y="122" class="b c">L1 数据缓存</text>
+  <text x="450" y="137" class="sub c">128 KB</text>
+  <line x1="450" y1="94" x2="450" y2="104" class="arrow "/>
+  <rect x="40" y="168" width="460" height="40" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="270" y="186" class="b c">L2 缓存，4 个性能核共享</text>
+  <text x="270" y="201" class="sub c">12 MB</text>
+  <line x1="90" y1="144" x2="90" y2="168" class="arrow "/>
+  <line x1="210" y1="144" x2="210" y2="168" class="arrow "/>
+  <line x1="330" y1="144" x2="330" y2="168" class="arrow "/>
+  <line x1="450" y1="144" x2="450" y2="168" class="arrow "/>
+  <rect x="40" y="236" width="460" height="40" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="270" y="254" class="b c">主内存</text>
+  <text x="270" y="269" class="sub c">32 GB</text>
+  <line x1="270" y1="208" x2="270" y2="236" class="arrow "/>
+  <text x="530" y="82" class="sub b">以本机 Apple M1 Pro 为例（sysctl）</text>
+  <text x="530" y="106" class="sub">缓存以缓存行为单位读写，</text>
+  <text x="530" y="124" class="sub">本机的缓存行为 128 字节。</text>
+  <text x="530" y="154" class="sub">核心 0 修改了缓存中的变量，</text>
+  <text x="530" y="172" class="sub">其它核心缓存里可能还是旧值，</text>
+  <text x="530" y="190" class="sub">缓存一致性协议负责让它们失效，</text>
+  <text x="530" y="208" class="sub">但编译器和 CPU 的重排序、</text>
+  <text x="530" y="226" class="sub">写缓冲仍会导致其它线程看不到</text>
+  <text x="530" y="244" class="sub">最新的值。</text>
+  <text x="24" y="310" class="sub">图中只画了一组 4 个性能核；本机共有 8 个性能核和 2 个能效核。</text>
+</svg>

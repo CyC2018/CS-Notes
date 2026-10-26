@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">镜像分层与容器的可写层</text>
+  <rect x="60" y="56" width="380" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="250" y="78.5" class="c sub">容器的可写层：运行时的修改都写在这里</text>
+  <rect x="60" y="100" width="380" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="250" y="122.5" class="c sub">RUN pip install flask</text>
+  <rect x="60" y="144" width="380" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="250" y="166.5" class="c sub">COPY app.py /app/</text>
+  <rect x="60" y="188" width="380" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="250" y="210.5" class="c sub">FROM python:3.12-slim（基础镜像的多层）</text>
+  <text x="460" y="82" class="sub">可读写，容器删除后就没有了</text>
+  <path d="M452,108 q10,0 10,10 V220 q0,10 -10,10" class="line"/>
+  <text x="476" y="172" class="sub b" style="fill:#444">镜像的只读层</text>
+  <text x="476" y="190" class="sub">Dockerfile 的每条指令生成一层，</text>
+  <text x="476" y="206" class="sub">多个镜像共享相同的层</text>
+  <text x="30" y="262" class="sub">容器修改镜像中的文件时，先把文件复制到可写层再修改（写时复制），只读层不变，所以同一个镜像可以启动多个容器。</text>
+  <text x="30" y="280" class="sub">Dockerfile 中把变化少的指令放在前面，修改代码后重新构建时前面的层可以直接复用缓存。</text>
+</svg>

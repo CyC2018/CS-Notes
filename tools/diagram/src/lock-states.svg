@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">synchronized 的锁状态变化（JDK 21 用 JOL 实测 Mark Word）</text>
+  <rect x="30" y="60" width="220" height="92" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="140" y="84" class="c b" style="fill:#444">无锁</text>
+  <text x="140" y="108" class="c sub mono" style="fill:#444">0x0000000000000001</text>
+  <text x="140" y="132" class="c sub">末尾 01</text>
+  <rect x="270" y="60" width="220" height="92" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="380" y="84" class="c b" style="fill:#444">轻量级锁</text>
+  <text x="380" y="108" class="c sub mono" style="fill:#444">0x000000016faceae0</text>
+  <text x="380" y="132" class="c sub">末尾 00</text>
+  <text x="380" y="146" class="c sub">指向加锁线程栈中的 Lock Record</text>
+  <rect x="510" y="60" width="220" height="92" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="620" y="84" class="c b" style="fill:#444">重量级锁</text>
+  <text x="620" y="108" class="c sub mono" style="fill:#444">0x000000015b630a72</text>
+  <text x="620" y="132" class="c sub">末尾 10</text>
+  <text x="620" y="146" class="c sub">指向 ObjectMonitor</text>
+  <line x1="252" y1="92" x2="268" y2="92" class="arrow "/>
+  <line x1="268" y1="120" x2="252" y2="120" class="arrow "/>
+  <text x="260" y="176" class="c sub">进入 synchronized：CAS 把 Mark Word 换成</text>
+  <text x="260" y="192" class="c sub">Lock Record 地址；退出时 CAS 换回</text>
+  <line x1="492" y1="106" x2="508" y2="106" class="arrow "/>
+  <text x="510" y="176" class="sub">另一个线程加锁时 CAS 失败，</text>
+  <text x="510" y="192" class="sub">膨胀为重量级锁，抢不到的线程阻塞</text>
+  <text x="30" y="236" class="sub">实测：① 新建的对象是 0x…01；② 一个线程进入 synchronized 后变为 thin lock；③ 退出后恢复为 0x…01；</text>
+  <text x="30" y="254" class="sub">④ 另一个线程持有锁时再去加锁，变为 fat lock；⑤ 两个线程都退出后仍是 fat lock，空闲的监视器由 JVM 之后回收。</text>
+  <text x="30" y="278" class="sub">如果对象调用过 hashCode()，哈希值会写进 Mark Word，例如 0x00000028ac3dc301 中的 28ac3dc3。</text>
+  <text x="30" y="302" class="sub">锁只会从轻量级膨胀为重量级，不会在使用中降级；JDK 15 之前，一个线程反复加锁时还会先进入偏向锁。</text>
+</svg>

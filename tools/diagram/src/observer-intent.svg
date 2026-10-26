@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="290" viewBox="0 0 740 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">观察者：一个主题，多个观察者</text>
+  <rect x="40" y="80" width="220" height="82" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="150" y="98" class="c sub b" style="fill:#444">WeatherData（主题）</text>
+  <line x1="40" y1="106" x2="260" y2="106" stroke="#7DBCB7"/>
+  <text x="48" y="122" class="sub mono" style="fill:#444">registerObserver(o)</text>
+  <text x="48" y="140" class="sub mono" style="fill:#444">removeObserver(o)</text>
+  <text x="48" y="158" class="sub mono" style="fill:#444">notifyObserver()</text>
+  <text x="150" y="186" class="c sub mono">observers = [布告板 1, 布告板 2]</text>
+  <rect x="450" y="56" width="250" height="46" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="575" y="74" class="c sub b" style="fill:#444">CurrentConditionsDisplay</text>
+  <line x1="450" y1="82" x2="700" y2="82" stroke="#7FB2D6"/>
+  <text x="458" y="98" class="sub mono" style="fill:#444">update(temp, humidity, pressure)</text>
+  <line x1="262" y1="120" x2="446" y2="82" class="arrow "/>
+  <rect x="450" y="126" width="250" height="46" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="575" y="144" class="c sub b" style="fill:#444">StatisticsDisplay</text>
+  <line x1="450" y1="152" x2="700" y2="152" stroke="#7FB2D6"/>
+  <text x="458" y="168" class="sub mono" style="fill:#444">update(temp, humidity, pressure)</text>
+  <line x1="262" y1="120" x2="446" y2="152" class="arrow "/>
+  <rect x="450" y="196" width="250" height="46" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="575" y="214" class="c sub b" style="fill:#444">以后新增的布告板</text>
+  <line x1="450" y1="222" x2="700" y2="222" stroke="#BBBBBB"/>
+  <text x="458" y="238" class="sub mono" style="fill:#444">update(temp, humidity, pressure)</text>
+  <line x1="262" y1="120" x2="446" y2="222" class="arrow dash"/>
+  <text x="354" y="76" class="c sub" style="fill:#296898">状态改变时逐个调用 update</text>
+  <text x="30" y="262" class="sub">主题只依赖 Observer 接口，不知道具体有哪些布告板；新增布告板时只需要调用 registerObserver 注册，主题的代码不用改。</text>
+</svg>

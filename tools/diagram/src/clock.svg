@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">时钟算法：用环形链表代替移动页面</text>
+  <rect x="172" y="55" width="56" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="74" class="c sub mono" style="fill:#444">A R=1</text>
+  <rect x="249.782" y="87.2183" width="56" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="277.782" y="106.218" class="c sub mono" style="fill:#444">B R=0</text>
+  <rect x="282" y="165" width="56" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="310" y="184" class="c sub mono" style="fill:#444">C R=1</text>
+  <rect x="249.782" y="242.782" width="56" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="277.782" y="261.782" class="c sub mono" style="fill:#444">D R=1</text>
+  <rect x="172" y="275" width="56" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="200" y="294" class="c sub mono" style="fill:#444">E R=0</text>
+  <rect x="94.2183" y="242.782" width="56" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="122.218" y="261.782" class="c sub mono" style="fill:#444">F R=1</text>
+  <rect x="62" y="165" width="56" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="184" class="c sub mono" style="fill:#444">G R=0</text>
+  <rect x="94.2183" y="87.2183" width="56" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="122.218" y="106.218" class="c sub mono" style="fill:#444">H R=1</text>
+  <line x1="200" y1="180" x2="270" y2="180" stroke="#C0605A" stroke-width="2" marker-end="url(#r)"/>
+  <circle cx="200" cy="180" r="4" fill="#C0605A"/>
+  <text x="200" y="202" class="c sub note">指针</text>
+  <text x="400" y="70" class="b">发生缺页时，从指针处开始检查：</text>
+  <text x="400" y="100" class="sub" style="fill:#444">C 的 R = 1：清零，指针前进</text>
+  <text x="400" y="124" class="sub" style="fill:#444">D 的 R = 1：清零，指针前进</text>
+  <text x="400" y="148" class="sub" style="fill:#444">E 的 R = 0：换出 E，新页面放在这里，</text>
+  <text x="400" y="172" class="sub" style="fill:#444">指针指向 F</text>
+  <text x="400" y="210" class="sub">效果与第二次机会相同，但只移动指针，</text>
+  <text x="400" y="228" class="sub">不用在链表中移动页面。</text>
+  <text x="30" y="326" class="sub">图中灰色的 C、D 在这次检查中被清零；淡紫色的 E 被换出。</text>
+</svg>

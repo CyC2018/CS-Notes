@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">排序：两个有序集合，成员都是文章 ID</text>
+  <text x="30" y="52" class="sub mono b" style="fill:#444">time:（分值是发布时间）</text>
+  <rect x="30" y="60" width="120" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="90" y="76" class="c sub" style="fill:#444">成员</text>
+  <rect x="150" y="60" width="110" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="205" y="76" class="c sub" style="fill:#444">分值</text>
+  <rect x="30" y="84" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="101" class="c sub mono" style="fill:#444">article:1001</text>
+  <rect x="150" y="84" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="205" y="101" class="c sub mono" style="fill:#444">1760923800</text>
+  <rect x="30" y="110" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="127" class="c sub mono" style="fill:#444">article:1002</text>
+  <rect x="150" y="110" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="205" y="127" class="c sub mono" style="fill:#444">1761026400</text>
+  <rect x="30" y="136" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="153" class="c sub mono" style="fill:#444">article:1003</text>
+  <rect x="150" y="136" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="205" y="153" class="c sub mono" style="fill:#444">1761135300</text>
+  <text x="30" y="186" class="sub mono" style="fill:#296898">ZRANGE time: 0 9 REV</text>
+  <text x="30" y="204" class="sub">最新的 10 篇：1003、1002、1001</text>
+  <text x="400" y="52" class="sub mono b" style="fill:#444">votes:（分值是点赞数）</text>
+  <rect x="400" y="60" width="120" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="460" y="76" class="c sub" style="fill:#444">成员</text>
+  <rect x="520" y="60" width="110" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="575" y="76" class="c sub" style="fill:#444">分值</text>
+  <rect x="400" y="84" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="101" class="c sub mono" style="fill:#444">article:1003</text>
+  <rect x="520" y="84" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="575" y="101" class="c sub mono" style="fill:#444">1</text>
+  <rect x="400" y="110" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="127" class="c sub mono" style="fill:#444">article:1001</text>
+  <rect x="520" y="110" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="575" y="127" class="c sub mono" style="fill:#444">4</text>
+  <rect x="400" y="136" width="120" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="153" class="c sub mono" style="fill:#444">article:1002</text>
+  <rect x="520" y="136" width="110" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="575" y="153" class="c sub mono" style="fill:#444">8</text>
+  <text x="400" y="186" class="sub mono" style="fill:#296898">ZRANGE votes: 0 9 REV</text>
+  <text x="400" y="204" class="sub">点赞最多的 10 篇：1002、1001、1003</text>
+  <text x="30" y="236" class="sub">有序集合按分值从小到大排列，REV 表示倒序取；取到文章 ID 后再用 HGETALL 读出每篇文章的信息。</text>
+</svg>

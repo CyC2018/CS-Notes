@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">主从链：中间层分担复制</text>
+  <path d="M335,52 v34 a25,6 0 0 0 50,0 v-34" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <ellipse cx="360" cy="52" rx="25" ry="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M335,69 a25,6 0 0 0 50,0" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="400" y="74" class="sub b">主服务器</text>
+  <line x1="360" y1="96" x2="140" y2="136" class="arrow "/>
+  <path d="M118,146 v28 a22,6 0 0 0 44,0 v-28" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="140" cy="146" rx="22" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M118,160 a22,6 0 0 0 44,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="172" y="164" class="sub">从服务器 1</text>
+  <line x1="140" y1="184" x2="70" y2="222" class="arrow "/>
+  <path d="M53,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="70" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M53,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="140" y1="184" x2="140" y2="222" class="arrow "/>
+  <path d="M123,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="140" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M123,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="140" y1="184" x2="210" y2="222" class="arrow "/>
+  <path d="M193,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="210" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M193,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="360" y1="96" x2="360" y2="136" class="arrow "/>
+  <path d="M338,146 v28 a22,6 0 0 0 44,0 v-28" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="360" cy="146" rx="22" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M338,160 a22,6 0 0 0 44,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="392" y="164" class="sub">从服务器 2</text>
+  <line x1="360" y1="184" x2="290" y2="222" class="arrow "/>
+  <path d="M273,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="290" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M273,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="360" y1="184" x2="360" y2="222" class="arrow "/>
+  <path d="M343,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="360" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M343,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="360" y1="184" x2="430" y2="222" class="arrow "/>
+  <path d="M413,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="430" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M413,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="360" y1="96" x2="580" y2="136" class="arrow "/>
+  <path d="M558,146 v28 a22,6 0 0 0 44,0 v-28" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="580" cy="146" rx="22" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M558,160 a22,6 0 0 0 44,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="612" y="164" class="sub">从服务器 3</text>
+  <line x1="580" y1="184" x2="510" y2="222" class="arrow "/>
+  <path d="M493,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="510" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M493,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="580" y1="184" x2="580" y2="222" class="arrow "/>
+  <path d="M563,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="580" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M563,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="580" y1="184" x2="650" y2="222" class="arrow "/>
+  <path d="M633,232 v18 a17,6 0 0 0 34,0 v-18" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="650" cy="232" rx="17" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M633,241 a17,6 0 0 0 34,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="360" y="288" class="c sub">中间层既是上一层的从服务器，又是下一层的主服务器；主服务器只需向 3 台发送数据，而不是 12 台。</text>
+</svg>

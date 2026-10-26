@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">电梯算法：磁头在 50，先向磁道号增大的方向移动</text>
+  <line x1="60" y1="70" x2="700" y2="70" class="line"/>
+  <line x1="60" y1="66" x2="60" y2="74" stroke="#999"/>
+  <text x="60" y="58" class="c sub mono">0</text>
+  <line x1="124" y1="66" x2="124" y2="74" stroke="#999"/>
+  <text x="124" y="58" class="c sub mono">10</text>
+  <line x1="188" y1="66" x2="188" y2="74" stroke="#999"/>
+  <text x="188" y="58" class="c sub mono">20</text>
+  <line x1="252" y1="66" x2="252" y2="74" stroke="#999"/>
+  <text x="252" y="58" class="c sub mono">30</text>
+  <line x1="316" y1="66" x2="316" y2="74" stroke="#999"/>
+  <text x="316" y="58" class="c sub mono">40</text>
+  <line x1="380" y1="66" x2="380" y2="74" stroke="#999"/>
+  <text x="380" y="58" class="c sub mono">50</text>
+  <line x1="444" y1="66" x2="444" y2="74" stroke="#999"/>
+  <text x="444" y="58" class="c sub mono">60</text>
+  <line x1="508" y1="66" x2="508" y2="74" stroke="#999"/>
+  <text x="508" y="58" class="c sub mono">70</text>
+  <line x1="572" y1="66" x2="572" y2="74" stroke="#999"/>
+  <text x="572" y="58" class="c sub mono">80</text>
+  <line x1="636" y1="66" x2="636" y2="74" stroke="#999"/>
+  <text x="636" y="58" class="c sub mono">90</text>
+  <line x1="700" y1="66" x2="700" y2="74" stroke="#999"/>
+  <text x="700" y="58" class="c sub mono">100</text>
+  <text x="710" y="74" class="sub">磁道</text>
+  <circle cx="520.8" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="252" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="668" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="418.4" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="136.8" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="578.4" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="341.6" cy="70" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="380" cy="100" r="4" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="388" y="104" class="sub mono" style="fill:#444">50</text>
+  <circle cx="418.4" cy="126" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="426.4" y="130" class="sub mono" style="fill:#444">56</text>
+  <line x1="380" y1="104" x2="418.4" y2="122" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="520.8" cy="152" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="528.8" y="156" class="sub mono" style="fill:#444">72</text>
+  <line x1="418.4" y1="130" x2="520.8" y2="148" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="578.4" cy="178" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="586.4" y="182" class="sub mono" style="fill:#444">81</text>
+  <line x1="520.8" y1="156" x2="578.4" y2="174" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="668" cy="204" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="676" y="208" class="sub mono" style="fill:#444">95</text>
+  <line x1="578.4" y1="182" x2="668" y2="200" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="341.6" cy="230" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="333.6" y="234" class="sub mono e" style="fill:#444">44</text>
+  <line x1="668" y1="208" x2="341.6" y2="226" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="252" cy="256" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="244" y="260" class="sub mono e" style="fill:#444">30</text>
+  <line x1="341.6" y1="234" x2="252" y2="252" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <circle cx="136.8" cy="282" r="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="128.8" y="286" class="sub mono e" style="fill:#444">12</text>
+  <line x1="252" y1="260" x2="136.8" y2="278" stroke="#7FB2D6" stroke-width="1.4" marker-end="url(#a)"/>
+  <text x="30" y="104" class="sub">起点</text>
+  <text x="30" y="316" class="sub">淡紫色点是待处理的请求。磁头移动的总距离为 128 个磁道。按先来先服务需要 318 个磁道。</text>
+</svg>

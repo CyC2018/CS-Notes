@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="490" viewBox="0 0 760 490">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Harness 中的引导与反馈：以分层规范为例</text>
+  <text x="30" y="70" class="b">引导：动手之前</text>
+  <rect x="30" y="84" width="190" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="104" class="b c">CLAUDE.md、AGENTS.md</text>
+  <text x="125" y="119" class="sub c">Controller 只能调用 Service</text>
+  <line x1="220" y1="106" x2="240" y2="106" class="line"/>
+  <rect x="30" y="140" width="190" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="160" class="b c">架构文档、代码示例</text>
+  <text x="125" y="175" class="sub c">需要时再读取</text>
+  <line x1="220" y1="162" x2="240" y2="162" class="line"/>
+  <rect x="30" y="196" width="190" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="216" class="b c">Skill</text>
+  <text x="125" y="231" class="sub c">按需加载的操作步骤</text>
+  <line x1="220" y1="218" x2="240" y2="218" class="line"/>
+  <line x1="240" y1="106" x2="240" y2="218" class="line"/>
+  <line x1="240" y1="106" x2="288" y2="106" class="arrow "/>
+  <rect x="290" y="84" width="180" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="380" y="104" class="b c">Agent</text>
+  <text x="380" y="119" class="sub c">模型 + Agent 循环</text>
+  <line x1="380" y1="128" x2="380" y2="154" class="arrow "/>
+  <rect x="290" y="156" width="180" height="76" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="290" y1="170" x2="470" y2="170" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="299" cy="163" r="2.2" fill="#BBBBBB"/>
+  <circle cx="307" cy="163" r="2.2" fill="#BBBBBB"/>
+  <circle cx="315" cy="163" r="2.2" fill="#BBBBBB"/>
+  <text x="299" y="186" class="sub mono">OrderController.java</text>
+  <text x="299" y="202" class="sub mono">mapper.selectById(id);</text>
+  <text x="380" y="250" class="c sub">Agent 第一次写的代码</text>
+  <text x="380" y="264" class="c sub note">跳过了 Service 层</text>
+  <text x="540" y="70" class="b">反馈：动手之后</text>
+  <rect x="540" y="84" width="190" height="44" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="635" y="104" class="b c">编译、单元测试</text>
+  <text x="635" y="119" class="sub c">确定，速度快</text>
+  <rect x="540" y="140" width="190" height="44" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="635" y="160" class="b c">架构检查（ArchUnit）</text>
+  <text x="635" y="175" class="sub c">确定，速度快</text>
+  <rect x="540" y="196" width="190" height="44" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="635" y="216" class="b c">模型审查</text>
+  <text x="635" y="231" class="sub c">能查语义，较慢且不确定</text>
+  <line x1="470" y1="194" x2="538" y2="162" class="arrow "/>
+  <path d="M730,162 C752,180 752,260 738,296" class="arrow red"/>
+  <text x="732" y="284" class="e sub note">未通过</text>
+  <rect x="30" y="298" width="700" height="102" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="30" y1="312" x2="730" y2="312" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="39" cy="305" r="2.2" fill="#BBBBBB"/>
+  <circle cx="47" cy="305" r="2.2" fill="#BBBBBB"/>
+  <circle cx="55" cy="305" r="2.2" fill="#BBBBBB"/>
+  <text x="39" y="328" class="sub mono">Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package</text>
+  <text x="39" y="344" class="sub mono">'..controller..' should depend on classes that reside in a package '..mapper..',</text>
+  <text x="39" y="360" class="sub mono">because Controller 只能调用 Service' was violated (3 times):</text>
+  <text x="39" y="376" class="sub mono">Method &lt;OrderController.get(long)&gt; calls method &lt;OrderMapper.selectById(long)&gt;</text>
+  <text x="39" y="392" class="sub mono">in (OrderController.java:7)</text>
+  <path d="M262,296 C262,200 270,150 296,130" class="arrow"/>
+  <text x="272" y="290" class="sub" style="fill:#444">错误信息作为工具结果发回，Agent 改为调用 OrderService</text>
+  <circle cx="60" cy="423" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M43,454 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="92" y="430" class="sub" style="fill:#444">开发者：同一个问题反复出现时，补一条规范（引导）或一个检查（反馈），而不是每次在对话中纠正。</text>
+  <text x="92" y="448" class="sub">确定的检查放在前面，便宜又可靠；模型审查用来发现规则写不出来的问题。</text>
+  <text x="30" y="478" class="sub">错误信息是本机用 ArchUnit 1.3 检查示例代码的真实输出，省略了包名。</text>
+</svg>

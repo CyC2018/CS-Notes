@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">DNS 解析 www.example.com</text>
+  <rect x="38" y="150" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="42" y="154" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,179.92 v5 M64,179.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="184.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="204" class="c b">主机</text>
+  <text x="60" y="222" class="c sub">先查浏览器缓存、</text>
+  <text x="60" y="238" class="c sub">系统缓存和 hosts</text>
+  <rect x="235" y="150" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="242" cy="156.5" r="2" fill="#7FB2D6"/>
+  <line x1="249" y1="156.5" x2="278" y2="156.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="235" y="166" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="242" cy="172.5" r="2" fill="#7FB2D6"/>
+  <line x1="249" y1="172.5" x2="278" y2="172.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="235" y="182" width="50" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="242" cy="188.5" r="2" fill="#7FB2D6"/>
+  <line x1="249" y1="188.5" x2="278" y2="188.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="260" y="214" class="c b">本地 DNS 服务器</text>
+  <text x="260" y="230" class="c sub">运营商或公司提供</text>
+  <rect x="507" y="60" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="514" cy="66.5" r="2" fill="#7DBCB7"/>
+  <line x1="521" y1="66.5" x2="546" y2="66.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="507" y="76" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="514" cy="82.5" r="2" fill="#7DBCB7"/>
+  <line x1="521" y1="82.5" x2="546" y2="82.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="566" y="72" class="b">根服务器</text>
+  <text x="566" y="88" class="sub mono">a.root-servers.net</text>
+  <line x1="290" y1="156" x2="502" y2="68" class="arrow "/>
+  <line x1="502" y1="86" x2="292" y2="166" class="arrow dash"/>
+  <text x="566" y="106" class="sub" style="fill:#444">去问 com 的服务器</text>
+  <text x="566" y="122" class="sub mono">a.gtld-servers.net 等</text>
+  <rect x="507" y="160" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="514" cy="166.5" r="2" fill="#7DBCB7"/>
+  <line x1="521" y1="166.5" x2="546" y2="166.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="507" y="176" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="514" cy="182.5" r="2" fill="#7DBCB7"/>
+  <line x1="521" y1="182.5" x2="546" y2="182.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="566" y="172" class="b">com 顶级域服务器</text>
+  <text x="566" y="188" class="sub mono">a.gtld-servers.net</text>
+  <line x1="290" y1="162" x2="502" y2="168" class="arrow "/>
+  <line x1="502" y1="186" x2="292" y2="172" class="arrow dash"/>
+  <text x="566" y="206" class="sub" style="fill:#444">去问 example.com 的服务器</text>
+  <text x="566" y="222" class="sub mono">hera.ns.cloudflare.com 等</text>
+  <rect x="507" y="260" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="514" cy="266.5" r="2" fill="#7FB2D6"/>
+  <line x1="521" y1="266.5" x2="546" y2="266.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="507" y="276" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="514" cy="282.5" r="2" fill="#7FB2D6"/>
+  <line x1="521" y1="282.5" x2="546" y2="282.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="566" y="272" class="b">权威服务器</text>
+  <text x="566" y="288" class="sub mono">hera.ns.cloudflare.com</text>
+  <line x1="290" y1="168" x2="502" y2="268" class="arrow "/>
+  <line x1="502" y1="286" x2="292" y2="178" class="arrow dash"/>
+  <text x="566" y="306" class="sub" style="fill:#444">www.example.com 的 A 记录</text>
+  <text x="566" y="322" class="sub mono">104.20.23.154，TTL 300</text>
+  <line x1="86" y1="160" x2="228" y2="160" class="arrow "/>
+  <text x="157" y="150" class="c sub">① 递归查询</text>
+  <line x1="228" y1="176" x2="86" y2="176" class="arrow dash"/>
+  <text x="157" y="192" class="c sub">④ 返回结果</text>
+  <text x="260" y="262" class="c sub" style="fill:#296898">② 迭代查询：每台服务器</text>
+  <text x="260" y="278" class="c sub" style="fill:#296898">只告诉下一步去问谁</text>
+  <text x="260" y="302" class="c sub" style="fill:#207773">③ 按 TTL 缓存 300 秒</text>
+  <text x="30" y="352" class="sub">图中的服务器和 TTL 是本机用 dig 逐级查询的结果：根服务器和 com 服务器返回的是下一级的 NS 记录（缓存 2 天），</text>
+  <text x="30" y="370" class="sub">只有权威服务器的回答带有 aa（权威回答）标志。缓存命中时，前面任何一级都可以直接返回，不必走完全程。</text>
+</svg>

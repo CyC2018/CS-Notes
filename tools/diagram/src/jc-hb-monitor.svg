@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">管程锁定规则</text>
+  <rect x="60" y="50" width="220" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="170" y="69.5" class="c sub b">线程 T1</text>
+  <rect x="340" y="50" width="220" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="450" y="69.5" class="c sub b">线程 T2</text>
+  <rect x="70" y="96" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="170" y="113" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">synchronized (lock) {</text>
+  <rect x="70" y="136" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="170" y="153" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">x = 1;</text>
+  <rect x="70" y="176" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="170" y="193" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">}  // unlock</text>
+  <rect x="350" y="216" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="450" y="233" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">synchronized (lock) {  // lock</text>
+  <rect x="350" y="256" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="450" y="273" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">print(x);  // 1</text>
+  <path d="M270,189 C310,189 310,229 348,229" class="arrow green"/>
+  <line x1="450" y1="242" x2="450" y2="256" class="arrow green"/>
+  <text x="24" y="324" class="sub">T1 释放锁先行发生于 T2 之后获得同一把锁，T1 在锁内的修改对 T2 可见。</text>
+</svg>

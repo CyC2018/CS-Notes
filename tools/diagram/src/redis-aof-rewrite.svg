@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">AOF 重写：对 counter 执行 1000 次 INCR</text>
+  <text x="30" y="60" class="b">重写前</text>
+  <path d="M30,74 h37 l9,9 v49 h-46 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M67,74 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="91" x2="69" y2="91" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="98" x2="69" y2="98" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="105" x2="69" y2="105" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="88" class="sub mono" style="fill:#444">appendonly.aof.1.incr.aof</text>
+  <text x="90" y="106" class="sub">27023 字节，1000 条命令</text>
+  <rect x="90" y="116" width="250" height="96" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="90" y1="130" x2="340" y2="130" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="99" cy="123" r="2.2" fill="#BBBBBB"/>
+  <circle cx="107" cy="123" r="2.2" fill="#BBBBBB"/>
+  <circle cx="115" cy="123" r="2.2" fill="#BBBBBB"/>
+  <text x="99" y="146" class="sub mono">*2 $4 INCR $7 counter</text>
+  <text x="99" y="162" class="sub mono">*2 $4 INCR $7 counter</text>
+  <text x="99" y="178" class="sub mono">*2 $4 INCR $7 counter</text>
+  <text x="99" y="194" class="sub mono">……</text>
+  <line x1="360" y1="130" x2="420" y2="130" class="arrow "/>
+  <text x="390" y="120" class="c sub mono">BGREWRITEAOF</text>
+  <text x="390" y="148" class="c sub">子进程按当前数据</text>
+  <text x="390" y="164" class="c sub">重新生成</text>
+  <text x="440" y="60" class="b">重写后</text>
+  <path d="M440,74 h37 l9,9 v49 h-46 z" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M477,74 v9 h9" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="446" y1="91" x2="479" y2="91" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="446" y1="98" x2="479" y2="98" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="446" y1="105" x2="479" y2="105" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="92" class="sub mono" style="fill:#444">appendonly.aof.2.base.rdb</text>
+  <text x="500" y="110" class="sub">105 字节，RDB 格式：counter = 1000</text>
+  <path d="M440,146 h37 l9,9 v49 h-46 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M477,146 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="446" y1="163" x2="479" y2="163" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="446" y1="170" x2="479" y2="170" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="446" y1="177" x2="479" y2="177" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="500" y="164" class="sub mono" style="fill:#444">appendonly.aof.2.incr.aof</text>
+  <text x="500" y="182" class="sub">0 字节，之后的写命令追加到这里</text>
+  <text x="30" y="238" class="sub">Redis 7.4 实测，文件在 appendonlydir 目录中，由 appendonly.aof.manifest 记录；aof-use-rdb-preamble 默认开启，基础文件用 RDB 格式。</text>
+</svg>

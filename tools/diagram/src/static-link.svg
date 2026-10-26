@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">静态链接：符号解析和重定位</text>
+  <rect x="30" y="50" width="260" height="70" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="30" y1="64" x2="290" y2="64" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="39" cy="57" r="2.2" fill="#BBBBBB"/>
+  <circle cx="47" cy="57" r="2.2" fill="#BBBBBB"/>
+  <circle cx="55" cy="57" r="2.2" fill="#BBBBBB"/>
+  <text x="39" y="80" class="sub mono">// main.c</text>
+  <text x="39" y="96" class="sub mono">int sum(int *a, int n);</text>
+  <text x="39" y="112" class="sub mono">int main() { return sum(arr, 2); }</text>
+  <rect x="310" y="50" width="200" height="70" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="310" y1="64" x2="510" y2="64" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="319" cy="57" r="2.2" fill="#BBBBBB"/>
+  <circle cx="327" cy="57" r="2.2" fill="#BBBBBB"/>
+  <circle cx="335" cy="57" r="2.2" fill="#BBBBBB"/>
+  <text x="319" y="80" class="sub mono">// sum.c</text>
+  <text x="319" y="96" class="sub mono">int sum(int *a, int n) {</text>
+  <text x="319" y="112" class="sub mono">  ... }</text>
+  <path d="M120,146 h27 l9,9 v35 h-36 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M147,146 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="126" y1="163" x2="149" y2="163" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="126" y1="170" x2="149" y2="170" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="126" y1="177" x2="149" y2="177" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="162" y="164" class="sub mono b" style="fill:#444">main.o</text>
+  <text x="162" y="180" class="sub note">引用 sum，地址未知</text>
+  <path d="M360,146 h27 l9,9 v35 h-36 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M387,146 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="163" x2="389" y2="163" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="170" x2="389" y2="170" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="177" x2="389" y2="177" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="402" y="164" class="sub mono b" style="fill:#444">sum.o</text>
+  <text x="402" y="180" class="sub ok">定义 sum</text>
+  <line x1="145" y1="122" x2="140" y2="144" class="arrow "/>
+  <line x1="390" y1="122" x2="380" y2="144" class="arrow "/>
+  <rect x="200" y="214" width="180" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="290" y="235.5" class="c sub b">链接器 ld</text>
+  <line x1="140" y1="192" x2="240" y2="212" class="arrow "/>
+  <line x1="380" y1="192" x2="340" y2="212" class="arrow "/>
+  <line x1="384" y1="231" x2="470" y2="231" class="arrow "/>
+  <path d="M476,208 h27 l9,9 v35 h-36 z" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M503,208 v9 h9" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="482" y1="225" x2="505" y2="225" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="482" y1="232" x2="505" y2="232" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="482" y1="239" x2="505" y2="239" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="520" y="226" class="sub mono b" style="fill:#444">prog</text>
+  <text x="520" y="242" class="sub">可执行目标文件</text>
+  <text x="560" y="80" class="sub" style="fill:#444">① 符号解析：把 main.o 中</text>
+  <text x="560" y="96" class="sub" style="fill:#444">对 sum 的引用对应到</text>
+  <text x="560" y="112" class="sub" style="fill:#444">sum.o 中的定义</text>
+  <text x="560" y="144" class="sub" style="fill:#444">② 重定位：合并代码后确定</text>
+  <text x="560" y="160" class="sub" style="fill:#444">sum 的地址，填回 main 中</text>
+  <text x="560" y="176" class="sub" style="fill:#444">调用指令的地址字段</text>
+  <text x="30" y="286" class="sub">找不到定义时报 undefined reference，出现两个同名的强定义时报 multiple definition，都是在符号解析这一步发现的。</text>
+</svg>

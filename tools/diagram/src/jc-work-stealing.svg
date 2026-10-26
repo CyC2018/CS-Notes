@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">工作窃取：自己从队列一端取，窃取从另一端取</text>
+  <text x="220" y="70" class="c sub b">Thread1 的双端队列</text>
+  <rect x="60" y="82" width="320" height="50" rx="6" fill="#FFFFFF" stroke="#BFBEBA"/>
+  <rect x="72" y="92" width="92" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="118" y="111" class="c sub mono" style="fill:#444">Task1</text>
+  <rect x="174" y="92" width="92" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="220" y="111" class="c sub mono" style="fill:#444">Task2</text>
+  <rect x="276" y="92" width="92" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="322" y="111" class="c sub mono" style="fill:#444">Task3</text>
+  <text x="60" y="150" class="sub b">旧</text>
+  <text x="380" y="150" class="e sub b">新</text>
+  <line x1="382" y1="107" x2="470" y2="107" class="arrow "/>
+  <text x="480" y="103" class="sub">Thread1 自己取出最新的 Task3</text>
+  <text x="480" y="121" class="sub">（后进先出）</text>
+  <rect x="480" y="190" width="200" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="580" y="214.5" class="c sub b">Thread2 的队列为空</text>
+  <path d="M118,122 C118,200 300,214 476,210" class="arrow green"/>
+  <text x="220" y="222" class="c sub ok">Thread2 窃取最早的 Task1（先进先出）</text>
+  <text x="24" y="266" class="sub">所有者和窃取者在队列的两端操作，只有队列中只剩一个任务时才会发生竞争。</text>
+  <text x="24" y="284" class="sub">先放入的任务通常是拆分前更大的任务，窃取它能让空闲线程分到更多的工作。</text>
+</svg>

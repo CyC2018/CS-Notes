@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">没有中介者：对象之间互相调用</text>
+  <rect x="70" y="58" width="140" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="84.5" class="c sub b">Alarm</text>
+  <rect x="430" y="58" width="140" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="500" y="84.5" class="c sub b">CoffeePot</text>
+  <rect x="70" y="208" width="140" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="234.5" class="c sub b">Calendar</text>
+  <rect x="430" y="208" width="140" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="500" y="234.5" class="c sub b">Sprinkler</text>
+  <line x1="214" y1="80" x2="426" y2="80" class="arrow" marker-start="url(#a)"/>
+  <line x1="140" y1="110" x2="140" y2="200" class="arrow" marker-start="url(#a)"/>
+  <line x1="208.308" y1="91.5385" x2="431.692" y2="218.462" class="arrow" marker-start="url(#a)"/>
+  <line x1="431.692" y1="91.5385" x2="208.308" y2="218.462" class="arrow" marker-start="url(#a)"/>
+  <line x1="500" y1="110" x2="500" y2="200" class="arrow" marker-start="url(#a)"/>
+  <line x1="214" y1="230" x2="426" y2="230" class="arrow" marker-start="url(#a)"/>
+  <text x="320" y="286" class="c sub">4 个对象之间有 6 条依赖，新增一个对象就要修改其它所有对象。</text>
+</svg>

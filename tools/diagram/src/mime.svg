@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">MIME：把非 ASCII 内容编码成 ASCII 字符</text>
+  <text x="90" y="62" class="c sub b" style="fill:#444">邮件主题</text>
+  <rect x="30" y="72" width="120" height="36" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="94" class="c b" style="fill:#444">你好</text>
+  <line x1="152" y1="90" x2="188" y2="90" class="arrow "/>
+  <text x="265" y="62" class="c sub b" style="fill:#444">UTF-8 编码</text>
+  <rect x="190" y="72" width="150" height="36" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="265" y="94" class="c sub mono" style="fill:#444">e4 bd a0 e5 a5 bd</text>
+  <line x1="342" y1="90" x2="378" y2="90" class="arrow "/>
+  <text x="435" y="62" class="c sub b" style="fill:#444">Base64</text>
+  <rect x="380" y="72" width="110" height="36" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="435" y="94" class="c sub mono" style="fill:#444">5L2g5aW9</text>
+  <line x1="492" y1="90" x2="528" y2="90" class="arrow "/>
+  <text x="615" y="62" class="c sub b" style="fill:#444">邮件首部</text>
+  <rect x="530" y="72" width="170" height="36" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="615" y="94" class="c sub mono" style="fill:#444">=?utf-8?b?5L2g5aW9?=</text>
+  <text x="30" y="150" class="sub">SMTP 最初只能传送 7 位 ASCII 文本。MIME 不改变 SMTP，只规定如何把中文、图片、附件等内容编码成 ASCII：</text>
+  <text x="30" y="168" class="sub">Base64 把每 3 个字节变成 4 个可打印字符，6 个字节的“你好”编码后是 8 个字符；收件方按首部中注明的</text>
+  <text x="30" y="186" class="sub">字符集和编码方式还原。</text>
+</svg>

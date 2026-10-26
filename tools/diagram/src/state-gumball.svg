@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="340" viewBox="0 0 740 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">糖果机的状态转移</text>
+  <rect x="75" y="84" width="170" height="52" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="106" class="c sub b mono" style="fill:#444">NoQuarterState</text>
+  <text x="160" y="124" class="c sub">没有投币</text>
+  <rect x="435" y="84" width="170" height="52" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="520" y="106" class="c sub b mono" style="fill:#444">HasQuarterState</text>
+  <text x="520" y="124" class="c sub">已投币</text>
+  <rect x="435" y="224" width="170" height="52" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="520" y="246" class="c sub b mono" style="fill:#444">SoldState</text>
+  <text x="520" y="264" class="c sub">出货中</text>
+  <rect x="75" y="224" width="170" height="52" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="160" y="246" class="c sub b mono" style="fill:#444">SoldOutState</text>
+  <text x="160" y="264" class="c sub">售罄</text>
+  <path d="M247,100 L433,100" class="arrow"/>
+  <text x="340" y="92" class="c sub mono" style="fill:#444">insertQuarter()</text>
+  <path d="M433,122 L247,122" class="arrow"/>
+  <text x="340" y="140" class="c sub mono" style="fill:#444">ejectQuarter()</text>
+  <line x1="520" y1="138" x2="520" y2="222" class="arrow "/>
+  <text x="530" y="184" class="sub mono" style="fill:#444">turnCrank()</text>
+  <path d="M435,240 C360,200 300,170 225,138" class="arrow"/>
+  <text x="372" y="196" class="c sub mono" style="fill:#444">dispense()，count &gt; 0</text>
+  <line x1="433" y1="262" x2="247" y2="262" class="arrow "/>
+  <text x="340" y="282" class="c sub mono" style="fill:#444">dispense()，count == 0</text>
+  <text x="30" y="320" class="sub">GumballMachine 把每个操作转交给当前状态对象，状态对象在合适的时候调用 setState 切换状态，避免一大串 if-else。</text>
+</svg>

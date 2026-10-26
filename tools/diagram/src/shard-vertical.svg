@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">垂直切分：按列拆成两张表</text>
+  <text x="230" y="58" class="c sub b" style="fill:#444">product（切分前）</text>
+  <rect x="30" y="66" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="70" y="83" class="c sub mono" style="fill:#444">id</text>
+  <rect x="30" y="92" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="70" y="109" class="c sub" style="fill:#444">1024</text>
+  <rect x="110" y="66" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="150" y="83" class="c sub mono" style="fill:#444">name</text>
+  <rect x="110" y="92" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="150" y="109" class="c sub" style="fill:#444">键盘</text>
+  <rect x="190" y="66" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="230" y="83" class="c sub mono" style="fill:#444">price</text>
+  <rect x="190" y="92" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="230" y="109" class="c sub" style="fill:#444">199</text>
+  <rect x="270" y="66" width="160" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="350" y="83" class="c sub mono" style="fill:#444">detail_html</text>
+  <rect x="270" y="92" width="160" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="350" y="109" class="c sub" style="fill:#444">&lt;div&gt;…20 KB…&lt;/div&gt;</text>
+  <line x1="150" y1="124" x2="150" y2="146" class="arrow "/>
+  <line x1="400" y1="124" x2="500" y2="146" class="arrow "/>
+  <rect x="30" y="168" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="70" y="185" class="c sub mono" style="fill:#444">id</text>
+  <rect x="30" y="194" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="70" y="211" class="c sub" style="fill:#444">1024</text>
+  <rect x="110" y="168" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="150" y="185" class="c sub mono" style="fill:#444">name</text>
+  <rect x="110" y="194" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="150" y="211" class="c sub" style="fill:#444">键盘</text>
+  <rect x="190" y="168" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="230" y="185" class="c sub mono" style="fill:#444">price</text>
+  <rect x="190" y="194" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="230" y="211" class="c sub" style="fill:#444">199</text>
+  <text x="150" y="240" class="c sub">product：常用的列</text>
+  <rect x="420" y="168" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="460" y="185" class="c sub mono" style="fill:#444">id</text>
+  <rect x="420" y="194" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="211" class="c sub" style="fill:#444">1024</text>
+  <rect x="500" y="168" width="160" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="580" y="185" class="c sub mono" style="fill:#444">detail_html</text>
+  <rect x="500" y="194" width="160" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="580" y="211" class="c sub" style="fill:#444">&lt;div&gt;…20 KB…&lt;/div&gt;</text>
+  <text x="540" y="240" class="c sub">product_detail：大字段</text>
+  <text x="30" y="264" class="sub">列表页只查 product，一页能放下更多行；打开详情时再按 id 查 product_detail。</text>
+</svg>

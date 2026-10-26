@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="540" viewBox="0 0 760 540">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Feed 流：拉模式在读时合并，推模式在写时分发</text>
+  <text x="24" y="66" class="b">拉模式（读扩散）</text>
+  <text x="24" y="84" class="sub">张三关注了 A、B 和大 V，打开首页时现场合并</text>
+  <rect x="24" y="100" width="108" height="70" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="24" y="100" width="108" height="22" rx="5" fill="#7FB2D6" opacity="0.35"/>
+  <text x="78" y="115" class="c b">A 的发件箱</text>
+  <rect x="30" y="128" width="96" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="36" y="140" class="sub mono">a2  10:05</text>
+  <rect x="30" y="148" width="96" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="36" y="160" class="sub mono">a1  09:00</text>
+  <rect x="140" y="100" width="108" height="50" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="140" y="100" width="108" height="22" rx="5" fill="#7FB2D6" opacity="0.35"/>
+  <text x="194" y="115" class="c b">B 的发件箱</text>
+  <rect x="146" y="128" width="96" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="152" y="140" class="sub mono">b1  10:20</text>
+  <rect x="256" y="100" width="108" height="70" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="256" y="100" width="108" height="22" rx="5" fill="#7FB2D6" opacity="0.35"/>
+  <text x="310" y="115" class="c b">大 V 的发件箱</text>
+  <rect x="262" y="128" width="96" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="268" y="140" class="sub mono">v3  10:30</text>
+  <rect x="262" y="148" width="96" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="268" y="160" class="sub mono">v2  08:10</text>
+  <circle cx="190" cy="229" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M173,260 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="190" y="274" class="c sub b">张三刷新首页</text>
+  <line x1="78" y1="172" x2="176" y2="214" class="arrow "/>
+  <line x1="194" y1="172" x2="182" y2="214" class="arrow "/>
+  <line x1="310" y1="172" x2="188" y2="214" class="arrow "/>
+  <rect x="110" y="288" width="160" height="110" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="110" y="288" width="160" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="190" y="303" class="c b">合并后按时间倒序</text>
+  <rect x="116" y="316" width="148" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="122" y="328" class="sub mono">v3  10:30</text>
+  <rect x="116" y="336" width="148" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="122" y="348" class="sub mono">b1  10:20</text>
+  <rect x="116" y="356" width="148" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="122" y="368" class="sub mono">a2  10:05</text>
+  <rect x="116" y="376" width="148" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="122" y="388" class="sub mono">a1  09:00</text>
+  <text x="190" y="424" class="c sub note">关注的人越多，读一次首页越慢</text>
+  <line x1="388" y1="56" x2="388" y2="500" class="frame"/>
+  <text x="408" y="66" class="b">推模式（写扩散）</text>
+  <text x="408" y="84" class="sub">A 发帖时，写入每个粉丝的收件箱</text>
+  <circle cx="580" cy="105" r="9" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M563,136 q0,-19 17,-19 q17,0 17,19 z" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="580" y="150" class="c sub b">A 发了 a3</text>
+  <rect x="430" y="182" width="130" height="90" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="430" y="182" width="130" height="22" rx="5" fill="#7FB2D6" opacity="0.35"/>
+  <text x="495" y="197" class="c b">张三的收件箱</text>
+  <rect x="436" y="210" width="118" height="16" rx="3" fill="#E6E3FA" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="442" y="222" class="sub mono">a3  10:40</text>
+  <rect x="436" y="230" width="118" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="442" y="242" class="sub mono">v3  10:30</text>
+  <rect x="436" y="250" width="118" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="442" y="262" class="sub mono">b1  10:20</text>
+  <rect x="600" y="182" width="130" height="70" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="600" y="182" width="130" height="22" rx="5" fill="#7FB2D6" opacity="0.35"/>
+  <text x="665" y="197" class="c b">李四的收件箱</text>
+  <rect x="606" y="210" width="118" height="16" rx="3" fill="#E6E3FA" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="612" y="222" class="sub mono">a3  10:40</text>
+  <rect x="606" y="230" width="118" height="16" rx="3" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.6"/>
+  <text x="612" y="242" class="sub mono">a2  10:05</text>
+  <line x1="566" y1="156" x2="506" y2="180" class="arrow "/>
+  <line x1="594" y1="156" x2="654" y2="180" class="arrow "/>
+  <text x="408" y="300" class="sub">读首页只需读自己的收件箱：</text>
+  <text x="408" y="318" class="sub mono">ZREVRANGE inbox:张三 0 19</text>
+  <text x="408" y="350" class="sub note">问题：大 V 有 1000 万粉丝，发一条就要写 1000 万次</text>
+  <text x="408" y="368" class="sub ok">解决：粉丝多的用户不推，粉丝打开首页时再拉取</text>
+  <text x="408" y="386" class="sub ok">合并（推拉结合）；只推给最近活跃的粉丝</text>
+  <text x="408" y="420" class="b">本机 Redis 7.4 实测</text>
+  <rect x="408" y="430" width="160" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="488" y="446" class="c sub" style="fill:#444">推：10 万个收件箱各写 1 条</text>
+  <rect x="568" y="430" width="150" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="643" y="446" class="c sub" style="fill:#444">532 ms，内存 +10 MB</text>
+  <rect x="408" y="454" width="160" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="488" y="470" class="c sub" style="fill:#444">推：读自己的收件箱一页</text>
+  <rect x="568" y="454" width="150" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="643" y="470" class="c sub" style="fill:#444">0.12 ms</text>
+  <rect x="408" y="478" width="160" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="488" y="494" class="c sub" style="fill:#444">拉：合并 500 个发件箱</text>
+  <rect x="568" y="478" width="150" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="643" y="494" class="c sub" style="fill:#444">24.5 ms</text>
+  <text x="24" y="526" class="sub">左右两边的帖子和时间是示意；表中的数字是用流水线在本机执行得到的，拉模式包括在客户端合并排序的时间。</text>
+</svg>

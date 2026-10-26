@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">最少连接：发给当前连接数最少的服务器</text>
+  <text x="30" y="102" class="sub b">Server 1</text>
+  <line x1="110" y1="126" x2="591.6" y2="126" class="line"/>
+  <text x="30" y="172" class="sub b">Server 2</text>
+  <line x1="110" y1="196" x2="591.6" y2="196" class="line"/>
+  <rect x="110" y="84" width="56" height="12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="116" y="94" class="sub" style="font-size:10px">请求 1</text>
+  <rect x="166" y="154" width="308" height="12" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="172" y="164" class="sub" style="font-size:10px">请求 2</text>
+  <rect x="222" y="98" width="56" height="12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="228" y="108" class="sub" style="font-size:10px">请求 3</text>
+  <rect x="278" y="168" width="313.6" height="12" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="284" y="178" class="sub" style="font-size:10px">请求 4</text>
+  <rect x="334" y="112" width="257.6" height="12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="340" y="122" class="sub" style="font-size:10px">请求 5</text>
+  <rect x="390" y="84" width="201.6" height="12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="396" y="94" class="sub" style="font-size:10px">请求 6</text>
+  <text x="110" y="236" class="c sub mono">0</text>
+  <text x="166" y="236" class="c sub mono">1</text>
+  <text x="222" y="236" class="c sub mono">2</text>
+  <text x="278" y="236" class="c sub mono">3</text>
+  <text x="334" y="236" class="c sub mono">4</text>
+  <text x="390" y="236" class="c sub mono">5</text>
+  <text x="446" y="236" class="c sub mono">6</text>
+  <text x="502" y="236" class="c sub mono">7</text>
+  <text x="558" y="236" class="c sub mono">8</text>
+  <text x="597.6" y="240" class="sub">时间</text>
+  <line x1="390" y1="62" x2="390" y2="224" stroke="#C0605A" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="390" y="56" class="c sub note">请求 6 到达时：Server 1 有 1 个连接，Server 2 有 2 个</text>
+  <text x="30" y="262" class="sub">同样的请求，最少连接算法把请求 6 发给只有 1 个连接的 Server 1，两台各有 2 个连接。</text>
+</svg>

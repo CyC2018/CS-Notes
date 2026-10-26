@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">CountDownLatch：计数减到 0 时唤醒等待的线程</text>
+  <text x="24" y="104" class="sub mono b">main</text>
+  <line x1="110" y1="100" x2="730" y2="100" stroke="#E2E2E2"/>
+  <text x="24" y="164" class="sub mono b">worker-1</text>
+  <line x1="110" y1="160" x2="730" y2="160" stroke="#E2E2E2"/>
+  <text x="24" y="214" class="sub mono b">worker-2</text>
+  <line x1="110" y1="210" x2="730" y2="210" stroke="#E2E2E2"/>
+  <text x="24" y="264" class="sub mono b">worker-3</text>
+  <line x1="110" y1="260" x2="730" y2="260" stroke="#E2E2E2"/>
+  <rect x="120" y="91" width="50" height="18" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="145" y="104" class="c sub" style="font-size:10.5px">执行</text>
+  <rect x="170" y="91" width="390" height="18" rx="4" fill="#FFFFFF" stroke="#7FB2D6" stroke-dasharray="4 3"/>
+  <text x="365" y="104" class="c sub" style="font-size:10.5px">await()，等待</text>
+  <rect x="560" y="91" width="160" height="18" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="640" y="104" class="c sub" style="font-size:10.5px">被唤醒，继续执行</text>
+  <rect x="130" y="151" width="170" height="18" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="215" y="164" class="c sub" style="font-size:10.5px">执行任务</text>
+  <circle cx="300" cy="160" r="5" fill="#C0605A"/>
+  <text x="308" y="148" class="sub mono">countDown()</text>
+  <line x1="300" y1="151" x2="300" y2="70" stroke="#C0605A" stroke-dasharray="2 3"/>
+  <rect x="130" y="201" width="300" height="18" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="280" y="214" class="c sub" style="font-size:10.5px">执行任务</text>
+  <circle cx="430" cy="210" r="5" fill="#C0605A"/>
+  <text x="438" y="198" class="sub mono">countDown()</text>
+  <line x1="430" y1="201" x2="430" y2="70" stroke="#C0605A" stroke-dasharray="2 3"/>
+  <rect x="130" y="251" width="430" height="18" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="345" y="264" class="c sub" style="font-size:10.5px">执行任务</text>
+  <circle cx="560" cy="260" r="5" fill="#C0605A"/>
+  <text x="568" y="248" class="sub mono">countDown()</text>
+  <line x1="560" y1="251" x2="560" y2="70" stroke="#C0605A" stroke-dasharray="2 3"/>
+  <text x="150" y="62" class="c sub mono b" style="fill:#766AA8">count = 3</text>
+  <text x="365" y="62" class="c sub mono b" style="fill:#766AA8">2</text>
+  <text x="495" y="62" class="c sub mono b" style="fill:#766AA8">1</text>
+  <text x="600" y="62" class="c sub mono b" style="fill:#766AA8">0</text>
+  <text x="24" y="304" class="sub">示意：new CountDownLatch(3)，main 调用 await() 等待 3 个工作线程各调用一次 countDown()。计数不能重置，只能使用一次。</text>
+</svg>

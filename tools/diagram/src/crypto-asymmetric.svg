@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">非对称加密：公钥加密、私钥解密；私钥签名、公钥验证</text>
+  <text x="30" y="66" class="b">加密</text>
+  <rect x="90" y="50" width="110" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="145" y="69" class="c sub" style="fill:#444">会话密钥</text>
+  <line x1="202" y1="65" x2="286" y2="65" class="arrow "/>
+  <text x="244" y="57" class="c sub" style="fill:#207773">服务器公钥</text>
+  <rect x="290" y="50" width="150" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="365" y="69" class="c sub" style="fill:#444">密文 256 字节</text>
+  <line x1="442" y1="65" x2="526" y2="65" class="arrow "/>
+  <text x="484" y="57" class="c sub" style="fill:#766AA8">服务器私钥</text>
+  <rect x="530" y="50" width="110" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="69" class="c sub" style="fill:#444">会话密钥</text>
+  <text x="90" y="100" class="sub">任何人都能用公钥加密，只有持有私钥的服务器能解开</text>
+  <text x="30" y="156" class="b">签名</text>
+  <rect x="90" y="140" width="110" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="145" y="159" class="c sub" style="fill:#444">证书内容</text>
+  <line x1="202" y1="155" x2="286" y2="155" class="arrow "/>
+  <text x="244" y="147" class="c sub" style="fill:#766AA8">CA 私钥签名</text>
+  <rect x="290" y="140" width="150" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="365" y="159" class="c sub" style="fill:#444">签名</text>
+  <line x1="442" y1="155" x2="526" y2="155" class="arrow "/>
+  <text x="484" y="147" class="c sub" style="fill:#207773">CA 公钥验证</text>
+  <rect x="530" y="140" width="110" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="159" class="c sub" style="fill:#444">签名有效</text>
+  <text x="90" y="190" class="sub">只有 CA 能生成签名，任何人都能用 CA 的公钥检查，内容改动一个字节签名就对不上</text>
+  <text x="30" y="236" class="sub">2048 位 RSA 的密文和签名都是 256 字节。非对称运算比对称加密慢得多，所以只用在握手阶段。</text>
+</svg>

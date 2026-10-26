@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">ReadView：沿版本链找到第一个对自己可见的版本</text>
+  <text x="30" y="64" class="sub">读事务开始读取时，事务 103、105 还没有提交，下一个要分配的事务 ID 是 106：</text>
+  <text x="30" y="82" class="sub mono" style="fill:#3F3F3F">TRX_IDs = {103, 105}，TRX_ID_MIN = 103，TRX_ID_MAX = 106</text>
+  <line x1="50" y1="140" x2="650" y2="140" class="arrow"/>
+  <text x="650" y="128" class="e sub">事务 ID</text>
+  <circle cx="90" cy="140" r="15" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="90" y="144" class="c sub mono b" style="fill:#3F3F3F">101</text>
+  <text x="90" y="176" class="c sub b ok">可见</text>
+  <text x="90" y="194" class="c sub">已提交</text>
+  <circle cx="190" cy="140" r="15" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="190" y="144" class="c sub mono b" style="fill:#3F3F3F">102</text>
+  <text x="190" y="176" class="c sub b ok">可见</text>
+  <text x="190" y="194" class="c sub">已提交</text>
+  <circle cx="290" cy="140" r="15" fill="#F3C6C2" stroke="#D99A94"/>
+  <text x="290" y="144" class="c sub mono b" style="fill:#3F3F3F">103</text>
+  <text x="290" y="176" class="c sub b note">不可见</text>
+  <text x="290" y="194" class="c sub">在 TRX_IDs 中</text>
+  <circle cx="390" cy="140" r="15" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="390" y="144" class="c sub mono b" style="fill:#3F3F3F">104</text>
+  <text x="390" y="176" class="c sub b ok">可见</text>
+  <text x="390" y="194" class="c sub">已提交</text>
+  <circle cx="490" cy="140" r="15" fill="#F3C6C2" stroke="#D99A94"/>
+  <text x="490" y="144" class="c sub mono b" style="fill:#3F3F3F">105</text>
+  <text x="490" y="176" class="c sub b note">不可见</text>
+  <text x="490" y="194" class="c sub">在 TRX_IDs 中</text>
+  <circle cx="590" cy="140" r="15" fill="#F3C6C2" stroke="#D99A94"/>
+  <text x="590" y="144" class="c sub mono b" style="fill:#3F3F3F">106</text>
+  <text x="590" y="176" class="c sub b note">不可见</text>
+  <text x="590" y="194" class="c sub">之后才开始</text>
+  <text x="290" y="112" class="c sub mono" style="fill:#766AA8">TRX_ID_MIN</text>
+  <text x="590" y="112" class="c sub mono" style="fill:#766AA8">TRX_ID_MAX</text>
+  <text x="30" y="236" class="sub b">读取 id = 1 这一行：</text>
+  <rect x="30" y="250" width="150" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="105" y="271.5" class="c sub b">版本 x = 'c'</text>
+  <text x="196" y="265" class="sub mono">DB_TRX_ID = 103，在 TRX_IDs 中</text>
+  <text x="196" y="281" class="sub b note">不可见，沿回滚指针找上一个版本</text>
+  <line x1="105" y1="284" x2="105" y2="300" class="arrow "/>
+  <rect x="30" y="300" width="150" height="34" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="105" y="321.5" class="c sub b">版本 x = 'b'</text>
+  <text x="196" y="315" class="sub mono">DB_TRX_ID = 102，小于 TRX_ID_MIN</text>
+  <text x="196" y="331" class="sub b ok">可见，读到 'b'</text>
+  <text x="30" y="374" class="sub">可重复读在第一次读取时创建 ReadView，之后一直使用它；提交读每次读取都创建新的 ReadView，103 提交后就能读到 'c'。</text>
+  <text x="30" y="392" class="sub">事务 ID 为示意；读到的结果在 MySQL 8.0 上实测一致。</text>
+</svg>

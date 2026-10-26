@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="280" viewBox="0 0 740 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">互联网：网络的网络</text>
+  <path d="M79.2,176 C37.4,176 41.2,135.5 75.4,132.8 C71.6,102.2 136.2,90.5 151.4,113 C174.2,96.8 219.8,105.8 208.4,132.8 C242.6,136.4 242.6,176 200.8,176 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="130" y="146" class="c sub b" style="fill:#444">公司 A 的局域网</text>
+  <path d="M309.2,126 C267.4,126 271.2,85.5 305.4,82.8 C301.6,52.2 366.2,40.5 381.4,63 C404.2,46.8 449.8,55.8 438.4,82.8 C472.6,86.4 472.6,126 430.8,126 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="360" y="96" class="c sub b" style="fill:#444">运营商 1 的网络</text>
+  <path d="M309.2,236 C267.4,236 271.2,195.5 305.4,192.8 C301.6,162.2 366.2,150.5 381.4,173 C404.2,156.8 449.8,165.8 438.4,192.8 C472.6,196.4 472.6,236 430.8,236 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="360" y="206" class="c sub b" style="fill:#444">运营商 2 的网络</text>
+  <path d="M539.2,176 C497.4,176 501.2,135.5 535.4,132.8 C531.6,102.2 596.2,90.5 611.4,113 C634.2,96.8 679.8,105.8 668.4,132.8 C702.6,136.4 702.6,176 660.8,176 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="590" y="146" class="c sub b" style="fill:#444">学校 B 的局域网</text>
+  <circle cx="255" cy="115" r="11" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="257.75" y1="117.75" x2="262.7" y2="122.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="252.25" y1="112.25" x2="247.3" y2="107.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="257.75" y1="112.25" x2="262.7" y2="107.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="252.25" y1="117.75" x2="247.3" y2="122.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M258.7,122.7 L262.7,122.7 L262.7,118.7" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M251.3,107.3 L247.3,107.3 L247.3,111.3" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M261.75,112.25 L257.75,112.25 L257.75,108.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M248.25,117.75 L252.25,117.75 L252.25,121.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="255" cy="170" r="11" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="257.75" y1="172.75" x2="262.7" y2="177.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="252.25" y1="167.25" x2="247.3" y2="162.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="257.75" y1="167.25" x2="262.7" y2="162.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="252.25" y1="172.75" x2="247.3" y2="177.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M258.7,177.7 L262.7,177.7 L262.7,173.7" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M251.3,162.3 L247.3,162.3 L247.3,166.3" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M261.75,167.25 L257.75,167.25 L257.75,163.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M248.25,172.75 L252.25,172.75 L252.25,176.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="370" cy="145" r="11" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="372.75" y1="147.75" x2="377.7" y2="152.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="367.25" y1="142.25" x2="362.3" y2="137.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="372.75" y1="142.25" x2="377.7" y2="137.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="367.25" y1="147.75" x2="362.3" y2="152.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M373.7,152.7 L377.7,152.7 L377.7,148.7" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M366.3,137.3 L362.3,137.3 L362.3,141.3" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M376.75,142.25 L372.75,142.25 L372.75,138.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M363.25,147.75 L367.25,147.75 L367.25,151.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="485" cy="115" r="11" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="487.75" y1="117.75" x2="492.7" y2="122.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="482.25" y1="112.25" x2="477.3" y2="107.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="487.75" y1="112.25" x2="492.7" y2="107.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="482.25" y1="117.75" x2="477.3" y2="122.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M488.7,122.7 L492.7,122.7 L492.7,118.7" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M481.3,107.3 L477.3,107.3 L477.3,111.3" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M491.75,112.25 L487.75,112.25 L487.75,108.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M478.25,117.75 L482.25,117.75 L482.25,121.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="485" cy="170" r="11" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="487.75" y1="172.75" x2="492.7" y2="177.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="482.25" y1="167.25" x2="477.3" y2="162.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="487.75" y1="167.25" x2="492.7" y2="162.3" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="482.25" y1="172.75" x2="477.3" y2="177.7" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M488.7,177.7 L492.7,177.7 L492.7,173.7" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M481.3,162.3 L477.3,162.3 L477.3,166.3" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M491.75,167.25 L487.75,167.25 L487.75,163.25" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M478.25,172.75 L482.25,172.75 L482.25,176.75" fill="none" stroke="#7DBCB7" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="30" y="262" class="sub">每朵云是一个独立的网络，浅青色的路由器把它们连接起来；互联网就是由许多这样的网络互连而成的。</text>
+</svg>

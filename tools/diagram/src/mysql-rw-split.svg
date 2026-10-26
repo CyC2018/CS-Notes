@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">读写分离与复制延迟</text>
+  <rect x="47" y="110" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="54" cy="116.5" r="2" fill="#7FB2D6"/>
+  <line x1="61" y1="116.5" x2="86" y2="116.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="47" y="126" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="54" cy="132.5" r="2" fill="#7FB2D6"/>
+  <line x1="61" y1="132.5" x2="86" y2="132.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="47" y="142" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="54" cy="148.5" r="2" fill="#7FB2D6"/>
+  <line x1="61" y1="148.5" x2="86" y2="148.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="70" y="174" class="c b">应用</text>
+  <rect x="170" y="108" width="140" height="46" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="240" y="128" class="c sub b" style="fill:#444">代理或数据源路由</text>
+  <text x="240" y="144" class="c sub">按 SQL 类型转发</text>
+  <line x1="96" y1="130" x2="166" y2="130" class="arrow "/>
+  <path d="M445,66 v36 a25,6 0 0 0 50,0 v-36" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="470" cy="66" rx="25" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M445,84 a25,6 0 0 0 50,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="510" y="82" class="sub">主库：写和实时读</text>
+  <path d="M448,156 v30 a22,6 0 0 0 44,0 v-30" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <ellipse cx="470" cy="156" rx="22" ry="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M448,171 a22,6 0 0 0 44,0" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="500" y="176" class="sub">从库 1：读</text>
+  <path d="M448,226 v30 a22,6 0 0 0 44,0 v-30" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <ellipse cx="470" cy="226" rx="22" ry="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M448,241 a22,6 0 0 0 44,0" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="500" y="246" class="sub">从库 2：读</text>
+  <path d="M496,96 C620,110 620,160 588,170" class="arrow dash"/>
+  <path d="M496,100 C660,120 660,230 588,240" class="arrow dash"/>
+  <text x="640" y="150" class="sub">复制</text>
+  <line x1="312" y1="120" x2="444" y2="84" class="arrow "/>
+  <text x="370" y="92" class="c sub mono">INSERT、UPDATE</text>
+  <line x1="312" y1="140" x2="446" y2="170" class="arrow "/>
+  <line x1="312" y1="146" x2="446" y2="238" class="arrow "/>
+  <text x="330" y="196" class="sub mono">SELECT</text>
+  <text x="30" y="272" class="sub">本机实测：主库一个事务插入 50 万行，从库在 1.4 秒后才一次性看到这些行。刚写完就去从库读，可能读不到自己写的数据。</text>
+  <text x="30" y="290" class="sub">常用做法：写入后的一段时间内这个用户的读请求走主库，或者把要求实时的读请求固定发到主库。</text>
+</svg>

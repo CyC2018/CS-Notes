@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">安全状态：共 10 个资源，存在一个能让所有进程运行完的顺序</text>
+  <text x="100" y="58" class="c sub b" style="fill:#444">(a) 初始</text>
+  <text x="52" y="91" class="sub b e" style="fill:#444">A</text>
+  <rect x="60" y="78" width="91" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="60" y="78" width="26" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="157" y="91" class="sub mono">2 / 7</text>
+  <text x="52" y="123" class="sub b e" style="fill:#444">B</text>
+  <rect x="60" y="110" width="65" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="60" y="110" width="39" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="131" y="123" class="sub mono">3 / 5</text>
+  <text x="52" y="155" class="sub b e" style="fill:#444">C</text>
+  <rect x="60" y="142" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="60" y="142" width="26" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="118" y="155" class="sub mono">2 / 4</text>
+  <rect x="60" y="180" width="80" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="100" y="197" class="c sub" style="fill:#444">Free 3</text>
+  <text x="280" y="58" class="c sub b" style="fill:#444">(b) B 再拿 2 个，运行结束</text>
+  <text x="232" y="91" class="sub b e" style="fill:#444">A</text>
+  <rect x="240" y="78" width="91" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="240" y="78" width="26" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="337" y="91" class="sub mono">2 / 7</text>
+  <text x="232" y="123" class="sub b e" style="fill:#BBB">B</text>
+  <text x="240" y="123" class="sub" style="fill:#BBB">已完成</text>
+  <text x="232" y="155" class="sub b e" style="fill:#444">C</text>
+  <rect x="240" y="142" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="240" y="142" width="26" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="298" y="155" class="sub mono">2 / 4</text>
+  <rect x="240" y="180" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="280" y="197" class="c sub" style="fill:#444">Free 6</text>
+  <text x="460" y="58" class="c sub b" style="fill:#444">(c) A 再拿 5 个，运行结束</text>
+  <text x="412" y="91" class="sub b e" style="fill:#BBB">A</text>
+  <text x="420" y="91" class="sub" style="fill:#BBB">已完成</text>
+  <text x="412" y="123" class="sub b e" style="fill:#BBB">B</text>
+  <text x="420" y="123" class="sub" style="fill:#BBB">已完成</text>
+  <text x="412" y="155" class="sub b e" style="fill:#444">C</text>
+  <rect x="420" y="142" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="420" y="142" width="26" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="478" y="155" class="sub mono">2 / 4</text>
+  <rect x="420" y="180" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="460" y="197" class="c sub" style="fill:#444">Free 8</text>
+  <text x="640" y="58" class="c sub b" style="fill:#444">(d) C 再拿 2 个，运行结束</text>
+  <text x="592" y="91" class="sub b e" style="fill:#BBB">A</text>
+  <text x="600" y="91" class="sub" style="fill:#BBB">已完成</text>
+  <text x="592" y="123" class="sub b e" style="fill:#BBB">B</text>
+  <text x="600" y="123" class="sub" style="fill:#BBB">已完成</text>
+  <text x="592" y="155" class="sub b e" style="fill:#BBB">C</text>
+  <text x="600" y="155" class="sub" style="fill:#BBB">已完成</text>
+  <rect x="600" y="180" width="80" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="640" y="197" class="c sub" style="fill:#444">Free 10</text>
+  <text x="40" y="238" class="sub">条形的长度是最大需求，浅蓝部分是已持有的数量。(a) 中 Free = 10 − 2 − 3 − 2 = 3，只够 B 补齐，</text>
+  <text x="40" y="256" class="sub">B 运行完归还 5 个后 Free = 6，又够 A 补齐 5 个，依此类推。</text>
+  <text x="40" y="280" class="sub">安全不代表一定按这个顺序执行，只说明不管进程怎样申请，系统都能找到一条出路。</text>
+</svg>

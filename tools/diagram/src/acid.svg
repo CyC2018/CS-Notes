@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">ACID：原子性、隔离性、持久性是手段，一致性是目的</text>
+  <rect x="40" y="48" width="170" height="46" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="69" class="b c">原子性</text>
+  <text x="125" y="84" class="sub c">undo log 回滚</text>
+  <rect x="40" y="128" width="170" height="46" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="149" class="b c">隔离性</text>
+  <text x="125" y="164" class="sub c">锁和 MVCC</text>
+  <rect x="40" y="208" width="170" height="46" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="125" y="229" class="b c">持久性</text>
+  <text x="125" y="244" class="sub c">redo log 刷盘</text>
+  <rect x="330" y="98" width="170" height="56" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="415" y="124" class="b c">一致性</text>
+  <text x="415" y="139" class="sub c">满足约束和业务规则</text>
+  <line x1="212" y1="70" x2="328" y2="116" class="arrow "/>
+  <line x1="212" y1="150" x2="328" y2="132" class="arrow "/>
+  <text x="270" y="82" class="c sub">没有并发时</text>
+  <text x="270" y="166" class="c sub">有并发时还需要</text>
+  <rect x="560" y="103" width="170" height="46" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="645" y="130.5" class="c sub b">事务的结果正确</text>
+  <line x1="502" y1="126" x2="558" y2="126" class="arrow "/>
+  <rect x="330" y="208" width="170" height="46" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="415" y="229" class="b c">系统崩溃后</text>
+  <text x="415" y="244" class="sub c">已提交的修改不丢失</text>
+  <line x1="212" y1="230" x2="328" y2="230" class="arrow "/>
+  <text x="40" y="284" class="sub">例如转账：原子性保证不会只扣款不入账，隔离性保证并发的转账互不干扰，持久性保证提交之后断电也不丢。</text>
+</svg>

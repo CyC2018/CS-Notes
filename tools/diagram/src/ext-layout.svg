@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="270" viewBox="0 0 760 270">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">ext2/ext4 文件系统：分区被分成多个块组</text>
+  <rect x="30" y="70" width="70" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="65" y="94" class="c sub" style="fill:#444">启动块</text>
+  <rect x="100" y="70" width="200" height="40" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="94" class="c sub b" style="fill:#444">块组 0</text>
+  <rect x="300" y="70" width="200" height="40" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="400" y="94" class="c sub b" style="fill:#444">块组 1</text>
+  <rect x="500" y="70" width="200" height="40" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="600" y="94" class="c sub b" style="fill:#444">块组 2</text>
+  <rect x="700" y="70" width="60" height="40" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="730" y="94" class="c sub" style="fill:#444">…</text>
+  <path d="M100,112 L30,150" class="line dash"/>
+  <path d="M300,112 L730,150" class="line dash"/>
+  <rect x="30" y="150" width="100" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="80" y="174" class="c sub" style="fill:#444">superblock</text>
+  <rect x="130" y="150" width="90" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="175" y="174" class="c sub" style="fill:#444">块组描述符</text>
+  <rect x="220" y="150" width="100" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="270" y="174" class="c sub" style="fill:#444">block bitmap</text>
+  <rect x="320" y="150" width="100" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="370" y="174" class="c sub" style="fill:#444">inode bitmap</text>
+  <rect x="420" y="150" width="120" height="40" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="480" y="174" class="c sub" style="fill:#444">inode table</text>
+  <rect x="540" y="150" width="190" height="40" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="635" y="174" class="c sub" style="fill:#444">data blocks</text>
+  <text x="30" y="214" class="sub">superblock 记录 inode 和 block 的总数与剩余数（多个块组中有备份）；两个 bitmap 用 1 位表示一个 block 或 inode 是否已被使用；</text>
+  <text x="30" y="232" class="sub">inode table 存放 inode，data blocks 存放文件内容。找空闲块时只需要扫描 bitmap。</text>
+</svg>
