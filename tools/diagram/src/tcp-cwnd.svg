@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">拥塞窗口的变化：初始 ssthresh = 8，窗口单位为报文段</text>
+  <line x1="80" y1="340" x2="740" y2="340" class="line"/>
+  <line x1="80" y1="340" x2="80" y2="80" class="line"/>
+  <text x="70" y="70" class="sub">cwnd</text>
+  <text x="72" y="344" class="sub e mono">0</text>
+  <text x="72" y="304" class="sub e mono">2</text>
+  <line x1="80" y1="300" x2="740" y2="300" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="72" y="264" class="sub e mono">4</text>
+  <line x1="80" y1="260" x2="740" y2="260" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="72" y="224" class="sub e mono">6</text>
+  <line x1="80" y1="220" x2="740" y2="220" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="72" y="184" class="sub e mono">8</text>
+  <line x1="80" y1="180" x2="740" y2="180" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="72" y="144" class="sub e mono">10</text>
+  <line x1="80" y1="140" x2="740" y2="140" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="72" y="104" class="sub e mono">12</text>
+  <line x1="80" y1="100" x2="740" y2="100" stroke="#F0F0F0" stroke-width="1"/>
+  <text x="96" y="358" class="c sub mono">0</text>
+  <text x="128" y="358" class="c sub mono">1</text>
+  <text x="160" y="358" class="c sub mono">2</text>
+  <text x="192" y="358" class="c sub mono">3</text>
+  <text x="224" y="358" class="c sub mono">4</text>
+  <text x="256" y="358" class="c sub mono">5</text>
+  <text x="288" y="358" class="c sub mono">6</text>
+  <text x="320" y="358" class="c sub mono">7</text>
+  <text x="352" y="358" class="c sub mono">8</text>
+  <text x="384" y="358" class="c sub mono">9</text>
+  <text x="416" y="358" class="c sub mono">10</text>
+  <text x="448" y="358" class="c sub mono">11</text>
+  <text x="480" y="358" class="c sub mono">12</text>
+  <text x="512" y="358" class="c sub mono">13</text>
+  <text x="544" y="358" class="c sub mono">14</text>
+  <text x="576" y="358" class="c sub mono">15</text>
+  <text x="608" y="358" class="c sub mono">16</text>
+  <text x="640" y="358" class="c sub mono">17</text>
+  <text x="672" y="358" class="c sub mono">18</text>
+  <text x="704" y="358" class="c sub mono">19</text>
+  <text x="740" y="376" class="sub e">传输轮次</text>
+  <line x1="86" y1="180" x2="330" y2="180" stroke="#C0605A" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+  <line x1="342" y1="220" x2="586" y2="220" stroke="#C0605A" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+  <line x1="598" y1="240" x2="714" y2="240" stroke="#C0605A" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+  <text x="86" y="174" class="sub note">ssthresh = 8</text>
+  <text x="342" y="214" class="sub note">ssthresh = 6</text>
+  <text x="714" y="256" class="sub note e">ssthresh = 5</text>
+  <polyline points="96,320 128,300 160,260 192,180 224,160 256,140 288,120 320,100" fill="none" stroke="#7FB2D6" stroke-width="2"/>
+  <polyline points="352,320 384,300 416,260 448,220 480,200 512,180 544,160 576,140" fill="none" stroke="#7FB2D6" stroke-width="2"/>
+  <polyline points="608,240 640,220 672,200 704,180" fill="none" stroke="#7FB2D6" stroke-width="2"/>
+  <line x1="320" y1="100" x2="352" y2="320" stroke="#C0605A" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <line x1="576" y1="140" x2="608" y2="240" stroke="#C0605A" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <circle cx="96" cy="320" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="128" cy="300" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="160" cy="260" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="192" cy="180" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="224" cy="160" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="256" cy="140" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="288" cy="120" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="320" cy="100" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="352" cy="320" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="384" cy="300" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="416" cy="260" r="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="448" cy="220" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="480" cy="200" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="512" cy="180" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="544" cy="160" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="576" cy="140" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="608" cy="240" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="640" cy="220" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="672" cy="200" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="704" cy="180" r="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="192" cy="180" r="7" fill="none" stroke="#9F94D5" stroke-width="1.5"/>
+  <line x1="198" y1="185" x2="206" y2="218" stroke="#BBB" stroke-width="1"/>
+  <text x="210" y="214" class="sub" style="fill:#555">① cwnd 达到 ssthresh，</text>
+  <text x="210" y="229" class="sub" style="fill:#555">改为每轮加 1</text>
+  <circle cx="320" cy="100" r="7" fill="none" stroke="#9F94D5" stroke-width="1.5"/>
+  <line x1="326" y1="95" x2="334" y2="60" stroke="#BBB" stroke-width="1"/>
+  <text x="338" y="56" class="sub" style="fill:#555">② 超时：ssthresh = 12 / 2 = 6，</text>
+  <text x="338" y="71" class="sub" style="fill:#555">cwnd 从 1 重新慢开始</text>
+  <circle cx="448" cy="220" r="7" fill="none" stroke="#9F94D5" stroke-width="1.5"/>
+  <line x1="454" y1="225" x2="462" y2="254" stroke="#BBB" stroke-width="1"/>
+  <text x="466" y="250" class="sub" style="fill:#555">③ 4 翻倍会超过 6，</text>
+  <text x="466" y="265" class="sub" style="fill:#555">只增大到 ssthresh</text>
+  <circle cx="576" cy="140" r="7" fill="none" stroke="#9F94D5" stroke-width="1.5"/>
+  <line x1="570" y1="135" x2="562" y2="104" stroke="#BBB" stroke-width="1"/>
+  <text x="558" y="100" class="sub e" style="fill:#555">④ 3 个重复确认：</text>
+  <text x="558" y="115" class="sub e" style="fill:#555">ssthresh = 10 / 2 = 5，cwnd = 5</text>
+  <text x="128" y="280" class="c sub" style="fill:#207773">慢开始</text>
+  <text x="390" y="268" class="c sub" style="fill:#207773">慢开始</text>
+  <text x="256" y="108" class="c sub" style="fill:#296898">拥塞避免</text>
+  <text x="531.2" y="200" class="c sub" style="fill:#296898">拥塞避免</text>
+  <text x="656" y="168" class="c sub" style="fill:#296898">快恢复后拥塞避免</text>
+  <text x="40" y="404" class="sub">浅青色点处于慢开始（cwnd &lt; ssthresh），每轮翻倍；浅蓝色点处于拥塞避免，每轮加 1。</text>
+</svg>

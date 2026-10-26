@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">TCP 首部</text>
+  <text x="43" y="60" class="sub mono">0</text>
+  <text x="277" y="60" class="sub mono e">15</text>
+  <text x="283" y="60" class="sub mono">16</text>
+  <text x="517" y="60" class="sub mono e">31</text>
+  <rect x="40" y="68" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="160" y="85" class="c">源端口</text>
+  <text x="160" y="101" class="c sub">16 位</text>
+  <rect x="280" y="68" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="85" class="c">目的端口</text>
+  <text x="400" y="101" class="c sub">16 位</text>
+  <rect x="40" y="108" width="480" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="280" y="125" class="c">序号</text>
+  <text x="280" y="141" class="c sub">本报文段数据第一个字节的编号</text>
+  <rect x="40" y="148" width="480" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="280" y="165" class="c">确认号</text>
+  <text x="280" y="181" class="c sub">期望收到的下一个字节的编号</text>
+  <rect x="40" y="188" width="60" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="70" y="205" class="c">数据偏移</text>
+  <text x="70" y="221" class="c sub">4 位</text>
+  <rect x="100" y="188" width="60" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="130" y="205" class="c">保留</text>
+  <text x="130" y="221" class="c sub">4 位</text>
+  <rect x="160" y="188" width="15" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="167.5" y="213" class="c sub mono" style="fill:#555">C</text>
+  <rect x="175" y="188" width="15" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="182.5" y="213" class="c sub mono" style="fill:#555">E</text>
+  <rect x="190" y="188" width="15" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="197.5" y="213" class="c sub mono" style="fill:#555">U</text>
+  <rect x="205" y="188" width="15" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="212.5" y="213" class="c sub mono" style="fill:#555">A</text>
+  <rect x="220" y="188" width="15" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="227.5" y="213" class="c sub mono" style="fill:#555">P</text>
+  <rect x="235" y="188" width="15" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="242.5" y="213" class="c sub mono" style="fill:#555">R</text>
+  <rect x="250" y="188" width="15" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="257.5" y="213" class="c sub mono" style="fill:#555">S</text>
+  <rect x="265" y="188" width="15" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="272.5" y="213" class="c sub mono" style="fill:#555">F</text>
+  <rect x="280" y="188" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="205" class="c">窗口</text>
+  <text x="400" y="221" class="c sub">16 位</text>
+  <rect x="40" y="228" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="160" y="245" class="c">检验和</text>
+  <text x="160" y="261" class="c sub">16 位</text>
+  <rect x="280" y="228" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="245" class="c">紧急指针</text>
+  <text x="400" y="261" class="c sub">16 位</text>
+  <rect x="40" y="268" width="360" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="220" y="285" class="c">选项</text>
+  <text x="220" y="301" class="c sub mono">长度可变</text>
+  <rect x="400" y="268" width="120" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="460" y="285" class="c">填充</text>
+  <text x="460" y="301" class="c sub">补齐 4 字节</text>
+  <rect x="40" y="308" width="480" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="280" y="332.5" class="c sub">数据（可以没有）</text>
+  <path d="M534,70 q8,0 8,10 V160.0 q0,8 8,8 q-8,0 -8,8 V256 q0,10 -8,10" class="line"/>
+  <text x="556" y="172" class="b">固定 20 字节</text>
+  <path d="M534,270 q8,0 8,8 V282.0 q0,6 6,6 q-6,0 -6,6 V298 q0,8 -8,8" class="line"/>
+  <text x="556" y="288" class="sub">0～40 字节，例如 MSS、</text>
+  <text x="556" y="304" class="sub">窗口扩大、SACK、时间戳</text>
+  <text x="40" y="374" class="sub">标志位：URG 紧急，ACK 确认，PSH 推送，RST 复位连接，SYN 建立连接，FIN 释放连接；</text>
+  <text x="40" y="392" class="sub">CWR、ECE 用于显式拥塞通知（ECN）。淡紫色是正文介绍的 ACK、SYN、FIN。</text>
+  <text x="40" y="418" class="sub">数据偏移以 4 字节为单位：5 表示首部 20 字节，最大值 15 表示 60 字节。</text>
+</svg>

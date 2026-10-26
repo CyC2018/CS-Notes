@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">IPv4 首部</text>
+  <text x="43" y="60" class="sub mono">0</text>
+  <text x="277" y="60" class="sub mono e">15</text>
+  <text x="283" y="60" class="sub mono">16</text>
+  <text x="517" y="60" class="sub mono e">31</text>
+  <rect x="40" y="68" width="60" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="70" y="85" class="c">版本</text>
+  <text x="70" y="101" class="c sub">4 位</text>
+  <rect x="100" y="68" width="60" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="130" y="85" class="c">首部长度</text>
+  <text x="130" y="101" class="c sub">4 位</text>
+  <rect x="160" y="68" width="120" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="220" y="85" class="c">区分服务</text>
+  <text x="220" y="101" class="c sub">8 位</text>
+  <rect x="280" y="68" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="85" class="c">总长度</text>
+  <text x="400" y="101" class="c sub">16 位</text>
+  <rect x="40" y="108" width="240" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="160" y="125" class="c">标识</text>
+  <text x="160" y="141" class="c sub">16 位</text>
+  <rect x="280" y="108" width="45" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="302.5" y="125" class="c">标志</text>
+  <text x="302.5" y="141" class="c sub">3 位</text>
+  <rect x="325" y="108" width="195" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="422.5" y="125" class="c">片偏移</text>
+  <text x="422.5" y="141" class="c sub">13 位</text>
+  <rect x="40" y="148" width="120" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="100" y="165" class="c">生存时间</text>
+  <text x="100" y="181" class="c sub">8 位</text>
+  <rect x="160" y="148" width="120" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="220" y="165" class="c">协议</text>
+  <text x="220" y="181" class="c sub">8 位</text>
+  <rect x="280" y="148" width="240" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="165" class="c">首部检验和</text>
+  <text x="400" y="181" class="c sub">16 位</text>
+  <rect x="40" y="188" width="480" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="280" y="205" class="c">源 IP 地址</text>
+  <text x="280" y="221" class="c sub">32 位</text>
+  <rect x="40" y="228" width="480" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="280" y="245" class="c">目的 IP 地址</text>
+  <text x="280" y="261" class="c sub">32 位</text>
+  <rect x="40" y="268" width="360" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="220" y="285" class="c">选项</text>
+  <text x="220" y="301" class="c sub mono">长度可变</text>
+  <rect x="400" y="268" width="120" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="460" y="285" class="c">填充</text>
+  <text x="460" y="301" class="c sub">补齐 4 字节</text>
+  <rect x="40" y="308" width="480" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="280" y="332.5" class="c sub">数据（例如 TCP 报文段、UDP 数据报）</text>
+  <path d="M534,70 q8,0 8,8 V162.0 q0,6 6,6 q-6,0 -6,6 V258 q0,8 -8,8" class="line"/>
+  <text x="554" y="172" class="b">固定 20 字节</text>
+  <path d="M534,270 q8,0 8,8 V282.0 q0,6 6,6 q-6,0 -6,6 V298 q0,8 -8,8" class="line"/>
+  <text x="554" y="292" class="sub">0～40 字节</text>
+  <text x="40" y="372" class="sub">淡紫色的三个字段用于分片：标志的后两位是 DF（为 1 时不允许分片）和 MF（为 1 时后面还有分片）。</text>
+  <text x="40" y="392" class="sub">首部长度以 4 字节为单位，片偏移以 8 字节为单位；总长度包括首部和数据，最大 65535 字节。</text>
+  <text x="40" y="412" class="sub">协议字段指出数据部分交给谁处理：1 是 ICMP，6 是 TCP，17 是 UDP。</text>
+</svg>

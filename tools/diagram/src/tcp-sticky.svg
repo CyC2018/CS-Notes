@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">粘包与拆包：写入 3 次，读取 3 次，边界对不上</text>
+  <text x="20" y="82" class="b">① 发送方写入</text>
+  <text x="20" y="98" class="sub">write 3 次</text>
+  <rect x="150" y="66" width="70" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="185" y="85" class="c sub" style="fill:#444">hello</text>
+  <rect x="224" y="66" width="70" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="259" y="85" class="c sub" style="fill:#444">world</text>
+  <rect x="298" y="66" width="420" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="508" y="85" class="c sub" style="fill:#444">第 3 条消息 200000 字节</text>
+  <text x="20" y="152" class="b">② 字节流</text>
+  <text x="20" y="168" class="sub">没有消息边界</text>
+  <rect x="150" y="140" width="70" height="26" rx="3" fill="#C6E4FB" stroke="none" stroke-width="1"/>
+  <text x="185" y="157" class="c sub" style="fill:#444">hello</text>
+  <rect x="220" y="140" width="78" height="26" rx="3" fill="#C6ECE9" stroke="none" stroke-width="1"/>
+  <text x="259" y="157" class="c sub" style="fill:#444">world</text>
+  <rect x="298" y="140" width="420" height="26" rx="3" fill="#E6E3FA" stroke="none" stroke-width="1"/>
+  <rect x="150" y="140" width="568" height="26" rx="3" fill="none" stroke="#999" stroke-width="1"/>
+  <text x="718" y="128" class="sub e">共 200010 字节</text>
+  <line x1="332" y1="132" x2="332" y2="214" stroke="#C0605A" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <line x1="586.258" y1="132" x2="586.258" y2="214" stroke="#C0605A" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <text x="20" y="232" class="b">③ 接收方读取</text>
+  <text x="20" y="248" class="sub">read 3 次</text>
+  <path d="M152,220 v8 H330 v-8" class="line"/>
+  <text x="241" y="246" class="c sub" style="fill:#444">第 1 次 1024 字节</text>
+  <text x="241" y="262" class="c sub">hello + world + 1014</text>
+  <path d="M334,220 v8 H584.258 v-8" class="line"/>
+  <text x="459.129" y="246" class="c sub" style="fill:#444">第 2 次 131072 字节</text>
+  <path d="M588.258,220 v8 H716 v-8" class="line"/>
+  <text x="652.129" y="246" class="c sub" style="fill:#444">第 3 次 67914 字节</text>
+  <text x="150" y="288" class="sub" style="fill:#C0605A">第 1 次读到两条完整消息和第 3 条的开头（粘包），第 3 条消息分 3 次才读完（拆包）。</text>
+  <text x="20" y="336" class="b">④ 加上长度字段</text>
+  <text x="20" y="352" class="sub">先读 4 字节长度</text>
+  <rect x="150" y="322" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="167" y="341" class="c sub mono" style="fill:#444">5</text>
+  <rect x="186" y="322" width="60" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="216" y="341" class="c sub" style="fill:#444">hello</text>
+  <rect x="248" y="322" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="265" y="341" class="c sub mono" style="fill:#444">5</text>
+  <rect x="284" y="322" width="60" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="314" y="341" class="c sub" style="fill:#444">world</text>
+  <rect x="346" y="322" width="60" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="376" y="341" class="c sub mono" style="fill:#444">200000</text>
+  <rect x="408" y="322" width="300" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="558" y="341" class="c sub" style="fill:#444">消息体 200000 字节</text>
+  <text x="150" y="372" class="sub">灰色是 4 字节的长度：接收方先读满 4 字节得到长度 n，再读满 n 字节，就是一条完整的消息。</text>
+  <text x="20" y="406" class="sub">macOS 本机实测：服务器等待 200 ms 后用 1024 字节的缓冲区读取，之后的读取大小随系统和缓冲区变化。</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420" viewBox="0 0 600 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">UDP 首部与伪首部：一次 DNS 查询</text>
+  <text x="43" y="60" class="sub mono">0</text>
+  <text x="237" y="60" class="sub mono e">15</text>
+  <text x="243" y="60" class="sub mono">16</text>
+  <text x="437" y="60" class="sub mono e">31</text>
+  <rect x="40" y="68" width="400" height="40" fill="#F5F5F5" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="240" y="85" class="c">源 IP 地址</text>
+  <text x="240" y="101" class="c sub mono">192.168.1.10</text>
+  <rect x="40" y="108" width="400" height="40" fill="#F5F5F5" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="240" y="125" class="c">目的 IP 地址</text>
+  <text x="240" y="141" class="c sub mono">8.8.8.8</text>
+  <rect x="40" y="148" width="100" height="40" fill="#F5F5F5" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="165" class="c">全 0</text>
+  <text x="90" y="181" class="c sub mono">0</text>
+  <rect x="140" y="148" width="100" height="40" fill="#F5F5F5" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="190" y="165" class="c">协议</text>
+  <text x="190" y="181" class="c sub mono">17</text>
+  <rect x="240" y="148" width="200" height="40" fill="#F5F5F5" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="340" y="165" class="c">UDP 长度</text>
+  <text x="340" y="181" class="c sub mono">37</text>
+  <rect x="34" y="62" width="412" height="132" rx="6" class="frame"/>
+  <text x="462" y="98" class="b">伪首部 12 字节</text>
+  <text x="462" y="118" class="sub">从 IP 首部取来，</text>
+  <text x="462" y="134" class="sub">只参与检验和计算，</text>
+  <text x="462" y="150" class="sub">不随报文发送</text>
+  <rect x="40" y="214" width="200" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="140" y="231" class="c">源端口</text>
+  <text x="140" y="247" class="c sub mono">51000</text>
+  <rect x="240" y="214" width="200" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="340" y="231" class="c">目的端口</text>
+  <text x="340" y="247" class="c sub mono">53</text>
+  <rect x="40" y="254" width="200" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="140" y="271" class="c">长度</text>
+  <text x="140" y="287" class="c sub mono">37</text>
+  <rect x="240" y="254" width="200" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="340" y="271" class="c">检验和</text>
+  <text x="340" y="287" class="c sub mono">0x7CDB</text>
+  <text x="462" y="250" class="b">UDP 首部 8 字节</text>
+  <text x="462" y="268" class="sub">每个字段 16 位</text>
+  <rect x="40" y="294" width="400" height="48" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="240" y="315" class="c">数据 29 字节</text>
+  <text x="240" y="331" class="c sub">DNS 查询：example.com 的 A 记录</text>
+  <text x="462" y="322" class="b">UDP 数据</text>
+  <text x="40" y="376" class="sub">长度 = 首部 8 + 数据 29 = 37 字节。</text>
+  <text x="40" y="396" class="sub">发送方把伪首部、首部和数据按 16 位相加后取反，填入检验和；接收方重新计算，不一致就丢弃。</text>
+</svg>
