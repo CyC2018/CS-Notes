@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">点赞：user:2004 给 article:1001 点赞</text>
+  <circle cx="50" cy="69" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M33,100 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="50" y="120" class="c sub mono">user:2004</text>
+  <line x1="76" y1="84" x2="126" y2="84" class="arrow "/>
+  <rect x="130" y="64" width="230" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="245" y="88.5" class="c sub mono">① SADD voted:1001 user:2004</text>
+  <path d="M245,106 V140 H160 V156" class="arrow green"/>
+  <text x="152" y="136" class="sub ok e">返回 1：第一次点赞</text>
+  <path d="M245,106 V140 H370 V156" class="arrow red"/>
+  <text x="260" y="136" class="sub note">返回 0：点过了</text>
+  <rect x="330" y="160" width="80" height="34" rx="6" fill="#F3C6C2" stroke="#BBBBBB"/>
+  <text x="370" y="181.5" class="c sub">拒绝</text>
+  <rect x="40" y="160" width="250" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="165" y="181.5" class="c sub mono">② HINCRBY article:1001 votes 1</text>
+  <text x="300" y="182" class="sub mono">→ 4</text>
+  <rect x="40" y="206" width="250" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="165" y="227.5" class="c sub mono">③ ZINCRBY votes: 1 article:1001</text>
+  <text x="300" y="228" class="sub mono">→ 4</text>
+  <line x1="160" y1="196" x2="160" y2="204" class="arrow "/>
+  <rect x="470" y="56" width="200" height="110" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="470" y="56" width="200" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="570" y="71" class="c b">voted:1001（SET）</text>
+  <rect x="476" y="84" width="188" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="482" y="96" class="sub mono">user:2002</text>
+  <rect x="476" y="104" width="188" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="482" y="116" class="sub mono">user:2003</text>
+  <rect x="476" y="124" width="188" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="482" y="136" class="sub mono">user:2005</text>
+  <rect x="476" y="144" width="188" height="16" rx="3" fill="#E6E3FA" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="482" y="156" class="sub mono">user:2004</text>
+  <text x="682" y="165" class="sub" style="fill:#766AA8">新增</text>
+  <circle cx="488" cy="198" r="10" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M488,192 V198 L492.5,201" fill="none" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="504" y="202" class="sub">EXPIRE 604800：7 天后自动删除</text>
+  <text x="470" y="222" class="sub">超过一周不能再点赞，也不再占用内存</text>
+  <text x="30" y="270" class="sub">已点赞的用户记在集合里，SADD 的返回值说明这个用户是否点过，防止重复点赞。</text>
+  <text x="30" y="288" class="sub">三步可以放进一个 Lua 脚本中原子执行，避免只执行了一部分。</text>
+</svg>

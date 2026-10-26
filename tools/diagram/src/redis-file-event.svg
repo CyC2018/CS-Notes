@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="290" viewBox="0 0 760 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">文件事件：一个线程处理多个客户端</text>
+  <rect x="40" y="60" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="44" y="64" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,87.2 v5 M64,87.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="92.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="110" class="c sub">客户端 A</text>
+  <line x1="86" y1="74" x2="186" y2="74" class="arrow"/>
+  <text x="136" y="66" class="c sub">新连接</text>
+  <rect x="40" y="124" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="44" y="128" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,151.2 v5 M64,151.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="156.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="174" class="c sub">客户端 B</text>
+  <line x1="86" y1="138" x2="186" y2="138" class="arrow"/>
+  <text x="136" y="130" class="c sub">发来 GET k</text>
+  <rect x="40" y="188" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="44" y="192" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,215.2 v5 M64,215.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="220.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="238" class="c sub">客户端 C</text>
+  <line x1="86" y1="202" x2="186" y2="202" class="arrow"/>
+  <text x="136" y="194" class="c sub">可以写回结果</text>
+  <rect x="192" y="66" width="130" height="150" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="257" y="132" class="c b">I/O 多路复用</text>
+  <text x="257" y="150" class="c sub mono">epoll_wait</text>
+  <text x="257" y="166" class="c sub">同时监听所有套接字</text>
+  <line x1="326" y1="141" x2="366" y2="141" class="arrow "/>
+  <rect x="370" y="128" width="120" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="380" y="132" width="30.6667" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="395.333" y="145" class="c sub">A</text>
+  <rect x="414.667" y="132" width="30.6667" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="430" y="145" class="c sub">B</text>
+  <rect x="449.333" y="132" width="30.6667" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="464.667" y="145" class="c sub">C</text>
+  <text x="430" y="118" class="c sub">就绪的事件</text>
+  <line x1="494" y1="141" x2="524" y2="141" class="arrow "/>
+  <rect x="528" y="116" width="56" height="50" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="556" y="145.5" class="c sub">分派</text>
+  <rect x="612" y="66" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="677" y="90.5" class="c sub b">连接应答处理器</text>
+  <text x="677" y="120" class="c sub">A：accept 新连接</text>
+  <line x1="588" y1="141" x2="608" y2="86" class="arrow "/>
+  <rect x="612" y="126" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="677" y="150.5" class="c sub b">命令请求处理器</text>
+  <text x="677" y="180" class="c sub">B：读出并执行 GET k</text>
+  <line x1="588" y1="141" x2="608" y2="146" class="arrow "/>
+  <rect x="612" y="186" width="130" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="677" y="210.5" class="c sub b">命令回复处理器</text>
+  <text x="677" y="240" class="c sub">C：把结果写给客户端</text>
+  <line x1="588" y1="141" x2="608" y2="206" class="arrow "/>
+  <text x="30" y="272" class="sub">执行命令的始终是一个线程：事件按顺序逐个处理，所以单条命令是原子的，但一条慢命令会阻塞其它客户端。</text>
+</svg>
