@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">TLS 1.2 与 TLS 1.3 的握手（本机 openssl 实测的报文顺序）</text>
+  <text x="200" y="58" class="c b">TLS 1.2：www.baidu.com</text>
+  <line x1="70" y1="70" x2="70" y2="420" stroke="#BBB" stroke-dasharray="4 4"/>
+  <line x1="330" y1="70" x2="330" y2="420" stroke="#BBB" stroke-dasharray="4 4"/>
+  <text x="70" y="432" class="c sub">客户端</text>
+  <text x="330" y="432" class="c sub">服务器</text>
+  <line x1="70" y1="86" x2="330" y2="86" class="arrow "/>
+  <text x="200" y="81" class="c sub mono" style="fill:#444">ClientHello</text>
+  <line x1="330" y1="128" x2="70" y2="128" class="arrow dash"/>
+  <text x="200" y="123" class="c sub mono" style="fill:#444">ServerHello</text>
+  <line x1="330" y1="160" x2="70" y2="160" class="arrow dash"/>
+  <text x="200" y="155" class="c sub mono" style="fill:#444">Certificate</text>
+  <line x1="330" y1="192" x2="70" y2="192" class="arrow dash"/>
+  <text x="200" y="187" class="c sub mono" style="fill:#444">ServerKeyExchange</text>
+  <text x="200" y="204" class="c sub">ECDHE 公钥 + 签名</text>
+  <line x1="330" y1="236" x2="70" y2="236" class="arrow dash"/>
+  <text x="200" y="231" class="c sub mono" style="fill:#444">ServerHelloDone</text>
+  <line x1="70" y1="278" x2="330" y2="278" class="arrow "/>
+  <text x="200" y="273" class="c sub mono" style="fill:#444">ClientKeyExchange</text>
+  <text x="200" y="290" class="c sub">ECDHE 公钥</text>
+  <line x1="70" y1="322" x2="330" y2="322" class="arrow "/>
+  <text x="200" y="317" class="c sub mono" style="fill:#444">ChangeCipherSpec, Finished</text>
+  <line x1="330" y1="364" x2="70" y2="364" class="arrow dash"/>
+  <text x="200" y="359" class="c sub mono" style="fill:#444">ChangeCipherSpec, Finished</text>
+  <line x1="70" y1="406" x2="330" y2="406" class="arrow green"/>
+  <text x="200" y="401" class="c sub mono" style="fill:#444">HTTP 请求（加密）</text>
+  <text x="200" y="452" class="c sub b" style="fill:#296898">2 个 RTT 后才能发送请求</text>
+  <text x="570" y="58" class="c b">TLS 1.3：www.example.com</text>
+  <line x1="440" y1="70" x2="440" y2="420" stroke="#BBB" stroke-dasharray="4 4"/>
+  <line x1="700" y1="70" x2="700" y2="420" stroke="#BBB" stroke-dasharray="4 4"/>
+  <text x="440" y="432" class="c sub">客户端</text>
+  <text x="700" y="432" class="c sub">服务器</text>
+  <line x1="440" y1="86" x2="700" y2="86" class="arrow "/>
+  <text x="570" y="81" class="c sub mono" style="fill:#444">ClientHello + key_share</text>
+  <text x="570" y="98" class="c sub">带上 ECDHE 公钥</text>
+  <line x1="700" y1="140" x2="440" y2="140" class="arrow dash"/>
+  <text x="570" y="135" class="c sub mono" style="fill:#444">ServerHello + key_share</text>
+  <line x1="700" y1="172" x2="440" y2="172" class="arrow dash"/>
+  <text x="570" y="167" class="c sub mono" style="fill:#444">{EncryptedExtensions}</text>
+  <line x1="700" y1="204" x2="440" y2="204" class="arrow dash"/>
+  <text x="570" y="199" class="c sub mono" style="fill:#444">{Certificate}</text>
+  <line x1="700" y1="236" x2="440" y2="236" class="arrow dash"/>
+  <text x="570" y="231" class="c sub mono" style="fill:#444">{CertificateVerify}</text>
+  <text x="570" y="248" class="c sub">用私钥签名</text>
+  <line x1="700" y1="280" x2="440" y2="280" class="arrow dash"/>
+  <text x="570" y="275" class="c sub mono" style="fill:#444">{Finished}</text>
+  <line x1="440" y1="322" x2="700" y2="322" class="arrow green"/>
+  <text x="570" y="317" class="c sub mono" style="fill:#444">{Finished} + HTTP 请求</text>
+  <text x="570" y="452" class="c sub b" style="fill:#296898">1 个 RTT 后就能发送请求</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="280" viewBox="0 0 720 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">HTTPS：HTTP 报文交给 TLS 加密后再交给 TCP</text>
+  <text x="120" y="56" class="c b">HTTP</text>
+  <rect x="60" y="66" width="120" height="32" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="120" y="86" class="c sub b" style="fill:#444">HTTP</text>
+  <rect x="60" y="104" width="120" height="32" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="120" y="124" class="c sub b" style="fill:#444">TCP</text>
+  <rect x="60" y="142" width="120" height="32" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="120" y="162" class="c sub b" style="fill:#444">IP</text>
+  <text x="300" y="56" class="c b">HTTPS</text>
+  <rect x="240" y="66" width="120" height="32" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="300" y="86" class="c sub b" style="fill:#444">HTTP</text>
+  <rect x="240" y="104" width="120" height="32" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="300" y="124" class="c sub b" style="fill:#444">TLS</text>
+  <rect x="240" y="142" width="120" height="32" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="300" y="162" class="c sub b" style="fill:#444">TCP</text>
+  <rect x="240" y="180" width="120" height="32" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="300" y="200" class="c sub b" style="fill:#444">IP</text>
+  <text x="420" y="60" class="b">抓包能看到的内容</text>
+  <rect x="420" y="72" width="270" height="36" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="430" y="87" class="sub b" style="fill:#444">IP、TCP 首部</text>
+  <text x="430" y="102" class="sub">明文：双方的地址和端口</text>
+  <rect x="420" y="116" width="270" height="36" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="430" y="131" class="sub b" style="fill:#444">TLS 记录头</text>
+  <text x="430" y="146" class="sub">明文：类型、版本、长度</text>
+  <rect x="420" y="160" width="270" height="36" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="430" y="175" class="sub b" style="fill:#444">HTTP 请求行、首部、主体</text>
+  <text x="430" y="190" class="sub">全部加密，包括 URL 和 Cookie</text>
+  <text x="30" y="240" class="sub">HTTPS 默认端口 443。握手时 ClientHello 中的 SNI（要访问的域名）仍是明文，</text>
+  <text x="30" y="258" class="sub">所以中间人能知道访问的是哪个网站，但看不到访问了哪个页面、提交了什么内容。</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">证书链：www.baidu.com 的证书如何被信任</text>
+  <rect x="30" y="60" width="220" height="110" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="82" class="c sub b" style="fill:#444">服务器证书</text>
+  <text x="140" y="104" class="c sub mono" style="fill:#444">baidu.com</text>
+  <text x="140" y="130" class="c sub">公钥：RSA 2048 位</text>
+  <text x="140" y="148" class="c sub">有效期 2026-07-09 ～ 2027-01-24</text>
+  <line x1="278" y1="115" x2="254" y2="115" class="arrow "/>
+  <text x="266" y="196" class="c sub"></text>
+  <rect x="280" y="60" width="220" height="110" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="390" y="82" class="c sub b" style="fill:#444">中间证书</text>
+  <text x="390" y="104" class="c sub mono" style="fill:#444">GlobalSign RSA OV SSL CA 2018</text>
+  <text x="390" y="130" class="c sub">由根证书签名</text>
+  <text x="390" y="148" class="c sub">随服务器证书一起发送</text>
+  <line x1="528" y1="115" x2="504" y2="115" class="arrow "/>
+  <text x="516" y="196" class="c sub"></text>
+  <rect x="530" y="60" width="220" height="110" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="640" y="82" class="c sub b" style="fill:#444">根证书</text>
+  <text x="640" y="104" class="c sub mono" style="fill:#444">GlobalSign Root R3</text>
+  <text x="640" y="130" class="c sub">自签名</text>
+  <text x="640" y="148" class="c sub">预装在操作系统的信任列表中</text>
+  <text x="255" y="196" class="c sub" style="fill:#766AA8">用中间证书的公钥验证服务器证书的签名</text>
+  <text x="505" y="196" class="c sub" style="fill:#766AA8">用根证书的公钥验证中间证书</text>
+  <text x="30" y="236" class="sub">浏览器还要检查：访问的域名 www.baidu.com 与证书中的域名匹配（Subject Alternative Name 中有 *.baidu.com），</text>
+  <text x="30" y="254" class="sub">证书在有效期内且没有被吊销。任何一步失败都会提示“连接不是私密连接”。</text>
+  <text x="30" y="278" class="sub">证书和签名是公开的，伪造者拿不到 CA 的私钥，就无法为自己的公钥生成有效签名。</text>
+</svg>
