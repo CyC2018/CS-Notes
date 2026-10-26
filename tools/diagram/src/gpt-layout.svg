@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">GPT 分区表的布局（LBA 为 512 字节）</text>
+  <rect x="30" y="70" width="80" height="44" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="70" y="96" class="c sub" style="fill:#444">保护性 MBR</text>
+  <text x="70" y="62" class="c sub mono">LBA 0</text>
+  <rect x="110" y="70" width="80" height="44" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="150" y="96" class="c sub" style="fill:#444">GPT 表头</text>
+  <text x="150" y="62" class="c sub mono">LBA 1</text>
+  <rect x="190" y="70" width="130" height="44" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="255" y="96" class="c sub" style="fill:#444">分区项 × 128</text>
+  <text x="255" y="62" class="c sub mono">LBA 2～33</text>
+  <rect x="320" y="70" width="220" height="44" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="430" y="96" class="c sub" style="fill:#444">各个分区</text>
+  <text x="430" y="62" class="c sub mono"></text>
+  <rect x="540" y="70" width="100" height="44" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="590" y="96" class="c sub" style="fill:#444">分区项备份</text>
+  <text x="590" y="62" class="c sub mono"></text>
+  <rect x="640" y="70" width="80" height="44" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="680" y="96" class="c sub" style="fill:#444">表头备份</text>
+  <text x="680" y="62" class="c sub mono">最后</text>
+  <text x="30" y="150" class="sub">每个分区项 128 字节，一个 LBA 放 4 个，32 个 LBA 共 128 个分区；表头带 CRC32 校验，损坏时用末尾的备份恢复。</text>
+  <text x="30" y="168" class="sub">LBA 是 64 位的，按 512 字节计算最大支持 2⁶⁴ × 512 字节 = 8 ZiB；MBR 只有 32 位，最大 2 TiB。</text>
+</svg>
