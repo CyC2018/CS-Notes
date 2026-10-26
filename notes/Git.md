@@ -141,9 +141,30 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 ## Git 命令一览
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a29acce-f243-4914-9f00-f2988c528412.jpg" width=""> </div><br>
+| 用途 | 命令 |
+| --- | --- |
+| 克隆仓库 | git clone <url> |
+| 查看状态 | git status |
+| 加入暂存区 | git add <file> |
+| 提交 | git commit -m "说明" |
+| 查看历史 | git log --oneline --graph |
+| 查看改动 | git diff（工作区与暂存区），git diff --staged（暂存区与最新提交） |
+| 撤销工作区的修改 | git restore <file> |
+| 撤销 git add | git restore --staged <file> |
+| 新建并切换分支 | git switch -c dev |
+| 切换分支 | git switch master |
+| 合并分支 | git merge dev |
+| 变基 | git rebase master |
+| 临时保存修改 | git stash，之后用 git stash pop 恢复 |
+| 撤销最近一次提交，保留修改 | git reset --soft HEAD~1 |
+| 回到某个提交，丢弃之后的修改 | git reset --hard <commit> |
+| 用一个新提交抵消某次提交 | git revert <commit> |
+| 拉取并合并远程分支 | git pull |
+| 推送 | git push origin dev |
 
-比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
+git restore 和 git switch 是 Git 2.23 加入的命令，分别承担了原来 git checkout 恢复文件和切换分支两种用途。需要注意的是，reset --hard 会丢弃未提交的修改；已经推送到远程的提交，应该用 revert 撤销，而不是 reset 后强制推送。
+
+比较详细的命令列表：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
 
 ## 参考资料
 
