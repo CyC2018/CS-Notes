@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">水平切分：按 user_id % 2 把行分到两个库</text>
+  <text x="120" y="82" class="c sub b" style="fill:#444">orders（切分前）</text>
+  <rect x="30" y="90" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="75" y="106" class="c sub" style="fill:#444">order_id</text>
+  <rect x="120" y="90" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="165" y="106" class="c sub" style="fill:#444">user_id</text>
+  <rect x="30" y="114" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="75" y="130" class="c sub mono" style="fill:#444">1024</text>
+  <rect x="120" y="114" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="165" y="130" class="c sub mono" style="fill:#444">7</text>
+  <rect x="30" y="138" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="75" y="154" class="c sub mono" style="fill:#444">1025</text>
+  <rect x="120" y="138" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="165" y="154" class="c sub mono" style="fill:#444">8</text>
+  <rect x="30" y="162" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="75" y="178" class="c sub mono" style="fill:#444">1026</text>
+  <rect x="120" y="162" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="165" y="178" class="c sub mono" style="fill:#444">9</text>
+  <rect x="30" y="186" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="75" y="202" class="c sub mono" style="fill:#444">1027</text>
+  <rect x="120" y="186" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="165" y="202" class="c sub mono" style="fill:#444">10</text>
+  <text x="410" y="58" class="c sub b" style="fill:#444">库 0 的 orders</text>
+  <rect x="320" y="66" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="365" y="82" class="c sub" style="fill:#444">order_id</text>
+  <rect x="410" y="66" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="455" y="82" class="c sub" style="fill:#444">user_id</text>
+  <rect x="320" y="90" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="365" y="106" class="c sub mono" style="fill:#444">1025</text>
+  <rect x="410" y="90" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="455" y="106" class="c sub mono" style="fill:#444">8</text>
+  <rect x="320" y="114" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="365" y="130" class="c sub mono" style="fill:#444">1027</text>
+  <rect x="410" y="114" width="90" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="455" y="130" class="c sub mono" style="fill:#444">10</text>
+  <text x="410" y="168" class="c sub b" style="fill:#444">库 1 的 orders</text>
+  <rect x="320" y="176" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="365" y="192" class="c sub" style="fill:#444">order_id</text>
+  <rect x="410" y="176" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="455" y="192" class="c sub" style="fill:#444">user_id</text>
+  <rect x="320" y="200" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="365" y="216" class="c sub mono" style="fill:#444">1024</text>
+  <rect x="410" y="200" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="455" y="216" class="c sub mono" style="fill:#444">7</text>
+  <rect x="320" y="224" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="365" y="240" class="c sub mono" style="fill:#444">1026</text>
+  <rect x="410" y="224" width="90" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="455" y="240" class="c sub mono" style="fill:#444">9</text>
+  <line x1="214" y1="130" x2="316" y2="106" class="arrow "/>
+  <line x1="214" y1="160" x2="316" y2="212" class="arrow "/>
+  <text x="530" y="106" class="sub">表结构相同，每个库只存一部分行</text>
+  <text x="530" y="216" class="sub">按 user_id 查询只访问一个库；</text>
+  <text x="530" y="234" class="sub">按其它条件查询要访问所有库</text>
+  <text x="30" y="268" class="sub">同一个用户的订单落在同一个库，查询“某用户的订单”不需要跨库。</text>
+</svg>
