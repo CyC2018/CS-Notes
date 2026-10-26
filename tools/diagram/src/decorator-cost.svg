@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">装饰者：一层套一层，cost() 由外向内调用</text>
+  <rect x="40" y="60" width="460" height="200" rx="14" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="54" y="82" class="sub b" style="fill:#444">Milk</text>
+  <rect x="80" y="96" width="300" height="140" rx="14" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="94" y="118" class="sub b" style="fill:#444">Mocha</text>
+  <rect x="120" y="134" width="140" height="66" rx="14" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="134" y="156" class="sub b" style="fill:#444">HouseBlend</text>
+  <text x="190" y="180" class="c sub mono" style="fill:#444">cost() = 1</text>
+  <text x="310" y="130" class="c sub mono" style="fill:#444">cost() = 1 + 1</text>
+  <text x="440" y="92" class="c sub mono" style="fill:#444">cost() = 1 + 2</text>
+  <text x="530" y="96" class="sub" style="fill:#444">① Milk.cost() 调用 Mocha.cost()</text>
+  <text x="530" y="126" class="sub" style="fill:#444">② Mocha.cost() 调用 HouseBlend.cost()</text>
+  <text x="530" y="156" class="sub" style="fill:#444">③ HouseBlend 返回 1</text>
+  <text x="530" y="186" class="sub" style="fill:#444">④ Mocha 返回 1 + 1 = 2</text>
+  <text x="530" y="216" class="sub" style="fill:#444">⑤ Milk 返回 1 + 2 = 3，输出 3.0</text>
+  <text x="30" y="286" class="sub">Milk、Mocha 和 HouseBlend 都实现 Beverage，所以装饰者可以继续被装饰；new Milk(new Mocha(new HouseBlend()))。</text>
+</svg>
