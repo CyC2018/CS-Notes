@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">G1 的一次并发标记周期（JDK 21 实测，堆 128 MB）</text>
+  <line x1="80" y1="200" x2="720" y2="200" class="line"/>
+  <line x1="100" y1="200" x2="100" y2="205" stroke="#999"/>
+  <text x="100" y="220" class="c sub mono">56 ms</text>
+  <line x1="260" y1="200" x2="260" y2="205" stroke="#999"/>
+  <text x="260" y="220" class="c sub mono">60 ms</text>
+  <line x1="420" y1="200" x2="420" y2="205" stroke="#999"/>
+  <text x="420" y="220" class="c sub mono">64 ms</text>
+  <line x1="580" y1="200" x2="580" y2="205" stroke="#999"/>
+  <text x="580" y="220" class="c sub mono">68 ms</text>
+  <rect x="140" y="150" width="456" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="368" y="166" class="c sub" style="fill:#444">并发标记 11.4 ms：与用户线程同时运行，2 个并发线程</text>
+  <rect x="136" y="166.318" width="8" height="29.682" rx="1" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="140" y1="164.318" x2="140" y2="78" stroke="#BBB" stroke-dasharray="2 2"/>
+  <text x="140" y="72" class="c sub" style="fill:#444">Young (Concurrent Start) 1.649 ms</text>
+  <rect x="296" y="162.43" width="8" height="33.57" rx="1" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="376" y="180.448" width="8" height="15.552" rx="1" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="416" y="193" width="8" height="3" rx="1" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <line x1="420" y1="191" x2="420" y2="78" stroke="#BBB" stroke-dasharray="2 2"/>
+  <text x="420" y="72" class="c sub" style="fill:#444">Remark 0.096 ms</text>
+  <rect x="496" y="183.04" width="8" height="12.96" rx="1" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="536" y="184.192" width="8" height="11.808" rx="1" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="576" y="193" width="8" height="3" rx="1" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <line x1="580" y1="191" x2="580" y2="102" stroke="#BBB" stroke-dasharray="2 2"/>
+  <text x="580" y="96" class="c sub" style="fill:#444">Cleanup 0.046 ms</text>
+  <rect x="616" y="186.19" width="8" height="9.81" rx="1" fill="#9F94D5" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="656" y="185.47" width="8" height="10.53" rx="1" fill="#9F94D5" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="660" y1="183.47" x2="660" y2="78" stroke="#BBB" stroke-dasharray="2 2"/>
+  <text x="660" y="72" class="c sub" style="fill:#444">Mixed 0.585 ms</text>
+  <text x="30" y="254" class="sub">柱子是停顿，高度表示时长。① 一次年轻代回收顺带开始标记（Concurrent Start）；② 并发标记期间年轻代回收照常进行；</text>
+  <text x="30" y="272" class="sub">③ 最终标记 Remark 和 ④ 清理 Cleanup 只停顿不到 0.1 ms；⑤ 之后的混合回收（Mixed）同时回收年轻代和</text>
+  <text x="30" y="290" class="sub">垃圾最多的老年代 Region。这次运行共 88 次停顿，最长 2.38 ms。</text>
+</svg>
