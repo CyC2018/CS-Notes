@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">源地址哈希：同一个 IP 总是落到同一台服务器</text>
+  <rect x="31" y="62" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="35" y="66" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M44,85.12 v5 M52,85.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="36" y="90.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="76" y="74" class="sub mono">192.0.2.30</text>
+  <text x="76" y="90" class="sub mono">crc32(IP) % 2 = 0</text>
+  <line x1="220" y1="78" x2="412" y2="96" class="arrow "/>
+  <rect x="31" y="116" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="35" y="120" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M44,139.12 v5 M52,139.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="36" y="144.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="76" y="128" class="sub mono">198.51.100.8</text>
+  <text x="76" y="144" class="sub mono">crc32(IP) % 2 = 0</text>
+  <line x1="220" y1="132" x2="412" y2="96" class="arrow "/>
+  <rect x="31" y="170" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="35" y="174" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M44,193.12 v5 M52,193.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="36" y="198.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="76" y="182" class="sub mono">203.0.113.11</text>
+  <text x="76" y="198" class="sub mono">crc32(IP) % 2 = 1</text>
+  <line x1="220" y1="186" x2="412" y2="216" class="arrow "/>
+  <rect x="31" y="224" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="35" y="228" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M44,247.12 v5 M52,247.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="36" y="252.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="76" y="236" class="sub mono">198.51.100.7</text>
+  <text x="76" y="252" class="sub mono">crc32(IP) % 2 = 1</text>
+  <line x1="220" y1="240" x2="412" y2="216" class="arrow "/>
+  <rect x="417" y="72" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="78.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="78.5" x2="456" y2="78.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="88" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="94.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="94.5" x2="456" y2="94.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="104" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="110.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="110.5" x2="456" y2="110.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="440" y="132" class="c sub b">Server 1</text>
+  <text x="478" y="100" class="sub">余数为 0 的客户端</text>
+  <rect x="417" y="192" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="198.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="198.5" x2="456" y2="198.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="208" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="214.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="214.5" x2="456" y2="214.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="224" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="230.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="230.5" x2="456" y2="230.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="440" y="252" class="c sub b">Server 2</text>
+  <text x="478" y="220" class="sub">余数为 1 的客户端</text>
+  <text x="30" y="288" class="sub">示意：用 crc32(IP) % 服务器数 选择服务器。服务器数量变化时，大部分客户端的结果都会改变。</text>
+</svg>
