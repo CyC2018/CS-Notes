@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="230" viewBox="0 0 760 230">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">gcc -o hello hello.c 的四个阶段</text>
+  <path d="M60,60 h31 l9,9 v41 h-40 z" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M91,60 v9 h9" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="66" y1="77" x2="93" y2="77" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="66" y1="84" x2="93" y2="84" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="66" y1="91" x2="93" y2="91" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="80" y="130" class="c sub mono b" style="fill:#444">hello.c</text>
+  <text x="80" y="146" class="c sub">源程序</text>
+  <line x1="108" y1="85" x2="202" y2="85" class="arrow "/>
+  <text x="155" y="76" class="c sub">预处理器 cpp</text>
+  <text x="155" y="104" class="c sub mono" style="fill:#296898">gcc -E</text>
+  <path d="M210,60 h31 l9,9 v41 h-40 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M241,60 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="216" y1="77" x2="243" y2="77" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="216" y1="84" x2="243" y2="84" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="216" y1="91" x2="243" y2="91" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="230" y="130" class="c sub mono b" style="fill:#444">hello.i</text>
+  <text x="230" y="146" class="c sub">预处理后的源程序</text>
+  <line x1="258" y1="85" x2="352" y2="85" class="arrow "/>
+  <text x="305" y="76" class="c sub">编译器 cc1</text>
+  <text x="305" y="104" class="c sub mono" style="fill:#296898">gcc -S</text>
+  <path d="M360,60 h31 l9,9 v41 h-40 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M391,60 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="77" x2="393" y2="77" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="84" x2="393" y2="84" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="366" y1="91" x2="393" y2="91" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="380" y="130" class="c sub mono b" style="fill:#444">hello.s</text>
+  <text x="380" y="146" class="c sub">汇编程序</text>
+  <line x1="408" y1="85" x2="502" y2="85" class="arrow "/>
+  <text x="455" y="76" class="c sub">汇编器 as</text>
+  <text x="455" y="104" class="c sub mono" style="fill:#296898">gcc -c</text>
+  <path d="M510,60 h31 l9,9 v41 h-40 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M541,60 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="516" y1="77" x2="543" y2="77" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="516" y1="84" x2="543" y2="84" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="516" y1="91" x2="543" y2="91" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="530" y="130" class="c sub mono b" style="fill:#444">hello.o</text>
+  <text x="530" y="146" class="c sub">可重定位目标文件</text>
+  <line x1="558" y1="85" x2="652" y2="85" class="arrow "/>
+  <text x="605" y="76" class="c sub">链接器 ld</text>
+  <path d="M660,60 h31 l9,9 v41 h-40 z" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M691,60 v9 h9" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="666" y1="77" x2="693" y2="77" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="666" y1="84" x2="693" y2="84" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="666" y1="91" x2="693" y2="91" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="680" y="130" class="c sub mono b" style="fill:#444">hello</text>
+  <text x="680" y="146" class="c sub">可执行目标文件</text>
+  <path d="M590,160 h23 l9,9 v31 h-32 z" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M613,160 v9 h9" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="596" y1="177" x2="615" y2="177" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="596" y1="184" x2="615" y2="184" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="596" y1="191" x2="615" y2="191" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="630" y="178" class="sub mono">printf.o 等</text>
+  <text x="630" y="194" class="sub">库中的目标文件</text>
+  <line x1="606" y1="158" x2="606" y2="92" class="arrow "/>
+  <text x="30" y="216" class="sub">前三步各自可以用 gcc 的选项单独执行；.i、.s 是文本文件，.o 和 hello 是二进制的 ELF 文件。</text>
+</svg>
