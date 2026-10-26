@@ -701,7 +701,7 @@ COMMIT
 
 ```sql
 CREATE TABLE mytable
-(col VARCHAR(10) CHARACTER SET latin COLLATE latin1_general_ci )
+(col VARCHAR(10) CHARACTER SET latin1 COLLATE latin1_general_ci )
 DEFAULT CHARACTER SET hebrew COLLATE hebrew_general_ci;
 ```
 
