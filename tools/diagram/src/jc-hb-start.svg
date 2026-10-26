@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="260" viewBox="0 0 600 260">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">线程启动规则</text>
+  <rect x="60" y="50" width="220" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="170" y="69.5" class="c sub b">main</text>
+  <rect x="340" y="50" width="220" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="450" y="69.5" class="c sub b">线程 t</text>
+  <rect x="70" y="96" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="170" y="113" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">x = 1;</text>
+  <rect x="70" y="136" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="170" y="153" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">t.start();</text>
+  <rect x="350" y="176" width="200" height="26" rx="5" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="450" y="193" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">print(x);  // 1</text>
+  <line x1="170" y1="122" x2="170" y2="136" class="arrow green"/>
+  <path d="M270,149 C310,149 310,189 348,189" class="arrow green"/>
+  <text x="24" y="244" class="sub">start() 先行发生于新线程中的每一个操作。</text>
+</svg>
