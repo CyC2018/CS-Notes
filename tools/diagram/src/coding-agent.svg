@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">AI 编程助手修复一个失败的测试（示意）</text>
+  <circle cx="46" cy="61" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M29,92 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="46" y="108" class="c sub b">开发者</text>
+  <path d="M86,54 h238 q6,0 6,6 v28 q0,6 -6,6 H98 l-8,8 l0,-8 H86 q-6,0 -6,-6 v-28 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="92" y="78" class="sub" style="fill:#444">“OrderServiceTest 挂了，修一下”</text>
+  <text x="30" y="152" class="sub b" style="fill:#444">收集上下文</text>
+  <rect x="110" y="130" width="64" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="142" y="151" class="c sub b mono" style="fill:#444">Bash</text>
+  <rect x="178" y="130" width="330" height="34" rx="4" fill="#FFFFFF" stroke="#CCC"/>
+  <text x="188" y="152" class="sub" style="fill:#444">mvn test → 1 个测试失败：期望 59.9，实际 0.0</text>
+  <rect x="110" y="182" width="64" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="142" y="203" class="c sub b mono" style="fill:#444">Grep</text>
+  <rect x="178" y="182" width="330" height="34" rx="4" fill="#FFFFFF" stroke="#CCC"/>
+  <text x="188" y="204" class="sub" style="fill:#444">grep -rn "calcAmount" src/  → OrderService.java:42</text>
+  <line x1="142" y1="166" x2="142" y2="180" class="arrow "/>
+  <rect x="110" y="234" width="64" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="142" y="255" class="c sub b mono" style="fill:#444">Read</text>
+  <rect x="178" y="234" width="330" height="34" rx="4" fill="#FFFFFF" stroke="#CCC"/>
+  <text x="188" y="256" class="sub" style="fill:#444">读取 OrderService.java 第 30～60 行</text>
+  <line x1="142" y1="218" x2="142" y2="232" class="arrow "/>
+  <text x="30" y="308" class="sub b" style="fill:#444">修改</text>
+  <rect x="110" y="286" width="64" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="142" y="307" class="c sub b mono" style="fill:#444">Edit</text>
+  <rect x="178" y="286" width="330" height="34" rx="4" fill="#FFFFFF" stroke="#CCC"/>
+  <text x="188" y="308" class="sub" style="fill:#444">把 discount 为 null 时的分支改为按原价计算</text>
+  <line x1="142" y1="270" x2="142" y2="284" class="arrow "/>
+  <text x="30" y="360" class="sub b" style="fill:#444">验证</text>
+  <rect x="110" y="338" width="64" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="142" y="359" class="c sub b mono" style="fill:#444">Bash</text>
+  <rect x="178" y="338" width="330" height="34" rx="4" fill="#FFFFFF" stroke="#CCC"/>
+  <text x="188" y="360" class="sub" style="fill:#444">mvn test → 全部通过</text>
+  <line x1="142" y1="322" x2="142" y2="336" class="arrow "/>
+  <path d="M110,355 C70,355 70,147 106,147" class="arrow dash"/>
+  <text x="64" y="256" class="sub e">失败就</text>
+  <text x="64" y="272" class="sub e">继续循环</text>
+  <text x="110" y="404" class="sub">每一步都是一次模型调用：模型选择工具，应用执行后把输出放回上下文。</text>
+  <text x="540" y="140" class="b">上下文中有什么</text>
+  <rect x="540" y="152" width="190" height="34" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="635" y="173" class="c sub" style="fill:#444">系统提示词、工具定义</text>
+  <rect x="540" y="190" width="190" height="34" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="635" y="211" class="c sub" style="fill:#444">CLAUDE.md 等项目约定</text>
+  <rect x="540" y="228" width="190" height="110" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="635" y="287" class="c sub" style="fill:#444">对话和每次工具的输出</text>
+  <line x1="540" y1="348" x2="730" y2="348" stroke="#C0605A" stroke-dasharray="4 3"/>
+  <text x="635" y="364" class="c sub note">接近上限时压缩为摘要</text>
+  <text x="540" y="396" class="sub">子 Agent 在自己的上下文中</text>
+  <text x="540" y="412" class="sub">搜索大量文件，只返回结论</text>
+  <text x="30" y="448" class="sub">修改文件前自动保存快照，可以撤销；执行命令、修改文件前按权限设置决定是否请求开发者确认。</text>
+</svg>
