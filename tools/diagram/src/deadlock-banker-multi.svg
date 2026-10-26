@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">多个资源的银行家算法：找出一个安全序列</text>
+  <text x="100" y="69" class="sub b e" style="fill:#444">E 总量</text>
+  <rect x="108" y="52" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="123" y="69" class="c sub mono" style="fill:#444">9</text>
+  <rect x="138" y="52" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="153" y="69" class="c sub mono" style="fill:#444">5</text>
+  <rect x="168" y="52" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="183" y="69" class="c sub mono" style="fill:#444">7</text>
+  <text x="290" y="69" class="sub b e" style="fill:#444">Available</text>
+  <rect x="298" y="52" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="313" y="69" class="c sub mono" style="fill:#444">1</text>
+  <rect x="328" y="52" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="343" y="69" class="c sub mono" style="fill:#444">1</text>
+  <rect x="358" y="52" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="373" y="69" class="c sub mono" style="fill:#444">2</text>
+  <text x="119" y="114" class="c sub b" style="fill:#444">Allocation 已分配</text>
+  <text x="54" y="139" class="sub e">P1</text>
+  <rect x="74" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="139" class="c sub mono" style="fill:#444">2</text>
+  <rect x="104" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="139" class="c sub mono" style="fill:#444">1</text>
+  <rect x="134" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="139" class="c sub mono" style="fill:#444">1</text>
+  <text x="54" y="165" class="sub e">P2</text>
+  <rect x="74" y="148" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="165" class="c sub mono" style="fill:#444">3</text>
+  <rect x="104" y="148" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="165" class="c sub mono" style="fill:#444">0</text>
+  <rect x="134" y="148" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="165" class="c sub mono" style="fill:#444">2</text>
+  <text x="54" y="191" class="sub e">P3</text>
+  <rect x="74" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="191" class="c sub mono" style="fill:#444">1</text>
+  <rect x="104" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="191" class="c sub mono" style="fill:#444">2</text>
+  <rect x="134" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="191" class="c sub mono" style="fill:#444">1</text>
+  <text x="54" y="217" class="sub e">P4</text>
+  <rect x="74" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="217" class="c sub mono" style="fill:#444">2</text>
+  <rect x="104" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="217" class="c sub mono" style="fill:#444">1</text>
+  <rect x="134" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="217" class="c sub mono" style="fill:#444">1</text>
+  <text x="289" y="114" class="c sub b" style="fill:#444">Need 还需要</text>
+  <text x="224" y="139" class="sub e">P1</text>
+  <rect x="244" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="259" y="139" class="c sub mono" style="fill:#444">3</text>
+  <rect x="274" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="289" y="139" class="c sub mono" style="fill:#444">2</text>
+  <rect x="304" y="122" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="319" y="139" class="c sub mono" style="fill:#444">2</text>
+  <text x="224" y="165" class="sub e">P2</text>
+  <rect x="244" y="148" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="259" y="165" class="c sub mono" style="fill:#444">1</text>
+  <rect x="274" y="148" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="289" y="165" class="c sub mono" style="fill:#444">0</text>
+  <rect x="304" y="148" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="319" y="165" class="c sub mono" style="fill:#444">2</text>
+  <text x="224" y="191" class="sub e">P3</text>
+  <rect x="244" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="259" y="191" class="c sub mono" style="fill:#444">5</text>
+  <rect x="274" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="289" y="191" class="c sub mono" style="fill:#444">2</text>
+  <rect x="304" y="174" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="319" y="191" class="c sub mono" style="fill:#444">0</text>
+  <text x="224" y="217" class="sub e">P4</text>
+  <rect x="244" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="259" y="217" class="c sub mono" style="fill:#444">0</text>
+  <rect x="274" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="289" y="217" class="c sub mono" style="fill:#444">1</text>
+  <rect x="304" y="200" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="319" y="217" class="c sub mono" style="fill:#444">1</text>
+  <text x="420" y="46" class="b">安全序列 P2 → P4 → P1 → P3</text>
+  <rect x="420" y="58" width="300" height="44" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="432" y="76" class="sub" style="fill:#444">1. P2 需要 (1 0 2) ≤ (1 1 2)</text>
+  <text x="446" y="94" class="sub">归还后 Available = (4 1 4)</text>
+  <rect x="420" y="112" width="300" height="44" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="130" class="sub" style="fill:#444">2. P4 需要 (0 1 1) ≤ (4 1 4)</text>
+  <text x="446" y="148" class="sub">归还后 Available = (6 2 5)</text>
+  <rect x="420" y="166" width="300" height="44" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="184" class="sub" style="fill:#444">3. P1 需要 (3 2 2) ≤ (6 2 5)</text>
+  <text x="446" y="202" class="sub">归还后 Available = (8 3 6)</text>
+  <rect x="420" y="220" width="300" height="44" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="238" class="sub" style="fill:#444">4. P3 需要 (5 2 0) ≤ (8 3 6)</text>
+  <text x="446" y="256" class="sub">归还后 Available = (9 5 7)</text>
+  <text x="30" y="290" class="sub">Need = 最大需求 − 已分配。一开始只有 P2 的需求能被满足，P1 缺 R2、P3 缺 R1；</text>
+  <text x="30" y="308" class="sub">收到新的申请时，先假设分配，再用这个方法检查，找不到安全序列就拒绝。</text>
+</svg>
