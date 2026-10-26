@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">FTP 的主动模式与被动模式</text>
+  <text x="190" y="56" class="c b">主动模式</text>
+  <rect x="48" y="90" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="52" y="94" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M66,119.92 v5 M74,119.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="58" y="124.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="70" y="146" class="c sub b">客户端</text>
+  <rect x="297" y="86" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="304" cy="92.5" r="2" fill="#7FB2D6"/>
+  <line x1="311" y1="92.5" x2="336" y2="92.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="297" y="102" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="304" cy="108.5" r="2" fill="#7FB2D6"/>
+  <line x1="311" y1="108.5" x2="336" y2="108.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="297" y="118" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="304" cy="124.5" r="2" fill="#7FB2D6"/>
+  <line x1="311" y1="124.5" x2="336" y2="124.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="146" class="c sub b">服务器</text>
+  <line x1="100" y1="100" x2="292" y2="100" class="arrow "/>
+  <text x="196" y="92" class="c sub mono">控制连接 → 21</text>
+  <text x="196" y="118" class="c sub mono" style="fill:#296898">PORT 192,168,1,10,195,81</text>
+  <line x1="292" y1="132" x2="100" y2="132" class="arrow red"/>
+  <text x="196" y="152" class="c sub mono" style="fill:#C0605A">数据连接 20 → 50001</text>
+  <text x="196" y="184" class="c sub">服务器主动连接客户端的 50001，</text>
+  <text x="196" y="200" class="c sub">客户端的防火墙要放行</text>
+  <text x="560" y="56" class="c b">被动模式</text>
+  <rect x="418" y="90" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="422" y="94" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M436,119.92 v5 M444,119.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="428" y="124.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="440" y="146" class="c sub b">客户端</text>
+  <rect x="667" y="86" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="674" cy="92.5" r="2" fill="#7FB2D6"/>
+  <line x1="681" y1="92.5" x2="706" y2="92.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="667" y="102" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="674" cy="108.5" r="2" fill="#7FB2D6"/>
+  <line x1="681" y1="108.5" x2="706" y2="108.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="667" y="118" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="674" cy="124.5" r="2" fill="#7FB2D6"/>
+  <line x1="681" y1="124.5" x2="706" y2="124.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="690" y="146" class="c sub b">服务器</text>
+  <line x1="470" y1="100" x2="662" y2="100" class="arrow "/>
+  <text x="566" y="92" class="c sub mono">控制连接 → 21</text>
+  <text x="566" y="118" class="c sub mono" style="fill:#296898">PASV → 227 (…,195,82)</text>
+  <line x1="470" y1="132" x2="662" y2="132" class="arrow green"/>
+  <text x="566" y="152" class="c sub mono" style="fill:#6A9F68">数据连接 → 50002</text>
+  <text x="566" y="184" class="c sub">客户端主动连接服务器的 50002，</text>
+  <text x="566" y="200" class="c sub">服务器要开放一段端口</text>
+  <text x="30" y="252" class="sub">PORT 和 PASV 的回复中，最后两个数字表示端口：195 × 256 + 81 = 50001，195 × 256 + 82 = 50002。</text>
+  <text x="30" y="272" class="sub">客户端通常在 NAT 和防火墙之后，服务器连不进来，所以现在多用被动模式。</text>
+</svg>
