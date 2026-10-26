@@ -7,3 +7,6 @@ CLAUDE.md
 面经数据/
 /dist/
 __pycache__/
+/.cache/
+/.site-build-*/
+/artifacts/

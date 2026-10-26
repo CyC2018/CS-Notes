@@ -13,10 +13,13 @@ import re
 import shutil
 import ssl
 import subprocess
+import tempfile
 import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+from site_assets import copy_referenced_assets, optimize_images, write_manifest, write_search_index
 
 try:
     import certifi
@@ -59,7 +62,9 @@ def download_asset(url):
     key = hashlib.sha256(url.encode()).hexdigest()[:20]
     existing = list((SITE / 'remote').glob(key + '.*'))
     if existing:
-        return url, {'path': str(existing[0].relative_to(SITE)), 'bytes': existing[0].stat().st_size}
+        data = existing[0].read_bytes()
+        return url, {'path': str(existing[0].relative_to(SITE)), 'bytes': len(data),
+                     'sha256': hashlib.sha256(data).hexdigest()}
     request_url = urllib.parse.urlunsplit((parsed.scheme, parsed.netloc,
         urllib.parse.quote(urllib.parse.unquote(parsed.path), safe='/%:@-._~!$&()*+,;='),
         parsed.query, ''))
@@ -153,59 +158,95 @@ def render_markdown(path, assets):
     return ''.join(part if i % 2 else convert(part) for i, part in enumerate(parts))
 
 
-def build():
+def build(optimize=True):
     assets = json.loads(ASSET_MAP.read_text()) if ASSET_MAP.exists() else {}
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    DIST.mkdir()
-    for directory in ('notes', 'assets'):
-        shutil.copytree(ROOT / directory, DIST / directory)
-    for directory in ('vendor', 'remote'):
-        shutil.copytree(SITE / directory, DIST / directory)
-    for name in ('index.html', 'site.css', 'site.js'):
-        shutil.copyfile(SITE / name, DIST / name)
-    for path in sources():
-        target = DIST / path.relative_to(ROOT)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(render_markdown(path, assets))
-    homepage = (DIST / 'README.md').read_text()
-    emojis = {'pencil2': '✏️', 'computer': '💻', 'cloud': '☁️', 'floppy_disk': '💾',
-              'coffee': '☕', 'bulb': '💡', 'art': '🎨', 'wrench': '🔧',
-              'watermelon': '🍉', 'memo': '📝'}
-    for name, symbol in emojis.items():
-        homepage = re.sub(r'^(## ):' + name + r':\s*', r'\1', homepage, flags=re.M)
-        homepage = homepage.replace('#' + name + '-', '#')
-        homepage = homepage.replace(':' + name + ':', symbol)
-    (DIST / 'README.md').write_text('# CS-Notes\n\n' + homepage)
-    note_paths = ['/' + str(p.relative_to(ROOT).with_suffix('')) for p in sorted((ROOT / 'notes').glob('*.md'))]
-    (DIST / 'search-paths.js').write_text('window.CS_NOTES_PATHS = ' + json.dumps(note_paths, ensure_ascii=False) + ';\n')
-    sidebar = ['- [首页](/)', '- [面试高频问题](/notes/面试高频问题)', '']
-    for line in (DIST / 'README.md').read_text().splitlines():
-        if line.startswith('## '):
-            label = re.sub(r':[a-z0-9_]+:', '', line[3:]).strip()
-            if label == '后记':
-                break
-            sidebar.extend(['', '- **' + label + '**'])
-        elif line.startswith('- ['):
-            sidebar.append('  ' + line)
-    (DIST / '_sidebar.md').write_text('\n'.join(sidebar) + '\n')
-    (DIST / '_404.md').write_text('# 页面暂未找到\n\n请从左侧目录或搜索查找笔记。\n\n[返回首页](/)\n')
-    (DIST / '.nojekyll').touch()
-    shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', DIST / 'favicon.png')
-    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
-    (DIST / 'build-info.json').write_text(json.dumps({'sourceCommit': commit, 'notes': len(note_paths)}, indent=2) + '\n')
-    files = [p for p in DIST.rglob('*') if p.is_file()]
-    report = {'notes': len(note_paths), 'files': len(files), 'bytes': sum(p.stat().st_size for p in files),
-              'oversized': [str(p.relative_to(DIST)) for p in files if p.stat().st_size > 25*1024*1024],
-              'unmirrored': [u for u in image_urls() if u not in assets or 'path' not in assets[u]]}
-    (ROOT / 'website/build-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-    print(json.dumps({**report, 'unmirrored': len(report['unmirrored'])}, ensure_ascii=False, indent=2))
+    unmirrored = [u for u in image_urls() if u not in assets or 'path' not in assets[u]]
+    if unmirrored:
+        raise ValueError(f'{len(unmirrored)} images need mirroring; run with --mirror')
+    with tempfile.TemporaryDirectory(prefix='.site-build-', dir=ROOT) as temporary:
+        dist = Path(temporary) / 'dist'
+        dist.mkdir()
+        shutil.copytree(SITE / 'vendor', dist / 'vendor')
+        for name in ('index.html', 'site.css', 'site.js', 'search.js'):
+            shutil.copyfile(SITE / name, dist / name)
+        for path in sources():
+            target = dist / path.relative_to(ROOT)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(render_markdown(path, assets))
+        homepage = (dist / 'README.md').read_text()
+        emojis = {'pencil2': '✏️', 'computer': '💻', 'cloud': '☁️', 'floppy_disk': '💾',
+                  'coffee': '☕', 'bulb': '💡', 'art': '🎨', 'wrench': '🔧',
+                  'watermelon': '🍉', 'memo': '📝'}
+        for name, symbol in emojis.items():
+            homepage = re.sub(r'^(## ):' + name + r':\s*', r'\1', homepage, flags=re.M)
+            homepage = homepage.replace('#' + name + '-', '#')
+            homepage = homepage.replace(':' + name + ':', symbol)
+        topics = [('算法', '✏️'), ('操作系统', '💻'), ('网络', '☁️'), ('面向对象', '🎨'),
+                  ('数据库', '💾'), ('Java', '☕'), ('系统设计', '💡'), ('工具', '🔧'),
+                  ('编码实践', '🍉'), ('后记', '📝')]
+        cards = '<nav class="topic-grid" aria-label="笔记分类">' + ''.join(
+            f'<a href="/#/?id={urllib.parse.quote(label.lower())}"><span aria-hidden="true">{symbol}</span>{label}</a>'
+            for label, symbol in topics) + '</nav>'
+        homepage = re.sub(r'^\| 算法[^\n]*\n\|[^\n]*\n\|[^\n]*', cards, homepage, count=1, flags=re.M)
+        homepage = homepage.replace('width="200px"', 'class="site-logo" width="200px"', 1)
+        (dist / 'README.md').write_text('# CS-Notes\n\n' + homepage)
+        note_paths = ['/' + str(p.relative_to(ROOT).with_suffix('')) for p in sorted((ROOT / 'notes').glob('*.md'))]
+        sidebar = ['- [首页](/)', '- [面试高频问题](/notes/面试高频问题)', '']
+        for line in homepage.splitlines():
+            if line.startswith('## '):
+                label = re.sub(r':[a-z0-9_]+:', '', line[3:]).strip()
+                if label == '后记':
+                    break
+                sidebar.extend(['', '- **' + label + '**'])
+            elif line.startswith('- ['):
+                sidebar.append('  ' + line)
+        (dist / '_sidebar.md').write_text('\n'.join(sidebar) + '\n')
+        (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
+        (dist / '.nojekyll').touch()
+        shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', dist / 'favicon.png')
+        copy_referenced_assets(dist, ROOT, SITE)
+        image_report = optimize_images(dist, ROOT / '.cache/site-assets') if optimize else {'converted': 0}
+        index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
+        legacy = json.loads((SITE / 'legacy-routes.json').read_text())
+        (dist / 'search-paths.js').write_text(
+            'window.CS_NOTES_PATHS = ' + json.dumps(note_paths, ensure_ascii=False) + ';\n'
+            'window.CS_NOTES_LEGACY_ROUTES = ' + json.dumps(legacy, ensure_ascii=False, separators=(',', ':')) + ';\n'
+            'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n')
+        generator = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        content_commit = subprocess.check_output(['git', 'merge-base', 'HEAD', 'origin/master'], cwd=ROOT, text=True).strip()
+        build_info = {'sourceCommit': content_commit, 'generatorCommit': generator, 'notes': len(note_paths),
+                      'searchIndex': index_name, 'legacyRoutes': len(legacy)}
+        (dist / 'build-info.json').write_text(json.dumps(build_info, indent=2) + '\n')
+        entry = (dist / 'index.html').read_text()
+        for name in ('site.css', 'site.js', 'search.js', 'search-paths.js'):
+            digest = hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12]
+            entry = entry.replace('/' + name + '"', '/' + name + '?v=' + digest + '"')
+        (dist / 'index.html').write_text(entry)
+        write_manifest(dist, build_info)
+        files = [p for p in dist.rglob('*') if p.is_file()]
+        report = {'notes': len(note_paths), 'files': len(files), 'bytes': sum(p.stat().st_size for p in files),
+                  'oversized': [str(p.relative_to(dist)) for p in files if p.stat().st_size > 25*1024*1024],
+                  'unmirrored': [], 'search': search_report, 'images': image_report, 'legacyRoutes': len(legacy)}
+        if report['oversized'] or len(files) > 20000:
+            raise ValueError('Static hosting quota exceeded')
+        previous = Path(temporary) / 'previous'
+        if DIST.exists():
+            DIST.rename(previous)
+        try:
+            dist.rename(DIST)
+        except BaseException:
+            if previous.exists():
+                previous.rename(DIST)
+            raise
+    (SITE / 'build-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+    print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--mirror', action='store_true')
+    parser.add_argument('--no-optimize-images', action='store_true', help='Skip optional Pillow/WebP delivery variants')
     args = parser.parse_args()
     if args.mirror:
         mirror_assets()
-    build()
+    build(optimize=not args.no_optimize_images)

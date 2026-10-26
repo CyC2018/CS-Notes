@@ -1,7 +1,20 @@
 {
   "notes": 179,
-  "files": 1325,
-  "bytes": 65585165,
+  "files": 1102,
+  "bytes": 56208108,
   "oversized": [],
-  "unmirrored": []
+  "unmirrored": [],
+  "search": {
+    "documents": 179,
+    "sections": 2330,
+    "bytes": 1237670,
+    "gzipBytes": 422662
+  },
+  "images": {
+    "converted": 395,
+    "originalBytes": 36756209,
+    "deliveryBytes": 14171658,
+    "pixelIdentical": true
+  },
+  "legacyRoutes": 504
 }

@@ -24,9 +24,31 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .search .matching-post { border-color: #dde3d8; }
 .site-footer { border-top: 1px solid #dfe3da; margin-top: 64px; padding-top: 20px; color: #7c877d; font-size: 12px; text-align: center; }
 .site-footer a { color: inherit; font-weight: 400; }
+.topic-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+.topic-grid a { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px 8px; border: 1px solid #dfe3da; border-radius: 7px; background: #fafbf8; text-decoration: none; font-size: 14px; white-space: nowrap; }
+.topic-grid a:hover, .topic-grid a:focus-visible { background: #e8f1e9; border-color: #369b72; }
+.site-search { padding: 8px 15px; }
+.site-search input { box-sizing: border-box; width: 100%; min-height: 42px; padding: 10px; border: 1px solid #dfe3da; color: #34495e; font-size: 15px; }
+.site-search input:focus { outline: 2px solid #369b72; outline-offset: 1px; }
+.search-status { color: #718078; font-size: 12px; margin: 7px 0; }
+.search-status:empty { display: none; }
+.site-search .matching-post { display: block; padding: 12px 0; border-bottom: 1px solid #dde3d8; text-decoration: none; }
+.matching-post strong, .matching-post small { display: block; }
+.matching-post strong { color: #369b72; font-size: 14px; }
+.matching-post small { color: #718078; margin: 5px 0; font-size: 12px; }
+.matching-post p { color: #34495e; margin: 4px 0; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.article-toc { border: 1px solid #dfe3da; border-radius: 7px; padding: 12px 18px; margin: 20px 0 28px; background: #fafbf8; }
+.article-toc summary { color: #369b72; font-weight: 600; cursor: pointer; min-height: 24px; }
+.article-toc > ul { margin-bottom: 0; }
 @media (min-width: 769px) { .content { padding-top: 12px; } }
 @media (max-width: 768px) {
   .markdown-section { padding: 24px 22px 80px; }
   .markdown-section h1 { font-size: 1.65rem; }
   .markdown-section pre { padding: 14px; }
+  .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .topic-grid a { min-height: 44px; padding: 8px; }
+  .site-logo { width: 110px; }
+  .sidebar-toggle { width: 48px; height: 48px; padding: 13px; background: rgba(243, 242, 238, .95); }
+  .sidebar ul li a { min-height: 28px; line-height: 2; }
+  .article-toc summary { min-height: 32px; line-height: 2; }
 }
