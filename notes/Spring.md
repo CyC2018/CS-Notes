@@ -4,6 +4,7 @@
     * [一、IoC 与 Bean](#一ioc-与-bean)
         * [IoC 与依赖注入](#ioc-与依赖注入)
         * [Bean 的生命周期](#bean-的生命周期)
+        * [Bean 的作用域与线程安全](#bean-的作用域与线程安全)
         * [循环依赖](#循环依赖)
     * [二、AOP](#二aop)
         * [动态代理](#动态代理)
@@ -13,6 +14,14 @@
         * [传播行为](#传播行为)
         * [事务失效](#事务失效)
     * [四、Spring Boot 自动配置](#四spring-boot-自动配置)
+    * [五、Spring MVC](#五spring-mvc)
+        * [请求的处理过程](#请求的处理过程)
+    * [六、MyBatis](#六mybatis)
+        * [#{} 和 ${} 的区别](#-和--的区别)
+        * [Mapper 接口为什么不需要实现类](#mapper-接口为什么不需要实现类)
+        * [动态 SQL](#动态-sql)
+        * [缓存](#缓存)
+    * [七、Spring 中的设计模式](#七spring-中的设计模式)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -41,6 +50,21 @@ public class OrderService {
 
 依赖注入有构造器注入、Setter 注入和字段注入（把 @Autowired 加在字段上）三种方式。Spring 官方推荐构造器注入：依赖可以声明为 final，对象创建出来就是完整可用的，缺少依赖时启动就会失败。
 
+@Autowired 和 @Resource 都能注入依赖，区别在于查找的顺序：
+
+- @Autowired 是 Spring 的注解，先按类型查找，找到多个时再按字段名或参数名匹配，仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称，或者给其中一个 Bean 加 @Primary；
+- @Resource 是 Jakarta EE（原 JSR-250）的注解，指定了 name 时按名称查找，否则先按字段名查找，找不到再按类型查找。
+
+例如容器中有两个 PayService 类型的 Bean，名称分别是 alipay 和 wechat：
+
+```java
+@Resource PayService wechat;      // 注入名称为 wechat 的 Bean
+@Autowired PayService alipay;     // 按类型找到两个，再按字段名匹配到 alipay
+@Autowired PayService payService; // 字段名匹配不上，启动失败
+```
+
+第三行启动时报错 NoUniqueBeanDefinitionException: expected single matching bean but found 2: alipay,wechat。
+
 ### Bean 的生命周期
 
 一个单例 Bean 从创建到销毁会经过以下步骤：
@@ -67,6 +91,29 @@ public class OrderService {
 9 @PreDestroy
 10 DisposableBean.destroy
 ```
+
+### Bean 的作用域与线程安全
+
+Bean 默认是单例（singleton）的，整个容器中只有一个对象，所有请求共用它。其它常用的作用域：
+
+- prototype：每次从容器获取都创建一个新对象，容器创建之后就不再管理它，不会调用它的销毁方法；
+- request、session：每个 HTTP 请求或会话一个对象，只能在 Web 应用中使用。
+
+多个线程同时使用一个单例 Bean 时，Spring 不做任何同步，它是否线程安全取决于有没有可变的成员变量。Controller、Service 通常只持有其他 Bean 的引用，不保存与请求有关的数据，所以是安全的；一旦把请求中的数据存到成员变量里，不同请求就会互相覆盖。例如：
+
+```java
+@RestController
+public class CounterController {
+    private int count = 0;                    // 所有请求共享
+
+    @GetMapping("/count")
+    public int count() { return ++count; }    // ++ 不是原子操作
+}
+```
+
+在本机用 64 个线程并发请求 1 万次，计数只增加了 9975，丢失了 25 次更新。解决方法是不在单例中保存状态，把数据放在方法的局部变量中；确实需要共享时使用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。
+
+需要注意的是，把 prototype 的 Bean 注入到单例中，只会在创建单例时注入一次，之后每次使用的都是同一个对象。需要每次得到新对象时，注入 ObjectProvider 并在使用时调用 getObject()。
 
 ### 循环依赖
 
@@ -183,6 +230,8 @@ REQUIRED 有一个常见的问题：内层方法抛出异常后，即使外层�
 
 Spring Boot 在 Spring 的基础上提供了自动配置和 starter：starter 把一组常用的依赖打包在一起，例如 spring-boot-starter-web 引入了 Spring MVC、内嵌的 Tomcat 和 JSON 库；自动配置则根据引入的依赖自动创建所需的 Bean，不需要手动配置就能启动一个 Web 应用。
 
+Spring Boot 并不是新的框架，容器、AOP、事务仍然是 Spring 提供的。除了 starter 和自动配置，它还能把应用连同内嵌的服务器打包成一个 jar，用 java -jar 直接运行，不再需要把 war 包部署到单独安装的 Tomcat 中。
+
 自动配置的过程：
 
 1. 启动类上的 @SpringBootApplication 包含了 @EnableAutoConfiguration；
@@ -190,6 +239,115 @@ Spring Boot 在 Spring 的基础上提供了自动配置和 starter：starter �
 3. 每个自动配置类都带有条件注解，条件满足时才生效。例如 @ConditionalOnClass 要求类路径上存在某个类，@ConditionalOnMissingBean 要求用户没有定义同类型的 Bean，@ConditionalOnProperty 根据配置项决定。
 
 例如引入 spring-boot-starter-jdbc 和数据库驱动后，数据源的自动配置类就会生效，按配置文件中的地址创建一个 DataSource；如果用户自己定义了 DataSource，由于 @ConditionalOnMissingBean，自动配置不再创建。因此用户的配置总是优先于自动配置。
+
+## 五、Spring MVC
+
+### 请求的处理过程
+
+所有请求都先交给一个 DispatcherServlet，由它的 doDispatch 方法完成分发：
+
+1. 通过 HandlerMapping 找到处理这个请求的方法（Handler），以及要经过的拦截器，组成 HandlerExecutionChain；
+2. 依次执行拦截器的 preHandle，任何一个返回 false 就不再继续；
+3. 通过 HandlerAdapter 调用 Controller 的方法，调用前把请求参数转换为方法参数，调用后把返回值转换为响应，例如用 Jackson 把对象写成 JSON；
+4. 倒序执行拦截器的 postHandle；
+5. 返回的是视图名时，由 ViewResolver 找到视图并渲染；@RestController 直接把返回值写入响应体，没有这一步；
+6. 倒序执行拦截器的 afterCompletion，即使前面发生了异常也会执行，常用于清理资源。
+
+在 Spring Boot 3.3（Spring MVC 6.1）中注册一个打印日志的拦截器，请求 GET /orders?userId=1024 时依次输出：
+
+```text
+[interceptor] preHandle /orders handler=demo.App$OrderController#list(int)
+[controller] OrderController.list(1024)
+[interceptor] postHandle
+[interceptor] afterCompletion status=200
+```
+
+拦截器与过滤器（Filter）的区别：过滤器是 Servlet 规范定义的，在请求进入 DispatcherServlet 之前执行，拿不到要调用哪个 Controller 方法；拦截器由 Spring MVC 调用，可以拿到 Handler，并且能使用 Spring 容器中的 Bean。
+
+## 六、MyBatis
+
+### #{} 和 ${} 的区别
+
+MyBatis 中 #{} 会被替换为占位符 ?，参数通过 PreparedStatement 单独传给数据库；${} 则是把参数直接拼接到 SQL 字符串中。用 ${} 时，传入的参数会改变 SQL 的结构，造成 SQL 注入：
+
+```java
+@Select("SELECT id, user_id AS userId, status FROM orders WHERE user_id = #{userId} ORDER BY id LIMIT 3")
+List<Order> byUser(@Param("userId") int userId);
+
+@Select("SELECT id, user_id AS userId, status FROM orders WHERE user_id = ${userId} ORDER BY id LIMIT 3")
+List<Order> byUserUnsafe(@Param("userId") String userId);
+```
+
+参数传入 1024 OR 1=1 时，MyBatis 输出的 SQL 分别为：
+
+```text
+==>  Preparing: SELECT ... WHERE user_id = ? ORDER BY id LIMIT 3
+==> Parameters: 1024(Integer)
+
+==>  Preparing: SELECT ... WHERE user_id = 1024 OR 1=1 ORDER BY id LIMIT 3
+==> Parameters:
+```
+
+第二条语句的条件恒为真，返回了其他用户的订单。${} 只用于表名、列名、ORDER BY 的字段这类不能使用占位符的地方，并且要用白名单校验参数。
+
+### Mapper 接口为什么不需要实现类
+
+MyBatis 在启动时为每个 Mapper 接口生成 JDK 动态代理，例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession 执行，再把结果映射成返回类型。
+
+### 动态 SQL
+
+XML 中可以用 if、where、foreach 等标签按参数拼接 SQL：
+
+```xml
+<select id="search" resultType="demo.App$Order">
+  SELECT id, user_id AS userId, status FROM orders
+  <where>
+    <if test="userId != null">AND user_id = #{userId}</if>
+    <if test="status != null">AND status = #{status}</if>
+  </where>
+</select>
+```
+
+只传 status 时生成 WHERE status = ?，两个都传时生成 WHERE user_id = ? AND status = ?，where 标签会去掉开头多余的 AND。
+
+### 缓存
+
+- 一级缓存：默认开启，作用范围是一个 SqlSession，同一个会话中相同的查询只执行一次，执行增删改或提交后清空。与 Spring 集成时，不在事务中的每次调用都会使用新的 SqlSession，一级缓存基本不起作用；
+- 二级缓存：需要在 Mapper 中配置 cache 才开启，多个会话共享，但缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
+
+## 七、Spring 中的设计模式
+
+| 模式 | Spring 中的例子 | 解决的问题 |
+| --- | --- | --- |
+| [工厂](设计模式%20-%20工厂方法.md) | BeanFactory、FactoryBean | 使用者只按名称或类型获取对象，不关心对象怎样创建 |
+| [单例](设计模式%20%20-%20单例.md) | 默认的 singleton 作用域，由 DefaultSingletonBeanRegistry 保存 | 每个 Bean 在容器中只有一个对象，不是通过私有构造函数实现的 |
+| [代理](设计模式%20-%20代理.md) | AOP 的 JdkDynamicAopProxy、CglibAopProxy | 在不修改原类的情况下加入事务、日志等逻辑，见 [动态代理](#动态代理) |
+| [模板方法](设计模式%20-%20模板方法.md) | JdbcTemplate、TransactionTemplate、AbstractApplicationContext 的 refresh() | 固定的步骤（获取连接、执行、释放、处理异常）由框架完成，变化的部分由使用者传入 |
+| [观察者](设计模式%20-%20观察者.md) | ApplicationEvent、ApplicationListener、@EventListener | 发布方不需要知道有哪些接收方 |
+| [适配器](设计模式%20-%20适配器.md) | Spring MVC 的 HandlerAdapter | DispatcherServlet 用同一个接口调用不同形式的处理器，见 [请求的处理过程](#请求的处理过程) |
+| [责任链](设计模式%20-%20责任链.md) | HandlerExecutionChain 中的拦截器、AOP 的 ReflectiveMethodInvocation | 多个拦截器或通知依次处理同一个请求 |
+| [策略](设计模式%20-%20策略.md) | InstantiationStrategy、Resource 的多种实现 | 同一件事有多种做法，运行时选择其中一种 |
+
+以观察者模式为例，订单支付成功后需要加积分、发短信，用事件解耦后，订单服务只负责发布事件：
+
+```java
+public record OrderPaidEvent(long orderId) {}
+
+publisher.publishEvent(new OrderPaidEvent(1024));      // 订单服务，publisher 是注入的 ApplicationEventPublisher
+
+@EventListener
+public void on(OrderPaidEvent e) { ... }               // 积分服务、短信服务各写一个监听方法
+```
+
+需要注意的是，监听方法默认在发布事件的线程中同步执行。在 Spring Boot 3.3 中让短信服务的监听方法抛出异常，输出如下：
+
+```text
+[main] 订单 1024 支付成功，发布事件
+[main] 短信服务：发送失败
+[main] 发布方收到异常：短信网关超时
+```
+
+两个监听方法都在 main 线程中执行；短信服务先执行并抛出异常后，积分服务的监听方法没有被调用，异常还传回了订单服务。监听方法之间的顺序默认不确定，可以用 @Order 指定；不希望互相影响时，加上 @Async 让监听方法在线程池中异步执行，或者用 @TransactionalEventListener 在订单的事务提交之后再处理。
 
 ## 参考资料
 
@@ -203,3 +361,5 @@ Spring Boot 在 Spring 的基础上提供了自动配置和 starter：starter �
 - [Spring Boot: Creating Your Own Auto-configuration](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html)
 - [Spring Boot 2.6 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 - [Spring Boot 2.7 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.7-Release-Notes)
+- [MyBatis 3 文档](https://mybatis.org/mybatis-3/zh_CN/index.html)
+- [DispatcherServlet | Spring Framework 文档](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)
