@@ -1,0 +1,32 @@
+:root { --theme-color: #369b72; }
+body, .sidebar, .sidebar-toggle { background: #f3f2ee; }
+body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+.app-name { font-weight: 650 !important; letter-spacing: .02em; }
+.sidebar { padding-top: 24px; border-right: 1px solid #e2e3dc; }
+.sidebar .search { border-bottom: 1px solid #e2e3dc; margin-bottom: 20px; }
+.search input { background: #fff !important; border-radius: 6px; }
+.sidebar-nav > ul { padding-left: 18px; }
+.sidebar ul li { margin: 7px 0; }
+.sidebar ul li strong { font-size: 13px; letter-spacing: .08em; color: #718078; }
+.sidebar ul li a { font-size: 14px; }
+.markdown-section { max-width: 960px; padding: 36px 48px 100px; }
+.markdown-section h1 { margin: 1rem 0 2rem; font-size: 2rem; }
+.markdown-section h2 { margin: 2.8rem 0 1.2rem; padding-bottom: .45rem; border-bottom: 1px solid #dfe3da; }
+.markdown-section h3 { margin-top: 2rem; }
+.markdown-section p, .markdown-section ul, .markdown-section ol { line-height: 1.95; }
+.markdown-section img { max-width: 100%; height: auto; border-radius: 4px; }
+.markdown-section pre { background: #fafbf8; border-radius: 6px; border: 1px solid #e2e6dc; }
+.markdown-section pre > code { font-family: "SFMono-Regular", Consolas, monospace; line-height: 1.65; }
+.markdown-section table { display: block; overflow: auto; }
+.markdown-section tr:nth-child(2n) { background: #f8f9f5; }
+.markdown-section td, .markdown-section th { border-color: #dfe3da; }
+.docsify-copy-code-button { font-family: inherit !important; }
+.search .matching-post { border-color: #dde3d8; }
+.site-footer { border-top: 1px solid #dfe3da; margin-top: 64px; padding-top: 20px; color: #7c877d; font-size: 12px; text-align: center; }
+.site-footer a { color: inherit; font-weight: 400; }
+@media (min-width: 769px) { .content { padding-top: 12px; } }
+@media (max-width: 768px) {
+  .markdown-section { padding: 24px 22px 80px; }
+  .markdown-section h1 { font-size: 1.65rem; }
+  .markdown-section pre { padding: 14px; }
+}

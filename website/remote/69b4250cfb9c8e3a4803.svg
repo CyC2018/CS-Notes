@@ -1,0 +1,20 @@
+<svg width="101.9" height="20" viewBox="0 0 1019 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="CyC: 在线阅读">
+  <title>CyC: 在线阅读</title>
+  <linearGradient id="ailXP" x2="0" y2="100%">
+    <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <mask id="lNooj"><rect width="1019" height="200" rx="30" fill="#FFF"/></mask>
+  <g mask="url(#lNooj)">
+    <rect width="479" height="200" fill="#555"/>
+    <rect width="540" height="200" fill="#4ab8a1" x="479"/>
+    <rect width="1019" height="200" fill="url(#ailXP)"/>
+  </g>
+  <g aria-hidden="true" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
+    <text x="220" y="148" textLength="219" fill="#000" opacity="0.25">CyC</text>
+    <text x="210" y="138" textLength="219" fill="#fff">CyC</text>
+    <text x="534" y="148" textLength="440" fill="#000" opacity="0.25">在线阅读</text>
+    <text x="524" y="138" textLength="440" fill="#fff">在线阅读</text>
+  </g>
+  <image x="40" y="35" width="130" height="130" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3Ny4wNzUgNzcuNyI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTQ3LjMyMyA3Ny43Yy0zLjU5NCAwLTYuNzktMi4zOTYtNy43ODctNS45OWwtMTcuMTcyLTYxLjdjLS45OTgtNC4zOTMgMS41OTgtOC43ODYgNS45OS05Ljc4NCA0LjE5My0xIDguMzg3IDEuMzk3IDkuNTg0IDUuMzlsMTYuOTczIDYxLjdjMS4xOTggNC4zOTQtMS4zOTcgOC43ODYtNS41OSA5Ljk4NC0uNi4yLTEuMzk3LjQtMS45OTcuNHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTcuMzcyIDcwLjcxYy00LjM5MyAwLTcuOTg3LTMuNTkzLTcuOTg3LTcuOTg1IDAtMS45OTcuOC0zLjk5NCAxLjk5Ny01LjM5Mkw1NC4xMTIgOS40MWMyLjk5NS0zLjM5MyA3Ljk4Ni0zLjU5MyAxMS4zOC0uNTk4czMuNTk1IDcuOTg3LjYgMTEuMzhsLTQyLjczIDQ3LjcyM2MtMS41OTcgMS43OTgtMy43OTQgMi43OTYtNS45OSAyLjc5NnoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNjkuMDg3IDU2LjczNGMtLjc5OCAwLTEuNTk3LS4yLTIuNTk2LS40TDUuNTkgMzYuMzY4QzEuNCAzNC45Ny0uOTk3IDMwLjM3Ny40IDI2LjE4NGMxLjM5Ny00LjE5MyA1Ljk5LTYuNTkgMTAuMTgzLTUuMTlsNjAuOSAxOS45NjZjNC4xOTMgMS4zOTcgNi41OSA1Ljk5IDUuMTkgMTAuMTg0LS45OTYgMy4zOTQtMy45OSA1LjU5LTcuNTg2IDUuNTl6Ii8+PC9zdmc+Cg=="/>
+</svg>

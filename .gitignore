@@ -5,3 +5,5 @@ desktop.ini
 CLAUDE.md
 修订记录.md
 面经数据/
+/dist/
+__pycache__/
