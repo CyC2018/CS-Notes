@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">多级缓存：本地缓存 → Redis → 数据库</text>
+  <rect x="30" y="60" width="250" height="96" rx="8" class="frame"/>
+  <text x="40" y="78" class="b">应用实例 1</text>
+  <rect x="50" y="90" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="57" cy="96.5" r="2" fill="#7FB2D6"/>
+  <line x1="64" y1="96.5" x2="83" y2="96.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="50" y="106" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="57" cy="112.5" r="2" fill="#7FB2D6"/>
+  <line x1="64" y1="112.5" x2="83" y2="112.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="110" y="88" width="150" height="50" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="185" y="108" class="c sub b" style="fill:#444">本地缓存 Caffeine</text>
+  <text x="185" y="126" class="c sub">约 21 ns</text>
+  <rect x="30" y="170" width="250" height="96" rx="8" class="frame"/>
+  <text x="40" y="188" class="b">应用实例 2</text>
+  <rect x="50" y="200" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="57" cy="206.5" r="2" fill="#7FB2D6"/>
+  <line x1="64" y1="206.5" x2="83" y2="206.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="50" y="216" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="57" cy="222.5" r="2" fill="#7FB2D6"/>
+  <line x1="64" y1="222.5" x2="83" y2="222.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="110" y="198" width="150" height="50" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="185" y="218" class="c sub b" style="fill:#444">本地缓存 Caffeine</text>
+  <text x="185" y="236" class="c sub">约 21 ns</text>
+  <path d="M390,86 v44 a30,6 0 0 0 60,0 v-44" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="420" cy="86" rx="30" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M390,108 a30,6 0 0 0 60,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="420" y="154" class="c b">Redis</text>
+  <text x="420" y="170" class="c sub">约 71 μs（本机回环）</text>
+  <path d="M590,86 v44 a30,6 0 0 0 60,0 v-44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="620" cy="86" rx="30" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M590,108 a30,6 0 0 0 60,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="620" y="154" class="c b">MySQL</text>
+  <text x="620" y="170" class="c sub">毫秒级</text>
+  <line x1="282" y1="100" x2="386" y2="104" class="arrow "/>
+  <text x="334" y="92" class="c sub">① 未命中</text>
+  <line x1="452" y1="104" x2="586" y2="104" class="arrow "/>
+  <text x="519" y="96" class="c sub">② 未命中</text>
+  <path d="M590,120 C520,140 480,140 454,124" class="arrow dash"/>
+  <text x="519" y="146" class="c sub">回填</text>
+  <path d="M386,120 C350,140 310,140 284,120" class="arrow dash"/>
+  <text x="334" y="146" class="c sub">回填</text>
+  <rect x="330" y="214" width="400" height="40" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="530" y="232" class="c sub" style="fill:#444">数据更新：写数据库，删除 Redis，再广播删除本地缓存</text>
+  <text x="530" y="248" class="c sub">（Redis Pub/Sub 或消息队列）</text>
+  <path d="M330,234 C300,234 290,150 282,128" class="arrow dash red"/>
+  <path d="M330,240 C300,240 292,230 282,224" class="arrow dash red"/>
+  <text x="30" y="292" class="sub">热点数据在本地内存中直接命中，不经过网络，也不会集中打到 Redis 的某一个节点；</text>
+  <text x="30" y="310" class="sub">代价是每个实例各存一份，更新时要通知所有实例，并给本地缓存设置较短的过期时间兜底。</text>
+</svg>
