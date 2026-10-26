@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">浏览器进程中的多个线程</text>
+  <rect x="30" y="46" width="680" height="210" rx="8" class="frame"/>
+  <text x="40" y="64" class="b">浏览器进程</text>
+  <text x="50" y="82" class="sub b" style="fill:#444">所有线程共享：</text>
+  <rect x="150" y="66" width="80" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="190" y="83" class="c sub" style="fill:#444">代码</text>
+  <rect x="238" y="66" width="100" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="288" y="83" class="c sub" style="fill:#444">全局数据</text>
+  <rect x="346" y="66" width="70" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="381" y="83" class="c sub" style="fill:#444">堆</text>
+  <rect x="424" y="66" width="160" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="504" y="83" class="c sub" style="fill:#444">打开的文件、网络连接</text>
+  <rect x="60" y="116" width="190" height="120" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="155" y="138" class="c sub b" style="fill:#444">网络请求线程</text>
+  <rect x="75" y="150" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="155" y="166" class="c sub" style="fill:#444">自己的栈</text>
+  <rect x="75" y="180" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="155" y="196" class="c sub" style="fill:#444">寄存器、程序计数器</text>
+  <text x="155" y="224" class="c sub">独立调度</text>
+  <rect x="280" y="116" width="190" height="120" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="375" y="138" class="c sub b" style="fill:#444">事件响应线程</text>
+  <rect x="295" y="150" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="375" y="166" class="c sub" style="fill:#444">自己的栈</text>
+  <rect x="295" y="180" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="375" y="196" class="c sub" style="fill:#444">寄存器、程序计数器</text>
+  <text x="375" y="224" class="c sub">独立调度</text>
+  <rect x="500" y="116" width="190" height="120" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="595" y="138" class="c sub b" style="fill:#444">渲染线程</text>
+  <rect x="515" y="150" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="595" y="166" class="c sub" style="fill:#444">自己的栈</text>
+  <rect x="515" y="180" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="595" y="196" class="c sub" style="fill:#444">寄存器、程序计数器</text>
+  <text x="595" y="224" class="c sub">独立调度</text>
+  <text x="30" y="284" class="sub">线程共享进程的内存，可以直接读写同一个变量通信；每个线程只有自己的栈和寄存器，所以创建和切换的开销比进程小。</text>
+</svg>

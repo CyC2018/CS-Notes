@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="250" viewBox="0 0 740 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">时间片轮转：时间片为 2，A、B、C 分别需要运行 5、3、2</text>
+  <rect x="60" y="70" width="124" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="122" y="91" class="c sub b" style="fill:#444">A</text>
+  <rect x="184" y="70" width="124" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="246" y="91" class="c sub b" style="fill:#444">B</text>
+  <rect x="308" y="70" width="124" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="370" y="91" class="c sub b" style="fill:#444">C</text>
+  <rect x="432" y="70" width="124" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="494" y="91" class="c sub b" style="fill:#444">A</text>
+  <rect x="556" y="70" width="62" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="587" y="91" class="c sub b" style="fill:#444">B</text>
+  <rect x="618" y="70" width="62" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="649" y="91" class="c sub b" style="fill:#444">A</text>
+  <text x="60" y="122" class="c sub mono">0</text>
+  <text x="122" y="122" class="c sub mono">1</text>
+  <text x="184" y="122" class="c sub mono">2</text>
+  <text x="246" y="122" class="c sub mono">3</text>
+  <text x="308" y="122" class="c sub mono">4</text>
+  <text x="370" y="122" class="c sub mono">5</text>
+  <text x="432" y="122" class="c sub mono">6</text>
+  <text x="494" y="122" class="c sub mono">7</text>
+  <text x="556" y="122" class="c sub mono">8</text>
+  <text x="618" y="122" class="c sub mono">9</text>
+  <text x="680" y="122" class="c sub mono">10</text>
+  <text x="432" y="150" class="c sub">C 在 6 结束</text>
+  <text x="618" y="150" class="c sub">B 在 9 结束</text>
+  <text x="680" y="166" class="c sub e">A 在 10 结束</text>
+  <text x="30" y="200" class="sub">用完时间片的进程回到队尾。平均完成时间 (10 + 9 + 6) / 3 ≈ 8.3；时间片越小响应越快，但切换次数越多，</text>
+  <text x="30" y="218" class="sub">每次切换都要保存和恢复上下文。</text>
+</svg>
