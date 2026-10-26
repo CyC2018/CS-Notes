@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">宏内核与微内核</text>
+  <text x="200" y="56" class="c b">宏内核（Linux）</text>
+  <rect x="30" y="66" width="340" height="70" rx="6" fill="#C6ECE9" fill-opacity="0.25"/>
+  <rect x="30" y="146" width="340" height="90" rx="6" fill="#C6E4FB" fill-opacity="0.25"/>
+  <text x="38" y="82" class="sub">用户态</text>
+  <text x="38" y="162" class="sub">内核态</text>
+  <rect x="40" y="88" width="320" height="36" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="200" y="110.5" class="c sub">应用程序</text>
+  <rect x="40" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="90" y="186.5" class="c sub">文件系统</text>
+  <rect x="148" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="198" y="186.5" class="c sub">设备驱动</text>
+  <rect x="256" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="306" y="186.5" class="c sub">内存管理</text>
+  <rect x="40" y="202" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="90" y="220.5" class="c sub">进程调度</text>
+  <rect x="148" y="202" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="198" y="220.5" class="c sub">进程间通信</text>
+  <rect x="30" y="246" width="340" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="200" y="263.5" class="c sub">硬件</text>
+  <text x="570" y="56" class="c b">微内核（Minix、QNX）</text>
+  <rect x="400" y="66" width="340" height="70" rx="6" fill="#C6ECE9" fill-opacity="0.25"/>
+  <rect x="400" y="146" width="340" height="90" rx="6" fill="#C6E4FB" fill-opacity="0.25"/>
+  <text x="408" y="82" class="sub">用户态</text>
+  <text x="408" y="162" class="sub">内核态</text>
+  <rect x="410" y="88" width="100" height="36" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="460" y="110.5" class="c sub">应用程序</text>
+  <rect x="520" y="88" width="100" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="570" y="110.5" class="c sub">文件系统</text>
+  <rect x="630" y="88" width="100" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="680" y="110.5" class="c sub">设备驱动</text>
+  <rect x="410" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="460" y="186.5" class="c sub">内存管理</text>
+  <rect x="518" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="568" y="186.5" class="c sub">进程调度</text>
+  <rect x="626" y="168" width="100" height="28" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="676" y="186.5" class="c sub">进程间通信</text>
+  <rect x="400" y="246" width="340" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="570" y="263.5" class="c sub">硬件</text>
+  <text x="30" y="292" class="sub">微内核把文件系统、驱动等移到用户态，通过消息与内核通信：一个驱动崩溃不会拖垮整个系统，但每次请求多了几次用户态和内核态的切换。</text>
+</svg>
