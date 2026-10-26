@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">第二次机会：访问过的页面再给一次机会</text>
+  <text x="30" y="86" class="sub b" style="fill:#444">(a) 时间 20 缺页</text>
+  <rect x="150" y="64" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="180" y="85" class="c sub mono" style="fill:#444">A  R=1</text>
+  <text x="180" y="58" class="c sub">装入 0</text>
+  <line x1="212" y1="81" x2="244" y2="81" class="arrow "/>
+  <rect x="246" y="64" width="60" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="276" y="85" class="c sub mono" style="fill:#444">B  R=0</text>
+  <text x="276" y="58" class="c sub">装入 3</text>
+  <line x1="308" y1="81" x2="340" y2="81" class="arrow "/>
+  <rect x="342" y="64" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="372" y="85" class="c sub mono" style="fill:#444">C  R=1</text>
+  <text x="372" y="58" class="c sub">装入 7</text>
+  <line x1="404" y1="81" x2="436" y2="81" class="arrow "/>
+  <rect x="438" y="64" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="468" y="85" class="c sub mono" style="fill:#444">D  R=0</text>
+  <text x="468" y="58" class="c sub">装入 8</text>
+  <line x1="500" y1="81" x2="532" y2="81" class="arrow "/>
+  <rect x="534" y="64" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="564" y="85" class="c sub mono" style="fill:#444">E  R=1</text>
+  <text x="564" y="58" class="c sub">装入 12</text>
+  <text x="150" y="120" class="sub" style="fill:#444">最老的 A 的 R = 1：清零，移到队尾，装入时间改为 20；再看 B，R = 0，换出 B</text>
+  <text x="30" y="188" class="sub b" style="fill:#444">(b) 处理之后</text>
+  <rect x="150" y="166" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="180" y="187" class="c sub mono" style="fill:#444">C  R=1</text>
+  <text x="180" y="160" class="c sub">装入 7</text>
+  <line x1="212" y1="183" x2="244" y2="183" class="arrow "/>
+  <rect x="246" y="166" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="276" y="187" class="c sub mono" style="fill:#444">D  R=0</text>
+  <text x="276" y="160" class="c sub">装入 8</text>
+  <line x1="308" y1="183" x2="340" y2="183" class="arrow "/>
+  <rect x="342" y="166" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="372" y="187" class="c sub mono" style="fill:#444">E  R=1</text>
+  <text x="372" y="160" class="c sub">装入 12</text>
+  <line x1="404" y1="183" x2="436" y2="183" class="arrow "/>
+  <rect x="438" y="166" width="60" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="468" y="187" class="c sub mono" style="fill:#444">A  R=0</text>
+  <text x="468" y="160" class="c sub">装入 20</text>
+  <line x1="500" y1="183" x2="532" y2="183" class="arrow "/>
+  <rect x="534" y="166" width="60" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="564" y="187" class="c sub mono" style="fill:#444">新页  R=1</text>
+  <text x="564" y="160" class="c sub">装入 20</text>
+  <text x="30" y="236" class="sub">队头是最早装入的页面。FIFO 会直接换出刚被访问过的 A，第二次机会算法换出的是又老又没被访问的 B。</text>
+</svg>
