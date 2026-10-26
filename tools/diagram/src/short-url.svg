@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">短链系统：生成时取 ID 转 Base62，访问时查缓存返回 302</text>
+  <text x="24" y="66" class="b">生成</text>
+  <circle cx="60" cy="93" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M43,124 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="60" y="140" class="c sub b">运营人员</text>
+  <rect x="247" y="88" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="94.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="94.5" x2="286" y2="94.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="247" y="104" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="110.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="110.5" x2="286" y2="110.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="247" y="120" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="126.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="126.5" x2="286" y2="126.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="270" y="148" class="c sub b">短链服务</text>
+  <line x1="86" y1="106" x2="240" y2="106" class="arrow "/>
+  <text x="163" y="98" class="c sub mono">POST /shorten</text>
+  <rect x="360" y="70" width="196" height="70" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="360" y="70" width="196" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="458" y="85" class="c b">发号器</text>
+  <rect x="366" y="98" width="184" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="372" y="110" class="sub mono">号段 100000000～100000999</text>
+  <rect x="366" y="118" width="184" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="372" y="130" class="sub mono">本次取到 100000000</text>
+  <line x1="296" y1="100" x2="358" y2="96" class="arrow "/>
+  <text x="458" y="162" class="c sub mono" style="fill:#444">100000000 转 Base62 → 6LAze</text>
+  <path d="M635,86 v44 a25,6 0 0 0 50,0 v-44" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="660" cy="86" rx="25" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M635,108 a25,6 0 0 0 50,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="660" y="152" class="c sub b">MySQL</text>
+  <line x1="558" y1="108" x2="630" y2="108" class="arrow "/>
+  <text x="736" y="172" class="e sub mono">6LAze →</text>
+  <text x="736" y="188" class="e sub mono">https://shop.example.com/item/1024</text>
+  <line x1="24" y1="210" x2="736" y2="210" class="frame"/>
+  <text x="24" y="238" class="b">访问</text>
+  <rect x="40" y="256" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="44" y="260" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,283.2 v5 M64,283.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="288.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="302" class="c sub b">浏览器</text>
+  <rect x="247" y="256" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="262.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="262.5" x2="286" y2="262.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="247" y="272" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="278.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="278.5" x2="286" y2="278.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="247" y="288" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="254" cy="294.5" r="2" fill="#7FB2D6"/>
+  <line x1="261" y1="294.5" x2="286" y2="294.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="270" y="316" class="c sub b">短链服务</text>
+  <line x1="86" y1="268" x2="240" y2="268" class="arrow "/>
+  <text x="163" y="260" class="c sub mono">① GET s.example/6LAze</text>
+  <path d="M445,256 v44 a25,6 0 0 0 50,0 v-44" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <ellipse cx="470" cy="256" rx="25" ry="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M445,278 a25,6 0 0 0 50,0" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="470" y="322" class="c sub b">Redis</text>
+  <line x1="296" y1="270" x2="440" y2="270" class="arrow "/>
+  <text x="368" y="262" class="c sub">② 查 6LAze</text>
+  <line x1="440" y1="292" x2="298" y2="292" class="arrow "/>
+  <text x="368" y="306" class="c sub">命中：返回长链接</text>
+  <text x="640" y="266" class="c sub">未命中时查 MySQL</text>
+  <text x="640" y="282" class="c sub">再写入缓存</text>
+  <line x1="500" y1="276" x2="588" y2="276" class="arrow dash"/>
+  <path d="M240,300 C190,330 130,330 88,300" class="arrow green"/>
+  <text x="164" y="346" class="c sub mono ok">③ 302 Found</text>
+  <text x="164" y="362" class="c sub mono ok">Location: https://shop.example.com/...</text>
+  <text x="24" y="404" class="sub">浏览器收到 302 后再访问长链接。用 301 时浏览器会缓存跳转，之后的点击不再经过短链服务，无法统计点击量。</text>
+</svg>
