@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="250" viewBox="0 0 740 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">容器：把应用和依赖打包在一起</text>
+  <rect x="40" y="56" width="200" height="130" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="76" class="c sub b" style="fill:#444">容器</text>
+  <rect x="60" y="86" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="140" y="103" class="c sub" style="fill:#444">订单服务</text>
+  <rect x="60" y="116" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="140" y="133" class="c sub" style="fill:#444">JDK 21</text>
+  <rect x="60" y="146" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="140" y="163" class="c sub" style="fill:#444">Debian</text>
+  <rect x="270" y="56" width="200" height="130" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="370" y="76" class="c sub b" style="fill:#444">容器</text>
+  <rect x="290" y="86" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="370" y="103" class="c sub" style="fill:#444">推荐服务</text>
+  <rect x="290" y="116" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="370" y="133" class="c sub" style="fill:#444">Python 3.12</text>
+  <rect x="290" y="146" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="370" y="163" class="c sub" style="fill:#444">Ubuntu</text>
+  <rect x="500" y="56" width="200" height="130" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="600" y="76" class="c sub b" style="fill:#444">容器</text>
+  <rect x="520" y="86" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="600" y="103" class="c sub" style="fill:#444">网关</text>
+  <rect x="520" y="116" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="600" y="133" class="c sub" style="fill:#444">静态二进制</text>
+  <rect x="520" y="146" width="160" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="600" y="163" class="c sub" style="fill:#444">Alpine</text>
+  <rect x="40" y="196" width="660" height="30" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="370" y="215.5" class="c sub b">宿主机的 Linux 内核</text>
+  <text x="30" y="244" class="sub">各容器的依赖互不影响，同一个镜像在开发机、测试环境和生产环境中运行结果一致。</text>
+</svg>
