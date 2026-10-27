@@ -49,6 +49,12 @@
         * [文章信息](#文章信息)
         * [点赞功能](#点赞功能)
         * [对文章进行排序](#对文章进行排序)
+    * [附录：实测](#附录实测)
+        * [A1 MySQL 与 Redis 的主键查询](#a1-mysql-与-redis-的主键查询)
+        * [A2 排行榜](#a2-排行榜)
+        * [A3 单线程的吞吐量和 CPU 时间](#a3-单线程的吞吐量和-cpu-时间)
+        * [A4 Redis Cluster](#a4-redis-cluster)
+        * [A5 Sentinel 故障转移](#a5-sentinel-故障转移)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -57,7 +63,7 @@
 
 Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。
 
-键的类型只能为字符串，值支持五种基本数据类型：字符串、列表、集合、散列表、有序集合，此外还有位图、HyperLogLog、地理空间、流（Stream）等类型。
+键的类型只能为字符串，值支持五种基本数据类型：字符串、列表、集合、哈希、有序集合，此外还有位图、HyperLogLog、地理空间、流（Stream）等类型。
 
 Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，使用复制来扩展读性能，使用分片来扩展写性能。
 
@@ -68,19 +74,17 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 - 事务：MySQL 的事务满足 ACID，出错可以回滚；Redis 的事务只保证一组命令依次执行、不被其它客户端的命令插入，其中一条命令执行出错时，其它命令不会回滚，见 [九、事务](#九事务)；
 - 持久性：MySQL 默认在事务提交时把 redo log 刷到磁盘，提交成功的数据不会因为宕机丢失；Redis 即使开启 AOF 并设置为 everysec，宕机时也可能丢失最近一秒左右的写入。
 
-数据都在内存中时，MySQL 按主键查询也很快。在本机用 50 个连接分别压测同一条主键查询和同一个键的 GET，各执行 20 万次：MySQL 每秒约 16 万次，用了约 6 个 CPU 核心，每次查询消耗约 36 微秒的 CPU 时间；Redis 每秒约 11 万次，只用了 1 个核心，每次约 8.7 微秒。Redis 的优势在于开销小、延迟稳定，以及计数器、排行榜这类 MySQL 不擅长的数据结构；需要持久保存、按多种条件查询的业务数据仍然放在 MySQL 中。两者通常一起使用，Redis 作为缓存，见 [缓存与数据库的一致性](缓存.md#缓存一致性)。
+数据都在内存中时，MySQL 按主键查询也很快。用 50 个连接分别执行 20 万次同一条主键查询和同一个键的 GET，两者每秒都能处理 13 万～17 万次，但 MySQL 用了约 6 个 CPU 核心，每次查询消耗约 36 微秒的 CPU 时间；Redis 只用 1 个核心，每次约 7 微秒（MySQL 8.0、Redis 7.4 实测，见[附录 A1](#a1-mysql-与-redis-的主键查询)）。Redis 的优势在于开销小、延迟稳定，以及计数器、排行榜这类 MySQL 不擅长的数据结构；需要持久保存、按多种条件查询的业务数据仍然放在 MySQL 中。两者通常一起使用，Redis 作为缓存，见 [缓存与数据库的一致性](缓存.md#缓存一致性)。
 
 ## 二、数据类型
 
 | 数据类型 | 可以存储的值 | 操作 |
 | :--: | :--: | :--: |
-| STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作\</br\> 对整数和浮点数执行自增或者自减操作 |
-| LIST | 列表 | 从两端压入或者弹出元素 \</br\> 对单个或者多个元素进行修剪，\</br\> 只保留一个范围内的元素 |
-| SET | 无序集合 | 添加、获取、移除单个元素\</br\> 检查一个元素是否存在于集合中\</br\> 计算交集、并集、差集\</br\> 从集合里面随机获取元素 |
-| HASH | 包含键值对的无序散列表 | 添加、获取、移除单个键值对\</br\> 获取所有键值对\</br\> 检查某个键是否存在|
-| ZSET | 有序集合 | 添加、获取、删除元素\</br\> 根据分值范围或者成员来获取元素\</br\> 计算一个键的排名 |
-
-> [What Redis data structures look like](https://redis.io/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/)
+| STRING | 字符串、整数或者浮点数 | 对整个字符串或者字符串的其中一部分执行操作<br> 对整数和浮点数执行自增或者自减操作 |
+| LIST | 列表 | 从两端压入或者弹出元素 <br> 对单个或者多个元素进行修剪，<br> 只保留一个范围内的元素 |
+| SET | 无序集合 | 添加、获取、移除单个元素<br> 检查一个元素是否存在于集合中<br> 计算交集、并集、差集<br> 从集合里面随机获取元素 |
+| HASH | 包含键值对的无序哈希表 | 添加、获取、移除单个键值对<br> 获取所有键值对<br> 检查某个键是否存在|
+| ZSET | 有序集合 | 添加、获取、删除元素<br> 根据分值范围或者成员来获取元素<br> 计算一个键的排名 |
 
 ### STRING
 
@@ -219,135 +223,50 @@ OK
 
 ### 字典
 
-dictht 是一个散列表结构，使用拉链法解决哈希冲突。
+键空间、HASH 和 SET 的 hashtable 编码、ZSET 中按成员查分数的部分，都是用字典（dict）实现的。字典是一个哈希表，用拉链法解决哈希冲突：桶的数量是 2 的幂，键的哈希值与桶数减 1 做位与得到桶的下标，落在同一个桶的键用链表连起来。
 
-```c
-/* This is our hash table structure. Every dictionary has two of this as we
- * implement incremental rehashing, for the old to the new table. */
-typedef struct dictht {
-    dictEntry **table;
-    unsigned long size;
-    unsigned long sizemask;
-    unsigned long used;
-} dictht;
-```
+键越来越多时链表变长，查找变慢，需要扩大桶数组并把所有键重新放一遍，称为 rehash。Redis 用一个线程执行命令，一个有几百万个键的字典一次性 rehash 会让服务器停顿很久，所以采用渐进式 rehash：
 
-```c
-typedef struct dictEntry {
-    void *key;
-    union {
-        void *val;
-        uint64_t u64;
-        int64_t s64;
-        double d;
-    } v;
-    struct dictEntry *next;
-} dictEntry;
-```
+- 字典中有两张哈希表 ht_table[0] 和 ht_table[1]，平时只用 ht_table[0]；
+- 键的数量达到桶数时扩容，ht_table[1] 的大小为不小于键数加 1 的 2 的幂；有子进程在执行 BGSAVE 或 AOF 重写时，为了减少写时复制的内存页，要达到桶数的 4 倍才扩容；
+- 键的数量不超过桶数的 1/8 时缩容，过程相同；
+- rehashidx 记录迁移到了哪个桶，之后每次对这个字典增删改查，都顺便把一个桶中的所有键迁移到 ht_table[1]，serverCron 也会定期花不超过 1 毫秒继续迁移；
+- 迁移期间新写入的键只放入 ht_table[1]，查找和删除时两张表都可能要查；
+- 全部迁移完成后，ht_table[1] 变为 ht_table[0]，rehashidx 恢复为 -1。
 
-Redis 的字典 dict 中包含两个哈希表 dictht，这是为了方便进行 rehash 操作。在扩容时，将其中一个 dictht 上的键值对 rehash 到另一个 dictht 上面，完成之后释放空间并交换两个 dictht 的角色。
+<div align="center"> <img src="pics/redis-rehash.png" width="760px"/> </div><br>
 
-```c
-typedef struct dict {
-    dictType *type;
-    void *privdata;
-    dictht ht[2];
-    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
-    unsigned long iterators; /* number of iterators currently running */
-} dict;
-```
-
-rehash 操作不是一次性完成，而是采用渐进方式，这是为了避免一次性执行过多的 rehash 操作给服务器带来过大的负担。
-
-渐进式 rehash 通过记录 dict 的 rehashidx 完成，它从 0 开始，然后每执行一次 rehash 都会递增。例如在一次 rehash 中，要把 dict[0] rehash 到 dict[1]，这一次会把 dict[0] 上 table[rehashidx] 的键值对 rehash 到 dict[1] 上，dict[0] 的 table[rehashidx] 指向 null，并令 rehashidx++。
-
-在 rehash 期间，每次对字典执行添加、删除、查找或者更新操作时，都会执行一次渐进式 rehash。
-
-采用渐进式 rehash 会导致字典中的数据分散在两个 dictht 上，因此对字典的查找操作也需要到对应的 dictht 去执行。
-
-```c
-/* Performs N steps of incremental rehashing. Returns 1 if there are still
- * keys to move from the old to the new hash table, otherwise 0 is returned.
- *
- * Note that a rehashing step consists in moving a bucket (that may have more
- * than one key as we use chaining) from the old to the new hash table, however
- * since part of the hash table may be composed of empty spaces, it is not
- * guaranteed that this function will rehash even a single bucket, since it
- * will visit at max N*10 empty buckets in total, otherwise the amount of
- * work it does would be unbound and the function may block for a long time. */
-int dictRehash(dict *d, int n) {
-    int empty_visits = n * 10; /* Max number of empty buckets to visit. */
-    if (!dictIsRehashing(d)) return 0;
-
-    while (n-- && d->ht[0].used != 0) {
-        dictEntry *de, *nextde;
-
-        /* Note that rehashidx can't overflow as we are sure there are more
-         * elements because ht[0].used != 0 */
-        assert(d->ht[0].size > (unsigned long) d->rehashidx);
-        while (d->ht[0].table[d->rehashidx] == NULL) {
-            d->rehashidx++;
-            if (--empty_visits == 0) return 1;
-        }
-        de = d->ht[0].table[d->rehashidx];
-        /* Move all the keys in this bucket from the old to the new hash HT */
-        while (de) {
-            uint64_t h;
-
-            nextde = de->next;
-            /* Get the index in the new hash table */
-            h = dictHashKey(d, de->key) & d->ht[1].sizemask;
-            de->next = d->ht[1].table[h];
-            d->ht[1].table[h] = de;
-            d->ht[0].used--;
-            d->ht[1].used++;
-            de = nextde;
-        }
-        d->ht[0].table[d->rehashidx] = NULL;
-        d->rehashidx++;
-    }
-
-    /* Check if we already rehashed the whole table... */
-    if (d->ht[0].used == 0) {
-        zfree(d->ht[0].table);
-        d->ht[0] = d->ht[1];
-        _dictReset(&d->ht[1]);
-        d->rehashidx = -1;
-        return 0;
-    }
-
-    /* More to rehash... */
-    return 1;
-}
-```
+以上依据 Redis 7.4 的 dict.c。Redis 7.0 之前的两张表是 dict 中的 dictht ht[2]，渐进式 rehash 的过程相同。
 
 ### 跳跃表
 
-是有序集合的底层实现之一。
+跳跃表（skiplist）是有序集合在成员较多时的底层结构，它在一条有序链表上增加了多层索引。
 
-跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。
+最底层是包含所有成员、按分值排序的链表。每个节点插入时随机决定层数：以 1/4 的概率升高一层，最多 32 层。所以大约每 4 个节点有 1 个出现在第 2 层，每 16 个节点有 1 个出现在第 3 层，平均每个节点约 1.33 个指针。
 
-在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。下图演示了查找 26 的过程。
+查找时从最高层开始向右走，下一个节点比目标大时下降一层，直到最底层。每层平均只走几步，查找、插入和删除的期望时间复杂度都是 O(logN)。下图演示了查找 26 的过程。
 
 <div align="center"> <img src="pics/redis-skiplist.png" width="760px"/> </div><br>
 
-与红黑树等平衡树相比，跳跃表具有以下优点：
+与红黑树等平衡树相比，跳跃表有以下优点：
 
-- 插入速度非常快速，因为不需要进行旋转等操作来维护平衡性；
-- 更容易实现；
-- 支持无锁操作。
+- 插入和删除只需要修改每一层前驱节点的指针，不需要旋转等操作来维护平衡；
+- 范围查询方便，找到起点后沿最底层链表向后遍历即可，ZRANGEBYSCORE 就是这样实现的；
+- 实现和调试更简单。
+
+Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了多少个节点，查找时把经过的跨度相加就得到排名，所以 ZRANK 也是 O(logN)。
 
 ## 四、使用场景
 
 ### 计数器
 
-可以对 String 进行自增自减运算，从而实现计数器功能。
+可以对字符串执行 INCR、INCRBY 等命令实现计数器，例如文章的阅读数、接口的调用次数。
 
-Redis 这种内存型数据库的读写性能非常高，很适合存储频繁读写的计数量。
+命令在服务器上原子执行，多个客户端同时加 1 不会丢失更新；数据在内存中，也适合这种频繁读写的场景。
 
 ### 缓存
 
-将热点数据放到内存中，设置内存的最大使用量以及淘汰策略来保证缓存的命中率。
+将热点数据放到内存中，设置内存的最大使用量以及淘汰策略来保证缓存的命中率，见 [缓存](缓存.md)。
 
 ### 查找表
 
@@ -357,9 +276,9 @@ Redis 这种内存型数据库的读写性能非常高，很适合存储频繁�
 
 ### 消息队列
 
-List 是一个双向链表，可以通过 lpush 和 rpop 写入和读取消息
+List 可以用 LPUSH 写入消息，用 BRPOP 阻塞地读取消息。但消息被取出后就从列表中删除，消费者处理失败时消息会丢失，也不能让多个消费者组各自消费一遍。
 
-不过最好使用 Kafka、RabbitMQ 等消息中间件。
+Redis 5.0 加入的流（Stream）支持消费者组和确认：XREADGROUP 读取的消息在 XACK 确认之前一直保存在待处理列表中，消费者宕机后可以由其它消费者认领。对可靠性和消息堆积量要求高的场景，仍然使用 Kafka、RocketMQ 等消息中间件，见 [消息队列](消息队列.md)。
 
 ### 会话缓存
 
@@ -383,7 +302,7 @@ ZREVRANGE rank:likes 0 9 WITHSCORES                -- 前 10 名
 ZREVRANK rank:likes article:1001                   -- 第几名，从 0 开始
 ```
 
-在本机向一个有序集合写入 100 万个成员，占用约 105 MB 内存；查前 10 名、查某个成员的排名和加分都是 O(logN) 的操作，SLOWLOG 记录的服务器执行时间大多在 4～10 微秒之间。
+向一个有序集合写入 100 万个成员，占用约 105 MB 内存；查前 10 名、查某个成员的排名和加分都是 O(logN) 的操作，SLOWLOG 记录的服务器执行时间只有几微秒（Redis 7.4 实测，见[附录 A2](#a2-排行榜)）。
 
 分值相同时，Redis 按成员名的字典序排列，而业务上通常要求先达到这个分数的排在前面。可以把时间编进分值：分值 = 点赞数 × 10<sup>10</sup> + (10<sup>10</sup> − 达到这个点赞数的秒级时间戳)。例如 article:1001 和 article:1002 都是 520 个赞，时间戳分别为 1793000000 和 1793000300，分值为 5208207000000 和 5208206999700，先达到的 article:1001 排在前面。需要注意的是，分值是双精度浮点数，只能精确表示 2<sup>53</sup> 以内的整数，这种写法下点赞数不能超过约 90 万，更大时要缩短时间部分的位数。
 
@@ -392,8 +311,6 @@ ZREVRANK rank:likes article:1001                   -- 第几名，从 0 开始
 ### 其它
 
 Set 可以实现交集、并集等操作，从而实现共同好友等功能。
-
-ZSet 可以实现有序性操作，从而实现排行榜等功能。
 
 ## 五、Redis 与 Memcached
 
@@ -415,15 +332,14 @@ Redis Cluster 实现了分布式的支持。
 
 ### 内存管理机制
 
-- Redis 和 Memcached 的数据都一直存储在内存中。Redis 曾经支持把很久没用的 value 交换到磁盘（虚拟内存），但是该特性已经在 2.6 版本移除。
-
-- Memcached 将内存分割成特定长度的块来存储数据，以完全解决内存碎片的问题。但是这种方式会使得内存的利用率不高，例如块的大小为 128 bytes，只存储 100 bytes 的数据，那么剩下的 28 bytes 就浪费掉了。
+- Redis 和 Memcached 的数据都一直存储在内存中。Redis 曾经支持把很久没用的 value 交换到磁盘（虚拟内存），但是该特性已经在 2.6 版本移除；
+- Memcached 将内存分割成特定长度的块来存储数据，避免了频繁分配和释放造成的内存碎片。但是这种方式会使得内存的利用率不高，例如块的大小为 128 字节，只存储 100 字节的数据，那么剩下的 28 字节就浪费掉了。
 
 ## 六、键的过期时间
 
-Redis 可以为每个键设置过期时间。过期的键不会在过期的瞬间被删除，而是通过两种策略清除：惰性删除，在访问键时检查它是否过期，过期就删除；定期删除，后台定时随机抽取一部分设置了过期时间的键进行检查，删除其中已经过期的键。
+Redis 可以为每个键设置过期时间。过期的键不会在过期的瞬间被删除，而是通过两种策略清除：惰性删除，在访问键时检查它是否过期，过期就删除；定期删除，后台每秒执行 10 次（由 hz 配置），每次随机抽取一部分设置了过期时间的键进行检查，删除其中已经过期的键。
 
-对于散列表这种容器，Redis 7.4 之前只能为整个键设置过期时间，7.4 开始可以使用 HEXPIRE 等命令为单个字段设置过期时间。
+对于 HASH 这种容器，Redis 7.4 之前只能为整个键设置过期时间，7.4 开始可以使用 HEXPIRE 等命令为单个字段设置过期时间。
 
 ## 七、数据淘汰策略
 
@@ -442,7 +358,9 @@ Redis 4.0 之后具体有 8 种淘汰策略：
 | allkeys-lfu | 从所有数据集中挑选最不经常使用的数据淘汰 |
 | noeviction | 禁止驱逐数据 |
 
-作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法实际实现上并非针对所有 key，而是抽样一小部分并且从中选出被淘汰的 key。
+默认策略是 noeviction：内存达到上限后，写命令返回错误，读命令照常执行。
+
+作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法实际实现上并非针对所有 key，而是每次抽样一小部分（maxmemory-samples，默认 5 个）并且从中选出被淘汰的 key。
 
 使用 Redis 缓存数据时，为了提高缓存命中率，需要保证缓存数据都是热点数据。可以将内存最大使用量设置为热点数据占用的内存量，然后启用 allkeys-lru 淘汰策略，将最近最少使用的数据淘汰。
 
@@ -476,7 +394,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 | everysec | 每秒同步一次 |
 | no | 让操作系统来决定何时同步 |
 
-- always 选项会严重减低服务器的性能；
+- always 选项会严重降低服务器的性能；
 - everysec 选项比较合适，可以保证系统崩溃时只会丢失一秒左右的数据，并且 Redis 每秒执行一次同步对服务器性能几乎没有任何影响；
 - no 选项并不能给服务器性能带来多大的提升，而且也会增加系统崩溃时数据丢失的数量。
 
@@ -618,9 +536,9 @@ Redis 用一个线程执行所有命令，仍然很快，原因主要有以下�
 - I/O 多路复用让一个线程同时处理大量连接；
 - 按数据的大小选择不同的编码，例如元素少时用紧凑的 listpack。
 
-在本机（Apple M1 Pro，Redis 7.4）用 redis-benchmark 测试，50 个连接逐条发送 GET，每秒约 13 万次；每次连续发送 16 条命令（流水线）时，每秒约 140 万次。逐条发送 100 万次 GET 时，服务器消耗的 CPU 时间中内核态 6.35 秒、用户态 1.18 秒：大部分时间花在网络读写的系统调用上，解析和执行一条命令只需要 1 微秒左右。
+用 redis-benchmark 测试，50 个连接逐条发送 GET，每秒约 16 万次；每次连续发送 16 条命令（流水线）时，每秒约 160 万次。逐条发送 100 万次 GET 时，服务器消耗的 CPU 时间中内核态 5.1 秒、用户态 1.0 秒：大部分时间花在网络读写的系统调用上，解析和执行一条命令只需要 1 微秒左右（Redis 7.4 实测，见[附录 A3](#a3-单线程的吞吐量和-cpu-时间)）。
 
-所以 Redis 的瓶颈通常是网络和内存，而不是 CPU。Redis 6.0 加入了 I/O 多线程（io-threads，默认关闭），只用多个线程读写套接字，命令仍由主线程逐个执行，单条命令的原子性不变。此外，关闭文件、AOF 刷盘和 UNLINK 释放大键的内存这些耗时操作由后台线程完成。
+所以 Redis 的瓶颈通常是网络和内存，而不是 CPU。Redis 6.0 加入了 I/O 多线程（io-threads，默认关闭），开启后默认只把写回客户端交给 I/O 线程，读取和解析请求还需要再打开 io-threads-do-reads；命令仍由主线程逐个执行，单条命令的原子性不变。此外，关闭文件、AOF 刷盘和 UNLINK 释放大键的内存这些耗时操作由后台线程完成。
 
 ## 十一、复制
 
@@ -660,7 +578,7 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 <div align="center"> <img src="pics/redis-sentinel-failover.png" width="760px"/> </div><br>
 
-实验中另一个从服务器 6401 改为复制 6402 时，6402 的日志为 Partial resynchronization request from 127.0.0.1:6401 accepted，只发送了 156 字节的积压数据；而重启的 6400 复制 ID 不匹配，只能全量复制。
+down-after-milliseconds 为 5 秒时，从主服务器宕机到客户端查到新地址约 6 秒，其中 5 秒是超时检测。新的主服务器保留了旧的复制 ID，另一个从服务器转向它时只需要部分重同步，只发送了 156 字节的积压数据；重启的旧主服务器复制 ID 不匹配，只能全量复制（Redis 7.4 实测，见[附录 A5](#a5-sentinel-故障转移)）。
 
 需要注意的是，主从之间是异步复制，切换时还没有复制到从服务器的写入会丢失。网络分区时，旧的主服务器还可能继续接受写入（脑裂），恢复后它变为从服务器，这段时间的写入也会丢失。可以配置 min-replicas-to-write 1 和 min-replicas-max-lag 10：延迟不超过 10 秒的从服务器少于 1 个时，主服务器拒绝写入并返回 NOREPLICAS，把丢失的范围限制在 10 秒左右。
 
@@ -675,8 +593,8 @@ Sentinel（哨兵）可以监听集群中的服务器，并在主服务器进入
 
 根据执行分片的位置，可以分为三种分片方式：
 
-- 客户端分片：客户端使用一致性哈希等算法决定键应当分布到哪个节点。
-- 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。
+- 客户端分片：客户端使用一致性哈希等算法决定键应当分布到哪个节点；
+- 代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上；
 - 服务器分片：Redis Cluster，使用 CRC16(key) % 16384 计算键所属的哈希槽，再把 16384 个哈希槽分配给各个节点。
 
 ### Redis Cluster
@@ -687,13 +605,13 @@ Redis 有三种常见的部署方式，解决的问题不同：
 - Sentinel：在主从复制的基础上自动监控和故障转移，但仍然只有一个主服务器负责写入，数据量受单机内存限制；
 - Redis Cluster：把数据分散到多个主节点上，每个主节点有自己的从节点，同时解决容量和高可用的问题。
 
-Redis Cluster 把键空间分为 16384 个哈希槽，每个主节点负责一部分槽。下面是在本机创建的 3 主 3 从的集群：
+Redis Cluster 把键空间分为 16384 个哈希槽，每个主节点负责一部分槽。下图是一个 3 主 3 从的集群（Redis 7.4 实测，见[附录 A4](#a4-redis-cluster)）：
 
 <div align="center"> <img src="pics/redis-cluster.png" width="720px"/> </div><br>
 
 - 客户端向不负责这个槽的节点发送命令时，会收到 MOVED 重定向。例如 user:1001 所在的槽 5712 属于 7002，发给 7001 会收到 MOVED 5712 127.0.0.1:7002。客户端会缓存槽与节点的对应关系，之后直接访问正确的节点；
 - 一条命令涉及多个键时，这些键必须在同一个槽中，否则报错 CROSSSLOT，Lua 脚本也是如此。可以用哈希标签（hash tag）让相关的键落到同一个槽：只有 {} 中的部分参与计算，{user:1001}:cart 和 {user:1001}:orders 都在槽 5712；
-- 主节点宕机后，它的一个从节点会被选为新的主节点。在本机把 cluster-node-timeout 设为 5 秒，停掉一个主节点后，这部分槽约 9 秒无法写入。
+- 主节点宕机后，它的一个从节点会被选为新的主节点。cluster-node-timeout 为 5 秒时，停掉一个主节点后，这部分槽约 7～9 秒无法写入。
 
 需要注意的是，主从之间是异步复制，主节点宕机前刚写入、还没有复制到从节点的数据会丢失，所以 Redis Cluster 不保证强一致性。
 
@@ -727,19 +645,187 @@ Redis 没有关系型数据库中的表这一概念来将同种类型的数据�
 
 <div align="center"> <img src="pics/redis-article-zsets.png" width="760px"/> </div><br>
 
+## 附录：实测
+
+以下实验的环境均为 Apple M1 Pro（10 核）、macOS，客户端和服务器在同一台机器上，Redis 7.4.1 从源码编译，使用默认配置，不开启持久化。
+
+### A1 MySQL 与 Redis 的主键查询
+
+MySQL 8.0.44，orders 表有 200 万行，要查的行已在缓冲池中。两边都用 50 个连接执行 20 万次，各做 3 轮。MySQL 的 CPU 时间是 mysqld 进程执行前后的 CPU 时间之差，Redis 的是 INFO cpu 中 used_cpu_sys 与 used_cpu_user 之和的差。
+
+```bash
+mysqlslap -uroot --concurrency=50 --iterations=1 --number-of-queries=200000 \
+  --create-schema=demo --query="SELECT * FROM orders WHERE id = 1024"
+redis-benchmark -c 50 -n 200000 -q GET order:1024
+```
+
+```text
+== 第 1 轮 MySQL
+  Average number of seconds to run all queries: 1.155 seconds
+墙钟 1.21 s，mysqld CPU 7.20 s，QPS 165707，每次 36.0 us，平均占用 6.0 核
+== 第 1 轮 Redis
+GET order:1024: 165425.97 requests per second, p50=0.231 msec
+redis-server CPU 1.21 s，每次 6.0 us
+== 第 2 轮 MySQL
+  Average number of seconds to run all queries: 1.111 seconds
+墙钟 1.16 s，mysqld CPU 7.34 s，QPS 172026，每次 36.7 us，平均占用 6.3 核
+== 第 2 轮 Redis
+GET order:1024: 153727.91 requests per second, p50=0.247 msec
+redis-server CPU 1.30 s，每次 6.5 us
+== 第 3 轮 MySQL
+  Average number of seconds to run all queries: 1.101 seconds
+墙钟 1.15 s，mysqld CPU 7.16 s，QPS 173683，每次 35.8 us，平均占用 6.2 核
+== 第 3 轮 Redis
+GET order:1024: 131926.12 requests per second, p50=0.287 msec
+redis-server CPU 1.49 s，每次 7.4 us
+```
+
+### A2 排行榜
+
+用 redis-py 写入同分排序的例子和 100 万个成员，分值是 0～100 万的随机整数，用流水线每 1 万条提交一次：
+
+```python
+def score(likes, ts):
+    return likes * 10**10 + (10**10 - ts)
+
+r.zadd('rank:likes', {'article:1001': score(520, 1793000000),
+                      'article:1002': score(520, 1793000300),
+                      'article:1003': score(980, 1793000600)})
+print(r.zrevrange('rank:likes', 0, 2, withscores=True))
+
+pipe = r.pipeline(transaction=False)
+for i in range(1_000_000):
+    pipe.zadd('rank:big', {f'u:{i}': random.randint(0, 10**6)})
+    if i % 10000 == 9999:
+        pipe.execute()
+pipe.execute()
+```
+
+内存是写入前后 INFO memory 中 used_memory 的差。之后执行 CONFIG SET slowlog-log-slower-than 0，让 SLOWLOG 记录所有命令，再把 ZREVRANGE rank:big 0 9 WITHSCORES、ZREVRANK rank:big u:123456、ZINCRBY rank:big 1 u:123456 各执行 5 次：
+
+```text
+[('article:1003', 9808206999400.0), ('article:1001', 5208207000000.0), ('article:1002', 5208206999700.0)]
+100 万成员内存 104.7 MB
+OBJECT ENCODING rank:big -> skiplist
+SLOWLOG 中的执行时间（微秒）
+zrevrange [5, 3, 2, 3, 4]
+zrevrank [4, 3, 3, 3, 3]
+zincrby [5, 5, 4, 6, 7]
+```
+
+### A3 单线程的吞吐量和 CPU 时间
+
+```bash
+redis-benchmark -c 50 -n 1000000 -t get -P 1 -q
+redis-benchmark -c 50 -n 1000000 -t get -P 16 -q
+# 每次测试前后各执行一次 INFO cpu，取 used_cpu_sys、used_cpu_user 的差
+```
+
+```text
+== -P 1
+GET: 162522.34 requests per second, p50=0.231 msec
+服务器 CPU：used_cpu_sys +5.13 s，used_cpu_user +1.00 s
+== -P 16
+GET: 1618123.00 requests per second, p50=0.415 msec
+服务器 CPU：used_cpu_sys +0.28 s，used_cpu_user +0.34 s
+```
+
+### A4 Redis Cluster
+
+6 个节点 7001～7006 都以 --cluster-enabled yes --cluster-node-timeout 5000 启动，然后创建 3 主 3 从的集群：
+
+```bash
+redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 \
+  127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 --cluster-replicas 1 --cluster-yes
+```
+
+槽的分配为 7001：0～5460，7002：5461～10922，7003：10923～16383。
+
+```text
+> redis-cli -p 7001 cluster keyslot user:1001
+5712
+> redis-cli -p 7001 cluster keyslot {user:1001}:cart
+5712
+> redis-cli -p 7001 cluster keyslot {user:1001}:orders
+5712
+> redis-cli -p 7001 set user:1001 alice
+MOVED 5712 127.0.0.1:7002
+> redis-cli -p 7002 set user:1001 alice
+OK
+> redis-cli -p 7002 mset user:1001:cart a user:1001:orders b
+CROSSSLOT Keys in request don't hash to the same slot
+> redis-cli -p 7002 mset {user:1001}:cart a {user:1001}:orders b
+OK
+> redis-cli -p 7002 eval "return redis.call('mset', KEYS[1], 'a', KEYS[2], 'b')" 2 user:1001:cart user:1001:orders
+CROSSSLOT Keys in request don't hash to the same slot
+```
+
+然后 kill -9 7002，每 100 毫秒向它的从节点写一次 user:1001，直到返回 OK。下面是第 3 次实验的输出，3 次实验分别在 7.1、8.7、8.8 秒后恢复写入：
+
+```text
+== 7002 的从节点：7006
+8.8 s 后写入成功，之前失败 73 次，最后一次失败前的返回为 CLUSTERDOWN The cluster is down
+* FAIL message received from ... about ...
+* Start of election delayed for 738 milliseconds (rank #0, offset 138).
+* Starting a failover election for epoch 7.
+* Failover election won: I'm the new master.
+> redis-cli -p 7006 get user:1001
+bob
+```
+
+### A5 Sentinel 故障转移
+
+1 主 6400、2 从 6401 和 6402，3 个哨兵 26400～26402，哨兵的配置：
+
+```text
+sentinel monitor mymaster 127.0.0.1 6400 2
+sentinel down-after-milliseconds mymaster 5000
+sentinel failover-timeout mymaster 60000
+```
+
+向 6400 写入 order:1024 后 kill -9 6400，每 100 毫秒用 SENTINEL get-master-addr-by-name mymaster 查询主服务器地址。下面的时间相对于 kill -9，日志取自 3 个哨兵中最先记录该事件的一个：
+
+```text
+== kill -9 6400 后 6.20 s，SENTINEL get-master-addr-by-name 返回 127.0.0.1:6401
+ 5.02 s  哨兵 26402  # +sdown master mymaster 127.0.0.1 6400
+ 5.10 s  哨兵 26400  # +odown master mymaster 127.0.0.1 6400 #quorum 2/2
+ 5.18 s  哨兵 26400  # +elected-leader master mymaster 127.0.0.1 6400
+ 5.24 s  哨兵 26400  # +selected-slave slave 127.0.0.1:6401 127.0.0.1 6401 @ mymaster 127.0.0.1 6400
+ 6.13 s  哨兵 26400  # +promoted-slave slave 127.0.0.1:6401 127.0.0.1 6401 @ mymaster 127.0.0.1 6400
+ 6.18 s  哨兵 26401  # +switch-master mymaster 127.0.0.1 6400 127.0.0.1 6401
+> GET order:1024（新的主服务器 6401）
+paid
+```
+
+重启 6400 后，新的主服务器 6401 的日志：
+
+```text
+* Partial resynchronization request from 127.0.0.1:6402 accepted. Sending 156 bytes of backlog starting from offset 2495.
+* Partial resynchronization not accepted: Replication ID mismatch (Replica asked for 'f16e5fc0...', my replication IDs are 'ac108f0e...' and '48696b86...')
+> 6400 的角色
+role:slave
+master_port:6401
+> CONFIG SET min-replicas-to-write 3 后写入（只有 2 个从服务器）
+NOREPLICAS Not enough good replicas to write.
+```
+
 ## 参考资料
 
-- Carlson J L. Redis in Action[J]. Media.johnwiley.com.au, 2013.
+- Carlson J L. Redis in Action [M]. Manning, 2013.
 - [黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.](http://redisbook.com/index.html)
 - [REDIS IN ACTION](https://web.archive.org/web/20210421115011/https://redislabs.com/ebook/foreword/)
-- [Skip Lists: Done Right](http://ticki.github.io/blog/skip-lists-done-right/)
+- [Skip Lists: Done Right](https://ticki.github.io/blog/skip-lists-done-right/)
 - [论述 Redis 和 Memcached 的差异](http://www.cnblogs.com/loveincode/p/7411911.html)
 - [Redis 3.0 中文版- 分片](http://wiki.jikexueyuan.com/project/redis-guide)
 - [Redis 应用场景](http://www.scienjus.com/redis-use-case/)
-- [Using Redis as an LRU cache](https://redis.io/topics/lru-cache)
+- [Key eviction | Redis](https://redis.io/docs/latest/develop/reference/eviction/)
+- [EXPIRE | Redis](https://redis.io/docs/latest/commands/expire/)
+- [Redis Streams](https://redis.io/docs/latest/develop/data-types/streams/)
 - [Redis: Scale with Redis Cluster](https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/)
 - [High availability with Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/)
 - [Redis replication](https://redis.io/docs/latest/operate/oss_and_stack/management/replication/)
 - [Redis persistence](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
 - [Transactions | Redis](https://redis.io/docs/latest/develop/interact/transactions/)
 - [Scripting with Lua | Redis](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/)
+- [Redis 7.4.1 源码 dict.c](https://github.com/redis/redis/blob/7.4.1/src/dict.c)
+- [Redis 7.4.1 源码 t_zset.c](https://github.com/redis/redis/blob/7.4.1/src/t_zset.c)

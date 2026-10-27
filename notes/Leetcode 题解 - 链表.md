@@ -383,7 +383,7 @@ Output: 2->1->4->3->5
 
 使用一个虚拟头节点 dummy，pre 指向下一组的前一个节点。先从 pre 向后走 k 步找到这一组的尾节点 tail，走不到说明剩余节点不足 k 个。然后把 pre.next 到 tail 这一段原地翻转，再把它接回原链表，最后 pre 移到这一组翻转后的末尾。
 
-<div align="center"> <img src="pics/reverse-k-group.png" width="560px"/> </div><br>
+<div align="center"> <img src="pics/reverse-k-group.png" width="600px"/> </div><br>
 
 ```java
 public ListNode reverseKGroup(ListNode head, int k) {

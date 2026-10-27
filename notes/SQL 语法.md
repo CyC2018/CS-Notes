@@ -189,8 +189,8 @@ LIMIT 2, 3;
 
 ## 八、排序
 
--   **ASC**  ：升序（默认）
--   **DESC**  ：降序
+- ASC：升序（默认）；
+- DESC：降序。
 
 可以按多个列进行排序，并且为每个列指定不同的排序方式：
 
@@ -316,8 +316,8 @@ WHERE SOUNDEX(col1) = SOUNDEX('apple')
 ### 日期和时间处理
 
 
-- 日期格式：YYYY-MM-DD
-- 时间格式：HH:MM:SS
+- 日期格式：YYYY-MM-DD；
+- 时间格式：HH:MM:SS。
 
 |函 数 | 说 明|
 | :---: | :---: |
@@ -722,7 +722,7 @@ USE mysql;
 SELECT user FROM user;
 ```
 
-**创建账户**  
+创建账户：
 
 新创建的账户没有任何权限。
 
@@ -730,25 +730,25 @@ SELECT user FROM user;
 CREATE USER myuser IDENTIFIED BY 'mypassword';
 ```
 
-**修改账户名**  
+修改账户名：
 
 ```sql
 RENAME USER myuser TO newuser;
 ```
 
-**删除账户**  
+删除账户：
 
 ```sql
 DROP USER myuser;
 ```
 
-**查看权限**  
+查看权限：
 
 ```sql
 SHOW GRANTS FOR myuser;
 ```
 
-**授予权限**  
+授予权限：
 
 账户用 username@host 的形式定义，username@% 使用的是默认主机名。
 
@@ -756,7 +756,7 @@ SHOW GRANTS FOR myuser;
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 ```
 
-**删除权限**  
+删除权限：
 
 GRANT 和 REVOKE 可在几个层次上控制访问权限：
 
@@ -770,7 +770,7 @@ GRANT 和 REVOKE 可在几个层次上控制访问权限：
 REVOKE SELECT, INSERT ON mydatabase.* FROM myuser;
 ```
 
-**更改密码**  
+更改密码：
 
 MySQL 8.0 移除了 Password() 函数，直接指定新密码即可。
 

@@ -16,6 +16,7 @@
     * [178. Rank Scores](#178-rank-scores)
     * [180. Consecutive Numbers](#180-consecutive-numbers)
     * [626. Exchange Seats](#626-exchange-seats)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -25,7 +26,7 @@ https://leetcode.com/problems/big-countries/description/
 
 ### Description
 
-```html
+```text
 +-----------------+------------+------------+--------------+---------------+
 | name            | continent  | area       | population   | gdp           |
 +-----------------+------------+------------+--------------+---------------+
@@ -39,7 +40,7 @@ https://leetcode.com/problems/big-countries/description/
 
 查找面积超过 3,000,000 或者人口数超过 25,000,000 的国家。
 
-```html
+```text
 +--------------+-------------+--------------+
 | name         | population  | area         |
 +--------------+-------------+--------------+
@@ -85,7 +86,7 @@ https://leetcode.com/problems/swap-salary/description/
 
 ### Description
 
-```html
+```text
 | id | name | sex | salary |
 |----|------|-----|--------|
 | 1  | A    | m   | 2500   |
@@ -96,7 +97,7 @@ https://leetcode.com/problems/swap-salary/description/
 
 只用一个 SQL 查询，将 sex 字段反转。
 
-```html
+```text
 | id | name | sex | salary |
 |----|------|-----|--------|
 | 1  | A    | f   | 2500   |
@@ -145,7 +146,7 @@ https://leetcode.com/problems/not-boring-movies/description/
 ### Description
 
 
-```html
+```text
 +---------+-----------+--------------+-----------+
 |   id    | movie     |  description |  rating   |
 +---------+-----------+--------------+-----------+
@@ -159,7 +160,7 @@ https://leetcode.com/problems/not-boring-movies/description/
 
 查找 id 为奇数，并且 description 不是 boring 的电影，按 rating 降序。
 
-```html
+```text
 +---------+-----------+--------------+-----------+
 |   id    | movie     |  description |  rating   |
 +---------+-----------+--------------+-----------+
@@ -204,7 +205,7 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 
 ### Description
 
-```html
+```text
 +---------+------------+
 | student | class      |
 +---------+------------+
@@ -222,7 +223,7 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 
 查找有五名及以上 student 的 class。
 
-```html
+```text
 +---------+
 | class   |
 +---------+
@@ -273,7 +274,7 @@ https://leetcode.com/problems/duplicate-emails/description/
 
 邮件地址表：
 
-```html
+```text
 +----+---------+
 | Id | Email   |
 +----+---------+
@@ -285,7 +286,7 @@ https://leetcode.com/problems/duplicate-emails/description/
 
 查找重复的邮件地址：
 
-```html
+```text
 +---------+
 | Email   |
 +---------+
@@ -331,7 +332,7 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 
 邮件地址表：
 
-```html
+```text
 +----+---------+
 | Id | Email   |
 +----+---------+
@@ -343,7 +344,7 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 
 删除重复的邮件地址：
 
-```html
+```text
 +----+------------------+
 | Id | Email            |
 +----+------------------+
@@ -413,7 +414,7 @@ https://leetcode.com/problems/combine-two-tables/description/
 
 Person 表：
 
-```html
+```text
 +-------------+---------+
 | Column Name | Type    |
 +-------------+---------+
@@ -426,7 +427,7 @@ PersonId is the primary key column for this table.
 
 Address 表：
 
-```html
+```text
 +-------------+---------+
 | Column Name | Type    |
 +-------------+---------+
@@ -483,7 +484,7 @@ https://leetcode.com/problems/employees-earning-more-than-their-managers/descrip
 
 Employee 表：
 
-```html
+```text
 +----+-------+--------+-----------+
 | Id | Name  | Salary | ManagerId |
 +----+-------+--------+-----------+
@@ -531,7 +532,7 @@ https://leetcode.com/problems/customers-who-never-order/description/
 
 Customers 表：
 
-```html
+```text
 +----+-------+
 | Id | Name  |
 +----+-------+
@@ -544,7 +545,7 @@ Customers 表：
 
 Orders 表：
 
-```html
+```text
 +----+------------+
 | Id | CustomerId |
 +----+------------+
@@ -555,7 +556,7 @@ Orders 表：
 
 查找没有订单的顾客信息：
 
-```html
+```text
 +-----------+
 | Customers |
 +-----------+
@@ -624,7 +625,7 @@ https://leetcode.com/problems/department-highest-salary/description/
 
 Employee 表：
 
-```html
+```text
 +----+-------+--------+--------------+
 | Id | Name  | Salary | DepartmentId |
 +----+-------+--------+--------------+
@@ -637,7 +638,7 @@ Employee 表：
 
 Department 表：
 
-```html
+```text
 +----+----------+
 | Id | Name     |
 +----+----------+
@@ -648,7 +649,7 @@ Department 表：
 
 查找一个 Department 中收入最高者的信息：
 
-```html
+```text
 +------------+----------+--------+
 | Department | Employee | Salary |
 +------------+----------+--------+
@@ -706,7 +707,7 @@ https://leetcode.com/problems/second-highest-salary/description/
 
 ### Description
 
-```html
+```text
 +----+--------+
 | Id | Salary |
 +----+--------+
@@ -718,7 +719,7 @@ https://leetcode.com/problems/second-highest-salary/description/
 
 查找工资第二高的员工。
 
-```html
+```text
 +---------------------+
 | SecondHighestSalary |
 +---------------------+
@@ -791,7 +792,7 @@ https://leetcode.com/problems/rank-scores/description/
 
 得分表：
 
-```html
+```text
 +----+-------+
 | Id | Score |
 +----+-------+
@@ -806,7 +807,7 @@ https://leetcode.com/problems/rank-scores/description/
 
 将得分排序，并统计排名。
 
-```html
+```text
 +-------+------+
 | Score | Rank |
 +-------+------+
@@ -851,7 +852,7 @@ ORDER BY
 |1|	4.1	|2|	4.2|
 |1|	4.1	|3|	4.3|
 
-可以看到每个 S1.score 都有对应好几条记录，我们再进行分组，并统计每个分组的数量作为 'Rank'
+可以看到每个 S1.score 都有对应好几条记录，再进行分组，并统计每个分组的数量作为 'Rank'
 
 ```sql
 SELECT
@@ -887,7 +888,7 @@ ORDER BY
 |  4.2  |  2   |
 |  4.1  |  3   |
 
-而我们希望的结果为：
+而希望的结果为：
 
 | score | Rank |
 | :---: | :--: |
@@ -907,7 +908,7 @@ ORDER BY
 |   1   |   4.1    |   2   |   4.2    |
 |   1   |   4.1    |   1   |   4.1    |
 
-我们想要的结果是，把分数相同的放在同一个排名，并且相同分数只占一个位置，例如上面的分数，Id=2 和 Id=3 的记录都有相同的分数，并且最高，他们并列第一。而 Id=1 的记录应该排第二名，而不是第三名。所以在进行 COUNT 计数统计时，我们需要使用 COUNT( DISTINCT S2.score ) 从而只统计一次相同的分数。
+想要的结果是，把分数相同的放在同一个排名，并且相同分数只占一个位置，例如上面的分数，Id=2 和 Id=3 的记录都有相同的分数，并且最高，他们并列第一。而 Id=1 的记录应该排第二名，而不是第三名。所以在进行 COUNT 计数统计时，需要使用 COUNT( DISTINCT S2.score ) 从而只统计一次相同的分数。
 
 ```sql
 SELECT
@@ -948,7 +949,7 @@ https://leetcode.com/problems/consecutive-numbers/description/
 
 数字表：
 
-```html
+```text
 +----+-----+
 | Id | Num |
 +----+-----+
@@ -964,7 +965,7 @@ https://leetcode.com/problems/consecutive-numbers/description/
 
 查找连续出现三次的数字。
 
-```html
+```text
 +-----------------+
 | ConsecutiveNums |
 +-----------------+
@@ -1013,7 +1014,7 @@ https://leetcode.com/problems/exchange-seats/description/
 
 seat 表存储着座位对应的学生。
 
-```html
+```text
 +---------+---------+
 |    id   | student |
 +---------+---------+
@@ -1027,7 +1028,7 @@ seat 表存储着座位对应的学生。
 
 要求交换相邻座位的两个学生，如果最后一个座位是奇数，那么不交换这个座位上的学生。
 
-```html
+```text
 +---------+---------+
 |    id   | student |
 +---------+---------+
@@ -1091,3 +1092,8 @@ VALUES
     ( '4', 'Green' ),
     ( '5', 'Jeames' );
 ```
+
+## 参考资料
+
+- [LeetCode 数据库题库](https://leetcode.com/problemset/database/)
+- [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
