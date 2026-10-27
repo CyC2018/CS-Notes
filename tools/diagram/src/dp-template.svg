@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="391" viewBox="0 0 760 391">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">模板方法的类图（咖啡和茶）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="274" y="60" width="292" height="124" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="420" y="77" class="c sub" style="font-size:9.5px">«abstract»</text>
+  <text x="420" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F;font-style:italic">CaffeineBeverage</text>
+  <line x1="274" y1="101" x2="566" y2="101" stroke="#7FB2D6"/>
+  <text x="283" y="116.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ prepareRecipe()</text>
+  <text x="398.457" y="116.5" class="sub" style="font-size:10px">// final，依次调用下面四个方法</text>
+  <text x="283" y="131.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ boilWater()</text>
+  <text x="283" y="146.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">~ brew()</text>
+  <text x="283" y="161.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ pourInCup()</text>
+  <text x="283" y="176.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">~ addCondiments()</text>
+  <rect x="255.5" y="244" width="129" height="67" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="320" y="264" class="c b mono" style="font-size:12px;fill:#3F3F3F">Coffee</text>
+  <line x1="255.5" y1="273" x2="384.5" y2="273" stroke="#7FB2D6"/>
+  <text x="264.5" y="288.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ brew()</text>
+  <text x="264.5" y="303.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ addCondiments()</text>
+  <rect x="455.5" y="244" width="129" height="67" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="520" y="264" class="c b mono" style="font-size:12px;fill:#3F3F3F">Tea</text>
+  <line x1="455.5" y1="273" x2="584.5" y2="273" stroke="#7FB2D6"/>
+  <text x="464.5" y="288.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ brew()</text>
+  <text x="464.5" y="303.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ addCondiments()</text>
+  <path d="M320,244 L320,214" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M520,244 L520,214" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M320,214 L520,214" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M420,214 L420,185" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <rect x="32" y="80" width="96" height="29" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="80" y="100" class="c b mono" style="font-size:12px;fill:#3F3F3F">Client</text>
+  <path d="M128,94.5 L274,95" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="201" y="89" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">prepareRecipe()</text>
+  <line x1="30" y1="345" x2="64" y2="345" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <text x="72" y="349" class="sub">继承</text>
+  <line x1="116" y1="345" x2="150" y2="345" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="158" y="349" class="sub">依赖（创建、调用）</text>
+  <rect x="279" y="338" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="303" y="349" class="sub">类</text>
+  <rect x="332" y="338" width="18" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="356" y="349" class="sub">客户端</text>
+  <text x="411" y="349" class="sub">~ 包访问权限；斜体为抽象</text>
+  <text x="30" y="371" class="sub" style="fill:#3F3F3F">流程固定在父类的 prepareRecipe() 中，子类不能修改；Coffee 和 Tea 只实现两个抽象步骤 brew() 和 addCondiments()。</text>
+</svg>
