@@ -1,0 +1,16 @@
+/.source-git/
+/upstream/
+/dist/
+/.cache/
+/.snapshot-*/
+/.site-build-*/
+/.update-check-*/
+/source-version.json
+/*-report.json
+/*-validation.json
+/validation.json
+/*.log
+/*.jpg
+/*.png
+__pycache__/
+!/requirements.txt
