@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="236" viewBox="0 0 460 236">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="230" y="28" class="title">③ 把 n-1 = 2 个圆盘从 buffer 移到 to</text>
+  <rect x="77" y="74" width="6" height="94" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <rect x="16" y="168" width="128" height="6" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="80" y="192" class="c sub">H1（from）</text>
+  <rect x="227" y="74" width="6" height="94" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <rect x="166" y="168" width="128" height="6" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="230" y="192" class="c sub">H2（buffer）</text>
+  <rect x="377" y="74" width="6" height="94" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <rect x="316" y="168" width="128" height="6" rx="2" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="380" y="192" class="c sub">H3（to）</text>
+  <rect x="327.0" y="146" width="106" height="20" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="380" y="160.5" class="c mono" style="font-size:12px;fill:#333">3</text>
+  <rect x="339.0" y="124" width="82" height="20" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="380" y="138.5" class="c mono" style="font-size:12px;fill:#333">2</text>
+  <rect x="351.0" y="102" width="58" height="20" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="380" y="116.5" class="c mono" style="font-size:12px;fill:#333">1</text>
+  <text x="230" y="54" class="sub c mono">移动 5～7：H2→H1，H2→H3，H1→H3</text>
+  <text x="230" y="222" class="sub c">又是一个 n = 2 的汉诺塔问题，起始柱换成 H2</text>
+</svg>

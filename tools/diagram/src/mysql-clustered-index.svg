@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">聚簇索引：主键索引的叶子节点保存整行数据</text>
+  <rect x="322" y="60" width="34" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="339" y="78" class="c sub mono" style="fill:#444">1530</text>
+  <rect x="356" y="60" width="34" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="373" y="78" class="c sub mono" style="fill:#444">2040</text>
+  <text x="410" y="78" class="sub">根节点：只有 key 和指针</text>
+  <rect x="24" y="130" width="216" height="92" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="30" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="55" y="153" class="c sub mono" style="fill:#444">id</text>
+  <rect x="80" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="105" y="153" class="c sub mono" style="fill:#444">user_id</text>
+  <rect x="130" y="138" width="64" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="162" y="153" class="c sub mono" style="fill:#444">amount</text>
+  <rect x="194" y="138" width="40" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="214" y="153" class="c sub mono" style="fill:#444">status</text>
+  <rect x="30" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="55" y="178" class="c sub mono" style="fill:#444">1021</text>
+  <rect x="80" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="105" y="178" class="c sub mono" style="fill:#444">17</text>
+  <rect x="130" y="162" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="162" y="178" class="c sub mono" style="fill:#444">99.00</text>
+  <rect x="194" y="162" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="214" y="178" class="c sub mono" style="fill:#444">1</text>
+  <rect x="30" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="55" y="204" class="c sub mono" style="fill:#444">1022</text>
+  <rect x="80" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="105" y="204" class="c sub mono" style="fill:#444">5</text>
+  <rect x="130" y="188" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="162" y="204" class="c sub mono" style="fill:#444">12.50</text>
+  <rect x="194" y="188" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="214" y="204" class="c sub mono" style="fill:#444">3</text>
+  <line x1="242" y1="176" x2="262" y2="176" class="arrow "/>
+  <rect x="264" y="130" width="216" height="92" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="270" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="295" y="153" class="c sub mono" style="fill:#444">id</text>
+  <rect x="320" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="345" y="153" class="c sub mono" style="fill:#444">user_id</text>
+  <rect x="370" y="138" width="64" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="402" y="153" class="c sub mono" style="fill:#444">amount</text>
+  <rect x="434" y="138" width="40" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="454" y="153" class="c sub mono" style="fill:#444">status</text>
+  <rect x="270" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="295" y="178" class="c sub mono" style="fill:#444">1530</text>
+  <rect x="320" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="345" y="178" class="c sub mono" style="fill:#444">17</text>
+  <rect x="370" y="162" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="402" y="178" class="c sub mono" style="fill:#444">58.00</text>
+  <rect x="434" y="162" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="454" y="178" class="c sub mono" style="fill:#444">3</text>
+  <rect x="270" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="295" y="204" class="c sub mono" style="fill:#444">1531</text>
+  <rect x="320" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="345" y="204" class="c sub mono" style="fill:#444">9</text>
+  <rect x="370" y="188" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="402" y="204" class="c sub mono" style="fill:#444">8.80</text>
+  <rect x="434" y="188" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="454" y="204" class="c sub mono" style="fill:#444">1</text>
+  <line x1="482" y1="176" x2="502" y2="176" class="arrow "/>
+  <rect x="504" y="130" width="216" height="92" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="510" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="535" y="153" class="c sub mono" style="fill:#444">id</text>
+  <rect x="560" y="138" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="585" y="153" class="c sub mono" style="fill:#444">user_id</text>
+  <rect x="610" y="138" width="64" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="642" y="153" class="c sub mono" style="fill:#444">amount</text>
+  <rect x="674" y="138" width="40" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="694" y="153" class="c sub mono" style="fill:#444">status</text>
+  <rect x="510" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="535" y="178" class="c sub mono" style="fill:#444">2040</text>
+  <rect x="560" y="162" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="585" y="178" class="c sub mono" style="fill:#444">17</text>
+  <rect x="610" y="162" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="642" y="178" class="c sub mono" style="fill:#444">120.00</text>
+  <rect x="674" y="162" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="694" y="178" class="c sub mono" style="fill:#444">2</text>
+  <rect x="510" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="535" y="204" class="c sub mono" style="fill:#444">2041</text>
+  <rect x="560" y="188" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="585" y="204" class="c sub mono" style="fill:#444">5</text>
+  <rect x="610" y="188" width="64" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="642" y="204" class="c sub mono" style="fill:#444">30.00</text>
+  <rect x="674" y="188" width="40" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="694" y="204" class="c sub mono" style="fill:#444">1</text>
+  <line x1="324" y1="88" x2="130" y2="128" class="arrow "/>
+  <line x1="356" y1="88" x2="370" y2="128" class="arrow "/>
+  <line x1="388" y1="88" x2="610" y2="128" class="arrow "/>
+  <text x="30" y="254" class="sub">InnoDB 的表数据就存放在主键索引中，按主键查询走到叶子节点就拿到了整行；一张表只能有一个聚簇索引。</text>
+  <text x="30" y="272" class="sub">示例取自 orders 表的几行，省略了 create_time 等列；没有主键时 InnoDB 用唯一索引或隐藏的行 ID 作为聚簇索引。</text>
+</svg>

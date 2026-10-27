@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="290" viewBox="0 0 560 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="280" y="28" class="title">拉链法：M = 5，哈希值相同的键放在同一条链表中</text>
+  <text x="30" y="70" class="b">依次插入（hashCode % M）</text>
+  <text x="30" y="96" class="mono sub">K：75 % 5 = 0</text>
+  <text x="30" y="120" class="mono sub">D：68 % 5 = 3</text>
+  <text x="30" y="144" class="mono sub">A：65 % 5 = 0</text>
+  <text x="30" y="168" class="mono sub">M：77 % 5 = 2</text>
+  <text x="30" y="192" class="mono sub">F：70 % 5 = 0</text>
+  <text x="30" y="216" class="mono sub">B：66 % 5 = 1</text>
+  <rect x="230" y="64" width="44" height="36" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="220" y="86" class="e sub mono">0</text>
+  <line x1="260" y1="82" x2="306" y2="82" class="arrow "/>
+  <rect x="308" y="70" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="328" y="86.5" class="c b">F</text>
+  <line x1="348" y1="82" x2="378" y2="82" class="arrow "/>
+  <rect x="380" y="70" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="400" y="86.5" class="c b">A</text>
+  <line x1="420" y1="82" x2="450" y2="82" class="arrow "/>
+  <rect x="452" y="70" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="472" y="86.5" class="c b">K</text>
+  <circle cx="252" cy="82.0" r="3" fill="#555"/>
+  <rect x="230" y="100" width="44" height="36" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="220" y="122" class="e sub mono">1</text>
+  <line x1="260" y1="118" x2="306" y2="118" class="arrow "/>
+  <rect x="308" y="106" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="328" y="122.5" class="c b">B</text>
+  <circle cx="252" cy="118.0" r="3" fill="#555"/>
+  <rect x="230" y="136" width="44" height="36" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="220" y="158" class="e sub mono">2</text>
+  <line x1="260" y1="154" x2="306" y2="154" class="arrow "/>
+  <rect x="308" y="142" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="328" y="158.5" class="c b">M</text>
+  <circle cx="252" cy="154.0" r="3" fill="#555"/>
+  <rect x="230" y="172" width="44" height="36" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="220" y="194" class="e sub mono">3</text>
+  <line x1="260" y1="190" x2="306" y2="190" class="arrow "/>
+  <rect x="308" y="178" width="40" height="24" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="328" y="194.5" class="c b">D</text>
+  <circle cx="252" cy="190.0" r="3" fill="#555"/>
+  <rect x="230" y="208" width="44" height="36" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="220" y="230" class="e sub mono">4</text>
+  
+  <text x="252" y="230" class="c sub mono">null</text>
+  <text x="380" y="270" class="c sub">新键插到链表头部，所以 0 号链表是 F → A → K</text>
+</svg>

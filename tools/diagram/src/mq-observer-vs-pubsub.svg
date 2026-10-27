@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">观察者模式与发布/订阅</text>
+  <text x="170" y="56" class="c b">观察者模式（同一进程内，同步调用）</text>
+  <rect x="90" y="76" width="160" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="170" y="100.5" class="c mono">OrderService</text>
+  <rect x="40" y="196" width="120" height="36" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="100" y="218.5" class="c sub mono">PointsListener</text>
+  <line x1="150" y1="118" x2="100" y2="194" class="arrow "/>
+  <rect x="220" y="196" width="120" height="36" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="280" y="218.5" class="c sub mono">SmsListener</text>
+  <line x1="190" y1="118" x2="280" y2="194" class="arrow "/>
+  <text x="170" y="256" class="c sub">OrderService 持有监听者列表，逐个调用 onPaid() 并等待返回</text>
+  <text x="540" y="56" class="c b">发布/订阅（通过消息队列，异步）</text>
+  <rect x="460" y="76" width="160" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="540" y="100.5" class="b c">订单服务</text>
+  <rect x="470" y="140" width="140" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="480" y="144" width="37.3333" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="498.667" y="157" class="c sub"></text>
+  <rect x="521.333" y="144" width="37.3333" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="540" y="157" class="c sub"></text>
+  <rect x="562.667" y="144" width="37.3333" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="581.333" y="157" class="c sub"></text>
+  <text x="462" y="158" class="e sub mono">主题 order.paid</text>
+  <line x1="540" y1="118" x2="540" y2="138" class="arrow "/>
+  <rect x="420" y="196" width="110" height="36" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="475" y="218.5" class="b c">积分服务</text>
+  <line x1="540" y1="168" x2="475" y2="194" class="arrow "/>
+  <rect x="550" y="196" width="110" height="36" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="605" y="218.5" class="b c">短信服务</text>
+  <line x1="540" y1="168" x2="605" y2="194" class="arrow "/>
+  <text x="540" y="256" class="c sub">发送后立即返回，不知道谁会消费、何时消费</text>
+  <line x1="355" y1="50" x2="355" y2="270" class="line dash"/>
+</svg>

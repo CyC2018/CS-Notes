@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">时分复用：每个用户在每一帧中占用固定的时隙</text>
+  <text x="30" y="60" class="sub" style="fill:#444">4 个用户在 4 个时间段内要发送的数据：第 1 段 A、C，第 2 段 C，第 3 段 B、D，第 4 段 A、C，共 7 份。</text>
+  <line x1="54" y1="184" x2="54" y2="94" class="arrow "/>
+  <line x1="54" y1="184" x2="666" y2="184" class="arrow "/>
+  <text x="660" y="206" class="sub e">时间</text>
+  <text x="44" y="102" class="sub e">频率</text>
+  <rect x="60" y="112" width="36" height="60" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="78" y="146" class="c sub b" style="">A</text>
+  <rect x="96" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="114" y="146" class="c sub" style="fill:#BBB">B</text>
+  <rect x="132" y="112" width="36" height="60" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="150" y="146" class="c sub b" style="">C</text>
+  <rect x="168" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="186" y="146" class="c sub" style="fill:#BBB">D</text>
+  <path d="M62,106 q0,-8 8,-8 H126.0 q6,0 6,-6 q0,6 6,6 H194 q8,0 8,8" class="line"/>
+  <text x="132" y="86" class="c sub">第 1 个时分复用帧</text>
+  <rect x="212" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="230" y="146" class="c sub" style="fill:#BBB">A</text>
+  <rect x="248" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="266" y="146" class="c sub" style="fill:#BBB">B</text>
+  <rect x="284" y="112" width="36" height="60" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="302" y="146" class="c sub b" style="">C</text>
+  <rect x="320" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="338" y="146" class="c sub" style="fill:#BBB">D</text>
+  <path d="M214,106 q0,-8 8,-8 H278.0 q6,0 6,-6 q0,6 6,6 H346 q8,0 8,8" class="line"/>
+  <text x="284" y="86" class="c sub">第 2 个时分复用帧</text>
+  <rect x="364" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="382" y="146" class="c sub" style="fill:#BBB">A</text>
+  <rect x="400" y="112" width="36" height="60" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="418" y="146" class="c sub b" style="">B</text>
+  <rect x="436" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="454" y="146" class="c sub" style="fill:#BBB">C</text>
+  <rect x="472" y="112" width="36" height="60" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="490" y="146" class="c sub b" style="">D</text>
+  <path d="M366,106 q0,-8 8,-8 H430.0 q6,0 6,-6 q0,6 6,6 H498 q8,0 8,8" class="line"/>
+  <text x="436" y="86" class="c sub">第 3 个时分复用帧</text>
+  <rect x="516" y="112" width="36" height="60" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="534" y="146" class="c sub b" style="">A</text>
+  <rect x="552" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="570" y="146" class="c sub" style="fill:#BBB">B</text>
+  <rect x="588" y="112" width="36" height="60" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="606" y="146" class="c sub b" style="">C</text>
+  <rect x="624" y="112" width="36" height="60" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="642" y="146" class="c sub" style="fill:#BBB">D</text>
+  <path d="M518,106 q0,-8 8,-8 H582.0 q6,0 6,-6 q0,6 6,6 H650 q8,0 8,8" class="line"/>
+  <text x="588" y="86" class="c sub">第 4 个时分复用帧</text>
+  <text x="30" y="230" class="sub">每一帧中第 1 个时隙固定给 A，第 2 个给 B……用户这一段没有数据，它的时隙也空着（白色）。</text>
+  <text x="30" y="250" class="sub">16 个时隙只有 7 个在传数据，利用率 7 / 16 ≈ 44%。</text>
+  <text x="30" y="270" class="sub">接收端按时隙的位置就能知道数据属于哪个用户，不需要额外的地址。</text>
+</svg>

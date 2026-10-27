@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="312" viewBox="0 0 620 312">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="310" y="28" class="title">哈夫曼编码：每次合并频率最小的两个节点</text>
+  <line x1="220" y1="74" x2="150" y2="140" class="line"/>
+  <text x="175" y="107" class="c mono b" style="fill:#766AA8">0</text>
+  <line x1="220" y1="74" x2="290" y2="140" class="line"/>
+  <text x="265" y="107" class="c mono b" style="fill:#766AA8">1</text>
+  <line x1="150" y1="140" x2="90" y2="206" class="line"/>
+  <text x="110" y="173" class="c mono b" style="fill:#766AA8">0</text>
+  <line x1="150" y1="140" x2="210" y2="206" class="line"/>
+  <text x="190" y="173" class="c mono b" style="fill:#766AA8">1</text>
+  <line x1="90" y1="206" x2="50" y2="272" class="line"/>
+  <text x="60" y="239" class="c mono b" style="fill:#766AA8">0</text>
+  <line x1="90" y1="206" x2="130" y2="272" class="line"/>
+  <text x="120" y="239" class="c mono b" style="fill:#766AA8">1</text>
+  <circle cx="220" cy="74" r="18" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="220" y="78.5" class="c mono" style="font-size:13px;fill:#333">150</text>
+  <circle cx="150" cy="140" r="18" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="150" y="144.5" class="c mono" style="font-size:13px;fill:#333">70</text>
+  <rect x="268" y="123" width="44" height="34" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="290" y="138" class="c b mono" style="fill:#333">d</text>
+  <text x="290" y="152" class="c sub mono">80</text>
+  <circle cx="90" cy="206" r="18" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="210.5" class="c mono" style="font-size:13px;fill:#333">30</text>
+  <rect x="188" y="189" width="44" height="34" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="210" y="204" class="c b mono" style="fill:#333">c</text>
+  <text x="210" y="218" class="c sub mono">40</text>
+  <rect x="28" y="255" width="44" height="34" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="50" y="270" class="c b mono" style="fill:#333">a</text>
+  <text x="50" y="284" class="c sub mono">10</text>
+  <rect x="108" y="255" width="44" height="34" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="130" y="270" class="c b mono" style="fill:#333">b</text>
+  <text x="130" y="284" class="c sub mono">20</text>
+  <text x="360" y="70" class="b">合并顺序</text>
+  <text x="360" y="92" class="sub mono">① a(10) + b(20) = 30</text>
+  <text x="360" y="112" class="sub mono">② 30 + c(40) = 70</text>
+  <text x="360" y="132" class="sub mono">③ 70 + d(80) = 150</text>
+  <text x="360" y="172" class="b">字符</text>
+  <text x="406" y="172" class="b">频率</text>
+  <text x="456" y="172" class="b">编码</text>
+  <text x="520" y="172" class="b">占用位数</text>
+  <text x="360" y="194" class="mono">a</text>
+  <text x="406" y="194" class="mono">10</text>
+  <text x="456" y="194" class="mono">000</text>
+  <text x="520" y="194" class="mono">30</text>
+  <text x="360" y="214" class="mono">b</text>
+  <text x="406" y="214" class="mono">20</text>
+  <text x="456" y="214" class="mono">001</text>
+  <text x="520" y="214" class="mono">60</text>
+  <text x="360" y="234" class="mono">c</text>
+  <text x="406" y="234" class="mono">40</text>
+  <text x="456" y="234" class="mono">01</text>
+  <text x="520" y="234" class="mono">80</text>
+  <text x="360" y="254" class="mono">d</text>
+  <text x="406" y="254" class="mono">80</text>
+  <text x="456" y="254" class="mono">1</text>
+  <text x="520" y="254" class="mono">80</text>
+  <line x1="360" y1="270" x2="560" y2="270" class="line"/>
+  <text x="360" y="288" class="sub">合计 250 位；定长 2 位编码需要 300 位</text>
+</svg>

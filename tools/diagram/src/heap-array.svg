@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="350" viewBox="0 0 460 350">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="230" y="28" class="title">堆的数组表示：位置 k 的子节点是 2k 和 2k+1</text>
+  <line x1="230" y1="62" x2="150" y2="108" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="230" y1="62" x2="310" y2="108" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="150" y1="108" x2="110" y2="154" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="150" y1="108" x2="190" y2="154" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="310" y1="108" x2="270" y2="154" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="310" y1="108" x2="350" y2="154" stroke="#AAAAAA" stroke-width="1"/>
+  <line x1="110" y1="154" x2="90" y2="200" stroke="#AAAAAA" stroke-width="1"/>
+  <circle cx="230" cy="62" r="14" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="230" y="66.5" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <text x="230" y="87" class="c sub mono" style="font-size:9px;fill:#999">1</text>
+  <circle cx="150" cy="108" r="14" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="150" y="112.5" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <text x="150" y="133" class="c sub mono" style="font-size:9px;fill:#999">2</text>
+  <circle cx="310" cy="108" r="14" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="310" y="112.5" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <text x="310" y="133" class="c sub mono" style="font-size:9px;fill:#999">3</text>
+  <circle cx="110" cy="154" r="14" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="110" y="158.5" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <text x="110" y="179" class="c sub mono" style="font-size:9px;fill:#999">4</text>
+  <circle cx="190" cy="154" r="14" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="190" y="158.5" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <text x="190" y="179" class="c sub mono" style="font-size:9px;fill:#999">5</text>
+  <circle cx="270" cy="154" r="14" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="270" y="158.5" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <text x="270" y="179" class="c sub mono" style="font-size:9px;fill:#999">6</text>
+  <circle cx="350" cy="154" r="14" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="350" y="158.5" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <text x="350" y="179" class="c sub mono" style="font-size:9px;fill:#999">7</text>
+  <circle cx="90" cy="200" r="14" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="204.5" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <text x="90" y="225" class="c sub mono" style="font-size:9px;fill:#999">8</text>
+  <text x="91" y="262" class="c sub mono">0</text>
+  <text x="125" y="262" class="c sub mono">1</text>
+  <text x="159" y="262" class="c sub mono">2</text>
+  <text x="193" y="262" class="c sub mono">3</text>
+  <text x="227" y="262" class="c sub mono">4</text>
+  <text x="261" y="262" class="c sub mono">5</text>
+  <text x="295" y="262" class="c sub mono">6</text>
+  <text x="329" y="262" class="c sub mono">7</text>
+  <text x="363" y="262" class="c sub mono">8</text>
+  <rect x="74" y="270" width="34" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="91" y="290" class="c mono" style="font-size:13px;fill:#333">–</text>
+  <rect x="108" y="270" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="125" y="290" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="142" y="270" width="34" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="159" y="290" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <rect x="176" y="270" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="193" y="290" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="210" y="270" width="34" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="227" y="290" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="244" y="270" width="34" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="261" y="290" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="278" y="270" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="295" y="290" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="312" y="270" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="329" y="290" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="346" y="270" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="363" y="290" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <text x="91" y="316" class="sub c">不用</text>
+  <text x="230" y="334" class="sub c">k = 2：父节点 k/2 = 1，子节点 2k = 4、2k+1 = 5</text>
+</svg>

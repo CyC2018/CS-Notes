@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="356" viewBox="0 0 780 356">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">IP 把异构的网络连接成一个统一的网络</text>
+  <text x="245" y="62" class="c b">实际的网络：三种不同的链路</text>
+  <text x="650" y="62" class="c b">网络层看到的网络</text>
+  <rect x="20" y="80" width="130" height="190" rx="8" class="frame"/>
+  <text x="30" y="98" class="b">以太网</text>
+  <rect x="340" y="80" width="130" height="190" rx="8" class="frame"/>
+  <text x="350" y="98" class="b">Wi-Fi</text>
+  <rect x="67" y="116" width="36" height="24.48" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="71" y="120" width="28" height="16.48" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M81,140.48 v5 M89,140.48 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="73" y="145.48" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="85" y="164" class="c sub mono">H1  192.168.1.10</text>
+  <rect x="67" y="196" width="36" height="24.48" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="71" y="200" width="28" height="16.48" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M81,220.48 v5 M89,220.48 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="73" y="225.48" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="85" y="244" class="c sub mono">H2  192.168.1.11</text>
+  <rect x="387" y="116" width="36" height="24.48" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="391" y="120" width="28" height="16.48" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M401,140.48 v5 M409,140.48 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="393" y="145.48" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="405" y="164" class="c sub mono">H3  172.16.0.20</text>
+  <rect x="387" y="196" width="36" height="24.48" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="391" y="200" width="28" height="16.48" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M401,220.48 v5 M409,220.48 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="393" y="225.48" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="405" y="244" class="c sub mono">H4  172.16.0.21</text>
+  <line x1="105" y1="132" x2="172" y2="175" class="line"/>
+  <line x1="105" y1="212" x2="172" y2="175" class="line"/>
+  <circle cx="190" cy="175" r="16" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="194" y1="179" x2="201.2" y2="186.2" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="186" y1="171" x2="178.8" y2="163.8" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="194" y1="171" x2="201.2" y2="163.8" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="186" y1="179" x2="178.8" y2="186.2" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M197.2,186.2 L201.2,186.2 L201.2,182.2" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M182.8,163.8 L178.8,163.8 L178.8,167.8" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M198,171 L194,171 L194,167" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M182,179 L186,179 L186,183" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="190" y="206" class="c b">R1</text>
+  <line x1="206" y1="175" x2="274" y2="175" class="line"/>
+  <text x="240" y="167" class="c sub b">PPP</text>
+  <text x="240" y="192" class="c sub">点对点链路</text>
+  <circle cx="290" cy="175" r="16" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="294" y1="179" x2="301.2" y2="186.2" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="286" y1="171" x2="278.8" y2="163.8" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="294" y1="171" x2="301.2" y2="163.8" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="286" y1="179" x2="278.8" y2="186.2" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M297.2,186.2 L301.2,186.2 L301.2,182.2" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M282.8,163.8 L278.8,163.8 L278.8,167.8" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M298,171 L294,171 L294,167" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M282,179 L286,179 L286,183" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="290" y="206" class="c b">R2</text>
+  <line x1="306" y1="175" x2="383" y2="132" class="line"/>
+  <line x1="306" y1="175" x2="383" y2="212" class="line"/>
+  <line x1="486" y1="175" x2="524" y2="175" class="arrow "/>
+  <path d="M602,212 C569,212 572,171.5 599,168.8 C596,138.2 647,126.5 659,149 C677,132.8 713,141.8 704,168.8 C731,172.4 731,212 698,212 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="650" y="174" class="c b">IP 网络</text>
+  <text x="650" y="190" class="c sub">路由器负责转发</text>
+  <line x1="580" y1="138" x2="618.5" y2="149.5" class="line"/>
+  <rect x="563" y="108" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="567" y="112" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M576,131.12 v5 M584,131.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="568" y="136.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="580" y="86" class="c sub b">H1</text>
+  <text x="580" y="101" class="c sub mono">192.168.1.10</text>
+  <line x1="580" y1="236" x2="618.5" y2="213.5" class="line"/>
+  <rect x="563" y="236" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="567" y="240" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M576,259.12 v5 M584,259.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="568" y="264.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="580" y="282" class="c sub b">H2</text>
+  <text x="580" y="297" class="c sub mono">192.168.1.11</text>
+  <line x1="722" y1="138" x2="682.4" y2="149.5" class="line"/>
+  <rect x="705" y="108" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="709" y="112" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M718,131.12 v5 M726,131.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="710" y="136.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="722" y="86" class="c sub b">H3</text>
+  <text x="722" y="101" class="c sub mono">172.16.0.20</text>
+  <line x1="722" y1="236" x2="682.4" y2="213.5" class="line"/>
+  <rect x="705" y="236" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="709" y="240" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M718,259.12 v5 M726,259.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="710" y="264.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="722" y="282" class="c sub b">H4</text>
+  <text x="722" y="297" class="c sub mono">172.16.0.21</text>
+  <text x="20" y="318" class="sub">以太网、PPP 链路和 Wi-Fi 的帧格式、地址都不同，但每台主机都有 IP 地址，路由器在各段链路之间转发 IP 数据报。</text>
+  <text x="20" y="338" class="sub">在网络层看来，H1 到 H3 只是在同一个 IP 网络中发送数据报，下面用的是什么链路被屏蔽了。</text>
+</svg>

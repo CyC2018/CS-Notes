@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="384" viewBox="0 0 720 384">
   <style>
     text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
     .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
     .b { font-weight: bold; }
     .c { text-anchor: middle; }
     .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
     .note { fill: #C0605A; }
     .ok { fill: #6A9F68; }
-    .sub { font-size: 11px; fill: #6E6E6E; }
     .mono { font-family: Menlo, Consolas, monospace; }
     .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
     .red { stroke: #C0605A; marker-end: url(#r); }
@@ -43,7 +43,7 @@
   <text x="40" y="114" class="sub">0</text>
   <text x="680" y="114" class="e sub">16383</text>
   <path d="M190,86 C190,104 263.1,100 263.1,118" class="arrow"/>
-  <line x1="263.1" y1="120" x2="263.1" y2="142" stroke="#9F94D5" stroke-width="2.5"/>
+  <line x1="263.1" y1="120" x2="263.1" y2="142" stroke="#9188D8" stroke-width="2.5"/>
   <text x="269.125" y="114" class="b">5712</text>
   <line x1="146.641" y1="144" x2="146.641" y2="168" class="line"/>
   <path d="M122.641,176 v36 a24,6 0 0 0 48,0 v-36" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
@@ -78,6 +78,6 @@
   <text x="176.641" y="256" class="sub">异步复制</text>
   <path d="M176.6,196 C226.6,178 280.0,178 330.0,196" class="arrow red dash"/>
   <text x="253.311" y="160" class="c sub" style="fill:#C0605A">发给 7001：MOVED 5712 → 7002</text>
-  <text x="20" y="338" class="sub">{user:1001}:cart、{user:1001}:orders 只按 {} 中的部分计算，都在槽 5712，可以在同一条命令或 Lua 脚本中使用</text>
-  <text x="20" y="354" class="sub">主节点宕机后从节点被选为新的主节点；本机 cluster-node-timeout 为 5 秒时，这部分槽约 9 秒无法写入</text>
+  <text x="40" y="348" class="sub">{user:1001}:cart、{user:1001}:orders 只按 {} 中的部分计算，都在槽 5712，可以在同一条命令或 Lua 脚本中使用</text>
+  <text x="40" y="366" class="sub">主节点宕机后从节点被选为新的主节点；本机 cluster-node-timeout 为 5 秒时，这部分槽约 7～9 秒无法写入</text>
 </svg>

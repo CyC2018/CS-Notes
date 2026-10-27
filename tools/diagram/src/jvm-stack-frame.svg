@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Java 虚拟机栈：每次方法调用压入一个栈帧</text>
+  <text x="30" y="64" class="sub b">调用 main() → pay() → add(3, 4) 时线程 1 的栈</text>
+  <rect x="30" y="76" width="210" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="135" y="99.5" class="c sub mono">add(3, 4)  ← 栈顶，正在执行</text>
+  <rect x="30" y="122" width="210" height="38" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="135" y="145.5" class="c sub mono">pay()</text>
+  <rect x="30" y="168" width="210" height="38" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="135" y="191.5" class="c sub mono">main()</text>
+  <line x1="242" y1="95" x2="296" y2="95" class="arrow "/>
+  <rect x="298" y="52" width="438" height="260" rx="8" class="frame"/>
+  <text x="308" y="70" class="b">add 的栈帧</text>
+  <text x="314" y="92" class="sub b">局部变量表（locals = 4）</text>
+  <rect x="314" y="102" width="98" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="363" y="120" class="c sub mono" style="fill:#444">[0] this</text>
+  <rect x="416" y="102" width="98" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="465" y="120" class="c sub mono" style="fill:#444">[1] a = 3</text>
+  <rect x="518" y="102" width="98" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="567" y="120" class="c sub mono" style="fill:#444">[2] b = 4</text>
+  <rect x="620" y="102" width="98" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="669" y="120" class="c sub mono" style="fill:#444">[3] sum = 7</text>
+  <text x="314" y="156" class="sub b">操作数栈（stack = 2）</text>
+  <text x="354" y="176" class="c sub mono">iload_1</text>
+  <rect x="329" y="210" width="50" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="354" y="225" class="c sub mono" style="fill:#444">3</text>
+  <rect x="329" y="188" width="50" height="22" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="354" y="203" class="c sub mono" style="fill:#444"></text>
+  <text x="458" y="176" class="c sub mono">iload_2</text>
+  <rect x="433" y="210" width="50" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="458" y="225" class="c sub mono" style="fill:#444">3</text>
+  <rect x="433" y="188" width="50" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="458" y="203" class="c sub mono" style="fill:#444">4</text>
+  <text x="562" y="176" class="c sub mono">iadd</text>
+  <rect x="537" y="210" width="50" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="562" y="225" class="c sub mono" style="fill:#444">7</text>
+  <rect x="537" y="188" width="50" height="22" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="562" y="203" class="c sub mono" style="fill:#444"></text>
+  <text x="666" y="176" class="c sub mono">istore_3</text>
+  <rect x="641" y="210" width="50" height="22" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="666" y="225" class="c sub mono" style="fill:#444"></text>
+  <rect x="641" y="188" width="50" height="22" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="666" y="203" class="c sub mono" style="fill:#444"></text>
+  <text x="314" y="254" class="sub">动态链接：指向运行时常量池，把符号引用解析为方法的地址</text>
+  <text x="314" y="274" class="sub">返回地址：add 执行完后回到 pay() 的哪条指令继续</text>
+  <text x="314" y="294" class="sub mono" style="font-size:10.5px">int add(int a, int b) { int sum = a + b; return sum; }</text>
+  <text x="30" y="340" class="sub">javap -v 显示 add 的 stack=2、locals=4，字节码依次为 iload_1、iload_2、iadd、istore_3、iload_3、ireturn。</text>
+  <text x="30" y="358" class="sub">方法返回时栈帧出栈；调用层次太深、栈帧放不下时抛出 StackOverflowError。</text>
+</svg>

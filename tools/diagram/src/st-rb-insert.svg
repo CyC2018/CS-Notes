@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="592" viewBox="0 0 820 592">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="410" y="28" class="title">向 3- 节点 C E 中插入新键：先旋转成左右子节点都是红色，再颜色转换</text>
+  <text x="410" y="56" class="c sub">初始时依次插入 E、C，C 是 E 的红色左子节点，两者组成一个 3- 节点</text>
+  <text x="24" y="154" class="b">插入 G</text>
+  <text x="24" y="172" class="sub">大于 E</text>
+  <text x="200" y="102" class="c sub">插入</text>
+  <line x1="200" y1="118" x2="200" y2="123" stroke="#555" stroke-width="1.1"/>
+  <line x1="190.338" y1="149.474" x2="177.662" y2="164.526" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="209.662" y1="149.474" x2="222.338" y2="164.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="200" cy="138" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="142.5" class="c b">E</text>
+  <circle cx="168" cy="176" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="168" y="180.5" class="c b">C</text>
+  <circle cx="232" cy="176" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="232" y="180.5" class="c b">G</text>
+  <text x="324" y="102" class="c sub b">颜色转换</text>
+  <line x1="324" y1="118" x2="324" y2="123" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="314.338" y1="149.474" x2="301.662" y2="164.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="333.662" y1="149.474" x2="346.338" y2="164.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="324" cy="138" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="324" y="142.5" class="c b">E</text>
+  <circle cx="292" cy="176" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="292" y="180.5" class="c b">C</text>
+  <circle cx="356" cy="176" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="356" y="180.5" class="c b">G</text>
+  <line x1="248" y1="164" x2="276" y2="164" class="arrow "/>
+  <text x="448" y="102" class="c sub b">根节点设为黑色</text>
+  <line x1="448" y1="118" x2="448" y2="123" stroke="#555" stroke-width="1.1"/>
+  <line x1="438.338" y1="149.474" x2="425.662" y2="164.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="457.662" y1="149.474" x2="470.338" y2="164.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="448" cy="138" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="448" y="142.5" class="c b">E</text>
+  <circle cx="416" cy="176" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="416" y="180.5" class="c b">C</text>
+  <circle cx="480" cy="176" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="480" y="180.5" class="c b">G</text>
+  <line x1="372" y1="164" x2="400" y2="164" class="arrow "/>
+  <line x1="20" y1="250" x2="800" y2="250" class="frame"/>
+  <text x="24" y="326" class="b">插入 A</text>
+  <text x="24" y="344" class="sub">小于 C</text>
+  <text x="200" y="274" class="c sub">插入</text>
+  <line x1="200" y1="290" x2="200" y2="295" stroke="#555" stroke-width="1.1"/>
+  <line x1="190.338" y1="321.474" x2="177.662" y2="336.526" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="158.338" y1="359.474" x2="145.662" y2="374.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="200" cy="310" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="314.5" class="c b">E</text>
+  <circle cx="168" cy="348" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="168" y="352.5" class="c b">C</text>
+  <circle cx="136" cy="386" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="136" y="390.5" class="c b">A</text>
+  <text x="324" y="274" class="c sub b">右旋转</text>
+  <line x1="324" y1="290" x2="324" y2="295" stroke="#555" stroke-width="1.1"/>
+  <line x1="314.338" y1="321.474" x2="301.662" y2="336.526" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="333.662" y1="321.474" x2="346.338" y2="336.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="324" cy="310" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="324" y="314.5" class="c b">C</text>
+  <circle cx="292" cy="348" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="292" y="352.5" class="c b">A</text>
+  <circle cx="356" cy="348" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="356" y="352.5" class="c b">E</text>
+  <line x1="248" y1="336" x2="276" y2="336" class="arrow "/>
+  <text x="448" y="274" class="c sub b">颜色转换</text>
+  <line x1="448" y1="290" x2="448" y2="295" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="438.338" y1="321.474" x2="425.662" y2="336.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="457.662" y1="321.474" x2="470.338" y2="336.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="448" cy="310" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="448" y="314.5" class="c b">C</text>
+  <circle cx="416" cy="348" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="416" y="352.5" class="c b">A</text>
+  <circle cx="480" cy="348" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="480" y="352.5" class="c b">E</text>
+  <line x1="372" y1="336" x2="400" y2="336" class="arrow "/>
+  <text x="572" y="274" class="c sub b">根节点设为黑色</text>
+  <line x1="572" y1="290" x2="572" y2="295" stroke="#555" stroke-width="1.1"/>
+  <line x1="562.338" y1="321.474" x2="549.662" y2="336.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="581.662" y1="321.474" x2="594.338" y2="336.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="572" cy="310" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="572" y="314.5" class="c b">C</text>
+  <circle cx="540" cy="348" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="540" y="352.5" class="c b">A</text>
+  <circle cx="604" cy="348" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="604" y="352.5" class="c b">E</text>
+  <line x1="496" y1="336" x2="524" y2="336" class="arrow "/>
+  <line x1="20" y1="422" x2="800" y2="422" class="frame"/>
+  <text x="24" y="498" class="b">插入 D</text>
+  <text x="24" y="516" class="sub">在 C、E 之间</text>
+  <text x="200" y="446" class="c sub">插入</text>
+  <line x1="200" y1="462" x2="200" y2="467" stroke="#555" stroke-width="1.1"/>
+  <line x1="187.102" y1="489.658" x2="148.898" y2="512.342" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="145.662" y1="531.474" x2="158.338" y2="546.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="200" cy="482" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="486.5" class="c b">E</text>
+  <circle cx="136" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="136" y="524.5" class="c b">C</text>
+  <circle cx="168" cy="558" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="168" y="562.5" class="c b">D</text>
+  <text x="324" y="446" class="c sub b">左旋转</text>
+  <line x1="324" y1="462" x2="324" y2="467" stroke="#555" stroke-width="1.1"/>
+  <line x1="314.338" y1="493.474" x2="301.662" y2="508.526" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="282.338" y1="531.474" x2="269.662" y2="546.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="324" cy="482" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="324" y="486.5" class="c b">E</text>
+  <circle cx="292" cy="520" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="292" y="524.5" class="c b">D</text>
+  <circle cx="260" cy="558" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="260" y="562.5" class="c b">C</text>
+  <line x1="248" y1="508" x2="276" y2="508" class="arrow "/>
+  <text x="448" y="446" class="c sub b">右旋转</text>
+  <line x1="448" y1="462" x2="448" y2="467" stroke="#555" stroke-width="1.1"/>
+  <line x1="438.338" y1="493.474" x2="425.662" y2="508.526" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="457.662" y1="493.474" x2="470.338" y2="508.526" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="448" cy="482" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="448" y="486.5" class="c b">D</text>
+  <circle cx="416" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="416" y="524.5" class="c b">C</text>
+  <circle cx="480" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="480" y="524.5" class="c b">E</text>
+  <line x1="372" y1="508" x2="400" y2="508" class="arrow "/>
+  <text x="572" y="446" class="c sub b">颜色转换</text>
+  <line x1="572" y1="462" x2="572" y2="467" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="562.338" y1="493.474" x2="549.662" y2="508.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="581.662" y1="493.474" x2="594.338" y2="508.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="572" cy="482" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="572" y="486.5" class="c b">D</text>
+  <circle cx="540" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="540" y="524.5" class="c b">C</text>
+  <circle cx="604" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="604" y="524.5" class="c b">E</text>
+  <line x1="496" y1="508" x2="524" y2="508" class="arrow "/>
+  <text x="696" y="446" class="c sub b">根节点设为黑色</text>
+  <line x1="696" y1="462" x2="696" y2="467" stroke="#555" stroke-width="1.1"/>
+  <line x1="686.338" y1="493.474" x2="673.662" y2="508.526" stroke="#555" stroke-width="1.1"/>
+  <line x1="705.662" y1="493.474" x2="718.338" y2="508.526" stroke="#555" stroke-width="1.1"/>
+  <circle cx="696" cy="482" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="696" y="486.5" class="c b">D</text>
+  <circle cx="664" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="664" y="524.5" class="c b">C</text>
+  <circle cx="728" cy="520" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="728" y="524.5" class="c b">E</text>
+  <line x1="620" y1="508" x2="648" y2="508" class="arrow "/>
+</svg>

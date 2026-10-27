@@ -356,7 +356,7 @@ Output: 6
 
 用两个指针从两端向中间移动，分别维护 leftMax 和 rightMax。如果 leftMax < rightMax，左指针处的水位只由 leftMax 决定，因为右边已经有一根不低于 rightMax 的柱子，可以直接结算左指针并右移；反之结算右指针并左移。
 
-<div align="center"> <img src="pics/trapping-rain-water.png" width="560px"/> </div><br>
+<div align="center"> <img src="pics/trapping-rain-water.png" width="600px"/> </div><br>
 
 ```java
 public int trap(int[] height) {

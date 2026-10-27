@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="548" viewBox="0 0 760 548">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Fast forward 与 --no-ff：合并同一个 dev 分支</text>
+  <text x="30" y="62" class="b">合并前：master 在 8c4423a，dev 比它多一个提交</text>
+  <circle cx="250" cy="135" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="250" y="163" class="c sub mono" style="fill:#3F3F3F">3c6d6d5</text>
+  <text x="250" y="177" class="c sub">add a.txt</text>
+  <circle cx="370" cy="135" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="370" y="163" class="c sub mono" style="fill:#3F3F3F">8c4423a</text>
+  <text x="370" y="177" class="c sub">add b.txt</text>
+  <circle cx="490" cy="135" r="13" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="490" y="163" class="c sub mono" style="fill:#3F3F3F">72f2299</text>
+  <text x="490" y="177" class="c sub">add c.txt</text>
+  <line x1="476" y1="135" x2="386" y2="135" class="arrow "/>
+  <line x1="356" y1="135" x2="266" y2="135" class="arrow "/>
+  <rect x="339.4" y="81" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="370" y="96" class="c sub mono" style="fill:#3F3F3F">master</text>
+  <line x1="370" y1="103" x2="370" y2="120" class="arrow "/>
+  <rect x="470.2" y="81" width="39.6" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="490" y="96" class="c sub mono" style="fill:#3F3F3F">dev</text>
+  <line x1="490" y1="103" x2="490" y2="120" class="arrow "/>
+  <line x1="30" y1="200" x2="730" y2="200" class="frame"/>
+  <text x="30" y="230" class="b">git merge dev（快进）</text>
+  <circle cx="60" cy="300" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="60" y="328" class="c sub mono" style="fill:#3F3F3F">3c6d6d5</text>
+  <text x="60" y="342" class="c sub">add a.txt</text>
+  <circle cx="160" cy="300" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="160" y="328" class="c sub mono" style="fill:#3F3F3F">8c4423a</text>
+  <text x="160" y="342" class="c sub">add b.txt</text>
+  <circle cx="260" cy="300" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="260" y="328" class="c sub mono" style="fill:#3F3F3F">72f2299</text>
+  <text x="260" y="342" class="c sub">add c.txt</text>
+  <line x1="246" y1="300" x2="176" y2="300" class="arrow "/>
+  <line x1="146" y1="300" x2="76" y2="300" class="arrow "/>
+  <rect x="194.4" y="247" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="225" y="262" class="c sub mono" style="fill:#3F3F3F">master</text>
+  <line x1="236" y1="269" x2="252" y2="287" class="arrow "/>
+  <rect x="280.2" y="247" width="39.6" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="300" y="262" class="c sub mono" style="fill:#3F3F3F">dev</text>
+  <line x1="292" y1="269" x2="268" y2="287" class="arrow "/>
+  <text x="30" y="432" class="sub">master 直接移动到 72f2299，历史是一条直线，</text>
+  <text x="30" y="448" class="sub">看不出这个提交来自 dev 分支。</text>
+  <rect x="30" y="462" width="330" height="72" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="40" y="480" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git log --first-parent --oneline master</text>
+  <text x="40" y="495" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">72f2299 add c.txt</text>
+  <text x="40" y="510" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">8c4423a add b.txt</text>
+  <text x="40" y="525" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">3c6d6d5 add a.txt</text>
+  <text x="400" y="230" class="b">git merge --no-ff -m "merge with no-ff" dev</text>
+  <circle cx="420" cy="300" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="420" y="265" class="c sub mono" style="fill:#3F3F3F">3c6d6d5</text>
+  <text x="420" y="279" class="c sub">add a.txt</text>
+  <circle cx="510" cy="300" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="510" y="265" class="c sub mono" style="fill:#3F3F3F">8c4423a</text>
+  <text x="510" y="279" class="c sub">add b.txt</text>
+  <circle cx="690" cy="300" r="13" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="690" y="328" class="c sub mono" style="fill:#3F3F3F">f30175d</text>
+  <text x="690" y="342" class="c sub">merge with no-ff</text>
+  <circle cx="585" cy="372" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="585" y="400" class="c sub mono" style="fill:#3F3F3F">72f2299</text>
+  <text x="585" y="414" class="c sub">add c.txt</text>
+  <line x1="496" y1="300" x2="436" y2="300" class="arrow "/>
+  <line x1="676" y1="300" x2="526" y2="300" class="arrow "/>
+  <line x1="574.901" y1="362.305" x2="521.542" y2="311.081" class="arrow "/>
+  <line x1="678.454" y1="307.917" x2="598.196" y2="362.952" class="arrow dash"/>
+  <rect x="659.4" y="247" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="690" y="262" class="c sub mono" style="fill:#3F3F3F">master</text>
+  <line x1="690" y1="269" x2="690" y2="285" class="arrow "/>
+  <rect x="495.2" y="361" width="39.6" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="515" y="376" class="c sub mono" style="fill:#3F3F3F">dev</text>
+  <line x1="535" y1="372" x2="569" y2="372" class="arrow "/>
+  <text x="400" y="432" class="sub">新建合并提交 f30175d，第一个父提交是 8c4423a，</text>
+  <text x="400" y="448" class="sub">第二个父提交（虚线）是 72f2299，分支历史被保留。</text>
+  <rect x="400" y="462" width="340" height="72" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="410" y="480" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git log --first-parent --oneline master</text>
+  <text x="410" y="495" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">f30175d merge with no-ff</text>
+  <text x="410" y="510" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">8c4423a add b.txt</text>
+  <text x="410" y="525" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">3c6d6d5 add a.txt</text>
+</svg>

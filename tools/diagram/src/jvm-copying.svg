@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="270" viewBox="0 0 760 270">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">复制：把存活的对象复制到另一半，再清空这一半</text>
+  <text x="30" y="64" class="sub b">回收前</text>
+  <text x="120" y="64" class="sub">正在使用的一半</text>
+  <rect x="120" y="72" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="138" y="92" class="c sub mono" style="fill:#444">A</text>
+  <rect x="156" y="72" width="36" height="32" rx="3" fill="#F3C6C2" stroke="#D99A94" stroke-width="1"/>
+  <text x="174" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="192" y="72" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="210" y="92" class="c sub mono" style="fill:#444">B</text>
+  <rect x="228" y="72" width="36" height="32" rx="3" fill="#F3C6C2" stroke="#D99A94" stroke-width="1"/>
+  <text x="246" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="264" y="72" width="36" height="32" rx="3" fill="#F3C6C2" stroke="#D99A94" stroke-width="1"/>
+  <text x="282" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="300" y="72" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="318" y="92" class="c sub mono" style="fill:#444">C</text>
+  <rect x="336" y="72" width="36" height="32" rx="3" fill="#F3C6C2" stroke="#D99A94" stroke-width="1"/>
+  <text x="354" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="372" y="72" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="390" y="92" class="c sub mono" style="fill:#444">D</text>
+  <text x="430" y="64" class="sub">另一半（空闲）</text>
+  <rect x="430" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="448" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="466" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="484" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="502" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="520" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="538" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="556" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="574" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="592" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="610" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="628" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="646" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="664" y="92" class="c sub mono" style="fill:#444"></text>
+  <rect x="682" y="72" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="700" y="92" class="c sub mono" style="fill:#444"></text>
+  <text x="30" y="156" class="sub b">回收后</text>
+  <rect x="120" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="156" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="174" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="192" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="210" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="228" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="246" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="264" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="282" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="300" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="318" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="336" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="354" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="372" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="390" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="430" y="140" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="448" y="160" class="c sub mono" style="fill:#444">A</text>
+  <rect x="466" y="140" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="484" y="160" class="c sub mono" style="fill:#444">B</text>
+  <rect x="502" y="140" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="520" y="160" class="c sub mono" style="fill:#444">C</text>
+  <rect x="538" y="140" width="36" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="556" y="160" class="c sub mono" style="fill:#444">D</text>
+  <rect x="574" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="592" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="610" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="628" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="646" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="664" y="160" class="c sub mono" style="fill:#444"></text>
+  <rect x="682" y="140" width="36" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="700" y="160" class="c sub mono" style="fill:#444"></text>
+  <path d="M266,104 C300,130 400,120 440,138" class="arrow"/>
+  <text x="120" y="200" class="sub">只需要处理存活的对象，复制后自然是连续的；代价是始终有一半内存空着。</text>
+  <text x="120" y="218" class="sub">新生代的对象大多很快死亡，所以 HotSpot 用 Eden 和两个 Survivor（默认 8:1:1）代替两个等大的半区。</text>
+  <rect x="30" y="240" width="18" height="14" rx="3" fill="#C6ECE9" stroke="#BBB"/>
+  <text x="54" y="252" class="sub">存活对象</text>
+  <rect x="140" y="240" width="18" height="14" rx="3" fill="#F3C6C2" stroke="#BBB"/>
+  <text x="164" y="252" class="sub">垃圾</text>
+  <rect x="250" y="240" width="18" height="14" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="274" y="252" class="sub">空闲</text>
+</svg>

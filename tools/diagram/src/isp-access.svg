@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="250" viewBox="0 0 740 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">通过 ISP 接入互联网</text>
+  <rect x="38" y="90" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="42" y="94" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,119.92 v5 M64,119.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="124.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="142" class="c b">用户</text>
+  <circle cx="180" cy="105" r="17" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="184.25" y1="109.25" x2="191.9" y2="116.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="175.75" y1="100.75" x2="168.1" y2="93.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="184.25" y1="100.75" x2="191.9" y2="93.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="175.75" y1="109.25" x2="168.1" y2="116.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M187.9,116.9 L191.9,116.9 L191.9,112.9" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M172.1,93.1 L168.1,93.1 L168.1,97.1" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M188.25,100.75 L184.25,100.75 L184.25,96.75" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M171.75,109.25 L175.75,109.25 L175.75,113.25" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="180" y="142" class="c b">家用路由器</text>
+  <rect x="316" y="82" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="323" cy="88.5" r="2" fill="#7DBCB7"/>
+  <line x1="330" y1="88.5" x2="357" y2="88.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="316" y="98" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="323" cy="104.5" r="2" fill="#7DBCB7"/>
+  <line x1="330" y1="104.5" x2="357" y2="104.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="316" y="114" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="323" cy="120.5" r="2" fill="#7DBCB7"/>
+  <line x1="330" y1="120.5" x2="357" y2="120.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="340" y="142" class="c b">接入 ISP</text>
+  <text x="340" y="158" class="c sub">例如本地的宽带运营商</text>
+  <path d="M465.6,140.4 C428.2,140.4 431.6,101.7 462.2,99.12 C458.8,69.88 516.6,58.7 530.2,80.2 C550.6,64.72 591.4,73.32 581.2,99.12 C611.8,102.56 611.8,140.4 574.4,140.4 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="520" y="104" class="c b">互联网</text>
+  <text x="520" y="120" class="c sub">更上层的 ISP</text>
+  <rect x="650" y="62" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="657" cy="68.5" r="2" fill="#7FB2D6"/>
+  <line x1="664" y1="68.5" x2="683" y2="68.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="650" y="78" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="657" cy="84.5" r="2" fill="#7FB2D6"/>
+  <line x1="664" y1="84.5" x2="683" y2="84.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="670" y="106" class="c sub mono">www.example.com</text>
+  <line x1="600" y1="106" x2="648" y2="76" class="line"/>
+  <rect x="650" y="132" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="657" cy="138.5" r="2" fill="#7FB2D6"/>
+  <line x1="664" y1="138.5" x2="683" y2="138.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="650" y="148" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="657" cy="154.5" r="2" fill="#7FB2D6"/>
+  <line x1="664" y1="154.5" x2="683" y2="154.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="670" y="176" class="c sub mono">mail.example.org</text>
+  <line x1="600" y1="106" x2="648" y2="146" class="line"/>
+  <line x1="84" y1="106" x2="162" y2="106" class="line"/>
+  <line x1="198" y1="106" x2="314" y2="106" class="line"/>
+  <line x1="366" y1="106" x2="436" y2="106" class="line"/>
+  <text x="260" y="96" class="c sub">光纤或 DSL</text>
+  <text x="30" y="210" class="sub">ISP 为家用路由器分配一个公网 IP 地址（例如 203.0.113.25），用户的流量经接入 ISP 进入互联网，</text>
+  <text x="30" y="230" class="sub">再由各级 ISP 转交，最终到达网站的服务器。</text>
+</svg>

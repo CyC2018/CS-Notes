@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">802.1Q 帧：在源地址后面插入 4 字节的 VLAN 标签</text>
+  <text x="30" y="60" class="b">普通以太网帧</text>
+  <rect x="30" y="70" width="120" height="40" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="90" y="87" class="c b">目的地址</text>
+  <text x="90" y="103" class="c sub">6 字节</text>
+  <rect x="150" y="70" width="120" height="40" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="210" y="87" class="c b">源地址</text>
+  <text x="210" y="103" class="c sub">6 字节</text>
+  <rect x="270" y="70" width="70" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="305" y="87" class="c b">类型</text>
+  <text x="305" y="103" class="c sub">2 字节</text>
+  <rect x="340" y="70" width="170" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="425" y="87" class="c b">数据</text>
+  <text x="425" y="103" class="c sub">46～1500 字节</text>
+  <rect x="510" y="70" width="60" height="40" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="540" y="87" class="c b">FCS</text>
+  <text x="540" y="103" class="c sub">4 字节</text>
+  <text x="30" y="142" class="b">加上 VLAN 标签后</text>
+  <rect x="30" y="152" width="120" height="40" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="90" y="169" class="c b">目的地址</text>
+  <text x="90" y="185" class="c sub">6 字节</text>
+  <rect x="150" y="152" width="120" height="40" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="210" y="169" class="c b">源地址</text>
+  <text x="210" y="185" class="c sub">6 字节</text>
+  <rect x="270" y="152" width="130" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="335" y="169" class="c b">VLAN 标签</text>
+  <text x="335" y="185" class="c sub">4 字节</text>
+  <rect x="400" y="152" width="70" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="435" y="169" class="c b">类型</text>
+  <text x="435" y="185" class="c sub">2 字节</text>
+  <rect x="470" y="152" width="170" height="40" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="555" y="169" class="c b">数据</text>
+  <text x="555" y="185" class="c sub">46～1500 字节</text>
+  <rect x="640" y="152" width="60" height="40" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="670" y="169" class="c b">FCS</text>
+  <text x="670" y="185" class="c sub">4 字节</text>
+  <path d="M270,194 L240,214" class="line dash"/>
+  <path d="M400,194 L520,214" class="line dash"/>
+  <rect x="240" y="214" width="100" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="290" y="231" class="c sub b">TPID</text>
+  <text x="290" y="247" class="c sub mono">0x8100</text>
+  <rect x="340" y="214" width="42" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="361" y="231" class="c sub b">PCP</text>
+  <text x="361" y="247" class="c sub">3 位</text>
+  <rect x="382" y="214" width="36" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="400" y="231" class="c sub b">DEI</text>
+  <text x="400" y="247" class="c sub">1 位</text>
+  <rect x="418" y="214" width="102" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="469" y="231" class="c sub b">VID</text>
+  <text x="469" y="247" class="c sub">12 位：10</text>
+  <text x="534" y="230" class="sub">TPID 为 0x8100 表示带有标签；</text>
+  <text x="534" y="248" class="sub">VID 是 VLAN 号，取值 1～4094。</text>
+</svg>

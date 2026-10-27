@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">一个 1500 字节的分组经过路由器的四种时延</text>
+  <rect x="30" y="96" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="34" y="100" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M46,123.2 v5 M54,123.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="38" y="128.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="50" y="146" class="c sub">上一跳</text>
+  <line x1="72" y1="112" x2="128" y2="112" class="line"/>
+  <rect x="130" y="60" width="330" height="110" rx="8" class="frame"/>
+  <text x="140" y="78" class="b">路由器</text>
+  <rect x="150" y="92" width="90" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="195" y="110" class="c sub b">处理</text>
+  <text x="195" y="125" class="sub c">检验、查路由表</text>
+  <line x1="240" y1="112" x2="270" y2="112" class="arrow "/>
+  <rect x="272" y="98" width="30" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="306" y="98" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="340" y="98" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="374" y="98" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="338" y="90" class="c sub">输出队列</text>
+  <text x="287" y="145" class="c sub" style="fill:#766AA8">本分组</text>
+  <text x="356" y="145" class="c sub">排在前面的 3 个</text>
+  <line x1="406" y1="112" x2="450" y2="112" class="arrow "/>
+  <line x1="460" y1="112" x2="700" y2="112" stroke="#555" stroke-width="1.1"/>
+  <rect x="464" y="104" width="54" height="16" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="494" y="96" class="sub">正在发送的分组</text>
+  <text x="610" y="140" class="c sub">2000 km 光纤，100 Mbit/s</text>
+  <rect x="706" y="96" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="710" y="100" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M722,123.2 v5 M730,123.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="714" y="128.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="726" y="146" class="c sub">下一跳</text>
+  <line x1="700" y1="112" x2="706" y2="112" class="line"/>
+  <text x="40" y="212" class="b">① 处理时延</text>
+  <text x="140" y="212" class="sub" style="fill:#444">检验首部、查找路由表等，通常是微秒级</text>
+  <text x="40" y="240" class="b">② 排队时延</text>
+  <text x="140" y="240" class="sub" style="fill:#444">前面还有 3 个分组在等待发送，要等它们发完；取决于当时的通信量</text>
+  <text x="40" y="268" class="b">③ 传输时延</text>
+  <text x="140" y="268" class="sub" style="fill:#444">轮到本分组时，把 12000 bit 全部推上 100 Mbit/s 的链路：12000 / 10⁸ s = 0.12 ms</text>
+  <text x="40" y="296" class="b">④ 传播时延</text>
+  <text x="140" y="296" class="sub" style="fill:#444">最后一个比特在 2000 km 光纤中传到下一跳：2 × 10⁶ m / (2 × 10⁸ m/s) = 10 ms</text>
+  <text x="40" y="334" class="sub">前两种发生在路由器内部，传输时延发生在把分组送上链路时，传播时延发生在链路上。</text>
+</svg>

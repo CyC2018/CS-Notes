@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">客户-服务器与对等方式</text>
+  <text x="190" y="64" class="c b">客户-服务器（C/S）</text>
+  <text x="590" y="64" class="c b">对等（P2P）：4 台主机交换一个文件的 4 个块</text>
+  <rect x="166" y="146" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="173" cy="152.5" r="2" fill="#7DBCB7"/>
+  <line x1="180" y1="152.5" x2="207" y2="152.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="166" y="162" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="173" cy="168.5" r="2" fill="#7DBCB7"/>
+  <line x1="180" y1="168.5" x2="207" y2="168.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="166" y="178" width="48" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="173" cy="184.5" r="2" fill="#7DBCB7"/>
+  <line x1="180" y1="184.5" x2="207" y2="184.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="190" y="210" class="c sub b">服务器</text>
+  <text x="190" y="226" class="c sub mono">www.example.com</text>
+  <rect x="43" y="86" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="47" y="90" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,109.12 v5 M64,109.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="114.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="132" class="c sub">浏览器 1</text>
+  <line x1="82.8922" y1="108.534" x2="158.303" y2="155.777" class="arrow "/>
+  <rect x="43" y="222" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="47" y="226" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M56,245.12 v5 M64,245.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="48" y="250.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="60" y="268" class="c sub">浏览器 2</text>
+  <line x1="83.1833" y1="227.852" x2="157.9" y2="183.581" class="arrow "/>
+  <rect x="303" y="86" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="307" y="90" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M316,109.12 v5 M324,109.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="308" y="114.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="320" y="132" class="c sub">浏览器 3</text>
+  <line x1="297.108" y1="108.534" x2="221.697" y2="155.777" class="arrow "/>
+  <rect x="303" y="222" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="307" y="226" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M316,245.12 v5 M324,245.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="308" y="250.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="320" y="268" class="c sub">App</text>
+  <line x1="296.817" y1="227.852" x2="222.1" y2="183.581" class="arrow "/>
+  <text x="190" y="306" class="c sub">客户主动请求，服务器一直运行，被动等待并提供服务</text>
+  <line x1="480" y1="110" x2="700" y2="110" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <rect x="564.0" y="100.0" width="52" height="20" fill="#FFFFFF"/>
+  <text x="590" y="114" class="c sub">块 1 ⇄ 3</text>
+  <line x1="480" y1="110" x2="480" y2="236" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <rect x="454.0" y="163.0" width="52" height="20" fill="#FFFFFF"/>
+  <text x="480" y="177" class="c sub">块 2 ⇄ 4</text>
+  <line x1="700" y1="110" x2="700" y2="236" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <rect x="674.0" y="163.0" width="52" height="20" fill="#FFFFFF"/>
+  <text x="700" y="177" class="c sub">块 2 ⇄ 4</text>
+  <line x1="480" y1="236" x2="700" y2="236" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <rect x="564.0" y="226.0" width="52" height="20" fill="#FFFFFF"/>
+  <text x="590" y="240" class="c sub">块 1 ⇄ 3</text>
+  <rect x="463" y="96" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="467" y="100" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M476,119.12 v5 M484,119.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="468" y="124.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="480" y="86" class="c sub">已有块 1、2</text>
+  <rect x="683" y="96" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="687" y="100" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M696,119.12 v5 M704,119.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="688" y="124.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="700" y="86" class="c sub">已有块 2、3</text>
+  <rect x="463" y="222" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="467" y="226" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M476,245.12 v5 M484,245.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="468" y="250.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="480" y="268" class="c sub">已有块 1、4</text>
+  <rect x="683" y="222" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="687" y="226" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M696,245.12 v5 M704,245.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="688" y="250.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="700" y="268" class="c sub">已有块 3、4</text>
+  <text x="590" y="306" class="c sub">每台主机既下载也上传：缺的块从别的主机取，已有的块提供给别人</text>
+</svg>

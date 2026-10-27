@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="230" viewBox="0 0 520 230">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="260" y="28" class="title">3- 节点 E J 在红黑树中表示为：J 的左链接为红链接，指向 E</text>
+  <rect x="90" y="66" width="60" height="28" rx="14" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="120" y="84.5" class="c b">E  J</text>
+  <line x1="98" y1="94" x2="50" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="27" y="152" width="46" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="50" y="169.5" class="c sub b">A C</text>
+  <line x1="120" y1="94" x2="120" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="103" y="152" width="34" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="120" y="169.5" class="c sub b">G</text>
+  <line x1="142" y1="94" x2="190" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="167" y="152" width="46" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="190" y="169.5" class="c sub b">L N</text>
+  <text x="120" y="210" class="c b">2-3 树</text>
+  <text x="260" y="125" class="c b" style="font-size:22px">⇔</text>
+  <line x1="409.179" y1="80.388" x2="380.821" y2="107.612" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="358.571" y1="127.715" x2="330" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="307" y="152" width="46" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="330" y="169.5" class="c sub b">A C</text>
+  <line x1="381.429" y1="127.715" x2="410" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="393" y="152" width="34" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="410" y="169.5" class="c sub b">G</text>
+  <line x1="428.858" y1="82.1055" x2="480" y2="152" stroke="#555" stroke-width="1.1"/>
+  <rect x="457" y="152" width="46" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="480" y="169.5" class="c sub b">L N</text>
+  <circle cx="420" cy="70" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="420" y="74.5" class="c b">J</text>
+  <circle cx="370" cy="118" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="370" y="122.5" class="c b">E</text>
+  <text x="372" y="92" class="e sub note">红链接</text>
+  <text x="410" y="210" class="c b">红黑树</text>
+</svg>

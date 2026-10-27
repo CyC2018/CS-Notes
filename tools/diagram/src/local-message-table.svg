@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">本地消息表：业务数据和消息在同一个本地事务中写入</text>
+  <rect x="24" y="56" width="330" height="200" rx="8" class="frame"/>
+  <text x="34" y="74" class="b">订单服务的数据库</text>
+  <text x="40" y="98" class="sub mono">BEGIN</text>
+  <rect x="40" y="108" width="140" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="110" y="129.5" class="c sub mono b">orders</text>
+  <text x="190" y="130" class="sub mono">INSERT 订单 1024</text>
+  <rect x="40" y="152" width="140" height="34" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="110" y="173.5" class="c sub mono b">local_message</text>
+  <text x="190" y="174" class="sub mono">INSERT 待发送</text>
+  <text x="40" y="210" class="sub">COMMIT：两行要么都写入，要么都不写入</text>
+  <rect x="400" y="136" width="120" height="40" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="460" y="160.5" class="b c">定时任务</text>
+  <line x1="356" y1="166" x2="398" y2="158" class="arrow "/>
+  <text x="377" y="150" class="c sub">扫描</text>
+  <rect x="560" y="140" width="170" height="26" rx="13" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="570" y="144" width="150" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="645" y="157" class="c sub">1024</text>
+  <text x="645" y="128" class="c sub b">消息队列</text>
+  <line x1="522" y1="156" x2="558" y2="154" class="arrow "/>
+  <text x="460" y="200" class="sub">发送成功后把消息标记为已发送；</text>
+  <text x="460" y="218" class="sub">失败就下次再发，所以可能重复</text>
+  <rect x="560" y="260" width="170" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="645" y="280" class="b c">积分服务</text>
+  <text x="645" y="295" class="sub c">按订单号去重，实现幂等</text>
+  <line x1="645" y1="168" x2="645" y2="258" class="arrow "/>
+  <text x="24" y="300" class="sub">订单服务的事务提交之后无法回滚：积分服务处理失败时只能重试或人工处理，</text>
+  <text x="24" y="318" class="sub">所以这是最终一致性，适合允许短时间不一致的场景。</text>
+</svg>

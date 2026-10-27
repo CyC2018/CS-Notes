@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Session Replication：每台服务器都保存全部会话</text>
+  <circle cx="60" cy="79" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M43,110 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="60" y="126" class="c sub b">Alice</text>
+  <line x1="86" y1="90" x2="238" y2="140" class="arrow "/>
+  <circle cx="60" cy="179" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M43,210 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="60" y="226" class="c sub b">Bob</text>
+  <line x1="86" y1="190" x2="238" y2="158" class="arrow "/>
+  <rect x="245" y="116" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="252" cy="122.5" r="2" fill="#BFBEBA"/>
+  <line x1="259" y1="122.5" x2="288" y2="122.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="245" y="132" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="252" cy="138.5" r="2" fill="#BFBEBA"/>
+  <line x1="259" y1="138.5" x2="288" y2="138.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="245" y="148" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="252" cy="154.5" r="2" fill="#BFBEBA"/>
+  <line x1="259" y1="154.5" x2="288" y2="154.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="270" y="176" class="c sub b">负载均衡器</text>
+  <rect x="447" y="60" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="66.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="66.5" x2="486" y2="66.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="447" y="76" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="82.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="82.5" x2="486" y2="82.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="447" y="92" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="98.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="98.5" x2="486" y2="98.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="470" y="120" class="c sub b">Server 1</text>
+  <rect x="520" y="60" width="130" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="76" class="c sub mono" style="fill:#444">session: alice</text>
+  <rect x="520" y="84" width="130" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="100" class="c sub mono" style="fill:#444">session: bob</text>
+  <line x1="298" y1="140" x2="444" y2="82" class="arrow "/>
+  <rect x="447" y="170" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="176.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="176.5" x2="486" y2="176.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="447" y="186" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="192.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="192.5" x2="486" y2="192.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="447" y="202" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="454" cy="208.5" r="2" fill="#7FB2D6"/>
+  <line x1="461" y1="208.5" x2="486" y2="208.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="470" y="230" class="c sub b">Server 2</text>
+  <rect x="520" y="170" width="130" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="186" class="c sub mono" style="fill:#444">session: alice</text>
+  <rect x="520" y="194" width="130" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="585" y="210" class="c sub mono" style="fill:#444">session: bob</text>
+  <line x1="298" y1="158" x2="444" y2="192" class="arrow "/>
+  <path d="M660,110 C700,130 700,160 660,176" class="arrow dash"/>
+  <path d="M640,176 C620,160 620,130 640,112" class="arrow dash"/>
+  <text x="712" y="146" class="c sub">同步</text>
+  <text x="30" y="266" class="sub">任何一台服务器都能处理任何用户的请求，但每次修改会话都要同步给所有服务器，服务器越多，内存和网络开销越大。</text>
+</svg>

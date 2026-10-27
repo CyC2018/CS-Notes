@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="258" viewBox="0 0 760 258">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">切换回 master 后 git merge dev：master 直接移动到 dev 所指的提交</text>
+  <circle cx="60" cy="160" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="60" y="188" class="c sub mono" style="fill:#3F3F3F">3c6d6d5</text>
+  <text x="60" y="202" class="c sub">add a.txt</text>
+  <circle cx="160" cy="160" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="160" y="188" class="c sub mono" style="fill:#3F3F3F">8c4423a</text>
+  <text x="160" y="202" class="c sub">add b.txt</text>
+  <circle cx="260" cy="160" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="260" y="188" class="c sub mono" style="fill:#3F3F3F">72f2299</text>
+  <text x="260" y="202" class="c sub">add c.txt</text>
+  <circle cx="360" cy="160" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="360" y="188" class="c sub mono" style="fill:#3F3F3F">a2a54e0</text>
+  <text x="360" y="202" class="c sub">add d.txt</text>
+  <line x1="346" y1="160" x2="276" y2="160" class="arrow "/>
+  <line x1="246" y1="160" x2="176" y2="160" class="arrow "/>
+  <line x1="146" y1="160" x2="76" y2="160" class="arrow "/>
+  <rect x="219.4" y="97" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-dasharray="4 3" opacity="0.55"/>
+  <text x="250" y="112" class="c sub mono" style="fill:#3F3F3F;opacity:0.55">master</text>
+  <path d="M250,96 C262,78 312,78 324,95" fill="none" stroke="#999" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <rect x="309.4" y="97" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="340" y="112" class="c sub mono" style="fill:#3F3F3F">master</text>
+  <line x1="345" y1="119" x2="354" y2="145" class="arrow "/>
+  <rect x="388.2" y="97" width="39.6" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="408" y="112" class="c sub mono" style="fill:#3F3F3F">dev</text>
+  <line x1="401" y1="119" x2="370" y2="147" class="arrow "/>
+  <rect x="316.6" y="51" width="46.8" height="22" rx="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="340" y="66" class="c sub mono" style="fill:#3F3F3F">HEAD</text>
+  <line x1="340" y1="73" x2="340" y2="95" class="arrow "/>
+  <rect x="438" y="52" width="308" height="147" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="448" y="70" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git checkout master</text>
+  <text x="448" y="85" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git merge dev</text>
+  <text x="448" y="100" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">Updating 72f2299..a2a54e0</text>
+  <text x="448" y="115" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">Fast-forward</text>
+  <text x="448" y="130" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git log --graph --oneline --all --decorate</text>
+  <text x="448" y="145" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">* a2a54e0 (HEAD -&gt; master, dev) add d.txt</text>
+  <text x="448" y="160" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">* 72f2299 add c.txt</text>
+  <text x="448" y="175" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">* 8c4423a add b.txt</text>
+  <text x="448" y="190" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">* 3c6d6d5 add a.txt</text>
+  <circle cx="37" cy="236" r="7" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="50" y="240" class="sub">提交（箭头指向父提交）</text>
+  <rect x="200" y="229" width="22" height="14" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="228" y="240" class="sub">分支</text>
+  <rect x="270" y="229" width="22" height="14" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="298" y="240" class="sub">HEAD</text>
+</svg>

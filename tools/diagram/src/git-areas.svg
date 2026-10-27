@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="336" viewBox="0 0 760 336">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">工作区、暂存区与提交历史：同一个文件的三个版本</text>
+  <text x="30" y="56" class="sub">依次执行：readme.txt 写入 v1 后 add、commit；改为 v2 后 add；再改为 v3。</text>
+  <rect x="268" y="70" width="472" height="130" rx="8" class="frame"/>
+  <text x="278" y="88" class="b">.git 目录（版本库）</text>
+  <rect x="30" y="96" width="190" height="96" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="125" y="120" class="c b">工作区</text>
+  <text x="125" y="137" class="c sub">磁盘上看到的文件</text>
+  <rect x="52" y="150" width="146" height="28" rx="4" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="125" y="168" class="c sub mono" style="fill:#3F3F3F">readme.txt: v3</text>
+  <rect x="290" y="96" width="190" height="96" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="385" y="120" class="c b">暂存区（Stage）</text>
+  <text x="385" y="137" class="c sub">下一次提交的内容</text>
+  <rect x="312" y="150" width="146" height="28" rx="4" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="385" y="168" class="c sub mono" style="fill:#3F3F3F">readme.txt: v2</text>
+  <rect x="530" y="96" width="190" height="96" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="625" y="120" class="c b">History</text>
+  <text x="625" y="137" class="c sub">HEAD → master → add readme</text>
+  <rect x="552" y="150" width="146" height="28" rx="4" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="625" y="168" class="c sub mono" style="fill:#3F3F3F">readme.txt: v1</text>
+  <line x1="220" y1="144" x2="288" y2="144" class="arrow "/>
+  <text x="243" y="136" class="c sub mono">add</text>
+  <line x1="480" y1="144" x2="528" y2="144" class="arrow "/>
+  <text x="504" y="136" class="c sub mono">commit</text>
+  <path d="M125,214 V222 H385 V214" fill="none" stroke="#888"/>
+  <text x="255" y="238" class="sub" text-anchor="middle" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">git diff</tspan><tspan>：工作区与暂存区之差，-v2 +v3</tspan></text>
+  <path d="M395,254 V262 H625 V254" fill="none" stroke="#888"/>
+  <text x="510" y="278" class="sub" text-anchor="middle" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">git diff --cached</tspan><tspan>：暂存区与 HEAD 之差，-v1 +v2</tspan></text>
+  <text x="30" y="306" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">MM readme.txt</tspan><tspan> 是 </tspan><tspan class="mono" style="font-size:11px;fill:#3F3F3F">git status -s</tspan><tspan> 的输出：左边的 M 表示暂存区与 HEAD 不同（有待提交的修改），</tspan></text>
+  <text x="30" y="324" class="sub">右边的 M 表示工作区与暂存区不同（有还没 add 的修改）。</text>
+</svg>

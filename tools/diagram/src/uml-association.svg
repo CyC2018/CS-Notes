@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="230" viewBox="0 0 640 230">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">关联：一个学校有多个学生，一个学生只属于一个学校</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="dia" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="diaf" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#555" stroke="#555" stroke-width="1"/></marker><marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#555" stroke-width="1.2"/></marker></defs>
+  <rect x="13" y="70" width="170" height="59" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="13" y="98" width="170" height="31" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="13" y1="119" x2="183" y2="119" stroke="#7FB2D6"/>
+  <text x="98" y="88" class="c sub b mono" style="fill:#3F3F3F">School</text>
+  <text x="21" y="113" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">- students: List&lt;Student&gt;</text>
+  <rect x="230" y="70" width="120" height="59" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="230" y="98" width="120" height="31" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="230" y1="119" x2="350" y2="119" stroke="#7FB2D6"/>
+  <text x="290" y="88" class="c sub b mono" style="fill:#3F3F3F">Student</text>
+  <text x="238" y="113" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">- school: School</text>
+  <path d="M183,84 L230,84" fill="none" stroke="#555" stroke-width="1.1"/>
+  <text x="189" y="78" class="sub mono b" style="fill:#3F3F3F">1</text>
+  <text x="225" y="78" class="e sub mono b" style="fill:#3F3F3F">*</text>
+  <rect x="370" y="60" width="256" height="102" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="380" y="78" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class School {</text>
+  <text x="380" y="93" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">    private List&lt;Student&gt; students;</text>
+  <text x="380" y="108" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">}</text>
+  <text x="380" y="123" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class Student {</text>
+  <text x="380" y="138" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">    private School school;</text>
+  <text x="380" y="153" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">}</text>
+  <text x="30" y="196" class="sub">实线连接两个类，两端的数字是多重性：School 一端是 1，Student 一端是 *（零个或多个），</text>
+  <text x="30" y="214" class="sub">表示多对一。关联通常体现为成员变量，在对象的整个生命周期中都存在。</text>
+</svg>

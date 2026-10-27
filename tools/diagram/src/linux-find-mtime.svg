@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">find -mtime：按 24 小时为单位计算文件的“天数”</text>
+  <line x1="34.8" y1="210" x2="690" y2="210" class="line"/>
+  <line x1="690" y1="206" x2="690" y2="214" class="line"/>
+  <text x="690" y="230" class="c sub">现在</text>
+  <line x1="612" y1="206" x2="612" y2="214" class="line"/>
+  <text x="612" y="230" class="c sub">1 天前</text>
+  <line x1="534" y1="206" x2="534" y2="214" class="line"/>
+  <text x="534" y="230" class="c sub">2 天前</text>
+  <line x1="456" y1="206" x2="456" y2="214" class="line"/>
+  <text x="456" y="230" class="c sub">3 天前</text>
+  <line x1="378" y1="206" x2="378" y2="214" class="line"/>
+  <text x="378" y="230" class="c sub">4 天前</text>
+  <line x1="300" y1="206" x2="300" y2="214" class="line"/>
+  <text x="300" y="230" class="c sub">5 天前</text>
+  <line x1="222" y1="206" x2="222" y2="214" class="line"/>
+  <text x="222" y="230" class="c sub">6 天前</text>
+  <line x1="144" y1="206" x2="144" y2="214" class="line"/>
+  <text x="144" y="230" class="c sub">7 天前</text>
+  <line x1="66" y1="206" x2="66" y2="214" class="line"/>
+  <text x="66" y="230" class="c sub">8 天前</text>
+  <circle cx="651" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="651" y="250" class="c sub mono" style="font-size:10px">12 小时</text>
+  <circle cx="573" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="573" y="250" class="c sub mono" style="font-size:10px">36 小时</text>
+  <circle cx="495" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="495" y="250" class="c sub mono" style="font-size:10px">60 小时</text>
+  <circle cx="417" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="417" y="250" class="c sub mono" style="font-size:10px">84 小时</text>
+  <circle cx="339" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="339" y="250" class="c sub mono" style="font-size:10px">108 小时</text>
+  <circle cx="261" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="261" y="250" class="c sub mono" style="font-size:10px">132 小时</text>
+  <circle cx="183" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="183" y="250" class="c sub mono" style="font-size:10px">156 小时</text>
+  <circle cx="105" cy="210" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="105" y="250" class="c sub mono" style="font-size:10px">180 小时</text>
+  <rect x="378" y="120" width="312" height="24" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="534" y="136" class="c sub mono b" style="fill:#3F3F3F">-mtime -4</text>
+  <line x1="378" y1="144" x2="378" y2="210" stroke="#BBB" stroke-dasharray="3 3"/>
+  <line x1="690" y1="144" x2="690" y2="210" stroke="#BBB" stroke-dasharray="3 3"/>
+  <text x="534" y="112" class="c sub">修改时间在 4 天（96 小时）之内</text>
+  <rect x="300" y="70" width="78" height="24" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="339" y="86" class="c sub mono b" style="fill:#3F3F3F">-mtime 4</text>
+  <line x1="300" y1="94" x2="300" y2="210" stroke="#BBB" stroke-dasharray="3 3"/>
+  <line x1="378" y1="94" x2="378" y2="210" stroke="#BBB" stroke-dasharray="3 3"/>
+  <text x="339" y="62" class="c sub">4～5 天前</text>
+  <rect x="34.8" y="120" width="265.2" height="24" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="167.4" y="136" class="c sub mono b" style="fill:#3F3F3F">-mtime +4</text>
+  <line x1="300" y1="144" x2="300" y2="210" stroke="#BBB" stroke-dasharray="3 3"/>
+  <text x="167.4" y="112" class="c sub">5 天（120 小时）之前</text>
+  <text x="30" y="290" class="sub">find 把“现在 − 修改时间”除以 24 小时并舍去小数得到天数 n，例如 108 小时得到 4。实测 -4 找到 12～84 小时的 4 个文件，</text>
+  <text x="30" y="308" class="sub">4 只找到 108 小时的文件，+4 找到 132、156、180 小时的 3 个文件：-4 不包含第 4 天，+4 也不包含第 4 天。</text>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="344" viewBox="0 0 760 344">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">集中式与分布式版本控制</text>
+  <rect x="20" y="46" width="350" height="262" rx="8" class="frame"/>
+  <text x="30" y="64" class="b">集中式（例如 SVN）</text>
+  <rect x="390" y="46" width="350" height="262" rx="8" class="frame"/>
+  <text x="400" y="64" class="b">分布式（例如 Git）</text>
+  <rect x="172" y="80" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="179" cy="86.5" r="2" fill="#7FB2D6"/>
+  <line x1="186" y1="86.5" x2="211" y2="86.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="172" y="96" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="179" cy="102.5" r="2" fill="#7FB2D6"/>
+  <line x1="186" y1="102.5" x2="211" y2="102.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="172" y="112" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="179" cy="118.5" r="2" fill="#7FB2D6"/>
+  <line x1="186" y1="118.5" x2="211" y2="118.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="146" class="c b">中心服务器</text>
+  <text x="195" y="161" class="c sub">保存全部历史 r1～r120</text>
+  <rect x="80" y="205" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="84" y="209" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M96,232.2 v5 M104,232.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="88" y="237.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="100" y="248" class="c b">工作副本</text>
+  <text x="100" y="263" class="c sub">只有 r120 的文件</text>
+  <line x1="100" y1="203" x2="171.25" y2="170" class="line"/>
+  <rect x="270" y="205" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="274" y="209" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M286,232.2 v5 M294,232.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="278" y="237.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="290" y="248" class="c b">工作副本</text>
+  <text x="290" y="263" class="c sub">只有 r120 的文件</text>
+  <line x1="290" y1="203" x2="218.75" y2="170" class="line"/>
+  <text x="195" y="292" class="c sub note">提交、查看历史都要连接服务器</text>
+  <rect x="542" y="80" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="549" cy="86.5" r="2" fill="#7FB2D6"/>
+  <line x1="556" y1="86.5" x2="581" y2="86.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="542" y="96" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="549" cy="102.5" r="2" fill="#7FB2D6"/>
+  <line x1="556" y1="102.5" x2="581" y2="102.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="542" y="112" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="549" cy="118.5" r="2" fill="#7FB2D6"/>
+  <line x1="556" y1="118.5" x2="581" y2="118.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="565" y="146" class="c b">GitHub 上的仓库</text>
+  <text x="565" y="161" class="c sub">完整仓库，用来交换提交</text>
+  <rect x="450" y="205" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="454" y="209" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M466,232.2 v5 M474,232.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="458" y="237.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="470" y="248" class="c b">本地仓库 .git</text>
+  <text x="470" y="263" class="c sub">同样保存全部历史</text>
+  <line x1="470" y1="203" x2="541.25" y2="170" class="arrow" marker-start="url(#a)"/>
+  <rect x="640" y="205" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="644" y="209" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M656,232.2 v5 M664,232.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="648" y="237.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="660" y="248" class="c b">本地仓库 .git</text>
+  <text x="660" y="263" class="c sub">同样保存全部历史</text>
+  <line x1="660" y1="203" x2="588.75" y2="170" class="arrow" marker-start="url(#a)"/>
+  <line x1="500" y1="224" x2="630" y2="224" class="arrow dash" marker-start="url(#a)"/>
+  <text x="565" y="216" class="c sub">也可以直接互相 pull</text>
+  <text x="565" y="292" class="c sub ok">只有 push、pull 时需要联网</text>
+  <text x="30" y="332" class="sub">分布式版本控制中 commit、log、branch 都在本地完成；中心服务器坏了，任何一个本地仓库都能恢复出完整历史。</text>
+</svg>

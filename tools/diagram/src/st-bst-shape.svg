@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="412" viewBox="0 0 560 412">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="280" y="28" class="title">同样 7 个键，插入顺序决定树的形状</text>
+  <text x="140" y="66" class="c b">插入顺序 D B F A C E G</text>
+  <line x1="129.034" y1="110.235" x2="90.9658" y2="145.765" stroke="#555" stroke-width="1.1"/>
+  <line x1="72.9167" y1="169.222" x2="57.0833" y2="198.778" stroke="#555" stroke-width="1.1"/>
+  <line x1="87.0833" y1="169.222" x2="102.917" y2="198.778" stroke="#555" stroke-width="1.1"/>
+  <line x1="150.966" y1="110.235" x2="189.034" y2="145.765" stroke="#555" stroke-width="1.1"/>
+  <line x1="192.917" y1="169.222" x2="177.083" y2="198.778" stroke="#555" stroke-width="1.1"/>
+  <line x1="207.083" y1="169.222" x2="222.917" y2="198.778" stroke="#555" stroke-width="1.1"/>
+  <circle cx="140" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="140" y="104.5" class="c b">D</text>
+  <circle cx="80" cy="156" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="80" y="160.5" class="c b">B</text>
+  <circle cx="50" cy="212" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="50" y="216.5" class="c b">A</text>
+  <circle cx="110" cy="212" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="110" y="216.5" class="c b">C</text>
+  <circle cx="200" cy="156" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="160.5" class="c b">F</text>
+  <circle cx="170" cy="212" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="170" y="216.5" class="c b">E</text>
+  <circle cx="230" cy="212" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="230" y="216.5" class="c b">G</text>
+  <text x="140" y="290" class="c sub">高度 3（≈ lg7），完全平衡</text>
+  <text x="410" y="66" class="c b">插入顺序 A B C D E F G</text>
+  <line x1="328.719" y1="112.206" x2="341.281" y2="129.794" stroke="#555" stroke-width="1.1"/>
+  <line x1="358.719" y1="154.206" x2="371.281" y2="171.794" stroke="#555" stroke-width="1.1"/>
+  <line x1="388.719" y1="196.206" x2="401.281" y2="213.794" stroke="#555" stroke-width="1.1"/>
+  <line x1="418.719" y1="238.206" x2="431.281" y2="255.794" stroke="#555" stroke-width="1.1"/>
+  <line x1="448.719" y1="280.206" x2="461.281" y2="297.794" stroke="#555" stroke-width="1.1"/>
+  <line x1="478.719" y1="322.206" x2="491.281" y2="339.794" stroke="#555" stroke-width="1.1"/>
+  <circle cx="320" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="104.5" class="c b">A</text>
+  <circle cx="350" cy="142" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="350" y="146.5" class="c b">B</text>
+  <circle cx="380" cy="184" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="380" y="188.5" class="c b">C</text>
+  <circle cx="410" cy="226" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="410" y="230.5" class="c b">D</text>
+  <circle cx="440" cy="268" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="440" y="272.5" class="c b">E</text>
+  <circle cx="470" cy="310" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="470" y="314.5" class="c b">F</text>
+  <circle cx="500" cy="352" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="356.5" class="c b">G</text>
+  <text x="410" y="396" class="c sub">高度 7，退化成链表</text>
+  <line x1="270" y1="60" x2="270" y2="400" class="frame"/>
+</svg>

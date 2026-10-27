@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="360" viewBox="0 0 740 360">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">透明传输：数据中出现控制字符时，在前面插入转义字符 ESC</text>
+  <text x="30" y="82" class="b">原始数据</text>
+  <text x="30" y="98" class="sub">5 字节</text>
+  <rect x="246" y="66" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="269" y="86" class="c sub mono" style="fill:#444">48</text>
+  <rect x="292" y="66" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="315" y="86" class="c sub mono" style="fill:#444">04</text>
+  <text x="315" y="58" class="c sub">与 EOT 相同</text>
+  <rect x="338" y="66" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="361" y="86" class="c sub mono" style="fill:#444">49</text>
+  <rect x="384" y="66" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="407" y="86" class="c sub mono" style="fill:#444">1B</text>
+  <text x="407" y="58" class="c sub">与 ESC 相同</text>
+  <rect x="430" y="66" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="453" y="86" class="c sub mono" style="fill:#444">4A</text>
+  <line x1="361" y1="104" x2="361" y2="128" class="arrow "/>
+  <text x="30" y="168" class="b">发送端填充后</text>
+  <text x="30" y="184" class="sub">首尾加上 SOH、EOT</text>
+  <rect x="200" y="152" width="46" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="223" y="172" class="c sub mono" style="fill:#444">01</text>
+  <rect x="246" y="152" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="269" y="172" class="c sub mono" style="fill:#444">48</text>
+  <rect x="292" y="152" width="46" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="315" y="172" class="c sub mono" style="fill:#444">1B</text>
+  <rect x="338" y="152" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="361" y="172" class="c sub mono" style="fill:#444">04</text>
+  <rect x="384" y="152" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="407" y="172" class="c sub mono" style="fill:#444">49</text>
+  <rect x="430" y="152" width="46" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="453" y="172" class="c sub mono" style="fill:#444">1B</text>
+  <rect x="476" y="152" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="499" y="172" class="c sub mono" style="fill:#444">1B</text>
+  <rect x="522" y="152" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="545" y="172" class="c sub mono" style="fill:#444">4A</text>
+  <rect x="568" y="152" width="46" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="591" y="172" class="c sub mono" style="fill:#444">04</text>
+  <text x="315" y="202" class="c sub" style="fill:#207773">插入</text>
+  <text x="453" y="202" class="c sub" style="fill:#207773">插入</text>
+  <text x="223" y="144" class="c sub">SOH</text>
+  <text x="591" y="144" class="c sub">EOT</text>
+  <text x="30" y="254" class="b">接收端</text>
+  <text x="30" y="270" class="sub">删去每个转义用的 ESC</text>
+  <rect x="246" y="238" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="269" y="258" class="c sub mono" style="fill:#444">48</text>
+  <rect x="292" y="238" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="315" y="258" class="c sub mono" style="fill:#444">04</text>
+  <rect x="338" y="238" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="361" y="258" class="c sub mono" style="fill:#444">49</text>
+  <rect x="384" y="238" width="46" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="407" y="258" class="c sub mono" style="fill:#444">1B</text>
+  <rect x="430" y="238" width="46" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="453" y="258" class="c sub mono" style="fill:#444">4A</text>
+  <line x1="407" y1="206" x2="407" y2="234" class="arrow "/>
+  <text x="30" y="316" class="sub">如果不插入 ESC，接收端读到第 2 个字节 04 就会以为帧已经结束。插入后，ESC 后面的字节一律当作普通数据，</text>
+  <text x="30" y="334" class="sub">数据中本来就有的 ESC（1B）也要在前面再加一个 ESC。填充和删除都由链路层完成，上层看不到 ESC 的存在。</text>
+</svg>

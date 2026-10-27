@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="250" viewBox="0 0 640 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">泛化：Car 和 Truck 继承 Vehicle</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="dia" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="diaf" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#555" stroke="#555" stroke-width="1"/></marker><marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#555" stroke-width="1.2"/></marker></defs>
+  <rect x="108" y="56" width="124" height="59" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="108" y="84" width="124" height="31" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="108" y1="94" x2="232" y2="94" stroke="#7FB2D6"/>
+  <text x="170" y="74" class="c sub b mono" style="fill:#3F3F3F">Vehicle</text>
+  <text x="116" y="109" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">+ move(): void</text>
+  <rect x="28" y="170" width="124" height="48" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="28" y="198" width="124" height="20" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="28" y1="208" x2="152" y2="208" stroke="#7FB2D6"/>
+  <text x="90" y="188" class="c sub b mono" style="fill:#3F3F3F">Car</text>
+  <path d="M90,170 L158,116" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <rect x="188" y="170" width="124" height="48" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="188" y="198" width="124" height="20" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="188" y1="208" x2="312" y2="208" stroke="#7FB2D6"/>
+  <text x="250" y="188" class="c sub b mono" style="fill:#3F3F3F">Truck</text>
+  <path d="M250,170 L182,116" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <rect x="350" y="60" width="260" height="87" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="360" y="78" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class Vehicle {</text>
+  <text x="360" y="93" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">    void move() { ... }</text>
+  <text x="360" y="108" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">}</text>
+  <text x="360" y="123" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class Car extends Vehicle { }</text>
+  <text x="360" y="138" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class Truck extends Vehicle { }</text>
+  <text x="350" y="170" class="sub">实线加空心三角形，三角形指向父类。</text>
+  <text x="350" y="188" class="sub">子类继承了父类的 move()。</text>
+</svg>

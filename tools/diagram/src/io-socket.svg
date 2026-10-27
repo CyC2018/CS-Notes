@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="350" viewBox="0 0 760 350">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Socket：连接建立后，双方各有一对输入流和输出流</text>
+  <rect x="30" y="56" width="300" height="256" rx="8" class="frame"/>
+  <text x="40" y="74" class="b">服务器</text>
+  <rect x="430" y="56" width="300" height="256" rx="8" class="frame"/>
+  <text x="440" y="74" class="b">客户端</text>
+  <rect x="50" y="90" width="260" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="180" y="110.5" class="c sub mono">new ServerSocket(8080)</text>
+  <rect x="50" y="134" width="260" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="180" y="154.5" class="c sub mono">accept() 返回一个 Socket</text>
+  <line x1="180" y1="122" x2="180" y2="134" class="arrow "/>
+  <rect x="450" y="90" width="260" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="580" y="110.5" class="c sub mono">new Socket("127.0.0.1", 8080)</text>
+  <path d="M450,106 C400,106 360,150 312,150" class="arrow dash"/>
+  <text x="380" y="118" class="c sub">三次握手</text>
+  <rect x="50" y="180" width="260" height="32" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="180" y="200.5" class="c sub mono">OutputStream</text>
+  <rect x="450" y="180" width="260" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="580" y="200.5" class="c sub mono">InputStream</text>
+  <rect x="50" y="222" width="260" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="180" y="242.5" class="c sub mono">InputStream</text>
+  <rect x="450" y="222" width="260" height="32" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="580" y="242.5" class="c sub mono">OutputStream</text>
+  <line x1="312" y1="196" x2="448" y2="196" class="arrow "/>
+  <line x1="448" y1="238" x2="312" y2="238" class="arrow "/>
+  <text x="380" y="188" class="c sub">服务器写</text>
+  <text x="380" y="230" class="c sub">客户端写</text>
+  <rect x="50" y="266" width="260" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="180" y="286.5" class="c sub mono">close()</text>
+  <rect x="450" y="266" width="260" height="32" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="580" y="286.5" class="c sub mono">close()</text>
+  <text x="30" y="336" class="sub">accept() 和 read() 在没有连接、没有数据时都会阻塞，所以传统的写法要为每个连接分配一个线程。</text>
+</svg>

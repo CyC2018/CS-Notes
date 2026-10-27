@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">磁盘的结构</text>
+  <text x="170" y="66" class="c b">侧视图</text>
+  <rect x="133" y="96" width="14" height="214" rx="3" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <rect x="292" y="104" width="16" height="196" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <rect x="40" y="126" width="200" height="8" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <line x1="292" y1="120" x2="192" y2="120" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="116" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="292" y1="140" x2="192" y2="140" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="136" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="40" y="196" width="200" height="8" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <line x1="292" y1="190" x2="192" y2="190" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="186" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="292" y1="210" x2="192" y2="210" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="206" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="40" y="266" width="200" height="8" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <line x1="292" y1="260" x2="192" y2="260" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="256" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="292" y1="280" x2="192" y2="280" stroke="#7DBCB7" stroke-width="3"/>
+  <rect x="180" y="276" width="12" height="8" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="140" y1="104" x2="70" y2="90" class="line"/>
+  <text x="66" y="94" class="sub b e">主轴</text>
+  <line x1="60" y1="200" x2="30" y2="230" class="line"/>
+  <text x="26" y="234" class="sub b e">盘面</text>
+  <line x1="308" y1="230" x2="330" y2="230" class="line"/>
+  <text x="334" y="234" class="sub b">磁臂</text>
+  <line x1="190" y1="117" x2="230" y2="76" class="line"/>
+  <text x="234" y="80" class="sub b">磁头</text>
+  <text x="30" y="340" class="sub">盘面的两面都可以存储数据，每一面对应一个磁头；</text>
+  <text x="30" y="358" class="sub">所有磁头装在同一个磁臂上，一起移动。</text>
+  <text x="560" y="66" class="c b">俯视图（一个盘面）</text>
+  <circle cx="560" cy="200" r="120" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <circle cx="560" cy="200" r="100" fill="none" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="560" cy="200" r="80" fill="none" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="560" cy="200" r="60" fill="none" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="560" cy="200" r="40" fill="none" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M660,200 a100,100 0 1 0 -200,0 a100,100 0 1 0 200,0 Z M640,200 a80,80 0 1 0 -160,0 a80,80 0 1 0 160,0 Z" fill="#C6ECE9" stroke="#7DBCB7" fill-rule="evenodd"/>
+  <line x1="582.0" y1="200.0" x2="680.0" y2="200.0" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="580.3" y1="208.4" x2="670.9" y2="245.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="575.6" y1="215.6" x2="644.9" y2="284.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="568.4" y1="220.3" x2="605.9" y2="310.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="560.0" y1="222.0" x2="560.0" y2="320.0" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="551.6" y1="220.3" x2="514.1" y2="310.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="544.4" y1="215.6" x2="475.1" y2="284.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="539.7" y1="208.4" x2="449.1" y2="245.9" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="538.0" y1="200.0" x2="440.0" y2="200.0" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="539.7" y1="191.6" x2="449.1" y2="154.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="544.4" y1="184.4" x2="475.1" y2="115.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="551.6" y1="179.7" x2="514.1" y2="89.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="560.0" y1="178.0" x2="560.0" y2="80.0" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="568.4" y1="179.7" x2="605.9" y2="89.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="575.6" y1="184.4" x2="644.9" y2="115.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <line x1="580.3" y1="191.6" x2="670.9" y2="154.1" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M605.9,89.1 A120,120 0 0 1 644.9,115.1 L630.7,129.3 A100,100 0 0 0 598.3,107.6 Z" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <circle cx="560" cy="200" r="20" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <line x1="730" y1="310" x2="632" y2="254" stroke="#7DBCB7" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="730" cy="310" r="10" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <rect x="626" y="249" width="12" height="10" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="475.428" y1="169.218" x2="410" y2="270" class="line"/>
+  <text x="406" y="274" class="sub b e">磁道</text>
+  <line x1="621.511" y1="108.806" x2="680" y2="84" class="line"/>
+  <text x="684" y="88" class="sub b">扇区</text>
+  <line x1="548" y1="188" x2="430" y2="110" class="line"/>
+  <text x="426" y="114" class="sub b e">主轴</text>
+  <line x1="638" y1="252" x2="700" y2="220" class="line"/>
+  <text x="704" y="224" class="sub b">磁头</text>
+  <text x="400" y="340" class="sub">同心圆是磁道（浅青色为其中一条），磁道上的一段弧是扇区，</text>
+  <text x="400" y="358" class="sub">大小为 512 字节或 4 KB。读写时先寻道，再等扇区转到磁头下。</text>
+</svg>
