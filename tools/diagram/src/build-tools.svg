@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Java 主流构建工具</text>
+  <rect x="40" y="60" width="190" height="60" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="135" y="84" class="c b">Ant</text>
+  <text x="135" y="104" class="c sub">2000 年 1.1 版</text>
+  <rect x="65" y="134" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#BFBEBA"/>
+  <text x="135" y="151" class="c sub mono" style="fill:#3F3F3F">build.xml</text>
+  <text x="135" y="184" class="c sub">用 XML 手写 target：</text>
+  <text x="135" y="201" class="c sub">编译、测试、打包</text>
+  <line x1="232" y1="90" x2="283" y2="90" class="arrow "/>
+  <rect x="285" y="60" width="190" height="60" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="380" y="84" class="c b">Maven</text>
+  <text x="380" y="104" class="c sub">2004 年 1.0 版</text>
+  <rect x="310" y="134" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#BFBEBA"/>
+  <text x="380" y="151" class="c sub mono" style="fill:#3F3F3F">pom.xml</text>
+  <text x="380" y="184" class="c sub">约定目录结构和生命周期，</text>
+  <text x="380" y="201" class="c sub">增加依赖管理</text>
+  <line x1="477" y1="90" x2="528" y2="90" class="arrow "/>
+  <rect x="530" y="60" width="190" height="60" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="625" y="84" class="c b">Gradle</text>
+  <text x="625" y="104" class="c sub">2012 年 1.0 版</text>
+  <rect x="555" y="134" width="140" height="26" rx="4" fill="#FFFFFF" stroke="#BFBEBA"/>
+  <text x="625" y="151" class="c sub mono" style="fill:#3F3F3F">build.gradle(.kts)</text>
+  <text x="625" y="184" class="c sub">用 Groovy 或 Kotlin DSL</text>
+  <text x="625" y="201" class="c sub">写构建脚本，支持增量构建</text>
+  <text x="40" y="238" class="sub">年份是各自第一个正式版本的发布时间；Gradle 8.2 起新建项目默认使用 Kotlin DSL（build.gradle.kts）。</text>
+</svg>
