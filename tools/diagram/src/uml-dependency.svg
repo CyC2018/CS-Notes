@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="236" viewBox="0 0 640 236">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">依赖：Vehicle 的 move() 用到了 MoveBehavior</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="dia" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker><marker id="diaf" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="17" markerHeight="10" orient="auto"><path d="M1,6 L10,1 L19,6 L10,11 z" fill="#555" stroke="#555" stroke-width="1"/></marker><marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#555" stroke-width="1.2"/></marker></defs>
+  <rect x="32" y="56" width="176" height="59" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="32" y="84" width="176" height="31" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <line x1="32" y1="94" x2="208" y2="94" stroke="#7FB2D6"/>
+  <text x="120" y="74" class="c sub b mono" style="fill:#3F3F3F">Vehicle</text>
+  <text x="40" y="109" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">+ move(mb: MoveBehavior)</text>
+  <rect x="58" y="150" width="124" height="71" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="58" y="190" width="124" height="31" fill="#FFFFFF" stroke="#B8B0DE"/>
+  <line x1="58" y1="200" x2="182" y2="200" stroke="#B8B0DE"/>
+  <text x="120" y="165" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="120" y="181" class="c sub b mono" style="fill:#3F3F3F;font-style:italic">MoveBehavior</text>
+  <text x="66" y="215" class="sub mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ move(): void</text>
+  <path d="M120,115 L120,149" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#open)"/>
+  <rect x="300" y="60" width="320" height="87" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="310" y="78" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">class Vehicle {</text>
+  <text x="310" y="93" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">    void move(MoveBehavior mb) {</text>
+  <text x="310" y="108" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">        mb.move();  // 只在方法中使用</text>
+  <text x="310" y="123" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">    }</text>
+  <text x="310" y="138" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">}</text>
+  <text x="300" y="170" class="sub">虚线加普通箭头，箭头指向被依赖的类。</text>
+  <text x="300" y="188" class="sub">MoveBehavior 只出现在方法参数中，不是成员变量，</text>
+  <text x="300" y="206" class="sub">move() 执行时才用到它，这是依赖和关联的区别。</text>
+</svg>
