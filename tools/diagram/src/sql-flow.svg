@@ -75,19 +75,19 @@
   <rect x="600" y="184" width="80" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
   <text x="640" y="200" class="c sub" style="fill:#444">1978736 行</text>
   <rect x="680" y="184" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
-  <text x="705" y="200" class="c sub mono" style="fill:#444">222512</text>
+  <text x="705" y="200" class="c sub mono" style="fill:#444">219687</text>
   <rect x="460" y="208" width="140" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
   <text x="530" y="224" class="c sub mono" style="fill:#444">idx_create_time</text>
   <rect x="600" y="208" width="80" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
   <text x="640" y="224" class="c sub" style="fill:#444">989368 行</text>
   <rect x="680" y="208" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
-  <text x="705" y="224" class="c sub mono" style="fill:#444">934036</text>
+  <text x="705" y="224" class="c sub mono" style="fill:#444">850325</text>
   <rect x="460" y="232" width="140" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
   <text x="530" y="248" class="c sub mono" style="fill:#444">idx_user_status_time</text>
   <rect x="600" y="232" width="80" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
   <text x="640" y="248" class="c sub" style="fill:#444">20 行</text>
   <rect x="680" y="232" width="50" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
-  <text x="705" y="248" class="c sub mono" style="fill:#444">2.27</text>
+  <text x="705" y="248" class="c sub mono" style="fill:#444">20.6</text>
   <rect x="40" y="410" width="680" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="380" y="428" class="c sub b" style="fill:#444">InnoDB：先在 Buffer Pool 中找数据页，不在内存中才从磁盘读入</text>
   <text x="380" y="444" class="c sub">按 idx_user_status_time 找到 20 条索引记录，用索引条件下推过滤 create_time，再回表取整行</text>
