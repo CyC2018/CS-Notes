@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="450" viewBox="0 0 640 450">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">字符串常量池：字面量共享同一个对象</text>
+  <text x="30" y="62" class="sub mono">String s1 = "abc";</text>
+  <text x="30" y="80" class="sub mono">String s2 = "abc";</text>
+  <text x="30" y="98" class="sub mono">String s3 = new String("abc");</text>
+  <rect x="30" y="120" width="120" height="260" rx="8" class="frame"/>
+  <text x="40" y="138" class="b">栈</text>
+  <rect x="50" y="176" width="80" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="194" class="c sub mono" style="fill:#444">s1</text>
+  <rect x="50" y="232" width="80" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="250" class="c sub mono" style="fill:#444">s2</text>
+  <rect x="50" y="288" width="80" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="306" class="c sub mono" style="fill:#444">s3</text>
+  <rect x="190" y="120" width="420" height="260" rx="8" class="frame"/>
+  <text x="200" y="138" class="b">堆</text>
+  <rect x="210" y="146" width="190" height="122" rx="6" fill="none" stroke="#B8B0DE" stroke-dasharray="4 3"/>
+  <text x="305" y="164" class="c sub" style="fill:#766AA8">字符串常量池</text>
+  <rect x="230" y="172" width="150" height="86" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="305" y="190" class="c sub b" style="fill:#444">String "abc"</text>
+  <rect x="240" y="200" width="130" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="305" y="216" class="c sub mono" style="fill:#444">value</text>
+  <rect x="240" y="226" width="130" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="305" y="242" class="c sub mono" style="fill:#444">coder = 0</text>
+  <rect x="230" y="282" width="150" height="86" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="305" y="300" class="c sub b" style="fill:#444">String（new 创建）</text>
+  <rect x="240" y="310" width="130" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="305" y="326" class="c sub mono" style="fill:#444">value</text>
+  <rect x="240" y="336" width="130" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="305" y="352" class="c sub mono" style="fill:#444">coder = 0</text>
+  <line x1="130" y1="190" x2="228" y2="202" class="arrow "/>
+  <line x1="130" y1="246" x2="228" y2="212" class="arrow "/>
+  <line x1="130" y1="302" x2="228" y2="322" class="arrow "/>
+  <text x="500" y="236" class="c sub mono b" style="fill:#444">byte[]</text>
+  <rect x="455" y="246" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="470" y="264" class="c sub mono" style="fill:#444">97</text>
+  <rect x="485" y="246" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="500" y="264" class="c sub mono" style="fill:#444">98</text>
+  <rect x="515" y="246" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="530" y="264" class="c sub mono" style="fill:#444">99</text>
+  <text x="500" y="292" class="c sub mono">'a' 'b' 'c'</text>
+  <path d="M370,212 C400,212 420,258 452,258" class="arrow"/>
+  <path d="M370,322 C410,322 420,266 452,266" class="arrow"/>
+  <text x="30" y="408" class="sub">s1 == s2 为 true，s1 == s3 为 false，s3.intern() == s1 为 true；</text>
+  <text x="30" y="426" class="sub">两个 String 对象的 value 指向同一个 byte[]，coder = 0 表示 Latin-1 编码，每个字符占 1 个字节（JDK 21 实测）。</text>
+</svg>
