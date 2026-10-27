@@ -52,10 +52,13 @@ jobs:
           key: site-webp-v1-${{ runner.os }}-${{ hashFiles('website/requirements.txt', 'website/builder/site_assets.py', 'notes/pics/**', 'assets/**') }}
           restore-keys: site-webp-v1-${{ runner.os }}-
       - name: 生成并校验网站与配图
-        run: python website/refresh.py --from-checkout
+        run: |
+          python website/refresh.py --from-checkout
+          python website/deploy/package_site.py
       - name: 检查搜索和发布保护
         run: |
           python website/builder/test_site_assets.py
+          python website/deploy/test_package_site.py
           node website/builder/test_search.cjs
           npm test --prefix website/deploy
       - name: 发布网页和图片并校验正式域名
