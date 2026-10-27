@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="330" viewBox="0 0 860 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="430" y="28" class="title">INT4 量化：缩放系数的粒度决定了小权重能否保留</text>
+  <text x="40" y="66" class="sub">第 14 层 q_proj 第 287 行，第 2752～2767 列（×1000）</text>
+  <text x="40" y="93" class="sub b">原始权重</text>
+  <text x="40" y="109" class="sub">BF16</text>
+  <rect x="162" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="180" y="95" class="c sub mono" style="font-size:10.5px">5.8</text>
+  <rect x="200" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="218" y="95" class="c sub mono" style="font-size:10.5px">3.4</text>
+  <rect x="238" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="256" y="95" class="c sub mono" style="font-size:10.5px">16.4</text>
+  <rect x="276" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="294" y="95" class="c sub mono" style="font-size:10.5px">11.2</text>
+  <rect x="314" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="332" y="95" class="c sub mono" style="font-size:10.5px">-4.2</text>
+  <rect x="352" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="370" y="95" class="c sub mono" style="font-size:10.5px">7.6</text>
+  <rect x="390" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="408" y="95" class="c sub mono" style="font-size:10.5px">2.4</text>
+  <rect x="428" y="78" width="36" height="26" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="446" y="95" class="c sub mono" style="font-size:10.5px">-244</text>
+  <rect x="466" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="484" y="95" class="c sub mono" style="font-size:10.5px">-10.5</text>
+  <rect x="504" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="522" y="95" class="c sub mono" style="font-size:10.5px">6.0</text>
+  <rect x="542" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="560" y="95" class="c sub mono" style="font-size:10.5px">7.2</text>
+  <rect x="580" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="598" y="95" class="c sub mono" style="font-size:10.5px">8.5</text>
+  <rect x="618" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="636" y="95" class="c sub mono" style="font-size:10.5px">-3.8</text>
+  <rect x="656" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="674" y="95" class="c sub mono" style="font-size:10.5px">-8.7</text>
+  <rect x="694" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="712" y="95" class="c sub mono" style="font-size:10.5px">-6.9</text>
+  <rect x="732" y="78" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="750" y="95" class="c sub mono" style="font-size:10.5px">6.0</text>
+  <text x="40" y="143" class="sub b">整个矩阵一个系数</text>
+  <text x="40" y="159" class="sub">s = 0.0474</text>
+  <rect x="162" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="180" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="200" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="218" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="238" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="256" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="276" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="294" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="314" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="332" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="352" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="370" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="390" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="408" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="428" y="128" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="446" y="145" class="c sub mono" style="font-size:10.5px">-5</text>
+  <rect x="466" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="484" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="504" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="522" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="542" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="560" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="580" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="598" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="618" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="636" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="656" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="674" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="694" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="712" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="732" y="128" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="750" y="145" class="c sub mono" style="font-size:10.5px">0</text>
+  <text x="40" y="193" class="sub b">每行一个系数</text>
+  <text x="40" y="209" class="sub">s = 0.0349</text>
+  <rect x="162" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="180" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="200" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="218" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="238" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="256" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="276" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="294" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="314" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="332" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="352" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="370" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="390" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="408" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="428" y="178" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="446" y="195" class="c sub mono" style="font-size:10.5px">-7</text>
+  <rect x="466" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="484" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="504" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="522" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="542" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="560" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="580" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="598" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="618" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="636" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="656" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="674" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="694" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="712" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="732" y="178" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="750" y="195" class="c sub mono" style="font-size:10.5px">0</text>
+  <text x="40" y="243" class="sub b">每 8 个一组</text>
+  <text x="40" y="259" class="sub">s = 0.0349 / 0.0015</text>
+  <rect x="162" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="180" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="200" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="218" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="238" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="256" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="276" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="294" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="314" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="332" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="352" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="370" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="390" y="228" width="36" height="26" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="408" y="245" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="428" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="446" y="245" class="c sub mono" style="font-size:10.5px">-7</text>
+  <rect x="466" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="484" y="245" class="c sub mono" style="font-size:10.5px">-7</text>
+  <rect x="504" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="522" y="245" class="c sub mono" style="font-size:10.5px">4</text>
+  <rect x="542" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="560" y="245" class="c sub mono" style="font-size:10.5px">5</text>
+  <rect x="580" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="598" y="245" class="c sub mono" style="font-size:10.5px">6</text>
+  <rect x="618" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="636" y="245" class="c sub mono" style="font-size:10.5px">-3</text>
+  <rect x="656" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="674" y="245" class="c sub mono" style="font-size:10.5px">-6</text>
+  <rect x="694" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="712" y="245" class="c sub mono" style="font-size:10.5px">-5</text>
+  <rect x="732" y="228" width="36" height="26" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="750" y="245" class="c sub mono" style="font-size:10.5px">4</text>
+  <line x1="465" y1="222" x2="465" y2="260" class="line dash"/>
+  <text x="776" y="145" class="sub mono">7.2</text>
+  <text x="776" y="195" class="sub mono">6.8</text>
+  <text x="776" y="245" class="sub mono">3.3</text>
+  <text x="776" y="88" class="sub">平均绝对</text>
+  <text x="776" y="104" class="sub">误差 ×1000</text>
+  <text x="40" y="290" class="sub">INT4 只有 -7～7 共 15 个整数，缩放系数 s = 范围内的最大绝对值 / 7，量化值 = round(w / s)。灰色格子被量化成 0，信息丢失。</text>
+  <text x="40" y="308" class="sub">离群值 -244.1 让它所在范围内的小权重都变成 0；按组之后，它只影响自己那一组，后 8 个权重得以保留。实际常用 128 个一组。</text>
+</svg>

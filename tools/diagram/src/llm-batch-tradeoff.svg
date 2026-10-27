@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="348" viewBox="0 0 760 348">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">batch 越大，总吞吐越高，每个请求的输出越慢</text>
+  <text x="30" y="60" class="b">总吞吐</text>
+  <rect x="40" y="243.639" width="48" height="16.3606" fill="#9F94D5" stroke="#9F94D5"/>
+  <text x="64" y="237.639" class="c sub mono">22</text>
+  <text x="64" y="276" class="c sub mono">1</text>
+  <rect x="118" y="150.953" width="48" height="109.047" fill="#9F94D5" stroke="#9F94D5"/>
+  <text x="142" y="144.953" class="c sub mono">149</text>
+  <text x="142" y="276" class="c sub mono">16</text>
+  <rect x="196" y="123.126" width="48" height="136.874" fill="#9F94D5" stroke="#9F94D5"/>
+  <text x="220" y="117.126" class="c sub mono">187</text>
+  <text x="220" y="276" class="c sub mono">32</text>
+  <rect x="274" y="103.478" width="48" height="156.522" fill="#9F94D5" stroke="#9F94D5"/>
+  <text x="298" y="97.4783" class="c sub mono">214</text>
+  <text x="298" y="276" class="c sub mono">64</text>
+  <line x1="34" y1="260" x2="356" y2="260" class="line"/>
+  <text x="196" y="294" class="c sub">batch 大小</text>
+  <text x="356" y="60" class="sub e">Token / 秒</text>
+  <text x="410" y="60" class="b">每个输出 Token 的时间（TPOT）</text>
+  <rect x="420" y="235.221" width="48" height="24.7789" fill="#7FB2D6" stroke="#7FB2D6"/>
+  <text x="444" y="229.221" class="c sub mono">44</text>
+  <text x="444" y="276" class="c sub mono">1</text>
+  <rect x="498" y="202.762" width="48" height="57.2381" fill="#7FB2D6" stroke="#7FB2D6"/>
+  <text x="522" y="196.762" class="c sub mono">102</text>
+  <text x="522" y="276" class="c sub mono">16</text>
+  <rect x="576" y="169.742" width="48" height="90.2579" fill="#7FB2D6" stroke="#7FB2D6"/>
+  <text x="600" y="163.742" class="c sub mono">161</text>
+  <text x="600" y="276" class="c sub mono">32</text>
+  <rect x="654" y="103.478" width="48" height="156.522" fill="#7FB2D6" stroke="#7FB2D6"/>
+  <text x="678" y="97.4783" class="c sub mono">279</text>
+  <text x="678" y="276" class="c sub mono">64</text>
+  <line x1="414" y1="260" x2="736" y2="260" class="line"/>
+  <text x="576" y="294" class="c sub">batch 大小</text>
+  <text x="736" y="60" class="sub e">毫秒</text>
+  <text x="30" y="316" class="sub">Qwen2.5-3B-Instruct，float16，Apple M1 Pro 笔记本上的示意性测量，不代表服务器上的数值；每个请求生成 128 个 Token。</text>
+  <text x="30" y="334" class="sub">batch 为 2～8 时 MPS 上的数值异常（吞吐几乎不变），完整数据见附录。</text>
+</svg>

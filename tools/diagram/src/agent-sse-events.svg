@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="452" viewBox="0 0 760 452">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Agent 执行过程中推给前端的 SSE 事件</text>
+  <text x="30" y="54" class="b">服务端依次写入的事件</text>
+  <text x="584" y="54" class="b">前端的处理</text>
+  <rect x="30" y="64" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="64" width="8" height="40" rx="2" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="48" y="80" class="sub mono" style="fill:#888">id: 1</text>
+  <text x="104" y="80" class="sub mono b" style="fill:#444">event: tool_call</text>
+  <text x="48" y="96" class="sub mono">data: {"name": "get_order", "args": {"order_id": "1024"}}</text>
+  <line x1="554" y1="84" x2="576" y2="84" class="arrow "/>
+  <text x="584" y="88" class="sub">正在查询订单 1024</text>
+  <rect x="30" y="112" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="112" width="8" height="40" rx="2" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="48" y="128" class="sub mono" style="fill:#888">id: 2</text>
+  <text x="104" y="128" class="sub mono b" style="fill:#444">event: tool_result</text>
+  <text x="48" y="144" class="sub mono">data: {"name": "get_order", "summary": "已发货，运单号 SF1234567"}</text>
+  <line x1="554" y1="132" x2="576" y2="132" class="arrow "/>
+  <text x="584" y="136" class="sub ok">✓ 订单已发货</text>
+  <rect x="30" y="160" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="160" width="8" height="40" rx="2" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="48" y="176" class="sub mono" style="fill:#888">id: 3</text>
+  <text x="104" y="176" class="sub mono b" style="fill:#444">event: tool_call</text>
+  <text x="48" y="192" class="sub mono">data: {"name": "get_logistics", "args": {"tracking_no": "SF1234567"}}</text>
+  <line x1="554" y1="180" x2="576" y2="180" class="arrow "/>
+  <text x="584" y="184" class="sub">正在查询物流</text>
+  <rect x="30" y="208" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="208" width="8" height="40" rx="2" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="48" y="224" class="sub mono" style="fill:#888">id: 4</text>
+  <text x="104" y="224" class="sub mono b" style="fill:#444">event: tool_result</text>
+  <text x="48" y="240" class="sub mono">data: {"name": "get_logistics", "summary": "杭州转运中心"}</text>
+  <line x1="554" y1="228" x2="576" y2="228" class="arrow "/>
+  <text x="584" y="232" class="sub ok">✓ 已到杭州转运中心</text>
+  <rect x="30" y="256" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="256" width="8" height="40" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="48" y="272" class="sub mono" style="fill:#888">id: 5</text>
+  <text x="104" y="272" class="sub mono b" style="fill:#444">event: delta</text>
+  <text x="48" y="288" class="sub mono">data: {"text": "您的包裹目前位于"}</text>
+  <line x1="554" y1="276" x2="576" y2="276" class="arrow "/>
+  <text x="584" y="280" class="sub">您的包裹目前位于</text>
+  <rect x="30" y="304" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="304" width="8" height="40" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="48" y="320" class="sub mono" style="fill:#888">id: 6</text>
+  <text x="104" y="320" class="sub mono b" style="fill:#444">event: delta</text>
+  <text x="48" y="336" class="sub mono">data: {"text": "杭州转运中心，预计明天送达。"}</text>
+  <line x1="554" y1="324" x2="576" y2="324" class="arrow "/>
+  <text x="584" y="328" class="sub">杭州转运中心，预计明天送达。</text>
+  <rect x="30" y="352" width="520" height="40" rx="4" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="30" y="352" width="8" height="40" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="48" y="368" class="sub mono" style="fill:#888">id: 7</text>
+  <text x="104" y="368" class="sub mono b" style="fill:#444">event: done</text>
+  <text x="48" y="384" class="sub mono">data: {"steps": 3}</text>
+  <line x1="554" y1="372" x2="576" y2="372" class="arrow "/>
+  <text x="584" y="376" class="sub">结束，停止加载动画</text>
+  <text x="30" y="412" class="sub">左侧色条：浅青是工具事件，前端显示为进度；浅蓝是回答的增量文字，逐段追加；灰色是结束、出错等控制事件。</text>
+  <text x="30" y="430" class="sub">每条事件以空行结束，id 递增，断线重连时浏览器带上 Last-Event-ID，服务端从下一条开始补发。</text>
+</svg>

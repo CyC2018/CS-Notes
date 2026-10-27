@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Qwen2.5-7B 的一层：参数都在哪些矩阵里</text>
+  <text x="210" y="62" class="c sub">输入：每个 Token 一个 3584 维向量</text>
+  <line x1="210" y1="68" x2="210" y2="82" class="arrow "/>
+  <rect x="120" y="84" width="180" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="210" y="101.5" class="c sub">RMSNorm</text>
+  <rect x="60" y="120" width="300" height="118" rx="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="72" y="140" class="b">注意力</text>
+  <text x="348" y="140" class="sub e">每层 2937 万</text>
+  <text x="84" y="163" class="sub mono">q_proj</text>
+  <text x="180" y="163" class="sub mono">3584 × 3584</text>
+  <text x="84" y="184" class="sub mono">k_proj</text>
+  <text x="180" y="184" class="sub mono">3584 × 512</text>
+  <text x="84" y="205" class="sub mono">v_proj</text>
+  <text x="180" y="205" class="sub mono">3584 × 512</text>
+  <text x="84" y="226" class="sub mono">o_proj</text>
+  <text x="180" y="226" class="sub mono">3584 × 3584</text>
+  <text x="272" y="182" class="sub">GQA：4 组</text>
+  <text x="272" y="198" class="sub">K、V 头</text>
+  <line x1="210" y1="240" x2="210" y2="258" class="arrow "/>
+  <text x="220" y="254" class="sub">+ 残差</text>
+  <rect x="120" y="262" width="180" height="26" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="210" y="279.5" class="c sub">RMSNorm</text>
+  <rect x="60" y="298" width="300" height="106" rx="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="72" y="318" class="b">前馈网络（SwiGLU）</text>
+  <text x="348" y="318" class="sub e">每层 2.04 亿</text>
+  <text x="84" y="341" class="sub mono">gate_proj</text>
+  <text x="180" y="341" class="sub mono">3584 × 18944</text>
+  <text x="84" y="362" class="sub mono">up_proj</text>
+  <text x="180" y="362" class="sub mono">3584 × 18944</text>
+  <text x="84" y="383" class="sub mono">down_proj</text>
+  <text x="180" y="383" class="sub mono">18944 × 3584</text>
+  <line x1="210" y1="406" x2="210" y2="424" class="arrow "/>
+  <text x="220" y="420" class="sub">+ 残差</text>
+  <text x="210" y="442" class="c sub">输出：仍是 3584 维，交给下一层（共 28 层）</text>
+  <text x="410" y="72" class="b">全模型 76.2 亿个参数</text>
+  <text x="410" y="106" class="sub">词嵌入</text>
+  <rect x="490" y="94" width="12.1652" height="18" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="508.165" y="107" class="sub">5.45 亿（7%）</text>
+  <text x="410" y="152" class="sub">28 层注意力</text>
+  <rect x="490" y="140" width="18.3482" height="18" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="514.348" y="153" class="sub">8.22 亿（11%）</text>
+  <text x="410" y="198" class="sub">28 层前馈网络</text>
+  <rect x="490" y="186" width="127.299" height="18" rx="2" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="623.299" y="199" class="sub">57.03 亿（75%）</text>
+  <text x="410" y="244" class="sub">输出层</text>
+  <rect x="490" y="232" width="12.1652" height="18" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="508.165" y="245" class="sub">5.45 亿（7%）</text>
+  <text x="410" y="282" class="sub">前馈网络占四分之三的参数，</text>
+  <text x="410" y="302" class="sub">MoE 替换的正是这一部分；</text>
+  <text x="410" y="322" class="sub">LoRA 只作用在 q、v 两个矩阵上时，</text>
+  <text x="410" y="342" class="sub">可训练参数只有 252 万（0.033%）。</text>
+  <text x="410" y="362" class="sub"></text>
+  <text x="410" y="382" class="sub">归一化在子层之前（Pre-Norm），</text>
+  <text x="410" y="402" class="sub">残差直接把子层的输入加到输出上。</text>
+</svg>

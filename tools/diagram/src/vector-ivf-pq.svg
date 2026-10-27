@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="450" viewBox="0 0 780 450">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">IVF 只查离查询最近的几个桶，PQ 把每个向量压缩成 64 个字节</text>
+  <text x="30" y="62" class="b">(a) IVF：先分桶，查询时只扫描 nprobe 个桶（示意）</text>
+  <rect x="30" y="76" width="330" height="250" rx="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <circle cx="96.6" cy="153.8" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="79.2" cy="149.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="90.6" cy="131.1" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="127.3" cy="137.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="94.3" cy="145.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="114.2" cy="134.5" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="105.0" cy="120.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="88.8" cy="128.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="72.4" cy="112.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="67.3" cy="131.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="92.1" cy="130.2" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <path d="M90,130 L100,140 M90,140 L100,130" stroke="#555" stroke-width="1.8"/>
+  <circle cx="200" cy="128" r="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1" opacity="0.85"/>
+  <circle cx="201.2" cy="108.0" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="198.6" cy="131.6" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="212.8" cy="115.3" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="193.2" cy="97.8" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="191.4" cy="95.0" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="175.9" cy="144.5" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="162.6" cy="140.0" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="205.6" cy="123.3" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="207.8" cy="135.9" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="217.8" cy="124.5" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="189.9" cy="118.9" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M195,123 L205,133 M195,133 L205,123" stroke="#555" stroke-width="1.8"/>
+  <circle cx="283.2" cy="144.3" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="286.6" cy="161.0" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="268.2" cy="128.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="283.8" cy="113.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="332.3" cy="108.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="295.2" cy="137.1" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="328.2" cy="115.2" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="318.2" cy="134.0" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="297.4" cy="134.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="310.9" cy="127.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="298.7" cy="150.3" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <path d="M295,140 L305,150 M295,150 L305,140" stroke="#555" stroke-width="1.8"/>
+  <circle cx="141.3" cy="213.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="135.9" cy="264.2" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="101.8" cy="254.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="102.1" cy="274.7" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="113.6" cy="246.8" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="106.1" cy="247.0" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="107.0" cy="236.8" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="145.0" cy="221.3" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="48.7" cy="248.2" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="107.5" cy="255.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="106.5" cy="247.8" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <path d="M105,245 L115,255 M105,255 L115,245" stroke="#555" stroke-width="1.8"/>
+  <circle cx="215" cy="228" r="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1" opacity="0.85"/>
+  <circle cx="220.6" cy="242.5" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="207.4" cy="222.4" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="248.0" cy="236.0" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="198.2" cy="262.9" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="228.2" cy="219.2" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="195.0" cy="232.5" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="200.9" cy="212.1" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="193.0" cy="220.4" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="233.8" cy="221.5" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="190.4" cy="238.0" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <circle cx="216.1" cy="240.7" r="3.2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M210,223 L220,233 M210,233 L220,223" stroke="#555" stroke-width="1.8"/>
+  <circle cx="325.4" cy="265.5" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="302.5" cy="267.3" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="285.7" cy="278.0" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="328.3" cy="270.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="301.0" cy="264.1" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="291.7" cy="255.9" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="298.2" cy="255.4" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="297.6" cy="244.3" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="311.0" cy="268.7" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="285.4" cy="233.5" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <circle cx="304.9" cy="284.6" r="3.2" fill="#DDDDDD" stroke="#C4C4C4" stroke-width="0.8"/>
+  <path d="M300,263 L310,273 M300,273 L310,263" stroke="#555" stroke-width="1.8"/>
+  <path d="M214,171 L216.6,177 L223,177.2 L218,181.5 L219.6,188 L214,184.5 L208.4,188 L210,181.5 L205,177.2 L211.4,177 z" fill="#9F94D5"/>
+  <text x="226" y="184" class="sub" style="fill:#766AA8">查询</text>
+  <text x="40" y="316" class="sub">× 是 k-means 得到的桶中心；浅紫色的两个桶离查询最近</text>
+  <text x="30" y="350" class="sub b">实测（8.3 万条 512 维，nlist = 256）：</text>
+  <text x="30" y="370" class="sub b">nprobe</text>
+  <text x="120" y="370" class="sub b e">扫描比例</text>
+  <text x="210" y="370" class="sub b e">Recall@10</text>
+  <text x="30" y="388" class="sub mono">1</text>
+  <text x="120" y="388" class="sub mono e">0.5%</text>
+  <text x="210" y="388" class="sub mono e">0.508</text>
+  <text x="30" y="404" class="sub mono">4</text>
+  <text x="120" y="404" class="sub mono e">1.9%</text>
+  <text x="210" y="404" class="sub mono e">0.728</text>
+  <text x="30" y="420" class="sub mono">16</text>
+  <text x="120" y="420" class="sub mono e">7.1%</text>
+  <text x="210" y="420" class="sub mono e">0.859</text>
+  <text x="30" y="436" class="sub mono">64</text>
+  <text x="120" y="436" class="sub mono e">27.3%</text>
+  <text x="210" y="436" class="sub mono e">0.949</text>
+  <text x="395" y="62" class="b">(b) PQ：每 8 维一段，用所在段的中心编号代替</text>
+  <text x="395" y="90" class="sub">“工作两年能休几天年假？”的向量，512 维 × 4 字节 = 2048 字节</text>
+  <rect x="395" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="409" y="115" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="423" y="100" width="28" height="22" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="437" y="115" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="451" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="465" y="115" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="479" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="493" y="115" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="507" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="521" y="115" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="535" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="549" y="115" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="563" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="577" y="115" class="c sub mono" style="font-size:9.5px">…</text>
+  <rect x="591" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="605" y="115" class="c sub mono" style="font-size:9.5px">…</text>
+  <rect x="619" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="633" y="115" class="c sub mono" style="font-size:9.5px">…</text>
+  <rect x="647" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="661" y="115" class="c sub mono" style="font-size:9.5px">61</text>
+  <rect x="675" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="689" y="115" class="c sub mono" style="font-size:9.5px">62</text>
+  <rect x="703" y="100" width="28" height="22" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="717" y="115" class="c sub mono" style="font-size:9.5px">63</text>
+  <text x="739" y="115" class="sub">64 段</text>
+  <path d="M437.0,122 L437.0,140" class="arrow"/>
+  <text x="395" y="160" class="sub b">第 1 段</text>
+  <rect x="445" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="465" y="160" class="c sub mono" style="font-size:9.5px">-0.017</text>
+  <rect x="485" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="505" y="160" class="c sub mono" style="font-size:9.5px">-0.040</text>
+  <rect x="525" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="545" y="160" class="c sub mono" style="font-size:9.5px">0.056</text>
+  <rect x="565" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="585" y="160" class="c sub mono" style="font-size:9.5px">-0.264</text>
+  <rect x="605" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="625" y="160" class="c sub mono" style="font-size:9.5px">0.036</text>
+  <rect x="645" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="665" y="160" class="c sub mono" style="font-size:9.5px">-0.024</text>
+  <rect x="685" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="705" y="160" class="c sub mono" style="font-size:9.5px">0.022</text>
+  <rect x="725" y="146" width="40" height="20" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="745" y="160" class="c sub mono" style="font-size:9.5px">-0.004</text>
+  <text x="395" y="186" class="sub">在第 1 段的 256 个中心里，离它最近的是 129 号：</text>
+  <text x="395" y="210" class="sub b">129 号</text>
+  <rect x="445" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="465" y="210" class="c sub mono" style="font-size:9.5px">-0.029</text>
+  <rect x="485" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="505" y="210" class="c sub mono" style="font-size:9.5px">0.009</text>
+  <rect x="525" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="545" y="210" class="c sub mono" style="font-size:9.5px">0.045</text>
+  <rect x="565" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="585" y="210" class="c sub mono" style="font-size:9.5px">-0.282</text>
+  <rect x="605" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="625" y="210" class="c sub mono" style="font-size:9.5px">0.023</text>
+  <rect x="645" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="665" y="210" class="c sub mono" style="font-size:9.5px">-0.058</text>
+  <rect x="685" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="705" y="210" class="c sub mono" style="font-size:9.5px">0.012</text>
+  <rect x="725" y="196" width="40" height="20" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="745" y="210" class="c sub mono" style="font-size:9.5px">0.014</text>
+  <text x="395" y="238" class="sub">每段只存 1 个字节的编号，整个向量变成 64 个字节：</text>
+  <rect x="445" y="248" width="44" height="22" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="467" y="263" class="c sub mono" style="font-size:10px">166</text>
+  <rect x="489" y="248" width="44" height="22" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="511" y="263" class="c sub mono" style="font-size:10px">129</text>
+  <rect x="533" y="248" width="44" height="22" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="555" y="263" class="c sub mono" style="font-size:10px">…</text>
+  <rect x="577" y="248" width="44" height="22" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="599" y="263" class="c sub mono" style="font-size:10px">163</text>
+  <text x="629" y="263" class="sub ok">压缩为原来的 1/32</text>
+  <text x="395" y="298" class="sub">查询时先算出查询的每一段与 256 个中心的内积，得到 64 × 256 的表；</text>
+  <text x="395" y="314" class="sub">库中每个向量的近似得分只需查表 64 次再相加，不用还原向量。</text>
+  <text x="395" y="350" class="sub b">实测（同一份数据，m = 64）：</text>
+  <text x="395" y="370" class="sub b">方法</text>
+  <text x="725" y="370" class="sub b e">Recall@10</text>
+  <text x="395" y="388" class="sub">只用 PQ 的近似得分</text>
+  <text x="725" y="388" class="sub mono e">0.677</text>
+  <text x="395" y="404" class="sub">PQ 取前 100，再用原始向量重算</text>
+  <text x="725" y="404" class="sub mono e">0.973</text>
+  <text x="395" y="420" class="sub">IVF（nprobe = 16）+ PQ + 重算</text>
+  <text x="725" y="420" class="sub mono e">0.847</text>
+</svg>

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="476" viewBox="0 0 760 476">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">静态批处理与连续批处理：4 个槽位，6 个请求</text>
+  <text x="30" y="74" class="b">静态批处理：整批结束后才接收新请求</text>
+  <text x="138" y="100" class="sub e">槽位 1</text>
+  <rect x="151" y="86" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="124" class="sub e">槽位 2</text>
+  <rect x="151" y="110" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="148" class="sub e">槽位 3</text>
+  <rect x="151" y="134" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="172" class="sub e">槽位 4</text>
+  <rect x="151" y="158" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="151" y="86" width="100" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="201" y="100" class="c sub b" style="fill:#444">A</text>
+  <rect x="423" y="86" width="100" height="20" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="473" y="100" class="c sub b" style="fill:#444">E</text>
+  <rect x="151" y="110" width="270" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="286" y="124" class="c sub b" style="fill:#444">B</text>
+  <rect x="423" y="110" width="202" height="20" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="524" y="124" class="c sub b" style="fill:#444">F</text>
+  <rect x="151" y="134" width="134" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="218" y="148" class="c sub b" style="fill:#444">C</text>
+  <rect x="151" y="158" width="168" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="235" y="172" class="c sub b" style="fill:#444">D</text>
+  <line x1="150" y1="182" x2="150" y2="186" stroke="#999"/>
+  <text x="150" y="198" class="c sub mono">0</text>
+  <line x1="184" y1="182" x2="184" y2="186" stroke="#999"/>
+  <line x1="218" y1="182" x2="218" y2="186" stroke="#999"/>
+  <text x="218" y="198" class="c sub mono">2</text>
+  <line x1="252" y1="182" x2="252" y2="186" stroke="#999"/>
+  <line x1="286" y1="182" x2="286" y2="186" stroke="#999"/>
+  <text x="286" y="198" class="c sub mono">4</text>
+  <line x1="320" y1="182" x2="320" y2="186" stroke="#999"/>
+  <line x1="354" y1="182" x2="354" y2="186" stroke="#999"/>
+  <text x="354" y="198" class="c sub mono">6</text>
+  <line x1="388" y1="182" x2="388" y2="186" stroke="#999"/>
+  <line x1="422" y1="182" x2="422" y2="186" stroke="#999"/>
+  <text x="422" y="198" class="c sub mono">8</text>
+  <line x1="456" y1="182" x2="456" y2="186" stroke="#999"/>
+  <line x1="490" y1="182" x2="490" y2="186" stroke="#999"/>
+  <text x="490" y="198" class="c sub mono">10</text>
+  <line x1="524" y1="182" x2="524" y2="186" stroke="#999"/>
+  <line x1="558" y1="182" x2="558" y2="186" stroke="#999"/>
+  <text x="558" y="198" class="c sub mono">12</text>
+  <line x1="592" y1="182" x2="592" y2="186" stroke="#999"/>
+  <line x1="626" y1="182" x2="626" y2="186" stroke="#999"/>
+  <text x="626" y="198" class="c sub mono">14</text>
+  <text x="640" y="198" class="sub">步</text>
+  <text x="640" y="136" class="sub">共 14 步</text>
+  <line x1="422" y1="78" x2="422" y2="182" stroke="#C0605A" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="428" y="76" class="sub note">B 结束，整批才结束</text>
+  <text x="30" y="256" class="b">连续批处理：每一步都移出完成的请求、加入等待的请求</text>
+  <text x="138" y="282" class="sub e">槽位 1</text>
+  <rect x="151" y="268" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="306" class="sub e">槽位 2</text>
+  <rect x="151" y="292" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="330" class="sub e">槽位 3</text>
+  <rect x="151" y="316" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="138" y="354" class="sub e">槽位 4</text>
+  <rect x="151" y="340" width="474" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="151" y="268" width="100" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="201" y="282" class="c sub b" style="fill:#444">A</text>
+  <rect x="253" y="268" width="100" height="20" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="303" y="282" class="c sub b" style="fill:#444">E</text>
+  <rect x="151" y="292" width="270" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="286" y="306" class="c sub b" style="fill:#444">B</text>
+  <rect x="151" y="316" width="134" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="218" y="330" class="c sub b" style="fill:#444">C</text>
+  <rect x="287" y="316" width="202" height="20" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="388" y="330" class="c sub b" style="fill:#444">F</text>
+  <rect x="151" y="340" width="168" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="235" y="354" class="c sub b" style="fill:#444">D</text>
+  <line x1="150" y1="364" x2="150" y2="368" stroke="#999"/>
+  <text x="150" y="380" class="c sub mono">0</text>
+  <line x1="184" y1="364" x2="184" y2="368" stroke="#999"/>
+  <line x1="218" y1="364" x2="218" y2="368" stroke="#999"/>
+  <text x="218" y="380" class="c sub mono">2</text>
+  <line x1="252" y1="364" x2="252" y2="368" stroke="#999"/>
+  <line x1="286" y1="364" x2="286" y2="368" stroke="#999"/>
+  <text x="286" y="380" class="c sub mono">4</text>
+  <line x1="320" y1="364" x2="320" y2="368" stroke="#999"/>
+  <line x1="354" y1="364" x2="354" y2="368" stroke="#999"/>
+  <text x="354" y="380" class="c sub mono">6</text>
+  <line x1="388" y1="364" x2="388" y2="368" stroke="#999"/>
+  <line x1="422" y1="364" x2="422" y2="368" stroke="#999"/>
+  <text x="422" y="380" class="c sub mono">8</text>
+  <line x1="456" y1="364" x2="456" y2="368" stroke="#999"/>
+  <line x1="490" y1="364" x2="490" y2="368" stroke="#999"/>
+  <text x="490" y="380" class="c sub mono">10</text>
+  <line x1="524" y1="364" x2="524" y2="368" stroke="#999"/>
+  <line x1="558" y1="364" x2="558" y2="368" stroke="#999"/>
+  <text x="558" y="380" class="c sub mono">12</text>
+  <line x1="592" y1="364" x2="592" y2="368" stroke="#999"/>
+  <line x1="626" y1="364" x2="626" y2="368" stroke="#999"/>
+  <text x="626" y="380" class="c sub mono">14</text>
+  <text x="640" y="380" class="sub">步</text>
+  <text x="640" y="318" class="sub">共 10 步</text>
+  <text x="30" y="404" class="sub">方块的长度是请求要生成的 Token 数。静态批处理中 E、F 要等到第 8 步才开始；连续批处理中 A 在第 3 步结束后，</text>
+  <text x="30" y="422" class="sub">E 立即补进空出的槽位，C 结束后 F 补进，全部完成从 14 步缩短到 10 步。</text>
+  <rect x="31" y="442" width="24" height="14" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="62" y="453" class="sub">第 0 步到达的请求</text>
+  <rect x="191" y="442" width="24" height="14" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="222" y="453" class="sub">第 1 步到达的请求</text>
+  <rect x="351" y="442" width="24" height="14" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="382" y="453" class="sub">槽位空闲</text>
+</svg>

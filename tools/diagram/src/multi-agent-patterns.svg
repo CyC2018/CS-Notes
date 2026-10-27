@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="330" viewBox="0 0 780 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">多 Agent 的三种协作方式</text>
+  <rect x="15" y="46" width="240" height="270" rx="8" class="frame"/>
+  <text x="25" y="64" class="b">主管分派</text>
+  <line x1="127.5" y1="80" x2="127.5" y2="120" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="115" y1="92.5" x2="155" y2="92.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="135" y1="80" x2="135" y2="120" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="115" y1="100" x2="155" y2="100" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="142.5" y1="80" x2="142.5" y2="120" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="115" y1="107.5" x2="155" y2="107.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="120" y="85" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="128.4" y="93.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="135" y="136" class="c sub b">主管 Agent</text>
+  <rect x="30" y="186" width="70" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="65" y="204.5" class="c sub b">物流 Agent</text>
+  <path d="M135,142 C135,162 65,162 65,184" class="arrow"/>
+  <rect x="106" y="186" width="70" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="141" y="204.5" class="c sub b">售后 Agent</text>
+  <path d="M135,142 C135,162 141,162 141,184" class="arrow"/>
+  <rect x="182" y="186" width="70" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="217" y="204.5" class="c sub b">商品 Agent</text>
+  <path d="M135,142 C135,162 217,162 217,184" class="arrow"/>
+  <text x="135" y="240" class="c sub">用户一句话问了物流和退款，</text>
+  <text x="135" y="256" class="c sub">主管拆开分派，再汇总回答</text>
+  <text x="135" y="296" class="c sub b">适合：子任务互相独立、可以并行</text>
+  <rect x="270" y="46" width="240" height="270" rx="8" class="frame"/>
+  <text x="280" y="64" class="b">流水线</text>
+  <rect x="320" y="76" width="140" height="38" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="390" y="92" class="c b">提取参数</text>
+  <text x="390" y="108" class="c sub">从供应商资料中</text>
+  <line x1="390" y1="116" x2="390" y2="130" class="arrow "/>
+  <rect x="320" y="132" width="140" height="38" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="390" y="148" class="c b">撰写文案</text>
+  <text x="390" y="164" class="c sub">按参数写详情页</text>
+  <line x1="390" y1="172" x2="390" y2="186" class="arrow "/>
+  <rect x="320" y="188" width="140" height="38" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="390" y="204" class="c b">合规审核</text>
+  <text x="390" y="220" class="c sub">极限词、功效宣称</text>
+  <path d="M462,207 C498,200 498,120 462,151" class="arrow dash"/>
+  <text x="496" y="166" class="sub e">退回</text>
+  <text x="390" y="260" class="c sub">商品上架：上一步的输出是下一步的输入</text>
+  <text x="390" y="296" class="c sub b">适合：步骤固定、各步需要不同的提示词</text>
+  <rect x="525" y="46" width="240" height="270" rx="8" class="frame"/>
+  <text x="535" y="64" class="b">讨论</text>
+  <line x1="578" y1="81" x2="578" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="566" y1="93" x2="604" y2="93" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="585" y1="81" x2="585" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="566" y1="100" x2="604" y2="100" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="592" y1="81" x2="592" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="566" y1="107" x2="604" y2="107" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="571" y="86" width="28" height="28" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="578.84" y="93.84" width="12.32" height="12.32" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="585" y="134" class="c sub b">Agent A</text>
+  <line x1="698" y1="81" x2="698" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="686" y1="93" x2="724" y2="93" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="705" y1="81" x2="705" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="686" y1="100" x2="724" y2="100" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="712" y1="81" x2="712" y2="119" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="686" y1="107" x2="724" y2="107" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="691" y="86" width="28" height="28" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="698.84" y="93.84" width="12.32" height="12.32" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="705" y="134" class="c sub b">Agent B</text>
+  <path d="M605,94 C635,80 655,80 685,94" class="arrow"/>
+  <path d="M685,108 C655,122 635,122 605,108" class="arrow"/>
+  <text x="645" y="76" class="c sub">看对方的理由，修改答案</text>
+  <rect x="595" y="176" width="100" height="30" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="645" y="195.5" class="c sub b">裁决</text>
+  <path d="M585,146 C585,166 605,170 615,174" class="arrow"/>
+  <path d="M705,146 C705,166 685,170 675,174" class="arrow"/>
+  <text x="645" y="240" class="c sub">两个 Agent 分别判断差评是否属实，</text>
+  <text x="645" y="256" class="c sub">几轮后由裁决者给出结论</text>
+  <text x="645" y="296" class="c sub b">适合：答案可以互相检验、出错代价高</text>
+</svg>

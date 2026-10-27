@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="396" viewBox="0 0 760 396">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">一个 10 步的 Agent 任务：每一步的输入 Token 与累计费用</text>
+  <text x="20" y="64" class="sub b">每一步的输入 Token</text>
+  <line x1="56" y1="290" x2="400" y2="290" stroke="#E4E4E4"/>
+  <text x="52" y="294" class="sub e mono">0</text>
+  <line x1="56" y1="240" x2="400" y2="240" stroke="#E4E4E4"/>
+  <text x="52" y="244" class="sub e mono">6K</text>
+  <line x1="56" y1="190" x2="400" y2="190" stroke="#E4E4E4"/>
+  <text x="52" y="194" class="sub e mono">12K</text>
+  <line x1="56" y1="140" x2="400" y2="140" stroke="#E4E4E4"/>
+  <text x="52" y="144" class="sub e mono">18K</text>
+  <line x1="56" y1="90" x2="400" y2="90" stroke="#E4E4E4"/>
+  <text x="52" y="94" class="sub e mono">24K</text>
+  <rect x="66" y="248.333" width="22" height="41.6667" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="66" y="289.583" width="22" height="0.416667" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="77" y="306" class="c sub mono">1</text>
+  <rect x="100" y="231.667" width="22" height="58.3333" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="100" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="111" y="306" class="c sub mono">2</text>
+  <rect x="134" y="215" width="22" height="75" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="134" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="145" y="306" class="c sub mono">3</text>
+  <rect x="168" y="198.333" width="22" height="91.6667" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="168" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="179" y="306" class="c sub mono">4</text>
+  <rect x="202" y="181.667" width="22" height="108.333" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="202" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="213" y="306" class="c sub mono">5</text>
+  <rect x="236" y="165" width="22" height="125" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="236" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="247" y="306" class="c sub mono">6</text>
+  <rect x="270" y="148.333" width="22" height="141.667" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="270" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="281" y="306" class="c sub mono">7</text>
+  <rect x="304" y="131.667" width="22" height="158.333" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="304" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="315" y="306" class="c sub mono">8</text>
+  <rect x="338" y="115" width="22" height="175" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="338" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="349" y="306" class="c sub mono">9</text>
+  <rect x="372" y="98.3333" width="22" height="191.667" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <rect x="372" y="275" width="22" height="15" fill="#9F94D5" stroke="#9F94D5" stroke-width="0.8"/>
+  <text x="383" y="306" class="c sub mono">10</text>
+  <text x="230" y="324" class="c sub">第几步</text>
+  <text x="430" y="64" class="sub b">累计费用（元）</text>
+  <line x1="466" y1="290" x2="720" y2="290" stroke="#E4E4E4"/>
+  <text x="462" y="294" class="sub e mono">0.0</text>
+  <line x1="466" y1="223.333" x2="720" y2="223.333" stroke="#E4E4E4"/>
+  <text x="462" y="227.333" class="sub e mono">0.1</text>
+  <line x1="466" y1="156.667" x2="720" y2="156.667" stroke="#E4E4E4"/>
+  <text x="462" y="160.667" class="sub e mono">0.2</text>
+  <line x1="466" y1="90" x2="720" y2="90" stroke="#E4E4E4"/>
+  <text x="462" y="94" class="sub e mono">0.3</text>
+  <text x="470" y="306" class="c sub mono">1</text>
+  <text x="581.111" y="306" class="c sub mono">5</text>
+  <text x="720" y="306" class="c sub mono">10</text>
+  <text x="595" y="324" class="c sub">第几步</text>
+  <path d="M470,282.267 L497.778,271.867 L525.556,258.8 L553.333,243.067 L581.111,224.667 L608.889,203.6 L636.667,179.867 L664.444,153.467 L692.222,124.4 L720,92.6667" fill="none" stroke="#C0605A" stroke-width="2"/>
+  <circle cx="470" cy="282.267" r="3" fill="#C0605A"/>
+  <circle cx="497.778" cy="271.867" r="3" fill="#C0605A"/>
+  <circle cx="525.556" cy="258.8" r="3" fill="#C0605A"/>
+  <circle cx="553.333" cy="243.067" r="3" fill="#C0605A"/>
+  <circle cx="581.111" cy="224.667" r="3" fill="#C0605A"/>
+  <circle cx="608.889" cy="203.6" r="3" fill="#C0605A"/>
+  <circle cx="636.667" cy="179.867" r="3" fill="#C0605A"/>
+  <circle cx="664.444" cy="153.467" r="3" fill="#C0605A"/>
+  <circle cx="692.222" cy="124.4" r="3" fill="#C0605A"/>
+  <circle cx="720" cy="92.6667" r="3" fill="#C0605A"/>
+  <path d="M470,288.735 L497.778,285.129 L525.556,281.471 L553.333,277.759 L581.111,273.993 L608.889,270.175 L636.667,266.303 L664.444,262.377 L692.222,258.399 L720,254.367" fill="none" stroke="#6A9F68" stroke-width="2"/>
+  <circle cx="470" cy="288.735" r="3" fill="#6A9F68"/>
+  <circle cx="497.778" cy="285.129" r="3" fill="#6A9F68"/>
+  <circle cx="525.556" cy="281.471" r="3" fill="#6A9F68"/>
+  <circle cx="553.333" cy="277.759" r="3" fill="#6A9F68"/>
+  <circle cx="581.111" cy="273.993" r="3" fill="#6A9F68"/>
+  <circle cx="608.889" cy="270.175" r="3" fill="#6A9F68"/>
+  <circle cx="636.667" cy="266.303" r="3" fill="#6A9F68"/>
+  <circle cx="664.444" cy="262.377" r="3" fill="#6A9F68"/>
+  <circle cx="692.222" cy="258.399" r="3" fill="#6A9F68"/>
+  <circle cx="720" cy="254.367" r="3" fill="#6A9F68"/>
+  <text x="714" y="82.6667" class="sub note e">不命中缓存 0.296 元</text>
+  <text x="714" y="244.367" class="sub ok e">命中前缀缓存 0.053 元</text>
+  <rect x="60" y="346" width="20" height="12" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="0.8"/>
+  <text x="86" y="356" class="sub">命中缓存的前缀（上一步的输入和输出）</text>
+  <rect x="330" y="346" width="20" height="12" rx="2" fill="#9F94D5"/>
+  <text x="356" y="356" class="sub">未命中：本步新增的工具结果</text>
+  <text x="60" y="384" class="sub">示意：系统提示词和工具定义 5000 Token，每步新增约 2000 Token。10 步累计输入 140K，其中 88% 可以命中缓存。</text>
+</svg>

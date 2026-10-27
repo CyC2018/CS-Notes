@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="380" viewBox="0 0 820 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="410" y="28" class="title">MCP 连接工具，A2A 连接 Agent</text>
+  <rect x="20" y="46" width="220" height="250" rx="8" class="frame"/>
+  <text x="30" y="64" class="b">电商平台</text>
+  <line x1="121.5" y1="82" x2="121.5" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="108" y1="95.5" x2="152" y2="95.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="130" y1="82" x2="130" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="108" y1="104" x2="152" y2="104" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="138.5" y1="82" x2="138.5" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="108" y1="112.5" x2="152" y2="112.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="113" y="87" width="34" height="34" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="122.52" y="96.52" width="14.96" height="14.96" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="130" y="146" class="c b">客服 Agent</text>
+  <rect x="61" y="214" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="68" cy="220.5" r="2" fill="#7FB2D6"/>
+  <line x1="75" y1="220.5" x2="88" y2="220.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="61" y="230" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="68" cy="236.5" r="2" fill="#7FB2D6"/>
+  <line x1="75" y1="236.5" x2="88" y2="236.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="78" y="270" class="c sub">订单库</text>
+  <path d="M130,156 C130,180 78,184 78,210" class="arrow"/>
+  <rect x="165" y="214" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="172" cy="220.5" r="2" fill="#7FB2D6"/>
+  <line x1="179" y1="220.5" x2="192" y2="220.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="165" y="230" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="172" cy="236.5" r="2" fill="#7FB2D6"/>
+  <line x1="179" y1="236.5" x2="192" y2="236.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="182" y="270" class="c sub">退款接口</text>
+  <path d="M130,156 C130,180 182,184 182,210" class="arrow"/>
+  <text x="130" y="192" class="c sub b">MCP</text>
+  <rect x="580" y="46" width="220" height="250" rx="8" class="frame"/>
+  <text x="590" y="64" class="b">快递公司</text>
+  <line x1="681.5" y1="82" x2="681.5" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="668" y1="95.5" x2="712" y2="95.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="690" y1="82" x2="690" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="668" y1="104" x2="712" y2="104" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="698.5" y1="82" x2="698.5" y2="126" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="668" y1="112.5" x2="712" y2="112.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="673" y="87" width="34" height="34" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="682.52" y="96.52" width="14.96" height="14.96" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="690" y="146" class="c b">物流 Agent</text>
+  <rect x="621" y="214" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="628" cy="220.5" r="2" fill="#7FB2D6"/>
+  <line x1="635" y1="220.5" x2="648" y2="220.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="621" y="230" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="628" cy="236.5" r="2" fill="#7FB2D6"/>
+  <line x1="635" y1="236.5" x2="648" y2="236.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="638" y="270" class="c sub">轨迹系统</text>
+  <path d="M690,156 C690,180 638,184 638,210" class="arrow"/>
+  <rect x="725" y="214" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="732" cy="220.5" r="2" fill="#7FB2D6"/>
+  <line x1="739" y1="220.5" x2="752" y2="220.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="725" y="230" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="732" cy="236.5" r="2" fill="#7FB2D6"/>
+  <line x1="739" y1="236.5" x2="752" y2="236.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="742" y="270" class="c sub">派送调度</text>
+  <path d="M690,156 C690,180 742,184 742,210" class="arrow"/>
+  <text x="690" y="192" class="c sub b">MCP</text>
+  <text x="410" y="70" class="c b">A2A（JSON-RPC、gRPC 或 HTTP+JSON）</text>
+  <rect x="256" y="88" width="308" height="42" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="264" y="105" class="sub" style="font-size:10.5px;fill:#3F3F3F">① GET /.well-known/agent-card.json</text>
+  <text x="264" y="121" class="sub" style="font-size:10.5px">名称、技能（查询轨迹、改派）、地址、认证方式</text>
+  <rect x="256" y="138" width="308" height="42" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="264" y="155" class="sub" style="font-size:10.5px;fill:#3F3F3F">② SendMessage：运单 SF1234567 改派到驿站</text>
+  <text x="264" y="171" class="sub" style="font-size:10.5px">返回任务 task-77，状态 submitted → working</text>
+  <rect x="256" y="188" width="308" height="42" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="264" y="205" class="sub" style="font-size:10.5px;fill:#3F3F3F">③ 状态 input-required：需要收件人手机号后四位</text>
+  <text x="264" y="221" class="sub" style="font-size:10.5px">客服 Agent 向用户询问后补充消息</text>
+  <rect x="256" y="238" width="308" height="42" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="264" y="255" class="sub" style="font-size:10.5px;fill:#3F3F3F">④ 状态 completed，Artifact：改派成功</text>
+  <text x="264" y="271" class="sub" style="font-size:10.5px">长任务可以用 SSE 推送进度或回调通知</text>
+  <line x1="242" y1="170" x2="254" y2="170" class="line"/>
+  <line x1="566" y1="170" x2="578" y2="170" class="arrow"/>
+  <text x="410" y="322" class="c sub">MCP 是 Agent 与自己的工具之间的协议，工具按固定的输入输出执行一次调用；</text>
+  <text x="410" y="340" class="c sub">A2A 是 Agent 与 Agent 之间的协议，对方是黑盒，任务有状态、可能持续很久、中途可能要补充信息。</text>
+  <text x="410" y="362" class="c sub">两家公司的 Agent 都只暴露能力，不共享各自的提示词、记忆和工具。</text>
+</svg>

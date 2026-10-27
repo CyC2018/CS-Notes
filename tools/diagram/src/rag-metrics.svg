@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="356" viewBox="0 0 760 356">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">同一份检索结果，Recall、MRR 和 NDCG 分别怎么算</text>
+  <text x="30" y="62" class="b">问题：工作两年能休几天年假？没休完的怎么办？</text>
+  <text x="30" y="82" class="sub">标注：3.1 天数、3.3 结转是回答必需的（相关度 2），3.2 申请部分相关（1），其余为 0</text>
+  <rect x="30" y="98" width="44" height="26" rx="0" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="52" y="115" class="c sub b">排名</text>
+  <rect x="74" y="98" width="170" height="26" rx="0" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="159" y="115" class="c sub b">检索到的切片</text>
+  <rect x="244" y="98" width="60" height="26" rx="0" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="274" y="115" class="c sub b">相关度</text>
+  <rect x="304" y="98" width="150" height="26" rx="0" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="379" y="115" class="c sub b">相关度 / log₂(排名 + 1)</text>
+  <rect x="30" y="124" width="44" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="52" y="142" class="c sub" style="">1</text>
+  <rect x="74" y="124" width="170" height="28" rx="0" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="159" y="142" class="c sub" style="">3.2 申请</text>
+  <rect x="244" y="124" width="60" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="274" y="142" class="c sub" style="">1</text>
+  <rect x="304" y="124" width="150" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="379" y="142" class="c sub mono" style="font-size:10.5px">1 / 1.000 = 1.000</text>
+  <rect x="30" y="152" width="44" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="52" y="170" class="c sub" style="">2</text>
+  <rect x="74" y="152" width="170" height="28" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="159" y="170" class="c sub" style="">3.1 天数</text>
+  <rect x="244" y="152" width="60" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="274" y="170" class="c sub" style="">2</text>
+  <rect x="304" y="152" width="150" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="379" y="170" class="c sub mono" style="font-size:10.5px">2 / 1.585 = 1.262</text>
+  <rect x="30" y="180" width="44" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="52" y="198" class="c sub" style="">3</text>
+  <rect x="74" y="180" width="170" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="159" y="198" class="c sub" style="">4.1 病假</text>
+  <rect x="244" y="180" width="60" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="274" y="198" class="c sub" style="">0</text>
+  <rect x="304" y="180" width="150" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="379" y="198" class="c sub mono" style="font-size:10.5px">0</text>
+  <rect x="30" y="208" width="44" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="52" y="226" class="c sub" style="">4</text>
+  <rect x="74" y="208" width="170" height="28" rx="0" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="159" y="226" class="c sub" style="">3.3 结转</text>
+  <rect x="244" y="208" width="60" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="274" y="226" class="c sub" style="">2</text>
+  <rect x="304" y="208" width="150" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="379" y="226" class="c sub mono" style="font-size:10.5px">2 / 2.322 = 0.861</text>
+  <rect x="30" y="236" width="44" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="52" y="254" class="c sub" style="">5</text>
+  <rect x="74" y="236" width="170" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="159" y="254" class="c sub" style="">3.3 结转（2023 版）</text>
+  <rect x="244" y="236" width="60" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="274" y="254" class="c sub" style="">0</text>
+  <rect x="304" y="236" width="150" height="28" rx="0" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="379" y="254" class="c sub mono" style="font-size:10.5px">0</text>
+  <text x="30" y="288" class="sub">浅紫色是必需的切片，浅蓝色是部分相关的切片</text>
+  <rect x="486" y="58" width="260" height="64" rx="5" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="496" y="76" class="sub b">Recall@K：必需的切片有几个进了前 K</text>
+  <text x="502" y="94" class="sub">Recall@3 = 1 / 2 = 0.5（3.3 结转排在第 4）</text>
+  <text x="502" y="111" class="sub">Recall@5 = 2 / 2 = 1</text>
+  <rect x="486" y="134" width="260" height="64" rx="5" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="496" y="152" class="sub b">MRR：第一个必需切片排名的倒数</text>
+  <text x="502" y="170" class="sub">这个问题的倒数排名 = 1 / 2 = 0.5</text>
+  <text x="502" y="187" class="sub">MRR 是所有问题的平均值</text>
+  <rect x="486" y="210" width="260" height="98" rx="5" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="496" y="228" class="sub b">NDCG@5：相关度按排名打折扣，再除以理想值</text>
+  <text x="502" y="246" class="sub">DCG = 1 + 1.262 + 0.861 = 3.123</text>
+  <text x="502" y="263" class="sub">理想顺序是相关度 2、2、1，</text>
+  <text x="502" y="280" class="sub">IDCG = 2 + 1.262 + 0.5 = 3.762</text>
+  <text x="502" y="297" class="sub">NDCG@5 = 3.123 / 3.762 = 0.830</text>
+  <text x="30" y="336" class="sub">Recall 只看有没有召回，MRR 只看第一个相关结果的位置，NDCG 同时考虑所有结果的相关程度和位置。</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="276" viewBox="0 0 760 276">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">SFT 样本：只对助手的回答计算损失</text>
+  <rect x="40" y="60" width="470" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="50" y="76" class="sub mono">&lt;|im_start|&gt;system</text>
+  <text x="200" y="76" class="sub">你是电商客服助手，回答要简短。&lt;|im_end|&gt;</text>
+  <rect x="40" y="90" width="470" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="50" y="106" class="sub mono">&lt;|im_start|&gt;user</text>
+  <text x="200" y="106" class="sub">拆封的耳机能退吗？&lt;|im_end|&gt;</text>
+  <rect x="40" y="120" width="470" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="50" y="136" class="sub mono">&lt;|im_start|&gt;assistant</text>
+  <text x="200" y="136" class="sub"></text>
+  <text x="530" y="92" class="sub b">提示部分 31 个 Token</text>
+  <text x="530" y="110" class="sub">标签设为 -100，不计入损失</text>
+  <rect x="40" y="184" width="46" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="63" y="201" class="c sub">不影响</text>
+  <rect x="90" y="184" width="34" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="107" y="201" class="c sub">二次</text>
+  <rect x="128" y="184" width="34" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="145" y="201" class="c sub">销售</text>
+  <rect x="166" y="184" width="34" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="183" y="201" class="c sub">的话</text>
+  <rect x="204" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="216" y="201" class="c sub">，</text>
+  <rect x="232" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="244" y="201" class="c sub">签</text>
+  <rect x="260" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="272" y="201" class="c sub">收</text>
+  <rect x="288" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="300" y="201" class="c sub">␣</text>
+  <rect x="316" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="328" y="201" class="c sub">7</text>
+  <rect x="344" y="184" width="34" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="361" y="201" class="c sub">␣天</text>
+  <rect x="382" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="394" y="201" class="c sub">内</text>
+  <rect x="410" y="184" width="34" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="427" y="201" class="c sub">可以</text>
+  <rect x="448" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="201" class="c sub">退</text>
+  <rect x="476" y="184" width="24" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="488" y="201" class="c sub">。</text>
+  <rect x="504" y="184" width="84" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="546" y="201" class="c sub mono">&lt;|im_end|&gt;</text>
+  <text x="40" y="172" class="sub b">助手回答 17 个 Token（含结束标记和换行），逐个预测下一个 Token，计算交叉熵</text>
+  <text x="40" y="238" class="sub">“天”在 Qwen 的词表中被切成两个字节级 Token，图中合并显示；换行符未画出。</text>
+  <text x="40" y="256" class="sub">模型学会的是“看到这样的提示，输出这样的回答，并在结束处停止”。</text>
+</svg>
