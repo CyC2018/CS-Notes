@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">ext2：inode 记录文件内容所在的全部 block</text>
+  <text x="30" y="58" class="sub">块大小 1 KB。先写入 f1～f6（各占 1 个 block），删除 f2、f4，再写入 4 KB 的 big.txt：</text>
+  <rect x="30" y="84" width="200" height="66" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="130" y="104" class="c b">big.txt 的 inode（13 号）</text>
+  <text x="130" y="122" class="c sub mono" style="fill:#3F3F3F">Size: 4096</text>
+  <text x="130" y="139" class="c sub" style="fill:#3F3F3F">block 指针：91、93、96、97</text>
+  <rect x="70" y="196" width="60" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="100" y="221" class="c sub mono" style="fill:#3F3F3F">f1</text>
+  <text x="100" y="252" class="c sub mono">90</text>
+  <rect x="136" y="196" width="60" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="166" y="221" class="c sub mono" style="fill:#3F3F3F">big.txt</text>
+  <text x="166" y="252" class="c sub mono">91</text>
+  <rect x="202" y="196" width="60" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="232" y="221" class="c sub mono" style="fill:#3F3F3F">f3</text>
+  <text x="232" y="252" class="c sub mono">92</text>
+  <rect x="268" y="196" width="60" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="298" y="221" class="c sub mono" style="fill:#3F3F3F">big.txt</text>
+  <text x="298" y="252" class="c sub mono">93</text>
+  <rect x="334" y="196" width="60" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="364" y="221" class="c sub mono" style="fill:#3F3F3F">f5</text>
+  <text x="364" y="252" class="c sub mono">94</text>
+  <rect x="400" y="196" width="60" height="40" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="430" y="221" class="c sub mono" style="fill:#3F3F3F">f6</text>
+  <text x="430" y="252" class="c sub mono">95</text>
+  <rect x="466" y="196" width="60" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="496" y="221" class="c sub mono" style="fill:#3F3F3F">big.txt</text>
+  <text x="496" y="252" class="c sub mono">96</text>
+  <rect x="532" y="196" width="60" height="40" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="562" y="221" class="c sub mono" style="fill:#3F3F3F">big.txt</text>
+  <text x="562" y="252" class="c sub mono">97</text>
+  <rect x="598" y="196" width="60" height="40" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="628" y="221" class="c sub" style="fill:#3F3F3F">空闲</text>
+  <text x="628" y="252" class="c sub mono">98</text>
+  <rect x="664" y="196" width="60" height="40" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="694" y="221" class="c sub" style="fill:#3F3F3F">空闲</text>
+  <text x="694" y="252" class="c sub mono">99</text>
+  <path d="M150,150 C150,176 166.0,170 166.0,194" class="arrow dash"/>
+  <path d="M172,150 C172,176 298.0,170 298.0,194" class="arrow dash"/>
+  <path d="M194,150 C194,176 496.0,170 496.0,194" class="arrow dash"/>
+  <path d="M216,150 C216,176 562.0,170 562.0,194" class="arrow dash"/>
+  <text x="30" y="272" class="sub">debugfs 显示 BLOCKS: (0):91, (1):93, (2-3):96-97。读取 big.txt 时先读 inode，再按这 4 个编号读出各个 block；</text>
+  <text x="30" y="290" class="sub">f2、f4 删除后留下的空洞被重新利用，文件的 block 不再连续，这就是磁盘碎片。</text>
+</svg>

@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="530" viewBox="0 0 760 530">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Linux 的目录结构（Ubuntu 24.04 中 ls -l 的结果）</text>
+  <text x="30" y="62" class="b mono" style="fill:#3F3F3F">/</text>
+  <line x1="36" y1="78" x2="48" y2="78" class="line"/>
+  <text x="52" y="82" class="mono sub" style="fill:#3F3F3F">bin</text>
+  <text x="122" y="82" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">→ usr/bin</tspan><tspan>，基本命令</tspan></text>
+  <line x1="36" y1="96" x2="48" y2="96" class="line"/>
+  <text x="52" y="100" class="mono sub" style="fill:#3F3F3F">boot/</text>
+  <text x="122" y="100" class="sub" text-anchor="start" xml:space="preserve"><tspan>内核和引导程序</tspan></text>
+  <line x1="36" y1="114" x2="48" y2="114" class="line"/>
+  <text x="52" y="118" class="mono sub" style="fill:#3F3F3F">dev/</text>
+  <text x="122" y="118" class="sub" text-anchor="start" xml:space="preserve"><tspan>设备文件</tspan></text>
+  <line x1="36" y1="132" x2="48" y2="132" class="line"/>
+  <text x="52" y="136" class="mono sub" style="fill:#3F3F3F">etc/</text>
+  <text x="122" y="136" class="sub" text-anchor="start" xml:space="preserve"><tspan>系统配置文件</tspan></text>
+  <line x1="36" y1="150" x2="48" y2="150" class="line"/>
+  <text x="52" y="154" class="mono sub" style="fill:#3F3F3F">home/</text>
+  <text x="122" y="154" class="sub" text-anchor="start" xml:space="preserve"><tspan>普通用户的主目录</tspan></text>
+  <line x1="36" y1="168" x2="48" y2="168" class="line"/>
+  <text x="52" y="172" class="mono sub" style="fill:#3F3F3F">lib</text>
+  <text x="122" y="172" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">→ usr/lib</tspan><tspan>，共享库</tspan></text>
+  <line x1="36" y1="186" x2="48" y2="186" class="line"/>
+  <text x="52" y="190" class="mono sub" style="fill:#3F3F3F">media/</text>
+  <text x="122" y="190" class="sub" text-anchor="start" xml:space="preserve"><tspan>U 盘、光盘等可移动介质的挂载点</tspan></text>
+  <line x1="36" y1="204" x2="48" y2="204" class="line"/>
+  <text x="52" y="208" class="mono sub" style="fill:#3F3F3F">mnt/</text>
+  <text x="122" y="208" class="sub" text-anchor="start" xml:space="preserve"><tspan>临时挂载点</tspan></text>
+  <line x1="36" y1="222" x2="48" y2="222" class="line"/>
+  <text x="52" y="226" class="mono sub" style="fill:#3F3F3F">opt/</text>
+  <text x="122" y="226" class="sub" text-anchor="start" xml:space="preserve"><tspan>第三方软件</tspan></text>
+  <line x1="36" y1="240" x2="48" y2="240" class="line"/>
+  <text x="52" y="244" class="mono sub" style="fill:#3F3F3F">proc/</text>
+  <text x="122" y="244" class="sub" text-anchor="start" xml:space="preserve"><tspan>进程和内核信息（虚拟文件系统）</tspan></text>
+  <line x1="36" y1="258" x2="48" y2="258" class="line"/>
+  <text x="52" y="262" class="mono sub" style="fill:#3F3F3F">root/</text>
+  <text x="122" y="262" class="sub" text-anchor="start" xml:space="preserve"><tspan>root 用户的主目录</tspan></text>
+  <line x1="36" y1="276" x2="48" y2="276" class="line"/>
+  <text x="52" y="280" class="mono sub" style="fill:#3F3F3F">run/</text>
+  <text x="122" y="280" class="sub" text-anchor="start" xml:space="preserve"><tspan>运行时数据，例如 PID 文件</tspan></text>
+  <line x1="36" y1="294" x2="48" y2="294" class="line"/>
+  <text x="52" y="298" class="mono sub" style="fill:#3F3F3F">sbin</text>
+  <text x="122" y="298" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">→ usr/sbin</tspan><tspan>，系统管理命令</tspan></text>
+  <line x1="36" y1="312" x2="48" y2="312" class="line"/>
+  <text x="52" y="316" class="mono sub" style="fill:#3F3F3F">srv/</text>
+  <text x="122" y="316" class="sub" text-anchor="start" xml:space="preserve"><tspan>对外提供服务的数据</tspan></text>
+  <line x1="36" y1="330" x2="48" y2="330" class="line"/>
+  <text x="52" y="334" class="mono sub" style="fill:#3F3F3F">sys/</text>
+  <text x="122" y="334" class="sub" text-anchor="start" xml:space="preserve"><tspan>设备和驱动信息（虚拟文件系统）</tspan></text>
+  <line x1="36" y1="348" x2="48" y2="348" class="line"/>
+  <text x="52" y="352" class="mono sub" style="fill:#3F3F3F">tmp/</text>
+  <text x="122" y="352" class="sub" text-anchor="start" xml:space="preserve"><tspan>临时文件</tspan></text>
+  <line x1="36" y1="366" x2="48" y2="366" class="line"/>
+  <text x="52" y="370" class="mono sub b" style="fill:#296898">usr/</text>
+  <text x="122" y="370" class="sub" text-anchor="start" xml:space="preserve"><tspan>安装的软件和只读数据</tspan></text>
+  <line x1="36" y1="384" x2="48" y2="384" class="line"/>
+  <text x="52" y="388" class="mono sub b" style="fill:#296898">var/</text>
+  <text x="122" y="388" class="sub" text-anchor="start" xml:space="preserve"><tspan>运行过程中会变化的数据</tspan></text>
+  <line x1="36" y1="68" x2="36" y2="384" class="line"/>
+  <text x="420" y="62" class="b mono" style="fill:#3F3F3F">/usr</text>
+  <line x1="426" y1="78" x2="438" y2="78" class="line"/>
+  <text x="442" y="82" class="mono sub" style="fill:#3F3F3F">bin/</text>
+  <text x="512" y="82" class="sub" text-anchor="start" xml:space="preserve"><tspan>用户命令</tspan></text>
+  <line x1="426" y1="96" x2="438" y2="96" class="line"/>
+  <text x="442" y="100" class="mono sub" style="fill:#3F3F3F">games/</text>
+  <text x="512" y="100" class="sub" text-anchor="start" xml:space="preserve"><tspan>游戏</tspan></text>
+  <line x1="426" y1="114" x2="438" y2="114" class="line"/>
+  <text x="442" y="118" class="mono sub" style="fill:#3F3F3F">include/</text>
+  <text x="512" y="118" class="sub" text-anchor="start" xml:space="preserve"><tspan>C 头文件</tspan></text>
+  <line x1="426" y1="132" x2="438" y2="132" class="line"/>
+  <text x="442" y="136" class="mono sub" style="fill:#3F3F3F">lib/</text>
+  <text x="512" y="136" class="sub" text-anchor="start" xml:space="preserve"><tspan>库</tspan></text>
+  <line x1="426" y1="150" x2="438" y2="150" class="line"/>
+  <text x="442" y="154" class="mono sub" style="fill:#3F3F3F">libexec/</text>
+  <text x="512" y="154" class="sub" text-anchor="start" xml:space="preserve"><tspan>供其它程序调用的内部程序</tspan></text>
+  <line x1="426" y1="168" x2="438" y2="168" class="line"/>
+  <text x="442" y="172" class="mono sub" style="fill:#3F3F3F">local/</text>
+  <text x="512" y="172" class="sub" text-anchor="start" xml:space="preserve"><tspan>本机自行安装的软件</tspan></text>
+  <line x1="426" y1="186" x2="438" y2="186" class="line"/>
+  <text x="442" y="190" class="mono sub" style="fill:#3F3F3F">sbin/</text>
+  <text x="512" y="190" class="sub" text-anchor="start" xml:space="preserve"><tspan>系统管理命令</tspan></text>
+  <line x1="426" y1="204" x2="438" y2="204" class="line"/>
+  <text x="442" y="208" class="mono sub" style="fill:#3F3F3F">share/</text>
+  <text x="512" y="208" class="sub" text-anchor="start" xml:space="preserve"><tspan>与架构无关的数据，例如 man 手册</tspan></text>
+  <line x1="426" y1="222" x2="438" y2="222" class="line"/>
+  <text x="442" y="226" class="mono sub" style="fill:#3F3F3F">src/</text>
+  <text x="512" y="226" class="sub" text-anchor="start" xml:space="preserve"><tspan>源代码</tspan></text>
+  <line x1="426" y1="68" x2="426" y2="222" class="line"/>
+  <text x="420" y="256" class="b mono" style="fill:#3F3F3F">/var</text>
+  <line x1="426" y1="272" x2="438" y2="272" class="line"/>
+  <text x="442" y="276" class="mono sub" style="fill:#3F3F3F">backups/</text>
+  <text x="512" y="276" class="sub" text-anchor="start" xml:space="preserve"><tspan>系统备份</tspan></text>
+  <line x1="426" y1="290" x2="438" y2="290" class="line"/>
+  <text x="442" y="294" class="mono sub" style="fill:#3F3F3F">cache/</text>
+  <text x="512" y="294" class="sub" text-anchor="start" xml:space="preserve"><tspan>应用程序的缓存</tspan></text>
+  <line x1="426" y1="308" x2="438" y2="308" class="line"/>
+  <text x="442" y="312" class="mono sub" style="fill:#3F3F3F">lib/</text>
+  <text x="512" y="312" class="sub" text-anchor="start" xml:space="preserve"><tspan>程序的状态数据，例如 dpkg、MySQL</tspan></text>
+  <line x1="426" y1="326" x2="438" y2="326" class="line"/>
+  <text x="442" y="330" class="mono sub" style="fill:#3F3F3F">local/</text>
+  <text x="512" y="330" class="sub" text-anchor="start" xml:space="preserve"><tspan>本机软件的可变数据</tspan></text>
+  <line x1="426" y1="344" x2="438" y2="344" class="line"/>
+  <text x="442" y="348" class="mono sub" style="fill:#3F3F3F">lock</text>
+  <text x="512" y="348" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">→ /run/lock</tspan><tspan>，锁文件</tspan></text>
+  <line x1="426" y1="362" x2="438" y2="362" class="line"/>
+  <text x="442" y="366" class="mono sub" style="fill:#3F3F3F">log/</text>
+  <text x="512" y="366" class="sub" text-anchor="start" xml:space="preserve"><tspan>日志</tspan></text>
+  <line x1="426" y1="380" x2="438" y2="380" class="line"/>
+  <text x="442" y="384" class="mono sub" style="fill:#3F3F3F">mail/</text>
+  <text x="512" y="384" class="sub" text-anchor="start" xml:space="preserve"><tspan>邮箱</tspan></text>
+  <line x1="426" y1="398" x2="438" y2="398" class="line"/>
+  <text x="442" y="402" class="mono sub" style="fill:#3F3F3F">opt/</text>
+  <text x="512" y="402" class="sub" text-anchor="start" xml:space="preserve"><tspan>/opt 中软件的可变数据</tspan></text>
+  <line x1="426" y1="416" x2="438" y2="416" class="line"/>
+  <text x="442" y="420" class="mono sub" style="fill:#3F3F3F">run</text>
+  <text x="512" y="420" class="sub" text-anchor="start" xml:space="preserve"><tspan class="mono" style="font-size:11px;fill:#3F3F3F">→ /run</tspan><tspan></tspan></text>
+  <line x1="426" y1="434" x2="438" y2="434" class="line"/>
+  <text x="442" y="438" class="mono sub" style="fill:#3F3F3F">spool/</text>
+  <text x="512" y="438" class="sub" text-anchor="start" xml:space="preserve"><tspan>等待处理的队列，例如邮件、打印</tspan></text>
+  <line x1="426" y1="452" x2="438" y2="452" class="line"/>
+  <text x="442" y="456" class="mono sub" style="fill:#3F3F3F">tmp/</text>
+  <text x="512" y="456" class="sub" text-anchor="start" xml:space="preserve"><tspan>重启后保留的临时文件</tspan></text>
+  <line x1="426" y1="262" x2="426" y2="452" class="line"/>
+  <text x="30" y="498" class="sub">Ubuntu 合并了 /usr：/bin、/sbin、/lib 是指向 /usr 下同名目录的符号链接（箭头后是链接的目标），</text>
+  <text x="30" y="516" class="sub">x86-64 上还有 /lib64 → usr/lib64。图中是容器内的结果，实体机上通常还有 lost+found、snap 等目录。</text>
+</svg>

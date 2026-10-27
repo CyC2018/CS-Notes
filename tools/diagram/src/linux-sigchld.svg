@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="446" viewBox="0 0 760 446">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">子进程停止、继续和退出时，父进程都会收到 SIGCHLD</text>
+  <rect x="180" y="46" width="140" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="250" y="65.5" class="b c">父进程</text>
+  <rect x="450" y="46" width="140" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="520" y="65.5" class="b c">子进程（PID 14）</text>
+  <line x1="250" y1="76" x2="250" y2="410" stroke="#BBB" stroke-dasharray="4 3"/>
+  <line x1="520" y1="76" x2="520" y2="398" stroke="#BBB" stroke-dasharray="4 3"/>
+  <text x="60" y="114" class="sub mono" style="fill:#3F3F3F">0 ms</text>
+  <line x1="250" y1="110" x2="518" y2="110" class="arrow "/>
+  <text x="385" y="104" class="c sub mono" style="fill:#3F3F3F">fork()</text>
+  <text x="60" y="154" class="sub mono" style="fill:#3F3F3F">0 ms</text>
+  <path d="M520,144 h26 v12 h-24" class="arrow"/>
+  <text x="552" y="154" class="sub mono" style="fill:#3F3F3F">raise(SIGSTOP)</text>
+  <text x="60" y="194" class="sub mono" style="fill:#3F3F3F">0 ms</text>
+  <line x1="520" y1="190" x2="252" y2="190" class="arrow "/>
+  <text x="385" y="184" class="c sub mono" style="fill:#3F3F3F">SIGCHLD  CLD_STOPPED，si_status=19</text>
+  <text x="552" y="194" class="sub">子进程状态 T</text>
+  <text x="60" y="234" class="sub mono" style="fill:#3F3F3F">202 ms</text>
+  <line x1="250" y1="230" x2="518" y2="230" class="arrow "/>
+  <text x="385" y="224" class="c sub mono" style="fill:#3F3F3F">kill(pid, SIGCONT)</text>
+  <text x="60" y="274" class="sub mono" style="fill:#3F3F3F">202 ms</text>
+  <line x1="520" y1="270" x2="252" y2="270" class="arrow "/>
+  <text x="385" y="264" class="c sub mono" style="fill:#3F3F3F">SIGCHLD  CLD_CONTINUED，si_status=18</text>
+  <text x="552" y="274" class="sub">子进程状态 S（usleep 中）</text>
+  <text x="60" y="314" class="sub mono" style="fill:#3F3F3F">417 ms</text>
+  <path d="M520,304 h26 v12 h-24" class="arrow"/>
+  <text x="552" y="314" class="sub mono" style="fill:#3F3F3F">exit(3)</text>
+  <text x="60" y="354" class="sub mono" style="fill:#3F3F3F">417 ms</text>
+  <line x1="520" y1="350" x2="252" y2="350" class="arrow "/>
+  <text x="385" y="344" class="c sub mono" style="fill:#3F3F3F">SIGCHLD  CLD_EXITED，si_status=3</text>
+  <text x="552" y="354" class="sub note">子进程状态 Z</text>
+  <text x="60" y="394" class="sub mono" style="fill:#3F3F3F">628 ms</text>
+  <line x1="250" y1="390" x2="518" y2="390" class="arrow "/>
+  <text x="385" y="384" class="c sub mono" style="fill:#3F3F3F">waitpid() 返回 14，退出码 3</text>
+  <text x="552" y="394" class="sub">/proc 中已没有该进程</text>
+  <path d="M512,396 l16,16 m0,-16 l-16,16" stroke="#C0605A" stroke-width="1.6"/>
+  <text x="30" y="432" class="sub">收到 CLD_EXITED 之后、调用 waitpid() 之前，子进程是僵死进程（Z）；waitpid() 取走退出码后进程描述符才被释放。</text>
+</svg>
