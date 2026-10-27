@@ -1,0 +1,17 @@
+[
+  {
+    "package": "docsify",
+    "version": "4.13.1",
+    "source": "https://registry.npmjs.org/docsify/-/docsify-4.13.1.tgz"
+  },
+  {
+    "package": "prismjs",
+    "version": "1.30.0",
+    "source": "https://registry.npmjs.org/prismjs/-/prismjs-1.30.0.tgz"
+  },
+  {
+    "package": "docsify-copy-code",
+    "version": "3.0.2",
+    "source": "https://registry.npmjs.org/docsify-copy-code/-/docsify-copy-code-3.0.2.tgz"
+  }
+]
