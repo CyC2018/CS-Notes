@@ -9,6 +9,7 @@
 /*-report.json
 /*-validation.json
 /validation.json
+/deploy/node_modules/
 /*.log
 /*.jpg
 /*.png
