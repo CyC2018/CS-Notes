@@ -1,0 +1,8 @@
+{
+  "name": "cs-notes-deployment",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node --test deploy.test.mjs" },
+  "dependencies": { "@edgeone/makers-sdk": "0.1.0" }
+}
