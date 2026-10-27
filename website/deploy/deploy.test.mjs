@@ -1,25 +1,39 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { access, mkdir, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import { deploySite, PROJECT } from './deploy.mjs';
+const executeFile = promisify(execFile);
 
-async function fixture(t) {
-  const directory = await mkdtemp(join(tmpdir(), 'cs-notes-deploy-'));
-  t.after(() => rm(directory, { recursive: true, force: true }));
-  const files = new Map(['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
-    'search.js', 'search-paths.js', 'search-index-example.json', 'notes/MySQL.md',
-    'notes/pics/example.png', 'optimized/example.webp', 'image-variants.json',
-    'notes/大模型应用.md', 'notes/Java 基础.md', 'notes/66. 构建乘积数组.md']
-    .map(path => [path, Buffer.from(`validated contents: ${path}`)]));
-  const manifest = Buffer.from(JSON.stringify({ sourceCommit: 'source', generatorHash: 'generator',
-    searchIndex: 'search-index-example.json', files: [...files].map(([path, data]) => ({
+async function saveManifest(directory, files, sourceCommit = 'source') {
+  const manifest = Buffer.from(JSON.stringify({ sourceCommit, generatorHash: 'generator',
+    searchIndex: 'search-index-example.json', files: [...files].filter(([path]) => path !== 'asset-manifest.json').map(([path, data]) => ({
       path, bytes: data.length, sha256: createHash('sha256').update(data).digest('hex'),
     })) }));
   files.set('asset-manifest.json', manifest);
   await writeFile(join(directory, 'asset-manifest.json'), manifest);
+  return manifest;
+}
+
+async function fixture(t, { notes = ['notes/MySQL.md', 'notes/大模型应用.md',
+  'notes/Java 基础.md', 'notes/66. 构建乘积数组.md'], images = true } = {}) {
+  const root = await mkdtemp(join(tmpdir(), 'cs-notes-deploy-'));
+  const directory = join(root, 'dist');
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const files = new Map(['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
+    'search.js', 'search-paths.js', 'search-index-example.json', 'image-variants.json', ...notes,
+    ...(images ? ['notes/pics/example.png', 'optimized/example.webp'] : [])]
+    .map(path => [path, Buffer.from(`validated contents: ${path}`)]));
+  for (const [path, data] of files) {
+    await mkdir(resolve(directory, path, '..'), { recursive: true });
+    await writeFile(join(directory, path), data);
+  }
+  const manifest = await saveManifest(directory, files);
   return { directory, files, manifest };
 }
 
@@ -35,10 +49,11 @@ test('每日检查：清单一致时不请求凭据、不重复发布，同时�
     },
   });
   assert.equal(report.result, 'unchanged');
-  assert.equal(report.verifiedFiles, 16);
+  assert.equal(report.verifiedFiles, 15);
   assert.ok(requests.includes('notes/MySQL.md'));
   assert.ok(requests.includes('notes/pics/example.png'));
   assert.ok(requests.includes('optimized/example.webp'));
+  await assert.rejects(access(resolve(directory, '../.cache/site-release.zip')), { code: 'ENOENT' });
 });
 
 test('新版本只向固定项目发布 dist，等候 Success 后重试正式域名校验', async t => {
@@ -112,4 +127,61 @@ test('中文或含空格文章返回首页时不能宣告发布成功', async t 
     fetcher: async url => new Response(url.pathname.includes(encodeURIComponent('大模型应用'))
       ? '<html>SPA fallback</html>' : files.get(decodeURIComponent(url.pathname.slice(1)))),
   }), /文件校验不一致：notes\/大模型应用.md/);
+});
+
+test('文章改名和没有优化配图时仍按清单核验当前有效内容', async t => {
+  const { directory, files } = await fixture(t, { notes: ['notes/new-note.md', 'notes/新笔记.md', 'notes/专题 新内容.md'], images: false });
+  const requests = [];
+  const report = await deploySite({ directory, attempts: 1,
+    getClient: () => assert.fail('无变化时不读取凭据'),
+    fetcher: async url => {
+      const path = decodeURIComponent(url.pathname.slice(1));
+      requests.push(path);
+      return new Response(files.get(path));
+    },
+  });
+  assert.equal(report.result, 'unchanged');
+  assert.ok(requests.includes('notes/新笔记.md'));
+  assert.ok(requests.includes('notes/专题 新内容.md'));
+});
+
+test('本地清单缺少关键页面时，在读取凭据和上传之前失败', async t => {
+  const { directory, files } = await fixture(t);
+  files.delete('index.html');
+  await saveManifest(directory, files);
+  await assert.rejects(deploySite({ directory, attempts: 1,
+    fetcher: async () => new Response('{}'),
+    getClient: () => assert.fail('不完整的本地产物不能读取发布凭据'),
+  }), /构建缺少关键文件：index.html/);
+});
+
+test('文件与清单不一致时，在读取凭据和上传之前失败', async t => {
+  const { directory } = await fixture(t);
+  await writeFile(join(directory, 'README.md'), 'changed after validation');
+  await assert.rejects(deploySite({ directory, attempts: 1,
+    fetcher: async () => new Response('{}'),
+    getClient: () => assert.fail('内容不一致时不能读取发布凭据'),
+  }), /打包前文件校验不一致/);
+});
+
+test('已有旧发布包时，上传的 ZIP 必须包含当前清单', async t => {
+  const { directory, files } = await fixture(t);
+  const archive = resolve(directory, '../.cache/site-release.zip');
+  const script = fileURLToPath(new URL('./package_site.py', import.meta.url));
+  await executeFile('python3', [script, '--source', directory, '--output', archive]);
+  const manifest = await saveManifest(directory, files, 'new-source');
+  let published = false;
+  const report = await deploySite({ directory, attempts: 1,
+    fetcher: async url => new Response(published ? files.get(decodeURIComponent(url.pathname.slice(1))) : '{}'),
+    getClient: async () => ({ projects: { get: async () => PROJECT },
+      deployments: { deploy: async input => {
+        const { stdout } = await executeFile('python3', ['-c',
+          'import sys, zipfile; print(zipfile.ZipFile(sys.argv[1]).read("asset-manifest.json").decode())', input.artifact.archive]);
+        assert.deepEqual(JSON.parse(stdout), JSON.parse(manifest));
+        published = true;
+        return { status: 'Success', deploymentId: 'new-release' };
+      } },
+    }),
+  });
+  assert.equal(report.result, 'deployed');
 });

@@ -5,25 +5,48 @@
     return String(value).normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
-  function search(index, query, limit) {
-    var terms = normalize(query).slice(0, 120).split(' ').filter(Boolean);
-    if (!terms.length) return [];
-    var results = [];
+  var preparedIndexes = new WeakMap();
+  function prepareIndex(index) {
+    var prepared = preparedIndexes.get(index);
+    if (prepared) return prepared;
+    prepared = [];
     index.documents.forEach(function (doc) {
       var page = normalize(doc.title);
       doc.sections.forEach(function (section) {
         var heading = normalize(section.title);
         var body = normalize(section.text);
-        var text = heading + ' ' + page + ' ' + body;
-        if (!terms.every(function (term) { return text.includes(term); })) return;
-        var score = terms.reduce(function (sum, term) {
-          return sum + (heading.includes(term) ? 40 : 0) + (page.includes(term) ? 15 : 0) +
-            (body.includes(term) ? Math.min(body.split(term).length - 1, 6) : 0);
-        }, 0);
-        if (heading === normalize(query)) score += 100;
-        results.push({ page: doc.title, path: doc.path, title: section.title || doc.title,
-          id: section.id, text: section.text, score: score });
+        prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
+          pageTitle: doc.title, path: doc.path, section: section });
       });
+    });
+    preparedIndexes.set(index, prepared);
+    return prepared;
+  }
+
+  function occurrences(text, term) {
+    var count = 0, offset = 0, found;
+    while (count < 6 && (found = text.indexOf(term, offset)) !== -1) {
+      count++;
+      offset = found + term.length;
+    }
+    return count;
+  }
+
+  function search(index, query, limit) {
+    var normalizedQuery = normalize(query);
+    var terms = normalizedQuery.slice(0, 120).split(' ').filter(Boolean);
+    if (!terms.length) return [];
+    var results = [];
+    prepareIndex(index).forEach(function (entry) {
+      if (!terms.every(function (term) { return entry.text.includes(term); })) return;
+      var score = terms.reduce(function (sum, term) {
+        return sum + (entry.heading.includes(term) ? 40 : 0) + (entry.page.includes(term) ? 15 : 0) +
+          occurrences(entry.body, term);
+      }, 0);
+      if (entry.heading === normalizedQuery) score += 100;
+      var section = entry.section;
+      results.push({ page: entry.pageTitle, path: entry.path, title: section.title || entry.pageTitle,
+        id: section.id, text: section.text, score: score });
     });
     return results.sort(function (a, b) { return b.score - a.score; }).slice(0, limit || 20);
   }
@@ -41,6 +64,7 @@
         return response.json();
       }).then(function (index) {
         if (index.version !== 1 || !Array.isArray(index.documents)) throw new Error('Invalid search index');
+        prepareIndex(index);
         return index;
       }).catch(function (error) { indexPromise = null; throw error; });
     }
@@ -99,6 +123,7 @@
     input.addEventListener('focus', function () { loadIndex().catch(function () {}); });
     input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(update, 140); });
     input.addEventListener('keydown', function (event) {
+      if (event.isComposing || event.keyCode === 229) return;
       if (event.key === 'Escape') { input.value = ''; update(); }
       var first = panel.querySelector('a');
       if (first && event.key === 'ArrowDown') { event.preventDefault(); first.focus(); }
