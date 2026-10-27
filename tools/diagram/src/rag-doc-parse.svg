@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="476" viewBox="0 0 800 476">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="400" y="28" class="title">同一页 PDF 的两种读取方式</text>
+  <text x="30" y="62" class="b">(a) 原始页面</text>
+  <rect x="30" y="76" width="200" height="300" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="40" y="92" class="sub" style="font-size:8px">员工手册（2026 版）</text>
+  <text x="220" y="92" class="sub e" style="font-size:8px">内部资料 请勿外传</text>
+  <line x1="40" y1="98" x2="220" y2="98" class="line"/>
+  <text x="40" y="118" class="b" style="font-size:12px">第 6 章 出差</text>
+  <text x="40" y="138" class="b" style="font-size:10px">6.3 住宿</text>
+  <rect x="42" y="146" width="176" height="4" rx="2" fill="#D8D8D8"/>
+  <rect x="42" y="155" width="176" height="4" rx="2" fill="#D8D8D8"/>
+  <rect x="42" y="164" width="90" height="4" rx="2" fill="#D8D8D8"/>
+  <rect x="42" y="176" width="64" height="15" rx="0" fill="#EAE9E7" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="46" y="187" class="sub" style="font-size:8.5px">城市</text>
+  <rect x="106" y="176" width="56" height="15" rx="0" fill="#EAE9E7" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="110" y="187" class="sub" style="font-size:8.5px">每晚上限</text>
+  <rect x="162" y="176" width="54" height="15" rx="0" fill="#EAE9E7" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="166" y="187" class="sub" style="font-size:8.5px">说明</text>
+  <rect x="42" y="191" width="64" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="46" y="202" class="sub" style="font-size:8.5px">北上广深</text>
+  <rect x="106" y="191" width="56" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="110" y="202" class="sub" style="font-size:8.5px">600 元</text>
+  <rect x="162" y="191" width="54" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="166" y="202" class="sub" style="font-size:8.5px">含税</text>
+  <rect x="42" y="206" width="64" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="46" y="217" class="sub" style="font-size:8.5px">其他省会</text>
+  <rect x="106" y="206" width="56" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="110" y="217" class="sub" style="font-size:8.5px">450 元</text>
+  <rect x="162" y="206" width="54" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="166" y="217" class="sub" style="font-size:8.5px">含税</text>
+  <rect x="42" y="221" width="64" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="46" y="232" class="sub" style="font-size:8.5px">其余城市</text>
+  <rect x="106" y="221" width="56" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="110" y="232" class="sub" style="font-size:8.5px">350 元</text>
+  <rect x="162" y="221" width="54" height="15" rx="0" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1"/>
+  <text x="166" y="232" class="sub" style="font-size:8.5px">含税</text>
+  <text x="40" y="258" class="b" style="font-size:10px">6.4 出差补贴</text>
+  <rect x="42" y="266" width="176" height="4" rx="2" fill="#D8D8D8"/>
+  <rect x="42" y="275" width="176" height="4" rx="2" fill="#D8D8D8"/>
+  <rect x="42" y="284" width="120" height="4" rx="2" fill="#D8D8D8"/>
+  <text x="40" y="366" class="sub" style="font-size:8px">人力资源部</text>
+  <text x="220" y="366" class="sub e" style="font-size:8px">第 12 页</text>
+  <text x="30" y="398" class="sub">带文本层的 PDF：字符和坐标都在文件里</text>
+  <text x="30" y="414" class="sub">扫描件：每页只是一张图片</text>
+  <text x="30" y="446" class="sub" style="fill:#999">(b)(c) 是程序的原始输出，</text>
+  <text x="30" y="462" class="sub" style="fill:#999">较长的行省略了中间部分</text>
+  <text x="262" y="62" class="b">(b) 直接读取文本层</text>
+  <rect x="262" y="76" width="258" height="306" rx="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="272" y="92" class="sub note">员工手册（2026 版） 内部资料</text>
+  <text x="512" y="92" class="sub note e">①</text>
+  <text x="272" y="108" class="sub note">请勿外传</text>
+  <text x="512" y="108" class="sub note e">①</text>
+  <text x="272" y="124" class="sub">第 6 章 出差</text>
+  <text x="272" y="140" class="sub">6.3 住宿</text>
+  <text x="272" y="156" class="sub">住宿标准按城市分级……担。两名同性员工同</text>
+  <text x="272" y="172" class="sub note">行的，</text>
+  <text x="512" y="172" class="sub note e">②</text>
+  <text x="272" y="188" class="sub note">则上合住一间。</text>
+  <text x="512" y="188" class="sub note e">②</text>
+  <text x="272" y="204" class="sub note">原</text>
+  <text x="512" y="204" class="sub note e">②</text>
+  <text x="272" y="220" class="sub">城市 每晚上限 说明</text>
+  <text x="272" y="236" class="sub">北京、上海、广州、深圳 600 元 含税</text>
+  <text x="272" y="252" class="sub">其他省会城市 450 元 含税</text>
+  <text x="272" y="268" class="sub">其余城市 350 元 含税</text>
+  <text x="272" y="284" class="sub">6.4 出差补贴</text>
+  <text x="272" y="300" class="sub">出差期间每天发放补贴 100 元，用于餐</text>
+  <text x="272" y="316" class="sub note">费</text>
+  <text x="512" y="316" class="sub note e">②</text>
+  <text x="272" y="332" class="sub">和通讯费，按实际出差天数计</text>
+  <text x="272" y="348" class="sub">算，不需要提供发票……，补贴按半天计算。</text>
+  <text x="272" y="364" class="sub note">人力资源部第 12 页</text>
+  <text x="512" y="364" class="sub note e">①</text>
+  <text x="262" y="404" class="sub note">① 页眉页脚混进正文</text>
+  <text x="262" y="420" class="sub note">② 按行折断，“原”字错位到下一行</text>
+  <text x="262" y="436" class="sub">标题和正文没有区别，表格只剩空格分隔</text>
+  <text x="540" y="62" class="b">(c) 扫描件 OCR</text>
+  <rect x="540" y="76" width="240" height="351.5" rx="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <text x="548" y="91" class="sub mono" style="font-size:9px;fill:#999">y=  86 x= 76</text>
+  <text x="638" y="91" class="sub" style="font-size:10.5px">员工手册（2026 版）</text>
+  <text x="548" y="105.5" class="sub mono" style="font-size:9px;fill:#999">y=  80 x=645</text>
+  <text x="638" y="105.5" class="sub" style="font-size:10.5px">内部资料 请勿外传</text>
+  <text x="548" y="120" class="sub mono" style="font-size:9px;fill:#999">y= 161 x= 76</text>
+  <text x="638" y="120" class="sub" style="font-size:10.5px">第6章出差</text>
+  <text x="548" y="134.5" class="sub mono" style="font-size:9px;fill:#999">y= 232 x= 74</text>
+  <text x="638" y="134.5" class="sub" style="font-size:10.5px">6.3 住宿</text>
+  <text x="548" y="149" class="sub mono" style="font-size:9px;fill:#999">y= 272 x= 78</text>
+  <text x="638" y="149" class="sub" style="font-size:10.5px">住宿标准按……同性员工同</text>
+  <text x="548" y="163.5" class="sub mono" style="font-size:9px;fill:#999">y= 310 x= 78</text>
+  <text x="638" y="163.5" class="sub" style="font-size:10.5px">行的，原则上合住一间。</text>
+  <text x="548" y="178" class="sub mono" style="font-size:9px;fill:#999">y= 366 x= 92</text>
+  <text x="638" y="178" class="sub note" style="font-size:10.5px">城市</text>
+  <text x="548" y="192.5" class="sub mono" style="font-size:9px;fill:#999">y= 410 x= 92</text>
+  <text x="638" y="192.5" class="sub note" style="font-size:10.5px">北京、上海、广州、深圳</text>
+  <text x="548" y="207" class="sub mono" style="font-size:9px;fill:#999">y= 454 x= 94</text>
+  <text x="638" y="207" class="sub note" style="font-size:10.5px">其他省会城市</text>
+  <text x="548" y="221.5" class="sub mono" style="font-size:9px;fill:#999">y= 499 x= 94</text>
+  <text x="638" y="221.5" class="sub note" style="font-size:10.5px">其余城市</text>
+  <text x="548" y="236" class="sub mono" style="font-size:9px;fill:#999">y= 362 x=509</text>
+  <text x="638" y="236" class="sub note" style="font-size:10.5px">每晚上限</text>
+  <text x="548" y="250.5" class="sub mono" style="font-size:9px;fill:#999">y= 406 x=507</text>
+  <text x="638" y="250.5" class="sub note" style="font-size:10.5px">600 元</text>
+  <text x="548" y="265" class="sub mono" style="font-size:9px;fill:#999">y= 450 x=509</text>
+  <text x="638" y="265" class="sub note" style="font-size:10.5px">450元</text>
+  <text x="548" y="279.5" class="sub mono" style="font-size:9px;fill:#999">y= 496 x=507</text>
+  <text x="638" y="279.5" class="sub note" style="font-size:10.5px">350 元</text>
+  <text x="548" y="294" class="sub mono" style="font-size:9px;fill:#999">y= 360 x=689</text>
+  <text x="638" y="294" class="sub note" style="font-size:10.5px">说明</text>
+  <text x="548" y="308.5" class="sub mono" style="font-size:9px;fill:#999">y= 404 x=689</text>
+  <text x="638" y="308.5" class="sub note" style="font-size:10.5px">含税</text>
+  <text x="548" y="323" class="sub mono" style="font-size:9px;fill:#999">y= 448 x=689</text>
+  <text x="638" y="323" class="sub note" style="font-size:10.5px">含税</text>
+  <text x="548" y="337.5" class="sub mono" style="font-size:9px;fill:#999">y= 494 x=689</text>
+  <text x="638" y="337.5" class="sub note" style="font-size:10.5px">含税</text>
+  <text x="548" y="352" class="sub mono" style="font-size:9px;fill:#999">y= 564 x= 80</text>
+  <text x="638" y="352" class="sub" style="font-size:10.5px">6.4 出差补贴</text>
+  <text x="548" y="366.5" class="sub mono" style="font-size:9px;fill:#999">y= 608 x= 84</text>
+  <text x="638" y="366.5" class="sub" style="font-size:10.5px">出差期间每……出差天数计</text>
+  <text x="548" y="381" class="sub mono" style="font-size:9px;fill:#999">y= 643 x= 82</text>
+  <text x="638" y="381" class="sub" style="font-size:10.5px">算，不需要……半天计算。</text>
+  <text x="548" y="395.5" class="sub mono" style="font-size:9px;fill:#999">y=1163 x= 88</text>
+  <text x="638" y="395.5" class="sub" style="font-size:10.5px">人力资源部</text>
+  <text x="548" y="410" class="sub mono" style="font-size:9px;fill:#999">y=1155 x=735</text>
+  <text x="638" y="410" class="sub" style="font-size:10.5px">第12页</text>
+  <text x="540" y="449.5" class="sub note">表格按列逐个输出（红色），</text>
+  <text x="540" y="465.5" class="sub note">要按 y 坐标重新组成行</text>
+</svg>

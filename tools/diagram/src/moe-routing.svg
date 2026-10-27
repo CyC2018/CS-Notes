@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">MoE：每个 Token 只经过得分最高的几个专家</text>
+  <rect x="40" y="70" width="110" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="95" y="92.5" class="c sub b">“退款”的向量</text>
+  <line x1="150" y1="88" x2="186" y2="88" class="arrow "/>
+  <rect x="188" y="70" width="96" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="236" y="86" class="c sub b">路由器</text>
+  <text x="236" y="101" class="sub c">一个线性层</text>
+  <text x="236" y="128" class="c sub">softmax 后的分数</text>
+  <text x="208" y="155" class="sub mono e">0.07</text>
+  <rect x="218" y="143" width="10.961" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="140" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="155.5" class="c sub">专家 1</text>
+  <text x="208" y="183" class="sub mono e">0.03</text>
+  <rect x="218" y="171" width="4.9251" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="168" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="183.5" class="c sub">专家 2</text>
+  <text x="208" y="211" class="sub mono e b">0.40</text>
+  <rect x="218" y="199" width="60" height="14" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="320" y="196" width="100" height="22" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="370" y="211.5" class="c sub b">专家 3</text>
+  <line x1="284" y1="207" x2="318" y2="207" class="arrow "/>
+  <line x1="420" y1="207" x2="478" y2="236" class="arrow "/>
+  <text x="208" y="239" class="sub mono e">0.07</text>
+  <rect x="218" y="227" width="9.91793" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="224" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="239.5" class="c sub">专家 4</text>
+  <text x="208" y="267" class="sub mono e">0.04</text>
+  <rect x="218" y="255" width="6.64819" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="252" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="267.5" class="c sub">专家 5</text>
+  <text x="208" y="295" class="sub mono e b">0.27</text>
+  <rect x="218" y="283" width="40.2192" height="14" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="320" y="280" width="100" height="22" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="370" y="295.5" class="c sub b">专家 6</text>
+  <line x1="284" y1="291" x2="318" y2="291" class="arrow "/>
+  <line x1="420" y1="291" x2="478" y2="252" class="arrow "/>
+  <text x="208" y="323" class="sub mono e">0.02</text>
+  <rect x="218" y="311" width="3.30139" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="308" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="323.5" class="c sub">专家 7</text>
+  <text x="208" y="351" class="sub mono e">0.09</text>
+  <rect x="218" y="339" width="13.3878" height="14" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="320" y="336" width="100" height="22" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="370" y="351.5" class="c sub">专家 8</text>
+  <rect x="480" y="222" width="150" height="44" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="555" y="240" class="c sub mono">0.60 × 专家 3</text>
+  <text x="555" y="257" class="c sub mono">+ 0.40 × 专家 6</text>
+  <line x1="630" y1="244" x2="660" y2="244" class="arrow "/>
+  <text x="668" y="248" class="sub">输出</text>
+  <text x="555" y="288" class="c sub">两个分数重新归一化后作为权重</text>
+  <text x="555" y="306" class="c sub">其余 6 个专家不参与计算</text>
+  <text x="40" y="382" class="sub">路由分数为示意。每个专家是一个独立的前馈网络，注意力层仍由所有 Token 共用。</text>
+  <text x="480" y="74" class="b">Dense 与 MoE（按 config.json 计算）</text>
+  <text x="480" y="96" class="sub b"></text>
+  <text x="630" y="96" class="sub b e">总参数</text>
+  <text x="710" y="96" class="sub b e">每个 Token</text>
+  <text x="480" y="118" class="sub">Qwen2.5-7B</text>
+  <text x="630" y="118" class="sub mono e">7.6B</text>
+  <text x="710" y="118" class="sub mono e">7.6B</text>
+  <text x="480" y="140" class="sub">Qwen3-30B-A3B</text>
+  <text x="630" y="140" class="sub mono e">30.5B</text>
+  <text x="710" y="140" class="sub mono e">3.3B</text>
+  <text x="480" y="170" class="sub">后者每层 128 个专家，每个 Token 选 8 个</text>
+</svg>

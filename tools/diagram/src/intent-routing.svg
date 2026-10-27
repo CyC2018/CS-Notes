@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="330" viewBox="0 0 780 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">意图路由：规则拦截、模型分类、低置信度兜底</text>
+  <path d="M26,62 h158 q6,0 6,6 v18 q0,6 -6,6 H38 l-8,8 l0,-8 H26 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="30" y="81" class="sub">订单 1024 到哪了？</text>
+  <path d="M192,77 C210,77 206,138 224,138" class="arrow"/>
+  <path d="M26,114 h158 q6,0 6,6 v18 q0,6 -6,6 H38 l-8,8 l0,-8 H26 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="30" y="133" class="sub">快递还没到，但我不想要了</text>
+  <path d="M192,129 C210,129 206,138 224,138" class="arrow"/>
+  <path d="M26,166 h158 q6,0 6,6 v18 q0,6 -6,6 H38 l-8,8 l0,-8 H26 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="30" y="185" class="sub">转人工</text>
+  <path d="M192,181 C210,181 206,138 224,138" class="arrow"/>
+  <rect x="228" y="112" width="104" height="52" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="280" y="135" class="c b">规则匹配</text>
+  <text x="280" y="151" class="c sub">转人工、订单号</text>
+  <line x1="280" y1="166" x2="280" y2="236" class="arrow "/>
+  <text x="292" y="204" class="sub">命中</text>
+  <rect x="228" y="240" width="104" height="40" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="280" y="264.5" class="c b">人工客服</text>
+  <line x1="334" y1="138" x2="384" y2="138" class="arrow "/>
+  <text x="359" y="130" class="c sub">未命中</text>
+  <line x1="403.5" y1="116" x2="403.5" y2="160" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="390" y1="129.5" x2="434" y2="129.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="412" y1="116" x2="412" y2="160" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="390" y1="138" x2="434" y2="138" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="420.5" y1="116" x2="420.5" y2="160" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="390" y1="146.5" x2="434" y2="146.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="395" y="121" width="34" height="34" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="404.52" y="130.52" width="14.96" height="14.96" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="412" y="182" class="c sub">分类模型或大模型</text>
+  <text x="412" y="198" class="c sub">输出类别和置信度</text>
+  <line x1="440" y1="138" x2="478" y2="138" class="arrow "/>
+  <rect x="482" y="110" width="112" height="56" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="538" y="135" class="c b">置信度 ≥ 阈值</text>
+  <text x="538" y="151" class="c sub">且类别在列表中</text>
+  <rect x="652" y="52" width="108" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="706" y="70.5" class="c b">物流查询</text>
+  <path d="M596,138 C622,138 626,66 648,66" class="arrow"/>
+  <rect x="652" y="92" width="108" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="706" y="110.5" class="c b">退款流程</text>
+  <path d="M596,138 C622,138 626,106 648,106" class="arrow"/>
+  <rect x="652" y="132" width="108" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="706" y="150.5" class="c b">改地址</text>
+  <path d="M596,138 C622,138 626,146 648,146" class="arrow"/>
+  <rect x="652" y="172" width="108" height="28" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="706" y="190.5" class="c b">商品咨询</text>
+  <path d="M596,138 C622,138 626,186 648,186" class="arrow"/>
+  <text x="604" y="125" class="c sub">是</text>
+  <line x1="538" y1="168" x2="538" y2="236" class="arrow "/>
+  <text x="550" y="206" class="sub">否</text>
+  <rect x="470" y="240" width="136" height="40" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="538" y="264.5" class="c b">反问澄清或通用 Agent</text>
+  <text x="390" y="306" class="c sub">例：“快递还没到，但我不想要了”含有“快递”，关键词规则把它分到物流；Qwen2.5-7B 分到退款，置信度 0.999。</text>
+</svg>

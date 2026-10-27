@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">长期记忆的更新：新地址与旧地址冲突</text>
+  <rect x="15" y="46" width="330" height="150" rx="8" class="frame"/>
+  <text x="25" y="64" class="b">① 10 月 26 日的会话中提取新事实</text>
+  <path d="M34,76 h292 q6,0 6,6 v32 q0,6 -6,6 H46 l-8,8 l0,-8 H34 q-6,0 -6,-6 v-32 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="38" y="94" class="sub">用户：我上周搬到滨江了，地址是杭州市滨江区</text>
+  <text x="38" y="111" class="sub">江南大道 588 号 3 幢 1201，以后都寄这里</text>
+  <line x1="180" y1="130" x2="180" y2="152" class="arrow "/>
+  <text x="190" y="146" class="sub">用模型提取</text>
+  <rect x="28" y="156" width="304" height="28" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="180" y="174.5" class="c sub mono">address：杭州市滨江区江南大道 588 号 3 幢 1201</text>
+  <rect x="360" y="46" width="345" height="150" rx="8" class="frame"/>
+  <text x="370" y="64" class="b">② 检索这个用户最相似的旧记忆</text>
+  <path d="M378,94 v38 a22,6 0 0 0 44,0 v-38" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="400" cy="94" rx="22" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M378,113 a22,6 0 0 0 44,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="400" y="158" class="c sub">长期记忆</text>
+  <rect x="440" y="76" width="252" height="70" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="440" y="76" width="252" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="566" y="91" class="c b">用户的长期记忆</text>
+  <rect x="446" y="104" width="240" height="16" rx="3" fill="#E6E3FA" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="452" y="116" class="sub">m1 常用收货地址：文三路 90 号（08-30）</text>
+  <rect x="446" y="124" width="240" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="452" y="136" class="sub">m2 喜欢简短的回答（09-12）</text>
+  <text x="566" y="176" class="c sub">m1 与新事实最相似</text>
+  <rect x="15" y="210" width="690" height="98" rx="8" class="frame"/>
+  <text x="25" y="228" class="b">③ 把旧记忆和新事实交给模型，选择 ADD、UPDATE、DELETE 或 NONE</text>
+  <line x1="52.5" y1="246" x2="52.5" y2="286" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="40" y1="258.5" x2="80" y2="258.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="60" y1="246" x2="60" y2="286" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="40" y1="266" x2="80" y2="266" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="67.5" y1="246" x2="67.5" y2="286" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="40" y1="273.5" x2="80" y2="273.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="45" y="251" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="53.4" y="259.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="84" y1="266" x2="112" y2="266" class="arrow "/>
+  <rect x="116" y="240" width="576" height="52" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="128" y="260" class="sub mono">{"op": "UPDATE", "id": "m1", "text": "常用收货地址：杭州市滨江区</text>
+  <text x="128" y="280" class="sub mono">江南大道 588 号 3 幢 1201（<tspan class="note">2026-09-14</tspan>）"}</text>
+  <text x="692" y="230" class="e sub">Qwen2.5-7B 的原始输出</text>
+  <rect x="15" y="322" width="690" height="124" rx="8" class="frame"/>
+  <text x="25" y="340" class="b">④ 由代码执行：旧记忆标记失效，新记忆的时间由代码填写</text>
+  <rect x="28" y="350" width="664" height="24" rx="3" fill="#F4F4F4" stroke="#CCCCCC"/>
+  <text x="38" y="366" class="sub mono b">m1</text>
+  <text x="70" y="366" class="sub">常用收货地址：杭州市西湖区文三路 90 号</text>
+  <text x="520" y="366" class="sub">08-30 写入</text>
+  <text x="610" y="366" class="sub note">10-26 失效</text>
+  <rect x="28" y="380" width="664" height="24" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="38" y="396" class="sub mono b">m3</text>
+  <text x="70" y="396" class="sub">常用收货地址：杭州市滨江区江南大道 588 号 3 幢 1201</text>
+  <text x="520" y="396" class="sub">10-26 写入</text>
+  <text x="610" y="396" class="sub ok">有效</text>
+  <rect x="28" y="410" width="664" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="38" y="426" class="sub mono b">m2</text>
+  <text x="70" y="426" class="sub">喜欢简短的回答</text>
+  <text x="520" y="426" class="sub">09-12 写入</text>
+  <text x="610" y="426" class="sub ok">有效</text>
+  <line x1="70" y1="362" x2="278" y2="362" stroke="#999" stroke-width="1"/>
+  <text x="20" y="466" class="sub note">模型输出中的日期 2026-09-14 是编造的（会话发生在 10-26），时间、用户 ID 这类字段不交给模型填写。</text>
+</svg>

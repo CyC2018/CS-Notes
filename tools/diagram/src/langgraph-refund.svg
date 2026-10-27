@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="380" viewBox="0 0 780 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">用状态图编排退款流程</text>
+  <rect x="133" y="50" width="64" height="26" rx="13" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="165" y="67" class="c sub mono">START</text>
+  <rect x="110" y="104" width="110" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="165" y="123.5" class="c sub b mono">classify</text>
+  <rect x="40" y="176" width="110" height="30" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="95" y="195.5" class="c sub b mono">check_order</text>
+  <rect x="190" y="176" width="110" height="30" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="245" y="195.5" class="c sub b mono">logistics</text>
+  <rect x="40" y="248" width="110" height="30" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="95" y="267.5" class="c sub b mono">confirm</text>
+  <rect x="40" y="320" width="110" height="30" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="95" y="339.5" class="c sub b mono">refund</text>
+  <rect x="216" y="324" width="64" height="26" rx="13" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="248" y="341" class="c sub mono">END</text>
+  <line x1="165" y1="77" x2="165" y2="102" class="arrow "/>
+  <path d="M150,136 C150,156 100,158 96,174" class="arrow"/>
+  <text x="104" y="158" class="sub e">退款</text>
+  <path d="M180,136 C180,156 240,158 244,174" class="arrow"/>
+  <text x="228" y="158" class="sub">物流</text>
+  <line x1="95" y1="208" x2="95" y2="246" class="arrow "/>
+  <line x1="95" y1="280" x2="95" y2="318" class="arrow "/>
+  <text x="104" y="303" class="sub">同意</text>
+  <path d="M152,264 C200,264 238,290 244,322" class="arrow"/>
+  <text x="214" y="280" class="sub">拒绝</text>
+  <line x1="152" y1="335" x2="214" y2="336" class="arrow "/>
+  <path d="M244,208 L246,322" class="arrow"/>
+  <text x="30" y="372" class="sub">实线框是节点，带标签的边是条件边，由节点写入状态的值决定下一步</text>
+  <circle cx="36" cy="263" r="9" fill="#FFFFFF" stroke="#B8B0DE"/>
+  <rect x="32" y="258" width="2.6" height="10" fill="#766AA8"/><rect x="37.4" y="258" width="2.6" height="10" fill="#766AA8"/>
+  <rect x="330" y="50" width="430" height="168" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="344" y="72" class="b">暂停在 confirm 时保存的状态（thread_id = user-7-session-1）</text>
+  <text x="350" y="98" class="sub mono b">question</text>
+  <text x="430" y="98" class="sub mono">"订单 1024 我要退款"</text>
+  <text x="350" y="118" class="sub mono b">intent</text>
+  <text x="430" y="118" class="sub mono">"退款"          ← classify 写入</text>
+  <text x="350" y="138" class="sub mono b">order</text>
+  <text x="430" y="138" class="sub mono">{amount: 59.9, ...}  ← check_order 写入</text>
+  <text x="350" y="158" class="sub mono b">approved</text>
+  <text x="430" y="158" class="sub mono">等待人工确认</text>
+  <text x="350" y="178" class="sub mono b">trace</text>
+  <text x="430" y="178" class="sub mono">[classify, check_order]  ← 追加，不覆盖</text>
+  <text x="350" y="198" class="sub mono b">next</text>
+  <text x="430" y="198" class="sub mono">confirm</text>
+  <rect x="330" y="230" width="430" height="120" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="344" y="252" class="b">人工确认与恢复</text>
+  <text x="350" y="274" class="sub">1. confirm 调用 interrupt()，图暂停，状态写入 checkpoint；</text>
+  <text x="350" y="291" class="sub">2. 审批页面展示退款金额 59.9 元，客服点击同意；</text>
+  <text x="350" y="308" class="sub">3. 用同一个 thread_id 和 Command(resume=True) 再次调用；</text>
+  <text x="350" y="325" class="sub">4. confirm 从头重新执行，interrupt() 返回 True，进入 refund。</text>
+  <text x="350" y="342" class="sub">refund 用订单号作幂等键，重复执行也只退款一次。</text>
+  <line x1="152" y1="263" x2="326" y2="263" class="arrow dash"/>
+</svg>

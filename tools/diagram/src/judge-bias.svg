@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="330" viewBox="0 0 700 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="350" y="28" class="title">Qwen2.5-7B 作裁判：每组 4 对回答 × 2 种顺序，共 8 次判断</text>
+  <line x1="90" y1="236" x2="660" y2="236" stroke="#E6E6E6"/>
+  <text x="80" y="240" class="sub e">0</text>
+  <line x1="90" y1="198.5" x2="660" y2="198.5" stroke="#E6E6E6"/>
+  <text x="80" y="202.5" class="sub e">2</text>
+  <line x1="90" y1="161" x2="660" y2="161" stroke="#E6E6E6"/>
+  <text x="80" y="165" class="sub e">4</text>
+  <line x1="90" y1="123.5" x2="660" y2="123.5" stroke="#E6E6E6"/>
+  <text x="80" y="127.5" class="sub e">6</text>
+  <line x1="90" y1="86" x2="660" y2="86" stroke="#E6E6E6"/>
+  <text x="80" y="90" class="sub e">8</text>
+  <text x="56" y="161" class="sub c">次数</text>
+  <rect x="146" y="234.5" width="40" height="1.5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="166" y="228.5" class="c sub">0/8</text>
+  <rect x="192" y="123.5" width="40" height="112.5" fill="#9F94D5" stroke="#8A7FC4" stroke-width="1"/>
+  <text x="212" y="117.5" class="c sub">6/8</text>
+  <text x="190" y="256" class="c b">质量相当</text>
+  <text x="190" y="272" class="c sub">选了排在第一个的</text>
+  <rect x="326" y="86" width="40" height="150" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="346" y="80" class="c sub">8/8</text>
+  <rect x="372" y="142.25" width="40" height="93.75" fill="#9F94D5" stroke="#8A7FC4" stroke-width="1"/>
+  <text x="392" y="136.25" class="c sub">5/8</text>
+  <text x="370" y="256" class="c b">只多了客套话</text>
+  <text x="370" y="272" class="c sub">选了更长的</text>
+  <rect x="506" y="104.75" width="40" height="131.25" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="526" y="98.75" class="c sub">7/8</text>
+  <rect x="552" y="234.5" width="40" height="1.5" fill="#9F94D5" stroke="#8A7FC4" stroke-width="1"/>
+  <text x="572" y="228.5" class="c sub">0/8</text>
+  <text x="550" y="256" class="c b">有一处与事实不符</text>
+  <text x="550" y="272" class="c sub">选了有错的</text>
+  <rect x="200" y="48" width="12" height="12" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="218" y="58" class="sub">不给参考</text>
+  <rect x="300" y="48" width="12" height="12" rx="2" fill="#9F94D5" stroke="#8A7FC4"/>
+  <text x="318" y="58" class="sub">提示词中给出工具返回的事实</text>
+  <text x="350" y="296" class="c sub">质量相当时理想的裁判应各占一半；不给参考时 8 次都选第二个，给参考后 8 次中 6 次选第一个。</text>
+  <text x="350" y="314" class="c sub">给出参考能纠正事实错误，纠正不了位置偏差。</text>
+</svg>

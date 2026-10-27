@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="540" viewBox="0 0 720 540">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">两种摘要提示词：压缩后保留了哪些事实</text>
+  <text x="360" y="50" class="c sub">Qwen2.5-3B 把 11 轮客服对话（1654 个 Token）各压缩 3 次；摘要为第 1 次的节选</text>
+  <rect x="20" y="66" width="330" height="215" rx="6" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="34" y="88" class="b">普通摘要：“用一段话总结这段对话”</text>
+  <text x="34" y="108" class="sub">约 150 个 Token　保留 <tspan class="note b">4.3</tspan> / 14 条　探针问题答对 <tspan class="note b">0.3</tspan> / 5</text>
+  <text x="34" y="136" class="sub">……订单ID为1024的耳机目前在杭州转运中心，预计10月</text>
+  <text x="34" y="155" class="sub">27日送达；订单ID为1025的65W氮化镓充电器已签收，</text>
+  <text x="34" y="174" class="sub">用户申请退货，客服为其安排了10月29日14:00-16:00</text>
+  <text x="34" y="193" class="sub">上门取件，<tspan class="note">并告知了用户取件地址和退款详情</tspan>；</text>
+  <text x="34" y="212" class="sub">用户还更改了订单ID为1026机械键盘的收货地址，客服</text>
+  <text x="34" y="231" class="sub">确认并更新了地址信息；最后，用户询问优惠券是否可以</text>
+  <text x="34" y="250" class="sub">用于订单ID为1026……</text>
+  <text x="34" y="271" class="sub note">只说“告知了地址和退款详情”，没有写出地址和金额</text>
+  <rect x="370" y="66" width="330" height="215" rx="6" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="384" y="88" class="b">结构化摘要：分项输出，编号照原文抄写</text>
+  <text x="384" y="108" class="sub">约 480 个 Token　保留 <tspan class="ok b">9.7</tspan> / 14 条　探针问题答对 <tspan class="ok b">3</tspan> / 5</text>
+  <text x="384" y="136" class="sub">订单：1024 降噪蓝牙耳机 X3，运输中，预计 10 月 27 日送达</text>
+  <text x="384" y="155" class="sub">　　　1025 65W 氮化镓充电器，已签收</text>
+  <text x="384" y="174" class="sub">　　　1026 机械键盘 K8，待发货</text>
+  <text x="384" y="193" class="sub">已办理：1024 优惠券 CP7731，10 元，有效期 2026-11-30</text>
+  <text x="384" y="212" class="sub">　　　　1025 退货，取件时间 2026-10-29 14:00-16:00，</text>
+  <text x="384" y="231" class="sub">　　　　　　　退款金额 59.9 元</text>
+  <text x="384" y="250" class="sub">　　　　1026 地址改为江南大道 588 号 3 幢 1201</text>
+  <text x="384" y="271" class="sub note">没有退货单号 R2051，也没有“短信联系、尾号 8823”</text>
+  <text x="20" y="315" class="b">每条事实在 3 次压缩中被保留的次数</text>
+  <text x="287" y="315" class="c sub">普通</text>
+  <text x="337" y="315" class="c sub">结构化</text>
+  <text x="637" y="315" class="c sub">普通</text>
+  <text x="687" y="315" class="c sub">结构化</text>
+  <text x="24" y="342" class="sub">订单 1024</text>
+  <rect x="268" y="331" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="281" y="331" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="294" y="331" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="318" y="331" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="331" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="344" y="331" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="24" y="368" class="sub note">运单 SF1234567</text>
+  <rect x="268" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="281" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="294" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="318" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="331" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="344" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="24" y="394" class="sub">预计 10-27 送达</text>
+  <rect x="268" y="383" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="281" y="383" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="294" y="383" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="318" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="344" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="24" y="420" class="sub">优惠券 10 元</text>
+  <rect x="268" y="409" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="281" y="409" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="294" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="318" y="409" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="409" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="344" y="409" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="24" y="446" class="sub">优惠券有效期 11-30</text>
+  <rect x="268" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="281" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="294" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="318" y="435" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="435" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="344" y="435" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="24" y="472" class="sub">订单 1025 退货</text>
+  <rect x="268" y="461" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="281" y="461" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="294" y="461" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="318" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="344" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="24" y="498" class="sub">退货单 R2051</text>
+  <rect x="268" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="281" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="294" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="318" y="487" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="331" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="344" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="374" y="342" class="sub">退款 59.9 元</text>
+  <rect x="618" y="331" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="631" y="331" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="331" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="331" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="331" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="694" y="331" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="374" y="368" class="sub">取件 10-29 14:00-16:00</text>
+  <rect x="618" y="357" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="631" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="357" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="357" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="694" y="357" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="374" y="394" class="sub">新地址 江南大道 588 号</text>
+  <rect x="618" y="383" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="631" y="383" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="383" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="694" y="383" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="374" y="420" class="sub">取件前短信联系</text>
+  <rect x="618" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="631" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="409" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="694" y="409" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="374" y="446" class="sub note">手机尾号 8823</text>
+  <rect x="618" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="631" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="681" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="694" y="435" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="374" y="472" class="sub">订单 1026 改地址</text>
+  <rect x="618" y="461" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="631" y="461" width="11" height="13" rx="2" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="644" y="461" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="694" y="461" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="374" y="498" class="sub">发票待提供税号</text>
+  <rect x="618" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="631" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="644" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <rect x="668" y="487" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="681" y="487" width="11" height="13" rx="2" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="694" y="487" width="11" height="13" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="20" y="525" class="sub">每格代表一次压缩，填色表示该事实出现在摘要中；红色的两条在 6 次压缩中都丢失了。</text>
+</svg>
