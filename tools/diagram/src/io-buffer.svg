@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">ByteBuffer 的状态变量：写入 hello，flip() 后读出 4 个字节</text>
+  <text x="30" y="92" class="sub b">① allocate(8)</text>
+  <rect x="200" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="226" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="226" y="116" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="252" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="278" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="278" y="116" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="304" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="330" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="330" y="116" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="356" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="382" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="382" y="116" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="408" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="434" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="434" y="116" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="460" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="486" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="486" y="116" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="512" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="538" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="538" y="116" class="c sub mono" style="font-size:9.5px">6</text>
+  <rect x="564" y="70" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="590" y="90" class="c sub mono" style="fill:#444"></text>
+  <text x="590" y="116" class="c sub mono" style="font-size:9.5px">7</text>
+  <line x1="200" y1="56" x2="200" y2="106" stroke="#6A9F68" stroke-width="2"/>
+  <line x1="616" y1="56" x2="616" y2="106" stroke="#C0605A" stroke-width="2"/>
+  <text x="650" y="84" class="sub mono ok" style="font-size:10.5px">position = 0</text>
+  <text x="650" y="100" class="sub mono note" style="font-size:10.5px">limit = 8</text>
+  <text x="30" y="168" class="sub b">② 写入 5 个字节</text>
+  <rect x="200" y="146" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="226" y="166" class="c sub mono" style="fill:#444">h</text>
+  <text x="226" y="192" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="252" y="146" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="278" y="166" class="c sub mono" style="fill:#444">e</text>
+  <text x="278" y="192" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="304" y="146" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="330" y="166" class="c sub mono" style="fill:#444">l</text>
+  <text x="330" y="192" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="356" y="146" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="166" class="c sub mono" style="fill:#444">l</text>
+  <text x="382" y="192" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="408" y="146" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="434" y="166" class="c sub mono" style="fill:#444">o</text>
+  <text x="434" y="192" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="460" y="146" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="486" y="166" class="c sub mono" style="fill:#444"></text>
+  <text x="486" y="192" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="512" y="146" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="538" y="166" class="c sub mono" style="fill:#444"></text>
+  <text x="538" y="192" class="c sub mono" style="font-size:9.5px">6</text>
+  <rect x="564" y="146" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="590" y="166" class="c sub mono" style="fill:#444"></text>
+  <text x="590" y="192" class="c sub mono" style="font-size:9.5px">7</text>
+  <line x1="460" y1="132" x2="460" y2="182" stroke="#6A9F68" stroke-width="2"/>
+  <line x1="616" y1="132" x2="616" y2="182" stroke="#C0605A" stroke-width="2"/>
+  <text x="650" y="160" class="sub mono ok" style="font-size:10.5px">position = 5</text>
+  <text x="650" y="176" class="sub mono note" style="font-size:10.5px">limit = 8</text>
+  <text x="30" y="244" class="sub b">③ flip()</text>
+  <rect x="200" y="222" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="226" y="242" class="c sub mono" style="fill:#444">h</text>
+  <text x="226" y="268" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="252" y="222" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="278" y="242" class="c sub mono" style="fill:#444">e</text>
+  <text x="278" y="268" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="304" y="222" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="330" y="242" class="c sub mono" style="fill:#444">l</text>
+  <text x="330" y="268" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="356" y="222" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="242" class="c sub mono" style="fill:#444">l</text>
+  <text x="382" y="268" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="408" y="222" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="434" y="242" class="c sub mono" style="fill:#444">o</text>
+  <text x="434" y="268" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="460" y="222" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="486" y="242" class="c sub mono" style="fill:#444"></text>
+  <text x="486" y="268" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="512" y="222" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="538" y="242" class="c sub mono" style="fill:#444"></text>
+  <text x="538" y="268" class="c sub mono" style="font-size:9.5px">6</text>
+  <rect x="564" y="222" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="590" y="242" class="c sub mono" style="fill:#444"></text>
+  <text x="590" y="268" class="c sub mono" style="font-size:9.5px">7</text>
+  <line x1="200" y1="208" x2="200" y2="258" stroke="#6A9F68" stroke-width="2"/>
+  <line x1="460" y1="208" x2="460" y2="258" stroke="#C0605A" stroke-width="2"/>
+  <text x="650" y="236" class="sub mono ok" style="font-size:10.5px">position = 0</text>
+  <text x="650" y="252" class="sub mono note" style="font-size:10.5px">limit = 5</text>
+  <text x="30" y="320" class="sub b">④ 读出 4 个字节</text>
+  <rect x="200" y="298" width="52" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="226" y="318" class="c sub mono" style="fill:#444">h</text>
+  <text x="226" y="344" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="252" y="298" width="52" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="278" y="318" class="c sub mono" style="fill:#444">e</text>
+  <text x="278" y="344" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="304" y="298" width="52" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="330" y="318" class="c sub mono" style="fill:#444">l</text>
+  <text x="330" y="344" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="356" y="298" width="52" height="32" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="382" y="318" class="c sub mono" style="fill:#444">l</text>
+  <text x="382" y="344" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="408" y="298" width="52" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="434" y="318" class="c sub mono" style="fill:#444">o</text>
+  <text x="434" y="344" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="460" y="298" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="486" y="318" class="c sub mono" style="fill:#444"></text>
+  <text x="486" y="344" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="512" y="298" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="538" y="318" class="c sub mono" style="fill:#444"></text>
+  <text x="538" y="344" class="c sub mono" style="font-size:9.5px">6</text>
+  <rect x="564" y="298" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="590" y="318" class="c sub mono" style="fill:#444"></text>
+  <text x="590" y="344" class="c sub mono" style="font-size:9.5px">7</text>
+  <line x1="408" y1="284" x2="408" y2="334" stroke="#6A9F68" stroke-width="2"/>
+  <line x1="460" y1="284" x2="460" y2="334" stroke="#C0605A" stroke-width="2"/>
+  <text x="650" y="312" class="sub mono ok" style="font-size:10.5px">position = 4</text>
+  <text x="650" y="328" class="sub mono note" style="font-size:10.5px">limit = 5</text>
+  <text x="30" y="396" class="sub b">⑤ clear()</text>
+  <rect x="200" y="374" width="52" height="32" rx="3" fill="#F6F6F6" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="226" y="394" class="c sub mono" style="fill:#444">h</text>
+  <text x="226" y="420" class="c sub mono" style="font-size:9.5px">0</text>
+  <rect x="252" y="374" width="52" height="32" rx="3" fill="#F6F6F6" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="278" y="394" class="c sub mono" style="fill:#444">e</text>
+  <text x="278" y="420" class="c sub mono" style="font-size:9.5px">1</text>
+  <rect x="304" y="374" width="52" height="32" rx="3" fill="#F6F6F6" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="330" y="394" class="c sub mono" style="fill:#444">l</text>
+  <text x="330" y="420" class="c sub mono" style="font-size:9.5px">2</text>
+  <rect x="356" y="374" width="52" height="32" rx="3" fill="#F6F6F6" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="382" y="394" class="c sub mono" style="fill:#444">l</text>
+  <text x="382" y="420" class="c sub mono" style="font-size:9.5px">3</text>
+  <rect x="408" y="374" width="52" height="32" rx="3" fill="#F6F6F6" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="434" y="394" class="c sub mono" style="fill:#444">o</text>
+  <text x="434" y="420" class="c sub mono" style="font-size:9.5px">4</text>
+  <rect x="460" y="374" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="486" y="394" class="c sub mono" style="fill:#444"></text>
+  <text x="486" y="420" class="c sub mono" style="font-size:9.5px">5</text>
+  <rect x="512" y="374" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="538" y="394" class="c sub mono" style="fill:#444"></text>
+  <text x="538" y="420" class="c sub mono" style="font-size:9.5px">6</text>
+  <rect x="564" y="374" width="52" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="590" y="394" class="c sub mono" style="fill:#444"></text>
+  <text x="590" y="420" class="c sub mono" style="font-size:9.5px">7</text>
+  <line x1="200" y1="360" x2="200" y2="410" stroke="#6A9F68" stroke-width="2"/>
+  <line x1="616" y1="360" x2="616" y2="410" stroke="#C0605A" stroke-width="2"/>
+  <text x="650" y="388" class="sub mono ok" style="font-size:10.5px">position = 0</text>
+  <text x="650" y="404" class="sub mono note" style="font-size:10.5px">limit = 8</text>
+  <text x="30" y="456" class="sub">竖线标出 position（绿）和 limit（红）的位置，capacity 始终为 8；clear() 只重置这两个变量，数据并没有被擦除。</text>
+</svg>

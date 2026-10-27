@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Selector：一个线程同时等待多个通道上的事件</text>
+  <rect x="40" y="130" width="120" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="100" y="156.5" class="b c">线程</text>
+  <rect x="230" y="130" width="150" height="44" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="305" y="150" class="b c">Selector</text>
+  <text x="305" y="165" class="sub c">select() 阻塞等待</text>
+  <line x1="162" y1="152" x2="228" y2="152" class="arrow "/>
+  <rect x="470" y="60" width="250" height="48" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="595" y="82" class="c sub mono b">ServerSocketChannel</text>
+  <text x="595" y="97" class="sub c">OP_ACCEPT：没有新连接</text>
+  <line x1="382" y1="152" x2="468" y2="84" stroke="#888" stroke-dasharray="4 3"/>
+  <rect x="470" y="136" width="250" height="48" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="595" y="158" class="c sub mono b">SocketChannel A</text>
+  <text x="595" y="173" class="sub c">OP_READ：数据到达，就绪</text>
+  <line x1="382" y1="152" x2="468" y2="160" stroke="#888" stroke-dasharray="4 3"/>
+  <rect x="470" y="212" width="250" height="48" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="595" y="234" class="c sub mono b">SocketChannel B</text>
+  <text x="595" y="249" class="sub c">OP_READ：没有数据</text>
+  <line x1="382" y1="152" x2="468" y2="236" stroke="#888" stroke-dasharray="4 3"/>
+  <text x="30" y="270" class="sub">select() 在任何一个通道就绪时返回，selectedKeys() 中只有 SocketChannel A，线程只处理它，不会阻塞在其它通道上。</text>
+  <text x="30" y="290" class="sub">底层使用操作系统的 I/O 多路复用：Linux 上是 epoll，本机 macOS 上 Selector.open() 返回 KQueueSelectorImpl。</text>
+</svg>
