@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="330" viewBox="0 0 700 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="350" y="28" class="title">URL 的组成，以及 URI、URL、URN 的关系</text>
+  <rect x="40" y="60" width="53" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="66.5" y="80" class="c mono" style="fill:#3F3F3F">https</text>
+  <text x="66.5" y="110" class="c sub">协议</text>
+  <text x="107.1" y="80" class="c mono" style="fill:#3F3F3F">://</text>
+  <rect x="121.2" y="60" width="141.8" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="192.1" y="80" class="c mono" style="fill:#3F3F3F">notes.example.com</text>
+  <text x="192.1" y="110" class="c sub">主机</text>
+  <text x="269.7" y="80" class="c mono" style="fill:#3F3F3F">:</text>
+  <rect x="276.4" y="60" width="38.2" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="295.5" y="80" class="c mono" style="fill:#3F3F3F">443</text>
+  <text x="295.5" y="110" class="c sub">端口</text>
+  <rect x="320.6" y="60" width="134.4" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="387.8" y="80" class="c mono" style="fill:#3F3F3F">/notes/http.html</text>
+  <text x="387.8" y="110" class="c sub">路径</text>
+  <text x="461.7" y="80" class="c mono" style="fill:#3F3F3F">?</text>
+  <rect x="468.4" y="60" width="82.6" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="509.7" y="80" class="c mono" style="fill:#3F3F3F">tab=cache</text>
+  <text x="509.7" y="110" class="c sub">查询</text>
+  <text x="557.7" y="80" class="c mono" style="fill:#3F3F3F">#</text>
+  <rect x="564.4" y="60" width="53" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="590.9" y="80" class="c mono" style="fill:#3F3F3F">intro</text>
+  <text x="590.9" y="110" class="c sub">片段</text>
+  <text x="40" y="140" class="sub">端口为协议的默认值（HTTPS 为 443）时可以省略；片段只在浏览器中用来定位页面内的位置，不会发送给服务器。</text>
+  <rect x="40" y="166" width="620" height="140" rx="8" fill="#FFFFFF" stroke="#BFBEBA"/>
+  <text x="56" y="188" class="sub b" style="fill:#444">URI（统一资源标识符）</text>
+  <rect x="60" y="202" width="330" height="88" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="225" y="226" class="c sub b" style="fill:#444">URL（统一资源定位符）</text>
+  <text x="225" y="250" class="c sub mono">https://notes.example.com/notes/http.html</text>
+  <text x="225" y="272" class="c sub">写明了怎样获取：用 HTTPS 向主机请求路径</text>
+  <rect x="410" y="202" width="230" height="88" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="525" y="226" class="c sub b" style="fill:#444">URN（统一资源名称）</text>
+  <text x="525" y="250" class="c sub mono">urn:isbn:0451450523</text>
+  <text x="525" y="272" class="c sub">只是一本书的名字，没有说明去哪里获取</text>
+</svg>

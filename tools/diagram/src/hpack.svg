@@ -74,7 +74,7 @@
   <rect x="30" y="186" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
   <text x="90" y="204" class="c sub mono" style="fill:#444">user-agent</text>
   <rect x="150" y="186" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
-  <text x="245" y="204" class="c sub" style="fill:#444">Mozilla/5.0 …（64 字节）</text>
+  <text x="245" y="204" class="c sub" style="fill:#444">Mozilla/5.0 …（66 字节）</text>
   <rect x="340" y="186" width="300" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
   <text x="490" y="204" class="c sub" style="fill:#444">动态表（第一次请求时加入）</text>
   <rect x="640" y="186" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
