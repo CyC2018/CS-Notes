@@ -46,31 +46,31 @@
   <text x="560" y="170" class="c sub mono">5 s</text>
   <line x1="660" y1="150" x2="660" y2="155" stroke="#999"/>
   <text x="660" y="170" class="c sub mono">6 s</text>
-  <rect x="60" y="140" width="504" height="20" rx="3" fill="#EAE9E7" stroke="#BFBEBA"/>
-  <text x="312" y="154" class="c sub" style="fill:#444">哨兵在 down-after-milliseconds（5 秒）内收不到回复</text>
-  <rect x="564" y="140" width="143" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="60" y="140" width="502" height="20" rx="3" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="311" y="154" class="c sub" style="fill:#444">哨兵在 down-after-milliseconds（5 秒）内收不到回复</text>
+  <rect x="562" y="140" width="116" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
   <line x1="60" y1="140" x2="60" y2="126" stroke="#BBB" stroke-dasharray="2 2"/>
   <circle cx="60" cy="150" r="3.5" fill="#C0605A"/>
   <text x="64" y="120" class="sub" style="fill:#444">kill -9 主服务器 6400</text>
-  <line x1="564" y1="140" x2="564" y2="104" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="564" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="560" y="98" class="sub e" style="fill:#444">5.04 s  ① 主观下线 +sdown</text>
-  <line x1="574" y1="140" x2="574" y2="82" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="574" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="570" y="76" class="sub e" style="fill:#444">5.14 s  ② 客观下线 +odown，3 个哨兵都同意（quorum 2）</text>
-  <line x1="582" y1="160" x2="582" y2="182" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="582" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="578" y="194" class="sub e" style="fill:#444">5.22 s  ③ 投票选出领头哨兵 +elected-leader</text>
-  <line x1="588" y1="160" x2="588" y2="204" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="588" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="584" y="216" class="sub e" style="fill:#444">5.28 s  ④ 选中 6402 +selected-slave</text>
-  <line x1="697" y1="160" x2="697" y2="226" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="697" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="693" y="238" class="sub e" style="fill:#444">6.37 s  ⑤ 6402 升为主服务器 +promoted-slave</text>
-  <line x1="707" y1="160" x2="707" y2="248" stroke="#BBB" stroke-dasharray="2 2"/>
-  <circle cx="707" cy="150" r="3.5" fill="#9F94D5"/>
-  <text x="703" y="260" class="sub e" style="fill:#444">6.47 s  ⑥ 通知切换 +switch-master</text>
-  <text x="30" y="286" class="sub">1 主 2 从、3 个哨兵，quorum 为 2。约 6.5 秒后客户端从哨兵查到新地址 6402，之前写入的 order:1024 仍在；</text>
-  <text x="30" y="304" class="sub">重启的 6400 被哨兵改为 6402 的从服务器。超时检测占了大部分时间，down-after-milliseconds 越小切换越快，</text>
+  <line x1="562" y1="140" x2="562" y2="104" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="562" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="558" y="98" class="sub e" style="fill:#444">5.02 s  ① 主观下线 +sdown</text>
+  <line x1="570" y1="140" x2="570" y2="82" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="570" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="566" y="76" class="sub e" style="fill:#444">5.10 s  ② 客观下线 +odown，2 个哨兵同意（quorum 2）</text>
+  <line x1="578" y1="160" x2="578" y2="182" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="578" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="574" y="194" class="sub e" style="fill:#444">5.18 s  ③ 投票选出领头哨兵 +elected-leader</text>
+  <line x1="584" y1="160" x2="584" y2="204" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="584" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="580" y="216" class="sub e" style="fill:#444">5.24 s  ④ 选中 6401 +selected-slave</text>
+  <line x1="673" y1="160" x2="673" y2="226" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="673" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="669" y="238" class="sub e" style="fill:#444">6.13 s  ⑤ 6401 升为主服务器 +promoted-slave</text>
+  <line x1="678" y1="160" x2="678" y2="248" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="678" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="674" y="260" class="sub e" style="fill:#444">6.18 s  ⑥ 通知切换 +switch-master</text>
+  <text x="30" y="286" class="sub">1 主 2 从、3 个哨兵，quorum 为 2。约 6.2 秒后客户端从哨兵查到新地址 6401，之前写入的 order:1024 仍在；</text>
+  <text x="30" y="304" class="sub">重启的 6400 被哨兵改为 6401 的从服务器。超时检测占了大部分时间，down-after-milliseconds 越小切换越快，</text>
   <text x="30" y="322" class="sub">但网络抖动时也越容易误判。</text>
 </svg>

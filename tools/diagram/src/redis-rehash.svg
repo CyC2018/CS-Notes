@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">渐进式 rehash：每次操作顺便迁移一个桶</text>
+  <text x="30" y="64" class="sub">写入 k5 时大小为 4 的 ht_table[0] 已有 4 个键，扩容为 8；之后的两次操作各迁移一个桶，0、1 号桶已经迁移完</text>
+  <text x="150" y="100" class="sub b">ht_table[0]（大小 4）</text>
+  <rect x="150" y="112" width="50" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="175" y="133" class="c sub mono" style="fill:#444">0</text>
+  <text x="216" y="134" class="sub">已迁移，置空</text>
+  <rect x="150" y="156" width="50" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="175" y="177" class="c sub mono" style="fill:#444">1</text>
+  <text x="216" y="178" class="sub">已迁移，置空</text>
+  <rect x="150" y="200" width="50" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="175" y="221" class="c sub mono" style="fill:#444">2</text>
+  <rect x="216" y="204" width="50" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="241" y="221" class="c sub mono" style="fill:#444">k3</text>
+  <line x1="200" y1="217" x2="214" y2="217" class="arrow "/>
+  <rect x="150" y="244" width="50" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="175" y="265" class="c sub mono" style="fill:#444">3</text>
+  <rect x="216" y="248" width="50" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="241" y="265" class="c sub mono" style="fill:#444">k4</text>
+  <line x1="200" y1="261" x2="214" y2="261" class="arrow "/>
+  <text x="24" y="221" class="sub mono" style="fill:#766AA8">rehashidx = 2</text>
+  <line x1="128" y1="217" x2="148" y2="217" class="arrow "/>
+  <text x="420" y="100" class="sub b">ht_table[1]（大小 8）</text>
+  <rect x="420" y="112" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="129" class="c sub mono" style="fill:#444">0</text>
+  <rect x="420" y="142" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="159" class="c sub mono" style="fill:#444">1</text>
+  <rect x="486" y="142" width="50" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="511" y="159" class="c sub mono" style="fill:#444">k2</text>
+  <line x1="470" y1="155" x2="484" y2="155" class="arrow "/>
+  <rect x="420" y="172" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="189" class="c sub mono" style="fill:#444">2</text>
+  <rect x="420" y="202" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="219" class="c sub mono" style="fill:#444">3</text>
+  <rect x="420" y="232" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="249" class="c sub mono" style="fill:#444">4</text>
+  <rect x="486" y="232" width="50" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="511" y="249" class="c sub mono" style="fill:#444">k1</text>
+  <line x1="470" y1="245" x2="484" y2="245" class="arrow "/>
+  <rect x="420" y="262" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="279" class="c sub mono" style="fill:#444">5</text>
+  <rect x="420" y="292" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="309" class="c sub mono" style="fill:#444">6</text>
+  <rect x="486" y="292" width="50" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="511" y="309" class="c sub mono" style="fill:#444">k5</text>
+  <line x1="470" y1="305" x2="484" y2="305" class="arrow "/>
+  <rect x="420" y="322" width="50" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="445" y="339" class="c sub mono" style="fill:#444">7</text>
+  <text x="552" y="296" class="sub" style="fill:#207773">k5：rehash 期间新写入的键</text>
+  <text x="552" y="312" class="sub" style="fill:#207773">只写入 ht_table[1]</text>
+  <path d="M270,217 C340,217 360,185 416,185" class="arrow dash"/>
+  <text x="345" y="244" class="c sub">下一次操作迁移 2 号桶</text>
+  <text x="30" y="388" class="sub">查找、删除时两张表都可能要查；serverCron 也会定期花不超过 1 毫秒继续迁移。</text>
+  <text x="30" y="408" class="sub">全部迁移完成后，ht_table[1] 变为 ht_table[0]，rehashidx 恢复为 -1。示意图，键所在的桶为假设。</text>
+</svg>
