@@ -1,9 +1,12 @@
 // Publish only validated dist/ to the existing Tencent Cloud project.
 import { createHash } from 'node:crypto';
+import { execFile } from 'node:child_process';
 import { readFile, mkdir, writeFile, appendFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { promisify } from 'node:util';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 const WEBSITE = fileURLToPath(new URL('../', import.meta.url));
+const executeFile = promisify(execFile);
 
 export const PROJECT = { projectId: 'makers-s7dxi8u5vidy', name: 'cs-notes' };
 export const ORIGIN = 'https://cyc2018.xyz';
@@ -17,24 +20,50 @@ async function download(origin, path, revision, fetcher) {
   return Buffer.from(await response.arrayBuffer());
 }
 
+function verificationPaths(manifest) {
+  const paths = ['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
+    'search.js', 'search-paths.js', manifest.searchIndex, 'image-variants.json'];
+  const records = new Map(manifest.files.map(file => [file.path, file]));
+  const notes = [...records.keys()].filter(path => path.startsWith('notes/') && path.endsWith('.md')).sort();
+  // Exercise ASCII, Unicode and spaces without depending on specific article titles.
+  for (const predicate of [path => /^[\x00-\x7F]+$/.test(path),
+    path => /[^\x00-\x7F]/.test(path) && !path.includes(' '), path => path.includes(' ')]) {
+    const note = notes.find(predicate);
+    if (note) paths.push(note);
+  }
+  for (const prefix of ['notes/pics/', 'optimized/']) {
+    const image = manifest.files.find(file => file.path.startsWith(prefix));
+    if (image) paths.push(image.path);
+  }
+  for (const path of paths) {
+    if (!records.has(path)) throw new Error(`构建缺少关键文件：${path}`);
+  }
+  return [...new Set(paths)];
+}
+
+async function packageRelease(directory, archive) {
+  const environment = { ...process.env };
+  delete environment.EDGEONE_API_TOKEN;
+  try {
+    await executeFile('python3', [resolve(WEBSITE, 'deploy/package_site.py'),
+      '--source', resolve(directory), '--output', resolve(archive)], { env: environment });
+  } catch (error) {
+    // The packaging subprocess receives no publishing token; don't log its command or environment.
+    const reason = error.stderr?.trim().split('\n').at(-1) || '请重新生成并校验网站。';
+    throw new Error(`发布包生成失败，未上传：${reason}`);
+  }
+}
+
 export async function verifyPublished(manifestBytes, { fetcher = fetch, origin = ORIGIN } = {}) {
   const manifest = JSON.parse(manifestBytes);
+  const paths = verificationPaths(manifest);
   const revision = sha256(manifestBytes);
   const remote = await download(origin, 'asset-manifest.json', revision, fetcher);
   if (sha256(remote) !== revision) throw new Error('正式域名的版本清单尚未与构建一致。');
-  const paths = ['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
-    'search.js', 'search-paths.js', manifest.searchIndex, 'image-variants.json', 'notes/MySQL.md',
-    'notes/大模型应用.md', 'notes/Java 基础.md', 'notes/66. 构建乘积数组.md'];
   const records = new Map(manifest.files.map(file => [file.path, file]));
-  for (const prefix of ['notes/pics/', 'optimized/']) {
-    const image = manifest.files.find(file => file.path.startsWith(prefix));
-    if (!image) throw new Error(`构建缺少配图：${prefix}`);
-    paths.push(image.path);
-  }
   // Check actual bytes as well as the manifest; an SPA fallback can also return HTTP 200.
   await Promise.all(paths.map(async path => {
     const record = records.get(path);
-    if (!record) throw new Error(`构建缺少关键文件：${path}`);
     const bytes = await download(origin, path, revision, fetcher);
     if (bytes.length !== record.bytes || sha256(bytes) !== record.sha256) {
       throw new Error(`正式域名文件校验不一致：${path}`);
@@ -47,6 +76,7 @@ export async function deploySite({ directory, archive = resolve(directory, '../.
   sleep = ms => new Promise(done => setTimeout(done, ms)), attempts = 12 }) {
   const manifestBytes = await readFile(resolve(directory, 'asset-manifest.json'));
   const manifest = JSON.parse(manifestBytes);
+  verificationPaths(manifest); // Reject local defects before any credential or production mutation.
   let unchanged = false;
   try {
     const remote = await download(ORIGIN, 'asset-manifest.json', sha256(manifestBytes), fetcher);
@@ -54,6 +84,8 @@ export async function deploySite({ directory, archive = resolve(directory, '../.
   } catch { /* A missing manifest should trigger a new deployment, never a false skip. */ }
   let deployment;
   if (!unchanged) {
+    // Always bind the upload to this validated dist; a cached ZIP may belong to an older build.
+    await packageRelease(directory, archive);
     const makers = await getClient();
     const project = await makers.projects.get({ projectId: PROJECT.projectId });
     if (project.projectId !== PROJECT.projectId || project.name !== PROJECT.name) {

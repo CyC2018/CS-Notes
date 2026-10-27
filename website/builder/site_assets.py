@@ -109,7 +109,8 @@ def copy_referenced_assets(dist, root):
 
 def optimize_images(dist, cache):
     """Add pixel-identical WebP alternatives; retain each referenced original URL."""
-    from PIL import Image
+    from PIL import Image, __version__ as pillow_version
+    cache = cache / pillow_version
     cache.mkdir(parents=True, exist_ok=True)
     candidates = [p for p in dist.rglob('*') if p.suffix.lower() in {'.png', '.jpg', '.jpeg'} and p.stat().st_size >= 4096]
 
