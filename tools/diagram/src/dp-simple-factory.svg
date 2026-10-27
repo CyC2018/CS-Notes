@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="385" viewBox="0 0 760 385">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">简单工厂的类图</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="440" y="62" width="205" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="542.5" y="82" class="c b mono" style="font-size:12px;fill:#3F3F3F">SimpleFactory</text>
+  <line x1="440" y1="91" x2="645" y2="91" stroke="#7FB2D6"/>
+  <text x="449" y="106.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ createProduct(int): Product</text>
+  <rect x="60" y="79.24" width="96" height="29" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="108" y="99.24" class="c b mono" style="font-size:12px;fill:#3F3F3F">Client</text>
+  <rect x="152" y="150" width="96" height="41" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="200" y="167" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="200" y="182" class="c b mono" style="font-size:12px;fill:#3F3F3F">Product</text>
+  <rect x="90" y="250" width="134" height="29" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="157" y="270" class="c b mono" style="font-size:12px;fill:#3F3F3F">ConcreteProduct</text>
+  <rect x="290" y="250" width="142" height="29" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="361" y="270" class="c b mono" style="font-size:12px;fill:#3F3F3F">ConcreteProduct1</text>
+  <rect x="490" y="250" width="142" height="29" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="561" y="270" class="c b mono" style="font-size:12px;fill:#3F3F3F">ConcreteProduct2</text>
+  <path d="M157,250 L157,220.5" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M361,250 L361,220.5" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M561,250 L561,220.5" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M157,220.5 L561,220.5" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M200,220.5 L200,192" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M156,93.74 L440,94.24" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="298" y="87.24" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">createProduct(1)</text>
+  <path d="M100,108.24 L100,170.5 L152,170.5" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="108" y="160" class="sub" style="font-size:10.5px">使用</text>
+  <path d="M615,114 L615,144 L720,144 L720,305 L157,305" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M157,305 L157,280" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <path d="M361,305 L361,280" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <path d="M561,305 L561,280" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="712" y="219.5" class="e sub">创建</text>
+  <line x1="30" y1="339" x2="64" y2="339" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="72" y="343" class="sub">实现</text>
+  <line x1="116" y1="339" x2="150" y2="339" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="158" y="343" class="sub">依赖（创建、调用）</text>
+  <rect x="279" y="332" width="18" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="303" y="343" class="sub">接口</text>
+  <rect x="343" y="332" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="367" y="343" class="sub">类</text>
+  <rect x="396" y="332" width="18" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="420" y="343" class="sub">客户端</text>
+  <text x="475" y="343" class="sub">+ public</text>
+  <text x="30" y="365" class="sub" style="fill:#3F3F3F">Client 不再写 if-else 和 new，只调用 createProduct(type)；新增产品时只修改 SimpleFactory。</text>
+</svg>

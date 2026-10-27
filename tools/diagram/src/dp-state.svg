@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="555" viewBox="0 0 760 555">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">状态的类图（糖果机）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="30" y="60" width="205" height="313" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="132.5" y="80" class="c b mono" style="font-size:12px;fill:#3F3F3F">GumballMachine</text>
+  <text x="132.5" y="93" class="c sub" style="font-size:10px">（Context）</text>
+  <line x1="30" y1="102" x2="235" y2="102" stroke="#7FB2D6"/>
+  <text x="39" y="117.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- soldOutState: State</text>
+  <text x="39" y="132.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- noQuarterState: State</text>
+  <text x="39" y="147.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- hasQuarterState: State</text>
+  <text x="39" y="162.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- soldState: State</text>
+  <text x="39" y="177.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- state: State</text>
+  <text x="39" y="192.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- count: int</text>
+  <line x1="30" y1="200" x2="235" y2="200" stroke="#7FB2D6"/>
+  <text x="39" y="215.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ GumballMachine(int)</text>
+  <text x="39" y="230.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ insertQuarter()</text>
+  <text x="39" y="245.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ ejectQuarter()</text>
+  <text x="39" y="260.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ turnCrank()</text>
+  <text x="39" y="275.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ setState(State)</text>
+  <text x="39" y="290.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ releaseBall()</text>
+  <text x="39" y="305.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getSoldOutState(): State</text>
+  <text x="39" y="320.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getNoQuarterState(): State</text>
+  <text x="39" y="335.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getHasQuarterState(): State</text>
+  <text x="39" y="350.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getSoldState(): State</text>
+  <text x="39" y="365.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getCount(): int</text>
+  <rect x="495.5" y="60" width="129" height="109" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="560" y="77" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="560" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F">State</text>
+  <line x1="495.5" y1="101" x2="624.5" y2="101" stroke="#B8B0DE"/>
+  <text x="504.5" y="116.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ insertQuarter()</text>
+  <text x="504.5" y="131.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ ejectQuarter()</text>
+  <text x="504.5" y="146.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ turnCrank()</text>
+  <text x="504.5" y="161.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ dispense()</text>
+  <rect x="447" y="219" width="226" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="560" y="239" class="c b mono" style="font-size:12px;fill:#3F3F3F">NoQuarterState</text>
+  <line x1="447" y1="248" x2="673" y2="248" stroke="#7FB2D6"/>
+  <text x="456" y="263.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ gumballMachine: GumballMachine</text>
+  <rect x="447" y="287" width="226" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="560" y="307" class="c b mono" style="font-size:12px;fill:#3F3F3F">HasQuarterState</text>
+  <line x1="447" y1="316" x2="673" y2="316" stroke="#7FB2D6"/>
+  <text x="456" y="331.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- gumballMachine: GumballMachine</text>
+  <rect x="447" y="355" width="226" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="560" y="375" class="c b mono" style="font-size:12px;fill:#3F3F3F">SoldState</text>
+  <line x1="447" y1="384" x2="673" y2="384" stroke="#7FB2D6"/>
+  <text x="456" y="399.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ gumballMachine: GumballMachine</text>
+  <rect x="447" y="423" width="226" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="560" y="443" class="c b mono" style="font-size:12px;fill:#3F3F3F">SoldOutState</text>
+  <line x1="447" y1="452" x2="673" y2="452" stroke="#7FB2D6"/>
+  <text x="456" y="467.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ gumballMachine: GumballMachine</text>
+  <path d="M673,313 L691,313" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M673,381 L691,381" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M673,449 L691,449" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M691,449 L691,194 L560,194" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M560,219 L560,170" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M235,114.5 L495.5,114.5" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="365.25" y="108.5" class="c sub" style="font-size:10.5px">state 等 5 个字段</text>
+  <path d="M447,245 L417,245" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M447,313 L417,313" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M447,381 L417,381" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M447,449 L417,449" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M417,245 L417,449" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M417,321 L235,321" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="326" y="315" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">gumballMachine</text>
+  <line x1="30" y1="509" x2="64" y2="509" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="72" y="513" class="sub">实现</text>
+  <line x1="116" y1="509" x2="150" y2="509" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="158" y="513" class="sub">关联（字段）</text>
+  <rect x="246" y="502" width="18" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="270" y="513" class="sub">接口</text>
+  <rect x="310" y="502" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="334" y="513" class="sub">类</text>
+  <text x="367" y="513" class="sub">+ public，- private，~ 包访问权限</text>
+  <text x="30" y="535" class="sub" style="fill:#3F3F3F">GumballMachine 把操作转交给当前的 state；状态对象调用 gumballMachine.setState(...) 切换到下一个状态，转移过程见下图。</text>
+</svg>

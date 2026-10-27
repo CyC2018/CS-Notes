@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="449" viewBox="0 0 760 449">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">观察者的类图（天气布告板）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="61.5" y="60" width="199" height="94" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="161" y="77" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="161" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F">Subject</text>
+  <line x1="61.5" y1="101" x2="260.5" y2="101" stroke="#B8B0DE"/>
+  <text x="70.5" y="116.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ registerObserver(Observer)</text>
+  <text x="70.5" y="131.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ removeObserver(Observer)</text>
+  <text x="70.5" y="146.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ notifyObserver()</text>
+  <rect x="30" y="204" width="262" height="165" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="161" y="224" class="c b mono" style="font-size:12px;fill:#3F3F3F">WeatherData</text>
+  <line x1="30" y1="233" x2="292" y2="233" stroke="#7FB2D6"/>
+  <text x="39" y="248.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- observers: List&lt;Observer&gt;</text>
+  <text x="39" y="263.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- temperature: float</text>
+  <text x="39" y="278.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- humidity: float</text>
+  <text x="39" y="293.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- pressure: float</text>
+  <line x1="30" y1="301" x2="292" y2="301" stroke="#7FB2D6"/>
+  <text x="39" y="316.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ setMeasurements(float, float, float)</text>
+  <text x="39" y="331.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ registerObserver(Observer)</text>
+  <text x="39" y="346.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ removeObserver(Observer)</text>
+  <text x="39" y="361.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ notifyObserver()</text>
+  <path d="M161,204 L161,155" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <rect x="467.5" y="74" width="205" height="64" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="570" y="91" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="570" y="106" class="c b mono" style="font-size:12px;fill:#3F3F3F">Observer</text>
+  <line x1="467.5" y1="115" x2="672.5" y2="115" stroke="#B8B0DE"/>
+  <text x="476.5" y="130.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ update(float, float, float)</text>
+  <rect x="448.5" y="188" width="243" height="67" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="570" y="208" class="c b mono" style="font-size:12px;fill:#3F3F3F">CurrentConditionsDisplay</text>
+  <line x1="448.5" y1="217" x2="691.5" y2="217" stroke="#7FB2D6"/>
+  <text x="457.5" y="232.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ CurrentConditionsDisplay(Subject)</text>
+  <text x="457.5" y="247.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ update(float, float, float)</text>
+  <rect x="467.5" y="285" width="205" height="67" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="570" y="305" class="c b mono" style="font-size:12px;fill:#3F3F3F">StatisticsDisplay</text>
+  <line x1="467.5" y1="314" x2="672.5" y2="314" stroke="#7FB2D6"/>
+  <text x="476.5" y="329.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ StatisticsDisplay(Subject)</text>
+  <text x="476.5" y="344.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ update(float, float, float)</text>
+  <path d="M672.5,318.5 L709.5,318.5 L709.5,163 L570,163" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M570,188 L570,139" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M292,213.9 L372,213.9 L372,106 L467.5,106" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="364" y="146" class="e sub mono" style="font-size:10.5px;fill:#3F3F3F">observers</text>
+  <text x="461.5" y="100" class="e sub mono" style="font-size:10.5px;fill:#3F3F3F">0..*</text>
+  <path d="M448.5,241.6 L292,241.6" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="370.25" y="235.6" class="c sub" style="font-size:10.5px">构造时注册自己</text>
+  <line x1="30" y1="403" x2="64" y2="403" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="72" y="407" class="sub">实现</text>
+  <line x1="116" y1="403" x2="150" y2="403" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="158" y="407" class="sub">关联（字段）</text>
+  <line x1="246" y1="403" x2="280" y2="403" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="288" y="407" class="sub">依赖（创建、调用）</text>
+  <rect x="409" y="396" width="18" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="433" y="407" class="sub">接口</text>
+  <rect x="473" y="396" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="497" y="407" class="sub">类</text>
+  <text x="530" y="407" class="sub">+ public，- private</text>
+  <text x="30" y="429" class="sub" style="fill:#3F3F3F">setMeasurements() 保存新数据后调用 notifyObserver()，逐个调用 observers 中布告板的 update()；主题只依赖 Observer 接口。</text>
+</svg>

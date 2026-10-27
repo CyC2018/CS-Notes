@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="487" viewBox="0 0 760 487">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">组合的类图（树形结构）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="309" y="60" width="142" height="147" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="380" y="77" class="c sub" style="font-size:9.5px">«abstract»</text>
+  <text x="380" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F;font-style:italic">Component</text>
+  <line x1="309" y1="101" x2="451" y2="101" stroke="#7FB2D6"/>
+  <text x="318" y="116.5" class="mono" style="font-size:10.5px;fill:#3F3F3F"># name: String</text>
+  <line x1="309" y1="124" x2="451" y2="124" stroke="#7FB2D6"/>
+  <text x="318" y="139.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ Component(String)</text>
+  <text x="318" y="154.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ print()</text>
+  <text x="318" y="169.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">~ print(int)</text>
+  <text x="318" y="184.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ add(Component)</text>
+  <text x="318" y="199.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ remove(Component)</text>
+  <rect x="146.5" y="267" width="207" height="97" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="250" y="287" class="c b mono" style="font-size:12px;fill:#3F3F3F">Leaf</text>
+  <line x1="146.5" y1="296" x2="353.5" y2="296" stroke="#7FB2D6"/>
+  <text x="155.5" y="311.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ Leaf(String)</text>
+  <text x="155.5" y="326.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ print(int)</text>
+  <text x="155.5" y="341.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ add(Component)</text>
+  <text x="264.636" y="341.5" class="sub" style="font-size:10px">// 抛出异常</text>
+  <text x="155.5" y="356.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ remove(Component)</text>
+  <text x="283.599" y="356.5" class="sub" style="font-size:10px">// 抛出异常</text>
+  <rect x="443" y="267" width="174" height="120" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="530" y="287" class="c b mono" style="font-size:12px;fill:#3F3F3F">Composite</text>
+  <line x1="443" y1="296" x2="617" y2="296" stroke="#7FB2D6"/>
+  <text x="452" y="311.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- child: List&lt;Component&gt;</text>
+  <line x1="443" y1="319" x2="617" y2="319" stroke="#7FB2D6"/>
+  <text x="452" y="334.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ Composite(String)</text>
+  <text x="452" y="349.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ print(int)</text>
+  <text x="452" y="364.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ add(Component)</text>
+  <text x="452" y="379.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ remove(Component)</text>
+  <path d="M250,267 L250,237" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M530,267 L530,237" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M250,237 L530,237" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M380,237 L380,208" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M617,303 L647,303 L647,118.8 L451,118.8" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="639" y="112.8" class="e sub mono" style="font-size:10.5px;fill:#3F3F3F">child  0..*</text>
+  <rect x="32" y="90" width="96" height="29" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="80" y="110" class="c b mono" style="font-size:12px;fill:#3F3F3F">Client</text>
+  <path d="M128,104.5 L309,105" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="218.5" y="99" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">root.print()</text>
+  <line x1="30" y1="421" x2="64" y2="421" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <text x="72" y="425" class="sub">继承</text>
+  <line x1="116" y1="421" x2="150" y2="421" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="158" y="425" class="sub">关联（字段）</text>
+  <line x1="246" y1="421" x2="280" y2="421" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="288" y="425" class="sub">依赖（创建、调用）</text>
+  <rect x="409" y="414" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="433" y="425" class="sub">类</text>
+  <rect x="462" y="414" width="18" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="486" y="425" class="sub">客户端</text>
+  <text x="30" y="445" class="sub">+ public，- private，# protected，~ 包访问权限；斜体为抽象</text>
+  <text x="30" y="467" class="sub" style="fill:#3F3F3F">Composite 的 child 中既可以放 Leaf，也可以放另一个 Composite；print(level) 递归打印整棵树，Leaf 不支持 add() 和 remove()。</text>
+</svg>
