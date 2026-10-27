@@ -32,17 +32,17 @@
 
   <text x="380" y="28" class="title">访问 https://www.example.com/ 的耗时（本机一次实测，RTT 约 200 ms）</text>
   <text x="148" y="82" class="sub b e" style="fill:#444">DNS 解析</text>
-  <rect x="160" y="64" width="6.15385" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
-  <text x="174.154" y="82" class="sub">10 ms，命中缓存</text>
+  <rect x="160" y="64" width="3" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="169.187" y="82" class="sub">2 ms，命中缓存</text>
   <text x="148" y="128" class="sub b e" style="fill:#444">TCP 三次握手</text>
-  <rect x="166.154" y="110" width="123.077" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
-  <text x="297.231" y="128" class="sub">1 个 RTT</text>
+  <rect x="161.187" y="110" width="123.127" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="292.314" y="128" class="sub">1 个 RTT</text>
   <text x="148" y="174" class="sub b e" style="fill:#444">TLS 1.3 握手</text>
-  <rect x="289.231" y="156" width="131.077" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
-  <text x="428.308" y="174" class="sub">1 个 RTT</text>
+  <rect x="284.314" y="156" width="128.663" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="420.977" y="174" class="sub">1 个 RTT</text>
   <text x="148" y="220" class="sub b e" style="fill:#444">请求到首字节</text>
-  <rect x="420.308" y="202" width="126.769" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
-  <text x="555.077" y="220" class="sub">1 个 RTT + 服务器处理</text>
+  <rect x="412.977" y="202" width="128.35" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="549.327" y="220" class="sub">1 个 RTT + 服务器处理</text>
   <line x1="160" y1="250" x2="160" y2="255" stroke="#999"/>
   <text x="160" y="270" class="c sub mono">0 ms</text>
   <line x1="221.538" y1="250" x2="221.538" y2="255" stroke="#999"/>
@@ -58,6 +58,6 @@
   <line x1="529.231" y1="250" x2="529.231" y2="255" stroke="#999"/>
   <text x="529.231" y="270" class="c sub mono">600 ms</text>
   <line x1="160" y1="250" x2="560" y2="250" class="line"/>
-  <text x="30" y="300" class="sub">curl -w 测得：time_connect 0.210 s、time_appconnect 0.423 s、time_starttransfer 0.629 s。</text>
+  <text x="30" y="300" class="sub">curl -w 测得：time_connect 0.202 s、time_appconnect 0.411 s、time_starttransfer 0.620 s。</text>
   <text x="30" y="318" class="sub">HTTPS 首次请求至少要 3 个 RTT 才能收到响应，这也是连接复用、TLS 会话恢复和 HTTP/3 要解决的问题。</text>
 </svg>
