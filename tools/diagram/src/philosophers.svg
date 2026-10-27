@@ -36,33 +36,33 @@
   <text x="200" y="50" class="c sub b" style="fill:#444">P0</text>
   <circle cx="200" cy="106" r="12" fill="#FFFFFF" stroke="#BBB"/>
   <line x1="229.389" y1="129.549" x2="249.374" y2="102.043" stroke="#8A6D5A" stroke-width="3" stroke-linecap="round"/>
-  <text x="221.16" y="144.875" class="c sub mono">0</text>
+  <text x="221.16" y="144.875" class="c sub mono">1</text>
   <circle cx="317.931" cy="131.682" r="20" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="317.931" y="135.682" class="c sub b" style="fill:#444">P1</text>
   <circle cx="260.868" cy="150.223" r="12" fill="#FFFFFF" stroke="#BBB"/>
   <line x1="247.553" y1="185.451" x2="279.889" y2="195.957" stroke="#8A6D5A" stroke-width="3" stroke-linecap="round"/>
-  <text x="234.238" y="185.125" class="c sub mono">1</text>
+  <text x="234.238" y="185.125" class="c sub mono">2</text>
   <circle cx="272.885" cy="270.318" r="20" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="272.885" y="274.318" class="c sub b" style="fill:#444">P2</text>
   <circle cx="237.618" cy="221.777" r="12" fill="#FFFFFF" stroke="#BBB"/>
   <line x1="200" y1="220" x2="200" y2="254" stroke="#8A6D5A" stroke-width="3" stroke-linecap="round"/>
-  <text x="200" y="210" class="c sub mono">2</text>
+  <text x="200" y="210" class="c sub mono">3</text>
   <circle cx="127.115" cy="270.318" r="20" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="127.115" y="274.318" class="c sub b" style="fill:#444">P3</text>
   <circle cx="162.382" cy="221.777" r="12" fill="#FFFFFF" stroke="#BBB"/>
   <line x1="152.447" y1="185.451" x2="120.111" y2="195.957" stroke="#8A6D5A" stroke-width="3" stroke-linecap="round"/>
-  <text x="165.762" y="185.125" class="c sub mono">3</text>
+  <text x="165.762" y="185.125" class="c sub mono">4</text>
   <circle cx="82.069" cy="131.682" r="20" fill="#C6ECE9" stroke="#7DBCB7"/>
   <text x="82.069" y="135.682" class="c sub b" style="fill:#444">P4</text>
   <circle cx="139.132" cy="150.223" r="12" fill="#FFFFFF" stroke="#BBB"/>
   <line x1="170.611" y1="129.549" x2="150.626" y2="102.043" stroke="#8A6D5A" stroke-width="3" stroke-linecap="round"/>
-  <text x="178.84" y="144.875" class="c sub mono">4</text>
+  <text x="178.84" y="144.875" class="c sub mono">0</text>
   <text x="400" y="80" class="b">如果每个人都先拿编号与自己相同的筷子：</text>
   <text x="400" y="106" class="sub" style="fill:#444">P0 拿 0、P1 拿 1……P4 拿 4，再去拿另一根：</text>
-  <text x="400" y="126" class="sub note">P0 等 4、P1 等 0……P4 等 3，形成环路，死锁。</text>
+  <text x="400" y="126" class="sub note">P0 等 1、P1 等 2……P4 等 0，形成环路，死锁。</text>
   <text x="400" y="166" class="b">解决方法：</text>
   <text x="400" y="190" class="sub" style="fill:#444">① 只有左右两根都能拿到时才拿（下面的代码）；</text>
-  <text x="400" y="210" class="sub" style="fill:#444">② 都先拿编号小的那根：P0 改为先拿 0 再拿 4，</text>
-  <text x="400" y="230" class="sub" style="fill:#444">   与 P1 争抢 0，环路被打破；</text>
+  <text x="400" y="210" class="sub" style="fill:#444">② 都先拿编号小的那根：P4 改为先拿 0 再拿 4，</text>
+  <text x="400" y="230" class="sub" style="fill:#444">   与 P0 争抢 0，环路被打破；</text>
   <text x="400" y="250" class="sub" style="fill:#444">③ 最多允许 4 个人同时拿筷子。</text>
 </svg>
