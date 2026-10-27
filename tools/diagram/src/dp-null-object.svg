@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="326" viewBox="0 0 760 326">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">空对象的类图</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="405.5" y="70" width="149" height="64" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="480" y="87" class="c sub" style="font-size:9.5px">«abstract»</text>
+  <text x="480" y="102" class="c b mono" style="font-size:12px;fill:#3F3F3F;font-style:italic">AbstractOperation</text>
+  <line x1="405.5" y1="111" x2="554.5" y2="111" stroke="#7FB2D6"/>
+  <text x="414.5" y="126.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">~ request()</text>
+  <rect x="265.5" y="194" width="209" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="370" y="214" class="c b mono" style="font-size:12px;fill:#3F3F3F">RealOperation</text>
+  <line x1="265.5" y1="223" x2="474.5" y2="223" stroke="#7FB2D6"/>
+  <text x="274.5" y="238.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ request()</text>
+  <text x="352.031" y="238.5" class="sub" style="font-size:10px">// 输出 do something</text>
+  <rect x="527" y="194" width="166" height="52" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="610" y="214" class="c b mono" style="font-size:12px;fill:#3F3F3F">NullOperation</text>
+  <line x1="527" y1="223" x2="693" y2="223" stroke="#7FB2D6"/>
+  <text x="536" y="238.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">~ request()</text>
+  <text x="613.531" y="238.5" class="sub" style="font-size:10px">// 什么都不做</text>
+  <path d="M370,194 L370,164" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M610,194 L610,164" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M370,164 L610,164" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M480,164 L480,135" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <rect x="30" y="80" width="212" height="52" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="136" y="100" class="c b mono" style="font-size:12px;fill:#3F3F3F">Client</text>
+  <line x1="30" y1="109" x2="242" y2="109" stroke="#7DBCB7"/>
+  <text x="39" y="124.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;text-decoration:underline">+ func(int): AbstractOperation</text>
+  <path d="M242,106 L405.5,102" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="323.75" y="96" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">func(-1).request()</text>
+  <line x1="30" y1="280" x2="64" y2="280" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <text x="72" y="284" class="sub">继承</text>
+  <line x1="116" y1="280" x2="150" y2="280" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="158" y="284" class="sub">依赖（创建、调用）</text>
+  <rect x="279" y="273" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="303" y="284" class="sub">类</text>
+  <rect x="332" y="273" width="18" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="356" y="284" class="sub">客户端</text>
+  <text x="411" y="284" class="sub">+ public，~ 包访问权限；斜体为抽象；下划线为静态成员</text>
+  <text x="30" y="306" class="sub" style="fill:#3F3F3F">func() 在参数小于 0 时返回 NullOperation 而不是 null，调用端拿到结果后直接调用 request()，不需要判空。</text>
+</svg>
