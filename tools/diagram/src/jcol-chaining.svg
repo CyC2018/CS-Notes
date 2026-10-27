@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">拉链法：插入 K1、K2、K3 之后的 table</text>
+  <text x="30" y="62" class="sub mono b">Entry[] table</text>
+  <rect x="30" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="52" y="88" class="c sub mono" style="fill:#444">0</text>
+  <rect x="74" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="96" y="88" class="c sub mono" style="fill:#444">1</text>
+  <rect x="118" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="140" y="88" class="c sub mono" style="fill:#444">2</text>
+  <rect x="162" y="70" width="44" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="184" y="88" class="c sub mono" style="fill:#444">3</text>
+  <rect x="206" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="228" y="88" class="c sub mono" style="fill:#444">4</text>
+  <rect x="250" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="272" y="88" class="c sub mono" style="fill:#444">5</text>
+  <rect x="294" y="70" width="44" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="316" y="88" class="c sub mono" style="fill:#444">6</text>
+  <rect x="338" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="360" y="88" class="c sub mono" style="fill:#444">7</text>
+  <rect x="382" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="404" y="88" class="c sub mono" style="fill:#444">8</text>
+  <rect x="426" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="448" y="88" class="c sub mono" style="fill:#444">9</text>
+  <rect x="470" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="492" y="88" class="c sub mono" style="fill:#444">10</text>
+  <rect x="514" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="536" y="88" class="c sub mono" style="fill:#444">11</text>
+  <rect x="558" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="580" y="88" class="c sub mono" style="fill:#444">12</text>
+  <rect x="602" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="624" y="88" class="c sub mono" style="fill:#444">13</text>
+  <rect x="646" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="668" y="88" class="c sub mono" style="fill:#444">14</text>
+  <rect x="690" y="70" width="44" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="712" y="88" class="c sub mono" style="fill:#444">15</text>
+  <rect x="60" y="132" width="150" height="76" rx="6" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="72" y="152" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">hash  = 115</text>
+  <text x="72" y="168" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">key   = "K1"</text>
+  <text x="72" y="184" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">value = "V1"</text>
+  <text x="72" y="200" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">next  = null</text>
+  <line x1="162" y1="98" x2="135" y2="130" class="arrow "/>
+  <rect x="250" y="132" width="150" height="76" rx="6" fill="#E6E3FA" stroke="#7FB2D6"/>
+  <text x="262" y="152" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">hash  = 118</text>
+  <text x="262" y="168" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">key   = "K3"</text>
+  <text x="262" y="184" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">value = "V3"</text>
+  <text x="262" y="200" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">next</text>
+  <line x1="294" y1="98" x2="325" y2="130" class="arrow "/>
+  <line x1="325" y1="208" x2="325" y2="230" class="arrow "/>
+  <rect x="250" y="232" width="150" height="76" rx="6" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="262" y="252" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">hash  = 118</text>
+  <text x="262" y="268" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">key   = "K2"</text>
+  <text x="262" y="284" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">value = "V2"</text>
+  <text x="262" y="300" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">next  = null</text>
+  <text x="440" y="150" class="sub">115 % 16 = 3，K1 放在 3 号桶；</text>
+  <text x="440" y="168" class="sub">118 % 16 = 6，K2 和 K3 都在 6 号桶。</text>
+  <text x="440" y="204" class="sub">JDK 1.7 用头插法，后插入的 K3 在链表头部；</text>
+  <text x="440" y="222" class="sub">JDK 1.8 改为尾插法，K3 会在 K2 之后。</text>
+  <text x="440" y="258" class="sub">hashCode 115、118 是为了说明而假设的值。</text>
+</svg>

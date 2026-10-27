@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Map 的主要接口和实现类</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="324.0" y="51.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="380" y="66" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="380" y="81" class="c sub b mono" style="fill:#3F3F3F">Map</text>
+  <rect x="64.0" y="141.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="120" y="156" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="120" y="171" class="c sub b mono" style="fill:#3F3F3F">SortedMap</text>
+  <rect x="64.0" y="231.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="120" y="254" class="c sub b mono" style="fill:#3F3F3F">TreeMap</text>
+  <rect x="244.0" y="141.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="164" class="c sub b mono" style="fill:#3F3F3F">HashMap</text>
+  <rect x="244.0" y="231.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="254" class="c sub b mono" style="fill:#3F3F3F">LinkedHashMap</text>
+  <rect x="404.0" y="141.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="460" y="164" class="c sub b mono" style="fill:#3F3F3F">Hashtable</text>
+  <rect x="564.0" y="141.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="620" y="164" class="c sub b mono" style="fill:#3F3F3F">ConcurrentHashMap</text>
+  <path d="M120,141.0 L380,90.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M120,231.0 L120,180.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M300,141.0 L380,90.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M300,231.0 L300,180.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M460,141.0 L380,90.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M620,141.0 L380,90.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="560" y="236" class="sub">LinkedHashMap 继承自 HashMap，</text>
+  <text x="560" y="254" class="sub">多维护了一条双向链表记录顺序。</text>
+  <line x1="30" y1="304" x2="70" y2="304" stroke="#555" marker-end="url(#tri)"/>
+  <text x="78" y="308" class="sub">继承</text>
+  <line x1="130" y1="304" x2="170" y2="304" stroke="#555" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="178" y="308" class="sub">实现</text>
+  <rect x="230" y="296" width="18" height="14" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="254" y="308" class="sub">接口</text>
+  <rect x="300" y="296" width="18" height="14" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="324" y="308" class="sub">类</text>
+</svg>

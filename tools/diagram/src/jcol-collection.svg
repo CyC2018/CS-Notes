@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Collection 的主要接口和实现类</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="344.0" y="51.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="400" y="66" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="400" y="81" class="c sub b mono" style="fill:#3F3F3F">Collection</text>
+  <rect x="71.0" y="131.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="127" y="146" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="127" y="161" class="c sub b mono" style="fill:#3F3F3F">Set</text>
+  <rect x="315.0" y="131.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="371" y="146" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="371" y="161" class="c sub b mono" style="fill:#3F3F3F">List</text>
+  <rect x="559.0" y="131.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="615" y="146" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="615" y="161" class="c sub b mono" style="fill:#3F3F3F">Queue</text>
+  <rect x="10.0" y="221.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="66" y="244" class="c sub b mono" style="fill:#3F3F3F">HashSet</text>
+  <rect x="132.0" y="221.0" width="112" height="38" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="188" y="236" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="188" y="251" class="c sub b mono" style="fill:#3F3F3F">SortedSet</text>
+  <rect x="10.0" y="311.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="66" y="334" class="c sub b mono" style="fill:#3F3F3F">LinkedHashSet</text>
+  <rect x="132.0" y="311.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="188" y="334" class="c sub b mono" style="fill:#3F3F3F">TreeSet</text>
+  <rect x="254.0" y="221.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="310" y="244" class="c sub b mono" style="fill:#3F3F3F">ArrayList</text>
+  <rect x="376.0" y="221.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="432" y="244" class="c sub b mono" style="fill:#3F3F3F">Vector</text>
+  <rect x="498.0" y="221.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="554" y="244" class="c sub b mono" style="fill:#3F3F3F">LinkedList</text>
+  <rect x="620.0" y="221.0" width="112" height="38" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="676" y="244" class="c sub b mono" style="fill:#3F3F3F">PriorityQueue</text>
+  <path d="M127,131.0 L400,90.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M371,131.0 L400,90.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M615,131.0 L400,90.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M66,221.0 L127,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M188,221.0 L127,170.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M188,311.0 L188,260.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M66,311.0 L66,260.0" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M310,221.0 L371,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M432,221.0 L371,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M554,221.0 L371,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M554,221.0 L615,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M676,221.0 L615,170.0" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <line x1="30" y1="386" x2="70" y2="386" stroke="#555" marker-end="url(#tri)"/>
+  <text x="78" y="390" class="sub">继承</text>
+  <line x1="130" y1="386" x2="170" y2="386" stroke="#555" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="178" y="390" class="sub">实现</text>
+  <rect x="230" y="378" width="18" height="14" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="254" y="390" class="sub">接口</text>
+  <rect x="300" y="378" width="18" height="14" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="324" y="390" class="sub">类</text>
+  <text x="30" y="420" class="sub">LinkedList 实现的是 Queue 的子接口 Deque，TreeSet 实现的是 SortedSet 的子接口 NavigableSet，图中省略了这些中间层。</text>
+</svg>
