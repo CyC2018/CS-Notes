@@ -1,7 +1,7 @@
 # HTTP
 <!-- GFM-TOC -->
 * [HTTP](#http)
-    * [一 、基础概念](#一-基础概念)
+    * [一、基础概念](#一基础概念)
         * [请求和响应报文](#请求和响应报文)
         * [URL](#url)
     * [二、HTTP 方法](#二http-方法)
@@ -58,11 +58,17 @@
         * [幂等性](#幂等性)
         * [可缓存](#可缓存)
         * [XMLHttpRequest](#xmlhttprequest)
+    * [附录：实测](#附录实测)
+        * [A1 OAuth 2.0 授权码模式](#a1-oauth-20-授权码模式)
+        * [A2 强缓存与协商缓存](#a2-强缓存与协商缓存)
+        * [A3 跨域](#a3-跨域)
+        * [A4 TLS 握手](#a4-tls-握手)
+        * [A5 XMLHttpRequest 发送 POST](#a5-xmlhttprequest-发送-post)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-## 一 、基础概念
+## 一、基础概念
 
 ### 请求和响应报文
 
@@ -71,9 +77,9 @@
 请求报文结构：
 
 - 第一行是包含了请求方法、URL、协议版本；
-- 接下来的多行都是请求首部 Header，每个首部都有一个首部名称，以及对应的值。
-- 一个空行用来分隔首部和内容主体 Body
-- 最后是请求的内容主体，GET 请求通常没有主体，POST 请求的表单数据、JSON 放在这里
+- 接下来的多行都是请求首部 Header，每个首部都有一个首部名称，以及对应的值；
+- 一个空行用来分隔首部和内容主体 Body；
+- 最后是请求的内容主体，GET 请求通常没有主体，POST 请求的表单数据、JSON 放在这里。
 
 ```http
 GET http://www.example.com/ HTTP/1.1
@@ -92,10 +98,10 @@ User-Agent: Mozilla/5.0 xxx
 
 响应报文结构：
 
-- 第一行包含协议版本、状态码以及描述，最常见的是 200 OK 表示请求成功了
-- 接下来多行也是首部内容
-- 一个空行分隔首部和内容主体
-- 最后是响应的内容主体
+- 第一行包含协议版本、状态码以及描述，最常见的是 200 OK 表示请求成功了；
+- 接下来多行也是首部内容；
+- 一个空行分隔首部和内容主体；
+- 最后是响应的内容主体。
 
 ```http
 HTTP/1.1 200 OK
@@ -127,48 +133,35 @@ X-Cache: HIT
 
 ### URL
 
-HTTP 使用 URL（**U**niform **R**esource **L**ocator，统一资源定位符）来定位资源，它是  URI（**U**niform **R**esource **I**dentifier，统一资源标识符）的子集，URL 在 URI 的基础上增加了定位能力。URI 除了包含 URL，还包含 URN（Uniform Resource Name，统一资源名称），它只是用来定义一个资源的名称，并不具备定位该资源的能力。例如 urn:isbn:0451450523 用来定义一个书籍名称，但是却没有表示怎么找到这本书。
+HTTP 使用 URL（Uniform Resource Locator，统一资源定位符）来定位资源，它是 URI（Uniform Resource Identifier，统一资源标识符）的子集，URL 在 URI 的基础上增加了定位能力。URI 除了包含 URL，还包含 URN（Uniform Resource Name，统一资源名称），它只是用来定义一个资源的名称，并不具备定位该资源的能力。例如 urn:isbn:0451450523 用来定义一个书籍名称，但是却没有表示怎么找到这本书。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8441b2c4-dca7-4d6b-8efb-f22efccaf331.png" width="500px"> </div><br>
-
-- [wikipedia：统一资源标志符](https://zh.wikipedia.org/wiki/统一资源标志符)
-- [wikipedia: URL](https://en.wikipedia.org/wiki/URL)
-- [RFC 9110：4.2.1 http URI Scheme](https://www.rfc-editor.org/rfc/rfc9110#section-4.2.1)
-- [What is the difference between a URI, a URL and a URN?](https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn)
+<div align="center"> <img src="pics/http-uri.png" width="700px"/> </div><br>
 
 ## 二、HTTP 方法
 
-客户端发送的   **请求报文**   第一行为请求行，包含了方法字段。
+客户端发送的请求报文第一行为请求行，包含了方法字段。
 
 ### GET
 
-> 获取资源
-
-当前网络请求中，绝大部分使用的是 GET 方法。
+GET 用于获取资源，当前网络请求中绝大部分使用的是 GET 方法。
 
 ### HEAD
 
-> 获取报文首部
-
-和 GET 方法类似，但是不返回报文实体主体部分。
+HEAD 用于获取报文首部，和 GET 方法类似，但是不返回报文实体主体部分。
 
 主要用于确认 URL 的有效性以及资源更新的日期时间等。
 
 ### POST
 
-> 传输实体主体
-
-POST 主要用来传输数据，而 GET 主要用来获取资源。
+POST 用于传输实体主体，主要用来传输数据，而 GET 主要用来获取资源。
 
 更多 POST 与 GET 的比较请见第九章。
 
 ### PUT
 
-> 上传文件
+PUT 用于创建或者替换目标资源，例如上传文件。它自身不带验证机制，需要配合身份认证使用，否则任何人都可以上传文件。
 
-PUT 用于创建或者替换目标资源。它自身不带验证机制，需要配合身份认证使用，否则任何人都可以上传文件。
-
-```html
+```http
 PUT /new.html HTTP/1.1
 Host: example.com
 Content-type: text/html
@@ -179,11 +172,9 @@ Content-length: 16
 
 ### PATCH
 
-> 对资源进行部分修改
+PATCH 用于对资源进行部分修改。PUT 也可以用于修改资源，但是只能完全替代原始资源，PATCH 允许部分修改。
 
-PUT 也可以用于修改资源，但是只能完全替代原始资源，PATCH 允许部分修改。
-
-```html
+```http
 PATCH /file.txt HTTP/1.1
 Host: www.example.com
 Content-Type: application/example
@@ -195,29 +186,23 @@ Content-Length: 100
 
 ### DELETE
 
-> 删除文件
+DELETE 用于删除资源，与 PUT 功能相反，并且同样不带验证机制。
 
-与 PUT 功能相反，并且同样不带验证机制。
-
-```html
+```http
 DELETE /file.html HTTP/1.1
 ```
 
 ### OPTIONS
 
-> 查询支持的方法
-
-查询指定的 URL 能够支持的方法。
+OPTIONS 用于查询指定的 URL 能够支持的方法。
 
 会返回 `Allow: GET, POST, HEAD, OPTIONS` 这样的内容。
 
 ### CONNECT
 
-> 要求在与代理服务器通信时建立隧道
+CONNECT 要求在与代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
 
-使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
-
-```html
+```http
 CONNECT www.example.com:443 HTTP/1.1
 ```
 
@@ -225,19 +210,15 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### TRACE
 
-> 追踪路径
-
-服务器会将通信路径返回给客户端。
+TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
 通常不会使用 TRACE，并且它容易受到 XST 攻击（Cross-Site Tracing，跨站追踪）。
 
-- [RFC 9110：9 Methods](https://www.rfc-editor.org/rfc/rfc9110#section-9)
-
 ## 三、HTTP 状态码
 
-服务器返回的   **响应报文**   中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
+服务器返回的响应报文中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。
 
 | 状态码 | 类别 | 含义 |
 | :---: | :---: | :---: |
@@ -249,53 +230,39 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### 1XX 信息
 
--   **100 Continue**  ：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
+- 100 Continue：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。
 
 ### 2XX 成功
 
--   **200 OK**  
-
--   **204 No Content**  ：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。
-
--   **206 Partial Content**  ：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
+- 200 OK：请求成功；
+- 204 No Content：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用；
+- 206 Partial Content：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
 
 ### 3XX 重定向
 
--   **301 Moved Permanently**  ：永久性重定向
+- 301 Moved Permanently：永久性重定向；
+- 302 Found：临时性重定向；
+- 303 See Other：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源；
+- 304 Not Modified：GET 或 HEAD 请求带有 If-None-Match 或 If-Modified-Since，资源没有变化时返回 304，不带响应体（If-Match、If-Unmodified-Since 条件不满足时返回的是 412 Precondition Failed）；
+- 307 Temporary Redirect：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法；
+- 308 Permanent Redirect：永久重定向，与 301 的含义类似，但不允许改变请求方法。
 
--   **302 Found**  ：临时性重定向
-
--   **303 See Other**  ：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源。
-
-- 注：RFC 9110 出于历史原因允许用户代理在 301、302 重定向时把 POST 方法改成 GET 方法，大多数浏览器也是这么做的。如果不希望方法被改变，应该使用 307 或者 308。
-
--   **304 Not Modified**  ：如果请求报文首部包含一些条件，例如：If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回 304 状态码。
-
--   **307 Temporary Redirect**  ：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法。
-
--   **308 Permanent Redirect**  ：永久重定向，与 301 的含义类似，但不允许改变请求方法。
+需要注意的是，RFC 9110 出于历史原因允许用户代理在 301、302 重定向时把 POST 方法改成 GET 方法，大多数浏览器也是这么做的。如果不希望方法被改变，应该使用 307 或者 308。
 
 ### 4XX 客户端错误
 
--   **400 Bad Request**  ：请求报文中存在语法错误。
-
--   **401 Unauthorized**  ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
-
--   **403 Forbidden**  ：请求被拒绝。
-
--   **404 Not Found**  
-
--   **429 Too Many Requests**  ：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
+- 400 Bad Request：请求报文中存在语法错误；
+- 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败；
+- 403 Forbidden：请求被拒绝；
+- 404 Not Found：服务器上没有找到请求的资源；
+- 429 Too Many Requests：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
 
 ### 5XX 服务器错误
 
--   **500 Internal Server Error**  ：服务器正在执行请求时发生错误。
-
--   **502 Bad Gateway**  ：作为网关或代理的服务器从上游服务器收到了无效的响应，例如 Nginx 连不上后端，或者后端在返回响应之前断开了连接。
-
--   **503 Service Unavailable**  ：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
-
--   **504 Gateway Timeout**  ：作为网关或代理的服务器没有及时收到上游服务器的响应，例如 Nginx 等待后端的时间超过了 proxy_read_timeout（默认 60 秒）。
+- 500 Internal Server Error：服务器正在执行请求时发生错误；
+- 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到了无效的响应，例如 Nginx 连不上后端，或者后端在返回响应之前断开了连接；
+- 503 Service Unavailable：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求；
+- 504 Gateway Timeout：作为网关或代理的服务器没有及时收到上游服务器的响应，例如 Nginx 等待后端的时间超过了 proxy_read_timeout（默认 60 秒）。
 
 502 和 504 都说明问题出在网关后面的服务上：502 是后端出错或者不可达，504 是后端太慢，排查时先看网关的错误日志，再看对应时间后端的日志和耗时。
 
@@ -303,7 +270,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 有 4 种类型的首部字段：通用首部字段、请求首部字段、响应首部字段和实体首部字段。
 
-各种首部字段及其含义如下（不需要全记，仅供查阅）：
+各种首部字段及其含义如下（不需要全记，仅供查阅）。这是《图解 HTTP》按 RFC 2616 的分类，RFC 9110 不再区分实体首部，表中的 Content-MD5、Warning 已被废弃：
 
 ### 通用首部字段
 
@@ -391,7 +358,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
 
-流水线是在同一条长连接上连续发出请求，而不用等待响应返回，这样可以减少延迟。
+流水线是在同一条长连接上连续发出请求，而不用等待响应返回，这样可以减少延迟。但服务器必须按请求的顺序返回响应，前面的响应慢了，后面的都要等待，称为队头阻塞，加上很多代理处理不好流水线，主流浏览器都没有启用它。HTTP/2 用多路复用解决了这个问题，见 [二进制分帧层](#二进制分帧层)。
 
 ### Cookie
 
@@ -403,15 +370,15 @@ Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合�
 
 #### 1. 用途
 
-- 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）
-- 个性化设置（如用户自定义设置、主题等）
-- 浏览器行为跟踪（如跟踪分析用户行为等）
+- 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）；
+- 个性化设置（如用户自定义设置、主题等）；
+- 浏览器行为跟踪（如跟踪分析用户行为等）。
 
 #### 2. 创建过程
 
 服务器发送的响应报文包含 Set-Cookie 首部字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。
 
-```html
+```http
 HTTP/1.0 200 OK
 Content-type: text/html
 Set-Cookie: yummy_cookie=choco
@@ -422,7 +389,7 @@ Set-Cookie: tasty_cookie=strawberry
 
 客户端之后对同一个服务器发送请求时，会从浏览器中取出 Cookie 信息并通过 Cookie 请求首部字段发送给服务器。
 
-```html
+```http
 GET /sample_page.html HTTP/1.1
 Host: www.example.org
 Cookie: yummy_cookie=choco; tasty_cookie=strawberry
@@ -430,10 +397,10 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 
 #### 3. 分类
 
-- 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
+- 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效；
 - 持久性 Cookie：指定过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
 
-```html
+```http
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
 ```
 
@@ -451,7 +418,7 @@ Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径
 
 浏览器通过 `document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
-```html
+```javascript
 document.cookie = "yummy_cookie=choco";
 document.cookie = "tasty_cookie=strawberry";
 console.log(document.cookie);
@@ -459,9 +426,9 @@ console.log(document.cookie);
 
 #### 6. HttpOnly
 
-标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
+标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击（XSS）常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
-```html
+```http
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 ```
 
@@ -502,7 +469,7 @@ JSON Web Token（JWT）是一种自带签名的令牌。用户登录成功后，
 
 JWT 由三部分组成，用 . 连接：
 
-```html
+```http
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwMjQsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzY3MjI1NjAwfQ.35OYguRMXfGxb4cYZPiP9KDH3-Ny6vMNwrPe-lNHBBw
 ```
 
@@ -546,7 +513,7 @@ OAuth 2.0 解决的是另一个问题：授权第三方应用访问用户在某�
 
 <div align="center"> <img src="pics/oauth-code-flow.png" width="760px"/> </div><br>
 
-在本机用 Python 实现了一个最小的授权服务器，按上图运行了一遍，第 ① 步之后浏览器访问的地址和第 ⑥ 步笔记网站后端发送的请求如下（域名已替换，省略了部分字段）：
+按上图走一遍，第 ① 步之后浏览器访问的地址和第 ⑥ 步笔记网站后端发送的请求如下（用 Python 实现的最小授权服务器实测，见[附录 A1](#a1-oauth-20-授权码模式)，域名已替换，省略了部分字段）：
 
 ```text
 GET https://id.example.com/authorize?response_type=code&client_id=notes-app
@@ -554,17 +521,17 @@ GET https://id.example.com/authorize?response_type=code&client_id=notes-app
     &code_challenge=RQgc0f_GtuKCUitkJiCz7wNdN-_2JLHQ0JGLD9XxGtg&code_challenge_method=S256
 
 POST https://id.example.com/token
-grant_type=authorization_code&code=R9YdiYheE6HIfYaA0e8LkQ
+grant_type=authorization_code&code=8XNe0QukdUBz_2wmZ34JLA
     &redirect_uri=https://notes.example.com/callback&client_id=notes-app
     &code_verifier=notes-demo-verifier-0123456789abcdefghijklmnop
 
-{"access_token": "v-7DlxOYaDNY-ewb8cCXCujdIyR7qdtl", "token_type": "Bearer", "expires_in": 3600}
+{"access_token": "7B0Gmo164bDXm_sgupjN4O9ANvUg1_SK", "token_type": "Bearer", "expires_in": 3600}
 ```
 
 几个参数的作用：
 
 - code：授权码，经过浏览器传给笔记网站，规范建议最长 10 分钟有效，并且只能使用一次。同一个授权码第二次换令牌时，返回 400 {"error": "invalid_grant"}；
-- code_verifier 和 code_challenge（PKCE）：笔记网站先生成一个随机串 code_verifier，把它的 SHA-256 摘要 code_challenge 放在第一步的地址中，换令牌时再提交原文，授权服务器核对两者是否对应。攻击者即使截获了授权码，没有 code_verifier 也换不到令牌，实测同样返回 invalid_grant；
+- code_verifier 和 code_challenge（PKCE）：笔记网站先生成一个随机串 code_verifier，把它的 SHA-256 摘要 code_challenge 放在第一步的地址中，换令牌时再提交原文，授权服务器核对两者是否对应。攻击者即使截获了授权码，没有 code_verifier 也换不到令牌，同样返回 invalid_grant；
 - state：笔记网站生成的随机值，回调时检查是否与发出的一致，防止攻击者用自己账号的授权码构造回调地址，让用户登录到攻击者的账号上，这是一种 [CSRF](攻击技术.md#二跨站请求伪造)；
 - access_token：访问令牌，由笔记网站的后端直接向授权服务器换取，不经过浏览器。
 
@@ -596,49 +563,49 @@ OAuth 2.0 本身只负责授权，访问令牌表示“可以读取昵称”，�
 
 HTTP/1.1 通过 Cache-Control 首部字段来控制缓存。
 
-**3.1 禁止进行缓存**  
+##### 3.1 禁止进行缓存
 
 no-store 指令规定不能对请求或响应的任何一部分进行缓存。
 
-```html
+```http
 Cache-Control: no-store
 ```
 
-**3.2 强制确认缓存**  
+##### 3.2 强制确认缓存
 
 no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源的有效性，只有当缓存资源有效时才能使用该缓存对客户端的请求进行响应。
 
-```html
+```http
 Cache-Control: no-cache
 ```
 
-**3.3 私有缓存和公共缓存**  
+##### 3.3 私有缓存和公共缓存
 
 private 指令规定了将资源作为私有缓存，只能被单独用户使用，一般存储在用户浏览器中。
 
-```html
+```http
 Cache-Control: private
 ```
 
 public 指令规定了将资源作为公共缓存，可以被多个用户使用，一般存储在代理服务器中。
 
-```html
+```http
 Cache-Control: public
 ```
 
-**3.4 缓存过期机制**  
+##### 3.4 缓存过期机制
 
 max-age 指令出现在请求报文，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
 
 max-age 指令出现在响应报文，表示缓存资源在缓存服务器中保存的时间。
 
-```html
+```http
 Cache-Control: max-age=31536000
 ```
 
 Expires 首部字段也可以用于告知缓存服务器该资源什么时候会过期。
 
-```html
+```http
 Expires: Wed, 04 Jul 2012 08:26:05 GMT
 ```
 
@@ -647,25 +614,25 @@ Expires: Wed, 04 Jul 2012 08:26:05 GMT
 
 #### 4. 缓存验证
 
-需要先了解 ETag 首部字段的含义，它是资源的唯一标识。URL 不能唯一表示资源，例如 `http://www.google.com/` 有中文和英文两个资源，只有 ETag 才能对这两个资源进行唯一标识。
+需要先了解 ETag 首部字段的含义，它是服务器为资源的某个版本生成的标识，资源的内容变化时 ETag 随之改变。同一个 URL 按内容协商返回不同的版本（例如中文和英文页面）时，每个版本也有各自的 ETag。
 
-```html
+```http
 ETag: "82e22293907ce725faf67773957acd12"
 ```
 
 可以将缓存资源的 ETag 值放入 If-None-Match 首部，服务器收到该请求后，判断缓存资源的 ETag 值和资源的最新 ETag 值是否一致，如果一致则表示缓存资源有效，返回 304 Not Modified。
 
-```html
+```http
 If-None-Match: "82e22293907ce725faf67773957acd12"
 ```
 
 Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器，因为只能精确到一秒，所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
 
-```html
+```http
 Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
 ```
 
-```html
+```http
 If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 ```
 
@@ -676,7 +643,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 - 强缓存：缓存还在 max-age 规定的有效期内，直接使用，不发送请求；
 - 协商缓存：缓存已经过期，或者响应中有 no-cache，浏览器带上 If-None-Match 或 If-Modified-Since 向服务器确认，资源没有变化就返回 304，只传输首部，浏览器继续使用本地的缓存。
 
-在本机用 Python 写一个服务器，a.js 返回 Cache-Control: max-age=600，b.js 返回 Cache-Control: no-cache，两者都带 ETag，用 Edge 打开同一个页面两次，服务器收到的请求如下：
+例如 a.js 返回 Cache-Control: max-age=600，b.js 返回 Cache-Control: no-cache，两者都带 ETag，用浏览器打开同一个页面两次，服务器收到的请求如下（Edge 156 实测，见[附录 A2](#a2-强缓存与协商缓存)）：
 
 ```text
 第 1 次  /a.js  无条件请求                 -> 200
@@ -692,7 +659,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 #### 1. 类型
 
-**1.1 服务端驱动型**  
+##### 1.1 服务端驱动型
 
 客户端设置特定的 HTTP 首部字段，例如 Accept、Accept-Charset、Accept-Encoding、Accept-Language，服务器根据这些字段返回特定的资源。
 
@@ -702,13 +669,13 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 - 客户端提供的信息相当冗长（HTTP/2 协议的首部压缩机制缓解了这个问题），并且存在隐私风险（HTTP 指纹识别技术）；
 - 给定的资源需要返回不同的展现形式，共享缓存的效率会降低，而服务器端的实现会越来越复杂。
 
-**1.2 代理驱动型**  
+##### 1.2 代理驱动型
 
 服务器返回 300 Multiple Choices 或者 406 Not Acceptable，客户端从中选出最合适的那个资源。
 
 #### 2. Vary
 
-```html
+```http
 Vary: Accept-Language
 ```
 
@@ -720,7 +687,7 @@ Vary: Accept-Language
 
 内容编码将实体主体进行压缩，从而减少传输的数据量。
 
-常用的内容编码有 gzip、deflate 和 br（Brotli），identity 表示不压缩。本机的 Edge 156 发出的请求中带的是 Accept-Encoding: gzip, deflate, br, zstd，较新的浏览器还支持 zstd。
+常用的内容编码有 gzip、deflate 和 br（Brotli），identity 表示不压缩。较新的浏览器还支持 zstd，例如 Edge 156 发出的请求中带的是 Accept-Encoding: gzip, deflate, br, zstd（见[附录 A5](#a5-xmlhttprequest-发送-post)）。
 
 浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于响应的内容取决于请求中的 Accept-Encoding，响应报文的 Vary 首部字段要包含 Accept-Encoding，否则缓存服务器可能把压缩过的内容返回给不支持该算法的客户端。
 
@@ -732,7 +699,7 @@ Vary: Accept-Language
 
 在请求报文中添加 Range 首部字段指定请求的范围。
 
-```html
+```http
 GET /z4d4kWk.jpg HTTP/1.1
 Host: i.imgur.com
 Range: bytes=0-1023
@@ -740,7 +707,7 @@ Range: bytes=0-1023
 
 请求成功的话服务器返回的响应包含 206 Partial Content 状态码。
 
-```html
+```http
 HTTP/1.1 206 Partial Content
 Content-Range: bytes 0-1023/146515
 Content-Length: 1024
@@ -752,14 +719,14 @@ Content-Length: 1024
 
 响应首部字段 Accept-Ranges 用于告知客户端是否能处理范围请求，可以处理使用 bytes，否则使用 none。
 
-```html
+```http
 Accept-Ranges: bytes
 ```
 
 #### 3. 响应状态码
 
-- 在请求成功的情况下，服务器会返回 206 Partial Content 状态码。
-- 在请求的范围越界的情况下，服务器会返回 416 Requested Range Not Satisfiable 状态码。
+- 在请求成功的情况下，服务器会返回 206 Partial Content 状态码；
+- 在请求的范围越界的情况下，服务器会返回 416 Range Not Satisfiable 状态码；
 - 在不支持范围请求的情况下，服务器会返回 200 OK 状态码。
 
 ### 分块传输编码
@@ -772,7 +739,7 @@ Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步�
 
 例如，上传多个表单时可以使用如下方式：
 
-```html
+```http
 Content-Type: multipart/form-data; boundary=AaB03x
 
 --AaB03x
@@ -799,16 +766,15 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 使用代理的主要目的是：
 
-- 缓存
-- 负载均衡
-- 网络访问控制
-- 访问日志记录
+- 缓存；
+- 负载均衡；
+- 网络访问控制；
+- 访问日志记录。
 
 代理服务器分为正向代理和反向代理两种：
 
-- 用户察觉得到正向代理的存在。
-
-- 而反向代理一般位于内部网络中，用户察觉不到。
+- 正向代理代表客户端访问外部的服务器，用户察觉得到它的存在，需要在客户端配置；
+- 反向代理代表服务器接收请求，一般位于内部网络中，用户察觉不到。
 
 <div align="center"> <img src="pics/http-proxy.png" width="760px"/> </div><br>
 
@@ -878,7 +844,7 @@ Access-Control-Max-Age: 600
 
 Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间相同的请求不再预检。跨域请求默认不携带 Cookie，前端设置 credentials: 'include' 后，服务器还要返回 Access-Control-Allow-Credentials: true，并且 Access-Control-Allow-Origin 不能是 *，必须写明具体的源。
 
-在本机用两个端口模拟两个源，用 Edge 验证：服务器不返回 Access-Control-Allow-Origin 时，fetch 失败，但服务器的日志显示请求已经执行了；预检请求没有允许 PUT 时，浏览器不再发送 PUT；携带 Cookie 而服务器返回 * 时，fetch 同样失败。
+用两个端口模拟两个源验证（Edge 156 实测，见[附录 A3](#a3-跨域)）：服务器不返回 Access-Control-Allow-Origin 时，fetch 失败，但服务器的日志显示请求已经执行了；预检请求没有允许 PUT 时，浏览器不再发送 PUT；携带 Cookie 而服务器返回 * 时，fetch 同样失败。
 
 需要注意的是，CORS 只决定浏览器是否把响应交给脚本，并不是安全措施：服务器仍然执行了请求，curl 这类不经过浏览器的工具也完全不受限制，权限要靠认证和 [CSRF 防护](攻击技术.md#二跨站请求伪造) 保证。另一种解决跨域的办法是同源的反向代理，例如由 Nginx 把 https://shop.example.com/api 转发给后端，浏览器看到的就是同源的请求。
 
@@ -909,7 +875,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 <div align="center"> <img src="pics/crypto-symmetric.png" width="720px"/> </div><br>
 
-#### 2.非对称密钥加密
+#### 2. 非对称密钥加密
 
 非对称密钥加密，又称公开密钥加密（Public-Key Encryption），加密和解密使用不同的密钥。
 
@@ -926,8 +892,8 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 上面提到对称密钥加密方式的传输效率更高，但是无法安全地将密钥 Secret Key 传输给通信方。而非对称密钥加密方式可以保证传输的安全性，因此可以利用非对称密钥加密方式将 Secret Key 传输给通信方。HTTPS 采用混合的加密机制，正是利用了上面提到的方案：
 
-- 使用非对称密钥加密方式，传输对称密钥加密方式所需要的 Secret Key，从而保证安全性;
-- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率。（下图中的会话密钥就是 Secret Key）
+- 使用非对称密钥加密方式，传输对称密钥加密方式所需要的 Secret Key，从而保证安全性；
+- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率（下图中的会话密钥就是 Secret Key）。
 
 需要注意的是，TLS 1.3 不再用公钥加密传输对称密钥，而是通过 ECDHE 密钥交换协商出会话密钥，非对称密钥只用于签名认证。
 
@@ -935,7 +901,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 ### 认证
 
-通过使用   **证书**   来对通信方进行认证。
+通过使用证书来对通信方进行认证。
 
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。
 
@@ -949,7 +915,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 TLS 握手完成三件事：协商加密算法、验证服务器的证书、协商出会话密钥。目前常用的密钥交换方式是 ECDHE：双方各自临时生成一对椭圆曲线密钥，把公钥发给对方，再用自己的私钥和对方的公钥算出相同的共享密钥。会话密钥本身从不在网络上传输，即使服务器的证书私钥日后泄露，之前录下的通信也无法解密，称为前向安全。服务器还要用证书的私钥对握手内容签名，证明自己就是证书的持有者。
 
-下图是本机用 openssl s_client 连接两个网站时记录的握手报文：
+下图是用 openssl s_client 连接两个网站时记录的握手报文（见[附录 A4](#a4-tls-握手)）：
 
 <div align="center"> <img src="pics/tls-handshake.png" width="760px"/> </div><br>
 
@@ -986,8 +952,8 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
-- 一个数据流（Stream）都有一个唯一标识符和可选的优先级信息，用于承载双向信息。
-- 消息（Message）是与逻辑请求或响应对应的完整的一系列帧。
+- 一个数据流（Stream）都有一个唯一标识符和可选的优先级信息，用于承载双向信息；
+- 消息（Message）是与逻辑请求或响应对应的完整的一系列帧；
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
 <div align="center"> <img src="pics/h2-streams.png" width="760px"/> </div><br>
@@ -1024,15 +990,14 @@ HTTP/3 改为基于 UDP 的 QUIC 协议：
 
 ## 八、HTTP/1.1 新特性
 
-详细内容请见上文
+与 HTTP/1.0 相比，HTTP/1.1 主要增加了以下特性，详细内容见上文：
 
-- 默认是长连接
-- 支持流水线
-- 支持同时打开多个 TCP 连接
-- 支持虚拟主机
-- 新增状态码 100
-- 支持分块传输编码
-- 新增缓存处理指令 max-age
+- 默认使用长连接；
+- 支持流水线；
+- 请求必须带 Host 首部，从而支持虚拟主机；
+- 新增状态码 100 Continue；
+- 支持分块传输编码；
+- 新增缓存处理指令 max-age 和条件请求 If-None-Match。
 
 ## 九、GET 和 POST 比较
 
@@ -1074,7 +1039,7 @@ GET 方法是安全的，而 POST 却不是，因为 POST 的目的是传送实�
 
 所有的安全方法也都是幂等的。
 
-在正确实现的条件下，GET，HEAD，PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。
+在正确实现的条件下，GET、HEAD、PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。
 
 GET /pageX HTTP/1.1 是幂等的，连续调用多次，客户端接收到的结果都是一样的：
 
@@ -1105,15 +1070,116 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 如果要对响应进行缓存，需要满足以下条件：
 
-- 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存的。
-- 响应报文的状态码是可缓存的，包括：200、203、204、206、300、301、308、404、405、410、414 和 501。
+- 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存；
+- 响应报文的状态码是可缓存的，包括：200、203、204、206、300、301、308、404、405、410、414 和 501；
 - 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
 
 ### XMLHttpRequest
 
 XMLHttpRequest 是浏览器提供的 API，用于在不刷新页面的情况下向服务器发送请求，是 AJAX 的基础，现在更常用的是 fetch()。
 
-网上流传一种说法：XMLHttpRequest 发送 POST 时，会先发送首部，再单独发送请求体，GET 则一次发完。HTTP 规范中没有这样的规定，这只是个别浏览器早期的实现细节，不能作为 GET 和 POST 的区别。在本机用 Edge 记录网络日志（--log-net-log），通过 XMLHttpRequest 发送一个带 21 字节请求体的 POST 请求，首部和请求体是在同一次 socket 写入中发出的，共 723 字节。
+网上流传一种说法：XMLHttpRequest 发送 POST 时，会先发送首部，再单独发送请求体，GET 则一次发完。HTTP 规范中没有这样的规定，这只是个别浏览器早期的实现细节，不能作为 GET 和 POST 的区别。用 Edge 记录网络日志，通过 XMLHttpRequest 发送一个带 21 字节请求体的 POST 请求，首部和请求体是在同一次 socket 写入中发出的，共 723 字节（Edge 156 实测，见[附录 A5](#a5-xmlhttprequest-发送-post)）。
+
+## 附录：实测
+
+以下实验的环境为 Apple M1 Pro、macOS，浏览器为 Edge 156，服务器都是用 Python 标准库 http.server 写的最小实现，运行在 127.0.0.1 上。
+
+### A1 OAuth 2.0 授权码模式
+
+授权服务器监听 9001 端口，笔记网站的回调地址在 9002 端口。授权码 10 分钟过期、只能用一次，换令牌时检查 redirect_uri，并核对 SHA-256(code_verifier) 是否等于第 ① 步的 code_challenge：
+
+```python
+verifier_hash = base64.urlsafe_b64encode(hashlib.sha256(q.get("code_verifier", "").encode()).digest()).rstrip(b"=").decode()
+if not c or c["exp"] < time.time() or c["redirect_uri"] != q.get("redirect_uri") or c["challenge"] != verifier_hash:
+    return self._json(400, {"error": "invalid_grant"})
+```
+
+```text
+① GET http://127.0.0.1:9001/authorize?response_type=code&client_id=notes-app&redirect_uri=http%3A%2F%2F127.0.0.1%3A9002%2Fcallback&scope=profile&state=x7Kp2&code_challenge=RQgc0f_GtuKCUitkJiCz7wNdN-_2JLHQ0JGLD9XxGtg&code_challenge_method=S256
+② 302 Location: http://127.0.0.1:9002/callback?code=8XNe0QukdUBz_2wmZ34JLA&state=x7Kp2
+③ POST /token grant_type=authorization_code&code=8XNe0QukdUBz_2wmZ34JLA&redirect_uri=http%3A%2F%2F127.0.0.1%3A9002%2Fcallback&client_id=notes-app&code_verifier=notes-demo-verifier-0123456789abcdefghijklmnop
+   -> {"access_token": "7B0Gmo164bDXm_sgupjN4O9ANvUg1_SK", "token_type": "Bearer", "expires_in": 3600}
+④ GET /userinfo -> {"sub": "zhangsan", "name": "张三"}
+再用一次同一个授权码 -> 400 {"error": "invalid_grant"}
+截获授权码但没有 code_verifier -> 400 {"error": "invalid_grant"}
+```
+
+### A2 强缓存与协商缓存
+
+页面引用 a.js 和 b.js，服务器对它们的响应首部分别为 Cache-Control: max-age=600、ETag: "a-v1" 和 Cache-Control: no-cache、ETag: "b-v1"，收到的 If-None-Match 与 ETag 相同时返回 304。用 Edge 打开页面两次，服务器的日志：
+
+```text
+/        无条件请求                        -> 200
+/a.js    无条件请求                        -> 200
+/b.js    无条件请求                        -> 200
+/favicon.ico 无条件请求                        -> 200
+/        无条件请求                        -> 200
+/b.js    If-None-Match: "b-v1" -> 304
+/favicon.ico 无条件请求                        -> 200
+```
+
+### A3 跨域
+
+页面在 127.0.0.1:8001，接口在 127.0.0.1:8002。/plain 不返回 Access-Control-Allow-Origin；/cors 返回它，但预检时不返回 Access-Control-Allow-Methods；/full 的预检允许 PUT；/star 返回 Access-Control-Allow-Origin: *。用无头模式的 Edge 打开页面，页面中 fetch 的结果和接口服务器的日志：
+
+```text
+1 GET no-cors-header FAIL TypeError: Failed to fetch
+2 GET with ACAO OK 200 data
+3 PUT json, preflight denied FAIL TypeError: Failed to fetch
+4 PUT json, preflight allowed OK 200 updated
+5 credentials with ACAO * FAIL TypeError: Failed to fetch
+
+API GET /plain {'Origin': 'http://127.0.0.1:8001'}
+API GET /cors {'Origin': 'http://127.0.0.1:8001'}
+API OPTIONS /cors {'Access-Control-Request-Method': 'PUT', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://127.0.0.1:8001'}
+API OPTIONS /full {'Access-Control-Request-Method': 'PUT', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://127.0.0.1:8001'}
+API PUT /full {'Origin': 'http://127.0.0.1:8001'}
+API GET /star {'Origin': 'http://127.0.0.1:8001'}
+```
+
+第 1 个请求在服务器上已经执行了，只是响应没有交给脚本；第 3 个请求预检之后没有发出 PUT。
+
+### A4 TLS 握手
+
+openssl 为 macOS 自带的 LibreSSL 3.3.6：
+
+```text
+$ openssl s_client -connect www.baidu.com:443 -servername www.baidu.com -tls1_2 -msg
+>>> TLS 1.3 Handshake [length 00d3], ClientHello
+<<< TLS 1.3 Handshake [length 003b], ServerHello
+<<< TLS 1.2 Handshake [length 12a3], Certificate
+<<< TLS 1.2 Handshake [length 014d], ServerKeyExchange
+<<< TLS 1.2 Handshake [length 0004], ServerHelloDone
+>>> TLS 1.2 Handshake [length 0046], ClientKeyExchange
+>>> TLS 1.2 ChangeCipherSpec [length 0001]
+>>> TLS 1.2 Handshake [length 0010], Finished
+<<< TLS 1.2 Handshake [length 00aa], NewSessionTicket
+<<< TLS 1.2 ChangeCipherSpec [length 0001]
+<<< TLS 1.2 Handshake [length 0010], Finished
+    Protocol  : TLSv1.2
+
+$ openssl s_client -connect www.example.com:443 -servername www.example.com -tls1_3 -msg
+>>> TLS 1.3 Handshake [length 00ce], ClientHello
+<<< TLS 1.3 Handshake [length 007a], ServerHello
+<<< TLS 1.3 Handshake [length 000a], EncryptedExtensions
+<<< TLS 1.3 Handshake [length 0e66], Certificate
+<<< TLS 1.3 Handshake [length 004f], CertificateVerify
+<<< TLS 1.3 Handshake [length 0024], Finished
+>>> TLS 1.3 Handshake [length 0024], Finished
+```
+
+### A5 XMLHttpRequest 发送 POST
+
+页面先用 XMLHttpRequest 发送 GET /api?m=GET，再发送 POST /api?m=POST，请求体为 user=alice&amount=100（21 字节）。Edge 加上 --log-net-log 启动，从日志中取出每次 SOCKET_BYTES_SENT 事件写入的字节数和内容的开头、结尾：
+
+```text
+740 b'GET / HTTP/1.1\r\nHost: 127.0.0.1:8770\r\nConnection: keep-alive' ... b'en-US;q=0.5\r\n\r\n'
+649 b'GET /api?m=GET HTTP/1.1\r\nHost: 127.0.0.1:8770\r\nConnection: k' ... b'en-US;q=0.5\r\n\r\n'
+723 b'POST /api?m=POST HTTP/1.1\r\nHost: 127.0.0.1:8770\r\nConnection:' ... b'q=0.5\r\n\r\nuser=alice&amount=100'
+666 b'GET /favicon.ico HTTP/1.1\r\nHost: 127.0.0.1:8770\r\nConnection:' ... b'en-US;q=0.5\r\n\r\n'
+```
+
+POST 的首部和请求体在同一次写入中。第一个请求的首部中有 Accept-Encoding: gzip, deflate, br, zstd。
 
 ## 参考资料
 
@@ -1123,13 +1189,11 @@ XMLHttpRequest 是浏览器提供的 API，用于在不刷新页面的情况下�
 - [RFC 9700: Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700)
 - [OWASP: JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)
 - [OWASP: HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html)
-- 上野宣. 图解 HTTP[M]. 人民邮电出版社, 2014.
+- 上野宣. 图解 HTTP [M]. 人民邮电出版社, 2014.
+- [High Performance Browser Networking: HTTP/2](https://hpbn.co/http2/)
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [MDN : Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
-- [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
-- [htmlspecialchars](http://php.net/manual/zh/function.htmlspecialchars.php)
 - [Difference between file URI and URL in java](https://web.archive.org/web/20191216080403/http://java2db.com:80/java-io/how-to-get-and-the-difference-between-file-uri-and-url-in-java)
-- [How to Fix SQL Injection Using Java PreparedStatement & CallableStatement](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-using-prepared-callable-statement)
 - [浅谈 HTTP 中 Get 与 Post 的区别](https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html)
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
 - [HTTP (HyperText Transfer Protocol)](https://www3.ntu.edu.sg/home/ehchua/programming/webprogramming/HTTP_Basics.html)
@@ -1148,9 +1212,16 @@ XMLHttpRequest 是浏览器提供的 API，用于在不刷新页面的情况下�
 - [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
 - [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
-- [HTTP/2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 - [RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3](https://www.rfc-editor.org/rfc/rfc8446)
 - [RFC 7541: HPACK: Header Compression for HTTP/2](https://www.rfc-editor.org/rfc/rfc7541)
 - [RFC 9114: HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
 - [RFC 9000: QUIC](https://www.rfc-editor.org/rfc/rfc9000)
 - [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)
+- [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110)
+- [RFC 9111: HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111)
+- [RFC 3986: Uniform Resource Identifier (URI): Generic Syntax](https://www.rfc-editor.org/rfc/rfc3986)
+- [RFC 6265: HTTP State Management Mechanism](https://www.rfc-editor.org/rfc/rfc6265)
+- [wikipedia：统一资源标志符](https://zh.wikipedia.org/wiki/统一资源标志符)
+- [wikipedia: URL](https://en.wikipedia.org/wiki/URL)
+- [RFC 9110：4.2.1 http URI Scheme](https://www.rfc-editor.org/rfc/rfc9110#section-4.2.1)
+- [RFC 9110：9 Methods](https://www.rfc-editor.org/rfc/rfc9110#section-9)
