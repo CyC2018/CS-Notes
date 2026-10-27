@@ -145,7 +145,7 @@ def build(optimize=True):
             homepage = homepage.replace(':' + name + ':', symbol)
         topics = [('算法', '✏️'), ('操作系统', '💻'), ('网络', '☁️'), ('面向对象', '🎨'),
                   ('数据库', '💾'), ('Java', '☕'), ('系统设计', '💡'), ('工具', '🔧'),
-                  ('编码实践', '🍉'), ('后记', '📝')]
+                  ('后记', '📝')]
         cards = '<nav class="topic-grid" aria-label="笔记分类">' + ''.join(
             f'<a href="/#/?id={urllib.parse.quote(label.lower())}"><span aria-hidden="true">{symbol}</span>{label}</a>'
             for label, symbol in topics) + '</nav>'
