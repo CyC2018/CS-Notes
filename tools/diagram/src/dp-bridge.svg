@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="442" viewBox="0 0 760 442">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">桥接的类图（遥控器和电视）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="144" y="60" width="142" height="145" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="215" y="77" class="c sub" style="font-size:9.5px">«abstract»</text>
+  <text x="215" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F;font-style:italic">RemoteControl</text>
+  <text x="215" y="105" class="c sub" style="font-size:10px">（Abstraction）</text>
+  <line x1="144" y1="114" x2="286" y2="114" stroke="#7FB2D6"/>
+  <text x="153" y="129.5" class="mono" style="font-size:10.5px;fill:#3F3F3F"># tv: TV</text>
+  <line x1="144" y1="137" x2="286" y2="137" stroke="#7FB2D6"/>
+  <text x="153" y="152.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ RemoteControl(TV)</text>
+  <text x="153" y="167.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ on()</text>
+  <text x="153" y="182.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ off()</text>
+  <text x="153" y="197.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ tuneChannel()</text>
+  <rect x="521.5" y="79" width="117" height="107" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="580" y="96" class="c sub" style="font-size:9.5px">«abstract»</text>
+  <text x="580" y="111" class="c b mono" style="font-size:12px;fill:#3F3F3F;font-style:italic">TV</text>
+  <text x="580" y="124" class="c sub" style="font-size:10px">（Implementor）</text>
+  <line x1="521.5" y1="133" x2="638.5" y2="133" stroke="#7FB2D6"/>
+  <text x="530.5" y="148.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ on()</text>
+  <text x="530.5" y="163.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ off()</text>
+  <text x="530.5" y="178.5" class="mono" style="font-size:10.5px;fill:#3F3F3F;font-style:italic">+ tuneChannel()</text>
+  <path d="M286,132.5 L521.5,132.5" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="403.75" y="126.5" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">tv</text>
+  <rect x="15.5" y="265" width="199" height="97" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="115" y="285" class="c b mono" style="font-size:12px;fill:#3F3F3F">ConcreteRemoteControl1</text>
+  <line x1="15.5" y1="294" x2="214.5" y2="294" stroke="#7FB2D6"/>
+  <text x="24.5" y="309.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ ConcreteRemoteControl1(TV)</text>
+  <text x="24.5" y="324.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ on()</text>
+  <text x="24.5" y="339.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ off()</text>
+  <text x="24.5" y="354.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ tuneChannel()</text>
+  <rect x="220.5" y="265" width="199" height="97" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="320" y="285" class="c b mono" style="font-size:12px;fill:#3F3F3F">ConcreteRemoteControl2</text>
+  <line x1="220.5" y1="294" x2="419.5" y2="294" stroke="#7FB2D6"/>
+  <text x="229.5" y="309.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ ConcreteRemoteControl2(TV)</text>
+  <text x="229.5" y="324.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ on()</text>
+  <text x="229.5" y="339.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ off()</text>
+  <text x="229.5" y="354.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ tuneChannel()</text>
+  <rect x="451.5" y="265" width="117" height="82" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="510" y="285" class="c b mono" style="font-size:12px;fill:#3F3F3F">Sony</text>
+  <line x1="451.5" y1="294" x2="568.5" y2="294" stroke="#7FB2D6"/>
+  <text x="460.5" y="309.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ on()</text>
+  <text x="460.5" y="324.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ off()</text>
+  <text x="460.5" y="339.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ tuneChannel()</text>
+  <rect x="591.5" y="265" width="117" height="82" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="650" y="285" class="c b mono" style="font-size:12px;fill:#3F3F3F">RCA</text>
+  <line x1="591.5" y1="294" x2="708.5" y2="294" stroke="#7FB2D6"/>
+  <text x="600.5" y="309.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ on()</text>
+  <text x="600.5" y="324.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ off()</text>
+  <text x="600.5" y="339.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ tuneChannel()</text>
+  <path d="M115,265 L115,235" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M320,265 L320,235" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M115,235 L320,235" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M215,235 L215,206" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <path d="M510,265 L510,225.5" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M650,265 L650,225.5" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M510,225.5 L650,225.5" fill="none" stroke="#555" stroke-width="1.1"/>
+  <path d="M580,225.5 L580,187" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <line x1="30" y1="396" x2="64" y2="396" stroke="#555" stroke-width="1.1" marker-end="url(#tri)"/>
+  <text x="72" y="400" class="sub">继承</text>
+  <line x1="116" y1="396" x2="150" y2="396" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="158" y="400" class="sub">关联（字段）</text>
+  <rect x="246" y="389" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="270" y="400" class="sub">类</text>
+  <text x="303" y="400" class="sub">+ public，# protected；斜体为抽象</text>
+  <text x="30" y="422" class="sub" style="fill:#3F3F3F">遥控器的 on() 先输出自己的信息，再调用 tv.on()；两边各自扩展子类，可以任意组合，例如 new ConcreteRemoteControl1(new RCA())。</text>
+</svg>
