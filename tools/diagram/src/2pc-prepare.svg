@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">2PC 准备阶段：协调者询问参与者能否提交</text>
+  <rect x="40" y="120" width="150" height="50" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="115" y="143" class="b c">协调者</text>
+  <text x="115" y="158" class="sub c">事务管理器</text>
+  <path d="M450,62 v34 a20,6 0 0 0 40,0 v-34" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="470" cy="62" rx="20" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M450,79 a20,6 0 0 0 40,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="76" class="sub b">订单库</text>
+  <text x="500" y="94" class="sub">INSERT 订单：已执行，未提交</text>
+  <line x1="192" y1="140" x2="446" y2="74" class="arrow "/>
+  <line x1="446" y1="86" x2="192" y2="146" class="arrow green dash"/>
+  <path d="M450,138 v34 a20,6 0 0 0 40,0 v-34" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="470" cy="138" rx="20" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M450,155 a20,6 0 0 0 40,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="152" class="sub b">库存库</text>
+  <text x="500" y="170" class="sub">UPDATE 库存 - 1：已执行，未提交</text>
+  <line x1="192" y1="140" x2="446" y2="150" class="arrow "/>
+  <line x1="446" y1="162" x2="192" y2="150" class="arrow green dash"/>
+  <path d="M450,214 v34 a20,6 0 0 0 40,0 v-34" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="470" cy="214" rx="20" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M450,231 a20,6 0 0 0 40,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="228" class="sub b">积分库</text>
+  <text x="500" y="246" class="sub">UPDATE 积分 + 10：已执行，未提交</text>
+  <line x1="192" y1="140" x2="446" y2="226" class="arrow "/>
+  <line x1="446" y1="238" x2="192" y2="154" class="arrow green dash"/>
+  <text x="290" y="98" class="c sub mono">① Prepare</text>
+  <text x="250" y="196" class="c sub mono ok">② Yes</text>
+  <text x="30" y="270" class="sub">参与者执行事务、写好 undo 和 redo 日志后回复 Yes，之后就不能再自行回滚，只能持有锁等待协调者的决定。</text>
+</svg>

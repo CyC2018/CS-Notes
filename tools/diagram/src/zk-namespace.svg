@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="410" viewBox="0 0 760 410">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Zookeeper：树形的命名空间，锁目录下是临时有序节点</text>
+  <rect x="340" y="56" width="80" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="380" y="77.5" class="c sub mono b">/</text>
+  <rect x="75" y="130" width="150" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="150" y="151.5" class="c sub mono b">/app1</text>
+  <rect x="265" y="130" width="150" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="340" y="151.5" class="c sub mono b">/app2</text>
+  <rect x="485" y="130" width="150" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="560" y="151.5" class="c sub mono b">/lock</text>
+  <line x1="380" y1="90" x2="150" y2="130" class="line"/>
+  <line x1="380" y1="90" x2="340" y2="130" class="line"/>
+  <line x1="380" y1="90" x2="560" y2="130" class="line"/>
+  <rect x="25" y="210" width="120" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="85" y="231.5" class="c sub mono b">/app1/p_1</text>
+  <rect x="155" y="210" width="120" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="215" y="231.5" class="c sub mono b">/app1/p_2</text>
+  <line x1="150" y1="164" x2="85" y2="210" class="line"/>
+  <line x1="150" y1="164" x2="215" y2="210" class="line"/>
+  <path d="M500,164 V330" fill="none" stroke="#555" stroke-width="1.1"/>
+  <line x1="500" y1="218" x2="520" y2="218" class="line"/>
+  <rect x="520" y="196" width="170" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="605" y="216" class="c sub mono b">node-0000000000</text>
+  <text x="605" y="231" class="sub c">客户端 A，持有锁</text>
+  <line x1="500" y1="274" x2="520" y2="274" class="line"/>
+  <rect x="520" y="252" width="170" height="44" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="605" y="272" class="c sub mono b">node-0000000001</text>
+  <text x="605" y="287" class="sub c">客户端 B，等待</text>
+  <path d="M690,274 C735,270 735,226 692,222" class="arrow dash"/>
+  <line x1="500" y1="330" x2="520" y2="330" class="line"/>
+  <rect x="520" y="308" width="170" height="44" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="605" y="328" class="c sub mono b">node-0000000002</text>
+  <text x="605" y="343" class="sub c">客户端 C，等待</text>
+  <path d="M690,330 C735,326 735,282 692,278" class="arrow dash"/>
+  <text x="744" y="240" class="e sub">监听</text>
+  <text x="30" y="376" class="sub">锁目录下的节点是临时有序节点：序号最小的客户端获得锁，其它客户端只监听自己的前一个节点；</text>
+  <text x="30" y="394" class="sub">A 释放锁或者会话超时，node-0000000000 被删除，只有 B 收到通知。</text>
+</svg>
