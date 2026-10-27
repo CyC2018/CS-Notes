@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="560" viewBox="0 0 760 560">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">OAuth 2.0 授权码流程：令牌由后端换取，不经过浏览器</text>
+  <rect x="10" y="52" width="200" height="32" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="110" y="72.5" class="c sub b">用户的浏览器</text>
+  <line x1="110" y1="84" x2="110" y2="520" stroke="#C8C8C8" stroke-dasharray="4 3"/>
+  <rect x="280" y="52" width="200" height="32" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="380" y="72.5" class="c sub b">笔记网站 notes.example.com</text>
+  <line x1="380" y1="84" x2="380" y2="520" stroke="#C8C8C8" stroke-dasharray="4 3"/>
+  <rect x="550" y="52" width="200" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="650" y="72.5" class="c sub b">授权服务器 id.example.com</text>
+  <line x1="650" y1="84" x2="650" y2="520" stroke="#C8C8C8" stroke-dasharray="4 3"/>
+  <line x1="114" y1="116" x2="374" y2="116" class="arrow "/>
+  <text x="245" y="109" class="c sub">① 点击“用账号中心登录”</text>
+  <line x1="376" y1="160" x2="116" y2="160" class="arrow "/>
+  <text x="245" y="153" class="c sub">② 302 到 id.example.com/authorize</text>
+  <text x="245" y="174" class="c sub">带上 state 和 code_challenge</text>
+  <line x1="114" y1="218" x2="644" y2="218" class="arrow "/>
+  <text x="128" y="211" class="sub">③ GET /authorize，用户登录并点击同意</text>
+  <line x1="646" y1="262" x2="116" y2="262" class="arrow "/>
+  <text x="128" y="255" class="sub">④ 302 到 notes.example.com/callback</text>
+  <text x="128" y="276" class="sub mono">?code=R9Ydi...&amp;state=x7Kp2</text>
+  <line x1="114" y1="320" x2="374" y2="320" class="arrow "/>
+  <text x="245" y="313" class="c sub">⑤ GET /callback?code=R9Ydi...&amp;state=x7Kp2</text>
+  <line x1="384" y1="364" x2="644" y2="364" class="arrow green"/>
+  <text x="515" y="357" class="c sub ok">⑥ POST /token：code + code_verifier</text>
+  <line x1="646" y1="408" x2="386" y2="408" class="arrow green"/>
+  <text x="515" y="401" class="c sub ok">⑦ {"access_token": "v-7Dl...", "expires_in": 3600}</text>
+  <line x1="384" y1="452" x2="644" y2="452" class="arrow green"/>
+  <text x="515" y="445" class="c sub ok">⑧ GET /userinfo，Authorization: Bearer v-7Dl...</text>
+  <line x1="376" y1="496" x2="116" y2="496" class="arrow "/>
+  <text x="245" y="489" class="c sub">⑨ 登录成功，Set-Cookie: 笔记网站自己的会话</text>
+  <text x="24" y="540" class="sub">绿色是笔记网站后端与授权服务器之间的直接请求，访问令牌不经过浏览器；授权码经过浏览器，但只能用一次，换令牌时还要提供 code_verifier。</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">对称加密：加密和解密用同一个密钥</text>
+  <rect x="30" y="80" width="120" height="36" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="90" y="102" class="c sub" style="fill:#444">转账 100 元</text>
+  <line x1="152" y1="98" x2="222" y2="98" class="arrow "/>
+  <text x="187" y="90" class="c sub">AES 加密</text>
+  <rect x="226" y="80" width="270" height="36" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="361" y="102" class="c sub mono" style="fill:#444">c0b9bea2112248bbc17e8d6a15e542de</text>
+  <line x1="498" y1="98" x2="568" y2="98" class="arrow "/>
+  <text x="533" y="90" class="c sub">AES 解密</text>
+  <rect x="572" y="80" width="120" height="36" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="632" y="102" class="c sub" style="fill:#444">转账 100 元</text>
+  <path d="M182,128 v-4 a5,5 0 0 1 10,0 v4" fill="none" stroke="#B8B0DE" stroke-width="1.8"/>
+  <rect x="179" y="128" width="16" height="12" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M528,128 v-4 a5,5 0 0 1 10,0 v4" fill="none" stroke="#B8B0DE" stroke-width="1.8"/>
+  <rect x="525" y="128" width="16" height="12" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="360" y="150" class="c sub mono" style="fill:#766AA8">同一个密钥 K = 000102…0e0f（16 字节）</text>
+  <text x="30" y="186" class="sub">用 openssl 实际计算（AES-128-CBC）：14 字节的明文补齐到 16 字节；没有 K 无法还原，但 K 本身怎样安全地交给对方是个问题。</text>
+</svg>

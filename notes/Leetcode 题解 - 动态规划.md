@@ -10,9 +10,11 @@
     * [矩阵路径](#矩阵路径)
         * [1. 矩阵的最小路径和](#1-矩阵的最小路径和)
         * [2. 矩阵的总路径数](#2-矩阵的总路径数)
+        * [3. 最大正方形](#3-最大正方形)
     * [数组区间](#数组区间)
         * [1. 数组区间和](#1-数组区间和)
         * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
+        * [3. 最长有效括号](#3-最长有效括号)
     * [分割整数](#分割整数)
         * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
         * [2. 按平方数来分割整数](#2-按平方数来分割整数)
@@ -43,7 +45,7 @@
 <!-- GFM-TOC -->
 
 
-递归和动态规划都是将原问题拆成多个子问题然后求解，他们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
+递归和动态规划都是将原问题拆成多个子问题然后求解，它们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
 
 ## 斐波那契数列
 
@@ -139,7 +141,7 @@ private int rob(int[] nums, int first, int last) {
 
 ### 4. 信件错排
 
-题目描述：有 N 个 信 和 信封，它们被打乱，求错误装信方式的数量。
+题目描述：有 N 个信和信封，它们被打乱，求每封信都装错信封的方式数量（错排数）。
 
 定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
 
@@ -154,11 +156,11 @@ private int rob(int[] nums, int first, int last) {
 
 ### 5. 母牛生产
 
-[程序员代码面试指南-P181](#)
+程序员代码面试指南-P181
 
 题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
-第 i 年成熟的牛的数量为：
+第 i 年牛的数量等于第 i-1 年牛的数量加上第 i-3 年牛的数量，这是因为第 i-3 年的牛到第 i 年都已成熟，每头都会生一头小牛：
 
 <!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]" class="mathjax-pic"/></div> <br>-->
 
@@ -238,6 +240,40 @@ public int uniquePaths(int m, int n) {
         ret = ret * (S - D + i) / i;
     }
     return (int) ret;
+}
+```
+
+### 3. 最大正方形
+
+221\. Maximal Square (Medium)
+
+[Leetcode](https://leetcode.com/problems/maximal-square/) / [力扣](https://leetcode.cn/problems/maximal-square/)
+
+题目描述：在由 0 和 1 组成的矩阵中，找出只包含 1 的最大正方形的面积。
+
+dp[i][j] 表示以 (i, j) 为右下角、只包含 1 的最大正方形的边长。它的边长受左边、上边和左上角三个方向的限制，取三者的最小值再加 1：
+
+```text
+dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
+
+matrix:  1 1 1       dp:  1 1 1
+         1 1 1            1 2 2
+         1 1 1            1 2 3
+```
+
+```java
+public int maximalSquare(char[][] matrix) {
+    int m = matrix.length, n = matrix[0].length, side = 0;
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (matrix[i - 1][j - 1] == '1') {
+                dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                side = Math.max(side, dp[i][j]);
+            }
+        }
+    }
+    return side * side;
 }
 ```
 
@@ -333,6 +369,42 @@ public int numberOfArithmeticSlices(int[] A) {
         total += cnt;
     }
     return total;
+}
+```
+
+### 3. 最长有效括号
+
+32\. Longest Valid Parentheses (Hard)
+
+[Leetcode](https://leetcode.com/problems/longest-valid-parentheses/) / [力扣](https://leetcode.cn/problems/longest-valid-parentheses/)
+
+```text
+Input: ")()())"
+Output: 4
+```
+
+dp[i] 表示以 s[i] 结尾的最长有效括号的长度，只有 s[i] 为 ) 时才可能不为 0。以 s[i - 1] 结尾的有效括号长度为 dp[i - 1]，跳过这一段之后的位置 j = i - dp[i - 1] - 1 如果是 (，就能和 s[i] 配对，长度为 dp[i - 1] + 2，再加上 j 前面紧挨着的有效括号长度 dp[j - 1]。
+
+```text
+s  : ( ) ( ( ) )
+dp : 0 2 0 0 2 6
+```
+
+```java
+public int longestValidParentheses(String s) {
+    int n = s.length(), ret = 0;
+    int[] dp = new int[n];
+    for (int i = 1; i < n; i++) {
+        if (s.charAt(i) != ')') {
+            continue;
+        }
+        int j = i - dp[i - 1] - 1;
+        if (j >= 0 && s.charAt(j) == '(') {
+            dp[i] = dp[i - 1] + 2 + (j > 0 ? dp[j - 1] : 0);
+            ret = Math.max(ret, dp[i]);
+        }
+    }
+    return ret;
 }
 ```
 
@@ -807,7 +879,7 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
 ```java
 public int findTargetSumWays(int[] nums, int S) {
     int sum = computeArraySum(nums);
-    if (sum < S || (sum + S) % 2 == 1) {
+    if (sum < Math.abs(S) || (sum + S) % 2 != 0) {
         return 0;
     }
     int W = (sum + S) / 2;
@@ -936,7 +1008,7 @@ public int coinChange(int[] coins, int amount) {
 
 [Leetcode](https://leetcode.com/problems/coin-change-2/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-2/description/)
 
-```text-html-basic
+```text
 Input: amount = 5, coins = [1, 2, 5]
 Output: 4
 Explanation: there are four ways to make up the amount:
@@ -1275,7 +1347,7 @@ public int minDistance(String word1, String word2) {
 
 题目描述：最开始只有一个字符 A，问需要多少次操作能够得到 n 个字符 A，每次操作可以复制当前所有的字符，或者粘贴。
 
-```
+```text
 Input: 3
 Output: 3
 Explanation:

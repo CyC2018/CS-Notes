@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="312" viewBox="0 0 720 312">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">100 GB 日志中出现次数最多的 10 个 URL（内存 4 GB）</text>
+  <path d="M30,110 h49 l9,9 v65 h-58 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M79,110 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="127" x2="81" y2="127" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="134" x2="81" y2="134" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="36" y1="141" x2="81" y2="141" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="59" y="202" class="c b">100 GB 日志</text>
+  <text x="59" y="218" class="c sub">每行一个 URL</text>
+  <text x="20" y="240" class="sub mono">按 hash(url) % 100</text>
+  <text x="20" y="256" class="sub">切成 100 份</text>
+  <path d="M190,60 h19 l9,9 v25 h-28 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M209,60 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="77" x2="211" y2="77" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="84" x2="211" y2="84" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="91" x2="211" y2="91" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="226" y="82" class="sub">文件 0</text>
+  <line x1="92" y1="147" x2="186" y2="77" class="arrow "/>
+  <rect x="320" y="62" width="44" height="30" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="320" y1="72" x2="364" y2="72" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="320" y1="82" x2="364" y2="82" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="342" y1="62" x2="342" y2="92" stroke="#BBB" stroke-width="0.8"/>
+  <text x="368" y="80" class="sub">HashMap 计数</text>
+  <line x1="272" y1="77" x2="316" y2="77" class="arrow "/>
+  <rect x="470" y="66" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="494" y="81" class="c sub">前 10</text>
+  <line x1="452" y1="77" x2="466" y2="77" class="arrow "/>
+  <line x1="520" y1="77" x2="586" y2="150" class="arrow "/>
+  <path d="M190,130 h19 l9,9 v25 h-28 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M209,130 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="147" x2="211" y2="147" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="154" x2="211" y2="154" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="161" x2="211" y2="161" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="226" y="152" class="sub">文件 1</text>
+  <line x1="92" y1="147" x2="186" y2="147" class="arrow "/>
+  <rect x="320" y="132" width="44" height="30" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="320" y1="142" x2="364" y2="142" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="320" y1="152" x2="364" y2="152" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="342" y1="132" x2="342" y2="162" stroke="#BBB" stroke-width="0.8"/>
+  <text x="368" y="150" class="sub">HashMap 计数</text>
+  <line x1="272" y1="147" x2="316" y2="147" class="arrow "/>
+  <rect x="470" y="136" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="494" y="151" class="c sub">前 10</text>
+  <line x1="452" y1="147" x2="466" y2="147" class="arrow "/>
+  <line x1="520" y1="147" x2="586" y2="150" class="arrow "/>
+  <path d="M190,220 h19 l9,9 v25 h-28 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M209,220 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="237" x2="211" y2="237" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="244" x2="211" y2="244" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="196" y1="251" x2="211" y2="251" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="226" y="242" class="sub">文件 99</text>
+  <line x1="92" y1="147" x2="186" y2="237" class="arrow "/>
+  <rect x="320" y="222" width="44" height="30" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="320" y1="232" x2="364" y2="232" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="320" y1="242" x2="364" y2="242" stroke="#BBB" stroke-width="0.8"/>
+  <line x1="342" y1="222" x2="342" y2="252" stroke="#BBB" stroke-width="0.8"/>
+  <text x="368" y="240" class="sub">HashMap 计数</text>
+  <line x1="272" y1="237" x2="316" y2="237" class="arrow "/>
+  <rect x="470" y="226" width="48" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="494" y="241" class="c sub">前 10</text>
+  <line x1="452" y1="237" x2="466" y2="237" class="arrow "/>
+  <line x1="520" y1="237" x2="586" y2="150" class="arrow "/>
+  <text x="204" y="196" class="c b">⋮</text>
+  <line x1="630" y1="126" x2="608" y2="148" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="630" y1="126" x2="652" y2="148" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="608" y1="148" x2="597" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="608" y1="148" x2="619" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="652" y1="148" x2="641" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <line x1="652" y1="148" x2="663" y2="170" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="630" cy="126" r="8" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="608" cy="148" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="652" cy="148" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="597" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="619" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="641" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="663" cy="170" r="7" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="630" y="196" class="c b">小顶堆</text>
+  <text x="630" y="212" class="c sub">全局前 10</text>
+  <text x="204" y="278" class="c sub">① 约 1 GB / 份</text>
+  <text x="370" y="278" class="c sub">② 每次只把一份读入内存</text>
+  <text x="560" y="278" class="c sub">③ 合并 100 × 10 个候选</text>
+  <text x="360" y="304" class="c note">相同的 URL 一定落在同一份中，所以每份单独统计的次数就是它的总次数</text>
+</svg>

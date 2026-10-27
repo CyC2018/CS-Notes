@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="280" viewBox="0 0 680 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">MHA、GQA 与 MQA</text>
+  <text x="120" y="60" class="c b">MHA</text>
+  <rect x="30" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="54" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="78" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="102" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="126" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="150" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="174" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="198" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="33" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="57" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="81" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="105" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="129" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="153" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="177" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="201" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="39" y1="96" x2="42" y2="148" class="line"/>
+  <line x1="63" y1="96" x2="66" y2="148" class="line"/>
+  <line x1="87" y1="96" x2="90" y2="148" class="line"/>
+  <line x1="111" y1="96" x2="114" y2="148" class="line"/>
+  <line x1="135" y1="96" x2="138" y2="148" class="line"/>
+  <line x1="159" y1="96" x2="162" y2="148" class="line"/>
+  <line x1="183" y1="96" x2="186" y2="148" class="line"/>
+  <line x1="207" y1="96" x2="210" y2="148" class="line"/>
+  <text x="120" y="196" class="c sub">KV Cache：8 份</text>
+  <text x="340" y="60" class="c b">GQA</text>
+  <rect x="250" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="274" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="298" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="322" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="346" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="370" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="394" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="418" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="289" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="385" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="259" y1="96" x2="298" y2="148" class="line"/>
+  <line x1="283" y1="96" x2="298" y2="148" class="line"/>
+  <line x1="307" y1="96" x2="298" y2="148" class="line"/>
+  <line x1="331" y1="96" x2="298" y2="148" class="line"/>
+  <line x1="355" y1="96" x2="394" y2="148" class="line"/>
+  <line x1="379" y1="96" x2="394" y2="148" class="line"/>
+  <line x1="403" y1="96" x2="394" y2="148" class="line"/>
+  <line x1="427" y1="96" x2="394" y2="148" class="line"/>
+  <text x="340" y="196" class="c sub">KV Cache：2 份，为 MHA 的 1/4</text>
+  <text x="560" y="60" class="c b">MQA</text>
+  <rect x="470" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="494" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="518" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="542" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="566" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="590" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="614" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="638" y="76" width="18" height="18" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <rect x="557" y="150" width="18" height="18" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="479" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="503" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="527" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="551" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="575" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="599" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="623" y1="96" x2="566" y2="148" class="line"/>
+  <line x1="647" y1="96" x2="566" y2="148" class="line"/>
+  <text x="560" y="196" class="c sub">KV Cache：1 份，为 MHA 的 1/8</text>
+  <rect x="20" y="222" width="14" height="14" rx="2" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="40" y="233" class="sub">查询头 Q</text>
+  <rect x="110" y="222" width="14" height="14" rx="2" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="130" y="233" class="sub">一组 K、V，需要缓存</text>
+  <text x="20" y="262" class="sub">Qwen2.5-7B 使用 GQA：28 个查询头共享 4 组 K、V，每个 Token 的 KV Cache 为 56 KB，MHA 需要 392 KB</text>
+</svg>

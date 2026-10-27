@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="330" viewBox="0 0 740 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">HotSpot 的 7 个经典垃圾收集器</text>
+  <rect x="30" y="50" width="680" height="96" rx="8" fill="#C6E4FB" fill-opacity="0.18"/>
+  <rect x="30" y="186" width="680" height="96" rx="8" fill="#EAE9E7" fill-opacity="0.45"/>
+  <text x="46" y="70" class="sub b" style="fill:#444">新生代</text>
+  <text x="46" y="206" class="sub b" style="fill:#444">老年代</text>
+  <rect x="80" y="82" width="140" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="150" y="104.5" class="c sub b">Serial</text>
+  <rect x="260" y="82" width="140" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="330" y="104.5" class="c sub b">ParNew</text>
+  <rect x="440" y="82" width="140" height="36" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="510" y="104.5" class="c sub b">Parallel Scavenge</text>
+  <rect x="80" y="218" width="140" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="150" y="240.5" class="c sub b">CMS</text>
+  <rect x="260" y="218" width="140" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="330" y="240.5" class="c sub b">Serial Old</text>
+  <rect x="440" y="218" width="140" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="510" y="240.5" class="c sub b">Parallel Old</text>
+  <rect x="620" y="136" width="76" height="64" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="658" y="164" class="c b" style="fill:#444">G1</text>
+  <text x="658" y="182" class="c sub">整个堆</text>
+  <line x1="150" y1="120" x2="330" y2="216" stroke="#666" stroke-width="1.3"/>
+  <line x1="330" y1="120" x2="150" y2="216" stroke="#666" stroke-width="1.3"/>
+  <line x1="510" y1="120" x2="330" y2="216" stroke="#666" stroke-width="1.3"/>
+  <line x1="510" y1="120" x2="510" y2="216" stroke="#666" stroke-width="1.3"/>
+  <line x1="150" y1="120" x2="150" y2="216" stroke="#C0605A" stroke-dasharray="4 3" stroke-width="1.3"/>
+  <line x1="330" y1="120" x2="330" y2="216" stroke="#C0605A" stroke-dasharray="4 3" stroke-width="1.3"/>
+  <path d="M220,236 H260" stroke="#999" stroke-width="1.3" stroke-dasharray="2 3" fill="none" marker-end="url(#a)"/>
+  <text x="240" y="272" class="c sub">失败时退回</text>
+  <text x="30" y="304" class="sub">实线是可以配合使用的组合；红色虚线的两种组合在 JDK 9 中移除（JEP 214）。JDK 9 起默认使用 G1，</text>
+  <text x="30" y="322" class="sub">CMS 在 JDK 14 中移除（JEP 363）。新的 ZGC、Shenandoah 不在图中。</text>
+</svg>

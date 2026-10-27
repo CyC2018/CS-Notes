@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">事件循环</text>
+  <rect x="230" y="46" width="140" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="300" y="67.5" class="c sub b">初始化服务器</text>
+  <rect x="200" y="104" width="200" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="125.5" class="c sub b">① 找到最近的时间事件</text>
+  <text x="412" y="126" class="sub">例如 serverCron 还有 30 ms 到期</text>
+  <rect x="200" y="154" width="200" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="175.5" class="c sub b">② epoll_wait 最多等待 30 ms</text>
+  <text x="412" y="176" class="sub">期间有文件事件就提前返回</text>
+  <line x1="300" y1="138" x2="300" y2="152" class="arrow "/>
+  <rect x="200" y="204" width="200" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="225.5" class="c sub b">③ 处理已就绪的文件事件</text>
+  <text x="412" y="226" class="sub">接受连接、执行命令、写回结果</text>
+  <line x1="300" y1="188" x2="300" y2="202" class="arrow "/>
+  <rect x="200" y="254" width="200" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="300" y="275.5" class="c sub b">④ 处理已到期的时间事件</text>
+  <text x="412" y="276" class="sub">serverCron 默认每 100 ms 执行一次</text>
+  <line x1="300" y1="238" x2="300" y2="252" class="arrow "/>
+  <line x1="300" y1="82" x2="300" y2="102" class="arrow "/>
+  <path d="M198,272 H160 V121 H196" class="arrow"/>
+  <text x="152" y="200" class="sub e">直到关闭</text>
+  <text x="30" y="316" class="sub">等待时间由最近的时间事件决定：既不会一直阻塞在 epoll_wait 上，也不会空转。</text>
+</svg>

@@ -8,6 +8,9 @@
     * [5. 归并两个有序数组](#5-归并两个有序数组)
     * [6. 判断链表是否存在环](#6-判断链表是否存在环)
     * [7. 最长子序列](#7-最长子序列)
+    * [8. 三数之和](#8-三数之和)
+    * [9. 接雨水](#9-接雨水)
+    * [10. 最小覆盖子串](#10-最小覆盖子串)
 <!-- GFM-TOC -->
 
 
@@ -81,7 +84,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
      if (target < 0) return false;
      int i = 0, j = (int) Math.sqrt(target);
      while (i <= j) {
-         int powSum = i * i + j * j;
+         long powSum = (long) i * i + (long) j * j;
          if (powSum == target) {
              return true;
          } else if (powSum > target) {
@@ -212,8 +215,6 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
     while (index2 >= 0) {
         if (index1 < 0) {
             nums1[indexMerge--] = nums2[index2--];
-        } else if (index2 < 0) {
-            nums1[indexMerge--] = nums1[index1--];
         } else if (nums1[index1] > nums2[index2]) {
             nums1[indexMerge--] = nums1[index1--];
         } else {
@@ -254,7 +255,7 @@ public boolean hasCycle(ListNode head) {
 
 [Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
 
-```
+```text
 Input:
 s = "abpcplea", d = ["ale","apple","monkey","plea"]
 
@@ -290,5 +291,126 @@ private boolean isSubstr(String s, String target) {
         i++;
     }
     return j == target.length();
+}
+```
+
+## 8. 三数之和
+
+15\. 3Sum (Medium)
+
+[Leetcode](https://leetcode.com/problems/3sum/) / [力扣](https://leetcode.cn/problems/3sum/)
+
+```text
+Input: nums = [-1, 0, 1, 2, -1, -4]
+Output: [[-1, -1, 2], [-1, 0, 1]]
+```
+
+题目描述：找出所有和为 0 且不重复的三元组。
+
+先排序，然后枚举第一个数 nums[i]，在它右边用第 1 题的双指针方法寻找和为 -nums[i] 的两个数。去重的关键是跳过相同的值：i 跳过与前一个数相同的值，找到一组解之后，两个指针也跳过相同的值。时间复杂度为 O(N<sup>2</sup>)。
+
+```java
+public List<List<Integer>> threeSum(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> ret = new ArrayList<>();
+    for (int i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] == nums[i - 1]) {
+            continue;
+        }
+        int l = i + 1, h = nums.length - 1;
+        while (l < h) {
+            int sum = nums[i] + nums[l] + nums[h];
+            if (sum < 0) {
+                l++;
+            } else if (sum > 0) {
+                h--;
+            } else {
+                ret.add(Arrays.asList(nums[i], nums[l], nums[h]));
+                while (l < h && nums[l] == nums[l + 1]) {
+                    l++;
+                }
+                while (l < h && nums[h] == nums[h - 1]) {
+                    h--;
+                }
+                l++;
+                h--;
+            }
+        }
+    }
+    return ret;
+}
+```
+
+## 9. 接雨水
+
+42\. Trapping Rain Water (Hard)
+
+[Leetcode](https://leetcode.com/problems/trapping-rain-water/) / [力扣](https://leetcode.cn/problems/trapping-rain-water/)
+
+```text
+Input: height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+Output: 6
+```
+
+位置 i 上方能存的水，取决于它左边最高的柱子和右边最高的柱子中较矮的那一个：water[i] = min(leftMax, rightMax) - height[i]。
+
+用两个指针从两端向中间移动，分别维护 leftMax 和 rightMax。如果 leftMax < rightMax，左指针处的水位只由 leftMax 决定，因为右边已经有一根不低于 rightMax 的柱子，可以直接结算左指针并右移；反之结算右指针并左移。
+
+<div align="center"> <img src="pics/trapping-rain-water.png" width="560px"/> </div><br>
+
+```java
+public int trap(int[] height) {
+    int l = 0, r = height.length - 1;
+    int leftMax = 0, rightMax = 0, ret = 0;
+    while (l < r) {
+        leftMax = Math.max(leftMax, height[l]);
+        rightMax = Math.max(rightMax, height[r]);
+        if (leftMax < rightMax) {
+            ret += leftMax - height[l++];
+        } else {
+            ret += rightMax - height[r--];
+        }
+    }
+    return ret;
+}
+```
+
+## 10. 最小覆盖子串
+
+76\. Minimum Window Substring (Hard)
+
+[Leetcode](https://leetcode.com/problems/minimum-window-substring/) / [力扣](https://leetcode.cn/problems/minimum-window-substring/)
+
+```text
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+```
+
+题目描述：找出 s 中包含 t 所有字符（包括重复字符）的最短子串。
+
+使用滑动窗口。need[c] 表示窗口还缺几个字符 c，missing 表示一共还缺几个字符。右指针不断扩大窗口，直到 missing 为 0，此时窗口包含了 t 的所有字符；然后移动左指针缩小窗口，在窗口仍然满足条件时更新答案。
+
+```java
+public String minWindow(String s, String t) {
+    int[] need = new int[128];
+    for (char c : t.toCharArray()) {
+        need[c]++;
+    }
+    int missing = t.length(), start = 0, minLen = Integer.MAX_VALUE;
+    for (int l = 0, r = 0; r < s.length(); r++) {
+        if (need[s.charAt(r)]-- > 0) {
+            missing--;
+        }
+        while (missing == 0) {
+            if (r - l + 1 < minLen) {
+                minLen = r - l + 1;
+                start = l;
+            }
+            if (++need[s.charAt(l++)] > 0) {
+                missing++;
+            }
+        }
+    }
+    return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
 }
 ```

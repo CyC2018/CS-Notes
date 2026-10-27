@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">主内存与工作内存之间的 8 种操作</text>
+  <rect x="30" y="90" width="170" height="120" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="115" y="148" class="b c">主内存</text>
+  <text x="115" y="163" class="sub c">变量 cnt</text>
+  <rect x="300" y="90" width="170" height="120" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="385" y="148" class="b c">工作内存</text>
+  <text x="385" y="163" class="sub c">cnt 的副本</text>
+  <rect x="570" y="90" width="160" height="120" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="650" y="148" class="b c">执行引擎</text>
+  <text x="650" y="163" class="sub c">cnt + 1</text>
+  <line x1="200" y1="118" x2="300" y2="118" class="arrow "/>
+  <text x="250" y="110" class="c sub mono">read → load</text>
+  <line x1="300" y1="182" x2="200" y2="182" class="arrow "/>
+  <text x="250" y="200" class="c sub mono">store → write</text>
+  <line x1="470" y1="118" x2="570" y2="118" class="arrow "/>
+  <text x="520" y="110" class="c sub mono">use</text>
+  <line x1="570" y1="182" x2="470" y2="182" class="arrow "/>
+  <text x="520" y="200" class="c sub mono">assign</text>
+  <text x="115" y="236" class="c sub mono b">lock / unlock</text>
+  <text x="115" y="252" class="c sub">作用于主内存中的变量</text>
+  <text x="24" y="284" class="sub">read 把值从主内存传到工作内存，load 放入副本；store 把副本传回主内存，write 写入变量。</text>
+</svg>

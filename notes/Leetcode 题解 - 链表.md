@@ -11,6 +11,10 @@
     * [8. 回文链表](#8-回文链表)
     * [9. 分隔链表](#9-分隔链表)
     * [10. 链表元素按奇偶聚集](#10-链表元素按奇偶聚集)
+    * [11. K 个一组翻转链表](#11-k-个一组翻转链表)
+    * [12. 重排链表](#12-重排链表)
+    * [13. 合并 K 个有序链表](#13-合并-k-个有序链表)
+    * [14. 链表排序](#14-链表排序)
 <!-- GFM-TOC -->
 
 
@@ -63,7 +67,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ```
 
-如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美 3.6]() 的问题。有两种解法：
+如果只是判断是否存在交点，那么就是另一个问题，即 编程之美 3.6 的问题。有两种解法：
 
 - 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
 - 或者直接比较两个链表的最后一个节点是否相同。
@@ -361,5 +365,172 @@ public ListNode oddEvenList(ListNode head) {
     }
     odd.next = evenHead;
     return head;
+}
+```
+
+##  11. K 个一组翻转链表
+
+25\. Reverse Nodes in k-Group (Hard)
+
+[Leetcode](https://leetcode.com/problems/reverse-nodes-in-k-group/) / [力扣](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
+
+```text
+Input: 1->2->3->4->5, k = 2
+Output: 2->1->4->3->5
+```
+
+题目描述：每 k 个节点一组进行翻转，最后不足 k 个的节点保持原有顺序。
+
+使用一个虚拟头节点 dummy，pre 指向下一组的前一个节点。先从 pre 向后走 k 步找到这一组的尾节点 tail，走不到说明剩余节点不足 k 个。然后把 pre.next 到 tail 这一段原地翻转，再把它接回原链表，最后 pre 移到这一组翻转后的末尾。
+
+<div align="center"> <img src="pics/reverse-k-group.png" width="560px"/> </div><br>
+
+```java
+public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode pre = dummy;
+    while (true) {
+        ListNode tail = pre;
+        for (int i = 0; i < k && tail != null; i++) {
+            tail = tail.next;
+        }
+        if (tail == null) {
+            break;
+        }
+        ListNode first = pre.next, next = tail.next;
+        ListNode prev = next, cur = first;
+        while (cur != next) {
+            ListNode tmp = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = tmp;
+        }
+        pre.next = tail;
+        pre = first;
+    }
+    return dummy.next;
+}
+```
+
+##  12. 重排链表
+
+143\. Reorder List (Medium)
+
+[Leetcode](https://leetcode.com/problems/reorder-list/) / [力扣](https://leetcode.cn/problems/reorder-list/)
+
+```text
+Input: 1->2->3->4->5
+Output: 1->5->2->4->3
+```
+
+题目描述：把 L0→L1→…→Ln 重排为 L0→Ln→L1→Ln-1→…，只能修改节点的指针。
+
+可以拆成三个已经解决过的子问题：用快慢指针找到中点并断开；把后半段反转；再把两段交替连接起来。
+
+```java
+public void reorderList(ListNode head) {
+    if (head == null || head.next == null) {
+        return;
+    }
+    ListNode slow = head, fast = head;
+    while (fast.next != null && fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode l2 = reverse(slow.next);
+    slow.next = null;
+    ListNode l1 = head;
+    while (l2 != null) {
+        ListNode n1 = l1.next, n2 = l2.next;
+        l1.next = l2;
+        l2.next = n1;
+        l1 = n1;
+        l2 = n2;
+    }
+}
+
+private ListNode reverse(ListNode head) {
+    ListNode pre = null;
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = pre;
+        pre = head;
+        head = next;
+    }
+    return pre;
+}
+```
+
+##  13. 合并 K 个有序链表
+
+23\. Merge k Sorted Lists (Hard)
+
+[Leetcode](https://leetcode.com/problems/merge-k-sorted-lists/) / [力扣](https://leetcode.cn/problems/merge-k-sorted-lists/)
+
+用小顶堆保存每个链表当前的头节点，每次取出值最小的节点接到结果链表后面，再把它的下一个节点放入堆中。设一共有 N 个节点，每个节点进出堆一次，时间复杂度为 O(NlogK)。
+
+也可以像归并排序那样两两合并，时间复杂度同样是 O(NlogK)。
+
+```java
+public ListNode mergeKLists(ListNode[] lists) {
+    PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.val, b.val));
+    for (ListNode node : lists) {
+        if (node != null) {
+            pq.add(node);
+        }
+    }
+    ListNode dummy = new ListNode(-1), tail = dummy;
+    while (!pq.isEmpty()) {
+        ListNode node = pq.poll();
+        tail.next = node;
+        tail = node;
+        if (node.next != null) {
+            pq.add(node.next);
+        }
+    }
+    return dummy.next;
+}
+```
+
+##  14. 链表排序
+
+148\. Sort List (Medium)
+
+[Leetcode](https://leetcode.com/problems/sort-list/) / [力扣](https://leetcode.cn/problems/sort-list/)
+
+题目描述：在 O(NlogN) 时间复杂度内对链表进行排序。
+
+链表不能随机访问，适合用归并排序：用快慢指针找到中点断开，两半分别排序后，用第 3 题的方法归并。递归需要 O(logN) 的栈空间。
+
+```java
+public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode slow = head, fast = head.next;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode right = slow.next;
+    slow.next = null;
+    return merge(sortList(head), sortList(right));
+}
+
+private ListNode merge(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(-1), tail = dummy;
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            tail.next = l1;
+            l1 = l1.next;
+        } else {
+            tail.next = l2;
+            l2 = l2.next;
+        }
+        tail = tail.next;
+    }
+    tail.next = l1 != null ? l1 : l2;
+    return dummy.next;
 }
 ```

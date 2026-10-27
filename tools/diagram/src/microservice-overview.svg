@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="400" viewBox="0 0 740 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">一次下单请求经过的组件</text>
+  <rect x="270" y="44" width="250" height="90" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="270" y="44" width="250" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="395" y="59" class="c b">Nacos :8848</text>
+  <rect x="276" y="72" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="282" y="84" class="sub">order-service → :8090</text>
+  <rect x="276" y="92" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="282" y="104" class="sub">inventory-service → :8081、:8082</text>
+  <rect x="276" y="112" width="238" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="282" y="124" class="sub">配置 order-service.yaml</text>
+  <rect x="36" y="178" width="28" height="46" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="40" y="184" width="20" height="30" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <circle cx="50" cy="219" r="2" fill="#B8B0DE"/>
+  <text x="50" y="244" class="c b">App</text>
+  <text x="50" y="259" class="c sub">带上令牌</text>
+  <path d="M190,174 L212,183 V197.4 C212,214.56 196,223 190,226 C184,223 168,214.56 168,197.4 V183 Z" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M181,198.96 l6,6 l12,-13" fill="none" stroke="#7FB2D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="190" y="244" class="c b">网关 :8080</text>
+  <text x="190" y="259" class="c sub">校验令牌、按路径转发</text>
+  <rect x="372" y="178" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="379" cy="184.5" r="2" fill="#7FB2D6"/>
+  <line x1="386" y1="184.5" x2="411" y2="184.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="372" y="194" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="379" cy="200.5" r="2" fill="#7FB2D6"/>
+  <line x1="386" y1="200.5" x2="411" y2="200.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="372" y="210" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="379" cy="216.5" r="2" fill="#7FB2D6"/>
+  <line x1="386" y1="216.5" x2="411" y2="216.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="395" y="244" class="c b">订单服务 :8090</text>
+  <text x="395" y="259" class="c sub">OpenFeign 调用库存服务</text>
+  <rect x="607" y="150" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="156.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="156.5" x2="646" y2="156.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="607" y="166" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="172.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="172.5" x2="646" y2="172.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="607" y="182" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="188.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="188.5" x2="646" y2="188.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="630" y="214" class="c sub">:8081</text>
+  <rect x="607" y="236" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="242.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="242.5" x2="646" y2="242.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="607" y="252" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="258.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="258.5" x2="646" y2="258.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="607" y="268" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="614" cy="274.5" r="2" fill="#7FB2D6"/>
+  <line x1="621" y1="274.5" x2="646" y2="274.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="630" y="300" class="c sub">:8082</text>
+  <text x="630" y="318" class="c b">库存服务</text>
+  <line x1="68" y1="200" x2="162" y2="200" class="arrow "/>
+  <line x1="216" y1="200" x2="366" y2="200" class="arrow "/>
+  <line x1="422" y1="194" x2="602" y2="172" class="arrow "/>
+  <line x1="422" y1="206" x2="602" y2="258" class="arrow "/>
+  <text x="520" y="214" class="c sub">轮询</text>
+  <path d="M190,170 C190,140 230,110 266,100" class="arrow dash"/>
+  <text x="160" y="132" class="sub">查询实例</text>
+  <path d="M395,138 L395,174" class="arrow dash"/>
+  <text x="402" y="160" class="sub">实例列表、配置推送</text>
+  <path d="M630,146 C630,110 580,92 524,90" class="arrow dash"/>
+  <text x="640" y="118" class="sub">注册</text>
+  <line x1="160" y1="346" x2="720" y2="346" stroke="#9F94D5" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="160" y="338" class="sub">traceId 6ade5947…74b 随请求头 traceparent 传递，各服务的日志中都带上它</text>
+  <text x="160" y="368" class="sub">订单服务调用库存服务时加上超时和熔断（Sentinel），跨服务的事务用 Seata 或消息保证一致</text>
+  <text x="20" y="392" class="sub">本机实际运行：Nacos 2.5.4，Spring Boot 3.3，Spring Cloud 2023.0，Spring Cloud Alibaba 2023.0.3.4</text>
+</svg>

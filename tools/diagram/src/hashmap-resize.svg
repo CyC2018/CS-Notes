@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="290" viewBox="0 0 620 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="310" y="28" class="title">HashMap 扩容时的桶下标</text>
+  <rect x="150" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="170" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="190" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="210" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="230" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="250" y="70" width="20" height="24" fill="#C6E4FB" stroke="#999"/>
+  <rect x="270" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="290" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="310" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="330" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="350" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="370" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="390" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="410" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="430" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="450" y="70" width="20" height="24" fill="#FFFFFF" stroke="#999"/>
+  <text x="140" y="87" class="e">capacity = 16</text>
+  <text x="160" y="64" class="c sub">0</text>
+  <text x="260" y="64" class="c sub">5</text>
+  <text x="460" y="64" class="c sub">15</text>
+  <rect x="140" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="154" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="168" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="182" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="196" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="210" y="220" width="14" height="24" fill="#C6E4FB" stroke="#999"/>
+  <rect x="224" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="238" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="252" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="266" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="280" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="294" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="308" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="322" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="336" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="350" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="364" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="378" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="392" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="406" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="420" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="434" y="220" width="14" height="24" fill="#C6E4FB" stroke="#999"/>
+  <rect x="448" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="462" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="476" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="490" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="504" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="518" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="532" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="546" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="560" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <rect x="574" y="220" width="14" height="24" fill="#FFFFFF" stroke="#999"/>
+  <text x="130" y="237" class="e">capacity = 32</text>
+  <text x="147" y="260" class="c sub">0</text>
+  <text x="217" y="260" class="c sub">5</text>
+  <text x="441" y="260" class="c sub">21</text>
+  <text x="581" y="260" class="c sub">31</text>
+  <line x1="257" y1="97" x2="217" y2="217" class="arrow "/>
+  <line x1="263" y1="97" x2="441" y2="217" class="arrow "/>
+  <text x="205" y="150" class="e mono">hash 低 5 位 0 0101</text>
+  <text x="205" y="168" class="e ok">第 5 位为 0：仍在 5</text>
+  <text x="371" y="150" class="mono">hash 低 5 位 1 0101</text>
+  <text x="371" y="168" class="note">第 5 位为 1：移到 5 + 16 = 21</text>
+  <text x="310" y="280" class="c">桶 5 中的键值对扩容后只会落在 5 或 21</text>
+</svg>

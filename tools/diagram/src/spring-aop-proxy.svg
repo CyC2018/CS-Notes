@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="230" viewBox="0 0 680 230">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">自调用不经过代理</text>
+  <rect x="20" y="82" width="90" height="50" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="65" y="111.5" class="b c">调用方</text>
+  <rect x="190" y="62" width="150" height="90" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="265" y="92" class="c b">代理对象</text>
+  <text x="265" y="114" class="c sub">执行切面逻辑</text>
+  <text x="265" y="132" class="c sub">例如开启、提交事务</text>
+  <rect x="400" y="50" width="260" height="140" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="412" y="72" class="b">原始对象</text>
+  <rect x="420" y="86" width="200" height="34" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="520" y="107.5" class="c mono sub">outer()</text>
+  <rect x="420" y="140" width="200" height="34" rx="4" fill="#FFFFFF" stroke="#C8C8C8"/>
+  <text x="520" y="161.5" class="c mono sub">@Transactional inner()</text>
+  <line x1="113" y1="107" x2="186" y2="107" class="arrow "/>
+  <text x="150" y="98" class="c sub mono">outer()</text>
+  <line x1="343" y1="103" x2="416" y2="103" class="arrow "/>
+  <path d="M620,108 C650,116 650,148 624,156" class="arrow red"/>
+  <text x="20" y="214" class="note">只有从外部经过代理的调用，切面才会生效；outer() 中的 this.inner() 直接调用原始对象，事务不生效。</text>
+</svg>

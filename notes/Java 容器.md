@@ -58,7 +58,7 @@
 
 - HashMap：基于哈希表实现。
 
-- HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
+- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
@@ -498,11 +498,11 @@ map.put("K3", "V3");
 ```
 
 - 新建一个 HashMap，默认大小为 16；
-- 插入 &lt;K1,V1\> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
-- 插入 &lt;K2,V2\> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
-- 插入 &lt;K3,V3\> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2\> 前面。
+- 插入 &lt;K1,V1\> 键值对，先计算 K1 的 hashCode，为了便于说明，假设为 115（实际上 "K1".hashCode() 是 2374），使用除留余数法得到所在的桶下标 115%16=3。
+- 插入 &lt;K2,V2\> 键值对，假设 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
+- 插入 &lt;K3,V3\> 键值对，假设 K3 的 hashCode 也为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 &lt;K2,V2\> 前面。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。
+应该注意到链表的插入是以头插法方式进行的，例如上面的 &lt;K3,V3\> 不是插在 &lt;K2,V2\> 后面，而是插入在链表头部。JDK 1.8 改成了尾插法。
 
 查找需要分成两步进行：
 
@@ -628,14 +628,14 @@ public final int hashCode() {
 
 令 x = 1\<\<4，即 x 为 2 的 4 次方，它具有以下性质：
 
-```
+```text
 x   : 00010000
 x-1 : 00001111
 ```
 
 令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
 
-```
+```text
 y       : 10110010
 x-1     : 00001111
 y&(x-1) : 00000010
@@ -643,7 +643,7 @@ y&(x-1) : 00000010
 
 这个性质和 y 对 x 取模效果是一样的：
 
-```
+```text
 y   : 10110010
 x   : 00010000
 y%x : 00000010
@@ -752,7 +752,9 @@ new capacity : 00100000
 对于一个 Key，它的哈希值 hash 在第 5 位：
 
 - 为 0，那么 hash%00010000 = hash%00100000，桶位置和原来一致；
-- 为 1，hash%00010000 = hash%00100000 + 16，桶位置是原位置 + 16。
+- 为 1，hash%00100000 = hash%00010000 + 16，桶位置是原位置 + 16。
+
+<div align="center"> <img src="pics/hashmap-resize.png" width="620px"/> </div><br>
 
 #### 7. 计算数组容量
 
@@ -760,7 +762,7 @@ HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它
 
 先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
 
-```
+```text
 mask |= mask >> 1    11011000
 mask |= mask >> 2    11111110
 mask |= mask >> 4    11111111
@@ -768,7 +770,7 @@ mask |= mask >> 4    11111111
 
 mask+1 是大于原始数字的最小的 2 的 n 次方。
 
-```
+```text
 num     10010000
 mask+1 100000000
 ```
@@ -789,7 +791,7 @@ static final int tableSizeFor(int cap) {
 
 #### 8. 链表转红黑树
 
-从 JDK 1.8 开始，一个桶存储的链表长度大于等于 8 时会将链表转换为红黑树。
+从 JDK 1.8 开始，向一个桶中添加元素时，如果链表长度已经达到 8（TREEIFY_THRESHOLD），并且数组长度不小于 64（MIN_TREEIFY_CAPACITY），就会将链表转换为红黑树，否则只进行扩容。树中的节点数减少到 6（UNTREEIFY_THRESHOLD）时会重新转换为链表。
 
 #### 9. 与 Hashtable 的比较
 
@@ -797,6 +799,12 @@ static final int tableSizeFor(int cap) {
 - HashMap 可以插入键为 null 的 Entry。
 - HashMap 的迭代器是 fail-fast 迭代器。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
+
+#### 10. 线程安全
+
+HashMap 不是线程安全的。例如两个线程同时向同一个空桶插入，都判断桶为空，后写入的会覆盖先写入的；size++ 也不是原子操作。在 JDK 21 上用 8 个线程各插入 10 万个不同的键，HashMap 的 size 每次都不同，例如 281854、463269，远少于 80 万；同样的操作 ConcurrentHashMap 每次都是 800000。
+
+JDK 1.7 的问题更严重：两个线程同时扩容时，头插法会把链表的顺序反转，可能让链表形成环，之后在这个桶上的 get 会陷入死循环。JDK 1.8 改为尾插法，扩容时保持链表原来的顺序，不会再成环，但并发写入仍然会丢失数据。多线程环境应该使用 ConcurrentHashMap。
 
 ### ConcurrentHashMap
 
@@ -924,9 +932,22 @@ public int size() {
 
 JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发度与 Segment 数量相等。
 
-JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized。
+JDK 1.8 去掉了 Segment，和 HashMap 一样使用 Node 数组加链表（或红黑树），锁的粒度缩小到每个桶。put 的过程如下：
 
-并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
+1. 用 spread() 计算哈希值，把 hashCode 的高 16 位异或到低 16 位，让高位也参与决定桶下标；
+2. 如果桶是空的，用 CAS 把新节点放进去，不加锁。CAS 失败说明有其它线程刚刚放入了节点，重新循环；
+3. 如果桶的头节点是 ForwardingNode（哈希值为 MOVED），说明正在扩容，当前线程先帮忙迁移数据；
+4. 否则用 synchronized 锁住桶的头节点，在链表或红黑树中插入或更新，链表长度达到 8 时转为红黑树；
+5. 最后更新元素个数。
+
+get 不加锁：数组元素通过 Unsafe 的 volatile 方式读取，节点的 val 和 next 都是 volatile，能读到其它线程写入的最新值。
+
+与 JDK 1.7 相比的其它变化：
+
+- 计数：元素个数保存在 baseCount 和一组 CounterCell 中，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同；
+- 扩容：多个线程可以同时参与迁移，每个线程领取一段桶，迁移完的桶放一个 ForwardingNode，get 遇到它时到新数组中查找。
+
+需要注意的是，ConcurrentHashMap 的键和值都不能为 null。HashMap 中 get 返回 null 时，可以再用 containsKey 判断是键不存在还是值为 null；在并发环境下，这两次调用之间其它线程可能修改了数据，结果无法确定，所以干脆不允许 null。另外，ConcurrentHashMap 只保证单个操作是原子的，先 get 再 put 这样的组合操作仍然要用 putIfAbsent、compute 等原子方法。
 
 ### LinkedHashMap
 
@@ -998,7 +1019,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 
 #### afterNodeInsertion()
 
-在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最晚的节点，也就是链表首部节点 first。
+在 put 等操作之后执行，当 removeEldestEntry() 方法返回 true 时会移除最老的节点，也就是链表首部节点 first。
 
 evict 只有在构建 Map 的时候才为 false，在这里为 true。
 
@@ -1124,7 +1145,6 @@ public final class ConcurrentCache<K, V> {
 - [Iterator 模式](https://openhome.cc/Gossip/DesignPattern/IteratorPattern.htm)
 - [Java 8 系列之重新认识 HashMap](https://tech.meituan.com/java_hashmap.html)
 - [What is difference between HashMap and Hashtable in Java?](http://javarevisited.blogspot.hk/2010/10/difference-between-hashmap-and.html)
-- [Java 集合之 HashMap](http://www.zhangchangle.com/2018/02/07/Java%E9%9B%86%E5%90%88%E4%B9%8BHashMap/)
 - [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
 - [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 - [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)

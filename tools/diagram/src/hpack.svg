@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">首部压缩：第二次请求只需 21 字节</text>
+  <rect x="30" y="50" width="120" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="90" y="66" class="c sub" style="fill:#444">首部</text>
+  <rect x="150" y="50" width="190" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="245" y="66" class="c sub" style="fill:#444">值</text>
+  <rect x="340" y="50" width="300" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="490" y="66" class="c sub" style="fill:#444">编码方式</text>
+  <rect x="640" y="50" width="80" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="680" y="66" class="c sub" style="fill:#444">字节数</text>
+  <rect x="30" y="74" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="92" class="c sub mono" style="fill:#444">:method</text>
+  <rect x="150" y="74" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="92" class="c sub mono" style="fill:#444">GET</text>
+  <rect x="340" y="74" width="300" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="490" y="92" class="c sub" style="fill:#444">静态表第 2 项</text>
+  <rect x="640" y="74" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="92" class="c sub mono" style="fill:#444">1</text>
+  <rect x="30" y="102" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="120" class="c sub mono" style="fill:#444">:scheme</text>
+  <rect x="150" y="102" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="120" class="c sub mono" style="fill:#444">https</text>
+  <rect x="340" y="102" width="300" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="490" y="120" class="c sub" style="fill:#444">静态表第 7 项</text>
+  <rect x="640" y="102" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="120" class="c sub mono" style="fill:#444">1</text>
+  <rect x="30" y="130" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="148" class="c sub mono" style="fill:#444">:authority</text>
+  <rect x="150" y="130" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="148" class="c sub mono" style="fill:#444">www.example.com</text>
+  <rect x="340" y="130" width="300" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="490" y="148" class="c sub" style="fill:#444">动态表（第一次请求时加入）</text>
+  <rect x="640" y="130" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="148" class="c sub mono" style="fill:#444">1</text>
+  <rect x="30" y="158" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="176" class="c sub mono" style="fill:#444">:path</text>
+  <rect x="150" y="158" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="176" class="c sub mono" style="fill:#444">/style.css</text>
+  <rect x="340" y="158" width="300" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="490" y="176" class="c sub" style="fill:#444">新值：名字用静态表，值用 Huffman 编码</text>
+  <rect x="640" y="158" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="176" class="c sub mono" style="fill:#444">9</text>
+  <rect x="30" y="186" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="204" class="c sub mono" style="fill:#444">user-agent</text>
+  <rect x="150" y="186" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="204" class="c sub" style="fill:#444">Mozilla/5.0 …（64 字节）</text>
+  <rect x="340" y="186" width="300" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="490" y="204" class="c sub" style="fill:#444">动态表（第一次请求时加入）</text>
+  <rect x="640" y="186" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="204" class="c sub mono" style="fill:#444">1</text>
+  <rect x="30" y="214" width="120" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="90" y="232" class="c sub mono" style="fill:#444">accept</text>
+  <rect x="150" y="214" width="190" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="245" y="232" class="c sub mono" style="fill:#444">text/css</text>
+  <rect x="340" y="214" width="300" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="490" y="232" class="c sub" style="fill:#444">新值：名字用静态表，值用 Huffman 编码</text>
+  <rect x="640" y="214" width="80" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="680" y="232" class="c sub mono" style="fill:#444">8</text>
+  <text x="30" y="272" class="sub">同样的请求用 HTTP/1.1 的文本格式是 148 字节；第一次请求要建立动态表，编码后 78 字节。</text>
+  <text x="30" y="290" class="sub">静态表是协议规定的 61 个常见首部；动态表由双方各自维护，保存本连接中出现过的首部，之后只发送序号。</text>
+  <text x="30" y="314" class="sub">以上字节数由 hpack 4.0 库编码得到（RFC 7541）。</text>
+</svg>

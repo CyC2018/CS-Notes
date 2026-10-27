@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">正向代理与反向代理</text>
+  <rect x="30" y="46" width="350" height="170" rx="8" class="frame"/>
+  <text x="40" y="64" class="b">正向代理</text>
+  <rect x="42" y="78" width="190" height="126" rx="8" fill="#C6ECE9" fill-opacity="0.25"/>
+  <text x="52" y="196" class="sub">内网</text>
+  <rect x="60" y="100" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="64" y="104" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M76,127.2 v5 M84,127.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="68" y="132.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="80" y="150" class="c sub">客户端</text>
+  <rect x="160" y="98" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="167" cy="104.5" r="2" fill="#BFBEBA"/>
+  <line x1="174" y1="104.5" x2="193" y2="104.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="160" y="114" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="167" cy="120.5" r="2" fill="#BFBEBA"/>
+  <line x1="174" y1="120.5" x2="193" y2="120.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="160" y="130" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="167" cy="136.5" r="2" fill="#BFBEBA"/>
+  <line x1="174" y1="136.5" x2="193" y2="136.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="180" y="150" class="c sub b">代理</text>
+  <rect x="300" y="98" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="307" cy="104.5" r="2" fill="#7FB2D6"/>
+  <line x1="314" y1="104.5" x2="333" y2="104.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="300" y="114" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="307" cy="120.5" r="2" fill="#7FB2D6"/>
+  <line x1="314" y1="120.5" x2="333" y2="120.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="300" y="130" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="307" cy="136.5" r="2" fill="#7FB2D6"/>
+  <line x1="314" y1="136.5" x2="333" y2="136.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="150" class="c sub">网站</text>
+  <line x1="104" y1="116" x2="156" y2="116" class="arrow "/>
+  <line x1="204" y1="116" x2="296" y2="116" class="arrow "/>
+  <text x="250" y="108" class="c sub">互联网</text>
+  <text x="205" y="236" class="c sub">代理客户端：服务器看到的是代理的地址</text>
+  <rect x="410" y="46" width="350" height="170" rx="8" class="frame"/>
+  <text x="420" y="64" class="b">反向代理</text>
+  <rect x="550" y="78" width="198" height="126" rx="8" fill="#C6E4FB" fill-opacity="0.25"/>
+  <text x="710" y="196" class="sub">机房</text>
+  <rect x="440" y="100" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="444" y="104" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M456,127.2 v5 M464,127.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="448" y="132.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="460" y="150" class="c sub">客户端</text>
+  <rect x="570" y="98" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="577" cy="104.5" r="2" fill="#BFBEBA"/>
+  <line x1="584" y1="104.5" x2="603" y2="104.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="570" y="114" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="577" cy="120.5" r="2" fill="#BFBEBA"/>
+  <line x1="584" y1="120.5" x2="603" y2="120.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="570" y="130" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="577" cy="136.5" r="2" fill="#BFBEBA"/>
+  <line x1="584" y1="136.5" x2="603" y2="136.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="590" y="150" class="c sub b">Nginx</text>
+  <rect x="693" y="82" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="88.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="88.5" x2="720" y2="88.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="693" y="98" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="104.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="104.5" x2="720" y2="104.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="693" y="120" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="126.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="126.5" x2="720" y2="126.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="693" y="136" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="142.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="142.5" x2="720" y2="142.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="693" y="158" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="164.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="164.5" x2="720" y2="164.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="693" y="174" width="34" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="700" cy="180.5" r="2" fill="#7FB2D6"/>
+  <line x1="707" y1="180.5" x2="720" y2="180.5" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="484" y1="116" x2="566" y2="116" class="arrow "/>
+  <line x1="614" y1="116" x2="690" y2="92" class="arrow "/>
+  <line x1="614" y1="116" x2="690" y2="130" class="arrow "/>
+  <line x1="614" y1="116" x2="690" y2="168" class="arrow "/>
+  <text x="585" y="236" class="c sub">代理服务器：客户端只知道代理的地址</text>
+</svg>

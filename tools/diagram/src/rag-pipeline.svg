@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="390" viewBox="0 0 680 390">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">RAG 的两个阶段</text>
+  <rect x="15" y="45" width="650" height="128" rx="8" class="frame"/>
+  <text x="25" y="63" class="b">离线：建立索引</text>
+  <path d="M40,76 h31 l9,9 v43 h-40 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M71,76 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="93" x2="73" y2="93" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="100" x2="73" y2="100" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="46" y1="107" x2="73" y2="107" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="60" y="146" class="c b">员工手册</text>
+  <text x="60" y="161" class="c sub">PDF、网页</text>
+  <line x1="88" y1="102" x2="150" y2="102" class="arrow "/>
+  <text x="119" y="94" class="c">解析、切片</text>
+  <rect x="156" y="70" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="85" class="sub">第 3 章 年假：工作满 1 年…</text>
+  <rect x="156" y="98" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="113" class="sub">第 4 章 病假：需提供…</text>
+  <rect x="156" y="126" width="176" height="22" rx="3" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="164" y="141" class="sub">第 5 章 报销：…</text>
+  <line x1="336" y1="102" x2="404" y2="102" class="arrow "/>
+  <text x="370" y="94" class="c">Embedding</text>
+  <text x="410" y="85" class="mono sub">[0.12, -0.53, …]</text>
+  <text x="410" y="113" class="mono sub">[0.80, 0.07, …]</text>
+  <text x="410" y="141" class="mono sub">[-0.31, 0.44, …]</text>
+  <line x1="526" y1="102" x2="572" y2="102" class="arrow "/>
+  <path d="M586,80 v44 a26,6 0 0 0 52,0 v-44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="612" cy="80" rx="26" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M586,102 a26,6 0 0 0 52,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="612" y="146" class="c b">向量数据库</text>
+  <text x="612" y="161" class="c sub">并建关键词索引</text>
+  <rect x="15" y="186" width="650" height="190" rx="8" class="frame"/>
+  <text x="25" y="204" class="b">在线：检索并生成</text>
+  <circle cx="52" cy="231" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M35,262 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="52" y="280" class="c b">用户</text>
+  <path d="M26,296 h114 q6,0 6,6 v18 q0,6 -6,6 H38 l-8,8 l0,-8 H26 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="30" y="315" class="sub">工作两年有几天年假？</text>
+  <line x1="205.1" y1="253.1" x2="215.5" y2="263.5" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="196" cy="244" r="13" fill="#FFFFFF" stroke="#888" stroke-width="2"/>
+  <text x="204" y="290" class="c b">检索</text>
+  <text x="204" y="305" class="c sub">召回、重排</text>
+  <line x1="84" y1="250" x2="172" y2="250" class="arrow "/>
+  <path d="M612,168 C612,204 262,184 214,226" class="arrow dash"/>
+  <text x="430" y="202" class="sub">查询</text>
+  <rect x="262" y="210" width="230" height="112" rx="4" fill="#FFFFFF" stroke="#BBB"/>
+  <text x="272" y="230" class="b">提示词</text>
+  <text x="272" y="252" class="sub">根据以下资料回答，并标注来源：</text>
+  <text x="272" y="269" class="sub">[1] 第 3 章 年假：工作满 1 年</text>
+  <text x="272" y="286" class="sub">     不满 10 年的，每年 5 天</text>
+  <text x="272" y="303" class="sub">问题：工作两年有几天年假？</text>
+  <line x1="228" y1="250" x2="258" y2="250" class="arrow "/>
+  <line x1="550" y1="221" x2="550" y2="271" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="535" y1="236" x2="585" y2="236" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="560" y1="221" x2="560" y2="271" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="535" y1="246" x2="585" y2="246" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="570" y1="221" x2="570" y2="271" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="535" y1="256" x2="585" y2="256" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="540" y="226" width="40" height="40" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="551.2" y="237.2" width="17.6" height="17.6" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="592" y="250" class="b">大模型</text>
+  <line x1="496" y1="246" x2="532" y2="246" class="arrow "/>
+  <path d="M526,314 h108 q6,0 6,6 v18 q0,6 -6,6 H628 l8,8 l-2,-8 H526 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="530" y="333" class="sub">5 天 [1]</text>
+  <line x1="560" y1="272" x2="560" y2="308" class="arrow "/>
+  <text x="262" y="352" class="sub">资料来自检索，回答附上来源，便于核对</text>
+</svg>

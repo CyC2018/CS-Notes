@@ -25,6 +25,7 @@
         * [2. 3 的 n 次方](#2-3-的-n-次方)
         * [3. 乘积数组](#3-乘积数组)
         * [4. 找出数组中的乘积最大的三个数](#4-找出数组中的乘积最大的三个数)
+        * [5. 用 Rand7() 实现 Rand10()](#5-用-rand7-实现-rand10)
 <!-- GFM-TOC -->
 
 
@@ -90,7 +91,7 @@ int lcm(int a, int b) {
 
 ### 3. 使用位操作和减法求解最大公约数
 
-[编程之美：2.7](#)
+编程之美：2.7
 
 对于 a 和 b 的最大公约数 f(a, b)，有：
 
@@ -238,7 +239,7 @@ public int trailingZeroes(int n) {
 }
 ```
 
-如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 [编程之美：2.2](#) 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
+如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 编程之美：2.2 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
 
 ## 字符串加法减法
 
@@ -531,5 +532,26 @@ public int maximumProduct(int[] nums) {
         }
     }
     return Math.max(max1*max2*max3, max1*min1*min2);
+}
+```
+
+### 5. 用 Rand7() 实现 Rand10()
+
+470\. Implement Rand10() Using Rand7() (Medium)
+
+[Leetcode](https://leetcode.com/problems/implement-rand10-using-rand7/) / [力扣](https://leetcode.cn/problems/implement-rand10-using-rand7/)
+
+题目描述：已知 rand7() 等概率返回 1 \~ 7，只用它实现等概率返回 1 \~ 10 的 rand10()。
+
+把两次 rand7() 的结果看成一个两位的 7 进制数，(rand7() - 1) * 7 + rand7() 能等概率地生成 1 \~ 49。只保留 1 \~ 40，它们对 10 取余之后 0 \~ 9 各出现 4 次，仍然是等概率的；落在 41 \~ 49 时重新生成，这种方法称为拒绝采样。
+
+```java
+public int rand10() {
+    while (true) {
+        int x = (rand7() - 1) * 7 + rand7();
+        if (x <= 40) {
+            return (x - 1) % 10 + 1;
+        }
+    }
 }
 ```

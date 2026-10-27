@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">一条 SELECT 在 MySQL 中的执行过程</text>
+  <rect x="30" y="46" width="420" height="56" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="30" y1="60" x2="450" y2="60" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="39" cy="53" r="2.2" fill="#BBBBBB"/>
+  <circle cx="47" cy="53" r="2.2" fill="#BBBBBB"/>
+  <circle cx="55" cy="53" r="2.2" fill="#BBBBBB"/>
+  <text x="39" y="76" class="sub mono">SELECT * FROM orders WHERE user_id = 1024</text>
+  <text x="39" y="92" class="sub mono">  AND create_time &gt; '2025-01-10'</text>
+  <rect x="20" y="126" width="720" height="268" rx="8" class="frame"/>
+  <text x="30" y="144" class="b">Server 层</text>
+  <rect x="40" y="150" width="90" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="85" y="171.5" class="c sub b">连接器</text>
+  <text x="142" y="165" class="sub" style="fill:#444">校验用户名、密码和权限，维持连接</text>
+  <rect x="40" y="196" width="90" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="85" y="217.5" class="c sub b">解析器</text>
+  <text x="142" y="211" class="sub" style="fill:#444">词法、语法分析，生成语法树</text>
+  <text x="142" y="226" class="sub note">写成 selec 时报 ERROR 1064</text>
+  <line x1="85" y1="184" x2="85" y2="194" class="arrow "/>
+  <rect x="40" y="242" width="90" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="85" y="263.5" class="c sub b">预处理</text>
+  <text x="142" y="257" class="sub" style="fill:#444">检查表和列是否存在</text>
+  <text x="142" y="272" class="sub note">写成 amout 时报 ERROR 1054 Unknown column</text>
+  <line x1="85" y1="230" x2="85" y2="240" class="arrow "/>
+  <rect x="40" y="288" width="90" height="34" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="85" y="309.5" class="c sub b">优化器</text>
+  <text x="142" y="303" class="sub" style="fill:#444">估算各种执行方式的代价，</text>
+  <text x="142" y="318" class="sub" style="fill:#444">选择代价最小的（右表）</text>
+  <line x1="85" y1="276" x2="85" y2="286" class="arrow "/>
+  <rect x="40" y="334" width="90" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="85" y="355.5" class="c sub b">执行器</text>
+  <text x="142" y="349" class="sub" style="fill:#444">按执行计划调用存储引擎的接口，过滤、返回结果</text>
+  <line x1="85" y1="322" x2="85" y2="332" class="arrow "/>
+  <line x1="85" y1="104" x2="85" y2="148" class="arrow "/>
+  <text x="460" y="154" class="sub b" style="fill:#444">优化器估算的代价（optimizer trace）</text>
+  <rect x="460" y="162" width="140" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="530" y="177" class="c sub" style="fill:#444">方案</text>
+  <rect x="600" y="162" width="80" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="640" y="177" class="c sub" style="fill:#444">估算行数</text>
+  <rect x="680" y="162" width="50" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="705" y="177" class="c sub" style="fill:#444">代价</text>
+  <rect x="460" y="184" width="140" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="530" y="200" class="c sub" style="fill:#444">全表扫描</text>
+  <rect x="600" y="184" width="80" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="640" y="200" class="c sub" style="fill:#444">1978736 行</text>
+  <rect x="680" y="184" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="705" y="200" class="c sub mono" style="fill:#444">222512</text>
+  <rect x="460" y="208" width="140" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="530" y="224" class="c sub mono" style="fill:#444">idx_create_time</text>
+  <rect x="600" y="208" width="80" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="640" y="224" class="c sub" style="fill:#444">989368 行</text>
+  <rect x="680" y="208" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="705" y="224" class="c sub mono" style="fill:#444">934036</text>
+  <rect x="460" y="232" width="140" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="530" y="248" class="c sub mono" style="fill:#444">idx_user_status_time</text>
+  <rect x="600" y="232" width="80" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="640" y="248" class="c sub" style="fill:#444">20 行</text>
+  <rect x="680" y="232" width="50" height="24" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="705" y="248" class="c sub mono" style="fill:#444">2.27</text>
+  <rect x="40" y="410" width="680" height="40" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="380" y="428" class="c sub b" style="fill:#444">InnoDB：先在 Buffer Pool 中找数据页，不在内存中才从磁盘读入</text>
+  <text x="380" y="444" class="c sub">按 idx_user_status_time 找到 20 条索引记录，用索引条件下推过滤 create_time，再回表取整行</text>
+  <line x1="85" y1="380" x2="85" y2="408" class="arrow "/>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">HTTP/2 的二进制分帧：一次 GET 请求和响应</text>
+  <rect x="30" y="52" width="300" height="96" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="30" y1="66" x2="330" y2="66" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="39" cy="59" r="2.2" fill="#BBBBBB"/>
+  <circle cx="47" cy="59" r="2.2" fill="#BBBBBB"/>
+  <circle cx="55" cy="59" r="2.2" fill="#BBBBBB"/>
+  <text x="39" y="82" class="sub mono">GET /index.html HTTP/1.1</text>
+  <text x="39" y="98" class="sub mono">Host: www.example.com</text>
+  <text x="39" y="114" class="sub mono">User-Agent: Mozilla/5.0 …</text>
+  <text x="39" y="130" class="sub mono">Accept: text/html</text>
+  <text x="180" y="168" class="c sub">HTTP/1.1：文本，150 字节</text>
+  <line x1="340" y1="100" x2="400" y2="100" class="arrow "/>
+  <text x="370" y="92" class="c sub">HTTP/2</text>
+  <rect x="400" y="60" width="70" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="435" y="79" class="c sub b" style="fill:#444">HEADERS</text>
+  <rect x="470" y="60" width="80" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="510" y="79" class="c sub mono" style="fill:#444">stream 1</text>
+  <rect x="550" y="60" width="120" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="610" y="79" class="c sub" style="fill:#444">78 字节</text>
+  <text x="680" y="80" class="sub">请求首部</text>
+  <rect x="400" y="130" width="70" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="435" y="149" class="c sub b" style="fill:#444">HEADERS</text>
+  <rect x="470" y="130" width="80" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="510" y="149" class="c sub mono" style="fill:#444">stream 1</text>
+  <rect x="550" y="130" width="120" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="610" y="149" class="c sub" style="fill:#444">… 字节</text>
+  <text x="680" y="150" class="sub">响应首部</text>
+  <rect x="400" y="170" width="70" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="435" y="189" class="c sub b" style="fill:#444">DATA</text>
+  <rect x="470" y="170" width="80" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="510" y="189" class="c sub mono" style="fill:#444">stream 1</text>
+  <rect x="550" y="170" width="120" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="610" y="189" class="c sub" style="fill:#444">577 字节</text>
+  <text x="680" y="190" class="sub">页面内容</text>
+  <text x="410" y="52" class="sub"></text>
+  <text x="400" y="122" class="sub b" style="fill:#444">服务器返回：</text>
+  <text x="30" y="230" class="sub">每个帧前面有 9 字节的帧头：长度、类型、标志和流 ID。请求和响应属于同一个流（stream 1），</text>
+  <text x="30" y="248" class="sub">所以多个请求可以在一个 TCP 连接上交错发送，接收方按流 ID 重新组装。</text>
+  <text x="30" y="274" class="sub">78 字节是用 hpack 库按图中首部实际编码的结果；577 字节是 www.example.com 首页的大小。</text>
+</svg>

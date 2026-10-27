@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">管道：fork 之后父进程写、子进程读</text>
+  <rect x="30" y="50" width="250" height="110" rx="8" class="frame"/>
+  <text x="40" y="68" class="b">父进程</text>
+  <rect x="460" y="50" width="250" height="110" rx="8" class="frame"/>
+  <text x="470" y="68" class="b">子进程</text>
+  <rect x="50" y="86" width="100" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="100" y="105" class="c sub" style="fill:#444">fd[1] 写端</text>
+  <rect x="160" y="86" width="100" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="210" y="105" class="c sub" style="fill:#444">fd[0] 关闭</text>
+  <rect x="480" y="86" width="100" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="530" y="105" class="c sub" style="fill:#444">fd[0] 读端</text>
+  <rect x="590" y="86" width="100" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="640" y="105" class="c sub" style="fill:#444">fd[1] 关闭</text>
+  <rect x="290" y="210" width="160" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="370" y="230" class="c sub b" style="fill:#444">内核中的管道缓冲区</text>
+  <text x="370" y="246" class="c sub">Linux 默认 64 KB</text>
+  <path d="M100,118 C100,190 220,232 286,232" class="arrow"/>
+  <path d="M454,232 C520,232 530,190 530,120" class="arrow"/>
+  <text x="150" y="200" class="sub mono">write(fd[1], "hello")</text>
+  <text x="560" y="200" class="sub mono">read(fd[0], buf)</text>
+  <text x="30" y="286" class="sub">pipe 返回两个文件描述符，fork 后父子进程都持有两端，各自关闭不用的一端，数据只能单向流动。</text>
+</svg>

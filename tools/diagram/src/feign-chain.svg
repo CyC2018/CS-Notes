@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="470" viewBox="0 0 740 470">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">inventoryClient.deduct(10086, 2) 经过的对象</text>
+  <rect x="40" y="52" width="260" height="44" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="40" y1="66" x2="300" y2="66" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="49" cy="59" r="2.2" fill="#BBBBBB"/>
+  <circle cx="57" cy="59" r="2.2" fill="#BBBBBB"/>
+  <circle cx="65" cy="59" r="2.2" fill="#BBBBBB"/>
+  <text x="49" y="82" class="sub mono">inventoryClient.deduct(10086, 2)</text>
+  <line x1="170" y1="100" x2="170" y2="140" class="arrow "/>
+  <text x="180" y="116" class="sub">代理 $Proxy88（启动时由</text>
+  <text x="180" y="131" class="sub">FeignClientFactoryBean 创建）</text>
+  <rect x="40" y="144" width="260" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M40,145 L54,155 L68,145" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="74" y="164" class="sub mono">POST http://inventory-service/…</text>
+  <text x="312" y="164" class="sub" fill="#999">此时还是服务名</text>
+  <line x1="170" y1="180" x2="170" y2="236" class="arrow "/>
+  <text x="180" y="200" class="sub mono">FeignBlockingLoadBalancerClient</text>
+  <text x="180" y="216" class="sub">交给负载均衡</text>
+  <rect x="40" y="240" width="260" height="92" rx="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="170" y="258" class="c sub">RoundRobinLoadBalancer 轮询选择</text>
+  <rect x="105" y="268" width="40" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="112" cy="274.5" r="2" fill="#B8B0DE"/>
+  <line x1="119" y1="274.5" x2="138" y2="274.5" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="105" y="284" width="40" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="112" cy="290.5" r="2" fill="#B8B0DE"/>
+  <line x1="119" y1="290.5" x2="138" y2="290.5" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="195" y="268" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="202" cy="274.5" r="2" fill="#7FB2D6"/>
+  <line x1="209" y1="274.5" x2="228" y2="274.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="195" y="284" width="40" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="202" cy="290.5" r="2" fill="#7FB2D6"/>
+  <line x1="209" y1="290.5" x2="228" y2="290.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="125" y="316" class="c b">8081 ✓</text>
+  <text x="215" y="316" class="c sub">8082</text>
+  <line x1="170" y1="336" x2="170" y2="362" class="arrow "/>
+  <text x="180" y="352" class="sub">reconstructURI：把服务名换成实例地址</text>
+  <rect x="40" y="366" width="260" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M40,367 L54,377 L68,367" fill="none" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="74" y="386" class="sub mono">POST http://127.0.0.1:8081/…</text>
+  <line x1="304" y1="382" x2="398" y2="382" class="arrow "/>
+  <rect x="407" y="360" width="46" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="414" cy="366.5" r="2" fill="#B8B0DE"/>
+  <line x1="421" y1="366.5" x2="446" y2="366.5" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="407" y="376" width="46" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="414" cy="382.5" r="2" fill="#B8B0DE"/>
+  <line x1="421" y1="382.5" x2="446" y2="382.5" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="407" y="392" width="46" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <circle cx="414" cy="398.5" r="2" fill="#B8B0DE"/>
+  <line x1="421" y1="398.5" x2="446" y2="398.5" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="430" y="422" class="c b">库存服务 8081</text>
+  <rect x="465" y="52" width="170" height="70" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="465" y="52" width="170" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="550" y="67" class="c b">Nacos 注册中心</text>
+  <rect x="471" y="80" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="477" y="92" class="sub mono">127.0.0.1:8081</text>
+  <rect x="471" y="100" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="477" y="112" class="sub mono">127.0.0.1:8082</text>
+  <text x="550" y="140" class="c sub mono">NacosDiscoveryClient</text>
+  <line x1="550" y1="146" x2="550" y2="172" class="arrow "/>
+  <rect x="465" y="174" width="170" height="34" rx="6" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="550" y="196" class="c b">DiscoveryClient 接口</text>
+  <text x="550" y="222" class="c sub mono">CompositeDiscoveryClient</text>
+  <line x1="550" y1="228" x2="550" y2="254" class="arrow "/>
+  <rect x="465" y="256" width="170" height="40" rx="6" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="490" cy="276" r="10" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M490,270 V276 L494.5,279" fill="none" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="510" y="281" class="b">缓存实例列表 35 秒</text>
+  <text x="550" y="312" class="c sub mono">CachingServiceInstanceListSupplier</text>
+  <line x1="463" y1="282" x2="304" y2="282" class="arrow "/>
+  <text x="384" y="274" class="c sub">实例列表</text>
+  <text x="20" y="452" class="sub">左列是请求的变化，右列是实例列表的来源；类名都是运行时实际打印出来的。</text>
+</svg>

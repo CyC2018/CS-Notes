@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">多级反馈队列：一个需要 100 个时间片的进程</text>
+  <text x="110" y="73" class="sub b e" style="fill:#444">队列 1</text>
+  <rect x="120" y="56" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="60" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="72" class="c sub"></text>
+  <rect x="170.8" y="60" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="189.2" y="72" class="c sub"></text>
+  <rect x="211.6" y="60" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="60" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="60" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="73" class="sub">时间片 1</text>
+  <text x="440" y="73" class="sub" style="">累计运行 1</text>
+  <path d="M340,68 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="105" class="sub b e" style="fill:#444">队列 2</text>
+  <rect x="120" y="88" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="92" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="104" class="c sub"></text>
+  <rect x="170.8" y="92" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="189.2" y="104" class="c sub"></text>
+  <rect x="211.6" y="92" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="92" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="92" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="105" class="sub">时间片 2</text>
+  <text x="440" y="105" class="sub" style="">累计运行 3</text>
+  <path d="M340,100 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="137" class="sub b e" style="fill:#444">队列 3</text>
+  <rect x="120" y="120" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="124" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="136" class="c sub"></text>
+  <rect x="170.8" y="124" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="189.2" y="136" class="c sub"></text>
+  <rect x="211.6" y="124" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="124" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="124" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="137" class="sub">时间片 4</text>
+  <text x="440" y="137" class="sub" style="">累计运行 7</text>
+  <path d="M340,132 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="169" class="sub b e" style="fill:#444">队列 4</text>
+  <rect x="120" y="152" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="156" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="168" class="c sub"></text>
+  <rect x="170.8" y="156" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="211.6" y="156" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="156" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="156" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="169" class="sub">时间片 8</text>
+  <text x="440" y="169" class="sub" style="">累计运行 15</text>
+  <path d="M340,164 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="201" class="sub b e" style="fill:#444">队列 5</text>
+  <rect x="120" y="184" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="188" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="200" class="c sub"></text>
+  <rect x="170.8" y="188" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="211.6" y="188" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="188" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="188" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="201" class="sub">时间片 16</text>
+  <text x="440" y="201" class="sub" style="">累计运行 31</text>
+  <path d="M340,196 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="233" class="sub b e" style="fill:#444">队列 6</text>
+  <rect x="120" y="216" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="220" width="36.8" height="16" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="148.4" y="232" class="c sub"></text>
+  <rect x="170.8" y="220" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="211.6" y="220" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="220" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="220" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="233" class="sub">时间片 32</text>
+  <text x="440" y="233" class="sub" style="">累计运行 63</text>
+  <path d="M340,228 q12,0 12,16" fill="none" stroke="#BBB" marker-end="url(#a)"/>
+  <text x="110" y="265" class="sub b e" style="fill:#444">队列 7</text>
+  <rect x="120" y="248" width="220" height="24" rx="12" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <rect x="130" y="252" width="36.8" height="16" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="148.4" y="264" class="c sub"></text>
+  <rect x="170.8" y="252" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="211.6" y="252" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="252.4" y="252" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <rect x="293.2" y="252" width="36.8" height="16" rx="3" fill="none" stroke="#CCC" stroke-dasharray="3 2"/>
+  <text x="352" y="265" class="sub">时间片 64</text>
+  <text x="440" y="265" class="sub" style="fill:#444">累计运行 100，完成</text>
+  <text x="30" y="290" class="sub">没用完时间片就进入下一级。这个进程只被调度 7 次，而时间片固定为 1 时要调度 100 次；新来的短进程在上面的高优先级队列中很快完成。</text>
+</svg>

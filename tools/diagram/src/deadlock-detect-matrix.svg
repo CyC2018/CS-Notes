@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">每种资源有多个：逐个找能满足请求的进程</text>
+  <text x="30" y="50" class="sub">资源 R1、R2、R3</text>
+  <text x="90" y="79" class="sub b e" style="fill:#444">E 总量</text>
+  <rect x="98" y="62" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="113" y="79" class="c sub mono" style="fill:#444">5</text>
+  <rect x="128" y="62" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="143" y="79" class="c sub mono" style="fill:#444">3</text>
+  <rect x="158" y="62" width="30" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="173" y="79" class="c sub mono" style="fill:#444">4</text>
+  <text x="280" y="79" class="sub b e" style="fill:#444">A 剩余</text>
+  <rect x="288" y="62" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="303" y="79" class="c sub mono" style="fill:#444">1</text>
+  <rect x="318" y="62" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="333" y="79" class="c sub mono" style="fill:#444">1</text>
+  <rect x="348" y="62" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="363" y="79" class="c sub mono" style="fill:#444">1</text>
+  <text x="119" y="124" class="c sub b" style="fill:#444">C 已分配</text>
+  <text x="54" y="149" class="sub e">P1</text>
+  <rect x="74" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="149" class="c sub mono" style="fill:#444">1</text>
+  <rect x="104" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="149" class="c sub mono" style="fill:#444">1</text>
+  <rect x="134" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="149" class="c sub mono" style="fill:#444">0</text>
+  <text x="54" y="175" class="sub e">P2</text>
+  <rect x="74" y="158" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="175" class="c sub mono" style="fill:#444">2</text>
+  <rect x="104" y="158" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="175" class="c sub mono" style="fill:#444">0</text>
+  <rect x="134" y="158" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="175" class="c sub mono" style="fill:#444">1</text>
+  <text x="54" y="201" class="sub e">P3</text>
+  <rect x="74" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="89" y="201" class="c sub mono" style="fill:#444">1</text>
+  <rect x="104" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="119" y="201" class="c sub mono" style="fill:#444">1</text>
+  <rect x="134" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="149" y="201" class="c sub mono" style="fill:#444">2</text>
+  <text x="289" y="124" class="c sub b" style="fill:#444">R 还在请求</text>
+  <text x="224" y="149" class="sub e">P1</text>
+  <rect x="244" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="259" y="149" class="c sub mono" style="fill:#444">2</text>
+  <rect x="274" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="289" y="149" class="c sub mono" style="fill:#444">0</text>
+  <rect x="304" y="132" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="319" y="149" class="c sub mono" style="fill:#444">1</text>
+  <text x="224" y="175" class="sub e">P2</text>
+  <rect x="244" y="158" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="259" y="175" class="c sub mono" style="fill:#444">1</text>
+  <rect x="274" y="158" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="289" y="175" class="c sub mono" style="fill:#444">1</text>
+  <rect x="304" y="158" width="30" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="319" y="175" class="c sub mono" style="fill:#444">0</text>
+  <text x="224" y="201" class="sub e">P3</text>
+  <rect x="244" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="259" y="201" class="c sub mono" style="fill:#444">1</text>
+  <rect x="274" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="289" y="201" class="c sub mono" style="fill:#444">2</text>
+  <rect x="304" y="184" width="30" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="319" y="201" class="c sub mono" style="fill:#444">1</text>
+  <text x="420" y="50" class="b">按算法依次标记</text>
+  <rect x="420" y="62" width="320" height="58" rx="5" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="432" y="80" class="sub" style="fill:#444">1. P2 请求 (1 1 0) ≤ A，可以运行</text>
+  <text x="446" y="100" class="sub">结束后归还 (2 0 1)，A = (3 1 2)</text>
+  <rect x="420" y="132" width="320" height="58" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="150" class="sub" style="fill:#444">2. P1 请求 (2 0 1) ≤ A，可以运行</text>
+  <text x="446" y="170" class="sub">结束后归还 (1 1 0)，A = (4 2 2)</text>
+  <rect x="420" y="202" width="320" height="58" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="220" class="sub" style="fill:#444">3. P3 请求 (1 2 1) ≤ A，可以运行</text>
+  <text x="446" y="240" class="sub">结束后归还 (1 1 2)，A = (5 3 4)</text>
+  <text x="30" y="286" class="sub">开始时 A 只满足 P2 的请求；P2 结束后归还资源，P1、P3 才依次得到满足。</text>
+  <text x="30" y="304" class="sub">所有进程都能被标记，没有死锁；如果某一步找不到能满足的进程，剩下没被标记的进程就处于死锁中。</text>
+</svg>

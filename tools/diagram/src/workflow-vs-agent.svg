@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="300" viewBox="0 0 680 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">工作流与 Agent</text>
+  <rect x="15" y="45" width="320" height="240" rx="8" class="frame"/>
+  <text x="25" y="63" class="b">工作流：代码决定步骤</text>
+  <path d="M34,82 h68 q6,0 6,6 v18 q0,6 -6,6 H46 l-8,8 l0,-8 H34 q-6,0 -6,-6 v-18 q0,-6 6,-6 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="38" y="101" class="sub">用户消息</text>
+  <line x1="146.5" y1="78" x2="146.5" y2="118" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="134" y1="90.5" x2="174" y2="90.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="154" y1="78" x2="154" y2="118" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="134" y1="98" x2="174" y2="98" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="161.5" y1="78" x2="161.5" y2="118" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="134" y1="105.5" x2="174" y2="105.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="139" y="83" width="30" height="30" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="147.4" y="91.4" width="13.2" height="13.2" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="154" y="134" class="c sub">大模型分类</text>
+  <line x1="110" y1="97" x2="134" y2="97" class="arrow "/>
+  <rect x="240" y="70" width="80" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="280" y="90.5" class="b c">退款流程</text>
+  <path d="M174,98 C200,98 210,86 236,86" class="arrow"/>
+  <text x="222" y="82" class="e sub">退款</text>
+  <rect x="240" y="140" width="80" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="280" y="160.5" class="b c">物流查询</text>
+  <path d="M174,98 C200,98 210,156 236,156" class="arrow"/>
+  <text x="222" y="170" class="e sub">物流</text>
+  <rect x="240" y="210" width="80" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="280" y="230.5" class="b c">转人工</text>
+  <path d="M174,98 C200,98 210,226 236,226" class="arrow"/>
+  <text x="222" y="240" class="e sub">其它</text>
+  <text x="175" y="268" class="c ok">可预测、成本可控</text>
+  <rect x="350" y="45" width="315" height="240" rx="8" class="frame"/>
+  <text x="360" y="63" class="b">Agent：大模型决定下一步</text>
+  <line x1="497" y1="127" x2="497" y2="177" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="482" y1="142" x2="532" y2="142" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="507" y1="127" x2="507" y2="177" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="482" y1="152" x2="532" y2="152" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="517" y1="127" x2="517" y2="177" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="482" y1="162" x2="532" y2="162" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="487" y="132" width="40" height="40" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="498.2" y="143.2" width="17.6" height="17.6" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="507" y="202" class="c sub">循环决策</text>
+  <rect x="380" y="70" width="90" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="425" y="90.5" class="b c">查订单</text>
+  <line x1="483" y1="128" x2="447" y2="102" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="560" y="70" width="90" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="605" y="90.5" class="b c">查物流</text>
+  <line x1="531" y1="128" x2="583" y2="102" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="380" y="214" width="90" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="425" y="234.5" class="b c">退款</text>
+  <line x1="483" y1="176" x2="447" y2="214" class="arrow dash" marker-start="url(#a)"/>
+  <rect x="560" y="214" width="90" height="32" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="605" y="234.5" class="b c">转人工</text>
+  <line x1="531" y1="176" x2="583" y2="214" class="arrow dash" marker-start="url(#a)"/>
+  <text x="507" y="268" class="c note">灵活，但成本更高、错误会累积</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="544" height="477" viewBox="0 0 544 477">
+  <style>
+    text { font-family: Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #666; font-weight: bold; text-anchor: middle; }
+    .title { fill: #777; }
+    .sub { fill: #888; }
+    .note { fill: #C38F8A; }
+    .flow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#arrow); }
+    .wait { stroke-dasharray: 4 3; }
+    .box { fill: #9CCBC6; }
+    .shadow { fill: #B8B8B8; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F5F5F5"/>
+  <text x="272" y="30" font-size="17" class="title">二级封锁协议</text>
+  <text x="272" y="50" font-size="10" class="sub">CyC</text>
+  <text x="223" y="74" font-size="11">T1</text>
+  <text x="340" y="74" font-size="11">T2</text>
+  <!-- T1：加 X 锁修改后回滚 -->
+  <circle cx="223" cy="104" r="18" fill="#61646B"/>
+  <line x1="223" y1="122" x2="223" y2="143.5" class="flow"/>
+  <polygon points="184,144.5 259,144.5 262,147.5 262,167.5 187,167.5 184,164.5" class="box"/>
+  <text x="223" y="160" font-size="11">lock-x A</text>
+  <line x1="223" y1="167.5" x2="223" y2="177.5" class="flow"/>
+  <polygon points="184,178.5 259,178.5 262,181.5 262,201.5 187,201.5 184,198.5" class="box"/>
+  <text x="223" y="194" font-size="11">read A=10</text>
+  <line x1="223" y1="201.5" x2="223" y2="213.5" class="flow"/>
+  <polygon points="184,214.5 259,214.5 262,217.5 262,237.5 187,237.5 184,234.5" class="box"/>
+  <text x="223" y="230" font-size="11">write A=20</text>
+  <line x1="223" y1="237.5" x2="223" y2="249.5" class="flow"/>
+  <polygon points="184,250.5 259,250.5 262,253.5 262,273.5 187,273.5 184,270.5" class="box"/>
+  <text x="223" y="266" font-size="11">rollback</text>
+  <line x1="223" y1="273.5" x2="223" y2="284.5" class="flow"/>
+  <polygon points="184,285.5 259,285.5 262,288.5 262,308.5 187,308.5 184,305.5" class="box"/>
+  <text x="223" y="301" font-size="11">unlock-x A</text>
+  <line x1="223" y1="308.5" x2="223" y2="413" class="flow"/>
+  <circle cx="223" cy="433" r="18" fill="#61646B"/>
+  <!-- T2：加 S 锁读取，等待 T1 释放 X 锁 -->
+  <circle cx="340" cy="104" r="18" fill="#61646B"/>
+  <line x1="340" y1="122" x2="340" y2="177.5" class="flow"/>
+  <polygon points="301,178.5 376,178.5 379,181.5 379,201.5 304,201.5 301,198.5" class="box"/>
+  <text x="340" y="194" font-size="11">lock-s A</text>
+  <line x1="340" y1="201.5" x2="340" y2="310.5" class="flow wait"/>
+  <text x="364" y="259" font-size="10" class="note">wait</text>
+  <polygon points="301,311.5 376,311.5 379,314.5 379,334.5 304,334.5 301,331.5" class="box"/>
+  <text x="340" y="327" font-size="11">obtain</text>
+  <line x1="340" y1="334.5" x2="340" y2="343.5" class="flow"/>
+  <polygon points="301,344.5 376,344.5 379,347.5 379,367.5 304,367.5 301,364.5" class="box"/>
+  <text x="340" y="360" font-size="11">read A=10</text>
+  <line x1="340" y1="367.5" x2="340" y2="376.5" class="flow"/>
+  <polygon points="301,377.5 376,377.5 379,380.5 379,400.5 304,400.5 301,397.5" class="box"/>
+  <text x="340" y="393" font-size="11">unlock-s A</text>
+  <line x1="340" y1="400.5" x2="340" y2="413" class="flow"/>
+  <circle cx="340" cy="433" r="18" fill="#61646B"/>
+</svg>

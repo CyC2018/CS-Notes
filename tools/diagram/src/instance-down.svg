@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="336" viewBox="0 0 740 336">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">停掉库存实例 8082 后，订单服务调用它的情况</text>
+  <line x1="250.0" y1="56" x2="250.0" y2="270" stroke="#EEE"/>
+  <text x="250" y="286" class="c sub">0 s</text>
+  <line x1="367.5" y1="56" x2="367.5" y2="270" stroke="#EEE"/>
+  <text x="367.5" y="286" class="c sub">10 s</text>
+  <line x1="485.0" y1="56" x2="485.0" y2="270" stroke="#EEE"/>
+  <text x="485" y="286" class="c sub">20 s</text>
+  <line x1="602.5" y1="56" x2="602.5" y2="270" stroke="#EEE"/>
+  <text x="602.5" y="286" class="c sub">30 s</text>
+  <line x1="720.0" y1="56" x2="720.0" y2="270" stroke="#EEE"/>
+  <text x="720" y="286" class="c sub">40 s</text>
+  <text x="20" y="86" class="b">kill -9，默认配置</text>
+  <rect x="250" y="74" width="470" height="18" rx="3" fill="#F5F5F5"/>
+  <rect x="250.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="255.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="260.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="265.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="271.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="276.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="281.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="287.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="292.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="297.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="302.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="308.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="313.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="318.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="324.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="329.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="334.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="339.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="345.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="350.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="355.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="361.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="366.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="371.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="376.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="382.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="387.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="392.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="398.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="403.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="408.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="413.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="419.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="424.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="429.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="435.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="440.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="445.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="450.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="456.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="461.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="466.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="472.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="477.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="482.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="487.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="493.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="498.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="503.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="509.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="514.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="519.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="525.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="530.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="535.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="540.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="546.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="551.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="556.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="562.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="567.2" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="572.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="577.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="583.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="588.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="593.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="599.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="604.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="609.5" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="614.8" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="620.1" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="625.4" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="630.7" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="636.0" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="641.3" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="646.6" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <rect x="651.9" y="74" width="2.4" height="18" fill="#C0605A"/>
+  <text x="260" y="108" class="sub">35 s 内约一半调用失败，共 83 次</text>
+  <text x="20" y="134">kill -9，关闭负载均衡缓存</text>
+  <rect x="250" y="122" width="470" height="18" rx="3" fill="#F5F5F5"/>
+  <rect x="252.3" y="122" width="3" height="18" fill="#C0605A"/>
+  <text x="260" y="156" class="sub">只失败 1 次</text>
+  <text x="20" y="182" class="b">进程卡住，默认配置</text>
+  <rect x="250" y="170" width="470" height="18" rx="3" fill="#F5F5F5"/>
+  <rect x="252.3" y="175" width="467.6" height="8" rx="2" fill="#E8B4B0"/>
+  <text x="260" y="204" class="sub">发往它的调用要等 60 s 才失败</text>
+  <text x="20" y="230">进程卡住，读取超时 2 s</text>
+  <rect x="250" y="218" width="470" height="18" rx="3" fill="#F5F5F5"/>
+  <rect x="250.0" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="275.9" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="301.7" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="327.6" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="353.4" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="379.2" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="405.1" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="430.9" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="456.8" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="482.6" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <rect x="508.5" y="218" width="23.5" height="18" fill="#E8B4B0"/>
+  <text x="260" y="252" class="sub">每次 2 s 后失败，约 23 s 后不再调用</text>
+  <line x1="257.1" y1="58" x2="257.1" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="261.05" y="50" class="sub" fill="#766AA8">Nacos 删除实例 0.6 s</text>
+  <line x1="520.2" y1="58" x2="520.2" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="524.25" y="50" class="sub" fill="#766AA8">进程卡住时 Nacos 23 s 后才删除</text>
+  <line x1="661.2" y1="58" x2="661.2" y2="270" stroke="#9F94D5" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="657.25" y="304" class="sub e" fill="#766AA8">负载均衡缓存 35 s 过期</text>
+  <text x="20" y="322" class="sub">订单服务每 0.2 s 调用一次库存服务，请求在 8081 和 8082 之间轮询；红色为失败的调用</text>
+</svg>

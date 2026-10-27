@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="330" viewBox="0 0 740 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">死锁：两个线程反向转账</text>
+  <circle cx="150" cy="110" r="20" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="150" y="114" class="c sub b" style="fill:#444">T1</text>
+  <circle cx="150" cy="250" r="20" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <text x="150" y="254" class="c sub b" style="fill:#444">T2</text>
+  <rect x="311" y="91" width="38" height="38" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="330" y="114" class="c sub b" style="fill:#444">alice</text>
+  <rect x="311" y="231" width="38" height="38" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="330" y="254" class="c sub b" style="fill:#444">bob</text>
+  <line x1="309" y1="110" x2="171" y2="110" class="arrow "/>
+  <text x="240" y="100" class="c sub">持有</text>
+  <line x1="309" y1="250" x2="171" y2="250" class="arrow "/>
+  <text x="240" y="266" class="c sub">持有</text>
+  <line x1="166.576" y1="122.893" x2="313.424" y2="237.107" class="arrow red"/>
+  <text x="206" y="166" class="c sub note">等待</text>
+  <line x1="166.576" y1="237.107" x2="313.424" y2="122.893" class="arrow red"/>
+  <text x="276" y="166" class="c sub note">等待</text>
+  <text x="60" y="80" class="sub mono">transfer(alice, bob)</text>
+  <text x="60" y="296" class="sub mono">transfer(bob, alice)</text>
+  <text x="240" y="316" class="c sub">圆形是线程，方形是账户上的锁</text>
+  <text x="420" y="70" class="b">四个条件同时满足：</text>
+  <rect x="420" y="92" width="300" height="40" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="109" class="sub b" style="fill:#444">互斥</text>
+  <text x="432" y="125" class="sub">一把锁同一时刻只能被一个线程持有</text>
+  <rect x="420" y="144" width="300" height="40" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="161" class="sub b" style="fill:#444">占有和等待</text>
+  <text x="432" y="177" class="sub">T1 持有 alice 的锁，还在等 bob 的锁</text>
+  <rect x="420" y="196" width="300" height="40" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="432" y="213" class="sub b" style="fill:#444">不可抢占</text>
+  <text x="432" y="229" class="sub">bob 的锁只能由 T2 自己释放</text>
+  <rect x="420" y="248" width="300" height="40" rx="5" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="432" y="265" class="sub b" style="fill:#444">环路等待</text>
+  <text x="432" y="281" class="sub">T1 → bob → T2 → alice → T1</text>
+</svg>

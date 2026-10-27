@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="448" viewBox="0 0 600 448">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 13px; }
+    .head { font-weight: bold; text-anchor: middle; }
+    .msg { text-anchor: middle; font-size: 12px; }
+    .note { font-size: 12px; fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .life { stroke: #BBB; stroke-width: 1; stroke-dasharray: 4 4; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .reply { stroke-dasharray: 5 4; }
+    .lost { stroke: #C0605A; marker-end: url(#x); }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+  <text x="300" y="28" class="title">栅栏令牌</text>
+  <line x1="90" y1="76" x2="90" y2="428" class="life"/>
+  <line x1="230" y1="76" x2="230" y2="428" class="life"/>
+  <line x1="370" y1="76" x2="370" y2="428" class="life"/>
+  <line x1="510" y1="76" x2="510" y2="428" class="life"/>
+  <rect x="49" y="45" width="82" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="90" y="64.5" class="head">客户端 1</text>
+  <rect x="194" y="45" width="72" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="230" y="64.5" class="head">锁服务</text>
+  <rect x="329" y="45" width="82" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="370" y="64.5" class="head">客户端 2</text>
+  <rect x="474" y="45" width="72" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="510" y="64.5" class="head">存储</text>
+  <line x1="94" y1="100" x2="226" y2="100" class="arrow"/>
+  <text x="160" y="94" class="msg">获取锁</text>
+  <line x1="226" y1="134" x2="94" y2="134" class="arrow reply"/>
+  <text x="160" y="128" class="msg">成功，令牌 33</text>
+  <rect x="85" y="158" width="10" height="150" fill="#E6E3FA" stroke="#9F94D5"/>
+  <text x="102" y="237" class="note"></text>
+  <text x="78" y="172" class="note" text-anchor="end">GC 停顿</text>
+  <text x="240" y="206" class="note" text-anchor="start">锁过期</text>
+  <line x1="366" y1="236" x2="234" y2="236" class="arrow"/>
+  <text x="300" y="230" class="msg">获取锁</text>
+  <line x1="234" y1="270" x2="366" y2="270" class="arrow reply"/>
+  <text x="300" y="264" class="msg">成功，令牌 34</text>
+  <line x1="374" y1="304" x2="506" y2="304" class="arrow"/>
+  <text x="440" y="298" class="msg">写入，令牌 34</text>
+  <text x="500" y="342" class="note ok" text-anchor="end">接受，记录 34</text>
+  <line x1="94" y1="372" x2="506" y2="372" class="arrow"/>
+  <text x="140" y="366" class="msg">写入，令牌 33</text>
+  <text x="500" y="410" class="note" text-anchor="end">拒绝，33 &lt; 34</text>
+</svg>

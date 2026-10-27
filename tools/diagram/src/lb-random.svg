@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="276" viewBox="0 0 640 276">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">随机：每个请求随机选一台服务器</text>
+  <text x="30" y="92" class="sub">请求按顺序到达</text>
+  <rect x="30" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="42" y="117" class="c sub">1</text>
+  <rect x="60" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="72" y="117" class="c sub">2</text>
+  <rect x="90" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="102" y="117" class="c sub">3</text>
+  <rect x="120" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="132" y="117" class="c sub">4</text>
+  <rect x="150" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="162" y="117" class="c sub">5</text>
+  <rect x="180" y="102" width="24" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="192" y="117" class="c sub">6</text>
+  <line x1="212" y1="113" x2="262" y2="113" class="arrow "/>
+  <rect x="275" y="90" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="282" cy="96.5" r="2" fill="#BFBEBA"/>
+  <line x1="289" y1="96.5" x2="318" y2="96.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="275" y="106" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="282" cy="112.5" r="2" fill="#BFBEBA"/>
+  <line x1="289" y1="112.5" x2="318" y2="112.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="275" y="122" width="50" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="282" cy="128.5" r="2" fill="#BFBEBA"/>
+  <line x1="289" y1="128.5" x2="318" y2="128.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="300" y="150" class="c sub b">负载均衡器</text>
+  <text x="300" y="166" class="c sub">随机</text>
+  <line x1="330" y1="113" x2="412" y2="76" class="arrow "/>
+  <rect x="417" y="56" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="62.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="62.5" x2="456" y2="62.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="72" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="78.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="78.5" x2="456" y2="78.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="88" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="94.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="94.5" x2="456" y2="94.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="440" y="116" class="c sub b">Server 1</text>
+  <rect x="478" y="66" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="489" y="81" class="c sub">1</text>
+  <rect x="504" y="66" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="515" y="81" class="c sub">2</text>
+  <rect x="530" y="66" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="541" y="81" class="c sub">4</text>
+  <line x1="330" y1="113" x2="412" y2="176" class="arrow "/>
+  <rect x="417" y="156" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="162.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="162.5" x2="456" y2="162.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="172" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="178.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="178.5" x2="456" y2="178.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="417" y="188" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="424" cy="194.5" r="2" fill="#7FB2D6"/>
+  <line x1="431" y1="194.5" x2="456" y2="194.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="440" y="216" class="c sub b">Server 2</text>
+  <rect x="478" y="166" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="489" y="181" class="c sub">3</text>
+  <rect x="504" y="166" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="515" y="181" class="c sub">5</text>
+  <rect x="530" y="166" width="22" height="22" rx="4" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="541" y="181" class="c sub">6</text>
+  <text x="30" y="254" class="sub">请求少时分配可能不均，请求多时接近平均：模拟 10000 个请求，两台分到 5055 和 4945 个。</text>
+</svg>

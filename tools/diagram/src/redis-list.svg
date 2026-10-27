@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="190" viewBox="0 0 480 190">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="240" y="28" class="title">LIST</text>
+  <text x="30" y="64" class="sub b"></text>
+  <rect x="30" y="70" width="120" height="28" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="90" y="88" class="c sub mono" style="fill:#444">orders:queue</text>
+  <line x1="154" y1="84" x2="184" y2="84" class="arrow "/>
+  <rect x="226" y="70" width="60" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="256" y="88" class="c sub mono" style="fill:#444">1024</text>
+  <text x="256" y="116" class="c sub mono">0</text>
+  <text x="256" y="132" class="c sub mono">-3</text>
+  <rect x="290" y="70" width="60" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="88" class="c sub mono" style="fill:#444">1025</text>
+  <text x="320" y="116" class="c sub mono">1</text>
+  <text x="320" y="132" class="c sub mono">-2</text>
+  <rect x="354" y="70" width="60" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="384" y="88" class="c sub mono" style="fill:#444">1026</text>
+  <text x="384" y="116" class="c sub mono">2</text>
+  <text x="384" y="132" class="c sub mono">-1</text>
+  <text x="216" y="116" class="sub e">下标</text>
+  <text x="216" y="132" class="sub e">负数下标</text>
+  <line x1="192" y1="78" x2="220" y2="78" class="arrow"/>
+  <line x1="220" y1="90" x2="192" y2="90" class="arrow"/>
+  <line x1="448" y1="78" x2="420" y2="78" class="arrow"/>
+  <line x1="420" y1="90" x2="448" y2="90" class="arrow"/>
+  <text x="206" y="62" class="c sub mono">LPUSH / LPOP</text>
+  <text x="434" y="62" class="c sub mono">RPUSH / RPOP</text>
+  <text x="30" y="168" class="sub">按插入顺序排列，元素可以重复；在两端插入和弹出是 O(1)，按下标访问要从一端数过去。</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Qwen2.5-7B 实际收到和输出的文本</text>
+  <rect x="30" y="54" width="520" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="40" y="69" class="sub mono" style="fill:#444">&lt;|im_start|&gt;system</text>
+  <text x="566" y="69" class="sub">系统消息</text>
+  <rect x="30" y="79" width="520" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="40" y="94" class="sub mono" style="fill:#444">你是电商客服助手，回答要简短。</text>
+  <rect x="30" y="104" width="520" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="40" y="119" class="sub mono" style="fill:#444"># Tools ... &lt;tools&gt;</text>
+  <text x="566" y="119" class="sub">推理服务按模板</text>
+  <rect x="30" y="129" width="520" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="40" y="144" class="sub mono" style="fill:#444">{"name": "get_order", "description": "按订单号查询…"}</text>
+  <text x="566" y="144" class="sub">拼入的工具定义</text>
+  <rect x="30" y="154" width="520" height="22" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="40" y="169" class="sub mono" style="fill:#444">{"name": "get_logistics", ...}&lt;/tools&gt;</text>
+  <rect x="30" y="179" width="520" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="40" y="194" class="sub mono" style="fill:#444">&lt;|im_start|&gt;user  订单 1024 到哪了？</text>
+  <text x="566" y="194" class="sub">用户消息</text>
+  <rect x="30" y="204" width="520" height="22" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="40" y="219" class="sub mono" style="fill:#444">&lt;|im_start|&gt;assistant</text>
+  <rect x="30" y="229" width="520" height="22" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="40" y="244" class="sub mono" style="fill:#444">&lt;tool_call&gt;</text>
+  <text x="566" y="244" class="sub">模型生成的文本</text>
+  <rect x="30" y="254" width="520" height="22" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="40" y="269" class="sub mono" style="fill:#444">{"name": "get_order", "arguments": {"order_id": "1024"}}</text>
+  <rect x="30" y="279" width="520" height="22" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="40" y="294" class="sub mono" style="fill:#444">&lt;/tool_call&gt;</text>
+  <rect x="30" y="304" width="520" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="40" y="319" class="sub mono" style="fill:#444">&lt;|im_start|&gt;user</text>
+  <text x="566" y="319" class="sub">应用执行工具后，</text>
+  <rect x="30" y="329" width="520" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="40" y="344" class="sub mono" style="fill:#444">&lt;tool_response&gt;{"status": "已发货", "tracking_no": "SF1234567"}</text>
+  <text x="566" y="344" class="sub">把结果放回去</text>
+  <rect x="30" y="354" width="520" height="22" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="40" y="369" class="sub mono" style="fill:#444">&lt;/tool_response&gt;</text>
+  <text x="30" y="401" class="sub">第 2 次调用时，上面的全部文本加上工具结果一起重新发给模型，共 327 个 Token；第 1 次是 255 个。</text>
+  <text x="30" y="419" class="sub">tool_calls、tool 角色这些结构化字段，在模型看来都只是这样一段特定格式的文本。</text>
+</svg>

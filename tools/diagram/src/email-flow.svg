@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">电子邮件：alice@a.com 发信给 bob@b.com</text>
+  <circle cx="50" cy="79" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M33,110 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="50" y="130" class="c sub b">alice</text>
+  <text x="50" y="146" class="c sub">用户代理</text>
+  <rect x="227" y="74" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="234" cy="80.5" r="2" fill="#7FB2D6"/>
+  <line x1="241" y1="80.5" x2="266" y2="80.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="227" y="90" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="234" cy="96.5" r="2" fill="#7FB2D6"/>
+  <line x1="241" y1="96.5" x2="266" y2="96.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="227" y="106" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="234" cy="112.5" r="2" fill="#7FB2D6"/>
+  <line x1="241" y1="112.5" x2="266" y2="112.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="250" y="138" class="c sub b">a.com 邮件服务器</text>
+  <rect x="477" y="74" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="80.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="80.5" x2="516" y2="80.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="477" y="90" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="96.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="96.5" x2="516" y2="96.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="477" y="106" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="112.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="112.5" x2="516" y2="112.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="500" y="138" class="c sub b">b.com 邮件服务器</text>
+  <circle cx="700" cy="79" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M683,110 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="700" y="130" class="c sub b">bob</text>
+  <text x="700" y="146" class="c sub">用户代理</text>
+  <rect x="96" y="74" width="110" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M96,75 L110,85 L124,75" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="130" y="92" class="sub b">SMTP</text>
+  <line x1="80" y1="108" x2="222" y2="108" class="arrow "/>
+  <line x1="278" y1="98" x2="472" y2="98" class="arrow "/>
+  <text x="375" y="88" class="c sub b">SMTP（端口 25）</text>
+  <text x="375" y="120" class="c sub">先查 b.com 的 MX 记录</text>
+  <text x="375" y="136" class="c sub">找到对方的邮件服务器</text>
+  <line x1="672" y1="98" x2="528" y2="98" class="arrow dash"/>
+  <text x="600" y="88" class="c sub b">POP3 或 IMAP</text>
+  <text x="600" y="120" class="c sub">bob 主动来取</text>
+  <text x="30" y="196" class="sub">发送和服务器之间的转发用 SMTP，是“推”；收件人读取用 POP3 或 IMAP，是“拉”。</text>
+  <text x="30" y="214" class="sub">邮件先存放在收件方的服务器上，bob 不在线也不影响 alice 发信。</text>
+  <text x="30" y="238" class="sub">（用户代理到发件服务器之间通常使用端口 587 并要求登录。）</text>
+</svg>

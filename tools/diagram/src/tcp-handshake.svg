@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="410" viewBox="0 0 600 410">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">TCP 三次握手</text>
+  <rect x="110" y="46" width="120" height="34" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="170" y="67.5" class="b c">客户端 A</text>
+  <line x1="170" y1="82" x2="170" y2="350" stroke="#BBB" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="370" y="46" width="120" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="430" y="67.5" class="b c">服务器 B</text>
+  <line x1="430" y1="82" x2="430" y2="350" stroke="#BBB" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="99.6" y="92" width="58.4" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="128.8" y="106" class="c sub mono" style="fill:#555">CLOSED</text>
+  <rect x="442" y="92" width="58.4" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="471.2" y="106" class="c sub mono" style="fill:#555">LISTEN</text>
+  <line x1="170" y1="124" x2="430" y2="164" class="arrow "/>
+  <text x="300" y="137" class="c sub mono" transform="rotate(8.75 300 144)" style="fill:#555">SYN=1, seq=1000</text>
+  <rect x="84.8" y="124" width="73.2" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="121.4" y="138" class="c sub mono" style="fill:#555">SYN-SENT</text>
+  <rect x="442" y="158" width="73.2" height="20" rx="4" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="478.6" y="172" class="c sub mono" style="fill:#555">SYN-RCVD</text>
+  <line x1="430" y1="184" x2="170" y2="224" class="arrow "/>
+  <text x="300" y="197" class="c sub mono" transform="rotate(-8.75 300 204)" style="fill:#555">SYN=1, ACK=1, seq=5000, ack=1001</text>
+  <rect x="62.6" y="218" width="95.4" height="20" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="110.3" y="232" class="c sub mono" style="fill:#555">ESTABLISHED</text>
+  <line x1="170" y1="244" x2="430" y2="284" class="arrow "/>
+  <text x="300" y="257" class="c sub mono" transform="rotate(8.75 300 264)" style="fill:#555">ACK=1, seq=1001, ack=5001</text>
+  <rect x="442" y="278" width="95.4" height="20" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="489.7" y="292" class="c sub mono" style="fill:#555">ESTABLISHED</text>
+  <line x1="176" y1="318" x2="424" y2="318" class="arrow" marker-start="url(#a)"/>
+  <text x="300" y="310" class="c sub">开始传输数据</text>
+  <text x="40" y="380" class="sub">A 的初始序号 x = 1000，B 的初始序号 y = 5000。</text>
+  <text x="40" y="398" class="sub">SYN 不携带数据也要占用一个序号，所以确认号分别是 x + 1 = 1001 和 y + 1 = 5001。</text>
+</svg>

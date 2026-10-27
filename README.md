@@ -20,6 +20,10 @@
 
 <br>
 
+<div align="center">准备面试可以从 <a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/面试高频问题.md">面试高频问题</a> 开始，每个问题都链接到对应的章节。</div>
+
+<br>
+
 ## :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
@@ -53,15 +57,18 @@
 - [Java 并发](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20并发.md)
 - [Java 虚拟机](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20虚拟机.md)
 - [Java I/O](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20IO.md)
+- [Spring](https://github.com/CyC2018/CS-Notes/blob/master/notes/Spring.md)
 
 ## :bulb: 系统设计 
 
 - [系统设计基础](https://github.com/CyC2018/CS-Notes/blob/master/notes/系统设计基础.md)
 - [分布式](https://github.com/CyC2018/CS-Notes/blob/master/notes/分布式.md)
 - [集群](https://github.com/CyC2018/CS-Notes/blob/master/notes/集群.md)
+- [微服务](https://github.com/CyC2018/CS-Notes/blob/master/notes/微服务.md)
 - [攻击技术](https://github.com/CyC2018/CS-Notes/blob/master/notes/攻击技术.md)
 - [缓存](https://github.com/CyC2018/CS-Notes/blob/master/notes/缓存.md)
 - [消息队列](https://github.com/CyC2018/CS-Notes/blob/master/notes/消息队列.md)
+- [大模型应用](https://github.com/CyC2018/CS-Notes/blob/master/notes/大模型应用.md)
 
 ## :art: 面向对象
 
@@ -84,11 +91,13 @@
 
 ### 排版
 
-笔记内容按照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.zh-CN.md) 进行排版，以保证内容的可读性。
+笔记内容按照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.zh-Hans.md) 进行排版，以保证内容的可读性。
 
 不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 [GFM](https://github.github.com/gfm/) 不支持 `<center> ![]() </center>` 这种方法让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
 
 在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
+
+提交 Issue、PR 以及添加配图的约定见 [贡献指南](CONTRIBUTING.md)。
 
 ### License
 

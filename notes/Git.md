@@ -83,7 +83,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 Git 会使用 \<\<\<\<\<\<\< ，======= ，\>\>\>\>\>\>\> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
-```
+```text
 <<<<<<< HEAD
 Creating a new branch is quick & simple.
 =======
@@ -93,11 +93,11 @@ Creating a new branch is quick AND simple.
 
 ## Fast forward
 
-"快进式合并"（fast-farward merge），会直接将 master 分支指向合并的分支，这种模式下进行分支合并会丢失分支信息，也就不能在分支历史上看出分支信息。
+“快进式合并”（fast-forward merge），会直接将 master 分支指向合并的分支，这种模式下进行分支合并会丢失分支信息，也就不能在分支历史上看出分支信息。
 
 可以在合并时加上 --no-ff 参数来禁用 Fast forward 模式，并且加上 -m 参数让合并时产生一个新的 commit。
 
-```
+```bash
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
@@ -109,7 +109,7 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 可以使用 git stash 将当前分支的修改储藏起来，此时当前工作区的所有修改都会被存到栈中，也就是说当前工作区是干净的，没有任何未提交的修改。此时就可以安全的切换到其它分支上了。
 
-```
+```bash
 $ git stash
 Saved working directory and index state \ "WIP on master: 049d078 added the index file"
 HEAD is now at 049d078 added the index file (To restore them type "git stash apply")
@@ -121,9 +121,9 @@ HEAD is now at 049d078 added the index file (To restore them type "git stash app
 
 Git 仓库和 Github 中心仓库之间的传输是通过 SSH 加密。
 
-如果工作区下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
+如果用户主目录下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
 
-```
+```bash
 $ ssh-keygen -t rsa -C "youremail@example.com"
 ```
 
@@ -141,9 +141,30 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 ## Git 命令一览
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a29acce-f243-4914-9f00-f2988c528412.jpg" width=""> </div><br>
+| 用途 | 命令 |
+| --- | --- |
+| 克隆仓库 | git clone <url> |
+| 查看状态 | git status |
+| 加入暂存区 | git add <file> |
+| 提交 | git commit -m "说明" |
+| 查看历史 | git log --oneline --graph |
+| 查看改动 | git diff（工作区与暂存区），git diff --staged（暂存区与最新提交） |
+| 撤销工作区的修改 | git restore <file> |
+| 撤销 git add | git restore --staged <file> |
+| 新建并切换分支 | git switch -c dev |
+| 切换分支 | git switch master |
+| 合并分支 | git merge dev |
+| 变基 | git rebase master |
+| 临时保存修改 | git stash，之后用 git stash pop 恢复 |
+| 撤销最近一次提交，保留修改 | git reset --soft HEAD~1 |
+| 回到某个提交，丢弃之后的修改 | git reset --hard <commit> |
+| 用一个新提交抵消某次提交 | git revert <commit> |
+| 拉取并合并远程分支 | git pull |
+| 推送 | git push origin dev |
 
-比较详细的地址：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
+git restore 和 git switch 是 Git 2.23 加入的命令，分别承担了原来 git checkout 恢复文件和切换分支两种用途。需要注意的是，reset --hard 会丢弃未提交的修改；已经推送到远程的提交，应该用 revert 撤销，而不是 reset 后强制推送。
+
+比较详细的命令列表：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
 
 ## 参考资料
 

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">一致性哈希：数据放在顺时针方向的第一个节点上</text>
+  <circle cx="200" cy="200" r="130" fill="none" stroke="#DDD" stroke-width="2"/>
+  <circle cx="244.5" cy="77.8" r="15" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="244.463" y="81.84" class="c sub b" style="fill:#444">A</text>
+  <circle cx="322.2" cy="244.5" r="15" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="322.16" y="248.463" class="c sub b" style="fill:#444">B</text>
+  <circle cx="135.0" cy="312.6" r="15" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="135" y="316.583" class="c sub b" style="fill:#444">C</text>
+  <circle cx="77.8" cy="155.5" r="15" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="77.84" y="159.537" class="c sub b" style="fill:#444">D</text>
+  <circle cx="322.2" cy="155.5" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="297.728" y="168.43" class="c sub mono">k1</text>
+  <circle cx="265.0" cy="312.6" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="252" y="294.067" class="c sub mono">k2</text>
+  <circle cx="200.0" cy="330.0" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="200" y="308" class="c sub mono">k3</text>
+  <circle cx="77.8" cy="244.5" r="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="102.272" y="239.57" class="c sub mono">k4</text>
+  <circle cx="244.5" cy="322.2" r="13" fill="#FFFFFF" stroke="#C0605A" stroke-dasharray="3 2"/>
+  <text x="244.463" y="326.16" class="c sub b note">X</text>
+  <text x="275.987" y="346.833" class="sub note">新增 X</text>
+  <text x="200" y="196" class="c sub b">哈希环</text>
+  <text x="200" y="214" class="c sub mono">0 ～ 2³² − 1</text>
+  <text x="390" y="60" class="sub" style="fill:#444">顺时针找第一个节点：k1 → B，k2、k3 → C，k4 → D。</text>
+  <text x="390" y="80" class="sub" style="fill:#444">在 B、C 之间新增 X 后，只有 k2 改由 X 负责，</text>
+  <text x="390" y="98" class="sub" style="fill:#444">k3 和其它节点上的数据都不动。</text>
+  <text x="390" y="134" class="b">10 万个键（MD5 取前 32 位）的实测结果</text>
+  <rect x="390" y="146" width="130" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="455" y="163" class="c sub" style="fill:#444"></text>
+  <rect x="520" y="146" width="110" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="575" y="163" class="c sub" style="fill:#444">每节点 1 个点</text>
+  <rect x="630" y="146" width="110" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="685" y="163" class="c sub" style="fill:#444">每节点 150 个</text>
+  <rect x="390" y="172" width="130" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="455" y="190" class="c sub" style="fill:#444">最多 / 最少</text>
+  <rect x="520" y="172" width="110" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="575" y="190" class="c sub mono" style="fill:#444">41.6 倍</text>
+  <rect x="630" y="172" width="110" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="685" y="190" class="c sub mono" style="fill:#444">1.17 倍</text>
+  <rect x="390" y="200" width="130" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="455" y="218" class="c sub" style="fill:#444">新增 1 个节点迁移</text>
+  <rect x="520" y="200" width="110" height="28" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="575" y="218" class="c sub mono" style="fill:#444">33.8%</text>
+  <rect x="630" y="200" width="110" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="685" y="218" class="c sub mono" style="fill:#444">20.7%</text>
+  <text x="390" y="256" class="sub">4 个节点各放 1 个点时，位置是随机的，最多的节点分到</text>
+  <text x="390" y="274" class="sub">55.4% 的键，最少的只有 1.3%；新增节点后应迁移约 1/5，</text>
+  <text x="390" y="292" class="sub">实际迁移了 33.8%。每个节点放 150 个虚拟节点后就接近均匀。</text>
+  <text x="390" y="318" class="sub" style="fill:#444">对比：hash % 4 改为 hash % 5，79.7% 的键要迁移。</text>
+  <text x="30" y="372" class="sub">左图是示意，节点位置不按比例；右表是实际计算的结果。</text>
+</svg>

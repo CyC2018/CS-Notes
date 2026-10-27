@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">CDN：用户访问离自己最近的节点</text>
+  <circle cx="60" cy="129" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M43,160 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="60" y="180" class="c sub b">杭州的用户</text>
+  <rect x="280" y="60" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="287" cy="66.5" r="2" fill="#BFBEBA"/>
+  <line x1="294" y1="66.5" x2="313" y2="66.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="280" y="76" width="40" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="287" cy="82.5" r="2" fill="#BFBEBA"/>
+  <line x1="294" y1="82.5" x2="313" y2="82.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="300" y="112" class="c sub b">DNS 调度</text>
+  <text x="300" y="128" class="c sub">返回杭州节点的 IP</text>
+  <rect x="277" y="190" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="284" cy="196.5" r="2" fill="#7DBCB7"/>
+  <line x1="291" y1="196.5" x2="316" y2="196.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="277" y="206" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="284" cy="212.5" r="2" fill="#7DBCB7"/>
+  <line x1="291" y1="212.5" x2="316" y2="212.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="277" y="222" width="46" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="284" cy="228.5" r="2" fill="#7DBCB7"/>
+  <line x1="291" y1="228.5" x2="316" y2="228.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="300" y="256" class="c sub b">CDN 杭州节点</text>
+  <text x="300" y="272" class="c sub">缓存了 logo.png</text>
+  <rect x="597" y="190" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="604" cy="196.5" r="2" fill="#7FB2D6"/>
+  <line x1="611" y1="196.5" x2="636" y2="196.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="597" y="206" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="604" cy="212.5" r="2" fill="#7FB2D6"/>
+  <line x1="611" y1="212.5" x2="636" y2="212.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="597" y="222" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="604" cy="228.5" r="2" fill="#7FB2D6"/>
+  <line x1="611" y1="228.5" x2="636" y2="228.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="620" y="256" class="c sub b">源站（北京）</text>
+  <line x1="86" y1="136" x2="274" y2="88" class="arrow "/>
+  <text x="170" y="98" class="c sub">① 解析 img.example.com</text>
+  <line x1="86" y1="150" x2="270" y2="210" class="arrow "/>
+  <text x="180" y="196" class="c sub">② 请求 logo.png</text>
+  <line x1="330" y1="214" x2="592" y2="214" class="arrow dash"/>
+  <text x="462" y="206" class="c sub">③ 未命中时回源，取回后缓存</text>
+  <path d="M270,232 C200,250 130,200 88,162" class="arrow green"/>
+  <text x="170" y="256" class="c sub ok">④ 返回，命中时不经过源站</text>
+  <text x="30" y="306" class="sub">静态资源由离用户最近的节点返回，延迟低，源站的带宽压力也小；资源更新后要刷新 CDN 缓存，或者在文件名中带上版本号。</text>
+</svg>

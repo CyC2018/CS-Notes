@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="440" viewBox="0 0 780 440">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">IP 分片：UDP 发送 3000 字节，经过 MTU 为 1500 的以太网</text>
+  <text x="20" y="113" class="b">原始数据报</text>
+  <rect x="104" y="92" width="66" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="137" y="112.5" class="c sub">IP 首部</text>
+  <rect x="170" y="92" width="560" height="32" rx="3" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="170" y="92" width="56" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="198" y="112" class="c sub" style="fill:#555">UDP 首部</text>
+  <text x="478" y="112" class="c sub">应用数据 3000 字节</text>
+  <text x="450" y="80" class="c sub">数据部分 3008 字节</text>
+  <line x1="170" y1="88" x2="170" y2="132" stroke="#999" stroke-dasharray="3 3"/>
+  <text x="170" y="146" class="c sub mono">0</text>
+  <line x1="410" y1="88" x2="410" y2="132" stroke="#999" stroke-dasharray="3 3"/>
+  <text x="410" y="146" class="c sub mono">1480</text>
+  <line x1="650" y1="88" x2="650" y2="132" stroke="#999" stroke-dasharray="3 3"/>
+  <text x="650" y="146" class="c sub mono">2960</text>
+  <line x1="730" y1="88" x2="730" y2="132" stroke="#999" stroke-dasharray="3 3"/>
+  <text x="730" y="146" class="c sub mono">3008</text>
+  <line x1="170" y1="152" x2="170" y2="186" stroke="#DDD" stroke-dasharray="3 3"/>
+  <rect x="104" y="186" width="66" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="137" y="205.5" class="c sub">IP 首部</text>
+  <rect x="170" y="186" width="240" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="170" y="186" width="56" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="198" y="205" class="c sub" style="fill:#555">UDP 首部</text>
+  <text x="318" y="205" class="c sub">数据 1480 字节</text>
+  <text x="104" y="234" class="sub" style="fill:#555">分片 1：总长度 1500，MF = 1，片偏移 = 0 / 8 = 0</text>
+  <line x1="410" y1="152" x2="410" y2="254" stroke="#DDD" stroke-dasharray="3 3"/>
+  <rect x="344" y="254" width="66" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="377" y="273.5" class="c sub">IP 首部</text>
+  <rect x="410" y="254" width="240" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="530" y="273" class="c sub">数据 1480 字节</text>
+  <text x="344" y="302" class="sub" style="fill:#555">分片 2：总长度 1500，MF = 1，片偏移 = 1480 / 8 = 185</text>
+  <line x1="650" y1="152" x2="650" y2="322" stroke="#DDD" stroke-dasharray="3 3"/>
+  <rect x="584" y="322" width="66" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="617" y="341.5" class="c sub">IP 首部</text>
+  <rect x="650" y="322" width="80" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="690" y="341" class="c sub">48 字节</text>
+  <text x="730" y="370" class="sub e" style="fill:#555">分片 3：总长度 68，MF = 0，片偏移 = 2960 / 8 = 370</text>
+  <text x="20" y="404" class="sub">每片的数据部分最多 1500 − 20 = 1480 字节，正好是 8 的倍数。三个分片的标识相同，</text>
+  <text x="20" y="422" class="sub">目的主机按标识收集分片、按片偏移排列，收齐后重组；只有第一个分片带有 UDP 首部和端口号。</text>
+</svg>

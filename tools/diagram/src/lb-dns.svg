@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">DNS 负载均衡：解析域名时选出服务器</text>
+  <rect x="48" y="132" width="44" height="29.92" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="52" y="136" width="36" height="21.92" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M66,161.92 v5 M74,161.92 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="58" y="166.92" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="70" y="186" class="c sub b">客户端</text>
+  <rect x="398" y="64" width="44" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="405" cy="70.5" r="2" fill="#BFBEBA"/>
+  <line x1="412" y1="70.5" x2="435" y2="70.5" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="398" y="80" width="44" height="13" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <circle cx="405" cy="86.5" r="2" fill="#BFBEBA"/>
+  <line x1="412" y1="86.5" x2="435" y2="86.5" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="420" y="110" class="c sub b">DNS 服务器</text>
+  <text x="420" y="126" class="c sub">按地域或轮询返回 IP</text>
+  <rect x="398" y="190" width="44" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="405" cy="196.5" r="2" fill="#7FB2D6"/>
+  <line x1="412" y1="196.5" x2="435" y2="196.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="398" y="206" width="44" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="405" cy="212.5" r="2" fill="#7FB2D6"/>
+  <line x1="412" y1="212.5" x2="435" y2="212.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="398" y="222" width="44" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="405" cy="228.5" r="2" fill="#7FB2D6"/>
+  <line x1="412" y1="228.5" x2="435" y2="228.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="420" y="252" class="c sub b">Server 2</text>
+  <text x="420" y="268" class="c sub mono">203.0.113.12</text>
+  <line x1="100" y1="140" x2="390" y2="78" class="arrow "/>
+  <text x="110" y="72" class="sub mono">① 查询 www.example.com</text>
+  <line x1="390" y1="96" x2="102" y2="150" class="arrow "/>
+  <text x="200" y="150" class="sub mono">② A 203.0.113.12，TTL 600</text>
+  <line x1="100" y1="162" x2="390" y2="204" class="arrow "/>
+  <text x="150" y="216" class="sub mono">③ GET http://www.example.com/</text>
+  <text x="30" y="290" class="sub">600 秒内本地和各级 DNS 缓存都直接返回这个地址，下线 Server 2 后要等缓存过期才生效。</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">访问 https://www.example.com/ 的耗时（本机一次实测，RTT 约 200 ms）</text>
+  <text x="148" y="82" class="sub b e" style="fill:#444">DNS 解析</text>
+  <rect x="160" y="64" width="6.15385" height="26" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="174.154" y="82" class="sub">10 ms，命中缓存</text>
+  <text x="148" y="128" class="sub b e" style="fill:#444">TCP 三次握手</text>
+  <rect x="166.154" y="110" width="123.077" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="297.231" y="128" class="sub">1 个 RTT</text>
+  <text x="148" y="174" class="sub b e" style="fill:#444">TLS 1.3 握手</text>
+  <rect x="289.231" y="156" width="131.077" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="428.308" y="174" class="sub">1 个 RTT</text>
+  <text x="148" y="220" class="sub b e" style="fill:#444">请求到首字节</text>
+  <rect x="420.308" y="202" width="126.769" height="26" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="555.077" y="220" class="sub">1 个 RTT + 服务器处理</text>
+  <line x1="160" y1="250" x2="160" y2="255" stroke="#999"/>
+  <text x="160" y="270" class="c sub mono">0 ms</text>
+  <line x1="221.538" y1="250" x2="221.538" y2="255" stroke="#999"/>
+  <text x="221.538" y="270" class="c sub mono">100 ms</text>
+  <line x1="283.077" y1="250" x2="283.077" y2="255" stroke="#999"/>
+  <text x="283.077" y="270" class="c sub mono">200 ms</text>
+  <line x1="344.615" y1="250" x2="344.615" y2="255" stroke="#999"/>
+  <text x="344.615" y="270" class="c sub mono">300 ms</text>
+  <line x1="406.154" y1="250" x2="406.154" y2="255" stroke="#999"/>
+  <text x="406.154" y="270" class="c sub mono">400 ms</text>
+  <line x1="467.692" y1="250" x2="467.692" y2="255" stroke="#999"/>
+  <text x="467.692" y="270" class="c sub mono">500 ms</text>
+  <line x1="529.231" y1="250" x2="529.231" y2="255" stroke="#999"/>
+  <text x="529.231" y="270" class="c sub mono">600 ms</text>
+  <line x1="160" y1="250" x2="560" y2="250" class="line"/>
+  <text x="30" y="300" class="sub">curl -w 测得：time_connect 0.210 s、time_appconnect 0.423 s、time_starttransfer 0.629 s。</text>
+  <text x="30" y="318" class="sub">HTTPS 首次请求至少要 3 个 RTT 才能收到响应，这也是连接复用、TLS 会话恢复和 HTTP/3 要解决的问题。</text>
+</svg>

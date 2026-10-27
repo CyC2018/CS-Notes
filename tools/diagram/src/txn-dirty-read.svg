@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="354" viewBox="0 0 780 354">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">读脏数据：读到了另一个事务没有提交的修改</text>
+  <rect x="40" y="50" width="335" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="207.5" y="71.5" class="c sub b">事务 T1</text>
+  <line x1="207.5" y1="84" x2="207.5" y2="280" stroke="#D2D2D2" stroke-dasharray="4 3"/>
+  <rect x="405" y="50" width="335" height="34" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="572.5" y="65" class="c sub b">事务 T2</text>
+  <text x="572.5" y="80" class="sub c">READ UNCOMMITTED</text>
+  <line x1="572.5" y1="84" x2="572.5" y2="280" stroke="#D2D2D2" stroke-dasharray="4 3"/>
+  <text x="22" y="104" class="c sub">时间</text>
+  <line x1="22" y1="110" x2="22" y2="274" class="arrow"/>
+  <rect x="46" y="96" width="323" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="56" y="113" class="sub mono" style="font-size:10px;fill:#3F3F3F">BEGIN</text>
+  <rect x="46" y="132" width="323" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="56" y="149" class="sub mono" style="font-size:10px;fill:#3F3F3F">UPDATE account SET balance = 200 WHERE id = 1</text>
+  <rect x="411" y="168" width="323" height="26" rx="5" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="421" y="185" class="sub mono" style="font-size:10px;fill:#3F3F3F">SELECT balance FROM account WHERE id = 1</text>
+  <text x="724" y="185" class="e sub mono note b" style="font-size:10px">→ 200</text>
+  <rect x="46" y="204" width="323" height="26" rx="5" fill="#FFFFFF" stroke="#7FB2D6"/>
+  <text x="56" y="221" class="sub mono" style="font-size:10px;fill:#3F3F3F">ROLLBACK</text>
+  <rect x="411" y="240" width="323" height="26" rx="5" fill="#FFFFFF" stroke="#7DBCB7"/>
+  <text x="421" y="257" class="sub mono" style="font-size:10px;fill:#3F3F3F">SELECT balance FROM account WHERE id = 1</text>
+  <text x="724" y="257" class="e sub mono" style="font-size:10px">→ 100</text>
+  <text x="30" y="300" class="sub b" style="fill:#3F3F3F">T2 读到的 200 从来没有提交过。</text>
+  <text x="30" y="322" class="sub" style="">T2 的隔离级别为 READ COMMITTED 及以上时，第一次读到的是 100。</text>
+</svg>

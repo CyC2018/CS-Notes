@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="690" height="350" viewBox="0 0 690 350">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="345" y="28" class="title">Agent：模型决策，应用执行</text>
+  <circle cx="50" cy="101" r="9" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M33,132 q0,-19 17,-19 q17,0 17,19 z" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="50" y="154" class="c b">用户</text>
+  <rect x="160" y="70" width="190" height="86" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="160" y1="84" x2="350" y2="84" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="169" cy="77" r="2.2" fill="#BBBBBB"/>
+  <circle cx="177" cy="77" r="2.2" fill="#BBBBBB"/>
+  <circle cx="185" cy="77" r="2.2" fill="#BBBBBB"/>
+  <text x="169" y="100" class="sub mono">while (未完成) {</text>
+  <text x="169" y="116" class="sub mono">  回复 = 调用模型(历史)</text>
+  <text x="169" y="132" class="sub mono">  执行回复中的工具调用</text>
+  <text x="169" y="148" class="sub mono">}</text>
+  <text x="255" y="176" class="c b">应用代码</text>
+  <text x="255" y="191" class="c sub">控制循环、校验参数和权限</text>
+  <line x1="573.5" y1="84" x2="573.5" y2="140" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="557" y1="100.5" x2="613" y2="100.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="585" y1="84" x2="585" y2="140" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="557" y1="112" x2="613" y2="112" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="596.5" y1="84" x2="596.5" y2="140" stroke="#7DBCB7" stroke-width="1.6"/>
+  <line x1="557" y1="123.5" x2="613" y2="123.5" stroke="#7DBCB7" stroke-width="1.6"/>
+  <rect x="562" y="89" width="46" height="46" rx="5" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <rect x="574.88" y="101.88" width="20.24" height="20.24" rx="2" fill="#FFFFFF" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="585" y="160" class="c b">大模型</text>
+  <text x="585" y="175" class="c sub">只输出文本</text>
+  <line x1="76" y1="102" x2="156" y2="102" class="arrow "/>
+  <text x="116" y="94" class="c sub">提问</text>
+  <line x1="156" y1="126" x2="76" y2="126" class="arrow "/>
+  <text x="116" y="142" class="c sub">回答</text>
+  <line x1="354" y1="96" x2="552" y2="96" class="arrow "/>
+  <text x="453" y="88" class="c sub">消息历史 + 工具列表</text>
+  <line x1="552" y1="128" x2="354" y2="128" class="arrow "/>
+  <text x="453" y="146" class="c sub">要调用的工具和参数，或最终回答</text>
+  <rect x="87" y="232" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="94" cy="238.5" r="2" fill="#7FB2D6"/>
+  <line x1="101" y1="238.5" x2="126" y2="238.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="87" y="248" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="94" cy="254.5" r="2" fill="#7FB2D6"/>
+  <line x1="101" y1="254.5" x2="126" y2="254.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="87" y="264" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="94" cy="270.5" r="2" fill="#7FB2D6"/>
+  <line x1="101" y1="270.5" x2="126" y2="270.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="110" y="296" class="c b">订单服务</text>
+  <text x="110" y="311" class="c sub mono">query_order</text>
+  <rect x="187" y="232" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="194" cy="238.5" r="2" fill="#7FB2D6"/>
+  <line x1="201" y1="238.5" x2="226" y2="238.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="187" y="248" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="194" cy="254.5" r="2" fill="#7FB2D6"/>
+  <line x1="201" y1="254.5" x2="226" y2="254.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="187" y="264" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="194" cy="270.5" r="2" fill="#7FB2D6"/>
+  <line x1="201" y1="270.5" x2="226" y2="270.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="210" y="296" class="c b">物流服务</text>
+  <text x="210" y="311" class="c sub mono">track</text>
+  <path d="M290,234 v34 a20,6 0 0 0 40,0 v-34" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="310" cy="234" rx="20" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M290,251 a20,6 0 0 0 40,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="310" y="296" class="c b">记忆存储</text>
+  <text x="310" y="311" class="c sub">用户偏好</text>
+  <line x1="215" y1="196" x2="110" y2="226" class="arrow dash"/>
+  <line x1="255" y1="196" x2="210" y2="226" class="arrow dash"/>
+  <line x1="295" y1="196" x2="310" y2="226" class="arrow dash"/>
+  <text x="380" y="238" class="sub">① 应用把问题和工具列表发给模型</text>
+  <text x="380" y="256" class="sub">② 模型返回：调用 query_order(1024)</text>
+  <text x="380" y="274" class="sub">③ 应用执行，把“快递单号 SF123”发回</text>
+  <text x="380" y="292" class="sub">④ 模型返回：调用 track("SF123")，⑤ 应用执行</text>
+  <text x="380" y="310" class="sub">⑥ 模型返回最终回答，循环结束</text>
+  <text x="20" y="340" class="note">模型始终只生成文本，查询数据库、调用接口都由应用代码完成</text>
+</svg>

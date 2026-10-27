@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="260" viewBox="0 0 740 260">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">4 个进程在一个 CPU 上并发执行</text>
+  <text x="60" y="78" class="sub b e" style="fill:#444">进程 A</text>
+  <line x1="70" y1="73" x2="700" y2="73" stroke="#EEE"/>
+  <text x="60" y="114" class="sub b e" style="fill:#444">进程 B</text>
+  <line x1="70" y1="109" x2="700" y2="109" stroke="#EEE"/>
+  <text x="60" y="150" class="sub b e" style="fill:#444">进程 C</text>
+  <line x1="70" y1="145" x2="700" y2="145" stroke="#EEE"/>
+  <text x="60" y="186" class="sub b e" style="fill:#444">进程 D</text>
+  <line x1="70" y1="181" x2="700" y2="181" stroke="#EEE"/>
+  <rect x="72" y="63" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="124" y="99" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="176" y="135" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="228" y="171" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="280" y="63" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="332" y="99" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="384" y="135" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="436" y="171" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="488" y="63" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="540" y="135" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="592" y="171" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="644" y="63" width="50" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <line x1="70" y1="206" x2="700" y2="206" class="line"/>
+  <text x="700" y="224" class="sub e">时间</text>
+  <text x="30" y="248" class="sub">任一时刻只有一个进程在 CPU 上运行；操作系统按时间片轮流切换，宏观上看 4 个进程在同时推进。</text>
+</svg>

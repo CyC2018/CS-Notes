@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="250" viewBox="0 0 680 250">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">温度与 Top-p</text>
+  <text x="90" y="62" class="c b">温度 0.5</text>
+  <text x="48" y="85" class="e">好</text>
+  <rect x="54" y="75" width="71.7" height="17" fill="#9F94D5"/>
+  <text x="130.666" y="85" class="sub">0.75</text>
+  <text x="48" y="107" class="e">热</text>
+  <rect x="54" y="97" width="13.9" height="17" fill="#DDDDDD"/>
+  <text x="72.8745" y="107" class="sub">0.15</text>
+  <text x="48" y="129" class="e">冷</text>
+  <rect x="54" y="119" width="7.3" height="17" fill="#DDDDDD"/>
+  <text x="66.3386" y="129" class="sub">0.08</text>
+  <text x="48" y="151" class="e">差</text>
+  <rect x="54" y="141" width="1.5" height="17" fill="#DDDDDD"/>
+  <text x="60.4046" y="151" class="sub">0.01</text>
+  <text x="48" y="173" class="e">闷</text>
+  <rect x="54" y="163" width="1.5" height="17" fill="#DDDDDD"/>
+  <text x="59.7167" y="173" class="sub">0.01</text>
+  <text x="255" y="62" class="c b">温度 1（原始分布）</text>
+  <text x="213" y="85" class="e">好</text>
+  <rect x="219" y="75" width="47.5" height="17" fill="#9F94D5"/>
+  <text x="271.5" y="85" class="sub">0.50</text>
+  <text x="213" y="107" class="e">热</text>
+  <rect x="219" y="97" width="20.9" height="17" fill="#DDDDDD"/>
+  <text x="244.9" y="107" class="sub">0.22</text>
+  <text x="213" y="129" class="e">冷</text>
+  <rect x="219" y="119" width="15.2" height="17" fill="#DDDDDD"/>
+  <text x="239.2" y="129" class="sub">0.16</text>
+  <text x="213" y="151" class="e">差</text>
+  <rect x="219" y="141" width="6.7" height="17" fill="#DDDDDD"/>
+  <text x="230.65" y="151" class="sub">0.07</text>
+  <text x="213" y="173" class="e">闷</text>
+  <rect x="219" y="163" width="4.8" height="17" fill="#DDDDDD"/>
+  <text x="228.75" y="173" class="sub">0.05</text>
+  <text x="420" y="62" class="c b">温度 1.5</text>
+  <text x="378" y="85" class="e">好</text>
+  <rect x="384" y="75" width="37.5" height="17" fill="#9F94D5"/>
+  <text x="426.529" y="85" class="sub">0.40</text>
+  <text x="378" y="107" class="e">热</text>
+  <rect x="384" y="97" width="21.7" height="17" fill="#DDDDDD"/>
+  <text x="410.71" y="107" class="sub">0.23</text>
+  <text x="378" y="129" class="e">冷</text>
+  <rect x="384" y="119" width="17.6" height="17" fill="#DDDDDD"/>
+  <text x="406.557" y="129" class="sub">0.18</text>
+  <text x="378" y="151" class="e">差</text>
+  <rect x="384" y="141" width="10.1" height="17" fill="#DDDDDD"/>
+  <text x="399.118" y="151" class="sub">0.11</text>
+  <text x="378" y="173" class="e">闷</text>
+  <rect x="384" y="163" width="8.1" height="17" fill="#DDDDDD"/>
+  <text x="397.085" y="173" class="sub">0.09</text>
+  <text x="592" y="62" class="c b">Top-p = 0.8</text>
+  <text x="548" y="85" class="e">好</text>
+  <rect x="554" y="75" width="54.0" height="17" fill="#9F94D5"/>
+  <text x="612.977" y="85" class="sub">0.57</text>
+  <text x="548" y="107" class="e">热</text>
+  <rect x="554" y="97" width="23.8" height="17" fill="#DDDDDD"/>
+  <text x="582.75" y="107" class="sub">0.25</text>
+  <text x="548" y="129" class="e">冷</text>
+  <rect x="554" y="119" width="17.3" height="17" fill="#DDDDDD"/>
+  <text x="576.273" y="129" class="sub">0.18</text>
+  <text x="548" y="151" class="e">差</text>
+  <rect x="554" y="141" width="6.7" height="17" fill="#F2F2F2"/>
+  <text x="565.65" y="151" class="sub" fill="#BBB">排除</text>
+  <text x="548" y="173" class="e">闷</text>
+  <rect x="554" y="163" width="4.8" height="17" fill="#F2F2F2"/>
+  <text x="563.75" y="173" class="sub" fill="#BBB">排除</text>
+  <line x1="524" y1="137" x2="670" y2="137" class="line dash" stroke="#C0605A"/>
+  <text x="528" y="205" class="sub">累计 0.50 → 0.72 → 0.88</text>
+  <text x="528" y="222" class="sub">保留前 3 个，重新归一化</text>
+  <text x="90" y="205" class="c sub">高概率的更高</text>
+  <text x="90" y="222" class="c ok">输出稳定</text>
+  <text x="420" y="205" class="c sub">分布变平</text>
+  <text x="420" y="222" class="c note">输出多样</text>
+  <line x1="510" y1="50" x2="510" y2="230" stroke="#DDD" stroke-width="1"/>
+</svg>

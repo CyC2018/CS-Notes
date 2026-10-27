@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="350" viewBox="0 0 640 350">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">ICMP 报文：以 ping 发出的回送请求为例</text>
+  <rect x="40" y="52" width="150" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="115" y="72.5" class="c sub">IP 首部（协议 = 1）</text>
+  <rect x="190" y="52" width="320" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="350" y="72" class="c sub" style="fill:#555">ICMP 报文</text>
+  <path d="M190,86 L40,120" class="line dash"/>
+  <path d="M510,86 L520,120" class="line dash"/>
+  <rect x="40" y="126" width="120" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="100" y="143" class="c">类型</text>
+  <text x="100" y="159" class="c sub">8（回送请求）</text>
+  <rect x="160" y="126" width="120" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="220" y="143" class="c">代码</text>
+  <text x="220" y="159" class="c sub mono">0</text>
+  <rect x="280" y="126" width="240" height="40" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="400" y="143" class="c">检验和</text>
+  <text x="400" y="159" class="c sub">16 位</text>
+  <rect x="40" y="166" width="240" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="160" y="183" class="c">标识符</text>
+  <text x="160" y="199" class="c sub">区分不同的 ping 进程</text>
+  <rect x="280" y="166" width="240" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="400" y="183" class="c">序号</text>
+  <text x="400" y="199" class="c sub">每发一个加 1</text>
+  <rect x="40" y="206" width="480" height="40" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="280" y="223" class="c">数据</text>
+  <text x="280" y="239" class="c sub">通常带上发送时间，用来计算往返时间</text>
+  <path d="M534,128 q8,0 8,8 V140.0 q0,6 6,6 q-6,0 -6,6 V156 q0,8 -8,8" class="line"/>
+  <text x="554" y="144" class="sub">所有 ICMP 报文</text>
+  <text x="554" y="160" class="sub">前 4 字节相同</text>
+  <path d="M534,168 q8,0 8,8 V200.0 q0,6 6,6 q-6,0 -6,6 V236 q0,8 -8,8" class="line"/>
+  <text x="554" y="202" class="sub">其余部分</text>
+  <text x="554" y="218" class="sub">取决于类型</text>
+  <text x="40" y="280" class="sub">ICMP 封装在 IP 数据报中，但它不是传输层协议，而是网络层的一部分。</text>
+  <text x="40" y="300" class="sub">目的主机返回回送回答（类型 0），标识符、序号和数据原样带回。</text>
+  <text x="40" y="320" class="sub">差错报告报文的数据部分是出错数据报的 IP 首部和数据的前 8 字节，源主机据此知道是哪个报文出了错。</text>
+</svg>

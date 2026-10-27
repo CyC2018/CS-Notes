@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">Redis Cluster：3 主 3 从</text>
+  <rect x="40" y="50" width="390" height="32" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M40,51 L54,61 L68,51" fill="none" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="74" y="70" class="sub mono">SET user:1001 …   CRC16(user:1001) % 16384 = 5712</text>
+  <rect x="40.0" y="120" width="213.3" height="22" fill="#C6E4FB" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="146.641" y="135" class="c sub">槽 0～5460</text>
+  <rect x="253.3" y="120" width="213.4" height="22" fill="#C6ECE9" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="359.98" y="135" class="c sub">槽 5461～10922</text>
+  <rect x="466.7" y="120" width="213.3" height="22" fill="#EAE9E7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="573.32" y="135" class="c sub">槽 10923～16383</text>
+  <text x="40" y="114" class="sub">0</text>
+  <text x="680" y="114" class="e sub">16383</text>
+  <path d="M190,86 C190,104 263.1,100 263.1,118" class="arrow"/>
+  <line x1="263.1" y1="120" x2="263.1" y2="142" stroke="#9F94D5" stroke-width="2.5"/>
+  <text x="269.125" y="114" class="b">5712</text>
+  <line x1="146.641" y1="144" x2="146.641" y2="168" class="line"/>
+  <path d="M122.641,176 v36 a24,6 0 0 0 48,0 v-36" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <ellipse cx="146.641" cy="176" rx="24" ry="6" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <path d="M122.641,194 a24,6 0 0 0 48,0" fill="none" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="146.641" y="236" class="c b">主节点 7001</text>
+  <line x1="146.641" y1="242" x2="146.641" y2="262" class="arrow dash"/>
+  <path d="M128.641,270 v24 a18,6 0 0 0 36,0 v-24" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <ellipse cx="146.641" cy="270" rx="18" ry="6" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M128.641,282 a18,6 0 0 0 36,0" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="146.641" y="316" class="c sub">从节点</text>
+  <line x1="359.98" y1="144" x2="359.98" y2="168" class="line"/>
+  <path d="M335.98,176 v36 a24,6 0 0 0 48,0 v-36" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <ellipse cx="359.98" cy="176" rx="24" ry="6" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M335.98,194 a24,6 0 0 0 48,0" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="359.98" y="236" class="c b">主节点 7002</text>
+  <line x1="359.98" y1="242" x2="359.98" y2="262" class="arrow dash"/>
+  <path d="M341.98,270 v24 a18,6 0 0 0 36,0 v-24" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <ellipse cx="359.98" cy="270" rx="18" ry="6" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M341.98,282 a18,6 0 0 0 36,0" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="359.98" y="316" class="c sub">从节点</text>
+  <line x1="573.32" y1="144" x2="573.32" y2="168" class="line"/>
+  <path d="M549.32,176 v36 a24,6 0 0 0 48,0 v-36" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <ellipse cx="573.32" cy="176" rx="24" ry="6" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M549.32,194 a24,6 0 0 0 48,0" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="573.32" y="236" class="c b">主节点 7003</text>
+  <line x1="573.32" y1="242" x2="573.32" y2="262" class="arrow dash"/>
+  <path d="M555.32,270 v24 a18,6 0 0 0 36,0 v-24" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <ellipse cx="573.32" cy="270" rx="18" ry="6" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M555.32,282 a18,6 0 0 0 36,0" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="573.32" y="316" class="c sub">从节点</text>
+  <text x="176.641" y="256" class="sub">异步复制</text>
+  <path d="M176.6,196 C226.6,178 280.0,178 330.0,196" class="arrow red dash"/>
+  <text x="253.311" y="160" class="c sub" style="fill:#C0605A">发给 7001：MOVED 5712 → 7002</text>
+  <text x="20" y="338" class="sub">{user:1001}:cart、{user:1001}:orders 只按 {} 中的部分计算，都在槽 5712，可以在同一条命令或 Lua 脚本中使用</text>
+  <text x="20" y="354" class="sub">主节点宕机后从节点被选为新的主节点；本机 cluster-node-timeout 为 5 秒时，这部分槽约 9 秒无法写入</text>
+</svg>

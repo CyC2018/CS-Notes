@@ -48,15 +48,15 @@ Unix 有五种 I/O 模型：
 ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492928416812_4.png"/> </div><br>
+<div align="center"> <img src="pics/io-blocking.png" width="760px"/> </div><br>
 
 ### 非阻塞式 I/O
 
-应用进程执行系统调用之后，内核返回一个错误码。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询（polling）。
+应用进程执行系统调用之后，如果数据还没有准备好，内核立即返回错误码 EAGAIN（也写作 EWOULDBLOCK）。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询（polling）。
 
 由于 CPU 要处理更多的系统调用，因此这种模型的 CPU 利用率比较低。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929000361_5.png"/> </div><br>
+<div align="center"> <img src="pics/io-nonblocking.png" width="760px"/> </div><br>
 
 ### I/O 复用
 
@@ -66,7 +66,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时有几万个连接，那么就需要创建相同数量的线程。相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929444818_6.png"/> </div><br>
+<div align="center"> <img src="pics/io-multiplex.png" width="760px"/> </div><br>
 
 ### 信号驱动 I/O
 
@@ -74,7 +74,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 相比于非阻塞式 I/O 的轮询方式，信号驱动 I/O 的 CPU 利用率更高。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492929553651_7.png"/> </div><br>
+<div align="center"> <img src="pics/io-signal.png" width="760px"/> </div><br>
 
 ### 异步 I/O
 
@@ -82,7 +82,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 异步 I/O 与信号驱动 I/O 的区别在于，异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492930243286_8.png"/> </div><br>
+<div align="center"> <img src="pics/io-async.png" width="760px"/> </div><br>
 
 ### 五大 I/O 模型比较
 
@@ -93,7 +93,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1492928105791_3.png"/> </div><br>
+<div align="center"> <img src="pics/io-compare.png" width="760px"/> </div><br>
 
 ## 二、I/O 复用
 
@@ -138,17 +138,21 @@ tv.tv_usec = 0;
 int ret = select( largest_sock + 1, &fd_in, &fd_out, NULL, &tv );
 
 // Check if select actually succeed
-if ( ret == -1 )
+if ( ret == -1 ) {
     // report error and abort
-else if ( ret == 0 )
+}
+else if ( ret == 0 ) {
     // timeout; no event detected
+}
 else
 {
-    if ( FD_ISSET( sock1, &fd_in ) )
+    if ( FD_ISSET( sock1, &fd_in ) ) {
         // input event on sock1
+    }
 
-    if ( FD_ISSET( sock2, &fd_out ) )
+    if ( FD_ISSET( sock2, &fd_out ) ) {
         // output event on sock2
+    }
 }
 ```
 
@@ -184,12 +188,14 @@ fds[1].fd = sock2;
 fds[1].events = POLLOUT;
 
 // Wait 10 seconds
-int ret = poll( &fds, 2, 10000 );
+int ret = poll( fds, 2, 10000 );
 // Check if poll actually succeed
-if ( ret == -1 )
+if ( ret == -1 ) {
     // report error and abort
-else if ( ret == 0 )
+}
+else if ( ret == 0 ) {
     // timeout; no event detected
+}
 else
 {
     // If we detect the event, zero it out so we can reuse the structure
@@ -234,19 +240,22 @@ epoll_ctl() 用于向内核注册新的描述符或者是改变某个文件描�
 
 从上面的描述可以看出，epoll 只需要将描述符从进程缓冲区向内核缓冲区拷贝一次，并且进程不需要通过轮询来获得事件完成的描述符。
 
+<div align="center"> <img src="pics/epoll.png" width="640px"/> </div><br>
+
 epoll 仅适用于 Linux OS。
 
 epoll 比 select 和 poll 更加灵活而且没有描述符数量限制。
 
-epoll 对多线程编程更有友好，一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生像 select 和 poll 的不确定情况。
+epoll 对多线程编程更加友好，一个线程调用了 epoll_wait() 另一个线程关闭了同一个描述符也不会产生像 select 和 poll 的不确定情况。
 
 ```c
 // Create the epoll descriptor. Only one is needed per app, and is used to monitor all sockets.
 // The function argument is ignored (it was not before, but now it is), so put your favorite number here
 int pollingfd = epoll_create( 0xCAFE );
 
-if ( pollingfd < 0 )
- // report error
+if ( pollingfd < 0 ) {
+    // report error
+}
 
 // Initialize the epoll structure in case more members are added in future
 struct epoll_event ev = { 0 };
@@ -259,8 +268,9 @@ ev.data.ptr = pConnection1;
 ev.events = EPOLLIN | EPOLLONESHOT;
 // Add the descriptor into the monitoring list. We can do it even if another thread is
 // waiting in epoll_wait - the descriptor will be properly added
-if ( epoll_ctl( epollfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 )
+if ( epoll_ctl( pollingfd, EPOLL_CTL_ADD, pConnection1->getSocket(), &ev ) != 0 ) {
     // report error
+}
 
 // Wait for up to 20 events (assuming we have added maybe 200 sockets before that it may happen)
 struct epoll_event pevents[ 20 ];
@@ -268,10 +278,12 @@ struct epoll_event pevents[ 20 ];
 // Wait for 10 seconds, and retrieve less than 20 epoll_event and store them into epoll_event array
 int ready = epoll_wait( pollingfd, pevents, 20, 10000 );
 // Check if epoll actually succeed
-if ( ret == -1 )
+if ( ready == -1 ) {
     // report error and abort
-else if ( ret == 0 )
+}
+else if ( ready == 0 ) {
     // timeout; no event detected
+}
 else
 {
     // Check if any events detected
@@ -335,3 +347,4 @@ poll 没有最大描述符数量的限制，如果平台支持并且对实时性
 - [poll vs select vs event-based](https://daniel.haxx.se/docs/poll-vs-select.html)
 - [select / poll / epoll: practical difference for system architects](http://www.ulduzsoft.com/2014/01/select-poll-epoll-practical-difference-for-system-architects/)
 - [Browse the source code of userspace/glibc/sysdeps/unix/sysv/linux/ online](https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/)
+- [epoll(7) — Linux manual page](https://man7.org/linux/man-pages/man7/epoll.7.html)

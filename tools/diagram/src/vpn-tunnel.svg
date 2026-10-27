@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="380" viewBox="0 0 780 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">VPN 隧道：场所 A 的 X 访问场所 B 的 Y</text>
+  <rect x="20" y="50" width="230" height="150" rx="8" class="frame"/>
+  <text x="30" y="68" class="b">场所 A 10.1.0.0/16</text>
+  <rect x="530" y="50" width="230" height="150" rx="8" class="frame"/>
+  <text x="540" y="68" class="b">场所 B 10.2.0.0/16</text>
+  <rect x="50" y="100" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="54" y="104" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M66,127.2 v5 M74,127.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="58" y="132.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="70" y="152" class="c b">X</text>
+  <text x="70" y="168" class="c sub mono">10.1.0.5</text>
+  <rect x="690" y="100" width="40" height="27.2" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="694" y="104" width="32" height="19.2" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M706,127.2 v5 M714,127.2 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="698" y="132.2" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="710" y="152" class="c b">Y</text>
+  <text x="710" y="168" class="c sub mono">10.2.0.8</text>
+  <circle cx="200" cy="116" r="17" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="204.25" y1="120.25" x2="211.9" y2="127.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="195.75" y1="111.75" x2="188.1" y2="104.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="204.25" y1="111.75" x2="211.9" y2="104.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="195.75" y1="120.25" x2="188.1" y2="127.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M207.9,127.9 L211.9,127.9 L211.9,123.9" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M192.1,104.1 L188.1,104.1 L188.1,108.1" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M208.25,111.75 L204.25,111.75 L204.25,107.75" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M191.75,120.25 L195.75,120.25 L195.75,124.25" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="200" y="152" class="c b">R1</text>
+  <text x="200" y="168" class="c sub mono">203.0.113.1</text>
+  <circle cx="580" cy="116" r="17" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <line x1="584.25" y1="120.25" x2="591.9" y2="127.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="575.75" y1="111.75" x2="568.1" y2="104.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="584.25" y1="111.75" x2="591.9" y2="104.1" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="575.75" y1="120.25" x2="568.1" y2="127.9" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M587.9,127.9 L591.9,127.9 L591.9,123.9" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M572.1,104.1 L568.1,104.1 L568.1,108.1" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M588.25,111.75 L584.25,111.75 L584.25,107.75" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M571.75,120.25 L575.75,120.25 L575.75,124.25" fill="none" stroke="#7FB2D6" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="580" y="152" class="c b">R2</text>
+  <text x="580" y="168" class="c sub mono">198.51.100.2</text>
+  <path d="M319.6,156 C271.2,156 275.6,111 315.2,108 C310.8,74 385.6,61 403.2,86 C429.6,68 482.4,78 469.2,108 C508.8,112 508.8,156 460.4,156 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="390" y="88" class="c b">互联网</text>
+  <rect x="220" y="108" width="340" height="16" rx="8" fill="#E6E3FA" opacity="0.55"/>
+  <text x="390" y="142" class="c sub">隧道</text>
+  <line x1="94" y1="116" x2="183" y2="116" class="line"/>
+  <line x1="597" y1="116" x2="686" y2="116" class="line"/>
+  <rect x="20" y="236" width="190" height="56" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="26" y="242" width="96" height="44" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="74" y="260" class="c sub mono" style="fill:#555">源 10.1.0.5</text>
+  <text x="74" y="276" class="c sub mono" style="fill:#555">目的 10.2.0.8</text>
+  <text x="166" y="268" class="c sub">数据</text>
+  <rect x="265" y="236" width="250" height="56" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="271" y="242" width="128" height="44" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="335" y="260" class="c sub mono" style="fill:#555">源 203.0.113.1</text>
+  <text x="335" y="276" class="c sub mono" style="fill:#555">目的 198.51.100.2</text>
+  <rect x="405" y="242" width="104" height="44" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <path d="M416,260 v-4 a5,5 0 0 1 10,0 v4" fill="none" stroke="#B8B0DE" stroke-width="1.8"/>
+  <rect x="413" y="260" width="16" height="12" rx="2" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="437" y="260" class="sub" style="fill:#555">加密后的</text>
+  <text x="437" y="276" class="sub" style="fill:#555">原数据报</text>
+  <rect x="570" y="236" width="190" height="56" rx="4" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="576" y="242" width="96" height="44" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="624" y="260" class="c sub mono" style="fill:#555">源 10.1.0.5</text>
+  <text x="624" y="276" class="c sub mono" style="fill:#555">目的 10.2.0.8</text>
+  <text x="716" y="268" class="c sub">数据</text>
+  <text x="115" y="312" class="c sub">① X 发出的数据报</text>
+  <text x="390" y="312" class="c sub">② R1 加密后加上新的首部</text>
+  <text x="665" y="312" class="c sub">③ R2 解密，恢复原数据报</text>
+  <line x1="212" y1="264" x2="260" y2="264" class="arrow "/>
+  <line x1="518" y1="264" x2="566" y2="264" class="arrow "/>
+  <text x="20" y="352" class="sub">互联网上的路由器只看到 R1、R2 的全球地址，看不到专用地址和数据内容。</text>
+  <text x="20" y="370" class="sub">图中的全球地址取自 RFC 5737 规定的文档示例地址段。</text>
+</svg>

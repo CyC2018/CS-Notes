@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">ReAct 与先规划后执行</text>
+  <rect x="20" y="46" width="680" height="30" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="360" y="65.5" class="b c">任务：对比 A、B 两款手机的价格和续航</text>
+  <rect x="20" y="90" width="310" height="225" rx="8" class="frame"/>
+  <text x="30" y="108" class="b">ReAct：边想边做</text>
+  <rect x="35" y="120" width="50" height="26" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="60" y="137.5" class="c sub">思考</text>
+  <line x1="88" y1="133" x2="108" y2="133" class="arrow "/>
+  <rect x="112" y="120" width="96" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="137.5" class="c sub">查 A 的价格</text>
+  <path d="M160,148 C160,154 60,150 60,155" class="arrow"/>
+  <rect x="35" y="157" width="50" height="26" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="60" y="174.5" class="c sub">思考</text>
+  <line x1="88" y1="170" x2="108" y2="170" class="arrow "/>
+  <rect x="112" y="157" width="96" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="174.5" class="c sub">查 B 的价格</text>
+  <path d="M160,185 C160,191 60,187 60,192" class="arrow"/>
+  <rect x="35" y="194" width="50" height="26" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="60" y="211.5" class="c sub">思考</text>
+  <line x1="88" y1="207" x2="108" y2="207" class="arrow "/>
+  <rect x="112" y="194" width="96" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="211.5" class="c sub">查 A 的续航</text>
+  <path d="M160,222 C160,228 60,224 60,229" class="arrow"/>
+  <rect x="35" y="231" width="50" height="26" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="60" y="248.5" class="c sub">思考</text>
+  <line x1="88" y1="244" x2="108" y2="244" class="arrow "/>
+  <rect x="112" y="231" width="96" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="160" y="248.5" class="c sub">查 B 的续航</text>
+  <path d="M160,259 C160,265 60,261 60,266" class="arrow"/>
+  <rect x="35" y="268" width="50" height="26" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="60" y="285.5" class="c sub">思考</text>
+  <line x1="88" y1="281" x2="108" y2="281" class="arrow "/>
+  <rect x="112" y="268" width="96" height="26" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="160" y="285.5" class="c sub">回答</text>
+  <text x="222" y="200" class="sub">5 次模型调用，</text>
+  <text x="222" y="218" class="sub">串行执行</text>
+  <rect x="345" y="90" width="355" height="225" rx="8" class="frame"/>
+  <text x="355" y="108" class="b">先规划后执行</text>
+  <rect x="358" y="172" width="86" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="401" y="192" class="b c">规划</text>
+  <text x="401" y="207" class="sub c">1 次调用</text>
+  <rect x="476" y="118" width="100" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="526" y="135.5" class="c sub">查 A 的价格</text>
+  <line x1="447" y1="194" x2="472" y2="131" class="arrow "/>
+  <line x1="579" y1="131" x2="604" y2="194" class="arrow "/>
+  <rect x="476" y="156" width="100" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="526" y="173.5" class="c sub">查 B 的价格</text>
+  <line x1="447" y1="194" x2="472" y2="169" class="arrow "/>
+  <line x1="579" y1="169" x2="604" y2="194" class="arrow "/>
+  <rect x="476" y="194" width="100" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="526" y="211.5" class="c sub">查 A 的续航</text>
+  <line x1="447" y1="194" x2="472" y2="207" class="arrow "/>
+  <line x1="579" y1="207" x2="604" y2="194" class="arrow "/>
+  <rect x="476" y="232" width="100" height="26" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="526" y="249.5" class="c sub">查 B 的续航</text>
+  <line x1="447" y1="194" x2="472" y2="245" class="arrow "/>
+  <line x1="579" y1="245" x2="604" y2="194" class="arrow "/>
+  <rect x="608" y="172" width="80" height="44" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="648" y="192" class="b c">汇总</text>
+  <text x="648" y="207" class="sub c">1 次调用</text>
+  <text x="526" y="278" class="c sub">4 个步骤可以并行</text>
+  <text x="360" y="302" class="note">某一步失败或结果不符合预期时，重新规划</text>
+</svg>

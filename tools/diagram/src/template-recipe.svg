@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">模板方法：流程固定在父类，变化的步骤交给子类</text>
+  <text x="140" y="56" class="c sub b mono" style="fill:#444">CaffeineBeverage.prepareRecipe()</text>
+  <rect x="40" y="70" width="200" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="140" y="92.5" class="c sub mono">boilWater()</text>
+  <rect x="40" y="120" width="200" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="140" y="142.5" class="c sub mono">brew()</text>
+  <line x1="140" y1="106" x2="140" y2="118" class="arrow "/>
+  <line x1="242" y1="138" x2="330" y2="138" class="arrow dash"/>
+  <rect x="334" y="122" width="170" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="419" y="142" class="c sub mono" style="fill:#444">Coffee.brew</text>
+  <rect x="520" y="122" width="170" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="605" y="142" class="c sub mono" style="fill:#444">Tea.brew</text>
+  <rect x="40" y="170" width="200" height="36" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="140" y="192.5" class="c sub mono">pourInCup()</text>
+  <line x1="140" y1="156" x2="140" y2="168" class="arrow "/>
+  <rect x="40" y="220" width="200" height="36" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="140" y="242.5" class="c sub mono">addCondiments()</text>
+  <line x1="140" y1="206" x2="140" y2="218" class="arrow "/>
+  <line x1="242" y1="238" x2="330" y2="238" class="arrow dash"/>
+  <rect x="334" y="222" width="170" height="32" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="419" y="242" class="c sub mono" style="fill:#444">Coffee.addCondiments</text>
+  <rect x="520" y="222" width="170" height="32" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="605" y="242" class="c sub mono" style="fill:#444">Tea.addCondiments</text>
+  <text x="419" y="62" class="c sub b" style="fill:#444">咖啡</text>
+  <text x="605" y="62" class="c sub b" style="fill:#444">茶</text>
+  <text x="30" y="284" class="sub">灰色步骤在父类中实现，所有饮料共用；淡紫色是抽象方法，由子类实现。prepareRecipe 是 final 的，子类不能改变步骤的顺序。</text>
+</svg>

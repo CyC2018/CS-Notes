@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="300" viewBox="0 0 620 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="310" y="28" class="title">布隆过滤器</text>
+  <rect x="54" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="70" y="155" class="c b">0</text>
+  <text x="70" y="181" class="c sub">0</text>
+  <rect x="86" y="135" width="32" height="30" fill="#C6E4FB" stroke="#999"/>
+  <text x="102" y="155" class="c b">1</text>
+  <text x="102" y="181" class="c sub">1</text>
+  <rect x="118" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="134" y="155" class="c b">0</text>
+  <text x="134" y="181" class="c sub">2</text>
+  <rect x="150" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="166" y="155" class="c b">0</text>
+  <text x="166" y="181" class="c sub">3</text>
+  <rect x="182" y="135" width="32" height="30" fill="#C6E4FB" stroke="#999"/>
+  <text x="198" y="155" class="c b">1</text>
+  <text x="198" y="181" class="c sub">4</text>
+  <rect x="214" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="230" y="155" class="c b">0</text>
+  <text x="230" y="181" class="c sub">5</text>
+  <rect x="246" y="135" width="32" height="30" fill="#C6E4FB" stroke="#999"/>
+  <text x="262" y="155" class="c b">1</text>
+  <text x="262" y="181" class="c sub">6</text>
+  <rect x="278" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="294" y="155" class="c b">0</text>
+  <text x="294" y="181" class="c sub">7</text>
+  <rect x="310" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="326" y="155" class="c b">0</text>
+  <text x="326" y="181" class="c sub">8</text>
+  <rect x="342" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="358" y="155" class="c b">0</text>
+  <text x="358" y="181" class="c sub">9</text>
+  <rect x="374" y="135" width="32" height="30" fill="#C6E4FB" stroke="#999"/>
+  <text x="390" y="155" class="c b">1</text>
+  <text x="390" y="181" class="c sub">10</text>
+  <rect x="406" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="422" y="155" class="c b">0</text>
+  <text x="422" y="181" class="c sub">11</text>
+  <rect x="438" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="454" y="155" class="c b">0</text>
+  <text x="454" y="181" class="c sub">12</text>
+  <rect x="470" y="135" width="32" height="30" fill="#C6E4FB" stroke="#999"/>
+  <text x="486" y="155" class="c b">1</text>
+  <text x="486" y="181" class="c sub">13</text>
+  <rect x="502" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="518" y="155" class="c b">0</text>
+  <text x="518" y="181" class="c sub">14</text>
+  <rect x="534" y="135" width="32" height="30" fill="#FFFFFF" stroke="#999"/>
+  <text x="550" y="155" class="c b">0</text>
+  <text x="550" y="181" class="c sub">15</text>
+  <rect x="120" y="50" width="80" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="160" y="69.5" class="b c">key1</text>
+  <rect x="420" y="50" width="80" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="460" y="69.5" class="b c">key2</text>
+  <line x1="160" y1="83" x2="102" y2="132" class="arrow "/>
+  <line x1="160" y1="83" x2="198" y2="132" class="arrow "/>
+  <line x1="160" y1="83" x2="262" y2="132" class="arrow "/>
+  <line x1="460" y1="83" x2="262" y2="132" class="arrow "/>
+  <line x1="460" y1="83" x2="390" y2="132" class="arrow "/>
+  <line x1="460" y1="83" x2="486" y2="132" class="arrow "/>
+  <text x="30" y="70" class="b">插入</text>
+  <rect x="90" y="240" width="80" height="30" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="130" y="259.5" class="b c">key3</text>
+  <rect x="380" y="240" width="80" height="30" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="420" y="259.5" class="b c">key4</text>
+  <line x1="130" y1="237" x2="102" y2="168" class="arrow "/>
+  <line x1="130" y1="237" x2="166" y2="168" class="arrow red"/>
+  <line x1="130" y1="237" x2="198" y2="168" class="arrow "/>
+  <line x1="420" y1="237" x2="198" y2="168" class="arrow "/>
+  <line x1="420" y1="237" x2="262" y2="168" class="arrow "/>
+  <line x1="420" y1="237" x2="486" y2="168" class="arrow "/>
+  <text x="30" y="260" class="b">查询</text>
+  <text x="180" y="252" class="note">位 3 为 0</text>
+  <text x="180" y="270" class="note">一定不存在</text>
+  <text x="470" y="252">全为 1：可能存在</text>
+  <text x="470" y="270" class="sub">实际未插入过，属于误判</text>
+</svg>

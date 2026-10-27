@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="400" viewBox="0 0 740 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">一次 RPC 调用</text>
+  <rect x="285" y="44" width="170" height="70" rx="5" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <rect x="285" y="44" width="170" height="22" rx="5" fill="#BFBEBA" opacity="0.35"/>
+  <text x="370" y="59" class="c b">注册中心</text>
+  <rect x="291" y="72" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="297" y="84" class="sub">库存服务 10.0.0.8</text>
+  <rect x="291" y="92" width="158" height="16" rx="3" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="0.6"/>
+  <text x="297" y="104" class="sub">库存服务 10.0.0.9</text>
+  <rect x="20" y="170" width="270" height="190" rx="8" class="frame"/>
+  <text x="30" y="188" class="b">订单服务（调用方）</text>
+  <rect x="34" y="198" width="242" height="40" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <line x1="34" y1="212" x2="276" y2="212" stroke="#BBBBBB" stroke-width="1"/>
+  <circle cx="43" cy="205" r="2.2" fill="#BBBBBB"/>
+  <circle cx="51" cy="205" r="2.2" fill="#BBBBBB"/>
+  <circle cx="59" cy="205" r="2.2" fill="#BBBBBB"/>
+  <text x="43" y="228" class="sub mono">inventoryService.deduct(10086, 2)</text>
+  <text x="40" y="262" class="sub">代理取得方法名和参数，</text>
+  <text x="40" y="280" class="sub">序列化后从缓存的地址中选一个实例</text>
+  <rect x="450" y="170" width="270" height="190" rx="8" class="frame"/>
+  <text x="460" y="188" class="b">库存服务（服务方）</text>
+  <rect x="477" y="214" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="220.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="220.5" x2="516" y2="220.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="477" y="230" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="236.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="236.5" x2="516" y2="236.5" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="477" y="246" width="46" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <circle cx="484" cy="252.5" r="2" fill="#7FB2D6"/>
+  <line x1="491" y1="252.5" x2="516" y2="252.5" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="536" y="226" class="sub">解码请求帧，</text>
+  <text x="536" y="244" class="sub">通过反射调用</text>
+  <text x="536" y="262" class="sub mono">InventoryServiceImpl</text>
+  <text x="536" y="278" class="sub mono">.deduct()</text>
+  <text x="500" y="296" class="c sub mono">返回 true</text>
+  <rect x="300" y="214" width="140" height="30" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M300,215 L314,225 L328,215" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="334" y="233" class="sub mono">ID 7 deduct</text>
+  <line x1="278" y1="229" x2="297" y2="229" class="arrow "/>
+  <line x1="442" y1="229" x2="486" y2="229" class="arrow "/>
+  <text x="370" y="206" class="c sub">② 请求帧：请求 ID + 方法 + 参数</text>
+  <rect x="300" y="300" width="140" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <path d="M300,301 L314,311 L328,301" fill="none" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="334" y="319" class="sub mono">ID 7 true</text>
+  <line x1="486" y1="315" x2="442" y2="315" class="arrow "/>
+  <line x1="298" y1="315" x2="278" y2="315" class="arrow "/>
+  <text x="370" y="292" class="c sub">③ 响应帧：请求 ID + 结果</text>
+  <path d="M283,100 C200,110 160,140 155,166" class="arrow dash"/>
+  <text x="110" y="130" class="sub">① 订阅地址，缓存在本地</text>
+  <path d="M590,166 C590,130 520,100 459,92" class="arrow dash"/>
+  <text x="560" y="130" class="sub">启动时注册，定期发送心跳</text>
+  <text x="370" y="388" class="c sub">注册中心只负责注册和发现，不转发请求；调用方按请求 ID 把响应交给对应的等待线程</text>
+</svg>

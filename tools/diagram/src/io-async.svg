@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">异步 I/O</text>
+  <rect x="120" y="46" width="160" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="200" y="65.5" class="c sub b">应用进程</text>
+  <rect x="460" y="46" width="160" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="540" y="65.5" class="c sub b">内核</text>
+  <line x1="200" y1="78" x2="200" y2="330" stroke="#BBB" stroke-dasharray="4 4"/>
+  <line x1="540" y1="78" x2="540" y2="330" stroke="#BBB" stroke-dasharray="4 4"/>
+  <rect x="554" y="96" width="26" height="94" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="590" y="139" class="sub b" style="fill:#444">① 等待数据</text>
+  <text x="590" y="155" class="sub">例如等对方发来 hello</text>
+  <rect x="554" y="244" width="26" height="46" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="590" y="270" class="sub b" style="fill:#444">② 复制到用户缓冲区</text>
+  <text x="554" y="214" class="sub">数据到达</text>
+  <line x1="200" y1="100" x2="540" y2="100" class="arrow "/>
+  <text x="370" y="95" class="c sub mono" style="fill:#444">aio_read(fd, buf, 1024)</text>
+  <line x1="540" y1="114" x2="200" y2="114" class="arrow dash"/>
+  <text x="370" y="109" class="c sub" style="fill:#444">立即返回</text>
+  <rect x="193" y="118" width="14" height="172" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="186" y="208" class="sub ok e">继续执行其它代码</text>
+  <line x1="540" y1="290" x2="200" y2="290" class="arrow dash"/>
+  <text x="370" y="285" class="c sub" style="fill:#444">完成通知：buf 中已经是 hello</text>
+  <text x="30" y="356" class="sub">两个阶段都由内核完成，进程收到通知时数据已经在自己的缓冲区中。Linux 上实际的异步 I/O 多用 io_uring。</text>
+</svg>

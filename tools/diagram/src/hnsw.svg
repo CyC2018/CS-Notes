@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="380" viewBox="0 0 640 380">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">HNSW：从稀疏的上层逐层下降</text>
+  <rect x="60" y="55" width="540" height="80" rx="6" fill="#F7F7F7" stroke="#DDD"/>
+  <text x="50" y="95" class="e sub">第 2 层</text>
+  <line x1="105.0" y1="98.0" x2="340.0" y2="83.0" stroke="#BBB" stroke-width="1"/>
+  <rect x="60" y="160" width="540" height="80" rx="6" fill="#F7F7F7" stroke="#DDD"/>
+  <text x="50" y="200" class="e sub">第 1 层</text>
+  <line x1="105.0" y1="203.0" x2="230.0" y2="194.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="340.0" y1="188.0" x2="570.0" y2="179.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="340.0" y1="188.0" x2="410.0" y2="200.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="410.0" y1="200.0" x2="570.0" y2="179.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="190.0" y1="218.0" x2="230.0" y2="194.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="105.0" y1="203.0" x2="190.0" y2="218.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="230.0" y1="194.0" x2="340.0" y2="188.0" stroke="#BBB" stroke-width="1"/>
+  <rect x="60" y="265" width="540" height="80" rx="6" fill="#F7F7F7" stroke="#DDD"/>
+  <text x="50" y="305" class="e sub">第 0 层</text>
+  <line x1="230.0" y1="299.0" x2="305.0" y2="312.2" stroke="#BBB" stroke-width="1"/>
+  <line x1="410.0" y1="305.0" x2="440.0" y2="284.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="480.0" y1="320.0" x2="570.0" y2="284.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="510.0" y1="296.0" x2="550.0" y2="311.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="340.0" y1="293.0" x2="410.0" y2="305.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="270.0" y1="281.0" x2="340.0" y2="293.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="190.0" y1="323.0" x2="230.0" y2="299.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="105.0" y1="308.0" x2="150.0" y2="287.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="480.0" y1="320.0" x2="510.0" y2="296.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="230.0" y1="299.0" x2="270.0" y2="281.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="510.0" y1="296.0" x2="570.0" y2="284.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="380.0" y1="326.0" x2="440.0" y2="284.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="105.0" y1="308.0" x2="190.0" y2="323.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="270.0" y1="281.0" x2="305.0" y2="312.2" stroke="#BBB" stroke-width="1"/>
+  <line x1="305.0" y1="312.2" x2="340.0" y2="293.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="150.0" y1="287.0" x2="190.0" y2="323.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="480.0" y1="320.0" x2="550.0" y2="311.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="105.0" y1="308.0" x2="230.0" y2="299.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="150.0" y1="287.0" x2="230.0" y2="299.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="340.0" y1="293.0" x2="380.0" y2="326.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="440.0" y1="284.0" x2="510.0" y2="296.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="380.0" y1="326.0" x2="410.0" y2="305.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="440.0" y1="284.0" x2="480.0" y2="320.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="550.0" y1="311.0" x2="570.0" y2="284.0" stroke="#BBB" stroke-width="1"/>
+  <line x1="105.0" y1="98.0" x2="340.0" y2="83.0" class="arrow red" stroke="#C0605A" stroke-width="2"/>
+  <line x1="340.0" y1="188.0" x2="570.0" y2="179.0" class="arrow red" stroke="#C0605A" stroke-width="2"/>
+  <line x1="570.0" y1="284.0" x2="510.0" y2="296.0" class="arrow red" stroke="#C0605A" stroke-width="2"/>
+  <line x1="340.0" y1="89.0" x2="340.0" y2="181.0" class="arrow red dash"/>
+  <line x1="570.0" y1="185.0" x2="570.0" y2="277.0" class="arrow red dash"/>
+  <circle cx="105.0" cy="98.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <circle cx="340.0" cy="83.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <polygon points="500.0,88.0 501.9,92.5 506.7,92.8 503.0,96.0 504.1,100.7 500.0,98.2 495.9,100.7 497.0,96.0 493.3,92.8 498.1,92.5" fill="#9F94D5"/>
+  <circle cx="105.0" cy="203.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="190.0" cy="218.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="230.0" cy="194.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="340.0" cy="188.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <circle cx="410.0" cy="200.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="570.0" cy="179.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <polygon points="500.0,193.0 501.9,197.5 506.7,197.8 503.0,201.0 504.1,205.7 500.0,203.2 495.9,205.7 497.0,201.0 493.3,197.8 498.1,197.5" fill="#9F94D5"/>
+  <circle cx="105.0" cy="308.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="150.0" cy="287.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="190.0" cy="323.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="230.0" cy="299.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="270.0" cy="281.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="305.0" cy="312.2" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="340.0" cy="293.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="380.0" cy="326.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="410.0" cy="305.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="440.0" cy="284.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="480.0" cy="320.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="510.0" cy="296.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <circle cx="550.0" cy="311.0" r="5" fill="#C6E4FB" stroke="#FFF"/>
+  <circle cx="570.0" cy="284.0" r="5" fill="#C0605A" stroke="#FFF"/>
+  <polygon points="500.0,298.0 501.9,302.5 506.7,302.8 503.0,306.0 504.1,310.7 500.0,308.1 495.9,310.7 497.0,306.0 493.3,302.8 498.1,302.5" fill="#9F94D5"/>
+  <circle cx="510.0" cy="296.0" r="10" fill="none" stroke="#C0605A" stroke-width="1.5"/>
+  <text x="105" y="88" class="c sub">入口</text>
+  <text x="524" y="324" class="c note">最近邻</text>
+  <polygon points="500.0,360.0 501.6,363.8 505.7,364.1 502.6,366.8 503.5,370.9 500.0,368.7 496.5,370.9 497.4,366.8 494.3,364.1 498.4,363.8" fill="#9F94D5"/>
+  <text x="511" y="370" class="sub">查询向量</text>
+  <text x="80" y="370" class="sub">每层贪心地走向离查询更近的节点，走不动了就下降一层</text>
+</svg>

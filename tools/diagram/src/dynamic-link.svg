@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">动态链接：链接时只记录依赖，运行时再加载共享库</text>
+  <rect x="20" y="46" width="340" height="200" rx="8" class="frame"/>
+  <text x="30" y="64" class="b">构建时</text>
+  <rect x="390" y="46" width="350" height="200" rx="8" class="frame"/>
+  <text x="400" y="64" class="b">运行时</text>
+  <path d="M50,80 h27 l9,9 v35 h-36 z" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.2"/>
+  <path d="M77,80 v9 h9" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="56" y1="97" x2="79" y2="97" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="56" y1="104" x2="79" y2="104" stroke="#BBBBBB" stroke-width="1"/>
+  <line x1="56" y1="111" x2="79" y2="111" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="68" y="140" class="c sub mono">main.o</text>
+  <path d="M130,80 h27 l9,9 v35 h-36 z" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1.2"/>
+  <path d="M157,80 v9 h9" fill="none" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="136" y1="97" x2="159" y2="97" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="136" y1="104" x2="159" y2="104" stroke="#BFBEBA" stroke-width="1"/>
+  <line x1="136" y1="111" x2="159" y2="111" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="148" y="140" class="c sub mono">libmath.so</text>
+  <text x="148" y="156" class="c sub">只读取符号表</text>
+  <rect x="200" y="84" width="70" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="235" y="105.5" class="c sub b">ld</text>
+  <line x1="90" y1="100" x2="196" y2="100" class="arrow "/>
+  <line x1="168" y1="112" x2="198" y2="112" class="arrow "/>
+  <path d="M290,80 h27 l9,9 v35 h-36 z" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <path d="M317,80 v9 h9" fill="none" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="296" y1="97" x2="319" y2="97" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="296" y1="104" x2="319" y2="104" stroke="#7DBCB7" stroke-width="1"/>
+  <line x1="296" y1="111" x2="319" y2="111" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="308" y="140" class="c sub mono">prog</text>
+  <line x1="272" y1="101" x2="286" y2="101" class="arrow "/>
+  <text x="40" y="186" class="sub">prog 中只记下依赖 libmath.so 和 libc.so，</text>
+  <text x="40" y="202" class="sub">不包含它们的代码</text>
+  <rect x="410" y="84" width="110" height="34" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="465" y="105.5" class="c sub">execve 加载 prog</text>
+  <line x1="522" y1="101" x2="552" y2="101" class="arrow "/>
+  <rect x="556" y="84" width="170" height="34" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="641" y="105.5" class="c sub b">动态链接器 ld-linux.so</text>
+  <text x="641" y="140" class="c sub">把 libmath.so、libc.so</text>
+  <text x="641" y="156" class="c sub">映射进内存，完成重定位</text>
+  <text x="410" y="196" class="sub">多个进程共享同一份库的代码（.text），</text>
+  <text x="410" y="212" class="sub">库更新后不用重新链接程序</text>
+  <text x="30" y="280" class="sub">用 ldd prog 可以查看程序依赖的共享库；找不到某个库时程序启动失败，报 cannot open shared object file。</text>
+</svg>

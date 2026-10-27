@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="330" viewBox="0 0 740 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">分段：每个段是独立的地址空间</text>
+  <rect x="40" y="100" width="70" height="120" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="75" y="164" class="c sub b" style="fill:#444">代码</text>
+  <text x="75" y="240" class="c sub">段 0</text>
+  <text x="75" y="256" class="c sub">长 12K</text>
+  <rect x="132" y="180" width="70" height="40" rx="4" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="167" y="204" class="c sub b" style="fill:#444">全局数据</text>
+  <text x="167" y="240" class="c sub">段 1</text>
+  <text x="167" y="256" class="c sub">长 4K</text>
+  <rect x="224" y="140" width="70" height="80" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="259" y="184" class="c sub b" style="fill:#444">堆</text>
+  <text x="259" y="240" class="c sub">段 2</text>
+  <text x="259" y="256" class="c sub">长 8K</text>
+  <line x1="259" y1="136" x2="259" y2="114" class="arrow"/>
+  <text x="259" y="108" class="c sub">可增长</text>
+  <rect x="316" y="140" width="70" height="80" rx="4" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="351" y="184" class="c sub b" style="fill:#444">栈</text>
+  <text x="351" y="240" class="c sub">段 3</text>
+  <text x="351" y="256" class="c sub">长 8K</text>
+  <line x1="351" y1="136" x2="351" y2="114" class="arrow"/>
+  <text x="351" y="108" class="c sub">可增长</text>
+  <text x="440" y="66" class="b">段表</text>
+  <rect x="440" y="76" width="50" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="465" y="92" class="c sub" style="fill:#444">段号</text>
+  <rect x="490" y="76" width="90" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="535" y="92" class="c sub" style="fill:#444">基址</text>
+  <rect x="580" y="76" width="70" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="615" y="92" class="c sub" style="fill:#444">长度</text>
+  <rect x="440" y="100" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="465" y="116" class="c sub mono" style="fill:#444">0</text>
+  <rect x="490" y="100" width="90" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="535" y="116" class="c sub mono" style="fill:#444">0x4000</text>
+  <rect x="580" y="100" width="70" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="615" y="116" class="c sub mono" style="fill:#444">12K</text>
+  <rect x="440" y="124" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="465" y="140" class="c sub mono" style="fill:#444">1</text>
+  <rect x="490" y="124" width="90" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="535" y="140" class="c sub mono" style="fill:#444">0x9000</text>
+  <rect x="580" y="124" width="70" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="615" y="140" class="c sub mono" style="fill:#444">4K</text>
+  <rect x="440" y="148" width="50" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="465" y="164" class="c sub mono" style="fill:#444">2</text>
+  <rect x="490" y="148" width="90" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="535" y="164" class="c sub mono" style="fill:#444">0xC000</text>
+  <rect x="580" y="148" width="70" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="615" y="164" class="c sub mono" style="fill:#444">8K</text>
+  <rect x="440" y="172" width="50" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="465" y="188" class="c sub mono" style="fill:#444">3</text>
+  <rect x="490" y="172" width="90" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="535" y="188" class="c sub mono" style="fill:#444">0x1C000</text>
+  <rect x="580" y="172" width="70" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="615" y="188" class="c sub mono" style="fill:#444">8K</text>
+  <text x="440" y="220" class="sub mono" style="fill:#444">地址 = (段号 2, 偏移 0x300)</text>
+  <text x="440" y="240" class="sub" style="fill:#444">0x300 &lt; 8K，没有越界</text>
+  <text x="440" y="260" class="sub mono" style="fill:#444">物理地址 = 0xC000 + 0x300 = 0xC300</text>
+  <text x="440" y="280" class="sub note">偏移 ≥ 段长时触发越界异常</text>
+  <text x="30" y="300" class="sub">各段长度不同、可以单独增长，并且可以按段设置权限（例如代码段只读）；但段的大小不固定，</text>
+  <text x="30" y="318" class="sub">内存中会留下大小不一的空闲碎片。段页式在每个段内再分页，兼顾两者。</text>
+</svg>

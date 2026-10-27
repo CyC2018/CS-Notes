@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">哨兵故障转移：kill -9 主服务器之后（本机实测）</text>
+  <line x1="60" y1="150" x2="720" y2="150" class="line"/>
+  <line x1="60" y1="150" x2="60" y2="155" stroke="#999"/>
+  <text x="60" y="170" class="c sub mono">0 s</text>
+  <line x1="160" y1="150" x2="160" y2="155" stroke="#999"/>
+  <text x="160" y="170" class="c sub mono">1 s</text>
+  <line x1="260" y1="150" x2="260" y2="155" stroke="#999"/>
+  <text x="260" y="170" class="c sub mono">2 s</text>
+  <line x1="360" y1="150" x2="360" y2="155" stroke="#999"/>
+  <text x="360" y="170" class="c sub mono">3 s</text>
+  <line x1="460" y1="150" x2="460" y2="155" stroke="#999"/>
+  <text x="460" y="170" class="c sub mono">4 s</text>
+  <line x1="560" y1="150" x2="560" y2="155" stroke="#999"/>
+  <text x="560" y="170" class="c sub mono">5 s</text>
+  <line x1="660" y1="150" x2="660" y2="155" stroke="#999"/>
+  <text x="660" y="170" class="c sub mono">6 s</text>
+  <rect x="60" y="140" width="504" height="20" rx="3" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="312" y="154" class="c sub" style="fill:#444">哨兵在 down-after-milliseconds（5 秒）内收不到回复</text>
+  <rect x="564" y="140" width="143" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <line x1="60" y1="140" x2="60" y2="126" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="60" cy="150" r="3.5" fill="#C0605A"/>
+  <text x="64" y="120" class="sub" style="fill:#444">kill -9 主服务器 6400</text>
+  <line x1="564" y1="140" x2="564" y2="104" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="564" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="560" y="98" class="sub e" style="fill:#444">5.04 s  ① 主观下线 +sdown</text>
+  <line x1="574" y1="140" x2="574" y2="82" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="574" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="570" y="76" class="sub e" style="fill:#444">5.14 s  ② 客观下线 +odown，3 个哨兵都同意（quorum 2）</text>
+  <line x1="582" y1="160" x2="582" y2="182" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="582" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="578" y="194" class="sub e" style="fill:#444">5.22 s  ③ 投票选出领头哨兵 +elected-leader</text>
+  <line x1="588" y1="160" x2="588" y2="204" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="588" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="584" y="216" class="sub e" style="fill:#444">5.28 s  ④ 选中 6402 +selected-slave</text>
+  <line x1="697" y1="160" x2="697" y2="226" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="697" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="693" y="238" class="sub e" style="fill:#444">6.37 s  ⑤ 6402 升为主服务器 +promoted-slave</text>
+  <line x1="707" y1="160" x2="707" y2="248" stroke="#BBB" stroke-dasharray="2 2"/>
+  <circle cx="707" cy="150" r="3.5" fill="#9F94D5"/>
+  <text x="703" y="260" class="sub e" style="fill:#444">6.47 s  ⑥ 通知切换 +switch-master</text>
+  <text x="30" y="286" class="sub">1 主 2 从、3 个哨兵，quorum 为 2。约 6.5 秒后客户端从哨兵查到新地址 6402，之前写入的 order:1024 仍在；</text>
+  <text x="30" y="304" class="sub">重启的 6400 被哨兵改为 6402 的从服务器。超时检测占了大部分时间，down-after-milliseconds 越小切换越快，</text>
+  <text x="30" y="322" class="sub">但网络抖动时也越容易误判。</text>
+</svg>

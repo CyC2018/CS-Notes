@@ -66,6 +66,11 @@
         * [waitpid()](#waitpid)
         * [孤儿进程](#孤儿进程)
         * [僵尸进程](#僵尸进程)
+    * [十一、线上问题排查](#十一线上问题排查)
+        * [CPU 占用高](#cpu-占用高)
+        * [内存占用高](#内存占用高)
+        * [端口与磁盘](#端口与磁盘)
+        * [日志分析](#日志分析)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -201,27 +206,23 @@ GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操�
 
 #### 1. IDE
 
-IDE（ATA）全称 Advanced Technology Attachment，接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
+IDE（Integrated Drive Electronics）通常也称为 ATA（Advanced Technology Attachment），接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
 
 #### 2. SATA
 
 SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强，且对数据线的长度要求比 ATA 低很多，支持热插拔等功能。SATA-II 的接口速度为 300MB/s，而 SATA-III 标准可达到 600MB/s 的传输速度。SATA 的数据线也比 ATA 的细得多，有利于机箱内的空气流通，整理线材也比较方便。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg" width=""/> </div><br>
-
 #### 3. SCSI
 
 SCSI 全称是 Small Computer System Interface（小型机系统接口），SCSI 硬盘广为工作站以及个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
-
 #### 4. SAS
 
-SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也通过缩小连接线改善系统内部空间等。
+SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，SAS-3 为 12Gb/s。此外也通过缩小连接线改善系统内部空间等。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
+#### 5. NVMe
+
+固态硬盘的速度已经超过了 SATA 接口的上限，NVMe（Non-Volatile Memory Express）让固态硬盘直接通过 PCIe 总线与 CPU 通信，PCIe 4.0 x4 的带宽约为 8 GB/s，远高于 SATA III 的 600 MB/s，并且支持大量并行的队列。Linux 中 NVMe 磁盘的文件名为 /dev/nvme0n1，分区为 /dev/nvme0n1p1。
 
 ### 磁盘的文件名
 
@@ -229,6 +230,7 @@ Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘�
 
 - IDE 磁盘：/dev/hd[a-d]
 - SATA/SCSI/SAS 磁盘：/dev/sd[a-p]
+- NVMe 磁盘：/dev/nvme0n1、/dev/nvme1n1
 
 其中文件名后面的序号的确定与系统检测到磁盘的顺序有关，而与磁盘所插入的插槽位置无关。
 
@@ -256,7 +258,7 @@ GPT 没有扩展分区概念，都是主分区，每个 LBA 可以分 4 个分�
 
 MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB = 8 ZB。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/GUID_Partition_Table_Scheme.svg.png" width="400"/> </div><br>
+<div align="center"> <img src="pics/gpt-layout.png" width="760px"/> </div><br>
 
 ### 开机检测程序
 
@@ -264,15 +266,13 @@ MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB 
 
 BIOS（Basic Input/Output System，基本输入输出系统），它是一个固件（嵌入在硬件中的软件），BIOS 程序存放在断电后内容不会丢失的只读内存中。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/50831a6f-2777-46ea-a571-29f23c85cc21.jpg"/> </div><br>
-
 BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可以开机的磁盘，并读取磁盘第一个扇区的主要开机记录（MBR），由主要开机记录（MBR）执行其中的开机管理程序，这个开机管理程序会加载操作系统的核心文件。
 
 主要开机记录（MBR）中的开机管理程序提供以下功能：选单、载入核心文件以及转交其它开机管理程序。转交这个功能可以用来实现多重引导，只需要将另一个操作系统的开机管理程序安装在其它分区的启动扇区上，在启动开机管理程序时，就可以通过选单选择启动当前的操作系统或者转交给其它开机管理程序从而启动另一个操作系统。
 
 下图中，第一扇区的主要开机记录（MBR）中的开机管理程序提供了两个选单：M1、M2，M1 指向了 Windows 操作系统，而 M2 指向其它分区的启动扇区，里面包含了另外一个开机管理程序，提供了一个指向 Linux 的选单。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
+<div align="center"> <img src="pics/mbr-multiboot.png" width="760px"/> </div><br>
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉主要开机记录（MBR），而 Linux 可以选择将开机管理程序安装在主要开机记录（MBR）或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
@@ -298,7 +298,7 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 - superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
 - block bitmap：记录 block 是否被使用的位图。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/BSD_disk.png" width="800"/> </div><br>
+<div align="center"> <img src="pics/ext-layout.png" width="760px"/> </div><br>
 
 ### 文件读取
 
@@ -329,7 +329,7 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 inode 具体包含以下信息：
 
-- 权限 (read/write/excute)；
+- 权限 (read/write/execute)；
 - 拥有者与群组 (owner/group)；
 - 容量；
 - 建立或状态改变的时间 (ctime)；
@@ -340,12 +340,12 @@ inode 具体包含以下信息：
 
 inode 具有以下特点：
 
-- 每个 inode 大小均固定为 128 bytes (新的 ext4 与 xfs 可设定到 256 bytes)；
+- 每个 inode 的大小在格式化时确定，早期的 ext2/ext3 为 128 bytes，现在 mke2fs 默认为 256 bytes；
 - 每个文件都仅会占用一个 inode。
 
 inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用让 inode 记录的引用 block 块记录引用信息。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/inode_with_signatures.jpg" width="600"/> </div><br>
+<div align="center"> <img src="pics/inode-pointers.png" width="760px"/> </div><br>
 
 ### 目录
 
@@ -420,7 +420,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 更换当前目录。
 
-```
+```bash
 cd [相对路径或绝对路径]
 ```
 
@@ -428,7 +428,7 @@ cd [相对路径或绝对路径]
 
 创建目录。
 
-```
+```bash
 ## mkdir [-mp] 目录名称
 -m ：配置目录权限
 -p ：递归创建目录
@@ -564,7 +564,7 @@ cp [-adfilprsu] source destination
 
 #### 2. 符号链接
 
-符号链接文件保存着源文件所在的绝对路径，在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
+符号链接文件保存着源文件的路径（可以是绝对路径，也可以是相对路径），在读取时会定位到源文件上，可以理解为 Windows 的快捷方式。
 
 当源文件被删除了，链接文件就打不开了。
 
@@ -639,7 +639,7 @@ cp [-adfilprsu] source destination
 
 文件搜索。可以用关键字或者正则表达式进行搜索。
 
-locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，它存储在内存中，并且每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
+locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
 
 ```html
 ## locate [-ir] keyword
@@ -785,7 +785,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命名别名：例如 ll 是 ls -al 的别名
+- 命令别名：例如 ll 通常是 ls -l 或者 ls -alF 的别名，具体取决于发行版的配置
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
@@ -1041,7 +1041,7 @@ $ grep -n 'the' regular_express.txt
 18:google is the best tools for search keyword
 ```
 
-示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为它们在 shell 是有特殊意义的。
+示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为 grep 默认使用基础正则表达式（BRE），其中的 { 和 } 需要转义才表示重复次数。
 
 ```html
 $ grep -n 'a\{2,5\}' regular_express.txt
@@ -1182,7 +1182,7 @@ dmtsai lines: 5 columns: 9
 | D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
 | Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
-| T | stopped (either by a job control signal or because it is being traced) <br> 结束，进程既可以被作业控制信号结束，也可能是正在被追踪。|
+| T | stopped (either by a job control signal or because it is being traced) <br> 停止，进程可能被作业控制信号暂停，也可能正在被追踪。|
 <br>
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png" width="490px"/> </div><br>
@@ -1206,7 +1206,7 @@ dmtsai lines: 5 columns: 9
 pid_t wait(int *status)
 ```
 
-父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
+父进程调用 wait() 会一直阻塞，直到有一个子进程退出，之后 wait() 会回收该子进程并返回。
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
 
@@ -1220,7 +1220,7 @@ pid_t waitpid(pid_t pid, int *status, int options)
 
 作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
 
-pid 参数指示一个子进程的 ID，表示只关心这个子进程退出的 SIGCHLD 信号。如果 pid=-1 时，那么和 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+pid 参数指示一个子进程的 ID，表示只等待这个子进程退出。如果 pid=-1 时，那么和 wait() 作用相同，等待任意一个子进程退出。
 
 options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
 
@@ -1242,23 +1242,114 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 进程所收养，这样 init 进程就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程。
 
+## 十一、线上问题排查
+
+以下输出来自一个 Debian 12 容器，其中运行着一个故意写了死循环、并占用了 200 MB 堆内存的 Java 程序（OpenJDK 17），省略了部分内容。
+
+### CPU 占用高
+
+先用 top 找到占用 CPU 最多的进程，再用 top -H 查看这个进程中的线程：
+
+```sh
+$ top -b -n 1 -o %CPU
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+  911 root      20   0 4021284 471124  20616 S 100.0   5.9   0:04.30 java
+
+$ top -b -n 2 -d 1 -H -p 911
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+  931 root      20   0 4088924 471252  20616 R  99.9   5.9   0:31.17 order-calc
+```
+
+线程 931 一直占用一个 CPU。jstack 输出的线程栈中，nid 是线程 ID 的十六进制，931 即 0x3a3：
+
+```sh
+$ printf "%x\n" 931
+3a3
+$ jstack 911 | grep -A3 "nid=0x3a3"
+"order-calc" #14 prio=5 os_prio=0 cpu=46406.68ms elapsed=46.46s tid=0x0000ffff80120ad0 nid=0x3a3 runnable
+   java.lang.Thread.State: RUNNABLE
+	at Busy.lambda$main$0(Busy.java:11)
+```
+
+这样就定位到了 Busy.java 第 11 行的死循环。如果是多个 GC 线程占满 CPU，说明在频繁 GC，转而检查内存。Java 进程的排查方法详见 [Java 虚拟机 - 线上问题排查](Java%20虚拟机.md#五线上问题排查)。
+
+### 内存占用高
+
+```sh
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           7.7Gi       1.1Gi       5.8Gi       564Ki       920Mi       6.5Gi
+```
+
+需要注意的是，free 列很小不代表内存不足。Linux 会用空闲内存缓存磁盘文件（buff/cache），需要时可以回收，应该看 available 列，它估算的是不使用交换分区还能分配给新程序的内存。
+
+Java 进程用 jstat 查看各区的使用率和 GC 次数，用 jmap 统计堆中哪类对象最多：
+
+```sh
+$ jstat -gcutil 911 1000 2
+  S0     S1     E      O      M     CCS    YGC     YGCT     FGC    FGCT     CGC    CGCT       GCT
+  0.00  13.69   0.00  88.90  37.54   3.98      9     0.008     0     0.000    16     0.005     0.014
+
+$ jmap -histo:live 911 | head -4
+ num     #instances         #bytes  class name (module)
+   1:          7529      210056264  [B (java.base@17.0.21)
+```
+
+老年代（O）已经用了 88.90%，堆中约 200 MB 是 byte 数组，与程序中缓存的 200 个 1 MB 数组对应。老年代使用率持续上升、Full GC 后也降不下来，通常就是内存泄漏，可以用 jmap -dump 导出堆快照分析。需要注意的是，-histo:live 会先触发一次 Full GC，生产环境要谨慎使用。
+
+### 端口与磁盘
+
+```sh
+$ ss -lntp
+State  Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+LISTEN 0      50                 *:8080            *:*    users:(("java",pid=911,fd=4))
+
+$ lsof -i :8080
+COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    911 root    4u  IPv6   5594      0t0  TCP *:http-alt (LISTEN)
+
+$ df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         453G   24G  406G   6% /
+```
+
+ss 是 netstat 的替代，速度更快，-l 只看监听的套接字，-n 不解析端口名，-t 只看 TCP，-p 显示进程。磁盘满时先用 df -h 找到满的分区，再用 du -sh * 逐级查找大目录。
+
+### 日志分析
+
+```sh
+$ tail -f app.log                 # 持续输出新写入的日志
+$ grep -c " 500 " access.log      # 统计 500 的行数
+214
+$ awk '{print $9}' access.log | sort | uniq -c | sort -rn     # 按状态码统计
+   9510 200
+    276 404
+    214 500
+$ awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3   # 访问最多的 IP
+   2306 10.0.0.3
+   2290 10.0.0.2
+   2280 10.0.0.1
+```
+
+以上统计基于一个 1 万行的示例访问日志，第 1 列是 IP，第 9 列是状态码。grep -C 5 可以同时显示匹配行前后各 5 行，查看异常前后发生了什么。
+
 ## 参考资料
 
-- 鸟哥. 鸟 哥 的 Linux 私 房 菜 基 础 篇 第 三 版[J]. 2009.
+- 鸟哥. 鸟哥的 Linux 私房菜：基础篇 第三版 [M]. 2009.
 - [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
 - [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table)
-- [详解 wait 和 waitpid 函数](https://blog.csdn.net/kevinhg/article/details/7001719)
-- [IDE、SATA、SCSI、SAS、FC、SSD 硬盘类型介绍](https://blog.csdn.net/tianlesoftware/article/details/6009110)
-- [Akai IB-301S SCSI Interface for S2800,S3000](http://www.mpchunter.com/s3000/akai-ib-301s-scsi-interface-for-s2800s3000/)
+- [详解 wait 和 waitpid 函数](https://web.archive.org/web/20251119085359/https://blog.csdn.net/kevinhg/article/details/7001719)
+- [IDE、SATA、SCSI、SAS、FC、SSD 硬盘类型介绍](https://web.archive.org/web/20251209102916/https://blog.csdn.net/tianlesoftware/article/details/6009110)
+- [Akai IB-301S SCSI Interface for S2800,S3000](https://web.archive.org/web/20100906064755/http://www.mpchunter.com:80/s3000/akai-ib-301s-scsi-interface-for-s2800s3000/)
 - [Parallel ATA](https://en.wikipedia.org/wiki/Parallel_ATA)
 - [ADATA XPG SX900 256GB SATA 3 SSD Review – Expanded Capacity and SandForce Driven Speed](http://www.thessdreview.com/our-reviews/adata-xpg-sx900-256gb-sata-3-ssd-review-expanded-capacity-and-sandforce-driven-speed/4/)
 - [Decoding UCS Invicta – Part 1](https://blogs.cisco.com/datacenter/decoding-ucs-invicta-part-1)
 - [硬盘](https://zh.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98)
 - [Difference between SAS and SATA](http://www.differencebetween.info/difference-between-sas-and-sata)
 - [BIOS](https://zh.wikipedia.org/wiki/BIOS)
-- [File system design case studies](https://www.cs.rutgers.edu/\~pxk/416/notes/13-fs-studies.html)
+- [File system design case studies](https://web.archive.org/web/20210126111620/https://www.cs.rutgers.edu/~pxk/416/notes/13-fs-studies.html)
 - [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
 - [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)

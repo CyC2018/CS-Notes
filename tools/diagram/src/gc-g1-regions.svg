@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="290" viewBox="0 0 740 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">G1 把堆分成大小相等的 Region</text>
+  <rect x="30" y="52" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="48" y="73" class="c sub b" style="fill:#444">E</text>
+  <rect x="70" y="52" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="88" y="73" class="c sub b" style="fill:#444">O</text>
+  <rect x="110" y="52" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="128" y="73" class="c sub b" style="fill:#444">E</text>
+  <rect x="150" y="52" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="168" y="73" class="c sub b" style="fill:#444">O</text>
+  <rect x="190" y="52" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="208" y="73" class="c sub b" style="fill:#444"></text>
+  <rect x="230" y="52" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="248" y="73" class="c sub b" style="fill:#444"></text>
+  <rect x="270" y="52" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="288" y="73" class="c sub b" style="fill:#444">O</text>
+  <rect x="310" y="52" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="328" y="73" class="c sub b" style="fill:#444"></text>
+  <rect x="350" y="52" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="368" y="73" class="c sub b" style="fill:#444"></text>
+  <rect x="390" y="52" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="408" y="73" class="c sub b" style="fill:#444"></text>
+  <rect x="430" y="52" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="448" y="73" class="c sub b" style="fill:#444">E</text>
+  <rect x="470" y="52" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="488" y="73" class="c sub b" style="fill:#444">O</text>
+  <rect x="510" y="52" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="528" y="73" class="c sub b" style="fill:#444">E</text>
+  <rect x="550" y="52" width="36" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="568" y="73" class="c sub b" style="fill:#444">S</text>
+  <rect x="590" y="52" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="608" y="73" class="c sub b" style="fill:#444">E</text>
+  <rect x="630" y="52" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="648" y="73" class="c sub b" style="fill:#444">O</text>
+  <rect x="30" y="92" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="48" y="113" class="c sub b" style="fill:#444">E</text>
+  <rect x="70" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="88" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="110" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="128" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="150" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="168" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="190" y="92" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="208" y="113" class="c sub b" style="fill:#444">O</text>
+  <rect x="230" y="92" width="36" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="248" y="113" class="c sub b" style="fill:#444">H</text>
+  <rect x="270" y="92" width="36" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="288" y="113" class="c sub b" style="fill:#444">H</text>
+  <rect x="310" y="92" width="36" height="34" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="328" y="113" class="c sub b" style="fill:#444">H</text>
+  <rect x="350" y="92" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="368" y="113" class="c sub b" style="fill:#444">O</text>
+  <rect x="390" y="92" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="408" y="113" class="c sub b" style="fill:#444">O</text>
+  <rect x="430" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="448" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="470" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="488" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="510" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="528" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="550" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="568" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="590" y="92" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="608" y="113" class="c sub b" style="fill:#444">O</text>
+  <rect x="630" y="92" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="648" y="113" class="c sub b" style="fill:#444"></text>
+  <rect x="30" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="48" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="70" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="88" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="110" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="128" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="150" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="168" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="190" y="132" width="36" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="208" y="153" class="c sub b" style="fill:#444">S</text>
+  <rect x="230" y="132" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="248" y="153" class="c sub b" style="fill:#444">E</text>
+  <rect x="270" y="132" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="288" y="153" class="c sub b" style="fill:#444">O</text>
+  <rect x="310" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="328" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="350" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="368" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="390" y="132" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="408" y="153" class="c sub b" style="fill:#444">O</text>
+  <rect x="430" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="448" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="470" y="132" width="36" height="34" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="488" y="153" class="c sub b" style="fill:#444">S</text>
+  <rect x="510" y="132" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="528" y="153" class="c sub b" style="fill:#444"></text>
+  <rect x="550" y="132" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="568" y="153" class="c sub b" style="fill:#444">O</text>
+  <rect x="590" y="132" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="608" y="153" class="c sub b" style="fill:#444">O</text>
+  <rect x="630" y="132" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="648" y="153" class="c sub b" style="fill:#444">E</text>
+  <rect x="30" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="48" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="70" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="88" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="110" y="172" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="128" y="193" class="c sub b" style="fill:#444">O</text>
+  <rect x="150" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="168" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="190" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="208" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="230" y="172" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="248" y="193" class="c sub b" style="fill:#444">O</text>
+  <rect x="270" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="288" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="310" y="172" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="328" y="193" class="c sub b" style="fill:#444">O</text>
+  <rect x="350" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="368" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="390" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="408" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="430" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="448" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="470" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="488" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="510" y="172" width="36" height="34" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="528" y="193" class="c sub b" style="fill:#444">O</text>
+  <rect x="550" y="172" width="36" height="34" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="568" y="193" class="c sub b" style="fill:#444">E</text>
+  <rect x="590" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="608" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="630" y="172" width="36" height="34" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="648" y="193" class="c sub b" style="fill:#444"></text>
+  <rect x="30" y="222" width="22" height="20" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="41" y="236" class="c sub" style="fill:#444">E</text>
+  <text x="58" y="236" class="sub">Eden</text>
+  <rect x="116" y="222" width="22" height="20" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="127" y="236" class="c sub" style="fill:#444">S</text>
+  <text x="144" y="236" class="sub">Survivor</text>
+  <rect x="238" y="222" width="22" height="20" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="249" y="236" class="c sub" style="fill:#444">O</text>
+  <text x="266" y="236" class="sub">老年代</text>
+  <rect x="315" y="222" width="22" height="20" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="326" y="236" class="c sub" style="fill:#444">H</text>
+  <text x="343" y="236" class="sub">大对象（Humongous）</text>
+  <rect x="491" y="222" width="22" height="20" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="502" y="236" class="c sub" style="fill:#444"></text>
+  <text x="519" y="236" class="sub">空闲</text>
+  <text x="30" y="270" class="sub">每个 Region 的角色可以变化。不小于半个 Region 的对象放在连续的大对象 Region 中。堆 128 MB 时 Region 为 1 MB，本机默认堆时为 4 MB。</text>
+</svg>

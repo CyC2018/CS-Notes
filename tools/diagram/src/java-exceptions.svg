@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">Java 异常的层次</text>
+  <rect x="320" y="46" width="120" height="30" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="380" y="65.5" class="c sub b mono">Throwable</text>
+  <rect x="110" y="106" width="150" height="30" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="185" y="125.5" class="c sub b mono">Error</text>
+  <rect x="500" y="106" width="150" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="575" y="125.5" class="c sub b mono">Exception</text>
+  <line x1="350" y1="78" x2="190" y2="104" class="arrow "/>
+  <line x1="410" y1="78" x2="570" y2="104" class="arrow "/>
+  <rect x="30" y="186" width="155" height="30" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="107.5" y="205.5" class="c sub b mono">OutOfMemoryError</text>
+  <line x1="185" y1="138" x2="108" y2="184" class="arrow "/>
+  <rect x="195" y="186" width="155" height="30" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="272.5" y="205.5" class="c sub b mono">StackOverflowError</text>
+  <line x1="185" y1="138" x2="273" y2="184" class="arrow "/>
+  <rect x="370" y="186" width="150" height="30" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="445" y="205.5" class="c sub b mono">RuntimeException</text>
+  <rect x="530" y="186" width="105" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="582.5" y="205.5" class="c sub b mono">IOException</text>
+  <rect x="645" y="186" width="105" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="697.5" y="205.5" class="c sub b mono">SQLException</text>
+  <line x1="555" y1="138" x2="445" y2="184" class="arrow "/>
+  <line x1="575" y1="138" x2="582" y2="184" class="arrow "/>
+  <line x1="600" y1="138" x2="697" y2="184" class="arrow "/>
+  <rect x="350" y="246" width="200" height="30" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="450" y="265.5" class="c sub b mono">NullPointerException</text>
+  <rect x="350" y="282" width="200" height="30" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="450" y="301.5" class="c sub b mono">ArithmeticException</text>
+  <line x1="445" y1="218" x2="445" y2="244" class="arrow "/>
+  <rect x="560" y="246" width="190" height="30" rx="6" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <text x="655" y="265.5" class="c sub b mono">FileNotFoundException</text>
+  <line x1="582" y1="218" x2="600" y2="244" class="arrow "/>
+  <text x="30" y="262" class="sub">淡紫色的 Error、RuntimeException 及它们的子类</text>
+  <text x="30" y="280" class="sub">是非受检异常，编译器不强制处理；</text>
+  <text x="30" y="298" class="sub">其余的 Exception（浅蓝）是受检异常，必须</text>
+  <text x="30" y="316" class="sub">捕获或者用 throws 声明。</text>
+</svg>

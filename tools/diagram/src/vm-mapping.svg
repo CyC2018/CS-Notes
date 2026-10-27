@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="320" y="28" class="title">虚拟内存：64 KB 的地址空间，只有 32 KB 物理内存</text>
+  <text x="195" y="52" class="c sub b" style="fill:#444">虚拟页（4 KB 一页）</text>
+  <rect x="150" y="454" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="471" class="c sub mono" style="fill:#444">2</text>
+  <text x="142" y="471" class="sub mono e">0K～4K</text>
+  <text x="250" y="471" class="sub mono">0</text>
+  <rect x="150" y="428" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="445" class="c sub mono" style="fill:#444">7</text>
+  <text x="142" y="445" class="sub mono e">4K～8K</text>
+  <text x="250" y="445" class="sub mono">1</text>
+  <rect x="150" y="402" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="419" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="419" class="sub mono e">8K～12K</text>
+  <text x="250" y="419" class="sub mono">2</text>
+  <rect x="150" y="376" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="393" class="c sub mono" style="fill:#444">5</text>
+  <text x="142" y="393" class="sub mono e">12K～16K</text>
+  <text x="250" y="393" class="sub mono">3</text>
+  <rect x="150" y="350" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="367" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="367" class="sub mono e">16K～20K</text>
+  <text x="250" y="367" class="sub mono">4</text>
+  <rect x="150" y="324" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="341" class="c sub mono" style="fill:#444">0</text>
+  <text x="142" y="341" class="sub mono e">20K～24K</text>
+  <text x="250" y="341" class="sub mono">5</text>
+  <rect x="150" y="298" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="315" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="315" class="sub mono e">24K～28K</text>
+  <text x="250" y="315" class="sub mono">6</text>
+  <rect x="150" y="272" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="289" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="289" class="sub mono e">28K～32K</text>
+  <text x="250" y="289" class="sub mono">7</text>
+  <rect x="150" y="246" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="263" class="c sub mono" style="fill:#444">3</text>
+  <text x="142" y="263" class="sub mono e">32K～36K</text>
+  <text x="250" y="263" class="sub mono">8</text>
+  <rect x="150" y="220" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="237" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="237" class="sub mono e">36K～40K</text>
+  <text x="250" y="237" class="sub mono">9</text>
+  <rect x="150" y="194" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="211" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="211" class="sub mono e">40K～44K</text>
+  <text x="250" y="211" class="sub mono">10</text>
+  <rect x="150" y="168" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="185" class="c sub mono" style="fill:#444">6</text>
+  <text x="142" y="185" class="sub mono e">44K～48K</text>
+  <text x="250" y="185" class="sub mono">11</text>
+  <rect x="150" y="142" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="159" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="159" class="sub mono e">48K～52K</text>
+  <text x="250" y="159" class="sub mono">12</text>
+  <rect x="150" y="116" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="133" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="133" class="sub mono e">52K～56K</text>
+  <text x="250" y="133" class="sub mono">13</text>
+  <rect x="150" y="90" width="90" height="26" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="195" y="107" class="c sub mono" style="fill:#444">4</text>
+  <text x="142" y="107" class="sub mono e">56K～60K</text>
+  <text x="250" y="107" class="sub mono">14</text>
+  <rect x="150" y="64" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="195" y="81" class="c sub mono" style="fill:#444">×</text>
+  <text x="142" y="81" class="sub mono e">60K～64K</text>
+  <text x="250" y="81" class="sub mono">15</text>
+  <text x="515" y="260" class="c sub b" style="fill:#444">物理页框</text>
+  <rect x="470" y="454" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="471" class="c sub" style="fill:#444">页 5</text>
+  <text x="570" y="471" class="sub mono">0K～4K</text>
+  <text x="462" y="471" class="sub mono e">0</text>
+  <rect x="470" y="428" width="90" height="26" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="515" y="445" class="c sub" style="fill:#444">空闲</text>
+  <text x="570" y="445" class="sub mono">4K～8K</text>
+  <text x="462" y="445" class="sub mono e">1</text>
+  <rect x="470" y="402" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="419" class="c sub" style="fill:#444">页 0</text>
+  <text x="570" y="419" class="sub mono">8K～12K</text>
+  <text x="462" y="419" class="sub mono e">2</text>
+  <rect x="470" y="376" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="393" class="c sub" style="fill:#444">页 8</text>
+  <text x="570" y="393" class="sub mono">12K～16K</text>
+  <text x="462" y="393" class="sub mono e">3</text>
+  <rect x="470" y="350" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="367" class="c sub" style="fill:#444">页 14</text>
+  <text x="570" y="367" class="sub mono">16K～20K</text>
+  <text x="462" y="367" class="sub mono e">4</text>
+  <rect x="470" y="324" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="341" class="c sub" style="fill:#444">页 3</text>
+  <text x="570" y="341" class="sub mono">20K～24K</text>
+  <text x="462" y="341" class="sub mono e">5</text>
+  <rect x="470" y="298" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="315" class="c sub" style="fill:#444">页 11</text>
+  <text x="570" y="315" class="sub mono">24K～28K</text>
+  <text x="462" y="315" class="sub mono e">6</text>
+  <rect x="470" y="272" width="90" height="26" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="515" y="289" class="c sub" style="fill:#444">页 1</text>
+  <text x="570" y="289" class="sub mono">28K～32K</text>
+  <text x="462" y="289" class="sub mono e">7</text>
+  <line x1="266" y1="467.0" x2="448" y2="415.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="441.0" x2="448" y2="285.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="389.0" x2="448" y2="337.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="337.0" x2="448" y2="467.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="259.0" x2="448" y2="389.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="181.0" x2="448" y2="311.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="266" y1="103.0" x2="448" y2="363.0" stroke="#AAA" stroke-width="1" marker-end="url(#a)"/>
+  <text x="30" y="496" class="sub">左边格子中的数字是页框号，× 表示这一页不在内存中，访问它会触发缺页中断，由操作系统从磁盘调入。</text>
+  <text x="30" y="514" class="sub">只有 7 页在内存中，程序照样可以运行；各页映射到哪个页框没有顺序要求。</text>
+</svg>
