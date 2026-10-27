@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="342" viewBox="0 0 520 342">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="260" y="28" class="title">快速排序：切分后对左右两部分递归排序</text>
+  <text x="141" y="58" class="c sub mono">0</text>
+  <text x="175" y="58" class="c sub mono">1</text>
+  <text x="209" y="58" class="c sub mono">2</text>
+  <text x="243" y="58" class="c sub mono">3</text>
+  <text x="277" y="58" class="c sub mono">4</text>
+  <text x="311" y="58" class="c sub mono">5</text>
+  <text x="345" y="58" class="c sub mono">6</text>
+  <text x="379" y="58" class="c sub mono">7</text>
+  <rect x="124" y="66" width="34" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="141" y="86" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="158" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="175" y="86" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="192" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="209" y="86" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="226" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="243" y="86" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="260" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="277" y="86" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="294" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="311" y="86" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="328" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="345" y="86" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="362" y="66" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="379" y="86" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <text x="112" y="86" class="e">初始</text>
+  <text x="408" y="86" class="sub">a[0] = 5 为切分元素</text>
+  <line x1="260" y1="104" x2="260" y2="138" class="arrow "/>
+  <text x="270" y="126" class="sub mono">partition(0, 7)</text>
+  <rect x="124" y="144" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="141" y="164" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="158" y="144" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="175" y="164" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="192" y="144" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="209" y="164" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="226" y="144" width="34" height="30" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="243" y="164" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="260" y="144" width="34" height="30" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="277" y="164" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="294" y="144" width="34" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="311" y="164" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="328" y="144" width="34" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="345" y="164" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="362" y="144" width="34" height="30" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="379" y="164" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <text x="112" y="164" class="e">切分后</text>
+  <text x="192" y="190" class="sub c">都 ≤ 5</text>
+  <text x="277" y="190" class="sub c mono">j = 4</text>
+  <text x="345" y="190" class="sub c">都 ≥ 5</text>
+  <line x1="192" y1="198" x2="154" y2="236" class="arrow "/>
+  <line x1="345" y1="198" x2="385" y2="236" class="arrow "/>
+  <text x="126" y="220" class="sub mono e">sort(0, 3)</text>
+  <text x="395" y="220" class="sub mono">sort(5, 7)</text>
+  <rect x="84" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="101" y="262" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="118" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="135" y="262" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="152" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="169" y="262" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="186" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="203" y="262" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="334" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="351" y="262" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <rect x="368" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="385" y="262" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="402" y="242" width="34" height="30" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="419" y="262" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <text x="152" y="290" class="sub c">递归后有序</text>
+  <text x="385" y="290" class="sub c">递归后有序</text>
+  <text x="260" y="326" class="sub c">5 已在最终位置，两侧排好后整个数组就有序（代码会先随机打乱，这里省略）</text>
+</svg>

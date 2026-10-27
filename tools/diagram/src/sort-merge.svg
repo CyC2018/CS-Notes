@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="578" height="456" viewBox="0 0 578 456">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="289" y="28" class="title">自顶向下归并排序：先拆分到单个元素，再两两归并</text>
+  <rect x="219" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="234" y="75" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="249" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="264" y="75" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="279" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="294" y="75" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="309" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="324" y="75" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="339" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="354" y="75" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="369" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="384" y="75" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="399" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="414" y="75" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="429" y="56" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="444" y="75" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <rect x="212" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="227" y="131" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="242" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="257" y="131" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="272" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="287" y="131" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="302" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="317" y="131" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="346" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="361" y="131" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="376" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="391" y="131" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="406" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="421" y="131" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="436" y="112" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="451" y="131" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <line x1="339" y1="86" x2="272" y2="109" class="arrow "/>
+  <line x1="339" y1="86" x2="406" y2="109" class="arrow "/>
+  <rect x="198" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="213" y="187" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="228" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="243" y="187" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="272" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="287" y="187" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="302" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="317" y="187" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="346" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="361" y="187" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="376" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="391" y="187" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="420" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="435" y="187" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="450" y="168" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="465" y="187" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <line x1="272" y1="142" x2="228" y2="165" class="arrow "/>
+  <line x1="272" y1="142" x2="302" y2="165" class="arrow "/>
+  <line x1="406" y1="142" x2="376" y2="165" class="arrow "/>
+  <line x1="406" y1="142" x2="450" y2="165" class="arrow "/>
+  <rect x="170" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="185" y="243" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="214" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="229" y="243" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="258" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="273" y="243" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="302" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="317" y="243" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="346" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="361" y="243" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="390" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="405" y="243" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="434" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="449" y="243" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="478" y="224" width="30" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="493" y="243" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <line x1="228" y1="198" x2="185" y2="221" class="arrow "/>
+  <line x1="228" y1="198" x2="229" y2="221" class="arrow "/>
+  <line x1="302" y1="198" x2="273" y2="221" class="arrow "/>
+  <line x1="302" y1="198" x2="317" y2="221" class="arrow "/>
+  <line x1="376" y1="198" x2="361" y2="221" class="arrow "/>
+  <line x1="376" y1="198" x2="405" y2="221" class="arrow "/>
+  <line x1="450" y1="198" x2="449" y2="221" class="arrow "/>
+  <line x1="450" y1="198" x2="493" y2="221" class="arrow "/>
+  <rect x="198" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="213" y="299" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="228" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="243" y="299" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="272" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="287" y="299" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="302" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="317" y="299" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="346" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="361" y="299" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="376" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="391" y="299" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <rect x="420" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="435" y="299" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="450" y="280" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="465" y="299" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <line x1="185" y1="254" x2="228" y2="277" class="arrow "/>
+  <line x1="229" y1="254" x2="228" y2="277" class="arrow "/>
+  <line x1="273" y1="254" x2="302" y2="277" class="arrow "/>
+  <line x1="317" y1="254" x2="302" y2="277" class="arrow "/>
+  <line x1="361" y1="254" x2="376" y2="277" class="arrow "/>
+  <line x1="405" y1="254" x2="376" y2="277" class="arrow "/>
+  <line x1="449" y1="254" x2="450" y2="277" class="arrow "/>
+  <line x1="493" y1="254" x2="450" y2="277" class="arrow "/>
+  <rect x="212" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="227" y="355" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="242" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="257" y="355" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="272" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="287" y="355" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="302" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="317" y="355" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="346" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="361" y="355" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="376" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="391" y="355" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="406" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="421" y="355" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <rect x="436" y="336" width="30" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="451" y="355" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <line x1="228" y1="310" x2="272" y2="333" class="arrow "/>
+  <line x1="302" y1="310" x2="272" y2="333" class="arrow "/>
+  <line x1="376" y1="310" x2="406" y2="333" class="arrow "/>
+  <line x1="450" y1="310" x2="406" y2="333" class="arrow "/>
+  <rect x="219" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="234" y="411" class="c mono" style="font-size:13px;fill:#333">1</text>
+  <rect x="249" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="264" y="411" class="c mono" style="font-size:13px;fill:#333">2</text>
+  <rect x="279" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="294" y="411" class="c mono" style="font-size:13px;fill:#333">3</text>
+  <rect x="309" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="324" y="411" class="c mono" style="font-size:13px;fill:#333">4</text>
+  <rect x="339" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="354" y="411" class="c mono" style="font-size:13px;fill:#333">5</text>
+  <rect x="369" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="384" y="411" class="c mono" style="font-size:13px;fill:#333">6</text>
+  <rect x="399" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="414" y="411" class="c mono" style="font-size:13px;fill:#333">7</text>
+  <rect x="429" y="392" width="30" height="28" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="444" y="411" class="c mono" style="font-size:13px;fill:#333">8</text>
+  <line x1="272" y1="366" x2="339" y2="389" class="arrow "/>
+  <line x1="406" y1="366" x2="339" y2="389" class="arrow "/>
+  <text x="144" y="140" class="e b">拆分</text>
+  <text x="144" y="158" class="e sub mono">mid = l + (h - l) / 2</text>
+  <text x="144" y="350" class="e b">归并</text>
+  <text x="144" y="368" class="e sub mono">merge(l, mid, h)</text>
+  <line x1="154" y1="60" x2="154" y2="250" stroke="#7FB2D6" stroke-width="2"/>
+  <line x1="154" y1="284" x2="154" y2="418" stroke="#7DBCB7" stroke-width="2"/>
+  <text x="339" y="444" class="sub c">3 层归并，每层合计处理 8 个元素</text>
+</svg>
