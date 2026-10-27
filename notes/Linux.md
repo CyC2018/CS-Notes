@@ -130,7 +130,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 
 #### 3. shutdown
 
-```html
+```text
 ## shutdown [-krhc] 时间 [信息]
 -k ： 不会关机，只是发送警告信息，通知所有在线的用户
 -r ： 将系统的服务停掉后就重新启动
@@ -142,7 +142,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 
 可以在环境变量 PATH 中声明可执行文件的路径，路径之间用 : 分隔。
 
-```html
+```text
 /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/dmtsai/.local/bin:/home/dmtsai/bin
 ```
 
@@ -168,13 +168,13 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ### VIM 三个模式
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209002818626.png"/> </div><br>
+<div align="center"> <img src="pics/linux-vim-modes.png" width="760px"/> </div><br>
 
 
 
 - 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
-- 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
-- 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
+- 编辑模式（Insert mode）：按下 “i” 等按键之后进入，可以对文本进行编辑；
+- 指令列模式（Bottom-line mode）：按下 “:” 按键之后进入，用于保存退出等操作。
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
@@ -304,11 +304,11 @@ BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
 
 对于 Ext2 文件系统，当要读取一个文件的内容时，先在 inode 中查找文件内容所在的所有 block，然后把所有 block 的内容读出来。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/12a65cc6-20e0-4706-9fe6-3ba49413d7f6.png" width="500px"> </div><br>
+<div align="center"> <img src="pics/linux-ext2-blocks.png" width="760px"/> </div><br>
 
-而对于 FAT 文件系统，它没有 inode，每个 block 中存储着下一个 block 的编号。
+而对于 FAT 文件系统，它没有 inode，每个 block 的下一个 block 编号记录在文件分配表（File Allocation Table, FAT）中，读取时从目录项中的起始编号开始，沿着这条链依次找到所有 block。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5b718e86-7102-4bb6-8ca5-d1dd791530c5.png" width="500px"> </div><br>
+<div align="center"> <img src="pics/linux-fat-chain.png" width="760px"/> </div><br>
 
 ### 磁盘碎片
 
@@ -371,7 +371,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/linux-filesystem.png" width=""/> </div><br>
+<div align="center"> <img src="pics/linux-fhs.png" width="760px"/> </div><br>
 
 ## 五、文件
 
@@ -409,7 +409,7 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 
 列出文件或者目录的信息，目录的信息就是其中包含的文件。
 
-```html
+```text
 ## ls [-aAdfFhilnrRSt] file|dir
 -a ：列出全部的文件
 -d ：仅列出目录本身
@@ -438,7 +438,7 @@ cd [相对路径或绝对路径]
 
 删除目录，目录必须为空。
 
-```html
+```text
 rmdir [-p] 目录名称
 -p ：递归删除目录
 ```
@@ -447,7 +447,7 @@ rmdir [-p] 目录名称
 
 更新文件时间或者建立新文件。
 
-```html
+```text
 ## touch [-acdmt] filename
 -a ： 更新 atime
 -c ： 更新 ctime，若该文件不存在则不建立新文件
@@ -460,7 +460,7 @@ rmdir [-p] 目录名称
 
 复制文件。如果源文件有两个以上，则目的文件一定要是目录才行。
 
-```html
+```text
 cp [-adfilprsu] source destination
 -a ：相当于 -dr --preserve=all
 -d ：若来源文件为链接文件，则复制链接文件属性而非文件本身
@@ -475,7 +475,7 @@ cp [-adfilprsu] source destination
 
 删除文件。
 
-```html
+```text
 ## rm [-fir] 文件或目录
 -r ：递归删除
 ```
@@ -484,7 +484,7 @@ cp [-adfilprsu] source destination
 
 移动文件。
 
-```html
+```text
 ## mv [-fiu] source destination
 ## mv [options] source1 source2 source3 .... directory
 -f ： force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖
@@ -494,19 +494,19 @@ cp [-adfilprsu] source destination
 
 可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r : 4、w : 2、x : 1。
 
-```html
+```text
 ## chmod [-R] xyz dirname/filename
 ```
 
 示例：将 .bashrc 文件的权限修改为 -rwxr-xr--。
 
-```html
+```text
 ## chmod 754 .bashrc
 ```
 
 也可以使用符号来设定权限。
 
-```html
+```text
 ## chmod [ugoa]  [+-=] [rwx] dirname/filename
 - u：拥有者
 - g：所属群组
@@ -519,7 +519,7 @@ cp [-adfilprsu] source destination
 
 示例：为 .bashrc 文件的所有用户添加写权限。
 
-```html
+```text
 ## chmod a+w .bashrc
 ```
 
@@ -538,10 +538,10 @@ cp [-adfilprsu] source destination
 
 ### 链接
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e46fd03-0cda-4d60-9b1c-0c256edaf6b2.png" width="450px"> </div><br>
+<div align="center"> <img src="pics/linux-links.png" width="760px"/> </div><br>
 
 
-```html
+```text
 ## ln [-sf] source_filename dist_filename
 -s ：默认是实体链接，加 -s 为符号链接
 -f ：如果目标文件存在时，先删除目标文件
@@ -555,7 +555,7 @@ cp [-adfilprsu] source destination
 
 有以下限制：不能跨越文件系统、不能对目录进行链接。
 
-```html
+```text
 ## ln /etc/crontab .
 ## ll -i /etc/crontab crontab
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 crontab
@@ -570,7 +570,7 @@ cp [-adfilprsu] source destination
 
 因为记录的是路径，所以可以为目录建立符号链接。
 
-```html
+```text
 ## ll -i /etc/crontab /root/crontab2
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 /etc/crontab
 53745909 lrwxrwxrwx. 1 root root 12 Jun 23 22:31 /root/crontab2 -> /etc/crontab
@@ -582,7 +582,7 @@ cp [-adfilprsu] source destination
 
 取得文件内容。
 
-```html
+```text
 ## cat [-AbEnTv] filename
 -n ：打印出行号，连同空白行也会有行号，-b 不会
 ```
@@ -603,7 +603,7 @@ cp [-adfilprsu] source destination
 
 取得文件前几行。
 
-```html
+```text
 ## head [-n number] filename
 -n ：后面接数字，代表显示几行的意思
 ```
@@ -622,7 +622,7 @@ cp [-adfilprsu] source destination
 
 指令搜索。
 
-```html
+```text
 ## which [-a] command
 -a ：将所有指令列出，而不是只列第一个
 ```
@@ -631,7 +631,7 @@ cp [-adfilprsu] source destination
 
 文件搜索。速度比较快，因为它只搜索几个特定的目录。
 
-```html
+```text
 ## whereis [-bmsu] dirname/filename
 ```
 
@@ -641,7 +641,7 @@ cp [-adfilprsu] source destination
 
 locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
 
-```html
+```text
 ## locate [-ir] keyword
 -r：正则表达式
 ```
@@ -650,27 +650,27 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每
 
 文件搜索。可以使用文件的属性和权限进行搜索。
 
-```html
+```text
 ## find [basedir] [option]
 example: find . -name "shadow*"
 ```
 
-**① 与时间有关的选项**  
+① 与时间有关的选项：
 
-```html
+```text
 -mtime  n ：列出在 n 天前的那一天修改过内容的文件
 -mtime +n ：列出在 n 天之前 (不含 n 天本身) 修改过内容的文件
--mtime -n ：列出在 n 天之内 (含 n 天本身) 修改过内容的文件
+-mtime -n ：列出在 n 天之内 (不含 n 天本身) 修改过内容的文件
 -newer file ： 列出比 file 更新的文件
 ```
 
-+4、4 和 -4 的指示的时间范围如下：
++4、4 和 -4 指示的时间范围如下：
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/> </div><br>
+<div align="center"> <img src="pics/linux-find-mtime.png" width="760px"/> </div><br>
 
-**② 与文件拥有者和所属群组有关的选项**  
+② 与文件拥有者和所属群组有关的选项：
 
-```html
+```text
 -uid n
 -gid n
 -user name
@@ -679,9 +679,9 @@ example: find . -name "shadow*"
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
-**③ 与文件权限和名称有关的选项**  
+③ 与文件权限和名称有关的选项：
 
-```html
+```text
 -name filename
 -size [+-]SIZE：搜寻比 SIZE 还要大 (+) 或小 (-) 的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
 -type TYPE
@@ -720,7 +720,7 @@ gzip 是 Linux 使用最广的压缩指令，可以解开 compress、zip 与 gzi
 
 可以使用 zcat、zmore、zless 来读取压缩文件的内容。
 
-```html
+```text
 $ gzip [-cdtv#] filename
 -c ：将压缩的数据输出到屏幕上
 -d ：解压缩
@@ -735,7 +735,7 @@ $ gzip [-cdtv#] filename
 
 查看命令：bzcat、bzmore、bzless、bzgrep。
 
-```html
+```text
 $ bzip2 [-cdkzv#] filename
 -k ：保留源文件
 ```
@@ -748,7 +748,7 @@ $ bzip2 [-cdkzv#] filename
 
 查看命令：xzcat、xzmore、xzless、xzgrep。
 
-```html
+```text
 $ xz [-dtlkc#] filename
 ```
 
@@ -756,7 +756,7 @@ $ xz [-dtlkc#] filename
 
 压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gzip、bzip2、xz 将打包文件进行压缩。
 
-```html
+```text
 $ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
 $ tar [-z|-j|-J] [tv] [-f 已有的 tar 文件]              ==查看
 $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
@@ -814,7 +814,7 @@ $ echo ${x}
 
 Bash 的变量可以声明为数组和整数数字。注意数字类型没有浮点数。如果不进行声明，默认是字符串类型。变量的声明使用 declare 命令：
 
-```html
+```text
 $ declare [-aixr] variable
 -a ： 定义为数组类型
 -i ： 定义为整数类型
@@ -859,7 +859,7 @@ $ find /home -name .bashrc > list 2>&1
 
 ## 八、管道指令
 
-管道是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管道。
+管道是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到想要的内容时就可以使用管道。
 
 在命令之间使用 | 分隔各个管道命令。
 
@@ -873,7 +873,7 @@ cut 对数据进行切分，取出想要的部分。
 
 切分过程一行一行地进行。
 
-```html
+```text
 $ cut
 -d ：分隔符
 -f ：经过 -d 分隔后，使用 -f n 取出第 n 个区间
@@ -882,7 +882,7 @@ $ cut
 
 示例 1：last 显示登入者的信息，取出用户名。
 
-```html
+```text
 $ last
 root pts/1 192.168.201.101 Sat Feb 7 12:35 still logged in
 root pts/1 192.168.201.101 Fri Feb 6 12:13 - 18:46 (06:33)
@@ -893,7 +893,7 @@ $ last | cut -d ' ' -f 1
 
 示例 2：将 export 输出的信息，取出第 12 字符以后的所有字符串。
 
-```html
+```text
 $ export
 declare -x HISTCONTROL="ignoredups"
 declare -x HISTSIZE="1000"
@@ -908,7 +908,7 @@ $ export | cut -c 12-
 
 **sort**   用于排序。
 
-```html
+```text
 $ sort [-fbMnrtuk] [file or stdin]
 -f ：忽略大小写
 -b ：忽略最前面的空格
@@ -922,7 +922,7 @@ $ sort [-fbMnrtuk] [file or stdin]
 
 示例：/etc/passwd 文件内容以 : 来分隔，要求以第三列进行排序。
 
-```html
+```text
 $ cat /etc/passwd | sort -t ':' -k 3
 root:x:0:0:root:/root:/bin/bash
 dmtsai:x:1000:1000:dmtsai:/home/dmtsai:/bin/bash
@@ -932,7 +932,7 @@ arod:x:1002:1003::/home/arod:/bin/bash
 
 **uniq**   可以将重复的数据只取一个。
 
-```html
+```text
 $ uniq [-ic]
 -i ：忽略大小写
 -c ：进行计数
@@ -940,7 +940,7 @@ $ uniq [-ic]
 
 示例：取得每个人的登录总次数
 
-```html
+```text
 $ last | cut -d ' ' -f 1 | sort | uniq -c
 1
 6 (unknown
@@ -954,7 +954,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 输出重定向会将输出内容重定向到文件中，而   **tee**   不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
-```html
+```text
 $ tee [-a] file
 ```
 
@@ -962,34 +962,34 @@ $ tee [-a] file
 
 **tr**   用来删除一行中的字符，或者对字符进行替换。
 
-```html
+```text
 $ tr [-ds] SET1 ...
 -d ： 删除行中 SET1 这个字符串
 ```
 
 示例，将 last 输出的信息所有小写转换为大写。
 
-```html
+```text
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
    **col**   将 tab 字符转为空格字符。
 
-```html
+```text
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
 **expand**   将 tab 转换一定数量的空格，默认是 8 个。
 
-```html
+```text
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
 **join**   将有相同数据的那一行合并在一起。
 
-```html
+```text
 $ join [-ti12] file1 file2
 -t ：分隔符，默认为空格
 -i ：忽略大小写的差异
@@ -999,7 +999,7 @@ $ join [-ti12] file1 file2
 
 **paste**   直接将两行粘贴在一起。
 
-```html
+```text
 $ paste [-d] file1 file2
 -d ：分隔符，默认为 tab
 ```
@@ -1008,7 +1008,7 @@ $ paste [-d] file1 file2
 
 **split**   将一个文件划分成多个文件。
 
-```html
+```text
 $ split [-bl] file PREFIX
 -b ：以大小来进行分区，可加单位，例如 b, k, m 等
 -l ：以行数来进行分区。
@@ -1021,7 +1021,7 @@ $ split [-bl] file PREFIX
 
 g/re/p（globally search a regular expression and print)，使用正则表示式进行全局查找并打印。
 
-```html
+```text
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
 -c ： 统计匹配到行的个数
 -i ： 忽略大小写
@@ -1032,7 +1032,7 @@ $ grep [-acinv] [--color=auto] 搜寻字符串 filename
 
 示例：把含有 the 字符串的行提取出来（注意默认会有 --color=auto 选项，因此以下内容在 Linux 中有颜色显示 the 字符串）
 
-```html
+```text
 $ grep -n 'the' regular_express.txt
 8:I can't finish the test.
 12:the symbol '*' is represented as start.
@@ -1043,7 +1043,7 @@ $ grep -n 'the' regular_express.txt
 
 示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为 grep 默认使用基础正则表达式（BRE），其中的 { 和 } 需要转义才表示重复次数。
 
-```html
+```text
 $ grep -n 'a\{2,5\}' regular_express.txt
 ```
 
@@ -1051,7 +1051,7 @@ $ grep -n 'a\{2,5\}' regular_express.txt
 
 用于格式化输出。它不属于管道命令，在给 printf 传数据时需要使用 $( ) 形式。
 
-```html
+```text
 $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
     DmTsai    80    60    92    77.33
      VBird    75    55    80    70.00
@@ -1064,9 +1064,9 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
-示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，我们用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
+示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
 
-```html
+```text
 $ last -n 5
 dmtsai pts/0 192.168.1.100 Tue Jul 14 17:32 still logged in
 dmtsai pts/0 192.168.1.100 Thu Jul 9 23:36 - 02:58 (03:22)
@@ -1075,7 +1075,7 @@ dmtsai pts/0 192.168.1.100 Thu Jul 9 08:02 - 08:17 (00:14)
 dmtsai tty1 Fri May 29 11:55 - 12:11 (00:15)
 ```
 
-```html
+```text
 $ last -n 5 | awk '{print $1 "\t" $3}'
 dmtsai   192.168.1.100
 dmtsai   192.168.1.100
@@ -1086,7 +1086,7 @@ dmtsai   Fri
 
 可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
 
-```html
+```text
 $ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 ```
 
@@ -1109,7 +1109,7 @@ awk 变量：
 
 示例：显示正在处理的行号以及每一行有多少字段
 
-```html
+```text
 $ last -n 5 | awk '{print $1 "\t lines: " NR "\t columns: " NF}'
 dmtsai lines: 1 columns: 10
 dmtsai lines: 2 columns: 10
@@ -1179,13 +1179,13 @@ dmtsai lines: 5 columns: 9
 | 状态 | 说明 |
 | :---: | --- |
 | R | running or runnable (on run queue)<br>正在执行或者可执行，此时进程位于执行队列中。|
-| D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 IO 阻塞。 |
+| D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 I/O 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
 | Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
 | T | stopped (either by a job control signal or because it is being traced) <br> 停止，进程可能被作业控制信号暂停，也可能正在被追踪。|
 <br>
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2bab4127-3e7d-48cc-914e-436be859fb05.png" width="490px"/> </div><br>
+<div align="center"> <img src="pics/linux-process-states.png" width="760px"/> </div><br>
 
 ### SIGCHLD
 
@@ -1198,7 +1198,7 @@ dmtsai lines: 5 columns: 9
 
 在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
-<div align="center"> <!-- <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/flow.png" width=""/> --> </div><br>
+<div align="center"> <img src="pics/linux-sigchld.png" width="760px"/> </div><br>
 
 ### wait()
 
