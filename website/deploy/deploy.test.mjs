@@ -11,7 +11,8 @@ async function fixture(t) {
   t.after(() => rm(directory, { recursive: true, force: true }));
   const files = new Map(['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
     'search.js', 'search-paths.js', 'search-index-example.json', 'notes/MySQL.md',
-    'notes/pics/example.png', 'optimized/example.webp']
+    'notes/pics/example.png', 'optimized/example.webp', 'image-variants.json',
+    'notes/大模型应用.md', 'notes/Java 基础.md', 'notes/66. 构建乘积数组.md']
     .map(path => [path, Buffer.from(`validated contents: ${path}`)]));
   const manifest = Buffer.from(JSON.stringify({ sourceCommit: 'source', generatorHash: 'generator',
     searchIndex: 'search-index-example.json', files: [...files].map(([path, data]) => ({
@@ -34,7 +35,7 @@ test('每日检查：清单一致时不请求凭据、不重复发布，同时�
     },
   });
   assert.equal(report.result, 'unchanged');
-  assert.equal(report.verifiedFiles, 12);
+  assert.equal(report.verifiedFiles, 16);
   assert.ok(requests.includes('notes/MySQL.md'));
   assert.ok(requests.includes('notes/pics/example.png'));
   assert.ok(requests.includes('optimized/example.webp'));
@@ -57,7 +58,7 @@ test('新版本只向固定项目发布 dist，等候 Success 后重试正式域
         assert.equal(input.projectId, PROJECT.projectId);
         assert.equal(input.env, 'Production');
         assert.equal(input.wait, true);
-        assert.deepEqual(input.artifact, { directory: resolve(directory) });
+        assert.deepEqual(input.artifact, { archive: resolve(directory, '../.cache/site-release.zip') });
         published = true;
         return { status: 'Success', deploymentId: 'deployment-test' };
       } },
@@ -102,4 +103,13 @@ test('网页正常但优化图片缺失时不能宣告发布成功', async t => 
     fetcher: async url => new Response(url.pathname.endsWith('.webp')
       ? '<html>SPA fallback</html>' : files.get(decodeURIComponent(url.pathname.slice(1)))),
   }), /文件校验不一致：optimized\/example.webp/);
+});
+
+test('中文或含空格文章返回首页时不能宣告发布成功', async t => {
+  const { directory, files } = await fixture(t);
+  await assert.rejects(deploySite({ directory, attempts: 1,
+    getClient: () => assert.fail('清单一致时不发布'),
+    fetcher: async url => new Response(url.pathname.includes(encodeURIComponent('大模型应用'))
+      ? '<html>SPA fallback</html>' : files.get(decodeURIComponent(url.pathname.slice(1)))),
+  }), /文件校验不一致：notes\/大模型应用.md/);
 });

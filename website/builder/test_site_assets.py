@@ -1,11 +1,12 @@
 """Regression checks for generated search anchors and asset collection."""
 import sys
+import tempfile
 import unittest
 from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from site_assets import heading_slug, referenced_paths, search_document
+from site_assets import heading_slug, optimize_images, referenced_paths, search_document
 
 
 class SearchIndexTests(unittest.TestCase):
@@ -25,6 +26,22 @@ class SearchIndexTests(unittest.TestCase):
     def test_comments_and_example_asset_urls_are_not_published(self):
         content = '<!-- <img src="/secret.png"> -->\n```html\n<img src="/example.png">\n```\n<img src="/notes/pics/actual.png">\n[正文](/notes/示例.md)\n'
         self.assertEqual(set(referenced_paths(content)), {'notes/pics/actual.png', 'notes/示例.md'})
+
+    def test_image_manifest_stable_across_file_creation_order(self):
+        from PIL import Image
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outputs = []
+            for index, names in enumerate([['a.png', 'z.png'], ['z.png', 'a.png']]):
+                dist = root / str(index)
+                dist.mkdir()
+                for name in names:
+                    Image.new('RGB', (128, 128), 'red' if name == 'a.png' else 'blue').save(
+                        dist / name, compress_level=0)
+                report = optimize_images(dist, root / 'cache')
+                self.assertEqual(report['converted'], 2)
+                outputs.append((dist / 'image-variants.json').read_bytes())
+            self.assertEqual(outputs[0], outputs[1])
 
 
 if __name__ == '__main__':
