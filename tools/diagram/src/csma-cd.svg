@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="456" viewBox="0 0 740 456">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">CSMA/CD：最先发送的站最多经过 2τ 就能知道是否碰撞</text>
+  <rect x="140" y="70" width="60" height="26" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="170" y="87.5" class="c sub b">站 A</text>
+  <rect x="420" y="70" width="60" height="26" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="450" y="87.5" class="c sub b">站 B</text>
+  <text x="310" y="86" class="c sub">两站之间的传播时延为 τ</text>
+  <line x1="170" y1="96" x2="170" y2="386" class="arrow "/>
+  <line x1="450" y1="96" x2="450" y2="386" class="arrow "/>
+  <text x="460" y="384" class="sub">时间</text>
+  <rect x="165" y="96" width="10" height="230" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <rect x="445" y="196" width="10" height="30" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <line x1="176" y1="96" x2="444" y2="226" class="arrow "/>
+  <line x1="444" y1="196" x2="176" y2="326" class="arrow red"/>
+  <text x="156" y="110" class="sub mono e">t = 0</text>
+  <text x="156" y="126" class="sub e">A 开始发送</text>
+  <text x="464" y="182" class="sub mono">t = τ − δ</text>
+  <text x="464" y="198" class="sub">B 检测到信道空闲，开始发送</text>
+  <text x="464" y="236" class="sub mono">t = τ</text>
+  <text x="464" y="252" class="sub note">A 的信号到达，B 检测到碰撞，停止发送</text>
+  <text x="156" y="330" class="sub mono e">t = 2τ − δ</text>
+  <text x="156" y="346" class="sub note e">A 检测到碰撞</text>
+  <text x="156" y="362" class="sub note e">停止发送</text>
+  <text x="30" y="418" class="sub">δ 越小，A 发现碰撞越晚，最晚接近 2τ，因此把 2τ 称为争用期。10 Mbit/s 以太网的争用期取 51.2 µs，</text>
+  <text x="30" y="438" class="sub">可发送 512 bit，即 64 字节；帧不能短于 64 字节，否则帧发完了还不知道是否发生了碰撞。</text>
+</svg>

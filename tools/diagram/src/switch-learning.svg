@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="410" viewBox="0 0 780 410">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="390" y="28" class="title">交换机的自学习：A 向 B 发送，B 再回复 A</text>
+  <text x="20" y="66" class="b">① A → B</text>
+  <rect x="130" y="101" width="120" height="70" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="190" y="140" class="c b">交换机</text>
+  <rect x="121" y="109" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="130" y="122" class="c sub mono">1</text>
+  <line x1="121" y1="118" x2="70" y2="118" class="line"/>
+  <rect x="29" y="103" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="33" y="107" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M42,126.12 v5 M50,126.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="34" y="131.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="20" y="122" class="b e">A</text>
+  <line x1="68" y1="110" x2="118" y2="110" class="arrow green"/>
+  <rect x="121" y="145" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="130" y="158" class="c sub mono">3</text>
+  <line x1="121" y1="154" x2="70" y2="154" class="line"/>
+  <rect x="29" y="139" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="33" y="143" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M42,162.12 v5 M50,162.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="34" y="167.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="20" y="158" class="b e">C</text>
+  <line x1="118" y1="162" x2="68" y2="162" class="arrow green"/>
+  <rect x="241" y="109" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="250" y="122" class="c sub mono">2</text>
+  <line x1="259" y1="118" x2="310" y2="118" class="line"/>
+  <rect x="317" y="103" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="321" y="107" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M330,126.12 v5 M338,126.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="322" y="131.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="360" y="122" class="b">B</text>
+  <line x1="262" y1="126" x2="312" y2="126" class="arrow green"/>
+  <rect x="241" y="145" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="250" y="158" class="c sub mono">4</text>
+  <line x1="259" y1="154" x2="310" y2="154" class="line"/>
+  <rect x="317" y="139" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="321" y="143" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M330,162.12 v5 M338,162.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="322" y="167.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="360" y="158" class="b">D</text>
+  <line x1="262" y1="162" x2="312" y2="162" class="arrow green"/>
+  <text x="190" y="206" class="c sub" style="fill:#444">表中没有 B，从除接口 1 外的所有接口转发</text>
+  <text x="80" y="244" class="sub b">处理后的交换表（记下 A 在接口 1）</text>
+  <rect x="80" y="250" width="160" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="160" y="266" class="c sub" style="fill:#444">MAC 地址</text>
+  <rect x="240" y="250" width="60" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="270" y="266" class="c sub" style="fill:#444">接口</text>
+  <rect x="80" y="274" width="160" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="160" y="290" class="c sub mono" style="fill:#444">00:1a:2b:3c:4d:0a</text>
+  <rect x="240" y="274" width="60" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="270" y="290" class="c sub mono" style="fill:#444">1</text>
+  <rect x="80" y="298" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="160" y="314" class="c sub mono" style="fill:#444"></text>
+  <rect x="240" y="298" width="60" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="270" y="314" class="c sub mono" style="fill:#444"></text>
+  <text x="410" y="66" class="b">② B → A</text>
+  <rect x="520" y="101" width="120" height="70" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="580" y="140" class="c b">交换机</text>
+  <rect x="511" y="109" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="520" y="122" class="c sub mono">1</text>
+  <line x1="511" y1="118" x2="460" y2="118" class="line"/>
+  <rect x="419" y="103" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="423" y="107" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M432,126.12 v5 M440,126.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="424" y="131.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="410" y="122" class="b e">A</text>
+  <line x1="508" y1="126" x2="458" y2="126" class="arrow green"/>
+  <rect x="511" y="145" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="520" y="158" class="c sub mono">3</text>
+  <line x1="511" y1="154" x2="460" y2="154" class="line"/>
+  <rect x="419" y="139" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="423" y="143" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M432,162.12 v5 M440,162.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="424" y="167.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="410" y="158" class="b e">C</text>
+  <rect x="631" y="109" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="640" y="122" class="c sub mono">2</text>
+  <line x1="649" y1="118" x2="700" y2="118" class="line"/>
+  <rect x="707" y="103" width="34" height="23.12" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <rect x="711" y="107" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="0.8"/>
+  <path d="M720,126.12 v5 M728,126.12 v5" stroke="#B8B0DE" stroke-width="1.4"/>
+  <rect x="712" y="131.12" width="24" height="3.5" rx="1.5" fill="#B8B0DE"/>
+  <text x="750" y="122" class="b">B</text>
+  <line x1="702" y1="110" x2="652" y2="110" class="arrow green"/>
+  <rect x="631" y="145" width="18" height="18" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="640" y="158" class="c sub mono">4</text>
+  <line x1="649" y1="154" x2="700" y2="154" class="line"/>
+  <rect x="707" y="139" width="34" height="23.12" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="711" y="143" width="26" height="15.12" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M720,162.12 v5 M728,162.12 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="712" y="167.12" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="750" y="158" class="b">D</text>
+  <text x="580" y="206" class="c sub" style="fill:#444">表中 A 在接口 1，只从接口 1 转发</text>
+  <text x="470" y="244" class="sub b">处理后的交换表（记下 B 在接口 2）</text>
+  <rect x="470" y="250" width="160" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="550" y="266" class="c sub" style="fill:#444">MAC 地址</text>
+  <rect x="630" y="250" width="60" height="24" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="660" y="266" class="c sub" style="fill:#444">接口</text>
+  <rect x="470" y="274" width="160" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="550" y="290" class="c sub mono" style="fill:#444">00:1a:2b:3c:4d:0a</text>
+  <rect x="630" y="274" width="60" height="24" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="660" y="290" class="c sub mono" style="fill:#444">1</text>
+  <rect x="470" y="298" width="160" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="550" y="314" class="c sub mono" style="fill:#444">00:1a:2b:3c:4d:0b</text>
+  <rect x="630" y="298" width="60" height="24" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="660" y="314" class="c sub mono" style="fill:#444">2</text>
+  <text x="30" y="350" class="sub">交换机收到帧后，先把源 MAC 地址和收到帧的接口记入交换表，再按目的 MAC 地址查表：</text>
+  <text x="30" y="372" class="sub">查到就只从对应的接口转发，查不到就从其它所有接口转发。C、D 收到 A 发给 B 的帧后，发现目的地址不是自己，就丢弃。</text>
+  <text x="30" y="392" class="sub">四台主机的 MAC 地址为 00:1a:2b:3c:4d:0a～0d；表项有老化时间，主机换了接口之后表项会被更新。</text>
+</svg>

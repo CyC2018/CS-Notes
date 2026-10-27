@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="280" viewBox="0 0 740 280">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">局域网的拓扑结构</text>
+  <rect x="100" y="126" width="60" height="28" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="130" y="144.5" class="c sub b">集线器</text>
+  <line x1="130" y1="128" x2="130" y2="70" class="line"/>
+  <rect x="114" y="45" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="118" y="49" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M126,66.76 v5 M134,66.76 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="118" y="71.76" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="154.727" y1="136.292" x2="202.28" y2="118.369" class="line"/>
+  <rect x="197.693" y="101.661" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="201.693" y="105.661" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M209.693,123.421 v5 M217.693,123.421 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="201.693" y="128.421" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="145.282" y1="149.708" x2="174.672" y2="196.631" class="line"/>
+  <rect x="165.725" y="193.339" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="169.725" y="197.339" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M177.725,215.099 v5 M185.725,215.099 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="169.725" y="220.099" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="114.718" y1="149.708" x2="85.3283" y2="196.631" class="line"/>
+  <rect x="62.2749" y="193.339" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="66.2749" y="197.339" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M74.2749,215.099 v5 M82.2749,215.099 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="66.2749" y="220.099" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="105.273" y1="136.292" x2="57.7197" y2="118.369" class="line"/>
+  <rect x="30.307" y="101.661" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="34.307" y="105.661" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M42.307,123.421 v5 M50.307,123.421 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="34.307" y="128.421" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="130" y="260" class="c b">星形</text>
+  <circle cx="370" cy="140" r="70" fill="none" stroke="#555" stroke-width="1.1"/>
+  <rect x="352" y="56" width="36" height="28" fill="#FFFFFF" stroke="none"/>
+  <rect x="354" y="57" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="358" y="61" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M366,78.76 v5 M374,78.76 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="358" y="83.76" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <rect x="418.574" y="104.369" width="36" height="28" fill="#FFFFFF" stroke="none"/>
+  <rect x="420.574" y="105.369" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="424.574" y="109.369" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M432.574,127.129 v5 M440.574,127.129 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="424.574" y="132.129" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <rect x="393.145" y="182.631" width="36" height="28" fill="#FFFFFF" stroke="none"/>
+  <rect x="395.145" y="183.631" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="399.145" y="187.631" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M407.145,205.391 v5 M415.145,205.391 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="399.145" y="210.391" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <rect x="310.855" y="182.631" width="36" height="28" fill="#FFFFFF" stroke="none"/>
+  <rect x="312.855" y="183.631" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="316.855" y="187.631" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M324.855,205.391 v5 M332.855,205.391 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="316.855" y="210.391" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <rect x="285.426" y="104.369" width="36" height="28" fill="#FFFFFF" stroke="none"/>
+  <rect x="287.426" y="105.369" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="291.426" y="109.369" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M299.426,127.129 v5 M307.426,127.129 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="291.426" y="132.129" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="370" y="260" class="c b">环形</text>
+  <line x1="520" y1="140" x2="720" y2="140" class="line"/>
+  <rect x="517" y="135" width="6" height="10" fill="#555"/><rect x="717" y="135" width="6" height="10" fill="#555"/>
+  <line x1="555" y1="140" x2="555" y2="104" class="line"/>
+  <rect x="539" y="74" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="543" y="78" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M551,95.76 v5 M559,95.76 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="543" y="100.76" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="620" y1="140" x2="620" y2="170" class="line"/>
+  <rect x="604" y="170" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="608" y="174" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M616,191.76 v5 M624,191.76 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="608" y="196.76" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <line x1="685" y1="140" x2="685" y2="104" class="line"/>
+  <rect x="669" y="74" width="32" height="21.76" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="673" y="78" width="24" height="13.76" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M681,95.76 v5 M689,95.76 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="673" y="100.76" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="620" y="260" class="c b">总线形</text>
+  <text x="130" y="240" class="c sub">以太网、交换式局域网</text>
+  <text x="370" y="240" class="c sub">令牌环网</text>
+  <text x="620" y="240" class="c sub">早期的同轴电缆以太网</text>
+</svg>

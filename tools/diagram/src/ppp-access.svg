@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="300" viewBox="0 0 740 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">PPP：用户计算机与 ISP 之间的链路层协议</text>
+  <rect x="56" y="86" width="48" height="32.64" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <rect x="60" y="90" width="40" height="24.64" rx="1.5" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="0.8"/>
+  <path d="M76,118.64 v5 M84,118.64 v5" stroke="#7FB2D6" stroke-width="1.4"/>
+  <rect x="68" y="123.64" width="24" height="3.5" rx="1.5" fill="#7FB2D6"/>
+  <text x="80" y="140" class="c b">用户计算机</text>
+  <text x="80" y="156" class="c sub">（或家用路由器）</text>
+  <rect x="355" y="84" width="50" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="362" cy="90.5" r="2" fill="#7DBCB7"/>
+  <line x1="369" y1="90.5" x2="398" y2="90.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="355" y="100" width="50" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="362" cy="106.5" r="2" fill="#7DBCB7"/>
+  <line x1="369" y1="106.5" x2="398" y2="106.5" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="355" y="116" width="50" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1.2"/>
+  <circle cx="362" cy="122.5" r="2" fill="#7DBCB7"/>
+  <line x1="369" y1="122.5" x2="398" y2="122.5" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="380" y="148" class="c b">ISP 的接入服务器</text>
+  <path d="M592,136.4 C559,136.4 562,102.2 589,99.92 C586,74.08 637,64.2 649,83.2 C667,69.52 703,77.12 694,99.92 C721,102.96 721,136.4 688,136.4 Z" fill="#F4F4F4" stroke="#C8C8C8" stroke-width="1.2"/>
+  <text x="640" y="112" class="c b">互联网</text>
+  <line x1="110" y1="106" x2="352" y2="106" class="line"/>
+  <line x1="408" y1="106" x2="566" y2="106" class="line"/>
+  <text x="231" y="98" class="c sub b">PPP 链路</text>
+  <text x="140" y="192" class="sub b">① 建立链路</text>
+  <text x="240" y="192" class="sub">LCP 协商帧的最大长度等参数</text>
+  <text x="140" y="214" class="sub b">② 身份认证</text>
+  <text x="240" y="214" class="sub">PAP 或 CHAP 校验用户名和密码</text>
+  <text x="140" y="236" class="sub b">③ 配置网络层</text>
+  <text x="240" y="236" class="sub">IPCP 为用户分配 IP 地址，例如 100.64.12.34</text>
+  <text x="140" y="258" class="sub b">④ 传输数据</text>
+  <text x="240" y="258" class="sub">IP 数据报封装在 PPP 帧中，在这条链路上来回传送</text>
+</svg>

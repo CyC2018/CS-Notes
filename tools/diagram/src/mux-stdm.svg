@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="360" y="28" class="title">统计时分复用：时隙按需分配，数据前带上用户地址</text>
+  <text x="30" y="60" class="sub" style="fill:#444">4 个用户在 4 个时间段内要发送的数据：第 1 段 A、C，第 2 段 C，第 3 段 B、D，第 4 段 A、C，共 7 份。</text>
+  <rect x="30" y="92" width="54" height="30" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="57" y="111.5" class="c b">A</text>
+  <line x1="86" y1="107" x2="176" y2="145" class="arrow "/>
+  <rect x="30" y="136" width="54" height="30" rx="6" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="57" y="155.5" class="c b">B</text>
+  <line x1="86" y1="151" x2="176" y2="155" class="arrow "/>
+  <rect x="30" y="180" width="54" height="30" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="57" y="199.5" class="c b">C</text>
+  <line x1="86" y1="195" x2="176" y2="165" class="arrow "/>
+  <rect x="30" y="224" width="54" height="30" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="57" y="243.5" class="c b">D</text>
+  <line x1="86" y1="239" x2="176" y2="175" class="arrow "/>
+  <rect x="180" y="132" width="100" height="56" rx="6" fill="#EAE9E7" stroke="#BFBEBA"/>
+  <text x="230" y="158" class="b c">集中器</text>
+  <text x="230" y="173" class="sub c">缓存各用户的数据</text>
+  <line x1="282" y1="160" x2="312" y2="160" class="arrow "/>
+  <rect x="316" y="134" width="46" height="52" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="319" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="339" y="149" class="c sub" style="font-size:9.5px">地址 A</text>
+  <text x="339" y="175" class="c sub b">A</text>
+  <rect x="362" y="134" width="46" height="52" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="365" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="385" y="149" class="c sub" style="font-size:9.5px">地址 C</text>
+  <text x="385" y="175" class="c sub b">C</text>
+  <rect x="408" y="134" width="46" height="52" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="411" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="431" y="149" class="c sub" style="font-size:9.5px">地址 C</text>
+  <text x="431" y="175" class="c sub b">C</text>
+  <rect x="454" y="134" width="46" height="52" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <rect x="457" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="477" y="149" class="c sub" style="font-size:9.5px">地址 B</text>
+  <text x="477" y="175" class="c sub b">B</text>
+  <rect x="508" y="134" width="46" height="52" rx="3" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <rect x="511" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="531" y="149" class="c sub" style="font-size:9.5px">地址 D</text>
+  <text x="531" y="175" class="c sub b">D</text>
+  <rect x="554" y="134" width="46" height="52" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <rect x="557" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="577" y="149" class="c sub" style="font-size:9.5px">地址 A</text>
+  <text x="577" y="175" class="c sub b">A</text>
+  <rect x="600" y="134" width="46" height="52" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <rect x="603" y="137" width="40" height="16" rx="2" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="623" y="149" class="c sub" style="font-size:9.5px">地址 C</text>
+  <text x="623" y="175" class="c sub b">C</text>
+  <rect x="646" y="134" width="46" height="52" rx="3" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="669" y="164" class="c sub">…</text>
+  <path d="M318,126 q0,-8 8,-8 H402 q6,0 6,-6 q0,6 6,6 H490 q8,0 8,8" class="line"/>
+  <text x="408" y="104" class="c sub">统计时分复用帧 1</text>
+  <path d="M510,126 q0,-8 8,-8 H594 q6,0 6,-6 q0,6 6,6 H682 q8,0 8,8" class="line"/>
+  <text x="600" y="104" class="c sub">统计时分复用帧 2</text>
+  <text x="30" y="296" class="sub">集中器把有数据的用户依次放进时隙，同样的 7 份数据只用 7 个时隙，省下的时隙可以服务更多的用户。</text>
+  <text x="30" y="316" class="sub">代价是时隙不再固定属于某个用户，每个时隙都要带上用户地址，接收端才能区分。</text>
+</svg>

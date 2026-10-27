@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="240" viewBox="0 0 740 240">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="370" y="28" class="title">PPP 的帧格式</text>
+  <rect x="40" y="92" width="58" height="44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="69" y="111" class="c b">F</text>
+  <text x="69" y="127" class="c sub mono">7E</text>
+  <text x="69" y="82" class="c sub">1 字节</text>
+  <rect x="98" y="92" width="58" height="44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="127" y="111" class="c b">A</text>
+  <text x="127" y="127" class="c sub mono">FF</text>
+  <text x="127" y="82" class="c sub">1 字节</text>
+  <rect x="156" y="92" width="58" height="44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="185" y="111" class="c b">C</text>
+  <text x="185" y="127" class="c sub mono">03</text>
+  <text x="185" y="82" class="c sub">1 字节</text>
+  <rect x="214" y="92" width="84" height="44" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="256" y="111" class="c b">协议</text>
+  <text x="256" y="127" class="c sub mono">0021</text>
+  <text x="256" y="82" class="c sub">2 字节</text>
+  <rect x="298" y="92" width="228" height="44" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="412" y="111" class="c">信息部分</text>
+  <text x="412" y="127" class="c sub">IP 数据报</text>
+  <text x="412" y="82" class="c sub">≤ 1500 字节</text>
+  <rect x="526" y="92" width="84" height="44" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
+  <text x="568" y="111" class="c b">FCS</text>
+  <text x="568" y="127" class="c sub mono">CRC</text>
+  <text x="568" y="82" class="c sub">2 字节</text>
+  <rect x="610" y="92" width="58" height="44" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="639" y="111" class="c b">F</text>
+  <text x="639" y="127" class="c sub mono">7E</text>
+  <text x="639" y="82" class="c sub">1 字节</text>
+  <text x="40" y="172" class="sub">首尾的 F 都是 0x7E，用来标记帧的开始和结束；A 固定为 0xFF，C 固定为 0x03。</text>
+  <text x="40" y="192" class="sub">协议字段指出信息部分的类型：0x0021 是 IP 数据报，0xC021 是 LCP 分组，0x8021 是 IPCP 分组。</text>
+  <text x="40" y="212" class="sub">信息部分中出现 0x7E 时改为 0x7D 0x5E，出现 0x7D 时改为 0x7D 0x5D，接收端再还原，实现透明传输。</text>
+</svg>

@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">码分复用：两个站同时发送，接收端用各自的码片分离</text>
+  <text x="226" y="62" class="c sub mono">1</text>
+  <text x="278" y="62" class="c sub mono">2</text>
+  <text x="330" y="62" class="c sub mono">3</text>
+  <text x="382" y="62" class="c sub mono">4</text>
+  <text x="434" y="62" class="c sub mono">5</text>
+  <text x="486" y="62" class="c sub mono">6</text>
+  <text x="538" y="62" class="c sub mono">7</text>
+  <text x="590" y="62" class="c sub mono">8</text>
+  <text x="30" y="83" class="b">S 站的码片 S</text>
+  <text x="30" y="99" class="sub mono">00011011</text>
+  <rect x="200" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="226" y="88" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="252" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="278" y="88" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="304" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="330" y="88" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="356" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="88" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="408" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="434" y="88" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="460" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="486" y="88" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="512" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="538" y="88" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="564" y="70" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="590" y="88" class="c sub mono" style="fill:#444">+1</text>
+  <text x="30" y="125" class="b">T 站的码片 T</text>
+  <text x="30" y="141" class="sub mono">00101110</text>
+  <rect x="200" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="226" y="130" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="252" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="278" y="130" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="304" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="330" y="130" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="356" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="382" y="130" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="408" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="434" y="130" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="460" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="486" y="130" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="512" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="538" y="130" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="564" y="112" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="590" y="130" class="c sub mono" style="fill:#444">-1</text>
+  <text x="630" y="131" class="sub">S · T = 0，两者正交</text>
+  <text x="30" y="183" class="b">S 站发送比特 1</text>
+  <text x="30" y="199" class="sub">发送 S</text>
+  <rect x="200" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="226" y="188" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="252" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="278" y="188" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="304" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="330" y="188" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="356" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="188" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="408" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="434" y="188" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="460" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="486" y="188" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="512" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="538" y="188" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="564" y="170" width="52" height="28" rx="3" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="590" y="188" class="c sub mono" style="fill:#444">+1</text>
+  <text x="30" y="225" class="b">T 站发送比特 0</text>
+  <text x="30" y="241" class="sub">发送 T 的反码 T'</text>
+  <rect x="200" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="226" y="230" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="252" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="278" y="230" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="304" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="330" y="230" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="356" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="382" y="230" class="c sub mono" style="fill:#444">+1</text>
+  <rect x="408" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="434" y="230" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="460" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="486" y="230" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="512" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="538" y="230" class="c sub mono" style="fill:#444">-1</text>
+  <rect x="564" y="212" width="52" height="28" rx="3" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="590" y="230" class="c sub mono" style="fill:#444">+1</text>
+  <text x="30" y="279" class="b">信道上叠加</text>
+  <text x="30" y="295" class="sub">两路信号相加</text>
+  <rect x="200" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="226" y="284" class="c sub mono" style="fill:#444">0</text>
+  <rect x="252" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="278" y="284" class="c sub mono" style="fill:#444">0</text>
+  <rect x="304" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="330" y="284" class="c sub mono" style="fill:#444">-2</text>
+  <rect x="356" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="382" y="284" class="c sub mono" style="fill:#444">+2</text>
+  <rect x="408" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="434" y="284" class="c sub mono" style="fill:#444">0</text>
+  <rect x="460" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="486" y="284" class="c sub mono" style="fill:#444">-2</text>
+  <rect x="512" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="538" y="284" class="c sub mono" style="fill:#444">0</text>
+  <rect x="564" y="266" width="52" height="28" rx="3" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="590" y="284" class="c sub mono" style="fill:#444">+2</text>
+  <line x1="200" y1="254" x2="616" y2="254" class="line"/>
+  <text x="30" y="336" class="b">接收端</text>
+  <text x="200" y="330" class="sub mono" style="fill:#444">(1/8) · S · 信道 = (1/8) × 8 = +1  →  S 站发送的是比特 1</text>
+  <text x="200" y="352" class="sub mono" style="fill:#444">(1/8) · T · 信道 = (1/8) × (−8) = -1  →  T 站发送的是比特 0</text>
+  <text x="30" y="384" class="sub">码片中的 0 记作 −1、1 记作 +1。每发送 1 个比特要发送 8 个码片，数据量是原来的 8 倍。</text>
+</svg>
