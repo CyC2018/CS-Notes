@@ -1,5 +1,6 @@
 .DS_Store
 *.txt
+!tools/site-requirements.txt
 !tencent13147342467085209222.txt
 desktop.ini
 CLAUDE.md
@@ -10,3 +11,4 @@ __pycache__/
 /.cache/
 /.site-build-*/
 /artifacts/
+/tools/deploy/node_modules/

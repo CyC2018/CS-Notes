@@ -5,6 +5,7 @@
 ## 生成网站
 
 ```bash
+python3 -m pip install -r tools/site-requirements.txt
 python3 tools/build_site.py
 python3 tools/check_site.py
 python3 tools/test_site_assets.py
@@ -37,7 +38,23 @@ python3 tools/serve_site.py
 - legacy-routes.json 来自 Windows 旧 VuePress 工程的 168 篇文章目录，保留扩展名、无扩展名等 504 个旧入口；旧工程不作为当前正文来源。
 - asset-manifest.json 记录每个发布文件的大小与 SHA-256，check_site.py 会验证全部文件、引用、索引、图片变体与旧链接目标。
 - 根域名与 www 域名绑定到同一项目，解析目标以腾讯云项目中的域名管理页面为准。
-- 更新原仓库文章后需要重新生成并上传；直接上传项目目前没有自动同步 Git 提交。
+- 主分支文章更新后，由下述 GitHub Actions 生成并发布；本地打包仍可用于手动恢复。
+
+## 自动更新与发布
+
+`.github/workflows/website.yml` 在 GitHub 云端运行，不依赖个人电脑开机，也不需要购买服务器：
+
+- 北京时间每天 09:17、21:17 检查主分支；master 有新提交时立即触发，也可在 Actions 中手动 Run workflow。
+- 每次重新检出最新 master，镜像新增外链图片，生成静态文件，校验全部引用、图片、搜索索引及文件清单。PR 只构建和测试，不使用发布凭据。
+- 校验通过后，对比正式站的资产清单；没有变化时检查线上关键文件并跳过重复发布。有变化时使用腾讯云官方 Makers SDK 发布到固定项目 `makers-s7dxi8u5vidy`（`cs-notes`，中国站）。
+- 部署必须达到 Success，随后核对正式域名的清单及首页、正文、搜索等 10 个关键文件的实际 SHA-256。校验失败会让任务失败；构建失败不会上传。发布后检查失败时先查看报告和腾讯云部署状态，不自动覆盖或删除旧版本。
+- Actions 每次只保存小型报告，保留 7 天，不每天积累约 52 MB 的完整网站 ZIP；原始正文、图片和构建代码保存在 Git 仓库。
+
+首次配置：把腾讯云 Makers API Token 保存为本仓库的 Actions Secret `EDGEONE_API_TOKEN`。令牌属于账号级凭据，不能放进公开源码、网页或日志；定期在腾讯云续期或更换，再更新同名 Secret。删除/撤销令牌会停止后续自动发布，不会删除已发布的网站。可在 Actions 中禁用“网站构建与发布”暂停整条流程。
+
+定时任务要求工作流文件存在于默认分支 master。GitHub 调度可能延迟，公开仓库连续 60 天无活动会自动停用定时工作流，届时需在 Actions 页面重新启用；这不是精确到分钟的可用性承诺。失败通知使用 GitHub 自身的 Actions 通知设置。
+
+参考：[腾讯云 GitHub Actions 发布](https://pages.edgeone.ai/document/using-github-actions)、[Makers SDK](https://pages.edgeone.ai/document/sdk-overview)、[GitHub 定时触发限制](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。
 
 ## 恢复背景
 
