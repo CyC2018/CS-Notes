@@ -47,13 +47,16 @@ verify_updates.py 在临时副本中修改文章、替换配图、新增文章�
 
 `.github/workflows/website.yml` 在 master 提交后、北京时间每天 09:17 和 21:17，以及手动 Run workflow 时运行。PR 仅验证合并后的源码，不读取部署凭据。CI 使用 `refresh.py --from-checkout` 从已检出的 Git 提交生成，源码中未提交的本机文件不会进入产物。
 
-通过图片、引用和搜索检查后，使用腾讯云官方 Makers SDK 发布整个 website/dist（包含网页和图片）到现有 cs-notes 项目，固定项目 ID 和中国站，上传前核对项目名称。清单与正式站一致时检查正式文件并跳过重复发布；有变化时等待腾讯云部署 Success，再核对正式域名的版本清单及 11 个关键页面/资源的实际 SHA-256，覆盖原图和优化配图。
+通过图片、引用和搜索检查后，使用 Python 标准库生成可重复的 UTF-8 发布包，再由腾讯云官方 Makers SDK 原样上传到现有 cs-notes 项目，包含整个 website/dist 的网页和图片。固定项目 ID 和中国站，上传前核对项目名称。清单与正式站一致时检查正式文件并跳过重复发布；有变化时等待腾讯云部署 Success，再核对正式域名的版本清单及 15 个关键页面/资源的实际 SHA-256，覆盖中文、空格文件名、图片清单、原图和优化配图。
+
+发布包由 `python3 website/deploy/package_site.py` 在构建后生成到忽略的 `.cache/site-release.zip`，仅包含已校验清单中的文件；打包阶段不传入令牌。SDK 的目录打包在当前平台解包后会将中文名转成 `#U…`，因此使用 SDK 的 archive 参数上传标准 ZIP，保留原有中文网址。
 
 本机检查发布保护（不需要令牌、不会上传）：
 
 ```bash
 npm ci --prefix website/deploy --ignore-scripts
 npm test --prefix website/deploy
+python3 website/deploy/test_package_site.py
 ```
 
 发布令牌只在仓库 Actions Secret `EDGEONE_API_TOKEN` 中配置，并仅传入可信 master 的发布步骤，不写入源码、网页、日志或报告。构建/校验失败时不会上传；发布后的域名检查失败会让任务失败，需查看部署记录后处理。删除令牌会停止后续发布，已经上线的网站不会被删除。

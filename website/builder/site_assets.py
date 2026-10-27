@@ -159,7 +159,7 @@ def optimize_images(dist, cache):
             return before + mapping.get(url, {}).get('path', url) + after
         parts = re.split(r'(```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->)', path.read_text())
         path.write_text(''.join(part if i % 2 else image_pattern.sub(replace, part) for i, part in enumerate(parts)))
-    (dist / 'image-variants.json').write_text(json.dumps(mapping, ensure_ascii=False, indent=2) + '\n')
+    (dist / 'image-variants.json').write_text(json.dumps(mapping, ensure_ascii=False, indent=2, sort_keys=True) + '\n')
     return {'converted': len(mapping), 'originalBytes': sum(v['originalBytes'] for v in mapping.values()),
             'deliveryBytes': sum(v['deliveryBytes'] for v in mapping.values()), 'pixelIdentical': True}
 

@@ -23,7 +23,8 @@ export async function verifyPublished(manifestBytes, { fetcher = fetch, origin =
   const remote = await download(origin, 'asset-manifest.json', revision, fetcher);
   if (sha256(remote) !== revision) throw new Error('正式域名的版本清单尚未与构建一致。');
   const paths = ['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
-    'search.js', 'search-paths.js', manifest.searchIndex, 'notes/MySQL.md'];
+    'search.js', 'search-paths.js', manifest.searchIndex, 'image-variants.json', 'notes/MySQL.md',
+    'notes/大模型应用.md', 'notes/Java 基础.md', 'notes/66. 构建乘积数组.md'];
   const records = new Map(manifest.files.map(file => [file.path, file]));
   for (const prefix of ['notes/pics/', 'optimized/']) {
     const image = manifest.files.find(file => file.path.startsWith(prefix));
@@ -42,7 +43,7 @@ export async function verifyPublished(manifestBytes, { fetcher = fetch, origin =
   return paths.length + 1;
 }
 
-export async function deploySite({ directory, getClient, fetcher = fetch,
+export async function deploySite({ directory, archive = resolve(directory, '../.cache/site-release.zip'), getClient, fetcher = fetch,
   sleep = ms => new Promise(done => setTimeout(done, ms)), attempts = 12 }) {
   const manifestBytes = await readFile(resolve(directory, 'asset-manifest.json'));
   const manifest = JSON.parse(manifestBytes);
@@ -59,7 +60,7 @@ export async function deploySite({ directory, getClient, fetcher = fetch,
       throw new Error('腾讯云项目标识与预期不一致，已停止发布。');
     }
     deployment = await makers.deployments.deploy({
-      projectId: PROJECT.projectId, artifact: { directory: resolve(directory) },
+      projectId: PROJECT.projectId, artifact: { archive: resolve(archive) },
       env: 'Production', wait: true, timeout: 600, pollInterval: 5,
       onStatusChange: ({ deployment }) => console.log(`腾讯云部署状态：${deployment.status}`),
     });
