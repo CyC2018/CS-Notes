@@ -30,6 +30,7 @@
         * [内存映射文件](#内存映射文件)
         * [对比](#对比)
     * [八、参考资料](#八参考资料)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -99,7 +100,7 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 - FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
 - FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9709694b-db05-4cce-8d2f-1c8b09f4d921.png" width="650px"> </div><br>
+<div align="center"> <img src="pics/io-decorator.png" width="760px"/> </div><br>
 
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
@@ -279,7 +280,7 @@ public static void main(String[] args) throws IOException {
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e6affc4-18e5-4596-96ef-fb84c63bf88a.png" width="550px"> </div><br>
+<div align="center"> <img src="pics/io-socket.png" width="760px"/> </div><br>
 
 ### Datagram
 
@@ -341,23 +342,17 @@ I/O 包和 NIO 已经很好地集成了，java.io.\* 已经以 NIO 为基础重�
 
 ① 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 8。capacity 变量不会改变，下面的讨论会忽略它。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1bea398f-17a7-4f67-a90b-9e2d243eaa9a.png"/> </div><br>
-
 ② 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 为 5，limit 保持不变。
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/80804f52-8815-4096-b506-48eef3eed5c6.png"/> </div><br>
 
 ③ 在将缓冲区的数据写到输出通道之前，需要先调用 flip() 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/952e06bd-5a65-4cab-82e4-dd1536462f38.png"/> </div><br>
-
 ④ 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b5bdcbe2-b958-4aef-9151-6ad963cb28b4.png"/> </div><br>
+⑤ 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。需要注意的是，clear() 只是重置这两个变量，缓冲区中的数据并没有被擦除，之后写入时会被覆盖。
 
-⑤ 最后需要调用 clear() 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
+在 JDK 21 上按这五步执行，写入的 5 个字节为 hello，打印出的 position 和 limit 与下图一致：
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/67bf5487-c45d-49b6-b9c0-a058d8c68902.png"/> </div><br>
+<div align="center"> <img src="pics/io-buffer.png" width="760px"/> </div><br>
 
 ### 文件 NIO 实例
 
@@ -405,17 +400,17 @@ public static void fastCopy(String src, String dist) throws IOException {
 
 ### 选择器
 
-NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
+NIO 常常被叫做非阻塞 I/O，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
 
-NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用一个选择器 Selector 通过轮询的方式去监听多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
+NIO 实现了 I/O 多路复用中的 Reactor 模型，一个线程 Thread 使用一个选择器 Selector 同时监听多个通道 Channel 上的事件，从而让一个线程就可以处理多个事件。
 
-通过配置监听的通道 Channel 为非阻塞，那么当 Channel 上的 IO 事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它 Channel，找到 IO 事件已经到达的 Channel 执行。
+通过配置监听的通道 Channel 为非阻塞，线程不会阻塞在某一个 Channel 上，而是阻塞在 Selector 的 select() 方法上，任何一个 Channel 有 I/O 事件到达时 select() 就返回，线程再处理这些已经就绪的 Channel。
 
-因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件，对于 IO 密集型的应用具有很好地性能。
+因为创建和切换线程的开销很大，因此使用一个线程来处理多个事件而不是一个线程处理一个事件，对于 I/O 密集型的应用具有很好的性能。
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/093f9e57-429c-413a-83ee-c689ba596cef.png" width="350px"> </div><br>
+<div align="center"> <img src="pics/io-selector.png" width="760px"/> </div><br>
 
 #### 1. 创建选择器
 
@@ -620,3 +615,9 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [NIO 与传统 IO 的区别](https://web.archive.org/web/20250917122905/https://blog.csdn.net/shimiso/article/details/24990499)
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
 - [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)
+
+## 参考资料
+
+- [Java SE 21 API: java.io](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/package-summary.html)
+- [Java SE 21 API: java.nio](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)
+- [The Java Tutorials: Basic I/O](https://docs.oracle.com/javase/tutorial/essential/io/)
