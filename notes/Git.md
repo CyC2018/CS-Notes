@@ -19,7 +19,7 @@
 
 Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200656794.png"/> </div><br>
+<div align="center"> <img src="pics/git-centralized-distributed.png" width="760px"/> </div><br>
 
 集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。
 
@@ -33,7 +33,7 @@ Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
 中心服务器用来交换每个用户的修改，没有中心服务器也能工作，但是中心服务器能够 24 小时保持开机状态，这样就能更方便的交换修改。
 
-Github 就是一个中心服务器。
+GitHub 就是一个中心服务器。
 
 ## 工作流
 
@@ -41,45 +41,45 @@ Github 就是一个中心服务器。
 
 Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本库，History 存储所有分支信息，使用一个 HEAD 指针指向当前分支。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208195941661.png"/> </div><br>
+<div align="center"> <img src="pics/git-areas.png" width="760px"/> </div><br>
 
-- git add files 把文件的修改添加到暂存区
-- git commit 把暂存区的修改提交到当前分支，提交之后暂存区就被清空了
-- git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
-- git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
+- git add files 把文件的修改添加到暂存区；
+- git commit 把暂存区的修改提交到当前分支，提交之后暂存区的内容与这次提交一致；
+- git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files；
+- git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200014395.png"/> </div><br>
+<div align="center"> <img src="pics/git-workflow.png" width="760px"/> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
 
-- git commit -a 直接把所有文件的修改添加到暂存区然后执行提交
-- git checkout HEAD -- files 取出最后一次修改，可以用来进行回滚操作
+- git commit -a 直接把所有已跟踪文件的修改添加到暂存区然后执行提交，未跟踪的新文件仍然需要先 git add；
+- git checkout HEAD -- files 取出最后一次提交中的文件，同时覆盖暂存区和工作区，可以用来进行回滚操作。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208200543923.png"/> </div><br>
+<div align="center"> <img src="pics/git-workflow-skip.png" width="760px"/> </div><br>
 
 ## 分支实现
 
 使用指针将每个提交连接成一条时间线，HEAD 指针指向当前分支指针。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203219927.png"/> </div><br>
+<div align="center"> <img src="pics/git-branch-pointer.png" width="760px"/> </div><br>
 
 新建分支是新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支，表示新分支成为当前分支。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203142527.png"/> </div><br>
+<div align="center"> <img src="pics/git-branch-new.png" width="760px"/> </div><br>
 
 每次提交只会让当前分支指针向前移动，而其它分支指针不会移动。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203112400.png"/> </div><br>
+<div align="center"> <img src="pics/git-branch-commit.png" width="760px"/> </div><br>
 
-合并分支也只需要改变指针即可。
+合并分支也只需要改变指针即可：切换回 master 后合并 dev，master 直接移动到 dev 所指的提交。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203010540.png"/> </div><br>
+<div align="center"> <img src="pics/git-branch-merge.png" width="760px"/> </div><br>
 
 ## 冲突
 
 当两个分支都对同一个文件的同一行进行了修改，在分支合并时就会产生冲突。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203034705.png"/> </div><br>
+<div align="center"> <img src="pics/git-conflict.png" width="760px"/> </div><br>
 
 Git 会使用 \<\<\<\<\<\<\< ，======= ，\>\>\>\>\>\>\> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样就能解决冲突。
 
@@ -101,7 +101,7 @@ Creating a new branch is quick AND simple.
 $ git merge --no-ff -m "merge with no-ff" dev
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208203639712.png"/> </div><br>
+<div align="center"> <img src="pics/git-no-ff.png" width="760px"/> </div><br>
 
 ## 储藏（Stashing）
 
@@ -119,7 +119,7 @@ HEAD is now at 049d078 added the index file (To restore them type "git stash app
 
 ## SSH 传输设置
 
-Git 仓库和 Github 中心仓库之间的传输是通过 SSH 加密。
+Git 仓库和 GitHub 中心仓库之间的传输是通过 SSH 加密。
 
 如果用户主目录下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
 
@@ -127,7 +127,7 @@ Git 仓库和 Github 中心仓库之间的传输是通过 SSH 加密。
 $ ssh-keygen -t rsa -C "youremail@example.com"
 ```
 
-然后把公钥 id_rsa.pub 的内容复制到 Github "Account settings" 的 SSH Keys 中。
+然后把公钥 id_rsa.pub 的内容复制到 GitHub “Settings” 的 SSH Keys 中。
 
 ## .gitignore 文件
 

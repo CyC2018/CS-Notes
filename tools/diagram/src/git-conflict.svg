@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="410" viewBox="0 0 760 410">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">两个分支修改了同一行：合并时产生冲突</text>
+  <circle cx="80" cy="120" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="80" y="148" class="c sub mono" style="fill:#3F3F3F">5631521</text>
+  <text x="80" y="162" class="c sub">add readme</text>
+  <circle cx="200" cy="120" r="13" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1.2"/>
+  <text x="200" y="148" class="c sub mono" style="fill:#3F3F3F">d1bc2f9</text>
+  <text x="200" y="162" class="c sub">add branch note</text>
+  <circle cx="330" cy="120" r="13" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="330" y="148" class="c sub mono" style="fill:#3F3F3F">a3cabdc</text>
+  <text x="330" y="162" class="c sub">&amp; simple</text>
+  <circle cx="330" cy="220" r="13" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1.2"/>
+  <text x="330" y="248" class="c sub mono" style="fill:#3F3F3F">3eb6050</text>
+  <text x="330" y="262" class="c sub">AND simple</text>
+  <line x1="186" y1="120" x2="96" y2="120" class="arrow "/>
+  <line x1="316" y1="120" x2="216" y2="120" class="arrow "/>
+  <line x1="318.903" y1="211.464" x2="212.682" y2="129.755" class="arrow "/>
+  <rect x="299.4" y="63" width="61.2" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="330" y="78" class="c sub mono" style="fill:#3F3F3F">master</text>
+  <line x1="330" y1="85" x2="330" y2="104" class="arrow "/>
+  <rect x="216.6" y="63" width="46.8" height="22" rx="5" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="240" y="78" class="c sub mono" style="fill:#3F3F3F">HEAD</text>
+  <line x1="262" y1="74" x2="297" y2="74" class="arrow "/>
+  <rect x="382.2" y="209" width="75.6" height="22" rx="5" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="420" y="224" class="c sub mono" style="fill:#3F3F3F">feature1</text>
+  <line x1="384" y1="220" x2="346" y2="220" class="arrow "/>
+  <text x="474" y="104" class="sub">master 上 readme.txt 的第 2 行：</text>
+  <rect x="474" y="112" width="272" height="24" rx="4" fill="#FFFFFF" stroke="#B8B0DE"/>
+  <text x="484" y="128" class="sub mono" style="font-size:10px;fill:#3F3F3F">Creating a new branch is quick &amp; simple.</text>
+  <text x="474" y="204" class="sub">feature1 上 readme.txt 的第 2 行：</text>
+  <rect x="474" y="212" width="272" height="24" rx="4" fill="#FFFFFF" stroke="#B8B0DE"/>
+  <text x="484" y="228" class="sub mono" style="font-size:10px;fill:#3F3F3F">Creating a new branch is quick AND simple.</text>
+  <text x="30" y="282" class="sub">两个分支从 d1bc2f9 分叉后各提交了一次，都修改了第 2 行，Git 无法自动决定保留哪一个：</text>
+  <rect x="30" y="296" width="712" height="102" rx="5" fill="#FAFAF8" stroke="#BFBEBA"/>
+  <text x="40" y="314" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git merge feature1</text>
+  <text x="40" y="329" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">Auto-merging readme.txt</text>
+  <text x="40" y="344" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">CONFLICT (content): Merge conflict in readme.txt</text>
+  <text x="40" y="359" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">Automatic merge failed; fix conflicts and then commit the result.</text>
+  <text x="40" y="374" class="mono" style="font-size:11px;fill:#296898" xml:space="preserve">$ git status -s</text>
+  <text x="40" y="389" class="mono" style="font-size:11px;fill:#3F3F3F" xml:space="preserve">UU readme.txt</text>
+</svg>
