@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="457" viewBox="0 0 760 457">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">代理的类图（图片延迟加载）</text>
+  <defs><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#FFFFFF" stroke="#555" stroke-width="1"/></marker></defs>
+  <rect x="328" y="60" width="104" height="64" rx="4" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="380" y="77" class="c sub" style="font-size:9.5px">«interface»</text>
+  <text x="380" y="92" class="c b mono" style="font-size:12px;fill:#3F3F3F">Image</text>
+  <line x1="328" y1="101" x2="432" y2="101" stroke="#B8B0DE"/>
+  <text x="337" y="116.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ showImage()</text>
+  <rect x="56.5" y="184" width="287" height="103" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="200" y="204" class="c b mono" style="font-size:12px;fill:#3F3F3F">ImageProxy</text>
+  <text x="200" y="217" class="c sub" style="font-size:10px">（代理）</text>
+  <line x1="56.5" y1="226" x2="343.5" y2="226" stroke="#7FB2D6"/>
+  <text x="65.5" y="241.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- highResolutionImage: HighResolutionImage</text>
+  <line x1="56.5" y1="249" x2="343.5" y2="249" stroke="#7FB2D6"/>
+  <text x="65.5" y="264.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ ImageProxy(HighResolutionImage)</text>
+  <text x="65.5" y="279.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ showImage()</text>
+  <rect x="497" y="184" width="186" height="193" rx="4" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="590" y="204" class="c b mono" style="font-size:12px;fill:#3F3F3F">HighResolutionImage</text>
+  <text x="590" y="217" class="c sub" style="font-size:10px">（真实对象）</text>
+  <line x1="497" y1="226" x2="683" y2="226" stroke="#7FB2D6"/>
+  <text x="506" y="241.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- imageURL: URL</text>
+  <text x="506" y="256.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- startTime: long</text>
+  <text x="506" y="271.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- height: int</text>
+  <text x="506" y="286.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">- width: int</text>
+  <line x1="497" y1="294" x2="683" y2="294" stroke="#7FB2D6"/>
+  <text x="506" y="309.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ HighResolutionImage(URL)</text>
+  <text x="506" y="324.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getHeight(): int</text>
+  <text x="506" y="339.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ getWidth(): int</text>
+  <text x="506" y="354.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ isLoad(): boolean</text>
+  <text x="506" y="369.5" class="mono" style="font-size:10.5px;fill:#3F3F3F">+ showImage()</text>
+  <path d="M200,184 L200,154" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M590,184 L590,154" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M200,154 L590,154" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <path d="M380,154 L380,125" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <path d="M343.5,230.35 L497,230.35" fill="none" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="420.25" y="224.35" class="c sub mono" style="font-size:10.5px;fill:#3F3F3F">highResolutionImage</text>
+  <rect x="57.5" y="77" width="105" height="29" rx="4" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="110" y="97" class="c b mono" style="font-size:12px;fill:#3F3F3F">ImageViewer</text>
+  <path d="M110,106 L110,184" fill="none" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="118" y="149" class="sub mono" style="font-size:10.5px;fill:#3F3F3F">showImage()</text>
+  <line x1="30" y1="411" x2="64" y2="411" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#tri)"/>
+  <text x="72" y="415" class="sub">实现</text>
+  <line x1="116" y1="411" x2="150" y2="411" stroke="#555" stroke-width="1.1" marker-end="url(#a)"/>
+  <text x="158" y="415" class="sub">关联（字段）</text>
+  <line x1="246" y1="411" x2="280" y2="411" stroke="#555" stroke-width="1.1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="288" y="415" class="sub">依赖（创建、调用）</text>
+  <rect x="409" y="404" width="18" height="13" rx="3" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="433" y="415" class="sub">接口</text>
+  <rect x="473" y="404" width="18" height="13" rx="3" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="497" y="415" class="sub">类</text>
+  <rect x="526" y="404" width="18" height="13" rx="3" fill="#C6ECE9" stroke="#7DBCB7"/>
+  <text x="550" y="415" class="sub">客户端</text>
+  <text x="605" y="415" class="sub">+ public，- private</text>
+  <text x="30" y="437" class="sub" style="fill:#3F3F3F">加载完成之前 ImageProxy.showImage() 每 100 ms 输出一次 Temp Image: 600 600，isLoad() 返回 true 后才调用真实对象。</text>
+</svg>
