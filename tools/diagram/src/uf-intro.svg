@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="270" viewBox="0 0 600 270">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">依次执行 6 次 union 之后：0～6 连通，7 单独是一个分量</text>
+  <text x="30" y="70" class="b">操作序列</text>
+  <text x="30" y="96" class="mono">1. union(0,1)</text>
+  <text x="30" y="118" class="mono">2. union(2,3)</text>
+  <text x="30" y="140" class="mono">3. union(1,3)</text>
+  <text x="30" y="162" class="mono">4. union(4,5)</text>
+  <text x="30" y="184" class="mono">5. union(3,5)</text>
+  <text x="30" y="206" class="mono">6. union(5,6)</text>
+  <rect x="222" y="62" width="266" height="136" rx="10" fill="#FFFFFF" stroke="#7FB2D6" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="504" y="142" width="52" height="56" rx="10" fill="#FFFFFF" stroke="#BFBEBA" stroke-width="1" stroke-dasharray="3 2"/>
+  <line x1="265" y1="90" x2="305" y2="90" stroke="#555" stroke-width="1.1"/>
+  <text x="285" y="84" class="c sub b" style="fill:#766AA8">1</text>
+  <line x1="445" y1="90" x2="405" y2="90" stroke="#555" stroke-width="1.1"/>
+  <text x="425" y="84" class="c sub b" style="fill:#766AA8">2</text>
+  <line x1="335" y1="90" x2="375" y2="90" stroke="#555" stroke-width="1.1"/>
+  <text x="355" y="84" class="c sub b" style="fill:#766AA8">3</text>
+  <line x1="335" y1="170" x2="375" y2="170" stroke="#555" stroke-width="1.1"/>
+  <text x="355" y="164" class="c sub b" style="fill:#766AA8">4</text>
+  <line x1="390" y1="105" x2="390" y2="155" stroke="#555" stroke-width="1.1"/>
+  <text x="398" y="134" class="sub b" style="fill:#766AA8">5</text>
+  <line x1="405" y1="170" x2="445" y2="170" stroke="#555" stroke-width="1.1"/>
+  <text x="425" y="164" class="c sub b" style="fill:#766AA8">6</text>
+  <circle cx="250" cy="90" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="250" y="94.5" class="c b">0</text>
+  <circle cx="320" cy="90" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="94.5" class="c b">1</text>
+  <circle cx="390" cy="90" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="390" y="94.5" class="c b">3</text>
+  <circle cx="460" cy="90" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="94.5" class="c b">2</text>
+  <circle cx="320" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="320" y="174.5" class="c b">4</text>
+  <circle cx="390" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="390" y="174.5" class="c b">5</text>
+  <circle cx="460" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="460" y="174.5" class="c b">6</text>
+  <circle cx="530" cy="170" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="530" y="174.5" class="c b">7</text>
+  <text x="240" y="232" class="mono ok">connected(0, 6) = true</text>
+  <text x="410" y="232" class="mono note">connected(0, 7) = false</text>
+  <text x="390" y="256" class="c sub">连线旁的数字表示由第几次 union 连上</text>
+</svg>

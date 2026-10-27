@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="330" viewBox="0 0 400 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="200" y="28" class="title">Quick Union 得到的树：find(0) 要走 4 步</text>
+  <line x1="168.823" y1="102.869" x2="190.589" y2="72.9398" class="arrow" style="stroke:#766AA8;stroke-width:1.8"/>
+  <line x1="128.823" y1="157.869" x2="150.589" y2="127.94" class="arrow "/>
+  <line x1="191.177" y1="157.869" x2="169.411" y2="127.94" class="arrow" style="stroke:#766AA8;stroke-width:1.8"/>
+  <line x1="231.177" y1="212.869" x2="209.411" y2="182.94" class="arrow "/>
+  <line x1="168.823" y1="212.869" x2="190.589" y2="182.94" class="arrow" style="stroke:#766AA8;stroke-width:1.8"/>
+  <line x1="160" y1="265" x2="160" y2="241" class="arrow" style="stroke:#766AA8;stroke-width:1.8"/>
+  <circle cx="200" cy="60" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="64.5" class="c b">6</text>
+  <circle cx="160" cy="115" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="160" y="119.5" class="c b">5</text>
+  <circle cx="120" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="120" y="174.5" class="c b">4</text>
+  <circle cx="200" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="200" y="174.5" class="c b">3</text>
+  <circle cx="240" cy="225" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="240" y="229.5" class="c b">2</text>
+  <circle cx="160" cy="225" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="160" y="229.5" class="c b">1</text>
+  <circle cx="160" cy="280" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="160" y="284.5" class="c b">0</text>
+  <circle cx="330" cy="60" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="330" y="64.5" class="c b">7</text>
+  <text x="70" y="285" class="mono b" style="fill:#766AA8">find(0)</text>
+  <text x="70" y="302" class="mono sub">0→1→3→5→6</text>
+  <text x="300" y="140" class="c b">树高为 4</text>
+  <text x="300" y="158" class="c sub">每次 union 都把</text>
+  <text x="300" y="174" class="c sub">较大的树挂到</text>
+  <text x="300" y="190" class="c sub">单个节点下面</text>
+  <text x="330" y="95" class="c sub">7 未连接</text>
+</svg>
