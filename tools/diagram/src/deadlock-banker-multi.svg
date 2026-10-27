@@ -116,6 +116,6 @@
   <rect x="420" y="220" width="300" height="44" rx="5" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1"/>
   <text x="432" y="238" class="sub" style="fill:#444">4. P3 需要 (5 2 0) ≤ (8 3 6)</text>
   <text x="446" y="256" class="sub">归还后 Available = (9 5 7)</text>
-  <text x="30" y="290" class="sub">Need = 最大需求 − 已分配。一开始只有 P2 的需求能被满足，P1 缺 R2、P3 缺 R1；</text>
+  <text x="30" y="290" class="sub">Need = 最大需求 − 已分配。一开始 P2、P4 的需求都能被满足，P1 的 R1、R2 不够，P3 的 R1 不够；</text>
   <text x="30" y="308" class="sub">收到新的申请时，先假设分配，再用这个方法检查，找不到安全序列就拒绝。</text>
 </svg>
