@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">三元联系：一个学生的一门课只由一位老师讲授</text>
+  <rect x="80" y="60" width="120" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="84.5" class="c sub b">Student</text>
+  <rect x="80" y="180" width="120" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="140" y="204.5" class="c sub b">Course</text>
+  <path d="M340.0,140 L400,112.0 L460.0,140 L400,168.0 z" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="400" y="144" class="c sub b">Teaches</text>
+  <rect x="580" y="120" width="120" height="40" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="640" y="144.5" class="c sub b">Teacher</text>
+  <line x1="200" y1="80" x2="360" y2="128" class="line"/>
+  <line x1="200" y1="200" x2="360" y2="152" class="line"/>
+  <line x1="460" y1="140" x2="578" y2="140" class="arrow "/>
+  <text x="30" y="270" class="sub">老师可以开多门课、教多个学生，但确定了学生和课程之后，老师只有一位，所以箭头指向 Teacher。</text>
+</svg>
