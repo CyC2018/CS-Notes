@@ -3,6 +3,18 @@
     try { return decodeURIComponent(value); } catch (error) { return value; }
   }
   function encodedRoute(path) { return path.split('/').map(encodeURIComponent).join('/'); }
+  function configureImages(root, homepage) {
+    if (!root) return;
+    root.querySelectorAll('img').forEach(function (img) {
+      if (homepage && img.classList.contains('site-logo')) {
+        img.loading = 'eager';
+        img.setAttribute('fetchpriority', 'high');
+      } else if (!img.hasAttribute('loading')) {
+        img.loading = 'lazy';
+      }
+      img.decoding = 'async';
+    });
+  }
   function preserveLegacyLinks() {
     var hash = location.hash;
     var legacy = (window.CS_NOTES_LEGACY_ROUTES || {})[decode(location.pathname)];
@@ -31,12 +43,8 @@
     copyCode: { buttonText: '复制', errorText: '复制失败', successText: '已复制' },
     plugins: [function (hook, vm) {
       hook.afterEach(function (content) {
-        content = content.replace(/<img\b[^>]*>/gi, function (tag) {
-          if (!/\bloading\s*=/i.test(tag)) tag = tag.replace(/<img\b/i, '<img loading="lazy"');
-          if (!/\bdecoding\s*=/i.test(tag)) tag = tag.replace(/<img\b/i, '<img decoding="async"');
-          return tag;
-        });
         var document = new DOMParser().parseFromString(content, 'text/html');
+        configureImages(document, vm.route.path === '/');
         var heading = document.querySelector('h1');
         var list = heading && heading.nextElementSibling;
         if (list && list.tagName === 'UL' && list.querySelectorAll('a').length > 5 &&
@@ -52,10 +60,7 @@
       hook.doneEach(function () {
         var heading = document.querySelector('.markdown-section h1, .markdown-section h2');
         document.title = (vm.route.path === '/' || !heading ? 'CS-Notes' : heading.textContent.trim() + ' · CS-Notes') + ' · CyC2018';
-        document.querySelectorAll('.markdown-section img').forEach(function (img) {
-          img.loading = 'lazy';
-          img.decoding = 'async';
-        });
+        configureImages(document.querySelector('.markdown-section'), vm.route.path === '/');
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
