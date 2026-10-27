@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="380" y="28" class="title">双亲委派：先交给父加载器，父加载器找不到才自己加载</text>
+  <rect x="40" y="60" width="250" height="48" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="165" y="82" class="b c">启动类加载器</text>
+  <text x="165" y="97" class="sub c">Bootstrap，用 null 表示</text>
+  <text x="310" y="89" class="sub">java.base 等核心模块：java.lang.String</text>
+  <rect x="40" y="134" width="250" height="48" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="165" y="156" class="b c">平台类加载器</text>
+  <text x="165" y="171" class="sub c">Platform（JDK 8 及之前为扩展类加载器）</text>
+  <text x="310" y="163" class="sub">java.sql 等平台模块：java.sql.Driver</text>
+  <line x1="165" y1="134" x2="165" y2="110" class="arrow "/>
+  <rect x="40" y="208" width="250" height="48" rx="6" fill="#C6E4FB" stroke="#7FB2D6"/>
+  <text x="165" y="230" class="b c">应用程序类加载器</text>
+  <text x="165" y="245" class="sub c">Application</text>
+  <text x="310" y="237" class="sub">classpath 上的类：com.shop.Order</text>
+  <line x1="165" y1="208" x2="165" y2="184" class="arrow "/>
+  <rect x="40" y="282" width="250" height="48" rx="6" fill="#E6E3FA" stroke="#B8B0DE"/>
+  <text x="165" y="304" class="b c">自定义类加载器</text>
+  <text x="165" y="319" class="sub c">继承 ClassLoader</text>
+  <text x="310" y="311" class="sub">例如从网络或加密文件中加载</text>
+  <line x1="165" y1="282" x2="165" y2="258" class="arrow "/>
+  <text x="176" y="126" class="sub">父加载器</text>
+  <text x="30" y="370" class="sub">加载 com.shop.Order：应用程序类加载器 → 平台 → 启动（找不到）→ 平台（找不到）→ 应用程序类加载器在 classpath 中找到并加载。</text>
+  <text x="30" y="388" class="sub">这样 java.lang.String 总是由启动类加载器加载，自己写的同名类不会替换掉核心类。</text>
+</svg>
