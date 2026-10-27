@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="290" viewBox="0 0 680 290">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="340" y="28" class="title">红黑树（左）与把红链接画平之后（右）：正好是一棵 2-3 树</text>
+  <line x1="158.085" y1="83.1118" x2="113.915" y2="116.888" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="93.7913" y1="138.555" x2="76.2087" y2="165.445" stroke="#555" stroke-width="1.1"/>
+  <line x1="59.7913" y1="190.555" x2="42.2087" y2="217.445" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="110.209" y1="138.555" x2="127.791" y2="165.445" stroke="#555" stroke-width="1.1"/>
+  <line x1="181.915" y1="83.1118" x2="226.085" y2="116.888" stroke="#555" stroke-width="1.1"/>
+  <line x1="229.791" y1="138.555" x2="212.209" y2="165.445" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="170" cy="74" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="170" y="78.5" class="c b">J</text>
+  <circle cx="102" cy="126" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="102" y="130.5" class="c b">E</text>
+  <circle cx="68" cy="178" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="68" y="182.5" class="c b">C</text>
+  <circle cx="34" cy="230" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="34" y="234.5" class="c b">A</text>
+  <circle cx="136" cy="178" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="136" y="182.5" class="c b">G</text>
+  <circle cx="238" cy="126" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="238" y="130.5" class="c b">N</text>
+  <circle cx="204" cy="178" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="204" y="182.5" class="c b">L</text>
+  <line x1="290" y1="150" x2="330" y2="150" class="arrow "/>
+  <rect x="424" y="100" width="124" height="40" rx="20" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="340" y="180" width="82" height="40" rx="20" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="550" y="180" width="82" height="40" rx="20" fill="#FFFFFF" stroke="#B8B0DE" stroke-width="1" stroke-dasharray="3 2"/>
+  <line x1="513" y1="120" x2="459" y2="120" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="437.027" y1="133.281" x2="408.973" y2="186.719" stroke="#555" stroke-width="1.1"/>
+  <line x1="387" y1="200" x2="375" y2="200" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="450.973" y1="133.281" x2="479.027" y2="186.719" stroke="#555" stroke-width="1.1"/>
+  <line x1="538.862" y1="130.345" x2="601.138" y2="189.655" stroke="#555" stroke-width="1.1"/>
+  <line x1="597" y1="200" x2="585" y2="200" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="528" cy="120" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="528" y="124.5" class="c b">J</text>
+  <circle cx="444" cy="120" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="444" y="124.5" class="c b">E</text>
+  <circle cx="402" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="402" y="204.5" class="c b">C</text>
+  <circle cx="360" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="360" y="204.5" class="c b">A</text>
+  <circle cx="486" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="486" y="204.5" class="c b">G</text>
+  <circle cx="612" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="612" y="204.5" class="c b">N</text>
+  <circle cx="570" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="570" y="204.5" class="c b">L</text>
+  <text x="340" y="270" class="c sub">红链接相连的节点合起来看作一个 3- 节点：E J、A C、L N</text>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="330" viewBox="0 0 800 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="400" y="28" class="title">deleteMin()：最小节点 A 没有左子树，让指向 A 的链接改为指向它的右子树 B</text>
+  <text x="190" y="64" class="c b">删除前</text>
+  <text x="620" y="64" class="c b">删除后</text>
+  <line x1="231.83" y1="104.92" x2="116.17" y2="145.08" stroke="#555" stroke-width="1.1"/>
+  <line x1="89.6795" y1="158.556" x2="42.3205" y2="191.444" stroke="#555" stroke-width="1.1"/>
+  <line x1="38.7646" y1="212.173" x2="57.2354" y2="237.827" stroke="#555" stroke-width="1.1"/>
+  <line x1="115.612" y1="156.302" x2="196.388" y2="193.698" stroke="#555" stroke-width="1.1"/>
+  <line x1="197.679" y1="208.556" x2="150.321" y2="241.444" stroke="#555" stroke-width="1.1"/>
+  <line x1="146.765" y1="262.173" x2="165.235" y2="287.827" stroke="#555" stroke-width="1.1"/>
+  <line x1="258.321" y1="108.556" x2="305.679" y2="141.444" stroke="#555" stroke-width="1.1"/>
+  <line x1="309.235" y1="162.173" x2="290.765" y2="187.827" stroke="#555" stroke-width="1.1"/>
+  <line x1="326.765" y1="162.173" x2="345.235" y2="187.827" stroke="#555" stroke-width="1.1"/>
+  <circle cx="246" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="246" y="104.5" class="c b">H</text>
+  <circle cx="102" cy="150" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="102" y="154.5" class="c b">C</text>
+  <circle cx="30" cy="200" r="15" fill="#E6E3FA" stroke="#B8B0DE" stroke-width="1"/>
+  <text x="30" y="204.5" class="c b">A</text>
+  <circle cx="66" cy="250" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="66" y="254.5" class="c b">B</text>
+  <circle cx="210" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="210" y="204.5" class="c b">F</text>
+  <circle cx="138" cy="250" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="138" y="254.5" class="c b">D</text>
+  <circle cx="174" cy="300" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="174" y="304.5" class="c b">E</text>
+  <circle cx="318" cy="150" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="318" y="154.5" class="c b">K</text>
+  <circle cx="282" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="282" y="204.5" class="c b">J</text>
+  <circle cx="354" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="354" y="204.5" class="c b">M</text>
+  <line x1="645.83" y1="104.92" x2="530.17" y2="145.08" stroke="#555" stroke-width="1.1"/>
+  <line x1="507.235" y1="162.173" x2="488.765" y2="187.827" stroke="#766AA8" stroke-width="2.2"/>
+  <line x1="529.612" y1="156.302" x2="610.388" y2="193.698" stroke="#555" stroke-width="1.1"/>
+  <line x1="611.679" y1="208.556" x2="564.321" y2="241.444" stroke="#555" stroke-width="1.1"/>
+  <line x1="560.765" y1="262.173" x2="579.235" y2="287.827" stroke="#555" stroke-width="1.1"/>
+  <line x1="672.321" y1="108.556" x2="719.679" y2="141.444" stroke="#555" stroke-width="1.1"/>
+  <line x1="723.235" y1="162.173" x2="704.765" y2="187.827" stroke="#555" stroke-width="1.1"/>
+  <line x1="740.765" y1="162.173" x2="759.235" y2="187.827" stroke="#555" stroke-width="1.1"/>
+  <circle cx="660" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="660" y="104.5" class="c b">H</text>
+  <circle cx="516" cy="150" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="516" y="154.5" class="c b">C</text>
+  <circle cx="480" cy="200" r="15" fill="#C6ECE9" stroke="#7DBCB7" stroke-width="1"/>
+  <text x="480" y="204.5" class="c b">B</text>
+  <circle cx="624" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="624" y="204.5" class="c b">F</text>
+  <circle cx="552" cy="250" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="552" y="254.5" class="c b">D</text>
+  <circle cx="588" cy="300" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="588" y="304.5" class="c b">E</text>
+  <circle cx="732" cy="150" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="732" y="154.5" class="c b">K</text>
+  <circle cx="696" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="696" y="204.5" class="c b">J</text>
+  <circle cx="768" cy="200" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="768" y="204.5" class="c b">M</text>
+  <line x1="390" y1="180" x2="440" y2="180" class="arrow "/>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="300" y="28" class="title">左旋转 rotateLeft(E)：把右红链接转成左红链接</text>
+  <line x1="94" y1="76" x2="94" y2="95" stroke="#555" stroke-width="1.1"/>
+  <line x1="85.1295" y1="122.096" x2="58.8705" y2="157.904" stroke="#555" stroke-width="1.1"/>
+  <line x1="106.393" y1="118.45" x2="169.607" y2="161.55" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="173.13" y1="182.096" x2="146.87" y2="217.904" stroke="#555" stroke-width="1.1"/>
+  <line x1="190.87" y1="182.096" x2="217.13" y2="217.904" stroke="#555" stroke-width="1.1"/>
+  <circle cx="94" cy="110" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="94" y="114.5" class="c b">E</text>
+  <circle cx="50" cy="170" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="50" y="174.5" class="c b">C</text>
+  <circle cx="182" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="182" y="174.5" class="c b">J</text>
+  <circle cx="138" cy="230" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="138" y="234.5" class="c b">G</text>
+  <circle cx="226" cy="230" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="226" y="234.5" class="c b">M</text>
+  <line x1="270" y1="160" x2="320" y2="160" class="arrow "/>
+  <line x1="492" y1="76" x2="492" y2="95" stroke="#555" stroke-width="1.1"/>
+  <line x1="479.607" y1="118.45" x2="416.393" y2="161.55" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="395.13" y1="182.096" x2="368.87" y2="217.904" stroke="#555" stroke-width="1.1"/>
+  <line x1="412.87" y1="182.096" x2="439.13" y2="217.904" stroke="#555" stroke-width="1.1"/>
+  <line x1="500.87" y1="122.096" x2="527.13" y2="157.904" stroke="#555" stroke-width="1.1"/>
+  <circle cx="492" cy="110" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="492" y="114.5" class="c b">J</text>
+  <circle cx="404" cy="170" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="404" y="174.5" class="c b">E</text>
+  <circle cx="360" cy="230" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="360" y="234.5" class="c b">C</text>
+  <circle cx="448" cy="230" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="448" y="234.5" class="c b">G</text>
+  <circle cx="536" cy="170" r="15" fill="#EAE9E7" stroke="#BFBEBA" stroke-width="1"/>
+  <text x="536" y="174.5" class="c b">M</text>
+  <text x="300" y="284" class="c sub">J 成为子树的根，继承 E 原来的颜色（黑）；E 变红，成为 J 的左子节点</text>
+  <text x="300" y="302" class="c sub">G 介于 E 和 J 之间，从 J 的左子树移到 E 的右子树</text>
+  <text x="300" y="92" class="c sub">灰色节点代表子树</text>
+</svg>

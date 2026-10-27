@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="370" viewBox="0 0 420 370">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="210" y="28" class="title">中序遍历：把每个节点竖直投影下来，正好按键递增排列</text>
+  <text x="210" y="52" class="c sub">依次插入 H、C、K、A、F、J、M、B、D、E 得到的树</text>
+  <line x1="268" y1="99" x2="268" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="116" y1="149" x2="116" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="40" y1="199" x2="40" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="78" y1="249" x2="78" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="230" y1="199" x2="230" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="154" y1="249" x2="154" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="192" y1="299" x2="192" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="344" y1="149" x2="344" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="306" y1="199" x2="306" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="382" y1="199" x2="382" y2="320" stroke="#AAA" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="253.751" y1="88.6871" x2="130.249" y2="129.313" stroke="#555" stroke-width="1.1"/>
+  <line x1="103.469" y1="142.244" x2="52.5313" y2="175.756" stroke="#555" stroke-width="1.1"/>
+  <line x1="49.0762" y1="195.942" x2="68.9238" y2="222.058" stroke="#555" stroke-width="1.1"/>
+  <line x1="129.737" y1="140.025" x2="216.263" y2="177.975" stroke="#555" stroke-width="1.1"/>
+  <line x1="217.469" y1="192.244" x2="166.531" y2="225.756" stroke="#555" stroke-width="1.1"/>
+  <line x1="163.076" y1="245.942" x2="182.924" y2="272.058" stroke="#555" stroke-width="1.1"/>
+  <line x1="280.531" y1="92.2442" x2="331.469" y2="125.756" stroke="#555" stroke-width="1.1"/>
+  <line x1="334.924" y1="145.942" x2="315.076" y2="172.058" stroke="#555" stroke-width="1.1"/>
+  <line x1="353.076" y1="145.942" x2="372.924" y2="172.058" stroke="#555" stroke-width="1.1"/>
+  <circle cx="268" cy="84" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="268" y="88.5" class="c b">H</text>
+  <circle cx="116" cy="134" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="116" y="138.5" class="c b">C</text>
+  <circle cx="40" cy="184" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="40" y="188.5" class="c b">A</text>
+  <circle cx="78" cy="234" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="78" y="238.5" class="c b">B</text>
+  <circle cx="230" cy="184" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="230" y="188.5" class="c b">F</text>
+  <circle cx="154" cy="234" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="154" y="238.5" class="c b">D</text>
+  <circle cx="192" cy="284" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="192" y="288.5" class="c b">E</text>
+  <circle cx="344" cy="134" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="344" y="138.5" class="c b">K</text>
+  <circle cx="306" cy="184" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="306" y="188.5" class="c b">J</text>
+  <circle cx="382" cy="184" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="188.5" class="c b">M</text>
+  <rect x="21" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="40" y="338.5" class="c b">A</text>
+  <rect x="59" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="78" y="338.5" class="c b">B</text>
+  <rect x="97" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="116" y="338.5" class="c b">C</text>
+  <rect x="135" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="154" y="338.5" class="c b">D</text>
+  <rect x="173" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="192" y="338.5" class="c b">E</text>
+  <rect x="211" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="230" y="338.5" class="c b">F</text>
+  <rect x="249" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="268" y="338.5" class="c b">H</text>
+  <rect x="287" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="306" y="338.5" class="c b">J</text>
+  <rect x="325" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="344" y="338.5" class="c b">K</text>
+  <rect x="363" y="320" width="38" height="28" rx="0" fill="#F7F7F6" stroke="#D6D5D2" stroke-width="1"/>
+  <text x="382" y="338.5" class="c b">M</text>
+</svg>

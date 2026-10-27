@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="230" viewBox="0 0 460 230">
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif; fill: #3F3F3F; font-size: 12px; }
+    .title { font-weight: bold; font-size: 15px; fill: #333; text-anchor: middle; }
+    .b { font-weight: bold; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .sub { font-size: 11px; fill: #6E6E6E; }
+    .note { fill: #C0605A; }
+    .ok { fill: #6A9F68; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .arrow { stroke: #555; stroke-width: 1.1; fill: none; marker-end: url(#a); }
+    .red { stroke: #C0605A; marker-end: url(#r); }
+    .green { stroke: #6A9F68; marker-end: url(#g); }
+    .dash { stroke-dasharray: 5 4; }
+    .line { stroke: #555; stroke-width: 1.1; fill: none; }
+    .frame { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 4 3; }
+    .shadow { fill: #DADADA; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#555"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#C0605A"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1,1.5 L9.5,5 L1,8.5 z" fill="#6A9F68"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <text x="230" y="28" class="title">颜色转换 flipColors(E)：两个子节点变黑，E 变红</text>
+  <line x1="106" y1="66" x2="106" y2="85" stroke="#555" stroke-width="1.1"/>
+  <line x1="96.8735" y1="111.904" x2="69.1265" y2="148.096" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="115.126" y1="111.904" x2="142.874" y2="148.096" stroke="#C0605A" stroke-width="2.2"/>
+  <circle cx="106" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="106" y="104.5" class="c b">E</text>
+  <circle cx="60" cy="160" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="60" y="164.5" class="c b">C</text>
+  <circle cx="152" cy="160" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="152" y="164.5" class="c b">G</text>
+  <line x1="205" y1="130" x2="245" y2="130" class="arrow "/>
+  <line x1="336" y1="66" x2="336" y2="85" stroke="#C0605A" stroke-width="2.2"/>
+  <line x1="326.874" y1="111.904" x2="299.126" y2="148.096" stroke="#555" stroke-width="1.1"/>
+  <line x1="345.126" y1="111.904" x2="372.874" y2="148.096" stroke="#555" stroke-width="1.1"/>
+  <circle cx="336" cy="100" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="336" y="104.5" class="c b">E</text>
+  <circle cx="290" cy="160" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="290" y="164.5" class="c b">C</text>
+  <circle cx="382" cy="160" r="15" fill="#C6E4FB" stroke="#7FB2D6" stroke-width="1"/>
+  <text x="382" y="164.5" class="c b">G</text>
+  <text x="230" y="200" class="c sub">从 2-3 树看：临时 4- 节点 C E G 分裂，中间的 E 移到上层节点</text>
+</svg>
