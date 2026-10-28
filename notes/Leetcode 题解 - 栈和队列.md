@@ -95,7 +95,7 @@ class MyStack {
 
 ## 3. 最小值栈
 
-155\. Min Stack (Easy)
+155\. Min Stack (Medium)
 
 [Leetcode](https://leetcode.com/problems/min-stack/description/) / [力扣](https://leetcode-cn.com/problems/min-stack/description/)
 
@@ -142,7 +142,7 @@ class MinStack {
 
 [Leetcode](https://leetcode.com/problems/valid-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/valid-parentheses/description/)
 
-```html
+```text
 "()[]{}"
 
 Output : true
@@ -177,7 +177,7 @@ public boolean isValid(String s) {
 
 [Leetcode](https://leetcode.com/problems/daily-temperatures/description/) / [力扣](https://leetcode-cn.com/problems/daily-temperatures/description/)
 
-```html
+```text
 Input: [73, 74, 75, 71, 69, 72, 76, 73]
 Output: [1, 1, 4, 2, 1, 1, 0, 0]
 ```
