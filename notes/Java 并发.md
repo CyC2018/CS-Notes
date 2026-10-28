@@ -64,6 +64,9 @@
     * [附录：实测](#附录实测)
         * [A1 三种锁在读多写少时的耗时](#a1-三种锁在读多写少时的耗时)
         * [A2 公平锁与非公平锁](#a2-公平锁与非公平锁)
+        * [A3 volatile 与循环条件](#a3-volatile-与循环条件)
+        * [A4 AtomicLong 与 LongAdder](#a4-atomiclong-与-longadder)
+        * [A5 InheritableThreadLocal 与线程池](#a5-inheritablethreadlocal-与线程池)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -572,6 +575,25 @@ public static void main(String[] args) {
 #### 1. 锁的实现
 
 synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+
+synchronized 代码块编译后是一对 monitorenter 和 monitorexit 指令，编译器还会生成一个异常处理器，抛出异常时也执行 monitorexit，保证锁一定会被释放；synchronized 方法没有这两条指令，而是在方法的访问标志中设置 ACC_SYNCHRONIZED，由 JVM 在调用和返回时加锁和解锁。下面是 JDK 21 的 javap 输出（有删节）：
+
+```text
+public void inc();                 // synchronized (this) { count++; }
+     3: monitorenter
+    ...                            // count++
+    15: monitorexit
+    16: goto          24
+    19: astore_2                   // 异常处理器：出现异常时也释放锁
+    20: aload_1
+    21: monitorexit
+    23: athrow
+
+public synchronized void dec();
+  flags: (0x0021) ACC_PUBLIC, ACC_SYNCHRONIZED
+```
+
+发生竞争、锁膨胀为重量级锁之后，HotSpot 用 ObjectMonitor 管理这把锁：_owner 指向持有锁的线程，_recursions 记录重入的次数；抢不到锁的线程进入 _cxq、_EntryList 队列并阻塞，调用 wait() 的线程进入 _WaitSet，被 notify() 之后再回到队列中重新竞争锁。ReentrantLock 则是用 Java 代码基于 AQS 实现的，见 [七、J.U.C - AQS](#七juc---aqs)。
 
 #### 2. 性能
 
@@ -1441,11 +1463,25 @@ public static void main(String[] args) throws InterruptedException {
 
 对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
 
+没有可见性保证时，即时编译器可以只读取一次字段，之后一直使用缓存的值（JLS 17.3）。例如下面的循环，stop 不加 volatile 时，主线程把它改为 true 之后，worker 线程仍然一直循环；加上 volatile 后，每次循环都重新读取 stop，worker 很快结束（JDK 21 各运行 3 次，结果相同，见[附录 A3](#a3-volatile-与循环条件)）：
+
+```java
+static boolean stop;               // 改为 static volatile boolean stop 后循环能结束
+
+new Thread(() -> { while (!stop) { } }).start();
+Thread.sleep(1000);
+stop = true;
+```
+
+这也是 volatile 最常见的用法：一个线程写、其它线程读的状态标志。count++ 这类读-改-写操作仍然要用锁或者原子类。
+
 #### 3. 有序性
 
 有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
 volatile 关键字通过添加内存屏障的方式来禁止重排序，即重排序时不能把后面的指令放到内存屏障之前。
+
+以 x86 为例，处理器本身只会把写操作之后的读操作提前执行，其它重排序都不会发生。因此 HotSpot 只在 volatile 写之后插入一条带 lock 前缀的空操作（lock addl $0, [rsp - C]）作为 StoreLoad 屏障：它之前的写入对其它处理器可见之后，后面的读操作才能执行。
 
 也可以通过 synchronized 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
 
@@ -1589,6 +1625,10 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 ```
 
 JDK 8 中这段代码在 sun.misc.Unsafe 中，CAS 方法名为 compareAndSwapInt()，逻辑相同。
+
+冲突激烈时，CAS 的代价会明显上升：很多线程同时更新同一个变量，这个变量所在的缓存行要在 CPU 核心之间来回传递，用 CAS 循环更新时失败重试的次数也越来越多。8 个线程各对同一个 AtomicLong 累加 1000 万次，共 8000 万次，耗时 3.5～5.1 秒；单线程累加 1000 万次约 70 毫秒，按此计算 8000 万次也只要约 0.56 秒（JDK 21 实测，见[附录 A4](#a4-atomiclong-与-longadder)）。
+
+LongAdder 把计数分散到多个 Cell 中，不同线程更新不同的 Cell，调用 sum() 时再把它们加起来，同样的 8 线程累加只用了 0.10～0.12 秒。代价是 sum() 返回的不是某一时刻的原子快照，所以它适合统计请求数这类计数，不适合需要根据当前值做判断的场景。
 
 #### 3. ABA
 
@@ -1766,6 +1806,8 @@ try {
 }
 ```
 
+子线程读不到父线程设置的 ThreadLocal 值。InheritableThreadLocal 会在创建子线程时把父线程的值复制过去，但只在创建时复制一次，而线程池中的线程创建之后会被反复使用。例如主线程先后设置 alice 和 bob，每次都向只有一个线程的线程池提交任务，两次读到的都是 alice（JDK 21 实测，见[附录 A5](#a5-inheritablethreadlocal-与线程池)）。需要把上下文传给线程池中的任务时，可以在提交任务时显式传递，或者使用阿里开源的 TransmittableThreadLocal，它在提交任务时捕获当前的值，执行任务前设置，执行后恢复。
+
 #### 3. 可重入代码（Reentrant Code）
 
 这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
@@ -1924,6 +1966,73 @@ fair=false count=1600000 55 ms
 fair=true count=1600000 3019 ms
 ```
 
+### A3 volatile 与循环条件
+
+JDK 21.0.13，Apple M1 Pro。worker 线程循环读取 stop 并计数，主线程 1 秒后把 stop 改为 true，再等待 worker 3 秒；不加参数时 stop 是普通字段，加参数 v 时读写 volatile 字段：
+
+```text
+$ java StopFlag        （运行 3 次）
+普通变量：主线程置为 true 3 秒后，worker 仍在运行
+普通变量：主线程置为 true 3 秒后，worker 仍在运行
+普通变量：主线程置为 true 3 秒后，worker 仍在运行
+$ java StopFlag v      （运行 3 次）
+worker 结束，循环 1762145299 次
+volatile：主线程置为 true 3 秒后，worker 已结束
+worker 结束，循环 1745928341 次
+volatile：主线程置为 true 3 秒后，worker 已结束
+worker 结束，循环 1746228300 次
+volatile：主线程置为 true 3 秒后，worker 已结束
+```
+
+### A4 AtomicLong 与 LongAdder
+
+JDK 21.0.13，Apple M1 Pro（10 核）。每个线程累加 1000 万次，每种线程数运行 3 轮：
+
+```java
+static long run(Runnable inc, int threads, int n) throws Exception {
+    Thread[] ts = new Thread[threads];
+    long t0 = System.nanoTime();
+    for (int i = 0; i < threads; i++) {
+        ts[i] = new Thread(() -> { for (int j = 0; j < n; j++) inc.run(); });
+        ts[i].start();
+    }
+    for (Thread t : ts) t.join();
+    return (System.nanoTime() - t0) / 1_000_000;
+}
+
+// run(atomicLong::incrementAndGet, threads, 10_000_000) 与 run(longAdder::increment, threads, 10_000_000)
+```
+
+```text
+线程 1 第 1 轮：AtomicLong 74 ms（结果 10000000），LongAdder 74 ms（结果 10000000）
+线程 1 第 2 轮：AtomicLong 70 ms（结果 10000000），LongAdder 71 ms（结果 10000000）
+线程 1 第 3 轮：AtomicLong 70 ms（结果 10000000），LongAdder 73 ms（结果 10000000）
+线程 8 第 1 轮：AtomicLong 3986 ms（结果 80000000），LongAdder 103 ms（结果 80000000）
+线程 8 第 2 轮：AtomicLong 5111 ms（结果 80000000），LongAdder 124 ms（结果 80000000）
+线程 8 第 3 轮：AtomicLong 3485 ms（结果 80000000），LongAdder 118 ms（结果 80000000）
+```
+
+### A5 InheritableThreadLocal 与线程池
+
+```java
+static final InheritableThreadLocal<String> USER = new InheritableThreadLocal<>();
+
+ExecutorService pool = Executors.newFixedThreadPool(1);
+for (String u : new String[]{"alice", "bob"}) {
+    USER.set(u);
+    new Thread(() -> System.out.println("新建线程中读到：" + USER.get())).start();
+    Thread.sleep(100);
+    pool.submit(() -> System.out.println("线程池中读到：" + USER.get())).get();
+}
+```
+
+```text
+新建线程中读到：alice
+线程池中读到：alice
+新建线程中读到：bob
+线程池中读到：alice
+```
+
 ## 参考资料
 
 - [Object (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html)
@@ -1948,3 +2057,8 @@ fair=true count=1600000 3019 ms
 - [markOop.hpp | OpenJDK jdk8u](https://github.com/openjdk/jdk8u/blob/master/hotspot/src/share/vm/oops/markOop.hpp)
 - [JDK 23 Release Notes: Change LockingMode Default from LM_LEGACY to LM_LIGHTWEIGHT](https://www.oracle.com/java/technologies/javase/23-relnote-issues.html)
 - [Thread.State (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.State.html)
+- [The Java Language Specification, Java SE 21 Edition: Chapter 17. Threads and Locks](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html)
+- [LongAdder (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/LongAdder.html)
+- [objectMonitor.hpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/objectMonitor.hpp)
+- [assembler_x86.cpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/x86/assembler_x86.cpp)
+- [TransmittableThreadLocal](https://github.com/alibaba/transmittable-thread-local)

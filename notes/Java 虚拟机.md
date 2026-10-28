@@ -38,6 +38,10 @@
         * [A2 逃逸分析](#a2-逃逸分析)
         * [A3 不同收集器的停顿](#a3-不同收集器的停顿)
         * [A4 堆大小对 G1 的影响](#a4-堆大小对-g1-的影响)
+        * [A5 ThreadLocalMap 的弱引用](#a5-threadlocalmap-的弱引用)
+        * [A6 默认的收集器与 G1 的 Region 大小](#a6-默认的收集器与-g1-的-region-大小)
+        * [A7 打破双亲委派](#a7-打破双亲委派)
+        * [A8 元空间溢出](#a8-元空间溢出)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -132,7 +136,7 @@ void pay(long orderId) {
 }
 ```
 
-方法返回后，栈帧中的 amount 和 order 立即消失；Order 对象如果没有被其它地方引用，会在之后的 GC 中被回收。操作系统中进程地址空间的栈和堆也是类似的划分：栈由编译器生成的代码自动分配和释放，堆由程序调用 malloc、free 管理。
+方法返回后，栈帧中的 amount 和 order 立即消失；Order 对象如果没有被其它地方引用，会在之后的 GC 中被回收。操作系统中进程地址空间的栈和堆也是类似的划分：栈由编译器生成的代码自动分配和释放，函数返回时局部变量就被释放，不会泄漏；堆由程序调用 malloc、free 管理，申请后忘记 free 就是内存泄漏。
 
 需要注意的是，对象不一定都在堆中创建。JIT 编译时会做逃逸分析，如果一个对象不会离开创建它的方法（没有被返回、没有赋给字段、没有传给其它线程），HotSpot 会把它拆成几个局部变量，这称为标量替换，堆中不再创建这个对象。例如在循环中创建 2 亿个只在方法内部使用的 Point 对象，默认没有发生 GC，耗时约 130 ms；加上 -XX:-DoEscapeAnalysis 关闭逃逸分析后，发生了 13 次 GC，耗时约 335 ms（JDK 21 实测，见[附录 A2](#a2-逃逸分析)）。
 
@@ -172,7 +176,7 @@ Instance size: 32 bytes
 - 实例数据：字段不按声明的顺序排列，虚拟机会重排以减少空隙，例如 userId 被放进了对象头后面 4 字节的空位；
 - 对齐填充：对象的大小必须是 8 字节的整数倍，new Object() 只有 12 字节的对象头，要补齐到 16 字节。
 
-关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。堆超过 32 GB 时压缩指针自动关闭，所有引用都变大，这是堆的大小通常不超过 32 GB 的原因。
+关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。最大堆达到 32 GB 时，对象引用的压缩自动关闭，所有引用都变成 8 字节（JDK 21 中 -Xmx31g 时 UseCompressedOops 为 true，-Xmx32g 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GB 的原因。
 
 ## 二、垃圾收集
 
@@ -209,12 +213,15 @@ public class Test {
 
 以 GC Roots 为起始点进行搜索，可达的对象都是存活的，不可达的对象可被回收。
 
-Java 虚拟机使用该算法来判断对象是否可被回收，GC Roots 一般包含以下内容：
+Java 虚拟机使用该算法来判断对象是否可被回收。
 
-- 虚拟机栈中局部变量表中引用的对象；
+GC Roots 是堆外指向堆中对象的引用，程序不经过其它对象就能直接访问到它们，GC 无法判断这些引用以后还会不会被使用，只能认为它们引用的对象都存活。GC Roots 一般包含以下内容：
+
+- 虚拟机栈中局部变量表中引用的对象，即正在执行的方法的参数和局部变量；
 - 本地方法栈中 JNI 中引用的对象；
-- 方法区中类静态属性引用的对象；
-- 方法区中的常量引用的对象。
+- 方法区中类静态属性引用的对象，类没有被卸载时，程序随时可以通过类名访问它们；
+- 方法区中的常量引用的对象，例如字符串常量池中的字符串；
+- 被 synchronized 持有的锁对象、已经启动且没有结束的线程，以及虚拟机内部的引用，例如系统类加载器、常驻的异常对象。
 
 <div align="center"> <img src="pics/jvm-gc-roots.png" width="760px"/> </div><br>
 
@@ -269,7 +276,7 @@ obj = null;  // 使对象只被软引用关联
 
 #### 3. 弱引用
 
-被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾收集发生之前。
+只被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾收集发生之前。
 
 使用 WeakReference 类来创建弱引用。
 
@@ -278,6 +285,12 @@ Object obj = new Object();
 WeakReference<Object> wf = new WeakReference<Object>(obj);
 obj = null;
 ```
+
+ThreadLocal 就用到了弱引用。每个线程的 ThreadLocalMap 中，Entry 继承自 WeakReference，key（ThreadLocal 对象）是弱引用，value 是强引用。如果 key 是强引用，业务代码不再使用某个 ThreadLocal 后，它仍然被线程的 Map 引用着，线程池中的线程一直存活，这个 ThreadLocal 对象和它的 value 都无法回收。
+
+key 改为弱引用后，ThreadLocal 对象在下一次 GC 时被回收，Entry 的 key 变为 null。之后这个线程再调用任意 ThreadLocal 的 set()、get()、remove() 时，会顺带清除遇到的一部分 key 为 null 的 Entry，value 才能被回收。在此之前 value 一直被强引用，所以用完之后仍然要调用 remove()，见 [线程本地存储](Java%20并发.md#2-线程本地存储thread-local-storage)。
+
+例如向 ThreadLocal 放入一个 10 MB 的数组，再把 ThreadLocal 变量置为 null：GC 之后 Entry 的 key 变为 null，value 还在；当前线程再通过其它 ThreadLocal 调用 set()，第 2 次调用之后这个 Entry 才被清除（JDK 21 实测，见[附录 A5](#a5-threadlocalmap-的弱引用)）。
 
 #### 4. 虚引用
 
@@ -425,6 +438,10 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。JDK 9 起 G1 成为默认的垃圾收集器（JEP 248），CMS 在 JDK 14 中被移除（JEP 363）。
 
+没有指定收集器时，JVM 按机器的配置选择：JDK 8 在服务器级的机器（至少 2 个处理器、约 2 GB 以上的物理内存）上默认使用 Parallel Scavenge 加 Parallel Old，否则使用 Serial；JDK 9 起把服务器级机器上的默认值改为 G1。
+
+所以 JDK 21 在只有 1 个处理器的环境中，例如只分配了 1 个 CPU 的容器，默认使用的仍是 Serial（见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。JDK 27 起在所有环境中都默认使用 G1（JEP 523）。
+
 堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
 <div align="center"> <img src="pics/gc-generations.png" width="740px"/> </div><br>
@@ -432,6 +449,10 @@ G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，�
 G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
 
 <div align="center"> <img src="pics/gc-g1-regions.png" width="740px"/> </div><br>
+
+-XX:G1HeapRegionSize 设置的是每个 Region 的大小，取值为 2 的幂，范围为 1 MB～512 MB（JDK 17 及以前最大为 32 MB）；Region 的数量由堆的大小决定。没有指定时，JVM 用最大堆除以 2048，向上取到 2 的幂，并限制在 1 MB～32 MB 之间，最大堆在 2 GB～64 GB 之间时 Region 约有 2048 个。例如 -Xmx4g 时 Region 为 2 MB，-Xmx16g 时为 8 MB，-Xmx64g 时为 32 MB（JDK 21 实测，见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。
+
+Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、Survivor 或老年代使用；大小达到 Region 一半的对象是 Humongous 对象，直接分配在一组连续的 Region 中，见 [大对象直接进入老年代](#2-大对象直接进入老年代)。
 
 通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾收集。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 的回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
@@ -479,7 +500,7 @@ G1 的新生代回收和混合回收都要在停顿中把存活对象复制到�
 | 128 MB | 125 | 0.4 ms | 0.008 ms | 41 次，共 93.5 ms，最长 6.1 ms |
 | 512 MB | 46 | 0.2 ms | 0.009 ms | 0 次 |
 
-ZGC 的停顿都在 0.01 ms 以内，比 G1 短两个数量级。但堆只有 128 MB 时，程序分配内存的速度超过了并发回收的速度，没有空闲的内存可用，分配内存的线程只能等待回收完成，日志中记为 Allocation Stall，对用户来说与停顿无异。所以使用 ZGC 要给堆留出足够的余量，代价是占用更多的内存，读屏障也会让吞吐量略有下降。
+这个程序中 ZGC 的停顿都在 0.01 ms 以内，比 G1 短两个数量级，官方给出的是停顿不超过 1 毫秒。但堆只有 128 MB 时，程序分配内存的速度超过了并发回收的速度，没有空闲的内存可用，分配内存的线程只能等待回收完成，日志中记为 Allocation Stall，对用户来说与停顿无异。所以使用 ZGC 要给堆留出足够的余量，代价是占用更多的内存，读屏障也会让吞吐量略有下降。
 
 ## 三、内存分配与回收策略
 
@@ -785,6 +806,36 @@ public abstract class ClassLoader {
 }
 ```
 
+#### 4. 打破双亲委派
+
+双亲委派的逻辑写在 loadClass() 中，只是一种约定。自定义类加载器重写 loadClass()，先自己加载，找不到再交给父加载器，就打破了双亲委派：
+
+```java
+@Override
+protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+    synchronized (getClassLoadingLock(name)) {
+        Class<?> c = findLoadedClass(name);
+        if (c == null && !name.startsWith("java.")) {
+            try {
+                c = findClass(name);                 // 先在自己的目录中查找
+            } catch (ClassNotFoundException ignored) {
+            }
+        }
+        if (c == null) c = super.loadClass(name, false);   // 找不到再走双亲委派
+        if (resolve) resolveClass(c);
+        return c;
+    }
+}
+```
+
+需要打破双亲委派的常见场景：
+
+- SPI：JDBC 的 DriverManager 由平台类加载器加载（JDK 8 中为启动类加载器），而 MySQL 驱动等实现类在 classpath 上，由应用类加载器加载，父加载器看不到子加载器中的类。DriverManager 通过 ServiceLoader 查找驱动，ServiceLoader 使用线程上下文类加载器（Thread.getContextClassLoader()，默认就是应用类加载器）加载实现类，相当于父加载器委托子加载器加载类；
+- Tomcat：每个 Web 应用有自己的 WebappClassLoader，先在本应用的 /WEB-INF/classes 和 /WEB-INF/lib 中查找，找不到再交给父加载器，这样同一个 Tomcat 中的两个应用可以使用同一个库的不同版本；JDK 的核心类和 Servlet 等规范接口仍然先交给父加载器；
+- 热部署：同一个类加载器不能重复定义同一个类，修改后的类要用新的类加载器加载，旧的加载器连同它加载的类一起丢弃，OSGi 等模块系统也为每个模块使用单独的加载器。
+
+例如两个上面这样的类加载器分别从 v1、v2 目录加载同名的 Greeter 类，在同一个 JVM 中得到两个不同的 Class 对象，分别输出 Greeter v1 和 Greeter v2。打破双亲委派也不能替换 JDK 的核心类，defineClass() 拒绝定义 java. 开头的包中的类，抛出 SecurityException: Prohibited package name: java.lang（JDK 21 实测，见[附录 A7](#a7-打破双亲委派)）。
+
 ### 自定义类加载器实现
 
 以下代码中的 FileSystemClassLoader 是自定义类加载器，继承自 java.lang.ClassLoader，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（.class 文件），然后读取该文件内容，最后通过 defineClass() 方法来把这些字节代码转换成 java.lang.Class 类的实例。
@@ -875,12 +926,14 @@ OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有
 
 - Java heap space：堆中无法再分配对象，可能是堆设置得太小，也可能是内存泄漏；
 - GC overhead limit exceeded：GC 占用了约 98% 的时间，却只回收了不到 2% 的堆，说明存活的对象几乎占满了堆；
-- Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类。
+- Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类，例如 CGLIB 生成代理类、Groovy 脚本每次执行都编译出新类，以及热部署时旧的类加载器仍被引用，它加载的类无法卸载。
+
+例如每次都创建一个新的类加载器重新定义 Plugin 类，并把得到的 Class 对象保存在列表中，-XX:MaxMetaspaceSize=16m 时定义了约 2600 个类后抛出 OutOfMemoryError: Metaspace；不保存 Class 对象时，10 万次定义中有约 9.8 万个类被卸载，没有溢出（JDK 21 实测，见[附录 A8](#a8-元空间溢出)）。类只有在它的类加载器被回收后才能卸载，见 [方法区的回收](#3-方法区的回收)。
 
 内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收，堆内存持续增长，最终导致内存溢出。常见原因：
 
 - 静态集合只添加不清理，例如用 static Map 做缓存却没有淘汰策略；
-- 线程池中的线程使用 ThreadLocal 后没有调用 remove()，线程一直存活，值也一直无法被回收；
+- 线程池中的线程使用 ThreadLocal 后没有调用 remove()，线程一直存活，值也一直无法被回收，见 [弱引用](#3-弱引用)；
 - 连接、流等资源没有关闭；
 - 注册的监听器、回调没有注销。
 
@@ -925,6 +978,8 @@ Heap dump file created [19154891 bytes in 0.007 secs]
    java.lang.Thread.State: RUNNABLE
         at Busy.lambda$main$0(Busy.java:3)
 ```
+
+需要注意的是，Linux 的平均负载（load average，top 和 uptime 显示的三个数）统计的不只是正在运行和等待 CPU 的任务（R 状态），还包括不可中断睡眠的任务（D 状态，通常在等待磁盘 I/O）。所以 CPU 利用率低而负载很高时，通常是大量线程阻塞在 I/O 上，例如磁盘读写过慢、NFS 挂载无响应。这时 top 中的 wa（等待 I/O 的时间占比）和 vmstat 中的 b 列（阻塞在 I/O 上的进程数）偏高，可以用 ps -eLo stat,pid,tid,comm 找出状态为 D 的线程。
 
 ### 死锁
 
@@ -1028,6 +1083,109 @@ $ java -Xmx256m -Xms256m -XX:+UseG1GC -Xlog:gc:file=tune-256m.log Tune
 G1 256m：停顿 43 次（Young 43，Full 0），共 42.7 ms，最长 1.223 ms
 ```
 
+### A5 ThreadLocalMap 的弱引用
+
+用反射在当前线程的 ThreadLocalMap 中找到 value 为 session 的 Entry，运行时需要加上 --add-opens java.base/java.lang=ALL-UNNAMED：
+
+```java
+byte[] session = new byte[10 * 1024 * 1024];
+ThreadLocal<byte[]> tl = new ThreadLocal<>();
+tl.set(session);
+tl = null;                                                  // 业务代码不再引用这个 ThreadLocal
+System.gc();
+for (int i = 1; i <= 64; i++) {
+    new ThreadLocal<>().set(i);                             // 其它 ThreadLocal 的 set，每次之后检查 Entry，被清除时停止
+}
+```
+
+```text
+set 之后：     Entry 还在，key=java.lang.ThreadLocal@31befd9f，value 还被引用
+GC 之后：      Entry 还在，key=null，value 还被引用
+第 2 次 set 后：Entry 已被清除
+```
+
+运行 3 次，都是在第 2 次 set() 之后被清除。
+
+### A6 默认的收集器与 G1 的 Region 大小
+
+本机有 10 个处理器，-XX:ActiveProcessorCount=1 让 JVM 认为只有 1 个处理器：
+
+```text
+$ java -XX:+PrintFlagsFinal -version | grep -E "Use(Serial|Parallel|G1|Z)GC " | awk '$4=="true"{print $2}'
+UseG1GC
+$ java -XX:ActiveProcessorCount=1 -XX:+PrintFlagsFinal -version | grep -E "Use(Serial|Parallel|G1|Z)GC " | awk '$4=="true"{print $2}'
+UseSerialGC
+```
+
+不同最大堆下的 G1HeapRegionSize（字节）：
+
+```text
+-Xmx128m: 1048576
+-Xmx1g:   1048576
+-Xmx4g:   2097152
+-Xmx16g:  8388608
+-Xmx64g:  33554432
+$ java -Xmx1g -XX:G1HeapRegionSize=64m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
+   size_t G1HeapRegionSize                         = 67108864                                  {product} {command line}
+$ java -Xmx1g -XX:G1HeapRegionSize=3m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
+   size_t G1HeapRegionSize                         = 4194304                                   {product} {command line, ergonomic}
+$ java -Xmx4g -Xlog:gc+init -version
+[0.005s][info][gc,init] Heap Region Size: 2M
+```
+
+指定 3m 时向上取为 4 MB。
+
+### A7 打破双亲委派
+
+DemoDriver 实现了 java.sql.Driver，在静态语句块中向 DriverManager 注册自己，并在 META-INF/services/java.sql.Driver 中登记；v1、v2 目录中各有一个 Greeter.class，hello() 分别返回 Greeter v1 和 Greeter v2；ChildFirstLoader 的 loadClass() 即正文中的代码：
+
+```java
+System.out.println("DriverManager 的加载器: " + DriverManager.class.getClassLoader());
+System.out.println("线程上下文类加载器:     " + Thread.currentThread().getContextClassLoader());
+Driver d = DriverManager.getDriver("jdbc:demo:orders");
+System.out.println("找到的驱动 " + d.getClass().getName() + "，加载器: " + d.getClass().getClassLoader());
+
+ClassLoader app = BreakDemo.class.getClassLoader();
+Class<?> g1 = new ChildFirstLoader(Path.of("../v1"), app).loadClass("Greeter");
+Class<?> g2 = new ChildFirstLoader(Path.of("../v2"), app).loadClass("Greeter");
+
+// 用一个普通的类加载器把 Greeter 的字节码定义为 java.lang.Greeter
+new ClassLoader(app) {
+    Class<?> def() { return defineClass("java.lang.Greeter", b, 0, b.length); }
+}.def();
+```
+
+```text
+DriverManager 的加载器: jdk.internal.loader.ClassLoaders$PlatformClassLoader@55f96302
+线程上下文类加载器:     jdk.internal.loader.ClassLoaders$AppClassLoader@2c854dc5
+找到的驱动 DemoDriver，加载器: jdk.internal.loader.ClassLoaders$AppClassLoader@2c854dc5
+Greeter v1 / Greeter v2，g1 == g2: false
+java.lang.SecurityException: Prohibited package name: java.lang
+```
+
+### A8 元空间溢出
+
+```java
+static class OneShotLoader extends ClassLoader {
+    Class<?> define(byte[] b) { return defineClass("Plugin", b, 0, b.length); }
+}
+
+byte[] bytes = Files.readAllBytes(Path.of("Plugin.class"));
+List<Class<?>> loaded = new ArrayList<>();
+while (true) loaded.add(new OneShotLoader().define(bytes));   // MetaLeak：一直持有，类无法卸载
+
+for (int i = 0; i < 100_000; i++) new OneShotLoader().define(bytes);   // MetaNoLeak：不持有
+```
+
+```text
+$ java -XX:MaxMetaspaceSize=16m MetaLeak
+加载了 2639 个 Plugin 类后：Metaspace
+$ java -XX:MaxMetaspaceSize=16m -Xlog:class+unload=info:file=unload.log MetaNoLeak
+加载了 100000 个 Plugin 类，没有溢出
+$ grep -c "unloading class Plugin" unload.log
+97643
+```
+
 ## 参考资料
 
 - [Troubleshooting Memory Leaks (Java SE 21)](https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html)
@@ -1053,3 +1211,13 @@ G1 256m：停顿 43 次（Young 43，Full 0），共 42.7 ms，最长 1.223 ms
 - [JEP 421: Deprecate Finalization for Removal](https://openjdk.org/jeps/421)
 - [JEP 363: Remove the Concurrent Mark Sweep (CMS) Garbage Collector](https://openjdk.org/jeps/363)
 - [JEP 379: Shenandoah: A Low-Pause-Time Garbage Collector (Production)](https://openjdk.org/jeps/379)
+- [JEP 248: Make G1 the Default Garbage Collector](https://openjdk.org/jeps/248)
+- [JEP 523: Make G1 the Default Garbage Collector in All Environments](https://openjdk.org/jeps/523)
+- [Ergonomics | Java SE 8 HotSpot Virtual Machine Garbage Collection Tuning Guide](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/ergonomics.html)
+- [JDK 18 Release Notes: Allow G1 Heap Regions up to 512MB](https://www.oracle.com/java/technologies/javase/18-relnote-issues.html)
+- [Eclipse Memory Analyzer: Garbage Collection Roots](https://help.eclipse.org/latest/topic/org.eclipse.mat.ui.help/concepts/gcroots.html)
+- [Apache Tomcat 10.1: Class Loader How-To](https://tomcat.apache.org/tomcat-10.1-doc/class-loader-howto.html)
+- [JDK 21 源码：ThreadLocal.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/lang/ThreadLocal.java)
+- [JDK 21 源码：ServiceLoader.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/ServiceLoader.java)
+- [proc_loadavg(5) — Linux manual page](https://man7.org/linux/man-pages/man5/proc_loadavg.5.html)
+- [vmstat(8) — Linux manual page](https://man7.org/linux/man-pages/man8/vmstat.8.html)

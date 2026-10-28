@@ -44,6 +44,8 @@
         * [A3 泛型的类型擦除](#a3-泛型的类型擦除)
         * [A4 反射与注解](#a4-反射与注解)
         * [A5 Lambda 与 Stream](#a5-lambda-与-stream)
+        * [A6 finally 的执行顺序与返回值](#a6-finally-的执行顺序与返回值)
+        * [A7 hashCode 的生成与比较顺序](#a7-hashcode-的生成与比较顺序)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -686,6 +688,8 @@ set.add(e2);
 System.out.println(set.size());   // 2
 ```
 
+这是因为 HashMap 查找键时先用 hashCode() 确定桶下标，在桶中先比较哈希值，哈希值相等时才用 == 或 equals() 判断。e1 和 e2 的哈希值不同，多半落在不同的桶中，即使落在同一个桶，也会因为哈希值不同而被跳过，equals() 根本没有机会被调用（JDK 21 实测，见[附录 A7](#a7-hashcode-的生成与比较顺序)）。HashSet 内部就是一个 HashMap，元素作为键存放。
+
 理想的哈希函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的哈希值上。这就要求了哈希函数要把所有域的值都考虑进来。可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。
 
 R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位，最左边的位丢失。并且一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，虚拟机可以自动进行这个优化。
@@ -702,6 +706,8 @@ public int hashCode() {
 ```
 
 实际编写时可以直接调用 Objects.hash(x, y, z)，它按同样的方式计算，只是初始值为 1。
+
+没有覆盖时，Object 的 hashCode() 并不是对象的内存地址。HotSpot 在第一次调用时用当前线程的 xorshift 随机数生成器得到一个 31 位的值，写入对象头的 Mark Word（见 [对象的创建与内存布局](Java%20虚拟机.md#对象的创建与内存布局)），之后对象即使被 GC 移动，哈希值也不变。生成方式由 -XX:hashCode 选择，JDK 21 的默认值为 5，即上面的随机数方案，改为 2 时所有对象的哈希值都是 1（见[附录 A7](#a7-hashcode-的生成与比较顺序)）。
 
 ### toString()
 
@@ -1316,6 +1322,38 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 
 <div align="center"> <img src="pics/java-exceptions.png" width="760px"/> </div><br>
 
+finally 块无论是否发生异常、try 或 catch 中是否执行了 return，都会在离开 try 语句之前执行，通常用来释放锁、关闭资源。finally 与 final、finalize() 只是名字相近：final 是修饰符，见 [final](#final)；finalize() 是 Object 的方法，对象被回收前可能被调用，JDK 9 起已经废弃，见 [finalize()](Java%20虚拟机.md#4-finalize)。
+
+try、catch、finally 的执行顺序和返回值有以下规则（JDK 21 实测，见[附录 A6](#a6-finally-的执行顺序与返回值)）：
+
+- try 中发生异常时，跳过 try 中剩下的语句，执行匹配的 catch，再执行 finally；catch 中有 return 时，先计算返回值，执行完 finally 再返回；
+- 返回值在执行 finally 之前就已经保存：返回基本类型时，finally 修改这个变量不影响返回值；返回引用时保存的是引用，finally 修改它指向的对象，调用方能看到修改；
+- finally 中的 return 会覆盖 try、catch 中的返回值，还会吞掉 try 中抛出的异常，用 -Xlint:finally 编译时会给出警告，不应该这样写；
+- finally 不执行的情况：执行到 finally 之前调用了 System.exit()、进程被 kill -9 或 JVM 崩溃；JVM 退出时仍在运行的守护线程也不会执行 finally。
+
+```java
+static int primitive() {
+    int x = 1;
+    try {
+        return x;            // 返回值 1 先被保存起来
+    } finally {
+        x = 2;               // 修改的是局部变量 x，返回 1
+    }
+}
+
+static List<String> reference() {
+    List<String> list = new ArrayList<>();
+    try {
+        list.add("try");
+        return list;         // 保存的是引用
+    } finally {
+        list.add("finally"); // 修改的是同一个对象，返回 [try, finally]
+    }
+}
+```
+
+编译器把 finally 中的代码复制到 try 和每个 catch 的出口处。return x 编译后先把 x 的值复制到另一个局部变量槽，再执行复制过来的 finally 代码，最后从那个槽中取出值返回，所以 finally 修改 x 不影响返回值。
+
 ## 九、泛型
 
 泛型把类型作为参数，让编译器在编译时检查类型。例如 List\<String\> 中只能放入字符串，取出时也不需要强制类型转换：
@@ -1329,7 +1367,7 @@ public class Box<T> {
 }
 ```
 
-Java 的泛型通过类型擦除实现：类型参数只在编译时检查，编译后都替换为它的上界（没有声明上界时为 Object），在取出元素的地方由编译器插入强制类型转换。所以 List\<String\> 和 List\<Integer\> 在运行时是同一个类：
+Java 的泛型通过类型擦除实现：类型参数只在编译时检查，编译后都替换为它的上界（没有声明上界时为 Object），在取出元素的地方由编译器插入强制类型转换。所以 List\<String\> 和 List\<Integer\> 在运行时是同一个类。需要注意的是，类、字段和方法声明中的泛型信息仍然以 Signature 属性保存在 class 文件中，可以通过反射读取（例如 getGenericSuperclass()），被擦除的是对象实例和局部变量上的类型参数：
 
 ```java
 List<String> a = new ArrayList<>();
@@ -1419,6 +1457,14 @@ Thread.ofVirtual().start(() -> System.out.println(Thread.currentThread().isVirtu
 ```
 
 Lambda 表达式不会生成匿名内部类的 class 文件。Lambda 的方法体被编译成当前类的私有静态方法 lambda$main$0，调用处是一条 invokedynamic 指令，第一次执行时由 LambdaMetafactory 在运行时生成实现函数式接口的类（javap 实测，见[附录 A5](#a5-lambda-与-stream)）。
+
+常用的中间操作中，filter 按条件保留元素，map 把每个元素变成另一个元素，flatMap 把每个元素变成一个流，再把这些流连接成一个流，常用于展开嵌套的集合：
+
+```java
+List<List<String>> groups = List.of(List.of("redis", "mysql"), List.of("kafka"));
+groups.stream().map(List::size).toList();          // [2, 1]
+groups.stream().flatMap(List::stream).toList();    // [redis, mysql, kafka]
+```
 
 Stream 是惰性求值的：filter、map 等中间操作只是记录下来，遇到 collect、findFirst 等终止操作才开始执行，并且每个元素依次走完整条流水线。上例改为 findFirst() 时，只处理了第一个元素 redis 就返回了，后面的 mysql、kafka 都没有被处理。
 
@@ -1602,6 +1648,116 @@ $ javap -c -p Lam（节选）
   private static void lambda$main$0(java.lang.String);
 ```
 
+正文中 map 与 flatMap 的例子：
+
+```text
+[2, 1]
+[redis, mysql, kafka]
+```
+
+### A6 finally 的执行顺序与返回值
+
+正文中的 primitive() 和 reference()，以及以下几个方法：
+
+```java
+static int pay() {
+    try {
+        System.out.println("try");
+        Integer.parseInt("x");          // 抛出 NumberFormatException
+        return 1;
+    } catch (NumberFormatException e) {
+        System.out.println("catch");
+        return 2;
+    } finally {
+        System.out.println("finally");
+    }
+}
+
+static int override() {
+    try {
+        throw new IllegalStateException("库存不足");
+    } finally {
+        return -1;                      // 覆盖了异常
+    }
+}
+
+// main 中
+try {
+    System.out.println("try");
+    System.exit(0);
+} finally {
+    System.out.println("finally");
+}
+```
+
+```text
+$ javac -Xlint:finally Fin.java
+Fin.java:28: 警告: [finally] finally 子句无法正常完成
+$ java Order
+try
+catch
+finally
+返回 2
+$ java Fin
+primitive(): 1
+reference(): [try, finally]
+override(): -1
+try
+$ javap -c -p Fin（primitive() 节选）
+       0: iconst_1
+       1: istore_0
+       2: iload_0
+       3: istore_1
+       4: iconst_2
+       5: istore_0
+       6: iload_1
+       7: ireturn
+       8: astore_2
+       9: iconst_2
+      10: istore_0
+      11: aload_2
+      12: athrow
+```
+
+System.exit(0) 之后的 finally 没有输出。字节码中，0～7 是正常返回的路径：x = 1 存入槽 0，返回值复制到槽 1，执行 finally 中的 x = 2，再返回槽 1 中的 1；8～12 是发生异常时的路径，其中 9～10 是同一段 finally 代码的另一份副本。
+
+### A7 hashCode 的生成与比较顺序
+
+```java
+Object a = new Object(), b = new Object();
+System.out.println(a.hashCode() + " " + b.hashCode() + " " + a.hashCode());
+```
+
+```text
+$ java Hash
+1829164700 2018699554 1829164700
+$ java -XX:+UnlockExperimentalVMOptions -XX:hashCode=2 Hash
+1 1 1
+$ java -XX:+UnlockExperimentalVMOptions -XX:+PrintFlagsFinal -version | grep -w hashCode
+     intx hashCode                                 = 5                                    {experimental} {default}
+```
+
+Key 的 hashCode() 返回 id，hashCode() 和 equals() 被调用时打印一行。容量为 16 时，id 为 1 和 17 的键落在同一个桶中：
+
+```java
+Map<Key, String> map = new HashMap<>();
+map.put(new Key(1), "a");
+map.get(new Key(1));
+map.get(new Key(17));
+```
+
+```text
+put(new Key(1))
+  hashCode 被调用
+get(new Key(1))
+  hashCode 被调用
+  equals 被调用
+  结果 a
+get(new Key(17))
+  hashCode 被调用
+  结果 null
+```
+
 ## 参考资料
 
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
@@ -1612,6 +1768,9 @@ $ javap -c -p Lam（节选）
 - [What’s New in Python 3.14](https://docs.python.org/3/whatsnew/3.14.html)
 - [A Guide to the Go Garbage Collector](https://go.dev/doc/gc-guide)
 - [JLS 5.1.7: Boxing Conversion](https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.1.7)
+- [JLS 14.20.2: Execution of try-finally and try-catch-finally](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.2)
+- [Java SE 21 API: Runtime](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html)
+- [HotSpot 源码：synchronizer.cpp 中的 get_next_hash()](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/synchronizer.cpp)
 - [JLS 4.6: Type Erasure](https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.6)
 - [JEP 254: Compact Strings](https://openjdk.org/jeps/254)
 - [JEP 361: Switch Expressions](https://openjdk.org/jeps/361)
