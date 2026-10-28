@@ -8,9 +8,11 @@
         * [循环依赖](#循环依赖)
     * [二、AOP](#二aop)
         * [动态代理](#动态代理)
+        * [代理的创建与通知的执行](#代理的创建与通知的执行)
         * [自调用](#自调用)
     * [三、事务](#三事务)
         * [声明式事务](#声明式事务)
+        * [事务的实现原理](#事务的实现原理)
         * [传播行为](#传播行为)
         * [事务失效](#事务失效)
     * [四、Spring Boot 自动配置](#四spring-boot-自动配置)
@@ -26,6 +28,9 @@
         * [A1 单例 Bean 的成员变量](#a1-单例-bean-的成员变量)
         * [A2 锁与事务的先后](#a2-锁与事务的先后)
         * [A3 Bean 创建的调用栈](#a3-bean-创建的调用栈)
+        * [A4 代理的创建与通知的顺序](#a4-代理的创建与通知的顺序)
+        * [A5 事务与数据库连接](#a5-事务与数据库连接)
+        * [A6 @Async 与 @Lazy 的循环依赖](#a6-async-与-lazy-的循环依赖)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -158,6 +163,10 @@ public class CounterController {
 - 构造器注入的循环依赖：创建 A 时必须先有 B，A 还没有实例化，没有可以提前暴露的对象；
 - 原型（prototype）作用域的 Bean：每次获取都创建新对象，不会放入缓存。
 
+另一种无法解决的情况与 @Async 有关。@Async 的代理由 AsyncAnnotationBeanPostProcessor 创建，它只在初始化之后生成代理，没有实现提前引用的 getEarlyBeanReference()，三级缓存中的工厂不会为它提前创建代理：B 拿到的是原始的 A，A 初始化完成后却被替换成了代理，B 中的引用与容器中的对象不一致。Spring 检查到这种情况时启动失败，提示 A 已经以原始版本注入到了 B 中、最终却被包装了；同样的结构把 @Async 换成 @Transactional 则可以正常启动，B 中注入的就是最终的代理（Spring Boot 3.3 实测，见[附录 A6](#a6-async-与-lazy-的循环依赖)）。
+
+构造器注入的循环依赖可以在其中一个参数上加 @Lazy 解开：Spring 先注入一个延迟解析的代理，第一次调用它的方法时才从容器中取出真正的 Bean。
+
 需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系。
 
 ## 二、AOP
@@ -249,6 +258,41 @@ public class OrderService {
 
 两个切面都没有指定顺序时，执行的先后是不确定的。@Order 的值越小越先执行、越靠外层，事务切面的默认值是 Ordered.LOWEST_PRECEDENCE，所以上面给锁的切面加上了 @Order(1)。
 
+### 代理的创建与通知的执行
+
+AOP 的几个术语可以和上面的分布式锁切面对应起来：
+
+- 切面（Aspect）：DistributedLockAspect 这个类，它把“拦截哪些方法”和“做什么”组织在一起；
+- 切点（Pointcut）：@annotation(lock)，描述要拦截哪些方法；
+- 通知（Advice）：around() 方法，即在被拦截的方法前后执行的逻辑；
+- 连接点（Join Point）：被拦截的一次方法执行，例如某次 createOrder(1024, 10086)，Spring AOP 只支持方法执行这一种连接点。
+
+通知按执行的时机分为五种：@Before、@AfterReturning（正常返回后）、@AfterThrowing（抛出异常后）、@After（无论是否抛出异常，类似 finally）和 @Around（包住整个调用，可以决定是否调用原方法，也能修改参数和返回值）。
+
+代理是在 [Bean 的生命周期](#bean-的生命周期) 中初始化之后的那一步创建的。引入 AOP 后，容器中会注册一个 BeanPostProcessor：AnnotationAwareAspectJAutoProxyCreator。每个 Bean 初始化完成后，它找出所有切面中与这个 Bean 的方法匹配的通知，有匹配的就创建代理，用代理代替原始对象放入容器，没有匹配的原样返回。在另一个 BeanPostProcessor 中打印，orderService 在初始化前的类型是 OrderService，初始化后变成了 OrderService$$SpringCGLIB$$0。存在循环依赖时代理会提前创建，见[循环依赖](#循环依赖)。
+
+调用代理的方法时，代理把匹配这个方法的通知排成一条链，依次调用，每个通知通过 proceed() 进入下一个，最后一个之后才是目标方法，这是[责任链](设计模式%20-%20责任链.md)模式。例如给 OrderService 加日志 @Order(1) 和鉴权 @Order(2) 两个切面，各有四种通知，调用 create(1024) 的输出如下（Spring Boot 3.3 实测，见[附录 A4](#a4-代理的创建与通知的顺序)）：
+
+```text
+日志 @Around 前
+  日志 @Before
+    鉴权 @Around 前
+      鉴权 @Before
+        目标方法 create(1024)
+      鉴权 @AfterReturning
+      鉴权 @After
+    鉴权 @Around 后
+  日志 @AfterReturning
+  日志 @After
+日志 @Around 后
+```
+
+@Order 值小的切面在外层，先进入、后退出。同一个切面内的顺序是：@Around 的前半段、@Before、目标方法、@AfterReturning 或 @AfterThrowing、@After、@Around 的后半段。
+
+Spring AOP 与 AspectJ 的区别：Spring AOP 在运行时生成代理，只能拦截 Spring Bean 的方法调用，自调用不会被拦截；AspectJ 在编译时或类加载时修改字节码（称为织入），能拦截构造函数、字段访问和自调用，但需要专门的编译器或 Java Agent。Spring 只借用了 AspectJ 的注解和切点表达式的解析，织入仍然靠代理，所以用 @Aspect 写的切面也是 Spring AOP。
+
+需要注意的是，@Transactional 不依赖 AspectJ。去掉 spring-boot-starter-aop 后，容器中的自动代理创建器变为 InfrastructureAdvisorAutoProxyCreator，它只处理事务这类框架内置的通知，事务仍然生效（见[附录 A5](#a5-事务与数据库连接)）。
+
 ### 自调用
 
 代理只能拦截从外部经过代理的调用。在目标对象内部调用自己的另一个方法时，等价于 this.inner()，调用的是原始对象，不经过代理，切面不会生效：
@@ -292,6 +336,34 @@ transactionTemplate.execute(status -> {
 ```
 
 回调正常返回时提交，抛出异常或者调用了 setRollbackOnly() 时回滚。它不依赖代理，不会因为自调用而失效，事务的范围也可以只是方法中的一段，适合只有一小段操作需要事务、或者要按条件决定回滚的场景，其余情况用 @Transactional 更简洁。
+
+### 事务的实现原理
+
+数据库的事务建立在一个连接上：同一个连接在开始事务之后执行的 SQL 才属于这个事务。@Transactional 要解决的问题是，Service 中通过 JdbcTemplate、MyBatis 执行的多条 SQL 怎样用上同一个连接，又不需要把连接作为参数层层传递。
+
+调用带 @Transactional 的方法时，代理中的 TransactionInterceptor 按以下步骤执行：
+
+1. 读取方法上的事务属性：传播行为、隔离级别、超时、是否只读和回滚规则；
+2. 调用事务管理器开启事务，使用 JDBC 和 MyBatis 时是 DataSourceTransactionManager：从连接池取一个连接，执行 setAutoCommit(false)，需要时设置隔离级别，再把连接绑定到当前线程（TransactionSynchronizationManager 中的 ThreadLocal）；
+3. 调用目标方法。JdbcTemplate 和 MyBatis 获取连接时先查看当前线程有没有绑定的连接，有就直接使用，所以方法中的所有 SQL 都在这个连接上执行；
+4. 方法正常返回时提交，抛出符合回滚规则的异常时回滚；最后恢复连接的自动提交和隔离级别，解除绑定，把连接还给连接池。
+
+在事务方法中查询 MySQL 的连接 ID，可以看到这个过程（Spring Boot 3.3、MySQL 8.0 实测，见[附录 A5](#a5-事务与数据库连接)）：
+
+```text
+create() 的第 1、2 条 SQL           连接 5435，autocommit=0
+  调用 StockService（REQUIRED）     连接 5435，autocommit=0
+  调用 LogService（REQUIRES_NEW）   连接 5436，autocommit=0
+  方法中新建的线程                  连接 5436，autocommit=1，不在事务中
+report()（READ_COMMITTED）          连接 5435，隔离级别 READ-COMMITTED
+事务结束后                          连接 5435，autocommit=1，隔离级别 REPEATABLE-READ
+```
+
+REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。REQUIRES_NEW 先挂起外层事务，即把外层的连接从线程上解绑、暂存起来，再取一个新连接开启新事务，结束后把外层的连接绑回去，所以两个事务互不影响。新线程上没有绑定连接，它的 SQL 自动提交，不属于这个事务，这就是[事务失效](#事务失效)中“在新线程中操作数据库”的原因。新线程用到的 5436 是 LogService 用完后还给连接池的连接，autocommit 已经恢复为 1。
+
+隔离级别默认是 Isolation.DEFAULT，即使用数据库自己的设置（MySQL 默认为可重复读）；指定了其它级别时，事务管理器只对这个连接、这一个事务设置，结束后恢复。
+
+需要注意的是，连接在整个事务方法执行期间都被占用。方法中有调用外部接口这类耗时的操作时，连接会被长时间占用，并发高时连接池很快耗尽，所以事务方法中只放必须在事务中完成的数据库操作。
 
 ### 传播行为
 
@@ -578,6 +650,129 @@ return true;
   （以下与构造函数相同）
 ```
 
+### A4 代理的创建与通知的顺序
+
+Spring Boot 3.3.5（spring-boot-starter-aop，AspectJ Weaver 1.9.22.1）、JDK 21。OrderService.create() 只打印一行；LogAspect（@Order(1)）和 AuthAspect（@Order(2)）的切点都是 execution(* lab.AopDemo.OrderService.*(..))，各有 @Around、@Before、@AfterReturning、@After 四个通知，按缩进打印。另写一个普通的 BeanPostProcessor，在初始化前后打印 orderService 的类型：
+
+```java
+public Object postProcessBeforeInitialization(Object bean, String name) {
+    if (bean instanceof OrderService) System.out.println("[初始化前] " + name + " 的类型：" + bean.getClass().getSimpleName());
+    return bean;
+}
+// postProcessAfterInitialization 同理
+```
+
+输出（省略了包名，通知列表只保留类名和所属的切面）：
+
+```text
+[初始化前] orderService 的类型：OrderService
+[初始化后] orderService 的类型：AopDemo$OrderService$$SpringCGLIB$$0
+BeanPostProcessor 列表：
+  ApplicationContextAwareProcessor
+  ImportAwareBeanPostProcessor
+  BeanPostProcessorChecker
+  ConfigurationPropertiesBindingPostProcessor
+  AnnotationAwareAspectJAutoProxyCreator
+  PersistenceExceptionTranslationPostProcessor
+  Probe
+  CommonAnnotationBeanPostProcessor
+  AutowiredAnnotationBeanPostProcessor
+  ApplicationListenerDetector
+代理中的通知（Advisor）：
+  ExposeInvocationInterceptor
+  AspectJAroundAdvice          LogAspect.around
+  AspectJMethodBeforeAdvice    LogAspect.before
+  AspectJAfterAdvice           LogAspect.after
+  AspectJAfterReturningAdvice  LogAspect.ret
+  AspectJAroundAdvice          AuthAspect.around
+  AspectJMethodBeforeAdvice    AuthAspect.before
+  AspectJAfterAdvice           AuthAspect.after
+  AspectJAfterReturningAdvice  AuthAspect.ret
+---- 调用 create(1024)
+日志 @Around 前
+  日志 @Before
+    鉴权 @Around 前
+      鉴权 @Before
+        目标方法 create(1024)
+      鉴权 @AfterReturning
+      鉴权 @After
+    鉴权 @Around 后
+  日志 @AfterReturning
+  日志 @After
+日志 @Around 后
+返回 OK
+```
+
+Probe 是上面打印类型的 BeanPostProcessor，它排在 AnnotationAwareAspectJAutoProxyCreator 之后，所以在“初始化后”看到的已经是代理。
+
+### A5 事务与数据库连接
+
+环境同 A2。conn() 在当前线程上用 JdbcTemplate 依次查询 CONNECTION_ID()、@@autocommit、@@transaction_isolation，并用 TransactionSynchronizationManager.isActualTransactionActive() 判断是否在事务中：
+
+```java
+@Transactional public void create() throws Exception {          // OrderService
+    System.out.println("  OrderService.create() 第 1 条 SQL：" + conn());
+    System.out.println("  OrderService.create() 第 2 条 SQL：" + conn());
+    System.out.println("  绑定在当前线程上的资源：" + TransactionSynchronizationManager.getResourceMap().values().stream()
+            .map(v -> v.getClass().getSimpleName()).toList());
+    stock.deduct();              // StockService，@Transactional
+    log.write();                 // LogService，@Transactional(propagation = Propagation.REQUIRES_NEW)
+    Thread t = new Thread(() -> System.out.println("  新线程中：" + conn()));
+    t.start(); t.join();
+}
+
+@Transactional(isolation = Isolation.READ_COMMITTED) public void report() {
+    System.out.println("  report()（READ_COMMITTED）：" + conn());
+}
+```
+
+```text
+自动代理：AnnotationAwareAspectJAutoProxyCreator
+事务外：连接 5435，autocommit=1，隔离级别 REPEATABLE-READ，不在事务中
+调用 create()：
+  OrderService.create() 第 1 条 SQL：连接 5435，autocommit=0，隔离级别 REPEATABLE-READ，在事务中
+  OrderService.create() 第 2 条 SQL：连接 5435，autocommit=0，隔离级别 REPEATABLE-READ，在事务中
+  绑定在当前线程上的资源：[ConnectionHolder]
+  StockService.deduct()（REQUIRED）：连接 5435，autocommit=0，隔离级别 REPEATABLE-READ，在事务中
+  LogService.write()（REQUIRES_NEW）：连接 5436，autocommit=0，隔离级别 REPEATABLE-READ，在事务中
+  新线程中：连接 5436，autocommit=1，隔离级别 REPEATABLE-READ，不在事务中
+调用 report()：
+  report()（READ_COMMITTED）：连接 5435，autocommit=0，隔离级别 READ-COMMITTED，在事务中
+事务结束后：连接 5435，autocommit=1，隔离级别 REPEATABLE-READ，不在事务中
+```
+
+事务外的连接 5435 是连接池复用的同一个连接。去掉 spring-boot-starter-aop（类路径上没有 AspectJ）后重新运行，第一行变为“自动代理：InfrastructureAdvisorAutoProxyCreator”，其余结果相同（连接 ID 为 5437、5438）。
+
+### A6 @Async 与 @Lazy 的循环依赖
+
+环境同 A2，使用 AnnotationConfigApplicationContext（默认允许循环依赖）：
+
+```java
+public static class AsyncA { @Autowired AsyncB b; @Async public void notifyUser() {} }
+public static class AsyncB { @Autowired AsyncA a; }
+@Configuration @EnableAsync static class AsyncCfg {
+    @Bean AsyncA asyncA() { return new AsyncA(); } @Bean AsyncB asyncB() { return new AsyncB(); }
+}
+
+// 对照：结构相同，A 的方法换成 @Transactional，配置类加 @EnableTransactionManagement
+
+public static class CA { final CB b; CA(CB b) { this.b = b; } public CB b() { return b; } }
+public static class CB { final CA a; CB(@Lazy CA a) { this.a = a; } }
+@Configuration static class LazyCfg {
+    @Bean CA ca(CB b) { return new CA(b); }
+    @Bean CB cb(@Lazy CA a) { return new CB(a); }
+}
+```
+
+```text
+@Async 的 Bean 参与循环依赖：启动失败，BeanCurrentlyInCreationException: Error creating bean with name 'asyncA': Bean with name 'asyncA' has been injected into other beans [asyncB] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. ...
+@Transactional 的 Bean 参与循环依赖：启动成功
+  TxB 中注入的是容器中的代理：true
+构造器循环依赖，一侧加 @Lazy：启动成功
+  CB 中注入的 CA 是代理：true（CircularDemo$CA$$SpringCGLIB$$0）
+  通过它调用 b() 得到的 CB 就是容器中的 CB：true
+```
+
 ## 参考资料
 
 - [Spring Framework: Dependency Injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html)
@@ -597,3 +792,9 @@ return true;
 - [MyBatis 3 文档](https://mybatis.org/mybatis-3/zh_CN/index.html)
 - [MyBatis 3: Dynamic SQL](https://mybatis.org/mybatis-3/dynamic-sql.html)
 - [DispatcherServlet | Spring Framework 文档](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)
+- [Spring Framework: Spring AOP Capabilities and Goals](https://docs.spring.io/spring-framework/reference/core/aop/introduction-spring-defn.html)
+- [Spring Framework: Using the "auto-proxy" Facility](https://docs.spring.io/spring-framework/reference/core/aop-api/autoproxy.html)
+- [Spring Framework: Understanding the Spring Framework's Declarative Transaction Implementation](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-decl-explained.html)
+- [Spring Framework: Synchronizing Resources with Transactions](https://docs.spring.io/spring-framework/reference/data-access/transaction/tx-resource-synchronization.html)
+- [Spring Framework 源码：DataSourceTransactionManager](https://github.com/spring-projects/spring-framework/blob/6.1.x/spring-jdbc/src/main/java/org/springframework/jdbc/datasource/DataSourceTransactionManager.java)
+- [Spring Framework 源码：AbstractAutowireCapableBeanFactory](https://github.com/spring-projects/spring-framework/blob/6.1.x/spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java)
