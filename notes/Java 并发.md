@@ -49,6 +49,7 @@
         * [内存间交互操作](#内存间交互操作)
         * [内存模型三大特性](#内存模型三大特性)
         * [先行发生原则](#先行发生原则)
+        * [volatile](#volatile)
     * [十一、线程安全](#十一线程安全)
         * [不可变](#不可变)
         * [互斥同步](#互斥同步)
@@ -60,6 +61,7 @@
         * [锁粗化](#锁粗化)
         * [轻量级锁](#轻量级锁)
         * [偏向锁](#偏向锁)
+        * [锁升级的过程](#锁升级的过程)
     * [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
     * [附录：实测](#附录实测)
         * [A1 三种锁在读多写少时的耗时](#a1-三种锁在读多写少时的耗时)
@@ -67,6 +69,11 @@
         * [A3 volatile 与循环条件](#a3-volatile-与循环条件)
         * [A4 AtomicLong 与 LongAdder](#a4-atomiclong-与-longadder)
         * [A5 InheritableThreadLocal 与线程池](#a5-inheritablethreadlocal-与线程池)
+        * [A6 简化版线程池](#a6-简化版线程池)
+        * [A7 线程池的异常与参数调整](#a7-线程池的异常与参数调整)
+        * [A8 重排序与 volatile](#a8-重排序与-volatile)
+        * [A9 ABA 与 AtomicStampedReference](#a9-aba-与-atomicstampedreference)
+        * [A10 锁状态与监视器的回收](#a10-锁状态与监视器的回收)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -224,12 +231,14 @@ public static void main(String[] args) {
 
 ### ThreadPoolExecutor
 
+线程池指的是预先创建一组线程反复执行提交的任务，而不是为每个任务新建线程。这是因为创建线程要分配线程栈、进行系统调用，任务很短时这部分开销可能超过任务本身；线程太多还会占用大量内存、加剧上下文切换。所以线程池一方面复用线程，另一方面限制线程的数量，任务太多时排队或者拒绝。
+
 上面的三种 Executor 都是通过 ThreadPoolExecutor 创建的，它的构造函数有以下参数：
 
 - corePoolSize：核心线程数，核心线程空闲时也不会被回收，除非调用了 allowCoreThreadTimeOut(true)；
 - maximumPoolSize：最大线程数；
 - keepAliveTime 和 unit：线程数超过核心线程数时，多出的线程空闲超过这个时间就会被回收；
-- workQueue：保存等待执行的任务的阻塞队列；
+- workQueue：保存等待执行的任务的阻塞队列，常用有界的 ArrayBlockingQueue、默认无界的 LinkedBlockingQueue，以及不保存任务、每个任务必须直接交给一个线程的 SynchronousQueue（CachedThreadPool 使用它）；
 - threadFactory：创建线程的工厂，常用来给线程起有意义的名字，方便排查问题；
 - handler：拒绝策略，线程数达到最大并且队列已满时，用来处理新提交的任务。
 
@@ -275,12 +284,24 @@ for (int i = 1; i <= 7; i++) {
 
 需要注意的是，任务 5、6 比先提交的任务 3、4 更早执行：队列满后新建的线程直接执行当前提交的任务，队列中的任务要等有线程空闲后才会被取出。
 
+先放入队列、队列满了才增加线程，是因为线程比排队的任务昂贵得多：核心线程承担平时的负载，短时间的高峰由队列缓冲，队列也放不下说明负载持续超出了处理能力，才临时增加线程，高峰过后它们空闲 keepAliveTime 后被回收。Tomcat 的线程池则反过来，线程数没有达到最大值时先增加线程，让等待 I/O 的请求尽快开始处理。
+
+核心线程数为 0 时，任务直接进入队列，execute() 发现没有线程时只创建一个。例如核心线程数为 0、最大线程数为 4、使用无界队列时，提交 3 个任务只有 1 个线程逐个执行（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。
+
 拒绝策略：
 
 - AbortPolicy：默认策略，抛出 RejectedExecutionException；
 - CallerRunsPolicy：由提交任务的线程自己执行这个任务，提交方被拖慢，从而降低了提交速度；
 - DiscardPolicy：直接丢弃任务；
 - DiscardOldestPolicy：丢弃队列中最早的任务，再重新提交当前任务。
+
+选择拒绝策略主要看任务能不能丢：
+
+- 不能丢、提交方能处理失败时用 AbortPolicy，捕获异常后返回错误或者稍后重试；
+- 不能丢、可以接受变慢时用 CallerRunsPolicy，例如处理请求的线程被拒绝后自己执行任务，这个请求变慢但任务不会丢，不允许阻塞的线程（例如 Netty 的 I/O 线程）不能这样用；
+- 允许丢失的任务，例如统计数据的上报，用 DiscardPolicy，只关心最新数据时用 DiscardOldestPolicy。
+
+也可以实现 RejectedExecutionHandler 接口自定义拒绝策略，例如记录日志并告警，再把任务写入数据库或消息队列，稍后重新执行。
 
 不建议用 Executors 创建线程池，而是直接创建 ThreadPoolExecutor 并使用有界队列：
 
@@ -292,7 +313,9 @@ for (int i = 1; i <= 7; i++) {
 - CPU 密集型：取 CPU 核数 + 1，多出的一个线程用于在某个线程因缺页等原因暂停时继续使用 CPU；
 - I/O 密集型：线程等待 I/O 时不占用 CPU，可以按 核数 × (1 + 等待时间 / 计算时间) 估算。例如 8 核 CPU，每个任务计算 10 ms、等待数据库 90 ms，约为 8 × (1 + 90 / 10) = 80 个线程。
 
-估算值只是起点，最终要通过压测确定。上线后监控活跃线程数、队列长度和拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整。
+也可以从吞吐量估算：同时在执行的任务数 = 每秒到达的任务数 × 每个任务的耗时（利特尔法则）。例如每秒 200 个请求，每个耗时 100 ms，平均有 200 × 0.1 = 20 个任务同时在执行，线程数至少为 20，再按高峰留出余量。
+
+估算值只是起点，最终要通过压测确定。上线后用 getActiveCount()、getQueue().size() 等方法监控活跃线程数和队列长度，在拒绝策略中统计拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整，参数放在配置中心、变更时调用这两个方法就是动态线程池。需要注意的是，JDK 9 起 setCorePoolSize() 的新值大于最大线程数时抛出 IllegalArgumentException，两者都要调大时先调最大线程数（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）；LinkedBlockingQueue 的容量是 final 字段，队列长度要可调时只能自己实现队列。
 
 线程池的核心结构并不复杂，常被要求手写一个简化版：固定数量的工作线程循环从阻塞队列中取任务执行，队列满了或者线程池已经关闭时拒绝新任务。
 
@@ -348,8 +371,10 @@ ThreadPoolExecutor 的结构与它相同，多做了以下几件事：
 
 - 线程不是一开始就全部创建，而是按前面的提交顺序按需创建；
 - 工作线程在 getTask() 中取任务：线程数超过核心线程数时用 poll(keepAliveTime) 等待，超时就退出，否则用 take() 一直等待；
-- 运行状态和线程数保存在同一个 AtomicInteger（ctl）中，两者可以在一次 CAS 中一起修改；
+- 运行状态和线程数保存在同一个 AtomicInteger（ctl）中，两者可以在一次 CAS 中一起修改。运行状态有 RUNNING、SHUTDOWN（shutdown() 之后，执行完队列中的任务）、STOP（shutdownNow() 之后）、TIDYING 和 TERMINATED 五种；
 - 用 execute() 提交的任务抛出异常时，执行它的线程退出，线程池再补一个新线程。
+
+任务抛出异常时，execute() 和 submit() 的表现不同：execute() 提交的任务，异常打印到标准错误，执行它的线程退出；submit() 把任务包装成 FutureTask，异常保存在 Future 中，不打印，线程也不退出，调用 future.get() 时才以 ExecutionException 抛出（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。所以用 submit() 提交又不调用 get() 的任务，异常会被悄悄吞掉，需要在任务内部捕获并记录。
 
 ## 三、中断
 
@@ -1538,6 +1563,8 @@ stop = true;
 
 有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
 
+例如写线程先执行 data = 1，再执行 ready = 1；读线程先读 ready，再读 data。按照代码的顺序，读到 ready 为 1 时 data 一定已经是 1，但两个都是普通字段时，编译器和处理器可以调整两次写入或两次读取的顺序：在 ARM 架构的 Apple M1 上，读到 ready 为 1 的约 1.3 亿次中，有约 1000～2300 次读到的 data 仍为 0；把 ready 改为 volatile 后一次也没有出现（JDK 21 实测，见[附录 A8](#a8-重排序与-volatile)）。
+
 volatile 关键字通过添加内存屏障的方式来禁止重排序，即重排序时不能把后面的指令放到内存屏障之前。
 
 以 x86 为例，处理器本身只会把写操作之后的读操作提前执行，其它重排序都不会发生。因此 HotSpot 只在 volatile 写之后插入一条带 lock 前缀的空操作（lock addl $0, [rsp - C]）作为 StoreLoad 屏障：它之前的写入对其它处理器可见之后，后面的读操作才能执行。
@@ -1590,11 +1617,24 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
 
+### volatile
+
+volatile 修饰的变量有两项保证：
+
+- 可见性：写入对之后读取它的线程立即可见；
+- 有序性：volatile 写之前的读写不会被重排序到它之后，volatile 读之后的读写不会被重排序到它之前。
+
+它不保证 count++ 这类复合操作的原子性，见[可见性](#2-可见性)。
+
+有序性使 volatile 变量可以用来发布数据。前面的例子中 ready 改为 volatile 后：写 data 先行发生于写 ready（单一线程原则），写 ready 先行发生于读到这个值（volatile 变量规则），读 ready 先行发生于读 data，由传递性，读到 ready 为 1 的线程一定能看到 data 为 1，data 本身不需要是 volatile。双重校验锁的单例必须加 volatile 也是这个原因，否则其它线程可能拿到一个构造方法还没有执行完的对象，见[单例](设计模式%20%20-%20单例.md#4-双重校验锁-线程安全)。
+
+volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性和有序性，不保证原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，代价是竞争时线程会阻塞。所以状态标志、发布数据用 volatile，读-改-写操作和多个变量一起修改用锁或原子类。
+
 ## 十一、线程安全
 
-多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。
+线程安全指的是：多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。例如 HashMap 不是线程安全的，8 个线程同时放入共 80 万个不同的键，结束后 size 远小于 80 万，见 [HashMap 的线程安全](Java%20容器.md#10-线程安全)。
 
-线程安全有以下几种实现方式：
+线程不安全的根源是多个线程同时读写共享的可变数据，表现为原子性、可见性和有序性三类问题，见[内存模型三大特性](#内存模型三大特性)。所以保证线程安全的思路有两类：一是让数据不被共享，或者不可变；二是必须共享可变数据时，用同步手段同时解决这三个问题。线程安全有以下几种实现方式：
 
 ### 不可变
 
@@ -1637,6 +1677,15 @@ public V put(K key, V value) {
 
 synchronized 和 ReentrantLock。
 
+以线程安全的计数器为例，几种实现方式的取舍：
+
+- synchronized 或 ReentrantLock：最通用，计数的同时还要修改其它变量时只能用锁；
+- AtomicInteger：用 CAS 实现，线程不阻塞，见[非阻塞同步](#非阻塞同步)；
+- LongAdder：高并发下最快，但 sum() 不是某一时刻的精确值，适合统计请求数；
+- 每个线程各自计数、最后汇总，计数过程不需要同步，见[无同步方案](#无同步方案)。
+
+需要注意的是，线程安全的类组合在一起不一定线程安全。例如先调用 ConcurrentHashMap 的 containsKey() 再调用 put()，其它线程可能在两次调用之间放入同一个键，要改用 putIfAbsent() 这类一次完成判断和修改的方法。
+
 ### 非阻塞同步
 
 互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
@@ -1648,6 +1697,8 @@ synchronized 和 ReentrantLock。
 #### 1. CAS
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
+
+CAS 由处理器指令完成，比较和写入之间不会被其它核心插入：x86 上 HotSpot 生成带 lock 前缀的 cmpxchg 指令，lock 前缀保证执行期间其它核心不能访问这个内存位置；ARM 上使用 ARMv8.1 的 CAS 指令，不支持时用独占加载、存储指令 LDXR、STXR 循环实现。Java 代码通过 Unsafe 的 compareAndSetInt() 等方法使用 CAS，JIT 把它们直接编译成这些指令。
 
 #### 2. AtomicInteger
 
@@ -1693,7 +1744,13 @@ LongAdder 把计数分散到多个 Cell 中，不同线程更新不同的 Cell�
 
 如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
 
-J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+ABA 是否有害，取决于值相同是否代表状态相同。计数器这类只关心数值的变量，A 变成 B 又变回 A 没有影响；用 CAS 实现的无锁栈、链表则可能出错。例如一个无锁栈从栈顶起依次是 A、B、C，线程 1 准备出栈，读到栈顶 A 和它的下一个节点 B，准备执行 CAS(栈顶, A, B)；这时线程 2 依次弹出 A、B，压入 D，再把 A 压回，栈变为 A、D、C；线程 1 的 CAS 发现栈顶仍是 A，执行成功，栈顶变成了已经被弹出的 B，D 丢失了。在 Java 中，线程 1 持有 A 的引用，A 不会被回收，所以只有把弹出的节点重新压栈、复用节点时才会出现这种情况。
+
+J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它把引用和一个整数版本号放在一起进行 CAS，每次修改都把版本号加 1。A 变为 B 再变回 A 之后，版本号已经从 0 变为 2，持有旧版本号 0 的 CAS 会失败（JDK 21 实测，见[附录 A9](#a9-aba-与-atomicstampedreference)）。数据库中用版本号实现的乐观锁也是同样的思路，版本号只增不减，不会出现 ABA。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+
+需要注意的是，AtomicStampedReference 和 AtomicReference 比较的是引用，而不是 equals()。用它们保存 Integer 时，值为 100 的 CAS 成功，值为 1000 的 CAS 却失败了，这是因为 -128～127 之外的整数每次自动装箱都会创建新的对象（见[附录 A9](#a9-aba-与-atomicstampedreference)）。
+
+除了 ABA，CAS 还有两个问题：一是竞争激烈时大量失败重试，浪费 CPU，见上一节的测试；二是只能保证一个变量的原子更新，多个变量要一起修改时，可以把它们放进一个不可变对象，用 AtomicReference 整体替换，或者直接加锁。
 
 #### 4. 乐观锁与悲观锁
 
@@ -1705,7 +1762,9 @@ J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference �
 UPDATE product SET stock = stock - 1, version = version + 1 WHERE id = 1 AND version = 1;
 ```
 
-先执行的请求影响 1 行，库存变为 9、版本号变为 2；后执行的请求影响 0 行，说明数据已被修改，需要重新读取后再试。
+先执行的请求影响 1 行，库存变为 9、版本号变为 2；后执行的请求影响 0 行，说明数据已被修改，需要重新读取后再试。项目中通常把读取和这条 UPDATE 放在循环中，并限制重试的次数，超过次数就返回失败，避免冲突多时无限重试。
+
+需要注意的是，乐观锁并不是完全不加锁：InnoDB 执行这条 UPDATE 时仍然会给这一行加行锁，只是从读取数据到提交修改的这段时间不持有锁，其它请求可以同时读取和计算。
 
 两者的选择：
 
@@ -1953,6 +2012,21 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 需要注意的是，偏向锁在 JDK 15 中被默认禁用并废弃（JEP 374），JDK 18 起相关参数已不再生效。
 
+### 锁升级的过程
+
+synchronized 设计锁升级，是因为重量级锁的代价在阻塞和唤醒：抢不到锁的线程要通过系统调用挂起、再被唤醒，涉及用户态与内核态的切换和上下文切换。而大部分锁在同一时刻只有一个线程使用，一次 CAS 就能加锁，没有必要付出这个代价。所以 JVM 先用代价低的实现，出现竞争后再换成代价高的实现。JDK 21 中锁的状态依次为：
+
+1. 无锁：新创建的对象，Mark Word 末尾为 01；
+2. 轻量级锁：一个线程进入 synchronized 时，用 CAS 把 Mark Word 换成指向自己栈中 Lock Record 的指针，末尾变为 00；同一个线程重入时只在栈中多放一个 Lock Record，退出时再用 CAS 把 Mark Word 换回来；
+3. 重量级锁：其它线程持有锁时 CAS 失败，锁膨胀为 ObjectMonitor，Mark Word 指向它，末尾变为 10。抢锁的线程先自适应自旋若干次，仍然抢不到再进入队列阻塞。
+
+轻量级锁一节中锁状态变化的图就是这个过程（JDK 21 实测，见[附录 A10](#a10-锁状态与监视器的回收)）。JDK 15 之前，无锁和轻量级锁之间还有偏向锁，其它线程来加锁时要先撤销偏向，代价很高。偏向锁的收益主要来自 Vector、Hashtable 这类每个方法都加锁、实际只被一个线程使用的旧代码，又让 JVM 的同步代码很复杂，所以 JDK 15 起被默认禁用（JEP 374），之后被移除。
+
+需要注意的是：
+
+- 在 HotSpot 的实现中，自旋发生在膨胀为重量级锁之后、线程阻塞之前，而不是在轻量级锁阶段：其它线程持有轻量级锁时，CAS 失败就直接膨胀；
+- “锁只能升级、不能降级”的说法并不准确。锁在被持有期间不会降级，但空闲的 ObjectMonitor 会被 JVM 回收（deflation），对象头恢复为无锁状态。例如两个线程竞争后锁变为重量级锁，都释放后约 60 秒，对象头变回 0x…01，再由一个线程加锁时又是轻量级锁（JDK 21 实测，见[附录 A10](#a10-锁状态与监视器的回收)）。
+
 ## 十三、多线程开发良好的实践
 
 - 给线程起个有意义的名字，这样可以方便找 Bug；
@@ -2143,6 +2217,144 @@ java.lang.IllegalStateException: 任务 2 出错
 
 异常的堆栈只保留了第一行。任务执行的先后和线程的分配每次不同，但每次都是 3 个任务完成、关闭后的提交被拒绝。ThreadPoolExecutor 的 ctl、getTask() 中的 poll/take 见 JDK 21 源码 java/util/concurrent/ThreadPoolExecutor.java。
 
+### A7 线程池的异常与参数调整
+
+线程工厂把线程依次命名为 worker-1、worker-2……，每次提交后等待 100 ms：
+
+```java
+ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(), factory);
+pool.execute(() -> System.out.println("任务 1 运行在 " + Thread.currentThread().getName()));
+pool.execute(() -> { throw new IllegalStateException("execute 中的异常"); });
+pool.execute(() -> System.out.println("任务 3 运行在 " + Thread.currentThread().getName()));
+Future<?> f = pool.submit(() -> { throw new IllegalStateException("submit 中的异常"); });
+pool.execute(() -> System.out.println("任务 5 运行在 " + Thread.currentThread().getName()));
+f.get();                                                   // 捕获 ExecutionException 后打印
+
+ThreadPoolExecutor p0 = new ThreadPoolExecutor(0, 4, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+for (int i = 0; i < 3; i++) p0.execute(() -> sleep(200));  // 50 ms 后查看线程数和队列长度
+
+ThreadPoolExecutor p = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
+p.setCorePoolSize(8);
+p.setMaximumPoolSize(8);
+p.setCorePoolSize(8);
+```
+
+```text
+任务 1 运行在 worker-1
+Exception in thread "worker-1" java.lang.IllegalStateException: execute 中的异常
+	at PoolDemo.lambda$main$1(PoolDemo.java:10)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+任务 3 运行在 worker-2
+submit 之后没有打印异常，completedTaskCount=4
+任务 5 运行在 worker-2
+future.get() 抛出 java.lang.IllegalStateException: submit 中的异常
+核心线程数 0、最大 4、无界队列，提交 3 个各 200 ms 的任务：线程数 1，队列中 2
+全部完成用时约 614 ms，最大线程数达到过 1
+最大线程数为 4 时 setCorePoolSize(8)：IllegalArgumentException
+先 setMaximumPoolSize(8) 再 setCorePoolSize(8)：core=8 max=8
+```
+
+JDK 8 的 setCorePoolSize() 只检查新值是否小于 0，JDK 9 起增加了与最大线程数的比较（见两个版本的 ThreadPoolExecutor.java）。
+
+### A8 重排序与 volatile
+
+写线程对 200 万个对象依次执行 data = 1、ready = 1，读线程同时对这些对象依次读 ready、再读 data，读 4 遍，统计读到 ready 为 1 而 data 为 0 的次数。每次运行重复 20 轮，普通字段和 volatile 各运行 3 次：
+
+```java
+static class Plain { int data; int ready; }
+static class Vol { int data; volatile int ready; }
+
+// 写线程
+for (int i = 0; i < N; i++) { Plain p = a[i]; p.data = 1; p.ready = 1; }
+// 读线程
+for (int i = 0; i < N; i++) {
+    Plain p = a[i];
+    int rd = p.ready;
+    int d = p.data;
+    if (rd == 1) { seen++; if (d == 0) bad++; }
+}
+```
+
+```text
+普通字段：读到 ready=1 的次数 128333444，其中 data=0 的次数 2287
+ready 为 volatile：读到 ready=1 的次数 145911502，其中 data=0 的次数 0
+普通字段：读到 ready=1 的次数 133943114，其中 data=0 的次数 1085
+ready 为 volatile：读到 ready=1 的次数 145143824，其中 data=0 的次数 0
+普通字段：读到 ready=1 的次数 133534876，其中 data=0 的次数 967
+ready 为 volatile：读到 ready=1 的次数 145152682，其中 data=0 的次数 0
+```
+
+### A9 ABA 与 AtomicStampedReference
+
+```java
+AtomicReference<String> top = new AtomicReference<>("A");
+String seen = top.get();                           // 线程 1 读到 A
+top.set("B"); top.set("A");                        // 线程 2 改为 B 又改回 A
+top.compareAndSet(seen, "C");
+
+AtomicStampedReference<String> ref = new AtomicStampedReference<>("A", 0);
+int[] h = new int[1];
+String v = ref.get(h); int stamp = h[0];           // 线程 1 读到 A、版本 0
+ref.compareAndSet("A", "B", 0, 1);                 // 线程 2
+ref.compareAndSet("B", "A", 1, 2);
+ref.compareAndSet(v, "C", stamp, stamp + 1);
+
+new AtomicStampedReference<>(100, 0).compareAndSet(100, 50, 0, 1);
+new AtomicStampedReference<>(1000, 0).compareAndSet(1000, 500, 0, 1);
+```
+
+```text
+AtomicReference CAS(A -> C)：true
+AtomicStampedReference CAS(A -> C, 版本 0)：false，当前值 A，版本 2
+值为 100 时 CAS(100 -> 50)：true
+值为 1000 时 CAS(1000 -> 500)：false
+```
+
+正文中无锁栈的例子用 AtomicReference<Node> 实现的栈，按正文的步骤手动交错执行两个线程的操作：
+
+```text
+初始：A B C
+线程 2 操作后：A D C
+线程 1 CAS(栈顶, A, B)：true
+结果：B C
+```
+
+### A10 锁状态与监视器的回收
+
+用 JOL 0.17 打印对象头中的 Mark Word。新对象、一个线程加锁、释放后、与另一个线程竞争后、都释放后：
+
+```java
+Object lock = new Object();
+synchronized (lock) { /* 打印 */ }
+Thread t = new Thread(() -> { synchronized (lock) { sleep(500); } });
+t.start();
+Thread.sleep(100);
+synchronized (lock) { /* 与 t 竞争，打印 */ }
+```
+
+```text
+① 无锁　　　　0x0000000000000001 (non-biasable; age: 0)
+② 一个线程加锁 0x000000016d14eae0 (thin lock: 0x000000016d14eae0)
+③ 释放后　　　0x0000000000000001 (non-biasable; age: 0)
+④ 发生竞争后　0x0000000129624112 (fat lock: 0x0000000129624112)
+⑤ 都释放后　　0x0000000129624112 (fat lock: 0x0000000129624112)
+```
+
+Mark Word 中的地址每次运行都不同。
+
+竞争之后每 5 秒打印一次，直到不再是 fat lock，然后再由一个线程加锁：
+
+```text
+竞争后　　0x0000000124208ff2 (fat lock: 0x0000000124208ff2)
+释放后 0 秒：0x0000000124208ff2 (fat lock: 0x0000000124208ff2)
+……
+释放后 55 秒：0x0000000124208ff2 (fat lock: 0x0000000124208ff2)
+释放后 60 秒：0x0000000000000001 (non-biasable; age: 0)
+再由一个线程加锁：0x000000016dffaad0 (thin lock: 0x000000016dffaad0)
+```
+
+JDK 21 中空闲监视器的回收由 MonitorDeflationThread 进行，距上次回收超过 GuaranteedAsyncDeflationInterval（默认 60000 ms）时一定会回收一次，见 JDK 21 源码 src/hotspot/share/runtime/synchronizer.cpp。
+
 ## 参考资料
 
 - [Object (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html)
@@ -2168,6 +2380,14 @@ java.lang.IllegalStateException: 任务 2 出错
 - [JDK 23 Release Notes: Change LockingMode Default from LM_LEGACY to LM_LIGHTWEIGHT](https://www.oracle.com/java/technologies/javase/23-relnote-issues.html)
 - [Thread.State (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.State.html)
 - [The Java Language Specification, Java SE 21 Edition: Chapter 17. Threads and Locks](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html)
+- [JDK 21 源码：ThreadPoolExecutor.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/concurrent/ThreadPoolExecutor.java)
+- [Apache Tomcat 源码：TaskQueue.java](https://github.com/apache/tomcat/blob/main/java/org/apache/tomcat/util/threads/TaskQueue.java)
+- [AtomicStampedReference (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/AtomicStampedReference.html)
+- [JDK 21 源码：x86_64.ad](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/x86/x86_64.ad)
+- [JDK 21 源码：macroAssembler_aarch64.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/aarch64/macroAssembler_aarch64.cpp)
+- [JDK 21 源码：synchronizer.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/synchronizer.cpp)
+- [JDK 21 源码：objectMonitor.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/objectMonitor.cpp)
+- [JSR 133 (Java Memory Model) FAQ](https://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html)
 - [LongAdder (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/LongAdder.html)
 - [objectMonitor.hpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/objectMonitor.hpp)
 - [assembler_x86.cpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/x86/assembler_x86.cpp)
