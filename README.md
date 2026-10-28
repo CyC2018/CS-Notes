@@ -25,7 +25,6 @@
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
 - [Leetcode 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20题解%20-%20目录.md)
 - [算法](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法%20-%20目录.md)
-- [字节跳动内推](assets/内推.md)
 
 ## :computer: 操作系统
 
@@ -45,11 +44,13 @@
 - [SQL 练习](https://github.com/CyC2018/CS-Notes/blob/master/notes/SQL%20练习.md)
 - [MySQL](https://github.com/CyC2018/CS-Notes/blob/master/notes/MySQL.md)
 - [Redis](https://github.com/CyC2018/CS-Notes/blob/master/notes/Redis.md)
+- [Redis - 进阶](https://github.com/CyC2018/CS-Notes/blob/master/notes/Redis%20-%20进阶.md)
 
 ## :coffee: Java
 
 - [Java 基础](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20基础.md)
 - [Java 容器](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20容器.md)
+- [Java 容器 - 进阶](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20容器%20-%20进阶.md)
 - [Java 并发](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20并发.md)
 - [Java 虚拟机](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20虚拟机.md)
 - [Java I/O](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20IO.md)
@@ -65,6 +66,7 @@
 - [缓存](https://github.com/CyC2018/CS-Notes/blob/master/notes/缓存.md)
 - [消息队列](https://github.com/CyC2018/CS-Notes/blob/master/notes/消息队列.md)
 - [大模型应用](https://github.com/CyC2018/CS-Notes/blob/master/notes/大模型应用.md)
+- [大模型应用 - 进阶](https://github.com/CyC2018/CS-Notes/blob/master/notes/大模型应用%20-%20进阶.md)
 
 ## :art: 面向对象
 
@@ -78,14 +80,6 @@
 - [构建工具](https://github.com/CyC2018/CS-Notes/blob/master/notes/构建工具.md)
 
 ## :memo: 后记
-
-### 排版
-
-笔记内容按照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.zh-Hans.md) 进行排版，以保证内容的可读性。
-
-不使用 `![]()` 这种方式来引用图片，而是用 `<img>` 标签。一方面是为了能够控制图片以合适的大小显示，另一方面是因为 [GFM](https://github.github.com/gfm/) 不支持 `<center> ![]() </center>` 这种方法让图片居中显示，只能使用 `<div align="center"> <img src=""/> </div>` 达到居中的效果。
-
-在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)。
 
 提交 Issue、PR 以及添加配图的约定见 [贡献指南](CONTRIBUTING.md)。
 
