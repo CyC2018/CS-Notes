@@ -9,11 +9,9 @@
         * [SET](#set)
         * [HASH](#hash)
         * [ZSET](#zset)
-    * [三、数据结构](#三数据结构)
-        * [对象编码](#对象编码)
-        * [字典](#字典)
-        * [跳跃表](#跳跃表)
-    * [四、使用场景](#四使用场景)
+        * [BITMAP](#bitmap)
+        * [HyperLogLog 与 GEO](#hyperloglog-与-geo)
+    * [三、使用场景](#三使用场景)
         * [计数器](#计数器)
         * [缓存](#缓存)
         * [查找表](#查找表)
@@ -22,6 +20,10 @@
         * [分布式锁实现](#分布式锁实现)
         * [排行榜](#排行榜)
         * [其它](#其它)
+    * [四、数据结构](#四数据结构)
+        * [对象编码](#对象编码)
+        * [字典](#字典)
+        * [跳跃表](#跳跃表)
     * [五、Redis 与 Memcached](#五redis-与-memcached)
         * [数据类型](#数据类型)
         * [数据持久化](#数据持久化)
@@ -35,9 +37,6 @@
     * [九、事务](#九事务)
         * [Lua 脚本](#lua-脚本)
     * [十、事件](#十事件)
-        * [文件事件](#文件事件)
-        * [时间事件](#时间事件)
-        * [事件的调度与执行](#事件的调度与执行)
         * [单线程为什么快](#单线程为什么快)
     * [十一、复制](#十一复制)
         * [连接过程](#连接过程)
@@ -55,8 +54,9 @@
         * [A3 单线程的吞吐量和 CPU 时间](#a3-单线程的吞吐量和-cpu-时间)
         * [A4 Redis Cluster](#a4-redis-cluster)
         * [A5 Sentinel 故障转移](#a5-sentinel-故障转移)
-        * [A6 SDS 的空间预分配](#a6-sds-的空间预分配)
-        * [A7 热点计数](#a7-热点计数)
+        * [A6 热点计数](#a6-热点计数)
+        * [A7 Bitmap 的签到和日活](#a7-bitmap-的签到和日活)
+        * [A8 HyperLogLog 的误差和内存](#a8-hyperloglog-的误差和内存)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -207,66 +207,94 @@ OK
 6) "92"
 ```
 
-## 三、数据结构
+### BITMAP
 
-### 对象编码
+位图（Bitmap）不是一种独立的数据类型，而是 STRING 上按位读写的一组命令：值仍然是 SDS 中的字节数组，TYPE 返回 string，第 offset 位表示整数 offset 是否在集合中。STRING 最大 512 MB，所以 offset 的范围是 0～2<sup>32</sup> − 1。
 
-同一种数据类型会根据元素的数量和大小选择不同的底层结构，称为编码，可以用 OBJECT ENCODING 查看。元素少时使用 listpack，它把所有元素连续地存放在一块内存中，节省内存，查找时虽然要逐个比较，但元素很少时并不慢；元素增多后转换为查找更快的结构。以下是在 Redis 7.4 上用默认配置验证的结果：
+它适合成员能编号为 0～N 的整数、并且只需要记录“是或否”的场景，例如某个用户某天是否签到、某个用户今天是否访问过。主要有以下命令：
 
-| 类型 | 元素少时 | 超过阈值后 | 阈值 |
-| --- | --- | --- | --- |
-| STRING | int（整数）、embstr | raw | 44 字节 |
-| LIST | listpack | quicklist（多个 listpack 组成的链表） | 单个 listpack 超过 8 KB |
-| HASH | listpack | hashtable | 512 个字段，或者有值超过 64 字节 |
-| SET | intset（全是整数）、listpack | hashtable | 整数 512 个，其它 128 个 |
-| ZSET | listpack | skiplist（跳跃表 + 字典） | 128 个成员，或者有成员超过 64 字节 |
+- SETBIT key offset 0|1：设置一位并返回这一位原来的值，字符串不够长时自动扩展，新增的位为 0；
+- GETBIT key offset：读取一位，超出字符串长度的位当作 0；
+- BITCOUNT key [start end [BYTE|BIT]]：统计值为 1 的位数，范围默认按字节，Redis 7.0 起可以按位指定；
+- BITPOS key 0|1：查找第一个 0 或 1 所在的位置；
+- BITOP AND|OR|XOR|NOT destkey key [key ...]：对多个位图做位运算，结果写入 destkey；
+- BITFIELD：把一段连续的位当作整数读写，例如 GET u28 0 把前 28 位读成一个无符号整数，也可以用 INCRBY 把每几位当作一个小计数器。
 
-例如一个 HASH 有 512 个字段时编码为 listpack，再写入一个字段就变为 hashtable。ZSET 转换后同时使用跳跃表和字典：字典按成员查分数，跳跃表按分数排序和范围查询。
+#### 1. 签到
 
-字符串的内容保存在简单动态字符串（Simple Dynamic String, SDS）中，它在字符数组前面记录了已用的长度 len 和分配的容量 alloc：
+每个用户每月一个键 sign:{用户 ID}:{年月}，第 n 号签到就把 offset n − 1 置为 1，一个月最多 31 位，只占 4 个字节。下图是用户 1001 十月 1 号到 28 号的签到情况：
 
-- 取长度是 O(1)，不用像 C 字符串那样遍历到 \0；
-- 按 len 而不是 \0 判断结尾，可以保存任意二进制数据；
-- 追加时空间不够才重新分配，并且多分配一些：新长度小于 1 MB 时分配新长度的 2 倍，否则多分配 1 MB，连续追加时不用每次都重新分配内存。
+<div align="center"> <img src="pics/redis-bitmap-sign.png" width="760px"/> </div><br>
 
-例如对 60 字节、没有剩余空间的字符串再 APPEND 1 字节，SDS 按 2 × 61 = 122 字节申请（内存分配器向上取整为 128 字节），追加后剩余 63 字节；对 2040000 字节的字符串追加后剩余约 1 MB（Redis 7.4 实测，见[附录 A6](#a6-sds-的空间预分配)）。embstr 编码把对象头和 SDS 放在同一块内存中，只需分配一次，44 字节的上限正好让两者一起放进 64 字节；它是只读的，APPEND 等修改会先把它转为 raw。
+```text
+> setbit sign:1001:202610 27 1          -- 28 号签到，返回原来的值 0
+(integer) 0
+> setbit sign:1001:202610 27 1          -- 重复签到，返回 1
+(integer) 1
+> getbit sign:1001:202610 3             -- 4 号是否签到
+(integer) 0
+> bitcount sign:1001:202610             -- 本月签到天数
+(integer) 23
+> bitpos sign:1001:202610 0             -- 第一次漏签的位置
+(integer) 3
+> bitfield sign:1001:202610 get u28 0   -- 1～28 号的 28 位
+1) (integer) 251606975
+```
 
-### 字典
+SETBIT 返回 1 说明今天已经签过，可以据此避免重复发放签到奖励。
 
-键空间、HASH 和 SET 的 hashtable 编码、ZSET 中按成员查分数的部分，都是用字典（dict）实现的。字典是一个哈希表，用拉链法解决哈希冲突：桶的数量是 2 的幂，键的哈希值与桶数减 1 做位与得到桶的下标，落在同一个桶的键用链表连起来。
+连续签到天数用 BITFIELD 一次读出 1 号到今天的位。每个字节从最高位开始编号，所以今天对应整数的最低位，在应用中从最低位开始数连续的 1，遇到 0 停止：251606975 的二进制末尾是 0111111，截至 28 号连续签到 6 天。“连续签到 7 天送优惠券”就是判断这个数是否达到 7，跨月时还要接着读上个月的键。
 
-键越来越多时链表变长，查找变慢，需要扩大桶数组并把所有键重新放一遍，称为 rehash。Redis 用一个线程执行命令，一个有几百万个键的字典一次性 rehash 会让服务器停顿很久，所以采用渐进式 rehash：
+内存方面，每人一年 365 位只有 46 字节，但每个键还有键名、对象头和字典项的开销。每人每年一个键时，实测平均每个键约 150 字节，1 亿用户一年约 15 GB，其中位图本身只有 4.6 GB（Redis 7.4 实测，见[附录 A7](#a7-bitmap-的签到和日活)）。
 
-- 字典中有两张哈希表 ht_table[0] 和 ht_table[1]，平时只用 ht_table[0]；
-- 键的数量达到桶数时扩容，ht_table[1] 的大小为不小于键数加 1 的 2 的幂；有子进程在执行 BGSAVE 或 AOF 重写时，为了减少写时复制的内存页，要达到桶数的 4 倍才扩容；
-- 键的数量不超过桶数的 1/8 时缩容，过程相同；
-- rehashidx 记录迁移到了哪个桶，之后每次对这个字典增删改查，都顺便把一个桶中的所有键迁移到 ht_table[1]，serverCron 也会定期花不超过 1 毫秒继续迁移；
-- 迁移期间新写入的键只放入 ht_table[1]，查找和删除时两张表都可能要查；
-- 全部迁移完成后，ht_table[1] 变为 ht_table[0]，rehashidx 恢复为 -1。
+#### 2. 日活统计
 
-<div align="center"> <img src="pics/redis-rehash.png" width="760px"/> </div><br>
+用户 ID 是从 1 开始连续分配的整数时，也可以反过来每天一个键 active:{日期}，offset 是用户 ID，所有用户当天的状态放在同一个位图中。100 万个用户只需要 10<sup>6</sup> / 8 = 125000 字节，约 122 KB：
 
-以上依据 Redis 7.4 的 dict.c。Redis 7.0 之前的两张表是 dict 中的 dictht ht[2]，渐进式 rehash 的过程相同。
+```text
+> setbit active:20261028 1000 1         -- 用户 1000 今天访问过
+(integer) 0
+> bitcount active:20261028              -- 当天活跃人数
+(integer) 369445
+> bitop and active:7d:and active:20261022 active:20261023 ... active:20261028
+(integer) 125001
+> bitcount active:7d:and                -- 7 天每天都活跃的人数
+(integer) 100184
+> bitop or active:7d:or active:20261022 active:20261023 ... active:20261028
+(integer) 125001
+> bitcount active:7d:or                 -- 7 天内活跃过的人数（周活）
+(integer) 925445
+```
 
-### 跳跃表
+BITOP 返回结果的字节数。100 万用户的位图上，BITCOUNT 的服务器执行时间约 15 微秒，对 7 天的位图做 BITOP AND 约 84 微秒；同一天的 36.9 万个活跃用户如果用 SET 保存，要占 14 MB（Redis 7.4 实测，见[附录 A7](#a7-bitmap-的签到和日活)）。
 
-跳跃表（skiplist）是有序集合在成员较多时的底层结构，它在一条有序链表上增加了多层索引。
+签到也可以这样存，每天一个键记录所有用户。两种键各有所长：按用户分键，查一个人一个月的情况只读一个键；按日期分键，统计一天的人数、多天的交集和并集只需一两条命令，并且没有大量小键的开销，1 亿用户一年是 365 × 12.5 MB ≈ 4.6 GB。
 
-最底层是包含所有成员、按分值排序的链表。每个节点插入时随机决定层数：以 1/4 的概率升高一层，最多 32 层。所以大约每 4 个节点有 1 个出现在第 2 层，每 16 个节点有 1 个出现在第 3 层，平均每个节点约 1.33 个指针。
+#### 3. 用户 ID 稀疏
 
-查找时从最高层开始向右走，下一个节点比目标大时下降一层，直到最底层。每层平均只走几步，查找、插入和删除的期望时间复杂度都是 O(logN)。下图演示了查找 26 的过程。
+SETBIT 会把字符串扩展到 offset 所在的字节，中间的内存一次分配完。用户 ID 从 1 亿开始时，第一个用户就要分配 12.5 MB；offset 为 40 亿时要分配 500 MB，这次 SETBIT 耗时约 100 毫秒，之后对它执行一次 BITCOUNT 约 92 毫秒，这期间服务器不能处理其它命令。64 位的雪花 ID 超过了 2<sup>32</sup> − 1，根本不能直接作为 offset。
 
-<div align="center"> <img src="pics/redis-skiplist.png" width="760px"/> </div><br>
+解决方案：
 
-与红黑树等平衡树相比，跳跃表有以下优点：
+- 先把 ID 转换成从 0 开始的连续序号，例如减去起始值，或者为用户另外分配一个自增序号；
+- 位图很大时按序号分段拆成多个键，键名为序号 / M，offset 为序号 mod M，避免单个大键；
+- 活跃的 ID 很少时改用 SET 或 HyperLogLog：1000 个分布在 1 亿以内的 ID，位图要 12.5 MB，SET 只要 30 KB。按实测每个整数成员在 SET 中约占 38 字节（304 位），活跃 ID 不到 ID 范围的 1/300 时 SET 更省内存。
 
-- 插入和删除只需要修改每一层前驱节点的指针，不需要旋转等操作来维护平衡；
-- 范围查询方便，找到起点后沿最底层链表向后遍历即可，ZRANGEBYSCORE 就是这样实现的；
-- 实现和调试更简单。
+#### 4. 与布隆过滤器的区别
 
-Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了多少个节点，查找时把经过的跨度相加就得到排名，所以 ZRANK 也是 O(logN)。
+Bitmap 与布隆过滤器的区别在于映射方式：Bitmap 一个整数对应一位，结果是精确的，但成员必须能编号成范围不大的整数；布隆过滤器用多个哈希函数把任意字符串映射到位数组的多个位置，可以保存 URL、手机号这类无法编号的 Key，代价是存在误判，见 [缓存穿透](缓存.md#缓存穿透)。所以 ID 是自增整数时，可以直接用 Bitmap 记录哪些 ID 存在来拦截不存在的请求；其它 Key 需要布隆过滤器，它的位数组可以存放在 Redis 的位图中，由客户端算出各个位置后用 SETBIT 写入、GETBIT 检查。
 
-## 四、使用场景
+### HyperLogLog 与 GEO
+
+HyperLogLog（HLL）用于估计一个集合中不同元素的个数，例如页面的独立访客数（Unique Visitor, UV）：PFADD 添加元素，PFCOUNT 返回估计值，PFMERGE 合并多个 HLL，例如把 7 天的 UV 合并成周 UV。
+
+它不保存元素本身：每个元素的 64 位哈希值按低 14 位分到 16384 个寄存器之一，寄存器用 6 位记录剩余位中第一个 1 出现位置的最大值。连续的 0 越长的哈希值越少见，这些最大值就大致反映了不同元素的个数。寄存器共 16384 × 6 位 = 12 KB，这就是每个键占用内存的上限，标准误差为 1.04 / √16384 ≈ 0.81%。代价是结果只是估计值，也不能判断某个元素是否存在或者取出元素。
+
+例如 100 万个不同的元素，PFCOUNT 返回 999674（误差 −0.03%），HLL 占 12 KB，同样的元素用 SET 保存要 30 MB；30 组各 100 万个元素的误差均方根为 0.80%，最大为 2.0%（Redis 7.4 实测，见[附录 A8](#a8-hyperloglog-的误差和内存)）。
+
+GEO 用于“附近的门店”这类查询：GEOADD 保存经纬度，GEOSEARCH 查找某个点一定半径或矩形内的成员并按距离排序，GEODIST 计算两点间的距离。它底层就是一个 ZSET，经纬度交错编码成 52 位的 Geohash 整数作为分值，相邻的点分值相近，查询时只需查找覆盖查询范围的 9 个区域对应的分值区间；代价是距离和范围有误差，官方文档说明最坏可达 0.5%。
+
+## 三、使用场景
 
 ### 计数器
 
@@ -274,13 +302,13 @@ Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了�
 
 命令在服务器上原子执行，多个客户端同时加 1 不会丢失更新；数据在内存中，也适合这种频繁读写的场景。
 
-如果直接在数据库中计数，所有请求都要更新同一行，行锁让这些更新只能一个接一个地执行。对同一行执行 UPDATE counter SET cnt = cnt + 1，MySQL 用 1、8、50 个连接时每秒都只有 5000～7000 次；Redis 的 INCR 用 50 个连接每秒约 10 万次（MySQL 8.0、Redis 7.4 实测，见[附录 A7](#a7-热点计数)）。
+如果直接在数据库中计数，所有请求都要更新同一行，行锁让这些更新只能一个接一个地执行。对同一行执行 UPDATE counter SET cnt = cnt + 1，MySQL 用 1、8、50 个连接时每秒都只有 5000～7000 次；Redis 的 INCR 用 50 个连接每秒约 10 万次（MySQL 8.0、Redis 7.4 实测，见[附录 A6](#a6-热点计数)）。
 
 常用的做法是在 Redis 中计数，再定期把计数写回数据库。单个计数仍然太热时，可以拆成多个键，例如 views:1024:0～views:1024:9，每次随机给其中一个加 1，读取时求和。点赞这类每个用户只能计一次的计数，还要记录点过赞的用户，见下文的 [点赞功能](#点赞功能)。
 
 ### 缓存
 
-将热点数据放到内存中，设置内存的最大使用量以及淘汰策略来保证缓存的命中率，见 [缓存](缓存.md)。
+将热点数据放到内存中，设置内存的最大使用量以及淘汰策略来保证缓存的命中率。缓存与数据库的一致性，以及缓存穿透、击穿和雪崩的处理，见 [缓存](缓存.md)。
 
 ### 查找表
 
@@ -325,6 +353,58 @@ ZREVRANK rank:likes article:1001                   -- 第几名，从 0 开始
 ### 其它
 
 Set 可以实现交集、并集等操作，从而实现共同好友等功能。
+
+签到、日活这类只需记录“是或否”的统计可以用 Bitmap，独立访客数这类允许少量误差的去重计数可以用 HyperLogLog，见 [BITMAP](#bitmap) 和 [HyperLogLog 与 GEO](#hyperloglog-与-geo)。
+
+## 四、数据结构
+
+### 对象编码
+
+同一种数据类型会根据元素的数量和大小选择不同的底层结构，称为编码，可以用 OBJECT ENCODING 查看。元素少时使用 listpack，它把所有元素连续地存放在一块内存中，节省内存，查找时虽然要逐个比较，但元素很少时并不慢；元素增多后转换为查找更快的结构。以下是在 Redis 7.4 上用默认配置验证的结果：
+
+| 类型 | 元素少时 | 超过阈值后 | 阈值 |
+| --- | --- | --- | --- |
+| STRING | int（整数）、embstr | raw | 44 字节 |
+| LIST | listpack | quicklist（多个 listpack 组成的链表） | 单个 listpack 超过 8 KB |
+| HASH | listpack | hashtable | 512 个字段，或者有值超过 64 字节 |
+| SET | intset（全是整数）、listpack | hashtable | 整数 512 个，其它 128 个 |
+| ZSET | listpack | skiplist（跳跃表 + 字典） | 128 个成员，或者有成员超过 64 字节 |
+
+例如一个 HASH 有 512 个字段时编码为 listpack，再写入一个字段就变为 hashtable。ZSET 转换后同时使用跳跃表和字典：字典按成员查分数，跳跃表按分数排序和范围查询。
+
+Redis 7.0 之前用的是压缩列表（ziplist），每个元素要记录前一个元素的长度，这个长度占 1 或 5 个字节，在中间插入或删除元素时可能让后面的元素依次变长，称为连锁更新；listpack 的每个元素只记录自己的长度，避免了这个问题。
+
+字符串的内容保存在简单动态字符串（Simple Dynamic String, SDS）中，它在字符数组前面记录了已用的长度 len 和分配的容量 alloc：
+
+- 取长度是 O(1)，不用像 C 字符串那样遍历到 \0；
+- 按 len 而不是 \0 判断结尾，可以保存任意二进制数据；
+- 追加时空间不够才重新分配，并且多分配一些：新长度小于 1 MB 时分配新长度的 2 倍，否则多分配 1 MB，连续追加时不用每次都重新分配内存。
+
+embstr 编码把对象头和 SDS 放在同一块内存中，只需分配一次，44 字节的上限正好让两者一起放进 64 字节；它是只读的，APPEND 等修改会先把它转为 raw。追加时实际分配的内存见[进阶：对象编码](Redis%20-%20进阶.md#对象编码)。
+
+### 字典
+
+键空间、HASH 和 SET 的 hashtable 编码、ZSET 中按成员查分数的部分，都是用字典（dict）实现的。字典是一个哈希表，用拉链法解决哈希冲突：桶的数量是 2 的幂，键的哈希值与桶数减 1 做位与得到桶的下标，落在同一个桶的键用链表连起来。
+
+键越来越多时链表变长，查找变慢，需要扩大桶数组并把所有键重新放一遍，称为 rehash。Redis 用一个线程执行命令，一个有几百万个键的字典一次性 rehash 会让服务器停顿很久，所以采用渐进式 rehash：同时保留新旧两张哈希表，每次对字典增删改查时顺便迁移一个桶，把迁移的开销分摊到之后的操作中。两张表的使用规则和扩容、缩容的条件见[进阶：字典](Redis%20-%20进阶.md#字典)。
+
+### 跳跃表
+
+跳跃表（skiplist）是有序集合在成员较多时的底层结构，它在一条有序链表上增加了多层索引。
+
+最底层是包含所有成员、按分值排序的链表。每个节点插入时随机决定层数：以 1/4 的概率升高一层，最多 32 层。所以大约每 4 个节点有 1 个出现在第 2 层，每 16 个节点有 1 个出现在第 3 层，平均每个节点约 1.33 个指针。
+
+查找时从最高层开始向右走，下一个节点比目标大时下降一层，直到最底层。每层平均只走几步，查找、插入和删除的期望时间复杂度都是 O(logN)。下图演示了查找 26 的过程。
+
+<div align="center"> <img src="pics/redis-skiplist.png" width="760px"/> </div><br>
+
+与红黑树等平衡树相比，跳跃表有以下优点：
+
+- 插入和删除只需要修改每一层前驱节点的指针，不需要旋转等操作来维护平衡；
+- 范围查询方便，找到起点后沿最底层链表向后遍历即可，ZRANGEBYSCORE 就是这样实现的；
+- 实现和调试更简单。
+
+Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了多少个节点，查找时把经过的跨度相加就得到排名，所以 ZRANK 也是 O(logN)。
 
 ## 五、Redis 与 Memcached
 
@@ -484,68 +564,7 @@ return n + 1
 
 ## 十、事件
 
-Redis 服务器是一个事件驱动程序。
-
-### 文件事件
-
-服务器通过套接字与客户端或者其它服务器进行通信，文件事件就是对套接字操作的抽象。
-
-Redis 基于 Reactor 模式开发了自己的网络事件处理器，使用 I/O 多路复用程序来同时监听多个套接字，并将到达的事件传送给文件事件分派器，分派器会根据套接字产生的事件类型调用相应的事件处理器。
-
-<div align="center"> <img src="pics/redis-file-event.png" width="760px"/> </div><br>
-
-### 时间事件
-
-服务器有一些操作需要在给定的时间点执行，时间事件是对这类定时操作的抽象。
-
-时间事件又分为：
-
-- 定时事件：是让一段程序在指定的时间之内执行一次；
-- 周期性事件：是让一段程序每隔指定时间就执行一次。
-
-Redis 将所有时间事件都放在一个无序链表中，通过遍历整个链表查找出已到达的时间事件，并调用相应的事件处理器。
-
-### 事件的调度与执行
-
-服务器需要不断监听文件事件的套接字才能得到待处理的文件事件，但是不能一直监听，否则时间事件无法在规定的时间内执行，因此监听时间应该根据距离现在最近的时间事件来决定。
-
-事件调度与执行由 aeProcessEvents 函数负责，伪代码如下：
-
-```python
-def aeProcessEvents():
-    # 获取到达时间离当前时间最接近的时间事件
-    time_event = aeSearchNearestTimer()
-    # 计算最接近的时间事件距离到达还有多少毫秒
-    remaind_ms = time_event.when - unix_ts_now()
-    # 如果事件已到达，那么 remaind_ms 的值可能为负数，将它设为 0
-    if remaind_ms < 0:
-        remaind_ms = 0
-    # 根据 remaind_ms 的值，创建 timeval
-    timeval = create_timeval_with_ms(remaind_ms)
-    # 阻塞并等待文件事件产生，最大阻塞时间由传入的 timeval 决定
-    aeApiPoll(timeval)
-    # 处理所有已产生的文件事件
-    processFileEvents()
-    # 处理所有已到达的时间事件
-    processTimeEvents()
-```
-
-将 aeProcessEvents 函数置于一个循环里面，加上初始化和清理函数，就构成了 Redis 服务器的主函数，伪代码如下：
-
-```python
-def main():
-    # 初始化服务器
-    init_server()
-    # 一直处理事件，直到服务器关闭为止
-    while server_is_not_shutdown():
-        aeProcessEvents()
-    # 服务器关闭，执行清理操作
-    clean_server()
-```
-
-从事件处理的角度来看，服务器运行流程如下：
-
-<div align="center"> <img src="pics/redis-event-loop.png" width="600px"/> </div><br>
+Redis 服务器是一个事件驱动程序：主线程在一个循环中用 I/O 多路复用等待套接字上的读写事件（文件事件），处理完这些事件后再执行到期的定时任务（时间事件）。事件的分类和调度过程见[进阶：事件](Redis%20-%20进阶.md#十事件)。
 
 ### 单线程为什么快
 
@@ -829,22 +848,7 @@ master_port:6401
 NOREPLICAS Not enough good replicas to write.
 ```
 
-### A6 SDS 的空间预分配
-
-Redis 7.4.1（内存分配器为 libc），启动时加 --enable-debug-command yes，用 DEBUG SDSLEN 查看值的 len、avail（剩余空间）和实际分配的内存：
-
-```text
-SET s（50 字节）              val_sds_len:50, val_sds_avail:10, val_zmalloc: 64       encoding raw
-APPEND s 10 字节              val_sds_len:60, val_sds_avail:0, val_zmalloc: 64
-APPEND s 1 字节               val_sds_len:61, val_sds_avail:63, val_zmalloc: 128
-SET big（2000000 字节）       val_sds_len:2000000, val_sds_avail:31606, val_zmalloc: 2031616
-APPEND big 40000 字节         val_sds_len:2040000, val_sds_avail:1072950, val_zmalloc: 3112960
-SET 44 字节 encoding embstr，SET 45 字节 encoding raw
-```
-
-对应的源码在 sds.c 的 _sdsMakeRoomFor()：剩余空间足够时直接返回；否则新长度小于 SDS_MAX_PREALLOC（1 MB）时乘以 2，不小于时加上 1 MB。SET 50 字节时的 10 字节、SET 大字符串时的 31606 字节剩余空间来自内存分配器的取整和协议缓冲区，不是预分配。
-
-### A7 热点计数
+### A6 热点计数
 
 MySQL 8.0.44（innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1），Redis 7.4.1，Apple M1 Pro。MySQL 用多个进程同时执行自动提交的 UPDATE counter SET cnt = cnt + 1 WHERE id = 1，最后核对 cnt；Redis 用 redis-benchmark 对同一个键执行 INCR：
 
@@ -859,6 +863,94 @@ $ redis-benchmark -p 6395 -c <连接数> -n 200000 --csv incr counter:1
 50 个连接  "incr counter:1","101368.47",...
 ```
 
+### A7 Bitmap 的签到和日活
+
+Redis 7.4.1（内存分配器为 libc），键加了实验用的前缀，下面的输出中已去掉。内存是写入前后 INFO memory 中 used_memory 的差，服务器执行时间取自 SLOWLOG（slowlog-log-slower-than 设为 0）。
+
+签到的例子先对 1～27 号中签到的日期执行 SETBIT，再执行正文中的命令：
+
+```text
+> setbit sign:1001:202610 27 1
+0
+> setbit sign:1001:202610 27 1
+1
+> getbit sign:1001:202610 3
+0
+> bitcount sign:1001:202610
+23
+> bitpos sign:1001:202610 0
+3
+> bitfield sign:1001:202610 get u28 0
+251606975
+> strlen sign:1001:202610
+4
+> type sign:1001:202610
+string
+> setbit t 0 1 之后 get t
+"\x80"
+> setbit t 7 1 之后 get t
+"\x81"
+```
+
+每人每年一个键：对 10 万个键 sign:{用户 ID}:2026 各执行 SETBIT 364 1：
+
+```text
+STRLEN 46，MEMORY USAGE 136，10 万个键 used_memory 增加 15433696，平均每个键 154 字节
+```
+
+日活：用户 ID 为 1～100 万，模拟 10 月 22 日～28 日 7 天，每 10 个用户有 1 个每天都活跃，其余用户每天以 30% 的概率活跃，用 Python 集合计算的真实值核对：
+
+```text
+active:20261028 STRLEN 125001，MEMORY USAGE 131144，7 个键 used_memory 增加 903024
+BITCOUNT active:20261028 -> 369445（真实值 369445），服务器执行 15 us
+BITOP AND（7 个键） -> BITCOUNT 100184（真实值 100184），BITOP 服务器执行 84 us
+BITOP OR（7 个键） -> BITCOUNT 925445（真实值 925445）
+同一天的 369445 个用户 ID 用 SADD 写入 SET：used_memory 增加 14120832，编码 hashtable
+```
+
+用户 ID 稀疏：
+
+```text
+SETBIT offset 100000000：客户端耗时 1.3 ms，STRLEN 12500001，used_memory 增加 12501072
+SETBIT offset 4000000000：客户端耗时 99.4 ms，STRLEN 500000001，used_memory 增加 500007296
+  对它执行 BITCOUNT：服务器执行 91777 us
+SETBIT offset 4294967295：客户端耗时 74.6 ms，STRLEN 536870912，used_memory 增加 536887680
+SETBIT offset 4294967296 -> ERR bit offset is not an integer or out of range
+1000 个随机 ID 分布在 1～1 亿：位图 used_memory 增加 12501056，SET 增加 30048（编码 hashtable）
+```
+
+### A8 HyperLogLog 的误差和内存
+
+Redis 7.4.1，向一个 HLL 写入 n 个不同的字符串 user:0～user:{n − 1}：
+
+```text
+1000 个不同元素：PFCOUNT 1007，误差 +0.70%，STRLEN 1910，MEMORY USAGE 2616
+100000 个不同元素：PFCOUNT 99471，误差 -0.53%，STRLEN 12304，MEMORY USAGE 12856
+1000000 个不同元素：PFCOUNT 999674，误差 -0.03%，STRLEN 12304，MEMORY USAGE 12856
+同样 100 万个 user:i 用 SET 保存：used_memory 增加 30080144
+```
+
+元素少时 STRLEN 为 1910 字节，是稀疏编码；转为密集编码后是 12288 字节的寄存器加 16 字节的头部。再写入 30 组、每组 100 万个不同的字符串：
+
+```text
+30 组误差(%) [1.41, 0.33, 0.19, -0.7, -0.19, -0.02, 0.84, 0.73, -1.02, -0.42, 0.59, -1.79, 0.32, -0.71, -0.48, -0.25, 0.25, 0.72, 0.57, 1.29, -0.35, 0.06, -0.17, 0.33, -0.63, 1.07, -0.37, 0.23, -1.05, -2.02]
+均方根 0.80%，绝对值最大 2.02%，绝对值不超过 0.81% 的组数 22
+```
+
+GEO 的键类型：
+
+```text
+> geoadd shops 120.1551 30.2741 shop:1 120.1620 30.2799 shop:2 120.2100 30.2460 shop:3
+3
+> type shops
+zset
+> geosearch shops fromlonlat 120.1560 30.2750 byradius 2 km asc withdist
+shop:1
+0.1321
+shop:2
+0.7932
+```
+
 ## 参考资料
 
 - Carlson J L. Redis in Action [M]. Manning, 2013.
@@ -871,6 +963,12 @@ $ redis-benchmark -p 6395 -c <连接数> -n 200000 --csv incr counter:1
 - [Key eviction | Redis](https://redis.io/docs/latest/develop/reference/eviction/)
 - [EXPIRE | Redis](https://redis.io/docs/latest/commands/expire/)
 - [Redis Streams](https://redis.io/docs/latest/develop/data-types/streams/)
+- [Redis bitmaps](https://redis.io/docs/latest/develop/data-types/strings/bitmaps/)
+- [SETBIT | Redis](https://redis.io/docs/latest/commands/setbit/)
+- [BITCOUNT | Redis](https://redis.io/docs/latest/commands/bitcount/)
+- [BITFIELD | Redis](https://redis.io/docs/latest/commands/bitfield/)
+- [HyperLogLog | Redis](https://redis.io/docs/latest/develop/data-types/probabilistic/hyperloglogs/)
+- [GEOADD | Redis](https://redis.io/docs/latest/commands/geoadd/)
 - [Redis: Scale with Redis Cluster](https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/)
 - [High availability with Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/)
 - [Redis replication](https://redis.io/docs/latest/operate/oss_and_stack/management/replication/)
@@ -880,3 +978,4 @@ $ redis-benchmark -p 6395 -c <连接数> -n 200000 --csv incr counter:1
 - [Redis 7.4.1 源码 dict.c](https://github.com/redis/redis/blob/7.4.1/src/dict.c)
 - [Redis 7.4.1 源码 t_zset.c](https://github.com/redis/redis/blob/7.4.1/src/t_zset.c)
 - [Redis 7.4.1 源码 sds.c](https://github.com/redis/redis/blob/7.4.1/src/sds.c)
+- [Redis 7.4.1 源码 hyperloglog.c](https://github.com/redis/redis/blob/7.4.1/src/hyperloglog.c)
