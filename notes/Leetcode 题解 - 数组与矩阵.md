@@ -24,7 +24,7 @@
 
 [Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/move-zeroes/description/)
 
-```html
+```text
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
 ```
 
@@ -48,7 +48,7 @@ public void moveZeroes(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [力扣](https://leetcode-cn.com/problems/reshape-the-matrix/description/)
 
-```html
+```text
 Input:
 nums =
 [[1,2],
@@ -103,7 +103,7 @@ public int findMaxConsecutiveOnes(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
 
-```html
+```text
 [
    [ 1,  5,  9],
    [10, 11, 13],
@@ -127,11 +127,11 @@ public boolean searchMatrix(int[][] matrix, int target) {
 
 ## 5. 有序矩阵的 Kth Element
 
-378\. Kth Smallest Element in a Sorted Matrix ((Medium))
+378\. Kth Smallest Element in a Sorted Matrix (Medium)
 
 [Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/) / [力扣](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
 
-```html
+```text
 matrix = [
   [ 1,  5,  9],
   [10, 11, 13],
@@ -172,7 +172,7 @@ public int kthSmallest(int[][] matrix, int k) {
     int m = matrix.length, n = matrix[0].length;
     PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
     for(int j = 0; j < n; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
-    for(int i = 0; i < k - 1; i++) { // 小根堆，去掉 k - 1 个堆顶元素，此时堆顶元素就是第 k 的数
+    for(int i = 0; i < k - 1; i++) { // 小根堆，去掉 k - 1 个堆顶元素，此时堆顶元素就是第 k 小的数
         Tuple t = pq.poll();
         if(t.x == m - 1) continue;
         pq.offer(new Tuple(t.x + 1, t.y, matrix[t.x + 1][t.y]));
@@ -199,12 +199,7 @@ class Tuple implements Comparable<Tuple> {
 
 [Leetcode](https://leetcode.com/problems/set-mismatch/description/) / [力扣](https://leetcode-cn.com/problems/set-mismatch/description/)
 
-```html
-Input: nums = [1,2,2,4]
-Output: [2,3]
-```
-
-```html
+```text
 Input: nums = [1,2,2,4]
 Output: [2,3]
 ```
@@ -285,7 +280,7 @@ public int findDuplicate(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [力扣](https://leetcode-cn.com/problems/beautiful-arrangement-ii/description/)
 
-```html
+```text
 Input: n = 3, k = 2
 Output: [1, 3, 2]
 Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.
@@ -315,7 +310,7 @@ public int[] constructArray(int n, int k) {
 
 [Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [力扣](https://leetcode-cn.com/problems/degree-of-an-array/description/)
 
-```html
+```text
 Input: [1,2,2,3,1,4,2]
 Output: 6
 ```
@@ -356,7 +351,7 @@ public int findShortestSubArray(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/) / [力扣](https://leetcode-cn.com/problems/toeplitz-matrix/description/)
 
-```html
+```text
 1234
 5123
 9512
@@ -396,7 +391,7 @@ private boolean check(int[][] matrix, int expectValue, int row, int col) {
 
 [Leetcode](https://leetcode.com/problems/array-nesting/description/) / [力扣](https://leetcode-cn.com/problems/array-nesting/description/)
 
-```html
+```text
 Input: A = [5,4,0,3,1,6,2]
 Output: 4
 Explanation:
@@ -432,7 +427,7 @@ public int arrayNesting(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/max-chunks-to-make-sorted/description/) / [力扣](https://leetcode-cn.com/problems/max-chunks-to-make-sorted/description/)
 
-```html
+```text
 Input: arr = [1,0,2,3,4]
 Output: 4
 Explanation:
@@ -505,7 +500,7 @@ Input: [3, 2, 1]    Output: [1, 2, 3]
 
 ```text
 1 5 8 4 7 6 5 3 1
-      i       j
+      i     j
 交换：1 5 8 5 7 6 4 3 1
 反转：1 5 8 5 1 3 4 6 7
 ```
