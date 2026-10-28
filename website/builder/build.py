@@ -153,7 +153,7 @@ def build(optimize=True):
         homepage = homepage.replace('width="200px"', 'class="site-logo" width="200px"', 1)
         (dist / 'README.md').write_text('# CS-Notes\n\n' + homepage)
         note_paths = ['/' + str(p.relative_to(ROOT).with_suffix('')) for p in sorted((ROOT / 'notes').glob('*.md'))]
-        sidebar = ['- [首页](/)', '- [面试高频问题](/notes/面试高频问题)', '']
+        sidebar = ['- [首页](/)', '']
         for line in homepage.splitlines():
             if line.startswith('## '):
                 label = re.sub(r':[a-z0-9_]+:', '', line[3:]).strip()
