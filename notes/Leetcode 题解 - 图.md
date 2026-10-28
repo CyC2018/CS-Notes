@@ -21,7 +21,7 @@
 
 [Leetcode](https://leetcode.com/problems/is-graph-bipartite/description/) / [力扣](https://leetcode-cn.com/problems/is-graph-bipartite/description/)
 
-```html
+```text
 Input: [[1,3], [0,2], [1,3], [0,2]]
 Output: true
 Explanation:
@@ -33,7 +33,7 @@ The graph looks like this:
 We can divide the vertices into two groups: {0, 2} and {1, 3}.
 ```
 
-```html
+```text
 Example 2:
 Input: [[1,2,3], [0,2], [0,1,3], [0,2]]
 Output: false
@@ -82,12 +82,12 @@ private boolean isBipartite(int curNode, int curColor, int[] colors, int[][] gra
 
 [Leetcode](https://leetcode.com/problems/course-schedule/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule/description/)
 
-```html
+```text
 2, [[1,0]]
 return true
 ```
 
-```html
+```text
 2, [[1,0],[0,1]]
 return false
 ```
@@ -142,7 +142,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
 
 [Leetcode](https://leetcode.com/problems/course-schedule-ii/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule-ii/description/)
 
-```html
+```text
 4, [[1,0],[2,0],[3,1],[3,2]]
 There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
 ```
@@ -207,7 +207,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 
 [Leetcode](https://leetcode.com/problems/redundant-connection/description/) / [力扣](https://leetcode-cn.com/problems/redundant-connection/description/)
 
-```html
+```text
 Input: [[1,2], [1,3], [2,3]]
 Output: [2,3]
 Explanation: The given undirected graph will be like this:
