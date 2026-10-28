@@ -7,11 +7,11 @@
         * [继承 Thread 类](#继承-thread-类)
         * [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
     * [二、基础线程机制](#二基础线程机制)
-        * [Executor](#executor)
-        * [ThreadPoolExecutor](#threadpoolexecutor)
         * [Daemon](#daemon)
         * [sleep()](#sleep)
         * [yield()](#yield)
+        * [Executor](#executor)
+        * [ThreadPoolExecutor](#threadpoolexecutor)
     * [三、中断](#三中断)
         * [InterruptedException](#interruptedexception)
         * [interrupted()](#interrupted)
@@ -81,6 +81,8 @@
 - 继承 Thread 类。
 
 实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以理解为任务是通过线程驱动从而执行的。
+
+这里的线程都是平台线程，每个对应一个操作系统线程。JDK 21 的虚拟线程由 JVM 调度到少量平台线程上运行，见[协程与虚拟线程](计算机操作系统%20-%20进程管理.md#5-协程)。
 
 ### 实现 Runnable 接口
 
@@ -156,6 +158,49 @@ public static void main(String[] args) {
 - 类可能只要求可执行就行，继承整个 Thread 类开销过大。
 
 ## 二、基础线程机制
+
+### Daemon
+
+守护线程是程序运行时在后台提供服务的线程，不属于程序中不可或缺的部分。
+
+当所有非守护线程结束时，程序也就终止，同时会杀死所有守护线程。
+
+main() 属于非守护线程。
+
+在线程启动之前使用 setDaemon() 方法可以将一个线程设置为守护线程。
+
+```java
+public static void main(String[] args) {
+    Thread thread = new Thread(new MyRunnable());
+    thread.setDaemon(true);
+}
+```
+
+### sleep()
+
+Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
+
+sleep() 可能会抛出 InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
+
+```java
+public void run() {
+    try {
+        Thread.sleep(3000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+### yield()
+
+对静态方法 Thread.yield() 的调用表示当前线程愿意让出 CPU，可以切换给其它线程来执行。该方法只是对线程调度器的一个提示，调度器可以忽略它，Javadoc 也说明很少有适合使用它的场合，主要用于调试和测试。
+
+```java
+public void run() {
+    Thread.yield();
+}
+```
 
 ### Executor
 
@@ -249,48 +294,62 @@ for (int i = 1; i <= 7; i++) {
 
 估算值只是起点，最终要通过压测确定。上线后监控活跃线程数、队列长度和拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整。
 
-### Daemon
-
-守护线程是程序运行时在后台提供服务的线程，不属于程序中不可或缺的部分。
-
-当所有非守护线程结束时，程序也就终止，同时会杀死所有守护线程。
-
-main() 属于非守护线程。
-
-在线程启动之前使用 setDaemon() 方法可以将一个线程设置为守护线程。
+线程池的核心结构并不复杂，常被要求手写一个简化版：固定数量的工作线程循环从阻塞队列中取任务执行，队列满了或者线程池已经关闭时拒绝新任务。
 
 ```java
-public static void main(String[] args) {
-    Thread thread = new Thread(new MyRunnable());
-    thread.setDaemon(true);
-}
-```
+public class SimplePool {
+    private final BlockingQueue<Runnable> queue;
+    private final List<Thread> workers = new ArrayList<>();
+    private volatile boolean shutdown = false;
 
-### sleep()
+    public SimplePool(int threads, int capacity) {
+        queue = new ArrayBlockingQueue<>(capacity);
+        for (int i = 0; i < threads; i++) {
+            Thread t = new Thread(() -> {
+                // 关闭后也要把队列中剩下的任务执行完再退出
+                while (!shutdown || !queue.isEmpty()) {
+                    Runnable task;
+                    try {
+                        task = queue.poll(100, TimeUnit.MILLISECONDS);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                    if (task == null) {
+                        continue;
+                    }
+                    try {
+                        task.run();
+                    } catch (RuntimeException e) {
+                        // 一个任务抛出异常，不能让工作线程退出
+                        e.printStackTrace();
+                    }
+                }
+            }, "pool-" + i);
+            workers.add(t);
+            t.start();
+        }
+    }
 
-Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
+    public void execute(Runnable task) {
+        if (shutdown || !queue.offer(task)) {
+            throw new RejectedExecutionException("线程池已关闭或队列已满");
+        }
+    }
 
-sleep() 可能会抛出 InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
-
-```java
-public void run() {
-    try {
-        Thread.sleep(3000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+    public void shutdown() {
+        shutdown = true;
     }
 }
 ```
 
-### yield()
+例如 2 个线程执行 4 个任务，其中任务 2 抛出异常，其余 3 个任务仍由这两个线程执行完；关闭之后再提交会被拒绝（JDK 21 实测，见[附录 A6](#a6-简化版线程池)）。
 
-对静态方法 Thread.yield() 的调用表示当前线程愿意让出 CPU，可以切换给其它线程来执行。该方法只是对线程调度器的一个提示，调度器可以忽略它，Javadoc 也说明很少有适合使用它的场合，主要用于调试和测试。
+ThreadPoolExecutor 的结构与它相同，多做了以下几件事：
 
-```java
-public void run() {
-    Thread.yield();
-}
-```
+- 线程不是一开始就全部创建，而是按前面的提交顺序按需创建；
+- 工作线程在 getTask() 中取任务：线程数超过核心线程数时用 poll(keepAliveTime) 等待，超时就退出，否则用 take() 一直等待；
+- 运行状态和线程数保存在同一个 AtomicInteger（ctl）中，两者可以在一次 CAS 中一起修改；
+- 用 execute() 提交的任务抛出异常时，执行它的线程退出，线程池再补一个新线程。
 
 ## 三、中断
 
@@ -2032,6 +2091,57 @@ for (String u : new String[]{"alice", "bob"}) {
 新建线程中读到：bob
 线程池中读到：alice
 ```
+
+### A6 简化版线程池
+
+环境：JDK 21.0.13，Apple M1 Pro。正文中的 SimplePool 加上 awaitTermination()（依次 join 所有工作线程），用下面的代码运行 3 次：
+
+```java
+SimplePool pool = new SimplePool(2, 10);
+for (int i = 1; i <= 4; i++) {
+    int id = i;
+    pool.execute(() -> {
+        if (id == 2) {
+            throw new IllegalStateException("任务 2 出错");
+        }
+        System.out.println("任务 " + id + " 由 " + Thread.currentThread().getName() + " 执行");
+    });
+}
+pool.shutdown();
+try {
+    pool.execute(() -> {});
+} catch (RejectedExecutionException e) {
+    System.out.println("关闭后提交：" + e.getMessage());
+}
+pool.awaitTermination();
+System.out.println("全部完成");
+```
+
+```text
+== run 1
+java.lang.IllegalStateException: 任务 2 出错
+关闭后提交：线程池已关闭或队列已满
+任务 3 由 pool-0 执行
+任务 1 由 pool-1 执行
+任务 4 由 pool-0 执行
+全部完成
+== run 2
+java.lang.IllegalStateException: 任务 2 出错
+关闭后提交：线程池已关闭或队列已满
+任务 1 由 pool-0 执行
+任务 4 由 pool-0 执行
+任务 3 由 pool-1 执行
+全部完成
+== run 3
+java.lang.IllegalStateException: 任务 2 出错
+关闭后提交：线程池已关闭或队列已满
+任务 3 由 pool-1 执行
+任务 4 由 pool-1 执行
+任务 1 由 pool-0 执行
+全部完成
+```
+
+异常的堆栈只保留了第一行。任务执行的先后和线程的分配每次不同，但每次都是 3 个任务完成、关闭后的提交被拒绝。ThreadPoolExecutor 的 ctl、getTask() 中的 poll/take 见 JDK 21 源码 java/util/concurrent/ThreadPoolExecutor.java。
 
 ## 参考资料
 

@@ -9,9 +9,9 @@
         * [适配器模式](#适配器模式)
     * [三、源码分析](#三源码分析)
         * [ArrayList](#arraylist)
+        * [LinkedList](#linkedlist)
         * [Vector](#vector)
         * [CopyOnWriteArrayList](#copyonwritearraylist)
-        * [LinkedList](#linkedlist)
         * [HashMap](#hashmap)
         * [ConcurrentHashMap](#concurrenthashmap)
         * [LinkedHashMap](#linkedhashmap)
@@ -200,74 +200,13 @@ public E remove(int index) {
 
 #### 4. 序列化
 
-ArrayList 基于数组实现，并且具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。
-
-保存元素的数组 elementData 使用 transient 修饰，该关键字声明数组默认不会被序列化。
-
-```java
-transient Object[] elementData; // non-private to simplify nested class access
-```
-
-ArrayList 实现了 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
-
-```java
-private void readObject(java.io.ObjectInputStream s)
-    throws java.io.IOException, ClassNotFoundException {
-    elementData = EMPTY_ELEMENTDATA;
-
-    // Read in size, and any hidden stuff
-    s.defaultReadObject();
-
-    // Read in capacity
-    s.readInt(); // ignored
-
-    if (size > 0) {
-        // be like clone(), allocate array based upon size not capacity
-        ensureCapacityInternal(size);
-
-        Object[] a = elementData;
-        // Read in all elements in the proper order.
-        for (int i=0; i<size; i++) {
-            a[i] = s.readObject();
-        }
-    }
-}
-```
-
-```java
-private void writeObject(java.io.ObjectOutputStream s)
-    throws java.io.IOException{
-    // Write out element count, and any hidden stuff
-    int expectedModCount = modCount;
-    s.defaultWriteObject();
-
-    // Write out size as capacity for behavioural compatibility with clone()
-    s.writeInt(size);
-
-    // Write out all elements in the proper order.
-    for (int i=0; i<size; i++) {
-        s.writeObject(elementData[i]);
-    }
-
-    if (modCount != expectedModCount) {
-        throw new ConcurrentModificationException();
-    }
-}
-```
-
-序列化时需要使用 ObjectOutputStream 的 writeObject() 将对象转换为字节流并输出。而 writeObject() 方法在传入的对象存在 writeObject() 的时候会去反射调用该对象的 writeObject() 来实现序列化。反序列化使用的是 ObjectInputStream 的 readObject() 方法，原理类似。
-
-```java
-ArrayList list = new ArrayList();
-ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-oos.writeObject(list);
-```
+保存元素的数组 elementData 用 transient 修饰，不参与默认的序列化。ArrayList 实现了 writeObject() 和 readObject()，只序列化前 size 个实际存放的元素，数组中空闲的位置不写出；反序列化时按 size 而不是原来的容量分配数组。源码见[进阶：序列化](Java%20容器%20-%20进阶.md#序列化)。
 
 #### 5. Fail-Fast
 
 modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
-在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。代码参考上节序列化中的 writeObject() 方法。
+在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。代码参考[进阶：序列化](Java%20容器%20-%20进阶.md#序列化)中的 writeObject() 方法。
 
 最常见的情况是在 foreach 循环中删除元素。foreach 编译后使用迭代器，list.remove() 改变了 modCount，迭代器下一次调用 next() 时就会抛出异常。应该使用迭代器自己的 remove()，或者 removeIf()：
 
@@ -284,6 +223,38 @@ while (it.hasNext()) {
 list.removeIf(s -> s.equals("a"));
 ```
 
+
+### LinkedList
+
+#### 1. 概览
+
+基于双向链表实现，使用 Node 存储链表节点信息。
+
+```java
+private static class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+}
+```
+
+每个链表存储了 first 和 last 指针：
+
+```java
+transient Node<E> first;
+transient Node<E> last;
+```
+
+<div align="center"> <img src="pics/jcol-linkedlist.png" width="760px"/> </div><br>
+
+#### 2. 与 ArrayList 的比较
+
+ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。ArrayList 和 LinkedList 的区别可以归结为数组和链表的区别：
+
+- 数组支持随机访问，但插入删除的代价很高，需要移动大量元素；
+- 链表不支持随机访问，但插入删除只需要改变指针。
+
+需要注意的是，链表在中间插入前要先遍历到插入位置，这一步也是 O(N) 的，而且要逐个访问分散在内存中的节点；数组移动元素用的是 System.arraycopy()，一次复制一整块连续内存。例如在 10 万个元素的中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒；只有在头部插入时 LinkedList 才明显更快（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。所以大多数场景下应该使用 ArrayList，需要在头尾频繁插入删除时使用 ArrayDeque 或 LinkedList。
 
 ### Vector
 
@@ -424,38 +395,6 @@ CopyOnWriteArrayList 在写操作的同时允许读操作，大大提高了读�
 - 数据不一致：读操作不能读取实时性的数据，因为部分写操作的数据还未同步到读数组中。
 
 所以 CopyOnWriteArrayList 不适合内存敏感以及对实时性要求很高的场景。
-
-### LinkedList
-
-#### 1. 概览
-
-基于双向链表实现，使用 Node 存储链表节点信息。
-
-```java
-private static class Node<E> {
-    E item;
-    Node<E> next;
-    Node<E> prev;
-}
-```
-
-每个链表存储了 first 和 last 指针：
-
-```java
-transient Node<E> first;
-transient Node<E> last;
-```
-
-<div align="center"> <img src="pics/jcol-linkedlist.png" width="760px"/> </div><br>
-
-#### 2. 与 ArrayList 的比较
-
-ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。ArrayList 和 LinkedList 的区别可以归结为数组和链表的区别：
-
-- 数组支持随机访问，但插入删除的代价很高，需要移动大量元素；
-- 链表不支持随机访问，但插入删除只需要改变指针。
-
-需要注意的是，链表在中间插入前要先遍历到插入位置，这一步也是 O(N) 的，而且要逐个访问分散在内存中的节点；数组移动元素用的是 System.arraycopy()，一次复制一整块连续内存。例如在 10 万个元素的中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒；只有在头部插入时 LinkedList 才明显更快（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。所以大多数场景下应该使用 ArrayList，需要在头尾频繁插入删除时使用 ArrayDeque 或 LinkedList。
 
 ### HashMap
 
@@ -811,36 +750,7 @@ JDK 1.8 的 resize() 就利用了这个性质：遍历旧桶中的链表，按 (
 
 #### 7. 计算数组容量
 
-HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它可以自动地将传入的容量转换为 2 的 n 次方。
-
-先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
-
-```text
-mask |= mask >> 1    11011000
-mask |= mask >> 2    11111110
-mask |= mask >> 4    11111111
-```
-
-mask+1 是大于原始数字的最小的 2 的 n 次方。
-
-```text
-num     10010000
-mask+1 100000000
-```
-
-以下是 HashMap 中计算数组容量的代码：
-
-```java
-static final int tableSizeFor(int cap) {
-    int n = cap - 1;
-    n |= n >>> 1;
-    n |= n >>> 2;
-    n |= n >>> 4;
-    n |= n >>> 8;
-    n |= n >>> 16;
-    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
-}
-```
+HashMap 构造函数允许传入的容量不是 2 的 n 次方，tableSizeFor() 会把它向上取为大于等于它的最小的 2 的 n 次方，例如传入 17 时容量为 32，传入 16 时仍为 16。这个计算只用移位和或运算，过程见[进阶：计算数组容量](Java%20容器%20-%20进阶.md#计算数组容量)。
 
 #### 8. 链表转红黑树
 
@@ -920,75 +830,7 @@ static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 
 #### 2. size 操作
 
-每个 Segment 维护了一个 count 变量来统计该 Segment 中的键值对个数。
-
-```java
-/**
- * The number of elements. Accessed only either within locks
- * or among other volatile reads that maintain visibility.
- */
-transient int count;
-```
-
-在执行 size 操作时，需要遍历所有 Segment 然后把 count 累计起来。
-
-ConcurrentHashMap 在执行 size 操作时先尝试不加锁，如果连续两次不加锁操作得到的结果一致，那么可以认为这个结果是正确的。
-
-尝试次数使用 RETRIES_BEFORE_LOCK 定义，该值为 2，retries 初始值为 -1，因此尝试次数为 3。
-
-如果尝试的次数超过 3 次，就需要对每个 Segment 加锁。
-
-```java
-/**
- * Number of unsynchronized retries in size and containsValue
- * methods before resorting to locking. This is used to avoid
- * unbounded retries if tables undergo continuous modification
- * which would make it impossible to obtain an accurate result.
- */
-static final int RETRIES_BEFORE_LOCK = 2;
-
-public int size() {
-    // Try a few times to get accurate count. On failure due to
-    // continuous async changes in table, resort to locking.
-    final Segment<K,V>[] segments = this.segments;
-    int size;
-    boolean overflow; // true if size overflows 32 bits
-    long sum;         // sum of modCounts
-    long last = 0L;   // previous sum
-    int retries = -1; // first iteration isn't retry
-    try {
-        for (;;) {
-            // 超过尝试次数，则对每个 Segment 加锁
-            if (retries++ == RETRIES_BEFORE_LOCK) {
-                for (int j = 0; j < segments.length; ++j)
-                    ensureSegment(j).lock(); // force creation
-            }
-            sum = 0L;
-            size = 0;
-            overflow = false;
-            for (int j = 0; j < segments.length; ++j) {
-                Segment<K,V> seg = segmentAt(segments, j);
-                if (seg != null) {
-                    sum += seg.modCount;
-                    int c = seg.count;
-                    if (c < 0 || (size += c) < 0)
-                        overflow = true;
-                }
-            }
-            // 连续两次得到的结果一致，则认为这个结果是正确的
-            if (sum == last)
-                break;
-            last = sum;
-        }
-    } finally {
-        if (retries > RETRIES_BEFORE_LOCK) {
-            for (int j = 0; j < segments.length; ++j)
-                segmentAt(segments, j).unlock();
-        }
-    }
-    return overflow ? Integer.MAX_VALUE : size;
-}
-```
+每个 Segment 用 count 记录自己的键值对个数，size() 要把所有 Segment 的 count 加起来。它先不加锁统计，相邻两次统计时各 Segment 的 modCount 之和相同，就认为结果正确；不加锁尝试 3 次仍不一致，再对所有 Segment 加锁后统计。源码见[进阶：size 操作](Java%20容器%20-%20进阶.md#size-操作)。
 
 #### 3. JDK 1.8 的改动
 
@@ -1153,51 +995,7 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
 private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
 ```
 
-#### ConcurrentCache
-
-Tomcat 中的 ConcurrentCache 使用了 WeakHashMap 来实现缓存功能。
-
-ConcurrentCache 采取的是分代缓存：
-
-- 经常使用的对象放入 eden 中，eden 使用 ConcurrentHashMap 实现，不用担心会被回收（伊甸园）；
-- 不常用的对象放入 longterm，longterm 使用 WeakHashMap 实现，这些老对象会被垃圾收集器回收；
-- 当调用 get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，从而保证经常被访问的节点不容易被回收；
-- 当调用 put() 方法时，如果 eden 的大小超过了 size，那么就将 eden 中的所有对象都放入 longterm 中，利用虚拟机回收掉一部分不经常使用的对象。
-
-```java
-public final class ConcurrentCache<K, V> {
-
-    private final int size;
-
-    private final Map<K, V> eden;
-
-    private final Map<K, V> longterm;
-
-    public ConcurrentCache(int size) {
-        this.size = size;
-        this.eden = new ConcurrentHashMap<>(size);
-        this.longterm = new WeakHashMap<>(size);
-    }
-
-    public V get(K k) {
-        V v = this.eden.get(k);
-        if (v == null) {
-            v = this.longterm.get(k);
-            if (v != null)
-                this.eden.put(k, v);
-        }
-        return v;
-    }
-
-    public void put(K k, V v) {
-        if (this.eden.size() >= size) {
-            this.longterm.putAll(this.eden);
-            this.eden.clear();
-        }
-        this.eden.put(k, v);
-    }
-}
-```
+Tomcat 的 ConcurrentCache 就是这样用的：常用的对象放在 ConcurrentHashMap 中，不常用的对象放在 WeakHashMap 中，由垃圾收集器回收，实现见[进阶：ConcurrentCache](Java%20容器%20-%20进阶.md#concurrentcache)。
 
 
 ## 附录：实测

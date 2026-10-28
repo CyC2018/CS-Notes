@@ -29,8 +29,8 @@
         * [双亲委派模型](#双亲委派模型)
         * [自定义类加载器实现](#自定义类加载器实现)
     * [五、线上问题排查](#五线上问题排查)
-        * [JVM 调优](#jvm-调优)
         * [内存溢出与内存泄漏](#内存溢出与内存泄漏)
+        * [JVM 调优](#jvm-调优)
         * [CPU 占用过高](#cpu-占用过高)
         * [死锁](#死锁)
     * [附录：实测](#附录实测)
@@ -54,7 +54,7 @@
 
 ### 程序计数器
 
-记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
+记录正在执行的虚拟机字节码指令的地址。如果正在执行的是本地方法，它的值是未定义的（JVM 规范 2.5.1 节）。
 
 ### Java 虚拟机栈
 
@@ -438,10 +438,6 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。JDK 9 起 G1 成为默认的垃圾收集器（JEP 248），CMS 在 JDK 14 中被移除（JEP 363）。
 
-没有指定收集器时，JVM 按机器的配置选择：JDK 8 在服务器级的机器（至少 2 个处理器、约 2 GB 以上的物理内存）上默认使用 Parallel Scavenge 加 Parallel Old，否则使用 Serial；JDK 9 起把服务器级机器上的默认值改为 G1。
-
-所以 JDK 21 在只有 1 个处理器的环境中，例如只分配了 1 个 CPU 的容器，默认使用的仍是 Serial（见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。JDK 27 起在所有环境中都默认使用 G1（JEP 523）。
-
 堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
 <div align="center"> <img src="pics/gc-generations.png" width="740px"/> </div><br>
@@ -481,6 +477,10 @@ Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、
 | G1 | 84 | 40.0 ms | 2.01 ms |
 
 G1 停顿的次数更多，但每次都很短，适合对响应时间敏感的服务。
+
+没有指定收集器时，JVM 按机器的配置选择：JDK 8 在服务器级的机器（至少 2 个处理器、约 2 GB 以上的物理内存）上默认使用 Parallel Scavenge 加 Parallel Old，否则使用 Serial；JDK 9 起把服务器级机器上的默认值改为 G1。
+
+所以 JDK 21 在只有 1 个处理器的环境中，例如只分配了 1 个 CPU 的容器，默认使用的仍是 Serial（见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。JDK 27 起在所有环境中都默认使用 G1（JEP 523）。
 
 #### 8. ZGC 收集器
 
@@ -551,7 +551,7 @@ G1 的新生代回收和混合回收都要在停顿中把存活对象复制到�
 
 老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等。
 
-为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代。还可以通过 -XX:MaxTenuringThreshold 调大对象进入老年代的年龄，让对象在新生代多存活一段时间。
+为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代。还可以通过 -XX:MaxTenuringThreshold 调大对象进入老年代的年龄，让对象在新生代多存活一段时间。需要注意的是，使用 G1 时不要用 -Xmn 固定新生代的大小，因为 G1 正是靠调整新生代的大小来满足停顿时间目标的（Oracle GC 调优指南）。
 
 #### 3. 空间分配担保失败
 
@@ -887,39 +887,6 @@ public class FileSystemClassLoader extends ClassLoader {
 
 ## 五、线上问题排查
 
-### JVM 调优
-
-调优之前先明确目标：在线服务关心最长停顿时间，批处理任务关心吞吐量。大多数情况下先使用默认的 G1，开启 GC 日志观察，确实有问题再调整参数；线上的 GC 问题大多是代码造成的，例如内存泄漏、一次查询加载了太多数据，只调参数解决不了。
-
-常用的参数：
-
-| 参数 | 作用 |
-| --- | --- |
-| -Xms、-Xmx | 堆的初始大小和最大值，线上通常设为相同，避免运行中扩容和收缩 |
-| -XX:MaxRAMPercentage | 不指定 -Xmx 时，最大堆占物理内存（容器中为容器的内存限制）的比例，默认 25% |
-| -Xss | 每个线程的栈大小 |
-| -XX:MaxMetaspaceSize | 元空间的上限，默认不限制 |
-| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起默认 G1 |
-| -XX:MaxGCPauseMillis | G1 的停顿时间目标，默认 200 ms |
-| -Xlog:gc*:file=gc.log | 输出 GC 日志（JDK 9 起；JDK 8 使用 -XX:+PrintGCDetails -Xloggc:gc.log） |
-| -XX:+HeapDumpOnOutOfMemoryError | 内存溢出时保存堆转储 |
-
-例如一个程序长期持有约 60 MB 的对象，同时不断创建短命的对象，用 G1 分别以 72 MB 和 256 MB 的堆运行（JDK 21 实测，见[附录 A4](#a4-堆大小对-g1-的影响)）：
-
-| 堆大小 | 新生代回收 | Full GC | 停顿总时长 | 最长停顿 | 运行时间 |
-| --- | --- | --- | --- | --- | --- |
-| 72 MB | 454 次 | 6 次 | 168.1 ms | 5.88 ms | 398 ms |
-| 256 MB | 43 次 | 0 次 | 42.7 ms | 1.22 ms | 317 ms |
-
-堆太小时，存活的对象几乎占满了老年代，日志中反复出现 Pause Full (G1 Compaction Pause) 71M->27M(72M)：每次 Full GC 后仍有一半以上的空间被占用，很快又满了。
-
-线上频繁 Full GC 的排查思路：
-
-1. 用 jstat -gcutil 观察老年代使用率（O 列）和 Full GC 次数（FGC 列）；
-2. Full GC 之后老年代使用率仍然很高，并且越来越高，说明对象一直无法回收，导出堆转储查找内存泄漏；
-3. Full GC 之后老年代能降下来，说明堆对于正常的负载偏小，或者有大对象、大量对象过早进入老年代，可以增大堆、调整新生代大小，或者从代码上减少一次创建的数据量；
-4. 元空间不足也会触发 Full GC，日志中的原因为 Metadata GC Threshold，检查是否在动态生成大量的类。
-
 ### 内存溢出与内存泄漏
 
 OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有：
@@ -963,6 +930,39 @@ java.lang.OutOfMemoryError: Java heap space
 Dumping heap to java_pid24607.hprof ...
 Heap dump file created [19154891 bytes in 0.007 secs]
 ```
+
+### JVM 调优
+
+调优之前先明确目标：在线服务关心最长停顿时间，批处理任务关心吞吐量。大多数情况下先使用默认的 G1，开启 GC 日志观察，确实有问题再调整参数；线上的 GC 问题大多是代码造成的，例如内存泄漏、一次查询加载了太多数据，只调参数解决不了。
+
+常用的参数：
+
+| 参数 | 作用 |
+| --- | --- |
+| -Xms、-Xmx | 堆的初始大小和最大值，线上通常设为相同，避免运行中扩容和收缩 |
+| -XX:MaxRAMPercentage | 不指定 -Xmx 时，最大堆占物理内存（容器中为容器的内存限制）的比例，默认 25% |
+| -Xss | 每个线程的栈大小 |
+| -XX:MaxMetaspaceSize | 元空间的上限，默认不限制 |
+| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起默认 G1 |
+| -XX:MaxGCPauseMillis | G1 的停顿时间目标，默认 200 ms |
+| -Xlog:gc*:file=gc.log | 输出 GC 日志（JDK 9 起；JDK 8 使用 -XX:+PrintGCDetails -Xloggc:gc.log） |
+| -XX:+HeapDumpOnOutOfMemoryError | 内存溢出时保存堆转储 |
+
+例如一个程序长期持有约 60 MB 的对象，同时不断创建短命的对象，用 G1 分别以 72 MB 和 256 MB 的堆运行（JDK 21 实测，见[附录 A4](#a4-堆大小对-g1-的影响)）：
+
+| 堆大小 | 新生代回收 | Full GC | 停顿总时长 | 最长停顿 | 运行时间 |
+| --- | --- | --- | --- | --- | --- |
+| 72 MB | 454 次 | 6 次 | 168.1 ms | 5.88 ms | 398 ms |
+| 256 MB | 43 次 | 0 次 | 42.7 ms | 1.22 ms | 317 ms |
+
+堆太小时，存活的对象几乎占满了老年代，日志中反复出现 Pause Full (G1 Compaction Pause) 71M->27M(72M)：每次 Full GC 后仍有一半以上的空间被占用，很快又满了。
+
+线上频繁 Full GC 的排查思路：
+
+1. 用 jstat -gcutil 观察老年代使用率（O 列）和 Full GC 次数（FGC 列）；
+2. Full GC 之后老年代使用率仍然很高，并且越来越高，说明对象一直无法回收，导出堆转储查找内存泄漏；
+3. Full GC 之后老年代能降下来，说明堆对于正常的负载偏小，或者有大对象、大量对象过早进入老年代，可以增大堆、调整新生代大小，或者从代码上减少一次创建的数据量；
+4. 元空间不足也会触发 Full GC，日志中的原因为 Metadata GC Threshold，检查是否在动态生成大量的类。
 
 ### CPU 占用过高
 
@@ -1205,6 +1205,7 @@ $ grep -c "unloading class Plugin" unload.log
 - [Guide to WeakHashMap in Java](http://www.baeldung.com/java-weakhashmap)
 - [Tomcat example source code file (ConcurrentCache.java)](https://alvinalexander.com/java/jwarehouse/apache-tomcat-6.0.16/java/org/apache/el/util/ConcurrentCache.java.shtml)
 - [Garbage-First (G1) Garbage Collector | Java SE 17 GC Tuning Guide](https://docs.oracle.com/en/java/javase/17/gctuning/garbage-first-g1-garbage-collector1.html)
+- [Garbage-First Garbage Collector Tuning | Java SE 21 GC Tuning Guide](https://docs.oracle.com/en/java/javase/21/gctuning/garbage-first-garbage-collector-tuning.html)
 - [The Z Garbage Collector | Java SE 21 GC Tuning Guide](https://docs.oracle.com/en/java/javase/21/gctuning/z-garbage-collector2.html)
 - [JEP 439: Generational ZGC](https://openjdk.org/jeps/439)
 - [JEP 490: ZGC: Remove the Non-Generational Mode](https://openjdk.org/jeps/490)
