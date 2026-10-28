@@ -20,7 +20,7 @@
 
 ## 0. 原理
 
-**基本原理** 
+#### 基本原理
 
 0s 表示一串 0，1s 表示一串 1。
 
@@ -54,7 +54,7 @@ x ^ x = 0       x & x = x       x | x = x
 01111111
 ```
 
-**位与运算技巧** 
+#### 位与运算技巧
 
 n&(n-1) 去除 n 的位级表示中最低的那一位 1。例如对于二进制表示 01011011，减去 1 得到 01011010，这两个数相与得到 01011010。
 
@@ -76,7 +76,7 @@ n&(-n) 得到 n 的位级表示中最低的那一位 1。-n 得到 n 的反码�
 
 n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1) 效果一样。
 
-**移位运算** 
+#### 移位运算
 
 \>\> n 为算术右移，相当于除以 2<sup>n</sup> 并向下取整，例如 -7 \>\> 2 = -2。
 
@@ -102,7 +102,7 @@ n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1
 11111111111111111111111111100100
 ```
 
-**mask 计算** 
+#### mask 计算
 
 要获取 111111111，将 0 取反即可，\~0。
 
@@ -112,9 +112,9 @@ n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1
 
 要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~((1\<\<i)-1)。
 
-**Java 中的位操作**  
+#### Java 中的位操作
 
-```html
+```java
 static int Integer.bitCount();           // 统计 1 的数量
 static int Integer.highestOneBit();      // 获得最高位
 static String toBinaryString(int i);     // 转换为二进制表示的字符串
@@ -122,11 +122,11 @@ static String toBinaryString(int i);     // 转换为二进制表示的字符串
 
 ## 1. 统计两个数的二进制表示有多少位不同
 
-461. Hamming Distance (Easy)
+461\. Hamming Distance (Easy)
 
 [Leetcode](https://leetcode.com/problems/hamming-distance/) / [力扣](https://leetcode-cn.com/problems/hamming-distance/)
 
-```html
+```text
 Input: x = 1, y = 4
 
 Output: 2
@@ -181,7 +181,7 @@ public int hammingDistance(int x, int y) {
 
 [Leetcode](https://leetcode.com/problems/single-number/description/) / [力扣](https://leetcode-cn.com/problems/single-number/description/)
 
-```html
+```text
 Input: [4,1,2,1,2]
 Output: 4
 ```
@@ -202,7 +202,7 @@ public int singleNumber(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/missing-number/description/) / [力扣](https://leetcode-cn.com/problems/missing-number/description/)
 
-```html
+```text
 Input: [3,0,1]
 Output: 2
 ```
@@ -352,7 +352,7 @@ public boolean isPowerOfFour(int num) {
 
 [Leetcode](https://leetcode.com/problems/binary-number-with-alternating-bits/description/) / [力扣](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/description/)
 
-```html
+```text
 Input: 10
 Output: True
 Explanation:
@@ -379,7 +379,7 @@ public boolean hasAlternatingBits(int n) {
 
 [Leetcode](https://leetcode.com/problems/number-complement/description/) / [力扣](https://leetcode-cn.com/problems/number-complement/description/)
 
-```html
+```text
 Input: 5
 Output: 2
 Explanation: The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.
@@ -412,7 +412,7 @@ public int findComplement(int num) {
 
 对于 10000000 这样的数要扩展成 11111111，可以利用以下方法：
 
-```html
+```text
 mask |= mask >> 1    11000000
 mask |= mask >> 2    11110000
 mask |= mask >> 4    11111111
@@ -432,7 +432,7 @@ public int findComplement(int num) {
 
 ## 11. 实现整数的加法
 
-371\. Sum of Two Integers (Easy)
+371\. Sum of Two Integers (Medium)
 
 [Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-two-integers/description/)
 
@@ -452,7 +452,7 @@ public int getSum(int a, int b) {
 
 [Leetcode](https://leetcode.com/problems/maximum-product-of-word-lengths/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/description/)
 
-```html
+```text
 Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
 Return 16
 The two words can be "abcw", "xtfn".
@@ -485,7 +485,7 @@ public int maxProduct(String[] words) {
 
 ## 13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数
 
-338\. Counting Bits (Medium)
+338\. Counting Bits (Easy)
 
 [Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode-cn.com/problems/counting-bits/description/)
 
@@ -500,4 +500,3 @@ public int[] countBits(int num) {
     return ret;
 }
 ```
-
