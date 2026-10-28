@@ -49,7 +49,7 @@ x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(
 
 ### 1. 生成素数序列
 
-204\. Count Primes (Easy)
+204\. Count Primes (Medium)
 
 [Leetcode](https://leetcode.com/problems/count-primes/description/) / [力扣](https://leetcode-cn.com/problems/count-primes/description/)
 
@@ -85,7 +85,7 @@ int gcd(int a, int b) {
 
 ```java
 int lcm(int a, int b) {
-    return a * b / gcd(a, b);
+    return a / gcd(a, b) * b; // 先除后乘，避免 a * b 溢出
 }
 ```
 
@@ -120,6 +120,10 @@ public int gcd(int a, int b) {
     } else {
         return gcd(b, a - b);
     }
+}
+
+private boolean isEven(int x) {
+    return (x & 1) == 0;
 }
 ```
 
@@ -164,7 +168,7 @@ public String convertToBase7(int num) {
 
 [Leetcode](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/) / [力扣](https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/description/)
 
-```html
+```text
 Input:
 26
 
@@ -199,7 +203,7 @@ public String toHex(int num) {
 
 [Leetcode](https://leetcode.com/problems/excel-sheet-column-title/description/) / [力扣](https://leetcode-cn.com/problems/excel-sheet-column-title/description/)
 
-```html
+```text
 1 -> A
 2 -> B
 3 -> C
@@ -225,7 +229,7 @@ public String convertToTitle(int n) {
 
 ### 1. 统计阶乘尾部有多少个 0
 
-172\. Factorial Trailing Zeroes (Easy)
+172\. Factorial Trailing Zeroes (Medium)
 
 [Leetcode](https://leetcode.com/problems/factorial-trailing-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/factorial-trailing-zeroes/description/)
 
@@ -249,7 +253,7 @@ public int trailingZeroes(int n) {
 
 [Leetcode](https://leetcode.com/problems/add-binary/description/) / [力扣](https://leetcode-cn.com/problems/add-binary/description/)
 
-```html
+```text
 a = "11"
 b = "1"
 Return "100".
@@ -303,7 +307,7 @@ public String addStrings(String num1, String num2) {
 
 [Leetcode](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/) / [力扣](https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements-ii/description/)
 
-```html
+```text
 Input:
 [1,2,3]
 
@@ -324,7 +328,7 @@ Only two moves are needed (remember each move increments or decrements one eleme
 
 设数组长度为 N，则可以找到 N/2 对 a 和 b 的组合，使它们都移动到 m 的位置。
 
-**解法 1**  
+#### 解法 1
 
 先排序，时间复杂度：O(NlogN)
 
@@ -342,9 +346,9 @@ public int minMoves2(int[] nums) {
 }
 ```
 
-**解法 2**  
+#### 解法 2
 
-使用快速选择找到中位数，时间复杂度 O(N)
+使用快速选择找到中位数，平均时间复杂度 O(N)
 
 ```java
 public int minMoves2(int[] nums) {
@@ -431,7 +435,7 @@ public int majorityElement(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/valid-perfect-square/description/) / [力扣](https://leetcode-cn.com/problems/valid-perfect-square/description/)
 
-```html
+```text
 Input: 16
 Returns: True
 ```
@@ -471,7 +475,7 @@ public boolean isPowerOfThree(int n) {
 
 [Leetcode](https://leetcode.com/problems/product-of-array-except-self/description/) / [力扣](https://leetcode-cn.com/problems/product-of-array-except-self/description/)
 
-```html
+```text
 For example, given [1,2,3,4], return [24,12,8,6].
 ```
 
@@ -504,7 +508,7 @@ public int[] productExceptSelf(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/maximum-product-of-three-numbers/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-three-numbers/description/)
 
-```html
+```text
 Input: [1,2,3,4]
 Output: 24
 ```
