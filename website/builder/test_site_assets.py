@@ -16,6 +16,9 @@ class SearchIndexTests(unittest.TestCase):
         self.assertEqual(heading_slug('三、检索增强生成', counts), '三、检索增强生成')
         self.assertEqual(heading_slug('TCP 拥塞控制', counts), 'tcp-拥塞控制')
         self.assertEqual(heading_slug('TCP 拥塞控制', counts), 'tcp-拥塞控制-1')
+        # marked 先把引号转义成 &quot;，Docsify 再去掉标点，留下 quot（Edge 渲染的 Java 基础页核对过）
+        self.assertEqual(heading_slug('new String("abc")', counts), 'new-stringquotabcquot')
+        self.assertEqual(heading_slug('1\\. 数据', counts), '_1-数据')
 
     def test_headings_in_code_do_not_change_real_anchors(self):
         doc = search_document(Path('示例.md'), '# 示例\n\n```python\n# TCP 拥塞控制\n```\n\n## TCP 拥塞控制\n慢开始\n')
