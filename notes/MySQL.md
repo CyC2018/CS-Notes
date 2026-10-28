@@ -195,6 +195,8 @@ SELECT user_id, status, create_time, id FROM orders WHERE user_id = 1001;
 | `user_id = 5 OR amount = 10.99` | ALL | OR 的一侧没有索引，仍然要扫描全表 |
 | `user_id != 5` | ALL | 几乎匹配所有行 |
 
+需要注意的是，表中都是 SELECT * 的结果。查询的列都在某个索引中时（覆盖索引），不需要回表，优化器会改为扫描这个二级索引：SELECT order_no 加 `LIKE '%7007'` 的 type 为 index，SELECT user_id 加 `user_id != 5` 的 type 为 range，仍然要读几乎全部的索引项，只是比扫描整张表的数据量小（见[附录 A2](#a2-索引的执行计划)）。
+
 对应的写法：
 
 - 把函数改写为范围：`create_time >= '2025-01-12' AND create_time < '2025-01-13'`，type 变为 range；
@@ -367,7 +369,7 @@ LIMIT 10;
 
 是 MySQL 默认的事务型存储引擎，只有在需要它不支持的特性时，才考虑使用其它存储引擎。
 
-实现了四个标准的隔离级别，默认级别是可重复读（REPEATABLE READ）。在可重复读隔离级别下，通过多版本并发控制（MVCC）+ Next-Key Locks 防止幻读，见 [数据库系统原理](数据库系统原理.md#六next-key-locks)。
+实现了四个标准的隔离级别，默认级别是可重复读（REPEATABLE READ）。在可重复读隔离级别下，通过多版本并发控制（MVCC）+ Next-Key Locks 在很大程度上避免了幻读，但一个事务中混用快照读和当前读时仍会出现，见 [数据库系统原理](数据库系统原理.md#六next-key-locks)。
 
 主键索引是聚簇索引，数据就保存在索引的叶子节点中，按主键查询走到叶子节点就拿到了整行。
 
@@ -452,6 +454,8 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 当单表的数据量或者写入量超过一台数据库服务器的承受能力时，就需要 Sharding，把数据分布到集群的不同节点上，从而缓解单个数据库的压力。
 
+单表的行数本身并不是瓶颈。附录 A1 中 200 万行的 orders 表，主键索引只有 3 层，每个中间页约有 900 个指针，每个叶子页约 80 行，按此计算 3 层可以容纳约 6000 万行。真正需要拆分的是单机承受不了的写入量和数据量，以及随之变慢的备份、加列、建索引等运维操作；如果只是读压力大，先用读写分离和缓存。阿里巴巴的 Java 开发手册给出的经验值是单表超过 500 万行或者 2 GB 再考虑分库分表，预计三年内达不到就不要提前拆分。
+
 <div align="center"> <img src="pics/shard-horizontal.png" width="760px"/> </div><br>
 
 ### 垂直切分
@@ -467,6 +471,10 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 - 哈希取模：hash(key) % N；
 - 范围：可以是 ID 范围也可以是时间范围；
 - 映射表：使用单独的一个数据库来存储映射关系。
+
+选择分片键时，要让最常用的查询都带上它，这样每次查询只访问一个分片。例如订单表按 user_id 分成 16 张表，放在 4 个库中：表号为 user_id % 16，库号为表号 / 4。user_id 为 10086 的用户，10086 % 16 = 6，订单都在 db_1.orders_6 中。
+
+分片数量一开始就定得比库的数量多，扩容时把整张表迁移到新库，每一行所属的表不变。如果直接按 hash(key) % 库数 分配，库从 4 个增加到 5 个时约 80% 的行都要迁移（见 [一致性哈希](缓存.md#六一致性哈希)）。
 
 ### Sharding 存在的问题
 
@@ -485,6 +493,20 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 - 使用全局唯一 ID（UUID）；
 - 为每个分片指定一个 ID 范围；
 - 使用分布式 ID 生成器，例如雪花算法（Snowflake）。
+
+#### 4. 不带分片键的查询
+
+订单按 user_id 分片后，按订单号或者按商家查询时不知道数据在哪个分片，只能查询所有分片再合并。常用的做法：
+
+- 基因法：生成订单号时把最后 4 个二进制位设为 user_id % 16，订单号 % 16 就等于 user_id % 16，按订单号也能算出所在的表；
+- 映射表：另存一张订单号到 user_id 的映射，先查映射再查订单；
+- 按另一个维度再存一份：例如按商家 ID 分片再存一份订单，或者同步到 Elasticsearch，通常订阅 binlog 异步更新，所以会有短暂的延迟。
+
+#### 5. 跨分片的排序和分页
+
+分片后执行 ORDER BY create_time DESC LIMIT 1000, 10，每个分片都要返回前 1010 行，由中间件归并排序后再取出第 1001～1010 行，页数越深，每个分片返回的数据越多。常用游标分页代替：记住上一页最后一条的 create_time，每个分片只取比它更早的 10 行，见上文的 [深分页](#深分页)。
+
+ShardingSphere 等中间件负责按分片键路由 SQL、改写分页条件和归并结果，应用像访问一张表一样访问分片后的表。
 
 ## 六、复制
 
@@ -547,7 +569,7 @@ redo log 的空间是固定的，循环写入：数据页写回磁盘之后，�
 
 ### binlog
 
-binlog 由 Server 层记录，与存储引擎无关，用于 [主从复制](#主从复制) 和把数据恢复到指定的时间点。MySQL 8.0 默认使用 ROW 格式，记录每一行修改前后的值。例如执行 UPDATE orders SET status = 3 WHERE id = 1024 后，用 mysqlbinlog 解析 binlog（省略了其它列）：
+binlog 由 Server 层记录，与存储引擎无关，用于 [主从复制](#主从复制) 和把数据恢复到指定的时间点。binlog 有三种格式：STATEMENT 记录 SQL 语句本身，日志小，但含有 UUID() 或者带 LIMIT 的 UPDATE 这类结果不确定的语句，在从库重放的结果可能不同；ROW 记录每一行修改前后的值；MIXED 平时记录语句，遇到这类语句时自动改用 ROW。MySQL 8.0 默认使用 ROW 格式。例如执行 UPDATE orders SET status = 3 WHERE id = 1024 后，用 mysqlbinlog 解析 binlog（省略了其它列）：
 
 ```text
 ### UPDATE `demo`.`orders`
@@ -655,6 +677,15 @@ SET optimizer_switch = 'index_condition_pushdown=on';   Handler_read_next = 3
 SET optimizer_switch = 'index_condition_pushdown=off';  Handler_read_next = 20
 ```
 
+覆盖索引时的前缀通配和不等于：
+
+```text
+EXPLAIN SELECT * FROM orders WHERE order_no LIKE '%7007';       type: ALL    key: NULL                  rows: 1978736
+EXPLAIN SELECT order_no FROM orders WHERE order_no LIKE '%7007'; type: index  key: idx_order_no          rows: 1978736  Extra: Using where; Using index
+EXPLAIN SELECT * FROM orders WHERE user_id != 5;                 type: ALL    key: NULL                  rows: 1978736
+EXPLAIN SELECT user_id FROM orders WHERE user_id != 5;           type: range  key: idx_user_status_time  rows: 989468   Extra: Using where; Using index
+```
+
 ### A3 二级索引对写入的影响
 
 建两张结构与 orders 相同的表：t_noidx 只有主键，t_idx 有 idx_create_time、idx_user_status_time、idx_order_no 和 idx_amount 四个二级索引。各执行两次 `INSERT INTO t SELECT * FROM orders` 插入 50 万行（每次之前 TRUNCATE），再从 mysql.innodb_index_stats 读取各索引的页数：
@@ -718,3 +749,7 @@ COUNT(*)             130.47 ms
 - [MySQL 8.0: Column Indexes（前缀索引）](https://dev.mysql.com/doc/refman/8.0/en/column-indexes.html)
 - [MySQL 8.0: The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)
 - [Replication Implementation | MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/replication-implementation.html)
+- [MySQL 8.0: Mixed Binary Logging Format](https://dev.mysql.com/doc/refman/8.0/en/binary-log-mixed.html)
+- [Java 开发手册（黄山版）](https://github.com/alibaba/p3c)
+- [ShardingSphere: 改写引擎](https://shardingsphere.apache.org/document/current/cn/reference/sharding/rewrite/)
+- [Designing Data-Intensive Applications 中文版：分片](https://github.com/vonng/ddia)
