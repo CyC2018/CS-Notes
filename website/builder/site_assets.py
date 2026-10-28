@@ -29,9 +29,30 @@ def plain_text(text):
     return re.sub(r'\s+', ' ', html.unescape(text)).strip()
 
 
+def marked_inline(title):
+    # Docsify slugs the HTML that marked renders for the heading: backslash escapes are
+    # resolved, code spans and link text are kept, and text is HTML-escaped, so a quote
+    # becomes &quot; and leaves "quot" in the slug.
+    def escape(text):
+        text = re.sub(r'&(?!#?\w+;)', '&amp;', text)
+        return text.replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&#39;')
+    out = []
+    for part in re.split(r'(`+[^`]*`+|<\/?[A-Za-z][^>]*>)', title):
+        if part.startswith('`'):
+            out.append(escape(part.strip('`')))
+        elif part.startswith('<'):
+            out.append(part)
+        else:
+            part = re.sub(r'!?\[([^\]]*)\]\([^)]*\)', r'\1', part)
+            part = re.sub(r'\\([!-/:-@\[-`{-~])', r'\1', part)
+            out.append(escape(part.replace('**', '').replace('__', '')))
+    return ''.join(out)
+
+
 def heading_slug(title, counts):
     # Match the pinned Docsify 4.13.1 slugger, including numeric and duplicate headings.
     title = title.replace('{docsify-ignore}', '').replace('{docsify-ignore-all}', '')
+    title = marked_inline(title)
     slug = PUNCTUATION.sub('', re.sub(r'<[^>]+>', '', title.strip()).lower())
     slug = re.sub(r'-+', '-', re.sub(r'\s', '-', slug))
     slug = re.sub(r'^(\d)', r'_\1', slug)
