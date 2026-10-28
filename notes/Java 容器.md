@@ -21,6 +21,7 @@
         * [A2 HashMap 的并发写入](#a2-hashmap-的并发写入)
         * [A3 ArrayList 的并发写入](#a3-arraylist-的并发写入)
         * [A4 HashMap 链表转红黑树](#a4-hashmap-链表转红黑树)
+        * [A5 HashMap 的扩容时机与 Hashtable](#a5-hashmap-的扩容时机与-hashtable)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -577,6 +578,15 @@ Entry(int h, K k, V v, Entry<K,V> n) {
 }
 ```
 
+JDK 1.8 的 put() 调用 putVal()，过程如下：
+
+1. 用 hash() 计算哈希值；table 为空时先调用 resize() 创建数组，数组到第一次 put 时才分配；
+2. 用 (n - 1) & hash 计算桶下标，桶为空时直接放入新节点；
+3. 桶不为空时，头节点是 TreeNode 就在红黑树中查找或插入，否则遍历链表，找到相同的键就用新值替换旧值并返回旧值，找不到就把新节点接在链表尾部，接上之前链表已有 8 个节点时调用 treeifyBin()，见第 8 节；
+4. 新增了节点时 size 加 1，大于 threshold 就调用 resize() 扩容，见第 5、6 节。
+
+判断键相同的条件是哈希值相等，并且两个键是同一个对象或者 equals() 返回 true，所以作为键的类要同时重写 hashCode() 和 equals()。
+
 #### 4. 确定桶下标
 
 很多操作都需要先确定一个键值对所在的桶下标。
@@ -682,6 +692,12 @@ final float loadFactor;
 transient int modCount;
 ```
 
+例如默认容量 16、装载因子 0.75 时 threshold 为 12，放入第 13 个键后容量变为 32，放入第 25 个键后变为 64（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
+
+装载因子取 0.75 是时间和空间的折中（HashMap 的 Javadoc）：调大可以少占内存，但链表变长，查找变慢；调小则扩容更频繁，空着的桶更多。装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布，约 98.6% 的桶只有 0～2 个节点，见第 8 节。
+
+能预估键的数量时，应该在创建时指定容量，避免多次扩容。需要注意的是，构造函数的参数是容量而不是键数：new HashMap<>(1000) 的容量为 1024、threshold 为 768，放入 1000 个键时仍会扩容一次；JDK 19 起的 HashMap.newHashMap(1000) 按装载因子换算出容量 2048，不再扩容（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
+
 从下面的添加元素代码中可以看出，当需要扩容时，令 capacity 为原来的两倍。
 
 ```java
@@ -766,10 +782,14 @@ HashMap 构造函数允许传入的容量不是 2 的 n 次方，tableSizeFor() 
 
 #### 9. 与 Hashtable 的比较
 
-- Hashtable 使用 synchronized 来进行同步；
-- HashMap 可以插入键为 null 的 Entry；
-- HashMap 的迭代器是 fail-fast 迭代器；
-- HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
+- 线程安全：Hashtable 的方法都用 synchronized 修饰，所有操作共用一把锁；HashMap 不加锁，不是线程安全的；
+- null：HashMap 允许一个键为 null、任意多个值为 null，Hashtable 的键和值都不能为 null，否则抛出 NullPointerException；
+- 容量与下标：HashMap 默认容量 16，每次扩为 2 倍，用位运算计算下标；Hashtable 默认容量 11，每次扩为 2n + 1，用 (hash & 0x7FFFFFFF) % length 取模，也不对 hashCode 做扰动（JDK 21 实测 Hashtable 依次扩为 23、47、95，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）；
+- 哈希冲突：HashMap 的链表过长时转为红黑树，Hashtable 始终使用链表；
+- 迭代：两者 keySet()、values() 等视图的迭代器都是 fail-fast 的，只有 Hashtable 的 keys()、elements() 返回的 Enumeration 不是；
+- 顺序：两者都不保证遍历的顺序，并且扩容后顺序可能改变。
+
+Hashtable 是 JDK 1.0 的遗留类，需要线程安全时使用 ConcurrentHashMap。需要按顺序遍历时，按插入顺序用 LinkedHashMap，按键的大小用 TreeMap：TreeMap 基于红黑树，查找和插入为 O(logN)，支持 firstKey()、subMap() 这类按范围的操作；HashMap 平均为 O(1)，不支持这些操作。
 
 #### 10. 线程安全
 
@@ -846,10 +866,23 @@ JDK 1.8 去掉了 Segment，和 HashMap 一样使用 Node 数组加链表（或�
 
 get 不加锁：数组元素通过 Unsafe 的 volatile 方式读取，节点的 val 和 next 都是 volatile，能读到其它线程写入的最新值。
 
+去掉 Segment 是因为 JDK 1.7 的并发度在创建时由 concurrencyLevel 确定，之后不能改变，默认的 16 个 Segment 最多允许 16 个线程同时写。JDK 1.8 锁住的是单个桶，并发度随扩容增大，两个线程更新不同的键时争用同一把锁的概率约为 1 / (8 × 元素个数)（源码注释）；而且最常见的往空桶中插入只用一次 CAS，不需要加锁。
+
+用 synchronized 锁住头节点，而不是给每个桶配一个 ReentrantLock，源码注释给出的理由是不想为每个桶多分配一个锁对象，用已有的头节点作为锁最省空间。加锁之后还要检查头节点是否仍是原来的节点，因为它可能已经被删除，或者这个桶已经被迁移。
+
+扩容的过程：
+
+1. 元素个数达到 sizeCtl（容量的 0.75 倍）时，一个线程创建 2 倍大小的新数组，开始迁移；
+2. 迁移从数组末尾向前进行，每个线程用 CAS 修改 transferIndex，领取一段还没有迁移的桶，每段至少 16 个，不同线程领到的范围不会重叠；
+3. 迁移一个桶时锁住它的头节点，按 hash & n 把节点分到新数组的 i 和 i + n 两个位置，与 HashMap 的拆分方法相同，然后在旧桶中放入 ForwardingNode；
+4. 所有桶迁移完后，table 指向新数组，sizeCtl 更新为新容量的 0.75 倍。
+
+迁移期间，get 遇到 ForwardingNode 时到新数组中查找，还没有迁移的桶照常在旧数组中读取；put 遇到 ForwardingNode 时先调用 helpTransfer() 领取一段桶帮忙迁移，完成后再到新数组中插入。迁移时创建新的节点，不修改旧节点的 next，所以正在旧链表上遍历的 get 不受影响。
+
 与 JDK 1.7 相比的其它变化：
 
-- 计数：元素个数保存在 baseCount 和一组 CounterCell 中，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同；
-- 扩容：多个线程可以同时参与迁移，每个线程领取一段桶，迁移完的桶放一个 ForwardingNode，get 遇到它时到新数组中查找。
+- 计数：元素个数保存在 baseCount 和一组 CounterCell 中，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同。求和时不加锁，其它线程可能正在增减，所以返回的是一个估计值，Javadoc 中也说明并发修改时它与实际个数可能不同；
+- 扩容：JDK 1.7 中每个 Segment 在自己的锁内各自扩容；JDK 1.8 中多个线程可以一起迁移整个数组，过程见上文。
 
 需要注意的是，ConcurrentHashMap 的键和值都不能为 null。HashMap 中 get 返回 null 时，可以再用 containsKey 判断是键不存在还是值为 null；在并发环境下，这两次调用之间其它线程可能修改了数据，结果无法确定，所以干脆不允许 null。另外，ConcurrentHashMap 只保证单个操作是原子的，先 get 再 put 这样的组合操作仍然要用 putIfAbsent、compute 等原子方法。
 
@@ -1147,6 +1180,39 @@ for (int i = 12; i >= 1; i--) map.remove(new Key(i));      // 每次删除后打
 8 0.00000006
 ```
 
+### A5 HashMap 的扩容时机与 Hashtable
+
+用反射读取 table 的长度和 threshold，运行时需要加上 --add-opens java.base/java.util=ALL-UNNAMED。依次放入 Integer 键，只打印容量变化的行；再分别用 new HashMap<>(n) 和 HashMap.newHashMap(n) 放入 n 个键，统计扩容次数：
+
+```java
+HashMap<Integer, Integer> m = new HashMap<>();
+for (int i = 1; i <= 25; i++) m.put(i, i);              // 容量变化时打印
+
+HashMap<Integer, Integer> a = new HashMap<>(1000);       // 放入 1000 个键，记录容量变化的次数
+HashMap<Integer, Integer> b = HashMap.newHashMap(1000);
+
+Hashtable<Integer, Integer> h = new Hashtable<>();
+for (int i = 1; i <= 40; i++) h.put(i, i);              // 容量变化时打印
+h.put(null, 1);
+h.put(1, null);
+```
+
+```text
+new HashMap<>()：容量 0，threshold 0
+放入第 1 个键后：容量 16，threshold 12
+放入第 13 个键后：容量 32，threshold 24
+放入第 25 个键后：容量 64，threshold 48
+放入 12 个键：new HashMap<>(12) 最终容量 16，期间扩容 0 次；HashMap.newHashMap(12) 最终容量 16，期间扩容 0 次
+放入 1000 个键：new HashMap<>(1000) 最终容量 2048，期间扩容 1 次；HashMap.newHashMap(1000) 最终容量 2048，期间扩容 0 次
+new Hashtable<>()：容量 11
+Hashtable 放入第 9 个键后：容量 23
+Hashtable 放入第 18 个键后：容量 47
+Hashtable 放入第 36 个键后：容量 95
+Hashtable put(null, 1)：NullPointerException
+Hashtable put(1, null)：NullPointerException
+HashMap 放入 null 键和 null 值：{null=v, k=null}
+```
+
 ## 参考资料
 
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
@@ -1157,6 +1223,10 @@ for (int i = 12; i >= 1; i--) map.remove(new Key(i));      // 每次删除后打
 - [The principle of ConcurrentHashMap analysis](http://www.programering.com/a/MDO3QDNwATM.html)
 - [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/)
 - [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
+- [HashMap (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html)
+- [Hashtable (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Hashtable.html)
+- [ConcurrentHashMap (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html)
+- [JDK 21 源码：ConcurrentHashMap.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/concurrent/ConcurrentHashMap.java)
 - [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 - [Java Collection Framework – The LinkedList Class](https://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
 - [JDK 21 源码：HashMap.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/HashMap.java)
