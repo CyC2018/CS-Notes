@@ -228,7 +228,7 @@ SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同
 
 Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘接口类型进行命名，常见磁盘的文件名如下：
 
-- IDE 磁盘：/dev/hd[a-d]
+- IDE 磁盘：/dev/hd[a-d]（旧驱动的命名，Linux 5.14 移除了旧的 IDE 驱动，现在由 libata 驱动 IDE 磁盘，也命名为 /dev/sd*）
 - SATA/SCSI/SAS 磁盘：/dev/sd[a-p]
 - NVMe 磁盘：/dev/nvme0n1、/dev/nvme1n1
 
@@ -278,7 +278,7 @@ BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可
 
 #### 2. UEFI
 
-BIOS 不可以读取 GPT 分区表，而 UEFI 可以。
+BIOS 只会执行 MBR 中的开机管理程序，本身不读取分区表，从 GPT 磁盘启动要依靠支持 GPT 的开机管理程序（例如 GRUB）；UEFI 可以直接读取 GPT 分区表。
 
 ## 四、文件系统
 
@@ -450,7 +450,7 @@ rmdir [-p] 目录名称
 ```text
 ## touch [-acdmt] filename
 -a ： 更新 atime
--c ： 更新 ctime，若该文件不存在则不建立新文件
+-c ： 若该文件不存在则不建立新文件
 -m ： 更新 mtime
 -d ： 后面可以接更新日期而不使用当前日期，也可以使用 --date="日期或时间"
 -t ： 后面可以接更新时间而不使用当前时间，格式为[YYYYMMDDhhmm]
@@ -760,7 +760,7 @@ $ xz [-dtlkc#] filename
 $ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
 $ tar [-z|-j|-J] [tv] [-f 已有的 tar 文件]              ==查看
 $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
--z ：使用 zip；
+-z ：使用 gzip；
 -j ：使用 bzip2；
 -J ：使用 xz；
 -c ：新建打包文件；
@@ -785,7 +785,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 
 - 命令历史：记录使用过的命令
 - 命令与文件补全：快捷键：tab
-- 命令别名：例如 ll 通常是 ls -l 或者 ls -alF 的别名，具体取决于发行版的配置
+- 命令别名：例如 Ubuntu 默认的 ~/.bashrc 中，ll 是 ls -alF 的别名
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X\* 列出 /usr/bin 下面所有以 X 开头的文件
 
