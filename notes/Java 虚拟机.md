@@ -15,7 +15,9 @@
         * [判断一个对象是否可被回收](#判断一个对象是否可被回收)
         * [引用类型](#引用类型)
         * [垃圾收集算法](#垃圾收集算法)
+        * [Stop The World](#stop-the-world)
         * [垃圾收集器](#垃圾收集器)
+        * [三色标记](#三色标记)
     * [三、内存分配与回收策略](#三内存分配与回收策略)
         * [Minor GC 和 Full GC](#minor-gc-和-full-gc)
         * [内存分配策略](#内存分配策略)
@@ -42,6 +44,9 @@
         * [A6 默认的收集器与 G1 的 Region 大小](#a6-默认的收集器与-g1-的-region-大小)
         * [A7 打破双亲委派](#a7-打破双亲委派)
         * [A8 元空间溢出](#a8-元空间溢出)
+        * [A9 G1 的标记周期与安全点](#a9-g1-的标记周期与安全点)
+        * [A10 直接内存与线程数的溢出](#a10-直接内存与线程数的溢出)
+        * [A11 堆直方图](#a11-堆直方图)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -52,9 +57,15 @@
 
 <div align="center"> <img src="pics/jvm-areas.png" width="760px"/> </div><br>
 
+程序计数器、Java 虚拟机栈和本地方法栈是线程私有的，随线程创建和销毁；堆和方法区被所有线程共享。除了程序计数器，JVM 规范为其它区域都规定了抛出 OutOfMemoryError 的情况，两种栈还可能抛出 StackOverflowError（JVM 规范 2.5 节）。
+
+需要注意的是，面试中说的“JVM 内存模型”通常指这里的运行时数据区域，而 Java 内存模型（Java Memory Model, JMM）规定的是多个线程读写共享变量时的可见性和顺序，见 [Java 内存模型](Java%20并发.md#十java-内存模型)。
+
 ### 程序计数器
 
 记录正在执行的虚拟机字节码指令的地址。如果正在执行的是本地方法，它的值是未定义的（JVM 规范 2.5.1 节）。
+
+线程被切换出去再切换回来时，要从原来的位置继续执行，所以每个线程都有自己的程序计数器。
 
 ### Java 虚拟机栈
 
@@ -181,6 +192,8 @@ Instance size: 32 bytes
 ## 二、垃圾收集
 
 垃圾收集主要是针对堆和方法区进行。程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后就会消失，因此不需要对这三个区域进行垃圾收集。
+
+垃圾收集要回答三个问题：哪些对象可以回收、怎么回收、什么时候回收。HotSpot 用可达性分析找出从 GC Roots 出发不可达的对象；按存活时间把堆分成新生代和老年代，分别用复制和标记 - 整理等算法；Eden 满时进行 Minor GC，老年代空间不足时进行 Full GC 或者并发的老年代回收，见 [三、内存分配与回收策略](#三内存分配与回收策略)。例如处理一次请求时创建的临时对象，请求结束后就不可达，下一次 Minor GC 随 Eden 一起清空；缓存中的对象熬过多次 Minor GC，被复制到老年代，之后只在回收老年代时才检查它。
 
 ### 判断一个对象是否可被回收
 
@@ -355,6 +368,18 @@ HotSpot 虚拟机的 Eden 和 Survivor 大小比例默认为 8:1，保证了内�
 - 新生代使用：复制算法；
 - 老年代使用：标记 - 清除 或者 标记 - 整理 算法。
 
+分代的依据是弱分代假说：大多数对象很快就不再使用，而存活较久的对象往往会继续存活下去（JEP 439）。所以新生代每次回收只有少量对象存活，复制的代价与存活对象的数量成正比，与垃圾的多少无关；老年代的对象大多存活，复制的代价太高，所以用标记 - 清除或标记 - 整理。分开之后，频繁的 Minor GC 只处理很小的新生代。
+
+分代也带来一个问题：老年代的对象可能引用新生代的对象，Minor GC 时这些引用也是 GC Roots。为了不扫描整个老年代，HotSpot 把老年代按 512 字节划分为卡（card），用户线程写入引用字段时，写屏障把所在的卡在卡表（card table）中标记为脏，Minor GC 时只扫描脏卡。G1 的 Remembered Set 也是同样的作用。
+
+### Stop The World
+
+垃圾收集时暂停所有用户线程，称为 Stop The World（STW）。这是因为可达性分析要遍历对象之间的引用，用户线程同时修改引用，就可能漏掉存活的对象；复制和整理算法还要移动对象、修改指向它的引用，期间不能让用户线程访问这些对象。
+
+用户线程要运行到安全点（safepoint）才能暂停，在安全点上 JIT 记录了栈中哪些位置是对象引用，GC 才能准确地找到 GC Roots（HotSpot 术语表）。JIT 在方法调用和返回、循环的回跳等位置插入检查，需要暂停时 JVM 设置一个标志，各线程运行到最近的检查点时挂起。所以一次停顿包括等待所有线程到达安全点和在安全点上执行 GC 两段时间，例如 G1 的一次新生代回收中，前者约 5 微秒，后者约 1.9 毫秒（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
+
+STW 无法完全消除，但可以缩短：CMS、G1 把耗时最长的标记与用户线程并发执行，ZGC 连复制对象也并发进行，停顿中只剩扫描 GC Roots 这类少量工作。并发标记带来的问题见 [三色标记](#三色标记)。
+
 ### 垃圾收集器
 
 <div align="center"> <img src="pics/gc-collectors.png" width="740px"/> </div><br>
@@ -458,10 +483,12 @@ Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、
 
 如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：
 
-- 初始标记：在一次新生代回收中顺带完成（Concurrent Start），标记 GC Roots 直接关联的对象，需要停顿；
+- 初始标记：老年代的占用超过阈值（-XX:InitiatingHeapOccupancyPercent，初始为 45%，之后 G1 根据标记所需的时间自适应调整）时，在下一次新生代回收中顺带完成（Concurrent Start），标记 GC Roots 直接关联的对象，需要停顿；
 - 并发标记：与用户线程同时运行，找出老年代中所有存活的对象，期间新生代回收照常进行；
 - 最终标记（Remark）：短暂停顿，处理并发标记期间用户线程修改引用留下的记录，完成标记，并直接回收完全空的 Region；
 - 清理与混合回收：清理（Cleanup）停顿根据各 Region 的回收价值决定是否进入回收阶段；之后的多次混合回收（Mixed）除了新生代，再挑选一部分垃圾最多的老年代 Region，把其中存活的对象复制出去，每次回收的数量受停顿时间目标（MaxGCPauseMillis，默认 200 ms）限制。
+
+例如一个 128 MB 堆的程序，GC 日志中一个完整的周期依次是 Pause Young (Concurrent Start)、并发标记、Pause Remark、Pause Cleanup、Pause Young (Prepare Mixed) 和 Pause Young (Mixed)。并发标记持续约 13 ms，期间还穿插了 4 次普通的新生代回收；Remark 和 Cleanup 的停顿分别只有约 0.1 ms 和 0.03 ms（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
 
 具备如下特点：
 
@@ -482,6 +509,15 @@ G1 停顿的次数更多，但每次都很短，适合对响应时间敏感的�
 
 所以 JDK 21 在只有 1 个处理器的环境中，例如只分配了 1 个 CPU 的容器，默认使用的仍是 Serial（见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。JDK 27 起在所有环境中都默认使用 G1（JEP 523）。
 
+与 CMS 相比，G1 的主要改进：
+
+- 回收范围：CMS 只回收老年代，要与 ParNew 配合；G1 用 Region 统一管理新生代和老年代，混合回收时一起回收；
+- 碎片：CMS 用标记 - 清除，碎片多了只能 Full GC 整理；G1 把存活对象复制到空闲的 Region，不产生碎片；
+- 停顿：CMS 的停顿无法控制；G1 按停顿时间目标挑选每次回收的 Region，停顿更可预测；
+- 并发标记：CMS 用增量更新，G1 用原始快照，见 [三色标记](#三色标记)。
+
+G1 的代价是 Remembered Set 等数据结构要占用额外的内存，写屏障更复杂，并发执行的 GC 线程也会占用 CPU，与 Parallel 相比停顿短得多，但吞吐量通常略低（Oracle GC 调优指南）。
+
 #### 8. ZGC 收集器
 
 ZGC 的目标是让停顿时间不随堆的大小增长，JDK 15 起可以用于生产（JEP 377），JDK 21 加入了分代模式（JEP 439），JDK 23 起分代成为默认模式（JEP 474），JDK 24 移除了不分代的模式（JEP 490）。
@@ -501,6 +537,27 @@ G1 的新生代回收和混合回收都要在停顿中把存活对象复制到�
 | 512 MB | 46 | 0.2 ms | 0.009 ms | 0 次 |
 
 这个程序中 ZGC 的停顿都在 0.01 ms 以内，比 G1 短两个数量级，官方给出的是停顿不超过 1 毫秒。但堆只有 128 MB 时，程序分配内存的速度超过了并发回收的速度，没有空闲的内存可用，分配内存的线程只能等待回收完成，日志中记为 Allocation Stall，对用户来说与停顿无异。所以使用 ZGC 要给堆留出足够的余量，代价是占用更多的内存，读屏障也会让吞吐量略有下降。
+
+### 三色标记
+
+CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜色表示对象的状态：
+
+- 白色：还没有被访问到，标记结束时仍为白色的就是垃圾；
+- 灰色：已经被访问到，但它引用的对象还没有全部检查；
+- 黑色：它引用的对象都已经检查过，之后不会再访问它。
+
+标记从 GC Roots 直接引用的对象开始，把它们置为灰色，然后不断取出一个灰色对象，把它引用的白色对象置为灰色，自己置为黑色，直到没有灰色对象。
+
+用户线程在标记期间修改引用，可能让存活的对象被当成垃圾，这称为漏标。例如订单对象 order 已经是黑色，用户对象 user 是灰色，user.addr 引用着白色的地址对象 addr。这时用户线程执行 order.addr = user.addr 和 user.addr = null，addr 只被 order 引用，但 order 已经检查过，不会再被访问，addr 一直是白色，标记结束后被回收，order.addr 就指向了一个已经被回收的对象。
+
+<div align="center"> <img src="pics/gc-tricolor.png" width="760px"/> </div><br>
+
+漏标需要同时满足两个条件：黑色对象新增了指向白色对象的引用；从灰色对象出发到这个白色对象的引用全部被删除。破坏任意一个条件就不会漏标，CMS 和 G1 各选了一个：
+
+- 增量更新（CMS）：写入引用字段时，写屏障把对象所在的卡标记为脏，重新标记时重新扫描脏卡中的对象，order 被再次检查，从而找到 addr；
+- 原始快照（Snapshot At The Beginning, SATB，G1）：删除或覆盖引用之前，写屏障把旧值记录下来并当作存活，执行 user.addr = null 时 addr 被记录下来。代价是标记期间才变成垃圾的对象要等下一个周期才能回收（Oracle GC 调优指南）。
+
+所以重新标记（Remark）的停顿不能省略，并发标记期间记录下来的对象要在用户线程暂停时处理完。CMS 要重新扫描 GC Roots 和所有脏卡，用户线程修改的引用越多停顿越长；G1 只需处理 SATB 记录的对象，停顿通常更短。
 
 ## 三、内存分配与回收策略
 
@@ -893,21 +950,24 @@ OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有
 
 - Java heap space：堆中无法再分配对象，可能是堆设置得太小，也可能是内存泄漏；
 - GC overhead limit exceeded：GC 占用了约 98% 的时间，却只回收了不到 2% 的堆，说明存活的对象几乎占满了堆；
-- Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类，例如 CGLIB 生成代理类、Groovy 脚本每次执行都编译出新类，以及热部署时旧的类加载器仍被引用，它加载的类无法卸载。
+- Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类，例如 CGLIB 生成代理类、Groovy 脚本每次执行都编译出新类，以及热部署时旧的类加载器仍被引用，它加载的类无法卸载；
+- Cannot reserve ... bytes of direct buffer memory：NIO 的直接内存超过了 -XX:MaxDirectMemorySize，没有设置时上限与最大堆相同，常见于 Netty 等框架申请的堆外内存没有释放；
+- unable to create native thread：线程数达到了进程或容器的上限，或者没有内存分配线程栈，与堆的大小无关。例如把容器的进程数限制为 500，堆几乎是空的，创建第 474 个线程时就抛出了这个错误，增大 -Xmx 解决不了（JDK 21 实测，见[附录 A10](#a10-直接内存与线程数的溢出)）。
 
 例如每次都创建一个新的类加载器重新定义 Plugin 类，并把得到的 Class 对象保存在列表中，-XX:MaxMetaspaceSize=16m 时定义了约 2600 个类后抛出 OutOfMemoryError: Metaspace；不保存 Class 对象时，10 万次定义中有约 9.8 万个类被卸载，没有溢出（JDK 21 实测，见[附录 A8](#a8-元空间溢出)）。类只有在它的类加载器被回收后才能卸载，见 [方法区的回收](#3-方法区的回收)。
 
-内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收，堆内存持续增长，最终导致内存溢出。常见原因：
+内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收，堆内存持续增长，最终导致内存溢出。内存溢出则是申请内存时空间不够这个结果，内存泄漏是原因之一，另一个常见原因是正常需要的内存就超过了上限，例如一次查询加载了上百万行数据。内存泄漏的常见原因：
 
 - 静态集合只添加不清理，例如用 static Map 做缓存却没有淘汰策略；
 - 线程池中的线程使用 ThreadLocal 后没有调用 remove()，线程一直存活，值也一直无法被回收，见 [弱引用](#3-弱引用)；
 - 连接、流等资源没有关闭；
-- 注册的监听器、回调没有注销。
+- 注册的监听器、回调没有注销；
+- 作为 HashMap 键的对象放入之后，修改了参与 hashCode() 计算的字段，之后 remove() 时到别的桶中查找，删不掉原来的键值对。
 
 排查步骤：
 
 1. 启动参数加上 -XX:+HeapDumpOnOutOfMemoryError，发生内存溢出时自动保存堆转储，用 -XX:HeapDumpPath 指定保存位置；进程还在运行时，可以用 jcmd <pid> GC.heap_dump <文件名> 手动导出；
-2. 用 Eclipse MAT 等工具打开堆转储，找到占用内存最多的对象，查看它们到 GC Roots 的引用链，确定是谁持有了这些对象；
+2. 用 Eclipse MAT 等工具打开堆转储，按 Retained Heap（对象被回收后能一起释放的内存）排序找到占用最多的对象，查看它们到 GC Roots 的引用链，确定是谁持有了这些对象；
 3. 引用链指向不应该存活的对象（例如上面的静态集合）就是内存泄漏，需要修改代码；否则说明确实需要这么多内存，应该增大堆或者减少一次加载的数据量。
 
 例如下面的程序不断向静态列表中添加 1 MB 的数组，静态变量引用的对象属于 GC Roots，这些数组都无法被回收：
@@ -930,6 +990,8 @@ java.lang.OutOfMemoryError: Java heap space
 Dumping heap to java_pid24607.hprof ...
 Heap dump file created [19154891 bytes in 0.007 secs]
 ```
+
+线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd <pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索（Oracle 排障指南）；它会先进行一次 Full GC，只统计存活的对象，对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
 
 ### JVM 调优
 
@@ -1186,6 +1248,100 @@ $ grep -c "unloading class Plugin" unload.log
 97643
 ```
 
+### A9 G1 的标记周期与安全点
+
+运行 A3 中的程序，同时输出 GC 和安全点的日志：
+
+```text
+$ java -Xmx128m -XX:+UseG1GC -Xlog:gc GCDemo
+[0.056s][info][gc] GC(6) Pause Young (Concurrent Start) (G1 Evacuation Pause) 103M->76M(128M) 1.591ms
+[0.056s][info][gc] GC(7) Concurrent Mark Cycle
+[0.063s][info][gc] GC(8) Pause Young (Normal) (G1 Evacuation Pause) 108M->85M(128M) 4.229ms
+[0.065s][info][gc] GC(9) Pause Young (Normal) (G1 Evacuation Pause) 111M->92M(128M) 0.788ms
+[0.066s][info][gc] GC(7) Pause Remark 105M->105M(128M) 0.107ms
+[0.067s][info][gc] GC(10) Pause Young (Normal) (G1 Evacuation Pause) 113M->99M(128M) 0.657ms
+[0.069s][info][gc] GC(11) Pause Young (Normal) (G1 Evacuation Pause) 116M->103M(128M) 0.583ms
+[0.070s][info][gc] GC(7) Pause Cleanup 112M->112M(128M) 0.034ms
+[0.070s][info][gc] GC(7) Concurrent Mark Cycle 13.498ms
+[0.071s][info][gc] GC(12) Pause Young (Prepare Mixed) (G1 Evacuation Pause) (Evacuation Failure) 119M->110M(128M) 0.661ms
+[0.072s][info][gc] GC(13) Pause Young (Mixed) (G1 Evacuation Pause) 120M->112M(128M) 0.421ms
+
+$ java -Xmx128m -XX:+UseG1GC -Xlog:gc,safepoint GCDemo
+[0.044s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 24M->6M(128M) 1.801ms
+[0.044s][info][safepoint] Safepoint "G1CollectForAllocation", Time since last: 16699083 ns, Reaching safepoint: 4750 ns, Cleanup: 2458 ns, At safepoint: 1858667 ns, Leaving safepoint: 4875 ns, Total: 1870750 ns
+```
+
+Reaching safepoint 是等待所有线程到达安全点的时间，At safepoint 是在安全点上执行操作（这里是新生代回收）的时间。
+
+### A10 直接内存与线程数的溢出
+
+不断分配 1 MB 的直接内存并保存在列表中：
+
+```java
+List<ByteBuffer> buffers = new ArrayList<>();
+while (true) buffers.add(ByteBuffer.allocateDirect(1024 * 1024));
+```
+
+```text
+$ java -Xmx256m -XX:MaxDirectMemorySize=32m Direct
+Exception in thread "main" java.lang.OutOfMemoryError: Cannot reserve 1048576 bytes of direct buffer memory (allocated: 33554432, limit: 33554432)
+	at java.base/java.nio.Bits.reserveMemory(Bits.java:178)
+	at java.base/java.nio.DirectByteBuffer.<init>(DirectByteBuffer.java:111)
+	at java.base/java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:360)
+$ java -Xmx64m Direct
+Exception in thread "main" java.lang.OutOfMemoryError: Cannot reserve 1048576 bytes of direct buffer memory (allocated: 67108864, limit: 67108864)
+```
+
+不断创建等待同一个 CountDownLatch 的线程。在 Docker 的 Ubuntu 24.04 容器（aarch64）中运行 Linux 版的 JDK 21.0.13，用 --pids-limit 500 限制容器的进程数：
+
+```java
+CountDownLatch never = new CountDownLatch(1);
+while (true) {
+    new Thread(() -> { try { never.await(); } catch (InterruptedException e) { } }).start();
+    n++;
+}
+```
+
+```text
+$ docker run --pids-limit 500 ... java -Xmx256m Threads
+[0.261s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 2040k, guardsize: 4k, detached.
+[0.262s][warning][os,thread] Failed to start the native thread for java.lang.Thread "Thread-474"
+已创建 474 个线程：java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+```
+
+### A11 堆直方图
+
+用 HashMap 做缓存，每次放入一个带 512 字节数组的 Session，从不删除，每放入 100 个休眠 10 ms；运行 10 秒和 30 秒时各执行一次 jcmd <pid> GC.class_histogram：
+
+```java
+record Session(String id, byte[] payload) {}
+static final Map<String, Session> CACHE = new HashMap<>();
+
+for (long i = 0; ; i++) {
+    String id = "s" + i;
+    CACHE.put(id, new Session(id, new byte[512]));
+    byte[] garbage = new byte[4096];          // 正常的临时对象，很快被回收
+    if (i % 100 == 0) Thread.sleep(10);
+}
+```
+
+```text
+（10 秒）
+ num     #instances         #bytes  class name (module)
+-------------------------------------------------------
+   1:        172630       45831736  [B (java.base@21.0.13)
+   2:         83430        2669760  java.util.HashMap$Node (java.base@21.0.13)
+   3:         90148        2163552  java.lang.String (java.base@21.0.13)
+   4:         82401        1977624  SlowLeak$Session
+（30 秒）
+   1:        508630      138567736  [B (java.base@21.0.13)
+   2:        251430        8045760  java.util.HashMap$Node (java.base@21.0.13)
+   3:        258148        6195552  java.lang.String (java.base@21.0.13)
+   4:        250401        6009624  SlowLeak$Session
+```
+
+两次执行后 jstat -gcutil 的 FGC 列分别为 1 和 2，每次统计前都进行了一次 Full GC。临时的 4 KB 数组已经被回收，没有出现在统计中；[B 的数量约为 Session 的 2 倍，分别是 Session 的 payload 和 String 内部的字节数组。
+
 ## 参考资料
 
 - [Troubleshooting Memory Leaks (Java SE 21)](https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html)
@@ -1222,3 +1378,9 @@ $ grep -c "unloading class Plugin" unload.log
 - [JDK 21 源码：ServiceLoader.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/ServiceLoader.java)
 - [proc_loadavg(5) — Linux manual page](https://man7.org/linux/man-pages/man5/proc_loadavg.5.html)
 - [vmstat(8) — Linux manual page](https://man7.org/linux/man-pages/man8/vmstat.8.html)
+- [HotSpot Glossary of Terms](https://openjdk.org/groups/hotspot/docs/HotSpotGlossary.html)
+- [Garbage-First (G1) Garbage Collector | Java SE 21 GC Tuning Guide](https://docs.oracle.com/en/java/javase/21/gctuning/garbage-first-g1-garbage-collector1.html)
+- [The java Command (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html)
+- [The jcmd Command (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jcmd.html)
+- [JDK 8 源码：concurrentMarkSweepGeneration.cpp](https://github.com/openjdk/jdk8u/blob/master/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp)
+- [Chapter 2. The Structure of the Java Virtual Machine (Java SE 21)](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)

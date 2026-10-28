@@ -57,6 +57,11 @@
         * [A6 热点计数](#a6-热点计数)
         * [A7 Bitmap 的签到和日活](#a7-bitmap-的签到和日活)
         * [A8 HyperLogLog 的误差和内存](#a8-hyperloglog-的误差和内存)
+        * [A9 过期删除](#a9-过期删除)
+        * [A10 LFU 计数器](#a10-lfu-计数器)
+        * [A11 持久化与脚本的默认配置](#a11-持久化与脚本的默认配置)
+        * [A12 长时间运行的 Lua 脚本](#a12-长时间运行的-lua-脚本)
+        * [A13 槽迁移与 ASK 重定向](#a13-槽迁移与-ask-重定向)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -87,6 +92,16 @@ Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，�
 | SET | 无序集合 | 添加、获取、移除单个元素<br> 检查一个元素是否存在于集合中<br> 计算交集、并集、差集<br> 从集合里面随机获取元素 |
 | HASH | 包含键值对的无序哈希表 | 添加、获取、移除单个键值对<br> 获取所有键值对<br> 检查某个键是否存在|
 | ZSET | 有序集合 | 添加、获取、删除元素<br> 根据分值范围或者成员来获取元素<br> 计算一个键的排名 |
+
+选择类型时看要对值做什么操作，常见的用法如下：
+
+- STRING：缓存序列化后的对象、计数器、分布式锁，见 [计数器](#计数器)、[分布式锁实现](#分布式锁实现)；
+- LIST：按插入顺序保存，两端读写，例如最新的 N 条消息、简单的消息队列，见 [消息队列](#消息队列)；
+- SET：去重和求交集、并集，例如文章的标签、共同好友、点过赞的用户，见 [点赞功能](#点赞功能)；
+- HASH：一个对象的多个字段，可以单独读写某个字段，例如用户信息、购物车中每件商品的数量；
+- ZSET：按分值排序和按范围查找，例如排行榜、按时间排序的 Feed、滑动窗口限流，见 [排行榜](#排行榜) 和 [限流算法](系统设计基础.md#1-限流算法)。
+
+签到、日活和独立访客数这类统计用 BITMAP 和 HyperLogLog，附近的门店用 GEO，需要消费者组和确认的消息用 Stream。
 
 ### STRING
 
@@ -404,6 +419,8 @@ embstr 编码把对象头和 SDS 放在同一块内存中，只需分配一次�
 - 范围查询方便，找到起点后沿最底层链表向后遍历即可，ZRANGEBYSCORE 就是这样实现的；
 - 实现和调试更简单。
 
+MySQL 的索引用 B+ 树，是因为 B+ 树的一个节点存放很多个键，每次读磁盘都取回一整页，减少 I/O 次数；有序集合全部在内存中，没有这个需要。Redis 的作者解释选择跳跃表时还提到：调整升层的概率就能控制内存，按 1/4 升层时每个节点平均只有 1.33 个指针；ZRANGE 这类范围遍历沿底层链表进行，缓存局部性不比平衡树差。跳跃表的代价是性能依赖随机数，最坏情况下退化为 O(N)，只是概率极小。
+
 Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了多少个节点，查找时把经过的跨度相加就得到排名，所以 ZRANK 也是 O(logN)。
 
 ## 五、Redis 与 Memcached
@@ -431,7 +448,16 @@ Redis Cluster 实现了分布式的支持。
 
 ## 六、键的过期时间
 
-Redis 可以为每个键设置过期时间。过期的键不会在过期的瞬间被删除，而是通过两种策略清除：惰性删除，在访问键时检查它是否过期，过期就删除；定期删除，后台每秒执行 10 次（由 hz 配置），每次随机抽取一部分设置了过期时间的键进行检查，删除其中已经过期的键。
+Redis 可以为每个键设置过期时间，过期时间保存在一个单独的字典中（键 → 过期的时间戳）。为每个键设置定时器的开销太大，所以过期的键不会在过期的瞬间被删除，而是通过两种策略清除：
+
+- 惰性删除：访问键时检查它是否过期，过期就删除并当作不存在，不额外占用 CPU，但不再被访问的过期键会一直占用内存；
+- 定期删除：后台每秒执行 10 次（由 hz 配置），每次从设置了过期时间的键中取 20 个检查，删除其中已经过期的；过期的超过 10% 时说明过期键还很多，继续检查下一批，但每次最多占用 25% 的 CPU 时间（hz 为 10 时是 25 毫秒）。
+
+两者互相补充：惰性删除保证读不到过期的数据，定期删除回收没人访问的过期键，并且限制了自己占用的 CPU。例如关闭定期删除后，10 万个已经过期的键仍然留在内存中，DBSIZE 为 100000；GET 其中一个返回 nil，DBSIZE 变为 99999；重新打开定期删除，372 毫秒后全部删除。
+
+需要注意的是，过期的键只占少数时，每批 20 个中过期的不到 10%，定期删除不会连续检查：100 万个键中有 5 万个过期，20 秒内只删除了 228 个（Redis 7.4 实测，见[附录 A9](#a9-过期删除)）。所以过期的键可能长时间占用内存，内存紧张时还要依靠下一节的淘汰策略。
+
+主从复制时，从服务器不自己删除过期的键，而是等待主服务器发来的 DEL，避免两边的数据不一致；在从服务器上读取已经过期、但还没有收到 DEL 的键时，返回的是空。
 
 对于 HASH 这种容器，Redis 7.4 之前只能为整个键设置过期时间，7.4 开始可以使用 HEXPIRE 等命令为单个字段设置过期时间。
 
@@ -452,13 +478,19 @@ Redis 4.0 之后具体有 8 种淘汰策略：
 | allkeys-lfu | 从所有数据集中挑选最不经常使用的数据淘汰 |
 | noeviction | 禁止驱逐数据 |
 
-默认策略是 noeviction：内存达到上限后，写命令返回错误，读命令照常执行。
+Redis 8.6 又增加了 allkeys-lrm 和 volatile-lrm，按最近一次修改的时间淘汰，读取不更新这个时间。
 
-作为内存数据库，出于对性能和内存消耗的考虑，Redis 的淘汰算法实际实现上并非针对所有 key，而是每次抽样一小部分（maxmemory-samples，默认 5 个）并且从中选出被淘汰的 key。
+默认策略是 noeviction：内存达到上限后，写命令返回错误，读命令照常执行。volatile 开头的策略只淘汰设置了过期时间的键，没有这样的键时，表现得和 noeviction 一样。
 
-使用 Redis 缓存数据时，为了提高缓存命中率，需要保证缓存数据都是热点数据。可以将内存最大使用量设置为热点数据占用的内存量，然后启用 allkeys-lru 淘汰策略，将最近最少使用的数据淘汰。
+Redis 的 LRU 和 LFU 都是近似实现。精确的 LRU 要用双向链表维护所有键的访问顺序（见 [LRU](缓存.md#七lru)），每个键多两个指针，每次访问都要移动节点。Redis 只在每个对象中用 24 位记录最近一次访问的时间（秒级），淘汰时随机抽取 maxmemory-samples（默认 5）个键，放入一个大小为 16 的候选池，淘汰池中空闲时间最长的键。抽样数调到 10 时已经很接近精确的 LRU，代价是多耗一些 CPU。
 
-Redis 4.0 引入了 volatile-lfu 和 allkeys-lfu 淘汰策略，LFU 策略通过统计访问频率，将访问频率最少的键值对淘汰。
+LFU 复用这 24 位：高 16 位是上次访问的时间（分钟），低 8 位是对数计数器，最大为 255。新键的计数为 5，每次访问以 1 / ((计数 − 5) × lfu-log-factor + 1) 的概率加 1，计数越大越难增长；距离上次访问每过 lfu-decay-time 分钟（默认 1），计数减 1，过去的热点会逐渐冷却。例如对一个键执行 10、100、1000、1 万、10 万、100 万次 GET 后，OBJECT FREQ 依次为 6、10、20、52、146、255（Redis 7.4 实测，见[附录 A10](#a10-lfu-计数器)）。
+
+选择策略时：
+
+- 只作缓存时用 allkeys-lru，并把内存上限设置为热点数据占用的内存量；访问频率的差异比较稳定，或者偶尔有批量读取冷数据时用 allkeys-lfu，一次性的访问不会把高频的键挤出去；
+- 同一个实例既存缓存又存不能丢的数据时，给缓存设置过期时间并用 volatile-lru，只淘汰缓存，官方文档更建议把两类数据放到两个实例中；
+- 当作数据库使用、数据不能被淘汰时用 noeviction，内存满时写入报错，由应用发现并处理。
 
 ## 八、持久化
 
@@ -467,6 +499,8 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 ### RDB 持久化
 
 将某个时间点的所有数据都存放到硬盘上。
+
+save 配置的默认值为 3600 1 300 100 60 10000，表示 1 小时内至少有 1 次修改、5 分钟内至少 100 次、1 分钟内至少 1 万次，满足任意一个条件就自动生成一次快照（Redis 7.4 实测，见[附录 A11](#a11-持久化与脚本的默认配置)）。SAVE 命令在主进程中生成快照，期间不处理其它命令，所以一般使用 BGSAVE。
 
 执行 BGSAVE 或满足 save 配置的条件时，Redis fork 一个子进程把内存中的数据写入 RDB 文件，主进程继续处理命令。fork 之后父子进程共享同一份内存页，主进程修改某一页时操作系统才复制这一页（写时复制），所以生成快照期间写入越多，额外占用的内存越多。
 
@@ -478,7 +512,7 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 ### AOF 持久化
 
-将写命令添加到 AOF 文件（Append Only File）的末尾。
+将写命令添加到 AOF 文件（Append Only File）的末尾。AOF 默认关闭，需要配置 appendonly yes 开启。
 
 使用 AOF 持久化需要设置同步选项，从而确保写命令同步到磁盘文件上的时机。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。有以下同步选项：
 
@@ -494,7 +528,9 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 
 随着服务器写请求的增多，AOF 文件会越来越大。Redis 提供了一种将 AOF 重写的特性，能够去除 AOF 文件中的冗余写命令。
 
-重写同样由子进程完成，它不读取旧的 AOF 文件，而是按内存中的当前数据生成最少的命令。Redis 7.0 起 AOF 由多个文件组成：重写生成的基础文件，以及之后追加写命令的增量文件。
+重写同样由子进程完成，它不读取旧的 AOF 文件，而是按内存中的当前数据生成最少的命令。AOF 文件比上次重写后增长一倍（auto-aof-rewrite-percentage 100），并且不小于 64 MB（auto-aof-rewrite-min-size）时自动重写，也可以执行 BGREWRITEAOF。
+
+Redis 7.0 起 AOF 由多个文件组成：重写生成的基础文件，以及之后追加写命令的增量文件，由一个清单文件（manifest）记录。重写期间主进程仍在处理写命令：它在开始重写时打开一个新的增量文件，之后的写命令都追加到这里；子进程写完新的基础文件后，主进程生成新的清单文件，原子地替换旧的，再删除旧的基础文件和增量文件。重写失败时，旧的文件加上新打开的增量文件仍是完整的数据。7.0 之前只有一个 AOF 文件，重写期间的写命令先保存在内存的重写缓冲区中，子进程完成后再追加到新文件的末尾。
 
 <div align="center"> <img src="pics/redis-aof-rewrite.png" width="760px"/> </div><br>
 
@@ -505,6 +541,8 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 - 丢失的数据：RDB 丢失最后一次快照之后的写入，按 save 配置可能是几分钟；AOF 使用 everysec 时约丢失 1 秒；
 - 文件和恢复：RDB 是紧凑的二进制快照，适合备份，数据量大时恢复也快；AOF 记录的是命令，文件通常更大；
 - 开销：RDB 只在生成快照时 fork 子进程，数据量大时 fork 本身可能让主进程停顿；AOF 每次写入都要追加，并且需要定期重写。
+
+能接受丢失几分钟数据时只用 RDB 即可；数据重要时两种都开启。官方文档不建议只用 AOF，因为定期的 RDB 快照便于备份，重启时恢复也更快。只作缓存、数据可以从数据库重建时，也可以都不开启。
 
 ## 九、事务
 
@@ -537,7 +575,9 @@ WATCH 可以实现乐观锁：EXEC 之前被 WATCH 的键被其它客户端修�
 
 ### Lua 脚本
 
-事务中的命令在 EXEC 时才一起执行，不能根据前一条命令的结果决定下一条做什么。Lua 脚本可以做到这一点，并且整个脚本原子执行，执行期间不会插入其它客户端的命令。
+事务中的命令在 EXEC 时才一起执行，不能根据前一条命令的结果决定下一条做什么。Lua 脚本可以做到这一点，并且整个脚本原子执行：Redis 用一个线程执行命令，执行脚本时不处理其它客户端的命令，整个脚本就像一条命令。用事务实现“先读后写”时，只能用 WATCH 检测冲突后重试；流水线只是减少网络往返，几条命令之间仍可能插入其它客户端的命令。
+
+这里的原子性指的是执行期间不被打断，而不是出错时全部回滚，见下文的注意事项。
 
 例如每个用户每天最多领 3 张券，键为 coupon:1001，有效期一天：
 
@@ -558,7 +598,7 @@ return n + 1
 需要注意的是：
 
 - 脚本中途出错时，之前执行的写命令不会回滚，之后的命令不再执行；
-- 脚本执行期间服务器不处理其它命令，脚本要短，不要在其中遍历大集合；
+- 脚本执行期间服务器不处理其它命令，其它客户端的请求一直等待。脚本运行超过 busy-reply-threshold（默认 5 秒）后，服务器才开始处理请求，但除了 SCRIPT KILL 和 SHUTDOWN NOSAVE 都返回 BUSY 错误。SCRIPT KILL 只能终止还没有执行写命令的脚本；已经写过数据的脚本只能等它结束，或者用 SHUTDOWN NOSAVE 关闭服务器并丢弃上次持久化之后的写入（Redis 7.4 实测，见[附录 A12](#a12-长时间运行的-lua-脚本)）。所以脚本要短，不要在其中遍历大集合；
 - 脚本用到的键要通过 KEYS 传入，集群模式下这些键必须在同一个槽中；
 - 可以先用 SCRIPT LOAD 把脚本缓存在服务器上，之后用 EVALSHA 加脚本的 SHA1 调用，不用每次发送脚本内容。
 
@@ -577,7 +617,9 @@ Redis 用一个线程执行所有命令，仍然很快，原因主要有以下�
 
 用 redis-benchmark 测试，50 个连接逐条发送 GET，每秒约 16 万次；每次连续发送 16 条命令（流水线）时，每秒约 160 万次。逐条发送 100 万次 GET 时，服务器消耗的 CPU 时间中内核态 5.1 秒、用户态 1.0 秒：大部分时间花在网络读写的系统调用上，解析和执行一条命令只需要 1 微秒左右（Redis 7.4 实测，见[附录 A3](#a3-单线程的吞吐量和-cpu-时间)）。
 
-所以 Redis 的瓶颈通常是网络和内存，而不是 CPU。Redis 6.0 加入了 I/O 多线程（io-threads，默认关闭），开启后默认只把写回客户端交给 I/O 线程，读取和解析请求还需要再打开 io-threads-do-reads；命令仍由主线程逐个执行，单条命令的原子性不变。此外，关闭文件、AOF 刷盘和 UNLINK 释放大键的内存这些耗时操作由后台线程完成。
+所以 Redis 的瓶颈通常是网络和内存，而不是 CPU。Redis 6.0 加入了 I/O 多线程（io-threads，默认关闭），开启后默认只把写回客户端交给 I/O 线程，读取和解析请求还需要再打开 io-threads-do-reads；Redis 8.0 重新实现了 I/O 多线程，I/O 线程同时负责读取、解析和写回，io-threads-do-reads 被废弃。两种实现中命令都由主线程逐个执行，不会有多个线程同时修改一个键，单条命令的原子性不变。此外，关闭文件、AOF 刷盘和 UNLINK 释放大键的内存这些耗时操作由后台线程完成。
+
+需要注意的是，单线程也意味着一条慢命令会让所有客户端等待：执行 KEYS *、对大 Key 执行 HGETALL 或 DEL、运行很长的 Lua 脚本时，其它命令都在排队，见 [大 Key 与热 Key](缓存.md#大-key-与热-key)。
 
 ## 十一、复制
 
@@ -653,6 +695,16 @@ Redis Cluster 把键空间分为 16384 个哈希槽，每个主节点负责一�
 - 主节点宕机后，它的一个从节点会被选为新的主节点。cluster-node-timeout 为 5 秒时，停掉一个主节点后，这部分槽约 7～9 秒无法写入。
 
 需要注意的是，主从之间是异步复制，主节点宕机前刚写入、还没有复制到从节点的数据会丢失，所以 Redis Cluster 不保证强一致性。
+
+扩容时要把一部分槽迁移到新节点。迁移以键为单位进行，期间一个槽的键一部分在源节点、一部分在目标节点，客户端靠 ASK 重定向找到它们。以把槽 5712 从 7002 迁移到 7003 为例（Redis 7.4 实测，见[附录 A13](#a13-槽迁移与-ask-重定向)）：
+
+- 先把 7003 上的槽 5712 标记为 IMPORTING、7002 上的标记为 MIGRATING，再用 MIGRATE 把键一批批搬到 7003，每个键在同一时刻只存在于其中一个节点；
+- 客户端仍然先访问 7002：键还在 7002 就直接处理，例如 {user:1001}:cart 正常返回；键已经迁走或者不存在，返回 ASK 5712 127.0.0.1:7003；
+- 客户端收到 ASK 后，先向 7003 发送 ASKING，再发送原来的命令；不发 ASKING 直接访问 7003，会收到 MOVED 被重定向回 7002；
+- 一条命令的多个键分散在两个节点上时，返回 TRYAGAIN，客户端稍后重试；
+- 所有键迁移完后，用 CLUSTER SETSLOT 5712 NODE 把槽分配给 7003，之后访问 7002 收到 MOVED 5712 127.0.0.1:7003。
+
+MOVED 与 ASK 的区别在于：MOVED 表示槽已经归属新的节点，客户端更新本地缓存的槽映射；ASK 只把这一次请求转到新节点，下一次仍然先访问源节点，因为槽中其它的键可能还没有迁走。所以迁移期间请求仍然可以处理，只是多了一次重定向；迁移大 Key 时 MIGRATE 耗时较长，期间两个节点都会阻塞。
 
 ## 十四、一个简单的论坛系统分析
 
@@ -951,6 +1003,137 @@ shop:2
 0.7932
 ```
 
+### A9 过期删除
+
+用流水线写入键，过期时间为 1 秒。DEBUG SET-ACTIVE-EXPIRE 0 关闭定期删除（服务器以 --enable-debug-command yes 启动），键的数量取自 INFO keyspace：
+
+```python
+r.execute_command('DEBUG', 'SET-ACTIVE-EXPIRE', 0)
+for i in range(100000): pipe.set(f'session:{i}', 'x', px=1000)
+time.sleep(2)
+print(stat()); print(r.get('session:7')); print(stat())   # stat() 返回 keys、expires 和 expired_keys
+r.execute_command('DEBUG', 'SET-ACTIVE-EXPIRE', 1)   # 每 5 毫秒查询一次，直到 keys 为 0
+```
+
+```text
+关闭定期删除，10 万个键过期 1 秒后：keys, expires, expired_keys = (100000, 100000, 0)
+GET session:7 -> None
+访问一个键后： (99999, 99999, 1)
+打开定期删除后 372 ms 清理完： (0, 0, 100000)
+```
+
+再写入 95 万个过期时间为 1 小时的键和 5 万个过期时间为 1 秒的键，不关闭定期删除，hz 为 10，统计剩余的过期键：
+
+```text
+到期后  0.0 s 剩余过期键 49996
+到期后  4.1 s 剩余过期键 49947
+到期后  8.1 s 剩余过期键 49901
+到期后 12.2 s 剩余过期键 49845
+到期后 16.2 s 剩余过期键 49809
+到期后 20.0 s 已清理 228/50000，expired_stale_perc=4.8
+```
+
+### A10 LFU 计数器
+
+maxmemory-policy 设为 allkeys-lfu，lfu-log-factor 和 lfu-decay-time 为默认的 10 和 1，对同一个键反复执行 GET，再用 OBJECT FREQ 读取计数器：
+
+```text
+新写入：OBJECT FREQ = 5
+GET 10 次后：OBJECT FREQ = 6
+GET 100 次后：OBJECT FREQ = 10
+GET 1000 次后：OBJECT FREQ = 20
+GET 10000 次后：OBJECT FREQ = 52
+GET 100000 次后：OBJECT FREQ = 146
+GET 1000000 次后：OBJECT FREQ = 255
+```
+
+### A11 持久化与脚本的默认配置
+
+不带配置文件启动 redis-server，用 CONFIG GET 读取：
+
+```text
+save = 3600 1 300 100 60 10000
+appendonly = no
+appendfsync = everysec
+auto-aof-rewrite-percentage = 100
+auto-aof-rewrite-min-size = 67108864
+aof-use-rdb-preamble = yes
+maxmemory-policy = noeviction
+maxmemory-samples = 5
+busy-reply-threshold = 5000
+io-threads = 1
+io-threads-do-reads = no
+hz = 10
+```
+
+### A12 长时间运行的 Lua 脚本
+
+一个客户端执行死循环脚本，另一个客户端在 1 秒时发送 PING：
+
+```bash
+redis-cli eval "local i = 0 while true do i = i + 1 end" 0
+```
+
+```text
+脚本开始后 1.0 s 发出 PING，5.08 s 收到：BUSY Redis is busy running a script. You can only call SCRIPT KILL or SHUTDOWN NOSAVE.
+> SCRIPT KILL
+OK
+（执行脚本的客户端）ERR Script killed by user with SCRIPT KILL...
+> PING
+PONG
+```
+
+脚本先写入再进入死循环：
+
+```bash
+redis-cli eval "redis.call('SET', KEYS[1], 'paid') while true do end" 1 order:1024
+```
+
+```text
+> SCRIPT KILL
+UNKILLABLE Sorry the script already executed write commands against the dataset. You can either wait the script termination or kill the server in a hard way using the SHUTDOWN NOSAVE command.
+> SHUTDOWN NOSAVE
+（执行脚本的客户端）Error: Server closed the connection
+```
+
+### A13 槽迁移与 ASK 重定向
+
+3 个主节点 7001～7003，槽的分配与 A4 相同，把槽 5712 从 7002 迁移到 7003（IDA、IDB 是两个节点的 ID）：
+
+```text
+7002> set user:1001 alice
+OK
+7002> set {user:1001}:cart book
+OK
+7003> cluster setslot 5712 importing IDA
+OK
+7002> cluster setslot 5712 migrating IDB
+OK
+7002> migrate 127.0.0.1 7003 "" 0 5000 keys user:1001
+OK
+7002> get user:1001
+ASK 5712 127.0.0.1:7003
+7002> get {user:1001}:cart
+book
+7002> set {user:1001}:orders o1
+ASK 5712 127.0.0.1:7003
+7002> mget user:1001 {user:1001}:cart
+TRYAGAIN Multiple keys request during rehashing of slot
+7003> get user:1001
+MOVED 5712 127.0.0.1:7002
+7003> asking
+OK
+7003> get user:1001
+alice
+$ redis-cli -c -p 7002 get user:1001
+alice
+7002> migrate 127.0.0.1 7003 "" 0 5000 keys {user:1001}:cart
+OK
+（在 3 个节点上执行 cluster setslot 5712 node IDB）
+7002> get user:1001
+MOVED 5712 127.0.0.1:7003
+```
+
 ## 参考资料
 
 - Carlson J L. Redis in Action [M]. Manning, 2013.
@@ -979,3 +1162,8 @@ shop:2
 - [Redis 7.4.1 源码 t_zset.c](https://github.com/redis/redis/blob/7.4.1/src/t_zset.c)
 - [Redis 7.4.1 源码 sds.c](https://github.com/redis/redis/blob/7.4.1/src/sds.c)
 - [Redis 7.4.1 源码 hyperloglog.c](https://github.com/redis/redis/blob/7.4.1/src/hyperloglog.c)
+- [Redis 7.4.1 源码 expire.c](https://github.com/redis/redis/blob/7.4.1/src/expire.c)
+- [Redis 7.4.1 源码 evict.c](https://github.com/redis/redis/blob/7.4.1/src/evict.c)
+- [Redis 8.0.0 redis.conf](https://github.com/redis/redis/blob/8.0.0/redis.conf)
+- [Redis cluster specification](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
+- [Why Redis uses skip lists (antirez, Hacker News)](https://news.ycombinator.com/item?id=1171423)
