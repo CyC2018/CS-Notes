@@ -4,10 +4,10 @@
     * [一、索引](#一索引)
         * [B+ Tree 原理](#b-tree-原理)
         * [MySQL 索引](#mysql-索引)
-        * [索引优化](#索引优化)
-        * [索引失效](#索引失效)
         * [索引的优点](#索引的优点)
         * [索引的使用条件](#索引的使用条件)
+        * [索引优化](#索引优化)
+        * [索引失效](#索引失效)
     * [二、查询性能优化](#二查询性能优化)
         * [一条 SQL 的执行过程](#一条-sql-的执行过程)
         * [使用 Explain 进行分析](#使用-explain-进行分析)
@@ -116,6 +116,20 @@ MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有
 
 空间数据索引（R-Tree）用于地理数据，会从所有维度来索引数据，可以按任意维度组合查询，需要使用 GIS 相关的函数来维护数据。MyISAM 支持空间数据索引，InnoDB 从 MySQL 5.7 起也支持。
 
+### 索引的优点
+
+- 大大减少了服务器需要扫描的数据行数；
+- 帮助服务器避免排序和分组时创建临时表：B+Tree 索引是有序的，可以直接用于 ORDER BY 和 GROUP BY；
+- 将随机 I/O 变为顺序 I/O：B+Tree 索引是有序的，相邻的数据存储在一起。
+
+### 索引的使用条件
+
+- 对于非常小的表，大部分情况下简单的全表扫描比建立索引更高效；
+- 对于中到大型的表，索引就非常有效；
+- 对于特大型的表，建立和维护索引的代价也随之增长，可以使用分区等技术直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配；
+- 索引并不是越多越好：插入、删除数据和修改索引列时，要同时维护每个相关的索引，索引也要占用存储空间。在 orders 表上插入 50 万行，没有二级索引时约 2.0 s，有 4 个二级索引时约 5.2 s，这 4 个索引共占 73 MB，而数据本身是 89 MB（见[附录 A3](#a3-二级索引对写入的影响)）；
+- 适合建索引的是经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中，并且区分度高的列，区分度很低的列（例如只有几种取值的状态）单独建索引的作用不大。
+
 ### 索引优化
 
 #### 1. 独立的列
@@ -216,20 +230,6 @@ WHERE user_id = 5 AND status > 0 AND create_time > '2025-01-05'   -- key_len = 5
 例如 `user_id = 1001 AND create_time >= '2025-01-20'` 跳过了 status，只能用 user_id 定位（key_len = 4），user_id 为 1001 的 20 行中只有 3 行满足时间条件。有索引下推时只需回表 3 次，关闭索引下推后要回表 20 次，再由 Server 层过滤。
 
 需要注意的是，是否使用索引是优化器按成本估算决定的。走二级索引的每一行都要回表，匹配的行越多回表越多，超过一定比例后全表扫描反而更快：`create_time > '2025-01-23'` 匹配 9.9 万行，走 idx_create_time；`create_time > '2025-01-02'` 匹配 191 万行，就选择了全表扫描。IN 也一样，`user_id IN` 5 个值、1 万个值时都走索引，2 万个值时就改为全表扫描。因此同一种写法有时走索引有时不走，可能是因为匹配的数据量不同。
-
-### 索引的优点
-
-- 大大减少了服务器需要扫描的数据行数；
-- 帮助服务器避免排序和分组时创建临时表：B+Tree 索引是有序的，可以直接用于 ORDER BY 和 GROUP BY；
-- 将随机 I/O 变为顺序 I/O：B+Tree 索引是有序的，相邻的数据存储在一起。
-
-### 索引的使用条件
-
-- 对于非常小的表，大部分情况下简单的全表扫描比建立索引更高效；
-- 对于中到大型的表，索引就非常有效；
-- 对于特大型的表，建立和维护索引的代价也随之增长，可以使用分区等技术直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配；
-- 索引并不是越多越好：插入、删除数据和修改索引列时，要同时维护每个相关的索引，索引也要占用存储空间。在 orders 表上插入 50 万行，没有二级索引时约 2.0 s，有 4 个二级索引时约 5.2 s，这 4 个索引共占 73 MB，而数据本身是 89 MB（见[附录 A3](#a3-二级索引对写入的影响)）；
-- 适合建索引的是经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中，并且区分度高的列，区分度很低的列（例如只有几种取值的状态）单独建索引的作用不大。
 
 ## 二、查询性能优化
 
@@ -735,7 +735,6 @@ COUNT(*)             130.47 ms
 - Baron Schwartz, Peter Zaitsev, Vadim Tkachenko, 等. 高性能 MySQL[M]. 电子工业出版社, 2013.
 - 姜承尧. MySQL 技术内幕: InnoDB 存储引擎 [M]. 机械工业出版社, 2011.
 - [20+ 条 MySQL 性能优化的最佳经验](https://www.jfox.info/20-tiao-mysql-xing-nen-you-hua-de-zui-jia-jing-yan.html)
-- [服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策](http://blog.720ui.com/2017/mysql_core_09_multi_db_table2/ "服务端指南 数据存储篇 | MySQL（09） 分库与分表带来的分布式困境与应对之策")
 - [How to create unique row ID in sharded databases?](https://stackoverflow.com/questions/788829/how-to-create-unique-row-id-in-sharded-databases)
 - [SQL Azure Federation – Introduction](http://geekswithblogs.net/shaunxu/archive/2012/01/07/sql-azure-federation-ndash-introduction.aspx "Title of this entry.")
 - [MySQL 索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)
