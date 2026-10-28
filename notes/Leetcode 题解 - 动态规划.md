@@ -61,9 +61,7 @@
 
 第 i 个楼梯可以从第 i-1 和 i-2 个楼梯再走一步到达，走到第 i 个楼梯的方法数为走到第 i-1 和第 i-2 个楼梯的方法数之和。
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-2]" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/14fe1e71-8518-458f-a220-116003061a83.png" width="200px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-climb-stairs.png" width="440px"/> </div><br>
 
 考虑到 dp[i] 只与 dp[i - 1] 和 dp[i - 2] 有关，因此可以只用两个变量来存储 dp[i - 1] 和 dp[i - 2]，使得原来的 O(N) 空间复杂度优化为 O(1) 复杂度。
 
@@ -84,7 +82,7 @@ public int climbStairs(int n) {
 
 ### 2. 强盗抢劫
 
-198\. House Robber (Easy)
+198\. House Robber (Medium)
 
 [Leetcode](https://leetcode.com/problems/house-robber/description/) / [力扣](https://leetcode-cn.com/problems/house-robber/description/)
 
@@ -94,9 +92,7 @@ public int climbStairs(int n) {
 
 由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=max(dp[i-2]+nums[i],dp[i-1])" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/2de794ca-aa7b-48f3-a556-a0e2708cb976.jpg" width="350px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-house-robber.png" width="480px"/> </div><br>
 
 ```java
 public int rob(int[] nums) {
@@ -150,21 +146,17 @@ private int rob(int[] nums, int first, int last) {
 
 综上所述，错误装信数量方式数量为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=(i-1)*dp[i-2]+(i-1)*dp[i-1]" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/da1f96b9-fd4d-44ca-8925-fb14c5733388.png" width="350px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-derangement.png" width="456px"/> </div><br>
 
 ### 5. 母牛生产
 
 程序员代码面试指南-P181
 
-题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年有 1 只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
+题目描述：假设农场中成熟的母牛每年都会生 1 头小母牛，并且永远不会死。第一年农场中有 1 只成熟的母牛，从第二年开始，母牛开始生小母牛。每只小母牛 3 年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。
 
 第 i 年牛的数量等于第 i-1 年牛的数量加上第 i-3 年牛的数量，这是因为第 i-3 年的牛到第 i 年都已成熟，每头都会生一头小牛：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i]=dp[i-1]+dp[i-3]" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/879814ee-48b5-4bcb-86f5-dcc400cb81ad.png" width="250px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-cow.png" width="440px"/> </div><br>
 
 ## 矩阵路径
 
@@ -174,7 +166,7 @@ private int rob(int[] nums, int first, int last) {
 
 [Leetcode](https://leetcode.com/problems/minimum-path-sum/description/) / [力扣](https://leetcode-cn.com/problems/minimum-path-sum/description/)
 
-```html
+```text
 [[1,3,1],
  [1,5,1],
  [4,2,1]]
@@ -214,7 +206,7 @@ public int minPathSum(int[][] grid) {
 
 题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/dc82f0f3-c1d4-4ac8-90ac-d5b32a9bd75a.jpg" width=""> </div><br>
+<div align="center"> <img src="pics/lc-dp-unique-paths.png" width="550px"/> </div><br>
 
 ```java
 public int uniquePaths(int m, int n) {
@@ -285,7 +277,7 @@ public int maximalSquare(char[][] matrix) {
 
 [Leetcode](https://leetcode.com/problems/range-sum-query-immutable/description/) / [力扣](https://leetcode-cn.com/problems/range-sum-query-immutable/description/)
 
-```html
+```text
 Given nums = [-2, 0, 3, -5, 2, -1]
 
 sumRange(0, 2) -> 1
@@ -319,16 +311,16 @@ class NumArray {
 
 [Leetcode](https://leetcode.com/problems/arithmetic-slices/description/) / [力扣](https://leetcode-cn.com/problems/arithmetic-slices/description/)
 
-```html
+```text
 A = [0, 1, 2, 3, 4]
 
-return: 6, for 3 arithmetic slices in A:
+return: 6, for 6 arithmetic slices in A:
 
 [0, 1, 2],
 [1, 2, 3],
 [0, 1, 2, 3],
 [0, 1, 2, 3, 4],
-[ 1, 2, 3, 4],
+[1, 2, 3, 4],
 [2, 3, 4]
 ```
 
@@ -336,7 +328,7 @@ dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
 
 当 A[i] - A[i-1] == A[i-1] - A[i-2]，那么 [A[i-2], A[i-1], A[i]] 构成一个等差递增子区间。而且在以 A[i-1] 为结尾的递增子区间的后面再加上一个 A[i]，一样可以构成新的递增子区间。
 
-```html
+```text
 dp[2] = 1
     [0, 1, 2]
 dp[3] = dp[2] + 1 = 2
@@ -412,7 +404,7 @@ public int longestValidParentheses(String s) {
 
 ### 1. 分割整数的最大乘积
 
-343\. Integer Break (Medim)
+343\. Integer Break (Medium)
 
 [Leetcode](https://leetcode.com/problems/integer-break/description/) / [力扣](https://leetcode-cn.com/problems/integer-break/description/)
 
@@ -433,7 +425,7 @@ public int integerBreak(int n) {
 
 ### 2. 按平方数来分割整数
 
-279\. Perfect Squares(Medium)
+279\. Perfect Squares (Medium)
 
 [Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode-cn.com/problems/perfect-squares/description/)
 
@@ -513,9 +505,7 @@ public int numDecodings(String s) {
 
 因为在求 dp[n] 时可能无法找到一个满足条件的递增子序列，此时 {S<sub>n</sub>} 就构成了递增子序列，需要对前面的求解方程做修改，令 dp[n] 最小为 1，即：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[n]=max\{1,dp[i]+1|S_i<S_n\&\&i<n\}" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ee994da4-0fc7-443d-ac56-c08caf00a204.jpg" width="350px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-lis.png" width="500px"/> </div><br>
 
 对于一个长度为 N 的序列，最长递增子序列并不一定会以 S<sub>N</sub> 为结尾，因此 dp[N] 不是序列的最长递增子序列的长度，需要遍历 dp 数组找出最大值才是所要的结果，max{ dp[i] | 1 <= i <= N} 即为所求。
 
@@ -561,7 +551,7 @@ return ret;
 
 例如对于数组 [4,3,6,5]，有：
 
-```html
+```text
 tails      len      num
 []         0        4
 [4]        1        3
@@ -609,7 +599,7 @@ private int binarySearch(int[] tails, int len, int key) {
 
 [Leetcode](https://leetcode.com/problems/maximum-length-of-pair-chain/description/) / [力扣](https://leetcode-cn.com/problems/maximum-length-of-pair-chain/description/)
 
-```html
+```text
 Input: [[1,2], [2,3], [3,4]]
 Output: 2
 Explanation: The longest chain is [1,2] -> [3,4]
@@ -643,7 +633,7 @@ public int findLongestChain(int[][] pairs) {
 
 [Leetcode](https://leetcode.com/problems/wiggle-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/wiggle-subsequence/description/)
 
-```html
+```text
 Input: [1,7,4,9,2,5]
 Output: 6
 The entire sequence is a wiggle sequence.
@@ -686,9 +676,7 @@ public int wiggleMaxLength(int[] nums) {
 
 综上，最长公共子序列的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=\left\{\begin{array}{rcl}dp[i-1][j-1]&&{S1_i==S2_j}\\max(dp[i-1][j],dp[i][j-1])&&{S1_i<>S2_j}\end{array}\right." class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ecd89a22-c075-4716-8423-e0ba89230e9a.jpg" width="450px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-lcs.png" width="660px"/> </div><br>
 
 对于长度为 N 的序列 S<sub>1</sub> 和长度为 M 的序列 S<sub>2</sub>，dp[N][M] 就是序列 S<sub>1</sub> 和序列 S<sub>2</sub> 的最长公共子序列长度。
 
@@ -732,9 +720,7 @@ public int wiggleMaxLength(int[] nums) {
 
 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[i][j]=max(dp[i-1][j],dp[i-1][j-w]+v)" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8cb2be66-3d47-41ba-b55b-319fc68940d4.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-knapsack.png" width="520px"/> </div><br>
 
 ```java
 // W 为背包总体积
@@ -757,13 +743,11 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 }
 ```
 
-**空间优化**  
+#### 空间优化
 
 在程序实现时可以对 0-1 背包做优化。观察状态转移方程可以知道，前 i 件物品的状态仅与前 i-1 件物品的状态有关，因此可以将 dp 定义为一维数组，其中 dp[j] 既可以表示 dp[i-1][j] 也可以表示 dp[i][j]。此时，
 
-<!--<div align="center"><img src="https://latex.codecogs.com/gif.latex?dp[j]=max(dp[j],dp[j-w]+v)" class="mathjax-pic"/></div> <br>-->
-
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9ae89f16-7905-4a6f-88a2-874b4cac91f4.jpg" width="300px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-knapsack-1d.png" width="540px"/> </div><br>
 
 因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，防止将 dp[i-1][j-w] 覆盖。也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
 
@@ -782,9 +766,9 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 }
 ```
 
-**无法使用贪心算法的解释**  
+#### 无法使用贪心算法的解释
 
-0-1 背包问题无法使用贪心算法来求解，也就是说不能按照先添加性价比最高的物品来达到最优，这是因为这种方式可能造成背包空间的浪费，从而无法达到最优。考虑下面的物品和一个容量为 5 的背包，如果先添加物品 0 再添加物品 1，那么只能存放的价值为 16，浪费了大小为 2 的空间。最优的方式是存放物品 1 和物品 2，价值为 22.
+0-1 背包问题无法使用贪心算法来求解，也就是说不能按照先添加性价比最高的物品来达到最优，这是因为这种方式可能造成背包空间的浪费，从而无法达到最优。考虑下面的物品和一个容量为 5 的背包，如果先添加物品 0 再添加物品 1，那么只能存放的价值为 16，浪费了大小为 2 的空间。最优的方式是存放物品 1 和物品 2，价值为 22。
 
 | id | w | v | v/w |
 | --- | --- | --- | --- |
@@ -792,7 +776,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 | 1 | 2 | 10 | 5 |
 | 2 | 3 | 12 | 4 |
 
-**变种**  
+#### 变种
 
 - 完全背包：物品数量为无限个
 
@@ -808,7 +792,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 [Leetcode](https://leetcode.com/problems/partition-equal-subset-sum/description/) / [力扣](https://leetcode-cn.com/problems/partition-equal-subset-sum/description/)
 
-```html
+```text
 Input: [1, 5, 11, 5]
 
 Output: true
@@ -850,7 +834,7 @@ private int computeArraySum(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/target-sum/description/) / [力扣](https://leetcode-cn.com/problems/target-sum/description/)
 
-```html
+```text
 Input: nums is [1, 1, 1, 1, 1], S is 3.
 Output: 5
 Explanation:
@@ -868,7 +852,7 @@ There are 5 ways to assign symbols to make the sum of nums be target 3.
 
 可以将这组数看成两部分，P 和 N，其中 P 使用正号，N 使用负号，有以下推导：
 
-```html
+```text
                   sum(P) - sum(N) = target
 sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
                        2 * sum(P) = target + sum(nums)
@@ -924,7 +908,7 @@ private int findTargetSumWays(int[] nums, int start, int S) {
 
 [Leetcode](https://leetcode.com/problems/ones-and-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/ones-and-zeroes/description/)
 
-```html
+```text
 Input: Array = {"10", "0001", "111001", "1", "0"}, m = 5, n = 3
 Output: 4
 
@@ -964,7 +948,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 [Leetcode](https://leetcode.com/problems/coin-change/description/) / [力扣](https://leetcode-cn.com/problems/coin-change/description/)
 
-```html
+```text
 Example 1:
 coins = [1, 2, 5], amount = 11
 return 3 (11 = 5 + 5 + 1)
@@ -1004,9 +988,9 @@ public int coinChange(int[] coins, int amount) {
 
 ### 5. 找零钱的硬币数组合
 
-518\. Coin Change 2 (Medium)
+518\. Coin Change II (Medium)
 
-[Leetcode](https://leetcode.com/problems/coin-change-2/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-2/description/)
+[Leetcode](https://leetcode.com/problems/coin-change-ii/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-ii/description/)
 
 ```text
 Input: amount = 5, coins = [1, 2, 5]
@@ -1042,7 +1026,7 @@ public int change(int amount, int[] coins) {
 
 [Leetcode](https://leetcode.com/problems/word-break/description/) / [力扣](https://leetcode-cn.com/problems/word-break/description/)
 
-```html
+```text
 s = "leetcode",
 dict = ["leet", "code"].
 Return true because "leetcode" can be segmented as "leet code".
@@ -1052,7 +1036,7 @@ dict 中的单词没有使用次数的限制，因此这是一个完全背包问
 
 该问题涉及到字典中单词的使用顺序，也就是说物品必须按一定顺序放入背包中，例如下面的 dict 就不够组成字符串 "leetcode"：
 
-```html
+```text
 ["lee", "tc", "cod"]
 ```
 
@@ -1081,7 +1065,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
 
 [Leetcode](https://leetcode.com/problems/combination-sum-iv/description/) / [力扣](https://leetcode-cn.com/problems/combination-sum-iv/description/)
 
-```html
+```text
 nums = [1, 2, 3]
 target = 4
 
@@ -1122,13 +1106,13 @@ public int combinationSum4(int[] nums, int target) {
 
 ### 1. 需要冷却期的股票交易
 
-309\. Best Time to Buy and Sell Stock with Cooldown(Medium)
+309\. Best Time to Buy and Sell Stock with Cooldown (Medium)
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
 
 题目描述：交易之后需要有一天的冷却时间。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ffd96b99-8009-487c-8e98-11c9d44ef14f.png" width="300px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-stock-cooldown.png" width="660px"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1158,7 +1142,7 @@ public int maxProfit(int[] prices) {
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
 
-```html
+```text
 Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
 Output: 8
 Explanation: The maximum profit can be achieved by:
@@ -1171,7 +1155,7 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1e2c588c-72b7-445e-aacb-d55dc8a88c29.png" width="300px"> </div><br>
+<div align="center"> <img src="pics/lc-dp-stock-fee.png" width="660px"/> </div><br>
 
 ```java
 public int maxProfit(int[] prices, int fee) {
@@ -1259,7 +1243,7 @@ public int maxProfit(int k, int[] prices) {
 
 [Leetcode](https://leetcode.com/problems/delete-operation-for-two-strings/description/) / [力扣](https://leetcode-cn.com/problems/delete-operation-for-two-strings/description/)
 
-```html
+```text
 Input: "sea", "eat"
 Output: 2
 Explanation: You need one step to make "sea" to "ea" and another step to make "eat" to "ea".
@@ -1286,11 +1270,11 @@ public int minDistance(String word1, String word2) {
 
 ### 2. 编辑距离
 
-72\. Edit Distance (Hard)
+72\. Edit Distance (Medium)
 
 [Leetcode](https://leetcode.com/problems/edit-distance/description/) / [力扣](https://leetcode-cn.com/problems/edit-distance/description/)
 
-```html
+```text
 Example 1:
 
 Input: word1 = "horse", word2 = "ros"
@@ -1351,7 +1335,7 @@ public int minDistance(String word1, String word2) {
 Input: 3
 Output: 3
 Explanation:
-Intitally, we have one character 'A'.
+Initially, we have one character 'A'.
 In step 1, we use Copy All operation.
 In step 2, we use Paste operation to get 'AA'.
 In step 3, we use Paste operation to get 'AAA'.
