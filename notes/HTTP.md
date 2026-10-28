@@ -66,6 +66,10 @@
         * [A5 XMLHttpRequest 发送 POST](#a5-xmlhttprequest-发送-post)
         * [A6 SSE 推送与断线重连](#a6-sse-推送与断线重连)
         * [A7 证书链与密码套件](#a7-证书链与密码套件)
+        * [A8 HTTP 与 HTTPS 的抓包对比](#a8-http-与-https-的抓包对比)
+        * [A9 证书验证](#a9-证书验证)
+        * [A10 TLS 握手报文与密钥交换](#a10-tls-握手报文与密钥交换)
+        * [A11 HTTPS 各阶段的耗时](#a11-https-各阶段的耗时)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -909,6 +913,8 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
+例如同一个登录请求 POST /login，表单为 user=alice&password=123456，分别用 HTTP 和 HTTPS 发给 shop.example，同时抓包（OpenSSL 3.0 实测，见[附录 A8](#a8-http-与-https-的抓包对比)）：HTTP 的报文中可以直接读到请求行和密码；HTTPS 的报文中找不到 /login 和 password，只能看到域名 shop.example。这是因为客户端在 ClientHello 的 SNI（Server Name Indication）扩展中以明文告诉服务器要访问哪个域名，服务器据此选择证书。需要注意的是，HTTPS 保护的是报文的内容，访问了哪个 IP 和域名、传输了多少数据，仍然可以被网络中的设备看到。
+
 <div align="center"> <img src="pics/https-layers.png" width="720px"/> </div><br>
 
 ### 加密
@@ -967,7 +973,11 @@ TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_A
 
 <div align="center"> <img src="pics/cert-chain.png" width="760px"/> </div><br>
 
-中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。
+证书中的签名是 CA 用自己的私钥对证书内容（域名、公钥、有效期、签发者等）的哈希值计算出来的。客户端用上一级证书中的公钥验证签名：证书内容只要被改动一个字节，哈希值就会变化，签名验证就会失败。例如把 baidu.com 证书中的 CN 改成 baidu.con，再用中间证书验证，结果为 certificate signature failure（OpenSSL 3.0 实测，见[附录 A9](#a9-证书验证)）。
+
+根证书是信任的起点，它是自签名的，无法再向上验证，因此不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 www.baidu.com。
+
+中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。用 curl 模拟这两种情况（见[附录 A9](#a9-证书验证)），分别报告证书中的域名与访问的域名不匹配（no alternative certificate subject name matches target host name）和证书不受信任（self-signed certificate）。
 
 Charles、Fiddler 等抓包工具能解密 HTTPS，是因为用户手动把它们的根证书加入了信任列表，工具再为访问的每个域名临时签发证书。App 可以在代码中只信任指定的证书或公钥，称为证书固定（Certificate Pinning），这时加入根证书也无法抓包。
 
@@ -981,6 +991,56 @@ TLS 握手完成三件事：协商加密算法、验证服务器的证书、协�
 
 TLS 1.2 要 2 个 RTT 之后才能发送 HTTP 请求。TLS 1.3 把 ECDHE 公钥直接放在 ClientHello 中，服务器回复 ServerHello 时双方就能算出密钥，之后的握手报文（图中花括号内）都已加密，1 个 RTT 后就能发送请求；TLS 1.3 还去掉了 RSA 密钥交换等不安全的算法。
 
+#### 1. 握手报文的内容
+
+以 TLS 1.2 的 ECDHE 握手为例，各报文携带的主要内容如下（OpenSSL 3.0 本地实测，见[附录 A10](#a10-tls-握手报文与密钥交换)）：
+
+- ClientHello：客户端支持的 TLS 版本、32 字节的客户端随机数、支持的密码套件列表，以及 server_name（即 SNI）、supported_groups（支持的椭圆曲线，例如 x25519、P-256）等扩展；
+- ServerHello：服务器选定的版本、密码套件（例子中为 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384）和 32 字节的服务器随机数；
+- Certificate：服务器的证书链；
+- ServerKeyExchange：服务器的 ECDHE 公钥（x25519 曲线上的 32 字节），以及用证书私钥对两个随机数和这个公钥计算的签名；
+- ClientKeyExchange：客户端的 ECDHE 公钥，同样是 32 字节；
+- ChangeCipherSpec 和 Finished：通知对方之后的报文都已加密，然后发送第一个加密的报文 Finished。
+
+客户端验证证书，再用证书中的公钥验证 ServerKeyExchange 中的签名，确认 ECDHE 公钥确实来自证书的持有者。之后双方用自己的私钥和对方的公钥算出相同的预主密钥（pre-master secret），再把预主密钥和两个随机数一起输入伪随机函数，得到 48 字节的主密钥，最后由主密钥派生出加密和完整性校验用的会话密钥。
+
+#### 2. 密钥交换
+
+ECDHE 基于 Diffie-Hellman（DH）密钥交换，双方只交换公钥，就能得到相同的密钥。用小数字演示如下，公开的参数是素数 p = 29 和底数 g = 2：
+
+```text
+客户端                                  服务器
+私钥 a = 9，不发送                      私钥 b = 13，不发送
+A = 2^9 mod 29 = 19           发送 A →
+                              ← 发送 B  B = 2^13 mod 29 = 14
+B^a mod 29 = 14^9 mod 29 = 3            A^b mod 29 = 19^13 mod 29 = 3
+```
+
+两边算出的都是 3，这是因为 B^a 和 A^b 都等于 2^(ab) mod 29。窃听者知道 p、g、A、B，要算出 3，就要从 19 = 2^a mod 29 反推出 a，这称为离散对数问题。29 这样的小数字可以逐个尝试，实际使用的 X25519 是 255 位的椭圆曲线，目前没有可行的算法。ECDHE 中的 E（Ephemeral）表示每次握手都生成新的私钥，用完即丢弃。
+
+DH 本身无法防止中间人：攻击者可以把 A、B 换成自己的公钥，分别与客户端和服务器各完成一次密钥交换。所以服务器要用证书私钥对自己的 ECDHE 公钥签名，客户端验证签名后才使用它。
+
+TLS 1.2 还支持 RSA 密钥交换：客户端生成 48 字节的随机预主密钥，用服务器证书中的 RSA 公钥加密后发给服务器（例子中加密后为 256 字节），只有持有私钥的服务器能解密。常说的“三个随机数”指的就是这种方式中的客户端随机数、服务器随机数和预主密钥。前两个以明文传输，作用是让每次连接的会话密钥都不同，攻击者即使重放录下的握手报文，算出的密钥也和原来不一样；需要保密的只有预主密钥。
+
+RSA 密钥交换没有前向安全：攻击者录下通信，日后拿到服务器的私钥，就能解密录下的预主密钥，进而解密全部通信。ECDHE 的私钥在握手后就丢弃，证书私钥只用来签名，泄露后也无法还原以前的会话密钥。因此 TLS 1.3 删除了 RSA 密钥交换，完整握手只能使用 (EC)DHE 这类前向安全的方式。
+
+#### 3. Finished 与会话恢复
+
+Finished 报文的内容是用主密钥对此前全部握手报文的哈希值计算出的校验值（TLS 1.2 中为 12 字节）。握手的前几个报文是明文，攻击者可以篡改，例如删掉 ClientHello 中安全的密码套件，迫使双方使用弱算法，称为降级攻击。双方各自根据自己收发的报文计算校验值，报文被改过，两边的结果就对不上，握手失败。
+
+完整的握手要验证证书和签名，开销较大。客户端再次连接同一个服务器时可以恢复会话：服务器在握手后发给客户端一个会话票据（即上面 TLS 1.2 握手中的 NewSessionTicket），客户端下次连接时带上它，双方直接由之前协商的密钥派生出新的会话密钥，不再验证证书。TLS 1.3 恢复会话时，客户端还可以在第一个报文中就带上请求，称为 0-RTT。需要注意的是，0-RTT 的数据可以被攻击者录下后重放，服务器通常只对 GET 这类幂等的请求接受 0-RTT 数据。
+
+#### 4. 一次 HTTPS 请求的过程
+
+以 TLS 1.3 为例，浏览器访问 https://www.jd.com/ 依次经过：
+
+1. DNS 查询，得到服务器的 IP 地址；
+2. TCP 三次握手，1 个 RTT；
+3. TLS 握手，1 个 RTT，协商算法和密钥并验证证书；
+4. 用会话密钥加密 HTTP 请求并发送，服务器解密后处理，响应同样加密后返回。
+
+TLS 1.2 的第 3 步需要 2 个 RTT。连接建立以后，同一个连接上的后续请求只需要第 4 步。
+
 ### 完整性保护
 
 SSL 提供报文摘要功能来进行完整性保护。
@@ -993,6 +1053,8 @@ HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了�
 
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要申请和维护证书，不过 Let's Encrypt 等机构可以免费签发证书。
+
+速度上的主要开销是建立连接时的 TLS 握手。例如直连 www.baidu.com（TLS 1.2）时，TCP 建连约 12 ms，TLS 握手约 34 ms；www.jd.com（TLS 1.3）的 TLS 握手约 15 ms，与 TCP 建连的 13 ms 相当（各 5 次的中位数，macOS 实测，见[附录 A11](#a11-https-各阶段的耗时)）。对称加密本身很快，现代 CPU 有 AES 指令加速；长连接和会话恢复可以避免每次请求都完整握手。
 
 ## 七、HTTP/1.1 新特性
 
@@ -1324,6 +1386,155 @@ Server public key is 2048 bit
     Verify return code: 0 (ok)
 ```
 
+### A8 HTTP 与 HTTPS 的抓包对比
+
+Docker Desktop 中的 Ubuntu 24.04 容器，OpenSSL 3.0.13，curl 8.5.0。用 openssl 为 shop.example 生成自签名证书，Python 的 http.server 在 8080 端口提供 HTTP、在 8443 端口提供 HTTPS，curl 用 --resolve 把 shop.example 解析到 127.0.0.1，各发送一次登录请求，同时用 tcpdump -A 在回环网卡上抓包：
+
+```bash
+curl --resolve shop.example:8080:127.0.0.1 -d 'user=alice&password=123456' http://shop.example:8080/login
+curl --cacert cert.pem --resolve shop.example:8443:127.0.0.1 -d 'user=alice&password=123456' https://shop.example:8443/login
+```
+
+HTTP 的报文（节选）：
+
+```text
+IP 127.0.0.1.35942 > 127.0.0.1.8080: Flags [P.], seq 1:182, ack 1, length 181: HTTP: POST /login HTTP/1.1
+POST /login HTTP/1.1
+Host: shop.example:8080
+User-Agent: curl/8.5.0
+Content-Length: 26
+Content-Type: application/x-www-form-urlencoded
+
+user=alice&password=123456
+```
+
+HTTPS（协商出的版本为 TLS 1.3）的报文中，可读的字符串只有客户端第一个报文（ClientHello，517 字节）中的域名：
+
+```text
+IP 127.0.0.1.59008 > 127.0.0.1.8443: Flags [P.], seq 1:518, ack 1, length 517
+...9.....3.....=.<.5./.....u.........shop.example.........
+...............................h2.http/1.1.........1.....*.(...........
+
+8443 端口的全部报文中：包含 password：False；包含 /login：False；包含 shop.example：True
+```
+
+### A9 证书验证
+
+同一个容器，OpenSSL 3.0.13。baidu.com 的服务器证书和中间证书由 openssl s_client -showcerts 取得（2026-10-28），证书有效期为 2026-07-09 至 2027-01-24，Subject Alternative Name 中共 53 个域名，包含 *.baidu.com。用中间证书验证服务器证书，再把证书中 CN 的 baidu.com 改为 baidu.con（只改 1 个字节）后验证：
+
+```text
+$ openssl verify -partial_chain -CAfile baidu_inter.pem baidu_leaf.pem
+baidu_leaf.pem: OK
+$ openssl verify -partial_chain -CAfile baidu_inter.pem tampered.pem
+C = CN, ST = Beijing, L = Beijing, O = "Beijing Baidu Netcom Science Technology Co., Ltd.", CN = baidu.con
+error 7 at 0 depth lookup: certificate signature failure
+error tampered.pem: verification failed
+```
+
+用 openssl s_server 加载 A8 中签发给 shop.example 的证书，curl 以另一个域名访问，或者不把这张证书加入信任：
+
+```text
+$ curl --cacert cert.pem --resolve evil.example:9443:127.0.0.1 https://evil.example:9443/
+curl: (60) SSL: no alternative certificate subject name matches target host name 'evil.example'
+$ curl --resolve shop.example:9443:127.0.0.1 https://shop.example:9443/
+curl: (60) SSL certificate problem: self-signed certificate
+```
+
+### A10 TLS 握手报文与密钥交换
+
+同一个容器，OpenSSL 3.0.13，openssl s_server 加载一张 RSA 2048 位的自签名证书，openssl s_client -trace 分别以 TLS 1.2 和 TLS 1.3 连接（节选）：
+
+```text
+$ openssl s_client -connect 127.0.0.1:9443 -servername shop.example -tls1_2 -trace
+    ClientHello, Length=200
+      client_version=0x303 (TLS 1.2)
+      Random:
+        gmt_unix_time=0xF8A84002
+        random_bytes (len=28): C71DE57BA94C8B46C0BCF0E81D006A4BB4DB80625A55EA34C1948233
+      cipher_suites (len=56)
+        {0xC0, 0x2C} TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        {0xC0, 0x30} TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        ...
+        extension_type=server_name(0), length=17
+          0000 - 00 0f 00 00 0c 73 68 6f-70 2e 65 78 61 6d 70   .....shop.examp
+        extension_type=supported_groups(10), length=12
+          ecdh_x25519 (29)
+          secp256r1 (P-256) (23)
+          ...
+    ServerHello, Length=61
+      Random:
+        gmt_unix_time=0xF5C13007
+        random_bytes (len=28): 6CE4C1B95FB5F49A26E80834543037CCB33A35F5444F574E47524401
+      cipher_suite {0xC0, 0x30} TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+    Certificate, Length=818
+    ServerKeyExchange, Length=296
+      KeyExchangeAlgorithm=ECDHE
+        named_curve: ecdh_x25519 (29)
+        point (len=32): 0FB8BADAB5220392F4037DDA7EEC182D9495363D4307EFAF2FFD0ABC164DEE48
+      Signature Algorithm: rsa_pss_rsae_sha256 (0x0804)
+      Signature (len=256): 355C9E535D193EC599AF0FAA82E45BA1...
+    ServerHelloDone, Length=0
+    ClientKeyExchange, Length=33
+      KeyExchangeAlgorithm=ECDHE
+        ecdh_Yc (len=32): C3DABAA64C3321A21C1BA63668472D9F6C5C7382C4E1688912559E532F7FB961
+    change_cipher_spec (1)
+    Finished, Length=12
+      verify_data (len=12): CA45594F81D3C16AA18FE6B7
+    NewSessionTicket, Length=182
+```
+
+客户端只提供 RSA 密钥交换的套件（-cipher AES128-GCM-SHA256）时，ClientKeyExchange 中是用证书公钥加密的预主密钥：
+
+```text
+    ClientKeyExchange, Length=258
+      KeyExchangeAlgorithm=rsa
+        EncryptedPreMasterSecret (len=256): 50837CC49B664182D3DEDC66976484D9...
+```
+
+TLS 1.3 中，ClientHello 和 ServerHello 的 key_share 扩展各带 32 字节的 x25519 公钥，ServerHello 之后的握手报文都以加密的 ApplicationData 记录发送：
+
+```text
+    ClientHello, Length=237
+        extension_type=key_share(51), length=38
+            key_exchange:  (len=32): 4B81D2B18B229E0363B5464672D5E06082531CE08124B589427D746ADED0564A
+    ServerHello, Length=118
+      cipher_suite {0x13, 0x02} TLS_AES_256_GCM_SHA384
+        extension_type=key_share(51), length=36
+            key_exchange:  (len=32): AB369663AEC645C6489E405CEC678A9121620BDBCDD9A6E9E0BC36D8F200EF7A
+  Content Type = ApplicationData (23)
+  Inner Content Type = Handshake (22)
+    EncryptedExtensions, Length=2
+  ...
+    Certificate, Length=821
+```
+
+正文中小数字的 DH 演示用 Python 计算：
+
+```python
+p, g = 29, 2
+a, b = 9, 13
+A, B = pow(g, a, p), pow(g, b, p)       # 19, 14
+print(pow(B, a, p), pow(A, b, p))        # 3 3
+print([x for x in range(1, p) if pow(g, x, p) == A])   # 窃听者逐个尝试：[9]
+```
+
+### A11 HTTPS 各阶段的耗时
+
+macOS 上的 curl 8.7.1（LibreSSL 3.3.6），不经过代理，对每个网站交替请求 HTTP 和 HTTPS 各 5 次（2026-10-28）。TCP 建连时间为 time_connect 减去 time_namelookup，TLS 握手时间为 time_appconnect 减去 time_connect：
+
+```bash
+curl -s -o /dev/null -w "dns %{time_namelookup} tcp %{time_connect} tls %{time_appconnect}\n" https://www.baidu.com/
+```
+
+```text
+www.baidu.com  TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+  TCP 建连（ms）：21.6  11.5   9.3  10.1  13.6    中位数 11.5
+  TLS 握手（ms）：28.3  33.8  56.6  43.9  32.8    中位数 33.8
+www.jd.com     TLSv1.3 / AEAD-AES256-GCM-SHA384
+  TCP 建连（ms）：14.9   5.9   7.5  13.2  24.3    中位数 13.2
+  TLS 握手（ms）：14.8  11.0  14.5  15.5  20.0    中位数 14.8
+```
+
 ## 参考资料
 
 - [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)
@@ -1374,3 +1585,6 @@ Server public key is 2048 bit
 - [wikipedia: URL](https://en.wikipedia.org/wiki/URL)
 - [RFC 9110：4.2.1 http URI Scheme](https://www.rfc-editor.org/rfc/rfc9110#section-4.2.1)
 - [RFC 9110：9 Methods](https://www.rfc-editor.org/rfc/rfc9110#section-9)
+- [RFC 5246: The Transport Layer Security (TLS) Protocol Version 1.2](https://www.rfc-editor.org/rfc/rfc5246)
+- [RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://www.rfc-editor.org/rfc/rfc5280)
+- [RFC 6066: Transport Layer Security (TLS) Extensions: Extension Definitions](https://www.rfc-editor.org/rfc/rfc6066)
