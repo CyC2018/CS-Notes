@@ -125,7 +125,7 @@ DataInputStream 装饰者提供了对更多数据类型进行输入的操作，�
 
 UTF-16be 中的 be 指的是 Big Endian，也就是大端。相应地也有 UTF-16le，le 指的是 Little Endian，也就是小端。
 
-Java 的内存编码使用双字节编码 UTF-16be，这不是指 Java 只支持这一种编码方式，而是说 char 这种类型使用 UTF-16be 进行编码。char 类型占 16 位，也就是两个字节，Java 使用这种双字节编码是为了让一个中文或者一个英文都能使用一个 char 来存储。
+Java 的 char 类型占 16 位，存放的是字符的 UTF-16 编码，这不是指 Java 只支持这一种编码方式。常用的中文和英文字符都能用一个 char 存储，编号超过 U+FFFF 的字符（例如一部分生僻字和 emoji）要用两个 char 表示。
 
 ### String 的编码方式
 
@@ -138,7 +138,7 @@ String str2 = new String(bytes, "UTF-8");
 System.out.println(str2);
 ```
 
-在调用无参数 getBytes() 方法时，默认的编码方式不是 UTF-16be。双字节编码的好处是可以使用一个 char 存储中文和英文，而将 String 转为 bytes[] 字节数组就不再需要这个好处，因此也就不再需要双字节编码。getBytes() 的默认编码方式与平台有关，一般为 UTF-8。
+在调用无参数 getBytes() 方法时，默认的编码方式不是 UTF-16。双字节编码的好处是可以使用一个 char 存储中文和英文，而将 String 转为 bytes[] 字节数组就不再需要这个好处，因此也就不再需要双字节编码。JDK 18 起 getBytes() 默认使用 UTF-8（JEP 400），之前的版本与平台有关。
 
 ```java
 byte[] bytes = str1.getBytes();
@@ -254,7 +254,7 @@ InetAddress.getByAddress(byte[] address);
 ```java
 public static void main(String[] args) throws IOException {
 
-    URL url = new URL("http://www.baidu.com");
+    URL url = URI.create("http://www.baidu.com").toURL();
 
     /* 字节流 */
     InputStream is = url.openStream();

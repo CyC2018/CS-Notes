@@ -42,7 +42,7 @@
 
 模式定义了数据如何存储、存储什么样的数据以及数据如何分解等信息，数据库和表都有模式。
 
-主键的值不允许修改，也不允许复用（不能将已经删除的主键值赋给新数据行的主键）。
+主键的值一般不修改，也不复用（不把已经删除的主键值赋给新数据行的主键），这是普遍遵循的习惯，数据库本身并不禁止。
 
 SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
 
@@ -403,7 +403,7 @@ HAVING num >= 2;
 
 ## 十四、子查询
 
-子查询中只能返回一个字段的数据。
+作为 IN 等条件与一个字段比较的子查询，只能返回一个字段的数据；MySQL 也支持 (col1, col2) IN (SELECT x, y ...) 这样同时比较多个字段。
 
 可以将子查询的结果作为 WHERE 语句的过滤条件：
 
@@ -581,9 +581,7 @@ WHERE col5 = val;
 
 包含 in、out 和 inout 三种参数。
 
-给变量赋值都需要用 select into 语句。
-
-每次只能给一个变量赋值，不支持集合的操作。
+可以用 SET 或者 SELECT ... INTO 给变量赋值。SELECT ... INTO 可以一次给多个变量赋值，但查询结果只能有一行，否则报错 1172（Result consisted of more than one row），多行结果要用下面的游标逐行处理。
 
 ```sql
 delimiter //
@@ -633,7 +631,10 @@ create procedure myprocedure(out ret int)
 
         repeat
             fetch mycursor into ret;
-            select ret;
+            # 最后一次 fetch 没有取到数据时 done 已经为 1，不能再输出 ret
+            if not done then
+                select ret;
+            end if;
         until done end repeat;
 
         close mycursor;
@@ -658,7 +659,7 @@ SELECT @result; -- 获取结果
 
 DELETE 触发器包含一个名为 OLD 的虚拟表，并且是只读的。
 
-UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中 NEW 是可以被修改的，而 OLD 是只读的。
+UPDATE 触发器包含一个名为 NEW 和一个名为 OLD 的虚拟表，其中 NEW 只能在 BEFORE 触发器中修改（SET NEW.col = ...），而 OLD 是只读的。
 
 MySQL 的触发器可以使用 CALL 语句调用存储过程，但是该存储过程不能向客户端返回数据，也不能使用动态 SQL。
 
