@@ -103,7 +103,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 I/O 复用（I/O multiplexing）指用一个系统调用同时等待多个描述符，其中任何一个就绪就返回。Linux 上的实现依次为 select、poll 和 epoll，epoll 解决了前两者在描述符数量很多时的性能问题。
 
-这里的多路复用指内核对描述符的事件通知，与 HTTP/2 在一个 TCP 连接上并发多个流不是同一个概念，见 [HTTP/2.0](HTTP.md#七http20)。
+这里的多路复用指内核对描述符的事件通知，与 HTTP/2 在一个 TCP 连接上并发多个流不是同一个概念，见 [HTTP/2.0](HTTP.md#八http20)。
 
 下面用一个例子贯穿全节：服务器维护 10000 个空闲连接，任意时刻只有 1 个连接可读。
 
