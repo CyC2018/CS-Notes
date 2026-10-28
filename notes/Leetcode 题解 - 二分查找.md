@@ -11,7 +11,7 @@
 <!-- GFM-TOC -->
 
 
-**正常实现**  
+#### 正常实现
 
 ```text
 Input : [1,2,3,4,5]
@@ -36,27 +36,27 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-**时间复杂度**  
+#### 时间复杂度
 
 二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
 
-**m 计算**  
+#### m 计算
 
 有两种计算中值 m 的方式：
 
 - m = (l + h) / 2
 - m = l + (h - l) / 2
 
-l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算法方法。
+l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算方法。
 
-**未成功查找的返回值**  
+#### 未成功查找的返回值
 
 循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
 
 - -1：以一个错误码表示没有查找到 key
 - l：将 key 插入到 nums 中的正确位置
 
-**变种**  
+#### 变种
 
 二分查找可以有很多变种，实现变种要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
 
@@ -103,7 +103,7 @@ l   m   h
 
 [Leetcode](https://leetcode.com/problems/sqrtx/description/) / [力扣](https://leetcode-cn.com/problems/sqrtx/description/)
 
-```html
+```text
 Input: 4
 Output: 2
 
@@ -143,7 +143,7 @@ public int mySqrt(int x) {
 
 [Leetcode](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/) / [力扣](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
 
-```html
+```text
 Input:
 letters = ["c", "f", "j"]
 target = "d"
@@ -179,7 +179,7 @@ public char nextGreatestLetter(char[] letters, char target) {
 
 [Leetcode](https://leetcode.com/problems/single-element-in-a-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
 
-```html
+```text
 Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
 Output: 2
 ```
@@ -245,7 +245,7 @@ public int firstBadVersion(int n) {
 
 [Leetcode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
-```html
+```text
 Input: [3,4,5,1,2],
 Output: 1
 ```
@@ -271,7 +271,7 @@ public int findMin(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) / [力扣](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
-```html
+```text
 Input: nums = [5,7,7,8,8,10], target = 8
 Output: [3,4]
 
@@ -281,7 +281,7 @@ Output: [-1,-1]
 
 题目描述：给定一个有序数组 nums 和一个目标 target，要求找到 target 在 nums 中的第一个位置和最后一个位置。
 
-可以用二分查找找出第一个位置和最后一个位置，但是寻找的方法有所不同，需要实现两个二分查找。我们将寻找  target 最后一个位置，转换成寻找 target+1 第一个位置，再往前移动一个位置。这样我们只需要实现一个二分查找代码即可。
+可以用二分查找找出第一个位置和最后一个位置，但是寻找的方法有所不同，需要实现两个二分查找。将寻找 target 最后一个位置，转换成寻找 target+1 第一个位置，再往前移动一个位置。这样只需要实现一个二分查找代码即可。
 
 ```java
 public int[] searchRange(int[] nums, int target) {
@@ -314,7 +314,7 @@ private int findFirst(int[] nums, int target) {
 nums = [2,2], target = 2
 ```
 
-如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findFirst 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3) ，我们希望返回 3 应该插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以我们需要将 h 取值为 nums.length，从而使得 findFirst 返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
+如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findFirst 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3)，希望返回 3 应该插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以需要将 h 取值为 nums.length，从而使得 findFirst 返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
 
 ## 7. 两个有序数组的中位数
 
