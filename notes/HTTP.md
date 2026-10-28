@@ -64,6 +64,8 @@
         * [A3 跨域](#a3-跨域)
         * [A4 TLS 握手](#a4-tls-握手)
         * [A5 XMLHttpRequest 发送 POST](#a5-xmlhttprequest-发送-post)
+        * [A6 SSE 推送与断线重连](#a6-sse-推送与断线重连)
+        * [A7 证书链与密码套件](#a7-证书链与密码套件)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -368,6 +370,11 @@ Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据�
 
 Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API（本地存储和会话存储）或 IndexedDB。
 
+Cookie 与 Web Storage 的区别：
+
+- Cookie 每次请求都会自动携带，单个大小约 4 KB（RFC 6265 要求浏览器至少支持 4096 字节），可以用 HttpOnly 禁止脚本读取；
+- localStorage 和 sessionStorage 不随请求发送，只能由脚本读写，每个源各约 5 MB；localStorage 一直保存到被删除，sessionStorage 按标签页隔离，关闭标签页就被清除。
+
 #### 1. 用途
 
 - 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）；
@@ -442,7 +449,7 @@ SameSite 属性控制跨站请求是否携带 Cookie，用于防范跨站请求�
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
 
-Session 可以存储在服务器上的文件、数据库或者内存中。也可以将 Session 存储在 Redis 这种内存型数据库中，效率会更高。
+Session 可以存储在服务器上的文件、数据库或者内存中。也可以将 Session 存储在 Redis 这种内存型数据库中，效率会更高。集群中的多台服务器如何共享 Session，见 [集群下的 Session 管理](集群.md#二集群下的-session-管理)。
 
 使用 Session 维护用户登录状态的过程如下：
 
@@ -493,7 +500,7 @@ JWT 与 Session 的区别：
 
 令牌在浏览器中的存放位置：放在 localStorage 中，页面上的任何脚本都能读取，一旦存在 XSS 漏洞，令牌就会被盗走；放在 HttpOnly 的 Cookie 中，脚本读不到，但浏览器会自动携带 Cookie，需要防范 [跨站请求伪造](攻击技术.md#二跨站请求伪造)。
 
-需要注意的是，服务器验证时要固定使用的签名算法，不能接受头部中 alg 为 none 的令牌；HMAC 的密钥要随机生成，长度不少于 256 位。
+需要注意的是，服务器验证时要固定使用的签名算法，不能接受头部中 alg 为 none 的令牌；HMAC 的密钥要随机生成，长度不少于 256 位。签名也不能防止窃听和重放，令牌被截获后，在过期前任何人都能拿它冒充用户，所以必须通过 HTTPS 传输；签名只证明令牌是服务器签发的，服务器仍要检查令牌中的用户是否有权访问所请求的资源。
 
 JWT 只是令牌的格式，而 OAuth 2.0 是授权框架，规定第三方应用如何获得访问令牌，这个访问令牌可以用 JWT 表示。
 
@@ -808,13 +815,47 @@ Sec-WebSocket-Accept: N5dfgp7eKvv+Po1vS+eAAHg5F1I=
 
 Sec-WebSocket-Key 是客户端随机生成的 16 字节的 Base64 编码。服务器在它后面拼上协议规定的 GUID 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，计算 SHA-1 后再做 Base64 编码，作为 Sec-WebSocket-Accept 返回，证明自己确实支持 WebSocket，而不是把请求当作普通的 HTTP 请求处理。之后连接上传输的不再是 HTTP 报文，而是 WebSocket 帧，帧头最短只有 2 字节，不用像 HTTP 那样每次都携带首部。
 
+WebSocket 是基于 TCP 的应用层协议。帧头中有区分文本、二进制、关闭、Ping 和 Pong 的操作码，以及载荷的长度：不超过 125 字节时直接写在第 2 个字节中，更长时再用 2 或 8 个字节表示。
+
+客户端发出的帧必须用 4 字节的随机掩码与数据逐字节异或，防止中间的代理把精心构造的数据当作 HTTP 请求，从而污染缓存。例如客户端发送文本 hello 的帧共 11 字节：81 85 两个字节、4 字节的掩码和 5 字节掩码后的数据；服务器发送同样的消息只需要 7 字节。
+
 需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。
 
-SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应，服务器不断地往响应中写入文本事件，只能由服务器发给客户端，浏览器断开后会自动重连。只需要服务器单向推送时（例如大模型逐字输出），SSE 更简单；客户端和服务器都需要随时发消息时（例如聊天、协同编辑），使用 WebSocket。
+SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应，Content-Type 为 text/event-stream，没有 Content-Length，服务器不断地往响应中写入文本事件，每条事件以空行结束，只能由服务器发给客户端。例如推送订单 1024 的状态（curl 实测，见[附录 A6](#a6-sse-推送与断线重连)）：
+
+```text
+GET /orders/1024/events HTTP/1.1
+Host: 127.0.0.1:8781
+Accept: text/event-stream
+
+HTTP/1.1 200 OK
+Content-Type: text/event-stream
+Cache-Control: no-cache
+
+id: 1
+event: status
+data: {"order": 1024, "status": "已下单"}
+
+id: 2
+event: status
+data: {"order": 1024, "status": "已发货"}
+
+```
+
+浏览器的 EventSource 在连接断开后会自动重连，并在 Last-Event-ID 首部中带上最后收到的事件编号，服务器据此只发送之后的事件；重连的间隔可以用 retry 字段设置，服务器返回 204 时浏览器停止重连。心跳、续传和代理缓冲等实现细节见 [流式输出](大模型应用.md#流式输出)。
+
+SSE 的局限：
+
+- EventSource 只能发送 GET 请求，不能自定义首部和请求体。需要在 Authorization 首部中携带令牌，或者用 POST 提交一段对话时，通常改用 fetch 读取响应流，自己按空行切分事件，断线重连也要自己实现；
+- 在 HTTP/1.1 下，浏览器对同一个域名最多同时打开 6 个连接，每个 SSE 都一直占用一个，打开多个标签页时很快就会用完；HTTP/2 在一个连接上复用多个流，没有这个问题。
+
+只需要服务器单向推送时（例如大模型逐字输出），SSE 更简单；客户端和服务器都需要随时发消息时（例如聊天、协同编辑），使用 WebSocket。
 
 ### 跨域
 
 同源指的是协议、域名和端口都相同。浏览器的同源策略限制网页中的脚本读取其它源的响应，例如 https://shop.example.com 页面中的脚本请求 https://api.example.com/orders，请求能够发出去，但浏览器默认不把响应交给脚本。
+
+同源策略保护的是用户浏览器中的身份和网络位置：没有它，用户打开一个恶意网页，网页中的脚本就能以用户的身份（带着 Cookie）请求其它网站，或者访问用户所在内网中的服务，并读取响应的内容。
 
 跨域资源共享（Cross-Origin Resource Sharing, CORS）指的是服务器通过响应首部声明允许哪些源读取响应：
 
@@ -848,6 +889,12 @@ Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间相同的
 
 需要注意的是，CORS 只决定浏览器是否把响应交给脚本，并不是安全措施：服务器仍然执行了请求，curl 这类不经过浏览器的工具也完全不受限制，权限要靠认证和 [CSRF 防护](攻击技术.md#二跨站请求伪造) 保证。另一种解决跨域的办法是同源的反向代理，例如由 Nginx 把 https://shop.example.com/api 转发给后端，浏览器看到的就是同源的请求。
 
+其它做法：
+
+- JSONP：利用 script 标签加载脚本不受同源策略限制，让服务器返回一段调用回调函数的脚本。只能发送 GET 请求，并且要完全信任对方返回的脚本，已经被 CORS 取代；
+- WebSocket：握手请求不受同源策略限制，浏览器会带上 Origin 首部，服务器需要自己检查来源；
+- postMessage：不同源的页面之间（例如页面和其中嵌入的 iframe）通过它传递消息，接收方要检查消息的来源。
+
 ## 六、HTTPS
 
 HTTP 有以下安全性问题：
@@ -856,7 +903,7 @@ HTTP 有以下安全性问题：
 - 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 - 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPS 使用了隧道进行通信。
+HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPS 使用了隧道进行通信。HTTPS 的默认端口是 443，HTTP 是 80。
 
 需要注意的是，SSL 已经被 TLS（Transport Layer Security）取代，SSL 3.0 在 2015 年由 RFC 7568 废弃，现在 HTTPS 实际使用的是 TLS，SSL 只是沿用的叫法。
 
@@ -897,6 +944,15 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 需要注意的是，TLS 1.3 不再用公钥加密传输对称密钥，而是通过 ECDHE 密钥交换协商出会话密钥，非对称密钥只用于签名认证。
 
+TLS 把用到的一组算法称为密码套件，例如访问 www.baidu.com 时协商出的 TLS 1.2 套件 ECDHE-RSA-AES128-GCM-SHA256（LibreSSL 3.3.6 实测，见[附录 A7](#a7-证书链与密码套件)）：
+
+- ECDHE：密钥交换，用椭圆曲线算法临时协商出会话密钥；
+- RSA：身份认证，服务器用证书的 RSA 私钥对自己发送的 ECDHE 参数签名；
+- AES128-GCM：对称加密，用 128 位的会话密钥加密数据，GCM 模式同时生成认证标签，保证完整性；
+- SHA256：由协商结果推导会话密钥时使用的哈希算法。
+
+TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_AES_256_GCM_SHA384，密钥交换（X25519）和签名算法单独协商。另一种常用的对称算法是 ChaCha20-Poly1305，在没有 AES 硬件加速的设备上更快；DES、3DES 和 RC4 已经不安全，TLS 1.3 不再支持。
+
 <div align="center"> <img src="pics/https-hybrid.png" width="740px"/> </div><br>
 
 ### 认证
@@ -910,6 +966,10 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
 
 <div align="center"> <img src="pics/cert-chain.png" width="760px"/> </div><br>
+
+中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。
+
+Charles、Fiddler 等抓包工具能解密 HTTPS，是因为用户手动把它们的根证书加入了信任列表，工具再为访问的每个域名临时签发证书。App 可以在代码中只信任指定的证书或公钥，称为证书固定（Certificate Pinning），这时加入根证书也无法抓包。
 
 ### TLS 握手
 
@@ -985,6 +1045,8 @@ HTTP/3 改为基于 UDP 的 QUIC 协议：
 - 每个流单独保证顺序，一个流丢包不影响其它流；
 - QUIC 内置了 TLS 1.3，传输层握手和加密握手合并，新连接 1 个 RTT 后就能发送请求，恢复之前的会话时可以 0 RTT；
 - 连接用连接 ID 标识，而不是 IP 地址和端口，手机从 Wi-Fi 切换到移动网络时连接不用重建。
+
+UDP 本身不保证可靠，QUIC 在它之上自己实现了确认、重传和拥塞控制，见 [在 UDP 上实现可靠传输](计算机网络%20-%20传输层.md#在-udp-上实现可靠传输)。
 
 浏览器通常先用 HTTP/2 访问，从响应首部 Alt-Svc 得知服务器支持 HTTP/3 后再切换，例如 www.example.com 的响应中有 alt-svc: h3=":443"; ma=86400。
 
@@ -1181,6 +1243,87 @@ $ openssl s_client -connect www.example.com:443 -servername www.example.com -tls
 
 POST 的首部和请求体在同一次写入中。第一个请求的首部中有 Accept-Encoding: gzip, deflate, br, zstd。
 
+### A6 SSE 推送与断线重连
+
+服务器用 http.server 实现，GET /orders/1024/events 依次写入 4 条事件后关闭连接，请求带有 Last-Event-ID 时只发送它之后的事件：
+
+```python
+last = int(self.headers.get("Last-Event-ID", 0))
+self.send_response(200)
+self.send_header("Content-Type", "text/event-stream")
+self.send_header("Cache-Control", "no-cache")
+self.end_headers()                       # 没有 Content-Length，连接保持打开
+for i in range(last + 1, len(EVENTS) + 1):
+    self.wfile.write(f"id: {i}\nevent: status\ndata: {{\"order\": 1024, \"status\": \"{EVENTS[i-1]}\"}}\n\n".encode())
+    self.wfile.flush(); time.sleep(0.5)
+```
+
+```text
+$ curl -v -N -H "Accept: text/event-stream" http://127.0.0.1:8781/orders/1024/events
+> GET /orders/1024/events HTTP/1.1
+> Host: 127.0.0.1:8781
+> Accept: text/event-stream
+< HTTP/1.1 200 OK
+< Content-Type: text/event-stream
+< Cache-Control: no-cache
+id: 1
+event: status
+data: {"order": 1024, "status": "已下单"}
+...
+id: 4
+event: status
+data: {"order": 1024, "status": "已签收"}
+
+$ curl -N -H "Accept: text/event-stream" -H "Last-Event-ID: 2" http://127.0.0.1:8781/orders/1024/events
+id: 3
+...
+id: 4
+...
+```
+
+再用无头模式的 Edge 打开一个使用 EventSource 的页面：第 1 次连接先发送 retry: 500，再发送事件 1、2 后断开；第 2 次连接发送之后的 2 条事件后断开；第 3 次连接返回 204。服务器的日志和页面中记录的事件：
+
+```text
+第 1 次连接 Accept='text/event-stream' Last-Event-ID=None
+第 2 次连接 Accept='text/event-stream' Last-Event-ID='2'
+第 3 次连接 Accept='text/event-stream' Last-Event-ID='4'
+
+4ms id=1 已下单
+4ms id=2 已发货
+4ms error readyState=0
+504ms id=3 运输中
+504ms id=4 已签收
+514ms error readyState=0
+1014ms error readyState=2
+```
+
+readyState 为 0 表示正在重连，为 2 表示已经关闭、不再重连。
+
+### A7 证书链与密码套件
+
+openssl 为 macOS 自带的 LibreSSL 3.3.6，LibreSSL 把 TLS 1.3 的套件 TLS_AES_256_GCM_SHA384 显示为 AEAD-AES256-GCM-SHA384：
+
+```text
+$ openssl s_client -connect www.baidu.com:443 -servername www.baidu.com
+depth=2 OU = GlobalSign Root CA - R3, O = GlobalSign, CN = GlobalSign
+depth=1 C = BE, O = GlobalSign nv-sa, CN = GlobalSign RSA OV SSL CA 2018
+depth=0 C = CN, ST = Beijing, L = Beijing, O = "Beijing Baidu Netcom Science Technology Co., Ltd.", CN = baidu.com
+Server Temp Key: ECDH, P-256, 256 bits
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES128-GCM-SHA256
+    Verify return code: 0 (ok)
+
+$ openssl s_client -connect www.jd.com:443 -servername www.jd.com
+depth=2 OU = GlobalSign Root CA - R3, O = GlobalSign, CN = GlobalSign
+depth=1 C = BE, O = GlobalSign nv-sa, CN = GlobalSign RSA OV SSL CA 2018
+depth=0 C = CN, ST = Beijing, L = Beijing, O = "BEIJING JINGDONG SHANGKE INFORMATION TECHNOLOGY CO., LTD.", CN = *.jd.com
+Server Temp Key: ECDH, X25519, 253 bits
+Server public key is 2048 bit
+    Protocol  : TLSv1.3
+    Cipher    : AEAD-AES256-GCM-SHA384
+    Verify return code: 0 (ok)
+```
+
 ## 参考资料
 
 - [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)
@@ -1217,6 +1360,12 @@ POST 的首部和请求体在同一次写入中。第一个请求的首部中有
 - [RFC 9114: HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
 - [RFC 9000: QUIC](https://www.rfc-editor.org/rfc/rfc9000)
 - [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)
+- [WHATWG HTML: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
+- [MDN: EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
+- [MDN: Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
+- [MDN: Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+- [OWASP: Pinning Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html)
+- [RFC 8439: ChaCha20 and Poly1305 for IETF Protocols](https://www.rfc-editor.org/rfc/rfc8439)
 - [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110)
 - [RFC 9111: HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111)
 - [RFC 3986: Uniform Resource Identifier (URI): Generic Syntax](https://www.rfc-editor.org/rfc/rfc3986)
