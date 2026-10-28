@@ -764,7 +764,7 @@ VALUES
 ### Solution
 
 ```sql
-CREATE FUNCTION getNthHighestSalary ( N INT ) RETURNS INT BEGIN
+CREATE FUNCTION getNthHighestSalary ( N INT ) RETURNS INT READS SQL DATA BEGIN
 
 SET N = N - 1;
 RETURN ( 
