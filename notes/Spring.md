@@ -73,23 +73,6 @@ public class OrderService {
 
 ### Bean 的生命周期
 
-容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition。
-
-第二步在 finishBeanFactoryInitialization() 中，按 BeanDefinition 依次创建所有非懒加载的单例，创建过程依靠反射。在一个 Bean 的构造函数和带 @Autowired 的 Setter 方法中打印调用栈，按调用顺序整理如下（Spring Boot 3.3 实测，见[附录 A3](#a3-bean-创建的调用栈)，最后一行 initializeBean 来自源码）：
-
-```text
-AbstractApplicationContext.refresh()
-└─ finishBeanFactoryInitialization() → preInstantiateSingletons()     遍历 BeanDefinition
-   └─ getBean() → doGetBean()                                         先查单例缓存，没有再创建
-      └─ createBean() → doCreateBean()
-         ├─ createBeanInstance() → Constructor.newInstance()          实例化：反射调用构造函数
-         ├─ populateBean() → AutowiredAnnotationBeanPostProcessor
-         │     .postProcessProperties() → Method.invoke()             属性填充：反射调用 Setter
-         └─ initializeBean()                                          Aware 回调、初始化、AOP 代理
-```
-
-@Autowired 加在字段上时，同样由 postProcessProperties() 处理，区别是用 Field.set() 反射赋值。
-
 一个单例 Bean 从创建到销毁会经过以下步骤：
 
 1. 实例化：调用构造函数创建对象；
@@ -115,6 +98,23 @@ AbstractApplicationContext.refresh()
 10 DisposableBean.destroy
 11 destroy-method
 ```
+
+容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition。
+
+第二步在 finishBeanFactoryInitialization() 中，按 BeanDefinition 依次创建所有非懒加载的单例，创建过程依靠反射。在一个 Bean 的构造函数和带 @Autowired 的 Setter 方法中打印调用栈，按调用顺序整理如下（Spring Boot 3.3 实测，见[附录 A3](#a3-bean-创建的调用栈)，最后一行 initializeBean 来自源码）：
+
+```text
+AbstractApplicationContext.refresh()
+└─ finishBeanFactoryInitialization() → preInstantiateSingletons()     遍历 BeanDefinition
+   └─ getBean() → doGetBean()                                         先查单例缓存，没有再创建
+      └─ createBean() → doCreateBean()
+         ├─ createBeanInstance() → Constructor.newInstance()          实例化：反射调用构造函数
+         ├─ populateBean() → AutowiredAnnotationBeanPostProcessor
+         │     .postProcessProperties() → Method.invoke()             属性填充：反射调用 Setter
+         └─ initializeBean()                                          Aware 回调、初始化、AOP 代理
+```
+
+@Autowired 加在字段上时，同样由 postProcessProperties() 处理，区别是用 Field.set() 反射赋值。
 
 ### Bean 的作用域与线程安全
 
