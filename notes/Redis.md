@@ -55,6 +55,8 @@
         * [A3 单线程的吞吐量和 CPU 时间](#a3-单线程的吞吐量和-cpu-时间)
         * [A4 Redis Cluster](#a4-redis-cluster)
         * [A5 Sentinel 故障转移](#a5-sentinel-故障转移)
+        * [A6 SDS 的空间预分配](#a6-sds-的空间预分配)
+        * [A7 热点计数](#a7-热点计数)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -221,6 +223,14 @@ OK
 
 例如一个 HASH 有 512 个字段时编码为 listpack，再写入一个字段就变为 hashtable。ZSET 转换后同时使用跳跃表和字典：字典按成员查分数，跳跃表按分数排序和范围查询。
 
+字符串的内容保存在简单动态字符串（Simple Dynamic String, SDS）中，它在字符数组前面记录了已用的长度 len 和分配的容量 alloc：
+
+- 取长度是 O(1)，不用像 C 字符串那样遍历到 \0；
+- 按 len 而不是 \0 判断结尾，可以保存任意二进制数据；
+- 追加时空间不够才重新分配，并且多分配一些：新长度小于 1 MB 时分配新长度的 2 倍，否则多分配 1 MB，连续追加时不用每次都重新分配内存。
+
+例如对 60 字节、没有剩余空间的字符串再 APPEND 1 字节，SDS 按 2 × 61 = 122 字节申请（内存分配器向上取整为 128 字节），追加后剩余 63 字节；对 2040000 字节的字符串追加后剩余约 1 MB（Redis 7.4 实测，见[附录 A6](#a6-sds-的空间预分配)）。embstr 编码把对象头和 SDS 放在同一块内存中，只需分配一次，44 字节的上限正好让两者一起放进 64 字节；它是只读的，APPEND 等修改会先把它转为 raw。
+
 ### 字典
 
 键空间、HASH 和 SET 的 hashtable 编码、ZSET 中按成员查分数的部分，都是用字典（dict）实现的。字典是一个哈希表，用拉链法解决哈希冲突：桶的数量是 2 的幂，键的哈希值与桶数减 1 做位与得到桶的下标，落在同一个桶的键用链表连起来。
@@ -263,6 +273,10 @@ Redis 的跳跃表还在每个指针上记录了跨度，即这一步跳过了�
 可以对字符串执行 INCR、INCRBY 等命令实现计数器，例如文章的阅读数、接口的调用次数。
 
 命令在服务器上原子执行，多个客户端同时加 1 不会丢失更新；数据在内存中，也适合这种频繁读写的场景。
+
+如果直接在数据库中计数，所有请求都要更新同一行，行锁让这些更新只能一个接一个地执行。对同一行执行 UPDATE counter SET cnt = cnt + 1，MySQL 用 1、8、50 个连接时每秒都只有 5000～7000 次；Redis 的 INCR 用 50 个连接每秒约 10 万次（MySQL 8.0、Redis 7.4 实测，见[附录 A7](#a7-热点计数)）。
+
+常用的做法是在 Redis 中计数，再定期把计数写回数据库。单个计数仍然太热时，可以拆成多个键，例如 views:1024:0～views:1024:9，每次随机给其中一个加 1，读取时求和。点赞这类每个用户只能计一次的计数，还要记录点过赞的用户，见下文的 [点赞功能](#点赞功能)。
 
 ### 缓存
 
@@ -405,6 +419,12 @@ Redis 是内存型数据库，为了保证数据在断电后不会丢失，需�
 <div align="center"> <img src="pics/redis-aof-rewrite.png" width="760px"/> </div><br>
 
 配置项 aof-use-rdb-preamble 默认开启，重写生成的基础文件使用 RDB 格式，称为混合持久化：重启时先载入 RDB 部分，再重放增量文件中的命令，兼顾了 RDB 恢复快和 AOF 丢失数据少的优点。两种持久化都开启时，重启后使用 AOF 恢复，因为它的数据通常更完整。
+
+两种方式的对比：
+
+- 丢失的数据：RDB 丢失最后一次快照之后的写入，按 save 配置可能是几分钟；AOF 使用 everysec 时约丢失 1 秒；
+- 文件和恢复：RDB 是紧凑的二进制快照，适合备份，数据量大时恢复也快；AOF 记录的是命令，文件通常更大；
+- 开销：RDB 只在生成快照时 fork 子进程，数据量大时 fork 本身可能让主进程停顿；AOF 每次写入都要追加，并且需要定期重写。
 
 ## 九、事务
 
@@ -809,6 +829,36 @@ master_port:6401
 NOREPLICAS Not enough good replicas to write.
 ```
 
+### A6 SDS 的空间预分配
+
+Redis 7.4.1（内存分配器为 libc），启动时加 --enable-debug-command yes，用 DEBUG SDSLEN 查看值的 len、avail（剩余空间）和实际分配的内存：
+
+```text
+SET s（50 字节）              val_sds_len:50, val_sds_avail:10, val_zmalloc: 64       encoding raw
+APPEND s 10 字节              val_sds_len:60, val_sds_avail:0, val_zmalloc: 64
+APPEND s 1 字节               val_sds_len:61, val_sds_avail:63, val_zmalloc: 128
+SET big（2000000 字节）       val_sds_len:2000000, val_sds_avail:31606, val_zmalloc: 2031616
+APPEND big 40000 字节         val_sds_len:2040000, val_sds_avail:1072950, val_zmalloc: 3112960
+SET 44 字节 encoding embstr，SET 45 字节 encoding raw
+```
+
+对应的源码在 sds.c 的 _sdsMakeRoomFor()：剩余空间足够时直接返回；否则新长度小于 SDS_MAX_PREALLOC（1 MB）时乘以 2，不小于时加上 1 MB。SET 50 字节时的 10 字节、SET 大字符串时的 31606 字节剩余空间来自内存分配器的取整和协议缓冲区，不是预分配。
+
+### A7 热点计数
+
+MySQL 8.0.44（innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1），Redis 7.4.1，Apple M1 Pro。MySQL 用多个进程同时执行自动提交的 UPDATE counter SET cnt = cnt + 1 WHERE id = 1，最后核对 cnt；Redis 用 redis-benchmark 对同一个键执行 INCR：
+
+```text
+MySQL 1 个连接共更新 5000 次：0.92 s，5437 次/秒，cnt = 5000
+MySQL 8 个连接共更新 16000 次：2.21 s，7251 次/秒，cnt = 16000
+MySQL 50 个连接共更新 20000 次：3.72 s，5383 次/秒，cnt = 20000
+
+$ redis-benchmark -p 6395 -c <连接数> -n 200000 --csv incr counter:1
+1 个连接   "incr counter:1","11020.50",...
+8 个连接   "incr counter:1","50213.41",...
+50 个连接  "incr counter:1","101368.47",...
+```
+
 ## 参考资料
 
 - Carlson J L. Redis in Action [M]. Manning, 2013.
@@ -829,3 +879,4 @@ NOREPLICAS Not enough good replicas to write.
 - [Scripting with Lua | Redis](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/)
 - [Redis 7.4.1 源码 dict.c](https://github.com/redis/redis/blob/7.4.1/src/dict.c)
 - [Redis 7.4.1 源码 t_zset.c](https://github.com/redis/redis/blob/7.4.1/src/t_zset.c)
+- [Redis 7.4.1 源码 sds.c](https://github.com/redis/redis/blob/7.4.1/src/sds.c)
