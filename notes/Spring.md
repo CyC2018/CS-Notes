@@ -23,6 +23,9 @@
         * [缓存](#缓存)
     * [七、Spring 中的设计模式](#七spring-中的设计模式)
     * [附录：实测](#附录实测)
+        * [A1 单例 Bean 的成员变量](#a1-单例-bean-的成员变量)
+        * [A2 锁与事务的先后](#a2-锁与事务的先后)
+        * [A3 Bean 创建的调用栈](#a3-bean-创建的调用栈)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -49,6 +52,8 @@ public class OrderService {
 - 对象只依赖接口，替换实现、在测试中注入模拟对象都不需要修改代码；
 - 对象的创建、作用域和生命周期由容器统一管理，事务、缓存这类功能也是容器在创建对象时织入的。
 
+容器通过注解知道要创建哪些对象：类上标注 @Component 或者它的派生注解 @Service、@Repository、@Controller，启动时由组件扫描发现；第三方库中的类无法修改源码，就在 @Configuration 类中写一个返回该对象的方法，并标注 @Bean。
+
 依赖注入有构造器注入、Setter 注入和字段注入（把 @Autowired 加在字段上）三种方式。Spring 官方推荐构造器注入：依赖可以声明为 final，对象创建出来就是完整可用的，缺少依赖时启动就会失败。
 
 @Autowired 和 @Resource 都能注入依赖，区别在于查找的顺序：
@@ -67,6 +72,23 @@ public class OrderService {
 第三行启动时报错 NoUniqueBeanDefinitionException: expected single matching bean but found 2: alipay,wechat。
 
 ### Bean 的生命周期
+
+容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition。
+
+第二步在 finishBeanFactoryInitialization() 中，按 BeanDefinition 依次创建所有非懒加载的单例，创建过程依靠反射。在一个 Bean 的构造函数和带 @Autowired 的 Setter 方法中打印调用栈，按调用顺序整理如下（Spring Boot 3.3 实测，见[附录 A3](#a3-bean-创建的调用栈)，最后一行 initializeBean 来自源码）：
+
+```text
+AbstractApplicationContext.refresh()
+└─ finishBeanFactoryInitialization() → preInstantiateSingletons()     遍历 BeanDefinition
+   └─ getBean() → doGetBean()                                         先查单例缓存，没有再创建
+      └─ createBean() → doCreateBean()
+         ├─ createBeanInstance() → Constructor.newInstance()          实例化：反射调用构造函数
+         ├─ populateBean() → AutowiredAnnotationBeanPostProcessor
+         │     .postProcessProperties() → Method.invoke()             属性填充：反射调用 Setter
+         └─ initializeBean()                                          Aware 回调、初始化、AOP 代理
+```
+
+@Autowired 加在字段上时，同样由 postProcessProperties() 处理，区别是用 Field.set() 反射赋值。
 
 一个单例 Bean 从创建到销毁会经过以下步骤：
 
@@ -113,7 +135,7 @@ public class CounterController {
 }
 ```
 
-例如用 64 个线程并发请求 1 万次，多次运行中每轮丢失的更新从 0 次到 67 次不等（Spring Boot 3.3 实测，见[附录：实测](#附录实测)）。是否丢失、丢失多少取决于线程执行的时序，这类问题在测试中很难稳定复现。解决方法是不在单例中保存状态，把数据放在方法的局部变量中；确实需要共享时使用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。
+例如用 64 个线程并发请求 1 万次，多次运行中每轮丢失的更新从 0 次到 67 次不等（Spring Boot 3.3 实测，见[附录 A1](#a1-单例-bean-的成员变量)）。是否丢失、丢失多少取决于线程执行的时序，这类问题在测试中很难稳定复现。解决方法是不在单例中保存状态，把数据放在方法的局部变量中；确实需要共享时使用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。
 
 需要注意的是，把 prototype 的 Bean 注入到单例中，只会在创建单例时注入一次，之后每次使用的都是同一个对象。需要每次得到新对象时，注入 ObjectProvider 并在使用时调用 getObject()。
 
@@ -177,6 +199,56 @@ proxy.create();
 提交事务
 ```
 
+生成的代理类 jdk.proxy1.$Proxy0 的父类是 java.lang.reflect.Proxy。Java 不支持多继承，代理类已经继承了 Proxy，就只能通过实现接口与目标类关联，这就是 JDK 动态代理只能代理接口的原因，没有实现接口的类要用 CGLIB 生成子类（JDK 21 实测）。
+
+动态代理与反射是两个概念：反射指的是在运行时获取类的信息、调用方法和读写字段，例如 method.invoke(target, args)；动态代理指的是在运行时生成新的类，例如上面的 Proxy.newProxyInstance() 生成了一个实现 OrderService 接口的类。JDK 动态代理依赖反射：代理类把每次调用都交给 InvocationHandler，传入表示被调用方法的 Method 对象，再由 method.invoke() 调用目标对象。
+
+实际开发中不需要自己创建代理，用 @Aspect 声明切面，Spring 在创建 Bean 时生成代理。常见的做法是自定义一个注解，让切面拦截带有这个注解的方法。例如给下单方法加分布式锁：
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DistributedLock {
+    String prefix();                       // 锁的 key 为 prefix 加第一个参数
+}
+
+@Aspect
+@Component
+@Order(1)                                  // 比事务切面先执行，锁包在事务外面
+public class DistributedLockAspect {
+    private final StringRedisTemplate redis;   // 构造器注入，省略构造函数
+
+    @Around("@annotation(lock)")           // 拦截带有 @DistributedLock 的方法
+    public Object around(ProceedingJoinPoint pjp, DistributedLock lock) throws Throwable {
+        String key = lock.prefix() + pjp.getArgs()[0];
+        String value = UUID.randomUUID().toString();
+        while (!Boolean.TRUE.equals(redis.opsForValue().setIfAbsent(key, value, Duration.ofSeconds(30)))) {
+            Thread.onSpinWait();           // 简化：自旋重试
+        }
+        try {
+            return pjp.proceed();          // 调用原方法
+        } finally {
+            redis.execute(UNLOCK, List.of(key), value);   // 是自己的锁才删除
+        }
+    }
+}
+
+@Service
+public class OrderService {
+    @Transactional
+    @DistributedLock(prefix = "lock:order:user:")
+    public boolean createOrder(int userId, int skuId) {
+        // 查询这个用户是否已经买过这个商品，没有就插入订单，完整代码见附录 A2
+    }
+}
+```
+
+@Around 中的 @annotation(lock) 表示拦截所有带 @DistributedLock 的方法，并把注解对象作为参数 lock 传入；pjp.proceed() 调用原方法。UNLOCK 是先比较再删除的 Lua 脚本，原理见 [Redis 的 SET NX 指令](分布式.md#redis-的-set-nx-指令)。记录日志、限流、幂等校验也都是这种写法。
+
+需要注意的是，createOrder() 上同时有事务和锁两个切面，它们的先后决定了锁是否包住事务。锁必须在外层：如果事务在外层，锁释放之后事务才提交，这期间另一个请求拿到锁，查不到还没有提交的订单，就会再创建一个。20 个请求同时为同一个用户下单，锁在事务外时 10 轮都只创建了 1 个订单；锁在事务内时 10 轮中有 8 轮创建了 2 个（Spring Boot 3.3、MySQL 8.0 实测，见[附录 A2](#a2-锁与事务的先后)）。
+
+两个切面都没有指定顺序时，执行的先后是不确定的。@Order 的值越小越先执行、越靠外层，事务切面的默认值是 Ordered.LOWEST_PRECEDENCE，所以上面给锁的切面加上了 @Order(1)。
+
 ### 自调用
 
 代理只能拦截从外部经过代理的调用。在目标对象内部调用自己的另一个方法时，等价于 this.inner()，调用的是原始对象，不经过代理，切面不会生效：
@@ -205,6 +277,21 @@ public class OrderService {
 @Transactional 同样基于 AOP 实现：代理在方法执行前开启事务，方法正常返回时提交，抛出异常时回滚。
 
 需要注意的是，默认只有 RuntimeException 和 Error 会触发回滚，受检异常（例如 IOException）不会回滚，需要通过 rollbackFor 指定。
+
+除了声明式事务，还可以用 TransactionTemplate 编程式地使用事务，事务的范围就是传入的回调：
+
+```java
+transactionTemplate.execute(status -> {
+    jdbc.update("UPDATE goods SET stock = stock - 1 WHERE id = ?", 1001);
+    jdbc.update("INSERT INTO orders (user_id, goods_id) VALUES (?, ?)", 1024, 1001);
+    if (riskCheckFailed) {
+        status.setRollbackOnly();          // 不抛异常也能回滚
+    }
+    return null;
+});
+```
+
+回调正常返回时提交，抛出异常或者调用了 setRollbackOnly() 时回滚。它不依赖代理，不会因为自调用而失效，事务的范围也可以只是方法中的一段，适合只有一小段操作需要事务、或者要按条件决定回滚的场景，其余情况用 @Transactional 更简洁。
 
 ### 传播行为
 
@@ -236,13 +323,36 @@ Spring Boot 并不是新的框架，容器、AOP、事务仍然是 Spring 提供
 
 自动配置的过程：
 
-1. 启动类上的 @SpringBootApplication 包含了 @EnableAutoConfiguration；
+1. 启动类上的 @SpringBootApplication 组合了三个注解：@SpringBootConfiguration（相当于 @Configuration，启动类中也可以定义 @Bean）、@ComponentScan（扫描启动类所在的包及其子包）和 @EnableAutoConfiguration（开启自动配置）；
 2. 启动时读取所有 jar 包中的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件，得到自动配置类的列表，Spring Boot 2.7 之前写在 META-INF/spring.factories 中；
 3. 每个自动配置类都带有条件注解，条件满足时才生效。例如 @ConditionalOnClass 要求类路径上存在某个类，@ConditionalOnMissingBean 要求用户没有定义同类型的 Bean，@ConditionalOnProperty 根据配置项决定。
 
 例如引入 spring-boot-starter-jdbc 和数据库驱动后，数据源的自动配置类就会生效，按配置文件中的地址创建一个 DataSource；如果用户自己定义了 DataSource，由于 @ConditionalOnMissingBean，自动配置不再创建。因此用户的配置总是优先于自动配置。
 
+自定义 starter 也是同样的做法。例如把公司内部的短信客户端做成 starter，自动配置类如下：
+
+```java
+@AutoConfiguration
+@EnableConfigurationProperties(SmsProperties.class)
+public class SmsAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean                  // 用户自己定义了 SmsClient 时不再创建
+    public SmsClient smsClient(SmsProperties props) {
+        return new SmsClient(props.sign());
+    }
+}
+
+@ConfigurationProperties("sms")               // 绑定配置文件中 sms.* 的配置
+public record SmsProperties(String sign) {}
+```
+
+再在 jar 包的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件中写上 SmsAutoConfiguration 的全名。其它项目引入这个 jar、配置 sms.sign 之后，就能直接注入 SmsClient；自己定义了 SmsClient 时，注入的是自己定义的那个。
+
+需要注意的是，自动配置类要放在不会被组件扫描到的包中，只通过 imports 文件加载。自动配置类在用户定义的 Bean 都注册之后才处理，@ConditionalOnMissingBean 才能看到用户的 Bean；如果它被组件扫描到，就会和普通的配置类一起提前处理，条件可能判断错误。第三方 starter 按约定命名为 xxx-spring-boot-starter，spring-boot-starter-xxx 留给 Spring Boot 官方使用。
+
 ## 五、Spring MVC
+
+Spring MVC 是基于 Servlet 的 Web 框架，按模型-视图-控制器（Model-View-Controller, MVC）的方式组织代码：Controller 接收请求、调用业务逻辑，Model 是要展示的数据，View 把数据渲染成页面。前后端分离后，Controller 通常直接把数据写成 JSON 返回，没有 View。
 
 ### 请求的处理过程
 
@@ -265,6 +375,8 @@ Spring Boot 并不是新的框架，容器、AOP、事务仍然是 Spring 提供
 ```
 
 拦截器与过滤器（Filter）的区别：过滤器是 Servlet 规范定义的，在请求进入 DispatcherServlet 之前执行，拿不到要调用哪个 Controller 方法；拦截器由 Spring MVC 调用，可以拿到 Handler，并且能使用 Spring 容器中的 Bean。
+
+拦截器与 Spring AOP 的区别：拦截器按 URL 匹配，只作用于进入 DispatcherServlet 的请求；AOP 按切点匹配任意 Spring Bean 的方法，Service 之间的调用也能拦截。因此登录校验、访问日志这类与请求有关的处理用拦截器，事务、缓存、分布式锁这类与业务方法有关的处理用 AOP。
 
 ## 六、MyBatis
 
@@ -296,6 +408,8 @@ List<Order> byUserUnsafe(@Param("userId") String userId);
 
 MyBatis 在启动时为每个 Mapper 接口生成 JDK 动态代理，例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession 执行，再把结果映射成返回类型。
 
+这个代理是通过 FactoryBean 放进容器的。FactoryBean 是一种特殊的 Bean，容器按名称获取它时，得到的是它的 getObject() 返回的对象，名称前加 & 才能取到 FactoryBean 本身。MyBatis-Spring 为每个 Mapper 接口注册一个 MapperFactoryBean：getBean("app.OrderMapper") 得到的是上面的代理对象，getBean("&app.OrderMapper") 得到的是 MapperFactoryBean（Spring Boot 3.3、mybatis-spring 3.0 实测）。BeanFactory 则是容器本身的根接口，负责创建和管理所有 Bean，两者只是名称相近。
+
 ### 动态 SQL
 
 XML 中可以用 if、where、foreach 等标签按参数拼接 SQL：
@@ -311,6 +425,29 @@ XML 中可以用 if、where、foreach 等标签按参数拼接 SQL：
 ```
 
 只传 status 时生成 WHERE status = ?，两个都传时生成 WHERE user_id = ? AND status = ?，where 标签会去掉开头多余的 AND。
+
+foreach 用于拼接 IN 列表。方法有多个参数时用 @Param 给参数命名，XML 中按名称引用：
+
+```java
+List<Order> byStatuses(@Param("userId") Integer userId, @Param("statuses") List<Integer> statuses);
+```
+
+```xml
+<select id="byStatuses" resultType="demo.App$Order">
+  SELECT id, user_id AS userId, status FROM orders
+  WHERE user_id = #{userId} AND status IN
+  <foreach collection="statuses" item="s" open="(" separator="," close=")">#{s}</foreach>
+</select>
+```
+
+传入 1024 和 [0, 3] 时，生成的 SQL 和参数为：
+
+```text
+==>  Preparing: SELECT id, user_id AS userId, status FROM orders WHERE user_id = ? AND status IN ( ? , ? )
+==> Parameters: 1024(Integer), 0(Integer), 3(Integer)
+```
+
+列表中的每个元素仍然是一个占位符。需要注意的是，列表为空时 foreach 不输出任何内容，括号也没有，SQL 变成 status IN 后面直接结束，执行时报语法错误，所以调用前要先判断列表是否为空。
 
 ### 缓存
 
@@ -353,6 +490,8 @@ public void on(OrderPaidEvent e) { ... }               // 积分服务、短信�
 
 ## 附录：实测
 
+### A1 单例 Bean 的成员变量
+
 Spring Boot 3.3.5、JDK 21，Apple M1 Pro。CounterController 与正文相同，用 Python 的线程池以 64 个线程请求 /count，每轮 1 万次，用请求前后 /count 的返回值计算增加了多少，应用启动后连续运行 3 轮：
 
 ```text
@@ -374,6 +513,71 @@ Spring Boot 3.3.5、JDK 21，Apple M1 Pro。CounterController 与正文相同，
 第 3 轮：64 个线程并发请求 10000 次，计数增加 9998，丢失 2 次更新
 ```
 
+### A2 锁与事务的先后
+
+Spring Boot 3.3.5（spring-boot-starter-aop、spring-boot-starter-data-redis）、JDK 21，MySQL 8.0.44（默认的可重复读），Redis 7.4.1，Apple M1 Pro。切面和 OrderService 与正文相同，createOrder() 的方法体为：
+
+```java
+Integer n = jdbc.queryForObject(
+        "SELECT COUNT(*) FROM t3_order WHERE user_id = ? AND sku_id = ?", Integer.class, userId, skuId);
+if (n > 0) {
+    return false;                          // 一人一单
+}
+jdbc.update("INSERT INTO t3_order (user_id, sku_id) VALUES (?, ?)", userId, skuId);
+return true;
+```
+
+每轮先清空 t3_order，再用 20 个线程同时调用 createOrder(1024, 10086)，统计返回 true 的次数和表中的行数。对照组加一个配置类 @EnableTransactionManagement(order = 0)，让事务切面比锁的切面（@Order(1)）更靠外：
+
+```text
+锁在事务外（锁 @Order(1)，事务切面为默认的 LOWEST_PRECEDENCE）
+第 1～10 轮：20 个并发请求，返回成功 1 次，订单表中 1 行
+锁在事务内（事务切面 order = 0）
+第 1 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 2 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 3 轮：20 个并发请求，返回成功 1 次，订单表中 1 行
+第 4 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 5 轮：20 个并发请求，返回成功 1 次，订单表中 1 行
+第 6 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 7 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 8 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 9 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+第 10 轮：20 个并发请求，返回成功 2 次，订单表中 2 行
+```
+
+### A3 Bean 创建的调用栈
+
+环境同 A2。在一个 @Component 的构造函数和带 @Autowired 的 Setter 方法中 new Throwable().getStackTrace()，只保留 org.springframework.beans、org.springframework.context 和反射的帧（从栈顶到栈底）：
+
+```text
+== 构造函数
+  DirectConstructorHandleAccessor.newInstance
+  Constructor.newInstanceWithCaller
+  Constructor.newInstance
+  BeanUtils.instantiateClass
+  SimpleInstantiationStrategy.instantiate
+  AbstractAutowireCapableBeanFactory.instantiateBean
+  AbstractAutowireCapableBeanFactory.createBeanInstance
+  AbstractAutowireCapableBeanFactory.doCreateBean
+  AbstractAutowireCapableBeanFactory.createBean
+  AbstractBeanFactory.lambda$doGetBean$0
+  DefaultSingletonBeanRegistry.getSingleton
+  AbstractBeanFactory.doGetBean
+  AbstractBeanFactory.getBean
+  DefaultListableBeanFactory.preInstantiateSingletons
+  AbstractApplicationContext.finishBeanFactoryInitialization
+  AbstractApplicationContext.refresh
+== Setter 注入
+  DirectMethodHandleAccessor.invoke
+  Method.invoke
+  AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.inject
+  InjectionMetadata.inject
+  AutowiredAnnotationBeanPostProcessor.postProcessProperties
+  AbstractAutowireCapableBeanFactory.populateBean
+  AbstractAutowireCapableBeanFactory.doCreateBean
+  （以下与构造函数相同）
+```
+
 ## 参考资料
 
 - [Spring Framework: Dependency Injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html)
@@ -384,7 +588,12 @@ Spring Boot 3.3.5、JDK 21，Apple M1 Pro。CounterController 与正文相同，
 - [Spring Framework: Transaction Propagation](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html)
 - [Spring Framework 源码：DefaultSingletonBeanRegistry](https://github.com/spring-projects/spring-framework/blob/main/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java)
 - [Spring Boot: Creating Your Own Auto-configuration](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html)
+- [Spring Boot: Using the @SpringBootApplication Annotation](https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html)
+- [Spring Framework: Programmatic Transaction Management](https://docs.spring.io/spring-framework/reference/data-access/transaction/programmatic.html)
+- [Spring Framework: Declaring Advice（Advice Ordering）](https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/advice.html)
+- [Spring Framework 源码：AbstractApplicationContext](https://github.com/spring-projects/spring-framework/blob/6.1.x/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java)
 - [Spring Boot 2.6 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 - [Spring Boot 2.7 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.7-Release-Notes)
 - [MyBatis 3 文档](https://mybatis.org/mybatis-3/zh_CN/index.html)
+- [MyBatis 3: Dynamic SQL](https://mybatis.org/mybatis-3/dynamic-sql.html)
 - [DispatcherServlet | Spring Framework 文档](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)
