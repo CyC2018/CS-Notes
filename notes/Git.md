@@ -71,7 +71,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 <div align="center"> <img src="pics/git-branch-commit.png" width="760px"/> </div><br>
 
-合并分支也只需要改变指针即可：切换回 master 后合并 dev，master 直接移动到 dev 所指的提交。
+合并分支也只需要改变指针即可：切换回 master 后合并 dev，master 直接移动到 dev 所指的提交。这种情况称为快进合并（Fast-forward），两个分支都有新的提交时，合并会生成一个新的提交。
 
 <div align="center"> <img src="pics/git-branch-merge.png" width="760px"/> </div><br>
 
@@ -105,9 +105,9 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 ## 储藏（Stashing）
 
-在一个分支上操作之后，如果还没有将修改提交到分支上，此时进行切换分支，那么另一个分支上也能看到新的修改。这是因为所有分支都共用一个工作区的缘故。
+在一个分支上操作之后，如果还没有将修改提交到分支上，此时进行切换分支，那么另一个分支上也能看到新的修改。这是因为所有分支都共用一个工作区的缘故。如果这些修改涉及的文件在两个分支上不同，切换会覆盖掉修改，Git 会拒绝切换。
 
-可以使用 git stash 将当前分支的修改储藏起来，此时当前工作区的所有修改都会被存到栈中，也就是说当前工作区是干净的，没有任何未提交的修改。此时就可以安全的切换到其它分支上了。
+可以使用 git stash 将当前分支的修改储藏起来，此时当前工作区中已跟踪文件的修改都会被存到栈中，工作区回到干净的状态；未跟踪的新文件默认不会储藏，需要加上 -u 选项。此时就可以安全的切换到其它分支上了。
 
 ```bash
 $ git stash
@@ -119,15 +119,15 @@ HEAD is now at 049d078 added the index file (To restore them type "git stash app
 
 ## SSH 传输设置
 
-Git 仓库和 GitHub 中心仓库之间的传输是通过 SSH 加密。
+Git 仓库和 GitHub 中心仓库之间可以通过 HTTPS 或者 SSH 加密传输，使用 SSH 时需要配置 SSH Key。
 
-如果用户主目录下没有 .ssh 目录，或者该目录下没有 id_rsa 和 id_rsa.pub 这两个文件，可以通过以下命令来创建 SSH Key：
+如果用户主目录下没有 .ssh 目录，或者该目录下没有 id_ed25519 和 id_ed25519.pub 这两个文件，可以通过以下命令来创建 SSH Key：
 
 ```bash
-$ ssh-keygen -t rsa -C "youremail@example.com"
+$ ssh-keygen -t ed25519 -C "youremail@example.com"
 ```
 
-然后把公钥 id_rsa.pub 的内容复制到 GitHub “Settings” 的 SSH Keys 中。
+然后把公钥 id_ed25519.pub 的内容复制到 GitHub “Settings” 的 SSH Keys 中。
 
 ## .gitignore 文件
 
