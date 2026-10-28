@@ -23,7 +23,7 @@
 
 [Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode-cn.com/problems/assign-cookies/description/)
 
-```html
+```text
 Input: grid[1,3], size[1,2,4]
 Output: 2
 ```
@@ -33,9 +33,9 @@ Output: 2
 1. 给一个孩子的饼干应当尽量小并且又能满足该孩子，这样大饼干才能拿来给满足度比较大的孩子。
 2. 因为满足度最小的孩子最容易得到满足，所以先满足满足度最小的孩子。
 
-在以上的解法中，我们只在每次分配饼干时选择一种看起来是当前最优的分配方法，但无法保证这种局部最优的分配方法最后能得到全局最优解。我们假设能得到全局最优解，并使用反证法进行证明，即假设存在一种比我们使用的贪心策略更优的最优策略。如果不存在这种最优策略，表示贪心策略就是最优策略，得到的解也就是全局最优解。
+在以上的解法中，只在每次分配饼干时选择一种看起来是当前最优的分配方法，但无法保证这种局部最优的分配方法最后能得到全局最优解。可以用反证法证明该贪心策略能得到全局最优解：假设存在一种比该贪心策略更优的最优策略。如果不存在这种最优策略，表示贪心策略就是最优策略，得到的解也就是全局最优解。
 
-证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m \< n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m \< n。经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
 
@@ -61,7 +61,7 @@ public int findContentChildren(int[] grid, int[] size) {
 
 [Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
 
-```html
+```text
 Input: [ [1,2], [1,2], [1,2] ]
 
 Output: 2
@@ -69,7 +69,7 @@ Output: 2
 Explanation: You need to remove two [1,2] to make the rest of intervals non-overlapping.
 ```
 
-```html
+```text
 Input: [ [1,2], [2,3] ]
 
 Output: 0
@@ -159,7 +159,7 @@ public int findMinArrowShots(int[][] points) {
 
 [Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
 
-```html
+```text
 Input:
 [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
 
@@ -214,7 +214,7 @@ public int maxProfit(int[] prices) {
 
 ## 6. 买卖股票的最大收益 II
 
-122\. Best Time to Buy and Sell Stock II (Easy)
+122\. Best Time to Buy and Sell Stock II (Medium)
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
@@ -241,7 +241,7 @@ public int maxProfit(int[] prices) {
 
 [Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode-cn.com/problems/can-place-flowers/description/)
 
-```html
+```text
 Input: flowerbed = [1,0,0,0,1], n = 1
 Output: True
 ```
@@ -269,11 +269,11 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 
 ## 8. 判断是否为子序列
 
-392\. Is Subsequence (Medium)
+392\. Is Subsequence (Easy)
 
 [Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/is-subsequence/description/)
 
-```html
+```text
 s = "abc", t = "ahbgdc"
 Return true.
 ```
@@ -293,11 +293,11 @@ public boolean isSubsequence(String s, String t) {
 
 ## 9. 修改一个数成为非递减数组
 
-665\. Non-decreasing Array (Easy)
+665\. Non-decreasing Array (Medium)
 
 [Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
 
-```html
+```text
 Input: [4,2,3]
 Output: True
 Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
@@ -329,11 +329,11 @@ public boolean checkPossibility(int[] nums) {
 
 ## 10. 子数组最大的和
 
-53\. Maximum Subarray (Easy)
+53\. Maximum Subarray (Medium)
 
 [Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode-cn.com/problems/maximum-subarray/description/)
 
-```html
+```text
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 ```
@@ -359,7 +359,7 @@ public int maxSubArray(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/partition-labels/description/) / [力扣](https://leetcode-cn.com/problems/partition-labels/description/)
 
-```html
+```text
 Input: S = "ababcbacadefegdehijhklij"
 Output: [9,7,8]
 Explanation:

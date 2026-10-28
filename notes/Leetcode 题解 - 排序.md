@@ -20,7 +20,7 @@
 
 ## 堆
 
-用于求解   **TopK Elements**   问题，也就是 K 个最大元素的问题。使用大小为 K 的小顶堆来实现：不断地往小顶堆中插入新元素，当堆中元素的数量大于 K 时，移除堆顶元素，也就是当前堆中最小的元素，剩下的元素都为当前添加过的元素中最大的 K 个元素。插入和移除堆顶元素的时间复杂度都为 log<sub>2</sub>N。
+用于求解   **TopK Elements**   问题，也就是 K 个最大元素的问题。使用大小为 K 的小顶堆来实现：不断地往小顶堆中插入新元素，当堆中元素的数量大于 K 时，移除堆顶元素，也就是当前堆中最小的元素，剩下的元素都为当前添加过的元素中最大的 K 个元素。插入和移除堆顶元素的时间复杂度都为 log<sub>2</sub>K。
 
 堆也可以用于求解 Kth Element 问题，得到了大小为 K 的小顶堆之后，堆顶元素就是第 K 大的元素。同理，求 K 个最小元素或者第 K 小的元素时使用大顶堆。
 
@@ -64,10 +64,11 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**快速选择**  ：时间复杂度 O(N)，空间复杂度 O(1)
+**快速选择**  ：平均时间复杂度 O(N)，空间复杂度 O(1)
 
 ```java
 public int findKthLargest(int[] nums, int k) {
+    shuffle(nums);  // 先打乱，避免最坏情况
     k = nums.length - k;
     int l = 0, h = nums.length - 1;
     while (l < h) {
@@ -102,6 +103,13 @@ private void swap(int[] a, int i, int j) {
     a[i] = a[j];
     a[j] = t;
 }
+
+private void shuffle(int[] a) {
+    Random random = new Random();
+    for (int i = a.length - 1; i > 0; i--) {
+        swap(a, i, random.nextInt(i + 1));
+    }
+}
 ```
 
 ## 桶排序
@@ -112,7 +120,7 @@ private void swap(int[] a, int i, int j) {
 
 [Leetcode](https://leetcode.com/problems/top-k-frequent-elements/description/) / [力扣](https://leetcode-cn.com/problems/top-k-frequent-elements/description/)
 
-```html
+```text
 Given [1,1,1,2,2,3] and k = 2, return [1,2].
 ```
 
@@ -159,7 +167,7 @@ public int[] topKFrequent(int[] nums, int k) {
 
 [Leetcode](https://leetcode.com/problems/sort-characters-by-frequency/description/) / [力扣](https://leetcode-cn.com/problems/sort-characters-by-frequency/description/)
 
-```html
+```text
 Input:
 "tree"
 
@@ -206,7 +214,7 @@ public String frequencySort(String s) {
 
 有三种颜色的球，算法的目标是将这三种球按颜色顺序正确地排列。它其实是三向切分快速排序的一种变种，在三向切分快速排序中，每次切分都将数组分成三个区间：小于切分元素、等于切分元素、大于切分元素，而该算法是将数组分成三个区间：等于红色、等于白色、等于蓝色。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7a3215ec-6fb7-4935-8b0d-cb408208f7cb.png"/> </div><br>
+<div align="center"> <img src="pics/lc-sort-dutch-flag.png" width="640px"/> </div><br>
 
 
 ### 1. 按颜色进行排序
@@ -215,7 +223,7 @@ public String frequencySort(String s) {
 
 [Leetcode](https://leetcode.com/problems/sort-colors/description/) / [力扣](https://leetcode-cn.com/problems/sort-colors/description/)
 
-```html
+```text
 Input: [2,0,2,1,1,0]
 Output: [0,0,1,1,2,2]
 ```

@@ -18,11 +18,11 @@
 
 ## 1. 有序数组的 Two Sum
 
-167\. Two Sum II - Input array is sorted (Easy)
+167\. Two Sum II - Input Array Is Sorted (Medium)
 
 [Leetcode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/)
 
-```html
+```text
 Input: numbers={2, 7, 11, 15}, target=9
 Output: index1=1, index2=2
 ```
@@ -59,11 +59,11 @@ public int[] twoSum(int[] numbers, int target) {
 
 ## 2. 两数平方和
 
-633\. Sum of Square Numbers (Easy)
+633\. Sum of Square Numbers (Medium)
 
 [Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
 
-```html
+```text
 Input: 5
 Output: True
 Explanation: 1 * 1 + 2 * 2 = 5
@@ -75,7 +75,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
 
 本题和 167\. Two Sum II - Input array is sorted 类似，只有一个明显区别：一个是和为 target，一个是平方和为 target。本题同样可以使用双指针得到两个数，使其平方和为 target。
 
-本题的关键是右指针的初始化，实现剪枝，从而降低时间复杂度。设右指针为 x，左指针固定为 0，为了使 0<sup>2</sup> + x<sup>2</sup> 的值尽可能接近 target，我们可以将 x 取为 sqrt(target)。
+本题的关键是右指针的初始化，实现剪枝，从而降低时间复杂度。设右指针为 x，左指针固定为 0，为了使 0<sup>2</sup> + x<sup>2</sup> 的值尽可能接近 target，可以将 x 取为 sqrt(target)。
 
 因为最多只需要遍历一次 0\~sqrt(target)，所以时间复杂度为 O(sqrt(target))。又因为只使用了两个额外的变量，因此空间复杂度为 O(1)。
 
@@ -103,18 +103,18 @@ Explanation: 1 * 1 + 2 * 2 = 5
 
 [Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/)
 
-```html
+```text
 Given s = "leetcode", return "leotcede".
 ```
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/a7cb8423-895d-4975-8ef8-662a0029c772.png" width="400px"> </div><br>
+<div align="center"> <img src="pics/lc-two-pointers-vowels.png" width="540px"/> </div><br>
 
 使用双指针，一个指针从头向尾遍历，一个指针从尾到头遍历，当两个指针都遍历到元音字符时，交换这两个元音字符。
 
-为了快速判断一个字符是不是元音字符，我们将全部元音字符添加到集合 HashSet 中，从而以 O(1) 的时间复杂度进行该操作。
+为了快速判断一个字符是不是元音字符，将全部元音字符添加到集合 HashSet 中，从而以 O(1) 的时间复杂度进行该操作。
 
 - 时间复杂度为 O(N)：只需要遍历所有元素一次
-- 空间复杂度 O(1)：只需要使用两个额外变量
+- 空间复杂度 O(N)：Java 的字符串不可修改，需要一个与 s 等长的字符数组保存结果
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ef25ff7c-0f63-420d-8b30-eafbeea35d11.gif" width="400px"> </div><br>
 
@@ -148,7 +148,7 @@ public String reverseVowels(String s) {
 
 [Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode-cn.com/problems/valid-palindrome-ii/description/)
 
-```html
+```text
 Input: "abca"
 Output: True
 Explanation: You could delete the character 'c'.
@@ -162,11 +162,11 @@ Explanation: You could delete the character 'c'.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fcc941ec-134b-4dcd-bc86-1702fd305300.gif" width="250px"> </div><br>
 
-本题的关键是处理删除一个字符。在使用双指针遍历字符串时，如果出现两个指针指向的字符不相等的情况，我们就试着删除一个字符，再判断删除完之后的字符串是否是回文字符串。
+本题的关键是处理删除一个字符。在使用双指针遍历字符串时，如果出现两个指针指向的字符不相等的情况，就试着删除一个字符，再判断删除完之后的字符串是否是回文字符串。
 
-在判断是否为回文字符串时，我们不需要判断整个字符串，因为左指针左边和右指针右边的字符之前已经判断过具有对称性质，所以只需要判断中间的子字符串即可。
+在判断是否为回文字符串时，不需要判断整个字符串，因为左指针左边和右指针右边的字符之前已经判断过具有对称性质，所以只需要判断中间的子字符串即可。
 
-在试着删除字符时，我们既可以删除左指针指向的字符，也可以删除右指针指向的字符。
+在试着删除字符时，既可以删除左指针指向的字符，也可以删除右指针指向的字符。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/db5f30a7-8bfa-4ecc-ab5d-747c77818964.gif" width="300px"> </div><br>
 
@@ -196,7 +196,7 @@ private boolean isPalindrome(String s, int i, int j) {
 
 [Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/merge-sorted-array/description/)
 
-```html
+```text
 Input:
 nums1 = [1,2,3,0,0,0], m = 3
 nums2 = [2,5,6],       n = 3
@@ -265,7 +265,7 @@ Output:
 
 题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回字典序的最小字符串。
 
-通过删除字符串 s 中的一个字符能得到字符串 t，可以认为 t 是 s 的子序列，我们可以使用双指针来判断一个字符串是否为另一个字符串的子序列。
+通过删除字符串 s 中的一些字符能得到字符串 t，可以认为 t 是 s 的子序列。使用双指针可以判断一个字符串是否为另一个字符串的子序列。
 
 ```java
 public String findLongestWord(String s, List<String> d) {

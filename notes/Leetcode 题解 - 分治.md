@@ -12,7 +12,7 @@
 
 [Leetcode](https://leetcode.com/problems/different-ways-to-add-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
 
-```html
+```text
 Input: "2-1-1".
 
 ((2-1)-1) = 0
@@ -61,7 +61,7 @@ public List<Integer> diffWaysToCompute(String input) {
 
 给定一个数字 n，要求生成所有值为 1...n 的二叉搜索树。
 
-```html
+```text
 Input: 3
 Output:
 [

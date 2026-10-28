@@ -20,7 +20,7 @@
 
 编程之美 3.1
 
-```html
+```text
 s1 = AABCD, s2 = CDAA
 Return : true
 ```
@@ -33,7 +33,7 @@ s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 �
 
 编程之美 2.17
 
-```html
+```text
 s = "abcd123" k = 3
 Return "123abcd"
 ```
@@ -46,7 +46,7 @@ Return "123abcd"
 
 程序员代码面试指南
 
-```html
+```text
 s = "I am a student"
 Return "student a am I"
 ```
@@ -59,7 +59,7 @@ Return "student a am I"
 
 [Leetcode](https://leetcode.com/problems/valid-anagram/description/) / [力扣](https://leetcode-cn.com/problems/valid-anagram/description/)
 
-```html
+```text
 s = "anagram", t = "nagaram", return true.
 s = "rat", t = "car", return false.
 ```
@@ -92,7 +92,7 @@ public boolean isAnagram(String s, String t) {
 
 [Leetcode](https://leetcode.com/problems/longest-palindrome/description/) / [力扣](https://leetcode-cn.com/problems/longest-palindrome/description/)
 
-```html
+```text
 Input : "abccccdd"
 Output : 7
 Explanation : One longest palindrome that can be built is "dccaccd", whose length is 7.
@@ -125,7 +125,7 @@ public int longestPalindrome(String s) {
 
 [Leetcode](https://leetcode.com/problems/isomorphic-strings/description/) / [力扣](https://leetcode-cn.com/problems/isomorphic-strings/description/)
 
-```html
+```text
 Given "egg", "add", return true.
 Given "foo", "bar", return false.
 Given "paper", "title", return true.
@@ -155,7 +155,7 @@ public boolean isIsomorphic(String s, String t) {
 
 [Leetcode](https://leetcode.com/problems/palindromic-substrings/description/) / [力扣](https://leetcode-cn.com/problems/palindromic-substrings/description/)
 
-```html
+```text
 Input: "aaa"
 Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
@@ -216,7 +216,7 @@ public boolean isPalindrome(int x) {
 
 [Leetcode](https://leetcode.com/problems/count-binary-substrings/description/) / [力扣](https://leetcode-cn.com/problems/count-binary-substrings/description/)
 
-```html
+```text
 Input: "00110011"
 Output: 6
 Explanation: There are 6 substrings that have equal number of consecutive 1's and 0's: "0011", "01", "1100", "10", "0011", and "01".
