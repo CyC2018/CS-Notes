@@ -20,10 +20,6 @@
 
 <br>
 
-<div align="center">准备面试可以从 <a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/面试高频问题.md">面试高频问题</a> 开始，每个问题都链接到对应的章节。</div>
-
-<br>
-
 ## :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
