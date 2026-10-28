@@ -10,10 +10,12 @@ import posixpath
 import re
 import shutil
 import tempfile
+import unicodedata
 import urllib.parse
+from collections import Counter
 from pathlib import Path
 
-from site_assets import copy_referenced_assets, optimize_images, write_manifest, write_search_index
+from site_assets import copy_referenced_assets, heading_slug, optimize_images, write_manifest, write_search_index
 from check import check
 
 BASE = Path(__file__).resolve().parents[1]
@@ -24,10 +26,13 @@ CACHE = BASE / '.cache/site-assets'
 VERSION_FILE = BASE / 'source-version.json'
 SOURCE_COMMIT = json.loads(VERSION_FILE.read_text())['commit'] if VERSION_FILE.is_file() else 'unknown'
 IMAGE_BY_NAME = {}
+ANCHORS = {}
 SOURCE_IMAGE_HOST = 'cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com'
 IMAGE = re.compile(r'(<img\b[^>]*?\bsrc=["\'])([^"\']+)(["\'])', re.I)
 MD_IMAGE = re.compile(r'(!\[[^\]]*\]\()((?:[^()\s]|\([^()\n]*\))*)(\))')
-MD_LINK = re.compile(r'(?<!!)\[([^\]]+)\]\(([^\s)]+)\)')
+MD_LINK = re.compile(r'(?<!!)\[((?:[^\[\]\n]|\[[^\[\]\n]*\])+)\]\(([^\s)]+)\)')
+# A fence closes only with the same character and at least the same length, so ``` inside a ```` block stays code.
+VERBATIM = re.compile(r'^(?P<fence>`{3,}|~{3,})[^\n]*\n[\s\S]*?^(?P=fence)[`~]*[ \t]*$|<!--[\s\S]*?-->', re.M)
 HTML_LINK = re.compile(r'(<a\b[^>]*?\bhref=["\'])([^"\']+)(["\'])', re.I)
 
 
@@ -58,6 +63,34 @@ def repository_images():
     return result
 
 
+def github_slug(text):
+    text = re.sub(r'<[^>]+>', '', text).strip().lower().replace('\\', '')
+    return ''.join(c for c in text if c in ' -_' or unicodedata.category(c)[0] in 'LN'
+                   or unicodedata.category(c) == 'Mn').replace(' ', '-')
+
+
+def anchor_map(path):
+    """Map GitHub heading anchors to the ids Docsify gives the same headings."""
+    result, github, docsify, fence = {}, Counter(), Counter(), None
+    for line in re.sub(r'<!--[\s\S]*?-->', '', path.read_text()).splitlines():
+        marker = re.match(r'^\s*(`{3,}|~{3,})', line)
+        if marker:
+            fence = marker[1][0] if fence is None else (None if marker[1][0] == fence else fence)
+            continue
+        heading = re.match(r'^(#{1,6})\s+(.+?)(?:\s+#+)?\s*$', line) if fence is None else None
+        if heading:
+            slug = github_slug(heading[2])
+            count = github[slug]
+            github[slug] += 1
+            result.setdefault(slug + (f'-{count}' if count else ''), heading_slug(heading[2], docsify))
+    return result
+
+
+def site_anchor(path, fragment):
+    fragment = urllib.parse.unquote(fragment)
+    return ANCHORS.get(path, {}).get(fragment, fragment)
+
+
 def local_target(url, source, html_link=False):
     url = html.unescape(url)
     parsed = urllib.parse.urlsplit(url)
@@ -75,6 +108,8 @@ def local_target(url, source, html_link=False):
         path = candidates[0].relative_to(ROOT).as_posix()
     elif parsed.netloc:
         return url
+    elif not path and url.startswith('#') and len(url) > 1:
+        return '#' + site_anchor(source.relative_to(ROOT).as_posix(), url[1:])
     elif not path or url.startswith(('#', 'mailto:', 'data:', '//')):
         return url
     elif not path.startswith('/'):
@@ -86,14 +121,14 @@ def local_target(url, source, html_link=False):
         if not html_link:
             result = '/' + urllib.parse.quote(path, safe='/')
             if parsed.fragment:
-                result += '#' + urllib.parse.quote(urllib.parse.unquote(parsed.fragment), safe='')
+                result += '#' + urllib.parse.quote(site_anchor(path, parsed.fragment), safe='')
             return result
         if path == 'README.md':
             route = '/'
         else:
             route = '/' + urllib.parse.quote(path[:-3], safe='/')
         if parsed.fragment:
-            route += '?id=' + urllib.parse.quote(urllib.parse.unquote(parsed.fragment), safe='')
+            route += '?id=' + urllib.parse.quote(site_anchor(path, parsed.fragment), safe='')
         return '/#' + route
     return '/' + urllib.parse.quote(path, safe='/')
 
@@ -114,13 +149,17 @@ def render_markdown(path):
         part = MD_IMAGE.sub(image, part)
         part = MD_LINK.sub(lambda m: f'[{m[1]}]({local_target(m[2], path)})', part)
         return HTML_LINK.sub(lambda m: m[1] + local_target(m[2], path, html_link=True) + m[3], part)
-    parts = re.split(r'(```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->)', content)
-    return ''.join(part if i % 2 else convert(part) for i, part in enumerate(parts))
+    result, last = [], 0
+    for match in VERBATIM.finditer(content):
+        result += [convert(content[last:match.start()]), match[0]]
+        last = match.end()
+    return ''.join(result + [convert(content[last:])])
 
 
 def build(optimize=True):
-    global IMAGE_BY_NAME
+    global IMAGE_BY_NAME, ANCHORS
     IMAGE_BY_NAME = repository_images()
+    ANCHORS = {p.relative_to(ROOT).as_posix(): anchor_map(p) for p in sources()}
     external = image_urls()
     replacements = {url: local_target(url, ROOT / 'README.md') for url in external}
     reused = {url: path for url, path in replacements.items() if path.startswith('/')}
@@ -136,20 +175,20 @@ def build(optimize=True):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(render_markdown(path))
         homepage = (dist / 'README.md').read_text()
-        emojis = {'pencil2': '✏️', 'computer': '💻', 'cloud': '☁️', 'floppy_disk': '💾',
+        emojis = {'rocket': '🚀', 'pencil2': '✏️', 'computer': '💻', 'cloud': '☁️', 'floppy_disk': '💾',
                   'coffee': '☕', 'bulb': '💡', 'art': '🎨', 'wrench': '🔧',
                   'watermelon': '🍉', 'memo': '📝'}
         for name, symbol in emojis.items():
             homepage = re.sub(r'^(## ):' + name + r':\s*', r'\1', homepage, flags=re.M)
             homepage = homepage.replace('#' + name + '-', '#')
             homepage = homepage.replace(':' + name + ':', symbol)
-        topics = [('算法', '✏️'), ('操作系统', '💻'), ('网络', '☁️'), ('面向对象', '🎨'),
+        topics = [('学习路线', '🚀'), ('算法', '✏️'), ('操作系统', '💻'), ('网络', '☁️'), ('面向对象', '🎨'),
                   ('数据库', '💾'), ('Java', '☕'), ('系统设计', '💡'), ('工具', '🔧'),
                   ('后记', '📝')]
         cards = '<nav class="topic-grid" aria-label="笔记分类">' + ''.join(
             f'<a href="/#/?id={urllib.parse.quote(label.lower())}"><span aria-hidden="true">{symbol}</span>{label}</a>'
             for label, symbol in topics) + '</nav>'
-        homepage = re.sub(r'^\| 算法[^\n]*\n\|[^\n]*\n\|[^\n]*', cards, homepage, count=1, flags=re.M)
+        homepage = re.sub(r'^\| (?:学习路线|算法)[^\n]*\n\|[^\n]*\n\|[^\n]*', cards, homepage, count=1, flags=re.M)
         homepage = homepage.replace('width="200px"', 'class="site-logo" width="200px"', 1)
         (dist / 'README.md').write_text('# CS-Notes\n\n' + homepage)
         note_paths = ['/' + str(p.relative_to(ROOT).with_suffix('')) for p in sorted((ROOT / 'notes').glob('*.md'))]
@@ -161,7 +200,7 @@ def build(optimize=True):
                     break
                 sidebar.extend(['', '- **' + label + '**'])
             elif line.startswith('- ['):
-                sidebar.append('  ' + line)
+                sidebar.append('  ' + re.match(r'- \[[^\]]+\]\([^)]+\)', line).group(0))
         (dist / '_sidebar.md').write_text('\n'.join(sidebar) + '\n')
         (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
         (dist / '.nojekyll').touch()
