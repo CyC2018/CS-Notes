@@ -8,9 +8,9 @@
 </div>
 <br>
 
-| 算法&nbsp; | 操作系统 | 网络&nbsp;|面向对象| &nbsp;数据库&nbsp;&nbsp;|&nbsp;Java&nbsp;&nbsp;|系统设计| &nbsp;&nbsp;工具&nbsp;&nbsp; | &nbsp;&nbsp;后记&nbsp;&nbsp; |
-| :---: | :----: | :---: | :----: | :----: | :----: | :----: | :----: | :----: |
-| [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |[:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计) |[:wrench:](#wrench-工具)| [:memo:](#memo-后记)|
+| 学习路线 | 算法&nbsp; | 操作系统 | 网络&nbsp;|面向对象| &nbsp;数据库&nbsp;&nbsp;|&nbsp;Java&nbsp;&nbsp;|系统设计| &nbsp;&nbsp;工具&nbsp;&nbsp; | &nbsp;&nbsp;后记&nbsp;&nbsp; |
+| :---: | :---: | :----: | :---: | :----: | :----: | :----: | :----: | :----: | :----: |
+| [:rocket:](#rocket-学习路线) | [:pencil2:](#pencil2-算法) | [:computer:](#computer-操作系统) | [:cloud:](#cloud-网络) | [:art:](#art-面向对象) | [:floppy_disk:](#floppy_disk-数据库) |[:coffee:](#coffee-java)| [:bulb:](#bulb-系统设计) |[:wrench:](#wrench-工具)| [:memo:](#memo-后记)|
 
 <br>
 
@@ -19,6 +19,15 @@
 </div>
 
 <br>
+
+## :rocket: 学习路线
+
+每条路线把笔记按天排好，每天 1～2 小时：读一段笔记，回答几道面试中的真实问题，做一个动手练习；后三条路线每天还有一道算法题。
+
+- [零基础](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20零基础.md)：没有学过计算机课程时从这里开始，用一次外卖下单讲清程序、操作系统、网络、数据库和数据结构，不需要会编程；
+- [Java 后端](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20Java%20后端.md)：会 Java 语法以后，系统准备后端面试，依次学 Java、MySQL、Redis、网络、操作系统、Spring、分布式和系统设计；
+- [大模型应用开发](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20大模型应用开发.md)：准备 RAG、Agent 方向的岗位，从 Transformer 的原理学到 Agent 和工程实践；
+- [面试冲刺](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20面试冲刺.md)：两三周后就要面试时，每天复习 3 个最常考的知识点。
 
 ## :pencil2: 算法
 
