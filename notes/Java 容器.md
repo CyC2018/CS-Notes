@@ -19,6 +19,8 @@
     * [附录：实测](#附录实测)
         * [A1 ArrayList 的扩容与常见陷阱](#a1-arraylist-的扩容与常见陷阱)
         * [A2 HashMap 的并发写入](#a2-hashmap-的并发写入)
+        * [A3 ArrayList 的并发写入](#a3-arraylist-的并发写入)
+        * [A4 HashMap 链表转红黑树](#a4-hashmap-链表转红黑树)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -56,6 +58,14 @@
 - HashMap：基于哈希表实现；
 - Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全。ConcurrentHashMap 的效率更高，因为它不会锁住整个表：JDK 1.7 使用分段锁，JDK 1.8 只锁住一个桶；
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
+
+上面的 ArrayList、LinkedList、HashMap 等常用容器都不是线程安全的。需要在多个线程之间共享时，线程安全的容器主要有以下三类：
+
+- 同步容器：Vector、Hashtable，以及用 Collections.synchronizedList()、synchronizedMap() 包装出来的容器，所有方法共用一把锁，同一时刻只有一个线程能访问；
+- 写时复制容器：CopyOnWriteArrayList、CopyOnWriteArraySet，写操作复制整个数组，读操作不加锁，适合读多写少的场景；
+- 并发容器：ConcurrentHashMap、ConcurrentSkipListMap（按键排序）、ConcurrentLinkedQueue，以及 ArrayBlockingQueue 等阻塞队列（见 [BlockingQueue](Java%20并发.md#blockingqueue)），用 CAS 和更细粒度的锁让多个线程同时访问。
+
+只在一个线程中使用的容器，例如方法中的局部变量，不需要线程安全，直接使用 ArrayList、HashMap，没有加锁的开销。
 
 
 ## 二、容器中的设计模式
@@ -345,6 +355,14 @@ public Vector() {
 
 #### 4. 替代方案
 
+ArrayList 不是线程安全的。JDK 21 的 add() 先读出 size 记为 s，容量不够时扩容，然后写入 elementData[s]，最后把 size 设为 s + 1，这几步之间没有同步：
+
+- 两个线程读到同一个 s，写入同一个位置，一个元素被覆盖，size 也只增加了 1；
+- 一个线程扩容后换成了新数组，另一个线程仍然写入旧数组，这次写入丢失，新数组中的这个位置留下 null；
+- 一个线程读到的 size 已被其它线程增加到超过它手中旧数组的长度，写入时抛出 ArrayIndexOutOfBoundsException。
+
+例如 8 个线程各添加 10 万个元素，30 轮中 size 在 15 万～58 万之间，大多数轮次中出现了上百到数万个 null，有 3 轮抛出了 ArrayIndexOutOfBoundsException；同样的操作用 Collections.synchronizedList() 每次都是 80 万（JDK 21 实测，见[附录 A3](#a3-arraylist-的并发写入)）。
+
 可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
 ```java
@@ -533,6 +551,13 @@ map.put("K3", "V3");
 - 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
 
 <div align="center"> <img src="pics/jcol-chaining.png" width="760px"/> </div><br>
+
+拉链法之外，解决哈希冲突的常见方法还有：
+
+- 开放定址法：冲突时按固定的规则在数组中寻找下一个空位，例如线性探测依次检查下一个位置。JDK 中的 ThreadLocalMap 和 IdentityHashMap 使用线性探测；
+- 再哈希法：冲突时换一个哈希函数重新计算位置。
+
+开放定址法的元素都存放在数组中，没有链表节点的开销，但装载因子必须较低，否则探测序列会很长；删除时也不能直接把位置置空，否则会截断其它元素的探测序列，ThreadLocalMap 删除元素后要把后面同一段中的元素重新放置。HashMap 采用拉链法，装载因子可以达到 0.75，删除只需修改链表，冲突严重时还可以把链表转为红黑树。
 
 #### 3. put 操作
 
@@ -819,7 +844,15 @@ static final int tableSizeFor(int cap) {
 
 #### 8. 链表转红黑树
 
-从 JDK 1.8 开始，向一个桶中添加元素时，如果链表长度已经达到 8（TREEIFY_THRESHOLD），并且数组长度不小于 64（MIN_TREEIFY_CAPACITY），就会将链表转换为红黑树，否则只进行扩容。树中的节点数减少到 6（UNTREEIFY_THRESHOLD）时会重新转换为链表。
+从 JDK 1.8 开始，向一个桶中添加元素时，如果链表中已经有 8 个节点（TREEIFY_THRESHOLD），会先检查数组长度：小于 64（MIN_TREEIFY_CAPACITY）时只进行扩容，否则把链表转换为红黑树。例如所有键的 hashCode() 都相同时，放入第 9 个键时容量从 16 扩为 32，第 10 个键时扩为 64，第 11 个键时才转为红黑树（JDK 21 实测，见[附录 A4](#a4-hashmap-链表转红黑树)）。数组较小时，冲突多半是桶太少造成的，扩容就能把链表拆开，所以先扩容。
+
+引入红黑树是为了限制最坏情况：hashCode() 分布很差，或者被人故意构造成相同的值时，大量键落在同一个桶中，在链表中查找退化为 O(N)，红黑树则为 O(logN)。
+
+阈值取 8，是因为 hashCode() 足够随机时，一个桶中很难积累 8 个节点：装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布，一个桶中恰好有 8 个节点的概率约为 0.00000006（HashMap 源码注释）。TreeNode 的大小约为普通节点的两倍，正常情况下用不到它，也就不必付出这部分内存。
+
+红黑树转回链表的阈值是 6 而不是 8，两个阈值之间留出余量，避免节点数在 8 附近增减时反复转换。需要注意的是，6 只用于扩容时拆分树：拆分后的节点数不超过 6 就转回链表。删除节点时按树的形状判断，根节点缺少左子节点或右子节点，或者根的左子节点没有左子节点时，转回链表，例如上面的例子再放入第 12 个键，然后逐个删除，剩 3 个键时才转回链表。
+
+选择红黑树而不是 AVL 树，是因为红黑树只要求大致平衡，插入和删除时需要的旋转更少，适合桶中元素不断增删的场景；代价是红黑树的高度比 AVL 树稍高，查找时多比较的次数很少。B+ 树为磁盘设计，用很大的节点减少读取磁盘的次数，不适合内存中只有几个节点的桶。
 
 #### 9. 与 Hashtable 的比较
 
@@ -1243,6 +1276,79 @@ run 0: size=263620 stuckThreads=4
   putter-4 at java.base/java.util.HashMap$TreeNode.treeify(HashMap.java:2107) / java.base/java.util.HashMap$TreeNode.split(HashMap.java:2339)
 ```
 
+### A3 ArrayList 的并发写入
+
+8 个线程各向同一个 ArrayList 添加 10 万个元素，捕获 add() 抛出的异常，结束后统计 size 和 null 元素的个数，共 30 轮：
+
+```java
+for (int t = 0; t < 8; t++) {
+    ts[t] = new Thread(() -> {
+        for (int i = 0; i < 100_000; i++) {
+            try { list.add(i); } catch (Exception e) { errors.incrementAndGet(); }
+        }
+    });
+    ts[t].start();
+}
+```
+
+```text
+round 0: size=155642，null 元素 5540，异常 1 次 [ArrayIndexOutOfBoundsException]
+round 1: size=160142，null 元素 768，异常 0 次 []
+round 2: size=295557，null 元素 40378，异常 0 次 []
+……
+round 19: size=584393，null 元素 0，异常 0 次 []
+round 21: size=379448，null 元素 17821，异常 1 次 [ArrayIndexOutOfBoundsException]
+round 24: size=373831，null 元素 5434，异常 1 次 [ArrayIndexOutOfBoundsException]
+round 29: size=541149，null 元素 91379，异常 0 次 []
+synchronizedList: size=800000
+```
+
+### A4 HashMap 链表转红黑树
+
+Key 的 hashCode() 都返回 42，并实现了 Comparable。每次放入或删除后，用反射查看数组的长度和 42 号桶中头节点的类型，运行时需要加上 --add-opens java.base/java.util=ALL-UNNAMED：
+
+```java
+record Key(int id) implements Comparable<Key> {
+    @Override public int hashCode() { return 42; }
+    @Override public int compareTo(Key o) { return Integer.compare(id, o.id); }
+}
+
+HashMap<Key, Integer> map = new HashMap<>();
+for (int i = 1; i <= 12; i++) map.put(new Key(i), i);      // 每次放入后打印
+for (int i = 12; i >= 1; i--) map.remove(new Key(i));      // 每次删除后打印
+```
+
+只打印了发生变化的行：
+
+```text
+放入第 1 个键后：容量 16，桶中节点类型 Node
+放入第 9 个键后：容量 32，桶中节点类型 Node
+放入第 10 个键后：容量 64，桶中节点类型 Node
+放入第 11 个键后：容量 64，桶中节点类型 TreeNode
+删除后剩 3 个键：容量 64，桶中节点类型 Node
+```
+
+扩容拆分树：容量 64 时放入 10 个哈希值为 42 或 106 的键（各 5 个），它们都在 42 号桶中，组成红黑树；再放入其它键触发扩容，容量变为 128 后它们分到 42 和 106 两个桶，每个桶 5 个节点，都转回了链表：
+
+```text
+容量 64：42 号桶 TreeNode
+扩容到 128 后：42 号桶 Node，106 号桶 Node
+```
+
+源码注释中的泊松分布概率 e<sup>-0.5</sup> × 0.5<sup>k</sup> / k!，按 k = 0～8 计算：
+
+```text
+0 0.60653066
+1 0.30326533
+2 0.07581633
+3 0.01263606
+4 0.00157951
+5 0.00015795
+6 0.00001316
+7 0.00000094
+8 0.00000006
+```
+
 ## 参考资料
 
 - Eckel B. Java 编程思想 [M]. 机械工业出版社, 2002.
@@ -1255,6 +1361,9 @@ run 0: size=263620 stuckThreads=4
 - [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
 - [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 - [Java Collection Framework – The LinkedList Class](https://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
+- [JDK 21 源码：HashMap.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/HashMap.java)
+- [JDK 21 源码：ArrayList.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/ArrayList.java)
+- [JDK 21 源码：ThreadLocal.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/lang/ThreadLocal.java)
 - [JDK 8 源码 java.util](https://github.com/openjdk/jdk8u/tree/master/jdk/src/share/classes/java/util)
 - [Java SE 21 API: Arrays.asList](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#asList(T...))
 - [Java SE 21 API: ArrayDeque](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayDeque.html)
