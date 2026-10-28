@@ -36,7 +36,7 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU 资源，一台机器只能开启几十个的虚拟机。
 
-而 Docker 只是一个进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以开启成千上万个 Docker。
+而容器只是宿主机上隔离运行的进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以运行成千上万个容器。
 
 ## 三、优势
 
@@ -152,7 +152,7 @@ spec:
 在单节点 K8s（k3s v1.31）上实际操作的结果如下：
 
 - kubectl apply 之后约 20 秒，3 个 Pod 全部就绪，Service 得到虚拟 IP 10.43.189.89，在集群内用 http://order-service 就能访问；
-- 删除一个 Pod，Deployment 发现副本数少于 3，立即创建新的 Pod，约 1.2 秒后恢复为 3/3，新 Pod 的 IP 与原来不同，Service 自动更新了后端列表；
+- 删除一个 Pod，Deployment 创建的 ReplicaSet 发现副本数少于 3，立即创建新的 Pod，约 1.2 秒后恢复为 3/3，新 Pod 的 IP 与原来不同，Service 自动更新了后端列表；
 - kubectl scale 把副本数改为 5；kubectl set image 修改镜像版本后，Deployment 创建新的 ReplicaSet，逐个用新版本的 Pod 替换旧的，约 12 秒完成滚动升级，期间一直有就绪的 Pod 在提供服务，需要时可以用 kubectl rollout undo 回滚。
 
 readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Service 的后端列表，避免把请求转发给还没启动完成的实例。
