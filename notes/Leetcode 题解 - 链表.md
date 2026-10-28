@@ -20,7 +20,7 @@
 
 链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
 
-##  1. 找出两个链表的交点
+## 1. 找出两个链表的交点
 
 160\. Intersection of Two Linked Lists (Easy)
 
@@ -28,7 +28,7 @@
 
 例如以下示例中 A 和 B 两个链表相交于 c1：
 
-```html
+```text
 A:          a1 → a2
                     ↘
                       c1 → c2 → c3
@@ -38,7 +38,7 @@ B:    b1 → b2 → b3
 
 但是不会出现以下相交的情况，因为每个节点只有一个 next 指针，也就只能有一个后继节点，而以下示例中节点 c 有两个后继节点。
 
-```html
+```text
 A:          a1 → a2       d1 → d2
                     ↘  ↗
                       c
@@ -72,7 +72,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 - 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
 - 或者直接比较两个链表的最后一个节点是否相同。
 
-##  2. 链表反转
+## 2. 链表反转
 
 206\. Reverse Linked List (Easy)
 
@@ -108,7 +108,7 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
-##  3. 归并两个有序的链表
+## 3. 归并两个有序的链表
 
 21\. Merge Two Sorted Lists (Easy)
 
@@ -128,13 +128,13 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 }
 ```
 
-##  4. 从有序链表中删除重复节点
+## 4. 从有序链表中删除重复节点
 
 83\. Remove Duplicates from Sorted List (Easy)
 
 [Leetcode](https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/) / [力扣](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/description/)
 
-```html
+```text
 Given 1->1->2, return 1->2.
 Given 1->1->2->3->3, return 1->2->3.
 ```
@@ -147,13 +147,13 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
-##  5. 删除链表的倒数第 n 个节点
+## 5. 删除链表的倒数第 n 个节点
 
 19\. Remove Nth Node From End of List (Medium)
 
 [Leetcode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/) / [力扣](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/description/)
 
-```html
+```text
 Given linked list: 1->2->3->4->5, and n = 2.
 After removing the second node from the end, the linked list becomes 1->2->3->5.
 ```
@@ -175,13 +175,13 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-##  6. 交换链表中的相邻结点
+## 6. 交换链表中的相邻结点
 
 24\. Swap Nodes in Pairs (Medium)
 
 [Leetcode](https://leetcode.com/problems/swap-nodes-in-pairs/description/) / [力扣](https://leetcode-cn.com/problems/swap-nodes-in-pairs/description/)
 
-```html
+```text
 Given 1->2->3->4, you should return the list as 2->1->4->3.
 ```
 
@@ -205,13 +205,13 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-##  7. 链表求和
+## 7. 链表求和
 
 445\. Add Two Numbers II (Medium)
 
 [Leetcode](https://leetcode.com/problems/add-two-numbers-ii/description/) / [力扣](https://leetcode-cn.com/problems/add-two-numbers-ii/description/)
 
-```html
+```text
 Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 8 -> 0 -> 7
 ```
@@ -246,7 +246,7 @@ private Stack<Integer> buildStack(ListNode l) {
 }
 ```
 
-##  8. 回文链表
+## 8. 回文链表
 
 234\. Palindrome Linked List (Easy)
 
@@ -297,13 +297,13 @@ private boolean isEqual(ListNode l1, ListNode l2) {
 }
 ```
 
-##  9. 分隔链表
+## 9. 分隔链表
 
 725\. Split Linked List in Parts(Medium)
 
 [Leetcode](https://leetcode.com/problems/split-linked-list-in-parts/description/) / [力扣](https://leetcode-cn.com/problems/split-linked-list-in-parts/description/)
 
-```html
+```text
 Input:
 root = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 3
 Output: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
@@ -339,13 +339,13 @@ public ListNode[] splitListToParts(ListNode root, int k) {
 }
 ```
 
-##  10. 链表元素按奇偶聚集
+## 10. 链表元素按奇偶聚集
 
 328\. Odd Even Linked List (Medium)
 
 [Leetcode](https://leetcode.com/problems/odd-even-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/odd-even-linked-list/description/)
 
-```html
+```text
 Example:
 Given 1->2->3->4->5->NULL,
 return 1->3->5->2->4->NULL.
@@ -368,7 +368,7 @@ public ListNode oddEvenList(ListNode head) {
 }
 ```
 
-##  11. K 个一组翻转链表
+## 11. K 个一组翻转链表
 
 25\. Reverse Nodes in k-Group (Hard)
 
@@ -413,7 +413,7 @@ public ListNode reverseKGroup(ListNode head, int k) {
 }
 ```
 
-##  12. 重排链表
+## 12. 重排链表
 
 143\. Reorder List (Medium)
 
@@ -462,7 +462,7 @@ private ListNode reverse(ListNode head) {
 }
 ```
 
-##  13. 合并 K 个有序链表
+## 13. 合并 K 个有序链表
 
 23\. Merge k Sorted Lists (Hard)
 
@@ -493,7 +493,7 @@ public ListNode mergeKLists(ListNode[] lists) {
 }
 ```
 
-##  14. 链表排序
+## 14. 链表排序
 
 148\. Sort List (Medium)
 
