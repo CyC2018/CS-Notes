@@ -16,7 +16,7 @@
         * [float 与 double](#float-与-double)
         * [隐式类型转换](#隐式类型转换)
         * [switch](#switch)
-    * [四、关键字](#四关键字)
+    * [四、关键字](#四关键字) 🔥🔥
         * [final](#final)
         * [static](#static)
     * [五、Object 通用方法](#五object-通用方法)
@@ -24,18 +24,18 @@
         * [equals()](#equals)
         * [hashCode()](#hashcode)
         * [toString()](#tostring)
-        * [clone()](#clone)
+        * [clone()](#clone) 🔥
     * [六、继承](#六继承)
         * [访问权限](#访问权限)
-        * [抽象类与接口](#抽象类与接口)
+        * [抽象类与接口](#抽象类与接口) 🔥
         * [super](#super)
         * [重写与重载](#重写与重载)
-    * [七、反射](#七反射)
+    * [七、反射](#七反射) 🔥
     * [八、异常](#八异常)
     * [九、泛型](#九泛型)
     * [十、注解](#十注解)
     * [十一、特性](#十一特性)
-        * [Java 各版本的新特性](#java-各版本的新特性)
+        * [Java 各版本的新特性](#java-各版本的新特性) 🔥
         * [Java 与 C++ 的区别](#java-与-c-的区别)
         * [JRE or JDK](#jre-or-jdk)
     * [附录：实测](#附录实测)
@@ -410,7 +410,7 @@ int days = switch (month) {
 Java 21 起 switch 还可以按类型匹配，见 [Java 各版本的新特性](#java-各版本的新特性)。
 
 
-## 四、关键字
+## 四、关键字 🔥🔥
 
 ### final
 
@@ -733,7 +733,7 @@ System.out.println(example.toString());
 ToStringExample@4554617c
 ```
 
-### clone()
+### clone() 🔥
 
 #### 1. Cloneable
 
@@ -885,6 +885,8 @@ e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
 ```
 
+<div align="center"> <img src="pics/shallow-deep-copy.png" width="760px"/> </div><br>
+
 #### 4. clone() 的替代方案
 
 使用 clone() 方法来拷贝一个对象既复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
@@ -988,7 +990,7 @@ public class AccessWithInnerClassExample {
 }
 ```
 
-### 抽象类与接口
+### 抽象类与接口 🔥
 
 #### 1. 抽象类
 
@@ -1274,7 +1276,7 @@ public static void main(String[] args) {
 }
 ```
 
-## 七、反射
+## 七、反射 🔥
 
 每个类都有一个 Class 对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件保存着类的字节码，类加载时 JVM 根据它创建对应的 Class 对象。
 
@@ -1423,7 +1425,7 @@ System.out.println(limit.value());   // 100
 
 ## 十一、特性
 
-### Java 各版本的新特性
+### Java 各版本的新特性 🔥
 
 目前常用的是长期支持（LTS）版本 8、11、17、21，面试中最常问 Java 8 和 Java 21：
 
