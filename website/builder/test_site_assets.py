@@ -7,9 +7,24 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from site_assets import heading_slug, optimize_images, referenced_paths, search_document
+from build import github_slug, hot_spans, strip_hot
 
 
 class SearchIndexTests(unittest.TestCase):
+    def test_hot_heading_mark(self):
+        # 标题末尾的“不换行空格 + 🔥”不改变 GitHub 锚点；网站上换成空的 span，Docsify 的 id 也不变
+        self.assertEqual(github_slug('ThreadPoolExecutor\u00a0🔥🔥'), 'threadpoolexecutor')
+        self.assertEqual(github_slug('5. 协程\u00a0🔥'), '5-协程')
+        self.assertEqual(github_slug('ThreadPoolExecutor 🔥'), 'threadpoolexecutor-')
+        self.assertEqual(strip_hot('### 5. 协程\u00a0🔥\n正文 🔥'), '### 5. 协程\n正文 🔥')
+        site = hot_spans('* [三、检索增强生成](#三检索增强生成) 🔥🔥\n## 三、检索增强生成\u00a0🔥🔥')
+        self.assertEqual(site, '* [三、检索增强生成](#三检索增强生成) <span class="hot hot-2"></span>\n'
+                               '## 三、检索增强生成<span class="hot hot-2"></span>')
+        self.assertEqual(heading_slug(site.split('\n')[1][3:], Counter()), '三、检索增强生成')
+        doc = search_document(Path('x.md'), site)
+        self.assertEqual([s['title'] for s in doc['sections']], ['x', '三、检索增强生成'])
+        self.assertEqual(doc['sections'][0]['text'], '')
+
     def test_docsify_numeric_duplicate_and_chinese_punctuation(self):
         counts = Counter()
         self.assertEqual(heading_slug('1. 慢开始与拥塞避免', counts), '_1-慢开始与拥塞避免')
