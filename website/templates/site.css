@@ -40,7 +40,16 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .article-toc { border: 1px solid #dfe3da; border-radius: 7px; padding: 12px 18px; margin: 20px 0 28px; background: #fafbf8; }
 .article-toc summary { color: #369b72; font-weight: 600; cursor: pointer; min-height: 24px; }
 .article-toc > ul { margin-bottom: 0; }
-@media (min-width: 769px) { .content { padding-top: 12px; } }
+@media (min-width: 769px) { .content { padding-top: 12px; } .article-toc { display: none; } }
+.page-toc-block { margin: 0 0 18px; padding: 0 0 14px 18px; border-bottom: 1px solid #e2e3dc; }
+.page-toc-title { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #34495e; }
+.sidebar ul.page-toc { margin: 6px 0 4px 10px; padding-left: 8px; border-left: 1px solid #dfe3da; }
+.sidebar ul.page-toc li { margin: 4px 0; }
+.sidebar ul.page-toc li a { font-size: 13px; color: #5a6560; border: none; font-weight: normal; }
+.sidebar ul.page-toc ul { margin: 2px 0 2px 12px; }
+.sidebar ul.page-toc li.has-sub > ul { display: none; }
+.sidebar ul.page-toc li.has-sub.open > ul { display: block; }
+.sidebar ul.page-toc li.current > a { color: var(--theme-color); font-weight: 600; }
 @media (max-width: 768px) {
   .markdown-section { padding: 24px 22px 80px; }
   .markdown-section h1 { font-size: 1.65rem; }
@@ -52,3 +61,18 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
   .sidebar ul li a { min-height: 28px; line-height: 2; }
   .article-toc summary { min-height: 32px; line-height: 2; }
 }
+
+/* 高频小节：目录、侧边栏和正文标题后的小火焰 */
+.hot { display: inline-flex; gap: 1px; margin-left: 5px; line-height: 1; vertical-align: -1px; }
+.hot svg { display: block; width: 11px; height: 14px; }
+.hot .o { fill: #d2665c; }
+.hot .i { fill: #f6d7d2; }
+.markdown-section h2 .hot, .markdown-section h3 .hot, .markdown-section h4 .hot { margin-left: 8px; vertical-align: 1px; }
+.markdown-section h2 .hot svg, .markdown-section h3 .hot svg { width: 15px; height: 19px; }
+.markdown-section h4 .hot svg { width: 13px; height: 16px; }
+
+/* 步骤动图的播放器 */
+.anim-bar { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 6px 0 4px; }
+.anim-bar button { min-height: 30px; padding: 2px 12px; border: 1px solid #dfe3da; border-radius: 6px; background: #fafbf8; color: #34495e; font: inherit; font-size: 13px; cursor: pointer; }
+.anim-bar button:hover, .anim-bar button:focus-visible { border-color: #369b72; color: #369b72; }
+.anim-count { min-width: 44px; color: #718078; font-size: 12px; font-variant-numeric: tabular-nums; }

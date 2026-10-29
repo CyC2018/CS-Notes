@@ -1,7 +1,7 @@
 # Java 虚拟机
 <!-- GFM-TOC -->
 * [Java 虚拟机](#java-虚拟机)
-    * [一、运行时数据区域](#一运行时数据区域)
+    * [一、运行时数据区域](#一运行时数据区域) 🔥🔥
         * [程序计数器](#程序计数器)
         * [Java 虚拟机栈](#java-虚拟机栈)
         * [本地方法栈](#本地方法栈)
@@ -11,7 +11,7 @@
         * [直接内存](#直接内存)
         * [堆和栈的区别](#堆和栈的区别)
         * [对象的创建与内存布局](#对象的创建与内存布局)
-    * [二、垃圾收集](#二垃圾收集)
+    * [二、垃圾收集](#二垃圾收集) 🔥🔥
         * [判断一个对象是否可被回收](#判断一个对象是否可被回收)
         * [引用类型](#引用类型)
         * [垃圾收集算法](#垃圾收集算法)
@@ -19,7 +19,7 @@
         * [垃圾收集器](#垃圾收集器)
         * [三色标记](#三色标记)
     * [三、内存分配与回收策略](#三内存分配与回收策略)
-        * [Minor GC 和 Full GC](#minor-gc-和-full-gc)
+        * [Minor GC 和 Full GC](#minor-gc-和-full-gc) 🔥
         * [内存分配策略](#内存分配策略)
         * [Full GC 的触发条件](#full-gc-的触发条件)
     * [四、类加载机制](#四类加载机制)
@@ -28,12 +28,12 @@
         * [类初始化时机](#类初始化时机)
         * [类与类加载器](#类与类加载器)
         * [类加载器分类](#类加载器分类)
-        * [双亲委派模型](#双亲委派模型)
+        * [双亲委派模型](#双亲委派模型) 🔥
         * [自定义类加载器实现](#自定义类加载器实现)
     * [五、线上问题排查](#五线上问题排查)
-        * [内存溢出与内存泄漏](#内存溢出与内存泄漏)
-        * [JVM 调优](#jvm-调优)
-        * [CPU 占用过高](#cpu-占用过高)
+        * [内存溢出与内存泄漏](#内存溢出与内存泄漏) 🔥🔥
+        * [JVM 调优](#jvm-调优) 🔥
+        * [CPU 占用过高](#cpu-占用过高) 🔥
         * [死锁](#死锁)
     * [附录：实测](#附录实测)
         * [A1 默认的线程栈大小](#a1-默认的线程栈大小)
@@ -47,13 +47,14 @@
         * [A9 G1 的标记周期与安全点](#a9-g1-的标记周期与安全点)
         * [A10 直接内存与线程数的溢出](#a10-直接内存与线程数的溢出)
         * [A11 堆直方图](#a11-堆直方图)
+        * [A12 泄漏时 GC 之后的占用](#a12-泄漏时-gc-之后的占用)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 本文大部分内容参考周志明《深入理解 Java 虚拟机》，想要深入学习的话请看原书。
 
-## 一、运行时数据区域
+## 一、运行时数据区域 🔥🔥
 
 <div align="center"> <img src="pics/jvm-areas.png" width="760px"/> </div><br>
 
@@ -189,7 +190,7 @@ Instance size: 32 bytes
 
 关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。最大堆达到 32 GB 时，对象引用的压缩自动关闭，所有引用都变成 8 字节（JDK 21 中 -Xmx31g 时 UseCompressedOops 为 true，-Xmx32g 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GB 的原因。
 
-## 二、垃圾收集
+## 二、垃圾收集 🔥🔥
 
 垃圾收集主要是针对堆和方法区进行。程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后就会消失，因此不需要对这三个区域进行垃圾收集。
 
@@ -561,7 +562,7 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 
 ## 三、内存分配与回收策略
 
-### Minor GC 和 Full GC
+### Minor GC 和 Full GC 🔥
 
 - Minor GC：回收新生代，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快；
 - Full GC：回收老年代和新生代，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
@@ -621,6 +622,8 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。
 
 为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+
+JDK 8 起方法区改用元空间实现，元空间的占用达到阈值时同样会触发 Full GC，日志中的原因为 Metadata GC Threshold，见 [JVM 调优](#jvm-调优)。
 
 #### 5. Concurrent Mode Failure
 
@@ -682,7 +685,7 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 public static int value = 123;
 ```
 
-如果类变量是常量，那么它将初始化为表达式所定义的值而不是 0。例如下面的常量 value 被初始化为 123 而不是 0。
+如果类变量是常量（用常量表达式初始化的 static final 变量），编译器会为它生成 ConstantValue 属性，虚拟机直接用这个值赋值，不需要执行 &lt;clinit\>() 中的赋值语句。例如下面的常量 value 是 123 而不是 0。《深入理解 Java 虚拟机》把这一步归在准备阶段，JVMS SE 21 §5.5 则把它写在初始化过程中、执行 &lt;clinit\>() 之前。
 
 ```java
 public static final int value = 123;
@@ -797,7 +800,7 @@ java.sql.Driver:    jdk.internal.loader.ClassLoaders$PlatformClassLoader
 String:             null
 ```
 
-### 双亲委派模型
+### 双亲委派模型 🔥
 
 应用程序是由三种类加载器互相配合从而实现类加载，除此之外还可以加入自己定义的类加载器。
 
@@ -944,7 +947,7 @@ public class FileSystemClassLoader extends ClassLoader {
 
 ## 五、线上问题排查
 
-### 内存溢出与内存泄漏
+### 内存溢出与内存泄漏 🔥🔥
 
 OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有：
 
@@ -993,7 +996,11 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 
 线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd <pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索（Oracle 排障指南）；它会先进行一次 Full GC，只统计存活的对象，对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
 
-### JVM 调优
+判断是不是泄漏，要看每次 GC 之后堆的占用。例如把附录 A11 的程序和一个只保留最近 1 万个 Session 的版本都用 128 MB 的堆运行：前者每次 GC 后剩下的都比上一次多，28 秒时抛出 OutOfMemoryError；后者每次 GC 后都回到约 8 MB（JDK 21 实测，见[附录 A12](#a12-泄漏时-gc-之后的占用)）。
+
+<div align="center"> <img src="pics/jvm-leak-curve.png" width="760px"/> </div><br>
+
+### JVM 调优 🔥
 
 调优之前先明确目标：在线服务关心最长停顿时间，批处理任务关心吞吐量。大多数情况下先使用默认的 G1，开启 GC 日志观察，确实有问题再调整参数；线上的 GC 问题大多是代码造成的，例如内存泄漏、一次查询加载了太多数据，只调参数解决不了。
 
@@ -1026,7 +1033,7 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 3. Full GC 之后老年代能降下来，说明堆对于正常的负载偏小，或者有大对象、大量对象过早进入老年代，可以增大堆、调整新生代大小，或者从代码上减少一次创建的数据量；
 4. 元空间不足也会触发 Full GC，日志中的原因为 Metadata GC Threshold，检查是否在动态生成大量的类。
 
-### CPU 占用过高
+### CPU 占用过高 🔥
 
 1. 用 top 找到 CPU 占用高的 Java 进程；
 2. 用 top -H -p <pid> 查看这个进程中每个线程的 CPU 占用，记下占用最高的线程 ID；
@@ -1341,6 +1348,64 @@ for (long i = 0; ; i++) {
 ```
 
 两次执行后 jstat -gcutil 的 FGC 列分别为 1 和 2，每次统计前都进行了一次 Full GC。临时的 4 KB 数组已经被回收，没有出现在统计中；[B 的数量约为 Session 的 2 倍，分别是 Session 的 payload 和 String 内部的字节数组。
+
+### A12 泄漏时 GC 之后的占用
+
+JDK 21.0.13，Apple M1 Pro，默认的 G1。与 A11 相同的缓存，参数 leak 时只增不删，bounded 时用 LinkedHashMap 只保留最近 1 万个；两个进程同时用 -Xmx128m -Xlog:gc:file=... 运行 60 秒：
+
+```java
+import java.util.*;
+
+/** 与附录 A11 相同的缓存泄漏；参数 bounded 时缓存只保留最近 1 万个 Session，作为对照。运行 seconds 秒后退出。 */
+public class SlowLeak {
+    record Session(String id, byte[] payload) {}
+
+    public static void main(String[] args) throws Exception {
+        boolean bounded = args[0].equals("bounded");
+        long seconds = Long.parseLong(args[1]);
+        Map<String, Session> cache = bounded
+                ? new LinkedHashMap<>() { protected boolean removeEldestEntry(Map.Entry<String, Session> e) { return size() > 10_000; } }
+                : new HashMap<>();
+        long end = System.currentTimeMillis() + seconds * 1000;
+        for (long i = 0; System.currentTimeMillis() < end; i++) {
+            String id = "s" + i;
+            cache.put(id, new Session(id, new byte[512]));
+            byte[] garbage = new byte[4096];          // 正常的临时对象，很快被回收
+            if (i % 100 == 0) Thread.sleep(10);
+        }
+        System.out.println((bounded ? "有上限" : "不删除") + "，缓存中 " + cache.size() + " 个 Session");
+    }
+}
+```
+
+```text
+$ java -Xmx128m -Xlog:gc:file=leak.log SlowLeak leak 60
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+
+leak.log（节选）
+[0.755s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 24M->4M(128M) 2.158ms
+[2.179s][info][gc] GC(1) Pause Young (Normal) (G1 Evacuation Pause) 51M->10M(128M) 3.072ms
+[4.267s][info][gc] GC(2) Pause Young (Normal) (G1 Evacuation Pause) 79M->20M(128M) 10.267ms
+[6.319s][info][gc] GC(3) Pause Young (Normal) (G1 Evacuation Pause) 86M->31M(128M) 15.447ms
+[8.322s][info][gc] GC(4) Pause Young (Normal) (G1 Evacuation Pause) 97M->41M(128M) 13.792ms
+[10.182s][info][gc] GC(5) Pause Young (Normal) (G1 Evacuation Pause) 103M->50M(128M) 4.855ms
+...
+[28.356s][info][gc] GC(26) Pause Young (Concurrent Start) (G1 Evacuation Pause) (Evacuation Failure) 127M->127M(128M) 3.220ms
+[28.400s][info][gc] GC(27) Pause Full (G1 Compaction Pause) 127M->127M(128M) 44.129ms
+[28.435s][info][gc] GC(29) Pause Full (G1 Compaction Pause) 127M->127M(128M) 34.784ms
+[28.435s][info][gc] GC(30) Pause Young (Normal) (G1 Evacuation Pause) 127M->127M(128M) 0.164ms
+[28.437s][info][gc] GC(31) Pause Full (G1 Compaction Pause) 127M->1M(10M) 1.570ms
+
+bounded.log（节选）
+[0.755s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 24M->4M(128M) 2.283ms
+[2.121s][info][gc] GC(1) Pause Young (Normal) (G1 Evacuation Pause) 51M->8M(128M) 5.769ms
+[4.199s][info][gc] GC(2) Pause Young (Normal) (G1 Evacuation Pause) 77M->8M(128M) 7.833ms
+...
+[41.045s][info][gc] GC(9) Pause Young (Normal) (G1 Evacuation Pause) 77M->8M(128M) 2.278ms
+[56.477s][info][gc] GC(10) Pause Young (Normal) (G1 Evacuation Pause) 77M->8M(128M) 4.599ms
+```
+
+leak 的最后一行发生在异常抛出、主线程结束之后，缓存已经不可达；作图时不包括这一行。
 
 ## 参考资料
 

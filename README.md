@@ -29,6 +29,8 @@
 - [大模型应用开发](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20大模型应用开发.md)：准备 RAG、Agent 方向的岗位，从 Transformer 的原理学到 Agent 和工程实践；
 - [面试冲刺](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20面试冲刺.md)：两三周后就要面试时，每天复习 3 个最常考的知识点。
 
+不按路线学习时，可以直接读下面的笔记。笔记中带 🔥🔥 的小节是面试中最常问的内容，带 🔥 的也常被问到。
+
 ## :pencil2: 算法
 
 - [剑指 Offer 题解](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)

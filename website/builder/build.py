@@ -15,7 +15,7 @@ import urllib.parse
 from collections import Counter
 from pathlib import Path
 
-from site_assets import copy_referenced_assets, heading_slug, optimize_images, write_manifest, write_search_index
+from site_assets import copy_referenced_assets, heading_slug, optimize_images, write_animations, write_manifest, write_search_index
 from check import check
 
 BASE = Path(__file__).resolve().parents[1]
@@ -63,6 +63,21 @@ def repository_images():
     return result
 
 
+# 高频标记：正文标题末尾是“不换行空格 + 🔥 或 🔥🔥”，目录行末尾是“ 🔥”或“ 🔥🔥”。GitHub 生成锚点时会删掉标题中的标记，锚点不变。
+# 网站上换成空的 <span class="hot hot-1|2">，由 site.js 画出小火焰；标题中不留空格，Docsify 生成的 id 与不加标记时相同。
+HOT_HEADING = re.compile(r'^(#{1,6} .*?)\u00a0(🔥{1,2})[ \t]*$', re.M)
+HOT_TOC = re.compile(r'^(\s*[-*] \[[^\]]+\]\(#[^)]*\)) (🔥{1,2})[ \t]*$', re.M)
+
+
+def strip_hot(text):
+    return HOT_HEADING.sub(r'\1', text)
+
+
+def hot_spans(text):
+    span = lambda m: f'{m[1]}<span class="hot hot-{len(m[2])}"></span>'
+    return HOT_TOC.sub(lambda m: f'{m[1]} <span class="hot hot-{len(m[2])}"></span>', HOT_HEADING.sub(span, text))
+
+
 def github_slug(text):
     text = re.sub(r'<[^>]+>', '', text).strip().lower().replace('\\', '')
     return ''.join(c for c in text if c in ' -_' or unicodedata.category(c)[0] in 'LN'
@@ -72,7 +87,7 @@ def github_slug(text):
 def anchor_map(path):
     """Map GitHub heading anchors to the ids Docsify gives the same headings."""
     result, github, docsify, fence = {}, Counter(), Counter(), None
-    for line in re.sub(r'<!--[\s\S]*?-->', '', path.read_text()).splitlines():
+    for line in re.sub(r'<!--[\s\S]*?-->', '', strip_hot(path.read_text())).splitlines():
         marker = re.match(r'^\s*(`{3,}|~{3,})', line)
         if marker:
             fence = marker[1][0] if fence is None else (None if marker[1][0] == fence else fence)
@@ -134,7 +149,7 @@ def local_target(url, source, html_link=False):
 
 
 def render_markdown(path):
-    content = path.read_text()
+    content = hot_spans(path.read_text())
     def image(match):
         url = html.unescape(match[2].strip())
         parsed = urllib.parse.urlsplit(url)
@@ -208,11 +223,13 @@ def build(optimize=True):
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
+        animations = write_animations(dist)
         legacy = json.loads((SITE / 'legacy-routes.json').read_text())
         (dist / 'search-paths.js').write_text(
             'window.CS_NOTES_PATHS = ' + json.dumps(note_paths, ensure_ascii=False) + ';\n'
             'window.CS_NOTES_LEGACY_ROUTES = ' + json.dumps(legacy, ensure_ascii=False, separators=(',', ':')) + ';\n'
-            'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n')
+            'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n'
+            'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
         for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*')]):
             if resource.is_file():

@@ -1,7 +1,7 @@
 # Java 并发
 <!-- GFM-TOC -->
 * [Java 并发](#java-并发)
-    * [一、使用线程](#一使用线程)
+    * [一、使用线程](#一使用线程) 🔥
         * [实现 Runnable 接口](#实现-runnable-接口)
         * [实现 Callable 接口](#实现-callable-接口)
         * [继承 Thread 类](#继承-thread-类)
@@ -11,7 +11,7 @@
         * [sleep()](#sleep)
         * [yield()](#yield)
         * [Executor](#executor)
-        * [ThreadPoolExecutor](#threadpoolexecutor)
+        * [ThreadPoolExecutor](#threadpoolexecutor) 🔥🔥
     * [三、中断](#三中断)
         * [InterruptedException](#interruptedexception)
         * [interrupted()](#interrupted)
@@ -21,7 +21,7 @@
         * [ReentrantLock](#reentrantlock)
         * [比较](#比较)
         * [使用选择](#使用选择)
-        * [Java 中的锁](#java-中的锁)
+        * [Java 中的锁](#java-中的锁) 🔥
     * [五、线程之间的协作](#五线程之间的协作)
         * [join()](#join)
         * [wait() notify() notifyAll()](#wait-notify-notifyall)
@@ -34,7 +34,7 @@
         * [无限期等待（WAITING）](#无限期等待waiting)
         * [限期等待（TIMED_WAITING）](#限期等待timed_waiting)
         * [死亡（TERMINATED）](#死亡terminated)
-    * [七、J.U.C - AQS](#七juc---aqs)
+    * [七、J.U.C - AQS](#七juc---aqs) 🔥
         * [CountDownLatch](#countdownlatch)
         * [CyclicBarrier](#cyclicbarrier)
         * [Semaphore](#semaphore)
@@ -47,10 +47,10 @@
     * [十、Java 内存模型](#十java-内存模型)
         * [主内存与工作内存](#主内存与工作内存)
         * [内存间交互操作](#内存间交互操作)
-        * [内存模型三大特性](#内存模型三大特性)
+        * [内存模型三大特性](#内存模型三大特性) 🔥🔥
         * [先行发生原则](#先行发生原则)
         * [volatile](#volatile)
-    * [十一、线程安全](#十一线程安全)
+    * [十一、线程安全](#十一线程安全) 🔥🔥
         * [不可变](#不可变)
         * [互斥同步](#互斥同步)
         * [非阻塞同步](#非阻塞同步)
@@ -59,7 +59,7 @@
         * [自旋锁](#自旋锁)
         * [锁消除](#锁消除)
         * [锁粗化](#锁粗化)
-        * [轻量级锁](#轻量级锁)
+        * [轻量级锁](#轻量级锁) 🔥
         * [偏向锁](#偏向锁)
         * [锁升级的过程](#锁升级的过程)
     * [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
@@ -74,12 +74,13 @@
         * [A8 重排序与 volatile](#a8-重排序与-volatile)
         * [A9 ABA 与 AtomicStampedReference](#a9-aba-与-atomicstampedreference)
         * [A10 锁状态与监视器的回收](#a10-锁状态与监视器的回收)
+        * [A11 线程池关闭后的 CallerRunsPolicy](#a11-线程池关闭后的-callerrunspolicy)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 
-## 一、使用线程
+## 一、使用线程 🔥
 
 有三种使用线程的方法：
 
@@ -229,7 +230,7 @@ public static void main(String[] args) {
 }
 ```
 
-### ThreadPoolExecutor
+### ThreadPoolExecutor 🔥🔥
 
 线程池指的是预先创建一组线程反复执行提交的任务，而不是为每个任务新建线程。这是因为创建线程要分配线程栈、进行系统调用，任务很短时这部分开销可能超过任务本身；线程太多还会占用大量内存、加剧上下文切换。所以线程池一方面复用线程，另一方面限制线程的数量，任务太多时排队或者拒绝。
 
@@ -300,6 +301,8 @@ for (int i = 1; i <= 7; i++) {
 - 不能丢、提交方能处理失败时用 AbortPolicy，捕获异常后返回错误或者稍后重试；
 - 不能丢、可以接受变慢时用 CallerRunsPolicy，例如处理请求的线程被拒绝后自己执行任务，这个请求变慢但任务不会丢，不允许阻塞的线程（例如 Netty 的 I/O 线程）不能这样用；
 - 允许丢失的任务，例如统计数据的上报，用 DiscardPolicy，只关心最新数据时用 DiscardOldestPolicy。
+
+需要注意的是，线程池关闭之后再提交任务也会触发拒绝策略，这时 CallerRunsPolicy 直接丢弃任务，不抛出异常；用 submit() 提交的任务被丢弃后，返回的 Future 永远不会完成，不带超时的 get() 会一直阻塞（JDK 21 实测，见[附录 A11](#a11-线程池关闭后的-callerrunspolicy)）。
 
 也可以实现 RejectedExecutionHandler 接口自定义拒绝策略，例如记录日志并告警，再把任务写入数据库或消息队列，稍后重新执行。
 
@@ -703,7 +706,7 @@ synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非�
 
 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放；ReentrantLock 则必须在 finally 中调用 unlock()。
 
-### Java 中的锁
+### Java 中的锁 🔥
 
 Java 中的锁可以从几个角度分类，同一把锁会同时属于多类，例如 ReentrantLock 默认是悲观、独占、可重入的非公平锁：
 
@@ -1017,7 +1020,7 @@ for (int i = 0; i < 3; i++) {
 
 可以是线程结束任务之后自己结束，或者产生了异常而结束。
 
-## 七、J.U.C - AQS
+## 七、J.U.C - AQS 🔥
 
 java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
 
@@ -1041,7 +1044,7 @@ lock.unlock();
 lock.unlock();                               // state 减到 0，唤醒等待队列中最先入队的线程
 ```
 
-公平锁与非公平锁的区别只在加锁的第一步：非公平锁不管队列里有没有线程在等，先尝试 CAS 抢一次；公平锁先检查队列（hasQueuedPredecessors），有线程在等就直接排到队尾。非公平锁的好处是刚释放锁的线程可以立即再次获得锁，省去了唤醒另一个线程的开销。例如 8 个线程各加锁、解锁 20 万次，非公平锁约 55 ms，公平锁约 3 秒，相差几十倍（JDK 21 实测，见[附录 A2](#a2-公平锁与非公平锁)），所以 ReentrantLock 默认是非公平的，只有严格要求先来先得时才使用公平锁。
+公平锁与非公平锁的区别在于获取锁之前是否先看队列：非公平锁不管队列里有没有线程在等，直接用 CAS 抢；公平锁每次尝试获取前都检查队列（hasQueuedPredecessors），有线程在等就排到队尾。已经入队的线程要轮到队首才尝试获取，但非公平锁下新来的线程仍可能抢在它前面，所以非公平锁不保证先来先得。非公平锁的好处是刚释放锁的线程可以立即再次获得锁，省去了唤醒另一个线程的开销。例如 8 个线程各加锁、解锁 20 万次，非公平锁约 55 ms，公平锁约 3 秒，相差几十倍（JDK 21 实测，见[附录 A2](#a2-公平锁与非公平锁)），所以 ReentrantLock 默认是非公平的，只有严格要求先来先得时才使用公平锁。
 
 CountDownLatch、Semaphore 等也基于 AQS，只是对 state 的解释不同：CountDownLatch 的 state 是剩余的计数，Semaphore 的 state 是剩余的许可数。
 
@@ -1441,7 +1444,7 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 - lock：作用于主内存的变量，把一个变量标识为一条线程独占的状态
 - unlock：作用于主内存的变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其它线程锁定
 
-### 内存模型三大特性
+### 内存模型三大特性 🔥🔥
 
 #### 1. 原子性
 
@@ -1630,7 +1633,7 @@ volatile 修饰的变量有两项保证：
 
 volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性和有序性，不保证原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，代价是竞争时线程会阻塞。所以状态标志、发布数据用 volatile，读-改-写操作和多个变量一起修改用锁或原子类。
 
-## 十一、线程安全
+## 十一、线程安全 🔥🔥
 
 线程安全指的是：多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。例如 HashMap 不是线程安全的，8 个线程同时放入共 80 万个不同的键，结束后 size 远小于 80 万，见 [HashMap 的线程安全](Java%20容器.md#10-线程安全)。
 
@@ -1980,7 +1983,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到有这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
 
-### 轻量级锁
+### 轻量级锁 🔥
 
 JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasable）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
 
@@ -2354,6 +2357,29 @@ Mark Word 中的地址每次运行都不同。
 ```
 
 JDK 21 中空闲监视器的回收由 MonitorDeflationThread 进行，距上次回收超过 GuaranteedAsyncDeflationInterval（默认 60000 ms）时一定会回收一次，见 JDK 21 源码 src/hotspot/share/runtime/synchronizer.cpp。
+
+### A11 线程池关闭后的 CallerRunsPolicy
+
+JDK 21.0.13。线程池先调用 shutdown()，再分别用 execute() 和 submit() 提交任务：
+
+```java
+ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS,
+        new ArrayBlockingQueue<>(1), new ThreadPoolExecutor.CallerRunsPolicy());
+pool.shutdown();
+pool.execute(() -> System.out.println("execute 的任务执行了"));
+Future<String> f = pool.submit(() -> "submit 的结果");
+try {
+    System.out.println(f.get(1, TimeUnit.SECONDS));
+} catch (TimeoutException e) {
+    System.out.println("submit 的 Future 1 秒内没有完成：isDone = " + f.isDone());
+}
+```
+
+```text
+submit 的 Future 1 秒内没有完成：isDone = false
+```
+
+execute() 提交的任务没有执行。CallerRunsPolicy 的 rejectedExecution() 只在 !e.isShutdown() 时才调用 r.run()，线程池关闭后什么也不做。
 
 ## 参考资料
 

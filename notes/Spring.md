@@ -2,11 +2,11 @@
 <!-- GFM-TOC -->
 * [Spring](#spring)
     * [一、IoC 与 Bean](#一ioc-与-bean)
-        * [IoC 与依赖注入](#ioc-与依赖注入)
-        * [Bean 的生命周期](#bean-的生命周期)
+        * [IoC 与依赖注入](#ioc-与依赖注入) 🔥
+        * [Bean 的生命周期](#bean-的生命周期) 🔥
         * [Bean 的作用域与线程安全](#bean-的作用域与线程安全)
-        * [循环依赖](#循环依赖)
-    * [二、AOP](#二aop)
+        * [循环依赖](#循环依赖) 🔥
+    * [二、AOP](#二aop) 🔥🔥
         * [动态代理](#动态代理)
         * [代理的创建与通知的执行](#代理的创建与通知的执行)
         * [自调用](#自调用)
@@ -15,9 +15,10 @@
         * [事务的实现原理](#事务的实现原理)
         * [传播行为](#传播行为)
         * [事务失效](#事务失效)
-    * [四、Spring Boot 自动配置](#四spring-boot-自动配置)
+    * [四、Spring Boot 自动配置](#四spring-boot-自动配置) 🔥
+        * [启动流程](#启动流程)
     * [五、Spring MVC](#五spring-mvc)
-        * [请求的处理过程](#请求的处理过程)
+        * [请求的处理过程](#请求的处理过程) 🔥
     * [六、MyBatis](#六mybatis)
         * [#{} 和 ${} 的区别](#-和--的区别)
         * [Mapper 接口为什么不需要实现类](#mapper-接口为什么不需要实现类)
@@ -31,13 +32,14 @@
         * [A4 代理的创建与通知的顺序](#a4-代理的创建与通知的顺序)
         * [A5 事务与数据库连接](#a5-事务与数据库连接)
         * [A6 @Async 与 @Lazy 的循环依赖](#a6-async-与-lazy-的循环依赖)
+        * [A7 Spring Boot 的启动过程](#a7-spring-boot-的启动过程)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 ## 一、IoC 与 Bean
 
-### IoC 与依赖注入
+### IoC 与依赖注入 🔥
 
 控制反转（Inversion of Control, IoC）指的是对象不再自己创建所依赖的对象，而是由容器创建好之后交给它。例如 OrderService 需要 OrderRepository，它不在内部 new 一个，而是声明自己需要，由 Spring 容器把创建好的对象传进来，这个过程称为依赖注入（Dependency Injection, DI）。
 
@@ -76,7 +78,7 @@ public class OrderService {
 
 第三行启动时报错 NoUniqueBeanDefinitionException: expected single matching bean but found 2: alipay,wechat。
 
-### Bean 的生命周期
+### Bean 的生命周期 🔥
 
 一个单例 Bean 从创建到销毁会经过以下步骤：
 
@@ -144,7 +146,7 @@ public class CounterController {
 
 需要注意的是，把 prototype 的 Bean 注入到单例中，只会在创建单例时注入一次，之后每次使用的都是同一个对象。需要每次得到新对象时，注入 ObjectProvider 并在使用时调用 getObject()。
 
-### 循环依赖
+### 循环依赖 🔥
 
 循环依赖指的是两个 Bean 互相依赖，例如 A 依赖 B，B 又依赖 A。
 
@@ -169,7 +171,7 @@ public class CounterController {
 
 需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系。
 
-## 二、AOP
+## 二、AOP 🔥🔥
 
 ### 动态代理
 
@@ -387,7 +389,7 @@ REQUIRED 有一个常见的问题：内层方法抛出异常后，即使外层�
 - 在新线程中操作数据库：事务绑定在当前线程上，其它线程中的操作不属于这个事务；
 - 数据库不支持事务，例如 MySQL 的 MyISAM 引擎。
 
-## 四、Spring Boot 自动配置
+## 四、Spring Boot 自动配置 🔥
 
 Spring Boot 在 Spring 的基础上提供了自动配置和 starter：starter 把一组常用的依赖打包在一起，例如 spring-boot-starter-web 引入了 Spring MVC、内嵌的 Tomcat 和 JSON 库；自动配置则根据引入的依赖自动创建所需的 Bean，不需要手动配置就能启动一个 Web 应用。
 
@@ -422,11 +424,51 @@ public record SmsProperties(String sign) {}
 
 需要注意的是，自动配置类要放在不会被组件扫描到的包中，只通过 imports 文件加载。自动配置类在用户定义的 Bean 都注册之后才处理，@ConditionalOnMissingBean 才能看到用户的 Bean；如果它被组件扫描到，就会和普通的配置类一起提前处理，条件可能判断错误。第三方 starter 按约定命名为 xxx-spring-boot-starter，spring-boot-starter-xxx 留给 Spring Boot 官方使用。
 
+### 启动流程
+
+启动类的 main 方法调用 SpringApplication.run(BootApp.class, args)，它先创建一个 SpringApplication 对象，再执行这个对象的 run()。以一个只引入了 spring-boot-starter-web 的应用为例，在各个步骤中打印耗时，并监听启动过程中发布的事件（Spring Boot 3.3 实测，见[附录 A7](#a7-spring-boot-的启动过程)，有删减）：
+
+```text
+  146 ms  new SpringApplication()，应用类型 SERVLET
+  187 ms  事件 ApplicationStartingEvent
+  417 ms  事件 ApplicationEnvironmentPreparedEvent
+  494 ms  ApplicationContextInitializer，上下文类型 AnnotationConfigServletWebServerApplicationContext，BeanDefinition 5 个
+  527 ms  事件 ApplicationPreparedEvent
+  811 ms  BeanFactoryPostProcessor，BeanDefinition 157 个，含 DispatcherServlet 自动配置：true
+  897 ms  创建内嵌 Tomcat 的工厂：TomcatServletWebServerFactory
+ 1182 ms  创建单例 Bean OrderService，8097 连接被拒绝
+ 1356 ms  事件 ServletWebServerInitializedEvent
+ 1359 ms  事件 ContextRefreshedEvent
+ 1360 ms  事件 ApplicationStartedEvent
+ 1363 ms  CommandLineRunner 执行，8097 可以连接
+ 1363 ms  事件 ApplicationReadyEvent
+```
+
+对照输出，启动分为以下几步：
+
+1. 创建 SpringApplication：根据类路径上的类判断应用类型，有 Servlet 和 Spring Web 的类时是 SERVLET，只有 WebFlux 时是 REACTIVE，都没有时是 NONE；再从各个 jar 包的 META-INF/spring.factories 中加载 ApplicationContextInitializer、ApplicationListener 等扩展；
+2. 准备环境：把命令行参数、系统属性、环境变量和 application.properties（或 application.yml）合并到 Environment 中，之后 @Value 和 @ConfigurationProperties 都从这里取值；
+3. 创建并准备容器：按应用类型创建 AnnotationConfigServletWebServerApplicationContext，执行各个 ApplicationContextInitializer（这时容器中只有 5 个内部组件的 BeanDefinition），再把启动类注册为 BeanDefinition；
+4. 刷新容器：执行 Spring 容器的 refresh()，Bean 都在这一步创建，见 [Bean 的生命周期](#bean-的生命周期)。与 Spring Boot 有关的有三处，见下文；
+5. 执行 Runner：依次调用容器中的 ApplicationRunner 和 CommandLineRunner，然后发布 ApplicationReadyEvent，run() 返回。
+
+refresh() 中与 Spring Boot 有关的三处：
+
+- 解析配置类：从启动类开始做组件扫描、解析 @Bean 方法，并按上文的过程加载自动配置类，BeanDefinition 从 5 个增加到 157 个；
+- onRefresh()：创建内嵌的 Tomcat，把 DispatcherServlet 注册到其中，这时还不监听端口；
+- 创建所有非懒加载的单例 Bean，之后在 finishRefresh() 中启动 Tomcat 的连接器，开始监听端口。所以创建 OrderService 时 8097 端口还连不上，执行 CommandLineRunner 时已经可以连接。
+
+启动完成后要执行的逻辑，例如缓存预热，可以放在 ApplicationRunner、CommandLineRunner 中，或者监听 ApplicationReadyEvent。Runner 抛出异常会导致启动失败。需要注意的是，执行 Runner 时 Tomcat 已经在接收请求，预热还没完成的请求可能直接落到数据库上。部署在 Kubernetes 中时，Spring Boot 在发布 ApplicationReadyEvent 之后才把就绪状态设为 ACCEPTING_TRAFFIC，[就绪探针](Docker.md#七kubernetes) 检查 /actuator/health/readiness 时，流量要等 Runner 执行完才会进来。
+
+用 java -jar 启动打包好的 jar 时，jar 的 Main-Class 是 Spring Boot 的 JarLauncher，它从 jar 中的 BOOT-INF/classes 和 BOOT-INF/lib 加载应用和依赖，再调用 Start-Class 指定的启动类的 main 方法。
+
+启动太慢时，可以设置 spring.main.lazy-initialization=true，让单例 Bean 在第一次使用时才创建，代价是配置错误要到第一次使用时才暴露，第一个请求也更慢。
+
 ## 五、Spring MVC
 
 Spring MVC 是基于 Servlet 的 Web 框架，按模型-视图-控制器（Model-View-Controller, MVC）的方式组织代码：Controller 接收请求、调用业务逻辑，Model 是要展示的数据，View 把数据渲染成页面。前后端分离后，Controller 通常直接把数据写成 JSON 返回，没有 View。
 
-### 请求的处理过程
+### 请求的处理过程 🔥
 
 所有请求都先交给一个 DispatcherServlet，由它的 doDispatch 方法完成分发：
 
@@ -445,6 +487,8 @@ Spring MVC 是基于 Servlet 的 Web 框架，按模型-视图-控制器（Model
 [interceptor] postHandle
 [interceptor] afterCompletion status=200
 ```
+
+<div align="center"> <img src="pics/spring-mvc-layers.png" width="760px"/> </div><br>
 
 拦截器与过滤器（Filter）的区别：过滤器是 Servlet 规范定义的，在请求进入 DispatcherServlet 之前执行，拿不到要调用哪个 Controller 方法；拦截器由 Spring MVC 调用，可以拿到 Handler，并且能使用 Spring 容器中的 Bean。
 
@@ -773,6 +817,92 @@ public static class CB { final CA a; CB(@Lazy CA a) { this.a = a; } }
   通过它调用 b() 得到的 CB 就是容器中的 CB：true
 ```
 
+### A7 Spring Boot 的启动过程
+
+Spring Boot 3.3.5（spring-boot-starter-web）、JDK 21，Apple M1 Pro。application.properties 中设置 server.port=8097、关闭 Banner，日志级别为 WARN，只保留 Tomcat 的启动日志。在各个扩展点中打印距 JVM 加载启动类的毫秒数，用 java -jar 运行（代码有删减）：
+
+```java
+@SpringBootApplication
+public class BootApp {
+    static final long T0 = System.nanoTime();
+    static void log(String s) { System.out.printf("%5d ms  %s%n", (System.nanoTime() - T0) / 1_000_000, s); }
+    static String port() {                       // 尝试连接自己的端口
+        try (Socket ignored = new Socket("127.0.0.1", 8097)) { return "8097 可以连接"; }
+        catch (Exception e) { return "8097 连接被拒绝"; }
+    }
+
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(BootApp.class);
+        log("new SpringApplication()，应用类型 " + app.getWebApplicationType());
+        app.addListeners(e -> log("事件 " + e.getClass().getSimpleName()));   // AvailabilityChangeEvent 另外打印状态
+        app.addInitializers(ctx -> log("ApplicationContextInitializer，上下文类型 " + ctx.getClass().getSimpleName()
+                + "，BeanDefinition " + ctx.getBeanFactory().getBeanDefinitionCount() + " 个"));
+        ConfigurableApplicationContext ctx = app.run(args);
+        log("run() 返回，BeanDefinition " + ctx.getBeanDefinitionCount() + " 个");
+        ctx.close();
+    }
+
+    @Bean static BeanFactoryPostProcessor countDefinitions() {
+        return bf -> log("BeanFactoryPostProcessor，BeanDefinition " + bf.getBeanDefinitionCount() + " 个，含 DispatcherServlet 自动配置："
+                + bf.containsBeanDefinition("org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration"));
+    }
+    @Bean WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> tomcatCustomizer() {
+        return f -> log("创建内嵌 Tomcat 的工厂：" + f.getClass().getSimpleName());
+    }
+    // 另有一个 BeanPostProcessor，在名为 dispatcherServlet 的 Bean 初始化后打印
+    @Bean CommandLineRunner warmUp() { return args -> log("CommandLineRunner 执行，" + port()); }
+}
+
+@Component
+class OrderService {
+    OrderService() { BootApp.log("创建单例 Bean OrderService，" + BootApp.port()); }
+}
+```
+
+```text
+  146 ms  new SpringApplication()，应用类型 SERVLET
+  187 ms  事件 ApplicationStartingEvent
+  417 ms  事件 ApplicationEnvironmentPreparedEvent
+  494 ms  ApplicationContextInitializer，上下文类型 AnnotationConfigServletWebServerApplicationContext，BeanDefinition 5 个
+  495 ms  事件 ApplicationContextInitializedEvent
+  527 ms  事件 ApplicationPreparedEvent
+  811 ms  BeanFactoryPostProcessor，BeanDefinition 157 个，含 DispatcherServlet 自动配置：true
+  897 ms  创建内嵌 Tomcat 的工厂：TomcatServletWebServerFactory
+  918 ms  创建 DispatcherServlet，8097 连接被拒绝
+[INFO] 15202 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8097 (http)
+ 1182 ms  创建单例 Bean OrderService，8097 连接被拒绝
+[INFO] 15202 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8097 (http) with context path '/'
+ 1356 ms  事件 ServletWebServerInitializedEvent
+ 1359 ms  事件 ContextRefreshedEvent
+ 1360 ms  事件 ApplicationStartedEvent
+ 1361 ms  事件 AvailabilityChangeEvent CORRECT
+ 1363 ms  CommandLineRunner 执行，8097 可以连接
+ 1363 ms  事件 ApplicationReadyEvent
+ 1363 ms  事件 AvailabilityChangeEvent ACCEPTING_TRAFFIC
+ 1363 ms  run() 返回，BeanDefinition 158 个
+ 1364 ms  事件 AvailabilityChangeEvent REFUSING_TRAFFIC
+ 1364 ms  事件 ContextClosedEvent
+```
+
+加上 -Dstack=true 时，每一行之后打印当时调用栈中 SpringApplication 和容器 refresh() 的方法（从外到内，节选）：
+
+```text
+ApplicationContextInitializer：SpringApplication.run > prepareContext > applyInitializers
+BeanFactoryPostProcessor：SpringApplication.run > refreshContext > AbstractApplicationContext.refresh > invokeBeanFactoryPostProcessors
+创建内嵌 Tomcat 的工厂、创建 DispatcherServlet：AbstractApplicationContext.refresh > ServletWebServerApplicationContext.onRefresh > createWebServer
+创建单例 Bean OrderService：AbstractApplicationContext.refresh > finishBeanFactoryInitialization
+CommandLineRunner：SpringApplication.run > callRunners
+```
+
+打包出的 jar 中 META-INF/MANIFEST.MF 的相关内容：
+
+```text
+Main-Class: org.springframework.boot.loader.launch.JarLauncher
+Start-Class: lab.BootApp
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+```
+
 ## 参考资料
 
 - [Spring Framework: Dependency Injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html)
@@ -784,6 +914,9 @@ public static class CB { final CA a; CB(@Lazy CA a) { this.a = a; } }
 - [Spring Framework 源码：DefaultSingletonBeanRegistry](https://github.com/spring-projects/spring-framework/blob/main/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java)
 - [Spring Boot: Creating Your Own Auto-configuration](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html)
 - [Spring Boot: Using the @SpringBootApplication Annotation](https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html)
+- [Spring Boot: SpringApplication](https://docs.spring.io/spring-boot/reference/features/spring-application.html)
+- [Spring Boot 源码：SpringApplication](https://github.com/spring-projects/spring-boot/blob/v3.3.5/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/SpringApplication.java)
+- [Spring Boot: The Executable Jar Format](https://docs.spring.io/spring-boot/specification/executable-jar/index.html)
 - [Spring Framework: Programmatic Transaction Management](https://docs.spring.io/spring-framework/reference/data-access/transaction/programmatic.html)
 - [Spring Framework: Declaring Advice（Advice Ordering）](https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/advice.html)
 - [Spring Framework 源码：AbstractApplicationContext](https://github.com/spring-projects/spring-framework/blob/6.1.x/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java)
