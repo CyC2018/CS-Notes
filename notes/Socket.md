@@ -8,7 +8,7 @@
         * [信号驱动 I/O](#信号驱动-io)
         * [异步 I/O](#异步-io)
         * [五大 I/O 模型比较](#五大-io-模型比较)
-    * [二、I/O 复用](#二io-复用)
+    * [二、I/O 复用](#二io-复用) 🔥🔥
         * [select](#select)
         * [poll](#poll)
         * [比较](#比较)
@@ -97,9 +97,11 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
+Java 中的 BIO 对应阻塞式 I/O；NIO 用 Selector 实现 I/O 复用，Linux 上基于 epoll；AIO（NIO.2 的异步通道）对应异步 I/O 的编程方式，但 Linux 上的 JDK 实际用 epoll 加线程池实现。
+
 <div align="center"> <img src="pics/io-compare.png" width="760px"/> </div><br>
 
-## 二、I/O 复用
+## 二、I/O 复用 🔥🔥
 
 I/O 复用（I/O multiplexing）指用一个系统调用同时等待多个描述符，其中任何一个就绪就返回。Linux 上的实现依次为 select、poll 和 epoll，epoll 解决了前两者在描述符数量很多时的性能问题。
 
