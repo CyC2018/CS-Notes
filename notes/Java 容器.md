@@ -1,19 +1,19 @@
 # Java 容器
 <!-- GFM-TOC -->
 * [Java 容器](#java-容器)
-    * [一、概览](#一概览)
+    * [一、概览](#一概览) 🔥
         * [Collection](#collection)
         * [Map](#map)
     * [二、容器中的设计模式](#二容器中的设计模式)
         * [迭代器模式](#迭代器模式)
         * [适配器模式](#适配器模式)
     * [三、源码分析](#三源码分析)
-        * [ArrayList](#arraylist)
+        * [ArrayList](#arraylist) 🔥
         * [LinkedList](#linkedlist)
         * [Vector](#vector)
         * [CopyOnWriteArrayList](#copyonwritearraylist)
-        * [HashMap](#hashmap)
-        * [ConcurrentHashMap](#concurrenthashmap)
+        * [HashMap](#hashmap) 🔥🔥
+        * [ConcurrentHashMap](#concurrenthashmap) 🔥🔥
         * [LinkedHashMap](#linkedhashmap)
         * [WeakHashMap](#weakhashmap)
     * [附录：实测](#附录实测)
@@ -26,7 +26,7 @@
 <!-- GFM-TOC -->
 
 
-## 一、概览
+## 一、概览 🔥
 
 容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。
 
@@ -122,7 +122,7 @@ asList() 返回的是数组的一个视图，而不是一个新的 ArrayList，�
 
 如果没有特别说明，以下源码分析基于 JDK 1.8。JDK 21 中这些类的主要逻辑没有变化，有差异的地方单独说明。
 
-### ArrayList
+### ArrayList 🔥
 
 
 #### 1. 概览
@@ -397,7 +397,7 @@ CopyOnWriteArrayList 在写操作的同时允许读操作，大大提高了读�
 
 所以 CopyOnWriteArrayList 不适合内存敏感以及对实时性要求很高的场景。
 
-### HashMap
+### HashMap 🔥🔥
 
 为了便于理解，以下源码分析以 JDK 1.7 为主。JDK 1.8 主要有以下变化，JDK 21 与 JDK 1.8 相同：
 
@@ -797,7 +797,7 @@ HashMap 不是线程安全的。例如两个线程同时向同一个空桶插入
 
 JDK 1.7 的问题更严重：两个线程同时扩容时，头插法会把链表的顺序反转，可能让链表形成环，之后在这个桶上的 get 会陷入死循环。JDK 1.8 改为尾插法，扩容时保持链表原来的顺序，不会再因为头插法成环，但并发写入仍然会丢失数据；链表转为红黑树时还可能破坏树的结构，实测中出现过线程抛出 ClassCastException，以及线程在 TreeNode.treeify() 中一直循环不返回的情况（见[附录 A2](#a2-hashmap-的并发写入)）。多线程环境应该使用 ConcurrentHashMap。
 
-### ConcurrentHashMap
+### ConcurrentHashMap 🔥🔥
 
 第 1、2 节是 JDK 1.7 的实现，JDK 1.8 的改动见第 3 节。
 
