@@ -61,6 +61,28 @@ def heading_slug(title, counts):
     return slug + (f'-{count}' if count else '')
 
 
+def write_animations(dist):
+    """把 anim.py 生成的步骤动图（GIF 注释为 CS-Notes step animation）拆成逐帧的无损 WebP。
+    GitHub 上直接播放 GIF；网站上用同一组帧做成可以暂停、逐步查看的播放器，返回 {GIF 路径: 帧、时长、尺寸}。"""
+    from PIL import Image, ImageSequence
+    result = {}
+    for gif in sorted(dist.rglob('*.gif')):
+        with Image.open(gif) as image:
+            if image.info.get('comment') != b'CS-Notes step animation' or getattr(image, 'n_frames', 1) < 2:
+                continue
+            folder = dist / 'anim' / hashlib.sha256(gif.read_bytes()).hexdigest()[:16]
+            folder.mkdir(parents=True, exist_ok=True)
+            frames, durations = [], []
+            for i, frame in enumerate(ImageSequence.Iterator(image)):
+                durations.append(frame.info.get('duration', 2000))
+                target = folder / f'{i}.webp'
+                frame.convert('RGB').save(target, format='WEBP', lossless=True, method=4)
+                frames.append('/' + target.relative_to(dist).as_posix())
+            result['/' + gif.relative_to(dist).as_posix()] = {
+                'frames': frames, 'durations': durations, 'width': image.width, 'height': image.height}
+    return result
+
+
 def search_document(path, content):
     counts = Counter()
     sections = []
@@ -87,7 +109,7 @@ def search_document(path, content):
             finish()
             raw_title = heading[2]
             current = {'title': plain_text(raw_title), 'id': heading_slug(raw_title, counts), 'text': ''}
-        elif not re.match(r'^\s*[-*+]\s+\[[^]]+\]\(#[^)]*\)\s*$', line):
+        elif not re.match(r'^\s*[-*+]\s+\[[^]]+\]\(#[^)]*\)\s*(?:<span class="hot[^"]*"></span>)?\s*$', line):
             lines.append(line)
     finish()
     return {'path': '/notes/' + path.stem, 'title': path.stem, 'sections': sections}
