@@ -27,6 +27,7 @@
         * [13. 分割字符串使得每个部分都是回文数](#13-分割字符串使得每个部分都是回文数)
         * [14. 数独](#14-数独)
         * [15. N 皇后](#15-n-皇后)
+        * [16. 括号生成](#16-括号生成)
     * [附录：实测](#附录实测)
         * [A1. 岛屿数量的递归深度](#a1-岛屿数量的递归深度)
 <!-- GFM-TOC -->
@@ -643,6 +644,8 @@ backtracking(当前选择):
 - 但是在递归返回时，需要将元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
 
 [岛屿数量](#2-矩阵中的连通分量数目)的标记表示格子已经处理过，不再撤销；[在矩阵中寻找字符串](#3-在矩阵中寻找字符串)的标记表示格子在当前路径上，换一条路径时要撤销。
+
+以 N 个互不相同的元素为例：排列有 N! 个，每个复制 O(N)，总时间 O(N·N!)；子集有 2<sup>N</sup> 个，总时间 O(N·2<sup>N</sup>)。这两类问题的额外空间是递归深度 O(N)（不计结果）。
 
 ### 1. 数字键盘组合
 
@@ -1399,6 +1402,51 @@ private void backtracking(int row) {
     }
 }
 ```
+
+### 16. 括号生成
+
+22\. Generate Parentheses (Medium)
+
+[Leetcode](https://leetcode.com/problems/generate-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/generate-parentheses/description/)
+
+```text
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+```
+
+从左到右逐个放括号，每一步只有两种选择，用两条规则剪枝：
+
+- 左括号用了不到 n 个时，才能放左括号；
+- 右括号的个数少于左括号时，才能放右括号，这样任何前缀中右括号都不会多于左括号。
+
+放满 2n 个字符时左右括号各 n 个，得到的就是合法的组合。例如 n = 2 时，第一个字符只能是左括号，第二个字符分出 "((" 和 "()" 两支，之后各自只剩一种放法，得到 "(())" 和 "()()"。
+
+```java
+public List<String> generateParenthesis(int n) {
+    List<String> combinations = new ArrayList<>();
+    backtracking(new StringBuilder(), 0, 0, n, combinations);
+    return combinations;
+}
+
+private void backtracking(StringBuilder prefix, int open, int close, int n, List<String> combinations) {
+    if (prefix.length() == 2 * n) {
+        combinations.add(prefix.toString());
+        return;
+    }
+    if (open < n) {
+        prefix.append('(');
+        backtracking(prefix, open + 1, close, n, combinations);
+        prefix.deleteCharAt(prefix.length() - 1);
+    }
+    if (close < open) {
+        prefix.append(')');
+        backtracking(prefix, open, close + 1, n, combinations);
+        prefix.deleteCharAt(prefix.length() - 1);
+    }
+}
+```
+
+满足这两条规则的前缀总能补成合法的组合，搜索不会走进死路。结果个数是卡特兰数 C(2n, n) / (n + 1)，n = 3 时 5 个，n = 8 时 1430 个；每个结果长 2n，总时间 O(n·C(2n, n) / (n + 1))，约为 O(4<sup>n</sup> / √n)。
 
 ## 附录：实测
 
