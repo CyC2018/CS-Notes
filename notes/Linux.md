@@ -90,7 +90,7 @@
 
 - Tab：命令和文件名补全；
 - Ctrl+C：中断正在运行的程序；
-- Ctrl+D：结束键盘输入（End Of File，EOF）
+- Ctrl+D：结束键盘输入（End Of File，EOF）。
 
 ### 求助
 
@@ -131,7 +131,7 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 #### 3. shutdown
 
 ```text
-## shutdown [-krhc] 时间 [信息]
+$ shutdown [-krhc] 时间 [信息]
 -k ： 不会关机，只是发送警告信息，通知所有在线的用户
 -r ： 将系统的服务停掉后就重新启动
 -h ： 将系统的服务停掉后就立即关机
@@ -148,14 +148,14 @@ info 与 man 类似，但是 info 将文档分成一个个页面，每个页面�
 
 ### sudo
 
-sudo 允许一般用户使用 root 可执行的命令，不过只有在 /etc/sudoers 配置文件中添加的用户才能使用该指令。
+sudo 允许一般用户使用 root 可执行的命令，不过只有在 /etc/sudoers（或 /etc/sudoers.d/ 中的文件）里授权的用户和群组才能使用该指令，例如 Ubuntu 默认授权 sudo 组的成员。
 
 ### 包管理工具
 
 RPM 和 DPKG 为最常见的两类软件包管理工具：
 
-- RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为许多 Linux 系统的既定软件标准。YUM 基于 RPM，具有依赖管理和软件升级功能。
-- 与 RPM 竞争的是基于 Debian 操作系统的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
+- RPM 全称为 RPM Package Manager（最初叫 Red Hat Package Manager），最早由 Red Hat 公司制定实施，随后被许多 Linux 发行版采用。YUM 基于 RPM，具有依赖管理和软件升级功能，Fedora、RHEL 8 起改用它的后继者 DNF；
+- 与 RPM 竞争的是 Debian 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。APT 基于 DPKG，负责依赖管理和升级，Ubuntu 中常用 apt install 安装软件。
 
 ### 发行版
 
@@ -163,8 +163,10 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 | 基于的包管理工具 | 商业发行版 | 社区发行版 |
 | :--: | :--: | :--: |
-| RPM | Red Hat | Fedora / CentOS |
+| RPM | Red Hat | Fedora / CentOS Stream |
 | DPKG | Ubuntu | Debian |
+
+CentOS Linux 已于 2024 年 6 月停止维护，原来用 CentOS 的服务器多改用 Rocky Linux、AlmaLinux。
 
 ### VIM 三个模式
 
@@ -229,7 +231,7 @@ SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同
 Linux 中每个硬件都被当做一个文件，包括磁盘。磁盘以磁盘接口类型进行命名，常见磁盘的文件名如下：
 
 - IDE 磁盘：/dev/hd[a-d]（旧驱动的命名，Linux 5.14 移除了旧的 IDE 驱动，现在由 libata 驱动 IDE 磁盘，也命名为 /dev/sd*）
-- SATA/SCSI/SAS 磁盘：/dev/sd[a-p]
+- SATA/SCSI/SAS 磁盘：/dev/sd[a-z]（超过 26 块后为 /dev/sdaa、/dev/sdab 等）
 - NVMe 磁盘：/dev/nvme0n1、/dev/nvme1n1
 
 其中文件名后面的序号的确定与系统检测到磁盘的顺序有关，而与磁盘所插入的插槽位置无关。
@@ -250,13 +252,13 @@ Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件�
 
 #### 2. GPT
 
-扇区是磁盘的最小存储单位，旧磁盘的扇区大小通常为 512 bytes，而最新的磁盘支持 4 k。GPT 为了兼容所有磁盘，在定义扇区上使用逻辑区块地址（Logical Block Address, LBA），LBA 默认大小为 512 bytes。
+扇区是磁盘的最小存储单位，旧磁盘的扇区大小通常为 512 bytes，而较新的磁盘支持 4 KB。GPT 用逻辑区块地址（Logical Block Address, LBA）给区块编号，区块的大小由磁盘决定，下面以最常见的 512 bytes 为例。
 
-GPT 第 1 个区块记录了主要开机记录（MBR），紧接着是 33 个区块记录分区信息，并把最后的 33 个区块用于对分区信息进行备份。这 33 个区块第一个为 GPT 表头纪录，这个部份纪录了分区表本身的位置与大小和备份分区的位置，同时放置了分区表的校验码 (CRC32)，操作系统可以根据这个校验码来判断 GPT 是否正确。若有错误，可以使用备份分区进行恢复。
+GPT 的第 1 个区块（LBA 0）是保护性 MBR，它把整块磁盘登记为一个类型特殊的分区，只认识 MBR 的旧工具不会把磁盘当成空盘误改；紧接着是 33 个区块记录分区信息，最后的 33 个区块是它们的备份。这 33 个区块中第一个是 GPT 表头，记录了分区表本身的位置与大小、备份的位置，以及分区表的校验码（CRC32），操作系统根据校验码判断 GPT 是否损坏，损坏时用备份恢复。
 
-GPT 没有扩展分区概念，都是主分区，每个 LBA 可以分 4 个分区，因此总共可以分 4 * 32 = 128 个分区。
+GPT 没有扩展分区概念，都是主分区。每个分区项占 128 bytes，一个区块放 4 项，记录分区项的 32 个区块共 4 * 32 = 128 项，因此默认最多 128 个分区。
 
-MBR 不支持 2.2 TB 以上的硬盘，GPT 则最多支持到 2<sup>33</sup> TB = 8 ZB。
+按 512 bytes 的区块计算，MBR 用 32 位记录区块号，最多寻址 2<sup>32</sup> × 512 B = 2 TiB（约 2.2 TB）；GPT 用 64 位，最多 2<sup>64</sup> × 512 B = 8 ZiB。
 
 <div align="center"> <img src="pics/gpt-layout.png" width="760px"/> </div><br>
 
@@ -280,11 +282,13 @@ BIOS 是开机的时候计算机执行的第一个程序，这个程序知道可
 
 BIOS 只会执行 MBR 中的开机管理程序，本身不读取分区表，从 GPT 磁盘启动要依靠支持 GPT 的开机管理程序（例如 GRUB）；UEFI 可以直接读取 GPT 分区表。
 
+UEFI 不执行 MBR 中的代码，而是从 EFI 系统分区（EFI System Partition, ESP，FAT 格式）中读取开机管理程序文件来启动，例如 Ubuntu 的 /boot/efi/EFI/ubuntu/shimx64.efi。多重引导时各系统把引导文件放在 ESP 的不同目录中（例如 EFI/Microsoft、EFI/ubuntu），由固件的启动菜单选择，不再争用 MBR 中唯一的 446 bytes。
+
 ## 四、文件系统
 
 ### 分区与文件系统
 
-对分区进行格式化是为了在分区上建立文件系统。一个分区通常只能格式化为一个文件系统，但是磁盘阵列等技术可以将一个分区格式化为多个文件系统。
+对分区进行格式化是为了在分区上建立文件系统。文件系统建立在块设备上，块设备通常是一个分区，也可以是 LVM、RAID 提供的逻辑设备：LVM 可以把一个分区划成多个逻辑卷，各自建立文件系统，也可以和 RAID 一样把多个磁盘合成一个设备。
 
 ### 组成
 
@@ -296,7 +300,7 @@ BIOS 只会执行 MBR 中的开机管理程序，本身不读取分区表，从 
 除此之外还包括：
 
 - superblock：记录文件系统的整体信息，包括 inode 和 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等；
-- block bitmap：记录 block 是否被使用的位图。
+- block bitmap、inode bitmap：分别记录 block、inode 是否已被使用的位图，分配时只需扫描位图。
 
 <div align="center"> <img src="pics/ext-layout.png" width="760px"/> </div><br>
 
@@ -329,39 +333,41 @@ BIOS 只会执行 MBR 中的开机管理程序，本身不读取分区表，从 
 
 inode 具体包含以下信息：
 
-- 权限 (read/write/execute)；
-- 拥有者与群组 (owner/group)；
+- 权限（read/write/execute）；
+- 拥有者与群组（owner/group）；
 - 容量；
-- 建立或状态改变的时间 (ctime)；
-- 最近读取时间 (atime)；
-- 最近修改时间 (mtime)；
-- 定义文件特性的旗标 (flag)，如 SetUID...；
-- 该文件真正内容的指向 (pointer)。
+- 状态改变的时间（ctime），不是创建时间；
+- 最近读取时间（atime）；
+- 最近修改时间（mtime）；
+- 定义文件特性的旗标（flag），如 SetUID；
+- 该文件真正内容的指向（pointer）。
 
 inode 具有以下特点：
 
 - 每个 inode 的大小在格式化时确定，早期的 ext2/ext3 为 128 bytes，现在 mke2fs 默认为 256 bytes；
 - 每个文件都仅会占用一个 inode。
 
-inode 中记录了文件内容所在的 block 编号，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block 编号。因此引入了间接、双间接、三间接引用。间接引用让 inode 记录的引用 block 块记录引用信息。
+inode 中记录了文件内容所在的 block 编号，但一个大文件需要几十万个 block，inode 的大小有限，放不下这么多编号。因此 ext2/ext3 的 inode 只放 12 个直接引用，再加一级、二级、三级间接引用：间接引用指向的 block 不存文件内容，而是存放更多的 block 编号。
 
 <div align="center"> <img src="pics/inode-pointers.png" width="760px"/> </div><br>
+
+ext4 默认改用区段（extent）记录位置：一条记录只写起始 block 和连续的长度，block 为 4 KB 时一条最多覆盖 128 MB，连续存放的大文件只需要很少几条记录。
 
 ### 目录
 
 建立一个目录时，会分配一个 inode 与至少一个 block。block 记录的内容是目录下所有文件的 inode 编号以及文件名。
 
-可以看到文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的写权限有关。
+文件的 inode 本身不记录文件名，文件名记录在目录中，因此新增文件、删除文件、更改文件名这些操作与目录的写权限有关。
 
 ### 日志
 
 如果突然断电，那么文件系统会发生错误，例如断电前只修改了 block bitmap，而还没有将数据真正写入 block 中。
 
-ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件系统。
+ext3/ext4 文件系统引入了日志（journal）：修改元数据之前，先把这次要做的修改写入日志区，写完后再追加一条提交记录，之后才改到实际位置。断电后只需重做有提交记录的修改、丢弃没有提交记录的，不必用 fsck 扫描整个文件系统。ext4 默认只把元数据写入日志，文件内容不经过日志。
 
 ### 挂载
 
-挂载利用目录作为文件系统的进入点，也就是说，进入目录之后就可以读取文件系统的数据。
+挂载指把一个文件系统接到目录树中的某个目录（挂载点）上，进入这个目录就是在访问该文件系统。例如把 U 盘的分区 /dev/sdb1 挂载到 /mnt/usb 后，/mnt/usb 下看到的就是 U 盘中的文件。
 
 ### 目录配置
 
@@ -400,8 +406,8 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 文件时间有以下三种：
 
 - modification time (mtime)：文件的内容更新就会更新；
-- status time (ctime)：文件的状态（权限、属性）更新就会更新；
-- access time (atime)：读取文件时就会更新。
+- status change time (ctime)：文件的状态（权限、属性）更新就会更新，修改内容时也会更新；
+- access time (atime)：读取文件时更新。需要注意的是，默认的挂载选项 relatime 下，只有 atime 不晚于 mtime 或 ctime、或者距上次更新超过一天时才更新。
 
 ### 文件与目录的基本操作
 
@@ -410,10 +416,10 @@ ext3/ext4 文件系统引入了日志功能，可以利用日志来修复文件�
 列出文件或者目录的信息，目录的信息就是其中包含的文件。
 
 ```text
-## ls [-aAdfFhilnrRSt] file|dir
+$ ls [-aAdfFhilnrRSt] file|dir
 -a ：列出全部的文件
 -d ：仅列出目录本身
--l ：以长数据串行列出，包含文件的属性与权限等等数据
+-l ：以长格式列出，包含文件的属性与权限等数据
 ```
 
 #### 2. cd
@@ -428,8 +434,8 @@ cd [相对路径或绝对路径]
 
 创建目录。
 
-```bash
-## mkdir [-mp] 目录名称
+```text
+$ mkdir [-mp] 目录名称
 -m ：配置目录权限
 -p ：递归创建目录
 ```
@@ -440,7 +446,7 @@ cd [相对路径或绝对路径]
 
 ```text
 rmdir [-p] 目录名称
--p ：递归删除目录
+-p ：删除后，上层目录变为空时一并删除
 ```
 
 #### 5. touch
@@ -448,7 +454,7 @@ rmdir [-p] 目录名称
 更新文件时间或者建立新文件。
 
 ```text
-## touch [-acdmt] filename
+$ touch [-acdmt] filename
 -a ： 更新 atime
 -c ： 若该文件不存在则不建立新文件
 -m ： 更新 mtime
@@ -476,7 +482,7 @@ cp [-adfilprsu] source destination
 删除文件。
 
 ```text
-## rm [-fir] 文件或目录
+$ rm [-fir] 文件或目录
 -r ：递归删除
 ```
 
@@ -485,8 +491,8 @@ cp [-adfilprsu] source destination
 移动文件。
 
 ```text
-## mv [-fiu] source destination
-## mv [options] source1 source2 source3 .... directory
+$ mv [-fiu] source destination
+$ mv [options] source1 source2 source3 .... directory
 -f ： force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖
 ```
 
@@ -495,19 +501,19 @@ cp [-adfilprsu] source destination
 可以将一组权限用数字来表示，此时一组权限的 3 个位当做二进制数字的位，从左到右每个位的权值为 4、2、1，即每个权限对应的数字权值为 r : 4、w : 2、x : 1。
 
 ```text
-## chmod [-R] xyz dirname/filename
+$ chmod [-R] xyz dirname/filename
 ```
 
 示例：将 .bashrc 文件的权限修改为 -rwxr-xr--。
 
 ```text
-## chmod 754 .bashrc
+$ chmod 754 .bashrc
 ```
 
 也可以使用符号来设定权限。
 
 ```text
-## chmod [ugoa]  [+-=] [rwx] dirname/filename
+$ chmod [ugoa]  [+-=] [rwx] dirname/filename
 - u：拥有者
 - g：所属群组
 - o：其他人
@@ -520,7 +526,7 @@ cp [-adfilprsu] source destination
 示例：为 .bashrc 文件的所有用户添加写权限。
 
 ```text
-## chmod a+w .bashrc
+$ chmod a+w .bashrc
 ```
 
 ### 默认权限
@@ -528,13 +534,13 @@ cp [-adfilprsu] source destination
 - 文件默认权限：文件默认没有可执行权限，因此为 666，也就是 -rw-rw-rw- 。
 - 目录默认权限：目录必须要能够进入，也就是必须拥有可执行权限，因此为 777 ，也就是 drwxrwxrwx。
 
-可以通过 umask 设置或者查看默认权限，通常以掩码的形式来表示，例如 002 表示其它用户的权限去除了一个 2 的权限，也就是写权限，因此建立新文件时默认的权限为 -rw-rw-r--。
+可以通过 umask 设置或者查看默认权限，它是一个掩码，表示要从上面的默认权限中去掉哪些位。例如 umask 为 002 时去掉其它用户的写权限，新建文件的权限为 -rw-rw-r--（664）。需要注意的是，这是按位去掉而不是相减：umask 为 023 时文件为 666 去掉 023 中的各位，得到 644，而不是 643。
 
 ### 目录的权限
 
 文件名不是存储在一个文件的内容中，而是存储在一个文件所在的目录中。因此，拥有文件的 w 权限并不能对文件名进行修改。
 
-目录存储文件列表，一个目录的权限也就是对其文件列表的权限。因此，目录的 r 权限表示可以读取文件列表；w 权限表示可以修改文件列表，具体来说，就是添加删除文件，对文件名进行修改；x 权限可以让该目录成为工作目录，x 权限是 r 和 w 权限的基础，如果不能使一个目录成为工作目录，也就没办法读取文件列表以及对文件列表进行修改了。
+目录存储文件列表，一个目录的权限也就是对其文件列表的权限。因此，目录的 r 权限表示可以读取文件列表；w 权限表示可以修改文件列表，具体来说，就是添加删除文件，对文件名进行修改；x 权限表示可以进入目录、访问其中的文件。没有 x 时，r 只能列出文件名，看不到文件的属性，也打不开其中的文件；w 也无法生效，不能在目录中新建或删除文件。
 
 ### 链接
 
@@ -542,7 +548,7 @@ cp [-adfilprsu] source destination
 
 
 ```text
-## ln [-sf] source_filename dist_filename
+$ ln [-sf] source_filename dist_filename
 -s ：默认是实体链接，加 -s 为符号链接
 -f ：如果目标文件存在时，先删除目标文件
 ```
@@ -556,8 +562,8 @@ cp [-adfilprsu] source destination
 有以下限制：不能跨越文件系统、不能对目录进行链接。
 
 ```text
-## ln /etc/crontab .
-## ll -i /etc/crontab crontab
+# ln /etc/crontab .
+# ll -i /etc/crontab crontab
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 crontab
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 /etc/crontab
 ```
@@ -571,7 +577,7 @@ cp [-adfilprsu] source destination
 因为记录的是路径，所以可以为目录建立符号链接。
 
 ```text
-## ll -i /etc/crontab /root/crontab2
+# ll -i /etc/crontab /root/crontab2
 34474855 -rw-r--r--. 2 root root 451 Jun 10 2014 /etc/crontab
 53745909 lrwxrwxrwx. 1 root root 12 Jun 23 22:31 /root/crontab2 -> /etc/crontab
 ```
@@ -583,7 +589,7 @@ cp [-adfilprsu] source destination
 取得文件内容。
 
 ```text
-## cat [-AbEnTv] filename
+$ cat [-AbEnTv] filename
 -n ：打印出行号，连同空白行也会有行号，-b 不会
 ```
 
@@ -604,7 +610,7 @@ cp [-adfilprsu] source destination
 取得文件前几行。
 
 ```text
-## head [-n number] filename
+$ head [-n number] filename
 -n ：后面接数字，代表显示几行的意思
 ```
 
@@ -623,7 +629,7 @@ cp [-adfilprsu] source destination
 指令搜索。
 
 ```text
-## which [-a] command
+$ which [-a] command
 -a ：将所有指令列出，而不是只列第一个
 ```
 
@@ -632,17 +638,17 @@ cp [-adfilprsu] source destination
 文件搜索。速度比较快，因为它只搜索几个特定的目录。
 
 ```text
-## whereis [-bmsu] dirname/filename
+$ whereis [-bmsu] dirname/filename
 ```
 
 #### 3. locate
 
 文件搜索。可以用关键字或者正则表达式进行搜索。
 
-locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每天更新一次，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
+Ubuntu 24.04 中 locate 由 plocate 提供，使用 /var/lib/plocate/ 中的数据库进行搜索。该数据库定期更新，所以无法用 locate 搜索新建的文件。可以使用 updatedb 来立即更新数据库。
 
 ```text
-## locate [-ir] keyword
+$ locate [-ir] keyword
 -r：正则表达式
 ```
 
@@ -651,7 +657,7 @@ locate 使用 /var/lib/mlocate/ 这个数据库来进行搜索，该数据库每
 文件搜索。可以使用文件的属性和权限进行搜索。
 
 ```text
-## find [basedir] [option]
+$ find [basedir] [option]
 example: find . -name "shadow*"
 ```
 
@@ -744,7 +750,7 @@ $ bzip2 [-cdkzv#] filename
 
 提供比 bzip2 更佳的压缩比。
 
-可以看到，gzip、bzip2、xz 的压缩比不断优化。不过要注意的是，压缩比越高，压缩的时间也越长。
+gzip、bzip2、xz 的压缩比依次提高，压缩所需的时间通常也依次变长。
 
 查看命令：xzcat、xzmore、xzless、xzgrep。
 
@@ -774,7 +780,7 @@ $ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
 | 使用方式 | 命令 |
 | :---: | --- |
 | 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
-| 查 看 | tar -jtv -f filename.tar.bz2 |
+| 查看 | tar -jtv -f filename.tar.bz2 |
 | 解压缩 | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录 |
 
 ## 七、Bash
@@ -841,21 +847,25 @@ $ echo ${array[1]}
 
 重定向指的是使用文件代替标准输入、标准输出和标准错误输出。
 
-| 1 | 代码 | 运算符 |
+| 名称 | 代码 | 运算符 |
 | :---: | :---: | :---:|
 | 标准输入 (stdin)  | 0 | \< 或 \<\< |
 | 标准输出 (stdout) | 1 | &gt; 或 \>\> |
 | 标准错误输出 (stderr) | 2 | 2\> 或 2\>\> |
 
-其中，有一个箭头的表示以覆盖的方式重定向，而有两个箭头的表示以追加的方式重定向。
+对于输出，一个箭头表示以覆盖的方式重定向，两个箭头表示以追加的方式重定向；输入的 \<\< 表示从后面的几行读入内容，直到遇到指定的结束字符串。
 
 可以将不需要的标准输出以及标准错误输出重定向到 /dev/null，相当于扔进垃圾箱。
 
-如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2\>&1 表示将标准错误输出转换为标准输出。
+如果需要将标准输出以及标准错误输出同时重定向到一个文件，可以用 2\>&1，它表示让 2 号指向 1 号此刻指向的文件。
 
 ```bash
 $ find /home -name .bashrc > list 2>&1
 ```
+
+Bash 从左到右处理重定向，所以 2\>&1 要写在 \> list 之后。写成 2\>&1 \> list 时，2 号复制的是 1 号原来指向的终端，错误信息仍然显示在屏幕上：
+
+<div align="center"> <img src="pics/linux-redirect-order.png" width="760px"/> </div><br>
 
 ## 八、管道指令
 
@@ -906,7 +916,7 @@ $ export | cut -c 12-
 
 ### 排序指令
 
-**sort**   用于排序。
+sort 用于排序。
 
 ```text
 $ sort [-fbMnrtuk] [file or stdin]
@@ -916,7 +926,7 @@ $ sort [-fbMnrtuk] [file or stdin]
 -n ：使用数字
 -r ：反向排序
 -u ：相当于 unique，重复的内容只出现一次
--t ：分隔符，默认为 tab
+-t ：分隔符，默认以空白分隔
 -k ：指定排序的区间
 ```
 
@@ -930,7 +940,9 @@ alex:x:1001:1002::/home/alex:/bin/bash
 arod:x:1002:1003::/home/arod:/bin/bash
 ```
 
-**uniq**   可以将重复的数据只取一个。
+需要注意的是，-k 3 表示从第 3 列一直比较到行尾，而且按字符串比较，UID 为 33 的行会排在 1001 之后；只按第 3 列的数值排序要写成 -k 3,3n。
+
+uniq 可以将重复的数据只取一个。
 
 ```text
 $ uniq [-ic]
@@ -952,7 +964,7 @@ $ last | cut -d ' ' -f 1 | sort | uniq -c
 
 ### 双向输出重定向
 
-输出重定向会将输出内容重定向到文件中，而   **tee**   不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
+输出重定向会将输出内容重定向到文件中，而 tee 不仅能够完成这个功能，还能保留屏幕上的输出。也就是说，使用 tee 指令，一个输出会同时传送到文件和屏幕上。
 
 ```text
 $ tee [-a] file
@@ -960,11 +972,11 @@ $ tee [-a] file
 
 ### 字符转换指令
 
-**tr**   用来删除一行中的字符，或者对字符进行替换。
+tr 用来删除一行中的字符，或者对字符进行替换。
 
 ```text
 $ tr [-ds] SET1 ...
--d ： 删除行中 SET1 这个字符串
+-d ： 删除输入中属于 SET1 的每一个字符，例如 tr -d 'abc' 会把 cab 也全部删掉
 ```
 
 示例，将 last 输出的信息所有小写转换为大写。
@@ -973,21 +985,21 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
-   **col**   将 tab 字符转为空格字符。
+col 将 tab 字符转为空格字符。
 
 ```text
 $ col [-xb]
 -x ： 将 tab 键转换成对等的空格键
 ```
 
-**expand**   将 tab 转换一定数量的空格，默认是 8 个。
+expand 将 tab 转换一定数量的空格，默认是 8 个。
 
 ```text
 $ expand [-t] file
 -t ：tab 转为空格的数量
 ```
 
-**join**   将有相同数据的那一行合并在一起。
+join 将有相同数据的那一行合并在一起。
 
 ```text
 $ join [-ti12] file1 file2
@@ -997,7 +1009,7 @@ $ join [-ti12] file1 file2
 -2 ：第二个文件所用的比较字段
 ```
 
-**paste**   直接将两行粘贴在一起。
+paste 直接将两行粘贴在一起。
 
 ```text
 $ paste [-d] file1 file2
@@ -1006,7 +1018,7 @@ $ paste [-d] file1 file2
 
 ### 分区指令
 
-**split**   将一个文件划分成多个文件。
+split 将一个文件划分成多个文件。
 
 ```text
 $ split [-bl] file PREFIX
@@ -1129,19 +1141,19 @@ dmtsai lines: 5 columns: 9
 示例：查看自己的进程
 
 ```sh
-## ps -l
+$ ps -l
 ```
 
 示例：查看系统所有进程
 
 ```sh
-## ps aux
+$ ps aux
 ```
 
 示例：查看特定的进程
 
 ```sh
-## ps aux | grep threadx
+$ ps aux | grep threadx
 ```
 
 #### 2. pstree
@@ -1151,7 +1163,7 @@ dmtsai lines: 5 columns: 9
 示例：查看所有进程树
 
 ```sh
-## pstree -A
+$ pstree -A
 ```
 
 #### 3. top
@@ -1161,7 +1173,7 @@ dmtsai lines: 5 columns: 9
 示例：两秒钟刷新一次
 
 ```sh
-## top -d 2
+$ top -d 2
 ```
 
 #### 4. netstat
@@ -1171,8 +1183,21 @@ dmtsai lines: 5 columns: 9
 示例：查看特定端口的进程
 
 ```sh
-## netstat -anp | grep port
+$ netstat -anp | grep port
 ```
+
+netstat 的替代命令是 ss，用法见[端口与磁盘](#端口与磁盘)。
+
+#### 5. kill
+
+向进程发送信号，常用来结束进程。
+
+```sh
+$ kill 911       # 默认发送 SIGTERM（15）
+$ kill -9 911    # 发送 SIGKILL（9）
+```
+
+SIGTERM 可以被进程捕获，进程收到后可以先保存数据、关闭连接再退出，例如开启了优雅停机的 Spring Boot 应用会在设定的超时时间内等正在处理的请求完成再退出；SIGKILL 不能被捕获或忽略，进程会被内核直接终止，来不及做任何清理。因此应先用 kill，进程没有响应时才用 kill -9。
 
 ### 进程状态
 
@@ -1189,12 +1214,9 @@ dmtsai lines: 5 columns: 9
 
 ### SIGCHLD
 
-当一个子进程改变了它的状态时（停止运行，继续运行或者退出），有两件事会发生在父进程中：
+默认情况下，子进程停止、继续或者退出时，父进程都会收到 SIGCHLD 信号，信号中带有子进程的信息，比如进程 ID、进程状态、进程使用 CPU 的时间等。
 
-- 得到 SIGCHLD 信号；
-- waitpid() 或者 wait() 调用会返回。
-
-其中子进程发送的 SIGCHLD 信号包含了子进程的信息，比如进程 ID、进程状态、进程使用 CPU 的时间等。
+wait() 只在子进程终止时返回；waitpid() 加上 WUNTRACED、WCONTINUED 选项后，子进程停止、继续时也会返回。
 
 在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息，父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
@@ -1206,7 +1228,7 @@ dmtsai lines: 5 columns: 9
 pid_t wait(int *status)
 ```
 
-父进程调用 wait() 会一直阻塞，直到有一个子进程退出，之后 wait() 会回收该子进程并返回。
+父进程调用 wait() 会一直阻塞，直到有一个子进程退出，之后 wait() 会回收该子进程并返回；调用时已经有退出的子进程，wait() 会立即返回。
 
 如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
 
@@ -1220,33 +1242,41 @@ pid_t waitpid(pid_t pid, int *status, int options)
 
 作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
 
-pid 参数指示一个子进程的 ID，表示只等待这个子进程退出。如果 pid=-1 时，那么和 wait() 作用相同，等待任意一个子进程退出。
+pid 参数指示一个子进程的 ID，表示只等待这个子进程退出。pid 为 -1 时和 wait() 作用相同，等待任意一个子进程退出。
 
-options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
+options 参数主要有 WNOHANG、WUNTRACED 和 WCONTINUED 三个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
 
 ### 孤儿进程
 
 一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。
 
-孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+孤儿进程由所在 [PID 命名空间](Docker.md#五实现原理)的 1 号进程（init）收养（祖先进程声明了 subreaper 时由它收养），并由它完成状态收集工作。
 
-由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
+init、systemd 会及时回收子进程，因此孤儿进程通常不会对系统造成危害。但容器中的 1 号进程如果是不调用 wait() 的业务程序，孤儿进程退出后会一直是僵尸进程，这时可以用 docker run --init 让 tini 作为 1 号进程负责回收。
 
 ### 僵尸进程
 
 一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。
 
-僵尸进程通过 ps 命令显示出来的状态为 Z（zombie）。
+僵尸进程通过 ps 命令显示出来的状态为 Z（zombie），第二列是它的父进程：
+
+```sh
+$ ps -eo pid,ppid,stat,comm | awk '$3 ~ /Z/'
+```
 
 系统所能使用的进程号是有限的，如果产生大量僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
 
-要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 进程所收养，这样 init 进程就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程。
+根本的解决办法是让父进程正确回收子进程。需要注意的是，多个子进程同时退出时父进程可能只收到一次 SIGCHLD（标准信号不排队），所以处理 SIGCHLD 时要循环调用 waitpid(-1, &status, WNOHANG)，直到返回 0（还有子进程在运行）或 -1（没有子进程了）。
+
+无法修改父进程时，可以把父进程杀死，僵尸进程就会变成孤儿进程，由收养它的进程（通常是 init）调用 wait() 释放资源。
 
 ## 十一、线上问题排查 🔥🔥
 
 以下输出来自一个 Debian 12 容器，其中运行着一个故意写了死循环、并占用了 200 MB 堆内存的 Java 程序（OpenJDK 17），省略了部分内容。
 
 ### CPU 占用高
+
+top 的前几行是整机概况。load average 是最近 1、5、15 分钟内处于可运行（R）或等待磁盘 I/O（D）状态的平均任务数，持续高于 CPU 核数说明有任务在排队。%Cpu(s) 一行中 us 是用户态时间占比，sy 是内核态，wa 是 CPU 空闲但有 I/O 未完成的时间占比，id 是空闲：us 高多是应用自身在计算；wa 高时还要用 iostat 看磁盘的延迟和队列，不能直接断定瓶颈在磁盘。
 
 先用 top 找到占用 CPU 最多的进程，再用 top -H 查看这个进程中的线程：
 
@@ -1260,7 +1290,7 @@ $ top -b -n 2 -d 1 -H -p 911
   931 root      20   0 4088924 471252  20616 R  99.9   5.9   0:31.17 order-calc
 ```
 
-线程 931 一直占用一个 CPU。jstack 输出的线程栈中，nid 是线程 ID 的十六进制，931 即 0x3a3：
+%CPU 按单个核计算，100.0 表示占满一个核，多核机器上一个进程可以超过 100%。线程 931 一直占用一个 CPU。jstack 输出的线程栈中，nid 就是线程 ID，JDK 17 及以前为十六进制，931 即 0x3a3；JDK 18 起为十进制（见 [Java 虚拟机 - CPU 占用过高](Java%20虚拟机.md#cpu-占用过高)）：
 
 ```sh
 $ printf "%x\n" 931
@@ -1281,7 +1311,9 @@ $ free -h
 Mem:           7.7Gi       1.1Gi       5.8Gi       564Ki       920Mi       6.5Gi
 ```
 
-需要注意的是，free 列很小不代表内存不足。Linux 会用空闲内存缓存磁盘文件（buff/cache），需要时可以回收，应该看 available 列，它估算的是不使用交换分区还能分配给新程序的内存。
+需要注意的是，free 列很小不代表内存不足。Linux 会用空闲内存缓存磁盘文件（buff/cache），需要时可以回收，应该看 available 列，它估算的是不使用交换分区还能分配给新程序的内存。在容器中 free 显示的是宿主机的内存，容器的内存上限要看 cgroup 中的 memory.max（见 [Docker - 实现原理](Docker.md#五实现原理)）。
+
+找占内存最多的进程用 ps aux --sort=-%mem | head，或在 top 中按 M 排序。进程的占用看 RES（实际占用的物理内存），不看 VIRT（申请的虚拟地址空间）：上面的 Java 进程 VIRT 约 3.8 GB，RES 只有约 460 MB。
 
 Java 进程用 jstat 查看各区的使用率和 GC 次数，用 jmap 统计堆中哪类对象最多：
 
@@ -1295,7 +1327,7 @@ $ jmap -histo:live 911 | head -4
    1:          7529      210056264  [B (java.base@17.0.21)
 ```
 
-老年代（O）已经用了 88.90%，堆中约 200 MB 是 byte 数组，与程序中缓存的 200 个 1 MB 数组对应。老年代使用率持续上升、Full GC 后也降不下来，通常就是内存泄漏，可以用 jmap -dump 导出堆快照分析。需要注意的是，-histo:live 会先触发一次 Full GC，生产环境要谨慎使用。
+老年代（O）已经用了 88.90%，堆中约 200 MB 是 byte 数组，与程序中缓存的 200 个 1 MB 数组对应。这只能说明谁占得多；负载稳定而每次 Full GC 后老年代使用率仍持续上升，才要怀疑内存泄漏，再用 jmap -dump 导出堆快照，看这些对象被谁引用。需要注意的是，-histo:live 会先触发一次 Full GC，生产环境要谨慎使用。
 
 ### 端口与磁盘
 
@@ -1308,17 +1340,26 @@ $ lsof -i :8080
 COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    911 root    4u  IPv6   5594      0t0  TCP *:http-alt (LISTEN)
 
+$ ss -Htan state time-wait | wc -l    # 统计 TIME_WAIT 连接数，-H 不输出表头
+
 $ df -h /
 Filesystem      Size  Used Avail Use% Mounted on
 overlay         453G   24G  406G   6% /
 ```
 
-ss 是 netstat 的替代，速度更快，-l 只看监听的套接字，-n 不解析端口名，-t 只看 TCP，-p 显示进程。磁盘满时先用 df -h 找到满的分区，再用 du -sh * 逐级查找大目录。
+ss 是 netstat 的替代，速度更快，-l 只看监听的套接字，-n 不解析端口名，-t 只看 TCP，-p 显示进程。TIME_WAIT 出现在主动关闭连接的一方，数量很大时的原因和处理见 [大量 TIME_WAIT 与 CLOSE_WAIT](计算机网络%20-%20传输层.md#大量-time_wait-与-close_wait)。
+
+上面 / 的类型是 overlay，这是容器由镜像层合并出的根目录（见 [Docker - 镜像与容器](Docker.md#六镜像与容器)）。磁盘满时先用 df -h 找到满的分区，再用 du -sh * 逐级查找大目录。如果 df 显示已满而 du 统计不到这么多，通常是大文件已被删除但仍被进程打开（例如删掉了正在写的日志），空间要等进程关闭文件后才释放，用 lsof +L1 可以找到这些文件和进程。
+
+<div align="center"> <img src="pics/linux-deleted-open.png" width="760px"/> </div><br>
 
 ### 日志分析
 
 ```sh
 $ tail -f app.log                 # 持续输出新写入的日志
+$ tail -n 200 app.log             # 最后 200 行
+$ grep -n "timeout" app.log | tail -5   # 带行号查找关键字，只看最后 5 处
+$ grep -rn "error" --include="*.log" . > error_log.txt   # 递归查找当前目录下所有 .log 文件，结果写入文件
 $ grep -c " 500 " access.log      # 统计 500 的行数
 214
 $ awk '{print $9}' access.log | sort | uniq -c | sort -rn     # 按状态码统计
@@ -1331,12 +1372,11 @@ $ awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3   # 访问�
    2280 10.0.0.1
 ```
 
-以上统计基于一个 1 万行的示例访问日志，第 1 列是 IP，第 9 列是状态码。grep -C 5 可以同时显示匹配行前后各 5 行，查看异常前后发生了什么。
+以上统计基于一个 1 万行的示例访问日志，第 1 列是 IP，第 9 列是状态码。grep -C 5 可以同时显示匹配行前后各 5 行，查看异常前后发生了什么。日志文件很大时不要用 cat 或 vim 整个打开，用 less 分页查看，或者用 tail、grep 只取需要的部分。
 
 ## 参考资料
 
 - 鸟哥. 鸟哥的 Linux 私房菜：基础篇 第三版 [M]. 2009.
-- [Linux 平台上的软件包管理](https://www.ibm.com/developerworks/cn/linux/l-cn-rpmdpkg/index.html)
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
@@ -1351,5 +1391,4 @@ $ awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3   # 访问�
 - [Difference between SAS and SATA](http://www.differencebetween.info/difference-between-sas-and-sata)
 - [BIOS](https://zh.wikipedia.org/wiki/BIOS)
 - [File system design case studies](https://web.archive.org/web/20210126111620/https://www.cs.rutgers.edu/~pxk/416/notes/13-fs-studies.html)
-- [Programming Project #4](https://classes.soe.ucsc.edu/cmps111/Fall08/proj4.shtml)
 - [FILE SYSTEM DESIGN](http://web.cs.ucla.edu/classes/fall14/cs111/scribe/11a/index.html)
