@@ -38,7 +38,7 @@ https://leetcode.com/problems/big-countries/description/
 +-----------------+------------+------------+--------------+---------------+
 ```
 
-查找面积超过 3,000,000 或者人口数超过 25,000,000 的国家。
+查找面积至少 3,000,000 或者人口至少 25,000,000 的国家。
 
 ```text
 +--------------+-------------+--------------+
@@ -58,8 +58,8 @@ SELECT name,
 FROM
     World
 WHERE
-    area > 3000000
-    OR population > 25000000;
+    area >= 3000000
+    OR population >= 25000000;
 ```
 
 ### SQL Schema
@@ -110,7 +110,7 @@ https://leetcode.com/problems/swap-salary/description/
 
 两个相等的数异或的结果为 0，而 0 与任何一个数异或的结果为这个数。
 
-sex  字段只有两个取值：'f' 和 'm'，并且有以下规律：
+sex 字段只有两个取值：'f' 和 'm'，并且有以下规律：
 
 ```text
 'f' ^ ('m' ^ 'f') = 'm' ^ ('f' ^ 'f') = 'm'
@@ -122,6 +122,13 @@ sex  字段只有两个取值：'f' 和 'm'，并且有以下规律：
 ```sql
 UPDATE salary
 SET sex = CHAR ( ASCII(sex) ^ ASCII( 'm' ) ^ ASCII( 'f' ) );
+```
+
+用 CASE 写更直观：
+
+```sql
+UPDATE salary
+SET sex = CASE sex WHEN 'm' THEN 'f' ELSE 'm' END;
 ```
 
 ### SQL Schema
@@ -189,7 +196,7 @@ ORDER BY
 DROP TABLE
 IF
     EXISTS cinema;
-CREATE TABLE cinema ( id INT, movie VARCHAR ( 255 ), description VARCHAR ( 255 ), rating FLOAT ( 2, 1 ) );
+CREATE TABLE cinema ( id INT, movie VARCHAR ( 255 ), description VARCHAR ( 255 ), rating DECIMAL ( 2, 1 ) );
 INSERT INTO cinema ( id, movie, description, rating )
 VALUES
     ( 1, 'War', 'great 3D', 8.9 ),
@@ -233,7 +240,7 @@ https://leetcode.com/problems/classes-more-than-5-students/description/
 
 ### Solution
 
-对 class 列进行分组之后，再使用 count 汇总函数统计每个分组的记录个数，之后使用 HAVING 进行筛选。HAVING  针对分组进行筛选，而 WHERE 针对每个记录（行）进行筛选。
+对 class 列进行分组之后，再使用 count 汇总函数统计每个分组的记录个数，之后使用 HAVING 进行筛选。HAVING 针对分组进行筛选，而 WHERE 针对每个记录（行）进行筛选。
 
 ```sql
 SELECT
@@ -296,7 +303,7 @@ https://leetcode.com/problems/duplicate-emails/description/
 
 ### Solution
 
-对 Email 进行分组，如果并使用 COUNT 进行计数统计，结果大于等于 2 的表示 Email  重复。
+对 Email 进行分组，并使用 COUNT 进行计数统计，结果大于等于 2 的表示 Email 重复。
 
 ```sql
 SELECT
@@ -366,7 +373,7 @@ FROM
     Person p2
 WHERE
     p1.Email = p2.Email
-    AND p1.Id > p2.Id
+    AND p1.Id > p2.Id;
 ```
 
 子查询：
@@ -386,7 +393,7 @@ WHERE
     );
 ```
 
-应该注意的是上述解法额外嵌套了一个 SELECT 语句，如果不这么做，会出现错误：You can't specify target table 'Person' for update in FROM clause。以下演示了这种错误解法。
+需要注意的是，上述解法额外嵌套了一个 SELECT 语句，如果不这么做，会出现错误：You can't specify target table 'Person' for update in FROM clause。这是因为 MySQL 不允许在修改一张表的同时在子查询中读取它；嵌套后内层结果先物化成临时表，外层读的是临时表。以下演示了这种错误解法。
 
 ```sql
 DELETE
@@ -400,7 +407,7 @@ WHERE
     );
 ```
 
-参考：[pMySQL Error 1093 - Can't specify target table for update in FROM clause](https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause)
+参考：[MySQL Error 1093 - Can't specify target table for update in FROM clause](https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause)
 
 ### SQL Schema
 
@@ -567,7 +574,7 @@ Orders 表：
 
 ### Solution
 
-左外链接
+左外连接
 
 ```sql
 SELECT
@@ -593,6 +600,8 @@ WHERE
         FROM Orders 
     );
 ```
+
+需要注意的是，子查询的结果中有 NULL 时，NOT IN 不返回任何行，这时改用 NOT EXISTS 或者左外连接。
 
 ### SQL Schema
 
@@ -731,7 +740,7 @@ https://leetcode.com/problems/second-highest-salary/description/
 
 ### Solution
 
-为了在没有查找到数据时返回 null，需要在查询结果外面再套一层 SELECT。
+为了在没有查找到数据时返回 null，需要在查询结果外面再套一层 SELECT：作为标量子查询，没有结果时它的值为 NULL。
 
 ```sql
 SELECT
@@ -762,6 +771,8 @@ VALUES
 查找工资第 N 高的员工。
 
 ### Solution
+
+LIMIT 的参数不能是 N - 1 这样的表达式，因此先把 N 减 1。
 
 ```sql
 CREATE FUNCTION getNthHighestSalary ( N INT ) RETURNS INT READS SQL DATA BEGIN
@@ -852,7 +863,7 @@ ORDER BY
 |1|	4.1	|2|	4.2|
 |1|	4.1	|3|	4.3|
 
-可以看到每个 S1.score 都有对应好几条记录，再进行分组，并统计每个分组的数量作为 'Rank'
+可以看到每个 S1.score 都有对应好几条记录，再进行分组，并统计每个分组的数量作为 'Rank'。
 
 ```sql
 SELECT
@@ -903,12 +914,12 @@ ORDER BY
 |   2   |   4.2    |   3   |   4.2    |
 |   2   |   4.2    |   2   |   4.2    |
 |   3   |   4.2    |   3   |   4.2    |
-|   3   |   4.2    |   2   |   4.1    |
+|   3   |   4.2    |   2   |   4.2    |
 |   1   |   4.1    |   3   |   4.2    |
 |   1   |   4.1    |   2   |   4.2    |
 |   1   |   4.1    |   1   |   4.1    |
 
-想要的结果是，把分数相同的放在同一个排名，并且相同分数只占一个位置，例如上面的分数，Id=2 和 Id=3 的记录都有相同的分数，并且最高，他们并列第一。而 Id=1 的记录应该排第二名，而不是第三名。所以在进行 COUNT 计数统计时，需要使用 COUNT( DISTINCT S2.score ) 从而只统计一次相同的分数。
+想要的结果是，把分数相同的放在同一个排名，并且相同分数只占一个位置，例如上面的分数，Id=2 和 Id=3 的记录都有相同的分数，并且最高，它们并列第一。而 Id=1 的记录应该排第二名，而不是第三名。所以在进行 COUNT 计数统计时，需要使用 COUNT( DISTINCT S2.score ) 从而只统计一次相同的分数。
 
 ```sql
 SELECT
@@ -922,6 +933,18 @@ GROUP BY
     S1.id, S1.score
 ORDER BY
     S1.score DESC;
+```
+
+MySQL 8.0 起也可以直接用窗口函数 DENSE_RANK()，它给相同的分数相同的排名，并且排名不跳号：
+
+```sql
+SELECT
+    score 'Score',
+    DENSE_RANK() OVER ( ORDER BY score DESC ) 'Rank'
+FROM
+    Scores
+ORDER BY
+    score DESC;
 ```
 
 ### SQL Schema
@@ -982,10 +1005,10 @@ FROM
     Logs L1,
     Logs L2,
     Logs L3
-WHERE L1.id = l2.id - 1
+WHERE L1.id = L2.id - 1
     AND L2.id = L3.id - 1
     AND L1.num = L2.num
-    AND l2.num = l3.num;
+    AND L2.num = L3.num;
 ```
 
 ### SQL Schema
@@ -993,9 +1016,9 @@ WHERE L1.id = l2.id - 1
 ```sql
 DROP TABLE
 IF
-    EXISTS LOGS;
-CREATE TABLE LOGS ( Id INT, Num INT );
-INSERT INTO LOGS ( Id, Num )
+    EXISTS Logs;
+CREATE TABLE Logs ( Id INT, Num INT );
+INSERT INTO Logs ( Id, Num )
 VALUES
     ( 1, 1 ),
     ( 2, 1 ),
