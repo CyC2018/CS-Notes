@@ -33,6 +33,13 @@
         * [A5 事务与数据库连接](#a5-事务与数据库连接)
         * [A6 @Async 与 @Lazy 的循环依赖](#a6-async-与-lazy-的循环依赖)
         * [A7 Spring Boot 的启动过程](#a7-spring-boot-的启动过程)
+        * [A8 @Autowired 的多个候选](#a8-autowired-的多个候选)
+        * [A9 事务的传播与事件监听](#a9-事务的传播与事件监听)
+        * [A10 MyBatis 的参数与拦截器的回调](#a10-mybatis-的参数与拦截器的回调)
+        * [A11 无法被代理的方法](#a11-无法被代理的方法)
+        * [A12 MyBatis 的结果映射、重载与二级缓存](#a12-mybatis-的结果映射重载与二级缓存)
+        * [A13 注解声明 Bean 与集合注入](#a13-注解声明-bean-与集合注入)
+        * [A14 Spring MVC 的映射与参数解析](#a14-spring-mvc-的映射与参数解析)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -61,12 +68,14 @@ public class OrderService {
 
 容器通过注解知道要创建哪些对象：类上标注 @Component 或者它的派生注解 @Service、@Repository、@Controller，启动时由组件扫描发现；第三方库中的类无法修改源码，就在 @Configuration 类中写一个返回该对象的方法，并标注 @Bean。
 
+@Service 等派生注解本身标注了 @Component（称为元注解），所以自定义的注解标上 @Component 也能声明 Bean。
+
 依赖注入有构造器注入、Setter 注入和字段注入（把 @Autowired 加在字段上）三种方式。Spring 官方推荐构造器注入：依赖可以声明为 final，对象创建出来就是完整可用的，缺少依赖时启动就会失败。
 
 @Autowired 和 @Resource 都能注入依赖，区别在于查找的顺序：
 
-- @Autowired 是 Spring 的注解，先按类型查找，找到多个时再按字段名或参数名匹配，仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称，或者给其中一个 Bean 加 @Primary；
-- @Resource 是 Jakarta EE（原 JSR-250）的注解，指定了 name 时按名称查找，否则先按字段名查找，找不到再按类型查找。
+- @Autowired 是 Spring 的注解，先按类型查找，找到多个时依次看 @Primary、字段名或参数名、@Priority（Spring 6.1 及以前 @Priority 先于名称），仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称；
+- @Resource 是 Jakarta EE（原 JSR-250）的注解，指定了 name 时按名称查找，否则先按字段名查找，找不到再按类型查找。它只能用在字段和 Setter 上，不能用在构造器上。
 
 例如容器中有两个 PayService 类型的 Bean，名称分别是 alipay 和 wechat：
 
@@ -76,17 +85,28 @@ public class OrderService {
 @Autowired PayService payService; // 字段名匹配不上，启动失败
 ```
 
-第三行启动时报错 NoUniqueBeanDefinitionException: expected single matching bean but found 2: alipay,wechat。
+第三行启动时报错 NoUniqueBeanDefinitionException: expected single matching bean but found 2: alipay,wechat。给 wechat 加上 @Primary 后，后两行注入的都是 wechat（见[附录 A8](#a8-autowired-的多个候选)）。
+
+需要按条件选择实现时，可以注入 `Map<String, PayService>`，按 Bean 的名称取出，例如 `services.get("wechat").pay()`，新增渠道只需再写一个实现类，这是策略模式在 Spring 中的常见写法（见[附录 A13](#a13-注解声明-bean-与集合注入)）。
+
+常用的注解按用途分为以下几类：
+
+- 声明 Bean：@Component、@Service、@Repository、@Controller，@Configuration 与 @Bean；
+- 注入：@Autowired、@Resource、@Qualifier、@Primary，@Value 注入配置项；
+- 作用域与生命周期：@Scope、@Lazy、@PostConstruct、@PreDestroy；
+- AOP 与事务：@Aspect、@Around、@Transactional、@Async；
+- Spring Boot：@SpringBootApplication、@ConfigurationProperties、@ConditionalOnClass；
+- Spring MVC：@RestController、@GetMapping、@PathVariable、@RequestParam、@RequestBody。
 
 ### Bean 的生命周期 🔥
 
-一个单例 Bean 从创建到销毁会经过以下步骤：
+一个单例 Bean 从创建到销毁分为实例化、属性填充、初始化、销毁四个阶段，第 3～6 步属于初始化：
 
 1. 实例化：调用构造函数创建对象；
 2. 属性填充：注入依赖；
 3. Aware 回调：例如 BeanNameAware 把 Bean 的名字传给它；
 4. BeanPostProcessor 的 postProcessBeforeInitialization()；
-5. 初始化：依次调用 @PostConstruct 方法、InitializingBean 的 afterPropertiesSet() 和配置的 init-method；
+5. 初始化：依次调用 @PostConstruct 方法、InitializingBean 的 afterPropertiesSet() 和配置的 init-method，其中 @PostConstruct 实际由内置的 BeanPostProcessor 在第 4 步调用，排在自定义的之后；
 6. BeanPostProcessor 的 postProcessAfterInitialization()，AOP 就是在这一步把 Bean 替换为代理对象的；
 7. 容器关闭时销毁：依次调用 @PreDestroy 方法、DisposableBean 的 destroy() 和配置的 destroy-method。
 
@@ -106,7 +126,7 @@ public class OrderService {
 11 destroy-method
 ```
 
-容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition。
+容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition；BeanPostProcessor 则在之后处理创建出来的每个 Bean（上面的第 4、6 步），可以返回代理替换原来的对象。
 
 第二步在 finishBeanFactoryInitialization() 中，按 BeanDefinition 依次创建所有非懒加载的单例，创建过程依靠反射。在一个 Bean 的构造函数和带 @Autowired 的 Setter 方法中打印调用栈，按调用顺序整理如下（Spring Boot 3.3 实测，见[附录 A3](#a3-bean-创建的调用栈)，最后一行 initializeBean 来自源码）：
 
@@ -121,7 +141,7 @@ AbstractApplicationContext.refresh()
          └─ initializeBean()                                          Aware 回调、初始化、AOP 代理
 ```
 
-@Autowired 加在字段上时，同样由 postProcessProperties() 处理，区别是用 Field.set() 反射赋值。
+@Autowired 加在字段上时，同样由 postProcessProperties() 处理，区别是用 Field.set() 反射赋值。static 字段上的 @Autowired 会被忽略。
 
 ### Bean 的作用域与线程安全
 
@@ -142,7 +162,7 @@ public class CounterController {
 }
 ```
 
-例如用 64 个线程并发请求 1 万次，多次运行中每轮丢失的更新从 0 次到 67 次不等（Spring Boot 3.3 实测，见[附录 A1](#a1-单例-bean-的成员变量)）。是否丢失、丢失多少取决于线程执行的时序，这类问题在测试中很难稳定复现。解决方法是不在单例中保存状态，把数据放在方法的局部变量中；确实需要共享时使用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。
+用 64 个线程并发请求 1 万次，多次运行中每轮丢失的更新从 0 次到 67 次不等（Spring Boot 3.3 实测，见[附录 A1](#a1-单例-bean-的成员变量)）。是否丢失、丢失多少取决于线程执行的时序，这类问题在测试中很难稳定复现。解决方法是不在单例中保存状态，把数据放在方法的局部变量中；确实需要共享时使用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。
 
 需要注意的是，把 prototype 的 Bean 注入到单例中，只会在创建单例时注入一次，之后每次使用的都是同一个对象。需要每次得到新对象时，注入 ObjectProvider 并在使用时调用 getObject()。
 
@@ -158,7 +178,7 @@ public class CounterController {
 
 <div align="center"> <img src="pics/spring-circular.png" width="720px"/> </div><br>
 
-需要三级缓存而不是两级，是因为 A 可能需要被 AOP 代理，而代理正常是在初始化的最后一步才创建的。三级缓存中的工厂被调用时，会判断 A 是否需要代理，需要的话提前创建代理返回给 B，之后初始化完成时不再重复创建。这样 B 拿到的对象与最终放入容器的对象是同一个；没有循环依赖时工厂不会被调用，代理仍按正常流程创建。
+需要三级缓存而不是两级，是因为 A 可能需要被 AOP 代理，而代理正常是在初始化的最后一步才创建的。如果只有两级，A 实例化后就要决定提前暴露什么：暴露原始对象，B 拿到的与最终放入容器的代理不是同一个；暴露代理，则不管有没有循环依赖都要提前创建代理。三级缓存中的工厂只在 B 来取 A 时才调用（图中第 ③ 步），A 需要代理就由它提前创建，没有循环依赖时不会被调用；结果移入二级缓存，A 同时被 B、C 依赖时工厂只调用一次。
 
 以下情况无法解决，启动时抛出 BeanCurrentlyInCreationException：
 
@@ -169,7 +189,7 @@ public class CounterController {
 
 构造器注入的循环依赖可以在其中一个参数上加 @Lazy 解开：Spring 先注入一个延迟解析的代理，第一次调用它的方法时才从容器中取出真正的 Bean。
 
-需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系。
+需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系，例如把互相调用的逻辑抽到新的 Bean C 中。
 
 ## 二、AOP 🔥🔥
 
@@ -180,11 +200,11 @@ public class CounterController {
 两种代理方式：
 
 - JDK 动态代理：目标类实现了接口时可以使用，代理类实现同样的接口，只能代理接口中的方法；
-- CGLIB：在运行时生成目标类的子类，通过重写方法来代理，因此 final 类、final 方法和 private 方法无法被代理。
+- CGLIB：在运行时生成目标类的子类，通过重写方法来代理，因此 final 类，以及 final、static 和 private 方法无法被代理。
 
 Spring Framework 在目标类实现了接口时默认使用 JDK 动态代理；Spring Boot 默认使用 CGLIB，可以通过 spring.aop.proxy-target-class 修改。
 
-JDK 动态代理的原理可以用下面的代码说明，切面逻辑写在 InvocationHandler 中：
+动态代理在运行时生成代理类，不必像[静态代理](设计模式%20-%20代理.md)那样为每个接口手写，同一段增强逻辑可以复用到不同的类上。JDK 动态代理的原理可以用下面的代码说明，切面逻辑写在 InvocationHandler 中：
 
 ```java
 public interface OrderService {
@@ -258,6 +278,8 @@ public class OrderService {
 
 需要注意的是，createOrder() 上同时有事务和锁两个切面，它们的先后决定了锁是否包住事务。锁必须在外层：如果事务在外层，锁释放之后事务才提交，这期间另一个请求拿到锁，查不到还没有提交的订单，就会再创建一个。20 个请求同时为同一个用户下单，锁在事务外时 10 轮都只创建了 1 个订单；锁在事务内时 10 轮中有 8 轮创建了 2 个（Spring Boot 3.3、MySQL 8.0 实测，见[附录 A2](#a2-锁与事务的先后)）。
 
+<div align="center"> <img src="pics/spring-lock-tx-order.png" width="800px"/> </div><br>
+
 两个切面都没有指定顺序时，执行的先后是不确定的。@Order 的值越小越先执行、越靠外层，事务切面的默认值是 Ordered.LOWEST_PRECEDENCE，所以上面给锁的切面加上了 @Order(1)。
 
 ### 代理的创建与通知的执行
@@ -316,6 +338,10 @@ public class OrderService {
 
 这是 @Transactional、@Async、@Cacheable 等注解失效最常见的原因。解决方法是把被调用的方法移到另一个 Bean 中，或者注入自身的代理，通过代理调用。
 
+outer() 本身有事务时，自调用的 inner() 即使声明了 REQUIRES_NEW 也不会开启新事务，外层回滚时一起回滚（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）。
+
+切面失效的其它原因见[事务失效](#事务失效)。其中 final 方法在 CGLIB 代理下容易出问题：调用直接在没有注入依赖的代理对象上执行，@Autowired 的字段为 null（Spring Boot 3.3 实测，见[附录 A11](#a11-无法被代理的方法)）。
+
 ## 三、事务
 
 ### 声明式事务
@@ -363,6 +389,8 @@ report()（READ_COMMITTED）          连接 5435，隔离级别 READ-COMMITTED
 
 REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。REQUIRES_NEW 先挂起外层事务，即把外层的连接从线程上解绑、暂存起来，再取一个新连接开启新事务，结束后把外层的连接绑回去，所以两个事务互不影响。新线程上没有绑定连接，它的 SQL 自动提交，不属于这个事务，这就是[事务失效](#事务失效)中“在新线程中操作数据库”的原因。新线程用到的 5436 是 LogService 用完后还给连接池的连接，autocommit 已经恢复为 1。
 
+<div align="center"> <img src="pics/spring-tx-connection.png" width="760px"/> </div><br>
+
 隔离级别默认是 Isolation.DEFAULT，即使用数据库自己的设置（MySQL 默认为可重复读）；指定了其它级别时，事务管理器只对这个连接、这一个事务设置，结束后恢复。
 
 需要注意的是，连接在整个事务方法执行期间都被占用。方法中有调用外部接口这类耗时的操作时，连接会被长时间占用，并发高时连接池很快耗尽，所以事务方法中只放必须在事务中完成的数据库操作。
@@ -375,18 +403,20 @@ REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。RE
 - REQUIRES_NEW：挂起当前事务，新建一个独立的事务，两个事务分别提交和回滚，例如无论业务成功与否都要保存的操作日志；
 - NESTED：在当前事务中创建一个保存点，内层回滚时只回滚到保存点，外层回滚时内层也一起回滚。
 
-REQUIRED 有一个常见的问题：内层方法抛出异常后，即使外层捕获了这个异常，整个事务也已经被标记为只能回滚，外层方法结束时事务回滚，并抛出 UnexpectedRollbackException。
+其余四种用得较少：SUPPORTS 有事务就加入，没有就非事务执行；NOT_SUPPORTED 挂起事务后非事务执行；MANDATORY 没有事务就抛出异常；NEVER 有事务就抛出异常。
+
+REQUIRED 有一个常见的问题：内层方法（另一个 Bean 的事务方法）抛出 RuntimeException 时不能单独回滚，只能把整个事务标记为只能回滚（rollback-only），即使外层捕获了这个异常，方法结束时仍然回滚，并抛出 UnexpectedRollbackException（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）。内层失败不应影响外层时，改用 REQUIRES_NEW 或 NESTED。
 
 ### 事务失效
 
 事务不生效的常见原因：
 
 - 自调用：同一个类中的方法互相调用，不经过代理；
-- 方法无法被代理：final 方法、static 方法和 private 方法；Spring 6.0 之前，非 public 方法上的注解也会被忽略；
+- 方法无法被代理：CGLIB 无法重写 final、static 和 private 方法，JDK 动态代理只拦截接口中声明的方法；Spring 6.0 之前，非 public 方法上的注解也会被忽略；
 - 异常被吞掉：方法内部捕获了异常而没有重新抛出，代理认为方法正常结束，提交了事务；
 - 抛出的是受检异常，而没有配置 rollbackFor；
 - 对象不是由 Spring 管理的，例如自己 new 出来的对象；
-- 在新线程中操作数据库：事务绑定在当前线程上，其它线程中的操作不属于这个事务；
+- 在新线程中操作数据库：事务绑定在当前线程上，其它线程（包括 @Async 方法使用的线程池线程）中的操作不属于这个事务；
 - 数据库不支持事务，例如 MySQL 的 MyISAM 引擎。
 
 ## 四、Spring Boot 自动配置 🔥
@@ -398,10 +428,12 @@ Spring Boot 并不是新的框架，容器、AOP、事务仍然是 Spring 提供
 自动配置的过程：
 
 1. 启动类上的 @SpringBootApplication 组合了三个注解：@SpringBootConfiguration（相当于 @Configuration，启动类中也可以定义 @Bean）、@ComponentScan（扫描启动类所在的包及其子包）和 @EnableAutoConfiguration（开启自动配置）；
-2. 启动时读取所有 jar 包中的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件，得到自动配置类的列表，Spring Boot 2.7 之前写在 META-INF/spring.factories 中；
-3. 每个自动配置类都带有条件注解，条件满足时才生效。例如 @ConditionalOnClass 要求类路径上存在某个类，@ConditionalOnMissingBean 要求用户没有定义同类型的 Bean，@ConditionalOnProperty 根据配置项决定。
+2. @EnableAutoConfiguration 通过 @Import 引入 AutoConfigurationImportSelector，它读取所有 jar 包中的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件，得到自动配置类的列表，Spring Boot 2.7 之前写在 META-INF/spring.factories 中。思路与 Java 的 SPI 相同，区别在于读到的类不直接实例化，而是作为配置类交给容器解析；
+3. 自动配置类大多带有条件注解，条件满足时才生效。例如 @ConditionalOnClass 要求类路径上存在某个类，@ConditionalOnMissingBean 要求用户没有定义同类型的 Bean，@ConditionalOnProperty 根据配置项决定。
 
 例如引入 spring-boot-starter-jdbc 和数据库驱动后，数据源的自动配置类就会生效，按配置文件中的地址创建一个 DataSource；如果用户自己定义了 DataSource，由于 @ConditionalOnMissingBean，自动配置不再创建。因此用户的配置总是优先于自动配置。
+
+启动时加上 --debug 会打印条件评估报告，列出每个自动配置类生效或跳过的原因，例如只引入 spring-boot-starter-web 时，152 个中只有 22 个生效（Spring Boot 3.3 实测，见[附录 A7](#a7-spring-boot-的启动过程)）。
 
 自定义 starter 也是同样的做法。例如把公司内部的短信客户端做成 starter，自动配置类如下：
 
@@ -466,20 +498,24 @@ refresh() 中与 Spring Boot 有关的三处：
 
 ## 五、Spring MVC
 
-Spring MVC 是基于 Servlet 的 Web 框架，按模型-视图-控制器（Model-View-Controller, MVC）的方式组织代码：Controller 接收请求、调用业务逻辑，Model 是要展示的数据，View 把数据渲染成页面。前后端分离后，Controller 通常直接把数据写成 JSON 返回，没有 View。
+Spring MVC 是 Spring Framework 中基于 Servlet 的 Web 模块，按模型-视图-控制器（Model-View-Controller, MVC）的方式组织代码：Controller 接收请求、调用业务逻辑，Model 是要展示的数据，View 把数据渲染成页面。前后端分离后，Controller 通常直接把数据写成 JSON 返回，没有 View。
 
 ### 请求的处理过程 🔥
 
 所有请求都先交给一个 DispatcherServlet，由它的 doDispatch 方法完成分发：
 
-1. 通过 HandlerMapping 找到处理这个请求的方法（Handler），以及要经过的拦截器，组成 HandlerExecutionChain；
-2. 依次执行拦截器的 preHandle，任何一个返回 false 就不再继续；
+1. 通过 HandlerMapping 找到处理这个请求的方法（Handler），以及要经过的拦截器，组成 HandlerExecutionChain，找不到时返回 404；
+2. 依次执行拦截器的 preHandle，任何一个返回 false 就不再继续，Controller 不会被调用；
 3. 通过 HandlerAdapter 调用 Controller 的方法，调用前把请求参数转换为方法参数，调用后把返回值转换为响应，例如用 Jackson 把对象写成 JSON；
-4. 倒序执行拦截器的 postHandle；
+4. 倒序执行拦截器的 postHandle，Controller 抛出异常时跳过这一步；
 5. 返回的是视图名时，由 ViewResolver 找到视图并渲染；@RestController 直接把返回值写入响应体，没有这一步；
-6. 倒序执行拦截器的 afterCompletion，即使前面发生了异常也会执行，常用于清理资源。
+6. 倒序执行 preHandle 已经返回 true 的拦截器的 afterCompletion，即使前面发生了异常也会执行，常用于清理资源，返回 false 的拦截器则要在返回前自己清理（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）。
 
-在 Spring Boot 3.3（Spring MVC 6.1）中注册一个打印日志的拦截器，请求 GET /orders?userId=1024 时依次输出：
+HandlerMapping 按路径和 HTTP 方法等条件匹配 @GetMapping 等注解的方法，多个都匹配时选最具体的，例如 /orders/latest 优先于 /orders/{id}；路径匹配而方法不匹配时返回 405。处理器还可以是实现 Controller 等接口的类，DispatcherServlet 为每种处理器找到支持它的 HandlerAdapter 来调用。
+
+参数由 HandlerMethodArgumentResolver 解析，@RequestBody 和返回值由 HttpMessageConverter 按 Content-Type、Accept 读写，转换失败时 GET /orders/abc 返回 400，用 text/plain 提交 JSON 返回 415（见[附录 A14](#a14-spring-mvc-的映射与参数解析)）。
+
+拦截器实现 HandlerInterceptor 接口，在 WebMvcConfigurer 的 addInterceptors 中注册。在 Spring Boot 3.3（Spring MVC 6.1）中注册一个打印日志的拦截器，请求 GET /orders?userId=1024 时依次输出：
 
 ```text
 [interceptor] preHandle /orders handler=demo.App$OrderController#list(int)
@@ -496,13 +532,15 @@ Spring MVC 是基于 Servlet 的 Web 框架，按模型-视图-控制器（Model
 
 ## 六、MyBatis
 
+MyBatis 是半自动的 ORM 框架：SQL 由开发者写在 XML 或注解中，MyBatis 负责绑定参数、把结果集映射成对象。Hibernate 则按实体的映射自动生成 SQL，复杂查询和调优时不容易控制。MyBatis-Plus 在 MyBatis 之上提供通用的 BaseMapper 和条件构造器，单表操作不用写 SQL。
+
 ### #{} 和 ${} 的区别
 
 MyBatis 中 #{} 会被替换为占位符 ?，参数通过 PreparedStatement 单独传给数据库；${} 则是把参数直接拼接到 SQL 字符串中。用 ${} 时，传入的参数会改变 SQL 的结构，造成 SQL 注入：
 
 ```java
 @Select("SELECT id, user_id AS userId, status FROM orders WHERE user_id = #{userId} ORDER BY id LIMIT 3")
-List<Order> byUser(@Param("userId") int userId);
+List<Order> byUser(@Param("userId") String userId);
 
 @Select("SELECT id, user_id AS userId, status FROM orders WHERE user_id = ${userId} ORDER BY id LIMIT 3")
 List<Order> byUserUnsafe(@Param("userId") String userId);
@@ -512,19 +550,23 @@ List<Order> byUserUnsafe(@Param("userId") String userId);
 
 ```text
 ==>  Preparing: SELECT ... WHERE user_id = ? ORDER BY id LIMIT 3
-==> Parameters: 1024(Integer)
+==> Parameters: 1024 OR 1=1(String)
 
 ==>  Preparing: SELECT ... WHERE user_id = 1024 OR 1=1 ORDER BY id LIMIT 3
 ==> Parameters:
 ```
 
-第二条语句的条件恒为真，返回了其他用户的订单。${} 只用于表名、列名、ORDER BY 的字段这类不能使用占位符的地方，并且要用白名单校验参数。
+第一条语句的结构没有变，整个字符串只是一个参数值；第二条语句的条件恒为真，返回了其他用户的订单（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）。${} 只用于表名、列名、ORDER BY 的字段这类不能使用占位符的地方，并且要用白名单校验参数。
 
 ### Mapper 接口为什么不需要实现类
 
 MyBatis 在启动时为每个 Mapper 接口生成 JDK 动态代理，例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession 执行，再把结果映射成返回类型。
 
-这个代理是通过 FactoryBean 放进容器的。FactoryBean 是一种特殊的 Bean，容器按名称获取它时，得到的是它的 getObject() 返回的对象，名称前加 & 才能取到 FactoryBean 本身。MyBatis-Spring 为每个 Mapper 接口注册一个 MapperFactoryBean：getBean("app.OrderMapper") 得到的是上面的代理对象，getBean("&app.OrderMapper") 得到的是 MapperFactoryBean（Spring Boot 3.3、mybatis-spring 3.0 实测）。BeanFactory 则是容器本身的根接口，负责创建和管理所有 Bean，两者只是名称相近。
+由于 SQL 只按方法名查找，Mapper 接口中的方法不能重载，两个同名方法都写了 SQL 时启动报错（见[附录 A12](#a12-mybatis-的结果映射重载与二级缓存)）。
+
+结果映射按列名匹配属性名，所以前面的 SQL 写成 user_id AS userId，也可以开启 mapUnderscoreToCamelCase 或用 resultMap 指定。对不上的列默认被忽略、不报错，属性保留初始值。
+
+Mapper 的代理对象是通过 FactoryBean 放进容器的。FactoryBean 是一种特殊的 Bean，容器按名称获取它时，得到的是它的 getObject() 返回的对象，名称前加 & 才能取到 FactoryBean 本身。MyBatis-Spring 为每个 Mapper 接口注册一个 MapperFactoryBean：getBean("orderMapper") 得到的是上面的代理对象，getBean("&orderMapper") 得到的是 MapperFactoryBean（Spring Boot 3.3、mybatis-spring 3.0 实测）。BeanFactory 则是容器本身的根接口，负责创建和管理所有 Bean，两者只是名称相近。
 
 ### 动态 SQL
 
@@ -568,16 +610,16 @@ List<Order> byStatuses(@Param("userId") Integer userId, @Param("statuses") List<
 ### 缓存
 
 - 一级缓存：默认开启，作用范围是一个 SqlSession，同一个会话中相同的查询只执行一次，执行增删改或提交后清空。与 Spring 集成时，不在事务中的每次调用都会使用新的 SqlSession，一级缓存基本不起作用；
-- 二级缓存：需要在 Mapper 中配置 cache 才开启，多个会话共享，但缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
+- 二级缓存：作用范围是一个 Mapper 的命名空间，多个会话共享，在 Mapper XML 中加 `<cache/>` 或在接口上加 @CacheNamespace 开启，结果对象要实现 Serializable。查询结果在会话提交后才写入（只有查询的会话关闭时也会写入，回滚时丢弃），同一命名空间的增删改提交后清空。缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
 
 ## 七、Spring 中的设计模式
 
 | 模式 | Spring 中的例子 | 解决的问题 |
 | --- | --- | --- |
-| [工厂](设计模式%20-%20工厂方法.md) | BeanFactory、FactoryBean | 使用者只按名称或类型获取对象，不关心对象怎样创建 |
+| [简单工厂](设计模式%20-%20简单工厂.md)、[工厂方法](设计模式%20-%20工厂方法.md) | BeanFactory 的 getBean()（简单工厂）；FactoryBean 的 getObject()（工厂方法） | 使用者只按名称或类型获取对象，不关心对象怎样创建 |
 | [单例](设计模式%20%20-%20单例.md) | 默认的 singleton 作用域，由 DefaultSingletonBeanRegistry 保存 | 每个 Bean 在容器中只有一个对象，不是通过私有构造函数实现的 |
 | [代理](设计模式%20-%20代理.md) | AOP 的 JdkDynamicAopProxy、CglibAopProxy | 在不修改原类的情况下加入事务、日志等逻辑，见 [动态代理](#动态代理) |
-| [模板方法](设计模式%20-%20模板方法.md) | JdbcTemplate、TransactionTemplate、AbstractApplicationContext 的 refresh() | 固定的步骤（获取连接、执行、释放、处理异常）由框架完成，变化的部分由使用者传入 |
+| [模板方法](设计模式%20-%20模板方法.md) | AbstractApplicationContext 的 refresh()；JdbcTemplate、TransactionTemplate | 固定的步骤由框架完成，变化的部分由子类重写（例如 onRefresh() 创建 Tomcat）或以回调传入 |
 | [观察者](设计模式%20-%20观察者.md) | ApplicationEvent、ApplicationListener、@EventListener | 发布方不需要知道有哪些接收方 |
 | [适配器](设计模式%20-%20适配器.md) | Spring MVC 的 HandlerAdapter | DispatcherServlet 用同一个接口调用不同形式的处理器，见 [请求的处理过程](#请求的处理过程) |
 | [责任链](设计模式%20-%20责任链.md) | HandlerExecutionChain 中的拦截器、AOP 的 ReflectiveMethodInvocation | 多个拦截器或通知依次处理同一个请求 |
@@ -602,7 +644,7 @@ public void on(OrderPaidEvent e) { ... }               // 积分服务、短信�
 [main] 发布方收到异常：短信网关超时
 ```
 
-两个监听方法都在 main 线程中执行；短信服务先执行并抛出异常后，积分服务的监听方法没有被调用，异常还传回了订单服务。监听方法之间的顺序默认不确定，可以用 @Order 指定；不希望互相影响时，加上 @Async 让监听方法在线程池中异步执行，或者用 @TransactionalEventListener 在订单的事务提交之后再处理。
+两个监听方法都在 main 线程中执行；短信服务先执行并抛出异常后，积分服务的监听方法没有被调用，异常还传回了订单服务。监听方法之间的顺序默认不确定，可以用 @Order 指定；不希望互相影响时，加上 @Async（配置类要加 @EnableAsync）让监听方法在线程池中异步执行，或者用 @TransactionalEventListener 在订单的事务提交之后再处理。后者在发布时没有事务就不会执行（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）；执行时原事务已经提交，监听方法中写数据库要调用另一个 Bean 中 REQUIRES_NEW 的事务方法。
 
 ## 附录：实测
 
@@ -903,14 +945,302 @@ Spring-Boot-Classes: BOOT-INF/classes/
 Spring-Boot-Lib: BOOT-INF/lib/
 ```
 
+同一个 jar 加上 --debug 启动，日志中的条件评估报告（CONDITIONS EVALUATION REPORT，节选）：
+
+```text
+Positive matches:
+   DispatcherServletAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.servlet.DispatcherServlet' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+Negative matches:
+   DataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+Unconditional classes:
+    org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
+    ...
+```
+
+spring-boot-autoconfigure 3.3.5 的 imports 文件中共 152 个自动配置类：类级别条件满足的 16 个，没有条件的 6 个，条件不满足的 130 个，其中 122 个是 OnClassCondition。
+
+### A8 @Autowired 的多个候选
+
+Spring Framework 6.1.14、JDK 21，Apple M1 Pro，使用 AnnotationConfigApplicationContext。容器中有 alipay、wechat 两个 PayService，wechat 标了 @Primary：
+
+```java
+@Configuration
+static class Cfg {
+    @Bean PayService alipay() { return () -> "alipay"; }
+    @Bean @Primary PayService wechat() { return () -> "wechat"; }
+    @Bean Client client() { return new Client(); }
+}
+
+static class Client {
+    @Autowired PayService alipay;        // 字段名与 alipay 相同
+    @Autowired PayService payService;    // 字段名不匹配任何 Bean
+}
+```
+
+```text
+字段 alipay 注入：wechat
+字段 payService 注入：wechat
+```
+
+换成 Spring Framework 6.2.19 运行，结果相同。
+
+去掉 @Primary，改为 Alipay 类标 @Priority(1)、Wechat 类标 @Priority(2)（数字越小优先级越高），字段名为 wechat：
+
+```text
+6.1.14 注入 Alipay    # @Priority 先于字段名
+6.2.19 注入 Wechat    # 字段名先于 @Priority
+```
+
+### A9 事务的传播与事件监听
+
+Spring Framework 6.1.14、JDK 21，Apple M1 Pro。事务管理器是一个不连数据库的 AbstractPlatformTransactionManager 子类，在开启、提交、回滚和标记 rollback-only 时打印一行，用来观察 Spring 做出的决定。Inner 和 Outer 是两个 Bean：
+
+```java
+static class Inner {
+    @Transactional public void failRuntime() { throw new IllegalStateException("库存不足"); }
+    @Transactional public void failChecked() throws Exception { throw new Exception("受检异常"); }
+}
+
+static class Outer {
+    final Inner inner;                     // 构造器注入，省略构造函数
+
+    @Transactional public void catchRuntime() {
+        try { inner.failRuntime(); } catch (RuntimeException e) { System.out.println("外层捕获：" + e.getMessage()); }
+    }
+    @Transactional public void catchChecked() {
+        try { inner.failChecked(); } catch (Exception e) { System.out.println("外层捕获：" + e.getMessage()); }
+    }
+    @Transactional public void selfCallRequiresNew() { requiresNew(); }   // 自调用
+    @Transactional(propagation = Propagation.REQUIRES_NEW) public void requiresNew() {
+        System.out.println("requiresNew() 执行，当前事务名：" + TransactionSynchronizationManager.getCurrentTransactionName());
+    }
+}
+```
+
+```text
+== 1. 内层（另一个 Bean，REQUIRED）抛 RuntimeException，外层捕获
+[tx1] begin
+参与者回滚：把外层事务标记为 rollback-only
+外层捕获：库存不足
+[tx1] rollback
+调用方收到：UnexpectedRollbackException: Transaction rolled back because it has been marked as rollback-only
+== 2. 内层抛受检异常（未配 rollbackFor），外层捕获
+[tx2] begin
+外层捕获：受检异常
+[tx2] commit
+== 3. 外层事务中自调用 REQUIRES_NEW 方法
+[tx3] begin
+requiresNew() 执行，当前事务名：lab.TxProp$Outer.selfCallRequiresNew
+[tx3] commit
+```
+
+第 3 项只有一次 begin，requiresNew() 看到的事务名是外层方法，没有开启新事务。
+
+事件监听使用同一个事务管理器，监听方法标注 @TransactionalEventListener（默认 AFTER_COMMIT），分别在事务方法和普通方法中发布事件：
+
+```java
+@Transactional public void payInTx() { publisher.publishEvent(new OrderPaidEvent(1024)); System.out.println("事务方法结束"); }
+public void payNoTx() { publisher.publishEvent(new OrderPaidEvent(1025)); System.out.println("非事务方法结束"); }
+
+@TransactionalEventListener
+public void on(OrderPaidEvent e) { System.out.println("短信监听收到订单 " + e.orderId()); }
+```
+
+```text
+== 在事务中发布
+[tx] begin
+事务方法结束
+[tx] commit
+短信监听收到订单 1024
+== 不在事务中发布
+非事务方法结束
+```
+
+### A10 MyBatis 的参数与拦截器的回调
+
+Spring Boot 3.3.5、MyBatis-Spring 3.0、MySQL 8.0.44、JDK 21，Apple M1 Pro。orders 表 200 万行，user_id 上有索引。两个 Mapper 方法的参数都是 String，分别用 #{userId} 和 ${userId}，传入 1024 OR 1=1：
+
+```text
+==>  Preparing: SELECT id, user_id AS userId, status FROM orders WHERE user_id = ? ORDER BY id LIMIT 3
+==> Parameters: 1024 OR 1=1(String)
+<==        Row: 1024, 1024, 3
+<==        Row: 101024, 1024, 0
+<==        Row: 201024, 1024, 0
+
+==>  Preparing: SELECT id, user_id AS userId, status FROM orders WHERE user_id = 1024 OR 1=1 ORDER BY id LIMIT 3
+==> Parameters: 
+<==        Row: 1, 1, 1
+<==        Row: 2, 2, 2
+<==        Row: 3, 3, 3
+```
+
+按顺序注册拦截器 A、B，请求参数 deny=1 时 B 的 preHandle 返回 false，/r2/boom 的 Controller 方法抛出 IllegalStateException，没有配置处理它的 @ExceptionHandler（异常被处理时 afterCompletion 收到的 ex 为 null）。三种请求的输出：
+
+```text
+# 正常完成，200
+A.preHandle -> true
+B.preHandle -> true
+controller
+B.postHandle
+A.postHandle
+B.afterCompletion ex=null
+A.afterCompletion ex=null
+
+# B 拒绝，403
+A.preHandle -> true
+B.preHandle -> false
+A.afterCompletion ex=null
+
+# Controller 抛出异常，500
+A.preHandle -> true
+B.preHandle -> true
+controller 抛出异常
+B.afterCompletion ex=IllegalStateException
+A.afterCompletion ex=IllegalStateException
+```
+
+### A11 无法被代理的方法
+
+Spring Boot 3.3.5（spring-aop 6.1.14，AspectJ Weaver 1.9.22.1）、JDK 21。切面拦截 Svc 的所有方法，在通知中打印方法名；Svc 中通过 @Autowired 注入了 Dep：
+
+```java
+@Component public static class Svc {
+    @Autowired Dep dep;
+    public String normal() { return "normal " + dep.name(); }
+    public final String fin() { return "final " + (dep == null ? "dep=null" : dep.name()); }
+    public static String stat() { return "static"; }
+    public String callsPrivate() { return priv(); }
+    private String priv() { return "private"; }
+}
+
+@Around("execution(* lab.AopFail.Svc.*(..))")
+public Object around(ProceedingJoinPoint pjp) throws Throwable {
+    System.out.println("  [切面] " + pjp.getSignature().getName());
+    return pjp.proceed();
+}
+```
+
+输出：
+
+```text
+代理类：AopFail$Svc$$SpringCGLIB$$0
+  [切面] normal
+normal() -> normal dep
+fin() -> final dep=null
+stat() -> static
+  [切面] callsPrivate
+callsPrivate() -> private
+```
+
+final 方法和 static 方法都没有经过切面，fin() 在代理对象上执行，dep 为 null；private 方法 priv() 只在 callsPrivate() 内部被调用，同样没有经过切面。
+
+### A12 MyBatis 的结果映射、重载与二级缓存
+
+MyBatis 3.5.14（不使用 Spring）、MySQL 8.0.44、JDK 21，Apple M1 Pro。orders 表中 id = 1 的行为 (1, 1024, 0)，Order 的属性为 id、userId、status，SQL 为 SELECT id, user_id, status FROM orders WHERE id = #{id}，日志有删减。
+
+列名 user_id 不起别名，分别关闭和开启 mapUnderscoreToCamelCase：
+
+```text
+mapUnderscoreToCamelCase=false -> Order{id=1, userId=null, status=0}
+mapUnderscoreToCamelCase=true -> Order{id=1, userId=1024, status=0}
+```
+
+接口中有两个同名的 find 方法。两个都加 @Select 时，注册 Mapper 失败；只有 find(int) 加 @Select 时，调用 find("2") 执行的是 find(int) 的 SQL：
+
+```text
+IllegalArgumentException: Mapped Statements collection already contains key demo.Main$Overload.find. ...
+
+==>  Preparing: SELECT id, user_id, status FROM orders WHERE id = ?
+find("2") -> PersistenceException: class java.lang.String cannot be cast to class java.lang.Integer ...
+```
+
+Mapper 加 @CacheNamespace，依次打开会话 s1～s5 查询 id = 1，s4 中先把 status 改为 5：
+
+```text
+s1 查询                    -> 查数据库
+s2 查询（s1 未关闭）       -> 查数据库
+s3 查询（s1 已关闭）       -> Cache Hit Ratio 0.33，未查数据库
+s4 UPDATE 后查询           -> 查数据库，status=5
+s5 查询（s4 已提交）       -> Cache Hit Ratio 0.6，未查数据库，status=5
+```
+
+### A13 注解声明 Bean 与集合注入
+
+Spring Framework 6.1.14、JDK 21，Apple M1 Pro，使用 AnnotationConfigApplicationContext 和组件扫描。自定义注解 @PayChannel 上标注 @Component，Alipay、Wechat 两个实现类只标 @PayChannel：
+
+```java
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME)
+@Component
+@interface PayChannel {
+    @AliasFor(annotation = Component.class)       // value 作为 Bean 的名称
+    String value() default "";
+}
+
+@PayChannel("alipay") static class Alipay implements PayService { ... }
+@PayChannel("wechat") static class Wechat implements PayService { ... }
+
+@Service static class Checkout {
+    @Autowired Map<String, PayService> services;
+    @Autowired List<PayService> list;
+    @Value("${sms.sign:默认签名}") String sign;      // 冒号后是没有配置时的默认值
+}
+```
+
+```text
+Service 上的 @Component: @org.springframework.stereotype.Component("")
+Map keys: [alipay, wechat]
+List size: 2
+pay(wechat): wechat
+@Value: 默认签名
+```
+
+### A14 Spring MVC 的映射与参数解析
+
+Spring Boot 3.3.5（Spring MVC 6.1.14、Tomcat 10.1.31）、JDK 21，Apple M1 Pro。Controller 中有三个方法，启动后从 RequestMappingHandlerMapping 和 RequestMappingHandlerAdapter 中读出映射表与解析器：
+
+```java
+@GetMapping("/orders/{id}")  public Order get(@PathVariable long id) { ... }
+@GetMapping("/orders/latest") public Order latest() { ... }
+@PostMapping("/orders")       public Order create(@RequestBody Order o) { ... }
+```
+
+```text
+[mapping] {POST [/orders]} => create
+[mapping] {GET [/orders/{id}]} => get
+[mapping] {GET [/orders/latest]} => latest
+[resolvers] 27
+[HandlerAdapter bean] requestMappingHandlerAdapter RequestMappingHandlerAdapter
+[HandlerAdapter bean] handlerFunctionAdapter HandlerFunctionAdapter
+[HandlerAdapter bean] httpRequestHandlerAdapter HttpRequestHandlerAdapter
+[HandlerAdapter bean] simpleControllerHandlerAdapter SimpleControllerHandlerAdapter
+```
+
+用 curl 发送请求，拦截器的 preHandle 打印匹配到的方法：
+
+```text
+GET /orders/1024           200  preHandle -> OrderController#get
+GET /orders/latest         200  preHandle -> OrderController#latest
+DELETE /orders/1024        405  Request method 'DELETE' is not supported
+GET /nope                  404
+GET /orders/abc            400  preHandle -> OrderController#get，之后 MethodArgumentTypeMismatchException
+POST /orders（JSON）       200  {"id":1024,"userId":1001}
+POST /orders（text/plain） 415  Content-Type 'text/plain;charset=UTF-8' is not supported
+```
+
 ## 参考资料
 
 - [Spring Framework: Dependency Injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html)
+- [Spring Framework: Fine-tuning Annotation-based Autowiring with Qualifiers](https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-qualifiers.html)
 - [Spring Framework: Customizing the Nature of a Bean](https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html)
 - [Spring Framework: Container Extension Points](https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html)
 - [Spring Framework: Proxying Mechanisms](https://docs.spring.io/spring-framework/reference/core/aop/proxying.html)
 - [Spring Framework: Using @Transactional](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
 - [Spring Framework: Transaction Propagation](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html)
+- [Spring Framework: Transaction-bound Events](https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html)
 - [Spring Framework 源码：DefaultSingletonBeanRegistry](https://github.com/spring-projects/spring-framework/blob/main/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java)
 - [Spring Boot: Creating Your Own Auto-configuration](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html)
 - [Spring Boot: Using the @SpringBootApplication Annotation](https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html)
@@ -925,6 +1255,8 @@ Spring-Boot-Lib: BOOT-INF/lib/
 - [MyBatis 3 文档](https://mybatis.org/mybatis-3/zh_CN/index.html)
 - [MyBatis 3: Dynamic SQL](https://mybatis.org/mybatis-3/dynamic-sql.html)
 - [DispatcherServlet | Spring Framework 文档](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)
+- [Spring Framework: Mapping Requests](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html)
+- [Spring Framework 源码：DispatcherServlet](https://github.com/spring-projects/spring-framework/blob/6.1.x/spring-webmvc/src/main/java/org/springframework/web/servlet/DispatcherServlet.java)
 - [Spring Framework: Spring AOP Capabilities and Goals](https://docs.spring.io/spring-framework/reference/core/aop/introduction-spring-defn.html)
 - [Spring Framework: Using the "auto-proxy" Facility](https://docs.spring.io/spring-framework/reference/core/aop-api/autoproxy.html)
 - [Spring Framework: Understanding the Spring Framework's Declarative Transaction Implementation](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-decl-explained.html)
