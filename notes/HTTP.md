@@ -510,7 +510,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwMjQsInJvb
 JWT 与 Session 的区别：
 
 - Session 的状态保存在服务器，删除 Session 就能让用户立即下线；集群中需要共享 Session，见 [集群下的 Session 管理](集群.md#二集群下的-session-管理)；
-- JWT 的状态保存在令牌中，任何持有密钥的服务都能独立验证，适合多个服务共用登录状态；代价是令牌签发后在过期前一直有效，服务器无法主动让它失效。
+- JWT 的状态保存在令牌中，任何持有密钥的服务都能独立验证（用 HS256 时持有密钥也就能签发，只需要验证的服务应改用 RS256 等非对称算法，只拿公钥），适合多个服务共用登录状态；代价是令牌签发后在过期前一直有效，服务器无法主动让它失效。
 
 无法主动失效是 JWT 最常被追问的问题，常用的解决方法是双令牌：访问令牌（Access Token）的有效期很短，例如 15 分钟，每次请求都携带；刷新令牌（Refresh Token）的有效期较长，服务器记录已签发的刷新令牌，只在访问令牌过期时用它换取新的访问令牌。用户退出或者被封禁时撤销刷新令牌，已经发出的访问令牌最多 15 分钟后自然失效：
 
@@ -675,7 +675,7 @@ If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 
 浏览器使用缓存分为两种情况：
 
-- 强缓存：缓存还在 max-age（或 Expires）规定的有效期内，直接使用，不发送请求；
+- 强缓存：缓存还在 max-age（或 Expires）规定的有效期内，直接使用，不发送请求；两者都没有时，浏览器可以按 Last-Modified 估算有效期，例如取距上次修改时间的 10%；
 - 协商缓存：缓存已经过期，或者响应中有 no-cache，浏览器带上 If-None-Match 或 If-Modified-Since 向服务器确认，资源没有变化就返回 304，只传输首部，浏览器继续使用本地的缓存。
 
 <div align="center"> <img src="pics/http-cache-flow.png" width="760px"/> </div><br>
@@ -944,7 +944,7 @@ HTTPS 并不是新协议，而是在 HTTP 和 TCP 之间加了一层 SSL（Secur
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-例如同一个登录请求 POST /login，表单为 user=alice&password=123456，分别用 HTTP 和 HTTPS 发给 shop.example，同时抓包（OpenSSL 3.0 实测，见[附录 A8](#a8-http-与-https-的抓包对比)）：HTTP 的报文中可以直接读到请求行和密码；HTTPS 的报文中找不到 /login 和 password，只能看到域名 shop.example。这是因为客户端在 ClientHello 的 SNI（Server Name Indication）扩展中以明文告诉服务器要访问哪个域名，服务器据此选择证书。需要注意的是，HTTPS 保护的是报文的内容，访问了哪个 IP 和域名、传输了多少数据，仍然可以被网络中的设备看到。
+例如同一个登录请求 POST /login，表单为 user=alice&password=123456，分别用 HTTP 和 HTTPS 发给 shop.example，同时抓包（OpenSSL 3.0 实测，见[附录 A8](#a8-http-与-https-的抓包对比)）：HTTP 的报文中可以直接读到请求行和密码；HTTPS 的报文中找不到 /login 和 password，只能看到域名 shop.example。这是因为未启用加密 ClientHello（Encrypted Client Hello, ECH）时，客户端在 ClientHello 的 SNI（Server Name Indication）扩展中以明文告诉服务器要访问哪个域名，服务器据此选择证书。需要注意的是，HTTPS 保护的是报文的内容，访问了哪个 IP、传输了多少数据，仍然可以被网络中的设备看到，未启用 ECH 时域名也是如此。
 
 <div align="center"> <img src="pics/https-layers.png" width="720px"/> </div><br>
 
@@ -1014,7 +1014,7 @@ TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_A
 
 证书中的签名是 CA 用自己的私钥对证书内容（域名、公钥、有效期、签发者等）的哈希值计算出来的。客户端用上一级证书中的公钥验证签名：证书内容只要被改动一个字节，哈希值就会变化，签名验证就会失败。例如把 baidu.com 证书中的 CN 改成 baidu.con，再用中间证书验证，结果为 certificate signature failure（OpenSSL 3.0 实测，见[附录 A9](#a9-证书验证)）。
 
-根证书是信任的起点，它是自签名的，无法再向上验证，因此不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 www.baidu.com。
+根证书是信任的起点，它是自签名的，无法再向上验证，因此通常不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 www.baidu.com。
 
 证书在有效期内也可能被提前吊销，例如私钥泄露。查询方式有两种，证书中可以写明相应的地址（baidu.com 的证书两者都有，见[附录 A9](#a9-证书验证)）：证书吊销列表（Certificate Revocation List, CRL）是 CA 定期发布的全部被吊销证书的序列号；在线证书状态协议（Online Certificate Status Protocol, OCSP）只查询这一张证书。每次连接都去问 CA 既慢又暴露用户的访问记录，所以服务器可以在握手时附带 CA 签过名的 OCSP 响应，称为 OCSP Stapling；浏览器也大多改为定期下载厂商汇总的吊销列表。
 
@@ -1043,7 +1043,7 @@ TLS 1.2 要 2 个 RTT 之后才能发送 HTTP 请求。TLS 1.3 把 ECDHE 公钥�
 - ClientKeyExchange：客户端的 ECDHE 公钥，同样是 32 字节；
 - ChangeCipherSpec 和 Finished：通知对方之后的报文都已加密，然后发送第一个加密的报文 Finished。
 
-客户端验证证书，再用证书中的公钥验证 ServerKeyExchange 中的签名，确认 ECDHE 公钥确实来自证书的持有者。之后双方用自己的私钥和对方的公钥算出相同的预主密钥（pre-master secret），再把预主密钥和两个随机数一起输入伪随机函数，得到 48 字节的主密钥，最后由主密钥派生出加密和完整性校验用的会话密钥。
+客户端验证证书，再用证书中的公钥验证 ServerKeyExchange 中的签名，确认 ECDHE 公钥确实来自证书的持有者。之后双方用自己的私钥和对方的公钥算出相同的预主密钥（pre-master secret），再把预主密钥和两个随机数一起输入伪随机函数（启用扩展主密钥时两个随机数换成从 ClientHello 到 ClientKeyExchange 这些握手报文的哈希，OpenSSL 3 默认启用），得到 48 字节的主密钥，最后由主密钥派生出加密和完整性校验用的会话密钥。
 
 #### 2. 密钥交换
 
@@ -1124,7 +1124,7 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 
 <div align="center"> <img src="pics/h2-frames.png" width="760px"/> </div><br>
 
-在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
+在通信过程中，客户端与同一个服务器通常只建立一个 TCP 连接，它承载了任意数量的双向数据流（Stream）。
 
 - 每个数据流（Stream）都有一个唯一标识符，用于承载双向信息（RFC 7540 定义的优先级信号已被 RFC 9113 废弃，需要时改用 RFC 9218 的 Priority 首部）；
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧；

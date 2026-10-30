@@ -89,6 +89,8 @@
         * [A23 拒绝策略的执行线程与 Future](#a23-拒绝策略的执行线程与-future)
         * [A24 volatile 的自增与机器码](#a24-volatile-的自增与机器码)
         * [A25 线程池空闲线程的状态与 submit()](#a25-线程池空闲线程的状态与-submit)
+        * [A26 CompletableFuture 的回调线程与异常](#a26-completablefuture-的回调线程与异常)
+        * [A27 traceId 随任务传递](#a27-traceid-随任务传递)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -235,7 +237,7 @@ Executor 把任务的提交和执行分开，提交者只管提交任务，不�
 
 - CachedThreadPool：有空闲线程时复用，没有时为任务新建一个线程，线程空闲 60 秒后被回收；
 - FixedThreadPool：所有任务只能使用固定大小的线程；
-- SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool。
+- SingleThreadExecutor：相当于大小为 1 的 FixedThreadPool，但不能再被调大线程数。
 
 ```java
 public static void main(String[] args) {
@@ -303,7 +305,7 @@ pool.shutdown();    // 不关闭的话，核心线程一直存活，程序不会
 
 需要注意的是，任务 5、6 比先提交的任务 3、4 更早执行：队列满后新建的线程直接执行当前提交的任务，队列中的任务要等有线程空闲后才会被取出。
 
-先放入队列、队列满了才增加线程，是因为线程比排队的任务昂贵得多：核心线程承担平时的负载，短时间的高峰由队列缓冲，队列也放不下说明负载持续超出了处理能力，才临时增加线程，高峰过后再减少。Tomcat 的线程池则反过来，线程数没有达到最大值时先增加线程，让等待 I/O 的请求尽快开始处理。
+先放入队列、队列满了才增加线程，是因为线程比排队的任务昂贵得多：核心线程承担平时的负载，短时间的高峰由队列缓冲，队列也放不下说明负载持续超出了处理能力，才临时增加线程，高峰过后再减少。Tomcat 的线程池则反过来：没有空闲线程、线程数又没到最大值时，它的队列在 offer() 中返回 false，线程池当作队列已满而先增加线程，让等待 I/O 的请求尽快开始处理。
 
 核心线程数为 0 时，任务直接进入队列，execute() 发现没有线程时只创建一个。例如核心线程数为 0、最大线程数为 4、使用无界队列时，提交 3 个任务只有 1 个线程逐个执行（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。
 
@@ -347,6 +349,8 @@ ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS,
 - CPU 密集型：取 CPU 核数 + 1，多出的一个线程用于在某个线程因缺页等原因暂停时继续使用 CPU；
 - I/O 密集型：线程等待 I/O 时不占用 CPU，可以按 核数 × (1 + 等待时间 / 计算时间) 估算。例如 8 核 CPU，每个任务计算 10 ms、等待数据库 90 ms，约为 8 × (1 + 90 / 10) = 80 个线程。
 
+核数取 availableProcessors() 的值，JDK 10 起在容器中按 CPU 配额计算，也可以用 -XX:ActiveProcessorCount 指定。
+
 也可以从吞吐量估算：同时在执行的任务数 = 每秒到达的任务数 × 每个任务的耗时（利特尔法则）。例如每秒 200 个请求，每个耗时 100 ms，平均有 200 × 0.1 = 20 个任务同时在执行，线程数至少为 20，再按高峰留出余量。
 
 CPU 或下游资源（例如数据库连接池）饱和后，再加线程也不能提高吞吐量。
@@ -355,7 +359,7 @@ CPU 或下游资源（例如数据库连接池）饱和后，再加线程也不�
 
 I/O 密集、估出的线程数成百上千时，JDK 21 可以改用虚拟线程（Executors.newVirtualThreadPerTaskExecutor()，每个任务一个，不池化），对下游的并发数用 [Semaphore](#semaphore) 限制。
 
-估算值只是起点，最终要通过压测确定。上线后用 getActiveCount()、getQueue().size() 等方法监控活跃线程数和队列长度，在拒绝策略中统计拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整，参数放在配置中心、变更时调用这两个方法就是动态线程池。需要注意的是，JDK 9 起 setCorePoolSize() 的新值大于最大线程数时抛出 IllegalArgumentException，两者都要调大时先调最大线程数（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）；LinkedBlockingQueue 的容量是 final 字段，队列长度要可调时只能自己实现队列。
+估算值只是起点，最终要通过压测确定。上线后用 getActiveCount()、getQueue().size() 等方法监控活跃线程数和队列长度，在拒绝策略中统计拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整，参数放在配置中心、变更时调用这两个方法就是动态线程池。需要注意的是，JDK 9 起 setCorePoolSize() 的新值大于最大线程数时抛出 IllegalArgumentException，两者都要调大时先调最大线程数；调小核心线程数后，多出的线程要再空闲满 keepAliveTime 才退出，调大时只按队列中排队的任务数补建线程（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）；LinkedBlockingQueue 的容量是 final 字段，队列长度要可调时只能自己实现队列。
 
 不同业务最好使用各自的线程池（线程池隔离），例如导出报表变慢时只占满自己的线程，不影响下单。
 
@@ -1194,8 +1198,11 @@ public class CountdownLatchExample {
         ExecutorService executorService = Executors.newCachedThreadPool();
         for (int i = 0; i < totalThread; i++) {
             executorService.execute(() -> {
-                System.out.print("run..");
-                countDownLatch.countDown();
+                try {
+                    System.out.print("run..");
+                } finally {
+                    countDownLatch.countDown();  // 任务抛出异常也要减 1
+                }
             });
         }
         countDownLatch.await();
@@ -1379,17 +1386,19 @@ pool.shutdown();
 
 需要注意的是：
 
-- 带 Async 的方法不传入线程池时，任务在 ForkJoinPool.commonPool() 中执行，它的线程数默认为 CPU 核数 − 1，并且被并行流等代码共用，阻塞的 I/O 任务应该使用自己的线程池（commonPool 并行度小于 2 时改为每个任务新建一个线程，见[附录 A18](#a18-completablefuture-的默认线程)）；
-- 异常不会自动抛出，要用 exceptionally、handle 处理，否则只有调用 join() 时才会得到包装后的 CompletionException；
-- 远程调用要设置超时：JDK 9 起 orTimeout() 超时后以 TimeoutException 结束，可以接 exceptionally 降级，但它不中断正在执行的任务，所以 HTTP 客户端、数据库驱动本身也要设置超时（JDK 21 实测，见[附录 A21](#a21-优先级队列与超时)）；
+- 带 Async 的方法不传入线程池时，任务在 ForkJoinPool.commonPool() 中执行，它的线程数默认为 CPU 核数 − 1，并且被并行流等代码共用，阻塞的 I/O 任务应该使用自己的线程池（commonPool 并行度小于 2 时改为每个任务新建一个线程，见[附录 A18](#a18-completablefuture-的默认线程)）；不带 Async 的回调通常由完成上一步的线程执行，也可能由其他调用 get()、join() 等方法的线程执行，注册时上一步已完成则由注册的线程直接执行，所以不要依赖回调所在的线程；
+- 异常不会自动抛出，要用 exceptionally、handle 处理，否则 get()、join() 分别抛出包装后的 ExecutionException、CompletionException，exceptionally 收到的异常在任务中抛出时被包装成 CompletionException，要用 getCause() 取原始异常，而 orTimeout() 的 TimeoutException 没有包装（JDK 21 实测，见[附录 A26](#a26-completablefuture-的回调线程与异常)）；
+- 远程调用要设置超时：JDK 9 起 orTimeout() 超时后以 TimeoutException 结束，可以接 exceptionally 降级，但它和 cancel() 一样不中断正在执行的任务，所以 HTTP 客户端、数据库驱动本身也要设置超时（JDK 21 实测，见[附录 A21](#a21-优先级队列与超时)）；
 - thenApply 的函数返回普通的值，thenCompose 的函数返回另一个 CompletableFuture，用来串联两个异步调用，避免得到 CompletableFuture&lt;CompletableFuture&lt;T&gt;&gt;。
 
 ### BlockingQueue
 
 java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
-- FIFO 队列：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）；
-- 优先级队列：PriorityBlockingQueue。
+- FIFO 队列：ArrayBlockingQueue（固定长度，入队出队共用一把锁）、LinkedBlockingQueue（入队出队各一把锁，默认容量 Integer.MAX_VALUE）；
+- 优先级队列：PriorityBlockingQueue；
+- 延迟队列：DelayQueue，元素到期后才能取出；
+- 直接交接：SynchronousQueue，不保存元素，put() 要等另一个线程 take()。
 
 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
 
@@ -2042,7 +2051,38 @@ try {
 }
 ```
 
-子线程读不到父线程设置的 ThreadLocal 值，因为值存在父线程自己的 Map 中。InheritableThreadLocal 在 new Thread() 时把父线程的值复制给子线程（复制的是引用），但只复制这一次，而线程池中的线程会被反复使用。例如主线程先后设置 alice 和 bob，每次都向只有一个线程的线程池提交任务，两次读到的都是 alice（JDK 21 实测，见[附录 A5](#a5-inheritablethreadlocal-与线程池)）。需要把上下文传给线程池中的任务时，可以在提交任务时显式传递，或者使用阿里开源的 TransmittableThreadLocal，它在提交任务时捕获当前的值，执行任务前设置，执行后恢复。
+子线程读不到父线程设置的 ThreadLocal 值，因为值存在父线程自己的 Map 中。InheritableThreadLocal 在 new Thread() 时把父线程的值复制给子线程（复制的是引用），但只复制这一次，而线程池中的线程会被反复使用。例如主线程先后设置 alice 和 bob，每次都向只有一个线程的线程池提交任务，两次读到的都是 alice（JDK 21 实测，见[附录 A5](#a5-inheritablethreadlocal-与线程池)）。
+线程池中的任务同样读不到提交者的值。例如过滤器把链路追踪的 traceId 放进请求线程的 ThreadLocal（日志框架的 MDC 也存在 ThreadLocal 中），业务代码把发短信交给线程池，任务读的是工作线程自己的 Map，得到 null 或者之前某个任务没清理的值，这条日志就和请求对不上了。
+
+解决办法是让任务带着上下文走：提交时在调用者线程中捕获，执行前在工作线程中设置，执行后在 finally 中恢复工作线程原来的值：
+
+```java
+static final ThreadLocal<String> TRACE_ID = new ThreadLocal<>();
+
+static Runnable wrap(Runnable task) {
+    String captured = TRACE_ID.get();      // 提交时，在调用者线程中捕获
+    return () -> {
+        String backup = TRACE_ID.get();    // 工作线程原来的值
+        TRACE_ID.set(captured);            // 执行前设置
+        try {
+            task.run();
+        } finally {
+            if (backup == null) TRACE_ID.remove(); else TRACE_ID.set(backup);  // 恢复
+        }
+    };
+}
+
+pool.execute(wrap(() -> log.info("traceId={} 发送短信", TRACE_ID.get())));
+```
+
+最后恢复而不是直接 remove()，是因为任务也可能在调用者线程中执行（例如 CallerRunsPolicy），直接 remove() 会把调用者自己的 traceId 清掉（JDK 21 实测，见[附录 A27](#a27-traceid-随任务传递)）。
+
+每个提交点都手写 wrap() 容易漏，一般在线程池上统一处理：
+
+- Spring 的 ThreadPoolTaskExecutor 用 setTaskDecorator() 设置一个 TaskDecorator，在 decorate() 中写同样的逻辑，经这个线程池执行的任务（包括 @Async 方法）都会被包装；MDC 用 MDC.getCopyOfContextMap() 捕获、MDC.setContextMap() 设置；
+- 把 traceId 存进阿里开源的 TransmittableThreadLocal（TTL）而不是普通 ThreadLocal，再用 TtlExecutors 包装线程池，由它完成捕获、设置和恢复；MDC 不会随之传递，需要另外处理。
+
+需要注意的是，只有被包装的任务才带着上下文。CompletableFuture 中没有指定线程池的 thenRunAsync() 这类方法在 ForkJoinPool.commonPool() 中执行，这一步读不到请求的 traceId（附录中读到的是 null）。
 
 #### 3. 可重入代码（Reentrant Code）
 
@@ -2380,6 +2420,18 @@ p.setCorePoolSize(8);
 
 ThreadPoolExecutor ps = new ThreadPoolExecutor(5, 10, 60, TimeUnit.SECONDS, new SynchronousQueue<>());
 for (int i = 0; i < 15; i++) ps.execute(() -> sleep(1000)); // 捕获 RejectedExecutionException 并计数
+
+ThreadPoolExecutor p1 = new ThreadPoolExecutor(10, 10, 2, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+p1.prestartAllCoreThreads();
+p1.setCorePoolSize(2);                                       // 0.5 s 和 3 s 时查看线程数
+
+ThreadPoolExecutor p2 = new ThreadPoolExecutor(2, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+p2.prestartAllCoreThreads();
+p2.setCorePoolSize(6);                                       // 队列为空
+
+ThreadPoolExecutor p3 = new ThreadPoolExecutor(2, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+for (int i = 0; i < 5; i++) p3.execute(() -> release.await()); // 2 个在执行、3 个排队，省略了 try/catch
+p3.setCorePoolSize(6);
 ```
 
 ```text
@@ -2396,9 +2448,12 @@ future.get() 抛出 java.lang.IllegalStateException: submit 中的异常
 最大线程数为 4 时 setCorePoolSize(8)：IllegalArgumentException
 先 setMaximumPoolSize(8) 再 setCorePoolSize(8)：core=8 max=8
 核心 5、最大 10、SynchronousQueue，提交 15 个 1 s 的任务：线程数 10，被拒绝 5 个
+keepAliveTime 2 s，核心线程数 10 → 2：0.5 s 时线程数 10，3 s 时线程数 2
+队列为空时核心线程数 2 → 6：线程数 2
+队列中 3 个任务时核心线程数 2 → 6：线程数 5
 ```
 
-JDK 8 的 setCorePoolSize() 只检查新值是否小于 0，JDK 9 起增加了与最大线程数的比较（见两个版本的 ThreadPoolExecutor.java）。
+JDK 8 的 setCorePoolSize() 只检查新值是否小于 0，JDK 9 起增加了与最大线程数的比较（见两个版本的 ThreadPoolExecutor.java）。调小核心线程数时 setCorePoolSize() 只中断空闲线程，被唤醒的线程回到 getTask() 后仍用 poll(keepAliveTime) 等待，超时才退出；调大时最多补建 min(增量, 队列长度) 个线程，上例增量为 4、队列中 3 个，所以补建 3 个。
 
 ### A8 重排序与 volatile
 
@@ -3131,6 +3186,86 @@ execute() 收到 FutureTask
 submit() 返回 FutureTask，get() = 3
 ```
 
+### A26 CompletableFuture 的回调线程与异常
+
+JDK 21.0.13，Apple M1 Pro。pool 是 2 个线程的线程池，线程名以 biz- 开头；下面省略了 try/catch 和 sleep() 的定义：
+
+```java
+// 回调线程
+CompletableFuture.completedFuture("x").thenApply(v -> Thread.currentThread().getName()).join();
+CompletableFuture.supplyAsync(() -> { sleep(200); return "y"; }, pool)
+        .thenApply(v -> Thread.currentThread().getName()).join();
+
+// 异常的包装
+CompletableFuture<Object> bad = CompletableFuture.supplyAsync(() -> { throw new IllegalStateException("boom"); }, pool);
+bad.get();     // 捕获后打印异常类型和 getCause()
+bad.join();
+CompletableFuture.supplyAsync(() -> { if (true) throw new RuntimeException("down"); return "ok"; }, pool)
+        .exceptionally(e -> "降级:" + e.getClass().getSimpleName()).join();
+CompletableFuture.supplyAsync(() -> { sleep(500); return "ok"; }, pool)
+        .orTimeout(100, TimeUnit.MILLISECONDS)
+        .exceptionally(e -> e.getClass().getSimpleName() + ", getCause()=" + e.getCause()).join();
+
+// cancel(true) 是否中断任务
+CompletableFuture<Void> running = CompletableFuture.runAsync(() -> {
+    try { Thread.sleep(500); finished.set(true); } catch (InterruptedException e) { interrupted.set(true); }
+}, pool);
+sleep(100);
+running.cancel(true);   // 600 ms 后查看两个标志
+```
+
+```text
+thenApply 的执行线程：上一步已完成时在 main；未完成时在 biz-666
+get()：ExecutionException(cause=IllegalStateException)
+join()：CompletionException(cause=IllegalStateException)
+exceptionally 收到：CompletionException
+orTimeout 后 exceptionally 收到：TimeoutException, getCause()=null
+cancel(true) 返回 true，任务被中断 = false，任务照常执行完 = true
+```
+
+多次运行结果相同（biz- 后的编号每次不同）。任务中抛出的异常由 completeThrowable() 包装成 CompletionException，超时则直接 completeExceptionally(new TimeoutException())；CompletableFuture 的 cancel() 文档写明 mayInterruptIfRunning 参数没有作用。
+
+### A27 traceId 随任务传递
+
+JDK 21.0.13，Apple M1 Pro。TRACE_ID 是普通 ThreadLocal，wrap() 为正文中的包装器，wrapRemove() 在 finally 中直接 remove()；pool 只有一个线程 pool-1，之前一个没有清理的任务在其中留下了 t-old：
+
+```java
+for (String id : new String[]{"t-alice", "t-bob"}) {
+    TRACE_ID.set(id);
+    pool.submit(() -> log("不包装：发送短信")).get();
+    pool.submit(wrap(() -> log("包装：发送短信"))).get();
+    CompletableFuture.runAsync(wrap(() -> log("包装：第一步")), pool)
+            .thenRunAsync(() -> log("commonPool：第二步"))
+            .thenRunAsync(wrap(() -> log("包装：第三步")), pool).join();
+    TRACE_ID.remove();
+}
+pool.submit(() -> log("任务结束后工作线程残留")).get();
+
+TRACE_ID.set("t-carol");
+wrap(() -> {}).run();          // 调用者自己执行任务
+log("调用者自己执行 wrap 后");
+wrapRemove(() -> {}).run();
+log("调用者自己执行 wrapRemove 后");
+```
+
+```text
+[pool-1] traceId=t-old 不包装：发送短信
+[pool-1] traceId=t-alice 包装：发送短信
+[pool-1] traceId=t-alice 包装：第一步
+[ForkJoinPool.commonPool-worker-1] traceId=null commonPool：第二步
+[pool-1] traceId=t-alice 包装：第三步
+[pool-1] traceId=t-old 不包装：发送短信
+[pool-1] traceId=t-bob 包装：发送短信
+[pool-1] traceId=t-bob 包装：第一步
+[ForkJoinPool.commonPool-worker-1] traceId=null commonPool：第二步
+[pool-1] traceId=t-bob 包装：第三步
+[pool-1] traceId=t-old 任务结束后工作线程残留
+[main] traceId=t-carol 调用者自己执行 wrap 后
+[main] traceId=null 调用者自己执行 wrapRemove 后
+```
+
+第三步的 wrap() 在 main 线程构造调用链时就执行了，所以捕获到的是请求的值；工作线程在任务结束后恢复为原来的 t-old。
+
 ## 参考资料
 
 - [Object (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html)
@@ -3176,6 +3311,8 @@ submit() 返回 FutureTask，get() = 3
 - [assembler_x86.cpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/x86/assembler_x86.cpp)
 - [TransmittableThreadLocal](https://github.com/alibaba/transmittable-thread-local)
 - [Thread (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html)
+- [TaskDecorator (Spring Framework)](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/task/TaskDecorator.html)
+- [Logback Manual: Mapped Diagnostic Context](https://logback.qos.ch/manual/mdc.html)
 - [JDK 21 源码：jvm.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/prims/jvm.cpp)
 - [Java SE 6 Performance White Paper](https://www.oracle.com/java/technologies/javase/6performance.html)
 - [biasedLocking.cpp | OpenJDK jdk8u](https://github.com/openjdk/jdk8u/blob/master/hotspot/src/share/vm/runtime/biasedLocking.cpp)

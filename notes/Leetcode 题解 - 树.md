@@ -906,6 +906,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
+每个节点最多访问一次，时间复杂度 O(N)；递归深度最多为树的高度 H，空间复杂度 O(H)，树退化成链时最坏为 O(N)。
+
 ### 6. 从有序数组中构造二叉查找树
 
 108\. Convert Sorted Array to Binary Search Tree (Easy)
