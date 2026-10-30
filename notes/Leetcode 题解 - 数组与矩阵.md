@@ -15,6 +15,7 @@
     * [12. 分隔数组](#12-分隔数组)
     * [13. 合并区间](#13-合并区间)
     * [14. 下一个排列](#14-下一个排列)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -104,12 +105,23 @@ public int findMaxConsecutiveOnes(int[] nums) {
 [Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
 
 ```text
-[
-   [ 1,  5,  9],
-   [10, 11, 13],
-   [12, 13, 15]
-]
+Input:
+matrix = [
+  [ 1,  4,  7, 11, 15],
+  [ 2,  5,  8, 12, 19],
+  [ 3,  6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+], target = 14
+
+Output: true
 ```
+
+题目描述：矩阵的每一行从左到右递增，每一列从上到下递增，判断 target 是否在矩阵中。
+
+从右上角开始比较。每次比较的元素都位于剩余范围的右上角，是剩余范围内所在行的最大值、所在列的最小值：target 比它小，这一列下面的元素都更大，可以排除这一列；target 比它大，这一行左边的元素都更小，可以排除这一行。每次比较排除一行或一列，时间复杂度为 O(M + N)。
+
+<div align="center"> <img src="pics/lc-array-matrix-search.png" width="640px"/> </div><br>
 
 ```java
 public boolean searchMatrix(int[][] matrix, int target) {
@@ -144,7 +156,7 @@ return 13.
 
 解题参考：[Share my thoughts and Clean Java Code](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
 
-二分查找解法：
+二分查找解法：在 [matrix[0][0], matrix[m - 1][n - 1]] 这个值域上二分，统计矩阵中不大于 mid 的元素个数 cnt。cnt < k 说明第 k 小的数比 mid 大，否则不大于 mid。循环结束时 lo 是使 cnt >= k 的最小值，这个值一定是矩阵中的元素。
 
 ```java
 public int kthSmallest(int[][] matrix, int k) {
@@ -165,7 +177,7 @@ public int kthSmallest(int[][] matrix, int k) {
 }
 ```
 
-堆解法：
+堆解法：每一列从上到下递增，可以看成 n 个有序链表做多路归并。先把第一行放入小根堆，每次弹出堆顶后放入它下面的元素，弹出 k - 1 次后堆顶就是第 k 小的数。
 
 ```java
 public int kthSmallest(int[][] matrix, int k) {
@@ -206,7 +218,7 @@ Output: [2,3]
 
 最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(NlogN)。本题可以以 O(N) 的时间复杂度、O(1) 空间复杂度来求解。
 
-主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。
+主要思想是通过交换数组元素，把值 x 放到下标 x - 1 上：nums[i] 不在正确的位置时，就和它应该去的位置交换，直到当前位置正确或者目标位置上已经是同样的值（说明遇到了重复的数）。放完之后，唯一一个 nums[i] != i + 1 的位置上，nums[i] 是重复的数，i + 1 是丢失的数。例如 [1, 2, 2, 4] 中，下标 2 上是 2，重复的数为 2，丢失的数为 3。
 
 ```java
 public int[] findErrorNums(int[] nums) {
@@ -238,7 +250,7 @@ private void swap(int[] nums, int i, int j) {
 
 要求不能修改数组，也不能使用额外的空间。
 
-二分查找解法：
+二分查找解法：对值域 [1, n] 二分，统计数组中不大于 mid 的元素个数 cnt。重复的数大于 mid 时，1 \~ mid 中每个数最多出现一次，cnt 不超过 mid；重复的数不大于 mid 时，大于 mid 的每个数最多出现一次，这类元素最多 n - mid 个，数组共 n + 1 个元素，cnt 至少为 mid + 1。因此 cnt > mid 说明重复的数在 [1, mid] 中，否则在 [mid + 1, n] 中。例如 [1, 3, 4, 2, 2] 中 mid = 2 时 cnt = 3，重复的数不大于 2。时间复杂度为 O(NlogN)。
 
 ```java
 public int findDuplicate(int[] nums) {
@@ -256,7 +268,9 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-双指针解法，类似于有环链表中找出环的入口：
+双指针解法：把 i → nums[i] 看成链表中的一条边。从下标 0 出发沿边一直走，每一步都落在 [1, n] 的下标上，不会停下，有限个节点中必然会进入环。环的入口至少有两条边指向它（来自环外和环内），也就是至少有两个下标上的值等于它，所以入口就是重复的数。用快慢指针先在环内相遇，再让一个指针回到起点，两个指针每次各走一步，相遇处就是环的入口，与[剑指 Offer 23 链表中环的入口结点](23.%20链表中环的入口结点.md)的做法相同。时间复杂度为 O(N)。
+
+<div align="center"> <img src="pics/lc-array-dup-cycle.png" width="640px"/> </div><br>
 
 ```java
 public int findDuplicate(int[] nums) {
@@ -288,7 +302,7 @@ Explanation: The [1, 3, 2] has three different positive integers ranging from 1 
 
 题目描述：数组元素为 1\~n 的整数，要求构建数组，使得相邻元素的差值不相同的个数为 k。
 
-让前 k+1 个元素构建出 k 个不相同的差值，序列为：1 k+1 2 k 3 k-1 ... k/2 k/2+1.
+让前 k+1 个元素构建出 k 个不相同的差值，序列为：1 k+1 2 k 3 k-1 ... k/2 k/2+1，相邻差值依次为 k、k-1、……、1。之后的元素按 k+2、k+3、……、n 递增排列，内部的差值都是 1；前一段的最后一个元素在 k/2 附近，与 k+2 的差值不超过 k，也已经出现过，因此不会产生新的差值。例如 n = 5、k = 3 时得到 [1, 4, 2, 3, 5]，差值为 3、2、1、2，衔接处 3 → 5 的差值 2 已经出现过。
 
 ```java
 public int[] constructArray(int n, int k) {
@@ -316,6 +330,8 @@ Output: 6
 ```
 
 题目描述：数组的度定义为元素出现的最高频率，例如上面的数组度为 3。要求找到一个最小的子数组，这个子数组的度和原数组一样。
+
+子数组的度要和原数组一样，就要包含某个出现次数最多的元素的全部出现位置，最短的就是从它第一次出现到最后一次出现的一段。记录每个元素的出现次数、第一次和最后一次出现的位置，在出现次数最多的元素中取这段长度的最小值。上面的数组中 2 出现 3 次，位置 1 到 6，答案为 6。
 
 ```java
 public int findShortestSubArray(int[] nums) {
@@ -403,6 +419,8 @@ S[0] = {A[0], A[5], A[6], A[2]} = {5, 6, 2, 0}
 
 题目描述：S[i] 表示一个集合，集合的第一个元素是 A[i]，第二个元素是 A[A[i]]，如此嵌套下去。求最大的 S[i]。
 
+数组是 0 \~ n-1 的一个排列，每个下标只被一个元素指向，所以 i → A[i] 把数组分成若干个互不相交的环，S[i] 就是 i 所在的环。同一个环上的起点得到的集合大小相同，遍历过的位置标记为 -1 后不再访问，每个元素只访问一次，时间复杂度为 O(N)。
+
 ```java
 public int arrayNesting(int[] nums) {
     int max = 0;
@@ -435,7 +453,9 @@ We can split into two chunks, such as [1, 0], [2, 3, 4].
 However, splitting into [1, 0], [2], [3], [4] is the highest number of chunks possible.
 ```
 
-题目描述：分隔数组，使得对每部分排序后数组就为有序。
+题目描述：arr 是 0 \~ n-1 的一个排列，把它分成尽量多的块，使得对每块分别排序后整个数组有序。
+
+前 i + 1 个元素能单独成为若干块，当且仅当它们恰好是 0 \~ i，也就是前缀的最大值等于 i。从左往右维护前缀最大值 right，每遇到 right == i 就可以切一刀。例如 [1, 0, 2, 3, 4] 在下标 1、2、3、4 处都满足条件，答案为 4。
 
 ```java
 public int maxChunksToSorted(int[] arr) {
@@ -529,3 +549,7 @@ private void swap(int[] nums, int i, int j) {
     nums[j] = t;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
