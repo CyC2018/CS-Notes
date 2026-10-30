@@ -44,7 +44,7 @@ Unix 有五种 I/O 模型：
 
 应用进程被阻塞，直到数据从内核缓冲区复制到应用进程缓冲区中才返回。
 
-需要注意的是，阻塞的只是当前进程，其它应用进程还可以执行，因此阻塞不意味着整个操作系统都被阻塞。被阻塞的进程不消耗 CPU 时间，CPU 可以去执行其它进程，因此这种模型的 CPU 利用率比较高。
+需要注意的是，阻塞的只是调用 recvfrom 的线程，同一进程的其它线程和其它进程都还可以执行。被阻塞的线程不消耗 CPU 时间，CPU 可以去执行其它任务，等待期间不浪费 CPU。
 
 下图中，recvfrom() 用于接收 Socket 传来的数据，并复制到应用进程的缓冲区 buf 中。这里把 recvfrom() 当成系统调用。
 
@@ -58,7 +58,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 应用进程执行系统调用之后，如果数据还没有准备好，内核立即返回错误码 EAGAIN（也写作 EWOULDBLOCK）。应用进程可以继续执行，但是需要不断的执行系统调用来获知 I/O 是否完成，这种方式称为轮询（polling）。
 
-由于 CPU 要处理更多的系统调用，因此这种模型的 CPU 利用率比较低。
+数据没到之前的这些系统调用都是白做的，轮询越频繁，浪费的 CPU 时间越多。
 
 <div align="center"> <img src="pics/io-nonblocking.png" width="760px"/> </div><br>
 
@@ -74,15 +74,19 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 ### 信号驱动 I/O
 
-应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行，也就是说等待数据阶段应用进程是非阻塞的。内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中。
+应用进程先用 sigaction 安装 SIGIO 的处理函数，再用 fcntl 为套接字设置属主（F_SETOWN）并打开 O_ASYNC。这些调用都立即返回，应用进程可以继续执行，因此等待数据阶段是非阻塞的。内核在数据到达时向应用进程发送 SIGIO 信号，应用进程在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中。
 
-相比于非阻塞式 I/O 的轮询方式，信号驱动 I/O 的 CPU 利用率更高。
+两步的顺序不能反过来：先打开 O_ASYNC 时，信号可能在处理函数安装之前到达，而 SIGIO 的默认动作会终止进程。
+
+相比于非阻塞式 I/O 的轮询方式，信号驱动 I/O 不需要反复调用，等待期间不浪费 CPU。
 
 <div align="center"> <img src="pics/io-signal.png" width="760px"/> </div><br>
 
 ### 异步 I/O
 
-应用进程执行 aio_read 系统调用会立即返回，应用进程可以继续执行，不会被阻塞，内核会在所有操作完成之后向应用进程发送信号。
+应用进程调用 aio_read 后立即返回，可以继续执行，不会被阻塞；等数据已经复制到应用进程的缓冲区，再通过信号或新建一个线程通知应用进程。
+
+需要注意的是，aio_read 是 POSIX 定义的库函数，不是系统调用。Linux 上的实现由 glibc 在用户空间用线程完成（aio(7)），由内核完成的异步 I/O 主要用 io_uring，见[应用场景](#应用场景)。
 
 异步 I/O 与信号驱动 I/O 的区别在于，异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O。
 
@@ -90,14 +94,14 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 ### 五大 I/O 模型比较
 
-- 同步 I/O：将数据从内核缓冲区复制到应用进程缓冲区的阶段（第二阶段），应用进程会阻塞。
+- 同步 I/O：将数据从内核缓冲区复制到应用进程缓冲区的阶段（第二阶段），应用进程会阻塞；
 - 异步 I/O：第二阶段应用进程不会阻塞。
 
-同步 I/O 包括阻塞式 I/O、非阻塞式 I/O、I/O 复用和信号驱动 I/O ，它们的主要区别在第一个阶段。
+同步 I/O 包括阻塞式 I/O、非阻塞式 I/O、I/O 复用和信号驱动 I/O，它们的主要区别在第一个阶段。
 
-非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
+非阻塞式 I/O、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
-Java 中的 BIO 对应阻塞式 I/O；NIO 用 Selector 实现 I/O 复用，Linux 上基于 epoll；AIO（NIO.2 的异步通道）对应异步 I/O 的编程方式，但 Linux 上的 JDK 实际用 epoll 加线程池实现。
+Java 中的 BIO 对应阻塞式 I/O；NIO 用 [Selector](Java%20IO.md#选择器) 实现 I/O 复用，Linux 上基于 epoll；AIO（NIO.2 的异步通道）对应异步 I/O 的编程方式，但 Linux 上的 JDK 实际用 epoll 加线程池实现。
 
 <div align="center"> <img src="pics/io-compare.png" width="760px"/> </div><br>
 
@@ -121,7 +125,11 @@ select 等待 readfds、writefds 和 exceptfds 三个集合中的描述符就绪
 
 fd_set 是位图，第 n 位表示描述符 n 是否在集合中。FD_SETSIZE 在 Linux 中为 1024，因此 select 只能监听编号小于 1024 的描述符（[select(2)](https://man7.org/linux/man-pages/man2/select.2.html)）。
 
-select 返回时会修改传入的集合，只保留就绪的描述符，因此每次调用前都要重新设置集合。下面的代码监听 sock1 和 sock2 的可读事件：
+select 返回时会修改传入的集合，只保留就绪的描述符，因此每次调用前都要重新设置集合。例如监听 3、5、7 时只有 5 可读，返回后 3 和 7 的位已经被清零：
+
+<div align="center"> <img src="pics/select-fdset.png" width="760px"/> </div><br>
+
+下面的代码监听 sock1 和 sock2 的可读事件：
 
 ```c
 fd_set rset;
@@ -209,6 +217,8 @@ epoll 实例在内核中是 struct eventpoll，其中有两个结构（Linux 6.1
 
 epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待队列上挂一个回调 ep_poll_callback。之后描述符变为可读，内核调用回调，把它加入就绪链表，应用不需要做任何事。epoll_wait 只检查就绪链表：链表为空就阻塞；否则把其中的事件（最多 maxevents 个）复制到用户空间。
 
+需要注意的是，常见的“epoll 用 mmap 与用户空间共享就绪链表”的说法并不成立：epoll_wait 返回前，内核把每个就绪事件逐个写入调用方传入的 events 数组（ep_send_events 中的 epoll_put_uevent）。epoll 省下的是每次复制和检查全部描述符的开销，就绪事件本身仍要复制。
+
 <div align="center"> <img src="pics/epoll-rbtree-rdllist.png" width="720px"/> </div><br>
 
 回到前面的例子：10000 个连接只有 1 个可读时，epoll_wait 只返回这 1 个事件，每次调用约 0.21 µs，而 poll 约 1.6 ms。与 select 和 poll 相比，epoll 有三点不同：
@@ -219,7 +229,11 @@ epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待�
 
 红黑树用于快速定位。epoll_ctl 的 MOD 和 DEL 操作只给出描述符编号，内核需要找到对应的节点，链表只能顺序查找，时间是 O(n)，而树可以保证 O(log n)。就绪链表只做追加和取出，用链表即可。
 
-epoll 没有 select 的 1024 限制。实际上限取决于三个因素：进程的文件描述符上限（RLIMIT_NOFILE，即 ulimit -n，很多系统的默认软限制较小，需要调大）；每个用户能注册的描述符总数 max_user_watches，默认约为可用低端内存的 4%，再除以每个注册项的成本（epoll(7)）；以及内存。每个注册项在 64 位内核中约占 160 字节，因此 100 万个注册约占 150 MiB 内核内存，还不包括套接字本身的缓冲区。在 16 GiB 内存的机器上，max_user_watches 的默认值估算约为 430 万。
+epoll 没有 select 的 1024 限制，实际上限取决于三个因素：
+
+- 进程的文件描述符上限 RLIMIT_NOFILE，即 ulimit -n，很多系统的默认软限制较小，需要调大；
+- 每个用户能注册的描述符总数 max_user_watches，默认值为可用低端内存的 4% 除以每个注册项的成本（epoll(7)），16 GiB 内存的机器上估算约为 430 万；
+- 内存：每个注册项在 64 位内核中约占 160 字节，100 万个注册约占 150 MiB 内核内存，还不包括套接字本身的缓冲区。
 
 使用 epoll 时还有两点需要注意：
 
@@ -271,9 +285,11 @@ for (;;) {
 }
 ```
 
-ET 还可能造成饥饿：如果某个连接的数据源源不断，循环读取会长时间占用线程，其它连接得不到处理。常见的做法是每次事件只读固定次数，剩下的数据留给下一轮处理；epoll(7) 建议用就绪链表在描述符之间轮流处理。如果读取后没有读到 EAGAIN，剩下的数据不会再产生事件，连接会一直停住，这种情况更接近永久饿死。
+ET 还可能造成饥饿：如果某个连接的数据源源不断，循环读取会长时间占用线程，其它连接得不到处理。常见的做法是每次事件只读固定次数，然后把这个描述符记在应用自己的就绪列表中，事件循环每一轮先处理列表中的描述符，再以超时 0 调用 epoll_wait，即 epoll(7) 建议的在就绪描述符之间轮流处理。如果没有读到 EAGAIN、也没有记下这个描述符，剩下的数据不会再产生事件，连接会一直停住。
 
 EPOLLONESHOT 可以与 ET 一起使用：描述符触发一次事件后会被禁用，直到用 EPOLL_CTL_MOD 重新启用。多个线程处理同一个连接时，可以避免两个线程同时处理该描述符的事件（epoll_ctl(2)）。
+
+两种模式的取舍：LT 写起来简单，没读完的数据下次还会通知，Redis 和 JDK 的 Selector 都用 LT；ET 减少了重复唤醒，但每次事件都必须读到 EAGAIN，适合 Netty 原生 epoll 传输、Go 运行时这类把读循环统一封装好的框架，见[应用场景](#应用场景)。
 
 ### 应用场景
 
@@ -296,6 +312,8 @@ Reactor 模式（反应器模式）把事件循环和事件处理分开：线程
 Netty 的 NioEventLoop 基于 Java NIO 的 Selector，在 Linux 上由 JDK 的 epoll 实现，注册时不使用 EPOLLET，因此是水平触发（OpenJDK 的 EPoll 类）。Netty 的原生 epoll 传输（io.netty.channel.epoll）则使用 EPOLLET。Selector 的用法见 [Java IO](Java%20IO.md#选择器)。
 
 多线程 Reactor 中，主 Reactor 通常只注册监听套接字，负责 accept；新连接按轮询或哈希分配给某个子 Reactor，由该子 Reactor 的 epoll 注册并处理读写。一个连接的描述符只注册到一个 epoll 实例中，读写都由同一个线程完成，连接的状态不需要加锁。Netty 的 BossGroup 与 WorkerGroup 就是这种主从结构。
+
+<div align="center"> <img src="pics/socket-reactor.png" width="760px"/> </div><br>
 
 如果多个线程的 epoll 同时监听同一个监听套接字，一个新连接会唤醒所有等待的线程，这称为惊群（thundering herd）。EPOLLEXCLUSIVE（Linux 4.5 起）让内核只唤醒其中的一个或部分等待者；SO_REUSEPORT（Linux 3.9 起）让每个线程绑定各自的监听套接字，由内核把新连接分配给其中一个（epoll_ctl(2)、socket(7)）。
 
@@ -418,6 +436,7 @@ poll: sock2 可读
 - [epoll(7) — Linux manual page](https://man7.org/linux/man-pages/man7/epoll.7.html)
 - [epoll_ctl(2) — Linux manual page](https://man7.org/linux/man-pages/man2/epoll_ctl.2.html)
 - [epoll_wait(2) — Linux manual page](https://man7.org/linux/man-pages/man2/epoll_wait.2.html)
+- [aio(7) — Linux manual page](https://man7.org/linux/man-pages/man7/aio.7.html)
 - [io_uring_setup(2) — Linux manual page](https://man7.org/linux/man-pages/man2/io_uring_setup.2.html)
 - [connect(2) — Linux manual page](https://man7.org/linux/man-pages/man2/connect.2.html)
 - [socket(7) — Linux manual page](https://man7.org/linux/man-pages/man7/socket.7.html)
@@ -426,5 +445,5 @@ poll: sock2 可读
 - [Netty 4.1 AbstractEpollChannel](https://github.com/netty/netty/blob/4.1/transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollChannel.java)
 - [Go runtime netpoll_epoll.go](https://github.com/golang/go/blob/master/src/runtime/netpoll_epoll.go)
 - [OpenJDK EPoll.java](https://github.com/openjdk/jdk/blob/master/src/java.base/linux/classes/sun/nio/ch/EPoll.java)
-- [Boost application performance using asynchronous I/O](https://www.ibm.com/developerworks/linux/library/l-async/)
-- [Synchronous and Asynchronous I/O](https://msdn.microsoft.com/en-us/library/windows/desktop/aa365683(v=vs.85).aspx)
+- [Boost application performance using asynchronous I/O](https://developer.ibm.com/articles/l-async/)
+- [Synchronous and Asynchronous I/O](https://learn.microsoft.com/en-us/windows/win32/fileio/synchronous-and-asynchronous-i-o)
