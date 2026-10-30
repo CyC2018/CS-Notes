@@ -597,6 +597,8 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 
 如果不成立，虚拟机会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于就进行 Minor GC，否则进行 Full GC。JDK 6 Update 24 之前还需要 HandlePromotionFailure 参数允许担保失败才会冒险进行 Minor GC，之后该参数不再起作用。
 
+JDK 6 Update 24 之后，HandlePromotionFailure 参数不会再影响到虚拟机的空间分配担保策略，只要老年代的连续空间大于新生代对象总大小或者历次晋升的平均大小就会进行Minor GC，否则将进行 Full GC。
+
 ### Full GC 的触发条件
 
 对于 Minor GC，其触发条件非常简单，当 Eden 空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
