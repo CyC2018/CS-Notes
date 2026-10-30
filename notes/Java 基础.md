@@ -157,7 +157,7 @@ public final class String
 }
 ```
 
-value 数组被声明为 final，这意味着 value 数组初始化之后就不能再引用其它数组。并且 String 内部没有改变 value 数组的方法，因此可以保证 String 不可变。
+value 数组被声明为 final，这只意味着 value 初始化之后不能再引用其它数组，数组中的内容仍然可以修改。真正保证 String 不可变的是：value 为 private，String 内部没有改变 value 数组的方法，也不把它交给外部代码。
 
 ### 不可变的好处
 
@@ -1358,7 +1358,7 @@ getMethod()、getField() 只能找到 public 成员，包括继承的；getDecla
 
 ## 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，例如 OutOfMemoryError、StackOverflowError，程序一般不捕获。Exception 分为两种：
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，例如 OutOfMemoryError、StackOverflowError，程序一般不捕获，编译器也不要求捕获或声明。Exception 分为两种：
 
 - 受检异常：例如 IOException、SQLException，需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，否则编译不通过，这类异常通常可以恢复；
 - 非受检异常：RuntimeException 及其子类，是程序运行时错误，例如除 0 会引发 ArithmeticException，访问 null 的成员会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
