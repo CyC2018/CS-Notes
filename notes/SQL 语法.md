@@ -44,14 +44,14 @@
 
 主键的值一般不修改，也不复用（不把已经删除的主键值赋给新数据行的主键），这是普遍遵循的习惯，数据库本身并不禁止。
 
-SQL（Structured Query Language)，标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
+SQL（Structured Query Language），标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等。
 
 SQL 语句不区分大小写，但是数据库表名、列名和值是否区分依赖于具体的 DBMS 以及配置。
 
-SQL 支持以下三种注释：
+MySQL 支持以下三种注释，其中 # 是 MySQL 特有的，-- 后面必须跟空白字符（例如空格）：
 
 ```sql
-## 注释
+# 注释
 SELECT *
 FROM mytable; -- 注释
 /* 注释1
@@ -71,7 +71,7 @@ USE test;
 CREATE TABLE mytable (
   # int 类型，不为空，自增
   id INT NOT NULL AUTO_INCREMENT,
-  # int 类型，不可为空，默认值为 1，不为空
+  # int 类型，不可为空，默认值为 1
   col1 INT NOT NULL DEFAULT 1,
   # 变长字符串类型，最长为 45 个字符，可以为空
   col2 VARCHAR(45) NULL,
@@ -148,6 +148,8 @@ WHERE id = 1;
 TRUNCATE TABLE mytable;
 ```
 
+与不带 WHERE 的 DELETE 不同，TRUNCATE 会隐式提交当前事务，不能回滚，并且会把 AUTO_INCREMENT 的值重置为初始值。
+
 使用更新和删除操作时一定要用 WHERE 子句，不然会把整张表的数据都破坏。可以先用 SELECT 语句进行测试，防止错误删除。
 
 ## 七、查询
@@ -223,6 +225,8 @@ WHERE col IS NULL;
 | BETWEEN | 在两个值之间 |
 | IS NULL | 为 NULL 值 |
 
+其中 !&gt; 和 !&lt; 只有 SQL Server 等少数 DBMS 支持，MySQL 中会报语法错误。
+
 应该注意到，NULL 与 0、空字符串都不同。
 
 **AND 和 OR**   用于连接多个过滤条件。优先处理 AND，当一个过滤表达式涉及到多个 AND 和 OR 时，可以使用 () 来决定优先级，使得优先级关系更清晰。
@@ -241,7 +245,7 @@ WHERE col IS NULL;
 
 -   **[ ]**   可以匹配集合内的字符，例如 [ab] 将匹配字符 a 或者 b。用脱字符 ^ 可以对其进行否定，也就是不匹配集合内的字符。需要注意的是，只有 SQL Server 等少数 DBMS 支持 [ ] 通配符，MySQL 不支持，需要改用 REGEXP。
 
-使用 Like 来进行通配符匹配。
+使用 LIKE 来进行通配符匹配。
 
 ```sql
 SELECT *
@@ -249,7 +253,15 @@ FROM mytable
 WHERE col LIKE '[^AB]%'; -- 不以 A 和 B 开头的任意文本
 ```
 
-不要滥用通配符，通配符位于开头处匹配会非常慢。
+MySQL 中的等价写法：
+
+```sql
+SELECT *
+FROM mytable
+WHERE col REGEXP '^[^AB]';
+```
+
+不要滥用通配符。通配符位于开头时，无法用这个条件在 B+ 树索引中做范围查找，大表上会非常慢。
 
 ## 十一、计算字段
 
@@ -262,7 +274,7 @@ SELECT col1 * col2 AS alias
 FROM mytable;
 ```
 
-**CONCAT()**   用于连接两个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
+**CONCAT()**   用于连接多个字段。许多数据库会使用空格把一个值填充为列宽，因此连接的结果会出现一些不必要的空格，使用 **TRIM()** 可以去除首尾空格。
 
 ```sql
 SELECT CONCAT(TRIM(col1), '(', TRIM(col2), ')') AS concat_col
@@ -278,12 +290,12 @@ FROM mytable;
 |函 数 |说 明|
 | :---: | :---: |
 | AVG() | 返回某列的平均值 |
-| COUNT() | 返回某列的行数 |
+| COUNT() | 返回行数，COUNT(*) 统计所有行，COUNT(列) 只统计该列不为 NULL 的行 |
 | MAX() | 返回某列的最大值 |
 | MIN() | 返回某列的最小值 |
 | SUM() |返回某列值之和 |
 
-AVG() 会忽略 NULL 行。
+除了 COUNT(*)，这些函数都会忽略 NULL 行。
 
 使用 DISTINCT 可以汇总不同的值。
 
@@ -302,7 +314,8 @@ FROM mytable;
 | UPPER() | 转换为大写字符 |
 | LTRIM() | 去除左边的空格 |
 | RTRIM() | 去除右边的空格 |
-| LENGTH() | 长度 |
+| LENGTH() | 字节数 |
+| CHAR_LENGTH() | 字符数 |
 | SOUNDEX() | 转换为语音值 |
 
 其中，  **SOUNDEX()**   可以将一个字符串转换为描述其语音表示的字母数字模式。
@@ -310,7 +323,7 @@ FROM mytable;
 ```sql
 SELECT *
 FROM mytable
-WHERE SOUNDEX(col1) = SOUNDEX('apple')
+WHERE SOUNDEX(col1) = SOUNDEX('apple');
 ```
 
 ### 日期和时间处理
@@ -344,7 +357,7 @@ mysql> SELECT NOW();
 ```
 
 ```text
-2018-4-14 20:25:11
+2018-04-14 20:25:11
 ```
 
 ### 数值处理
@@ -384,7 +397,7 @@ GROUP BY col
 ORDER BY num;
 ```
 
-WHERE 过滤行，HAVING 过滤分组，行过滤应当先于分组过滤。
+WHERE 在分组之前过滤行，不能使用汇总函数；HAVING 在分组之后过滤分组，可以使用汇总函数。能写在 WHERE 中的条件不放到 HAVING，以减少参与分组的行。
 
 ```sql
 SELECT col, COUNT(*) AS num
@@ -399,7 +412,7 @@ HAVING num >= 2;
 - GROUP BY 子句出现在 WHERE 子句之后，ORDER BY 子句之前；
 - 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
 - NULL 的行会单独分为一组；
-- 大多数 SQL 实现不支持 GROUP BY 列具有可变长度的数据类型。
+- 有些 DBMS 不允许按大文本类型的列分组，MySQL 中 VARCHAR 和 TEXT 列都可以分组。
 
 ## 十四、子查询
 
@@ -429,13 +442,13 @@ ORDER BY cust_name;
 
 连接用于连接多个表，使用 JOIN 关键字，并且条件语句使用 ON 而不是 WHERE。
 
-连接可以替换子查询，并且比子查询的效率一般会更快。
+很多子查询可以改写为连接。MySQL 8.0 的优化器会把 IN 子查询自动转换为半连接，两种写法常常得到相同的执行计划，快慢以 EXPLAIN 为准。
 
 可以用 AS 给列名、计算字段和表名取别名，给表名取别名是为了简化 SQL 语句以及连接相同表。
 
 ### 内连接
 
-内连接又称等值连接，使用 INNER JOIN 关键字。
+内连接只返回两张表中满足连接条件的行，使用 INNER JOIN 关键字；连接条件是等值比较时也叫等值连接。
 
 ```sql
 SELECT A.value, B.value
@@ -465,7 +478,7 @@ FROM employee
 WHERE department = (
       SELECT department
       FROM employee
-      WHERE name = "Jim");
+      WHERE name = 'Jim');
 ```
 
 自连接版本
@@ -474,23 +487,25 @@ WHERE department = (
 SELECT e1.name
 FROM employee AS e1 INNER JOIN employee AS e2
 ON e1.department = e2.department
-      AND e2.name = "Jim";
+      AND e2.name = 'Jim';
 ```
 
 ### 自然连接
 
 自然连接是把同名列通过等值测试连接起来的，同名列可以有多个。
 
-内连接和自然连接的区别：内连接提供连接的列，而自然连接自动连接所有同名列。
+内连接和自然连接的区别：内连接用 ON 或 USING 指定连接条件，自然连接自动用所有同名列做等值连接，结果中同名列只出现一次。例如 Customers 和 Orders（内容见下文的外连接）只有 cust_id 一个同名列：
 
 ```sql
-SELECT A.value, B.value
-FROM tablea AS A NATURAL JOIN tableb AS B;
+SELECT cust_id, cust_name, order_id
+FROM Customers NATURAL JOIN Orders;
 ```
+
+需要注意的是，两表都有 key 和 value 列时，NATURAL JOIN 要求两列都相等，而不只是 key 相等。
 
 ### 外连接
 
-外连接保留了没有关联的那些行。分为左外连接，右外连接以及全外连接，左外连接就是保留左表没有关联的行。
+外连接保留了没有关联的那些行。分为左外连接，右外连接以及全外连接，左外连接就是保留左表没有关联的行。MySQL 不支持 FULL OUTER JOIN，可以用 UNION ALL 合并左外连接的结果和右外连接中左表没有匹配的行（WHERE 左表主键 IS NULL）；直接用 UNION 合并两个外连接会把相同的行去重，可能少行。
 
 检索所有顾客的订单信息，包括还没有订单信息的顾客。
 
@@ -525,15 +540,15 @@ orders 表：
 | 1 | a | 2 |
 | 3 | c | 3 |
 | 3 | c | 4 |
-| 2 | b | Null |
+| 2 | b | NULL |
+
+如果改成内连接，结果只有前 4 行，没有订单的顾客 b 不会出现。
 
 ## 十六、组合查询
 
-使用   **UNION**   来组合两个查询，如果第一个查询返回 M 行，第二个查询返回 N 行，那么组合查询的结果一般为 M+N 行。
+使用   **UNION**   来组合两个查询。如果第一个查询返回 M 行，第二个查询返回 N 行，UNION 默认去除相同的行，结果最多 M+N 行；需要保留相同的行时使用 UNION ALL，结果正好是 M+N 行。
 
-每个查询必须包含相同的列、表达式和聚集函数。
-
-默认会去除相同行，如果需要保留相同行，使用 UNION ALL。
+每个查询的列数必须相同，对应列的类型要兼容，结果的列名取第一个查询的列名。
 
 只能包含一个 ORDER BY 子句，并且必须位于语句的最后。
 
@@ -544,14 +559,14 @@ WHERE col = 1
 UNION
 SELECT col
 FROM mytable
-WHERE col =2;
+WHERE col = 2;
 ```
 
 ## 十七、视图
 
 视图是虚拟的表，本身不包含数据，也就不能对其进行索引操作。
 
-对视图的操作和对普通表的操作一样。
+查询视图和查询普通表一样；只有不含汇总函数、DISTINCT、GROUP BY、UNION 等的简单视图才能用 INSERT、UPDATE、DELETE 修改，修改会作用到底层的表。
 
 视图具有如下好处：
 
@@ -575,7 +590,7 @@ WHERE col5 = val;
 
 - 代码封装，保证了一定的安全性；
 - 代码复用；
-- 由于是预先编译，因此具有很高的性能。
+- 减少客户端与服务器之间的往返。需要注意的是，MySQL 并不预先编译存储过程，只在每个会话第一次调用时解析并缓存。
 
 命令行中创建存储过程需要自定义分隔符，因为命令行是以 ; 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。
 
@@ -607,14 +622,14 @@ select @ret;
 
 在存储过程中使用游标可以对一个结果集进行移动遍历。
 
-游标主要用于交互式应用，其中用户需要对数据集中的任意行进行浏览和修改。
+MySQL 的游标只能在存储过程等存储程序中使用，并且是只读的，只能从前往后逐行读取。
 
 使用游标的四个步骤：
 
 1. 声明游标，这个过程没有实际检索出数据；
 2. 打开游标；
 3. 取出数据；
-4. 关闭游标；
+4. 关闭游标。
 
 ```sql
 delimiter //
@@ -639,7 +654,7 @@ create procedure myprocedure(out ret int)
 
         close mycursor;
     end //
- delimiter ;
+delimiter ;
 ```
 
 ## 二十、触发器
@@ -669,25 +684,25 @@ MySQL 的触发器可以使用 CALL 语句调用存储过程，但是该存储�
 
 - 事务（transaction）指一组 SQL 语句；
 - 回退（rollback）指撤销指定 SQL 语句的过程；
-- 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
-- 保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退（与回退整个事务处理不同）。
+- 提交（commit）指结束当前事务，使事务中的修改永久生效；
+- 保留点（savepoint）指事务中设置的临时标记，可以只回退到这个标记，而不回退整个事务。
 
-不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CREATE 和 DROP 语句。
+不能回退 SELECT 语句，回退 SELECT 语句也没意义；也不能回退 CREATE 和 DROP 语句，这类语句执行前会隐式提交当前事务，之前的修改也无法再回滚。
 
-MySQL 的事务提交默认是隐式提交，每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭隐式提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复隐式提交。
+MySQL 默认开启自动提交（autocommit），每执行一条语句就把这条语句当成一个事务然后进行提交。当出现 START TRANSACTION 语句时，会关闭自动提交；当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭，重新恢复自动提交。
 
 设置 autocommit 为 0 可以取消自动提交；autocommit 标记是针对每个连接而不是针对服务器的。
 
 如果没有设置保留点，ROLLBACK 会回退到 START TRANSACTION 语句处；如果设置了保留点，并且在 ROLLBACK 中指定该保留点，则会回退到该保留点。
 
 ```sql
-START TRANSACTION
-// ...
-SAVEPOINT delete1
-// ...
-ROLLBACK TO delete1
-// ...
-COMMIT
+START TRANSACTION;
+-- ...
+SAVEPOINT delete1;
+-- ...
+ROLLBACK TO delete1;
+-- ...
+COMMIT;
 ```
 
 ## 二十二、字符集
@@ -696,7 +711,9 @@ COMMIT
 
 - 字符集为字母和符号的集合；
 - 编码为某个字符集成员的内部表示；
-- 校对字符指定如何比较，主要用于排序和分组。
+- 校对（collation）指定字符如何比较，主要用于排序和分组。
+
+MySQL 8.0 默认的字符集是 utf8mb4，校对是 utf8mb4_0900_ai_ci（ci 表示不区分大小写，'a' = 'A' 为真）。MySQL 的 utf8 实际是 utf8mb3，每个字符最多 3 字节，存不下 emoji 等 4 字节字符。
 
 除了给表指定字符集和校对外，也可以给列指定：
 
@@ -751,7 +768,7 @@ SHOW GRANTS FOR myuser;
 
 授予权限：
 
-账户用 username@host 的形式定义，username@% 使用的是默认主机名。
+账户用 username@host 的形式定义，省略主机名时为 username@'%'，表示可以从任意主机连接。
 
 ```sql
 GRANT SELECT, INSERT ON mydatabase.* TO myuser;
@@ -761,7 +778,7 @@ GRANT SELECT, INSERT ON mydatabase.* TO myuser;
 
 GRANT 和 REVOKE 可在几个层次上控制访问权限：
 
-- 整个服务器，使用 GRANT ALL 和 REVOKE ALL；
+- 整个服务器，使用 ON \*.\*；
 - 整个数据库，使用 ON database.\*；
 - 特定的表，使用 ON database.table；
 - 特定的列；
