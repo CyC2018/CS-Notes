@@ -9,24 +9,23 @@
         * [2. 按照字符出现次数对字符串排序](#2-按照字符出现次数对字符串排序)
     * [荷兰国旗问题](#荷兰国旗问题)
         * [1. 按颜色进行排序](#1-按颜色进行排序)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 ## 快速选择
 
-用于求解   **Kth Element**   问题，也就是第 K 个元素的问题。
+用于求解 Kth Element 问题，也就是第 K 个元素的问题。
 
 可以使用快速排序的 partition() 进行实现。需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
 
 ## 堆
 
-用于求解   **TopK Elements**   问题，也就是 K 个最大元素的问题。使用大小为 K 的小顶堆来实现：不断地往小顶堆中插入新元素，当堆中元素的数量大于 K 时，移除堆顶元素，也就是当前堆中最小的元素，剩下的元素都为当前添加过的元素中最大的 K 个元素。插入和移除堆顶元素的时间复杂度都为 log<sub>2</sub>K。
+用于求解 TopK Elements 问题，也就是 K 个最大元素的问题。使用大小为 K 的小顶堆来实现：不断地往小顶堆中插入新元素，当堆中元素的数量大于 K 时，移除堆顶元素，也就是当前堆中最小的元素，剩下的元素都为当前添加过的元素中最大的 K 个元素。插入和移除堆顶元素的时间复杂度都为 O(logK)。
 
 堆也可以用于求解 Kth Element 问题，得到了大小为 K 的小顶堆之后，堆顶元素就是第 K 大的元素。同理，求 K 个最小元素或者第 K 小的元素时使用大顶堆。
 
-快速选择也可以求解 TopK Elements 问题，因为找到 Kth Element 之后，再遍历一次数组，所有大于等于 Kth Element 的元素都是 TopK Elements。
-
-可以看到，快速选择和堆排序都可以求解 Kth Element 和 TopK Elements 问题。
+快速选择也可以求解 TopK Elements 问题：快速选择结束时，第 K 大的元素已经位于下标 N - K，它右边的都不小于它，取数组最后 K 个元素即可，这 K 个元素之间不保证有序。不能简单地取出所有大于等于第 K 大元素的数，有重复值时会多于 K 个。
 
 ### 1. Kth Element
 
@@ -41,7 +40,7 @@ Output: 5
 
 题目描述：找到数组中第 k 大的元素。
 
-**排序**  ：时间复杂度 O(NlogN)，空间复杂度 O(1)
+排序：时间复杂度 O(NlogN)，空间复杂度 O(logN)（JDK 对基本类型的排序在部分输入下还会分配额外的数组）。
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -50,7 +49,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**堆**  ：时间复杂度 O(NlogK)，空间复杂度 O(K)。
+堆：时间复杂度 O(NlogK)，空间复杂度 O(K)。
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -64,7 +63,13 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-**快速选择**  ：平均时间复杂度 O(N)，空间复杂度 O(1)
+快速选择：平均时间复杂度 O(N)，空间复杂度 O(1)。
+
+第 k 大的元素就是升序排序后下标为 N - k 的元素。partition() 与快速排序的[切分](算法%20-%20排序.md#2-切分)相同，返回切分元素的最终位置 j，它左边的元素都不大于它，右边的都不小于它。j 等于目标下标时直接得到答案；j 小于目标下标时只需要在右半边继续切分，否则在左半边，每次只处理一边，平均下来总的比较次数是 N + N / 2 + N / 4 + ... ≈ 2N。
+
+以 [3, 2, 1, 5, 6, 4]、k = 2 为例（为便于对照没有打乱），两轮切分就找到了答案：
+
+<div align="center"> <img src="pics/lc-sort-quickselect.png" width="700px"/> </div><br>
 
 ```java
 public int findKthLargest(int[] nums, int k) {
@@ -179,6 +184,8 @@ Explanation:
 So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
 ```
 
+把每个字符按出现次数放进桶中，从出现次数最多的桶开始，把每个字符重复它的出现次数拼接起来。
+
 ```java
 public String frequencySort(String s) {
     Map<Character, Integer> frequencyForNum = new HashMap<>();
@@ -230,6 +237,8 @@ Output: [0,0,1,1,2,2]
 
 题目描述：只有 0/1/2 三种颜色。
 
+三个指针把数组分成四段：[0, zero] 全是 0，[zero + 1, one - 1] 全是 1，[one, two - 1] 还没处理，[two, n - 1] 全是 2。one 指向的数为 0 时，与 zero + 1 交换，交换过来的数一定是 1（或者就是它自己），因此 one 可以前进；为 2 时与 two - 1 交换，换过来的数还没看过，one 不能前进。
+
 ```java
 public void sortColors(int[] nums) {
     int zero = -1, one = 0, two = nums.length;
@@ -250,3 +259,8 @@ private void swap(int[] nums, int i, int j) {
     nums[j] = t;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- Sedgewick R, Wayne K. 算法（第 4 版）[M]. 人民邮电出版社, 2012.

@@ -8,6 +8,7 @@
     * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
     * [6. 查找区间](#6-查找区间)
     * [7. 两个有序数组的中位数](#7-两个有序数组的中位数)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -47,14 +48,14 @@ public int binarySearch(int[] nums, int key) {
 - m = (l + h) / 2
 - m = l + (h - l) / 2
 
-l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算方法。
+l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都不小于 0，因此 h - l 不会出现溢出问题。所以，最好使用第二种计算方法。
 
 #### 未成功查找的返回值
 
 循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
 
-- -1：以一个错误码表示没有查找到 key
-- l：将 key 插入到 nums 中的正确位置
+- -1：以一个错误码表示没有查找到 key；
+- l：将 key 插入到 nums 中的正确位置。
 
 #### 变种
 
@@ -77,9 +78,9 @@ public int binarySearch(int[] nums, int key) {
 
 该实现和正常实现有以下不同：
 
-- h 的赋值表达式为 h = m
-- 循环条件为 l \< h
-- 最后返回 l 而不是 -1
+- h 的赋值表达式为 h = m；
+- 循环条件为 l \< h；
+- 最后返回 l 而不是 -1。
 
 在 nums[m] \>= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
 
@@ -95,7 +96,7 @@ l   m   h
 ...
 ```
 
-当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
+当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端先判断返回值小于 nums.length，再判断该位置上的值和 key 是否相等。
 
 ## 1. 求开方
 
@@ -112,7 +113,7 @@ Output: 2
 Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
 ```
 
-一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
+要找的是满足 r * r \<= x 的最大整数 r，它一定在 1 \~ x 之间（x \>= 2 时），可以用二分查找。比较 mid 和 x / mid 而不是计算 mid * mid，是为了避免乘法溢出。
 
 对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l \<= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
 
@@ -157,6 +158,8 @@ Output: "c"
 
 题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符，如果找不到就返回第 1 个字符。
 
+letters[m] \<= target 时答案一定在 m 的右边，令 l = m + 1；否则 m 可能就是答案，令 h = m - 1 继续在左边找更小的。循环结束时 l = h + 1，指向第一个大于 target 的字符，l 等于 n 表示所有字符都不大于 target。
+
 ```java
 public char nextGreatestLetter(char[] letters, char target) {
     int n = letters.length;
@@ -189,6 +192,8 @@ Output: 2
 要求以 O(logN) 时间复杂度进行求解，因此不能遍历数组并进行异或操作来求解，这么做的时间复杂度为 O(N)。
 
 令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 \< index，那么 nums[m] == nums[m + 1]；m + 1 \>= index，那么 nums[m] != nums[m + 1]。
+
+例如 [1, 1, 2, 3, 3, 4, 4, 8, 8] 中 index = 2：m = 0 时 nums[0] == nums[1]，还没到 index；m = 4 时 nums[4] = 3、nums[5] = 4，成对状态已经被打乱，index 在 m 或它的左边。
 
 从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 index 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 index 所在的数组位置为 [l, m]，此时令 h = m。
 
@@ -250,6 +255,12 @@ Input: [3,4,5,1,2],
 Output: 1
 ```
 
+题目描述：一个升序数组在某个位置被旋转，数组中的元素互不相同，求最小值。
+
+旋转后的数组分为两段升序，后一段的元素都小于前一段，最小值是后一段的第一个元素。用 nums[m] 和区间末尾的 nums[h] 比较：nums[m] \<= nums[h] 说明 m 已经在后一段，最小值在 [l, m] 中，令 h = m；否则 m 还在前一段，最小值在 [m + 1, h] 中，令 l = m + 1。
+
+不能改为和 nums[l] 比较：nums[m] \> nums[l] 时，可能是 m 在前一段，也可能是 [l, h] 这一段本身没有旋转、最小值就是 nums[l]，两种情况无法区分。
+
 ```java
 public int findMin(int[] nums) {
     int l = 0, h = nums.length - 1;
@@ -267,7 +278,7 @@ public int findMin(int[] nums) {
 
 ## 6. 查找区间
 
-34\. Find First and Last Position of Element in Sorted Array
+34\. Find First and Last Position of Element in Sorted Array (Medium)
 
 [Leetcode](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) / [力扣](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
@@ -308,13 +319,13 @@ private int findFirst(int[] nums, int target) {
 }
 ```
 
-在寻找第一个位置的二分查找代码中，需要注意 h 的取值为 nums.length，而不是 nums.length - 1。先看以下示例：
+在寻找第一个位置的二分查找代码中，需要注意 h 的初始值为 nums.length，而不是 nums.length - 1。先看以下示例：
 
 ```text
 nums = [2,2], target = 2
 ```
 
-如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findFirst 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3)，希望返回 3 应该插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以需要将 h 取值为 nums.length，从而使得 findFirst 返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
+findFirst(nums, 3) 要返回 3 应该插入的位置，也就是 nums.length = 2，于是 last = 2 - 1 = 1。如果 h 的初始值为 nums.length - 1，findFirst 的返回值只能在 [0, nums.length - 1] 中，这里会返回 1，得到错误的 last = 0。
 
 ## 7. 两个有序数组的中位数
 
@@ -324,7 +335,11 @@ nums = [2,2], target = 2
 
 题目描述：求两个有序数组合并后的中位数，要求时间复杂度为 O(log(m + n))。
 
-把问题转化为求两个数组合并后第 k 小的数。比较两个数组各自的第 k / 2 个元素，较小的那个元素以及它前面的元素都不可能是第 k 小，可以一次排除，然后在剩下的部分里寻找第 k - 排除个数 小的数。k 每轮减半，时间复杂度为 O(log(m + n))。
+把问题转化为求两个数组合并后第 k 小的数。比较两个数组各自的第 k / 2 个元素，假设 nums1 的不大于 nums2 的。合并时让相等的元素中 nums1 的排在前面，那么排在它前面的最多只有 nums1 中的 k / 2 - 1 个和 nums2 中的 k / 2 - 1 个，它最多排在第 k - 1 位，因此 nums1 的前 k / 2 个元素都排在第 k 小之前，可以一次排除。
+
+排除了 x 个数之后，在剩下的部分里寻找第 k - x 小的数；某个数组剩余的长度不足 k / 2 时，取它的最后一个元素比较。k 每轮减半，时间复杂度为 O(log(m + n))。
+
+<div align="center"> <img src="pics/lc-bs-median-kth.png" width="760px"/> </div><br>
 
 ```java
 public double findMedianSortedArrays(int[] nums1, int[] nums2) {
@@ -354,3 +369,7 @@ private int kth(int[] nums1, int i, int[] nums2, int j, int k) {
     return kth(nums1, i, nums2, b + 1, k - (b - j + 1));
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)

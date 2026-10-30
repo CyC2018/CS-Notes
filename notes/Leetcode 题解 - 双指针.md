@@ -11,6 +11,8 @@
     * [8. 三数之和](#8-三数之和)
     * [9. 接雨水](#9-接雨水)
     * [10. 最小覆盖子串](#10-最小覆盖子串)
+    * [11. 无重复字符的最长子串](#11-无重复字符的最长子串)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -34,6 +36,8 @@ Output: index1=1, index2=2
 - 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
 - 如果 sum \> target，移动较大的元素，使 sum 变小一些；
 - 如果 sum \< target，移动较小的元素，使 sum 变大一些。
+
+这样移动不会错过答案：sum \< target 时，numbers[i] 与 i、j 之间任何元素的和都不超过 sum，i 不可能属于答案；sum \> target 时同理排除 j。
 
 数组中的元素最多遍历一次，时间复杂度为 O(N)。只使用了两个额外变量，空间复杂度为  O(1)。
 
@@ -71,11 +75,9 @@ Explanation: 1 * 1 + 2 * 2 = 5
 
 题目描述：判断一个非负整数是否为两个整数的平方和。
 
-可以看成是在元素为 0\~target 的有序数组中查找两个数，使得这两个数的平方和为 target，如果能找到，则返回 true，表示 target 是两个整数的平方和。
+可以看成是在元素为 0\~target 的有序数组中查找两个数，使得这两个数的平方和为 target，做法与[有序数组的 Two Sum](#1-有序数组的-two-sum)相同，只是把和换成了平方和。
 
-本题和 167\. Two Sum II - Input array is sorted 类似，只有一个明显区别：一个是和为 target，一个是平方和为 target。本题同样可以使用双指针得到两个数，使其平方和为 target。
-
-本题的关键是右指针的初始化，实现剪枝，从而降低时间复杂度。设右指针为 x，左指针固定为 0，为了使 0<sup>2</sup> + x<sup>2</sup> 的值尽可能接近 target，可以将 x 取为 sqrt(target)。
+本题的关键是右指针的初始化，实现剪枝，从而降低时间复杂度。两个数都不会超过 sqrt(target)，因此右指针从 sqrt(target) 开始即可。
 
 因为最多只需要遍历一次 0\~sqrt(target)，所以时间复杂度为 O(sqrt(target))。又因为只使用了两个额外的变量，因此空间复杂度为 O(1)。
 
@@ -113,8 +115,8 @@ Given s = "leetcode", return "leotcede".
 
 为了快速判断一个字符是不是元音字符，将全部元音字符添加到集合 HashSet 中，从而以 O(1) 的时间复杂度进行该操作。
 
-- 时间复杂度为 O(N)：只需要遍历所有元素一次
-- 空间复杂度 O(N)：Java 的字符串不可修改，需要一个与 s 等长的字符数组保存结果
+- 时间复杂度为 O(N)：只需要遍历所有元素一次；
+- 空间复杂度为 O(N)：Java 的字符串不可修改，需要一个与 s 等长的字符数组保存结果。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ef25ff7c-0f63-420d-8b30-eafbeea35d11.gif" width="400px"> </div><br>
 
@@ -230,7 +232,9 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 
 [Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
 
-使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。
+使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。这是因为进入环之后，快指针每次比慢指针多走一步，两者的距离每次缩小 1，不会跳过慢指针。
+
+求环的入口时，快慢指针都要从头节点出发，做法见[剑指 Offer 23](23.%20链表中环的入口结点.md)。
 
 ```java
 public boolean hasCycle(ListNode head) {
@@ -267,6 +271,8 @@ Output:
 
 通过删除字符串 s 中的一些字符能得到字符串 t，可以认为 t 是 s 的子序列。使用双指针可以判断一个字符串是否为另一个字符串的子序列。
 
+遍历 d 时，比当前答案短、或者一样长但字典序更大的字符串直接跳过。
+
 ```java
 public String findLongestWord(String s, List<String> d) {
     String longestWord = "";
@@ -275,14 +281,14 @@ public String findLongestWord(String s, List<String> d) {
         if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
             continue;
         }
-        if (isSubstr(s, target)) {
+        if (isSubsequence(s, target)) {
             longestWord = target;
         }
     }
     return longestWord;
 }
 
-private boolean isSubstr(String s, String target) {
+private boolean isSubsequence(String s, String target) {
     int i = 0, j = 0;
     while (i < s.length() && j < target.length()) {
         if (s.charAt(i) == target.charAt(j)) {
@@ -307,13 +313,18 @@ Output: [[-1, -1, 2], [-1, 0, 1]]
 
 题目描述：找出所有和为 0 且不重复的三元组。
 
-先排序，然后枚举第一个数 nums[i]，在它右边用第 1 题的双指针方法寻找和为 -nums[i] 的两个数。去重的关键是跳过相同的值：i 跳过与前一个数相同的值，找到一组解之后，两个指针也跳过相同的值。时间复杂度为 O(N<sup>2</sup>)。
+先排序，然后枚举第一个数 nums[i]，在它右边用[有序数组的 Two Sum](#1-有序数组的-two-sum)的双指针方法寻找和为 -nums[i] 的两个数。去重的关键是跳过相同的值：i 跳过与前一个数相同的值，找到一组解之后，两个指针也跳过相同的值。nums[i] 大于 0 时三个数都大于 0，可以直接结束。时间复杂度为 O(N<sup>2</sup>)。以 [-2, -2, 0, 0, 2, 2] 为例：
+
+<div align="center"> <img src="pics/lc-two-pointers-3sum.png" width="640px"/> </div><br>
 
 ```java
 public List<List<Integer>> threeSum(int[] nums) {
     Arrays.sort(nums);
     List<List<Integer>> ret = new ArrayList<>();
     for (int i = 0; i < nums.length - 2; i++) {
+        if (nums[i] > 0) {
+            break;
+        }
         if (i > 0 && nums[i] == nums[i - 1]) {
             continue;
         }
@@ -354,7 +365,7 @@ Output: 6
 
 位置 i 上方能存的水，取决于它左边最高的柱子和右边最高的柱子中较矮的那一个：water[i] = min(leftMax, rightMax) - height[i]。
 
-用两个指针从两端向中间移动，分别维护 leftMax 和 rightMax。如果 leftMax < rightMax，左指针处的水位只由 leftMax 决定，因为右边已经有一根不低于 rightMax 的柱子，可以直接结算左指针并右移；反之结算右指针并左移。
+用两个指针从两端向中间移动，leftMax、rightMax 分别是 [0, l] 和 [r, n - 1] 中最高的柱子。如果 leftMax < rightMax，左指针右边最高的柱子不低于 rightMax，水位只由 leftMax 决定，可以直接结算左指针并右移；反之结算右指针并左移。不需要额外的数组，空间复杂度为 O(1)。
 
 <div align="center"> <img src="pics/trapping-rain-water.png" width="600px"/> </div><br>
 
@@ -390,6 +401,19 @@ Output: "BANC"
 
 使用滑动窗口。need[c] 表示窗口还缺几个字符 c，missing 表示一共还缺几个字符。右指针不断扩大窗口，直到 missing 为 0，此时窗口包含了 t 的所有字符；然后移动左指针缩小窗口，在窗口仍然满足条件时更新答案。
 
+need[c] 可以小于 0，表示窗口中的 c 比需要的多。因此只有加入前 need[c] 大于 0 的 c 才让 missing 减一，移出后 need[c] 大于 0 时 missing 才加一。例如 s = "AAAB"、t = "AAB"：
+
+```text
+操作    窗口   need[A]  need[B]  missing
+初始           2        1        3
+加入 A  A      1        1        2
+加入 A  AA     0        1        1
+加入 A  AAA    -1       1        1        多出一个 A，missing 不变
+加入 B  AAAB   -1       0        0        满足条件，记录长度 4
+移出 A  AAB    0        0        0        仍满足条件，记录长度 3
+移出 A  AB     1        0        1        又缺一个 A，停止收缩
+```
+
 ```java
 public String minWindow(String s, String t) {
     int[] need = new int[128];
@@ -414,3 +438,38 @@ public String minWindow(String s, String t) {
     return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
 }
 ```
+
+## 11. 无重复字符的最长子串
+
+3\. Longest Substring Without Repeating Characters (Medium)
+
+[Leetcode](https://leetcode.com/problems/longest-substring-without-repeating-characters/) / [力扣](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+
+```text
+Input: s = "pwwkew"
+Output: 3
+```
+
+题目描述：求不含重复字符的最长子串的长度，字符都在 ASCII 范围内。
+
+使用滑动窗口，保证窗口 [l, r] 内没有重复字符。last[c] 是字符 c 上次出现位置的下一位，右指针遇到 c 时，左指针移到 max(l, last[c])：c 上次出现的位置可能已经在窗口左边，左指针不能后退。时间复杂度为 O(N)。
+
+同一道题的另一种写法见[剑指 Offer 48](48.%20最长不含重复字符的子字符串.md)。
+
+```java
+public int lengthOfLongestSubstring(String s) {
+    int[] last = new int[128]; // 字符上次出现位置的下一位
+    int ret = 0;
+    for (int l = 0, r = 0; r < s.length(); r++) {
+        char c = s.charAt(r);
+        l = Math.max(l, last[c]);
+        ret = Math.max(ret, r - l + 1);
+        last[c] = r + 1;
+    }
+    return ret;
+}
+```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)

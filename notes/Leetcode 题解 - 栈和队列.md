@@ -9,6 +9,7 @@
     * [6. 循环数组中比当前元素大的下一个元素](#6-循环数组中比当前元素大的下一个元素)
     * [7. 字符串解码](#7-字符串解码)
     * [8. 基本计算器](#8-基本计算器)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -19,6 +20,8 @@
 [Leetcode](https://leetcode.com/problems/implement-queue-using-stacks/description/) / [力扣](https://leetcode-cn.com/problems/implement-queue-using-stacks/description/)
 
 栈的顺序为后进先出，而队列的顺序为先进先出。使用两个栈实现队列，一个元素需要经过两个栈才能出队列，在经过第一个栈时元素顺序被反转，经过第二个栈时再次被反转，此时就是先进先出顺序。
+
+需要注意的是，只有 out 为空时才把 in 中的元素整体倒进 out，否则后进入的元素会压在先进入的元素上面。每个元素最多被压入、弹出 in 和 out 各一次，因此单次操作的均摊时间复杂度为 O(1)。
 
 ```java
 class MyQueue {
@@ -99,6 +102,8 @@ class MyStack {
 
 [Leetcode](https://leetcode.com/problems/min-stack/description/) / [力扣](https://leetcode-cn.com/problems/min-stack/description/)
 
+用一个辅助栈 minStack 与数据栈同步压入和弹出，minStack 的每个位置保存数据栈从栈底到该位置的最小值。例如依次压入 3、5、2，minStack 为 3、3、2；弹出 2 之后，栈顶的 3 就是剩下元素的最小值。
+
 ```java
 class MinStack {
 
@@ -134,7 +139,7 @@ class MinStack {
 }
 ```
 
-对于实现最小值队列问题，可以先将队列使用栈来实现，然后就将问题转换为最小值栈，这个问题出现在 编程之美：3.7。
+最小值队列可以用两个最小值栈实现（见[用栈实现队列](#1-用栈实现队列)），队列的最小值就是两个栈的最小值中较小的那个，这个问题出自《编程之美》3.7。
 
 ## 4. 用栈实现括号匹配
 
@@ -147,6 +152,8 @@ class MinStack {
 
 Output : true
 ```
+
+左括号压栈；遇到右括号时，栈顶必须是与它配对的左括号，否则不合法。遍历结束后栈必须为空，例如 "((" 的每一步都没有出错，但仍不合法。
 
 ```java
 public boolean isValid(String s) {
@@ -182,7 +189,11 @@ Input: [73, 74, 75, 71, 69, 72, 76, 73]
 Output: [1, 1, 4, 2, 1, 1, 0, 0]
 ```
 
-在遍历数组时用栈把数组中的数存起来，如果当前遍历的数比栈顶元素来得大，说明栈顶元素的下一个比它大的数就是当前元素。
+栈中保存还没有等到更高温度的下标。遍历到 curIndex 时，只要当前温度比栈顶下标的温度高，栈顶下标的答案就是 curIndex，弹出它并记录距离；弹完之后再把 curIndex 压栈。因此栈中下标对应的温度从栈底到栈顶单调不增（相等的温度不会弹栈），这种栈称为单调栈。
+
+<div align="center"> <img src="pics/lc-stack-daily-temps.png" width="720px"/> </div><br>
+
+每个下标最多入栈、出栈各一次，时间复杂度为 O(N)。
 
 ```java
 public int[] dailyTemperatures(int[] temperatures) {
@@ -214,7 +225,9 @@ The number 2 can't find next greater number;
 The second 1's next greater number needs to search circularly, which is also 2.
 ```
 
-与 739. Daily Temperatures (Medium) 不同的是，数组是循环数组，并且最后要求的不是距离而是下一个元素。
+与[每日温度](#5-数组中元素与下一个比它大的元素之间的距离)不同的是，数组是循环数组，并且最后要求的不是距离而是下一个元素。
+
+把数组遍历两遍，相当于在原数组后面再接一份，靠后的元素在第二遍中就能找到位于数组开头的更大元素。第二遍只负责弹栈、填写答案，不再压栈。
 
 ```java
 public int[] nextGreaterElements(int[] nums) {
@@ -289,7 +302,7 @@ Output: 5
 
 题目描述：计算只包含非负整数、+、-、*、/ 和空格的表达式，整数除法向零截断。
 
-乘除的优先级高于加减。读到一个数字之后，先不急着计算，等读到它后面的运算符时，再根据它前面的运算符处理：+ 把数字压栈，- 把相反数压栈，* 和 / 与栈顶元素计算后再放回。最后把栈中所有元素相加。
+乘除的优先级高于加减。读到一个数字之后，先不急着计算，等读到它后面的运算符时，再根据它前面的运算符处理：+ 把数字压栈，- 把相反数压栈，* 和 / 与栈顶元素计算后再放回。最后把栈中所有元素相加。例如 3+5/2：读到 + 时按前面默认的 + 压入 3，读到 / 时压入 5，读完字符串时按 / 把栈顶的 5 换成 5 / 2 = 2，结果为 3 + 2 = 5。
 
 ```java
 public int calculate(String s) {
@@ -322,3 +335,8 @@ public int calculate(String s) {
     return ret;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- 《编程之美》小组. 编程之美 [M]. 电子工业出版社, 2008.

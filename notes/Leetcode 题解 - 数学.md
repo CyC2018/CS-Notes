@@ -26,6 +26,7 @@
         * [3. 乘积数组](#3-乘积数组)
         * [4. 找出数组中的乘积最大的三个数](#4-找出数组中的乘积最大的三个数)
         * [5. 用 Rand7() 实现 Rand10()](#5-用-rand7-实现-rand10)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -91,14 +92,14 @@ int lcm(int a, int b) {
 
 ### 3. 使用位操作和减法求解最大公约数
 
-编程之美：2.7
+《编程之美》2.7
 
 对于 a 和 b 的最大公约数 f(a, b)，有：
 
-- 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2);
-- 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
-- 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
-- 如果 a 和 b 均为奇数，f(a, b) = f(b, a-b);
+- 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2)；
+- 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b)；
+- 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2)；
+- 如果 a 和 b 均为奇数，f(a, b) = f(b, a-b)。
 
 乘 2 和除 2 都可以转换为移位操作。
 
@@ -213,7 +214,7 @@ public String toHex(int num) {
 28 -> AB
 ```
 
-因为是从 1 开始计算的，而不是从 0 开始，因此需要对 n 执行 -1 操作。
+这种表示没有 0，A \~ Z 对应 1 \~ 26，每一位的取值是 1 \~ 26 而不是 0 \~ 25。先把 n 减 1，最低位就变成 0 \~ 25，对应 A \~ Z，再对 (n - 1) / 26 递归处理更高位。例如 52：51 % 26 = 25 对应 Z，51 / 26 = 1 对应 A，结果为 AZ。
 
 ```java
 public String convertToTitle(int n) {
@@ -243,7 +244,7 @@ public int trailingZeroes(int n) {
 }
 ```
 
-如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 编程之美：2.2 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
+如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自《编程之美》2.2。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
 
 ## 字符串加法减法
 
@@ -348,7 +349,7 @@ public int minMoves2(int[] nums) {
 
 #### 解法 2
 
-使用快速选择找到中位数，平均时间复杂度 O(N)
+使用快速选择找到中位数，平均时间复杂度 O(N)。下面的实现固定以第一个元素为基准，输入已经有序时每次只能排除一个元素，退化为 O(N<sup>2</sup>)，可以先随机打乱数组或随机选取基准。
 
 ```java
 public int minMoves2(int[] nums) {
@@ -414,7 +415,11 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2，因为如果多于 i / 2 的话 cnt 就一定不会为 0。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+Boyer-Moore 多数投票算法（Boyer-Moore Majority Vote Algorithm）可以在 O(N) 时间、O(1) 空间内解决这个问题。它维护一个候选元素 majority 和计数 cnt：遇到和候选相同的元素 cnt 加一，不同的元素 cnt 减一，相当于让两个不同的元素互相抵消；cnt 为 0 时把当前元素作为新的候选。
+
+每次抵消的是一对不同的元素，其中最多有一个是多数元素，所以抵消掉若干对之后，多数元素在剩下的元素中出现的次数仍然多于一半。cnt 回到 0 时，从上次 cnt 为 0 到现在扫过的一段恰好两两抵消完，可以整段丢掉，从下一个元素重新开始；扫描结束时没有被抵消的候选就是多数元素。本题保证多数元素存在，否则还要再遍历一次，确认候选的出现次数确实多于 n / 2。
+
+<div align="center"> <img src="pics/lc-math-majority-vote.png" width="520px"/> </div><br>
 
 ```java
 public int majorityElement(int[] nums) {
@@ -444,7 +449,7 @@ Returns: True
 
 间隔：3,5,7,...
 
-间隔为等差数列，使用这个特性可以得到从 1 开始的平方序列。
+间隔为等差数列，使用这个特性可以得到从 1 开始的平方序列：依次减去 1、3、5……，num 是完全平方数当且仅当恰好减到 0。这种做法的时间复杂度为 O(sqrt(N))。
 
 ```java
 public boolean isPerfectSquare(int num) {
@@ -462,6 +467,8 @@ public boolean isPerfectSquare(int num) {
 326\. Power of Three (Easy)
 
 [Leetcode](https://leetcode.com/problems/power-of-three/description/) / [力扣](https://leetcode-cn.com/problems/power-of-three/description/)
+
+1162261467 是 int 范围内最大的 3 的幂（3<sup>19</sup>）。3 是素数，3<sup>19</sup> 的正约数只有 3<sup>0</sup> \~ 3<sup>19</sup>，因此能整除它的正整数一定是 3 的幂。
 
 ```java
 public boolean isPowerOfThree(int n) {
@@ -482,6 +489,15 @@ For example, given [1,2,3,4], return [24,12,8,6].
 给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
 
 要求时间复杂度为 O(N)，并且不能使用除法。
+
+除了 nums[i] 之外所有元素的乘积，等于它左边所有元素的乘积乘以右边所有元素的乘积。第一遍从左往右把左边的乘积 left 写进 products，第二遍从右往左再乘上右边的乘积 right，输出数组之外只用了两个变量。例如 [2, 3, 4, 5]：
+
+```text
+下标          0    1    2    3
+左边的乘积    1    2    6   24
+右边的乘积   60   20    5    1
+结果         60   40   30   24
+```
 
 ```java
 public int[] productExceptSelf(int[] nums) {
@@ -512,6 +528,8 @@ public int[] productExceptSelf(int[] nums) {
 Input: [1,2,3,4]
 Output: 24
 ```
+
+数组中可能有负数，乘积最大的三个数只有两种可能：最大的三个数，或者最大的数乘以最小的两个数（两个负数相乘为正）。遍历一次记录最大的三个数和最小的两个数，取两种乘积中较大的一个。
 
 ```java
 public int maximumProduct(int[] nums) {
@@ -547,7 +565,7 @@ public int maximumProduct(int[] nums) {
 
 题目描述：已知 rand7() 等概率返回 1 \~ 7，只用它实现等概率返回 1 \~ 10 的 rand10()。
 
-把两次 rand7() 的结果看成一个两位的 7 进制数，(rand7() - 1) * 7 + rand7() 能等概率地生成 1 \~ 49。只保留 1 \~ 40，它们对 10 取余之后 0 \~ 9 各出现 4 次，仍然是等概率的；落在 41 \~ 49 时重新生成，这种方法称为拒绝采样。
+把两次 rand7() 的结果看成一个两位的 7 进制数，(rand7() - 1) * 7 + rand7() 能等概率地生成 1 \~ 49。只保留 1 \~ 40，它们对 10 取余之后 0 \~ 9 各出现 4 次，仍然是等概率的；落在 41 \~ 49 时重新生成，这种方法称为拒绝采样。每轮成功的概率为 40 / 49，平均需要 49 / 40 ≈ 1.23 轮，也就是约 2.45 次 rand7()。
 
 ```java
 public int rand10() {
@@ -559,3 +577,8 @@ public int rand10() {
     }
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- 《编程之美》小组. 编程之美 [M]. 电子工业出版社, 2008.

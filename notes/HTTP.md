@@ -70,6 +70,9 @@
         * [A9 证书验证](#a9-证书验证)
         * [A10 TLS 握手报文与密钥交换](#a10-tls-握手报文与密钥交换)
         * [A11 HTTPS 各阶段的耗时](#a11-https-各阶段的耗时)
+        * [A12 HTTP/2 的并发流上限](#a12-http2-的并发流上限)
+        * [A13 301 与 302 的缓存](#a13-301-与-302-的缓存)
+        * [A14 对称加密与非对称加密的速度](#a14-对称加密与非对称加密的速度)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -161,7 +164,7 @@ HEAD 用于获取报文首部，和 GET 方法类似，但是不返回报文实�
 
 POST 用于传输实体主体，主要用来传输数据，而 GET 主要用来获取资源。
 
-更多 POST 与 GET 的比较请见第九章。
+更多 POST 与 GET 的比较见 [GET 和 POST 比较](#九get-和-post-比较)。
 
 ### PUT
 
@@ -253,13 +256,15 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 - 307 Temporary Redirect：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法；
 - 308 Permanent Redirect：永久重定向，与 301 的含义类似，但不允许改变请求方法。
 
+301 和 302 的区别也体现在缓存上：没有缓存指令时，301 默认可以缓存，浏览器之后直接跳到新地址（Edge 156 实测，见[附录 A13](#a13-301-与-302-的缓存)），搜索引擎也会改为收录新地址，适合域名迁移；302 默认不缓存，每次都先访问旧地址，适合登录后跳回原页面这类临时跳转。
+
 需要注意的是，RFC 9110 出于历史原因允许用户代理在 301、302 重定向时把 POST 方法改成 GET 方法，大多数浏览器也是这么做的。如果不希望方法被改变，应该使用 307 或者 308。
 
 ### 4XX 客户端错误
 
 - 400 Bad Request：请求报文中存在语法错误；
 - 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败；
-- 403 Forbidden：请求被拒绝；
+- 403 Forbidden：服务器理解请求但拒绝执行，例如已登录的普通用户访问管理接口，凭证有效但权限不够（401 是没有认证或者认证失败）；
 - 404 Not Found：服务器上没有找到请求的资源；
 - 429 Too Many Requests：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
 
@@ -321,7 +326,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 | 首部字段名 | 说明 |
 | :--: | :--: |
 | Accept-Ranges | 是否接受字节范围请求 |
-| Age | 推算资源创建经过时间 |
+| Age | 响应在缓存中已经存放的秒数 |
 | ETag | 资源的匹配信息 |
 | Location | 令客户端重定向至指定 URI |
 | Proxy-Authenticate | 代理服务器对客户端的认证信息 |
@@ -353,18 +358,20 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 
 #### 1. 短连接与长连接
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问的 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大。
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问的 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大：每个连接都要先经过 [三次握手](计算机网络%20-%20传输层.md#tcp-的三次握手)，主动关闭的一方还要在 [TIME_WAIT](计算机网络%20-%20传输层.md#大量-time_wait-与-close_wait) 中保留连接（Linux 为 60 秒），频繁访问时会耗尽本地端口。
 
 长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
 - 从 HTTP/1.1 开始默认是长连接的，如果要断开连接，需要由客户端或者服务器端提出断开，使用 `Connection: close`；
 - 在 HTTP/1.1 之前默认是短连接的，如果需要使用长连接，则使用 `Connection: Keep-Alive`。
 
+长连接也不会一直保持：服务器在连接空闲一段时间后关闭它，例如 Nginx 的 keepalive_timeout 默认 75 秒，一个连接上处理的请求数达到 keepalive_requests（默认 1000）时也会关闭。它和 TCP 的保活机制（keepalive）不是一回事，后者由内核在连接空闲很久后发送探测报文，见 [心跳与重连](系统设计基础.md#心跳与重连)。
+
 #### 2. 流水线
 
 默认情况下，HTTP 请求是按顺序发出的，下一个请求只有在当前请求收到响应之后才会被发出。由于受到网络延迟和带宽的限制，在下一个请求被发送到服务器之前，可能需要等待很长时间。
 
-流水线是在同一条长连接上连续发出请求，而不用等待响应返回，这样可以减少延迟。但服务器必须按请求的顺序返回响应，前面的响应慢了，后面的都要等待，称为队头阻塞，加上很多代理处理不好流水线，主流浏览器都没有启用它。HTTP/2 用多路复用解决了这个问题，见 [二进制分帧层](#二进制分帧层)。
+流水线是在同一条长连接上连续发出请求，而不用等待响应返回，这样可以减少延迟。但服务器必须按请求的顺序返回响应，前面的响应慢了，后面的都要等待，称为队头阻塞，加上很多代理处理不好流水线，主流浏览器都没有启用它。HTTP/2 用多路复用解决了这个问题，见 [二进制分帧层](#二进制分帧层)；TCP 层的队头阻塞仍然存在，见 [HTTP/3](#http3)。
 
 ### Cookie 🔥
 
@@ -372,7 +379,7 @@ HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使
 
 Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器之后向同一服务器再次发起请求时被携带上，用于告知服务端两个请求是否来自同一浏览器。由于之后每次请求都会需要携带 Cookie 数据，因此会带来额外的性能开销（尤其是在移动环境下）。
 
-Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API（本地存储和会话存储）或 IndexedDB。
+Cookie 曾经是浏览器中唯一的本地存储手段。现在只在本地使用的数据一般改存到 Web Storage（localStorage 和 sessionStorage）或 IndexedDB 中，Cookie 主要用来保存会话标识这类需要随请求发给服务器的数据。
 
 Cookie 与 Web Storage 的区别：
 
@@ -408,7 +415,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 
 #### 3. 分类
 
-- 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效；
+- 会话期 Cookie：没有指定过期时间，浏览器关闭之后一般会被删除（启用了会话恢复的浏览器可能保留）；
 - 持久性 Cookie：指定过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
 
 ```http
@@ -447,7 +454,7 @@ Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 
 标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
-SameSite 属性控制跨站请求是否携带 Cookie，用于防范跨站请求伪造，见 [设置 Cookie 的 SameSite 属性](攻击技术.md#3-设置-cookie-的-samesite-属性)。
+SameSite 属性控制跨站请求是否携带 Cookie，取值有 Strict、Lax 和 None，None 表示跨站请求也携带，必须同时设置 Secure。它用于防范跨站请求伪造，见 [设置 Cookie 的 SameSite 属性](攻击技术.md#3-设置-cookie-的-samesite-属性)。
 
 #### 8. Session
 
@@ -458,21 +465,26 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 使用 Session 维护用户登录状态的过程如下：
 
 - 用户进行登录时，用户提交包含用户名和密码的表单，放入 HTTP 请求报文中；
-- 服务器验证该用户名和密码，如果正确则把用户信息存储到 Redis 中，它在 Redis 中的 Key 称为 Session ID；
+- 服务器验证该用户名和密码，如果正确就生成一个随机的 Session ID，以它为 Key 把用户信息存储到 Redis 中；
 - 服务器返回的响应报文的 Set-Cookie 首部字段包含了这个 Session ID，客户端收到响应报文之后将该 Cookie 值存入浏览器中；
 - 客户端之后对同一个服务器进行请求时会包含该 Cookie 值，服务器收到之后提取出 Session ID，从 Redis 中取出用户信息，继续之前的业务操作。
 
-应该注意 Session ID 的安全性问题，不能让它被恶意攻击者轻易获取，那么就不能产生一个容易被猜到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
+<div align="center"> <img src="pics/http-session-login.png" width="760px"/> </div><br>
+
+Session 的过期由服务器控制，通常是一段时间没有访问就失效，例如 Tomcat 和 Spring Boot 默认 30 分钟；存在 Redis 中时给 Key 设置 TTL，每次访问时刷新，例如 session:9f2c7a41 → {"uid":1024}，TTL 1800 秒。关闭浏览器后，即使会话期 Cookie 被删除，服务器上的 Session 也要等到超时才被清除；用户主动退出时，服务器直接删除这个 Session。
+
+Session ID 相当于用户的登录凭证，拿到它就能冒充用户，所以它必须足够随机、不能被猜到；登录成功后要重新生成 Session ID，防止攻击者事先让用户使用一个自己知道的 Session ID（会话固定攻击）。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
 
 #### 9. 浏览器禁用 Cookie
 
-此时无法使用 Cookie 来保存用户信息，只能使用 Session。除此之外，不能再将 Session ID 存放到 Cookie 中，而是使用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递。
+此时无法使用 Cookie 来保存用户信息和 Session ID。如果仍使用 Session，可以用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递，例如 /orders;jsessionid=9f2c7a41。URL 中的 Session ID 容易随分享的链接和日志泄露，前后端分离的应用更常见的做法是由前端保存令牌，放在 Authorization 首部中发送，见 [JWT](#11-jwt)。
 
 #### 10. Cookie 与 Session 选择
 
-- Cookie 只能存储 ASCII 码字符串，而 Session 则可以存储任何类型的数据，因此在考虑数据复杂性时首选 Session；
-- Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
-- 对于大型网站，如果用户所有的信息都存储在 Session 中，那么开销是非常大的，因此不建议将所有的用户信息都存储到 Session 中。
+- 存放位置：Cookie 的数据保存在浏览器中；Session 的数据保存在服务器中，浏览器只保存 Session ID，通常也是放在 Cookie 中发送；
+- 安全：Cookie 的内容用户可以查看和修改，不能存放密码等隐私数据；需要防篡改时可以加签名，但签名不能隐藏内容；Session 的数据客户端拿不到；
+- 容量和类型：单个 Cookie 约 4 KB，只能是 ASCII 字符串；Session 可以存储任何类型的数据；
+- 开销：Cookie 每次请求都要携带，越大越浪费带宽；Session 占用服务器的内存，用户很多时不宜把所有用户信息都放进去，集群中还要共享。
 
 #### 11. JWT
 
@@ -500,7 +512,11 @@ JWT 与 Session 的区别：
 - Session 的状态保存在服务器，删除 Session 就能让用户立即下线；集群中需要共享 Session，见 [集群下的 Session 管理](集群.md#二集群下的-session-管理)；
 - JWT 的状态保存在令牌中，任何持有密钥的服务都能独立验证，适合多个服务共用登录状态；代价是令牌签发后在过期前一直有效，服务器无法主动让它失效。
 
-无法主动失效是 JWT 最常被追问的问题，常用的解决方法是双令牌：访问令牌（Access Token）的有效期很短，例如 15 分钟，每次请求都携带；刷新令牌（Refresh Token）的有效期较长，服务器记录已签发的刷新令牌，只在访问令牌过期时用它换取新的访问令牌。用户退出或者被封禁时撤销刷新令牌，已经发出的访问令牌最多 15 分钟后自然失效。需要立即失效时，可以把令牌的 ID 放入 Redis 黑名单，过期时间设为令牌的剩余有效期，但这又回到了在服务器保存状态。
+无法主动失效是 JWT 最常被追问的问题，常用的解决方法是双令牌：访问令牌（Access Token）的有效期很短，例如 15 分钟，每次请求都携带；刷新令牌（Refresh Token）的有效期较长，服务器记录已签发的刷新令牌，只在访问令牌过期时用它换取新的访问令牌。用户退出或者被封禁时撤销刷新令牌，已经发出的访问令牌最多 15 分钟后自然失效：
+
+<div align="center"> <img src="pics/jwt-refresh-timeline.png" width="760px"/> </div><br>
+
+需要立即失效时，可以把令牌的 ID 放入 Redis 黑名单，过期时间设为令牌的剩余有效期，但这又回到了在服务器保存状态。
 
 令牌在浏览器中的存放位置：放在 localStorage 中，页面上的任何脚本都能读取，一旦存在 XSS 漏洞，令牌就会被盗走；放在 HttpOnly 的 Cookie 中，脚本读不到，但浏览器会自动携带 Cookie，需要防范 [跨站请求伪造](攻击技术.md#二跨站请求伪造)。
 
@@ -524,7 +540,7 @@ OAuth 2.0 解决的是另一个问题：授权第三方应用访问用户在某�
 
 <div align="center"> <img src="pics/oauth-code-flow.png" width="760px"/> </div><br>
 
-按上图走一遍，第 ① 步之后浏览器访问的地址和第 ⑥ 步笔记网站后端发送的请求如下（用 Python 实现的最小授权服务器实测，见[附录 A1](#a1-oauth-20-授权码模式)，域名已替换，省略了部分字段）：
+按上图走一遍，第 ③ 步浏览器访问的地址和第 ⑥ 步笔记网站后端发送的请求如下（用 Python 实现的最小授权服务器实测，见[附录 A1](#a1-oauth-20-授权码模式)，域名已替换，省略了部分字段）：
 
 ```text
 GET https://id.example.com/authorize?response_type=code&client_id=notes-app
@@ -590,6 +606,8 @@ no-cache 指令规定缓存服务器需要先向源服务器验证缓存资源�
 Cache-Control: no-cache
 ```
 
+需要注意的是，no-cache 并不是不缓存，而是每次使用缓存之前都要向服务器确认；完全不允许缓存的是 no-store。
+
 ##### 3.3 私有缓存和公共缓存
 
 private 指令规定了将资源作为私有缓存，只能被单独用户使用，一般存储在用户浏览器中。
@@ -606,9 +624,9 @@ Cache-Control: public
 
 ##### 3.4 缓存过期机制
 
-max-age 指令出现在请求报文，并且缓存资源的缓存时间小于该指令指定的时间，那么就能接受该缓存。
+max-age 指令出现在响应报文中，表示响应在多少秒内是新鲜的，例如 max-age=600 表示缓存 10 分钟之内可以直接使用。
 
-max-age 指令出现在响应报文，表示缓存资源在缓存服务器中保存的时间。
+max-age 指令出现在请求报文中，表示客户端只接受已缓存时间不超过这个秒数的响应，例如刷新页面时浏览器发送 max-age=0，要求缓存先向服务器确认；强制刷新时发送的则是 no-cache。
 
 ```http
 Cache-Control: max-age=31536000
@@ -620,8 +638,12 @@ Expires 首部字段也可以用于告知缓存服务器该资源什么时候会
 Expires: Wed, 04 Jul 2012 08:26:05 GMT
 ```
 
-- 在 HTTP/1.1 中，会优先处理 max-age 指令；
-- 在 HTTP/1.0 中，max-age 指令会被忽略掉。
+- 响应中同时有 max-age 和 Expires 时，HTTP/1.1 的缓存以 max-age 为准，忽略 Expires；
+- 只支持 HTTP/1.0 的缓存不认识 max-age，只看 Expires。
+
+Expires 是一个绝对时间，客户端和服务器的时钟不一致时会算错，max-age 是相对的秒数，没有这个问题。
+
+响应经过 CDN 等代理缓存时，代理会在 Age 首部中写明它已经存放了多少秒，新鲜期要扣掉这部分。例如浏览器收到 max-age=600、Age=540 的响应，只能再直接使用约 60 秒，而不是重新计时 600 秒。
 
 #### 4. 缓存验证
 
@@ -637,7 +659,7 @@ ETag: "82e22293907ce725faf67773957acd12"
 If-None-Match: "82e22293907ce725faf67773957acd12"
 ```
 
-Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器，因为只能精确到一秒，所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
+Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器：时间只精确到秒，同一秒内的多次修改区分不出来；文件被重新生成而内容没变时，修改时间也会变，导致不必要的重新下载。所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
 
 ```http
 Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
@@ -647,12 +669,16 @@ Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
 If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
 ```
 
+请求中同时带有 If-None-Match 和 If-Modified-Since 时，服务器只按 If-None-Match 判断，忽略 If-Modified-Since。
+
 #### 5. 强缓存与协商缓存
 
 浏览器使用缓存分为两种情况：
 
-- 强缓存：缓存还在 max-age 规定的有效期内，直接使用，不发送请求；
+- 强缓存：缓存还在 max-age（或 Expires）规定的有效期内，直接使用，不发送请求；
 - 协商缓存：缓存已经过期，或者响应中有 no-cache，浏览器带上 If-None-Match 或 If-Modified-Since 向服务器确认，资源没有变化就返回 304，只传输首部，浏览器继续使用本地的缓存。
+
+<div align="center"> <img src="pics/http-cache-flow.png" width="760px"/> </div><br>
 
 例如 a.js 返回 Cache-Control: max-age=600，b.js 返回 Cache-Control: no-cache，两者都带 ETag，用浏览器打开同一个页面两次，服务器收到的请求如下（Edge 156 实测，见[附录 A2](#a2-强缓存与协商缓存)）：
 
@@ -821,13 +847,13 @@ Sec-WebSocket-Accept: N5dfgp7eKvv+Po1vS+eAAHg5F1I=
 
 Sec-WebSocket-Key 是客户端随机生成的 16 字节的 Base64 编码。服务器在它后面拼上协议规定的 GUID 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，计算 SHA-1 后再做 Base64 编码，作为 Sec-WebSocket-Accept 返回，证明自己确实支持 WebSocket，而不是把请求当作普通的 HTTP 请求处理。之后连接上传输的不再是 HTTP 报文，而是 WebSocket 帧，帧头最短只有 2 字节，不用像 HTTP 那样每次都携带首部。
 
-WebSocket 是基于 TCP 的应用层协议。帧头中有区分文本、二进制、关闭、Ping 和 Pong 的操作码，以及载荷的长度：不超过 125 字节时直接写在第 2 个字节中，更长时再用 2 或 8 个字节表示。
+WebSocket 是基于 TCP 的应用层协议。帧头中有区分文本、二进制、关闭、Ping 和 Pong 的操作码，以及载荷的长度：不超过 125 字节时直接写在第 2 个字节中，更长时再用 2 或 8 个字节表示。协议对消息大小几乎不设上限（一条消息还可以拆成多个帧），实际的上限由接收端配置，超过时以关闭码 1009（消息过大）关闭连接，例如 Tomcat 未启用分段接收时，整条二进制消息不能超过默认 8 KB 的缓冲区。
 
 客户端发出的帧必须用 4 字节的随机掩码与数据逐字节异或，防止中间的代理把精心构造的数据当作 HTTP 请求，从而污染缓存。例如客户端发送文本 hello 的帧共 11 字节：81 85 两个字节、4 字节的掩码和 5 字节掩码后的数据；服务器发送同样的消息只需要 7 字节。
 
-需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。
+需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。WebSocket 断开后不会自动重连，客户端要自己按逐渐增大的间隔重连，并补拉断线期间的消息，见 [心跳与重连](系统设计基础.md#心跳与重连)。
 
-SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应，Content-Type 为 text/event-stream，没有 Content-Length，服务器不断地往响应中写入文本事件，每条事件以空行结束，只能由服务器发给客户端。例如推送订单 1024 的状态（curl 实测，见[附录 A6](#a6-sse-推送与断线重连)）：
+SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应（HTTP/1.1 和 HTTP/2 下同样基于 TCP），Content-Type 为 text/event-stream，没有 Content-Length，服务器不断地往响应中写入 UTF-8 文本事件（二进制要先编码），每条事件以空行结束，只能由服务器发给客户端。例如推送订单 1024 的状态（curl 实测，见[附录 A6](#a6-sse-推送与断线重连)）：
 
 ```text
 GET /orders/1024/events HTTP/1.1
@@ -853,9 +879,10 @@ data: {"order": 1024, "status": "已发货"}
 SSE 的局限：
 
 - EventSource 只能发送 GET 请求，不能自定义首部和请求体。需要在 Authorization 首部中携带令牌，或者用 POST 提交一段对话时，通常改用 fetch 读取响应流，自己按空行切分事件，断线重连也要自己实现；
-- 在 HTTP/1.1 下，浏览器对同一个域名最多同时打开 6 个连接，每个 SSE 都一直占用一个，打开多个标签页时很快就会用完；HTTP/2 在一个连接上复用多个流，没有这个问题。
+- 在 HTTP/1.1 下，浏览器对同一个域名最多同时打开 6 个连接，每个 SSE 都一直占用一个，打开多个标签页时很快就会用完；HTTP/2 在一个连接上复用多个流，没有这个问题；
+- 响应正常结束和中途断开时，EventSource 都同样触发 error 并重连（见[附录 A6](#a6-sse-推送与断线重连)），无法据此判断内容是否发完。通常约定一条结束事件（例如 data: [DONE]），没有收到就按未完成处理，续传或重试。
 
-只需要服务器单向推送时（例如大模型逐字输出），SSE 更简单；客户端和服务器都需要随时发消息时（例如聊天、协同编辑），使用 WebSocket。
+大模型对话是“提交一次问题、持续返回回答”，正好对应一次 POST 请求加一个流式响应，所以通常用 SSE，现有的鉴权、网关都能直接使用，而轮询的延迟和开销都更大。客户端和服务器都需要随时发消息时（例如聊天、实时语音对话），使用 WebSocket，代价是换成另一种协议，代理要专门配置转发 Upgrade 首部。
 
 ### 跨域 🔥
 
@@ -874,7 +901,7 @@ HTTP/1.1 200 OK
 Access-Control-Allow-Origin: https://shop.example.com
 ```
 
-GET、HEAD 和表单形式的 POST 这类简单请求直接发送；其它请求，例如 PUT 或者 Content-Type 为 application/json 的 POST，浏览器会先发一个 OPTIONS 预检请求，询问服务器是否允许，允许之后才发送真正的请求：
+方法是 GET、HEAD 或 POST，并且脚本只设置了 Accept、Content-Type 等少数几个首部（Content-Type 只能是表单或纯文本）时，称为简单请求，直接发送；其它请求，例如 PUT、Content-Type 为 application/json 的 POST、带 Authorization 首部的 GET，浏览器会先发一个 OPTIONS 预检请求，询问服务器是否允许，允许之后才发送真正的请求：
 
 ```text
 OPTIONS /orders/1024 HTTP/1.1
@@ -895,7 +922,7 @@ Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间相同的
 
 <div align="center"> <img src="pics/cors-cases.png" width="760px"/> </div><br>
 
-需要注意的是，CORS 只决定浏览器是否把响应交给脚本，并不是安全措施：服务器仍然执行了请求，curl 这类不经过浏览器的工具也完全不受限制，权限要靠认证和 [CSRF 防护](攻击技术.md#二跨站请求伪造) 保证。另一种解决跨域的办法是同源的反向代理，例如由 Nginx 把 https://shop.example.com/api 转发给后端，浏览器看到的就是同源的请求。
+需要注意的是，CORS 并不是服务器的安全措施：简单请求在服务器上已经执行，只是响应不交给脚本（只有需要预检的请求，预检失败后才不会发送），curl 这类不经过浏览器的工具也完全不受限制，权限要靠认证和 [CSRF 防护](攻击技术.md#二跨站请求伪造) 保证。另一种解决跨域的办法是同源的反向代理，例如由 Nginx 把 https://shop.example.com/api 转发给后端，浏览器看到的就是同源的请求。
 
 其它做法：
 
@@ -911,7 +938,7 @@ HTTP 有以下安全性问题：
 - 不验证通信方的身份，通信方的身份有可能遭遇伪装；
 - 无法证明报文的完整性，报文有可能遭篡改。
 
-HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPS 使用了隧道进行通信。HTTPS 的默认端口是 443，HTTP 是 80。
+HTTPS 并不是新协议，而是在 HTTP 和 TCP 之间加了一层 SSL（Secure Sockets Layer）：HTTP 报文先交给 SSL 加密，再由 TCP 发送。HTTPS 的默认端口是 443，HTTP 是 80。
 
 需要注意的是，SSL 已经被 TLS（Transport Layer Security）取代，SSL 3.0 在 2015 年由 RFC 7568 废弃，现在 HTTPS 实际使用的是 TLS，SSL 只是沿用的叫法。
 
@@ -920,6 +947,12 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 例如同一个登录请求 POST /login，表单为 user=alice&password=123456，分别用 HTTP 和 HTTPS 发给 shop.example，同时抓包（OpenSSL 3.0 实测，见[附录 A8](#a8-http-与-https-的抓包对比)）：HTTP 的报文中可以直接读到请求行和密码；HTTPS 的报文中找不到 /login 和 password，只能看到域名 shop.example。这是因为客户端在 ClientHello 的 SNI（Server Name Indication）扩展中以明文告诉服务器要访问哪个域名，服务器据此选择证书。需要注意的是，HTTPS 保护的是报文的内容，访问了哪个 IP 和域名、传输了多少数据，仍然可以被网络中的设备看到。
 
 <div align="center"> <img src="pics/https-layers.png" width="720px"/> </div><br>
+
+HTTPS 只防网络中的窃听、冒充服务器和篡改。SQL 注入、XSS、CSRF 利用的是网站本身的漏洞，HTTPS 无法防范。
+
+打开 http://shop.example 时，浏览器可能先用明文的 HTTP 访问，服务器再返回 301 跳转到 HTTPS。攻击者可以拦下这次跳转，自己与服务器用 HTTPS 通信，与用户继续用 HTTP 通信，称为 SSL 剥离。HTTP 严格传输安全（HTTP Strict Transport Security, HSTS）用来解决这个问题：github.com 的 HTTPS 响应带有首部 Strict-Transport-Security: max-age=31536000; includeSubdomains; preload，浏览器在之后一年内访问这个域名及其子域名都直接使用 HTTPS。第一次访问仍有风险，域名加入浏览器内置的 HSTS 预加载列表后才能避免。
+
+反过来，HTTPS 页面通过 HTTP 加载资源称为混合内容，浏览器会阻止其中的脚本，图片等资源则改用 HTTPS 加载或者阻止。
 
 ### 加密
 
@@ -940,19 +973,21 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 非对称密钥除了用来加密，还可以用来进行签名。因为私有密钥无法被其他人获取，因此通信发送方使用其私有密钥进行签名，通信接收方使用发送方的公开密钥对签名进行验证，就能判断这个签名是否正确。
 
-- 优点：可以更安全地将公开密钥传输给通信发送方；
+- 优点：公开密钥可以公开传输，被截获也无法用来解密；
 - 缺点：运算速度慢。
+
+例如本机 RSA-2048 用私钥解密每秒约 1600 次，每次只能处理两百多字节，合计不到 0.4 MB/s；对称加密 AES-128-GCM 每秒能加密约 6 GB（OpenSSL 3.6 实测，见[附录 A14](#a14-对称加密与非对称加密的速度)）。所以非对称加密只适合处理密钥、签名这类很短的数据。
 
 <div align="center"> <img src="pics/crypto-asymmetric.png" width="720px"/> </div><br>
 
 #### 3. HTTPS 采用的加密方式
 
-上面提到对称密钥加密方式的传输效率更高，但是无法安全地将密钥 Secret Key 传输给通信方。而非对称密钥加密方式可以保证传输的安全性，因此可以利用非对称密钥加密方式将 Secret Key 传输给通信方。HTTPS 采用混合的加密机制，正是利用了上面提到的方案：
+HTTPS 采用混合的加密机制，用非对称加密解决密钥的传输，用对称加密保证效率：
 
 - 使用非对称密钥加密方式，传输对称密钥加密方式所需要的 Secret Key，从而保证安全性；
-- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率（下图中的会话密钥就是 Secret Key）。
+- 获取到 Secret Key 后，再使用对称密钥加密方式进行通信，从而保证效率。下图中公钥加密传递的是预主密钥，双方再由它和两个随机数派生出会话密钥，也就是这里的 Secret Key。
 
-需要注意的是，TLS 1.3 不再用公钥加密传输对称密钥，而是通过 ECDHE 密钥交换协商出会话密钥，非对称密钥只用于签名认证。
+需要注意的是，用公钥加密传输密钥是 TLS 1.2 的 RSA 密钥交换，现在的握手大多改用 ECDHE 协商会话密钥，证书的密钥只用于签名，TLS 1.3 已删除 RSA 密钥交换，见 [TLS 握手](#tls-握手)。
 
 TLS 把用到的一组算法称为密码套件，例如访问 www.baidu.com 时协商出的 TLS 1.2 套件 ECDHE-RSA-AES128-GCM-SHA256（LibreSSL 3.3.6 实测，见[附录 A7](#a7-证书链与密码套件)）：
 
@@ -971,15 +1006,17 @@ TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_A
 
 数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。
 
-服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
+服务器的运营人员把域名和服务器的公开密钥提交给 CA，CA 核实申请者确实控制这个域名之后，用自己的私钥对域名、公钥等信息签名，生成证书。
 
-进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
+进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端先验证证书上 CA 的签名，验证通过才相信证书中的公钥属于这个域名，再用它完成握手。
 
 <div align="center"> <img src="pics/cert-chain.png" width="760px"/> </div><br>
 
 证书中的签名是 CA 用自己的私钥对证书内容（域名、公钥、有效期、签发者等）的哈希值计算出来的。客户端用上一级证书中的公钥验证签名：证书内容只要被改动一个字节，哈希值就会变化，签名验证就会失败。例如把 baidu.com 证书中的 CN 改成 baidu.con，再用中间证书验证，结果为 certificate signature failure（OpenSSL 3.0 实测，见[附录 A9](#a9-证书验证)）。
 
 根证书是信任的起点，它是自签名的，无法再向上验证，因此不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 www.baidu.com。
+
+证书在有效期内也可能被提前吊销，例如私钥泄露。查询方式有两种，证书中可以写明相应的地址（baidu.com 的证书两者都有，见[附录 A9](#a9-证书验证)）：证书吊销列表（Certificate Revocation List, CRL）是 CA 定期发布的全部被吊销证书的序列号；在线证书状态协议（Online Certificate Status Protocol, OCSP）只查询这一张证书。每次连接都去问 CA 既慢又暴露用户的访问记录，所以服务器可以在握手时附带 CA 签过名的 OCSP 响应，称为 OCSP Stapling；浏览器也大多改为定期下载厂商汇总的吊销列表。
 
 中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。用 curl 模拟这两种情况（见[附录 A9](#a9-证书验证)），分别报告证书中的域名与访问的域名不匹配（no alternative certificate subject name matches target host name）和证书不受信任（self-signed certificate）。
 
@@ -1038,12 +1075,12 @@ Finished 报文的内容是用主密钥对此前全部握手报文的哈希值�
 
 以 TLS 1.3 为例，浏览器访问 https://www.jd.com/ 依次经过：
 
-1. DNS 查询，得到服务器的 IP 地址；
-2. TCP 三次握手，1 个 RTT；
+1. DNS 查询，得到服务器的 IP 地址，过程见[域名系统](计算机网络%20-%20应用层.md#域名系统)；
+2. [TCP 三次握手](计算机网络%20-%20传输层.md#tcp-的三次握手)，1 个 RTT；
 3. TLS 握手，1 个 RTT，协商算法和密钥并验证证书；
 4. 用会话密钥加密 HTTP 请求并发送，服务器解密后处理，响应同样加密后返回。
 
-TLS 1.2 的第 3 步需要 2 个 RTT。连接建立以后，同一个连接上的后续请求只需要第 4 步。
+TLS 1.2 的第 3 步需要 2 个 RTT。连接建立以后，同一个连接上的后续请求只需要第 4 步。从 DHCP、ARP 到渲染页面的完整过程见 [Web 页面请求过程](计算机网络%20-%20应用层.md#web-页面请求过程)。
 
 ### 完整性保护
 
@@ -1077,8 +1114,8 @@ HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了�
 
 HTTP/1.x 实现简单是以牺牲性能为代价的：
 
-- 客户端需要使用多个连接才能实现并发和缩短延迟；
-- 不会压缩请求和响应首部，从而导致不必要的网络流量；
+- 一个连接上同一时刻只能等待一个响应，浏览器只能对同一个域名打开多个连接来并发，通常最多 6 个，资源多的页面中其余请求只能排队；
+- 首部是不压缩的文本，每个请求都重复发送相同的 User-Agent、Cookie，从而导致不必要的网络流量；
 - 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
 
 ### 二进制分帧层
@@ -1089,11 +1126,15 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 
 在通信过程中，只会有一个 TCP 连接存在，它承载了任意数量的双向数据流（Stream）。
 
-- 一个数据流（Stream）都有一个唯一标识符和可选的优先级信息，用于承载双向信息；
+- 每个数据流（Stream）都有一个唯一标识符，用于承载双向信息（RFC 7540 定义的优先级信号已被 RFC 9113 废弃，需要时改用 RFC 9218 的 Priority 首部）；
 - 消息（Message）是与逻辑请求或响应对应的完整的一系列帧；
 - 帧（Frame）是最小的通信单位，来自不同数据流的帧可以交错发送，然后再根据每个帧头的数据流标识符重新组装。
 
 <div align="center"> <img src="pics/h2-streams.png" width="760px"/> </div><br>
+
+一个连接上的并发流数也有上限，由对方在 SETTINGS 帧的 SETTINGS_MAX_CONCURRENT_STREAMS 中声明，规范建议不小于 100，例如 Nginx 默认为 128，www.example.com 声明的是 256（2026-10-30 实测，见[附录 A12](#a12-http2-的并发流上限)）。超过上限的请求要等前面的流结束，但仍然不需要新建连接。
+
+浏览器只支持基于 TLS 的 HTTP/2：客户端在 ClientHello 的 ALPN 扩展中列出 h2 和 http/1.1，服务器选定 h2 后直接使用 HTTP/2。不加密的 HTTP/2（h2c）一般只用在内网的服务之间，例如明文的 gRPC 连接。
 
 ### 服务端推送
 
@@ -1107,9 +1148,9 @@ HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送�
 
 HTTP/1.1 的首部带有大量信息，而且每次都要重复发送。
 
-HTTP/2.0 要求客户端和服务器同时维护和更新一个包含之前见过的首部字段表，从而避免了重复传输。
+HTTP/2.0 的首部压缩称为 HPACK，客户端和服务器各自维护两张表：静态表是协议规定的 61 个常见首部，例如第 2 项是 :method: GET；动态表保存本连接中出现过的首部。表中已有的首部通常只发送 1 字节的序号，新的值用 Huffman 编码压缩后发送。
 
-不仅如此，HTTP/2.0 也使用 Huffman 编码对首部字段进行压缩。
+例如在同一个连接上先后请求 /index.html 和 /style.css，第二次请求的 User-Agent 等首部都已经在动态表中，编码后只有 21 字节，同样的内容用 HTTP/1.1 的文本格式是 148 字节：
 
 <div align="center"> <img src="pics/hpack.png" width="760px"/> </div><br>
 
@@ -1120,14 +1161,16 @@ HTTP/2 在一个 TCP 连接上复用多个流，但 TCP 只保证整个字节流
 HTTP/3 改为基于 UDP 的 QUIC 协议：
 
 - 每个流单独保证顺序，一个流丢包不影响其它流；
-- QUIC 内置了 TLS 1.3，传输层握手和加密握手合并，新连接 1 个 RTT 后就能发送请求，恢复之前的会话时可以 0 RTT；
+- QUIC 内置了 TLS 1.3，传输层握手和加密握手合并，新连接 1 个 RTT 后就能发送请求，恢复之前的会话时可以 [0-RTT](#3-finished-与会话恢复)；
 - 连接用连接 ID 标识，而不是 IP 地址和端口，手机从 Wi-Fi 切换到移动网络时连接不用重建。
 
 <div align="center"> <img src="pics/http3-quic.png" width="760px"/> </div><br>
 
-UDP 本身不保证可靠，QUIC 在它之上自己实现了确认、重传和拥塞控制，见 [在 UDP 上实现可靠传输](计算机网络%20-%20传输层.md#在-udp-上实现可靠传输)。
+UDP 本身不保证可靠，QUIC 在它之上自己实现了确认、重传和拥塞控制。之所以不直接改进 TCP，是因为 TCP 实现在操作系统内核中，中间设备还会检查 TCP 首部，新特性很难普及，见 [在 UDP 上实现可靠传输](计算机网络%20-%20传输层.md#在-udp-上实现可靠传输)。
 
 浏览器通常先用 HTTP/2 访问，从响应首部 Alt-Svc 得知服务器支持 HTTP/3 后再切换，例如 www.example.com 的响应中有 alt-svc: h3=":443"; ma=86400。
+
+HTTP/3 并不总是更快：优势主要体现在丢包多、延迟高、经常切换网络的移动场景，网络良好时与 HTTP/2 差别不大；部分网络会屏蔽 UDP，这时浏览器回退到基于 TCP 的 HTTP/2。
 
 ## 九、GET 和 POST 比较
 
@@ -1139,7 +1182,11 @@ GET 用于获取资源，而 POST 用于传输实体主体。
 
 GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体中。不能因为 POST 参数存储在实体主体中就认为它的安全性更高，因为照样可以通过一些抓包工具（Fiddler）查看。
 
-因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 参数支持标准字符集。
+因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 请求体的编码由 Content-Type 决定，例如表单同样按这种方式编码，JSON 则直接用 UTF-8。
+
+参数放在哪里只是惯例：POST 也可以同时带查询参数，例如 POST /orders?dryRun=true；GET 的请求体在规范中没有定义含义，有的服务器和代理会忽略或者拒绝，不应该依赖。
+
+HTTP 规范没有限制 URL 和请求体的长度，限制来自浏览器和服务器的实现，例如 Nginx 默认请求行不能超过 8 KB（超出返回 414），请求体不能超过 1 MB（超出返回 413）。参数很长或者要上传文件时用 POST。
 
 ```http
 GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
@@ -1155,7 +1202,7 @@ name1=value1&name2=value2
 
 ### 安全
 
-安全的 HTTP 方法不会改变服务器状态，也就是说它只是可读的。
+安全的 HTTP 方法在语义上是只读的，服务器顺带写访问日志、更新统计不影响它是安全的。
 
 GET 方法是安全的，而 POST 却不是，因为 POST 的目的是传送实体主体内容，这个内容可能是用户上传的表单数据，上传成功之后，服务器可能把这个数据存储到数据库中，因此状态也就发生了改变。
 
@@ -1165,19 +1212,15 @@ GET 方法是安全的，而 POST 却不是，因为 POST 的目的是传送实�
 
 ### 幂等性
 
-幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。
+幂等的 HTTP 方法，同样的请求执行一次与连续执行多次，对服务器的效果是一样的。幂等看的是对服务器状态的效果，不要求每次的响应相同，也不要求请求不改变状态。
 
-所有的安全方法也都是幂等的。
+所有的安全方法也都是幂等的。在正确实现的条件下，GET、HEAD、PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。
 
-在正确实现的条件下，GET、HEAD、PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。
+PUT 是幂等的，因为它用请求中的内容整个替换资源，执行多少次，订单 1024 的状态都是“已发货”：
 
-GET /pageX HTTP/1.1 是幂等的，连续调用多次，客户端接收到的结果都是一样的：
-
-```http
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
-GET /pageX HTTP/1.1
+```text
+PUT /orders/1024 {"status": "已发货"}   -> 200
+PUT /orders/1024 {"status": "已发货"}   -> 200，状态不变
 ```
 
 POST /add_row HTTP/1.1 不是幂等的，如果调用多次，就会增加多行记录：
@@ -1196,12 +1239,14 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
 DELETE /idX/delete HTTP/1.1   -> Returns 404
 ```
 
+幂等决定了请求失败后能不能放心地重试：客户端没收到响应时，重发 PUT、DELETE 不会多出数据，重发 POST 可能会重复下单。让 POST 也能安全重试的做法见 [幂等](分布式.md#九幂等)。
+
 ### 可缓存
 
 如果要对响应进行缓存，需要满足以下条件：
 
 - 请求报文的 HTTP 方法本身是可缓存的，包括 GET 和 HEAD，但是 PUT 和 DELETE 不可缓存，POST 在多数情况下不可缓存；
-- 响应报文的状态码是可缓存的，包括：200、203、204、206、300、301、308、404、405、410、414 和 501；
+- 响应报文的状态码默认可以缓存（启发式缓存），包括：200、203、204、206、300、301、308、404、405、410、414 和 501，其它状态码（例如 302）带有 max-age 等显式的缓存指令时也可以缓存；
 - 响应报文的 Cache-Control 首部字段没有指定不进行缓存。
 
 ### XMLHttpRequest
@@ -1446,6 +1491,18 @@ $ curl --resolve shop.example:9443:127.0.0.1 https://shop.example:9443/
 curl: (60) SSL certificate problem: self-signed certificate
 ```
 
+证书中的吊销查询地址（2026-10-30，LibreSSL 3.3.6 的 openssl s_client -status 连接 www.baidu.com，再用 openssl x509 -text 查看服务器证书）：
+
+```text
+OCSP response: no response sent
+            Authority Information Access:
+                CA Issuers - URI:http://secure.globalsign.com/cacert/gsrsaovsslca2018.crt
+                OCSP - URI:http://ocsp.globalsign.com/gsrsaovsslca2018
+            X509v3 CRL Distribution Points:
+                Full Name:
+                  URI:http://crl.globalsign.com/gsrsaovsslca2018.crl
+```
+
 ### A10 TLS 握手报文与密钥交换
 
 同一个容器，OpenSSL 3.0.13，openssl s_server 加载一张 RSA 2048 位的自签名证书，openssl s_client -trace 分别以 TLS 1.2 和 TLS 1.3 连接（节选）：
@@ -1541,8 +1598,95 @@ www.jd.com     TLSv1.3 / AEAD-AES256-GCM-SHA384
   TLS 握手（ms）：14.8  11.0  14.5  15.5  20.0    中位数 14.8
 ```
 
+### A12 HTTP/2 的并发流上限
+
+macOS 上的 Python 3.13（2026-10-30）。用 ALPN 协商 h2 后发送连接前言和一个空的 SETTINGS 帧，解析服务器发来的第一个 SETTINGS 帧（RFC 9113 第 6.5 节）：
+
+```python
+import socket, ssl, struct
+ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem"); ctx.set_alpn_protocols(["h2"])
+s = ctx.wrap_socket(socket.create_connection((host, 443)), server_hostname=host)
+s.sendall(b"PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n" + b"\x00\x00\x00\x04\x00\x00\x00\x00\x00")
+def recv_exact(n):                       # recv() 可能只返回一部分，读满 n 字节为止
+    buf = b""
+    while len(buf) < n:
+        chunk = s.recv(n - len(buf))
+        if not chunk: raise EOFError
+        buf += chunk
+    return buf
+while True:
+    head = recv_exact(9)                 # 帧头：3 字节长度、1 字节类型、1 字节标志、4 字节流 ID
+    length, ftype = int.from_bytes(head[:3], "big"), head[3]
+    body = recv_exact(length)
+    if ftype == 4 and not head[4] & 1:   # 类型 4 为 SETTINGS，跳过 ACK
+        break
+for i in range(0, length, 6):
+    print(struct.unpack(">HI", body[i:i + 6]))   # (参数编号, 值)，编号 3 为 MAX_CONCURRENT_STREAMS
+```
+
+```text
+== www.example.com ALPN h2
+  MAX_CONCURRENT_STREAMS = 256
+  INITIAL_WINDOW_SIZE = 65536
+  MAX_FRAME_SIZE = 16777215
+== www.taobao.com ALPN h2
+  MAX_CONCURRENT_STREAMS = 128
+  INITIAL_WINDOW_SIZE = 65536
+  MAX_FRAME_SIZE = 16777215
+```
+
+### A13 301 与 302 的缓存
+
+服务器把 /p301、/p302 分别重定向到 /new，重定向响应中没有 Cache-Control：
+
+```python
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class H(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path in ("/p301", "/p302"):
+            self.send_response(301 if self.path == "/p301" else 302)
+            self.send_header("Location", "/new"); self.send_header("Content-Length", "0"); self.end_headers()
+        else:
+            body = b"new"
+            self.send_response(200); self.send_header("Cache-Control", "no-store")
+            self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+
+HTTPServer(("127.0.0.1", 8795), H).serve_forever()
+```
+
+运行服务器后，从一个新建的配置目录开始，用 `msedge --headless=new --user-data-dir=<目录> --dump-dom http://127.0.0.1:8795/p301` 依次打开两个地址，共两轮，两轮之间保留配置目录中的缓存。服务器收到的请求如下（省略 favicon）：
+
+```text
+第 1 轮  GET /p301 -> 301   GET /new -> 200
+         GET /p302 -> 302   GET /new -> 200
+第 2 轮                     GET /new -> 200
+         GET /p302 -> 302   GET /new -> 200
+```
+
+第 2 轮打开 /p301 时浏览器没有再请求它，直接使用缓存的 301 跳到 /new；/p302 每次都要请求。
+
+### A14 对称加密与非对称加密的速度
+
+OpenSSL 3.6.0，Apple M1 Pro，各运行 2 秒。RSA-2048 的 decrypt 是私钥运算，AES-128-GCM 每次加密 16 KB，结果的单位是千字节每秒：
+
+```text
+$ openssl speed -seconds 2 rsa2048
+                   sign    verify    encrypt   decrypt   sign/s verify/s  encr./s  decr./s
+rsa  2048 bits 0.000613s 0.000016s 0.000017s 0.000618s   1632.3  61772.4  59997.6   1617.5
+$ openssl speed -seconds 2 -evp aes-128-gcm -bytes 16384
+type          16384 bytes
+AES-128-GCM    6280411.97k
+```
+
+使用 PKCS#1 v1.5 填充时，RSA-2048 一次最多加密 245 字节，1617.5 × 245 ≈ 0.40 MB/s。
+
 ## 参考资料
 
+- [RFC 9113: HTTP/2](https://www.rfc-editor.org/rfc/rfc9113)
+- [RFC 9218: Extensible Prioritization Scheme for HTTP](https://www.rfc-editor.org/rfc/rfc9218)
+- [Nginx: ngx_http_core_module](https://nginx.org/en/docs/http/ngx_http_core_module.html)
+- [Nginx: ngx_http_v2_module](https://nginx.org/en/docs/http/ngx_http_v2_module.html)
 - [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)
 - [RFC 6749: The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
 - [RFC 7636: Proof Key for Code Exchange (PKCE)](https://www.rfc-editor.org/rfc/rfc7636)

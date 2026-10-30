@@ -75,6 +75,20 @@
         * [A9 ABA 与 AtomicStampedReference](#a9-aba-与-atomicstampedreference)
         * [A10 锁状态与监视器的回收](#a10-锁状态与监视器的回收)
         * [A11 线程池关闭后的 CallerRunsPolicy](#a11-线程池关闭后的-callerrunspolicy)
+        * [A12 中断标记的清除](#a12-中断标记的清除)
+        * [A13 ThreadLocal 的陈旧条目与数据串用](#a13-threadlocal-的陈旧条目与数据串用)
+        * [A14 虚拟线程在 synchronized 中阻塞](#a14-虚拟线程在-synchronized-中阻塞)
+        * [A15 AQS 等待队列的获取顺序](#a15-aqs-等待队列的获取顺序)
+        * [A16 线程状态的转换](#a16-线程状态的转换)
+        * [A17 交替打印的两种错误写法](#a17-交替打印的两种错误写法)
+        * [A18 CompletableFuture 的默认线程](#a18-completablefuture-的默认线程)
+        * [A19 只读视图与不可变拷贝](#a19-只读视图与不可变拷贝)
+        * [A20 CompletableFuture 组合异步调用](#a20-completablefuture-组合异步调用)
+        * [A21 优先级队列与超时](#a21-优先级队列与超时)
+        * [A22 start() 与操作系统线程](#a22-start-与操作系统线程)
+        * [A23 拒绝策略的执行线程与 Future](#a23-拒绝策略的执行线程与-future)
+        * [A24 volatile 的自增与机器码](#a24-volatile-的自增与机器码)
+        * [A25 线程池空闲线程的状态与 submit()](#a25-线程池空闲线程的状态与-submit)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -88,9 +102,9 @@
 - 实现 Callable 接口；
 - 继承 Thread 类。
 
-实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以理解为任务是通过线程驱动从而执行的。
+实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。实际开发中更常把任务提交给[线程池](#threadpoolexecutor)，所以线程池通常也算作一种创建线程的方式。
 
-这里的线程都是平台线程，每个对应一个操作系统线程。JDK 21 的虚拟线程由 JVM 调度到少量平台线程上运行，见[协程与虚拟线程](计算机操作系统%20-%20进程管理.md#5-协程)。
+这里的线程都是平台线程，每个对应一个操作系统线程。JDK 21 的虚拟线程用 Thread.ofVirtual().start(task) 创建，由 JVM 调度到少量平台线程上运行，见[协程与虚拟线程](计算机操作系统%20-%20进程管理.md#5-协程)。
 
 ### 实现 Runnable 接口
 
@@ -117,7 +131,7 @@ public static void main(String[] args) {
 
 ### 实现 Callable 接口
 
-与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
+与 Runnable 相比，Callable 的 call() 可以有返回值，也可以抛出受检异常。Thread 只接受 Runnable，所以要先把 Callable 包装成同时实现了 Runnable 和 Future 的 [FutureTask](#futuretask)，再用 get() 等待结果。
 
 ```java
 public class MyCallable implements Callable<Integer> {
@@ -141,7 +155,9 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 
 同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runnable 接口。
 
-当调用 start() 方法启动一个线程时，虚拟机会将该线程放入就绪队列中等待被调度，当一个线程被调度时会执行该线程的 run() 方法。
+new Thread() 只是在堆上创建了一个对象，状态为 NEW。调用 start() 后，JVM 才向操作系统申请创建线程（Linux 上调用 pthread_create），并分配[线程栈](Java%20虚拟机.md#java-虚拟机栈)（-Xss，x86-64 的 Linux 上默认 1 MB），新线程获得 CPU 后执行 run()（JDK 21 实测，见[附录 A22](#a22-start-与操作系统线程)）。
+
+需要注意的是，直接调用 run() 只是在当前线程中执行一个普通方法，run() 中打印的线程名是 main。同一个 Thread 对象只能 start() 一次，再次调用会抛出 IllegalThreadStateException。
 
 ```java
 public class MyThread extends Thread {
@@ -163,7 +179,7 @@ public static void main(String[] args) {
 实现接口会更好一些，因为：
 
 - Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
-- 类可能只要求可执行就行，继承整个 Thread 类开销过大。
+- 任务与线程解耦：实现接口的任务可以提交给线程池，由已有的线程执行。
 
 ## 二、基础线程机制
 
@@ -181,6 +197,7 @@ main() 属于非守护线程。
 public static void main(String[] args) {
     Thread thread = new Thread(new MyRunnable());
     thread.setDaemon(true);
+    thread.start();
 }
 ```
 
@@ -188,7 +205,7 @@ public static void main(String[] args) {
 
 Thread.sleep(millisec) 方法会休眠当前正在执行的线程，millisec 单位为毫秒。
 
-sleep() 可能会抛出 InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。
+sleep() 可能会抛出 InterruptedException，它是受检异常，而 run() 的签名没有声明异常，所以只能在 run() 内部捕获。线程中抛出的其它异常也不会传播到启动它的线程，没有捕获时只结束这个线程。
 
 ```java
 public void run() {
@@ -212,7 +229,7 @@ public void run() {
 
 ### Executor
 
-Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。
+Executor 把任务的提交和执行分开，提交者只管提交任务，不用自己创建和管理线程。多个任务访问共享的可变状态时仍然需要同步。
 
 主要有三种 Executor：
 
@@ -232,7 +249,7 @@ public static void main(String[] args) {
 
 ### ThreadPoolExecutor 🔥🔥
 
-线程池指的是预先创建一组线程反复执行提交的任务，而不是为每个任务新建线程。这是因为创建线程要分配线程栈、进行系统调用，任务很短时这部分开销可能超过任务本身；线程太多还会占用大量内存、加剧上下文切换。所以线程池一方面复用线程，另一方面限制线程的数量，任务太多时排队或者拒绝。
+线程池指的是预先创建一组线程反复执行提交的任务，而不是为每个任务新建线程。这是因为创建线程要分配线程栈、进行系统调用，任务很短时这部分开销可能超过任务本身；线程太多还会占用大量内存、加剧[上下文切换](计算机操作系统%20-%20进程管理.md#4-上下文切换)。所以线程池一方面复用线程，另一方面限制线程的数量，任务太多时排队或者拒绝。
 
 上面的三种 Executor 都是通过 ThreadPoolExecutor 创建的，它的构造函数有以下参数：
 
@@ -271,6 +288,7 @@ for (int i = 1; i <= 7; i++) {
         System.out.println("提交任务 " + i + "：被拒绝");
     }
 }
+pool.shutdown();    // 不关闭的话，核心线程一直存活，程序不会退出
 ```
 
 ```text
@@ -285,26 +303,39 @@ for (int i = 1; i <= 7; i++) {
 
 需要注意的是，任务 5、6 比先提交的任务 3、4 更早执行：队列满后新建的线程直接执行当前提交的任务，队列中的任务要等有线程空闲后才会被取出。
 
-先放入队列、队列满了才增加线程，是因为线程比排队的任务昂贵得多：核心线程承担平时的负载，短时间的高峰由队列缓冲，队列也放不下说明负载持续超出了处理能力，才临时增加线程，高峰过后它们空闲 keepAliveTime 后被回收。Tomcat 的线程池则反过来，线程数没有达到最大值时先增加线程，让等待 I/O 的请求尽快开始处理。
+先放入队列、队列满了才增加线程，是因为线程比排队的任务昂贵得多：核心线程承担平时的负载，短时间的高峰由队列缓冲，队列也放不下说明负载持续超出了处理能力，才临时增加线程，高峰过后再减少。Tomcat 的线程池则反过来，线程数没有达到最大值时先增加线程，让等待 I/O 的请求尽快开始处理。
 
 核心线程数为 0 时，任务直接进入队列，execute() 发现没有线程时只创建一个。例如核心线程数为 0、最大线程数为 4、使用无界队列时，提交 3 个任务只有 1 个线程逐个执行（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。
+
+按优先级执行可以用 PriorityBlockingQueue（无界），任务类实现 Comparable 并用 execute() 提交，submit() 包装出的 FutureTask 不可比较，入队时抛出 ClassCastException（见[附录 A21](#a21-优先级队列与超时)）。
 
 拒绝策略：
 
 - AbortPolicy：默认策略，抛出 RejectedExecutionException；
-- CallerRunsPolicy：由提交任务的线程自己执行这个任务，提交方被拖慢，从而降低了提交速度；
+- CallerRunsPolicy：由提交任务的线程（不一定是主线程）自己执行这个任务，执行完才返回，从而降低了提交速度；
 - DiscardPolicy：直接丢弃任务；
 - DiscardOldestPolicy：丢弃队列中最早的任务，再重新提交当前任务。
 
 选择拒绝策略主要看任务能不能丢：
 
 - 不能丢、提交方能处理失败时用 AbortPolicy，捕获异常后返回错误或者稍后重试；
-- 不能丢、可以接受变慢时用 CallerRunsPolicy，例如处理请求的线程被拒绝后自己执行任务，这个请求变慢但任务不会丢，不允许阻塞的线程（例如 Netty 的 I/O 线程）不能这样用；
+- 不能丢、可以接受变慢时用 CallerRunsPolicy，不允许阻塞的线程（例如 Netty 的 I/O 线程）不能这样用；
 - 允许丢失的任务，例如统计数据的上报，用 DiscardPolicy，只关心最新数据时用 DiscardOldestPolicy。
 
-需要注意的是，线程池关闭之后再提交任务也会触发拒绝策略，这时 CallerRunsPolicy 直接丢弃任务，不抛出异常；用 submit() 提交的任务被丢弃后，返回的 Future 永远不会完成，不带超时的 get() 会一直阻塞（JDK 21 实测，见[附录 A11](#a11-线程池关闭后的-callerrunspolicy)）。
+需要注意的是，线程池关闭之后再提交任务也会触发拒绝策略，这时只有 AbortPolicy 抛出异常，另外三种都直接丢弃任务。用 submit() 或 supplyAsync() 提交的任务被丢弃后，返回的 Future 永远不会完成，不带超时的 get()、join() 会一直阻塞（JDK 21 实测，见[附录 A11](#a11-线程池关闭后的-callerrunspolicy)、[A23](#a23-拒绝策略的执行线程与-future)）。
 
-也可以实现 RejectedExecutionHandler 接口自定义拒绝策略，例如记录日志并告警，再把任务写入数据库或消息队列，稍后重新执行。
+也可以实现 RejectedExecutionHandler 接口自定义拒绝策略，例如统计拒绝次数、记录日志后抛出异常，不能丢的任务也可以写入数据库或消息队列稍后重试：
+
+```java
+AtomicLong rejected = new AtomicLong();    // 拒绝次数，供监控采集
+RejectedExecutionHandler handler = (task, executor) -> {
+    rejected.incrementAndGet();
+    log.warn("任务被拒绝：线程数 {}，队列中 {} 个", executor.getPoolSize(), executor.getQueue().size());
+    throw new RejectedExecutionException("订单线程池已满");
+};
+ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS,
+        new ArrayBlockingQueue<>(2), handler);
+```
 
 不建议用 Executors 创建线程池，而是直接创建 ThreadPoolExecutor 并使用有界队列：
 
@@ -318,7 +349,17 @@ for (int i = 1; i <= 7; i++) {
 
 也可以从吞吐量估算：同时在执行的任务数 = 每秒到达的任务数 × 每个任务的耗时（利特尔法则）。例如每秒 200 个请求，每个耗时 100 ms，平均有 200 × 0.1 = 20 个任务同时在执行，线程数至少为 20，再按高峰留出余量。
 
+CPU 或下游资源（例如数据库连接池）饱和后，再加线程也不能提高吞吐量。
+
+队列长度按可以接受的排队时间估算，例如上例每秒处理 200 个任务，最多排队 0.5 秒时约为 100，再长的话任务排到时调用方可能已经超时。
+
+I/O 密集、估出的线程数成百上千时，JDK 21 可以改用虚拟线程（Executors.newVirtualThreadPerTaskExecutor()，每个任务一个，不池化），对下游的并发数用 [Semaphore](#semaphore) 限制。
+
 估算值只是起点，最终要通过压测确定。上线后用 getActiveCount()、getQueue().size() 等方法监控活跃线程数和队列长度，在拒绝策略中统计拒绝次数，必要时调用 setCorePoolSize()、setMaximumPoolSize() 在运行时调整，参数放在配置中心、变更时调用这两个方法就是动态线程池。需要注意的是，JDK 9 起 setCorePoolSize() 的新值大于最大线程数时抛出 IllegalArgumentException，两者都要调大时先调最大线程数（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）；LinkedBlockingQueue 的容量是 final 字段，队列长度要可调时只能自己实现队列。
+
+不同业务最好使用各自的线程池（线程池隔离），例如导出报表变慢时只占满自己的线程，不影响下单。
+
+线程池的队列在内存中，进程崩溃时队列中和正在执行的任务都会丢失。不能丢的任务要先写入数据库或消息队列，执行完再标记完成，重启后重新执行未完成的，因此任务要幂等。
 
 线程池的核心结构并不复杂，常被要求手写一个简化版：固定数量的工作线程循环从阻塞队列中取任务执行，队列满了或者线程池已经关闭时拒绝新任务。
 
@@ -356,13 +397,15 @@ public class SimplePool {
         }
     }
 
-    public void execute(Runnable task) {
+    // 检查状态和入队要在同一把锁内完成，否则检查之后、入队之前发生关闭，
+    // 工作线程可能已经全部退出，这个任务就没人执行了
+    public synchronized void execute(Runnable task) {
         if (shutdown || !queue.offer(task)) {
             throw new RejectedExecutionException("线程池已关闭或队列已满");
         }
     }
 
-    public void shutdown() {
+    public synchronized void shutdown() {
         shutdown = true;
     }
 }
@@ -372,20 +415,21 @@ public class SimplePool {
 
 ThreadPoolExecutor 的结构与它相同，多做了以下几件事：
 
-- 线程不是一开始就全部创建，而是按前面的提交顺序按需创建；
-- 工作线程在 getTask() 中取任务：线程数超过核心线程数时用 poll(keepAliveTime) 等待，超时就退出，否则用 take() 一直等待；
-- 运行状态和线程数保存在同一个 AtomicInteger（ctl）中，两者可以在一次 CAS 中一起修改。运行状态有 RUNNING、SHUTDOWN（shutdown() 之后，执行完队列中的任务）、STOP（shutdownNow() 之后）、TIDYING 和 TERMINATED 五种；
-- 用 execute() 提交的任务抛出异常时，执行它的线程退出，线程池再补一个新线程。
+- 线程不是一开始就全部创建，而是按前面的提交顺序按需创建（prestartAllCoreThreads() 可以提前创建核心线程）；
+- 工作线程在 getTask() 中取任务，线程本身没有核心与非核心之分：线程数超过核心线程数（或开启了 allowCoreThreadTimeOut）时用 poll(keepAliveTime) 等待，超时后再检查一次、仍可以减少线程才退出，否则用 take() 一直等待，所以空闲后退出的不一定是后创建的线程（见[附录 A25](#a25-线程池空闲线程的状态与-submit)）；
+- 运行状态和线程数保存在同一个 AtomicInteger（ctl）中，两者可以在一次 CAS 中一起修改。运行状态有 RUNNING、SHUTDOWN（shutdown() 之后，执行完队列中的任务）、STOP（shutdownNow() 之后）、TIDYING 和 TERMINATED 五种。
 
-任务抛出异常时，execute() 和 submit() 的表现不同：execute() 提交的任务，异常打印到标准错误，执行它的线程退出；submit() 把任务包装成 FutureTask，异常保存在 Future 中，不打印，线程也不退出，调用 future.get() 时才以 ExecutionException 抛出（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。所以用 submit() 提交又不调用 get() 的任务，异常会被悄悄吞掉，需要在任务内部捕获并记录。
+提交任务还可以用 submit()，它也接收 Callable，把任务包装成 [FutureTask](#futuretask) 后调用 execute()。任务抛出异常时两者的表现不同：execute() 提交的任务，异常打印到标准错误，执行它的线程退出，线程池再补一个新线程；submit() 的异常保存在 Future 中，不打印，线程也不退出，调用 future.get() 时才以 ExecutionException 抛出（JDK 21 实测，见[附录 A7](#a7-线程池的异常与参数调整)）。所以用 submit() 提交又不调用 get() 的任务，异常会被悄悄吞掉，需要在任务内部捕获并记录。
 
 ## 三、中断
 
 一个线程执行完毕之后会自动结束，如果在运行过程中发生异常也会提前结束。
 
+停止一个线程要靠协作：其它线程设置一个 volatile 停止标记或者调用 interrupt()，由线程自己检查后在合适的位置结束；只设置停止标记不会唤醒停在 sleep()、wait() 中的线程，这时要用 interrupt()。Thread.stop() 会让线程在任意位置停下，可能留下修改了一半的数据，JDK 20 起直接抛出 UnsupportedOperationException。
+
 ### InterruptedException
 
-通过调用一个线程的 interrupt() 来中断该线程，如果该线程正在 sleep()、wait()、join() 等方法中处于限期等待或者无限期等待状态，那么就会抛出 InterruptedException，从而提前结束该线程。但是不能中断传统 I/O 的阻塞和等待 synchronized 锁的阻塞（BLOCKED）。
+通过调用一个线程的 interrupt() 来中断该线程，如果该线程正在 sleep()、wait()、join() 等方法中处于限期等待或者无限期等待状态，那么就会抛出 InterruptedException。中断只是一个请求，异常被捕获之后线程是否结束由代码自己决定。但是不能中断等待 synchronized 锁的阻塞（BLOCKED），平台线程阻塞在 ServerSocket.accept() 这类传统 I/O 上时通常也不响应中断（见[附录 A16](#a16-线程状态的转换)）。
 
 对于以下代码，在 main() 中启动一个线程之后再中断它，由于线程中调用了 Thread.sleep() 方法，因此会抛出一个 InterruptedException，从而提前结束线程，不执行之后的语句。
 
@@ -418,10 +462,9 @@ public static void main(String[] args) throws InterruptedException {
 ```text
 Main run
 java.lang.InterruptedException: sleep interrupted
-    at java.lang.Thread.sleep(Native Method)
-    at InterruptExample.lambda$main$0(InterruptExample.java:5)
-    at InterruptExample$$Lambda$1/713338599.run(Unknown Source)
-    at java.lang.Thread.run(Thread.java:745)
+    at java.base/java.lang.Thread.sleep0(Native Method)
+    at java.base/java.lang.Thread.sleep(Thread.java:509)
+    at InterruptExample$MyThread1.run(InterruptExample.java:6)
 ```
 
 ### interrupted()
@@ -457,6 +500,8 @@ public static void main(String[] args) throws InterruptedException {
 Thread end
 ```
 
+需要注意的是，静态方法 interrupted() 返回的同时会清除中断标记，只检查不清除要用实例方法 isInterrupted()；抛出 InterruptedException 时中断标记也已被清除，捕获后不结束线程时应调用 Thread.currentThread().interrupt() 恢复标记，让外层的代码仍能检查到中断（JDK 21 实测，见[附录 A12](#a12-中断标记的清除)）。
+
 ### Executor 的中断操作
 
 调用 Executor 的 shutdown() 方法后，线程池不再接受新任务，已经提交的任务会继续执行完，它本身不会阻塞等待，需要等待时调用 awaitTermination()；如果调用的是 shutdownNow() 方法，则相当于调用每个线程的 interrupt() 方法，并返回队列中还没有执行的任务。
@@ -482,15 +527,15 @@ public static void main(String[] args) {
 ```text
 Main run
 java.lang.InterruptedException: sleep interrupted
-    at java.lang.Thread.sleep(Native Method)
-    at ExecutorInterruptExample.lambda$main$0(ExecutorInterruptExample.java:9)
-    at ExecutorInterruptExample$$Lambda$1/1160460865.run(Unknown Source)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-    at java.lang.Thread.run(Thread.java:745)
+    at java.base/java.lang.Thread.sleep0(Native Method)
+    at java.base/java.lang.Thread.sleep(Thread.java:509)
+    at ExecutorInterruptExample.lambda$main$0(ExecutorInterruptExample.java:7)
+    at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+    at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+    at java.base/java.lang.Thread.run(Thread.java:1583)
 ```
 
-如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future\<?\> 对象，通过调用该对象的 cancel(true) 方法就可以中断线程。
+如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future\<?\> 对象，调用该对象的 cancel(true) 方法会取消这个任务，并中断正在执行它的线程。
 
 ```java
 Future<?> future = executorService.submit(() -> {
@@ -545,7 +590,7 @@ public static void main(String[] args) {
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-对于以下代码，两个线程调用了不同对象的同步代码块，因此这两个线程就不需要同步。从输出结果可以看出，两个线程交叉执行。
+对于以下代码，两个线程调用了不同对象的同步代码块，因此这两个线程就不需要同步，输出可能交叉（循环很短，不保证每次都交叉），例如其中一次的输出：
 
 ```java
 public static void main(String[] args) {
@@ -558,7 +603,7 @@ public static void main(String[] args) {
 ```
 
 ```text
-0 0 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9
+0 1 2 0 1 2 3 4 5 6 7 8 9 3 4 5 6 7 8 9
 ```
 
 
@@ -582,7 +627,7 @@ public void func() {
 }
 ```
 
-作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。
+作用于整个类：两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。
 
 ```java
 public class SynchronizedExample {
@@ -620,6 +665,8 @@ public synchronized static void fun() {
 ```
 
 作用于整个类。
+
+需要注意的是，同步实例方法和 synchronized (this) 锁的是当前对象，同步静态方法和 synchronized (X.class) 锁的是 Class 对象，两者是不同的锁，互不阻塞。
 
 ### ReentrantLock
 
@@ -684,19 +731,31 @@ public synchronized void dec();
 
 #### 2. 性能
 
-新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，在平台线程上 synchronized 与 ReentrantLock 的性能大致相同。JDK 21 的虚拟线程是例外，见[使用选择](#使用选择)。
 
 #### 3. 等待可中断
 
 当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
 
-ReentrantLock 可中断，而 synchronized 不行。
+ReentrantLock 可中断，而 synchronized 不行：等待进入 synchronized 的线程被中断后仍然继续等待。ReentrantLock 的 lockInterruptibly() 在等待时响应中断，tryLock(timeout) 还可以限定等待的时间：
+
+```java
+if (lock.tryLock(1, TimeUnit.SECONDS)) {   // 最多等 1 秒，等待期间也响应中断
+    try {
+        // 访问共享资源
+    } finally {
+        lock.unlock();
+    }
+} else {
+    // 等待超时，放弃或降级处理
+}
+```
 
 #### 4. 公平锁
 
 公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
 
-synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。需要注意的是，无参的 tryLock() 不遵守公平设置，可能插队。
 
 #### 5. 锁绑定多个条件
 
@@ -705,6 +764,8 @@ synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非�
 ### 使用选择
 
 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放；ReentrantLock 则必须在 finally 中调用 unlock()。
+
+JDK 21 的虚拟线程在 synchronized 块内阻塞时会被固定（pinned）在载体线程上，载体线程也随之阻塞：1000 个虚拟线程各在一个 synchronized 块内 sleep 100 ms，10 核机器上约 10.4 秒，换成 ReentrantLock 约 0.1 秒（JDK 21 实测，见[附录 A14](#a14-虚拟线程在-synchronized-中阻塞)）。所以 JDK 21 中虚拟线程内有阻塞操作的临界区要用 ReentrantLock，JDK 24 起（[JEP 491](https://openjdk.org/jeps/491)）基本不再固定。
 
 ### Java 中的锁 🔥
 
@@ -738,9 +799,9 @@ if (!lock.validate(stamp)) {                // 读的过程中有写入
 
 需要注意的是：
 
-- 读锁不能升级为写锁：持有读锁时再获取写锁，要等所有读锁释放，而自己的读锁不会释放，tryLock(1, TimeUnit.SECONDS) 等待 1 秒后返回 false，用 lock() 就会永远阻塞；
+- ReentrantReadWriteLock 的读锁不能升级为写锁：持有读锁时再获取写锁，要等所有读锁释放，而自己的读锁不会释放，tryLock(1, TimeUnit.SECONDS) 等待 1 秒后返回 false，用 lock() 就会永远阻塞；
 - 写锁可以降级为读锁：先获取写锁，再获取读锁，然后释放写锁，这样修改之后的数据可以继续读，期间不会被其它线程修改；
-- StampedLock 不可重入，也不支持 Condition，乐观读期间读到的数据可能是不一致的，只能在 validate 成功之后使用。
+- StampedLock 不可重入，也不支持 Condition。乐观读期间读到的数据可能不一致，读取过程也可能出错（例如遍历正在增删键的 HashMap，上例只改价格），只能在 validate 成功之后使用读到的值。
 
 ## 五、线程之间的协作
 
@@ -815,18 +876,23 @@ B
 ```java
 public class WaitNotifyExample {
 
+    private boolean ready = false;   // 等待的条件，读写都在锁内
+
     public synchronized void before() {
         System.out.println("before");
+        ready = true;
         notifyAll();
     }
 
     public synchronized void after() {
         try {
-            wait();
+            while (!ready) {         // 条件已经满足就不用等待，被唤醒后也要重新检查
+                wait();
+            }
+            System.out.println("after");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace();     // 被中断时条件不一定满足，不能继续执行 after 的逻辑
         }
-        System.out.println("after");
     }
 }
 ```
@@ -837,6 +903,7 @@ public static void main(String[] args) {
     WaitNotifyExample example = new WaitNotifyExample();
     executorService.execute(() -> example.after());
     executorService.execute(() -> example.before());
+    executorService.shutdown();
 }
 ```
 
@@ -845,16 +912,20 @@ before
 after
 ```
 
+ready 不能省略：如果 before() 先执行，这次 notifyAll() 没有唤醒任何线程，通知也不会被保存，after() 随后调用 wait() 就会一直等下去。所以 wait() 要配合一个受锁保护的条件。
+
 wait() 和 sleep() 的区别：
 
 - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
-- wait() 会释放锁，sleep() 不会。
+- wait() 必须在持有该对象锁的同步块中调用，sleep() 在任何地方都可以调用；
+- wait() 会释放锁，sleep() 不会；
+- 不带超时的 wait() 要等 notify() 或 notifyAll() 唤醒（也可能虚假唤醒），sleep() 到时间自动返回，两者都可以被 interrupt() 打断。
 
 ### await() signal() signalAll()
 
 java.util.concurrent 类库中提供了 Condition 类来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。
 
-相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
+与 wait() 相比，一个 Lock 可以创建多个 Condition，signal() 只唤醒等某个条件的线程；而一个对象只有一个等待集合，notifyAll() 会唤醒所有等待的线程。
 
 使用 Lock 来获取一个 Condition 对象。
 
@@ -863,11 +934,13 @@ public class AwaitSignalExample {
 
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
+    private boolean ready = false;
 
     public void before() {
         lock.lock();
         try {
             System.out.println("before");
+            ready = true;
             condition.signalAll();
         } finally {
             lock.unlock();
@@ -877,7 +950,9 @@ public class AwaitSignalExample {
     public void after() {
         lock.lock();
         try {
-            condition.await();
+            while (!ready) {
+                condition.await();
+            }
             System.out.println("after");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -894,6 +969,7 @@ public static void main(String[] args) {
     AwaitSignalExample example = new AwaitSignalExample();
     executorService.execute(() -> example.after());
     executorService.execute(() -> example.before());
+    executorService.shutdown();
 }
 ```
 
@@ -948,7 +1024,7 @@ ABCABCABCABCABCABCABCABCABCABC
 - 等待条件要用 while 而不是 if：线程被唤醒时不一定轮到了自己，例如和其它线程一起被 notifyAll() 唤醒，或者发生了虚假唤醒，醒来后必须重新检查条件；
 - 要用 notifyAll() 而不是 notify()：notify() 只唤醒任意一个等待的线程，例如 B 打印完后唤醒的是 A，A 发现没轮到自己又继续等待，C 就再也不会被唤醒，三个线程都在等待。
 
-把上面代码中的 notifyAll() 改成 notify() 后运行 100 次，每次都在打印出几个字母后卡住；把 while 改成 if 后，100 次中有 94 次打印出 ABAABAAB 这样的乱序后卡住，其余 6 次乱序打印完（JDK 21 实测）。
+把上面代码中的 notifyAll() 改成 notify() 后运行 100 次，98 次在打印出几个字母后卡住；把 while 改成 if 后，100 次全部乱序，其中 92 次乱序后卡住（JDK 21 实测，见[附录 A17](#a17-交替打印的两种错误写法)）。
 
 用 Semaphore 实现更直观：每个线程对应一个信号量，只有第一个线程的许可为 1。线程打印前获取自己的许可，打印后释放下一个线程的许可，就像传递接力棒：
 
@@ -976,13 +1052,17 @@ for (int i = 0; i < 3; i++) {
 
 一个线程只能处于一种状态，并且这里的线程状态特指 Java 虚拟机的线程状态，不能反映线程在特定操作系统下的状态。
 
+与操作系统的[进程状态](计算机操作系统%20-%20进程管理.md#进程状态的切换)对照：RUNNABLE 包含了就绪和运行；平台线程处于 BLOCKED、WAITING、TIMED_WAITING 时，在操作系统层面通常都是阻塞，区别只在等待的原因。
+
+<div align="center"> <img src="pics/jc-thread-states.png" width="760px"/> </div><br>
+
 ### 新建（NEW）
 
 创建后尚未启动。
 
 ### 可运行（RUNNABLE）
 
-正在 Java 虚拟机中运行。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。
+正在 Java 虚拟机中运行。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。平台线程阻塞在 ServerSocket.accept() 这类传统 I/O 上时，getState() 通常也返回 RUNNABLE（见[附录 A16](#a16-线程状态的转换)）。
 
 ### 阻塞（BLOCKED）
 
@@ -994,7 +1074,7 @@ for (int i = 0; i < 3; i++) {
 
 阻塞和等待的区别在于，阻塞是被动的，它是在等待获取 monitor lock。而等待是主动的，通过调用  Object.wait() 等方法进入。
 
-需要注意的是，只有等待 synchronized 的线程才处于 BLOCKED 状态。ReentrantLock 基于 AQS，抢不到锁的线程通过 LockSupport.park() 挂起，状态是 WAITING：让一个线程等待 synchronized、另一个线程等待 ReentrantLock，在 JDK 21 上打印两者的 getState()，分别是 BLOCKED 和 WAITING。
+需要注意的是，只有等待 synchronized 的线程才处于 BLOCKED 状态。ReentrantLock 基于 AQS，抢不到锁的线程通过 LockSupport.park() 挂起，状态是 WAITING：让一个线程等待 synchronized、另一个线程等待 ReentrantLock，在 JDK 21 上打印两者的 getState()，分别是 BLOCKED 和 WAITING（见[附录 A15](#a15-aqs-等待队列的获取顺序)、[附录 A16](#a16-线程状态的转换)）。
 
 | 进入方法 | 退出方法 |
 | --- | --- |
@@ -1011,8 +1091,8 @@ for (int i = 0; i < 3; i++) {
 | Thread.sleep() 方法 | 时间结束 |
 | 设置了 Timeout 参数的 Object.wait() 方法 | 时间结束 / Object.notify() / Object.notifyAll()  |
 | 设置了 Timeout 参数的 Thread.join() 方法 | 时间结束 / 被调用的线程执行完毕 |
-| LockSupport.parkNanos() 方法 | LockSupport.unpark(Thread) |
-| LockSupport.parkUntil() 方法 | LockSupport.unpark(Thread) |
+| LockSupport.parkNanos() 方法 | 时间结束 / LockSupport.unpark(Thread) |
+| LockSupport.parkUntil() 方法 | 时间结束 / LockSupport.unpark(Thread) |
 
 调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
 
@@ -1022,29 +1102,78 @@ for (int i = 0; i < 3; i++) {
 
 ## 七、J.U.C - AQS 🔥
 
-java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
-
 AbstractQueuedSynchronizer（AQS）用两样东西实现了各种同步器：
 
-- 一个 int 类型的 state，含义由具体的同步器决定，修改时使用 CAS；
+- 一个 volatile 的 int 类型 state，含义由具体的同步器决定，修改时使用 CAS；
 - 一个等待队列，获取失败的线程包装成节点加入队尾，并通过 LockSupport.park() 挂起，释放时唤醒队头的线程。
 
-以 ReentrantLock 为例，state 表示锁被重入的次数：0 表示没有被持有，加锁时用 CAS 把 0 改为 1，同一个线程再次加锁时直接加 1，解锁时减 1，减到 0 才真正释放。下面的代码中，main 线程加锁两次后，t1、t2 都进入了等待队列：
+AQS 用模板方法把这两部分分开：子类只定义怎样修改 state 算获取成功、怎样算释放，排队、挂起和唤醒都由 AQS 完成。获取分为两种模式：
+
+- 独占模式一次只有一个线程能获取成功，子类实现 tryAcquire()、tryRelease()，例如 ReentrantLock 和读写锁的写锁；
+- 共享模式可以有多个线程同时获取成功，子类实现 tryAcquireShared()、tryReleaseShared()，例如 Semaphore、CountDownLatch 和读写锁的读锁。
+
+以 ReentrantLock 为例，state 表示锁被重入的次数，exclusiveOwnerThread 记录持有锁的线程：0 表示没有被持有，加锁时用 CAS 把 0 改为 1 并记下持有者，持有者再次加锁时直接加 1，解锁时减 1，减到 0 才清空持有者、真正释放。可重入让加锁的 transfer() 能调用同样加这把锁的 withdraw()，否则线程会等待只有自己才会释放的锁（[自死锁](计算机操作系统%20-%20死锁.md#1-java-线程死锁)）。
+
+下面的代码中，main 线程加锁两次后，t1、t2 都进入了等待队列：
 
 ```java
 ReentrantLock lock = new ReentrantLock();
 lock.lock();
 lock.lock();
 System.out.println(lock.getHoldCount());     // 2
-Thread t1 = new Thread(lock::lock), t2 = new Thread(lock::lock);
+Runnable task = () -> {
+    lock.lock();
+    try {
+        // 访问共享资源
+    } finally {
+        lock.unlock();
+    }
+};
+Thread t1 = new Thread(task), t2 = new Thread(task);
 t1.start(); t2.start();
 Thread.sleep(200);
 System.out.println(lock.getQueueLength());   // 2，t1、t2 的状态都是 WAITING
 lock.unlock();
 lock.unlock();                               // state 减到 0，唤醒等待队列中最先入队的线程
+t1.join(); t2.join();
 ```
 
-公平锁与非公平锁的区别在于获取锁之前是否先看队列：非公平锁不管队列里有没有线程在等，直接用 CAS 抢；公平锁每次尝试获取前都检查队列（hasQueuedPredecessors），有线程在等就排到队尾。已经入队的线程要轮到队首才尝试获取，但非公平锁下新来的线程仍可能抢在它前面，所以非公平锁不保证先来先得。非公平锁的好处是刚释放锁的线程可以立即再次获得锁，省去了唤醒另一个线程的开销。例如 8 个线程各加锁、解锁 20 万次，非公平锁约 55 ms，公平锁约 3 秒，相差几十倍（JDK 21 实测，见[附录 A2](#a2-公平锁与非公平锁)），所以 ReentrantLock 默认是非公平的，只有严格要求先来先得时才使用公平锁。
+等待队列是一个带哑头节点的双向链表，下图是 t1 先入队、t2 后入队时的三步（JDK 21 实测，见[附录 A15](#a15-aqs-等待队列的获取顺序)）：
+
+<div align="center"> <img src="pics/jc-aqs-queue.png" width="760px"/> </div><br>
+
+用双向链表是因为 next 用于释放时找到要唤醒的后继，prev 用于判断前驱是不是头节点、取消时跳过已取消的前驱。
+
+ReentrantLock 的每个 Condition 还有自己的条件队列：await() 释放锁并进入条件队列，signal() 把节点移到等待队列，被移过去的线程要重新获得锁才能从 await() 返回（JDK 21 实测，见[附录 A15](#a15-aqs-等待队列的获取顺序)）：
+
+<div align="center"> <img src="pics/jc-aqs-condition.png" width="760px"/> </div><br>
+
+公平锁与非公平锁的区别在于获取锁之前是否先看队列，等待队列本身是先进先出的。下面是公平锁加锁的代码（JDK 21 源码，有简化）：
+
+```java
+final void lock() {
+    if (!initialTryLock())
+        acquire(1);              // AQS：tryAcquire() 失败就入队，排到队首时重试，仍失败才 park
+}
+
+final boolean initialTryLock() {
+    int c = getState();
+    if (c == 0) {
+        if (!hasQueuedThreads() && compareAndSetState(0, 1)) {  // 非公平锁不检查队列
+            setExclusiveOwnerThread(Thread.currentThread());
+            return true;
+        }
+    } else if (getExclusiveOwnerThread() == Thread.currentThread()) {
+        setState(c + 1);         // 重入：只有持有者会执行这里，不需要 CAS
+        return true;
+    }
+    return false;
+}
+```
+
+tryAcquire() 中也一样，公平锁先用 hasQueuedPredecessors() 检查队列，非公平锁直接 CAS。所以非公平锁下新来的线程可能抢在已入队的线程前面，不保证先来先得。
+
+非公平锁的好处是少切换线程：被唤醒的线程要等操作系统调度才能运行，公平锁下这段时间锁只能空着，非公平锁则让正在运行的线程直接拿到锁。例如 8 个线程各加锁、解锁 20 万次，非公平锁约 55 ms，持有者只换了 1～3 万次；公平锁约 3 秒，几乎每次加锁都换一个线程（JDK 21 实测，见[附录 A2](#a2-公平锁与非公平锁)）。代价是排队的线程可能一再被插队，所以 ReentrantLock 默认非公平，只有严格要求先来先得时才用公平锁。
 
 CountDownLatch、Semaphore 等也基于 AQS，只是对 state 的解释不同：CountDownLatch 的 state 是剩余的计数，Semaphore 的 state 是剩余的许可数。
 
@@ -1052,7 +1181,7 @@ CountDownLatch、Semaphore 等也基于 AQS，只是对 state 的解释不同：
 
 用来控制一个或者多个线程等待多个线程。
 
-维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
+计数器就是 AQS 的 state，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
 
 <div align="center"> <img src="pics/jc-countdownlatch.png" width="760px"/> </div><br>
 
@@ -1085,6 +1214,8 @@ run..run..run..run..run..run..run..run..run..run..end
 用来控制多个线程互相等待，只有当多个线程都到达时，这些线程才会继续执行。
 
 和 CountDownLatch 相似，都是通过维护计数器来实现的。线程执行 await() 方法之后计数器会减 1，并进行等待，直到计数器为 0，所有调用 await() 方法而在等待的线程才能继续执行。
+
+它不直接基于 AQS，而是用 ReentrantLock 和 Condition 实现，最后一个到达的线程调用 signalAll() 唤醒全部。
 
 CyclicBarrier 和 CountDownLatch 的一个区别是，所有线程到达、屏障打开之后，CyclicBarrier 的计数器会自动恢复为初始值，可以用于下一轮，所以它才叫做循环屏障；CountDownLatch 的计数减到 0 之后不能再重置。reset() 用于强制重置屏障，正在等待的线程会抛出 BrokenBarrierException。
 
@@ -1134,7 +1265,7 @@ before..before..before..before..before..before..before..before..before..before..
 
 ### Semaphore
 
-Semaphore 类似于操作系统中的信号量，可以控制对互斥资源的访问线程数。
+Semaphore 类似于操作系统中的[信号量](计算机操作系统%20-%20进程管理.md#3-信号量)，可以控制对互斥资源的访问线程数。
 
 以下代码模拟了对某个服务的并发请求，每次只能有 3 个客户端同时访问，请求总数为 10。
 
@@ -1150,9 +1281,12 @@ public class SemaphoreExample {
             executorService.execute(()->{
                 try {
                     semaphore.acquire();
-                    System.out.print(semaphore.availablePermits() + " ");
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
+                    return;               // 被中断时没有拿到许可，release() 会让许可多出一个
+                }
+                try {
+                    System.out.print(semaphore.availablePermits() + " ");
                 } finally {
                     semaphore.release();
                 }
@@ -1230,21 +1364,24 @@ Future 只能调用 get() 阻塞等待结果，多个异步任务之间有依赖
 ```java
 ExecutorService pool = Executors.newFixedThreadPool(8);
 CompletableFuture<String> order = CompletableFuture.supplyAsync(() -> call("订单 1024", 200), pool);
-CompletableFuture<String> logistics = order.thenApplyAsync(o -> call("物流 SF1234567", 200), pool);  // 依赖订单的结果
+CompletableFuture<String> logistics = order.thenApplyAsync(o -> call("物流 SF1234567", 200), pool);  // 订单查完才查物流
 CompletableFuture<String> coupon = CompletableFuture.supplyAsync(() -> call("优惠券 2 张", 200), pool)
         .exceptionally(e -> "优惠券暂不可用");                                                      // 失败时降级
 String page = logistics.thenCombine(coupon, (l, c) -> l + "，" + c).join();
+pool.shutdown();
 ```
 
 ```text
-串行：640 ms
-物流 SF1234567，优惠券暂不可用，耗时 425 ms
+物流 SF1234567，优惠券暂不可用，耗时 413 ms
 ```
+
+三次调用依次执行要 610～630 ms，组合之后约等于两次调用（JDK 21 实测，见[附录 A20](#a20-completablefuture-组合异步调用)）。
 
 需要注意的是：
 
-- 不传入线程池时，任务在 ForkJoinPool.commonPool() 中执行，它的线程数默认为 CPU 核数 − 1（10 核的机器上为 9），并且被并行流等代码共用，阻塞的 I/O 任务应该使用自己的线程池；
+- 带 Async 的方法不传入线程池时，任务在 ForkJoinPool.commonPool() 中执行，它的线程数默认为 CPU 核数 − 1，并且被并行流等代码共用，阻塞的 I/O 任务应该使用自己的线程池（commonPool 并行度小于 2 时改为每个任务新建一个线程，见[附录 A18](#a18-completablefuture-的默认线程)）；
 - 异常不会自动抛出，要用 exceptionally、handle 处理，否则只有调用 join() 时才会得到包装后的 CompletionException；
+- 远程调用要设置超时：JDK 9 起 orTimeout() 超时后以 TimeoutException 结束，可以接 exceptionally 降级，但它不中断正在执行的任务，所以 HTTP 客户端、数据库驱动本身也要设置超时（JDK 21 实测，见[附录 A21](#a21-优先级队列与超时)）；
 - thenApply 的函数返回普通的值，thenCompose 的函数返回另一个 CompletableFuture，用来串联两个异步调用，避免得到 CompletableFuture&lt;CompletableFuture&lt;T&gt;&gt;。
 
 ### BlockingQueue
@@ -1411,9 +1548,11 @@ public static void main(String[] args) throws InterruptedException {
 997
 ```
 
+结果变小是因为 cnt++ 分为读取、加 1、写回三步，两个线程读到同一个值时就少加了一次，见[原子性](#1-原子性)。
+
 ## 十、Java 内存模型
 
-Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
+Java 内存模型（Java Memory Model, JMM）规定了一个线程对共享变量的写入在什么条件下对其它线程可见、操作的顺序能保证到什么程度，屏蔽了各种硬件和编译器的差异。它和堆、栈这些[运行时数据区域](Java%20虚拟机.md#一运行时数据区域)不是一回事。
 
 ### 主内存与工作内存
 
@@ -1423,7 +1562,9 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 <div align="center"> <img src="pics/jc-cpu-cache.png" width="760px"/> </div><br>
 
-所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
+这里的变量指实例字段、静态字段和数组元素，不包括局部变量。所有的变量都存储在主内存中，每个线程还有自己的工作内存，保存了该线程使用的变量的主内存副本拷贝。
+
+工作内存是一个抽象概念。硬件的缓存一致性协议（例如 MESI）已经保证了各个核心看到的缓存行一致，Java 中的可见性问题主要来自编译器把变量的值留在寄存器中（见[可见性](#2-可见性)一节的循环），以及处理器的写缓冲。
 
 线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
 
@@ -1435,14 +1576,14 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 
 <div align="center"> <img src="pics/jc-jmm-ops.png" width="760px"/> </div><br>
 
-- read：把一个变量的值从主内存传输到工作内存中
-- load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中
-- use：把工作内存中一个变量的值传递给执行引擎
-- assign：把一个从执行引擎接收到的值赋给工作内存的变量
-- store：把工作内存的一个变量的值传送到主内存中
-- write：在 store 之后执行，把 store 得到的值放入主内存的变量中
-- lock：作用于主内存的变量，把一个变量标识为一条线程独占的状态
-- unlock：作用于主内存的变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其它线程锁定
+- read：把一个变量的值从主内存传输到工作内存中；
+- load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中；
+- use：把工作内存中一个变量的值传递给执行引擎；
+- assign：把一个从执行引擎接收到的值赋给工作内存的变量；
+- store：把工作内存的一个变量的值传送到主内存中；
+- write：在 store 之后执行，把 store 得到的值放入主内存的变量中；
+- lock：取得一个对象关联的锁，使它被一条线程独占；
+- unlock：释放这把锁，释放后其它线程才可以取得它。
 
 ### 内存模型三大特性 🔥🔥
 
@@ -1454,7 +1595,7 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 为了方便讨论，将内存间的交互操作简化为 3 个：load、assign、store。
 
-下图演示了两个线程同时对 cnt 进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入旧值。可以看出，这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
+下图演示了两个线程同时对 cnt 进行操作，load、assign、store 这一系列操作整体上看不具备原子性，那么在 T1 修改 cnt 并且还没有将修改后的值写入主内存，T2 依然可以读入旧值。这两个线程虽然执行了两次自增运算，但是主内存中 cnt 的值最后为 1 而不是 2。因此对 int 类型读写操作满足原子性只是说明 load、assign、store 这些单个操作具备原子性。
 
 <div align="center"> <img src="pics/jc-cnt-race.png" width="780px"/> </div><br>
 
@@ -1462,7 +1603,7 @@ AtomicInteger 能保证多个线程修改的原子性。
 
 <div align="center"> <img src="pics/jc-atomic-cas.png" width="780px"/> </div><br>
 
-使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现：
+使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现，main() 与[线程不安全示例](#九线程不安全示例)相同，只把 example 换成 AtomicExample：
 
 ```java
 public class AtomicExample {
@@ -1478,29 +1619,11 @@ public class AtomicExample {
 }
 ```
 
-```java
-public static void main(String[] args) throws InterruptedException {
-    final int threadSize = 1000;
-    AtomicExample example = new AtomicExample(); // 只修改这条语句
-    final CountDownLatch countDownLatch = new CountDownLatch(threadSize);
-    ExecutorService executorService = Executors.newCachedThreadPool();
-    for (int i = 0; i < threadSize; i++) {
-        executorService.execute(() -> {
-            example.add();
-            countDownLatch.countDown();
-        });
-    }
-    countDownLatch.await();
-    executorService.shutdown();
-    System.out.println(example.get());
-}
-```
-
 ```text
 1000
 ```
 
-除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的原子性。它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
+除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的原子性。它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。同样用前面的 main() 运行，结果也是 1000：
 
 ```java
 public class AtomicSynchronizedExample {
@@ -1516,39 +1639,17 @@ public class AtomicSynchronizedExample {
 }
 ```
 
-```java
-public static void main(String[] args) throws InterruptedException {
-    final int threadSize = 1000;
-    AtomicSynchronizedExample example = new AtomicSynchronizedExample();
-    final CountDownLatch countDownLatch = new CountDownLatch(threadSize);
-    ExecutorService executorService = Executors.newCachedThreadPool();
-    for (int i = 0; i < threadSize; i++) {
-        executorService.execute(() -> {
-            example.add();
-            countDownLatch.countDown();
-        });
-    }
-    countDownLatch.await();
-    executorService.shutdown();
-    System.out.println(example.get());
-}
-```
-
-```text
-1000
-```
-
 #### 2. 可见性
 
 可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
 主要有三种实现可见性的方式：
 
-- volatile
-- synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
-- final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+- volatile：写入的值对之后读取它的线程立即可见；
+- synchronized：释放锁之前的写入，对之后获得同一把锁的线程可见；
+- final：被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
 
-对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
+对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题。volatile 只保证每次读取时拿到当时的最新值：在[原子性](#1-原子性)一节的图中，T2 读到的 0 就是当时的最新值，两个线程仍然都写回 1。两个线程各对 volatile int 自增 1000 万次，结果只有 984 万～1624 万（JDK 21 实测，见[附录 A24](#a24-volatile-的自增与机器码)）。
 
 没有可见性保证时，即时编译器可以只读取一次字段，之后一直使用缓存的值（JLS 17.3）。例如下面的循环，stop 不加 volatile 时，主线程把它改为 true 之后，worker 线程仍然一直循环；加上 volatile 后，每次循环都重新读取 stop，worker 很快结束（JDK 21 各运行 3 次，结果相同，见[附录 A3](#a3-volatile-与循环条件)）：
 
@@ -1560,23 +1661,26 @@ Thread.sleep(1000);
 stop = true;
 ```
 
-这也是 volatile 最常见的用法：一个线程写、其它线程读的状态标志。count++ 这类读-改-写操作仍然要用锁或者原子类。
+这也是 volatile 最常见的用法：一个线程写、其它线程读的状态标志。
 
 #### 3. 有序性
 
-有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+有序性是指：在本线程内观察，所有操作都是有序的。在一个线程中观察另一个线程，所有操作都是无序的，无序是因为发生了重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+
+重排序是为了让程序跑得更快，来自两处：
+
+- 编译器：例如即时编译器把循环中不变的读取提到循环外；
+- 处理器：读指令缓存未命中时先执行后面不依赖它的指令，写入先放进写缓冲、稍后才进入缓存。
 
 例如写线程先执行 data = 1，再执行 ready = 1；读线程先读 ready，再读 data。按照代码的顺序，读到 ready 为 1 时 data 一定已经是 1，但两个都是普通字段时，编译器和处理器可以调整两次写入或两次读取的顺序：在 ARM 架构的 Apple M1 上，读到 ready 为 1 的约 1.3 亿次中，有约 1000～2300 次读到的 data 仍为 0；把 ready 改为 volatile 后一次也没有出现（JDK 21 实测，见[附录 A8](#a8-重排序与-volatile)）。
 
-volatile 关键字通过添加内存屏障的方式来禁止重排序，即重排序时不能把后面的指令放到内存屏障之前。
-
-以 x86 为例，处理器本身只会把写操作之后的读操作提前执行，其它重排序都不会发生。因此 HotSpot 只在 volatile 写之后插入一条带 lock 前缀的空操作（lock addl $0, [rsp - C]）作为 StoreLoad 屏障：它之前的写入对其它处理器可见之后，后面的读操作才能执行。
+volatile 关键字通过添加内存屏障（memory barrier）的方式来禁止重排序，禁止的方向和屏障的位置见 [volatile](#volatile) 一节。
 
 也可以通过 synchronized 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
 
 ### 先行发生原则
 
-上面提到了可以用 volatile 和 synchronized 来保证有序性。JDK 5（JSR-133）起，Java 内存模型用先行发生（happens-before）关系来定义可见性：如果操作 A 先行发生于操作 B，那么 A 的结果对 B 可见。它说的是可见性和顺序上的保证，并不要求 A 在时间上先执行。以下规则天然成立，不需要额外的同步手段。
+JDK 5（JSR-133）起，Java 内存模型用先行发生（happens-before）关系来定义可见性：如果操作 A 先行发生于操作 B，那么 A 的结果对 B 可见。它说的是可见性和顺序上的保证，并不要求 A 在时间上先执行。以下规则天然成立，不需要额外的同步手段。
 
 #### 1. 单一线程原则
 
@@ -1586,7 +1690,7 @@ volatile 关键字通过添加内存屏障的方式来禁止重排序，即重�
 
 #### 2. 管程锁定规则
 
-一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
+一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。管程（monitor）在这里指 synchronized 的对象锁，见[管程](计算机操作系统%20-%20进程管理.md#4-管程)。
 
 <div align="center"> <img src="pics/jc-hb-monitor.png" width="600px"/> </div><br>
 
@@ -1614,7 +1718,7 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 #### 7. 对象终结规则
 
-一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
+一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。finalize() 自 JDK 9 起已废弃（[JEP 421](https://openjdk.org/jeps/421)）。
 
 #### 8. 传递性
 
@@ -1627,11 +1731,17 @@ volatile 修饰的变量有两项保证：
 - 可见性：写入对之后读取它的线程立即可见；
 - 有序性：volatile 写之前的读写不会被重排序到它之后，volatile 读之后的读写不会被重排序到它之前。
 
-它不保证 count++ 这类复合操作的原子性，见[可见性](#2-可见性)。
+volatile 变量单次的读、写是原子的（包括 long、double），但它不保证 count++ 这类复合操作的原子性，见[可见性](#2-可见性)。
 
 有序性使 volatile 变量可以用来发布数据。前面的例子中 ready 改为 volatile 后：写 data 先行发生于写 ready（单一线程原则），写 ready 先行发生于读到这个值（volatile 变量规则），读 ready 先行发生于读 data，由传递性，读到 ready 为 1 的线程一定能看到 data 为 1，data 本身不需要是 volatile。双重校验锁的单例必须加 volatile 也是这个原因，否则其它线程可能拿到一个构造方法还没有执行完的对象，见[单例](设计模式%20%20-%20单例.md#4-双重校验锁-线程安全)。
 
-volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性和有序性，不保证原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，代价是竞争时线程会阻塞。所以状态标志、发布数据用 volatile，读-改-写操作和多个变量一起修改用锁或原子类。
+这两项保证由即时编译器和处理器共同实现：即时编译器每次都真正读写 volatile 字段、不做上面禁止的重排序，并在读写前后插入内存屏障，禁止处理器重排序（ARM 的指令为 JDK 21 实测，见[附录 A24](#a24-volatile-的自增与机器码)）：
+
+<div align="center"> <img src="pics/jc-volatile-barrier.png" width="760px"/> </div><br>
+
+x86 上 volatile 写之后的 lock addl 要等写缓冲中的写入进入缓存，后面的读才能执行；其它核心中这一行的旧副本由 MESI 等协议置为失效，随后读到的就是新值。
+
+volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性和有序性，不保证复合操作的原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，代价是竞争时线程会阻塞。所以状态标志、发布数据用 volatile，读-改-写操作和多个变量一起修改用锁或原子类。
 
 ## 十一、线程安全 🔥🔥
 
@@ -1641,16 +1751,16 @@ volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性
 
 ### 不可变
 
-不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。多线程环境下，应当尽量使对象成为不可变，来满足线程安全。
+不可变（Immutable）的对象一定是线程安全的：只要它被正确地构建出来，任何线程都不会看到它处于不一致的状态，不需要任何同步。多线程环境下应当尽量使对象不可变。
 
 不可变的类型：
 
 - final 关键字修饰的基本数据类型
 - String
-- 枚举类型
+- 没有可变字段的枚举类型
 - Number 部分子类，如 Long 和 Double 等数值包装类型，BigInteger 和 BigDecimal 等大数据类型。但同为 Number 的原子类 AtomicInteger 和 AtomicLong 则是可变的。
 
-对于集合类型，可以使用 Collections.unmodifiableXXX() 方法来获取一个不可变的集合。
+对于集合类型，可以使用 Collections.unmodifiableXXX() 方法来获取一个只读的集合。
 
 ```java
 public class ImmutableExample {
@@ -1664,11 +1774,11 @@ public class ImmutableExample {
 
 ```text
 Exception in thread "main" java.lang.UnsupportedOperationException
-    at java.util.Collections$UnmodifiableMap.put(Collections.java:1457)
+    at java.base/java.util.Collections$UnmodifiableMap.put(Collections.java:1660)
     at ImmutableExample.main(ImmutableExample.java:9)
 ```
 
-Collections.unmodifiableXXX() 返回的是原集合的只读视图，并不拷贝数据：通过视图修改会抛出异常，但原集合被修改后，视图中也能看到变化（JDK 21 实测）。需要真正不可变的拷贝时，使用 JDK 10 起的 Map.copyOf()、List.copyOf()。视图中需要对集合进行修改的方法都直接抛出异常：
+Collections.unmodifiableXXX() 返回的是原集合的只读视图，并不拷贝数据：通过视图修改会抛出异常，但原集合被修改后，视图中也能看到变化（JDK 21 实测，见[附录 A19](#a19-只读视图与不可变拷贝)）。需要不随原集合变化的拷贝时，使用 JDK 10 起的 Map.copyOf()、List.copyOf()，它们只保证集合本身不可修改，不会复制其中的可变对象。视图中需要对集合进行修改的方法都直接抛出异常：
 
 ```java
 public V put(K key, V value) {
@@ -1678,46 +1788,42 @@ public V put(K key, V value) {
 
 ### 互斥同步
 
-synchronized 和 ReentrantLock。
+即前面的 synchronized 和 ReentrantLock，见[四、互斥同步](#四互斥同步)。
 
 以线程安全的计数器为例，几种实现方式的取舍：
 
-- synchronized 或 ReentrantLock：最通用，计数的同时还要修改其它变量时只能用锁；
+- synchronized 或 ReentrantLock：最通用，计数的同时还要修改其它变量时通常用锁；
 - AtomicInteger：用 CAS 实现，线程不阻塞，见[非阻塞同步](#非阻塞同步)；
 - LongAdder：高并发下最快，但 sum() 不是某一时刻的精确值，适合统计请求数；
 - 每个线程各自计数、最后汇总，计数过程不需要同步，见[无同步方案](#无同步方案)。
+
+JDK 中线程安全的类有不可变类、StringBuffer 和 Vector 这类每个方法都加锁的类、ConcurrentHashMap 等并发容器和原子类，容器的选择见 [Java 容器](Java%20容器.md#一概览)。
 
 需要注意的是，线程安全的类组合在一起不一定线程安全。例如先调用 ConcurrentHashMap 的 containsKey() 再调用 put()，其它线程可能在两次调用之间放入同一个键，要改用 putIfAbsent() 这类一次完成判断和修改的方法。
 
 ### 非阻塞同步
 
-互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
-
-互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
+互斥同步也称为阻塞同步，属于悲观的并发策略：无论是否真的出现竞争都先加锁，竞争时线程的阻塞和唤醒涉及用户态与内核态的切换，这是它主要的性能开销。
 
 随着硬件指令集的发展，可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。
 
 #### 1. CAS
 
-乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
+乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。CAS 失败时不阻塞线程，只返回 false，由调用方决定重试还是放弃。
 
 CAS 由处理器指令完成，比较和写入之间不会被其它核心插入：x86 上 HotSpot 生成带 lock 前缀的 cmpxchg 指令，lock 前缀保证执行期间其它核心不能访问这个内存位置；ARM 上使用 ARMv8.1 的 CAS 指令，不支持时用独占加载、存储指令 LDXR、STXR 循环实现。Java 代码通过 Unsafe 的 compareAndSetInt() 等方法使用 CAS，JIT 把它们直接编译成这些指令。
 
 #### 2. AtomicInteger
 
-J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。
+java.util.concurrent.atomic 包中的原子类都基于 CAS，按更新的对象分为几类：
 
-以下代码使用了 AtomicInteger 执行了自增的操作。
+- 基本类型：AtomicInteger、AtomicLong、AtomicBoolean；
+- 数组：AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray；
+- 引用：AtomicReference，以及带版本号的 AtomicStampedReference、带标记的 AtomicMarkableReference；
+- 字段更新器：AtomicIntegerFieldUpdater 等，更新已有类的 volatile 字段；
+- 累加器：LongAdder、LongAccumulator，见本节末尾。
 
-```java
-private AtomicInteger cnt = new AtomicInteger();
-
-public void add() {
-    cnt.incrementAndGet();
-}
-```
-
-以下是 JDK 21 中 incrementAndGet() 的源码，它调用了 Unsafe 的 getAndAddInt()：
+AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作，用法见[原子性](#1-原子性)中的例子。以下是 JDK 21 中 incrementAndGet() 的源码，它调用了 Unsafe 的 getAndAddInt()：
 
 ```java
 public final int incrementAndGet() {
@@ -1737,7 +1843,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 }
 ```
 
-JDK 8 中这段代码在 sun.misc.Unsafe 中，CAS 方法名为 compareAndSwapInt()，逻辑相同。
+JDK 8 中这段代码在 sun.misc.Unsafe 中，CAS 方法名为 compareAndSwapInt()，逻辑相同。这是 Java 层面的写法，即时编译器可能替换为原子加法指令，例如 x86 上的 lock xadd。AtomicInteger 的 value 字段本身是 volatile 的，get()、set() 靠它保证可见性。
 
 冲突激烈时，CAS 的代价会明显上升：很多线程同时更新同一个变量，这个变量所在的缓存行要在 CPU 核心之间来回传递，用 CAS 循环更新时失败重试的次数也越来越多。8 个线程各对同一个 AtomicLong 累加 1000 万次，共 8000 万次，耗时 3.5～5.1 秒；单线程累加 1000 万次约 70 毫秒，按此计算 8000 万次也只要约 0.56 秒（JDK 21 实测，见[附录 A4](#a4-atomiclong-与-longadder)）。
 
@@ -1747,33 +1853,44 @@ LongAdder 把计数分散到多个 Cell 中，不同线程更新不同的 Cell�
 
 如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
 
-ABA 是否有害，取决于值相同是否代表状态相同。计数器这类只关心数值的变量，A 变成 B 又变回 A 没有影响；用 CAS 实现的无锁栈、链表则可能出错。例如一个无锁栈从栈顶起依次是 A、B、C，线程 1 准备出栈，读到栈顶 A 和它的下一个节点 B，准备执行 CAS(栈顶, A, B)；这时线程 2 依次弹出 A、B，压入 D，再把 A 压回，栈变为 A、D、C；线程 1 的 CAS 发现栈顶仍是 A，执行成功，栈顶变成了已经被弹出的 B，D 丢失了。在 Java 中，线程 1 持有 A 的引用，A 不会被回收，所以只有把弹出的节点重新压栈、复用节点时才会出现这种情况。
+ABA 是否有害，取决于值相同是否代表状态相同。计数器这类只关心数值的变量，A 变成 B 又变回 A 没有影响；用 CAS 实现的无锁栈、链表则可能出错。例如下图的无锁栈，线程 1 出栈时被挂起，期间栈从 A → B → C 变成了 A → D → C，线程 1 的 CAS(栈顶, A, B) 仍然成功，D 丢失了（JDK 21 实测，见[附录 A9](#a9-aba-与-atomicstampedreference)）：
 
-J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它把引用和一个整数版本号放在一起进行 CAS，每次修改都把版本号加 1。A 变为 B 再变回 A 之后，版本号已经从 0 变为 2，持有旧版本号 0 的 CAS 会失败（JDK 21 实测，见[附录 A9](#a9-aba-与-atomicstampedreference)）。数据库中用版本号实现的乐观锁也是同样的思路，版本号只增不减，不会出现 ABA。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+<div align="center"> <img src="pics/jc-aba-stack.png" width="760px"/> </div><br>
+
+在 Java 中，线程 1 持有 A 的引用，A 不会被回收，所以只有把弹出的节点重新压栈、复用节点时才会出现这种情况。
+
+J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它把引用和一个整数版本号放在一起进行 CAS，每次修改都把版本号加 1。A 变为 B 再变回 A 之后，版本号已经从 0 变为 2，持有旧版本号 0 的 CAS 会失败（JDK 21 实测，见[附录 A9](#a9-aba-与-atomicstampedreference)）。数据库中用版本号实现的乐观锁也是同样的思路，版本号只增不减，不会出现 ABA。如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
 
 需要注意的是，AtomicStampedReference 和 AtomicReference 比较的是引用，而不是 equals()。用它们保存 Integer 时，值为 100 的 CAS 成功，值为 1000 的 CAS 却失败了，这是因为 -128～127 之外的整数每次自动装箱都会创建新的对象（见[附录 A9](#a9-aba-与-atomicstampedreference)）。
 
-除了 ABA，CAS 还有两个问题：一是竞争激烈时大量失败重试，浪费 CPU，见上一节的测试；二是只能保证一个变量的原子更新，多个变量要一起修改时，可以把它们放进一个不可变对象，用 AtomicReference 整体替换，或者直接加锁。
+除了 ABA，CAS 还有两个问题：一是竞争激烈时大量失败重试，浪费 CPU，见上一节的测试，可以限制重试次数、改用锁，或者像 LongAdder 那样分散竞争；二是只能保证一个变量的原子更新，多个变量要一起修改时，可以把它们放进一个不可变对象，用 AtomicReference 整体替换，或者直接加锁。
 
 #### 4. 乐观锁与悲观锁
 
-悲观锁认为冲突一定会发生，访问共享数据之前先加锁，其它线程只能等待，例如 synchronized、ReentrantLock，以及数据库的 SELECT ... FOR UPDATE。乐观锁认为冲突很少发生，不加锁直接操作，提交时再检查数据是否被别人改过，改过就重试或放弃，例如 CAS 和数据库中的版本号。
+悲观锁认为冲突一定会发生，访问共享数据之前先加锁，其它线程只能等待，例如 synchronized、ReentrantLock，以及数据库的 SELECT ... FOR UPDATE。乐观锁认为冲突很少发生，不加锁直接操作，提交时再检查数据是否被别人改过，改过就重试或放弃，例如 CAS、数据库中的版本号和 Redis 的 [WATCH](Redis.md#九事务)。
 
-数据库中常用版本号实现乐观锁。例如两个请求都读到库存 10、版本号 1，然后都执行：
+以库存 10、版本号 1 的商品为例，两个请求各买一件：
+
+<div align="center"> <img src="pics/jc-optimistic-pessimistic.png" width="760px"/> </div><br>
+
+悲观锁的 SELECT ... FOR UPDATE 要在事务中执行，锁持有到事务提交，加锁范围见 [Next-Key Locks](数据库系统原理.md#next-key-locks)。乐观锁的检查写在 UPDATE 的条件中，影响 0 行就重新读取再试：
 
 ```sql
 UPDATE product SET stock = stock - 1, version = version + 1 WHERE id = 1 AND version = 1;
 ```
 
-先执行的请求影响 1 行，库存变为 9、版本号变为 2；后执行的请求影响 0 行，说明数据已被修改，需要重新读取后再试。项目中通常把读取和这条 UPDATE 放在循环中，并限制重试的次数，超过次数就返回失败，避免冲突多时无限重试。
+项目中通常把读取和这条 UPDATE 放在循环中，并限制重试的次数。
 
-需要注意的是，乐观锁并不是完全不加锁：InnoDB 执行这条 UPDATE 时仍然会给这一行加行锁，只是从读取数据到提交修改的这段时间不持有锁，其它请求可以同时读取和计算。
+需要注意的是，乐观锁并不是完全不加锁：InnoDB 执行这条 UPDATE 时仍然会给这一行加行锁，持有到事务提交，只是读取和计算期间不持有锁。
 
 两者的选择：
 
 - 读多写少、冲突少时用乐观锁，没有加锁和阻塞的开销；
 - 写多、冲突频繁时用悲观锁，否则乐观锁会不断失败重试，反而浪费 CPU；
-- 乐观锁只能保证单个变量或单行数据的原子更新，涉及多个资源时仍然要加锁或使用事务。
+- 读取和提交之间隔着用户操作时用乐观锁，例如打开编辑页面几分钟后才保存，版本号随页面返回、保存时再比较；
+- 一次 CAS 只能更新一个变量，一条带版本号的 UPDATE 只保护这一行，涉及多个资源时仍然要加锁或使用事务。
+
+秒杀这类同一行冲突激烈的扣库存，用版本号时有库存也会大量失败，更适合把判断写进条件（`WHERE stock > 0`），见[防止超卖的几种做法](系统设计基础.md#防止超卖的几种做法)。
 
 ### 无同步方案
 
@@ -1781,7 +1898,7 @@ UPDATE product SET stock = stock - 1, version = version + 1 WHERE id = 1 AND ver
 
 #### 1. 栈封闭
 
-多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
+多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。需要注意的是，局部变量引用的对象被放进共享的集合或字段后，就不再是线程私有的。
 
 ```java
 public class StackClosedExample {
@@ -1812,11 +1929,7 @@ public static void main(String[] args) {
 
 #### 2. 线程本地存储（Thread Local Storage）
 
-如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
-
-符合这种特点的应用并不少见，大部分使用消费队列的架构模式（如“生产者-消费者”模式）都会将产品的消费过程尽量在一个线程中消费完。其中最重要的一个应用实例就是经典 Web 交互模型中的“一个请求对应一个服务器线程”（Thread-per-Request）的处理方式，这种处理方式的广泛应用使得很多 Web 服务端应用都可以使用线程本地存储来解决线程安全问题。
-
-可以使用 java.lang.ThreadLocal 类来实现线程本地存储功能。
+如果一份数据只会在一个线程内使用，就可以让每个线程各存一份，把它的可见范围限制在线程之内，无须同步也不会出现数据争用。例如一个请求由一个线程处理到底，拦截器校验登录后把当前用户放进 ThreadLocal，之后的 Controller、Service 直接取用，不必层层传参，其它请求的线程取到的是各自的用户。
 
 对于以下代码，thread1 中设置 threadLocal 为 1，而 thread2 设置 threadLocal 为 2。过了一段时间之后，thread1 读取 threadLocal 依然是 1，不受 thread2 的影响。
 
@@ -1881,7 +1994,7 @@ public class ThreadLocalExample1 {
 ThreadLocal.ThreadLocalMap threadLocals = null;
 ```
 
-当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 ThreadLocalMap 对象，然后将 ThreadLocal-\>value 键值对插入到该 Map 中。
+当调用一个 ThreadLocal 的 set(T value) 方法时，先得到当前线程的 ThreadLocalMap 对象，然后将 ThreadLocal-\>value 键值对插入到该 Map 中。ThreadLocalMap 不是 HashMap，哈希冲突时用线性探测。下面是 JDK 8 的源码，JDK 21 的逻辑相同。
 
 ```java
 public void set(T value) {
@@ -1912,11 +2025,13 @@ public T get() {
 }
 ```
 
-ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。
+ThreadLocal 和锁解决的是不同的问题：锁让多个线程排队访问必须共享的数据，ThreadLocal 给每个线程一份，用于本来就属于某个线程的数据，例如当前用户、Spring 事务绑定的数据库连接。但它保存的只是引用，多个线程放进同一个可变对象时，这个对象仍然是共享的。
 
-ThreadLocalMap 的 Entry 继承自 WeakReference，对 key（ThreadLocal 对象）是弱引用，对 value 是强引用。ThreadLocal 对象没有其它强引用时，key 会在 GC 后变为 null，但 value 仍然被线程的 Map 引用着；线程池中的线程一直存活，这些 value 就一直无法回收，这就是 ThreadLocal 的内存泄漏。
+ThreadLocalMap 的 Entry 继承自 WeakReference，对 key（ThreadLocal 对象）是弱引用，对 value 是强引用。key 用弱引用，是为了让不再使用的 ThreadLocal 对象能被回收：没有其它强引用时，key 在 GC 后变为 null，留下陈旧的条目。
 
-更常见的问题是线程池复用线程导致数据串用。在只有一个线程的线程池中，请求 1 设置了用户 alice 但没有 remove()，请求 2 没有登录，调用 get() 却读到了 alice。所以每次使用 ThreadLocal 后都要在 finally 中调用 remove()：
+陈旧条目的 value 仍被 Map 强引用，只有这个线程之后调用 set()、remove() 或 get() 没有直接命中时才会被顺带清理。例如 5 个临时 ThreadLocal 各放 10 MB 不 remove()，GC 后 Map 中仍留着 50 MB（JDK 21 实测，见[附录 A13](#a13-threadlocal-的陈旧条目与数据串用)）。线程池中的线程一直存活，又没有触发清理时，这些 value 就一直留着，这就是 ThreadLocal 的内存泄漏，引用链见[弱引用](Java%20虚拟机.md#3-弱引用)的配图。常用的 static final ThreadLocal 一直强可达，旧 value 只能靠 remove() 或下一次 set() 覆盖。
+
+更常见的问题是线程池复用线程导致数据串用。在只有一个线程的线程池中，请求 1 设置了用户 alice 但没有 remove()，请求 2 没有登录，调用 get() 却读到了 alice（JDK 21 实测，见[附录 A13](#a13-threadlocal-的陈旧条目与数据串用)）。所以每次使用 ThreadLocal 后都要在 finally 中调用 remove()；在拦截器中设置的，在 afterCompletion() 中调用（preHandle() 返回 false 或抛出异常时它不会执行，见[请求的处理过程](Spring.md#请求的处理过程)）：
 
 ```java
 try {
@@ -1927,7 +2042,7 @@ try {
 }
 ```
 
-子线程读不到父线程设置的 ThreadLocal 值。InheritableThreadLocal 会在创建子线程时把父线程的值复制过去，但只在创建时复制一次，而线程池中的线程创建之后会被反复使用。例如主线程先后设置 alice 和 bob，每次都向只有一个线程的线程池提交任务，两次读到的都是 alice（JDK 21 实测，见[附录 A5](#a5-inheritablethreadlocal-与线程池)）。需要把上下文传给线程池中的任务时，可以在提交任务时显式传递，或者使用阿里开源的 TransmittableThreadLocal，它在提交任务时捕获当前的值，执行任务前设置，执行后恢复。
+子线程读不到父线程设置的 ThreadLocal 值，因为值存在父线程自己的 Map 中。InheritableThreadLocal 在 new Thread() 时把父线程的值复制给子线程（复制的是引用），但只复制这一次，而线程池中的线程会被反复使用。例如主线程先后设置 alice 和 bob，每次都向只有一个线程的线程池提交任务，两次读到的都是 alice（JDK 21 实测，见[附录 A5](#a5-inheritablethreadlocal-与线程池)）。需要把上下文传给线程池中的任务时，可以在提交任务时显式传递，或者使用阿里开源的 TransmittableThreadLocal，它在提交任务时捕获当前的值，执行任务前设置，执行后恢复。
 
 #### 3. 可重入代码（Reentrant Code）
 
@@ -1945,7 +2060,7 @@ try {
 
 自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
 
-在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
+固定的自旋次数少了等不到释放，多了白白占用 CPU。在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
 ### 锁消除
 
@@ -1985,9 +2100,9 @@ public static String concatString(String s1, String s2, String s3) {
 
 ### 轻量级锁 🔥
 
-JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasable）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
+JDK 1.6 引入了偏向锁，加上此前已有的轻量级锁，锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasable）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
 
-以下是 64 位 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。末尾两位的锁标志和倒数第 3 位的偏向标志区分了五种状态，除了 GC 标记状态，其它四个状态已经在前面介绍过了。
+以下是 64 位 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。末尾两位的锁标志和倒数第 3 位的偏向标志区分了五种状态：上面的四种，以及 GC 时使用的标记状态。
 
 <div align="center"> <img src="pics/markword.png" width="760px"/> </div><br>
 
@@ -2009,21 +2124,21 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 偏向锁的思想是偏向于让第一个获取锁对象的线程，这个线程在之后获取该锁就不再需要进行同步操作，甚至连 CAS 操作也不再需要。
 
-当锁对象第一次被线程获得的时候，进入偏向状态，标记为 1 01。同时使用 CAS 操作将线程 ID 记录到 Mark Word 中，如果 CAS 操作成功，这个线程以后每次进入这个锁相关的同步块就不需要再进行任何同步操作。
+当锁对象第一次被线程获得的时候，进入偏向状态，标记为 1 01。同时使用 CAS 操作将线程 ID 记录到 Mark Word 中，如果 CAS 操作成功，这个线程以后每次进入这个锁相关的同步块就不需要再进行任何同步操作，只比较 Mark Word 中的线程 ID，退出时也不修改 Mark Word。
 
-当有另外一个线程去尝试获取这个锁对象时，偏向状态就宣告结束，此时撤销偏向（Revoke Bias）后恢复到未锁定状态或者轻量级锁状态。
+当有另外一个线程去尝试获取这个锁对象时，偏向状态就宣告结束。撤销偏向（Revoke Bias）要在安全点暂停偏向的线程、检查它的栈：还在同步块中就改为由它持有的轻量级锁，已经退出就恢复为无锁状态。
 
 需要注意的是，偏向锁在 JDK 15 中被默认禁用并废弃（JEP 374），JDK 18 起相关参数已不再生效。
 
 ### 锁升级的过程
 
-synchronized 设计锁升级，是因为重量级锁的代价在阻塞和唤醒：抢不到锁的线程要通过系统调用挂起、再被唤醒，涉及用户态与内核态的切换和上下文切换。而大部分锁在同一时刻只有一个线程使用，一次 CAS 就能加锁，没有必要付出这个代价。所以 JVM 先用代价低的实现，出现竞争后再换成代价高的实现。JDK 21 中锁的状态依次为：
+synchronized 设计锁升级，是因为重量级锁的代价在阻塞和唤醒：抢不到锁的线程要通过系统调用挂起、再被唤醒，涉及用户态与内核态的切换和上下文切换。而大部分锁在同一时刻只有一个线程使用，一次 [CAS](#1-cas) 就能加锁，没有必要付出这个代价。所以 JVM 先用代价低的实现，出现竞争后再换成代价高的实现。JDK 21 中锁的状态依次为：
 
 1. 无锁：新创建的对象，Mark Word 末尾为 01；
 2. 轻量级锁：一个线程进入 synchronized 时，用 CAS 把 Mark Word 换成指向自己栈中 Lock Record 的指针，末尾变为 00；同一个线程重入时只在栈中多放一个 Lock Record，退出时再用 CAS 把 Mark Word 换回来；
-3. 重量级锁：其它线程持有锁时 CAS 失败，锁膨胀为 ObjectMonitor，Mark Word 指向它，末尾变为 10。抢锁的线程先自适应自旋若干次，仍然抢不到再进入队列阻塞。
+3. 重量级锁：其它线程持有锁时 CAS 失败，锁膨胀为 ObjectMonitor（结构见[锁的实现](#1-锁的实现)），原持有者成为它的 _owner，Mark Word 改为指向它，末尾变为 10。抢锁的线程先自适应自旋若干次，仍然抢不到再进入队列阻塞，原持有者退出时唤醒它们。
 
-轻量级锁一节中锁状态变化的图就是这个过程（JDK 21 实测，见[附录 A10](#a10-锁状态与监视器的回收)）。JDK 15 之前，无锁和轻量级锁之间还有偏向锁，其它线程来加锁时要先撤销偏向，代价很高。偏向锁的收益主要来自 Vector、Hashtable 这类每个方法都加锁、实际只被一个线程使用的旧代码，又让 JVM 的同步代码很复杂，所以 JDK 15 起被默认禁用（JEP 374），之后被移除。
+轻量级锁一节中锁状态变化的图就是这个过程（JDK 21 实测，见[附录 A10](#a10-锁状态与监视器的回收)）。JDK 15 之前，无锁和轻量级锁之间还有偏向锁，其它线程来加锁时要先在安全点[撤销偏向](#偏向锁)，代价很高。偏向锁的收益主要来自 Vector、Hashtable 这类每个方法都加锁、实际只被一个线程使用的旧代码，又让 JVM 的同步代码很复杂，所以 JDK 15 起被默认禁用（JEP 374），之后被移除。
 
 需要注意的是：
 
@@ -2101,6 +2216,28 @@ fair=true count=1600000 3114 ms
 fair=false count=1600000 55 ms
 fair=true count=1600000 3019 ms
 ```
+
+锁内再记下上一次的持有者，统计 160 万次加锁中换了多少次线程（JDK 21.0.13，Apple M1 Pro，2026-10-30 重跑；这次机器负载较高，耗时比上面长，只列切换次数）：
+
+```java
+l.lock();
+try {
+    cnt[0]++;
+    Thread me = Thread.currentThread();
+    if (last[0] != me) { switches[0]++; last[0] = me; }
+} finally { l.unlock(); }
+```
+
+```text
+fair=false 持有者切换 15535 次
+fair=true  持有者切换 1599695 次
+fair=false 持有者切换 12103 次
+fair=true  持有者切换 1598792 次
+fair=false 持有者切换 19352 次
+fair=true  持有者切换 1596940 次
+```
+
+共运行 9 次，非公平锁为 11862～29162 次，公平锁都在 159.6 万次以上。
 
 ### A3 volatile 与循环条件
 
@@ -2240,6 +2377,9 @@ ThreadPoolExecutor p = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS, new Ar
 p.setCorePoolSize(8);
 p.setMaximumPoolSize(8);
 p.setCorePoolSize(8);
+
+ThreadPoolExecutor ps = new ThreadPoolExecutor(5, 10, 60, TimeUnit.SECONDS, new SynchronousQueue<>());
+for (int i = 0; i < 15; i++) ps.execute(() -> sleep(1000)); // 捕获 RejectedExecutionException 并计数
 ```
 
 ```text
@@ -2255,6 +2395,7 @@ future.get() 抛出 java.lang.IllegalStateException: submit 中的异常
 全部完成用时约 614 ms，最大线程数达到过 1
 最大线程数为 4 时 setCorePoolSize(8)：IllegalArgumentException
 先 setMaximumPoolSize(8) 再 setCorePoolSize(8)：core=8 max=8
+核心 5、最大 10、SynchronousQueue，提交 15 个 1 s 的任务：线程数 10，被拒绝 5 个
 ```
 
 JDK 8 的 setCorePoolSize() 只检查新值是否小于 0，JDK 9 起增加了与最大线程数的比较（见两个版本的 ThreadPoolExecutor.java）。
@@ -2322,6 +2463,14 @@ AtomicStampedReference CAS(A -> C, 版本 0)：false，当前值 A，版本 2
 结果：B C
 ```
 
+把栈顶换成 AtomicStampedReference<Node>，同样的步骤：
+
+```text
+线程 2 操作后：A D C，版本 4
+线程 1 CAS(A, B, 版本 0)：false
+结果：A D C
+```
+
 ### A10 锁状态与监视器的回收
 
 用 JOL 0.17 打印对象头中的 Mark Word。新对象、一个线程加锁、释放后、与另一个线程竞争后、都释放后：
@@ -2344,6 +2493,25 @@ synchronized (lock) { /* 与 t 竞争，打印 */ }
 ```
 
 Mark Word 中的地址每次运行都不同。
+
+线程 A 持有轻量级锁、还在同步块中时，线程 B 来加锁（JDK 21.0.13，Apple M1 Pro，运行 3 次结果相同）：
+
+```java
+Thread a = new Thread(() -> { synchronized (lock) { /* 打印 */ sleep(300); /* 再打印 */ } });
+Thread b = new Thread(() -> { synchronized (lock) { /* 打印 */ } });
+a.start(); Thread.sleep(100); b.start();
+```
+
+```text
+   6 ms A 加锁　　　　0x000000017027e8b0 (thin lock: 0x000000017027e8b0) A.holdsLock=true
+ 112 ms B 开始加锁
+ 216 ms B 的状态：BLOCKED
+ 320 ms A 仍在同步块中 0x0000000129e3ec82 (fat lock: 0x0000000129e3ec82) A.holdsLock=true
+ 321 ms A 退出
+ 322 ms B 获得锁　　　0x0000000129e3ec82 (fat lock: 0x0000000129e3ec82)
+```
+
+B 把锁膨胀为重量级锁后，A 仍然持有它；A 退出后 B 随即获得锁。
 
 竞争之后每 5 秒打印一次，直到不再是 fat lock，然后再由一个线程加锁：
 
@@ -2381,6 +2549,588 @@ submit 的 Future 1 秒内没有完成：isDone = false
 
 execute() 提交的任务没有执行。CallerRunsPolicy 的 rejectedExecution() 只在 !e.isShutdown() 时才调用 r.run()，线程池关闭后什么也不做。
 
+### A12 中断标记的清除
+
+JDK 21.0.13。线程在 sleep() 中被中断，捕获异常后依次检查中断标记：
+
+```java
+Thread t = new Thread(() -> {
+    try {
+        Thread.sleep(2000);
+    } catch (InterruptedException e) {
+        System.out.println("捕获 InterruptedException 后 isInterrupted() = " + Thread.currentThread().isInterrupted());
+        Thread.currentThread().interrupt();
+        System.out.println("调用 interrupt() 恢复后 isInterrupted() = " + Thread.currentThread().isInterrupted());
+        System.out.println("第一次 Thread.interrupted() = " + Thread.interrupted());
+        System.out.println("第二次 Thread.interrupted() = " + Thread.interrupted());
+    }
+});
+t.start();
+t.interrupt();
+t.join();
+```
+
+```text
+捕获 InterruptedException 后 isInterrupted() = false
+调用 interrupt() 恢复后 isInterrupted() = true
+第一次 Thread.interrupted() = true
+第二次 Thread.interrupted() = false
+```
+### A13 ThreadLocal 的陈旧条目与数据串用
+
+JDK 21.0.13，默认 G1。在一个新线程中执行下面的代码，并用反射读取当前线程 ThreadLocalMap 的 table，统计 key 仍存活的条目（live）和 key 已被回收、value 还在的条目（stale）：
+
+```java
+ThreadLocal<String> keep = new ThreadLocal<>();     // 一直有强引用
+keep.set("ok");
+for (int i = 0; i < 5; i++) {
+    ThreadLocal<byte[]> tl = new ThreadLocal<>();   // 临时创建，用完不 remove()
+    tl.set(new byte[10 << 20]);
+}
+System.gc();
+keep.get();                                         // 直接命中
+new ThreadLocal<Integer>().set(1);                  // 新增一个条目
+```
+
+```text
+① 设置 5 个 10MB 后：live=6 stale=0 staleValueMB=0
+② GC 之后：live=1 stale=5 staleValueMB=50
+③ keep.get() 后：live=1 stale=5 staleValueMB=50
+④ 另一个 ThreadLocal.set() 后：live=2 stale=0 staleValueMB=0
+```
+
+运行 3 次结果相同。④ 中 5 个陈旧条目全部被清掉，与它们在表中的位置有关，set() 不保证每次都清理全部。
+
+数据串用：只有一个线程的线程池依次执行 4 个任务，USER 是 static final ThreadLocal：
+
+```java
+pool.submit(() -> { USER.set("alice"); System.out.println("请求 1 设置用户 alice，没有 remove()"); }).get();
+pool.submit(() -> System.out.println("请求 2 没有登录，读到的用户：" + USER.get())).get();
+pool.submit(() -> { try { USER.set("bob"); } finally { USER.remove(); } }).get();
+pool.submit(() -> System.out.println("请求 3 用完后 remove()，请求 4 读到：" + USER.get())).get();
+```
+
+```text
+请求 1 设置用户 alice，没有 remove()
+请求 2 没有登录，读到的用户：alice
+请求 3 用完后 remove()，请求 4 读到：null
+```
+### A14 虚拟线程在 synchronized 中阻塞
+
+JDK 21.0.13，Apple M1 Pro（10 核）。1000 个虚拟线程，每个在自己的锁内 sleep 100 ms，锁之间没有竞争：
+
+```java
+try (ExecutorService es = Executors.newVirtualThreadPerTaskExecutor()) {
+    for (int i = 0; i < 1000; i++) {
+        Object mon = new Object();
+        ReentrantLock lock = new ReentrantLock();
+        es.submit(() -> {
+            if (sync) {
+                synchronized (mon) { sleep(); }
+            } else {
+                lock.lock();
+                try { sleep(); } finally { lock.unlock(); }
+            }
+        });
+    }
+}
+```
+
+```text
+CPU 核数 10
+synchronized：10363 ms，ReentrantLock：105 ms
+synchronized：10350 ms，ReentrantLock：107 ms
+synchronized：10349 ms，ReentrantLock：106 ms
+```
+
+synchronized 的耗时约为 1000 × 100 ms ÷ 10 个载体线程。加上 -Djdk.tracePinnedThreads=short 运行，输出中有固定的原因：
+
+```text
+VirtualThread[#20]/runnable@ForkJoinPool-1-worker-1 reason:MONITOR
+    Pin1.lambda$main$0(Pin1.java:4) <== monitors:1
+```
+### A15 AQS 等待队列的获取顺序
+
+JDK 21.0.13。main 加锁两次后，先让 t1 入队，确认入队后再启动 t2，然后 main 解锁两次：
+
+```java
+Runnable task = () -> {
+    lock.lock();
+    try { order.add(Thread.currentThread().getName()); } finally { lock.unlock(); }
+};
+Thread t1 = new Thread(task, "t1"), t2 = new Thread(task, "t2");
+t1.start();
+while (!lock.hasQueuedThread(t1)) Thread.onSpinWait();   // 确保 t1 先入队
+t2.start();
+while (!lock.hasQueuedThread(t2)) Thread.onSpinWait();
+lock.unlock();
+lock.unlock();
+t1.join(); t2.join();
+```
+
+```text
+main 加锁两次，holdCount=2
+队列长度 2，t1 WAITING，t2 WAITING
+unlock 一次后仍持有：true，队列长度 2
+获得锁的顺序 [t1, t2]，最后 isLocked=false
+```
+
+运行 3 次结果相同。
+
+Condition：T1 加锁后在 ready 为 false 时调用 await()，T2 随后加锁，把 ready 改为 true 并调用 signal()，再 sleep 200 ms 后解锁，用 getWaitQueueLength()、hasQueuedThread() 查看两个队列：
+
+```java
+// T1
+lock.lock();
+try { while (!ready) cond.await(); } finally { lock.unlock(); }
+// T2，在 T1 进入 await() 之后启动
+lock.lock();
+try {
+    ready = true;
+    cond.signal();
+    System.out.println(lock.getWaitQueueLength(cond) + " " + lock.hasQueuedThread(t1) + " " + t1.getState());
+    Thread.sleep(200);
+} finally { lock.unlock(); }
+```
+
+```text
+① T1 await() 之后：锁被持有=false，T1 状态=WAITING，等待队列中有 T1=false
+② T2 获得锁：条件队列长度=1，等待队列中有 T1=false
+③ T2 signal() 之后：条件队列长度=0，等待队列中有 T1=true，锁的持有者仍是 T2=true，T1 状态=WAITING
+   T2 sleep 200 ms 后 T1 状态=WAITING（还在等锁）
+④ T2 unlock()
+T1: after（从 await 返回，持有锁 hold=1）
+```
+
+### A16 线程状态的转换
+
+JDK 21.0.13。在各种调用之后等待 100 ms，再打印目标线程的 getState()，例如 wait() 与 notify() 一组：
+
+```java
+Object mon = new Object();
+Thread t = new Thread(() -> {
+    synchronized (mon) {
+        try { mon.wait(); } catch (InterruptedException e) { }
+    }
+});
+t.start();
+show("synchronized 内 wait()", t);
+synchronized (mon) {
+    mon.notify();
+    show("notify() 后、通知方仍持有锁", t);
+}
+```
+
+其余几组分别是 sleep(500)、parkNanos(500 ms)、Condition 的 await() 与 signal()、等待进入另一个线程持有的 synchronized：
+
+```text
+new Thread() 之后                        NEW
+synchronized 内 wait()                  WAITING
+notify() 后、通知方仍持有锁                BLOCKED
+run() 结束                              TERMINATED
+sleep(500)                             TIMED_WAITING
+parkNanos(500 ms)                      TIMED_WAITING
+parkNanos 超时、无人 unpark 后            TERMINATED
+Condition.await()                      WAITING
+signal() 后、通知方仍持有 ReentrantLock    WAITING
+等待进入 synchronized                    BLOCKED
+```
+
+另外分别让一个平台线程（Thread.ofPlatform()）和一个虚拟线程（Thread.ofVirtual()）阻塞在 ServerSocket 的 accept() 上，300 ms 后打印：
+
+```text
+平台线程 阻塞在 accept()：RUNNABLE
+虚拟线程 阻塞在 accept()：WAITING
+```
+
+再对两者调用 interrupt()：平台线程 300 ms 后仍是 RUNNABLE，直到 Socket 被关闭；虚拟线程立即抛出异常：
+
+```text
+虚拟线程 accept() 抛出 java.net.SocketException: Closed by interrupt，中断标记=true，socket 已关闭=true
+```
+
+### A17 交替打印的两种错误写法
+
+JDK 21.0.13，Apple M1 Pro。在[交替打印](#交替打印)的 PrintABC 中分别把 notifyAll() 改为 notify()、把 while 改为 if，每种写法启动 100 次 JVM，每次 3 个线程各打印 10 次；1 秒内没有全部结束记为卡住，输出不是 ABC 循环的前缀记为乱序：
+
+```text
+while + notify()：  98 次卡住·有序，2 次完成·有序
+if + notifyAll()：  92 次卡住·乱序，8 次完成·乱序
+```
+
+在同一个 JVM 中连续运行 100 次，结果分别是 97 次和 88 次卡住，比例随调度变化，但两种写法都会出错。
+
+### A18 CompletableFuture 的默认线程
+
+JDK 21.0.13。不传线程池，用 runAsync() 提交 20 个各 sleep 100 ms 的任务，统计用到的线程，用 -XX:ActiveProcessorCount 模拟不同的核数：
+
+```java
+for (int i = 0; i < 20; i++) {
+    fs.add(CompletableFuture.runAsync(() -> {
+        names.add(Thread.currentThread().getName());
+        try { Thread.sleep(100); } catch (InterruptedException e) { }
+    }));
+}
+fs.forEach(CompletableFuture::join);
+```
+
+```text
+$ java -XX:ActiveProcessorCount=10 CfPool
+CPU 核数 10，commonPool 并行度 9
+20 个任务用到的线程数 9，例如 ForkJoinPool.commonPool-worker-9
+$ java -XX:ActiveProcessorCount=2 CfPool
+CPU 核数 2，commonPool 并行度 1
+20 个任务用到的线程数 20，例如 Thread-3
+```
+
+CompletableFuture 中 USE_COMMON_POOL 为 ForkJoinPool.getCommonPoolParallelism() > 1，否则使用 ThreadPerTaskExecutor。
+
+### A19 只读视图与不可变拷贝
+
+JDK 21.0.13：
+
+```java
+Map<String, Integer> map = new HashMap<>();
+Map<String, Integer> view = Collections.unmodifiableMap(map);
+Map<String, Integer> copy = Map.copyOf(map);
+map.put("a", 1);
+System.out.println("原集合 put 后，视图：" + view + "，copyOf 的拷贝：" + copy);
+view.put("b", 2);
+```
+
+```text
+原集合 put 后，视图：{a=1}，copyOf 的拷贝：{}
+Exception in thread "main" java.lang.UnsupportedOperationException
+    at java.base/java.util.Collections$UnmodifiableMap.put(Collections.java:1660)
+```
+
+### A20 CompletableFuture 组合异步调用
+
+JDK 21.0.13，Apple M1 Pro。call(result, ms) 先 sleep(ms)，结果以“优惠券”开头时抛出异常。先在 main 线程中依次调用三次，再用 [CompletableFuture](#completablefuture) 一节的代码组合，各运行 3 次：
+
+```java
+long start = System.currentTimeMillis();
+String serial = call("订单 1024", 200) + call("物流 SF1234567", 200);
+try { call("优惠券 2 张", 200); } catch (Exception ignored) { }
+System.out.println("串行：" + (System.currentTimeMillis() - start) + " ms");
+```
+
+```text
+串行：614 ms
+物流 SF1234567，优惠券暂不可用，耗时 413 ms
+串行：630 ms
+物流 SF1234567，优惠券暂不可用，耗时 451 ms
+串行：609 ms
+物流 SF1234567，优惠券暂不可用，耗时 415 ms
+```
+
+### A21 优先级队列与超时
+
+JDK 21.0.13，Apple M1 Pro。Job 按 pri 从小到大执行，用 `java PriorityPoolDemo.java` 运行：
+
+```java
+import java.util.concurrent.*;
+
+public class PriorityPoolDemo {
+    record Job(int pri, String name) implements Runnable, Comparable<Job> {
+        public void run() { System.out.println("执行 " + name); }
+        public int compareTo(Job o) { return Integer.compare(pri, o.pri); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ThreadPoolExecutor p = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new PriorityBlockingQueue<>());
+        p.execute(() -> sleep(300));   // 占住唯一的线程，后面的任务进入队列
+        p.execute(new Job(3, "低"));
+        p.execute(new Job(1, "高"));
+        p.execute(new Job(2, "中"));
+        try { p.submit(new Job(0, "submit")); } catch (Exception e) { System.out.println("submit: " + e.getClass().getSimpleName()); }
+        p.shutdown();
+        p.awaitTermination(5, TimeUnit.SECONDS);
+
+        ExecutorService pool = Executors.newFixedThreadPool(1);
+        long t0 = System.currentTimeMillis();
+        CompletableFuture<String> f = CompletableFuture.supplyAsync(() -> {
+            sleep(2000);
+            System.out.println("慢调用仍执行完，" + (System.currentTimeMillis() - t0) + " ms");
+            return "x";
+        }, pool).orTimeout(500, TimeUnit.MILLISECONDS).exceptionally(e -> "降级(" + e.getClass().getSimpleName() + ")");
+        System.out.println(f.join() + "，" + (System.currentTimeMillis() - t0) + " ms");
+        pool.submit(() -> System.out.println("下一个任务开始，" + (System.currentTimeMillis() - t0) + " ms")).get();
+        pool.shutdown();
+    }
+
+    static void sleep(long ms) {
+        try { Thread.sleep(ms); } catch (InterruptedException e) { throw new RuntimeException(e); }
+    }
+}
+```
+
+```text
+submit: ClassCastException
+执行 高
+执行 中
+执行 低
+降级(TimeoutException)，508 ms
+慢调用仍执行完，2004 ms
+下一个任务开始，2005 ms
+```
+
+### A22 start() 与操作系统线程
+
+JDK 21.0.13，macOS 15.8（Apple M1 Pro）。osThreads() 用 ps -M -p <pid> 统计本进程的操作系统线程数（第一次启动子进程时 JDK 会多创建一个 process reaper 线程，所以先调用一次预热），线程在 run() 中等待 done 以便统计：
+
+```java
+CountDownLatch done = new CountDownLatch(1);
+Runnable task = () -> {
+    System.out.println("run() 运行在 " + Thread.currentThread().getName());
+    try { done.await(); } catch (InterruptedException ignored) { }
+};
+osThreads();
+System.out.println("开始时操作系统线程数 " + osThreads());
+Thread t = new Thread(task);
+System.out.println("new Thread() 之后 " + osThreads() + "，状态 " + t.getState());
+t.start();
+Thread.sleep(200);
+System.out.println("start() 之后 " + osThreads() + "，状态 " + t.getState());
+done.countDown();
+t.join();
+System.out.println("线程结束后 " + osThreads() + "，状态 " + t.getState());
+new Thread(task).run();   // done 已归零，run() 直接返回
+try {
+    t.start();
+} catch (IllegalThreadStateException e) {
+    System.out.println("再次 start()：" + e);
+}
+```
+
+```text
+开始时操作系统线程数 22
+new Thread() 之后 22，状态 NEW
+run() 运行在 Thread-0
+start() 之后 23，状态 WAITING
+线程结束后 22，状态 TERMINATED
+run() 运行在 main
+再次 start()：java.lang.IllegalThreadStateException
+```
+
+开始时的 22 个线程包括 main、垃圾收集、即时编译等 JVM 自己的线程和 process reaper。start() 之后的状态是 WAITING，因为新线程正在等待 done。
+
+### A23 拒绝策略的执行线程与 Future
+
+JDK 21.0.13，Apple M1 Pro。每个线程池只有 1 个线程、队列容量为 1，先用两个 2 秒的任务把线程和队列占满，再提交新任务：
+
+```java
+import java.util.concurrent.*;
+
+public class RejectDemo {
+    // 1 个线程、队列容量 1，先用两个 2 秒的任务把线程和队列占满
+    static ThreadPoolExecutor busyPool(RejectedExecutionHandler handler) {
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(1), handler);
+        pool.execute(() -> sleep(2000));
+        pool.execute(() -> sleep(2000));
+        return pool;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Thread request = new Thread(() -> {
+            ThreadPoolExecutor pool = busyPool(new ThreadPoolExecutor.CallerRunsPolicy());
+            long t0 = System.currentTimeMillis();
+            pool.execute(() -> System.out.print("[CallerRuns] 任务运行在 " + Thread.currentThread().getName()));
+            System.out.println("，execute() 返回");
+            CompletableFuture<String> coupon = CompletableFuture.supplyAsync(() -> call("优惠券 2 张", 1000), pool);
+            long t1 = System.currentTimeMillis() - t0;
+            String r = coupon.orTimeout(300, TimeUnit.MILLISECONDS).exceptionally(e -> "优惠券暂不可用").join();
+            System.out.println("[CallerRuns] supplyAsync() " + t1 + " ms 后返回，300 ms 超时后的结果：" + r);
+            pool.shutdown();
+        }, "request-1");
+        request.start();
+        request.join();
+
+        ThreadPoolExecutor abort = busyPool(new ThreadPoolExecutor.AbortPolicy());
+        CompletableFuture<String> coupon;
+        try {
+            coupon = CompletableFuture.supplyAsync(() -> call("优惠券 2 张", 1000), abort);
+        } catch (RejectedExecutionException e) {
+            System.out.print("[Abort] supplyAsync() 抛出 RejectedExecutionException");
+            coupon = CompletableFuture.completedFuture("优惠券暂不可用");
+        }
+        System.out.println("，降级为：" + coupon.join());
+        abort.shutdown();
+
+        ThreadPoolExecutor discard = busyPool(new ThreadPoolExecutor.DiscardPolicy());
+        Future<String> f = discard.submit(() -> "submit 的结果");
+        CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> "supplyAsync 的结果", discard);
+        discard.shutdown();
+        discard.awaitTermination(10, TimeUnit.SECONDS);
+        System.out.println("[Discard] 线程池已终止，submit 的 Future isDone = " + f.isDone()
+                + "，supplyAsync 的 Future isDone = " + cf.isDone());
+
+        ThreadPoolExecutor oldest = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(1), new ThreadPoolExecutor.DiscardOldestPolicy());
+        oldest.execute(() -> sleep(500));
+        Future<String> head = oldest.submit(() -> "队首的任务");
+        Future<String> newer = oldest.submit(() -> "新提交的任务");   // 挤掉队首的任务
+        oldest.shutdown();
+        oldest.awaitTermination(10, TimeUnit.SECONDS);
+        oldest.execute(() -> System.out.println("不会执行"));          // 关闭后提交，不抛出异常
+        System.out.println("[DiscardOldest] " + newer.get() + "完成，被丢弃的队首任务 isDone = " + head.isDone());
+    }
+
+    static String call(String name, long ms) {
+        sleep(ms);
+        return name;
+    }
+
+    static void sleep(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+
+```text
+[CallerRuns] 任务运行在 request-1，execute() 返回
+[CallerRuns] supplyAsync() 1018 ms 后返回，300 ms 超时后的结果：优惠券 2 张
+[Abort] supplyAsync() 抛出 RejectedExecutionException，降级为：优惠券暂不可用
+[Discard] 线程池已终止，submit 的 Future isDone = false，supplyAsync 的 Future isDone = false
+[DiscardOldest] 新提交的任务完成，被丢弃的队首任务 isDone = false
+```
+
+3 次运行中 supplyAsync() 分别在 1018、1008、1008 ms 后返回，返回时查询已经在 request-1 线程中执行完，orTimeout() 不再起作用。DiscardOldestPolicy 的 rejectedExecution() 与 CallerRunsPolicy 一样先检查 isShutdown()，线程池关闭后什么也不做，所以最后一次 execute() 既没有执行任务，也没有抛出异常。
+
+### A24 volatile 的自增与机器码
+
+JDK 21.0.13，Apple M1 Pro。两个线程同时开始，各对 volatile int 自增 1000 万次，运行 10 次：
+
+```java
+import java.util.concurrent.CountDownLatch;
+
+public class VolInc {
+    static volatile int vol;
+
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch go = new CountDownLatch(1);
+        Runnable r = () -> {
+            try { go.await(); } catch (InterruptedException e) { return; }
+            for (int i = 0; i < 10_000_000; i++) vol++;
+        };
+        Thread t1 = new Thread(r), t2 = new Thread(r);
+        t1.start(); t2.start();
+        go.countDown();
+        t1.join(); t2.join();
+        System.out.println(vol);
+    }
+}
+```
+
+```text
+11238586
+16240335
+14087758
+12424758
+11042940
+10497991
+12019974
+12214413
+10275853
+9835329
+```
+
+机器码：把写线程和读线程的操作写成两个方法，在 main() 中交替调用 200 万次，使它们被 C2 编译：
+
+```java
+int data;
+volatile int ready;
+
+void writer() { data = 1; ready = 1; }
+int reader() { int r = ready; return r + data; }
+```
+
+用 java -XX:+UnlockDiagnosticVMOptions -XX:-TieredCompilation -XX:CompileCommand=print,VolAsm::writer -XX:CompileCommand=print,VolAsm::reader VolAsm 输出机器码。本机没有反汇编插件，输出是十六进制，按 AArch64 的指令编码解出其中的读写指令：
+
+```text
+writer：str  w11, [x1, #12]    // data = 1
+        stlr w11, [x10]        // ready = 1，x10 = x1 + 16
+reader：ldar w11, [x10]        // 读 ready
+        ldr  w10, [x1, #12]    // 读 data
+```
+
+两个方法中都没有 dmb 屏障指令。
+
+### A25 线程池空闲线程的状态与 submit()
+
+JDK 21.0.13，Apple M1 Pro。沿用正文的例子：核心线程数 2、最大线程数 4、keepAliveTime 60 秒、队列容量 2，提交 7 个各执行 1 秒的任务。线程工厂把线程依次命名为“线程 1”到“线程 4”，任务开始时打印执行它的线程；shutdown() 推迟到观察结束后调用，2.5 秒和 63 秒时用下面的代码打印每个线程的状态，以及它阻塞在队列的哪个方法上：
+
+```java
+for (Thread t : workers) {    // 线程工厂创建过的全部线程
+    if (!t.isAlive()) {
+        System.out.println(t.getName() + "：已退出");
+        continue;
+    }
+    String where = "?";
+    for (StackTraceElement e : t.getStackTrace()) {
+        if (e.getClassName().endsWith("BlockingQueue")) {
+            where = e.getMethodName();
+            break;
+        }
+    }
+    System.out.println(t.getName() + "：" + t.getState() + "，" + where + "()");
+}
+```
+
+运行 4 次，下面是其中两次：
+
+```text
+== run 1
+任务 3 由线程 1 执行
+任务 4 由线程 2 执行
+2.5 秒，任务全部完成，线程数 4：
+线程 1：TIMED_WAITING，poll()
+线程 2：TIMED_WAITING，poll()
+线程 3：TIMED_WAITING，poll()
+线程 4：TIMED_WAITING，poll()
+63 秒，线程数 2：
+线程 1：WAITING，take()
+线程 2：WAITING，take()
+线程 3：已退出
+线程 4：已退出
+== run 2
+任务 3 由线程 3 执行
+任务 4 由线程 4 执行
+（2.5 秒时同样是 4 个 TIMED_WAITING）
+63 秒，线程数 2：
+线程 1：已退出
+线程 2：已退出
+线程 3：WAITING，take()
+线程 4：WAITING，take()
+```
+
+省略了任务 1、2、5、6 的输出，它们分别由线程 1 到线程 4 执行，任务 7 被拒绝。另外两次与 run 2 相同。每次留下的都是执行了任务 3、4 的线程。
+
+把 execute() 重写为先打印参数的类型，再用 submit() 提交一个 Callable：
+
+```java
+ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>()) {
+    @Override
+    public void execute(Runnable command) {
+        System.out.println("execute() 收到 " + command.getClass().getSimpleName());
+        super.execute(command);
+    }
+};
+Future<Integer> f = pool.submit(() -> 1 + 2);
+System.out.println("submit() 返回 " + f.getClass().getSimpleName() + "，get() = " + f.get());
+pool.shutdown();
+```
+
+```text
+execute() 收到 FutureTask
+submit() 返回 FutureTask，get() = 3
+```
+
 ## 参考资料
 
 - [Object (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html)
@@ -2402,6 +3152,13 @@ execute() 提交的任务没有执行。CallerRunsPolicy 的 rejectedExecution()
 - [聊聊并发（八）——Fork/Join 框架介绍](http://ifeve.com/talk-concurrency-forkjoin/)
 - [Eliminating SynchronizationRelated Atomic Operations with Biased Locking and Bulk Rebiasing](http://www.oracle.com/technetwork/java/javase/tech/biasedlocking-oopsla2006-preso-150106.pdf)
 - [JEP 374: Deprecate and Disable Biased Locking](https://openjdk.org/jeps/374)
+- [JEP 444: Virtual Threads](https://openjdk.org/jeps/444)
+- [JEP 491: Synchronize Virtual Threads without Pinning](https://openjdk.org/jeps/491)
+- [JEP 421: Deprecate Finalization for Removal](https://openjdk.org/jeps/421)
+- [JDK 21 源码：AbstractQueuedSynchronizer.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/concurrent/locks/AbstractQueuedSynchronizer.java)
+- [JDK 21 源码：ReentrantLock.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/util/concurrent/locks/ReentrantLock.java)
+- [ReentrantLock (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/ReentrantLock.html)
+- [JDK 21 源码：ThreadLocal.java](https://github.com/openjdk/jdk21u/blob/master/src/java.base/share/classes/java/lang/ThreadLocal.java)
 - [markOop.hpp | OpenJDK jdk8u](https://github.com/openjdk/jdk8u/blob/master/hotspot/src/share/vm/oops/markOop.hpp)
 - [JDK 23 Release Notes: Change LockingMode Default from LM_LEGACY to LM_LIGHTWEIGHT](https://www.oracle.com/java/technologies/javase/23-relnote-issues.html)
 - [Thread.State (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.State.html)
@@ -2418,3 +3175,11 @@ execute() 提交的任务没有执行。CallerRunsPolicy 的 rejectedExecution()
 - [objectMonitor.hpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/runtime/objectMonitor.hpp)
 - [assembler_x86.cpp | OpenJDK jdk21u](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/x86/assembler_x86.cpp)
 - [TransmittableThreadLocal](https://github.com/alibaba/transmittable-thread-local)
+- [Thread (Java SE 21)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html)
+- [JDK 21 源码：jvm.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/share/prims/jvm.cpp)
+- [Java SE 6 Performance White Paper](https://www.oracle.com/java/technologies/javase/6performance.html)
+- [biasedLocking.cpp | OpenJDK jdk8u](https://github.com/openjdk/jdk8u/blob/master/hotspot/src/share/vm/runtime/biasedLocking.cpp)
+- [JDK 21 源码：os_posix.cpp](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/os/posix/os_posix.cpp)
+- [futex(7) - Linux manual page](https://man7.org/linux/man-pages/man7/futex.7.html)
+- [The JSR-133 Cookbook for Compiler Writers](https://gee.cs.oswego.edu/dl/jmm/cookbook.html)
+- [JDK 21 源码：aarch64.ad](https://github.com/openjdk/jdk21u/blob/master/src/hotspot/cpu/aarch64/aarch64.ad)
