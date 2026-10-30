@@ -579,16 +579,6 @@ public int lengthOfLIS(int[] nums) {
 }
 ```
 
-使用 Stream 求最大值会导致运行时间过长，可以改成以下形式：
-
-```java
-int ret = 0;
-for (int i = 0; i < n; i++) {
-    ret = Math.max(ret, dp[i]);
-}
-return ret;
-```
-
 以上解法的时间复杂度为 O(N<sup>2</sup>)，可以使用二分查找将时间复杂度降低为 O(NlogN)。
 
 定义一个 tails 数组，其中 tails[i] 存储所有长度为 i + 1 的递增子序列中最小的末尾元素。对于一个元素 x，
