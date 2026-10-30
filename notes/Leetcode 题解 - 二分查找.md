@@ -89,7 +89,7 @@ public int binarySearch(int[] nums, int key) {
 ```text
 nums = {0, 1, 2}, key = 1
 l   m   h
-0   1   2  nums[m] >= key
+0   1   3  nums[m] >= key
 0   0   1  nums[m] < key
 1   1   1  nums[m] >= key
 1   1   1  nums[m] >= key
