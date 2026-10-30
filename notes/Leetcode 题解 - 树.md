@@ -37,6 +37,7 @@
     * [Trie](#trie)
         * [1. 实现一个 Trie](#1-实现一个-trie)
         * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie用来求前缀和)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -71,7 +72,7 @@ public int maxDepth(TreeNode root) {
    15   7
 ```
 
-平衡树左右子树高度差都小于等于 1
+平衡树指的是每个节点的左右子树高度差都小于等于 1。
 
 ```java
 private boolean result = true;
@@ -107,6 +108,8 @@ Input:
 
 Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
 ```
+
+以某个节点为最高点的最长路径等于它左右子树的高度之和。最长路径不一定经过根节点，因此在求高度的递归中对每个节点都算一次，取最大值。
 
 ```java
 private int max = 0;
@@ -178,7 +181,7 @@ public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 
 ### 6. 判断路径和是否等于一个数
 
-Leetcode : 112. Path Sum (Easy)
+112\. Path Sum (Easy)
 
 [Leetcode](https://leetcode.com/problems/path-sum/description/) / [力扣](https://leetcode-cn.com/problems/path-sum/description/)
 
@@ -231,6 +234,10 @@ Return 3. The paths that sum to 8 are:
 ```
 
 路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。
+
+对每个节点各统计一次以它开头的路径，每个节点会被它的每个祖先各访问一次，平衡树中时间复杂度为 O(NlogN)，退化成链时为 O(N²)。节点值可达 10^9，sum 一路相减可能溢出 int，因此用 long。
+
+用[和为 K 的子数组](Leetcode%20题解%20-%20哈希表.md#5-和为-k-的子数组)的前缀和方法可以做到 O(N)：哈希表记录根到当前节点路径上各前缀和的出现次数，回溯时减掉。
 
 ```java
 public int pathSum(TreeNode root, int sum) {
@@ -335,7 +342,9 @@ private boolean isSymmetric(TreeNode t1, TreeNode t2) {
 
 [Leetcode](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/description/)
 
-树的根节点到叶子节点的最小路径长度
+树的根节点到叶子节点的最小路径长度。
+
+需要注意的是，只有一侧子树为空时不能取 min，因为这个节点不是叶子，路径只能走另一侧。
 
 ```java
 public int minDepth(TreeNode root) {
@@ -392,6 +401,8 @@ private boolean isLeaf(TreeNode node){
 Output : 2
 ```
 
+做法同[两节点的最长路径](#3-两节点的最长路径)，只是 dfs 返回的是节点值都与 root 相同的单侧最长路径，孩子的值与 root 不同时这一侧记为 0。
+
 ```java
 private int path = 0;
 
@@ -425,6 +436,8 @@ private int dfs(TreeNode root){
      3   1
 Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
 ```
+
+相连的两个节点不能同时选：选 root 时加上四个孙子子树的结果（val1），不选时为两个孩子子树的结果之和（val2）。同一子树会被祖父和父节点各算一次，因此用 cache 记录。
 
 ```java
 Map<TreeNode, Integer> cache = new HashMap<>(); 
@@ -461,6 +474,8 @@ Output: 5
 
 一个节点要么具有 0 个或 2 个子节点，如果有子节点，那么根节点是最小的节点。
 
+孩子的值大于根时，它就是这棵子树中比根大的最小值；等于根时要递归往下找，-1 表示这一侧没有比根大的值。
+
 ```java
 public int findSecondMinimumValue(TreeNode root) {
     if (root == null) return -1;
@@ -477,7 +492,7 @@ public int findSecondMinimumValue(TreeNode root) {
 
 ## 层次遍历
 
-使用 BFS 进行层次遍历。不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
+使用 BFS 进行层次遍历。不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。按层输出（102 题）和之字形输出的写法见[剑指 Offer 32.2](32.2%20把二叉树打印成多行.md)、[32.3](32.3%20按之字形顺序打印二叉树.md)。
 
 ### 1. 一棵树每层节点的平均数
 
@@ -527,6 +542,8 @@ Output:
 7
 ```
 
+按层遍历时每层先放右孩子、再放左孩子，最后一个出队的节点就是最底层最左边的节点。
+
 ```java
 public int findBottomLeftValue(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
@@ -559,7 +576,7 @@ public int findBottomLeftValue(TreeNode root) {
 
 前序、中序、后序遍历只是在对节点访问的顺序有一点不同，其它都相同。
 
-① 前序
+前序遍历：
 
 ```java
 void dfs(TreeNode root) {
@@ -570,7 +587,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-② 中序
+中序遍历：
 
 ```java
 void dfs(TreeNode root) {
@@ -581,7 +598,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-③ 后序
+后序遍历：
 
 ```java
 void dfs(TreeNode root) {
@@ -639,11 +656,42 @@ public List<Integer> postorderTraversal(TreeNode root) {
 }
 ```
 
+上面的写法只是输出顺序正确，节点并不是按后序访问的。要真正按后序访问，可以像[中序遍历](#3-非递归实现二叉树的中序遍历)那样一路向左压栈，栈顶节点的右子树为空或刚访问完（右孩子等于上一个访问的节点 prev）时才弹出访问，否则先转向右子树。没有 prev 时，下图第 6 步会再次转向 5，陷入死循环：
+
+<div align="center"> <img src="pics/lc-tree-postorder-stack.png" width="720px"/> </div><br>
+
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> ret = new ArrayList<>();
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode cur = root, prev = null; // prev 为上一个访问的节点
+    while (cur != null || !stack.isEmpty()) {
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.left;
+        }
+        TreeNode node = stack.peek();
+        if (node.right != null && node.right != prev) {
+            cur = node.right; // 右子树还没访问，先转向右子树
+        } else {
+            stack.pop();
+            ret.add(node.val);
+            prev = node;
+        }
+    }
+    return ret;
+}
+```
+
 ### 3. 非递归实现二叉树的中序遍历
 
 94\. Binary Tree Inorder Traversal (Easy)
 
 [Leetcode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+
+从 cur 一路向左压栈直到为空，弹出栈顶访问后转向它的右子树。以上面的树为例：
+
+<div align="center"> <img src="pics/lc-tree-inorder-stack.png" width="640px"/> </div><br>
 
 ```java
 public List<Integer> inorderTraversal(TreeNode root) {
@@ -699,7 +747,9 @@ Output:
  1
 ```
 
-题目描述：只保留值在 L \~ R 之间的节点
+题目描述：只保留值在 L \~ R 之间的节点。
+
+root 的值大于 R 时，它的右子树也都大于 R，结果就是修剪后的左子树；小于 L 时同理。
 
 ```java
 public TreeNode trimBST(TreeNode root, int L, int R) {
@@ -742,7 +792,7 @@ private void inOrder(TreeNode node, int k) {
 }
 ```
 
-递归解法：
+递归解法：每层都要重新统计左子树的大小，最坏时间复杂度为 O(N²)；节点中保存子树大小时只需沿一条路径往下走。
 
 ```java
 public int kthSmallest(TreeNode root, int k) {
@@ -778,7 +828,7 @@ Output: The root of a Greater Tree like this:
           20     13
 ```
 
-先遍历右子树。
+按右、根、左的顺序遍历就是从大到小访问，sum 累加访问过的值并写回当前节点。
 
 ```java
 private int sum = 0;
@@ -815,6 +865,8 @@ private void traver(TreeNode node) {
 For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 ```
 
+p、q 分在 root 两侧或其中一个就是 root 时，root 就是最近公共祖先。
+
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if (root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
@@ -841,6 +893,10 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ```
 
+lowestCommonAncestor 在 root 子树中查找：同时有 p、q 时返回最近公共祖先，只有其中一个时返回那个节点，都没有时返回 null。左右子树都找到时 p、q 分在 root 两侧，root 就是答案，否则返回找到的那一侧。查找 5 和 4 时遇到 5 就直接返回，因为 4 在 5 的子树中，5 就是答案。
+
+<div align="center"> <img src="pics/lc-tree-lca-return.png" width="600px"/> </div><br>
+
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if (root == null || root == p || root == q) return root;
@@ -855,6 +911,8 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 108\. Convert Sorted Array to Binary Search Tree (Easy)
 
 [Leetcode](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/description/)
+
+取中间的元素作为根，两侧的元素个数最多相差 1，因此树是平衡的。
 
 ```java
 public TreeNode sortedArrayToBST(int[] nums) {
@@ -888,6 +946,8 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
    /   /
  -10  5
 ```
+
+做法同上一题，只是链表要用快慢指针找中点，并在它前面断开。每层找中点共 O(N)，共 O(logN) 层，时间复杂度为 O(NlogN)。
 
 ```java
 public TreeNode sortedListToBST(ListNode head) {
@@ -936,7 +996,7 @@ Output: True
 
 使用中序遍历得到有序数组之后，再利用双指针对数组进行查找。
 
-应该注意到，这一题不能用分别在左右子树两部分来处理这种思想，因为两个待求的节点可能分别在左右子树中。
+需要注意的是，这一题不能分别在左右子树中递归求解，因为两个待求的节点可能分别在左右子树中。
 
 ```java
 public boolean findTarget(TreeNode root, int k) {
@@ -1018,6 +1078,8 @@ return [2].
 
 答案可能不止一个，也就是有多个值出现的次数一样多。
 
+中序遍历时相同的值连续出现，和前一个节点比较就能算出当前值的次数 curCnt；curCnt 超过 maxCnt 时结果只留当前值，等于时追加。例如依次访问 1、2、2，结果从 [1] 变为 [1, 2]，再变为 [2]。
+
 ```java
 private int curCnt = 1;
 private int maxCnt = 1;
@@ -1070,7 +1132,7 @@ class Trie {
 
     private class Node {
         Node[] childs = new Node[26];
-        boolean isLeaf;
+        boolean isLeaf;  // 是否有单词在这个节点结束，不一定是叶子
     }
 
     private Node root = new Node();
@@ -1122,6 +1184,8 @@ class Trie {
     }
 }
 ```
+
+需要注意的是，substring 每次都复制剩下的字符串，长度为 L 的单词共复制约 L<sup>2</sup> / 2 个字符；改为传入下标或用循环往下走，每个操作是 O(L)。
 
 ### 2. 实现一个 Trie，用来求前缀和
 
@@ -1189,3 +1253,8 @@ class MapSum {
     }
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- Sedgewick R, Wayne K. 算法（第 4 版）[M]. 人民邮电出版社, 2012.
