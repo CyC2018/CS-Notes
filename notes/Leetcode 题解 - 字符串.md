@@ -13,12 +13,13 @@
     * [10. 最长回文子串](#10-最长回文子串)
     * [11. 字符串相乘](#11-字符串相乘)
     * [12. 比较版本号](#12-比较版本号)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
 ## 1. 字符串循环移位包含
 
-编程之美 3.1
+《编程之美》3.1
 
 ```text
 s1 = AABCD, s2 = CDAA
@@ -27,11 +28,11 @@ Return : true
 
 给定两个字符串 s1 和 s2，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
 
-s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。
+s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。需要注意的是，循环移位不改变长度，还要先判断 s2 不比 s1 长，例如 s2 = ABA 是 s1s1 = ABAB 的子串，却不可能被 AB 的循环移位包含。
 
 ## 2. 字符串循环移位
 
-编程之美 2.17
+《编程之美》2.17
 
 ```text
 s = "abcd123" k = 3
@@ -44,7 +45,7 @@ Return "123abcd"
 
 ## 3. 字符串中单词的翻转
 
-程序员代码面试指南
+《程序员代码面试指南》
 
 ```text
 s = "I am a student"
@@ -131,7 +132,7 @@ Given "foo", "bar", return false.
 Given "paper", "title", return true.
 ```
 
-记录一个字符上次出现的位置，如果两个字符串中的字符上次出现的位置一样，那么就属于同构。
+记录一个字符上次出现的位置，如果两个字符串中的字符上次出现的位置一样，那么就属于同构。代码中存的是 i + 1，用数组初值 0 表示“还没出现过”；如果存 i，第一次出现在位置 0 的字符会和没出现过的字符混淆，例如 "ab" 和 "aa" 会被误判为同构。
 
 ```java
 public boolean isIsomorphic(String s, String t) {
@@ -161,7 +162,7 @@ Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 ```
 
-从字符串的某一位开始，尝试着去扩展子字符串。
+每个回文串都有一个中心：长度为奇数时是一个字符，长度为偶数时是两个相邻字符之间。长度为 N 的字符串共有 2N - 1 个中心，从每个中心向两边扩展，两端字符相等就多得到一个回文子串，不相等就停止。例如 "aaa" 以中间的 a 为中心，依次得到 "a" 和 "aaa"。
 
 ```java
 private int cnt = 0;
@@ -189,9 +190,9 @@ private void extendSubstrings(String s, int start, int end) {
 
 [Leetcode](https://leetcode.com/problems/palindrome-number/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-number/description/)
 
-要求不能使用额外空间，也就不能将整数转换为字符串进行判断。
+进阶要求不将整数转换为字符串进行判断。
 
-将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。
+将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。每次把 x 的最后一位移到 right 上，直到 right 不小于 x，这时已经处理了一半的位数。例如 12321 得到 x = 12、right = 123，位数为奇数，比较 x 和 right / 10。末尾为 0 的正数不可能是回文数，需要先排除，否则 10 会得到 x = 0、right = 1，x 等于 right / 10，被误判为回文数。
 
 ```java
 public boolean isPalindrome(int x) {
@@ -221,6 +222,10 @@ Input: "00110011"
 Output: 6
 Explanation: There are 6 substrings that have equal number of consecutive 1's and 0's: "0011", "01", "1100", "10", "0011", and "01".
 ```
+
+满足条件的子串一定跨过一个 0 和 1 的交界，左半边全是一种字符，右半边全是另一种。相邻的两组连续字符长度为 preLen 和 curLen 时，交界处能组成 min(preLen, curLen) 个子串，例如 "000" 和 "11" 之间是 "01" 和 "0011"。
+
+代码在遍历时边走边计数：当前这组每多一个字符，只要前一组还有足够的字符与它配对（preLen \>= curLen），就多一个子串。
 
 ```java
 public int countBinarySubstrings(String s) {
@@ -252,7 +257,7 @@ Input: s = "babad"
 Output: "bab"（"aba" 也是正确答案）
 ```
 
-和第 7 题一样从中心扩展：回文串的中心可能是一个字符，也可能是两个字符之间，以每个位置为中心分别向两边扩展，记录最长的回文。时间复杂度为 O(N<sup>2</sup>)，空间复杂度为 O(1)。
+和[回文子字符串个数](#7-回文子字符串个数)一样从中心扩展：回文串的中心可能是一个字符，也可能是两个字符之间，以每个位置为中心分别向两边扩展，记录最长的回文。时间复杂度为 O(N<sup>2</sup>)，空间复杂度为 O(1)。
 
 ```java
 private int start = 0, maxLen = 0;
@@ -290,7 +295,7 @@ Output: "5535"
 
 题目描述：以字符串形式给出两个非负整数，返回它们的乘积，不能把字符串直接转换为整数。
 
-模拟竖式乘法。乘积最多有 m + n 位，用数组 digits 按从高位到低位的顺序保存。num1[i] 与 num2[j] 相乘的结果落在 digits[i + j + 1] 上，先把所有乘积累加到对应位置，最后从低位到高位统一处理进位。
+模拟竖式乘法。乘积最多有 m + n 位，用数组 digits 按从高位到低位的顺序保存。num1[i] 与 num2[j] 相乘的结果落在 digits[i + j + 1] 上，先把所有乘积累加到对应位置，最后从低位到高位统一处理进位。例如 123 × 45 中，个位相乘的 3 × 5 落在 digits[2 + 1 + 1] = digits[4]，也就是乘积的最低位。
 
 ```java
 public String multiply(String num1, String num2) {
@@ -354,3 +359,9 @@ public int compareVersion(String version1, String version2) {
     return 0;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- 《编程之美》小组. 编程之美 [M]. 电子工业出版社, 2008.
+- 左程云. 程序员代码面试指南 [M]. 电子工业出版社, 2015.
