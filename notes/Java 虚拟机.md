@@ -57,6 +57,7 @@
         * [A19 GC 时间的占比](#a19-gc-时间的占比)
         * [A20 线程栈中的 CPU 时间](#a20-线程栈中的-cpu-时间)
         * [A21 堆以外的内存](#a21-堆以外的内存)
+        * [A22 容器中的默认堆](#a22-容器中的默认堆)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -83,7 +84,7 @@
 
 <div align="center"> <img src="pics/jvm-stack-frame.png" width="760px"/> </div><br>
 
-可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，默认值与平台有关，x86-64 的 Linux 上为 1 MB，ARM64 的 Linux 和 macOS（Apple 芯片）上为 2 MB（-XX:+PrintFlagsFinal 中的 ThreadStackSize，见[附录 A1](#a1-默认的线程栈大小) 和[附录 A10](#a10-直接内存与线程数的溢出) 中的 stacksize）：
+可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，默认值与平台有关，x86-64 的 Linux 上为 1 MB，ARM64 的 Linux 上为 2040 KB，macOS（Apple 芯片）上为 2 MB（-XX:+PrintFlagsFinal 中的 ThreadStackSize，见[附录 A1](#a1-默认的线程栈大小) 和[附录 A10](#a10-直接内存与线程数的溢出) 中的 stacksize）：
 
 ```bash
 java -Xss2M HackTheJava
@@ -145,7 +146,7 @@ Class 文件中的常量池（编译器生成的字面量和符号引用）会�
 
 在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
 
-直接内存不属于 JVM 规范定义的运行时数据区域，但同样会耗尽：它的上限由 -XX:MaxDirectMemorySize 设置，没有设置时与最大堆相同，超出时抛出 OutOfMemoryError，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)。
+直接内存不属于 JVM 规范定义的运行时数据区域，但同样会耗尽：它的上限由 -XX:MaxDirectMemorySize 设置，没有设置时与最大堆相同，超出时抛出 OutOfMemoryError，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)。堆外内存不由 GC 直接回收，DirectByteBuffer 对象被回收后，由它关联的 Cleaner 释放对应的堆外内存。
 
 ### 堆和栈的区别
 
@@ -403,7 +404,7 @@ STW 无法完全消除，但可以缩短：CMS、G1 把耗时最长的标记与�
 以上是 JDK 8 中 HotSpot 虚拟机的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。OpenJDK 21 中保留了 Serial、Serial Old、Parallel Scavenge、Parallel Old 和 G1，CMS 和 ParNew 已经移除，另外新增了 ZGC 和 Shenandoah 这两个以并发为主的收集器（Oracle JDK 不包含 Shenandoah）。
 
 - 单线程与多线程：单线程指的是垃圾收集器只使用一个线程，而多线程使用多个线程，多个 GC 线程同时工作称为并行（Parallel）；
-- 串行与并发：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并发指的是垃圾收集器和用户程序同时执行。图中除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+- 独占与并发：独占指的是垃圾收集时停顿用户程序（Stop The World），垃圾收集器与用户程序交替执行；并发指的是垃圾收集器和用户程序同时执行。图中除了 CMS 和 G1 之外，其它垃圾收集器的整个收集过程都需要停顿用户程序。
 
 评价收集器主要看停顿时间、吞吐量和内存占用，三者难以兼顾。一般先用默认的 G1；批处理等只看吞吐量的任务用 Parallel；堆只有约 100 MB 以内或只有 1 个处理器时用 Serial；要求停顿在毫秒以下、堆又很大时用 ZGC。运行中的应用用的是哪个收集器，用 `jcmd <pid> VM.flags` 查看，输出中的 -XX:+UseG1GC 就是 G1（见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。
 
@@ -499,7 +500,7 @@ Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、
 
 - 初始标记：老年代的占用超过阈值（-XX:InitiatingHeapOccupancyPercent，初始为 45%，之后 G1 根据标记所需的时间自适应调整）时，在下一次新生代回收中顺带完成（Concurrent Start），标记 GC Roots 直接关联的对象，需要停顿；
 - 并发标记：与用户线程同时运行，找出老年代中所有存活的对象，期间新生代回收照常进行；
-- 最终标记（Remark）：短暂停顿，处理并发标记期间用户线程修改引用留下的记录，完成标记，并直接回收完全空的 Region；
+- 最终标记（Remark）：短暂停顿，处理并发标记期间用户线程修改引用留下的记录，完成标记，再处理软、弱引用并卸载不再使用的类，直接回收完全空的 Region；
 - 清理与混合回收：清理（Cleanup）停顿根据各 Region 的回收价值决定是否进入回收阶段；之后的多次混合回收（Mixed）除了新生代，再挑选一部分垃圾最多的老年代 Region，把其中存活的对象复制出去，每次回收的数量受停顿时间目标（MaxGCPauseMillis，默认 200 ms）限制。
 
 例如一个 128 MB 堆的程序，GC 日志中一个完整的周期依次是 Pause Young (Concurrent Start)、并发标记、Pause Remark、Pause Cleanup、Pause Young (Prepare Mixed) 和 Pause Young (Mixed)。整个标记周期从开始到 Cleanup 约 13.5 ms，期间还穿插了 4 次普通的新生代回收；Remark 和 Cleanup 的停顿分别只有约 0.1 ms 和 0.03 ms（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
@@ -573,7 +574,7 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 - 增量更新（CMS）：写入引用字段时，写屏障把对象所在的卡标记为脏，重新标记时重新扫描脏卡中的对象，order 被再次检查，从而找到 addr；
 - 原始快照（Snapshot At The Beginning, SATB，G1）：删除或覆盖引用之前，写屏障把旧值记录下来并当作存活，执行 user.addr = null 时 addr 被记录下来。代价是标记期间才变成垃圾的对象要等下一个周期才能回收。
 
-所以重新标记（Remark）的停顿不能省略，并发标记期间记录下来的对象要在用户线程暂停时处理完。CMS 要重新扫描 GC Roots 和所有脏卡，用户线程修改的引用越多停顿越长；G1 只需处理 SATB 记录的对象，停顿通常更短。
+所以重新标记（Remark）的停顿不能省略，并发标记期间记录下来的对象要在用户线程暂停时处理完。CMS 要重新扫描 GC Roots 和所有脏卡，用户线程修改的引用越多停顿越长；G1 不必重新扫描脏卡，只需处理 SATB 记录的对象，再完成引用处理、类卸载等收尾工作，停顿通常更短。
 
 ## 三、内存分配与回收策略
 
@@ -615,9 +616,9 @@ G1 的日志中三者分别记为 Pause Young (Normal)、Pause Young (Mixed) 和
 
 #### 5. 空间分配担保
 
-在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的。这是因为最坏的情况是新生代的对象全部存活，Survivor 放不下的都要进入老年代。
+这一步针对 Serial 和 Parallel。在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的。这是因为最坏的情况是新生代的对象全部存活，Survivor 放不下的都要进入老年代。
 
-如果不成立，虚拟机会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于就进行 Minor GC，否则进行 Full GC。JDK 6 Update 24 之前还需要 HandlePromotionFailure 参数允许担保失败才会冒险进行 Minor GC，之后该参数不再起作用。
+如果不成立，虚拟机会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于就进行 Minor GC，否则进行 Full GC。JDK 6 Update 24 之前还需要 HandlePromotionFailure 参数允许担保失败才会冒险进行 Minor GC，之后该参数不再起作用。G1 没有这一步，复制时找不到空闲的 Region 就是 Evacuation Failure，见 [Full GC 的触发条件](#full-gc-的触发条件)。
 
 ### Full GC 的触发条件
 
@@ -764,7 +765,7 @@ public static void main(String[] args) {
 
 接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt;clinit\>() 方法。但接口与类不同的是，执行接口的 &lt;clinit\>() 方法不需要先执行父接口的 &lt;clinit\>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时一般也不会执行接口的 &lt;clinit\>() 方法，例外是接口中声明了非 abstract、非 static 的方法（default 方法或 JDK 9 起的 private 方法）时，实现类初始化之前要先初始化这个接口。
 
-虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
+虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。更隐蔽的是两个类的 &lt;clinit\>() 互相用到对方、又被两个线程同时初始化时，两个线程会永久等待，jstack 中它们的状态是 RUNNABLE，显示 waiting on the Class initialization monitor，不会报告死锁（JDK 21 实测）。
 
 ### 类初始化时机
 
@@ -776,7 +777,7 @@ public static void main(String[] args) {
 - 调用 Class.forName("Order")，或者使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化，而 Order.class 和 Class.forName("Order", false, loader) 只取得 Class 对象，不会触发，见 [反射](Java%20基础.md#七反射)；
 - 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化；
 - 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
-- 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic、REF_putStatic、REF_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化；
+- 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic、REF_putStatic、REF_invokeStatic、REF_newInvokeSpecial 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则在第一次调用它时需要先触发其初始化；
 - 当一个接口声明了非 abstract、非 static 的方法（default 方法或 JDK 9 起的 private 方法）时，如果它的实现类发生了初始化，要先初始化这个接口。例如 Impl 同时实现了带 default 方法的 WithDefault 和不带 default 方法的 NoDefault，new Impl() 时依次输出“WithDefault 初始化”“Impl 初始化”，NoDefault 没有被初始化（JDK 21 实测）。
 
 #### 2. 被动引用
@@ -979,7 +980,7 @@ OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有
 
 以上几类要按各自的原因检查，下面是最常见的 Java heap space 的排查步骤：
 
-1. 启动参数加上 -XX:+HeapDumpOnOutOfMemoryError，发生内存溢出时自动保存堆转储，用 -XX:HeapDumpPath 指定保存位置；进程还在运行时，可以用 jcmd <pid> GC.heap_dump <文件名> 手动导出；
+1. 启动参数加上 -XX:+HeapDumpOnOutOfMemoryError，发生内存溢出时自动保存堆转储，用 -XX:HeapDumpPath 指定保存位置。它只对虚拟机报告的溢出（例如 Java heap space、Metaspace）生效，并且只转储第一次，直接内存和线程数的溢出不会生成堆转储；进程还在运行时，可以用 `jcmd <pid> GC.heap_dump <文件名>` 手动导出；
 2. 用 Eclipse MAT 等工具打开堆转储，按 Retained Heap（对象被回收后能一起释放的内存）排序找到占用最多的对象，查看它们到 GC Roots 的引用链，确定是谁持有了这些对象；
 3. 引用链指向不应该存活的对象（例如上面的静态集合）就是内存泄漏，需要修改代码；否则说明确实需要这么多内存，应该增大堆或者减少一次加载的数据量。
 
@@ -1041,7 +1042,11 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 
 堆太小时，日志中反复出现 Pause Full (G1 Compaction Pause)，6 次 Full GC 后的占用从约 27 MB 涨到 53 MB：缓存越来越大，每次 Full GC 能腾出的空间越来越少，很快又满了。
 
-堆设多大，先看 Full GC 之后堆的占用，这是长期存活的数据量，堆要在它之上留出余量，余量越小 GC 越频繁；定下初值后压测，看停顿和 GC 时间的占比是否达标。-Xmx 也不能等于容器的内存，进程还有元空间、线程栈、直接内存、代码缓存和 GC 自己的数据结构，例如 4 GB 堆的 G1 进程，GC 的数据结构就提交了约 135 MB（JDK 21 实测，见[附录 A21](#a21-堆以外的内存)），总和超过容器的限制时进程会被 OOM Killer 杀掉。
+堆设多大，先看 Full GC 之后堆的占用，这是长期存活的数据量，堆要在它之上留出余量，余量越小 GC 越频繁；定下初值后压测，看停顿和 GC 时间的占比是否达标。-Xmx 也不能等于容器的内存，进程还有元空间、线程栈、直接内存、代码缓存和 GC 自己的数据结构，例如 4 GB 堆的 G1 进程，GC 的数据结构就提交了约 135 MB（JDK 21 实测，见[附录 A21](#a21-堆以外的内存)）。
+
+容器中，JVM 默认开启 -XX:+UseContainerSupport（JDK 10 起；cgroup v2 需要 JDK 15、11.0.16 或 8u372 起），把容器的内存限制当作物理内存，按 MaxRAMPercentage 算出最大堆，例如限制 1 GiB 时为 256 MiB。内存不到约 250 MiB 时改为取一半（MinRAMPercentage，默认 50%），调 MaxRAMPercentage 不起作用（JDK 21 实测，见[附录 A22](#a22-容器中的默认堆)）。
+
+常见做法是不写 -Xmx，用 MaxRAMPercentage 按比例设堆，但比例不能太高。例如限制 1 GiB、比例 75% 时堆最大 768 MiB，堆外只剩 256 MiB，要放下元空间、线程栈、代码缓存、GC 数据结构和直接内存；直接内存没有设上限时可以和堆一样大。例如堆用到 700 MiB、ByteBuffer.allocateDirect 申请的直接内存 300 MiB，再加上约 100 MiB 的其它堆外内存，合计约 1.1 GiB，堆还没到上限，进程已经超过了限制。这时 JVM 不会抛出 OutOfMemoryError，而是被内核的 OOM Killer 杀掉（退出码 137，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)）。所以要用 -XX:MaxDirectMemorySize 给 NIO 的直接缓冲区设上限，压测时加 -XX:NativeMemoryTracking=summary，用 `jcmd <pid> VM.native_memory summary` 看各部分的占用（输出见[附录 A21](#a21-堆以外的内存)），再定堆的比例。
 
 判断 GC 是不是瓶颈，看停顿时间占运行时间的比例和最长停顿。jstat -gcutil <pid> 5000 每 5 秒输出一次，GCT 列是累计的停顿秒数，两次之差除以间隔就是这段时间的占比。-Xlog:gc 日志中以 Pause 开头的行记录一次停顿，例如 Pause Young (Normal) (G1 Evacuation Pause) 24M->1M(64M) 0.542ms 依次是回收的类型、原因、回收前后堆的占用、堆的大小和停顿时长；Concurrent 开头的行是并发执行的耗时，不计入停顿。例如 64 MB 的堆中老年代已用 92%，5 秒内新生代回收了 1403 次，20% 的时间都在停顿（JDK 21 实测，见[附录 A19](#a19-gc-时间的占比)）。
 
@@ -1674,6 +1679,29 @@ $ jcmd <pid> VM.native_memory summary scale=MB
 | 4 GB | 135 MB | 178 MB |
 
 直接内存记在 Other 中。macOS 上 NMT 把线程栈按 -Xss（2 MB）整段记为已提交，Linux 上只统计实际用到的页，数值小得多。这个程序几乎不加载类，元空间不到 1 MB，实际的服务加载的类多得多，元空间也大得多。
+
+### A22 容器中的默认堆
+
+JDK 21.0.13，Apple M1 Pro。容器感知只在 Linux 上生效，这里用 -XX:MaxRAM 模拟 JVM 看到的内存：容器中 JVM 把内存限制当作物理内存，与 MaxRAM 进入同一段堆大小的计算。
+
+```text
+$ java -XX:+PrintFlagsFinal -version | grep RAMPercentage
+   double InitialRAMPercentage                     = 1.562500
+   double MaxRAMPercentage                         = 25.000000
+   double MinRAMPercentage                         = 50.000000
+$ java -XX:MaxRAM=1g -XX:+PrintFlagsFinal -version | grep ' MaxHeapSize '
+   size_t MaxHeapSize                              = 268435456
+```
+
+| JVM 看到的内存 | 默认的最大堆 | MaxRAMPercentage=75 |
+| --- | --- | --- |
+| 200 MiB | 104 MiB | 104 MiB |
+| 256 MiB | 128 MiB | 192 MiB |
+| 512 MiB | 128 MiB | 384 MiB |
+| 1 GiB | 256 MiB | 768 MiB |
+| 2 GiB | 512 MiB | 1536 MiB |
+
+256 MiB 和 512 MiB 都是 128 MiB：内存的一半不小于默认的最小值（约 125 MiB）时，最大堆取 25% 与这个最小值中较大的一个。
 
 ## 参考资料
 
