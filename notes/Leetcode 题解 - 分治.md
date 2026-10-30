@@ -3,6 +3,7 @@
 * [Leetcode 题解 - 分治](#leetcode-题解---分治)
     * [1. 给表达式加括号](#1-给表达式加括号)
     * [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -20,6 +21,8 @@ Input: "2-1-1".
 
 Output : [0, 2]
 ```
+
+最后一步计算的运算符把表达式分成左右两部分，两部分各自加括号的方式互不影响。以每个运算符为分界，递归求出左边和右边所有可能的结果，再两两组合。例如以第二个 - 为分界，左边 "2-1" 的结果为 [1]，右边 "1" 的结果为 [1]，得到 1 - 1 = 0，对应 ((2-1)-1)。表达式中没有运算符时，它本身就是一个数。
 
 ```java
 public List<Integer> diffWaysToCompute(String input) {
@@ -60,6 +63,8 @@ public List<Integer> diffWaysToCompute(String input) {
 [Leetcode](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) / [力扣](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
 
 给定一个数字 n，要求生成所有值为 1...n 的二叉搜索树。
+
+以 i 为根时，左子树只能由 1...i-1 组成，右子树只能由 i+1...n 组成。递归生成两边所有的子树，再把每一棵左子树和每一棵右子树组合到根 i 上。区间为空时返回只含 null 的列表，表示空子树，这样组合的循环不需要特殊处理。
 
 ```text
 Input: 3
@@ -110,3 +115,7 @@ private List<TreeNode> generateSubtrees(int s, int e) {
     return res;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
