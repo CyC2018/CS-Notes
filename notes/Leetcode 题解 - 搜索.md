@@ -27,6 +27,8 @@
         * [13. 分割字符串使得每个部分都是回文数](#13-分割字符串使得每个部分都是回文数)
         * [14. 数独](#14-数独)
         * [15. N 皇后](#15-n-皇后)
+    * [附录：实测](#附录实测)
+        * [A1. 岛屿数量的递归深度](#a1-岛屿数量的递归深度)
 <!-- GFM-TOC -->
 
 
@@ -54,12 +56,14 @@
 - 4 -\> {}
 - 3 -\> {}
 
-每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等   **最优解**   问题：第一次遍历到目的节点，其所经过的路径为最短路径。应该注意的是，使用 BFS 只能求解无权图的最短路径，无权图是指从一个节点到另一个节点的代价都记为 1。
+每一层遍历的节点都与根节点距离相同。设 d<sub>i</sub> 表示第 i 个节点与根节点的距离，推导出一个结论：对于先遍历的节点 i 与后遍历的节点 j，有 d<sub>i</sub> <= d<sub>j</sub>。利用这个结论，可以求解最短路径等最优解问题：第一次遍历到目的节点，其所经过的路径为最短路径。需要注意的是，BFS 只能求解无权图的最短路径，无权图是指从一个节点到另一个节点的代价都记为 1。
 
 在程序实现 BFS 时需要考虑以下问题：
 
 - 队列：用来存储每一轮遍历得到的节点；
 - 标记：对于遍历过的节点，应该将它标记，防止重复遍历。
+
+下面的代码每轮先记下队列大小 size，取出的这 size 个节点正好是一层。
 
 ### 1. 计算在网格中从原点到特定点的最短路径长度
 
@@ -68,13 +72,13 @@
 [Leetcode](https://leetcode.com/problems/shortest-path-in-binary-matrix/) / [力扣](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/)
 
 ```text
-[[1,1,0,1],
- [1,0,1,0],
- [1,1,1,1],
- [1,0,1,1]]
+Input: grid = [[0,0,0],
+               [1,1,0],
+               [1,1,0]]
+Output: 4
 ```
 
-题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。
+题目描述：0 表示可以经过，每一步可以走到相邻的 8 个格子（包括斜对角），求从左上角到右下角最少经过几个格子，无法到达时返回 -1。
 
 ```java
 public int shortestPathBinaryMatrix(int[][] grids) {
@@ -208,6 +212,8 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 
 题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。
 
+把每个单词看成节点，只差一个字符的两个单词之间连一条边，问题就变成了无权图的最短路径。
+
 ```java
 public int ladderLength(String beginWord, String endWord, List<String> wordList) {
     wordList.add(beginWord);
@@ -283,11 +289,11 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。
 
-从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种   **可达性**   问题。
+从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种可达性问题。
 
 在程序实现 DFS 时需要考虑以下问题：
 
-- 栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。
+- 栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点，通常直接使用递归栈；
 - 标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。
 
 ### 1. 查找最大的连通面积
@@ -306,6 +312,8 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
  [0,0,0,0,0,0,0,1,1,1,0,0,0],
  [0,0,0,0,0,0,0,1,1,0,0,0,0]]
 ```
+
+题目描述：求上下左右相连的 1 组成的最大区域有多少个格子，上面的例子为 6。
 
 ```java
 private int m, n;
@@ -355,7 +363,7 @@ Input:
 Output: 3
 ```
 
-可以将矩阵表示看成一张无向图。
+可以将矩阵看成一张无向图，每个岛屿是一个连通分量，每次 DFS 把一整座岛屿改为 0，避免重复计数。
 
 ```java
 private int m, n;
@@ -386,6 +394,27 @@ private void dfs(char[][] grid, int i, int j) {
     grid[i][j] = '0';
     for (int[] d : direction) {
         dfs(grid, i + d[0], j + d[1]);
+    }
+}
+```
+
+需要注意的是，递归深度最多等于岛屿的格子数，300 × 300 的网格全是 1 时深达 9 万层，JDK 21 默认的线程栈会溢出（见[附录 A1](#a1-岛屿数量的递归深度)），这时可以把 dfs 换成下面的 BFS：
+
+```java
+private void bfs(char[][] grid, int i, int j) {
+    Queue<int[]> queue = new LinkedList<>();
+    queue.add(new int[]{i, j});
+    grid[i][j] = '0';
+    while (!queue.isEmpty()) {
+        int[] cur = queue.poll();
+        for (int[] d : direction) {
+            int r = cur[0] + d[0], c = cur[1] + d[1];
+            if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == '0') {
+                continue;
+            }
+            grid[r][c] = '0';
+            queue.add(new int[]{r, c});
+        }
     }
 }
 ```
@@ -460,6 +489,8 @@ X O X X
 
 先填充最外侧，剩下的就是里侧了。
 
+<div align="center"> <img src="pics/search-surrounded-regions.png" width="660px"/> </div><br>
+
 ```java
 private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 private int m, n;
@@ -524,7 +555,11 @@ Return:
 [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (positions with parentheses in above matrix).
 ```
 
-左边和上边是太平洋，右边和下边是大西洋，内部的数字代表海拔，海拔高的地方的水能够流到低的地方，求解水能够流到太平洋和大西洋的所有位置。
+左边和上边是太平洋，右边和下边是大西洋，内部的数字代表海拔，水能从一个格子流向海拔不高于它的相邻格子，求解水能够流到太平洋和大西洋的所有位置。
+
+和上一题一样从边界出发：分别从两个大洋的沿岸逆着水流搜索，两边都能走到的格子就是答案。
+
+<div align="center"> <img src="pics/search-pacific-atlantic.png" width="660px"/> </div><br>
 
 ```java
 private int m, n;
@@ -585,13 +620,29 @@ private void dfs(int r, int c, boolean[][] canReach) {
 
 Backtracking（回溯）属于 DFS。
 
-- 普通 DFS 主要用在   **可达性问题**  ，这种问题只需要执行到特定的位置然后返回即可。
-- 而 Backtracking 主要用于求解   **排列组合**   问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串，这种问题在执行到特定的位置返回之后还会继续执行求解过程。
+- 普通 DFS 主要用在可达性问题，这种问题只需要执行到特定的位置然后返回即可；
+- 而 Backtracking 主要用于求解排列组合问题，例如有 { 'a','b','c' } 三个字符，求解所有由这三个字符排列得到的字符串，这种问题在执行到特定的位置返回之后还会继续执行求解过程。
+
+各题的代码都是下面的结构，加入结果时要复制当前选择，因为这个列表之后还会被修改：
+
+```text
+backtracking(当前选择):
+    if 满足结束条件:
+        结果.add(复制当前选择)
+        return
+    for 候选 in 这一层的候选:
+        if 不合法: continue
+        做选择（加入列表、标记已访问）
+        backtracking(当前选择)
+        撤销选择（移出列表、取消标记）
+```
 
 因为 Backtracking 不是立即返回，而要继续求解，因此在程序实现时，需要注意对元素的标记问题：
 
 - 在访问一个新元素进入新的递归调用时，需要将新元素标记为已经访问，这样才能在继续递归调用时不用重复访问该元素；
 - 但是在递归返回时，需要将元素标记为未访问，因为只需要保证在一个递归链中不同时访问一个元素，可以访问已经访问过但是不在当前递归链中的元素。
+
+[岛屿数量](#2-矩阵中的连通分量数目)的标记表示格子已经处理过，不再撤销；[在矩阵中寻找字符串](#3-在矩阵中寻找字符串)的标记表示格子在当前路径上，换一条路径时要撤销。
 
 ### 1. 数字键盘组合
 
@@ -644,6 +695,8 @@ Given "25525511135",
 return ["255.255.11.135", "255.255.111.35"].
 ```
 
+每一层截取 1～3 个字符作为一段，段的值不超过 255 且不能有前导 0；截满 4 段且正好用完字符时得到一个结果。
+
 ```java
 public List<String> restoreIpAddresses(String s) {
     List<String> addresses = new ArrayList<>();
@@ -694,6 +747,8 @@ word = "ABCCED", -> returns true,
 word = "SEE", -> returns true,
 word = "ABCB", -> returns false.
 ```
+
+同一个格子在一条路径中只能用一次，例如 "ABCB" 走到 C 之后，相邻的 B 已经在路径上，因此返回 false。
 
 ```java
 private final static int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
@@ -766,7 +821,6 @@ private boolean backtracking(int curLen, int r, int c, boolean[][] visited, fina
 ```
 
 ```java
-
 public List<String> binaryTreePaths(TreeNode root) {
     List<String> paths = new ArrayList<>();
     if (root == null) {
@@ -825,6 +879,10 @@ private String buildPath(List<Integer> values) {
 ]
 ```
 
+下图是 [1,2,3] 的前 12 步：
+
+<div align="center"> <img src="pics/search-permute-trace.png" width="620px"/> </div><br>
+
 ```java
 public List<List<Integer>> permute(int[] nums) {
     List<List<Integer>> permutes = new ArrayList<>();
@@ -865,7 +923,11 @@ private void backtracking(List<Integer> permuteList, List<List<Integer>> permute
 
 数组元素可能含有相同的元素，进行排列时就有可能出现重复的排列，要求重复的排列只返回一个。
 
-在实现上，和 Permutations 不同的是要先排序，然后在添加一个元素时，判断这个元素是否等于前一个元素，如果等于，并且前一个元素还未访问，那么就跳过这个元素。
+和 Permutations 不同的是要先排序，让相同的元素相邻；添加一个元素时，如果它等于前一个元素，并且前一个元素还未访问，就跳过这个元素。
+
+这样值相同的元素只能按下标顺序进入路径，每个排列只生成一次：
+
+<div align="center"> <img src="pics/search-perm-dedup.png" width="700px"/> </div><br>
 
 ```java
 public List<List<Integer>> permuteUnique(int[] nums) {
@@ -917,6 +979,8 @@ If n = 4 and k = 2, a solution is:
 ]
 ```
 
+组合不考虑顺序，所以每一层只从比上一个数大的数中选，选出的组合递增，不会重复。
+
 ```java
 public List<List<Integer>> combine(int n, int k) {
     List<List<Integer>> combinations = new ArrayList<>();
@@ -930,7 +994,7 @@ private void backtracking(List<Integer> combineList, List<List<Integer>> combina
         combinations.add(new ArrayList<>(combineList));
         return;
     }
-    for (int i = start; i <= n - k + 1; i++) {  // 剪枝
+    for (int i = start; i <= n - k + 1; i++) {  // 剪枝：后面至少还要剩下 k - 1 个数
         combineList.add(i);
         backtracking(combineList, combinations, i + 1, k - 1, n);
         combineList.remove(combineList.size() - 1);
@@ -949,6 +1013,8 @@ given candidate set [2, 3, 6, 7] and target 7,
 A solution set is:
 [[7],[2, 2, 3]]
 ```
+
+每个数可以重复选取，所以递归时传入 i 而不是 i + 1。
 
 ```java
 public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -990,6 +1056,8 @@ A solution set is:
   [1, 1, 6]
 ]
 ```
+
+每个数只能用一次，递归时传入 i + 1；数组中有重复的数，去重方法与 [含有相同元素求排列](#6-含有相同元素求排列) 相同。
 
 ```java
 public List<List<Integer>> combinationSum2(int[] candidates, int target) {
@@ -1035,7 +1103,7 @@ Output:
 [[1,2,6], [1,3,5], [2,3,4]]
 ```
 
-从 1-9 数字中选出 k 个数不重复的数，使得它们的和为 n。
+从 1～9 中选出 k 个不重复的数，使得它们的和为 n，写法与 [组合](#7-组合) 相同。
 
 ```java
 public List<List<Integer>> combinationSum3(int k, int n) {
@@ -1069,7 +1137,9 @@ private void backtracking(int k, int n, int start,
 
 [Leetcode](https://leetcode.com/problems/subsets/description/) / [力扣](https://leetcode-cn.com/problems/subsets/description/)
 
-找出集合的所有子集，子集不能重复，[1, 2] 和 [2, 1] 这种子集算重复
+找出集合的所有子集，子集不能重复，[1, 2] 和 [2, 1] 这种子集算重复。
+
+子集就是大小为 0～n 的所有组合，对每种大小各做一次组合的回溯。
 
 ```java
 public List<List<Integer>> subsets(int[] nums) {
@@ -1115,6 +1185,8 @@ If nums = [1,2,2], a solution is:
   []
 ]
 ```
+
+去重方法与 [含有相同元素求排列](#6-含有相同元素求排列) 相同。
 
 ```java
 public List<List<Integer>> subsetsWithDup(int[] nums) {
@@ -1164,6 +1236,8 @@ Return
 ]
 ```
 
+每一层从剩余字符串的开头切出一段回文串，再对剩下的部分递归。
+
 ```java
 public List<List<String>> partition(String s) {
     List<List<String>> partitions = new ArrayList<>();
@@ -1204,6 +1278,8 @@ private boolean isPalindrome(String s, int begin, int end) {
 
 <div align="center"> <img src="pics/search-sudoku.png" width="330px"/> </div><br>
 
+用三个标记数组记录每一行、每一列、每一个 3 \* 3 宫中已经出现的数字。找到一个解就返回 true，不再撤销，棋盘上留下的就是答案。
+
 ```java
 private boolean[][] rowsUsed = new boolean[9][10];
 private boolean[][] colsUsed = new boolean[9][10];
@@ -1212,7 +1288,7 @@ private char[][] board;
 
 public void solveSudoku(char[][] board) {
     this.board = board;
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (board[i][j] == '.') {
                 continue;
@@ -1222,7 +1298,8 @@ public void solveSudoku(char[][] board) {
             colsUsed[j][num] = true;
             cubesUsed[cubeNum(i, j)][num] = true;
         }
-        backtracking(0, 0);
+    }
+    backtracking(0, 0);
 }
 
 private boolean backtracking(int row, int col) {
@@ -1322,3 +1399,49 @@ private void backtracking(int row) {
     }
 }
 ```
+
+## 附录：实测
+
+### A1. 岛屿数量的递归深度
+
+环境：JDK 21.0.13（Temurin，macOS arm64，默认 ThreadStackSize = 2048 KB）。全为 1 的 N × N 网格，用与正文相同的 dfs（方向顺序右、左、下、上，会蛇形走完整个网格）并统计最大递归深度，命令为 `java Deep200 N`：
+
+```java
+static int depth, maxDepth;
+
+static void dfs(char[][] g, int i, int j) {
+    if (i < 0 || i >= m || j < 0 || j >= n || g[i][j] == '0') return;
+    depth++;
+    maxDepth = Math.max(maxDepth, depth);
+    g[i][j] = '0';
+    for (int[] d : direction) dfs(g, i + d[0], j + d[1]);
+    depth--;
+}
+
+// main 中：全 1 的 N × N 网格
+try {
+    dfs(grid, 0, 0);
+    System.out.println(N + "x" + N + " all 1: max recursion depth " + maxDepth);
+} catch (StackOverflowError e) {
+    System.out.println(N + "x" + N + " all 1: StackOverflowError at depth " + depth);
+}
+```
+
+```text
+# 第一次运行
+100x100 all 1: max recursion depth 10000
+200x200 all 1: StackOverflowError at depth 26231
+300x300 all 1: StackOverflowError at depth 25541
+# 第二次运行
+100x100 all 1: max recursion depth 10000
+200x200 all 1: StackOverflowError at depth 21931
+300x300 all 1: StackOverflowError at depth 14533
+```
+
+正文的 numIslands 在 200 × 200 和 300 × 300 时同样抛出 StackOverflowError；换成 BFS 后三种规模都返回 1。溢出的深度与栈帧大小、JIT 编译状态有关，每次运行不同。
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- Sedgewick R, Wayne K. 算法（第 4 版）[M]. 人民邮电出版社, 2012.
+- [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/home/)
