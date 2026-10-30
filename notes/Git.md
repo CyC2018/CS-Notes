@@ -21,17 +21,15 @@ Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
 <div align="center"> <img src="pics/git-centralized-distributed.png" width="760px"/> </div><br>
 
-集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。
+集中式版本控制的完整历史只保存在中心服务器上，每个人只取出某个版本的工作副本；分布式版本控制的每一份克隆都有完整的历史。
 
-集中式版本控制有安全性问题，当中心服务器挂了所有人都没办法工作了。
+SVN 不联网也能修改文件、查看和撤销本地的改动，但提交、查看历史、切换版本都要连接服务器，服务器宕机时这些操作都无法进行。Git 的提交和查看历史都在本地完成，联网只是为了和别人交换提交。
 
-集中式版本控制需要连网才能工作，如果网速过慢，那么提交一个文件会慢的无法让人忍受。而分布式版本控制不需要连网就能工作。
-
-分布式版本控制新建分支、合并分支操作速度非常快，而集中式版本控制新建一个分支相当于复制一份完整代码。
+SVN 的分支是服务器上的一次廉价复制，并不复制文件的数据；Git 新建、切换和合并分支都在本地完成，不需要访问服务器。
 
 ## 中心服务器
 
-中心服务器用来交换每个用户的修改，没有中心服务器也能工作，但是中心服务器能够 24 小时保持开机状态，这样就能更方便的交换修改。
+中心服务器用来交换每个用户的修改，没有中心服务器也能工作，但是中心服务器能够 24 小时保持开机状态，这样就能更方便地交换修改。
 
 GitHub 就是一个中心服务器。
 
@@ -45,7 +43,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 - git add files 把文件的修改添加到暂存区；
 - git commit 把暂存区的修改提交到当前分支，提交之后暂存区的内容与这次提交一致；
-- git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files；
+- git reset -- files 用当前分支最新提交中的文件覆盖暂存区，取消这些文件已暂存的修改，工作区不变；
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改。
 
 <div align="center"> <img src="pics/git-workflow.png" width="760px"/> </div><br>
@@ -63,7 +61,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 <div align="center"> <img src="pics/git-branch-pointer.png" width="760px"/> </div><br>
 
-新建分支是新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支，表示新分支成为当前分支。
+新建并切换分支时，新建一个指针指向时间线的最后一个节点，并让 HEAD 指针指向新分支，表示新分支成为当前分支。
 
 <div align="center"> <img src="pics/git-branch-new.png" width="760px"/> </div><br>
 
@@ -81,7 +79,7 @@ Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本
 
 <div align="center"> <img src="pics/git-conflict.png" width="760px"/> </div><br>
 
-Git 会使用 \<\<\<\<\<\<\< ，======= ，\>\>\>\>\>\>\> 标记出不同分支的内容，只需要把不同分支中冲突部分修改成一样，删掉这些标记，再执行 git add 和 git commit，就完成了合并。
+Git 会在冲突的文件中使用 \<\<\<\<\<\<\< ，======= ，\>\>\>\>\>\>\> 标记出两个分支的内容，在工作区中把这一段改成最终想要的内容，删掉这些标记，再执行 git add 和 git commit，就完成了合并。
 
 ```text
 <<<<<<< HEAD
@@ -91,11 +89,13 @@ Creating a new branch is quick AND simple.
 >>>>>>> feature1
 ```
 
+例如决定保留 master 的写法，就把上面这五行改成 master 中的那一行。
+
 ## Fast forward
 
-“快进式合并”（fast-forward merge），会直接将 master 分支指向合并的分支，这种模式下进行分支合并会丢失分支信息，也就不能在分支历史上看出分支信息。
+快进合并（fast-forward merge）只把 master 指针移动到 dev 所指的提交，不生成新提交。合并后的历史是一条直线，之后看不出哪些提交是在 dev 分支上开发的。
 
-可以在合并时加上 --no-ff 参数来禁用 Fast forward 模式，并且加上 -m 参数让合并时产生一个新的 commit。
+可以在合并时加上 --no-ff 参数来禁用 Fast forward 模式，这时总会生成一个新的合并提交，-m 参数指定这个提交的说明。
 
 ```bash
 $ git merge --no-ff -m "merge with no-ff" dev
@@ -105,17 +105,24 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 ## 储藏（Stashing）
 
-在一个分支上操作之后，如果还没有将修改提交到分支上，此时进行切换分支，那么另一个分支上也能看到新的修改。这是因为所有分支都共用一个工作区的缘故。如果这些修改涉及的文件在两个分支上不同，切换会覆盖掉修改，Git 会拒绝切换。
+在一个分支上操作之后，如果还没有将修改提交到分支上，此时进行切换分支，那么另一个分支上也能看到新的修改。这是因为所有分支都共用一个工作区的缘故。如果切换会覆盖未提交的修改，Git 会拒绝切换。
 
-可以使用 git stash 将当前分支的修改储藏起来，此时当前工作区中已跟踪文件的修改都会被存到栈中，工作区回到干净的状态；未跟踪的新文件默认不会储藏，需要加上 -u 选项。此时就可以安全的切换到其它分支上了。
+可以使用 git stash 将当前分支的修改储藏起来，此时已跟踪文件的修改（包括已经 add 到暂存区的）都会被存到栈中，工作区回到干净的状态；未跟踪的新文件默认不会储藏，需要加上 -u 选项。此时就可以安全地切换到其它分支上了。
 
 ```bash
 $ git stash
-Saved working directory and index state \ "WIP on master: 049d078 added the index file"
-HEAD is now at 049d078 added the index file (To restore them type "git stash apply")
+Saved working directory and index state WIP on master: 049d078 added the index file
 ```
 
-该功能可以用于 bug 分支的实现。如果当前正在 dev 分支上进行开发，但是此时 master 上有个 bug 需要修复，但是 dev 分支上的开发还未完成，不想立即提交。在新建 bug 分支并切换到 bug 分支之前就需要使用 git stash 将 dev 分支的未提交修改储藏起来。
+例如 dev 上的开发做到一半，master 上有个 bug 需要马上修复，而 dev 的修改还不想提交：
+
+```bash
+$ git stash              # 储藏 dev 上未提交的修改
+$ git switch master
+$ git switch -c fix-bug  # 在 bug 分支上修复、提交，再合并回 master
+$ git switch dev
+$ git stash pop          # 取回储藏的修改，并从栈中删除这条记录
+```
 
 ## SSH 传输设置
 
@@ -127,7 +134,7 @@ Git 仓库和 GitHub 中心仓库之间可以通过 HTTPS 或者 SSH 加密传�
 $ ssh-keygen -t ed25519 -C "youremail@example.com"
 ```
 
-然后把公钥 id_ed25519.pub 的内容复制到 GitHub “Settings” 的 SSH Keys 中。
+然后把公钥 id_ed25519.pub 的内容添加到 GitHub “Settings” 中的 “SSH and GPG keys”。
 
 ## .gitignore 文件
 
@@ -136,6 +143,16 @@ $ ssh-keygen -t ed25519 -C "youremail@example.com"
 - 操作系统自动生成的文件，比如缩略图；
 - 编译生成的中间文件，比如 Java 编译产生的 .class 文件；
 - 自己的敏感信息，比如存放口令的配置文件。
+
+例如 Java 项目的 .gitignore 可以这样写，每行一条规则：
+
+```text
+*.class
+target/
+*.local.yml
+```
+
+需要注意的是，.gitignore 只对未跟踪的文件生效。已经提交过的文件即使后来写进 .gitignore，修改仍会出现在 git status 中，要先用 git rm --cached <file> 把它移出版本库（工作区的文件保留）。
 
 不需要全部自己编写，可以到 [https://github.com/github/gitignore](https://github.com/github/gitignore) 中进行查询。
 
@@ -159,10 +176,17 @@ $ ssh-keygen -t ed25519 -C "youremail@example.com"
 | 撤销最近一次提交，保留修改 | git reset --soft HEAD~1 |
 | 回到某个提交，丢弃之后的修改 | git reset --hard <commit> |
 | 用一个新提交抵消某次提交 | git revert <commit> |
+| 下载远程分支的新提交，不合并 | git fetch |
 | 拉取并合并远程分支 | git pull |
 | 推送 | git push origin dev |
 
-git restore 和 git switch 是 Git 2.23 加入的命令，分别承担了原来 git checkout 恢复文件和切换分支两种用途。需要注意的是，reset --hard 会丢弃未提交的修改；已经推送到远程的提交，应该用 revert 撤销，而不是 reset 后强制推送。
+git restore 和 git switch 是 Git 2.23 加入的命令，分别承担了原来 git checkout 恢复文件和切换分支两种用途。git pull 先执行 git fetch，再把远程分支合入当前分支：本地没有新提交时直接快进，两边都有新提交时按 pull.rebase 配置或 --rebase、--no-rebase 参数选择变基或合并。单独执行 git fetch 只更新 origin/master 这类远程跟踪分支，本地的 master 不动，可以先看别人改了什么再决定怎样合并。
+
+master 和 dev 都有新提交时，merge 与 rebase 都能把 master 上的新提交合进 dev。merge 生成一个有两个父提交的合并提交，原有的提交不变；git rebase master 则把 dev 上的提交逐个放到 master 最新的提交之后重新提交一遍，历史成为一条直线，但这些提交的哈希都变了。因此只对还没有推送、或者只有自己在用的分支变基，别人已经拉取的提交不要变基。git rebase -i 还可以把本地的多个提交合并成一个再推送。
+
+<div align="center"> <img src="pics/git-merge-rebase.png" width="760px"/> </div><br>
+
+需要注意的是，reset --hard 会丢弃未提交的修改；已经推送到远程的提交，应该用 revert 撤销，而不是 reset 后强制推送。
 
 比较详细的命令列表：http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf
 
@@ -170,5 +194,6 @@ git restore 和 git switch 是 Git 2.23 加入的命令，分别承担了原来 
 
 - [Git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
 - [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
-- [廖雪峰 : Git 教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+- [Pro Git（第二版，中文）](https://git-scm.com/book/zh/v2)
+- [Version Control with Subversion: Using Branches](https://svnbook.red-bean.com/en/1.7/svn.branchmerge.using.html)
 - [Learn Git Branching](https://learngitbranching.js.org/)
