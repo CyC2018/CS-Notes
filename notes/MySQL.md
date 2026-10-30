@@ -46,6 +46,11 @@
         * [A6 联合索引的扫描范围](#a6-联合索引的扫描范围)
         * [A7 慢查询的定位与优化](#a7-慢查询的定位与优化)
         * [A8 唯一索引与普通索引](#a8-唯一索引与普通索引)
+        * [A9 字符串与时间类型](#a9-字符串与时间类型)
+        * [A10 区分度低的列](#a10-区分度低的列)
+        * [A11 redo log 的检查点](#a11-redo-log-的检查点)
+        * [A12 主从复制的初始化与延迟](#a12-主从复制的初始化与延迟)
+        * [A13 InnoDB 与 MyISAM 的并发读写](#a13-innodb-与-myisam-的并发读写)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -59,7 +64,7 @@
 B+ Tree 是一种多路平衡查找树：每个节点可以有很多个子节点，所有叶子节点都在同一层。InnoDB 的索引就是 B+ Tree，它有两个特点：
 
 - 内部节点只保存 key 和指向子节点的指针，数据都保存在叶子节点中；
-- 叶子节点按 key 的顺序用指针连成链表。
+- 叶子节点按 key 的顺序用指针连成双向链表，正序、倒序都能顺着扫描。
 
 <div align="center"> <img src="pics/mysql-bplus-tree.png" width="760px"/> </div><br>
 
@@ -77,13 +82,13 @@ B+ Tree 是一种多路平衡查找树：每个节点可以有很多个子节点
 - 一次 I/O 读入一个节点：操作系统和数据库都以页为单位读写磁盘，B+ Tree 的节点大小正好是一页。对于机械硬盘，读不同位置的页还要移动磁头寻道，树越矮寻道次数越少；
 - 适合顺序读：范围查询沿着叶子节点顺序扫描，相邻的页可以利用磁盘的预读提前读入。
 
-根节点和中间节点访问频繁，通常常驻在内存的缓冲池中，所以按主键查找一行实际上最多读一次磁盘。按[附录 A1](#a1-主键索引的高度)中每个中间页约 900 个指针、每个叶子页约 80 行计算，3 层的 B+ Tree 约能放 6000 万行。
+根节点和中间节点访问频繁，通常常驻在内存的缓冲池中（3 层放满时中间页也只占约 14 MB），所以按主键查找一行通常只需要读一次磁盘。按[附录 A1](#a1-主键索引的高度)中每个中间页约 900 个指针、每个叶子页约 80 行计算，3 层的 B+ Tree 约能放 900 × 900 × 80 ≈ 6000 万行；每行约 1 KB 时每个叶子页只能放约 14 行，约能放 1100 万行。
 
 #### 4. 与 B Tree 的比较
 
 - B Tree 的每个节点都存放数据，B+ Tree 只有叶子节点存放数据，内部节点只存放 key 和指针，同样大小的页能放下更多的 key，树更矮；
 - B+ Tree 的叶子节点按 key 的顺序用指针连接，范围查询找到起点后顺序扫描叶子节点即可，B Tree 则要在不同层的节点之间来回遍历；
-- B+ Tree 的每次查找都要走到叶子节点，查询的磁盘 I/O 次数稳定。
+- B+ Tree 的每次查找都要走到叶子节点，查询的磁盘 I/O 次数稳定。B Tree 虽然可能在上层命中，但绝大多数 key 都在最下层，平均读盘次数并不更少。
 
 #### 5. 与跳表、LSM 树的比较
 
@@ -104,11 +109,15 @@ InnoDB 的 B+Tree 索引分为两种：
 - 主键索引：叶子节点保存整行数据，表的数据就存放在主键索引中，这种方式称为聚簇索引。因为数据只能按一种顺序存放，所以一张表只能有一个聚簇索引；
 - 二级索引（辅助索引）：叶子节点保存索引列和主键的值。
 
+没有定义主键时，InnoDB 用第一个所有列都为 NOT NULL 的唯一索引作为聚簇索引；也没有这样的索引时，自动生成一个 6 字节的隐藏行 ID 作为聚簇索引的 key。
+
 <div align="center"> <img src="pics/mysql-clustered-index.png" width="760px"/> </div><br>
 
 通过二级索引查询其它列时，要先在二级索引中找到主键，再到聚簇索引中查出整行，这称为回表：
 
 <div align="center"> <img src="pics/mysql-secondary-index.png" width="760px"/> </div><br>
+
+一段范围内的二级索引项对应的主键一般是无序的，逐行回表是在聚簇索引上随机读。
 
 非聚簇索引在不同语境下含义不同：在 InnoDB 中指的就是二级索引；MyISAM 的数据单独存放在数据文件中，主键索引和其它索引的叶子节点都只保存行在文件中的地址，所有索引都是非聚簇索引。
 
@@ -121,7 +130,7 @@ InnoDB 的 B+Tree 索引分为两种：
 - 无法用于排序与分组；
 - 只支持精确查找，无法用于部分查找和范围查找。
 
-MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有一个“自适应哈希索引”的功能：某些索引值被频繁访问时，InnoDB 自动在 B+Tree 索引之上为它们建立哈希索引，加快等值查找。
+MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有一个“自适应哈希索引”的功能：某些索引值被频繁访问时，InnoDB 自动在 B+Tree 索引之上为它们建立哈希索引，加快等值查找（MySQL 8.4 起默认关闭，由 innodb_adaptive_hash_index 控制）。
 
 #### 3. 全文索引
 
@@ -136,7 +145,7 @@ MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有
 按用途，B+Tree 索引分为以下几种：
 
 - 主键索引：一张表只有一个，列不能为 NULL，在 InnoDB 中就是聚簇索引；
-- 唯一索引：列的值不能重复，但可以有多个 NULL（MySQL 8.0 实测，见[附录 A8](#a8-唯一索引与普通索引)），在 InnoDB 中是二级索引；
+- 唯一索引：列的值不能重复，但可以有多个 NULL（MySQL 8.0 实测，见[附录 A8](#a8-唯一索引与普通索引)），在 InnoDB 中通常是二级索引；
 - 普通索引：没有唯一性约束；
 - 联合索引：建立在多个列上的索引，见下文的 [多列索引](#2-多列索引)；
 - 前缀索引：只索引字符串的前一部分，见下文的 [前缀索引](#4-前缀索引)。
@@ -151,18 +160,29 @@ MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有
 
 ### 索引的使用条件 🔥🔥
 
-- 对于非常小的表，大部分情况下简单的全表扫描比建立索引更高效；
-- 对于中到大型的表，索引就非常有效；
-- 对于特大型的表，建立和维护索引的代价也随之增长，可以使用分区等技术直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配；
+- 很小的表（例如几百行的配置表）只有几个数据页，全表扫描的代价很小；表越大，索引的作用越明显；
+- 特大型的表建立和维护索引的代价也随之增长，可以按时间等条件分区，查询时只扫描相关的分区；
 - 索引并不是越多越好：插入、删除数据和修改索引列时，要同时维护每个相关的索引，索引也要占用存储空间。在 orders 表上插入 50 万行，没有二级索引时约 2.0 s，有 4 个二级索引时约 5.2 s，这 4 个索引共占 73 MB，而数据本身是 89 MB（见[附录 A3](#a3-二级索引对写入的影响)）；
-- 适合建索引的是经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中，并且区分度高的列，区分度很低的列（例如只有几种取值的状态）单独建索引的作用不大。
+- 适合建索引的是经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中，并且区分度高的列，频繁修改而很少查询的列不适合；
+- 区分度很低的列（例如性别）单独建索引的作用不大，甚至更慢：10 万行的表按 gender = 1 查询，一半的行要回表，走索引 20 ms，全表扫描 11 ms；但总是查占比很少的值时索引仍然有效，只占 1% 的 status = 1 走索引 0.6 ms（MySQL 8.0 实测，见[附录 A10](#a10-区分度低的列)）。
 
 设计索引时还要注意：
 
 - 多个条件经常一起出现时，建一个联合索引，而不是每列各建一个，列的顺序见下文的 [索引列的顺序](#3-索引列的顺序)；
 - 尽量让高频查询用上覆盖索引，避免回表；
 - 已经有联合索引 (a, b) 时，单独的索引 (a) 是冗余的，可以删掉；
-- 主键用较短的自增整数，原因见上文的 [B+Tree 索引](#1-btree-索引)。
+- 主键用较短的自增整数，原因见上文的 [B+Tree 索引](#1-btree-索引)；
+- 线上加普通二级索引是在线 DDL，期间表仍可读写，但开始和结束时要短暂获取排他元数据锁，遇到长事务会等锁并阻塞后面的读写，所以先检查长事务、在低峰期执行。
+
+以订单表为例，索引从高频查询推出来：
+
+| 高频查询 | 索引 | 理由 |
+| --- | --- | --- |
+| `WHERE order_no = ?` | 唯一索引 (order_no) | 区分度最高，还能保证不重复 |
+| `WHERE user_id = ? AND status = ? ORDER BY create_time DESC LIMIT 10` | (user_id, status, create_time) | 等值列在前、排序列在后，免去排序；只按 user_id 查也能用 |
+| `WHERE create_time >= ? AND create_time < ?` | (create_time) | 联合索引不能按 create_time 直接定位 |
+
+status 区分度低且已在联合索引中，不单独建索引。
 
 ### 索引优化 🔥
 
@@ -185,7 +205,9 @@ SELECT film_id, actor_id FROM sakila.film_actor
 WHERE actor_id = 1 AND film_id = 1;
 ```
 
-联合索引只有一棵 B+ 树，索引项按列的顺序排序：先按第一列排序，第一列相同时再按第二列，以此类推。下图是联合索引 (user_id, status, create_time) 的叶子节点，以及四种查询条件要扫描的范围：
+这是因为一个单列索引只能按一列定位。例如 100 万行的表上 a = 5 匹配 939 行、b = 7 匹配 9819 行，同时满足的只有 12 行：只有单列索引时，最多分别扫描两个索引再按主键取交集，读了 1 万多个索引项；建立 (a, b) 后只读 12 个（见[附录 A6](#a6-联合索引的扫描范围)）。
+
+联合索引只有一棵 B+ 树，索引项按列的顺序排序：先按第一列排序，第一列相同时再按第二列，以此类推。下图是联合索引 (user_id, status, create_time) 的叶子节点（每项还带有主键 id），以及四种查询条件要扫描的范围：
 
 <div align="center"> <img src="pics/mysql-composite-index.png" width="780px"/> </div><br>
 
@@ -201,7 +223,7 @@ MySQL 8.0.13 起，缺少最左列时还可能使用跳跃扫描（Skip Scan）�
 
 #### 3. 索引列的顺序
 
-让选择性最强的索引列放在前面。
+列的顺序首先要满足最左前缀（例如还经常单独按 user_id 查询，user_id 就要放在最前面），其次让选择性最强的列放在前面。
 
 索引的选择性是指：不重复的索引值和记录总数的比值。最大值为 1，此时每个记录都有唯一的索引与其对应。选择性越高，每个记录的区分度越高，查询效率也越高。
 
@@ -244,7 +266,7 @@ ALTER TABLE user ADD INDEX idx_email (email(10));
 SELECT user_id, status, create_time, id FROM orders WHERE user_id = 1001;
 ```
 
-它的优点是只读取索引，读取的数据量小，并且避免了回表带来的随机 I/O。
+它的优点是只读取索引，读取的数据量小，并且避免了回表带来的随机 I/O。代价是索引更大、写入更慢，所以只为最高频的查询这样设计。
 
 ### 索引失效 🔥
 
@@ -263,9 +285,9 @@ SELECT user_id, status, create_time, id FROM orders WHERE user_id = 1001;
 
 对应的写法：
 
-- 把函数改写为范围：`create_time >= '2025-01-12' AND create_time < '2025-01-13'`，type 变为 range；
+- 把函数改写为范围：`create_time >= '2025-01-12' AND create_time < '2025-01-13'`，type 变为 range；不能改写 SQL 时，MySQL 8.0.13 起可以建函数索引 `INDEX ((DATE(create_time)))`，原来的查询就能按 ref 查找（见[附录 A2](#a2-索引的执行计划)）；
 - 字符串列用字符串比较：`order_no = '7007'`，type 变为 ref。这是因为 '7007'、' 7007'、'7007a' 转换成数字后都等于 7007，没法按索引的顺序查找；反过来，整数列与字符串比较（`id = '1001'`）仍然走主键，因为被转换的是常量而不是列；
-- 只在右边模糊匹配：`LIKE '7007%'`，type 为 range；
+- 只在右边模糊匹配：`LIKE '7007%'`，type 为 range；按关键词搜索可以改用全文索引或 Elasticsearch；
 - OR 两侧的列都有索引时，可以分别扫描两个索引再合并结果，type 为 index_merge。
 
 IS NULL、IS NOT NULL、NOT IN 本身不会让索引失效：order_no IS NULL 的 type 为 ref；NOT IN 和 != 一样，走不走索引取决于匹配的行数（见[附录 A6](#a6-联合索引的扫描范围)）。
@@ -277,15 +299,15 @@ WHERE user_id = 5 AND status = 1 AND create_time > '2025-01-05'   -- key_len = 1
 WHERE user_id = 5 AND status > 0 AND create_time > '2025-01-05'   -- key_len = 5，只用到前两列
 ```
 
+<div align="center"> <img src="pics/index-leftmost.png" width="760px"/> </div><br>
+
 不过第二条语句的 Extra 为 Using index condition，也就是索引下推：create_time 虽然不能缩小扫描范围，但仍然在索引上过滤，不满足条件的行不需要回表，所以范围条件之后的列并不是完全没有作用。
 
-<div align="center"> <img src="pics/index-leftmost.png" width="760px"/> </div><br>
+跳过中间列时也一样：`user_id = 1001 AND create_time >= '2025-01-20'` 跳过了 status，只能用 user_id 定位（key_len = 4），user_id 为 1001 的 20 行中只有 3 行满足时间条件。有索引下推时只需回表 3 次，关闭索引下推后要回表 20 次，再由 Server 层过滤。
 
 另外，范围条件带等号（>=、<=、BETWEEN）时，后面的列还能参与确定扫描的起点和终点。例如 user_id BETWEEN 1001 AND 1006 AND status = 2 的 key_len 为 5，关闭索引下推后读了 100 个索引项；改为 user_id > 1000 AND user_id < 1007 后 key_len 为 4，要读 120 个（见[附录 A6](#a6-联合索引的扫描范围)）。起点和终点之间的索引项仍然要逐条判断 status。
 
-例如 `user_id = 1001 AND create_time >= '2025-01-20'` 跳过了 status，只能用 user_id 定位（key_len = 4），user_id 为 1001 的 20 行中只有 3 行满足时间条件。有索引下推时只需回表 3 次，关闭索引下推后要回表 20 次，再由 Server 层过滤。
-
-需要注意的是，是否使用索引是优化器按成本估算决定的。走二级索引的每一行都要回表，匹配的行越多回表越多，超过一定比例后全表扫描反而更快：`create_time > '2025-01-23'` 匹配 9.9 万行，走 idx_create_time；`create_time > '2025-01-02'` 匹配 191 万行，就选择了全表扫描。IN 也一样，`user_id IN` 5 个值、1 万个值时都走索引，2 万个值时就改为全表扫描。因此同一种写法有时走索引有时不走，可能是因为匹配的数据量不同。
+需要注意的是，是否使用索引是优化器按成本估算决定的。走二级索引的每一行都要回表，匹配的行越多回表越多，超过一定比例后全表扫描反而更快：`create_time > '2025-01-23'` 匹配 9.9 万行，走 idx_create_time；`create_time > '2025-01-02'` 匹配 191 万行，就选择了全表扫描。IN 也一样，`user_id IN` 5 个值、1 万个值时都走索引，2 万个值时就改为全表扫描。因此同一种写法有时走索引有时不走，可能是因为匹配的数据量不同，也可能是统计信息不准（见[分析原因](#2-分析原因)）。
 
 ## 二、查询性能优化 🔥🔥
 
@@ -303,21 +325,21 @@ MySQL 分为 Server 层和存储引擎层：Server 层负责连接、解析、�
 
 ### 使用 Explain 进行分析
 
-Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explain 结果来优化查询语句。
+Explain 用来查看优化器选定的执行计划，语句本身并不执行，也可以用于 UPDATE、DELETE 等语句。
 
 比较重要的字段有：
 
 - id 和 table：每张表一行，有子查询、UNION 时 id 不同；连接查询中 id 相同的几行按 MySQL 读取的顺序排列，上面的是驱动表；
 - select_type：查询类型，有简单查询、联合查询、子查询等；
-- type：访问类型，从好到差常见的有 const、eq_ref、ref、range、index、ALL。const 表示通过主键或唯一索引最多匹配一行，eq_ref 表示连接时用被驱动表的主键或唯一索引匹配，ref 表示通过普通索引等值匹配，range 表示索引范围扫描，index 表示扫描整个索引树，ALL 表示全表扫描；
+- type：访问类型，从好到差常见的有 system、const、eq_ref、ref、range、index、ALL。system 表示表中只有一行（InnoDB 表上一般见不到），const 表示通过主键或唯一索引最多匹配一行，eq_ref 表示连接时用被驱动表的主键或唯一索引匹配，ref 表示通过普通索引等值匹配，range 表示索引范围扫描，index 表示扫描整个索引树，ALL 表示全表扫描；
 - possible_keys 和 key：可以使用的索引和实际使用的索引。possible_keys 中有索引而 key 为 NULL，说明优化器认为走索引的代价更高；
-- key_len：使用的索引长度，联合索引可以据此算出用到了前几列，见 [索引失效](#索引失效)；
+- key_len：使用的索引长度，联合索引可以据此算出用到了前几列，见 [索引失效](#索引失效)。可以为 NULL 的列多 1 字节，变长的列多 2 字节，例如可以为 NULL 的 utf8mb4 列 order_no VARCHAR(32)，key_len 为 32 × 4 + 2 + 1 = 131；
 - ref：与索引比较的是常量（const）还是其它表的列；
 - rows：估算的扫描行数；
 - filtered：按其余条件过滤后剩下的行占 rows 的百分比，也是估算值；
-- Extra：额外信息，Using index 表示使用了覆盖索引，不需要回表；Using index condition 表示使用了索引下推；Using filesort 表示无法利用索引的顺序，需要额外排序；Using temporary 表示使用了临时表，常见于 GROUP BY 和 ORDER BY 的列不一致。
+- Extra：额外信息，Using where 表示存储引擎返回的行还要在 Server 层按 WHERE 条件过滤，走了索引时也可能出现（见[附录 A7](#a7-慢查询的定位与优化)）；Using index 表示使用了覆盖索引，不需要回表；Using index condition 表示使用了索引下推；Using filesort 表示无法利用索引的顺序，需要额外排序；Using temporary 表示使用了临时表，常见于 GROUP BY 的列无法利用索引的顺序，或者 GROUP BY 和 ORDER BY 的列不一致。
 
-出现 ALL、Using filesort 或 Using temporary，并且 rows 很大时，通常需要调整索引或者改写查询。
+出现 ALL、Using filesort 或 Using temporary，并且 rows 远多于需要的行时，通常需要调整索引或者改写查询。
 
 例如统计 2025 年 1 月 12 日各状态的订单数（MySQL 8.0，省略了部分字段，见[附录 A7](#a7-慢查询的定位与优化)）：
 
@@ -359,7 +381,7 @@ Explain 只显示估算值，MySQL 8.0.18 起可以用 EXPLAIN ANALYZE 实际执
 SELECT status, COUNT(*) FROM orders WHERE create_time >= '2025-01-13' AND create_time < '2025-01-14' GROUP BY status;
 ```
 
-最有用的是 Rows_examined 与 Rows_sent 的对比：这条语句只返回 4 行，却读了 86400 行。Lock_time 很大则说明时间花在了等锁上，要查的是锁冲突和长事务，而不是索引。
+最有用的是 Rows_examined 与 Rows_sent 的对比：这条语句只返回 4 行，却读了 86400 行。Lock_time 很大则说明时间花在了等锁上，要查的是锁冲突和长事务，而不是索引（8.0.28 起才包含等待行锁的时间）。
 
 同一类语句的参数各不相同，逐条看日志很难抓住重点。mysqldumpslow 把数字和字符串替换为 N 和 'S'，按语句归类汇总，例如按总耗时排序（-s t）：
 
@@ -382,7 +404,8 @@ Count: 2  Time=0.70s (1s)  Lock=0.00s (0s)  Rows=0.5 (1), root[root]@localhost
 - 出现 Using filesort、Using temporary：让排序和分组的列利用索引的顺序，见 [索引列的顺序](#3-索引列的顺序)；
 - 连接查询中被驱动表的连接列没有索引：外层的每一行都要扫描一遍被驱动表，应在连接列上建索引；MySQL 8.0.18 起这种情况改用哈希连接，但仍要读完整张被驱动表；
 - Lock_time 大，或者同一条语句的耗时忽长忽短：通常是在等待行锁或元数据锁，见 [MySQL 中的锁](数据库系统原理.md#mysql-中的锁)；
-- 统计信息不准导致选错了索引：执行 ANALYZE TABLE 更新统计信息，必要时用 FORCE INDEX 指定索引。
+- 统计信息不准导致选错了索引：执行 ANALYZE TABLE 更新统计信息，必要时用 FORCE INDEX 指定索引；
+- 索引已经用对，但要读的行本身就很多（例如按月统计几千万条订单）：定时汇总到统计表，或者缓存查询结果。
 
 #### 3. 修改并验证
 
@@ -400,7 +423,7 @@ Count: 2  Time=0.70s (1s)  Lock=0.00s (0s)  Rows=0.5 (1), root[root]@localhost
 
 #### 2. 减少服务器端扫描的行数
 
-最有效的方式是使用索引来覆盖查询。
+让过滤条件用上索引，直接定位到要读的范围。覆盖索引只减少回表，不减少扫描的索引项，见 [深分页](#深分页) 中的延迟关联。
 
 ### 重构查询方式
 
@@ -412,7 +435,7 @@ Count: 2  Time=0.70s (1s)  Lock=0.00s (0s)  Rows=0.5 (1), root[root]@localhost
 DELETE FROM messages WHERE create_time < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 ```
 
-```sql
+```text
 rows_affected = 0
 do {
     rows_affected = do_query(
@@ -425,7 +448,6 @@ do {
 将一个大连接查询分解成对每一个表进行一次单表查询，然后在应用程序中进行关联，这样做的好处有：
 
 - 应用层的缓存更容易命中：单表查询的结果可以按主键缓存，被其它查询复用，其中一张表变化时也只需要让这张表相关的缓存失效；
-- 减少锁竞争；
 - 在应用层进行连接，可以更容易对数据库进行拆分，从而更容易做到高性能和可伸缩；
 - 查询本身效率也可能会有所提升。例如下面的例子中，使用 IN() 代替连接查询，可以让 MySQL 按照 ID 顺序进行查询，这可能比随机的连接要更高效。
 
@@ -442,17 +464,17 @@ SELECT * FROM tag_post WHERE tag_id=1234;
 SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 ```
 
+代价是要多次访问数据库，几次查询读到的也可能不是同一时刻的数据。
+
 ### 深分页
 
 深分页指的是偏移量很大的分页查询。例如 200 万行的订单表 orders，create_time 上有普通索引 idx_create_time，按创建时间翻到第 100001 页：
 
 ```sql
-SELECT * FROM orders ORDER BY create_time LIMIT 1000000, 10;
+SELECT * FROM orders ORDER BY create_time, id LIMIT 1000000, 10;
 ```
 
 MySQL 没办法直接跳到第 1000001 行，只能先找出排在前面的 1000010 行，丢弃前 1000000 行，再返回最后 10 行，偏移量越大越慢。
-
-<div align="center"> <img src="pics/deep-pagination.png" width="720px"/> </div><br>
 
 这条查询的执行计划中 type 为 ALL、Extra 为 Using filesort，也就是全表扫描后排序。这是因为如果走 idx_create_time，读出的 1000010 条索引项都要回表取整行，产生上百万次随机读，优化器判断这样还不如全表扫描。
 
@@ -460,8 +482,8 @@ MySQL 没办法直接跳到第 1000001 行，只能先找出排在前面的 1000
 
 ```sql
 SELECT o.* FROM orders o
-JOIN (SELECT id FROM orders ORDER BY create_time LIMIT 1000000, 10) t ON o.id = t.id
-ORDER BY o.create_time;
+JOIN (SELECT id FROM orders ORDER BY create_time, id LIMIT 1000000, 10) t ON o.id = t.id
+ORDER BY o.create_time, o.id;
 ```
 
 游标分页（也叫书签分页）指的是记住上一页最后一行的排序值，下一页从它之后开始查。这样可以直接在索引上定位到上一页结束的位置，只读 10 行：
@@ -475,18 +497,13 @@ ORDER BY create_time, id
 LIMIT 10;
 ```
 
-排序列的值可能重复，所以要再按主键排序，并把主键也作为游标的一部分，否则时间相同的行会被跳过或者重复返回。游标分页的代价是不能直接跳到任意一页，只能逐页翻，适合 App 下拉加载、按时间浏览记录这类场景。
+排序列的值可能重复，所以要再按主键排序，并把主键也作为游标的一部分，否则时间相同的行会被跳过或者重复返回。游标分页的代价是不能直接跳到任意一页，只能逐页翻，适合 App 下拉加载、按时间浏览记录这类场景。必须跳页的场景用延迟关联，并限制翻页的深度，例如只允许翻到前 100 页。
 
-几种写法的耗时如下（MySQL 8.0，数据全部在内存中，取 5 次中最快的一次，见[附录 A5](#a5-深分页的耗时)），后三种写法返回的 10 行相同：
+三种写法返回的 10 行相同，读取的数据和耗时如下（MySQL 8.0，数据全部在内存中，取 5 次中最快的一次，见[附录 A5](#a5-深分页的耗时)），作为对比，LIMIT 0, 10 只需 0.05 ms：
 
-| 写法 | 耗时 | 读取的数据 |
-| --- | --- | --- |
-| LIMIT 0, 10 | 0.15 ms | 10 行 |
-| LIMIT 1000000, 10 | 1397 ms | 全表 200 万行，再排序 |
-| 延迟关联 | 79 ms | 1000010 条索引项，回表 10 次 |
-| 游标分页 | 0.49 ms | 10 行 |
+<div align="center"> <img src="pics/deep-pagination.png" width="720px"/> </div><br>
 
-还可以从需求上限制翻页的深度，例如只允许翻到前 100 页。Elasticsearch 默认也不允许 from + size 超过 10000，更深的翻页要用 search_after，原理与游标分页相同。
+Elasticsearch 同样限制翻页的深度，默认不允许 from + size 超过 10000，更深的翻页要用 search_after，原理与游标分页相同。
 
 需要注意的是，分页时常常还要显示总记录数。InnoDB 没有保存表的行数，因为并发的事务看到的行数可能不同，COUNT(*) 需要扫描整个索引，上面的表执行一次约需 130 ms。数据量大时可以缓存总数、显示估算值，或者只提供“下一页”。
 
@@ -502,31 +519,30 @@ COUNT(*) 和 COUNT(1) 在 InnoDB 中的处理方式相同，都统计行数，�
 
 主键索引是聚簇索引，数据就保存在索引的叶子节点中，按主键查询走到叶子节点就拿到了整行。
 
+崩溃恢复靠两种 [日志](#七日志)：先重放 redo log 恢复数据页，再用 undo log 回滚崩溃时还没有提交的事务。
+
 内部做了很多优化，包括从磁盘读取数据时的预读、自动创建的自适应哈希索引、加速二级索引写入的 change buffer 等。
 
-支持真正的在线热备份。其它存储引擎不支持在线热备份，要获取一致性视图需要停止对所有表的写入，而在读写混合场景中，停止写入可能也意味着停止读取。
+支持在线热备份：mysqldump --single-transaction 在一个事务中读取一致的快照，备份期间不阻塞增删改（但要避免对这些表执行 DDL）。MyISAM 要得到一致的备份通常要先加读锁，备份期间写入都被阻塞。
 
 ### MyISAM
 
-设计简单，数据以紧密格式存储。对于只读数据，或者表比较小、可以容忍修复操作，则依然可以使用它。
+设计简单，数据和索引分别存放在 .MYD 和 .MYI 文件中，提供压缩表、空间数据索引等特性。只读的数据，或者表比较小、可以容忍修复操作时，仍然可以使用它。
 
-提供了大量的特性，包括压缩表、空间数据索引等。
+不支持事务，也不支持行级锁：读取时对表加共享锁，写入时对表加排他锁。表有读取操作的同时，也可以在表的末尾插入新的记录，这被称为并发插入（CONCURRENT INSERT）。
 
-不支持事务。
-
-不支持行级锁，只能对整张表加锁，读取时会对需要读到的所有表加共享锁，写入时则对表加排它锁。但在表有读取操作的同时，也可以往表中插入新的记录，这被称为并发插入（CONCURRENT INSERT）。
-
-可以手工或者自动执行检查和修复操作，但是和事务恢复以及崩溃恢复不同，可能导致一些数据丢失，而且修复操作是非常慢的。
-
-如果指定了 DELAY_KEY_WRITE 选项，在每次修改执行完成时，不会立即将修改的索引数据写入磁盘，而是会写到内存中的键缓冲区，只有在清理键缓冲区或者关闭表的时候才会将对应的索引块写入磁盘。这种方式可以极大的提升写入性能，但是在数据库或者主机崩溃时会造成索引损坏，需要执行修复操作。
+崩溃后表可能损坏，需要手工或者自动执行检查和修复，修复很慢，并且可能丢失一些数据。
 
 ### 比较
 
 - 事务：InnoDB 是事务型的，可以使用 Commit 和 Rollback 语句；
 - 并发：MyISAM 只支持表级锁，而 InnoDB 还支持行级锁；
 - 外键：InnoDB 支持外键；
+- 索引：InnoDB 的主键索引是聚簇索引，MyISAM 的索引都保存行的地址，见 [B+Tree 索引](#1-btree-索引)；
+- 行数：MyISAM 保存了表的行数，不带 WHERE 的 COUNT(*) 直接返回，InnoDB 要扫描索引；
 - 备份：InnoDB 支持在线热备份；
 - 崩溃恢复：MyISAM 崩溃后发生损坏的概率比 InnoDB 高很多，而且恢复的速度也更慢；
+- 性能：MyISAM 的表锁让并发的读写互相等待，16 个客户端读写各半时耗时是 InnoDB 的 2～5 倍，只读时 InnoDB 也不更慢（MySQL 8.0 实测，见[附录 A13](#a13-innodb-与-myisam-的并发读写)）；
 - 其它特性：MyISAM 支持压缩表，空间数据索引 InnoDB 从 MySQL 5.7 起也支持。
 
 ## 四、数据类型
@@ -547,9 +563,11 @@ DECIMAL 可以指定精度，例如 DECIMAL(18, 9) 表示总共 18 位，取 9 �
 
 主要有 CHAR 和 VARCHAR 两种类型，一种是定长的，一种是变长的。
 
-VARCHAR 这种变长类型能够节省空间，因为只需要存储必要的内容。但是在执行 UPDATE 时可能会使行变得比原来长，当超出一个页所能容纳的大小时，就要执行额外的操作。MyISAM 会将行拆成不同的片段存储，而 InnoDB 则需要分裂页来使行放进页内。
+括号中的数字是字符数而不是字节数。例如 utf8mb4 下的 VARCHAR(10) 能存 10 个字符，9 个汉字加 1 个字母共占 28 字节，存第 11 个字符时报错（MySQL 8.0 实测，见[附录 A9](#a9-字符串与时间类型)）。一行所有列加起来不能超过 65535 字节，utf8mb4 的一个字符最多 4 字节，所以单个 VARCHAR 列最多 16383 个字符，更长的用 TEXT。
 
-在进行存储和检索时，会保留 VARCHAR 末尾的空格，而会删除 CHAR 末尾的空格。
+VARCHAR 还要用 1～2 字节记录实际长度；CHAR(n) 不足 n 个字符时补空格，读取时去掉末尾的空格，存入的 'ab  ' 读出来是 'ab'，VARCHAR 则原样保留。长度固定的值（例如 MD5 摘要）适合用 CHAR。
+
+VARCHAR 这种变长类型能够节省空间，因为只需要存储必要的内容。但是在执行 UPDATE 时可能会使行变得比原来长，当超出一个页所能容纳的大小时，就要执行额外的操作。MyISAM 会将行拆成不同的片段存储，而 InnoDB 则需要分裂页来使行放进页内。
 
 ### 时间和日期
 
@@ -567,7 +585,7 @@ MySQL 提供了两种相似的日期时间类型：DATETIME 和 TIMESTAMP。
 
 和 UNIX 时间戳相同，保存从 1970 年 1 月 1 日午夜（格林威治时间）以来的秒数，使用 4 个字节，只能表示从 1970 年到 2038 年。
 
-它和时区有关，也就是说一个时间戳在不同的时区所代表的具体时间是不同的。
+它和时区有关：写入时从会话的时区（time_zone）转换为 UTC 保存，读取时再转换回会话的时区，例如在 +08:00 的会话中写入 10:00，在 +00:00 的会话中读出 02:00，同时写入的 DATETIME 列仍是 10:00（MySQL 8.0 实测，见[附录 A9](#a9-字符串与时间类型)）。
 
 MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提供了 UNIX_TIMESTAMP() 函数把日期转换为 UNIX 时间戳。
 
@@ -583,7 +601,7 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 当单表的数据量或者写入量超过一台数据库服务器的承受能力时，就需要 Sharding，把数据分布到集群的不同节点上，从而缓解单个数据库的压力。
 
-单表的行数本身并不是瓶颈。附录 A1 中 200 万行的 orders 表，主键索引只有 3 层，每个中间页约有 900 个指针，每个叶子页约 80 行，按此计算 3 层可以容纳约 6000 万行。真正需要拆分的是单机承受不了的写入量和数据量，以及随之变慢的备份、加列、建索引等运维操作；如果只是读压力大，先用读写分离和缓存。阿里巴巴的 Java 开发手册给出的经验值是单表超过 500 万行或者 2 GB 再考虑分库分表，预计三年内达不到就不要提前拆分。
+单表的行数本身并不是瓶颈，3 层的 B+ Tree 就能放几千万行（见 [与红黑树的比较](#3-与红黑树的比较)）。真正需要拆分的是单机承受不了的写入量和数据量，以及随之变慢的备份、加列、建索引等运维操作；如果只是读压力大，先用读写分离和缓存。阿里巴巴的 Java 开发手册给出的经验值是单表超过 500 万行或者 2 GB 再考虑分库分表，预计三年内达不到就不要提前拆分。
 
 分表和分库解决的问题不同：分表把一张大表拆成多张小表，缓解单表的加列、建索引、备份等问题，但所有表仍在同一台机器上；分库把数据分到多台机器上，才能扩展连接数、CPU、磁盘 I/O 和存储容量。所以只是单表太大时可以只分表，单机的写入或存储扛不住时再分库，两者也常常一起做。
 
@@ -592,6 +610,8 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 ### 垂直切分
 
 垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
+
+例如把商品表中只有详情页才读的几 KB 描述拆到 product_detail 表，主表每页能放下更多行，列表查询读的页更少；代价是需要完整信息时要多查一张表。
 
 在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将原来的电商数据库垂直切分成商品数据库、用户数据库等。
 
@@ -619,7 +639,7 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 #### 2. 连接
 
-可以将原来的连接分解成多个单表查询，然后在用户程序中进行连接。
+可以将原来的连接分解成多个单表查询，然后在用户程序中进行连接。也可以避免跨库连接：字典表这类很少修改的小表在每个库中都存一份（广播表）；订单表和订单明细表按 user_id 使用相同的分片规则，同一用户的数据在同一个库中，可以直接连接；只需要少量字段时冗余到当前表。
 
 #### 3. ID 唯一性
 
@@ -639,13 +659,15 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 #### 5. 跨分片的排序和分页
 
-分片后执行 ORDER BY create_time DESC LIMIT 1000, 10，每个分片都要返回前 1010 行，由中间件归并排序后再取出第 1001～1010 行，页数越深，每个分片返回的数据越多。常用游标分页代替：记住上一页最后一条的 create_time，每个分片只取比它更早的 10 行，见上文的 [深分页](#深分页)。
+分片后执行 ORDER BY create_time DESC LIMIT 1000, 10，每个分片都要返回前 1010 行，由中间件归并排序后再取出第 1001～1010 行，页数越深，每个分片返回的数据越多。常用游标分页代替：记住上一页最后一条的 create_time 和 id，每个分片只取排在它之后的 10 行，见上文的 [深分页](#深分页)。
+
+<div align="center"> <img src="pics/shard-paging.png" width="760px"/> </div><br>
 
 ShardingSphere 等中间件负责按分片键路由 SQL、改写分页条件和归并结果，应用像访问一张表一样访问分片后的表。
 
 #### 6. 扩容与数据迁移
 
-从单库拆到多个库，或者增加分片时，为了不停机，常用双写迁移：先让新旧两边同时写入，以旧库为准；再把历史数据复制到新库并比对修复；然后逐步把读请求切到新库；最后停止写旧库。每一步出问题都可以退回上一步。也可以订阅旧库的 binlog 把修改同步到新库，追上之后再切换。
+从单库拆到多个库，或者增加分片时，为了不停机，常用双写迁移：先让新旧两边同时写入，以旧库为准；再把历史数据复制到新库并比对修复；然后逐步把读请求切到新库；最后停止写旧库。在停止写旧库之前，每一步出问题都可以退回上一步。也可以订阅旧库的 binlog 把修改同步到新库，追上之后再切换。
 
 ## 六、复制
 
@@ -657,9 +679,13 @@ ShardingSphere 等中间件负责按分片键路由 SQL、改写分页条件和�
 - I/O 线程：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（Relay log）；
 - SQL 线程：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（Replay）。
 
+连接由从服务器发起：I/O 线程告诉主服务器从 binlog 的哪个位置开始发送（使用全局事务 ID，即 GTID 时，告诉它已经执行过哪些事务），之后由 dump 线程主动推送新的 binlog，Canal 这类同步工具也是这样伪装成从库的。
+
 MySQL 8.0.27 起 replica_parallel_workers 默认为 4，从服务器上实际是一个协调线程读取中继日志，再把事务分给 4 个工作线程并行重放，以减小复制延迟。
 
 <div align="center"> <img src="pics/mysql-replication.png" width="760px"/> </div><br>
+
+新加入的从库先用 mysqldump --single-transaction --source-data 或 CLONE 插件拷贝全量数据，记下对应的 binlog 位置或 GTID 集合，再从这里开始增量复制（见[附录 A12](#a12-主从复制的初始化与延迟)）。
 
 ### 读写分离
 
@@ -668,17 +694,27 @@ MySQL 8.0.27 起 replica_parallel_workers 默认为 4，从服务器上实际是
 读写分离能提高性能的原因在于：
 
 - 大多数业务读多写少，读请求可以分散到多个从服务器上，主服务器只处理写入；
-- 主从服务器负责各自的读和写，缓解了锁的争用。
+- 统计、报表这类耗时的查询放在从服务器上，不占用主服务器的 CPU 和 I/O。
 
-读写分离常用代理方式来实现，代理服务器接收应用层传来的读写请求，然后决定转发到哪个服务器。也可以在应用中按语句类型选择数据源。
+读写分离可以由代理（例如 ProxySQL）转发，对应用透明但多了一跳网络，也可以在应用中选择数据源（例如 ShardingSphere-JDBC）。同一个事务中的读一般也发到主库，否则读不到本事务刚写入的数据。
 
 <div align="center"> <img src="pics/mysql-rw-split.png" width="760px"/> </div><br>
 
-MySQL 默认是异步复制，主服务器提交事务后不等从服务器，从服务器的数据会落后一段时间，称为复制延迟。用户刚修改完资料就去从库读取，可能读到修改前的数据。常用的处理方法：
+MySQL 默认是异步复制，主服务器提交事务后不等从服务器，从服务器的数据会落后一段时间，称为复制延迟。用户刚修改完资料就去从库读取，可能读到修改前的数据。
+
+延迟主要来自三方面：一是大事务，binlog 在提交时才整体写入，从库要等主库提交后才开始重放，例如主库上执行 32 秒的 100 万行 UPDATE，让紧随其后的小修改 1 分钟以上才在从库上可见（见[附录 A12](#a12-主从复制的初始化与延迟)），所以大批量修改要 [分批执行](#1-切分大查询)；二是从库重放跟不上；三是网络慢。
+
+排查时用 SHOW REPLICA STATUS 分清是接收慢还是重放慢：接收位置（Source_Log_File、Read_Source_Log_Pos）已追上主库而 Executed_Gtid_Set 落后于 Retrieved_Gtid_Set，是重放慢；接收位置落后，是网络或接收慢，这时 Seconds_Behind_Source 可能显示为 0。
+
+常用的处理方法：
 
 - 写入后短时间内的读取，或者对实时性要求高的读取，强制走主库，保证用户能读到自己刚写入的数据（读己之写）；
-- 使用半同步复制：至少一个从库把 binlog 写入中继日志后，主库才向客户端返回提交成功，减少主库宕机时丢失的数据，但并不保证从库已经执行完这些修改；
-- 监控从库的延迟（SHOW REPLICA STATUS 中的 Seconds_Behind_Source），延迟过大的从库暂时不分配读请求。
+- 写入后记下这个事务的 GTID，读从库前先执行 WAIT_FOR_EXECUTED_GTID_SET，等从库执行完这个事务后，在新开始的事务或快照中读取，超时就改读主库；
+- 监控从库的延迟，延迟过大的从库暂时不分配读请求。
+
+使用缓存时，未命中的读请求还可能把从库中的旧值写回缓存，见 [缓存一致性](缓存.md#缓存一致性)。
+
+异步复制时主库宕机，已经提交、还没有发给从库的事务在切换后就丢失了。半同步复制让至少一个从库把 binlog 写入中继日志后，主库才返回提交成功，但并不保证从库已经执行完，读从库仍可能读到旧数据；等待超时后主库会退回异步复制。
 
 ## 七、日志 🔥
 
@@ -690,11 +726,13 @@ InnoDB 执行一次修改时，会写下面三种日志：
 | redo log | InnoDB | 对数据页的修改 | 崩溃恢复 |
 | binlog | Server 层 | 修改前后的整行（ROW 格式） | 主从复制，恢复到指定时间点 |
 
-undo log 的作用见 [多版本并发控制](数据库系统原理.md#五多版本并发控制)。
+回滚事务时，InnoDB 按 undo log 从后往前逐条撤销：插入的行删除，更新的行写回旧值。undo log 如何串起版本链供 MVCC 读取，见 [Undo 日志](数据库系统原理.md#undo-日志)。
 
 ### redo log
 
 InnoDB 以 16 KB 的页为单位存储数据，修改数据时先修改内存中缓存的页。如果每次提交都把修改过的页写回磁盘，修改几行数据就要随机写好几个 16 KB 的页。redo log 的做法是：提交时只把对数据页的修改顺序追加到 redo log 并刷盘，数据页之后再由后台线程批量写回。崩溃重启时重放 redo log 中还没有写回数据页的修改，已提交的事务就不会丢失。这种先写日志、后写数据的方式称为预写日志（Write-Ahead Logging, WAL）。
+
+16 KB 的页写回时断电，可能只写了一部分（磁盘一次写入通常是 4 KB），redo log 无法在这样的页上重放，所以 InnoDB 先把脏页写入双写缓冲（doublewrite buffer），恢复时用这份副本还原写坏的页。
 
 innodb_flush_log_at_trx_commit 控制提交时 redo log 的刷盘方式：
 
@@ -702,9 +740,11 @@ innodb_flush_log_at_trx_commit 控制提交时 redo log 的刷盘方式：
 - 2：每次提交都写入操作系统的缓存，每秒刷盘一次，MySQL 进程崩溃不会丢失数据，操作系统崩溃或者断电可能丢失最近 1 秒左右的事务；
 - 0：每秒写入并刷盘一次，MySQL 进程崩溃也可能丢失最近 1 秒左右的事务。
 
-需要注意的是，由于进程调度，0 和 2 的“每秒刷盘”并不严格保证每秒发生一次，所以“1 秒”只是大致的范围；DDL 等内部操作也可能让 InnoDB 不按这个设置提前刷盘。
+需要注意的是，0 和 2 的“每秒刷盘”受进程调度影响，并不严格每秒一次，“1 秒”只是大致的范围。
 
-redo log 的空间是固定的，循环写入：数据页写回磁盘之后，对应的 redo log 就可以被覆盖。MySQL 8.0.30 起由 innodb_redo_log_capacity 控制大小，默认为 100 MB。
+redo log 的空间是固定的，循环写入。日志中的位置用不断增大的日志序列号（Log Sequence Number, LSN）表示；检查点（checkpoint）之前的修改都已写回数据页，这部分日志可以被覆盖，崩溃重启时从检查点开始重放。
+
+MySQL 8.0.30 起 redo log 的大小由 innodb_redo_log_capacity 控制，默认为 100 MB。当前 LSN 与检查点的差距（实测见[附录 A11](#a11-redo-log-的检查点)）接近这个大小时，InnoDB 必须先集中写回脏页，写入会明显变慢，所以写入量大的库要调大 redo log。
 
 ### binlog
 
@@ -725,13 +765,13 @@ COMMIT
 redo log 与 binlog 的区别：
 
 - redo log 是 InnoDB 的日志，记录对数据页的修改，空间固定、循环写，用于崩溃恢复；
-- binlog 是 Server 层的日志，记录行的修改或者 SQL 语句，追加写、不会覆盖，可以发送给从库，也可以用来把数据恢复到任意时间点。
+- binlog 是 Server 层的日志，记录行的修改或者 SQL 语句，追加写、不会覆盖，可以发送给从库，也可以在还原全量备份后重放，把数据恢复到备份之后的任意时间点（binlog 默认保留 30 天）。
 
 两种日志不能互相代替。崩溃恢复要知道哪些修改已经写入了数据页：每个数据页上记着最后一次修改对应的 redo log 位置（LSN），恢复时从检查点开始重放 redo log，跳过页上已经有的修改；binlog 只记录行或语句，没有数据页的信息，无法判断该从哪里开始重放。反过来，redo log 会被循环覆盖，不能用于复制和按时间点恢复。
 
 ### 两阶段提交
 
-一个事务既要写 redo log 又要写 binlog，如果只写成功了一个就崩溃，主库和从库的数据就会不一致。例如 redo log 写了而 binlog 没写，主库重启后保留了这次修改，从库却收不到。因此 MySQL 把提交分为两个阶段：
+一个事务既要写 redo log 又要写 binlog，如果只写成功了一个就崩溃，主库和从库的数据就会不一致。例如 redo log 写了而 binlog 没写，主库重启后保留了这次修改，从库却收不到；反过来，binlog 写了而 redo log 没写，从库就多了主库没有的修改。因此 MySQL 把提交分为两个阶段：
 
 <div align="center"> <img src="pics/mysql-2pc.png" width="720px"/> </div><br>
 
@@ -741,18 +781,20 @@ redo log 与 binlog 的区别：
 
 崩溃重启时，对于处于 prepare 状态的事务，到 binlog 中查找它的 Xid：找到了说明 binlog 已经写完，就提交这个事务；找不到就回滚。这样主库的数据与 binlog 总是一致的，从库按照 binlog 复制，也就与主库一致。
 
-innodb_flush_log_at_trx_commit 和 sync_binlog 的默认值都是 1，也就是每次提交时两种日志都会刷盘，常被称为“双 1”配置。sync_binlog 为 0 时由操作系统决定何时把 binlog 刷盘，为 N 时每 N 组提交刷盘一次；机器断电时可能丢失还没有刷盘的 binlog，从库和用 binlog 恢复的数据会缺少这些事务。
+innodb_flush_log_at_trx_commit 和 sync_binlog 的默认值都是 1，也就是每次提交时两种日志都会刷盘，常被称为“双 1”配置。sync_binlog 为 0 时由操作系统决定何时把 binlog 刷盘，为 N 时每 N 次组提交（同时提交的多个事务合为一批刷盘）才刷盘一次；机器断电时可能丢失还没有刷盘的 binlog，从库和用 binlog 恢复的数据会缺少这些事务。
 
 ### 更新语句的执行过程
 
 以 UPDATE orders SET status = 3 WHERE id = 1024 为例，把三种日志串起来：
 
-1. 执行器调用 InnoDB 按主键查找 id = 1024 的行，所在的页不在缓冲池中就先从磁盘读入，并对这一行加 X 锁；
+<div align="center"> <img src="pics/mysql-update-flow.png" width="760px"/> </div><br>
+
+1. 执行器调用 InnoDB 按主键查找 id = 1024 的行，所在的页不在缓冲池中就先从磁盘读入，并对这一行加 [X 锁](数据库系统原理.md#1-读写锁)；
 2. InnoDB 把旧值 status = 0 写入 undo log，用于回滚和 MVCC；
 3. 修改缓冲池中的数据页，这一页成为脏页，同时生成 redo log 记录，放入内存中的 redo log buffer；
 4. 执行器把这次修改写入 binlog cache；
 5. 提交时按两阶段提交把 redo log 和 binlog 写入并刷盘，然后释放锁，向客户端返回成功；
-6. 脏页之后由后台线程写回磁盘，写回后对应的 redo log 空间就可以被覆盖。
+6. 脏页由后台线程写回磁盘，写回后对应的 redo log 空间就可以被覆盖。写回的时机与提交无关，未提交事务的修改也可能先写回。
 
 提交时同步写磁盘的只有两个顺序追加的日志，数据页的随机写被推迟到了后台。
 
@@ -791,6 +833,12 @@ PRIMARY  4
 
 PAGE_LEVEL 为 2，说明根页、中间页、叶子页共 3 层。根页中的 27 条记录指向 27 个中间页，叶子页约 2.4 万个（数据 385 MB ÷ 16 KB），每页约 80 行。
 
+每行约 1 KB 时：另建一张表，主键 BIGINT 加 4 个 CHAR 列共 990 字节（latin1），插入 5 万行后从 mysql.innodb_index_stats 读出主键索引的叶子页数：
+
+```text
+AVG_ROW_LENGTH = 1277   n_leaf_pages = 3572   50000 ÷ 3572 ≈ 14 行/页
+```
+
 ### A2 索引的执行计划
 
 ```text
@@ -824,11 +872,19 @@ EXPLAIN SELECT user_id, status, create_time, id FROM orders WHERE user_id = 1001
 type: ref  key: idx_user_status_time  Extra: Using index
 ```
 
-索引下推：查询 `SELECT * FROM orders WHERE user_id = 1001 AND create_time >= '2025-01-20'`，执行前后用 SHOW SESSION STATUS 查看 Handler_read_next（沿索引读取下一条记录的次数）：
+索引下推：查询 `SELECT * FROM orders WHERE user_id = 1001 AND create_time >= '2025-01-20'`，执行前后用 SHOW SESSION STATUS 查看 Handler_read_next（存储引擎向 Server 层返回下一条记录的次数，开启索引下推时不包括在引擎内被过滤掉的索引项）：
 
 ```text
 SET optimizer_switch = 'index_condition_pushdown=on';   Handler_read_next = 3
 SET optimizer_switch = 'index_condition_pushdown=off';  Handler_read_next = 20
+```
+
+函数索引（10 万行的表 o，create_time 上有普通索引）：
+
+```text
+EXPLAIN SELECT * FROM o WHERE DATE(create_time) = '2025-01-12';   type: index  key: idx_ct    Extra: Using where; Using index
+ALTER TABLE o ADD INDEX idx_date ((DATE(create_time)));
+EXPLAIN SELECT * FROM o WHERE DATE(create_time) = '2025-01-12';   type: ref    key: idx_date  rows: 1440
 ```
 
 覆盖索引时的前缀通配和不等于：
@@ -871,12 +927,14 @@ idx_user_status_time:  rows 20,      cost 20.6022, chosen true
 每条语句执行 5 次，用 SHOW PROFILES 取最快的一次：
 
 ```text
-LIMIT 0, 10          0.15 ms
-LIMIT 1000000, 10    1397.3 ms   EXPLAIN: type=ALL, Extra=Using filesort
-延迟关联              79.07 ms    子查询 EXPLAIN: type=index, key=idx_create_time, Extra=Using index
-游标分页              0.49 ms
-COUNT(*)             130.47 ms
+LIMIT 0, 10          0.05 ms
+LIMIT 1000000, 10    1547.4 ms   EXPLAIN: type=ALL, Extra=Using filesort
+延迟关联             80.76 ms    子查询 EXPLAIN: type=index, key=idx_create_time, Extra=Using index
+游标分页             0.19 ms
+COUNT(*)             130.38 ms
 ```
+
+四条分页语句都按 (create_time, id) 排序（2026-10-30 重跑），后三条返回的 10 个 id 相同（1000000、1017679……1159111）。
 
 按 (create_time, id) 排序后第 1000000 行为 id = 982321、create_time = '2025-01-12 13:46:39'，这就是游标分页示例中使用的游标。
 
@@ -916,6 +974,14 @@ EXPLAIN SELECT * FROM t WHERE age = 30;             type: ALL    rows: 100175  E
 ```
 
 SET optimizer_switch = 'skip_scan=off' 后，第一条变为 type: index、rows: 100175，扫描整个索引。开启跳跃扫描时执行第一条，返回 2000 行，Handler_read_key = 5，Handler_read_next = 2000。
+
+联合索引与多个单列索引：新建 100 万行的表 t(id, a, b, pad)，a 取 0～999、b 取 0～99 的随机值，a = 5 有 939 行，b = 7 有 9819 行，两者同时满足的有 12 行。a、b 为 INT NOT NULL，FLUSH STATUS 后执行 SELECT * FROM t WHERE a = 5 AND b = 7，再用 SHOW SESSION STATUS LIKE 'Handler_read%' 查看：
+
+```text
+索引                 type         key          key_len  Extra                                       Handler_read_next
+idx_a、idx_b         index_merge  idx_a,idx_b  4,4      Using intersect(idx_a,idx_b); Using where   10749
+idx_ab (a, b)        ref          idx_ab       8        NULL                                        12
+```
 
 ### A7 慢查询的定位与优化
 
@@ -958,6 +1024,26 @@ EXPLAIN SELECT COUNT(1) FROM orders;          type: index  key: idx_create_time 
 EXPLAIN SELECT COUNT(order_no) FROM orders;   type: index  key: idx_order_no     Extra: Using index
 ```
 
+Extra 中的 Using where 与 Using temporary：
+
+```text
+EXPLAIN SELECT * FROM orders WHERE user_id = 1001 AND amount > 500;
+type: ref  key: idx_user_status_time  key_len: 4  rows: 20  filtered: 33.33  Extra: Using where
+EXPLAIN ANALYZE：
+-> Filter: (orders.amount > 500.00)  (cost=19.8 rows=6.67) (actual time=0.0875..0.108 rows=10 loops=1)
+    -> Index lookup on orders using idx_user_status_time (user_id=1001)  (cost=19.8 rows=20) (actual time=0.0853..0.104 rows=20 loops=1)
+
+EXPLAIN SELECT status, COUNT(*) FROM orders GROUP BY status;     type: index  key: idx_user_status_time  Extra: Using index; Using temporary
+EXPLAIN SELECT user_id, COUNT(*) FROM orders GROUP BY user_id;   type: index  key: idx_user_status_time  Extra: Using index
+```
+
+system 与 key_len（新建的 utf8mb4 表）：
+
+```text
+只有一行的表 SELECT *        InnoDB 表 type: ALL；MyISAM 表 type: system；FROM (SELECT 1) t 的派生表 type: system
+key_len                      VARCHAR(10) NOT NULL 42；VARCHAR(10) NULL 43；CHAR(10) NOT NULL 40；INT NULL 5
+```
+
 ### A8 唯一索引与普通索引
 
 ```sql
@@ -972,6 +1058,129 @@ INSERT INTO t VALUES (4, '13800000000');
 ```text
 SELECT * FROM t2 WHERE a = 20   type: const   Handler_read_next = 0
 SELECT * FROM t2 WHERE b = 20   type: ref     Handler_read_next = 1
+```
+
+### A9 字符串与时间类型
+
+```sql
+CREATE TABLE s (c CHAR(10), v VARCHAR(10)) CHARSET utf8mb4;
+INSERT INTO s VALUES ('ab  ', 'ab  ');
+SELECT CONCAT('[', c, ']'), CONCAT('[', v, ']') FROM s;     -- [ab]  [ab  ]
+INSERT INTO s VALUES ('数据库系统原理笔记A', '数据库系统原理笔记A');
+SELECT CHAR_LENGTH(v), LENGTH(v) FROM s WHERE v LIKE '数据库%';  -- 10  28
+INSERT INTO s (v) VALUES ('数据库系统原理笔记AB');
+-- ERROR 1406 (22001): Data too long for column 'v' at row 1
+CREATE TABLE big (v VARCHAR(20000)) CHARSET utf8mb4;
+-- ERROR 1074 (42000): Column length too big for column 'v' (max = 16383); use BLOB or TEXT instead
+```
+
+```sql
+CREATE TABLE t (ts TIMESTAMP, dt DATETIME);
+SET time_zone = '+08:00';
+INSERT INTO t VALUES ('2025-01-12 10:00:00', '2025-01-12 10:00:00');
+SET time_zone = '+00:00';
+SELECT ts, dt FROM t;   -- 2025-01-12 02:00:00  2025-01-12 10:00:00
+```
+
+### A10 区分度低的列
+
+10 万行的表，gender 为 0、1 各占一半，status = 1 只占 1%，两列上各有一个单列索引。每条语句执行 5 次，用 SHOW PROFILES 取最快的一次：
+
+```sql
+CREATE TABLE t (id INT PRIMARY KEY AUTO_INCREMENT, gender TINYINT NOT NULL, status TINYINT NOT NULL,
+                remark VARCHAR(100) NOT NULL, KEY idx_gender (gender), KEY idx_status (status));
+SET SESSION cte_max_recursion_depth = 200000;
+INSERT INTO t (gender, status, remark)
+WITH RECURSIVE seq(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM seq WHERE n < 100000)
+SELECT n % 2, IF(n % 100 = 0, 1, 0), REPEAT('x', 80) FROM seq;
+ANALYZE TABLE t;
+```
+
+```text
+                                                                         type  key         rows   耗时
+SELECT COUNT(remark) FROM t WHERE gender = 1                             ref   idx_gender  49692  19.69 ms
+SELECT COUNT(remark) FROM t IGNORE INDEX (idx_gender) WHERE gender = 1   ALL   NULL        99385  11.15 ms
+SELECT COUNT(remark) FROM t WHERE status = 1                             ref   idx_status  1000    0.58 ms
+SELECT COUNT(remark) FROM t IGNORE INDEX (idx_status) WHERE status = 1   ALL   NULL        99385  11.19 ms
+```
+
+### A11 redo log 的检查点
+
+innodb_redo_log_capacity 为默认的 100 MB。向一张行长约 200 字节的表插入 30 万行，前后用 SHOW ENGINE INNODB STATUS 查看 LOG 一节（省略了其它行），脏页数取自 Innodb_buffer_pool_pages_dirty：
+
+```text
+                     插入之前       插入 30 万行后   10 秒后
+Log sequence number  11254876758    11337217873      11337220392
+Log flushed up to    11254876758    11337217873      11337220392
+Last checkpoint at   11254862981    11255288150      11286198372
+脏页数               49             4623             2637
+```
+
+插入后 LSN 比检查点领先 81929723 字节（约 78 MB）；10 秒后脏页减少到 2637 页，检查点前移，差距为 51022020 字节（约 49 MB）。重复一次时，插入后领先约 79 MB，10 秒后约 37 MB，后台写回的速度每次不同。
+
+### A12 主从复制的初始化与延迟
+
+MySQL 8.0.44，本机两个实例：主库 3357、从库 3358，都开启 GTID（gtid_mode=ON），orders 表 100 万行。
+
+全量加增量：先用 mysqldump 备份，备份之后在主库上再执行两条修改，然后从库导入备份并开始复制：
+
+```bash
+mysqldump -uroot -S /tmp/mysql3357.sock --single-transaction --source-data=2 --databases shop > dump.sql
+# 备份中记下了对应的 GTID 集合：SET @@GLOBAL.GTID_PURGED='...:1-5'
+# 主库上再执行 UPDATE orders SET status = 1 WHERE id = 1024 和一条 INSERT，gtid_executed 变为 1-7
+mysql -uroot -S /tmp/mysql3358.sock < dump.sql
+mysql -uroot -S /tmp/mysql3358.sock -e "CHANGE REPLICATION SOURCE TO SOURCE_HOST = '127.0.0.1', SOURCE_PORT = 3357,
+  SOURCE_USER = 'repl', SOURCE_PASSWORD = 'repl', SOURCE_AUTO_POSITION = 1, GET_SOURCE_PUBLIC_KEY = 1; START REPLICA;"
+```
+
+```text
+                 行数      id = 1024 的 status   gtid_executed
+导入备份后       1000000   0                     1-5
+START REPLICA 后 1000001   1                     1-7
+SHOW REPLICA STATUS：Retrieved_Gtid_Set 6-7，Executed_Gtid_Set 1-7，Seconds_Behind_Source 0
+```
+
+从库只从主库拉取了备份之后的 6、7 两个事务。
+
+大事务造成的延迟：主库执行 UPDATE orders SET amount = amount + 1（100 万行，自动提交），提交后立即把订单 1024 的 status 加 1，然后在从库上读订单 1024，再用 WAIT_FOR_EXECUTED_GTID_SET 等待这个事务（时间从脚本开始计）：
+
+```text
+[主库  0.96s] 开始执行大事务
+[主库 33.25s] 大事务提交
+[主库 33.45s] 订单 1024 改为 status = 2 并提交，gtid_executed = 1-9
+[从库 33.46s] 立即读订单 1024：status = 1（旧值）
+[从库 35.24s] Retrieved_Gtid_Set 6-9，Executed_Gtid_Set 1-7，Seconds_Behind_Source 34
+[从库 93.75s] Retrieved_Gtid_Set 6-9，Executed_Gtid_Set 1-7，Seconds_Behind_Source 93
+[从库 94.08s] Executed_Gtid_Set 1-9，status = 2
+[从库 94.09s] WAIT_FOR_EXECUTED_GTID_SET 返回 0，等待 60.63s，再读：status = 2
+```
+
+重复一次时，大事务在主库执行 35 秒，WAIT_FOR_EXECUTED_GTID_SET 等待了 86 秒。第三次同时记录了接收位置（大事务在主库执行 10 秒，binlog 约 48 MB）：
+
+```text
+[主库 10.16s] 小修改提交，主库 binlog 位置 binlog.000001:168742430，gtid_executed = 1-13
+[从库 10.56s] Read_Source_Log_Pos 168742430，Retrieved_Gtid_Set 6-13，Executed_Gtid_Set 1-11
+[从库 26.26s] Executed_Gtid_Set 1-12（大事务重放完）
+[从库 26.36s] Executed_Gtid_Set 1-13，WAIT_FOR_EXECUTED_GTID_SET 等待 16.09s
+```
+
+主库提交后 0.4 秒，从库的接收位置就追上了主库，之后 16 秒都在重放，瓶颈在重放。
+
+### A13 InnoDB 与 MyISAM 的并发读写
+
+两张引擎不同、结构相同的表，各 10 万行：
+
+```sql
+CREATE TABLE t_InnoDB (id INT PRIMARY KEY, c INT, pad CHAR(100)) ENGINE=InnoDB;
+CREATE TABLE t_MyISAM (id INT PRIMARY KEY, c INT, pad CHAR(100)) ENGINE=MyISAM;
+```
+
+存储过程 p_InnoDB(pct)、p_MyISAM(pct) 每次调用执行 1000 条按主键随机访问的语句，其中 pct% 是 UPDATE ... SET c = c + 1 WHERE id = k（自动提交，innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1），其余是 SELECT c ... WHERE id = k。用 mysqlslap 启动 16 个客户端，每个客户端调用 4 次，取 3 轮的平均耗时，前后跑了两遍：
+
+```text
+写比例   InnoDB           MyISAM
+0%       0.144 / 0.116 s  0.594 / 0.306 s
+50%      1.578 / 1.001 s  3.355 / 4.687 s
 ```
 
 ## 参考资料
@@ -1010,4 +1219,6 @@ SELECT * FROM t2 WHERE b = 20   type: ref     Handler_read_next = 1
 - [MySQL 8.0: Hash Joins](https://dev.mysql.com/doc/refman/8.0/en/hash-joins.html)
 - [MySQL 8.0: Aggregate Function Descriptions（COUNT）](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html)
 - [MySQL 8.0: InnoDB Recovery](https://dev.mysql.com/doc/refman/8.0/en/innodb-recovery.html)
+- [MySQL 8.0: Undo Logs](https://dev.mysql.com/doc/refman/8.0/en/innodb-undo-logs.html)
+- [MySQL 8.0: mysqldump](https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html)
 - [Online migrations at scale](https://stripe.com/blog/online-migrations)
