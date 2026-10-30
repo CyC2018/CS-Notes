@@ -347,7 +347,7 @@ List<String> list = new CopyOnWriteArrayList<>();
 
 #### 1. 读写分离
 
-写操作先加锁，把当前数组复制一份，在副本上修改，最后把 volatile 字段 array 指向副本；加锁是为了防止两个写操作各自复制同一个旧数组，后完成的覆盖先完成的。已经发布的数组不再被修改，所以读操作直接读当前的数组，不需要加锁。JDK 21 中写操作改为用 synchronized 加锁，过程相同。
+写操作先加锁，把当前数组复制一份，在副本上修改，最后把 volatile 字段 array 指向副本；加锁是为了防止两个写操作各自复制同一个旧数组，后完成的覆盖先完成的。已经发布的数组不再被修改，所以读操作直接读当前的数组，不需要加锁。JDK 9 起写操作改为用 synchronized 加锁，过程相同。
 
 迭代器遍历的是创建时的数组快照：遍历期间可以修改列表，不会抛出 ConcurrentModificationException，但看不到这些修改，也不支持通过迭代器 remove（JDK 21 实测，见[附录 A8](#a8-copyonwritearraylist-的迭代器)）。
 
