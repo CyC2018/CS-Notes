@@ -15,9 +15,9 @@
 
 ## 一、解决的问题
 
-由于不同的机器有不同的操作系统，以及不同的库和组件，在将一个应用部署到多台机器上需要进行大量的环境配置操作。
+不同的机器有不同的操作系统，以及不同的库和组件，将一个应用部署到多台机器上时，需要进行大量的环境配置操作。
 
-Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其它机器上。
+Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程与宿主机上的其它进程互相隔离，但共享宿主机的内核。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其它机器上。
 
 <div align="center"> <img src="pics/docker-why.png" width="740px"/> </div><br>
 
@@ -29,15 +29,13 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 ### 启动速度
 
-启动虚拟机需要先启动虚拟机的操作系统，再启动应用，这个过程非常慢；
-
-而启动 Docker 相当于启动宿主操作系统上的一个进程。
+启动虚拟机需要先启动虚拟机中的操作系统，再启动应用，通常要几十秒；启动容器相当于在宿主机上启动一个进程，通常在 1 秒以内。
 
 ### 占用资源
 
-虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU 资源，一台机器只能开启几十个的虚拟机。
+虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU 资源，一台机器只能开启几十个虚拟机。
 
-而容器只是宿主机上隔离运行的进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以运行成千上万个容器。
+容器只是宿主机上隔离运行的进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以运行成千上万个容器。
 
 ## 三、优势
 
@@ -61,11 +59,11 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 持续集成指的是频繁地将代码集成到主干上，这样能够更快地发现错误。
 
-Docker 具有轻量级以及隔离性的特点，在将代码集成到一个 Docker 中不会对其它 Docker 产生影响。
+容器轻量、相互隔离，每次集成都可以在一个新的容器中构建和测试，不会影响其它构建，也不会残留上一次的环境。
 
 ### 提供可伸缩的云服务
 
-根据应用的负载情况，可以很容易地增加或者减少 Docker。
+根据应用的负载情况，可以很容易地增加或者减少容器。
 
 ### 搭建微服务架构
 
@@ -96,11 +94,11 @@ $ echo $$
 
 镜像是一种静态的结构，可以看成面向对象里面的类，而容器是镜像的一个实例。
 
-镜像包含着容器运行时所需要的代码以及其它组件，它是一种分层结构，每一层都是只读的（read-only layers）。构建镜像时，会一层一层构建，前一层是后一层的基础。镜像的这种分层存储结构很适合镜像的复用以及定制。
+镜像包含容器运行所需的全部文件（应用、依赖库和基础系统），由多个只读层叠成，每一层只记录相对下面一层的变化。例如下文订单服务的镜像共 7 层：下面 5 层来自基础镜像 eclipse-temurin:21-jre-alpine，上面 2 层是订单服务的 Dockerfile 新增的。基于同一个基础镜像的多个镜像在磁盘上共用这 5 层，拉取时也只下载缺少的层。
 
-构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。
+创建容器时，Docker 在镜像之上加一个可写层，保存容器运行过程中的修改。
 
-<div align="center"> <img src="pics/docker-layers.png" width="740px"/> </div><br>
+<div align="center"> <img src="pics/docker-image-layers.png" width="800px"/> </div><br>
 
 分层由联合文件系统实现，Docker 默认使用 OverlayFS：镜像的各层是只读的下层目录（lowerdir），容器的可写层是上层目录（upperdir），两者合并后挂载为容器的根目录。
 
@@ -112,7 +110,7 @@ $ echo $$
 
 ### 用 Dockerfile 构建镜像
 
-Dockerfile 是描述怎样构建镜像的文本文件，每条指令在上一步的结果上执行，修改文件系统的指令（RUN、COPY、ADD）各产生一层。
+Dockerfile 是描述怎样构建镜像的文本文件，每条指令在上一步的结果上执行。RUN、COPY、ADD 这类修改文件系统的指令各产生一层，WORKDIR 要新建目录时也产生一层；EXPOSE、ENTRYPOINT 只修改镜像的配置，不产生层。
 
 下面把一个 Spring Boot 3 订单服务打包成镜像，它提供 GET /orders/{id} 接口，返回订单的状态：
 
@@ -173,9 +171,9 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 - RUN 与 CMD、ENTRYPOINT：RUN 在构建镜像时执行，结果写入镜像；CMD 和 ENTRYPOINT 只是记录容器启动时要执行的命令；
 - CMD 与 ENTRYPOINT：docker run 镜像名之后的参数会替换 CMD，而追加到 ENTRYPOINT 之后。例如 docker run order-service:1.0 --server.port=9090 启动后，容器中的 1 号进程是 java -jar app.jar --server.port=9090。通常 ENTRYPOINT 写固定的命令，CMD 写可以被覆盖的默认参数。
 
-ENTRYPOINT 和 CMD 应写成 JSON 数组的 exec 形式。写成 shell 形式（例如 ENTRYPOINT java -jar app.jar）时，命令由 /bin/sh -c 启动，Shell 成为 1 号进程时不会把 docker stop 发出的 SIGTERM 转发给 Java，Docker 等待 10 秒后改用 SIGKILL 强制结束，应用来不及优雅停止。
+ENTRYPOINT 和 CMD 应写成 JSON 数组的 exec 形式。写成 shell 形式（例如 ENTRYPOINT java -jar app.jar）时，命令由 /bin/sh -c 启动，Shell 成为 1 号进程时不会把 docker stop 发出的 SIGTERM（两种信号的区别见 [Linux - kill](Linux.md#5-kill)）转发给 Java，Docker 等待 10 秒后改用 SIGKILL 强制结束，应用来不及优雅停止。
 
-例如 ENTRYPOINT java -jar app.jar; echo "order-service exited" 的容器停止用了 10.3 秒，退出码 137；exec 形式只用 0.7 秒，退出码 143，日志中有 Spring Boot 的 Graceful shutdown complete（见[附录 A2](#a2-exec-形式与-shell-形式)）。需要注意的是，Alpine 的 sh 在命令只有一条时会直接用它替换自己，这时 Java 仍然是 1 号进程。
+例如 ENTRYPOINT java -jar app.jar; echo "order-service exited" 的容器停止用了 10.3 秒，退出码 137；exec 形式只用 0.7 秒，退出码 143，日志中有 Spring Boot 的 Graceful shutdown complete（见[附录 A2](#a2-exec-形式与-shell-形式)）。需要注意的是，Alpine 的 sh（BusyBox）会用 -c 中的最后一条命令替换自己，java 在最后时仍然是 1 号进程；基于 Ubuntu 的镜像中 sh 是 dash，只有一条命令时也不替换。因此不论用哪种基础镜像，都应写成 exec 形式。
 
 ### 运行容器：端口、数据卷与网络
 
@@ -185,7 +183,7 @@ docker run -d --name order -p 8080:8080 order-service:1.0
 
 -d 表示在后台运行，--name 给容器命名，-p 宿主机端口:容器端口 把宿主机 8080 端口收到的连接转发到容器的 8080 端口。
 
-每个容器有自己的网络命名空间，两个容器都监听 8080 不会冲突，冲突的是宿主机端口。再用 -p 8080:8080 启动第二个容器时报错 Bind for 0.0.0.0:8080 failed: port is already allocated，改用 -p 8081:8080 即可（见[附录 A4](#a4-端口数据卷网络与-compose)）。同样，宿主机上已有 MySQL 占用 3306 时，容器中的 MySQL 可以映射为 -p 3307:3306；端口被哪个进程占用可以用 ss -lntp 或 lsof -i :3306 查看。
+每个容器有自己的网络命名空间，两个容器都监听 8080 不会冲突，冲突的是宿主机端口。再用 -p 8080:8080 启动第二个容器时报错 Bind for 0.0.0.0:8080 failed: port is already allocated，改用 -p 8081:8080 即可（见[附录 A4](#a4-端口数据卷网络与-compose)）。同样，宿主机上已有 MySQL 占用 3306 时，容器中的 MySQL 可以映射为 -p 3307:3306；端口被哪个进程占用可以用 ss -lntp 或 lsof -i :3306 查看（见 [Linux - 端口与磁盘](Linux.md#端口与磁盘)）。
 
 #### 1. 数据卷
 
@@ -318,7 +316,13 @@ spec:
 - 删除一个 Pod，Deployment 创建的 ReplicaSet 发现副本数少于 3，0.3 秒内创建了新的 Pod，约 11 秒后新 Pod 启动完成并通过就绪检查，恢复为 3/3，新 Pod 的 IP 与原来不同，Service 自动更新了后端列表；
 - kubectl scale 修改副本数；kubectl set image 把镜像改为 order-service:1.1 后，Deployment 创建新的 ReplicaSet，逐个用新版本的 Pod 替换旧的，约 33 秒完成滚动升级，期间一直有就绪的 Pod 在提供服务，需要时可以用 kubectl rollout undo 回滚。
 
-readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Service 的后端列表，避免把请求转发给还没启动完成的实例。livenessProbe 是存活探针：连续失败 3 次（默认值）时 kubelet 重启容器，用于发现进程还在、但已经不能工作的情况，例如死锁。Spring Boot 的 Actuator 在 K8s 中自动提供 /actuator/health/readiness 和 /actuator/health/liveness 两个端点。
+滚动升级的节奏由 maxSurge（最多比副本数多出几个 Pod）和 maxUnavailable（最多允许几个 Pod 不可用）控制，默认都是 25%。3 个副本时两者分别为 1 和 0，所以控制器每次先多起一个新 Pod，等它通过就绪检查后才删掉一个旧 Pod：
+
+<div align="center"> <img src="pics/k8s-rolling-update.png" width="800px"/> </div><br>
+
+kubectl scale 是手动扩缩容。按负载自动调整用水平 Pod 自动扩缩器（HorizontalPodAutoscaler, HPA）：它默认每 15 秒从 metrics-server 取一次各 Pod 的资源用量，按 期望副本数 = ⌈当前副本数 × 当前值 / 目标值⌉ 修改 Deployment 的 replicas。CPU 使用率是相对 requests 计算的，例如目标为 60%，3 个 Pod 平均用了 requests 250m 中的 225m（90%），副本数调为 ⌈3 × 90 / 60⌉ = 5。缩容时取最近 5 分钟内建议值中最大的一个，负载短暂回落不会立即缩容。没有设置 requests 的容器算不出使用率，HPA 不会按这个指标扩缩。
+
+readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Service 的后端列表，避免把请求转发给还没启动完成的实例。livenessProbe 是存活探针：连续失败 3 次（默认值）时 kubelet 重启容器，用于发现进程还在、但已经不能工作的情况，例如死锁。Spring Boot 的 Actuator 在 K8s 中自动提供 /actuator/health/readiness 和 /actuator/health/liveness 两个端点。启动很慢的应用还要配置启动探针（startupProbe）：它通过之前另外两种探针都不执行，避免存活探针在启动阶段连续失败、容器被反复重启。
 
 删除 Pod（缩容、滚动升级）时，控制平面把它从 Service 的后端中摘除，同时 kubelet 向容器的 1 号进程发送 SIGTERM，30 秒（terminationGracePeriodSeconds 的默认值）后进程还没退出就发送 SIGKILL。应用收到 SIGTERM 后应停止接收新请求、处理完已有请求再退出，Spring Boot 3.4 起默认开启这种优雅停机。摘除后端需要一点时间才能传到每个节点，所以常用 preStop 钩子先等待几秒（例如 sleep 5），再让应用开始停止。
 
@@ -349,7 +353,7 @@ YAML 中的 resources 声明了 Pod 需要的资源：
 
 Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中就绪 Pod 的地址，每个节点上的 kube-proxy 把它们写成 iptables 或 IPVS 规则。
 
-订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的包，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中。
+订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的新连接，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。选中之后，这个连接后续的包都发往同一个 Pod。iptables 模式下，虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中；IPVS 模式则会把它绑定到每个节点的虚拟网卡 kube-ipvs0 上。
 
 Service 按访问范围分为几种类型：
 
@@ -379,7 +383,7 @@ spec:
                   number: 80
 ```
 
-Ingress 只是规则，真正处理请求的是 Ingress 控制器，例如 Ingress-NGINX、Traefik（k3s 自带），它们本身作为 Pod 运行，通过 LoadBalancer 或 NodePort 类型的 Service 对外暴露。实测中带 Host: shop.example.com 访问 /orders/1024 返回订单数据，访问 /users/1 或换成其它域名都返回 404（见[附录 A7](#a7-service-与-ingress)）。
+Ingress 只是规则，真正处理请求的是 Ingress 控制器，例如 Traefik（k3s 自带），它本身作为 Pod 运行，通过 LoadBalancer 或 NodePort 类型的 Service 对外暴露；曾经最常用的 Ingress-NGINX 已于 2026 年 3 月停止维护。实测中带 Host: shop.example.com 访问 /orders/1024 返回订单数据，访问 /users/1 或换成其它域名都返回 404（见[附录 A7](#a7-service-与-ingress)）。
 
 <div align="center"> <img src="pics/k8s-traffic.png" width="800px"/> </div><br>
 
@@ -399,7 +403,7 @@ Pod 的阶段（phase）只有 Pending、Running、Succeeded、Failed、Unknown 
 
 排查的顺序通常是：kubectl get pods -o wide 看状态、重启次数和所在节点；kubectl describe pod 看事件；kubectl logs 看应用日志，容器重启过的加 --previous；kubectl exec 进入容器检查配置和网络；kubectl top pod 看资源占用（需要 metrics-server）。
 
-节点 NotReady 指控制平面一段时间没有收到节点上 kubelet 的心跳，这个时间由 node-monitor-grace-period 决定（v1.31 默认 40 秒，v1.32 起 50 秒）。停掉工作节点 d1-agent 后 32 秒，它变为 NotReady，Conditions 中是 Kubelet stopped posting node status，并被加上 node.kubernetes.io/unreachable 污点；上面的 Pod 同时被标记为未就绪，从 Service 的后端中摘除。Pod 默认容忍这个污点 300 秒，又过了约 5 分钟才被驱逐，Deployment 在 d1-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
+节点 NotReady 指控制平面一段时间没有收到节点上 kubelet 的心跳，这个时间由 node-monitor-grace-period 决定（v1.31 默认 40 秒，v1.32 起 50 秒）。停掉工作节点 d1-agent 后 32 秒，它变为 NotReady（kubelet 约每 10 秒续约一次心跳，宽限期从最后一次心跳算起，所以比 40 秒短），Conditions 中是 Kubelet stopped posting node status，并被加上 node.kubernetes.io/unreachable 污点；上面的 Pod 同时被标记为未就绪，从 Service 的后端中摘除。Pod 默认容忍这个污点 300 秒，又过了约 5 分钟才被驱逐，Deployment 在 d1-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
 
 排查 NotReady 时先用 kubectl describe node 看 Conditions：
 
@@ -486,6 +490,22 @@ ExitCode=137
 
 shell 形式写成 ENTRYPOINT java -jar app.jar 或 ENTRYPOINT echo "starting" && java -jar app.jar 时，ps 显示 1 号进程是 java，停止耗时 0.43 s 和 0.24 s，退出码都是 143。
 
+基础镜像不同时，shell 形式的 1 号进程也不同。用 sh -c 启动一个用 trap 处理 SIGTERM 的子 shell（外层只有这一条命令），再执行 docker stop：
+
+```text
+# alpine:3.22，/bin/sh 是 BusyBox
+PID   COMMAND
+    1 sh -c trap "echo got TERM; exit 0" TERM; while :; do sleep 0.2; done
+stop took 1.50 s
+ExitCode=0
+# ubuntu:24.04，/bin/sh 是 dash
+  PID COMMAND
+    1 sh -c sh -c "trap \"echo got TERM; exit 0\" TERM; while :; do sleep 0.2; done"
+    7 sh -c trap "echo got TERM; exit 0" TERM; while :; do sleep 0.2; done
+stop took 12.69 s
+ExitCode=137
+```
+
 用 docker run order-service:1.0 --server.port=9090 启动：
 
 ```text
@@ -517,7 +537,7 @@ A /tmp/tomcat.8080.7999032892732268743
 c--------- 2 root root 0, 0 Oct 28 10:19 motd
 ```
 
-白障文件是主次设备号为 0, 0 的字符设备。/tmp 下新增的文件是 JVM 和 Tomcat 运行时创建的。
+白障文件是主次设备号为 0, 0 的字符设备。lowerdir 中的 8 个目录是镜像的 7 层（快照 319～323 来自基础镜像，353、354 是订单服务新增的两层），加上 Docker 为容器生成的初始化层（快照 426，紧挨着可写层 427）。/tmp 下新增的文件是 JVM 和 Tomcat 运行时创建的。
 
 ### A4 端口、数据卷、网络与 Compose
 
@@ -791,7 +811,6 @@ $ kubectl get pod -o jsonpath='{.items[0].spec.tolerations}'
 
 ## 参考资料
 
-- [DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP](https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/)
 - [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 - [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php)
 - [How to Create Docker Container using Dockerfile](https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
@@ -812,6 +831,7 @@ $ kubectl get pod -o jsonpath='{.items[0].spec.tolerations}'
 - [Kubernetes 文档：Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 - [Kubernetes 文档：Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 - [Kubernetes 文档：Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Ingress NGINX Retirement: What You Need to Know](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
 - [Kubernetes 文档：Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
 - [Kubernetes 文档：Liveness, Readiness, and Startup Probes](https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/)
 - [Kubernetes 文档：Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
