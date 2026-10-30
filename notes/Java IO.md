@@ -455,7 +455,7 @@ int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 int num = selector.select();
 ```
 
-使用 select() 来监听到达的事件，它会一直阻塞直到有至少一个事件到达。
+使用 select() 来监听到达的事件，它会阻塞到至少一个通道就绪，或者被 wakeup() 或线程中断唤醒，因此返回值可能为 0。
 
 #### 4. 获取到达的事件
 
