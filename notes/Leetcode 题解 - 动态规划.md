@@ -45,7 +45,9 @@
 <!-- GFM-TOC -->
 
 
-递归和动态规划都是将原问题拆成多个子问题然后求解，它们之间最本质的区别是，动态规划保存了子问题的解，避免重复计算。
+递归和动态规划都是将原问题拆成多个子问题然后求解，区别是动态规划保存了子问题的解，避免重复计算，例如递归求斐波那契数 f(5) 时 f(3) 会被算 2 次。记忆化递归也属于动态规划，只是按自顶向下的顺序计算。
+
+写动态规划要确定 dp 的含义、状态转移方程、初始值和计算顺序。
 
 ## 斐波那契数列
 
@@ -90,7 +92,7 @@ public int climbStairs(int n) {
 
 定义 dp 数组用来存储最大的抢劫量，其中 dp[i] 表示抢到第 i 个住户时的最大抢劫量。
 
-由于不能抢劫邻近住户，如果抢劫了第 i -1 个住户，那么就不能再抢劫第 i 个住户，所以
+抢第 i 个住户的话，第 i - 1 个住户就不能抢，因此取抢和不抢两种情况的较大值：
 
 <div align="center"> <img src="pics/lc-dp-house-robber.png" width="480px"/> </div><br>
 
@@ -111,6 +113,10 @@ public int rob(int[] nums) {
 213\. House Robber II (Medium)
 
 [Leetcode](https://leetcode.com/problems/house-robber-ii/description/) / [力扣](https://leetcode-cn.com/problems/house-robber-ii/description/)
+
+题目描述：住户围成一圈，首尾两户相邻。
+
+首尾两户不能同时抢，因此分别在 0 \~ n-2（不抢最后一户）和 1 \~ n-1（不抢第一户）中按上一题求解，取较大值。
 
 ```java
 public int rob(int[] nums) {
@@ -139,12 +145,12 @@ private int rob(int[] nums, int first, int last) {
 
 题目描述：有 N 个信和信封，它们被打乱，求每封信都装错信封的方式数量（错排数）。
 
-定义一个数组 dp 存储错误方式数量，dp[i] 表示前 i 个信和信封的错误方式数量。假设第 i 个信装到第 j 个信封里面，而第 j 个信装到第 k 个信封里面。根据 i 和 k 是否相等，有两种情况：
+dp[i] 表示 i 封信都装错的方式数量。第 i 封信装进了第 j 个信封（j ≠ i，有 i - 1 种选法），再看第 j 封信装在哪里：
 
-- i==k，交换 i 和 j 的信后，它们的信和信封在正确的位置，但是其余 i-2 封信有 dp[i-2] 种错误装信的方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-2] 种错误装信方式。
-- i != k，交换 i 和 j 的信后，第 i 个信和信封在正确的位置，其余 i-1 封信有 dp[i-1] 种错误装信方式。由于 j 有 i-1 种取值，因此共有 (i-1)\*dp[i-1] 种错误装信方式。
+- 第 j 封信装进第 i 个信封：i 和 j 互相装错，剩下的 i - 2 封信要全部装错，有 dp[i - 2] 种；
+- 第 j 封信没有装进第 i 个信封：去掉第 i 封信和第 j 个信封，把第 i 个信封看成第 j 封信不能装的信封，问题就变成 i - 1 封信全部装错，有 dp[i - 1] 种。
 
-综上所述，错误装信数量方式数量为：
+两种情况都要乘以 j 的 i - 1 种选法，因此：
 
 <div align="center"> <img src="pics/lc-dp-derangement.png" width="456px"/> </div><br>
 
@@ -174,6 +180,8 @@ Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes
 ```
 
 题目描述：求从矩阵的左上角到右下角的最小路径和，每次只能向右和向下移动。
+
+dp[j] 表示走到当前行第 j 列的最小路径和，只用一行滚动更新：更新前的 dp[j] 是上一行的值（从上侧走来），dp[j - 1] 已经是本行的值（从左侧走来）。
 
 ```java
 public int minPathSum(int[][] grid) {
@@ -243,13 +251,13 @@ public int uniquePaths(int m, int n) {
 
 题目描述：在由 0 和 1 组成的矩阵中，找出只包含 1 的最大正方形的面积。
 
-dp[i][j] 表示以 (i, j) 为右下角、只包含 1 的最大正方形的边长。它的边长受左边、上边和左上角三个方向的限制，取三者的最小值再加 1：
+dp[i][j] 表示以 (i, j) 为右下角、只包含 1 的最大正方形的边长。当前格为 1 时，边长受左边、上边和左上角的限制，取三者的最小值再加 1。左上角不能省略，例如下面右边的例子只能得到边长 1。
 
 ```text
 dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
 
-matrix:  1 1 1       dp:  1 1 1
-         1 1 1            1 2 2
+matrix:  1 1 1       dp:  1 1 1        matrix:  0 1       dp:  0 1
+         1 1 1            1 2 2                 1 1            1 1
          1 1 1            1 2 3
 ```
 
@@ -324,25 +332,27 @@ return: 6, for 6 arithmetic slices in A:
 [2, 3, 4]
 ```
 
-dp[i] 表示以 A[i] 为结尾的等差递增子区间的个数。
+子区间要求连续、长度至少为 3，公差可以为 0 或负数，例如 [7, 7, 7]、[3, 2, 1]。
 
-当 A[i] - A[i-1] == A[i-1] - A[i-2]，那么 [A[i-2], A[i-1], A[i]] 构成一个等差递增子区间。而且在以 A[i-1] 为结尾的递增子区间的后面再加上一个 A[i]，一样可以构成新的递增子区间。
+dp[i] 表示以 A[i] 为结尾的等差子区间的个数。
+
+当 A[i] - A[i-1] == A[i-1] - A[i-2]，那么 [A[i-2], A[i-1], A[i]] 构成一个等差子区间。而且在以 A[i-1] 为结尾的等差子区间的后面再加上一个 A[i]，一样可以构成新的等差子区间。
 
 ```text
 dp[2] = 1
     [0, 1, 2]
 dp[3] = dp[2] + 1 = 2
     [0, 1, 2, 3], // [0, 1, 2] 之后加一个 3
-    [1, 2, 3]     // 新的递增子区间
+    [1, 2, 3]     // 新的等差子区间
 dp[4] = dp[3] + 1 = 3
     [0, 1, 2, 3, 4], // [0, 1, 2, 3] 之后加一个 4
     [1, 2, 3, 4],    // [1, 2, 3] 之后加一个 4
-    [2, 3, 4]        // 新的递增子区间
+    [2, 3, 4]        // 新的等差子区间
 ```
 
 综上，在 A[i] - A[i-1] == A[i-1] - A[i-2] 时，dp[i] = dp[i-1] + 1。
 
-因为递增子区间不一定以最后一个元素为结尾，可以是任意一个元素结尾，因此需要返回 dp 数组累加的结果。
+因为等差子区间不一定以最后一个元素为结尾，可以是任意一个元素结尾，因此需要返回 dp 数组累加的结果。
 
 ```java
 public int numberOfArithmeticSlices(int[] A) {
@@ -375,12 +385,9 @@ Input: ")()())"
 Output: 4
 ```
 
-dp[i] 表示以 s[i] 结尾的最长有效括号的长度，只有 s[i] 为 ) 时才可能不为 0。以 s[i - 1] 结尾的有效括号长度为 dp[i - 1]，跳过这一段之后的位置 j = i - dp[i - 1] - 1 如果是 (，就能和 s[i] 配对，长度为 dp[i - 1] + 2，再加上 j 前面紧挨着的有效括号长度 dp[j - 1]。
+dp[i] 表示以 s[i] 结尾的最长有效括号的长度，只有 s[i] 为 ) 时才可能不为 0。以 s[i - 1] 结尾的有效括号长度为 dp[i - 1]，跳过这一段之后的位置 j = i - dp[i - 1] - 1 如果是 (，就能和 s[i] 配对，长度为 dp[i - 1] + 2，再加上 j 前面紧挨着的有效括号长度 dp[j - 1]。以 "()(())" 为例：
 
-```text
-s  : ( ) ( ( ) )
-dp : 0 2 0 0 2 6
-```
+<div align="center"> <img src="pics/lc-dp-valid-parentheses.png" width="560px"/> </div><br>
 
 ```java
 public int longestValidParentheses(String s) {
@@ -400,6 +407,40 @@ public int longestValidParentheses(String s) {
 }
 ```
 
+只用计数可以把空间降到 O(1)：从左往右数左右括号，相等时得到一段有效括号，右括号更多时清零；"(()" 这类左括号一直更多的情况会被漏掉，再从右往左对称地扫一遍。
+
+```java
+public int longestValidParentheses(String s) {
+    int left = 0, right = 0, ret = 0;
+    for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) == '(') {
+            left++;
+        } else {
+            right++;
+        }
+        if (left == right) {
+            ret = Math.max(ret, 2 * right);
+        } else if (right > left) {
+            left = right = 0;
+        }
+    }
+    left = right = 0;
+    for (int i = s.length() - 1; i >= 0; i--) {
+        if (s.charAt(i) == '(') {
+            left++;
+        } else {
+            right++;
+        }
+        if (left == right) {
+            ret = Math.max(ret, 2 * left);
+        } else if (left > right) {
+            left = right = 0;
+        }
+    }
+    return ret;
+}
+```
+
 ## 分割整数
 
 ### 1. 分割整数的最大乘积
@@ -408,7 +449,9 @@ public int longestValidParentheses(String s) {
 
 [Leetcode](https://leetcode.com/problems/integer-break/description/) / [力扣](https://leetcode-cn.com/problems/integer-break/description/)
 
-题目描述：For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+题目描述：把正整数 n 拆成至少两个正整数的和，求这些整数乘积的最大值。For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+
+dp[i] 表示把 i 拆分后的最大乘积。枚举拆出的第一个数 j，剩下的 i - j 可以继续拆分（j \* dp[i - j]），也可以不拆（j \* (i - j)），不拆可能更大，例如 dp[3] = 2 小于 3。
 
 ```java
 public int integerBreak(int n) {
@@ -429,7 +472,9 @@ public int integerBreak(int n) {
 
 [Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode-cn.com/problems/perfect-squares/description/)
 
-题目描述：For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+题目描述：把 n 表示成若干个完全平方数的和，求最少需要几个。For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+
+dp[i] 表示和为 i 的最少平方数个数，枚举最后一个平方数 square，dp[i] = min(dp[i - square] + 1)。
 
 ```java
 public int numSquares(int n) {
@@ -467,7 +512,9 @@ private List<Integer> generateSquareList(int n) {
 
 [Leetcode](https://leetcode.com/problems/decode-ways/description/) / [力扣](https://leetcode-cn.com/problems/decode-ways/description/)
 
-题目描述：Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+题目描述：字母 A \~ Z 分别编码为 1 \~ 26，求一个数字串有多少种解码方法。Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+dp[i] 表示前 i 个字符的解码方法数。第 i 个字符不为 0 时可以单独解码，加上 dp[i - 1]；最后两个字符在 10 \~ 26 之间时可以一起解码，加上 dp[i - 2]。例如 "226" 的 dp 为 [1, 1, 2, 3]。
 
 ```java
 public int numDecodings(String s) {
@@ -497,9 +544,9 @@ public int numDecodings(String s) {
 
 ## 最长递增子序列
 
-已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>}，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个  **子序列**  。
+已知一个序列 {S<sub>1</sub>, S<sub>2</sub>,...,S<sub>n</sub>}，取出若干数组成新的序列 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>}，其中 i1、i2 ... im 保持递增，即新序列中各个数仍然保持原数列中的先后顺序，称新序列为原序列的一个 **子序列**。
 
-如果在子序列中，当下标 ix > iy 时，S<sub>ix</sub> > S<sub>iy</sub>，称子序列为原序列的一个  **递增子序列**  。
+如果在子序列中，当下标 ix > iy 时，S<sub>ix</sub> > S<sub>iy</sub>，称子序列为原序列的一个 **递增子序列**。
 
 定义一个数组 dp 存储最长递增子序列的长度，dp[n] 表示以 S<sub>n</sub> 结尾的序列的最长递增子序列长度。对于一个递增子序列 {S<sub>i1</sub>, S<sub>i2</sub>,...,S<sub>im</sub>}，如果 im < n 并且 S<sub>im</sub> < S<sub>n</sub>，此时 {S<sub>i1</sub>, S<sub>i2</sub>,..., S<sub>im</sub>, S<sub>n</sub>} 为一个递增子序列，递增子序列的长度增加 1。满足上述条件的递增子序列中，长度最长的那个递增子序列就是要找的，在长度最长的递增子序列上加上 S<sub>n</sub> 就构成了以 S<sub>n</sub> 为结尾的最长递增子序列。因此 dp[n] = max{ dp[i]+1 | S<sub>i</sub> < S<sub>n</sub> && i < n} 。
 
@@ -544,23 +591,16 @@ return ret;
 
 以上解法的时间复杂度为 O(N<sup>2</sup>)，可以使用二分查找将时间复杂度降低为 O(NlogN)。
 
-定义一个 tails 数组，其中 tails[i] 存储长度为 i + 1 的最长递增子序列的最后一个元素。对于一个元素 x，
+定义一个 tails 数组，其中 tails[i] 存储所有长度为 i + 1 的递增子序列中最小的末尾元素。对于一个元素 x，
 
 - 如果它大于 tails 数组所有的值，那么把它添加到 tails 后面，表示最长递增子序列长度加 1；
 - 如果 tails[i-1] \< x \<= tails[i]，那么更新 tails[i] = x。
 
-例如对于数组 [4,3,6,5]，有：
+例如对于数组 [2,5,3,7,1]：
 
-```text
-tails      len      num
-[]         0        4
-[4]        1        3
-[3]        1        6
-[3,6]      2        5
-[3,5]      2        null
-```
+<div align="center"> <img src="pics/lc-dp-lis-tails.png" width="660px"/> </div><br>
 
-可以看出 tails 数组保持有序，因此在查找 S<sub>i</sub> 位于 tails 数组的位置时就可以使用二分查找。
+tails 数组保持有序，因此可以用二分查找 x 的位置。需要注意的是，tails 不一定是真实的递增子序列，只有它的长度是答案。
 
 ```java
 public int lengthOfLIS(int[] nums) {
@@ -593,6 +633,8 @@ private int binarySearch(int[] tails, int len, int key) {
 }
 ```
 
+要输出一个最长递增子序列，可以在 O(N<sup>2</sup>) 解法中用 prev[i] 记录 dp[i] 由哪个 j 转移而来，再从 dp 最大的位置沿 prev 往回走。
+
 ### 2. 一组整数对能够构成的最长链
 
 646\. Maximum Length of Pair Chain (Medium)
@@ -606,6 +648,8 @@ Explanation: The longest chain is [1,2] -> [3,4]
 ```
 
 题目描述：对于 (a, b) 和 (c, d) ，如果 b \< c，则它们可以构成一条链。
+
+整数对可以按任意顺序选取，链上的左端点一定递增，因此先按左端点排序，再按最长递增子序列的方法求解。
 
 ```java
 public int findLongestChain(int[][] pairs) {
@@ -648,6 +692,8 @@ Output: 2
 
 要求：使用 O(N) 时间复杂度求解。
 
+up、down 分别表示到当前元素为止、最后一步上升和下降的最长摆动子序列长度。nums[i] > nums[i - 1] 时，nums[i] 可以接在最后一步下降的序列后面，up = down + 1；下降时 down = up + 1；相等时都不变。
+
 ```java
 public int wiggleMaxLength(int[] nums) {
     if (nums == null || nums.length == 0) {
@@ -667,7 +713,7 @@ public int wiggleMaxLength(int[] nums) {
 
 ## 最长公共子序列
 
-对于两个子序列 S1 和 S2，找出它们最长的公共子序列。
+对于两个序列 S1 和 S2，找出它们最长的公共子序列。
 
 定义一个二维数组 dp 用来存储最长公共子序列的长度，其中 dp[i][j] 表示 S1 的前 i 个字符与 S2 的前 j 个字符最长公共子序列的长度。考虑 S1<sub>i</sub> 与 S2<sub>j</sub> 值是否相等，分为两种情况：
 
@@ -682,8 +728,8 @@ public int wiggleMaxLength(int[] nums) {
 
 与最长递增子序列相比，最长公共子序列有以下不同点：
 
-- 针对的是两个序列，求它们的最长公共子序列。
-- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>。
+- 针对的是两个序列，求它们的最长公共子序列；
+- 在最长递增子序列中，dp[i] 表示以 S<sub>i</sub> 为结尾的最长递增子序列长度，子序列必须包含 S<sub>i</sub> ；在最长公共子序列中，dp[i][j] 表示 S1 中前 i 个字符与 S2 中前 j 个字符的最长公共子序列长度，不一定包含 S1<sub>i</sub> 和 S2<sub>j</sub>；
 - 在求最终解时，最长公共子序列中 dp[N][M] 就是最终解，而最长递增子序列中 dp[N] 不是最终解，因为以 S<sub>N</sub> 为结尾的最长递增子序列不一定是整个序列最长递增子序列，需要遍历一遍 dp 数组找到最大者。
 
 ### 1. 最长公共子序列
@@ -693,25 +739,52 @@ public int wiggleMaxLength(int[] nums) {
 [Leetcode](https://leetcode.com/problems/longest-common-subsequence/) / [力扣](https://leetcode-cn.com/problems/longest-common-subsequence/)
 
 ```java
-    public int longestCommonSubsequence(String text1, String text2) {
-        int n1 = text1.length(), n2 = text2.length();
-        int[][] dp = new int[n1 + 1][n2 + 1];
-        for (int i = 1; i <= n1; i++) {
-            for (int j = 1; j <= n2; j++) {
-                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                }
+public int longestCommonSubsequence(String text1, String text2) {
+    int n1 = text1.length(), n2 = text2.length();
+    int[][] dp = new int[n1 + 1][n2 + 1];
+    for (int i = 1; i <= n1; i++) {
+        for (int j = 1; j <= n2; j++) {
+            if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
-        return dp[n1][n2];
     }
+    return dp[n1][n2];
+}
+```
+
+可以像[矩阵的最小路径和](#1-矩阵的最小路径和)一样只用一行滚动更新，空间降为 O(min(M, N))。左上角 dp[i - 1][j - 1] 在算 dp[j - 1] 时已被覆盖，要提前用变量保存：
+
+```java
+public int longestCommonSubsequence(String text1, String text2) {
+    if (text1.length() < text2.length()) {   // 让 text2 是较短的那个
+        String t = text1;
+        text1 = text2;
+        text2 = t;
+    }
+    int n = text2.length();
+    int[] dp = new int[n + 1];
+    for (int i = 1; i <= text1.length(); i++) {
+        int leftUp = 0;                   // dp[i - 1][j - 1]
+        for (int j = 1; j <= n; j++) {
+            int up = dp[j];               // dp[i - 1][j]，被覆盖前先保存
+            if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                dp[j] = leftUp + 1;
+            } else {
+                dp[j] = Math.max(up, dp[j - 1]);
+            }
+            leftUp = up;
+        }
+    }
+    return dp[n];
+}
 ```
 
 ## 0-1 背包
 
-有一个容量为 N 的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
+有一个容量为 W 的背包和 N 件物品，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
 
 定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示前 i 件物品体积不超过 j 的情况下能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
 
@@ -778,13 +851,10 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 #### 变种
 
-- 完全背包：物品数量为无限个
-
-- 多重背包：物品数量有限制
-
-- 多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制
-
-- 其它：物品之间相互约束或者依赖
+- 完全背包：每种物品的数量无限，例如[找零钱的最少硬币数](#4-找零钱的最少硬币数)；
+- 多重背包：每种物品的数量有限制；
+- 多维费用背包：物品不仅有重量，还有体积，同时考虑这两种限制，例如 [01 字符构成最多的字符串](#3-01-字符构成最多的字符串)；
+- 其它：物品之间相互约束或者依赖。
 
 ### 1. 划分数组为和相等的两部分
 
@@ -858,7 +928,7 @@ sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
                        2 * sum(P) = target + sum(nums)
 ```
 
-因此只要找到一个子集，令它们都取正号，并且和等于 (target + sum(nums))/2，就证明存在解。
+每种添加符号的方式对应一个取正号的子集 P，因此答案是和为 W = (target + sum(nums)) / 2 的子集个数。dp[j] 表示和为 j 的子集个数，dp[0] = 1 对应空集。
 
 ```java
 public int findTargetSumWays(int[] nums, int S) {
@@ -964,25 +1034,21 @@ return -1.
 - 物品大小：面额
 - 物品价值：数量
 
-因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包的逆序遍历 dp 数组改为正序遍历即可。
+因为硬币可以重复使用，因此这是一个完全背包问题。完全背包只需要将 0-1 背包的逆序遍历 dp 数组改为正序遍历即可（见[空间优化](#空间优化)），正序时 dp[i - coin] 可能已经放过本轮的硬币，相当于同一种硬币再放一次。dp[i] 表示凑出金额 i 的最少硬币数。
+
+每次选面额最大的硬币不一定最优，例如 coins = [1, 3, 4]、amount = 6，贪心得到 4 + 1 + 1，最优是 3 + 3。
 
 ```java
 public int coinChange(int[] coins, int amount) {
-    if (amount == 0 || coins == null) return 0;
     int[] dp = new int[amount + 1];
+    Arrays.fill(dp, amount + 1);   // amount + 1 表示凑不出
+    dp[0] = 0;
     for (int coin : coins) {
-        for (int i = coin; i <= amount; i++) { //将逆序遍历改为正序遍历
-            if (i == coin) {
-                dp[i] = 1;
-            } else if (dp[i] == 0 && dp[i - coin] != 0) {
-                dp[i] = dp[i - coin] + 1;
-
-            } else if (dp[i - coin] != 0) {
-                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-            }
+        for (int i = coin; i <= amount; i++) {   // 将逆序遍历改为正序遍历
+            dp[i] = Math.min(dp[i], dp[i - coin] + 1);
         }
     }
-    return dp[amount] == 0 ? -1 : dp[amount];
+    return dp[amount] > amount ? -1 : dp[amount];
 }
 ```
 
@@ -1002,7 +1068,7 @@ Explanation: there are four ways to make up the amount:
 5=1+1+1+1+1
 ```
 
-完全背包问题，使用 dp 记录可达成目标的组合数目。
+完全背包问题，dp[i] 记录凑出金额 i 的组合数目。外层遍历硬币、内层遍历金额，硬币按固定的顺序加入，1+2 和 2+1 只算一种。
 
 ```java
 public int change(int amount, int[] coins) {
@@ -1032,15 +1098,9 @@ dict = ["leet", "code"].
 Return true because "leetcode" can be segmented as "leet code".
 ```
 
-dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。
+dp[i] 表示 s 的前 i 个字符能否拆分成 dict 中的单词。dict 中的单词没有使用次数的限制，因此这是一个完全背包问题。
 
-该问题涉及到字典中单词的使用顺序，也就是说物品必须按一定顺序放入背包中，例如下面的 dict 就不够组成字符串 "leetcode"：
-
-```text
-["lee", "tc", "cod"]
-```
-
-求解顺序的完全背包问题时，对物品的迭代应该放在最里层，对背包的迭代放在外层，只有这样才能让物品按一定顺序放入背包中。
+与上一题不同，单词在 s 中的先后顺序任意，因此外层遍历位置 i、内层遍历单词。交换两层循环时单词只能按 dict 中的顺序出现，例如 s = "codeleet"、dict = ["leet", "code"] 会得到 false。
 
 ```java
 public boolean wordBreak(String s, List<String> wordDict) {
@@ -1083,7 +1143,12 @@ Note that different sequences are counted as different combinations.
 Therefore the output is 7.
 ```
 
-涉及顺序的完全背包。
+涉及顺序的完全背包。外层遍历 target、内层遍历 nums，每个金额的最后一个数可以是任意一个 num，(1, 2) 和 (2, 1) 分别计数。以 nums = [1, 2]、target = 3 对比[找零钱的硬币数组合](#5-找零钱的硬币数组合)：
+
+```text
+外层遍历硬币（518）：处理 1 后 dp = [1, 1, 1, 1]，处理 2 后 dp = [1, 1, 2, 2]   2 种：1+1+1、1+2
+外层遍历金额（377）：dp = [1, 1, 2, 3]                                          3 种：1+1+1、1+2、2+1
+```
 
 ```java
 public int combinationSum4(int[] nums, int target) {
@@ -1110,7 +1175,9 @@ public int combinationSum4(int[] nums, int target) {
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
 
-题目描述：交易之后需要有一天的冷却时间。
+题目描述：可以进行多次交易，但卖出之后需要有一天的冷却时间才能再次买入。
+
+buy、s1、sell、s2 分别表示当天买入、持有且当天没买、当天卖出、不持有且当天没卖，值为到这一天为止的最大收益。冷却期体现在 buy 只能从前一天的 s2 转移过来。第 0 天的 s1、sell 只是占位初值，不会得到比合法交易更大的收益。
 
 <div align="center"> <img src="pics/lc-dp-stock-cooldown.png" width="660px"/> </div><br>
 
@@ -1155,6 +1222,8 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
+状态与[需要冷却期的股票交易](#1-需要冷却期的股票交易)相同，区别是 buy 也可以从前一天的 sell 转移过来，卖出时扣除手续费。
+
 <div align="center"> <img src="pics/lc-dp-stock-fee.png" width="660px"/> </div><br>
 
 ```java
@@ -1176,12 +1245,13 @@ public int maxProfit(int[] prices, int fee) {
 }
 ```
 
-
 ### 3. 只能进行两次的股票交易
 
 123\. Best Time to Buy and Sell Stock III (Hard)
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
+
+四个变量依次是到当天为止完成第一次买入、第一次卖出、第二次买入、第二次卖出后的最大收益，第二次买入以第一次卖出的收益为起点。
 
 ```java
 public int maxProfit(int[] prices) {
@@ -1210,6 +1280,8 @@ public int maxProfit(int[] prices) {
 188\. Best Time to Buy and Sell Stock IV (Hard)
 
 [Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
+
+maxProfit[i][j] 表示最多交易 i 次、到第 j 天为止的最大收益。第 j 天要么不卖出，收益为 maxProfit[i][j - 1]；要么在之前的某天 m 买入、第 j 天卖出，收益为 prices[j] + max(maxProfit[i - 1][m] - prices[m])，localMax 在遍历 j 时维护这个最大值。k >= n / 2 时次数不构成限制，累加所有上涨的差价即可。
 
 ```java
 public int maxProfit(int k, int[] prices) {
@@ -1249,7 +1321,7 @@ Output: 2
 Explanation: You need one step to make "sea" to "ea" and another step to make "eat" to "ea".
 ```
 
-可以转换为求两个字符串的最长公共子序列问题。
+可以转换为求两个字符串的最长公共子序列问题：两个字符串都只保留最长公共子序列，其余字符删掉，删除次数为 m + n - 2 \* LCS。
 
 ```java
 public int minDistance(String word1, String word2) {
@@ -1297,6 +1369,10 @@ exection -> execution (insert 'u')
 
 题目描述：修改一个字符串成为另一个字符串，使得修改次数最少。一次修改操作包括：插入一个字符、删除一个字符、替换一个字符。
 
+dp[i][j] 表示 word1 的前 i 个字符变成 word2 的前 j 个字符的最少操作数。最后一个字符相等时 dp[i][j] = dp[i - 1][j - 1]；不相等时，最后一步是替换、删除或插入，取三者的最小值再加 1：
+
+<div align="center"> <img src="pics/lc-dp-edit-distance.png" width="660px"/> </div><br>
+
 ```java
 public int minDistance(String word1, String word2) {
     if (word1 == null || word2 == null) {
@@ -1323,6 +1399,8 @@ public int minDistance(String word1, String word2) {
 }
 ```
 
+空间复杂度可以和[最长公共子序列](#1-最长公共子序列)一样用一维数组降到 O(N)。
+
 ### 3. 复制粘贴字符
 
 650\. 2 Keys Keyboard (Medium)
@@ -1340,6 +1418,8 @@ In step 1, we use Copy All operation.
 In step 2, we use Paste operation to get 'AA'.
 In step 3, we use Paste operation to get 'AAA'.
 ```
+
+如果 n 有因子 i，可以先得到 n / i 个 A，再复制一次、粘贴 i - 1 次，用 i 步变成 n 个 A。因此总步数是 n 的质因数之和，例如 12 = 2 × 2 × 3，需要 7 步。
 
 ```java
 public int minSteps(int n) {
@@ -1367,3 +1447,8 @@ public int minSteps(int n) {
     return dp[n];
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- 左程云. 程序员代码面试指南：IT 名企算法与数据结构题目最优解 [M]. 电子工业出版社, 2015.
