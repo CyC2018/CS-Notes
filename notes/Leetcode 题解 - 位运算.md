@@ -15,6 +15,7 @@
     * [11. 实现整数的加法](#11-实现整数的加法)
     * [12. 字符串数组最大乘积](#12-字符串数组最大乘积)
     * [13. 统计从 0 \~ n 每个数的二进制表示中 1 的个数](#13-统计从-0--n-每个数的二进制表示中-1-的个数)
+    * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
@@ -56,16 +57,16 @@ x ^ x = 0       x & x = x       x | x = x
 
 #### 位与运算技巧
 
-n&(n-1) 去除 n 的位级表示中最低的那一位 1。例如对于二进制表示 01011011，减去 1 得到 01011010，这两个数相与得到 01011010。
+n&(n-1) 去除 n 的位级表示中最低的那一位 1。n-1 把这一位 1 变成 0、它右边的 0 都变成 1，更高的位不变，因此相与后只去掉了这一位。例如对于二进制表示 10110100，减去 1 得到 10110011，这两个数相与得到 10110000。
 
 ```text
-01011011 &
-01011010
+10110100 &
+10110011
 --------
-01011010
+10110000
 ```
 
-n&(-n) 得到 n 的位级表示中最低的那一位 1。-n 得到 n 的反码加 1，也就是 -n=\~n+1。例如对于二进制表示 10110100，-n 得到 01001100，相与得到 00000100。
+n&(-n) 得到 n 的位级表示中最低的那一位 1。在补码中 -n=\~n+1，加 1 后最低的那一位 1 及其右边的位与 n 相同，更高的位都与 n 相反。例如对于二进制表示 10110100，-n 得到 01001100，相与得到 00000100。
 
 ```text
 10110100 &
@@ -91,7 +92,7 @@ n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1
 ```text
 11111111111111111111111111111001  >>> 2
 --------
-00111111111111111111111111111111
+00111111111111111111111111111110
 ```
 
 \<\< n 为算术左移，相当于乘以 2<sup>n</sup>。-7 \<\< 2 = -28。
@@ -104,20 +105,20 @@ n-(n&(-n)) 则可以去除 n 的位级表示中最低的那一位 1，和 n&(n-1
 
 #### mask 计算
 
-要获取 111111111，将 0 取反即可，\~0。
+要获取 32 位全为 1 的 int，将 0 取反即可，\~0。
 
 要得到只有第 i 位为 1 的 mask，将 1 向左移动 i-1 位即可，1\<\<(i-1) 。例如 1\<\<4 得到只有第 5 位为 1 的 mask ：00010000。
 
-要得到 1 到 i 位为 1 的 mask，(1\<\<i)-1 即可，例如将 (1\<\<4)-1 = 00010000-1 = 00001111。
+要得到 1 到 i 位为 1 的 mask，(1\<\<i)-1 即可，例如将 (1\<\<4)-1 = 00010000-1 = 00001111。需要注意的是，i = 32 时不适用：int 的移位距离只取低 5 位，1\<\<32 等于 1。
 
 要得到 1 到 i 位为 0 的 mask，只需将 1 到 i 位为 1 的 mask 取反，即 \~((1\<\<i)-1)。
 
 #### Java 中的位操作
 
 ```java
-static int Integer.bitCount();           // 统计 1 的数量
-static int Integer.highestOneBit();      // 获得最高位
-static String toBinaryString(int i);     // 转换为二进制表示的字符串
+static int Integer.bitCount(int i);          // 统计 1 的数量
+static int Integer.highestOneBit(int i);     // 只保留最高位的 1
+static String Integer.toBinaryString(int i); // 转换为二进制表示的字符串
 ```
 
 ## 1. 统计两个数的二进制表示有多少位不同
@@ -209,6 +210,8 @@ Output: 2
 
 题目描述：数组元素在 0-n 之间，但是有一个数是缺失的，要求找到这个缺失的数。
 
+把 0 \~ n 和数组中的所有元素一起异或，出现过的数各出现两次而抵消，剩下的就是缺失的数。
+
 ```java
 public int missingNumber(int[] nums) {
     int ret = 0;
@@ -225,11 +228,11 @@ public int missingNumber(int[] nums) {
 
 [Leetcode](https://leetcode.com/problems/single-number-iii/description/) / [力扣](https://leetcode-cn.com/problems/single-number-iii/description/)
 
-两个不相等的元素在位级表示上必定会有一位存在不同。
+题目描述：数组中只有两个元素出现一次，其余元素都出现两次，找出这两个元素。
 
-将数组的所有元素异或得到的结果为不存在重复的两个元素异或的结果。
+将所有元素异或，出现两次的元素互相抵消，得到这两个元素 a、b 的异或 diff。a 和 b 不相等，diff 中为 1 的位上 a 和 b 必然不同。
 
-diff &= -diff 得到 diff 最右侧不为 0 的位，也就是不存在重复的两个元素在位级表示上最右侧不同的那一位，利用这一位就可以将两个元素区分开来。
+diff &= -diff 取出 diff 最右侧的 1，按这一位是否为 1 把数组分成两组：a 和 b 分到不同的组，相同的元素分到同一组，每组各自异或就得到 a 和 b。例如 [1, 2, 1, 3, 2, 5]：diff = 3^5 = 110，取出 010，这一位为 0 的 {1, 1, 5} 异或得到 5，为 1 的 {2, 3, 2} 异或得到 3。
 
 ```java
 public int[] singleNumber(int[] nums) {
@@ -294,13 +297,15 @@ private int reverseByte(byte b) {
 
 ## 6. 不用额外变量交换两个整数
 
-程序员代码面试指南 ：P317
+《程序员代码面试指南》P317
 
 ```java
 a = a ^ b;
 b = a ^ b;
 a = a ^ b;
 ```
+
+第二行 b = (a ^ b) ^ b 得到原来的 a，第三行 a = (a ^ b) ^ a 得到原来的 b。需要注意的是，a 和 b 不能是同一个变量（例如交换 nums[i] 和 nums[j] 时 i == j），否则第一行就把它变成了 0。
 
 ## 7. 判断一个数是不是 2 的 n 次方
 
@@ -330,7 +335,7 @@ public boolean isPowerOfTwo(int n) {
 
 [Leetcode](https://leetcode.com/problems/power-of-four/) / [力扣](https://leetcode-cn.com/problems/power-of-four/)
 
-这种数在二进制表示中有且只有一个奇数位为 1，例如 16（10000）。
+这种数在二进制表示中有且只有一个 1，并且位于从右往左数的第 1、3、5…… 位，例如 16（10000）。代码中的掩码正好在这些位上为 1。
 
 ```java
 public boolean isPowerOfFour(int num) {
@@ -364,7 +369,7 @@ Explanation:
 The binary representation of 11 is: 1011.
 ```
 
-对于 1010 这种位级表示的数，把它向右移动 1 位得到 101，这两个数每个位都不同，因此异或得到的结果为 1111。
+对于 1010 这种位级表示的数，把它向右移动 1 位得到 101，这两个数每个位都不同，因此异或得到的结果为 1111。全为 1 的数 a 加 1 后变成 10000，与 a 相与为 0，因此用 a & (a + 1) == 0 判断 a 是否全为 1。
 
 ```java
 public boolean hasAlternatingBits(int n) {
@@ -436,9 +441,17 @@ public int findComplement(int num) {
 
 [Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-two-integers/description/)
 
-a ^ b 表示没有考虑进位的情况下两数的和，(a & b) \<\< 1 就是进位。
+a ^ b 表示没有考虑进位的情况下两数的和，(a & b) \<\< 1 就是进位。两者再相加又可能产生进位，重复到进位为 0 为止。例如 5 + 3：
 
-递归会终止的原因是 (a & b) \<\< 1 最右边会多一个 0，那么继续递归，进位最右边的 0 会慢慢增多，最后进位会变为 0，递归终止。
+```text
+a     b      a ^ b   (a & b) << 1
+101   011    110     010
+110   010    100     100
+100   100    000     1000
+000   1000   1000    0000
+```
+
+递归会终止的原因是进位由 a & b 左移一位得到，每一轮最右边连续的 0 至少多一个，最多 32 轮后变为 0。负数同样适用，int 按补码相加，超出 32 位的进位直接丢弃。
 
 ```java
 public int getSum(int a, int b) {
@@ -489,7 +502,7 @@ public int maxProduct(String[] words) {
 
 [Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode-cn.com/problems/counting-bits/description/)
 
-对于数字 6(110)，它可以看成是 4(100) 再加一个 2(10)，因此 dp[i] = dp[i&(i-1)] + 1;
+i&(i-1) 去掉 i 最低的那一位 1，结果比 i 小、已经算过，因此 dp[i] = dp[i&(i-1)] + 1。例如 dp[6] = dp[4] + 1 = 2（110 去掉最低的 1 得到 100）。
 
 ```java
 public int[] countBits(int num) {
@@ -500,3 +513,8 @@ public int[] countBits(int num) {
     return ret;
 }
 ```
+
+## 参考资料
+
+- [LeetCode 题库](https://leetcode.com/problemset/)
+- 左程云. 程序员代码面试指南 [M]. 电子工业出版社, 2015.
