@@ -193,6 +193,18 @@
   }
   preserveLegacyLinks();
   window.addEventListener('hashchange', preserveLegacyLinks);
+  // 学习路线的文章开头提示可以在学习站中按这条路线定级、排计划
+  var LEARN_ROUTES = { 'Java 后端': 'java', '大模型应用开发': 'llm', '面试冲刺': 'sprint' };
+  function learnCallout(vm, section) {
+    var match = decode(vm.route.path).match(/^\/notes\/学习路线 - (.+)$/), id = match && LEARN_ROUTES[match[1]];
+    if (!section || !id || section.querySelector('.learn-callout')) return;
+    var box = document.createElement('a');
+    box.className = 'learn-callout';
+    box.href = '/learn/#/start/' + id;
+    box.innerHTML = '<b>在学习站中按这条路线学</b><span>先做一轮自评定级，跳过已经掌握的天，按每天的时间和面试日期排出计划，自评过的题按间隔复习。</span>';
+    var heading = section.querySelector('h1');
+    (heading || section.firstChild).insertAdjacentElement(heading ? 'afterend' : 'beforebegin', box);
+  }
   window.$docsify = {
     name: 'CS-Notes',
     repo: 'https://github.com/CyC2018/CS-Notes',
@@ -226,6 +238,7 @@
         configureImages(document.querySelector('.markdown-section'), vm.route.path === '/');
         stepAnimations(document.querySelector('.markdown-section'));
         articleToc(vm);
+        learnCallout(vm, document.querySelector('.markdown-section'));
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
