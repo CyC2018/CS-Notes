@@ -225,6 +225,32 @@
     banner.querySelector('.learn-banner-text span').textContent = (due ? '今天有 ' + due + ' 道题到了该复习的时候，' : '') + '已经学完 ' + done + ' 天' + (due ? '' : '，接着学下一天');
     banner.querySelector('.learn-banner-go').textContent = '继续';
   }
+  // 首页的“今日面试题”：每天按日期换一道面试最常问的题（同一天所有读者看到的一样），链接到这道题的页面，先想再看要点
+  function dailyQuestion(section) {
+    var banner = section && section.querySelector('.learn-banner'), sections = window.CS_NOTES_LEARN_SECTIONS;
+    if (!banner || !sections || section.querySelector('.learn-daily')) return;
+    var seen = {}, hot = [];
+    Object.keys(sections).forEach(function (note) {
+      Object.keys(sections[note]).forEach(function (anchor) {
+        sections[note][anchor].forEach(function (q) { if (q[2] > 1 && !seen[q[0]]) { seen[q[0]] = true; hot.push(q); } });
+      });
+    });
+    if (!hot.length) return;
+    hot.sort(function (a, b) { return a[0] < b[0] ? -1 : 1; });
+    var p = localDay().split('-').map(Number), q = hot[Math.floor(Date.UTC(p[0], p[1] - 1, p[2]) / 864e5) % hot.length];
+    var record = learnRecord(), done = record && record.cards[q[0]] && record.cards[q[0]].last === localDay();
+    var link = document.createElement('a'), label = document.createElement('span'), text = document.createElement('span'), go = document.createElement('span');
+    link.className = 'learn-q learn-daily';
+    link.href = '/learn/q/' + q[0] + '.html';
+    label.className = 'learn-q-label';
+    label.textContent = '今日面试题';
+    text.className = 'learn-q-text';
+    text.textContent = q[1];
+    go.className = 'learn-q-go';
+    go.textContent = done ? '今天练过了' : '想一想';
+    link.appendChild(label); link.appendChild(text); link.appendChild(go);
+    banner.insertAdjacentElement('afterend', link);
+  }
   // 小节标题下列出这一节的面试题（显示第一道的题目和题数），点进去只练这一节；练过的显示已练或到期
   function sectionQuestions(vm, section) {
     var match = decode(vm.route.path).match(/^\/notes\/(.+)$/), note = match && match[1];
@@ -304,6 +330,7 @@
         practiceCallout(vm, document.querySelector('.markdown-section'));
         sectionQuestions(vm, document.querySelector('.markdown-section'));
         learnBanner(document.querySelector('.markdown-section'));
+        dailyQuestion(document.querySelector('.markdown-section'));
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
