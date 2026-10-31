@@ -31,7 +31,7 @@
 
 215\. Kth Largest Element in an Array (Medium)
 
-[Leetcode](https://leetcode.com/problems/kth-largest-element-in-an-array/description/) / [力扣](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/description/)
+[Leetcode](https://leetcode.com/problems/kth-largest-element-in-an-array/description/) / [力扣](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
 
 ```text
 Input: [3,2,1,5,6,4] and k = 2
@@ -123,7 +123,7 @@ private void shuffle(int[] a) {
 
 347\. Top K Frequent Elements (Medium)
 
-[Leetcode](https://leetcode.com/problems/top-k-frequent-elements/description/) / [力扣](https://leetcode-cn.com/problems/top-k-frequent-elements/description/)
+[Leetcode](https://leetcode.com/problems/top-k-frequent-elements/description/) / [力扣](https://leetcode.cn/problems/top-k-frequent-elements/description/)
 
 ```text
 Given [1,1,1,2,2,3] and k = 2, return [1,2].
@@ -170,7 +170,7 @@ public int[] topKFrequent(int[] nums, int k) {
 
 451\. Sort Characters By Frequency (Medium)
 
-[Leetcode](https://leetcode.com/problems/sort-characters-by-frequency/description/) / [力扣](https://leetcode-cn.com/problems/sort-characters-by-frequency/description/)
+[Leetcode](https://leetcode.com/problems/sort-characters-by-frequency/description/) / [力扣](https://leetcode.cn/problems/sort-characters-by-frequency/description/)
 
 ```text
 Input:
@@ -228,7 +228,7 @@ public String frequencySort(String s) {
 
 75\. Sort Colors (Medium)
 
-[Leetcode](https://leetcode.com/problems/sort-colors/description/) / [力扣](https://leetcode-cn.com/problems/sort-colors/description/)
+[Leetcode](https://leetcode.com/problems/sort-colors/description/) / [力扣](https://leetcode.cn/problems/sort-colors/description/)
 
 ```text
 Input: [2,0,2,1,1,0]
