@@ -53,6 +53,8 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .learn-q-label { flex: none; padding: 1px 7px; border-radius: 5px; background: #e3f2ea; color: var(--theme-color); font-size: 12px; font-weight: 600; }
 .learn-q-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #34495e; }
 .learn-q-go { flex: none; color: var(--theme-color); font-weight: 600; }
+.learn-daily { margin: -8px 0 18px; }
+.learn-daily .learn-q-text { display: -webkit-box; white-space: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .learn-q.due .learn-q-go { color: #c2410c; }
 @media (min-width: 769px) { .content { padding-top: 12px; } .article-toc { display: none; } }
 .page-toc-block { margin: 0 0 18px; padding: 0 0 14px 18px; border-bottom: 1px solid #e2e3dc; }
