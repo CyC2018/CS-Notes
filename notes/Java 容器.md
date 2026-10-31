@@ -1032,7 +1032,7 @@ capacity 32:  [5] 5 37  [21] 21 53
 
 ### A6 JDK 1.7 HashMap 扩容成环的模拟
 
-本机没有 JDK 7，这里在 JDK 21 上按 JDK 7 HashMap.transfer() 的逻辑模拟两个线程的执行顺序：A、B 的哈希值为 3 和 11，容量从 4 扩到 8 时都在 3 号桶。线程 1 执行完 next = e.next 后暂停，线程 2 完成整个扩容，线程 1 再继续：
+下面在 JDK 21 上按 JDK 7 HashMap.transfer() 的逻辑模拟两个线程的执行顺序：A、B 的哈希值为 3 和 11，容量从 4 扩到 8 时都在 3 号桶。线程 1 执行完 next = e.next 后暂停，线程 2 完成整个扩容，线程 1 再继续：
 
 ```java
 Entry e = old[3], next = e.next;            // 线程 1 读到 e、next 后暂停
