@@ -38,6 +38,13 @@ function verificationPaths(manifest) {
   for (const path of paths) {
     if (!records.has(path)) throw new Error(`构建缺少关键文件：${path}`);
   }
+  // 学习站（/learn/）：入口、数据和离线缓存脚本都要是这次构建的版本
+  if (records.has('learn/index.html')) {
+    for (const path of ['learn/index.html', 'learn/data.json', 'learn/app.js', 'learn/sw.js']) {
+      if (!records.has(path)) throw new Error(`构建缺少关键文件：${path}`);
+      paths.push(path);
+    }
+  }
   return [...new Set(paths)];
 }
 
@@ -62,6 +69,12 @@ export async function verifyPublished(manifestBytes, { fetcher = fetch, origin =
   if (sha256(remote) !== revision) throw new Error('正式域名的版本清单尚未与构建一致。');
   const records = new Map(manifest.files.map(file => [file.path, file]));
   // Check actual bytes as well as the manifest; an SPA fallback can also return HTTP 200.
+  // 目录地址 /learn/ 要返回学习站的入口页，而不是网站首页或 404
+  if (records.has('learn/index.html')) {
+    const entry = records.get('learn/index.html');
+    const bytes = await download(origin, 'learn/', revision, fetcher);
+    if (sha256(bytes) !== entry.sha256) throw new Error('正式域名的 /learn/ 没有返回学习站入口页');
+  }
   await Promise.all(paths.map(async path => {
     const record = records.get(path);
     const bytes = await download(origin, path, revision, fetcher);
