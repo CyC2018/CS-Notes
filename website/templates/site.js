@@ -206,14 +206,38 @@
     (heading || section.firstChild).insertAdjacentElement(heading ? 'afterend' : 'beforebegin', box);
   }
   // 学习站中有这篇笔记的题时，文章末尾提示读完练一练（只抽这篇笔记的题，还没开始学也可以练）
+  // 学习站的记录：同一个网站，保存在这个浏览器的 localStorage 中，不上传；入口处据此写出读者自己的进度
+  function learnRecord() {
+    try { var record = JSON.parse(localStorage.getItem('cs-learn-v1')); return record && record.cards ? record : null; } catch (error) { return null; }
+  }
+  function localDay() {
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  // 首页的学习站横幅：已经在学的读者显示今天到期的复习和完成的天数，按钮改为“继续”
+  function learnBanner(section) {
+    var banner = section && section.querySelector('.learn-banner'), record = learnRecord();
+    if (!banner || !record || !record.profile || banner.dataset.personal) return;
+    var today = localDay(), cards = record.cards, done = Object.keys(record.done || {}).length;
+    var due = Object.keys(cards).filter(function (id) { return cards[id].due && cards[id].due <= today; }).length;
+    banner.dataset.personal = '1';
+    banner.querySelector('b').textContent = '继续学习';
+    banner.querySelector('.learn-banner-text span').textContent = (due ? '今天有 ' + due + ' 道题到了该复习的时候，' : '') + '已经学完 ' + done + ' 天' + (due ? '' : '，接着学下一天');
+    banner.querySelector('.learn-banner-go').textContent = '继续';
+  }
   function practiceCallout(vm, section) {
     var match = decode(vm.route.path).match(/^\/notes\/(.+)$/), note = match && match[1];
-    var count = note && (window.CS_NOTES_LEARN_TOPICS || {})[note];
-    if (!section || !count || count < 2 || section.querySelector('.learn-practice')) return;
+    var ids = note && (window.CS_NOTES_LEARN_TOPICS || {})[note];
+    if (!section || !ids || ids.length < 2 || section.querySelector('.learn-practice')) return;
+    var record = learnRecord(), today = localDay();
+    var tried = record ? ids.filter(function (id) { return record.cards[id]; }) : [];
+    var due = tried.filter(function (id) { return record.cards[id].due && record.cards[id].due <= today; });
     var box = document.createElement('a');
     box.className = 'learn-callout learn-practice';
     box.href = '/learn/#/mock/' + encodeURIComponent(note);
-    box.innerHTML = '<b>读完练一练</b><span>学习站中有 ' + count + ' 道和这篇笔记有关的面试题：先自己答，再对照参考要点自评，自评过的题会按间隔提醒复习。</span>';
+    box.innerHTML = '<b>读完练一练</b><span>' + (tried.length
+      ? '这篇笔记有 ' + ids.length + ' 道面试题，你练过 ' + tried.length + ' 道' + (due.length ? '，其中 ' + due.length + ' 道到了该复习的时候' : '') + '。再练一组，自评后按间隔安排复习。'
+      : '学习站中有 ' + ids.length + ' 道和这篇笔记有关的面试题：先自己答，再对照参考要点自评，自评过的题会按间隔提醒复习。') + '</span>';
     // 放在上一篇、下一篇之前
     var after = section.querySelector('.page-nav') || section.querySelector('.site-footer');
     if (after) after.insertAdjacentElement('beforebegin', box); else section.appendChild(box);
@@ -253,6 +277,7 @@
         articleToc(vm);
         learnCallout(vm, document.querySelector('.markdown-section'));
         practiceCallout(vm, document.querySelector('.markdown-section'));
+        learnBanner(document.querySelector('.markdown-section'));
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
