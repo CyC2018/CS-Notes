@@ -15,6 +15,7 @@
         * [1. 数组区间和](#1-数组区间和)
         * [2. 数组中等差递增子区间的个数](#2-数组中等差递增子区间的个数)
         * [3. 最长有效括号](#3-最长有效括号)
+        * [4. 乘积最大子数组](#4-乘积最大子数组)
     * [分割整数](#分割整数)
         * [1. 分割整数的最大乘积](#1-分割整数的最大乘积)
         * [2. 按平方数来分割整数](#2-按平方数来分割整数)
@@ -55,7 +56,7 @@
 
 70\. Climbing Stairs (Easy)
 
-[Leetcode](https://leetcode.com/problems/climbing-stairs/description/) / [力扣](https://leetcode-cn.com/problems/climbing-stairs/description/)
+[Leetcode](https://leetcode.com/problems/climbing-stairs/description/) / [力扣](https://leetcode.cn/problems/climbing-stairs/description/)
 
 题目描述：有 N 阶楼梯，每次可以上一阶或者两阶，求有多少种上楼梯的方法。
 
@@ -86,7 +87,7 @@ public int climbStairs(int n) {
 
 198\. House Robber (Medium)
 
-[Leetcode](https://leetcode.com/problems/house-robber/description/) / [力扣](https://leetcode-cn.com/problems/house-robber/description/)
+[Leetcode](https://leetcode.com/problems/house-robber/description/) / [力扣](https://leetcode.cn/problems/house-robber/description/)
 
 题目描述：抢劫一排住户，但是不能抢邻近的住户，求最大抢劫量。
 
@@ -112,7 +113,7 @@ public int rob(int[] nums) {
 
 213\. House Robber II (Medium)
 
-[Leetcode](https://leetcode.com/problems/house-robber-ii/description/) / [力扣](https://leetcode-cn.com/problems/house-robber-ii/description/)
+[Leetcode](https://leetcode.com/problems/house-robber-ii/description/) / [力扣](https://leetcode.cn/problems/house-robber-ii/description/)
 
 题目描述：住户围成一圈，首尾两户相邻。
 
@@ -170,7 +171,7 @@ dp[i] 表示 i 封信都装错的方式数量。第 i 封信装进了第 j 个�
 
 64\. Minimum Path Sum (Medium)
 
-[Leetcode](https://leetcode.com/problems/minimum-path-sum/description/) / [力扣](https://leetcode-cn.com/problems/minimum-path-sum/description/)
+[Leetcode](https://leetcode.com/problems/minimum-path-sum/description/) / [力扣](https://leetcode.cn/problems/minimum-path-sum/description/)
 
 ```text
 [[1,3,1],
@@ -210,7 +211,7 @@ public int minPathSum(int[][] grid) {
 
 62\. Unique Paths (Medium)
 
-[Leetcode](https://leetcode.com/problems/unique-paths/description/) / [力扣](https://leetcode-cn.com/problems/unique-paths/description/)
+[Leetcode](https://leetcode.com/problems/unique-paths/description/) / [力扣](https://leetcode.cn/problems/unique-paths/description/)
 
 题目描述：统计从矩阵左上角到右下角的路径总数，每次只能向右或者向下移动。
 
@@ -283,7 +284,7 @@ public int maximalSquare(char[][] matrix) {
 
 303\. Range Sum Query - Immutable (Easy)
 
-[Leetcode](https://leetcode.com/problems/range-sum-query-immutable/description/) / [力扣](https://leetcode-cn.com/problems/range-sum-query-immutable/description/)
+[Leetcode](https://leetcode.com/problems/range-sum-query-immutable/description/) / [力扣](https://leetcode.cn/problems/range-sum-query-immutable/description/)
 
 ```text
 Given nums = [-2, 0, 3, -5, 2, -1]
@@ -317,7 +318,7 @@ class NumArray {
 
 413\. Arithmetic Slices (Medium)
 
-[Leetcode](https://leetcode.com/problems/arithmetic-slices/description/) / [力扣](https://leetcode-cn.com/problems/arithmetic-slices/description/)
+[Leetcode](https://leetcode.com/problems/arithmetic-slices/description/) / [力扣](https://leetcode.cn/problems/arithmetic-slices/description/)
 
 ```text
 A = [0, 1, 2, 3, 4]
@@ -441,13 +442,53 @@ public int longestValidParentheses(String s) {
 }
 ```
 
+### 4. 乘积最大子数组
+
+152\. Maximum Product Subarray (Medium)
+
+[Leetcode](https://leetcode.com/problems/maximum-product-subarray/) / [力扣](https://leetcode.cn/problems/maximum-product-subarray/)
+
+```text
+Input: [3, -1, 2, -4]
+Output: 24，子数组为整个数组
+```
+
+与 [子数组最大的和](Leetcode%20题解%20-%20贪心思想.md#10-子数组最大的和) 类似，都看以当前元素结尾的子数组，但乘积不能只保存最大值：负数乘上最小的负积会变成最大的正积。所以同时维护以 nums[i] 结尾的最大积 max 和最小积 min，三个候选是 nums[i] 本身、max × nums[i] 和 min × nums[i]。
+
+以 [3, -1, 2, -4] 为例：
+
+```text
+i   nums[i]   max   min   结果
+0     3        3     3     3
+1    -1       -1    -3     3
+2     2        2    -6     3
+3    -4       24    -8    24
+```
+
+走到 2 时最大积只有 2，-6 看起来没用，但它乘上 -4 就得到 24。只保存最大积的话，最后只能得到 3。
+
+```java
+public int maxProduct(int[] nums) {
+    int max = nums[0], min = nums[0], ret = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        int a = max * nums[i], b = min * nums[i];
+        max = Math.max(nums[i], Math.max(a, b));
+        min = Math.min(nums[i], Math.min(a, b));
+        ret = Math.max(ret, max);
+    }
+    return ret;
+}
+```
+
+只遍历一遍数组，时间复杂度 O(N)；只保存三个变量，空间复杂度 O(1)。
+
 ## 分割整数
 
 ### 1. 分割整数的最大乘积
 
 343\. Integer Break (Medium)
 
-[Leetcode](https://leetcode.com/problems/integer-break/description/) / [力扣](https://leetcode-cn.com/problems/integer-break/description/)
+[Leetcode](https://leetcode.com/problems/integer-break/description/) / [力扣](https://leetcode.cn/problems/integer-break/description/)
 
 题目描述：把正整数 n 拆成至少两个正整数的和，求这些整数乘积的最大值。For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
 
@@ -470,7 +511,7 @@ public int integerBreak(int n) {
 
 279\. Perfect Squares (Medium)
 
-[Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode-cn.com/problems/perfect-squares/description/)
+[Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode.cn/problems/perfect-squares/description/)
 
 题目描述：把 n 表示成若干个完全平方数的和，求最少需要几个。For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
 
@@ -510,7 +551,7 @@ private List<Integer> generateSquareList(int n) {
 
 91\. Decode Ways (Medium)
 
-[Leetcode](https://leetcode.com/problems/decode-ways/description/) / [力扣](https://leetcode-cn.com/problems/decode-ways/description/)
+[Leetcode](https://leetcode.com/problems/decode-ways/description/) / [力扣](https://leetcode.cn/problems/decode-ways/description/)
 
 题目描述：字母 A \~ Z 分别编码为 1 \~ 26，求一个数字串有多少种解码方法。Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
 
@@ -560,7 +601,7 @@ public int numDecodings(String s) {
 
 300\. Longest Increasing Subsequence (Medium)
 
-[Leetcode](https://leetcode.com/problems/longest-increasing-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/longest-increasing-subsequence/description/)
+[Leetcode](https://leetcode.com/problems/longest-increasing-subsequence/description/) / [力扣](https://leetcode.cn/problems/longest-increasing-subsequence/description/)
 
 ```java
 public int lengthOfLIS(int[] nums) {
@@ -629,7 +670,7 @@ private int binarySearch(int[] tails, int len, int key) {
 
 646\. Maximum Length of Pair Chain (Medium)
 
-[Leetcode](https://leetcode.com/problems/maximum-length-of-pair-chain/description/) / [力扣](https://leetcode-cn.com/problems/maximum-length-of-pair-chain/description/)
+[Leetcode](https://leetcode.com/problems/maximum-length-of-pair-chain/description/) / [力扣](https://leetcode.cn/problems/maximum-length-of-pair-chain/description/)
 
 ```text
 Input: [[1,2], [2,3], [3,4]]
@@ -665,7 +706,7 @@ public int findLongestChain(int[][] pairs) {
 
 376\. Wiggle Subsequence (Medium)
 
-[Leetcode](https://leetcode.com/problems/wiggle-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/wiggle-subsequence/description/)
+[Leetcode](https://leetcode.com/problems/wiggle-subsequence/description/) / [力扣](https://leetcode.cn/problems/wiggle-subsequence/description/)
 
 ```text
 Input: [1,7,4,9,2,5]
@@ -726,7 +767,7 @@ public int wiggleMaxLength(int[] nums) {
 
 1143\. Longest Common Subsequence
 
-[Leetcode](https://leetcode.com/problems/longest-common-subsequence/) / [力扣](https://leetcode-cn.com/problems/longest-common-subsequence/)
+[Leetcode](https://leetcode.com/problems/longest-common-subsequence/) / [力扣](https://leetcode.cn/problems/longest-common-subsequence/)
 
 ```java
 public int longestCommonSubsequence(String text1, String text2) {
@@ -850,7 +891,7 @@ public int knapsack(int W, int N, int[] weights, int[] values) {
 
 416\. Partition Equal Subset Sum (Medium)
 
-[Leetcode](https://leetcode.com/problems/partition-equal-subset-sum/description/) / [力扣](https://leetcode-cn.com/problems/partition-equal-subset-sum/description/)
+[Leetcode](https://leetcode.com/problems/partition-equal-subset-sum/description/) / [力扣](https://leetcode.cn/problems/partition-equal-subset-sum/description/)
 
 ```text
 Input: [1, 5, 11, 5]
@@ -892,7 +933,7 @@ private int computeArraySum(int[] nums) {
 
 494\. Target Sum (Medium)
 
-[Leetcode](https://leetcode.com/problems/target-sum/description/) / [力扣](https://leetcode-cn.com/problems/target-sum/description/)
+[Leetcode](https://leetcode.com/problems/target-sum/description/) / [力扣](https://leetcode.cn/problems/target-sum/description/)
 
 ```text
 Input: nums is [1, 1, 1, 1, 1], S is 3.
@@ -966,7 +1007,7 @@ private int findTargetSumWays(int[] nums, int start, int S) {
 
 474\. Ones and Zeroes (Medium)
 
-[Leetcode](https://leetcode.com/problems/ones-and-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/ones-and-zeroes/description/)
+[Leetcode](https://leetcode.com/problems/ones-and-zeroes/description/) / [力扣](https://leetcode.cn/problems/ones-and-zeroes/description/)
 
 ```text
 Input: Array = {"10", "0001", "111001", "1", "0"}, m = 5, n = 3
@@ -1006,7 +1047,7 @@ public int findMaxForm(String[] strs, int m, int n) {
 
 322\. Coin Change (Medium)
 
-[Leetcode](https://leetcode.com/problems/coin-change/description/) / [力扣](https://leetcode-cn.com/problems/coin-change/description/)
+[Leetcode](https://leetcode.com/problems/coin-change/description/) / [力扣](https://leetcode.cn/problems/coin-change/description/)
 
 ```text
 Example 1:
@@ -1046,7 +1087,7 @@ public int coinChange(int[] coins, int amount) {
 
 518\. Coin Change II (Medium)
 
-[Leetcode](https://leetcode.com/problems/coin-change-ii/description/) / [力扣](https://leetcode-cn.com/problems/coin-change-ii/description/)
+[Leetcode](https://leetcode.com/problems/coin-change-ii/description/) / [力扣](https://leetcode.cn/problems/coin-change-ii/description/)
 
 ```text
 Input: amount = 5, coins = [1, 2, 5]
@@ -1080,7 +1121,7 @@ public int change(int amount, int[] coins) {
 
 139\. Word Break (Medium)
 
-[Leetcode](https://leetcode.com/problems/word-break/description/) / [力扣](https://leetcode-cn.com/problems/word-break/description/)
+[Leetcode](https://leetcode.com/problems/word-break/description/) / [力扣](https://leetcode.cn/problems/word-break/description/)
 
 ```text
 s = "leetcode",
@@ -1113,7 +1154,7 @@ public boolean wordBreak(String s, List<String> wordDict) {
 
 377\. Combination Sum IV (Medium)
 
-[Leetcode](https://leetcode.com/problems/combination-sum-iv/description/) / [力扣](https://leetcode-cn.com/problems/combination-sum-iv/description/)
+[Leetcode](https://leetcode.com/problems/combination-sum-iv/description/) / [力扣](https://leetcode.cn/problems/combination-sum-iv/description/)
 
 ```text
 nums = [1, 2, 3]
@@ -1163,7 +1204,7 @@ public int combinationSum4(int[] nums, int target) {
 
 309\. Best Time to Buy and Sell Stock with Cooldown (Medium)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
 
 题目描述：可以进行多次交易，但卖出之后需要有一天的冷却时间才能再次买入。
 
@@ -1197,7 +1238,7 @@ public int maxProfit(int[] prices) {
 
 714\. Best Time to Buy and Sell Stock with Transaction Fee (Medium)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/)
 
 ```text
 Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
@@ -1239,7 +1280,7 @@ public int maxProfit(int[] prices, int fee) {
 
 123\. Best Time to Buy and Sell Stock III (Hard)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/description/)
 
 四个变量依次是到当天为止完成第一次买入、第一次卖出、第二次买入、第二次卖出后的最大收益，第二次买入以第一次卖出的收益为起点。
 
@@ -1269,7 +1310,7 @@ public int maxProfit(int[] prices) {
 
 188\. Best Time to Buy and Sell Stock IV (Hard)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/description/)
 
 maxProfit[i][j] 表示最多交易 i 次、到第 j 天为止的最大收益。第 j 天要么不卖出，收益为 maxProfit[i][j - 1]；要么在之前的某天 m 买入、第 j 天卖出，收益为 prices[j] + max(maxProfit[i - 1][m] - prices[m])，localMax 在遍历 j 时维护这个最大值。k >= n / 2 时次数不构成限制，累加所有上涨的差价即可。
 
@@ -1303,7 +1344,7 @@ public int maxProfit(int k, int[] prices) {
 
 583\. Delete Operation for Two Strings (Medium)
 
-[Leetcode](https://leetcode.com/problems/delete-operation-for-two-strings/description/) / [力扣](https://leetcode-cn.com/problems/delete-operation-for-two-strings/description/)
+[Leetcode](https://leetcode.com/problems/delete-operation-for-two-strings/description/) / [力扣](https://leetcode.cn/problems/delete-operation-for-two-strings/description/)
 
 ```text
 Input: "sea", "eat"
@@ -1334,7 +1375,7 @@ public int minDistance(String word1, String word2) {
 
 72\. Edit Distance (Medium)
 
-[Leetcode](https://leetcode.com/problems/edit-distance/description/) / [力扣](https://leetcode-cn.com/problems/edit-distance/description/)
+[Leetcode](https://leetcode.com/problems/edit-distance/description/) / [力扣](https://leetcode.cn/problems/edit-distance/description/)
 
 ```text
 Example 1:
@@ -1395,7 +1436,7 @@ public int minDistance(String word1, String word2) {
 
 650\. 2 Keys Keyboard (Medium)
 
-[Leetcode](https://leetcode.com/problems/2-keys-keyboard/description/) / [力扣](https://leetcode-cn.com/problems/2-keys-keyboard/description/)
+[Leetcode](https://leetcode.com/problems/2-keys-keyboard/description/) / [力扣](https://leetcode.cn/problems/2-keys-keyboard/description/)
 
 题目描述：最开始只有一个字符 A，问需要多少次操作能够得到 n 个字符 A，每次操作可以复制当前所有的字符，或者粘贴。
 
