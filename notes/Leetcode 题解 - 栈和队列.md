@@ -17,7 +17,7 @@
 
 232\. Implement Queue using Stacks (Easy)
 
-[Leetcode](https://leetcode.com/problems/implement-queue-using-stacks/description/) / [力扣](https://leetcode-cn.com/problems/implement-queue-using-stacks/description/)
+[Leetcode](https://leetcode.com/problems/implement-queue-using-stacks/description/) / [力扣](https://leetcode.cn/problems/implement-queue-using-stacks/description/)
 
 栈的顺序为后进先出，而队列的顺序为先进先出。使用两个栈实现队列，一个元素需要经过两个栈才能出队列，在经过第一个栈时元素顺序被反转，经过第二个栈时再次被反转，此时就是先进先出顺序。
 
@@ -61,7 +61,7 @@ class MyQueue {
 
 225\. Implement Stack using Queues (Easy)
 
-[Leetcode](https://leetcode.com/problems/implement-stack-using-queues/description/) / [力扣](https://leetcode-cn.com/problems/implement-stack-using-queues/description/)
+[Leetcode](https://leetcode.com/problems/implement-stack-using-queues/description/) / [力扣](https://leetcode.cn/problems/implement-stack-using-queues/description/)
 
 在将一个元素 x 插入队列时，为了维护原来的后进先出顺序，需要让 x 插入队列首部。而队列的默认插入顺序是队列尾部，因此在将 x 插入队列尾部之后，需要让除了 x 之外的所有元素出队列，再入队列。
 
@@ -100,7 +100,7 @@ class MyStack {
 
 155\. Min Stack (Medium)
 
-[Leetcode](https://leetcode.com/problems/min-stack/description/) / [力扣](https://leetcode-cn.com/problems/min-stack/description/)
+[Leetcode](https://leetcode.com/problems/min-stack/description/) / [力扣](https://leetcode.cn/problems/min-stack/description/)
 
 用一个辅助栈 minStack 与数据栈同步压入和弹出，minStack 的每个位置保存数据栈从栈底到该位置的最小值。例如依次压入 3、5、2，minStack 为 3、3、2；弹出 2 之后，栈顶的 3 就是剩下元素的最小值。
 
@@ -145,7 +145,7 @@ class MinStack {
 
 20\. Valid Parentheses (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/valid-parentheses/description/)
+[Leetcode](https://leetcode.com/problems/valid-parentheses/description/) / [力扣](https://leetcode.cn/problems/valid-parentheses/description/)
 
 ```text
 "()[]{}"
@@ -178,11 +178,13 @@ public boolean isValid(String s) {
 }
 ```
 
+每个字符最多入栈、出栈一次，时间复杂度 O(N)；全是左括号时栈中有 N 个元素，空间复杂度 O(N)。
+
 ## 5. 数组中元素与下一个比它大的元素之间的距离
 
 739\. Daily Temperatures (Medium)
 
-[Leetcode](https://leetcode.com/problems/daily-temperatures/description/) / [力扣](https://leetcode-cn.com/problems/daily-temperatures/description/)
+[Leetcode](https://leetcode.com/problems/daily-temperatures/description/) / [力扣](https://leetcode.cn/problems/daily-temperatures/description/)
 
 ```text
 Input: [73, 74, 75, 71, 69, 72, 76, 73]
@@ -215,7 +217,7 @@ public int[] dailyTemperatures(int[] temperatures) {
 
 503\. Next Greater Element II (Medium)
 
-[Leetcode](https://leetcode.com/problems/next-greater-element-ii/description/) / [力扣](https://leetcode-cn.com/problems/next-greater-element-ii/description/)
+[Leetcode](https://leetcode.com/problems/next-greater-element-ii/description/) / [力扣](https://leetcode.cn/problems/next-greater-element-ii/description/)
 
 ```text
 Input: [1,2,1]
