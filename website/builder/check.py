@@ -32,7 +32,7 @@ def check(source, output):
             if not name:
                 continue
             references += 1
-            if name not in files and name + '.md' not in files:
+            if name not in files and name + '.md' not in files and name.rstrip('/') + '/index.html' not in files:
                 errors.append('缺失引用：' + name)
     for name in re.findall(r'(?:src|href)="(/[^"#]+)"', (output / 'index.html').read_text()):
         if name.split('?')[0].lstrip('/') not in files:
