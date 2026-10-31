@@ -530,8 +530,8 @@ JWT 只是令牌的格式，而 OAuth 2.0 是授权框架，规定第三方应�
 
 多个系统在同一个父域名下时（a.example.com、b.example.com），把会话的 Cookie 设置为 Domain=example.com 就能共享。域名不同时（shop.com、pay.com），Cookie 无法跨域，需要一个统一的认证中心 sso.example.com：
 
-1. 用户访问 pay.com，pay.com 发现没有会话，重定向到 sso.example.com/login?redirect=https://pay.com/；
-2. 用户之前在 shop.com 登录时已经在认证中心登录过，认证中心的域名下有它自己的 Cookie，于是不需要输入密码，直接生成一个一次性的票据，重定向回 https://pay.com/?ticket=ST-1024；
+1. 用户访问 pay.com，pay.com 发现没有会话，重定向到 `sso.example.com/login?redirect=https://pay.com/`；
+2. 用户之前在 shop.com 登录时已经在认证中心登录过，认证中心的域名下有它自己的 Cookie，于是不需要输入密码，直接生成一个一次性的票据，重定向回 `https://pay.com/?ticket=ST-1024`；
 3. pay.com 的后端拿票据向认证中心验证，得到用户信息后建立 pay.com 自己的会话。
 
 票据经过浏览器的地址栏，可能被记录或截获，所以只能使用一次、有效期很短，并且必须由后端去认证中心验证，而不是直接信任。
@@ -659,7 +659,9 @@ ETag: "82e22293907ce725faf67773957acd12"
 If-None-Match: "82e22293907ce725faf67773957acd12"
 ```
 
-Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器：时间只精确到秒，同一秒内的多次修改区分不出来；文件被重新生成而内容没变时，修改时间也会变，导致不必要的重新下载。所以它通常作为 ETag 的备用方案。如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
+Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器：时间只精确到秒，同一秒内的多次修改区分不出来；文件被重新生成而内容没变时，修改时间也会变，导致不必要的重新下载。所以它通常作为 ETag 的备用方案。
+
+如果响应首部字段里含有这个信息，客户端可以在后续的请求中带上 If-Modified-Since 来验证缓存。服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 200 OK。如果请求的资源从那时起未经修改，那么返回一个不带有实体主体的 304 Not Modified 响应报文。
 
 ```http
 Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
@@ -886,7 +888,7 @@ SSE 的局限：
 
 ### 跨域 🔥
 
-同源指的是协议、域名和端口都相同。浏览器的同源策略限制网页中的脚本读取其它源的响应，例如 https://shop.example.com 页面中的脚本请求 https://api.example.com/orders，请求能够发出去，但浏览器默认不把响应交给脚本。
+同源指的是协议、域名和端口都相同。浏览器的同源策略限制网页中的脚本读取其它源的响应，例如 `https://shop.example.com` 页面中的脚本请求 `https://api.example.com/orders`，请求能够发出去，但浏览器默认不把响应交给脚本。
 
 同源策略保护的是用户浏览器中的身份和网络位置：没有它，用户打开一个恶意网页，网页中的脚本就能以用户的身份（带着 Cookie）请求其它网站，或者访问用户所在内网中的服务，并读取响应的内容。
 
@@ -976,7 +978,7 @@ HTTPS 只防网络中的窃听、冒充服务器和篡改。SQL 注入、XSS、C
 - 优点：公开密钥可以公开传输，被截获也无法用来解密；
 - 缺点：运算速度慢。
 
-例如本机 RSA-2048 用私钥解密每秒约 1600 次，每次只能处理两百多字节，合计不到 0.4 MB/s；对称加密 AES-128-GCM 每秒能加密约 6 GB（OpenSSL 3.6 实测，见[附录 A14](#a14-对称加密与非对称加密的速度)）。所以非对称加密只适合处理密钥、签名这类很短的数据。
+例如在 Apple M1 Pro 上，RSA-2048 用私钥解密每秒约 1600 次，每次只能处理两百多字节，合计不到 0.4 MB/s；对称加密 AES-128-GCM 每秒能加密约 6 GB（OpenSSL 3.6 实测，见[附录 A14](#a14-对称加密与非对称加密的速度)）。所以非对称加密只适合处理密钥、签名这类很短的数据。
 
 <div align="center"> <img src="pics/crypto-asymmetric.png" width="720px"/> </div><br>
 
@@ -1014,7 +1016,7 @@ TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_A
 
 证书中的签名是 CA 用自己的私钥对证书内容（域名、公钥、有效期、签发者等）的哈希值计算出来的。客户端用上一级证书中的公钥验证签名：证书内容只要被改动一个字节，哈希值就会变化，签名验证就会失败。例如把 baidu.com 证书中的 CN 改成 baidu.con，再用中间证书验证，结果为 certificate signature failure（OpenSSL 3.0 实测，见[附录 A9](#a9-证书验证)）。
 
-根证书是信任的起点，它是自签名的，无法再向上验证，因此通常不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 www.baidu.com。
+根证书是信任的起点，它是自签名的，无法再向上验证，因此通常不在握手中发送，而是预装在操作系统或浏览器的信任列表中。客户端沿证书链逐级验证，链的最上端必须是信任列表中的根证书。除了签名，客户端还要检查证书是否在有效期内、是否已被吊销，以及访问的域名是否在证书的 Subject Alternative Name 中，例如 baidu.com 的证书列出了 53 个域名，其中的 *.baidu.com 匹配 `www.baidu.com`。
 
 证书在有效期内也可能被提前吊销，例如私钥泄露。查询方式有两种，证书中可以写明相应的地址（baidu.com 的证书两者都有，见[附录 A9](#a9-证书验证)）：证书吊销列表（Certificate Revocation List, CRL）是 CA 定期发布的全部被吊销证书的序列号；在线证书状态协议（Online Certificate Status Protocol, OCSP）只查询这一张证书。每次连接都去问 CA 既慢又暴露用户的访问记录，所以服务器可以在握手时附带 CA 签过名的 OCSP 响应，称为 OCSP Stapling；浏览器也大多改为定期下载厂商汇总的吊销列表。
 
@@ -1030,7 +1032,7 @@ TLS 握手完成三件事：协商加密算法、验证服务器的证书、协�
 
 <div align="center"> <img src="pics/tls-handshake.png" width="760px"/> </div><br>
 
-TLS 1.2 要 2 个 RTT 之后才能发送 HTTP 请求。TLS 1.3 把 ECDHE 公钥直接放在 ClientHello 中，服务器回复 ServerHello 时双方就能算出密钥，之后的握手报文（图中花括号内）都已加密，1 个 RTT 后就能发送请求；TLS 1.3 还去掉了 RSA 密钥交换等不安全的算法。
+TLS 1.2 要 2 个 RTT 之后才能发送 HTTP 请求。TLS 1.3 把 ECDHE 公钥直接放在 ClientHello 中，服务器回复 ServerHello 时双方就能算出密钥，之后的握手报文（图中花括号内）都已加密，1 个 RTT 后就能发送请求。如果客户端猜错了服务器支持的曲线，服务器会回复 HelloRetryRequest 要求重发 ClientHello，多花 1 个 RTT。TLS 1.3 还去掉了 RSA 密钥交换等不安全的算法。
 
 #### 1. 握手报文的内容
 
@@ -1069,7 +1071,11 @@ RSA 密钥交换没有前向安全：攻击者录下通信，日后拿到服务�
 
 Finished 报文的内容是用主密钥对此前全部握手报文的哈希值计算出的校验值（TLS 1.2 中为 12 字节）。握手的前几个报文是明文，攻击者可以篡改，例如删掉 ClientHello 中安全的密码套件，迫使双方使用弱算法，称为降级攻击。双方各自根据自己收发的报文计算校验值，报文被改过，两边的结果就对不上，握手失败。
 
-完整的握手要验证证书和签名，开销较大。客户端再次连接同一个服务器时可以恢复会话：服务器在握手后发给客户端一个会话票据（即上面 TLS 1.2 握手中的 NewSessionTicket），客户端下次连接时带上它，双方直接由之前协商的密钥派生出新的会话密钥，不再验证证书。TLS 1.3 恢复会话时，客户端还可以在第一个报文中就带上请求，称为 0-RTT。需要注意的是，0-RTT 的数据可以被攻击者录下后重放，通常只有 GET 这类安全的请求才放在 0-RTT 中发送。
+完整的握手要验证证书和签名，开销较大。客户端再次连接同一个服务器时可以恢复会话：服务器在握手后发给客户端一个会话票据（即上面 TLS 1.2 握手中的 NewSessionTicket），客户端下次连接时带上它，双方直接由之前协商的密钥派生出新的会话密钥，不再验证证书。
+
+TLS 1.3 恢复会话时通常还会再做一次 ECDHE，即使票据对应的密钥泄露，握手之后的应用数据密钥也算不出来；只用票据派生密钥则没有前向安全。
+
+TLS 1.3 恢复会话时，客户端还可以在第一个报文中就带上请求，称为 0-RTT。0-RTT 的数据只用票据派生的密钥加密，不享有上面的前向安全保证。需要注意的是，0-RTT 的数据可以被攻击者录下后重放，通常只有 GET 这类安全的请求才放在 0-RTT 中发送。TLS 只要求每个服务器实例对同一次握手的 0-RTT 数据最多接受一次（例如每张票据只能用一次），客户端重试造成的重复请求仍要由应用处理；服务器不想冒险时可以返回 425 Too Early，让客户端在握手完成后重发。
 
 #### 4. 一次 HTTPS 请求的过程
 
@@ -1095,7 +1101,7 @@ HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了�
 - 因为需要进行加密解密等过程，因此速度会更慢；
 - 需要申请和维护证书，不过 Let's Encrypt 等机构可以免费签发证书。
 
-速度上的主要开销是建立连接时的 TLS 握手。例如直连 www.baidu.com（TLS 1.2）时，TCP 建连约 12 ms，TLS 握手约 34 ms；www.jd.com（TLS 1.3）的 TLS 握手约 15 ms，与 TCP 建连的 13 ms 相当（各 5 次的中位数，macOS 实测，见[附录 A11](#a11-https-各阶段的耗时)）。对称加密本身很快，现代 CPU 有 AES 指令加速；长连接和会话恢复可以避免每次请求都完整握手。
+速度上的主要开销是建立连接时的 TLS 握手。例如直连 `www.baidu.com`（TLS 1.2）时，TCP 建连约 12 ms，TLS 握手约 34 ms；`www.jd.com`（TLS 1.3）的 TLS 握手约 15 ms，与 TCP 建连的 13 ms 相当（各 5 次的中位数，macOS 实测，见[附录 A11](#a11-https-各阶段的耗时)）。对称加密本身很快，现代 CPU 有 AES 指令加速；长连接和会话恢复可以避免每次请求都完整握手。
 
 ## 七、HTTP/1.1 新特性
 
@@ -1491,7 +1497,7 @@ $ curl --resolve shop.example:9443:127.0.0.1 https://shop.example:9443/
 curl: (60) SSL certificate problem: self-signed certificate
 ```
 
-证书中的吊销查询地址（2026-10-30，LibreSSL 3.3.6 的 openssl s_client -status 连接 www.baidu.com，再用 openssl x509 -text 查看服务器证书）：
+证书中的吊销查询地址（2026-10-30，LibreSSL 3.3.6 的 openssl s_client -status 连接 `www.baidu.com`，再用 openssl x509 -text 查看服务器证书）：
 
 ```text
 OCSP response: no response sent
@@ -1716,7 +1722,8 @@ AES-128-GCM    6280411.97k
 - [XMLHttpRequest (XHR) Uses Multiple Packets for HTTP POST?](https://blog.josephscott.org/2009/08/27/xmlhttprequest-xhr-uses-multiple-packets-for-http-post/)
 - [Symmetric vs. Asymmetric Encryption – What are differences?](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
 - [Web 性能优化与 HTTP/2](https://www.kancloud.cn/digest/web-performance-http2)
-- [RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3](https://www.rfc-editor.org/rfc/rfc8446)
+- [RFC 9846: The Transport Layer Security (TLS) Protocol Version 1.3](https://www.rfc-editor.org/rfc/rfc9846)
+- [RFC 8470: Using Early Data in HTTP](https://www.rfc-editor.org/rfc/rfc8470)
 - [RFC 7541: HPACK: Header Compression for HTTP/2](https://www.rfc-editor.org/rfc/rfc7541)
 - [RFC 9114: HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
 - [RFC 9000: QUIC](https://www.rfc-editor.org/rfc/rfc9000)
