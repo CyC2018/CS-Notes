@@ -43,6 +43,8 @@ verify_updates.py 在临时副本中修改文章、替换配图、新增文章�
 
 页面模板保留手机分类导航、折叠目录、搜索和旧文章入口兼容；固定版本的浏览器依赖及许可证保存在 templates/vendor 中。
 
+学习站（定级、每日计划、间隔复习）的源码在仓库根目录的 learn/，构建时由 build.py 调用 learn/build.py 生成到 dist/learn/，随网站一起发布；首页、侧边栏和三条学习路线的文章开头有入口。说明见 learn/README.md。
+
 ## 自动更新与发布
 
 `.github/workflows/website.yml` 在 master 提交后、北京时间每天 09:17 和 21:17，以及手动 Run workflow 时运行。PR 仅验证合并后的源码，不读取部署凭据。CI 使用 `refresh.py --from-checkout` 从已检出的 Git 提交生成，源码中未提交的本机文件不会进入产物。
