@@ -245,6 +245,12 @@ def build(optimize=True):
             if learn_report['pending']:
                 print(prefix + '学习站：内容与 learn/content.lock.json 不一致，请在本机运行 python3 learn/maintain.py 查看并写入：'
                       + json.dumps(learn_report['pending'], ensure_ascii=False), file=sys.stderr)
+        learn_topics = {}
+        if learn_report is not None:
+            # 每篇笔记在学习站中有几道题（题目的原文链接指向这篇笔记），文章末尾据此提示“读完练一练”
+            for question in json.loads((dist / 'learn' / 'data.json').read_text())['questions'].values():
+                for note in {link['note'] for link in question['links'] if link.get('note')}:
+                    learn_topics[note] = learn_topics.get(note, 0) + 1
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
@@ -254,7 +260,8 @@ def build(optimize=True):
             'window.CS_NOTES_PATHS = ' + json.dumps(note_paths, ensure_ascii=False) + ';\n'
             'window.CS_NOTES_LEGACY_ROUTES = ' + json.dumps(legacy, ensure_ascii=False, separators=(',', ':')) + ';\n'
             'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n'
-            'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n')
+            'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n'
+            'window.CS_NOTES_LEARN_TOPICS = ' + json.dumps(learn_topics, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
         learn = [*LEARN_BUILD.parent.glob('*.py'), *(LEARN_BUILD.parent / 'src').rglob('*')] if LEARN_BUILD.is_file() else []
         for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*'), *learn]):
