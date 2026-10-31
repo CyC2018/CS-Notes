@@ -52,7 +52,7 @@ x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(
 
 204\. Count Primes (Medium)
 
-[Leetcode](https://leetcode.com/problems/count-primes/description/) / [力扣](https://leetcode-cn.com/problems/count-primes/description/)
+[Leetcode](https://leetcode.com/problems/count-primes/description/) / [力扣](https://leetcode.cn/problems/count-primes/description/)
 
 埃拉托斯特尼筛法在每次找到一个素数时，将能被素数整除的数排除掉。
 
@@ -134,7 +134,7 @@ private boolean isEven(int x) {
 
 504\. Base 7 (Easy)
 
-[Leetcode](https://leetcode.com/problems/base-7/description/) / [力扣](https://leetcode-cn.com/problems/base-7/description/)
+[Leetcode](https://leetcode.com/problems/base-7/description/) / [力扣](https://leetcode.cn/problems/base-7/description/)
 
 ```java
 public String convertToBase7(int num) {
@@ -167,7 +167,7 @@ public String convertToBase7(int num) {
 
 405\. Convert a Number to Hexadecimal (Easy)
 
-[Leetcode](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/) / [力扣](https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/description/)
+[Leetcode](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/) / [力扣](https://leetcode.cn/problems/convert-a-number-to-hexadecimal/description/)
 
 ```text
 Input:
@@ -202,7 +202,7 @@ public String toHex(int num) {
 
 168\. Excel Sheet Column Title (Easy)
 
-[Leetcode](https://leetcode.com/problems/excel-sheet-column-title/description/) / [力扣](https://leetcode-cn.com/problems/excel-sheet-column-title/description/)
+[Leetcode](https://leetcode.com/problems/excel-sheet-column-title/description/) / [力扣](https://leetcode.cn/problems/excel-sheet-column-title/description/)
 
 ```text
 1 -> A
@@ -232,7 +232,7 @@ public String convertToTitle(int n) {
 
 172\. Factorial Trailing Zeroes (Medium)
 
-[Leetcode](https://leetcode.com/problems/factorial-trailing-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/factorial-trailing-zeroes/description/)
+[Leetcode](https://leetcode.com/problems/factorial-trailing-zeroes/description/) / [力扣](https://leetcode.cn/problems/factorial-trailing-zeroes/description/)
 
 尾部的 0 由 2 * 5 得来，2 的数量明显多于 5 的数量，因此只要统计有多少个 5 即可。
 
@@ -252,7 +252,7 @@ public int trailingZeroes(int n) {
 
 67\. Add Binary (Easy)
 
-[Leetcode](https://leetcode.com/problems/add-binary/description/) / [力扣](https://leetcode-cn.com/problems/add-binary/description/)
+[Leetcode](https://leetcode.com/problems/add-binary/description/) / [力扣](https://leetcode.cn/problems/add-binary/description/)
 
 ```text
 a = "11"
@@ -282,7 +282,7 @@ public String addBinary(String a, String b) {
 
 415\. Add Strings (Easy)
 
-[Leetcode](https://leetcode.com/problems/add-strings/description/) / [力扣](https://leetcode-cn.com/problems/add-strings/description/)
+[Leetcode](https://leetcode.com/problems/add-strings/description/) / [力扣](https://leetcode.cn/problems/add-strings/description/)
 
 字符串的值为非负整数。
 
@@ -306,7 +306,7 @@ public String addStrings(String num1, String num2) {
 
 462\. Minimum Moves to Equal Array Elements II (Medium)
 
-[Leetcode](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/) / [力扣](https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements-ii/description/)
+[Leetcode](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/) / [力扣](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements-ii/description/)
 
 ```text
 Input:
@@ -404,7 +404,7 @@ private void swap(int[] nums, int i, int j) {
 
 169\. Majority Element (Easy)
 
-[Leetcode](https://leetcode.com/problems/majority-element/description/) / [力扣](https://leetcode-cn.com/problems/majority-element/description/)
+[Leetcode](https://leetcode.com/problems/majority-element/description/) / [力扣](https://leetcode.cn/problems/majority-element/description/)
 
 先对数组排序，最中间那个数出现次数一定多于 n / 2。
 
@@ -438,7 +438,7 @@ public int majorityElement(int[] nums) {
 
 367\. Valid Perfect Square (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-perfect-square/description/) / [力扣](https://leetcode-cn.com/problems/valid-perfect-square/description/)
+[Leetcode](https://leetcode.com/problems/valid-perfect-square/description/) / [力扣](https://leetcode.cn/problems/valid-perfect-square/description/)
 
 ```text
 Input: 16
@@ -466,7 +466,7 @@ public boolean isPerfectSquare(int num) {
 
 326\. Power of Three (Easy)
 
-[Leetcode](https://leetcode.com/problems/power-of-three/description/) / [力扣](https://leetcode-cn.com/problems/power-of-three/description/)
+[Leetcode](https://leetcode.com/problems/power-of-three/description/) / [力扣](https://leetcode.cn/problems/power-of-three/description/)
 
 1162261467 是 int 范围内最大的 3 的幂（3<sup>19</sup>）。3 是素数，3<sup>19</sup> 的正约数只有 3<sup>0</sup> \~ 3<sup>19</sup>，因此能整除它的正整数一定是 3 的幂。
 
@@ -480,7 +480,7 @@ public boolean isPowerOfThree(int n) {
 
 238\. Product of Array Except Self (Medium)
 
-[Leetcode](https://leetcode.com/problems/product-of-array-except-self/description/) / [力扣](https://leetcode-cn.com/problems/product-of-array-except-self/description/)
+[Leetcode](https://leetcode.com/problems/product-of-array-except-self/description/) / [力扣](https://leetcode.cn/problems/product-of-array-except-self/description/)
 
 ```text
 For example, given [1,2,3,4], return [24,12,8,6].
@@ -522,7 +522,7 @@ public int[] productExceptSelf(int[] nums) {
 
 628\. Maximum Product of Three Numbers (Easy)
 
-[Leetcode](https://leetcode.com/problems/maximum-product-of-three-numbers/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-three-numbers/description/)
+[Leetcode](https://leetcode.com/problems/maximum-product-of-three-numbers/description/) / [力扣](https://leetcode.cn/problems/maximum-product-of-three-numbers/description/)
 
 ```text
 Input: [1,2,3,4]
