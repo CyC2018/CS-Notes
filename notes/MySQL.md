@@ -51,6 +51,7 @@
         * [A11 redo log 的检查点](#a11-redo-log-的检查点)
         * [A12 主从复制的初始化与延迟](#a12-主从复制的初始化与延迟)
         * [A13 InnoDB 与 MyISAM 的并发读写](#a13-innodb-与-myisam-的并发读写)
+        * [A14 找到持有锁的源头事务](#a14-找到持有锁的源头事务)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -150,7 +151,7 @@ MEMORY 引擎支持哈希索引，InnoDB 不能显式创建哈希索引，但有
 - 联合索引：建立在多个列上的索引，见下文的 [多列索引](#2-多列索引)；
 - 前缀索引：只索引字符串的前一部分，见下文的 [前缀索引](#4-前缀索引)。
 
-唯一索引和普通索引的查询速度差别很小：等值查询时唯一索引找到一条就停止（type 为 const），普通索引还要往后多读一条（type 为 ref）。区别主要在写入：普通索引的页不在缓冲池中时，InnoDB 可以先把修改记在 change buffer 中，以后读入这一页时再合并；唯一索引插入前必须读出这一页检查是否重复，用不上 change buffer。MySQL 8.4 起 change buffer 默认关闭，这个差别也就没有了。
+唯一索引和普通索引的查询速度差别很小：等值查询时唯一索引找到一条就停止（type 为 const），普通索引还要往后多读一条（type 为 ref）。区别主要在写入：普通索引的页不在缓冲池中时，InnoDB 可以先把修改记在 change buffer 中，以后读入这一页时再合并；唯一索引插入前必须读出这一页检查是否重复，用不上 change buffer。MySQL 8.4 把 change buffer 默认关闭，这个差别也就没有了；9.5 起又默认开启（innodb_change_buffering 为 all），所以要看所用的版本和配置。
 
 ### 索引的优点
 
@@ -403,7 +404,7 @@ Count: 2  Time=0.70s (1s)  Lock=0.00s (0s)  Rows=0.5 (1), root[root]@localhost
 - 走了索引但回表太多：改为覆盖索引，或者用 [深分页](#深分页) 中的延迟关联；
 - 出现 Using filesort、Using temporary：让排序和分组的列利用索引的顺序，见 [索引列的顺序](#3-索引列的顺序)。filesort 在排序缓冲中排序，缓冲最大为 sort_buffer_size（默认 256 KB），放不下时分块排序后写入临时文件再归并，所以先让索引满足排序，再考虑调大这个参数；
 - 连接查询中被驱动表的连接列没有索引：外层的每一行都要扫描一遍被驱动表，应在连接列上建索引；MySQL 8.0.18 起这种情况改用哈希连接，但仍要读完整张被驱动表；
-- Lock_time 大，或者同一条语句的耗时忽长忽短：通常是在等待行锁或元数据锁，见 [MySQL 中的锁](数据库系统原理.md#mysql-中的锁)；
+- Lock_time 大，或者同一条语句的耗时忽长忽短：通常是在等待行锁或元数据锁，见 [MySQL 中的锁](数据库系统原理.md#mysql-中的锁)。行锁等待查询 sys.innodb_lock_waits（元数据锁等待查 performance_schema.metadata_locks），可以看到谁在等谁，等待的连接也可能挡住别人，只作为 blocking_pid 出现、自己不在等待的那个连接才是源头；它执行完语句却没有提交时，blocking_query 为 NULL，在 PROCESSLIST 中显示为 Sleep，要到应用中找到没有提交的事务，紧急时用 KILL 结束这个连接，它的事务会回滚（MySQL 8.0 实测，见[附录 A14](#a14-找到持有锁的源头事务)）；
 - 统计信息不准导致选错了索引：执行 ANALYZE TABLE 更新统计信息，必要时用 FORCE INDEX 指定索引；
 - 索引已经用对，但要读的行本身就很多（例如按月统计几千万条订单）：定时汇总到统计表，或者缓存查询结果。
 
@@ -655,7 +656,7 @@ TIMESTAMP 比 DATETIME 少占用 1 字节，但是只能表示到 2038 年，需
 
 订单按 user_id 分片后，按订单号或者按商家查询时不知道数据在哪个分片，只能查询所有分片再合并。常用的做法：
 
-- 基因法：生成订单号时把最后 4 个二进制位设为 user_id % 16，订单号 % 16 就等于 user_id % 16，按订单号也能算出所在的表；
+- 基因法：生成订单号时在末尾预留 4 个二进制位放 user_id % 16，订单号 % 16 就等于 user_id % 16，按订单号也能算出所在的表。需要注意的是，要从序号中让出这 4 位（例如雪花算法的 12 位序号缩为 8 位），直接覆盖原来的低 4 位会让同一毫秒内的订单号重复；
 - 映射表：另存一张订单号到 user_id 的映射，先查映射再查订单；
 - 按另一个维度再存一份：例如按商家 ID 分片再存一份订单，或者同步到 Elasticsearch，通常订阅 binlog 异步更新，所以会有短暂的延迟。
 
@@ -683,7 +684,7 @@ ShardingSphere 等中间件负责按分片键路由 SQL、改写分页条件和�
 
 连接由从服务器发起：I/O 线程告诉主服务器从 binlog 的哪个位置开始发送（使用全局事务 ID，即 GTID 时，告诉它已经执行过哪些事务），之后由 dump 线程主动推送新的 binlog，Canal 这类同步工具也是这样伪装成从库的。
 
-MySQL 8.0.27 起 replica_parallel_workers 默认为 4，从服务器上实际是一个协调线程读取中继日志，再把事务分给 4 个工作线程并行重放，以减小复制延迟。
+MySQL 8.0.27 起 replica_parallel_workers 默认为 4，从服务器上实际是一个协调线程读取中继日志，再把事务分给 4 个工作线程并行重放，以减小复制延迟。哪些事务可以并行，由主库写在 binlog 中的依赖信息决定：8.0 默认（binlog_transaction_dependency_tracking 为 COMMIT_ORDER）只让主库上同时处于提交阶段的事务并行，主库并发低、事务一个接一个提交时，从库上仍是串行重放；设为 WRITESET 后还按修改的行判断，能让更多互不冲突的事务并行（写集为空或不完整、修改没有主键和唯一键的表或外键中的父表时，仍按提交顺序判断），8.4 删除了这个参数，固定使用 WRITESET。
 
 <div align="center"> <img src="pics/mysql-replication.png" width="760px"/> </div><br>
 
@@ -704,7 +705,7 @@ MySQL 8.0.27 起 replica_parallel_workers 默认为 4，从服务器上实际是
 
 MySQL 默认是异步复制，主服务器提交事务后不等从服务器，从服务器的数据会落后一段时间，称为复制延迟。用户刚修改完资料就去从库读取，可能读到修改前的数据。
 
-延迟主要来自三方面：一是大事务，binlog 在提交时才整体写入，从库要等主库提交后才开始重放，例如主库上执行 32 秒的 100 万行 UPDATE，让紧随其后的小修改 1 分钟以上才在从库上可见（见[附录 A12](#a12-主从复制的初始化与延迟)），所以大批量修改要 [分批执行](#1-切分大查询)；二是从库重放跟不上；三是网络慢。
+延迟主要来自三方面：一是大事务，binlog 在提交时才整体写入，从库要等主库提交后才开始重放，例如主库上执行 32 秒的 100 万行 UPDATE，让紧随其后的小修改 1 分钟以上才在从库上可见（见[附录 A12](#a12-主从复制的初始化与延迟)），所以大批量修改要 [分批执行](#1-切分大查询)；二是从库重放跟不上，例如从库的配置或负载不如主库、按上面的依赖信息只能串行重放，或者表没有主键和唯一索引，ROW 格式下从库要扫描表才能找到被修改的行；三是网络慢。
 
 排查时用 SHOW REPLICA STATUS 分清是接收慢还是重放慢：接收位置（Source_Log_File、Read_Source_Log_Pos）已追上主库而 Executed_Gtid_Set 落后于 Retrieved_Gtid_Set，是重放慢；接收位置落后，是网络或接收慢，这时 Seconds_Behind_Source 可能显示为 0。
 
@@ -716,7 +717,7 @@ MySQL 默认是异步复制，主服务器提交事务后不等从服务器，�
 
 使用缓存时，未命中的读请求还可能把从库中的旧值写回缓存，见 [缓存一致性](缓存.md#缓存一致性)。
 
-异步复制时主库宕机，已经提交、还没有发给从库的事务在切换后就丢失了。半同步复制让至少一个从库把 binlog 写入中继日志后，主库才返回提交成功，但并不保证从库已经执行完，读从库仍可能读到旧数据；等待超时后主库会退回异步复制。
+异步复制时主库宕机，已经提交、还没有发给从库的事务在切换后就丢失了。半同步复制让至少一个从库把 binlog 写入中继日志并刷盘后，主库才返回提交成功。默认的 AFTER_SYNC 在主库的存储引擎提交之前等待确认，等待期间主库上的其它会话也看不到这个事务；改为 AFTER_COMMIT 时先提交再等待，其它会话可能已经读到一个主库宕机后会丢失的事务。半同步复制并不保证从库已经执行完，读从库仍可能读到旧数据；等待超时后主库会退回异步复制。
 
 ## 七、日志 🔥
 
@@ -936,7 +937,7 @@ LIMIT 1000000, 10    1547.4 ms   EXPLAIN: type=ALL, Extra=Using filesort
 COUNT(*)             130.38 ms
 ```
 
-四条分页语句都按 (create_time, id) 排序（2026-10-30 重跑），后三条返回的 10 个 id 相同（1000000、1017679……1159111）。
+四条分页语句都按 (create_time, id) 排序，后三条返回的 10 个 id 相同（1000000、1017679……1159111）。
 
 按 (create_time, id) 排序后第 1000000 行为 id = 982321、create_time = '2025-01-12 13:46:39'，这就是游标分页示例中使用的游标。
 
@@ -1186,13 +1187,59 @@ CREATE TABLE t_InnoDB (id INT PRIMARY KEY, c INT, pad CHAR(100)) ENGINE=InnoDB;
 CREATE TABLE t_MyISAM (id INT PRIMARY KEY, c INT, pad CHAR(100)) ENGINE=MyISAM;
 ```
 
-存储过程 p_InnoDB(pct)、p_MyISAM(pct) 每次调用执行 1000 条按主键随机访问的语句，其中 pct% 是 UPDATE ... SET c = c + 1 WHERE id = k（自动提交，innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1），其余是 SELECT c ... WHERE id = k。用 mysqlslap 启动 16 个客户端，每个客户端调用 4 次，取 3 轮的平均耗时，前后跑了两遍：
+存储过程 p_InnoDB(pct)、p_MyISAM(pct) 每次调用执行 1000 条按主键随机访问的语句，其中 pct% 是 UPDATE ... SET c = c + 1 WHERE id = k（自动提交，innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1），其余是 SELECT c ... WHERE id = k。用 mysqlslap 启动 16 个客户端，每个客户端调用 4 次，取 3 轮的平均耗时，前后跑了两遍。`--number-of-queries` 是所有客户端合计的调用次数，64 ÷ 16 = 4：
+
+```bash
+mysqlslap --create-schema=bench --concurrency=16 --iterations=3 --number-of-queries=64 --query="CALL p_InnoDB(50)"
+```
+
+表和存储过程都建在 bench 库中，存储过程的定义如下（p_MyISAM 相同，只把表名换成 t_MyISAM）：
+
+```sql
+DELIMITER //
+CREATE PROCEDURE p_InnoDB(pct INT)
+BEGIN
+  DECLARE i INT DEFAULT 0; DECLARE k INT; DECLARE v INT;
+  WHILE i < 1000 DO
+    SET k = FLOOR(1 + RAND() * 100000);
+    IF RAND() * 100 < pct THEN UPDATE t_InnoDB SET c = c + 1 WHERE id = k;
+    ELSE SELECT c INTO v FROM t_InnoDB WHERE id = k; END IF;
+    SET i = i + 1;
+  END WHILE;
+END//
+DELIMITER ;
+```
+
+两遍的平均耗时：
 
 ```text
 写比例   InnoDB           MyISAM
 0%       0.144 / 0.116 s  0.594 / 0.306 s
 50%      1.578 / 1.001 s  3.355 / 4.687 s
 ```
+
+### A14 找到持有锁的源头事务
+
+MySQL 8.0.44，Apple M1 Pro。连接 29077 执行 UPDATE account SET balance = balance - 1 WHERE id = 1 后不提交；连接 29078、29079 随后执行 UPDATE account SET balance = balance + 1 WHERE id = 1（应用一侧的线程栈见 [Java 虚拟机附录 A23](Java%20虚拟机.md#a23-等待连接池时的线程栈)）：
+
+```sql
+SELECT waiting_pid, waiting_query, blocking_pid, blocking_query FROM sys.innodb_lock_waits;
+SELECT id, command, time, state, info FROM information_schema.processlist;
+```
+
+```text
+waiting_pid  waiting_query                                          blocking_pid  blocking_query
+29078        UPDATE account SET balance = balance + 1 WHERE id = 1  29077         NULL
+29079        UPDATE account SET balance = balance + 1 WHERE id = 1  29077         NULL
+29079        UPDATE account SET balance = balance + 1 WHERE id = 1  29078         UPDATE account SET balance = balance + 1 WHERE id = 1
+
+id     command  time  state     info
+29077  Sleep    6               NULL
+29078  Query    6     updating  UPDATE account SET balance = balance + 1 WHERE id = 1
+29079  Query    6     updating  UPDATE account SET balance = balance + 1 WHERE id = 1
+```
+
+29079 同时被 29077 和排在它前面的 29078 挡住；只作为阻塞方出现的是 29077，它没有在执行语句，blocking_query 为 NULL。
 
 ## 参考资料
 
