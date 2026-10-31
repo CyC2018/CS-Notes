@@ -205,6 +205,19 @@
     var heading = section.querySelector('h1');
     (heading || section.firstChild).insertAdjacentElement(heading ? 'afterend' : 'beforebegin', box);
   }
+  // 学习站中有这篇笔记的题时，文章末尾提示读完练一练（只抽这篇笔记的题，还没开始学也可以练）
+  function practiceCallout(vm, section) {
+    var match = decode(vm.route.path).match(/^\/notes\/(.+)$/), note = match && match[1];
+    var count = note && (window.CS_NOTES_LEARN_TOPICS || {})[note];
+    if (!section || !count || count < 2 || section.querySelector('.learn-practice')) return;
+    var box = document.createElement('a');
+    box.className = 'learn-callout learn-practice';
+    box.href = '/learn/#/mock/' + encodeURIComponent(note);
+    box.innerHTML = '<b>读完练一练</b><span>学习站中有 ' + count + ' 道和这篇笔记有关的面试题：先自己答，再对照参考要点自评，自评过的题会按间隔提醒复习。</span>';
+    // 放在上一篇、下一篇之前
+    var after = section.querySelector('.page-nav') || section.querySelector('.site-footer');
+    if (after) after.insertAdjacentElement('beforebegin', box); else section.appendChild(box);
+  }
   window.$docsify = {
     name: 'CS-Notes',
     repo: 'https://github.com/CyC2018/CS-Notes',
@@ -239,6 +252,7 @@
         stepAnimations(document.querySelector('.markdown-section'));
         articleToc(vm);
         learnCallout(vm, document.querySelector('.markdown-section'));
+        practiceCallout(vm, document.querySelector('.markdown-section'));
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
