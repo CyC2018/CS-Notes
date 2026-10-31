@@ -58,6 +58,7 @@
         * [A20 线程栈中的 CPU 时间](#a20-线程栈中的-cpu-时间)
         * [A21 堆以外的内存](#a21-堆以外的内存)
         * [A22 容器中的默认堆](#a22-容器中的默认堆)
+        * [A23 等待连接池时的线程栈](#a23-等待连接池时的线程栈)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -80,7 +81,7 @@
 
 ### Java 虚拟机栈
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+每个 Java 方法在执行的同时会创建一个栈帧，用于存储局部变量表、操作数栈、动态链接和方法返回地址等信息。栈帧中保存着指向当前方法所属类的运行时常量池的引用，用于支持动态链接：在运行时把常量池中方法和字段的符号引用解析为实际的方法入口和字段位置。从方法调用直至执行完成的过程，对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
 <div align="center"> <img src="pics/jvm-stack-frame.png" width="760px"/> </div><br>
 
@@ -202,7 +203,9 @@ Instance size: 32 bytes
 - 实例数据：字段不按声明的顺序排列，虚拟机会重排以减少空隙，例如 userId 被放进了对象头后面 4 字节的空位；
 - 对齐填充：对象的大小必须是 8 字节的整数倍，new Object() 只有 12 字节的对象头，要补齐到 16 字节。
 
-关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。最大堆达到 32 GB 时，对象引用的压缩自动关闭，所有引用都变成 8 字节（JDK 21 中 -Xmx31g 时 UseCompressedOops 为 true，-Xmx32g 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GB 的原因。
+以上是 JDK 21 的布局。JDK 27 起默认使用紧凑对象头（JEP 534）：压缩后的类型指针放进 Mark Word 的高 22 位，对象头只有 8 字节，new Object() 也只占 8 字节，可以用 -XX:-UseCompactObjectHeaders 关闭。
+
+在 JDK 21 中关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。最大堆接近 32 GB 时，对象引用的压缩自动关闭，所有引用都变成 8 字节（JDK 21 中 -Xmx32736m 时 UseCompressedOops 为 true，-Xmx32737m 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GB 的原因。JDK 27 起类型指针总是压缩，-XX:-UseCompressedClassPointers 会被忽略。
 
 ## 二、垃圾收集 🔥🔥
 
@@ -416,7 +419,7 @@ STW 无法完全消除，但可以缩短：CMS、G1 把耗时最长的标记与�
 
 它的优点是简单高效，在单个 CPU 环境下，由于没有线程交互的开销，因此拥有最高的单线程收集效率。
 
-它是非服务器级机器（例如只有 1 个处理器）上的默认收集器，见 [G1 收集器](#7-g1-收集器) 中默认收集器的选择，这类机器的内存一般来说不会很大。它收集一两百兆垃圾的停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿时间是可以接受的。
+在 JDK 26 及以前，它是非服务器级机器（例如只有 1 个处理器）上的默认收集器，见 [G1 收集器](#7-g1-收集器) 中默认收集器的选择，这类机器的内存一般来说不会很大。它收集一两百兆垃圾的停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿时间是可以接受的。
 
 #### 2. ParNew 收集器
 
@@ -923,7 +926,7 @@ protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundE
 需要打破双亲委派的常见场景：
 
 - SPI：JDBC 的 DriverManager 由平台类加载器加载（JDK 8 中为启动类加载器），而 MySQL 驱动等实现类在 classpath 上，由应用类加载器加载，父加载器看不到子加载器中的类。DriverManager 通过 ServiceLoader 查找驱动，ServiceLoader 使用线程上下文类加载器（Thread.getContextClassLoader()，默认就是应用类加载器）加载实现类，相当于父加载器委托子加载器加载类；
-- Tomcat：每个 Web 应用有自己的 WebappClassLoader，先在本应用的 /WEB-INF/classes 和 /WEB-INF/lib 中查找，找不到再交给父加载器，这样同一个 Tomcat 中的两个应用可以使用同一个库的不同版本；JDK 的核心类和 Servlet 等规范接口仍然先交给父加载器；
+- Tomcat：每个 Web 应用有自己的 WebappClassLoader，先在本应用的 /WEB-INF/classes 和 /WEB-INF/lib 中查找，找不到再交给父加载器，这样同一个 Tomcat 中的两个应用可以使用同一个库的不同版本；JDK 自带的类先交给加载 JDK 类的加载器（JDK 9 起为平台类加载器，JDK 8 为扩展类加载器），Servlet 等规范接口和 Tomcat 自身的类先交给父加载器，Web 应用无法用自己的版本覆盖它们；
 - 热部署：同一个类加载器不能重复定义同一个类，修改后的类要用新的类加载器加载，旧的加载器连同它加载的类一起丢弃，OSGi 等模块系统也为每个模块使用单独的加载器。
 
 例如两个上面这样的类加载器分别从 v1、v2 目录加载同名的 Greeter 类，在同一个 JVM 中得到两个不同的 Class 对象，分别输出 Greeter v1 和 Greeter v2。打破双亲委派也不能替换 JDK 的核心类，defineClass() 拒绝定义 java. 开头的包中的类，抛出 SecurityException: Prohibited package name: java.lang（JDK 21 实测，见[附录 A7](#a7-打破双亲委派)）。
@@ -1009,7 +1012,7 @@ Dumping heap to java_pid24607.hprof ...
 Heap dump file created [19154891 bytes in 0.007 secs]
 ```
 
-线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd <pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索；它会先进行一次 Full GC，只统计存活的对象，对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
+线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd \<pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索；它会先进行一次 Full GC，只统计存活的对象，对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
 
 判断是不是泄漏，要看每次 GC 之后堆的占用。例如把附录 A11 的程序和一个只保留最近 1 万个 Session 的版本都用 128 MB 的堆运行：前者 GC 后的占用总体持续上升，最后几次 Full GC 后仍有 115～127 MB，28 秒时抛出 OutOfMemoryError；后者每次 GC 后都回到约 8 MB（JDK 21 实测，见[附录 A12](#a12-泄漏时-gc-之后的占用)）。
 
@@ -1048,7 +1051,7 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 
 常见做法是不写 -Xmx，用 MaxRAMPercentage 按比例设堆，但比例不能太高。例如限制 1 GiB、比例 75% 时堆最大 768 MiB，堆外只剩 256 MiB，要放下元空间、线程栈、代码缓存、GC 数据结构和直接内存；直接内存没有设上限时可以和堆一样大。例如堆用到 700 MiB、ByteBuffer.allocateDirect 申请的直接内存 300 MiB，再加上约 100 MiB 的其它堆外内存，合计约 1.1 GiB，堆还没到上限，进程已经超过了限制。这时 JVM 不会抛出 OutOfMemoryError，而是被内核的 OOM Killer 杀掉（退出码 137，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)）。所以要用 -XX:MaxDirectMemorySize 给 NIO 的直接缓冲区设上限，压测时加 -XX:NativeMemoryTracking=summary，用 `jcmd <pid> VM.native_memory summary` 看各部分的占用（输出见[附录 A21](#a21-堆以外的内存)），再定堆的比例。
 
-判断 GC 是不是瓶颈，看停顿时间占运行时间的比例和最长停顿。jstat -gcutil <pid> 5000 每 5 秒输出一次，GCT 列是累计的停顿秒数，两次之差除以间隔就是这段时间的占比。-Xlog:gc 日志中以 Pause 开头的行记录一次停顿，例如 Pause Young (Normal) (G1 Evacuation Pause) 24M->1M(64M) 0.542ms 依次是回收的类型、原因、回收前后堆的占用、堆的大小和停顿时长；Concurrent 开头的行是并发执行的耗时，不计入停顿。例如 64 MB 的堆中老年代已用 92%，5 秒内新生代回收了 1403 次，20% 的时间都在停顿（JDK 21 实测，见[附录 A19](#a19-gc-时间的占比)）。
+判断 GC 是不是瓶颈，看停顿时间占运行时间的比例和最长停顿。jstat -gcutil \<pid> 5000 每 5 秒输出一次，GCT 列是累计的停顿秒数，两次之差除以间隔就是这段时间的占比。-Xlog:gc 日志中以 Pause 开头的行记录一次停顿，例如 Pause Young (Normal) (G1 Evacuation Pause) 24M->1M(64M) 0.542ms 依次是回收的类型、原因、回收前后堆的占用、堆的大小和停顿时长；Concurrent 开头的行是并发执行的耗时，不计入停顿。例如 64 MB 的堆中老年代已用 92%，5 秒内新生代回收了 1403 次，20% 的时间都在停顿（JDK 21 实测，见[附录 A19](#a19-gc-时间的占比)）。
 
 线上频繁 Full GC 的排查思路：
 
@@ -1061,8 +1064,8 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 ### CPU 占用过高 🔥
 
 1. 用 top 找到 CPU 占用高的 Java 进程；
-2. 用 top -H -p <pid> 查看这个进程中每个线程的 CPU 占用，记下占用最高的线程 ID（输出示例见 [Linux - CPU 占用高](Linux.md#cpu-占用高)）；
-3. 用 jstack <pid> 或者 jcmd <pid> Thread.print 导出所有线程的调用栈，按线程 ID 找到对应的线程；
+2. 用 top -H -p \<pid> 查看这个进程中每个线程的 CPU 占用，记下占用最高的线程 ID（输出示例见 [Linux - CPU 占用高](Linux.md#cpu-占用高)）；
+3. 用 jstack \<pid> 或者 jcmd \<pid> Thread.print 导出所有线程的调用栈，按线程 ID 找到对应的线程；
 4. 查看这个线程正在执行的代码，隔几秒再导出两三次，确认它一直停在同一段代码中。
 
 需要重启恢复服务时，先导出线程栈再重启，重启后现场就丢失了。
@@ -1077,16 +1080,22 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 
 要按线程 ID 查找，不能只看状态：阻塞在 socket 读取上等待数据的线程也是 RUNNABLE，但 cpu= 几乎不增长（JDK 21 实测，见[附录 A20](#a20-线程栈中的-cpu-时间)）。
 
-jstack 和 Thread.print 不输出虚拟线程的栈，要用 jcmd <pid> Thread.dump_to_file <文件> 导出（JDK 21 实测）。
+jstack 和 Thread.print 不输出虚拟线程的栈，要用 jcmd \<pid> Thread.dump_to_file <文件> 导出（JDK 21 实测）。
 
 常见的原因有：
 
 - 死循环，例如空转等待、出错后立即重试，或者多线程同时扩容 JDK 1.7 的 HashMap 使链表成环，之后的 get() 在环上不停遍历（见 [HashMap 的线程安全](Java%20容器.md#10-线程安全)）；
-- 频繁 GC，这时 CPU 占用高的线程中有多个 GC 线程（名为 GC Thread#0、G1 Conc#0 等）。用 jstat -gcutil <pid> 1000 看哪一列增长得快：FGC 增长时按 [JVM 调优](#jvm-调优) 中频繁 Full GC 的思路排查；只有 YGC 增长时，多半是对象分配太快或堆太小。
+- 频繁 GC，这时 CPU 占用高的线程中有多个 GC 线程（名为 GC Thread#0、G1 Conc#0 等）。用 jstat -gcutil \<pid> 1000 看哪一列增长得快：FGC 增长时按 [JVM 调优](#jvm-调优) 中频繁 Full GC 的思路排查；只有 YGC 增长时，多半是对象分配太快或堆太小。
 
 需要注意的是，Linux 的平均负载（load average，top 和 uptime 显示的三个数）统计的不只是正在运行和等待 CPU 的任务（R 状态），还包括不可中断睡眠的任务（D 状态，通常在等待磁盘 I/O）。所以 CPU 利用率低而负载很高时，通常是大量线程阻塞在 I/O 上，例如磁盘读写过慢、NFS 挂载无响应。这时 top 中的 wa（等待 I/O 的时间占比）和 vmstat 中的 b 列（阻塞在 I/O 上的进程数）偏高，可以用 ps -eLo stat,pid,tid,comm 找出状态为 D 的线程。
 
-CPU 和负载都不高、接口却变慢时，线程多半在等待，多导出几次线程栈，看大量线程是 BLOCKED 在同一把锁上，还是在 socket 读取上等待下游的响应。
+CPU 和负载都不高、接口却变慢时，线程多半在等待。多导出几次线程栈，看大量线程停在哪里：
+
+- BLOCKED，停在同一把 synchronized 锁上：找到持有这把锁的线程在做什么；
+- TIMED_WAITING (parking)，停在 HikariPool.getConnection 这类获取连接的方法中：连接池已经耗尽，要找的是拿着连接不还或执行太慢的线程，原因在数据库一侧时扩大连接池没有用；
+- RUNNABLE，停在 socket 读取上（例如 MySQL 驱动的 ReadAheadInputStream.read）：在等数据库或下游服务返回，状态是 RUNNABLE 却不占 CPU。
+
+连接池耗尽时常常是后两种同时出现：少数线程拿着连接、在数据库中等待行锁，其余线程在等连接（JDK 21、HikariCP 5.1 实测，见[附录 A23](#a23-等待连接池时的线程栈)）。数据库一侧找到持有锁的源头事务的方法见[慢查询的定位与优化](MySQL.md#2-分析原因)。
 
 ### 死锁
 
@@ -1360,7 +1369,7 @@ $ docker run --pids-limit 500 ... java -Xmx256m Threads
 
 ### A11 堆直方图
 
-用 HashMap 做缓存，每次放入一个带 512 字节数组的 Session，从不删除，每放入 100 个休眠 10 ms；运行 10 秒和 30 秒时各执行一次 jcmd <pid> GC.class_histogram：
+用 HashMap 做缓存，每次放入一个带 512 字节数组的 Session，从不删除，每放入 100 个休眠 10 ms；运行 10 秒和 30 秒时各执行一次 jcmd \<pid> GC.class_histogram：
 
 ```java
 record Session(String id, byte[] payload) {}
@@ -1703,6 +1712,29 @@ $ java -XX:MaxRAM=1g -XX:+PrintFlagsFinal -version | grep ' MaxHeapSize '
 
 256 MiB 和 512 MiB 都是 128 MiB：内存的一半不小于默认的最小值（约 125 MiB）时，最大堆取 25% 与这个最小值中较大的一个。
 
+### A23 等待连接池时的线程栈
+
+JDK 21.0.13、HikariCP 5.1.0、MySQL Connector/J 9.4.0、MySQL 8.0.44，Apple M1 Pro。先用一个单独的连接执行 UPDATE account SET balance = balance - 1 WHERE id = 1 且不提交；再建一个最大连接数为 2 的连接池，3 个线程各取一个连接执行 UPDATE account SET balance = balance + 1 WHERE id = 1。6 秒后用 jstack 导出线程栈（节选）：
+
+```text
+"http-nio-8080-exec-1" ... runnable
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.Net.poll(java.base@21.0.13/Native Method)
+	...
+	at com.mysql.cj.protocol.ReadAheadInputStream.fill(ReadAheadInputStream.java:91)
+	at com.mysql.cj.protocol.ReadAheadInputStream.read(ReadAheadInputStream.java:157)
+
+"http-nio-8080-exec-3" ... waiting on condition
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at jdk.internal.misc.Unsafe.park(java.base@21.0.13/Native Method)
+	...
+	at java.util.concurrent.SynchronousQueue.poll(java.base@21.0.13/SynchronousQueue.java:338)
+	at com.zaxxer.hikari.util.ConcurrentBag.borrow(ConcurrentBag.java:151)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:162)
+```
+
+exec-1、exec-2 拿到了连接，在 socket 上等数据库返回，实际是在数据库中等待行锁；exec-3 等连接，30 秒后抛出 SQLTransientConnectionException: Connection is not available, request timed out after 30012ms (total=2, active=2, idle=0, waiting=0)。同一时刻数据库一侧的查询结果见 [MySQL 附录 A14](MySQL.md#a14-找到持有锁的源头事务)。
+
 ## 参考资料
 
 - [Troubleshooting Memory Leaks (Java SE 21)](https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html)
@@ -1719,7 +1751,7 @@ $ java -XX:MaxRAM=1g -XX:+PrintFlagsFinal -version | grep ' MaxHeapSize '
 - [深入理解 JVM(2)——GC 算法与内存分配策略](https://web.archive.org/web/20201120232823/https://crowhawk.github.io/2017/08/10/jvm_2/)
 - [深入理解 JVM(3)——7 种垃圾收集器](https://web.archive.org/web/20201120232823/https://crowhawk.github.io/2017/08/15/jvm_3/)
 - [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)
-- [深入探讨 Java 类加载器](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html#code6)
+- 深入探讨 Java 类加载器（IBM developerWorks 中文站，已下线）
 - [Guide to WeakHashMap in Java](http://www.baeldung.com/java-weakhashmap)
 - [Tomcat example source code file (ConcurrentCache.java)](https://alvinalexander.com/java/jwarehouse/apache-tomcat-6.0.16/java/org/apache/el/util/ConcurrentCache.java.shtml)
 - [Garbage-First (G1) Garbage Collector | Java SE 17 GC Tuning Guide](https://docs.oracle.com/en/java/javase/17/gctuning/garbage-first-g1-garbage-collector1.html)

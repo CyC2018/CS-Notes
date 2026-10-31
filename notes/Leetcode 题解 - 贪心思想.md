@@ -22,7 +22,7 @@
 
 455\. Assign Cookies (Easy)
 
-[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode-cn.com/problems/assign-cookies/description/)
+[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode.cn/problems/assign-cookies/description/)
 
 ```text
 Input: grid[1,3], size[1,2,4]
@@ -63,7 +63,7 @@ public int findContentChildren(int[] grid, int[] size) {
 
 435\. Non-overlapping Intervals (Medium)
 
-[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
+[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode.cn/problems/non-overlapping-intervals/description/)
 
 ```text
 Input: [ [1,2], [1,2], [1,2] ]
@@ -114,7 +114,7 @@ public int eraseOverlapIntervals(int[][] intervals) {
 
 452\. Minimum Number of Arrows to Burst Balloons (Medium)
 
-[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [力扣](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [力扣](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
 ```text
 Input:
@@ -150,7 +150,7 @@ public int findMinArrowShots(int[][] points) {
 
 406\. Queue Reconstruction by Height(Medium)
 
-[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
+[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode.cn/problems/queue-reconstruction-by-height/description/)
 
 ```text
 Input:
@@ -197,7 +197,7 @@ public int[][] reconstructQueue(int[][] people) {
 
 121\. Best Time to Buy and Sell Stock (Easy)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/)
 
 题目描述：一次股票交易包含买入和卖出，只进行一次交易，求最大收益。
 
@@ -217,12 +217,14 @@ public int maxProfit(int[] prices) {
 }
 ```
 
+只遍历一遍数组，时间复杂度 O(N)，空间复杂度 O(1)。
+
 
 ## 6. 买卖股票的最大收益 II
 
 122\. Best Time to Buy and Sell Stock II (Medium)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
 题目描述：可以进行多次交易，多次交易之间不能交叉进行。
 
@@ -245,7 +247,7 @@ public int maxProfit(int[] prices) {
 
 605\. Can Place Flowers (Easy)
 
-[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode-cn.com/problems/can-place-flowers/description/)
+[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode.cn/problems/can-place-flowers/description/)
 
 ```text
 Input: flowerbed = [1,0,0,0,1], n = 1
@@ -279,7 +281,7 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 
 392\. Is Subsequence (Easy)
 
-[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/is-subsequence/description/)
+[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode.cn/problems/is-subsequence/description/)
 
 ```text
 s = "abc", t = "ahbgdc"
@@ -305,7 +307,7 @@ public boolean isSubsequence(String s, String t) {
 
 665\. Non-decreasing Array (Medium)
 
-[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
+[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode.cn/problems/non-decreasing-array/description/)
 
 ```text
 Input: [4,2,3]
@@ -343,7 +345,7 @@ public boolean checkPossibility(int[] nums) {
 
 53\. Maximum Subarray (Medium)
 
-[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode-cn.com/problems/maximum-subarray/description/)
+[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode.cn/problems/maximum-subarray/description/)
 
 ```text
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
@@ -367,11 +369,13 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
+只遍历一遍数组，时间复杂度 O(N)；只保存 preSum 和 maxSum，空间复杂度 O(1)。
+
 ## 11. 分隔字符串使同种字符出现在一起
 
 763\. Partition Labels (Medium)
 
-[Leetcode](https://leetcode.com/problems/partition-labels/description/) / [力扣](https://leetcode-cn.com/problems/partition-labels/description/)
+[Leetcode](https://leetcode.com/problems/partition-labels/description/) / [力扣](https://leetcode.cn/problems/partition-labels/description/)
 
 ```text
 Input: S = "ababcbacadefegdehijhklij"

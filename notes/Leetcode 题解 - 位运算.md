@@ -125,7 +125,7 @@ static String Integer.toBinaryString(int i); // 转换为二进制表示的字�
 
 461\. Hamming Distance (Easy)
 
-[Leetcode](https://leetcode.com/problems/hamming-distance/) / [力扣](https://leetcode-cn.com/problems/hamming-distance/)
+[Leetcode](https://leetcode.com/problems/hamming-distance/) / [力扣](https://leetcode.cn/problems/hamming-distance/)
 
 ```text
 Input: x = 1, y = 4
@@ -180,7 +180,7 @@ public int hammingDistance(int x, int y) {
 
 136\. Single Number (Easy)
 
-[Leetcode](https://leetcode.com/problems/single-number/description/) / [力扣](https://leetcode-cn.com/problems/single-number/description/)
+[Leetcode](https://leetcode.com/problems/single-number/description/) / [力扣](https://leetcode.cn/problems/single-number/description/)
 
 ```text
 Input: [4,1,2,1,2]
@@ -201,7 +201,7 @@ public int singleNumber(int[] nums) {
 
 268\. Missing Number (Easy)
 
-[Leetcode](https://leetcode.com/problems/missing-number/description/) / [力扣](https://leetcode-cn.com/problems/missing-number/description/)
+[Leetcode](https://leetcode.com/problems/missing-number/description/) / [力扣](https://leetcode.cn/problems/missing-number/description/)
 
 ```text
 Input: [3,0,1]
@@ -226,7 +226,7 @@ public int missingNumber(int[] nums) {
 
 260\. Single Number III (Medium)
 
-[Leetcode](https://leetcode.com/problems/single-number-iii/description/) / [力扣](https://leetcode-cn.com/problems/single-number-iii/description/)
+[Leetcode](https://leetcode.com/problems/single-number-iii/description/) / [力扣](https://leetcode.cn/problems/single-number-iii/description/)
 
 题目描述：数组中只有两个元素出现一次，其余元素都出现两次，找出这两个元素。
 
@@ -252,7 +252,7 @@ public int[] singleNumber(int[] nums) {
 
 190\. Reverse Bits (Easy)
 
-[Leetcode](https://leetcode.com/problems/reverse-bits/description/) / [力扣](https://leetcode-cn.com/problems/reverse-bits/description/)
+[Leetcode](https://leetcode.com/problems/reverse-bits/description/) / [力扣](https://leetcode.cn/problems/reverse-bits/description/)
 
 ```java
 public int reverseBits(int n) {
@@ -311,7 +311,7 @@ a = a ^ b;
 
 231\. Power of Two (Easy)
 
-[Leetcode](https://leetcode.com/problems/power-of-two/description/) / [力扣](https://leetcode-cn.com/problems/power-of-two/description/)
+[Leetcode](https://leetcode.com/problems/power-of-two/description/) / [力扣](https://leetcode.cn/problems/power-of-two/description/)
 
 二进制表示只有一个 1 存在。
 
@@ -333,7 +333,7 @@ public boolean isPowerOfTwo(int n) {
 
 342\. Power of Four (Easy)
 
-[Leetcode](https://leetcode.com/problems/power-of-four/) / [力扣](https://leetcode-cn.com/problems/power-of-four/)
+[Leetcode](https://leetcode.com/problems/power-of-four/) / [力扣](https://leetcode.cn/problems/power-of-four/)
 
 这种数在二进制表示中有且只有一个 1，并且位于从右往左数的第 1、3、5…… 位，例如 16（10000）。代码中的掩码正好在这些位上为 1。
 
@@ -355,7 +355,7 @@ public boolean isPowerOfFour(int num) {
 
 693\. Binary Number with Alternating Bits (Easy)
 
-[Leetcode](https://leetcode.com/problems/binary-number-with-alternating-bits/description/) / [力扣](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/description/)
+[Leetcode](https://leetcode.com/problems/binary-number-with-alternating-bits/description/) / [力扣](https://leetcode.cn/problems/binary-number-with-alternating-bits/description/)
 
 ```text
 Input: 10
@@ -382,7 +382,7 @@ public boolean hasAlternatingBits(int n) {
 
 476\. Number Complement (Easy)
 
-[Leetcode](https://leetcode.com/problems/number-complement/description/) / [力扣](https://leetcode-cn.com/problems/number-complement/description/)
+[Leetcode](https://leetcode.com/problems/number-complement/description/) / [力扣](https://leetcode.cn/problems/number-complement/description/)
 
 ```text
 Input: 5
@@ -439,7 +439,7 @@ public int findComplement(int num) {
 
 371\. Sum of Two Integers (Medium)
 
-[Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-two-integers/description/)
+[Leetcode](https://leetcode.com/problems/sum-of-two-integers/description/) / [力扣](https://leetcode.cn/problems/sum-of-two-integers/description/)
 
 a ^ b 表示没有考虑进位的情况下两数的和，(a & b) \<\< 1 就是进位。两者再相加又可能产生进位，重复到进位为 0 为止。例如 5 + 3：
 
@@ -463,7 +463,7 @@ public int getSum(int a, int b) {
 
 318\. Maximum Product of Word Lengths (Medium)
 
-[Leetcode](https://leetcode.com/problems/maximum-product-of-word-lengths/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/description/)
+[Leetcode](https://leetcode.com/problems/maximum-product-of-word-lengths/description/) / [力扣](https://leetcode.cn/problems/maximum-product-of-word-lengths/description/)
 
 ```text
 Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
@@ -500,7 +500,7 @@ public int maxProduct(String[] words) {
 
 338\. Counting Bits (Easy)
 
-[Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode-cn.com/problems/counting-bits/description/)
+[Leetcode](https://leetcode.com/problems/counting-bits/description/) / [力扣](https://leetcode.cn/problems/counting-bits/description/)
 
 i&(i-1) 去掉 i 最低的那一位 1，结果比 i 小、已经算过，因此 dp[i] = dp[i&(i-1)] + 1。例如 dp[6] = dp[4] + 1 = 2（110 去掉最低的 1 得到 100）。
 

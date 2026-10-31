@@ -20,7 +20,7 @@
 
 785\. Is Graph Bipartite? (Medium)
 
-[Leetcode](https://leetcode.com/problems/is-graph-bipartite/description/) / [力扣](https://leetcode-cn.com/problems/is-graph-bipartite/description/)
+[Leetcode](https://leetcode.com/problems/is-graph-bipartite/description/) / [力扣](https://leetcode.cn/problems/is-graph-bipartite/description/)
 
 ```text
 Input: [[1,3], [0,2], [1,3], [0,2]]
@@ -83,7 +83,7 @@ private boolean isBipartite(int curNode, int curColor, int[] colors, int[][] gra
 
 207\. Course Schedule (Medium)
 
-[Leetcode](https://leetcode.com/problems/course-schedule/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule/description/)
+[Leetcode](https://leetcode.com/problems/course-schedule/description/) / [力扣](https://leetcode.cn/problems/course-schedule/description/)
 
 ```text
 2, [[1,0]]
@@ -145,7 +145,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
 
 210\. Course Schedule II (Medium)
 
-[Leetcode](https://leetcode.com/problems/course-schedule-ii/description/) / [力扣](https://leetcode-cn.com/problems/course-schedule-ii/description/)
+[Leetcode](https://leetcode.com/problems/course-schedule-ii/description/) / [力扣](https://leetcode.cn/problems/course-schedule-ii/description/)
 
 ```text
 4, [[1,0],[2,0],[3,1],[3,2]]
@@ -246,7 +246,7 @@ public int[] findOrder(int numCourses, int[][] prerequisites) {
 
 684\. Redundant Connection (Medium)
 
-[Leetcode](https://leetcode.com/problems/redundant-connection/description/) / [力扣](https://leetcode-cn.com/problems/redundant-connection/description/)
+[Leetcode](https://leetcode.com/problems/redundant-connection/description/) / [力扣](https://leetcode.cn/problems/redundant-connection/description/)
 
 ```text
 Input: [[1,2], [1,3], [2,3]]

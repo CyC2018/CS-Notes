@@ -25,7 +25,7 @@
 
 160\. Intersection of Two Linked Lists (Easy)
 
-[Leetcode](https://leetcode.com/problems/intersection-of-two-linked-lists/description/) / [力扣](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/description/)
+[Leetcode](https://leetcode.com/problems/intersection-of-two-linked-lists/description/) / [力扣](https://leetcode.cn/problems/intersection-of-two-linked-lists/description/)
 
 例如以下示例中 A 和 B 两个链表相交于 c1：
 
@@ -79,7 +79,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 206\. Reverse Linked List (Easy)
 
-[Leetcode](https://leetcode.com/problems/reverse-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/reverse-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/reverse-linked-list/description/) / [力扣](https://leetcode.cn/problems/reverse-linked-list/description/)
 
 递归：先把 head.next 之后的部分反转，返回新的头节点；此时 next 是反转后那一段的尾节点，把 head 接在 next 后面，再断开 head 原来的 next 指针。例如 1→2→3，反转 2→3 得到 3→2 后，令 2.next = 1、1.next = null，得到 3→2→1。
 
@@ -115,7 +115,7 @@ public ListNode reverseList(ListNode head) {
 
 21\. Merge Two Sorted Lists (Easy)
 
-[Leetcode](https://leetcode.com/problems/merge-two-sorted-lists/description/) / [力扣](https://leetcode-cn.com/problems/merge-two-sorted-lists/description/)
+[Leetcode](https://leetcode.com/problems/merge-two-sorted-lists/description/) / [力扣](https://leetcode.cn/problems/merge-two-sorted-lists/description/)
 
 比较两个链表的头节点，较小的那个作为结果的头节点，它的 next 指向剩余部分归并的结果。递归最坏需要 O(m + n) 的栈空间（m、n 为两个链表的长度），链表很长时可以改用迭代：用虚拟头节点 dummy 和尾指针 tail，每次把较小的节点接到 tail 后面，代码见[链表排序](#14-链表排序)中的 merge()。
 
@@ -137,7 +137,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 
 83\. Remove Duplicates from Sorted List (Easy)
 
-[Leetcode](https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/) / [力扣](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/description/)
+[Leetcode](https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/) / [力扣](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/description/)
 
 ```text
 Given 1->1->2, return 1->2.
@@ -158,7 +158,7 @@ public ListNode deleteDuplicates(ListNode head) {
 
 19\. Remove Nth Node From End of List (Medium)
 
-[Leetcode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/) / [力扣](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/description/)
+[Leetcode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/) / [力扣](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/)
 
 ```text
 Given linked list: 1->2->3->4->5, and n = 2.
@@ -188,7 +188,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 
 24\. Swap Nodes in Pairs (Medium)
 
-[Leetcode](https://leetcode.com/problems/swap-nodes-in-pairs/description/) / [力扣](https://leetcode-cn.com/problems/swap-nodes-in-pairs/description/)
+[Leetcode](https://leetcode.com/problems/swap-nodes-in-pairs/description/) / [力扣](https://leetcode.cn/problems/swap-nodes-in-pairs/description/)
 
 ```text
 Given 1->2->3->4, you should return the list as 2->1->4->3.
@@ -220,7 +220,7 @@ public ListNode swapPairs(ListNode head) {
 
 445\. Add Two Numbers II (Medium)
 
-[Leetcode](https://leetcode.com/problems/add-two-numbers-ii/description/) / [力扣](https://leetcode-cn.com/problems/add-two-numbers-ii/description/)
+[Leetcode](https://leetcode.com/problems/add-two-numbers-ii/description/) / [力扣](https://leetcode.cn/problems/add-two-numbers-ii/description/)
 
 ```text
 Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
@@ -263,7 +263,7 @@ private Stack<Integer> buildStack(ListNode l) {
 
 234\. Palindrome Linked List (Easy)
 
-[Leetcode](https://leetcode.com/problems/palindrome-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/palindrome-linked-list/description/) / [力扣](https://leetcode.cn/problems/palindrome-linked-list/description/)
 
 进阶要求：以 O(1) 的空间复杂度来求解。
 
@@ -314,7 +314,7 @@ private boolean isEqual(ListNode l1, ListNode l2) {
 
 725\. Split Linked List in Parts (Medium)
 
-[Leetcode](https://leetcode.com/problems/split-linked-list-in-parts/description/) / [力扣](https://leetcode-cn.com/problems/split-linked-list-in-parts/description/)
+[Leetcode](https://leetcode.com/problems/split-linked-list-in-parts/description/) / [力扣](https://leetcode.cn/problems/split-linked-list-in-parts/description/)
 
 ```text
 Input:
@@ -358,7 +358,7 @@ public ListNode[] splitListToParts(ListNode head, int k) {
 
 328\. Odd Even Linked List (Medium)
 
-[Leetcode](https://leetcode.com/problems/odd-even-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/odd-even-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/odd-even-linked-list/description/) / [力扣](https://leetcode.cn/problems/odd-even-linked-list/description/)
 
 ```text
 Example:
@@ -430,6 +430,8 @@ public ListNode reverseKGroup(ListNode head, int k) {
 }
 ```
 
+每个节点在找尾节点时被访问一次、翻转时再被访问一次，时间复杂度 O(N)；只用了几个指针，空间复杂度 O(1)。
+
 ## 12. 重排链表
 
 143\. Reorder List (Medium)
@@ -478,6 +480,8 @@ private ListNode reverse(ListNode head) {
     return pre;
 }
 ```
+
+找中点、反转后半段、交替连接各遍历一次链表，时间复杂度 O(N)；只修改指针，空间复杂度 O(1)。
 
 ## 13. 合并 K 个有序链表
 

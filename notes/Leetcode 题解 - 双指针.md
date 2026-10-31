@@ -22,7 +22,7 @@
 
 167\. Two Sum II - Input Array Is Sorted (Medium)
 
-[Leetcode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/) / [力扣](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/description/)
+[Leetcode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/) / [力扣](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/description/)
 
 ```text
 Input: numbers={2, 7, 11, 15}, target=9
@@ -65,7 +65,7 @@ public int[] twoSum(int[] numbers, int target) {
 
 633\. Sum of Square Numbers (Medium)
 
-[Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-square-numbers/description/)
+[Leetcode](https://leetcode.com/problems/sum-of-square-numbers/description/) / [力扣](https://leetcode.cn/problems/sum-of-square-numbers/description/)
 
 ```text
 Input: 5
@@ -103,7 +103,7 @@ Explanation: 1 * 1 + 2 * 2 = 5
 
 345\. Reverse Vowels of a String (Easy)
 
-[Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode-cn.com/problems/reverse-vowels-of-a-string/description/)
+[Leetcode](https://leetcode.com/problems/reverse-vowels-of-a-string/description/) / [力扣](https://leetcode.cn/problems/reverse-vowels-of-a-string/description/)
 
 ```text
 Given s = "leetcode", return "leotcede".
@@ -148,7 +148,7 @@ public String reverseVowels(String s) {
 
 680\. Valid Palindrome II (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode-cn.com/problems/valid-palindrome-ii/description/)
+[Leetcode](https://leetcode.com/problems/valid-palindrome-ii/description/) / [力扣](https://leetcode.cn/problems/valid-palindrome-ii/description/)
 
 ```text
 Input: "abca"
@@ -196,7 +196,7 @@ private boolean isPalindrome(String s, int i, int j) {
 
 88\. Merge Sorted Array (Easy)
 
-[Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/merge-sorted-array/description/)
+[Leetcode](https://leetcode.com/problems/merge-sorted-array/description/) / [力扣](https://leetcode.cn/problems/merge-sorted-array/description/)
 
 ```text
 Input:
@@ -226,11 +226,13 @@ public void merge(int[] nums1, int m, int[] nums2, int n) {
 }
 ```
 
+每次循环写入一个位置，最多 m + n 次，时间复杂度 O(m + n)；直接在 nums1 上归并，空间复杂度 O(1)。
+
 ## 6. 判断链表是否存在环
 
 141\. Linked List Cycle (Easy)
 
-[Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode-cn.com/problems/linked-list-cycle/description/)
+[Leetcode](https://leetcode.com/problems/linked-list-cycle/description/) / [力扣](https://leetcode.cn/problems/linked-list-cycle/description/)
 
 使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。这是因为进入环之后，快指针每次比慢指针多走一步，两者的距离每次缩小 1，不会跳过慢指针。
 
@@ -253,11 +255,13 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
+慢指针进入环之前最多走 N 步，进入环之后快指针每次追近 1 步，不超过环长就能追上，时间复杂度 O(N)；只用两个指针，空间复杂度 O(1)。用 HashSet 记录访问过的节点也能判断，但需要 O(N) 的空间。
+
 ## 7. 最长子序列
 
 524\. Longest Word in Dictionary through Deleting (Medium)
 
-[Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/description/)
+[Leetcode](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/) / [力扣](https://leetcode.cn/problems/longest-word-in-dictionary-through-deleting/description/)
 
 ```text
 Input:

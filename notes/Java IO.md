@@ -599,12 +599,12 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [The Java Tutorials: Basic I/O](https://docs.oracle.com/javase/tutorial/essential/io/)
 - [JEP 353: Reimplement the Legacy Socket API](https://openjdk.org/jeps/353)
 - [Java SE 21 API: MappedByteBuffer](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/MappedByteBuffer.html)
-- [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
+- NIO 入门（IBM developerWorks 中文站，已下线）
 - [Java NIO Tutorial](https://jenkov.com/tutorials/java-nio/index.html)
 - [Java NIO 浅析](https://tech.meituan.com/2016/11/04/nio.html)
-- [IBM: 深入分析 Java I/O 的工作机制](https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html)
-- [IBM: 深入分析 Java 中的中文编码问题](https://www.ibm.com/developerworks/cn/java/j-lo-chinesecoding/index.html)
-- [IBM: Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
+- 深入分析 Java I/O 的工作机制（IBM developerWorks 中文站，已下线）
+- 深入分析 Java 中的中文编码问题（IBM developerWorks 中文站，已下线）
+- Java 序列化的高级认识（IBM developerWorks 中文站，已下线）
 - [NIO 与传统 IO 的区别](https://web.archive.org/web/20250917122905/https://blog.csdn.net/shimiso/article/details/24990499)
 - [Decorator Design Pattern](http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document)
 - [Socket Multicast](http://labojava.blogspot.com/2012/12/socket-multicast.html)

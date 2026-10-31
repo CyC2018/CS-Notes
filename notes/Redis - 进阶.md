@@ -123,6 +123,6 @@ SET 44 字节 encoding embstr，SET 45 字节 encoding raw
 
 ## 参考资料
 
-- [黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.](http://redisbook.com/index.html)
+- 黄健宏. Redis 设计与实现 [M]. 机械工业出版社, 2014.
 - [Redis 7.4.1 源码 dict.c](https://github.com/redis/redis/blob/7.4.1/src/dict.c)
 - [Redis 7.4.1 源码 sds.c](https://github.com/redis/redis/blob/7.4.1/src/sds.c)

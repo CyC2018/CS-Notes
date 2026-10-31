@@ -187,6 +187,8 @@ public class CounterController {
 
 另一种无法解决的情况与 @Async 有关。@Async 的代理由 AsyncAnnotationBeanPostProcessor 创建，它只在初始化之后生成代理，没有实现提前引用的 getEarlyBeanReference()，三级缓存中的工厂不会为它提前创建代理：B 拿到的是原始的 A，A 初始化完成后却被替换成了代理，B 中的引用与容器中的对象不一致。Spring 检查到这种情况时启动失败，提示 A 已经以原始版本注入到了 B 中、最终却被包装了；同样的结构把 @Async 换成 @Transactional 则可以正常启动，B 中注入的就是最终的代理（Spring Boot 3.3 实测，见[附录 A6](#a6-async-与-lazy-的循环依赖)）。
 
+这是 Spring 6.1 的行为。在 Spring 6.2.19、7.0.10 上，允许循环依赖时同样的结构能够启动（见[附录 A6](#a6-async-与-lazy-的循环依赖)）：6.2.3 起，容器在预先创建单例时遇到这个异常会跳过 A，之后从 B 开始重新创建。官方尚未确认这是否是预期行为，不能据此认为 @Async 支持循环依赖。Spring Boot 默认禁止循环依赖，所以在 Boot 中默认仍是启动失败。
+
 构造器注入的循环依赖可以在其中一个参数上加 @Lazy 解开：Spring 先注入一个延迟解析的代理，第一次调用它的方法时才从容器中取出真正的 Bean。
 
 需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系，例如把互相调用的逻辑抽到新的 Bean C 中。
@@ -400,8 +402,8 @@ REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。RE
 传播行为指的是一个事务方法调用另一个事务方法时，事务如何传递。常用的有以下三种：
 
 - REQUIRED：默认值，当前有事务就加入，没有就新建。内外两个方法属于同一个事务，一起提交或者一起回滚；
-- REQUIRES_NEW：挂起当前事务，新建一个独立的事务，两个事务分别提交和回滚，例如无论业务成功与否都要保存的操作日志；
-- NESTED：在当前事务中创建一个保存点，内层回滚时只回滚到保存点，外层回滚时内层也一起回滚。
+- REQUIRES_NEW：挂起当前事务，新建一个独立的事务，两个事务分别提交和回滚，例如无论业务成功与否都要保存的操作日志。需要注意的是，已有外层事务时，执行内层事务期间一个线程同时占用两个连接，并发高时所有线程可能都拿着外层的连接等内层的连接，直到获取连接超时；内层修改外层已加锁的行时，也会一直等到锁等待超时；
+- NESTED：在当前事务中创建一个保存点，内层回滚时只回滚到保存点，外层回滚时内层也一起回滚。保存点是 JDBC 连接的功能，只引入 JDBC 时 Spring Boot 默认的 JdbcTransactionManager 支持；引入 Spring Data JPA 后默认是 JpaTransactionManager，用 Hibernate 时在已有事务中使用 NESTED 会抛出 NestedTransactionNotSupportedException。没有当前事务时，NESTED 和 REQUIRED 一样新建事务。
 
 其余四种用得较少：SUPPORTS 有事务就加入，没有就非事务执行；NOT_SUPPORTED 挂起事务后非事务执行；MANDATORY 没有事务就抛出异常；NEVER 有事务就抛出异常。
 
@@ -560,7 +562,7 @@ List<Order> byUserUnsafe(@Param("userId") String userId);
 
 ### Mapper 接口为什么不需要实现类
 
-MyBatis 在启动时为每个 Mapper 接口生成 JDK 动态代理，例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession 执行，再把结果映射成返回类型。
+MyBatis 在启动时为每个 Mapper 接口注册一个代理工厂 MapperProxyFactory，获取 Mapper 时由它创建 JDK 动态代理；Spring 中由 MapperFactoryBean 在创建 Bean 时获取一次，注入的就是这个代理。例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession 执行，再把结果映射成返回类型。
 
 由于 SQL 只按方法名查找，Mapper 接口中的方法不能重载，两个同名方法都写了 SQL 时启动报错（见[附录 A12](#a12-mybatis-的结果映射重载与二级缓存)）。
 
@@ -610,7 +612,7 @@ List<Order> byStatuses(@Param("userId") Integer userId, @Param("statuses") List<
 ### 缓存
 
 - 一级缓存：默认开启，作用范围是一个 SqlSession，同一个会话中相同的查询只执行一次，执行增删改或提交后清空。与 Spring 集成时，不在事务中的每次调用都会使用新的 SqlSession，一级缓存基本不起作用；
-- 二级缓存：作用范围是一个 Mapper 的命名空间，多个会话共享，在 Mapper XML 中加 `<cache/>` 或在接口上加 @CacheNamespace 开启，结果对象要实现 Serializable。查询结果在会话提交后才写入（只有查询的会话关闭时也会写入，回滚时丢弃），同一命名空间的增删改提交后清空。缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
+- 二级缓存：作用范围是一个 Mapper 的命名空间，多个会话共享，在 Mapper XML 中加 `<cache/>` 或在接口上加 @CacheNamespace 开启，结果对象要实现 Serializable。查询结果在会话提交后才写入（只有查询的会话关闭时也会写入；执行过增删改的会话回滚时丢弃），同一命名空间的增删改提交后清空。缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
 
 ## 七、Spring 中的设计模式
 
@@ -677,15 +679,15 @@ Spring Boot 3.3.5（spring-boot-starter-aop、spring-boot-starter-data-redis）�
 
 ```java
 Integer n = jdbc.queryForObject(
-        "SELECT COUNT(*) FROM t3_order WHERE user_id = ? AND sku_id = ?", Integer.class, userId, skuId);
+        "SELECT COUNT(*) FROM seckill_order WHERE user_id = ? AND sku_id = ?", Integer.class, userId, skuId);
 if (n > 0) {
     return false;                          // 一人一单
 }
-jdbc.update("INSERT INTO t3_order (user_id, sku_id) VALUES (?, ?)", userId, skuId);
+jdbc.update("INSERT INTO seckill_order (user_id, sku_id) VALUES (?, ?)", userId, skuId);
 return true;
 ```
 
-每轮先清空 t3_order，再用 20 个线程同时调用 createOrder(1024, 10086)，统计返回 true 的次数和表中的行数。对照组加一个配置类 @EnableTransactionManagement(order = 0)，让事务切面比锁的切面（@Order(1)）更靠外：
+每轮先清空 seckill_order，再用 20 个线程同时调用 createOrder(1024, 10086)，统计返回 true 的次数和表中的行数。对照组加一个配置类 @EnableTransactionManagement(order = 0)，让事务切面比锁的切面（@Order(1)）更靠外：
 
 ```text
 锁在事务外（锁 @Order(1)，事务切面为默认的 LOWEST_PRECEDENCE）
@@ -858,6 +860,8 @@ public static class CB { final CA a; CB(@Lazy CA a) { this.a = a; } }
   CB 中注入的 CA 是代理：true（CircularDemo$CA$$SpringCGLIB$$0）
   通过它调用 b() 得到的 CB 就是容器中的 CB：true
 ```
+
+同样的 @Async 代码在 Spring 6.2.19、7.0.10 上启动成功，A、B 的构造顺序为 A、B、B、A，日志中有一条 Bean 'asyncA' marked for pre-instantiation (not lazy-init) but currently initialized by other thread - skipping it in mainline thread，B 中注入的 A 与容器中的是同一个代理对象。
 
 ### A7 Spring Boot 的启动过程
 

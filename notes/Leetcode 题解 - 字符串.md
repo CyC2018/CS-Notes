@@ -58,7 +58,7 @@ Return "student a am I"
 
 242\. Valid Anagram (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-anagram/description/) / [力扣](https://leetcode-cn.com/problems/valid-anagram/description/)
+[Leetcode](https://leetcode.com/problems/valid-anagram/description/) / [力扣](https://leetcode.cn/problems/valid-anagram/description/)
 
 ```text
 s = "anagram", t = "nagaram", return true.
@@ -91,7 +91,7 @@ public boolean isAnagram(String s, String t) {
 
 409\. Longest Palindrome (Easy)
 
-[Leetcode](https://leetcode.com/problems/longest-palindrome/description/) / [力扣](https://leetcode-cn.com/problems/longest-palindrome/description/)
+[Leetcode](https://leetcode.com/problems/longest-palindrome/description/) / [力扣](https://leetcode.cn/problems/longest-palindrome/description/)
 
 ```text
 Input : "abccccdd"
@@ -124,7 +124,7 @@ public int longestPalindrome(String s) {
 
 205\. Isomorphic Strings (Easy)
 
-[Leetcode](https://leetcode.com/problems/isomorphic-strings/description/) / [力扣](https://leetcode-cn.com/problems/isomorphic-strings/description/)
+[Leetcode](https://leetcode.com/problems/isomorphic-strings/description/) / [力扣](https://leetcode.cn/problems/isomorphic-strings/description/)
 
 ```text
 Given "egg", "add", return true.
@@ -154,7 +154,7 @@ public boolean isIsomorphic(String s, String t) {
 
 647\. Palindromic Substrings (Medium)
 
-[Leetcode](https://leetcode.com/problems/palindromic-substrings/description/) / [力扣](https://leetcode-cn.com/problems/palindromic-substrings/description/)
+[Leetcode](https://leetcode.com/problems/palindromic-substrings/description/) / [力扣](https://leetcode.cn/problems/palindromic-substrings/description/)
 
 ```text
 Input: "aaa"
@@ -188,7 +188,7 @@ private void extendSubstrings(String s, int start, int end) {
 
 9\. Palindrome Number (Easy)
 
-[Leetcode](https://leetcode.com/problems/palindrome-number/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-number/description/)
+[Leetcode](https://leetcode.com/problems/palindrome-number/description/) / [力扣](https://leetcode.cn/problems/palindrome-number/description/)
 
 进阶要求不将整数转换为字符串进行判断。
 
@@ -215,7 +215,7 @@ public boolean isPalindrome(int x) {
 
 696\. Count Binary Substrings (Easy)
 
-[Leetcode](https://leetcode.com/problems/count-binary-substrings/description/) / [力扣](https://leetcode-cn.com/problems/count-binary-substrings/description/)
+[Leetcode](https://leetcode.com/problems/count-binary-substrings/description/) / [力扣](https://leetcode.cn/problems/count-binary-substrings/description/)
 
 ```text
 Input: "00110011"

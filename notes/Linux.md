@@ -1186,7 +1186,7 @@ $ top -d 2
 $ netstat -anp | grep port
 ```
 
-netstat 的替代命令是 ss，用法见[端口与磁盘](#端口与磁盘)。
+netstat 的替代命令是 ss，用法见[端口与磁盘](#端口与磁盘)。Ubuntu 24.04 默认不安装 netstat 所在的 net-tools 包，需要时用 sudo apt install net-tools 安装。
 
 #### 5. kill
 

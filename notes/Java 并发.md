@@ -383,7 +383,9 @@ public class SimplePool {
                     try {
                         task = queue.poll(100, TimeUnit.MILLISECONDS);
                     } catch (InterruptedException e) {
-                        return;
+                        // 上一个任务可能留下了中断标记，抛出异常时标记已被清除；
+                        // 直接退出会少一个工作线程，是否退出只由 shutdown 决定
+                        continue;
                     }
                     if (task == null) {
                         continue;
@@ -416,6 +418,8 @@ public class SimplePool {
 ```
 
 例如 2 个线程执行 4 个任务，其中任务 2 抛出异常，其余 3 个任务仍由这两个线程执行完；关闭之后再提交会被拒绝（JDK 21 实测，见[附录 A6](#a6-简化版线程池)）。
+
+工作线程在 poll() 处被中断时不能直接退出：某个任务执行完后线程上留着中断标记，下一次 poll() 就会抛出 InterruptedException，直接退出的话，只有 1 个线程时队列中剩下的任务就再也没人执行（见附录 A6 的第二个例子）。
 
 ThreadPoolExecutor 的结构与它相同，多做了以下几件事：
 
@@ -1146,7 +1150,7 @@ t1.join(); t2.join();
 
 <div align="center"> <img src="pics/jc-aqs-queue.png" width="760px"/> </div><br>
 
-用双向链表是因为 next 用于释放时找到要唤醒的后继，prev 用于判断前驱是不是头节点、取消时跳过已取消的前驱。
+用双向链表是因为 next 用于释放时找到要唤醒的后继，prev 用于判断前驱是不是头节点、取消时跳过已取消的前驱。这是 JDK 14 改写 AQS 之后的实现。JDK 8 的资料中常见的 waitStatus（在前驱节点上记 SIGNAL，表示后继需要唤醒）和释放时从 tail 向前查找后继，在 JDK 21 中改为节点自己的 WAITING 状态位和 signalNext(head)：释放时直接唤醒 head 的后继，已取消的节点由 cleanQueue() 摘除。
 
 ReentrantLock 的每个 Condition 还有自己的条件队列：await() 释放锁并进入条件队列，signal() 把节点移到等待队列，被移过去的线程要重新获得锁才能从 await() 返回（JDK 21 实测，见[附录 A15](#a15-aqs-等待队列的获取顺序)）：
 
@@ -1457,6 +1461,8 @@ public static void main(String[] args) {
 produce..produce..consume..consume..produce..consume..produce..consume..produce..consume..
 ```
 
+需要注意的是，打印语句在 put()、take() 返回之后才执行，两者之间线程可能被切换，所以输出中 consume.. 可能出现在对应的 produce.. 之前，看起来像先消费后生产。这只是打印的顺序：take() 只有在队列中有元素时才会返回，5 个生产者和 5 个消费者最终各打印 5 次。
+
 ### ForkJoin
 
 主要用于并行计算中，和 MapReduce 原理类似，都是把大的计算任务拆分成多个小任务并行计算。
@@ -1748,6 +1754,8 @@ volatile 变量单次的读、写是原子的（包括 long、double），但它
 
 <div align="center"> <img src="pics/jc-volatile-barrier.png" width="760px"/> </div><br>
 
+表中 ARM 的指令是 C2 编译后的结果，C1 编译的代码在 ARM 上仍用普通的读写加 dmb 屏障指令。
+
 x86 上 volatile 写之后的 lock addl 要等写缓冲中的写入进入缓存，后面的读才能执行；其它核心中这一行的旧副本由 MESI 等协议置为失效，随后读到的就是新值。
 
 volatile 与 synchronized 的区别：volatile 只修饰变量，保证可见性和有序性，不保证复合操作的原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，代价是竞争时线程会阻塞。所以状态标志、发布数据用 volatile，读-改-写操作和多个变量一起修改用锁或原子类。
@@ -1820,7 +1828,7 @@ JDK 中线程安全的类有不可变类、StringBuffer 和 Vector 这类每个�
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。CAS 失败时不阻塞线程，只返回 false，由调用方决定重试还是放弃。
 
-CAS 由处理器指令完成，比较和写入之间不会被其它核心插入：x86 上 HotSpot 生成带 lock 前缀的 cmpxchg 指令，lock 前缀保证执行期间其它核心不能访问这个内存位置；ARM 上使用 ARMv8.1 的 CAS 指令，不支持时用独占加载、存储指令 LDXR、STXR 循环实现。Java 代码通过 Unsafe 的 compareAndSetInt() 等方法使用 CAS，JIT 把它们直接编译成这些指令。
+CAS 由处理器指令完成，比较和写入之间不会被其它核心插入：x86 上 HotSpot 生成带 lock 前缀的 cmpxchg 指令，lock 前缀保证执行期间其它核心不能访问这个内存位置；ARM 上使用 ARMv8.1 的 CASAL 指令（带获取和释放语义的 CAS），不支持时用带同样语义的独占加载、存储指令 LDAXR、STLXR 循环实现。Java 代码通过 Unsafe 的 compareAndSetInt() 等方法使用 CAS，JIT 把它们直接编译成这些指令。
 
 #### 2. AtomicInteger
 
@@ -2142,7 +2150,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 JDK 1.6 引入了偏向锁，加上此前已有的轻量级锁，锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasable）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
 
-以下是 64 位 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。末尾两位的锁标志和倒数第 3 位的偏向标志区分了五种状态：上面的四种，以及 GC 时使用的标记状态。
+以下是 JDK 8 中 64 位 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。末尾两位的锁标志和倒数第 3 位的偏向标志区分了五种状态：上面的四种，以及 GC 时使用的标记状态。偏向锁的实现在 JDK 18 中删除，JDK 21 的 Mark Word 中倒数第 3 位不再使用，只靠末尾两位区分无锁、轻量级锁、重量级锁和 GC 标记。
 
 <div align="center"> <img src="pics/markword.png" width="760px"/> </div><br>
 
@@ -2158,7 +2166,7 @@ JDK 1.6 引入了偏向锁，加上此前已有的轻量级锁，锁拥有了四
 
 如果 CAS 操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的虚拟机栈，如果是的话说明当前线程已经拥有了这个锁对象，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁。
 
-以上是 JDK 21 默认的实现（LockingMode 为 1）。JDK 23 起默认改为新的轻量级锁实现（LM_LIGHTWEIGHT），不再把 Mark Word 复制到栈上的 Lock Record 中，而是在线程中维护一个持有的锁对象列表。
+以上是 JDK 21 默认的实现（LockingMode 为 1）。JDK 23 起默认改为新的轻量级锁实现（LM_LIGHTWEIGHT），不再把 Mark Word 复制到栈上的 Lock Record 中，而是在线程中维护一个持有的锁对象列表。JDK 26 删除了旧的实现，-XX:LockingMode 不再生效，JDK 27 中使用这个参数会因无法识别而启动失败。
 
 ### 偏向锁
 
@@ -2176,7 +2184,7 @@ synchronized 设计锁升级，是因为重量级锁的代价在阻塞和唤醒�
 
 1. 无锁：新创建的对象，Mark Word 末尾为 01；
 2. 轻量级锁：一个线程进入 synchronized 时，用 CAS 把 Mark Word 换成指向自己栈中 Lock Record 的指针，末尾变为 00；同一个线程重入时只在栈中多放一个 Lock Record，退出时再用 CAS 把 Mark Word 换回来；
-3. 重量级锁：其它线程持有锁时 CAS 失败，锁膨胀为 ObjectMonitor（结构见[锁的实现](#1-锁的实现)），原持有者成为它的 _owner，Mark Word 改为指向它，末尾变为 10。抢锁的线程先自适应自旋若干次，仍然抢不到再进入队列阻塞，原持有者退出时唤醒它们。
+3. 重量级锁：其它线程持有锁时 CAS 失败，锁膨胀为 ObjectMonitor（结构见[锁的实现](#1-锁的实现)），原持有者成为它的 _owner，Mark Word 改为指向它，末尾变为 10。JDK 27 起默认不再改写 Mark Word 中的地址，而是把对象和 ObjectMonitor 的对应关系记在一张全局表中，按对象的哈希码查找，Mark Word 保留哈希码，只把末尾改为 10。抢锁的线程先自适应自旋若干次，仍然抢不到再进入队列阻塞，原持有者退出时唤醒它们。
 
 轻量级锁一节中锁状态变化的图就是这个过程（JDK 21 实测，见[附录 A10](#a10-锁状态与监视器的回收)）。JDK 15 之前，无锁和轻量级锁之间还有偏向锁，其它线程来加锁时要先在安全点[撤销偏向](#偏向锁)，代价很高。偏向锁的收益主要来自 Vector、Hashtable 这类每个方法都加锁、实际只被一个线程使用的旧代码，又让 JVM 的同步代码很复杂，所以 JDK 15 起被默认禁用（JEP 374），之后被移除。
 
@@ -2257,7 +2265,7 @@ fair=false count=1600000 55 ms
 fair=true count=1600000 3019 ms
 ```
 
-锁内再记下上一次的持有者，统计 160 万次加锁中换了多少次线程（JDK 21.0.13，Apple M1 Pro，2026-10-30 重跑；这次机器负载较高，耗时比上面长，只列切换次数）：
+锁内再记下上一次的持有者，统计 160 万次加锁中换了多少次线程（JDK 21.0.13，Apple M1 Pro；运行时机器负载较高，耗时不与上面比较，只列切换次数）：
 
 ```java
 l.lock();
@@ -2397,6 +2405,19 @@ java.lang.IllegalStateException: 任务 2 出错
 
 异常的堆栈只保留了第一行。任务执行的先后和线程的分配每次不同，但每次都是 3 个任务完成、关闭后的提交被拒绝。ThreadPoolExecutor 的 ctl、getTask() 中的 poll/take 见 JDK 21 源码 java/util/concurrent/ThreadPoolExecutor.java。
 
+任务留下中断标记的情况：只有 1 个工作线程，任务 1 执行完后调用 Thread.currentThread().interrupt() 留下中断标记，任务 2、3 已在队列中，500 毫秒后打印存活的工作线程数：
+
+```text
+== 工作线程被中断时直接 return
+任务 1 执行完，留下了中断标记
+存活的工作线程：0
+== 改为 continue（正文中的写法）
+任务 1 执行完，留下了中断标记
+任务 2 执行
+任务 3 执行
+存活的工作线程：1
+```
+
 ### A7 线程池的异常与参数调整
 
 线程工厂把线程依次命名为 worker-1、worker-2……，每次提交后等待 100 ms：
@@ -2509,7 +2530,7 @@ AtomicStampedReference CAS(A -> C, 版本 0)：false，当前值 A，版本 2
 值为 1000 时 CAS(1000 -> 500)：false
 ```
 
-正文中无锁栈的例子用 AtomicReference<Node> 实现的栈，按正文的步骤手动交错执行两个线程的操作：
+正文中无锁栈的例子用 AtomicReference\<Node> 实现的栈，按正文的步骤手动交错执行两个线程的操作：
 
 ```text
 初始：A B C
@@ -2518,7 +2539,7 @@ AtomicStampedReference CAS(A -> C, 版本 0)：false，当前值 A，版本 2
 结果：B C
 ```
 
-把栈顶换成 AtomicStampedReference<Node>，同样的步骤：
+把栈顶换成 AtomicStampedReference\<Node>，同样的步骤：
 
 ```text
 线程 2 操作后：A D C，版本 4
@@ -2932,7 +2953,7 @@ submit: ClassCastException
 
 ### A22 start() 与操作系统线程
 
-JDK 21.0.13，macOS 15.8（Apple M1 Pro）。osThreads() 用 ps -M -p <pid> 统计本进程的操作系统线程数（第一次启动子进程时 JDK 会多创建一个 process reaper 线程，所以先调用一次预热），线程在 run() 中等待 done 以便统计：
+JDK 21.0.13，macOS 15.8（Apple M1 Pro）。osThreads() 用 ps -M -p \<pid> 统计本进程的操作系统线程数（第一次启动子进程时 JDK 会多创建一个 process reaper 线程，所以先调用一次预热），线程在 run() 中等待 done 以便统计：
 
 ```java
 CountDownLatch done = new CountDownLatch(1);
@@ -3105,7 +3126,7 @@ void writer() { data = 1; ready = 1; }
 int reader() { int r = ready; return r + data; }
 ```
 
-用 java -XX:+UnlockDiagnosticVMOptions -XX:-TieredCompilation -XX:CompileCommand=print,VolAsm::writer -XX:CompileCommand=print,VolAsm::reader VolAsm 输出机器码。本机没有反汇编插件，输出是十六进制，按 AArch64 的指令编码解出其中的读写指令：
+用 java -XX:+UnlockDiagnosticVMOptions -XX:-TieredCompilation -XX:CompileCommand=print,VolAsm::writer -XX:CompileCommand=print,VolAsm::reader VolAsm 输出机器码。未加载反汇编插件时，机器码以十六进制输出，下面按 AArch64 的指令编码解出其中的读写指令：
 
 ```text
 writer：str  w11, [x1, #12]    // data = 1

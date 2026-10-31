@@ -11,7 +11,7 @@
 
 241\. Different Ways to Add Parentheses (Medium)
 
-[Leetcode](https://leetcode.com/problems/different-ways-to-add-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
+[Leetcode](https://leetcode.com/problems/different-ways-to-add-parentheses/description/) / [力扣](https://leetcode.cn/problems/different-ways-to-add-parentheses/description/)
 
 ```text
 Input: "2-1-1".
@@ -60,7 +60,7 @@ public List<Integer> diffWaysToCompute(String input) {
 
 95\. Unique Binary Search Trees II (Medium)
 
-[Leetcode](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) / [力扣](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
+[Leetcode](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) / [力扣](https://leetcode.cn/problems/unique-binary-search-trees-ii/description/)
 
 给定一个数字 n，要求生成所有值为 1...n 的二叉搜索树。
 

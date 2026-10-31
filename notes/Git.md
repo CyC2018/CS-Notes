@@ -152,7 +152,7 @@ target/
 *.local.yml
 ```
 
-需要注意的是，.gitignore 只对未跟踪的文件生效。已经提交过的文件即使后来写进 .gitignore，修改仍会出现在 git status 中，要先用 git rm --cached <file> 把它移出版本库（工作区的文件保留）。
+需要注意的是，.gitignore 只对未跟踪的文件生效。已经提交过的文件即使后来写进 .gitignore，修改仍会出现在 git status 中，要先用 git rm --cached \<file> 把它移出版本库（工作区的文件保留）。
 
 不需要全部自己编写，可以到 [https://github.com/github/gitignore](https://github.com/github/gitignore) 中进行查询。
 
@@ -160,22 +160,22 @@ target/
 
 | 用途 | 命令 |
 | --- | --- |
-| 克隆仓库 | git clone <url> |
+| 克隆仓库 | git clone \<url> |
 | 查看状态 | git status |
-| 加入暂存区 | git add <file> |
+| 加入暂存区 | git add \<file> |
 | 提交 | git commit -m "说明" |
 | 查看历史 | git log --oneline --graph |
 | 查看改动 | git diff（工作区与暂存区），git diff --staged（暂存区与最新提交） |
-| 撤销工作区的修改 | git restore <file> |
-| 撤销 git add | git restore --staged <file> |
+| 撤销工作区的修改 | git restore \<file> |
+| 撤销 git add | git restore --staged \<file> |
 | 新建并切换分支 | git switch -c dev |
 | 切换分支 | git switch master |
 | 合并分支 | git merge dev |
 | 变基 | git rebase master |
 | 临时保存修改 | git stash，之后用 git stash pop 恢复 |
 | 撤销最近一次提交，保留修改 | git reset --soft HEAD~1 |
-| 回到某个提交，丢弃之后的修改 | git reset --hard <commit> |
-| 用一个新提交抵消某次提交 | git revert <commit> |
+| 回到某个提交，丢弃之后的修改 | git reset --hard \<commit> |
+| 用一个新提交抵消某次提交 | git revert \<commit> |
 | 下载远程分支的新提交，不合并 | git fetch |
 | 拉取并合并远程分支 | git pull |
 | 推送 | git push origin dev |
