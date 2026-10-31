@@ -70,7 +70,7 @@
 
 1091\. Shortest Path in Binary Matrix (Medium)
 
-[Leetcode](https://leetcode.com/problems/shortest-path-in-binary-matrix/) / [力扣](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/)
+[Leetcode](https://leetcode.com/problems/shortest-path-in-binary-matrix/) / [力扣](https://leetcode.cn/problems/shortest-path-in-binary-matrix/)
 
 ```text
 Input: grid = [[0,0,0],
@@ -121,7 +121,7 @@ public int shortestPathBinaryMatrix(int[][] grids) {
 
 279\. Perfect Squares (Medium)
 
-[Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode-cn.com/problems/perfect-squares/description/)
+[Leetcode](https://leetcode.com/problems/perfect-squares/description/) / [力扣](https://leetcode.cn/problems/perfect-squares/description/)
 
 ```text
 For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
@@ -186,7 +186,7 @@ private List<Integer> generateSquares(int n) {
 
 127\. Word Ladder (Hard)
 
-[Leetcode](https://leetcode.com/problems/word-ladder/description/) / [力扣](https://leetcode-cn.com/problems/word-ladder/description/)
+[Leetcode](https://leetcode.com/problems/word-ladder/description/) / [力扣](https://leetcode.cn/problems/word-ladder/description/)
 
 ```text
 Input:
@@ -301,7 +301,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 695\. Max Area of Island (Medium)
 
-[Leetcode](https://leetcode.com/problems/max-area-of-island/description/) / [力扣](https://leetcode-cn.com/problems/max-area-of-island/description/)
+[Leetcode](https://leetcode.com/problems/max-area-of-island/description/) / [力扣](https://leetcode.cn/problems/max-area-of-island/description/)
 
 ```text
 [[0,0,1,0,0,0,0,1,0,0,0,0,0],
@@ -352,7 +352,7 @@ private int dfs(int[][] grid, int r, int c) {
 
 200\. Number of Islands (Medium)
 
-[Leetcode](https://leetcode.com/problems/number-of-islands/description/) / [力扣](https://leetcode-cn.com/problems/number-of-islands/description/)
+[Leetcode](https://leetcode.com/problems/number-of-islands/description/) / [力扣](https://leetcode.cn/problems/number-of-islands/description/)
 
 ```text
 Input:
@@ -399,6 +399,8 @@ private void dfs(char[][] grid, int i, int j) {
 }
 ```
 
+每个格子最多被改为 0 一次，之后对它的 dfs 调用都立即返回，而每个格子最多被 4 个相邻格子各调用一次，时间复杂度 O(MN)；全是 1 时递归深度为 MN，空间复杂度 O(MN)。
+
 需要注意的是，递归深度最多等于岛屿的格子数，300 × 300 的网格全是 1 时深达 9 万层，JDK 21 默认的线程栈会溢出（见[附录 A1](#a1-岛屿数量的递归深度)），这时可以把 dfs 换成下面的 BFS：
 
 ```java
@@ -424,7 +426,7 @@ private void bfs(char[][] grid, int i, int j) {
 
 547\. Number of Provinces (Medium)
 
-[Leetcode](https://leetcode.com/problems/number-of-provinces/description/) / [力扣](https://leetcode-cn.com/problems/number-of-provinces/description/)
+[Leetcode](https://leetcode.com/problems/number-of-provinces/description/) / [力扣](https://leetcode.cn/problems/number-of-provinces/description/)
 
 ```text
 Input:
@@ -470,7 +472,7 @@ private void dfs(int[][] M, int i, boolean[] hasVisited) {
 
 130\. Surrounded Regions (Medium)
 
-[Leetcode](https://leetcode.com/problems/surrounded-regions/description/) / [力扣](https://leetcode-cn.com/problems/surrounded-regions/description/)
+[Leetcode](https://leetcode.com/problems/surrounded-regions/description/) / [力扣](https://leetcode.cn/problems/surrounded-regions/description/)
 
 ```text
 For example,
@@ -539,7 +541,7 @@ private void dfs(char[][] board, int r, int c) {
 
 417\. Pacific Atlantic Water Flow (Medium)
 
-[Leetcode](https://leetcode.com/problems/pacific-atlantic-water-flow/description/) / [力扣](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/description/)
+[Leetcode](https://leetcode.com/problems/pacific-atlantic-water-flow/description/) / [力扣](https://leetcode.cn/problems/pacific-atlantic-water-flow/description/)
 
 ```text
 Given the following 5x5 matrix:
@@ -651,7 +653,7 @@ backtracking(当前选择):
 
 17\. Letter Combinations of a Phone Number (Medium)
 
-[Leetcode](https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/) / [力扣](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/description/)
+[Leetcode](https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/) / [力扣](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/)
 
 <div align="center"> <img src="pics/search-phone-keypad.png" width="700px"/> </div><br>
 
@@ -691,7 +693,7 @@ private void doCombination(StringBuilder prefix, List<String> combinations, fina
 
 93\. Restore IP Addresses (Medium)
 
-[Leetcode](https://leetcode.com/problems/restore-ip-addresses/description/) / [力扣](https://leetcode-cn.com/problems/restore-ip-addresses/description/)
+[Leetcode](https://leetcode.com/problems/restore-ip-addresses/description/) / [力扣](https://leetcode.cn/problems/restore-ip-addresses/description/)
 
 ```text
 Given "25525511135",
@@ -736,7 +738,7 @@ private void doRestore(int k, StringBuilder tempAddress, List<String> addresses,
 
 79\. Word Search (Medium)
 
-[Leetcode](https://leetcode.com/problems/word-search/description/) / [力扣](https://leetcode-cn.com/problems/word-search/description/)
+[Leetcode](https://leetcode.com/problems/word-search/description/) / [力扣](https://leetcode.cn/problems/word-search/description/)
 
 ```text
 For example,
@@ -809,7 +811,7 @@ private boolean backtracking(int curLen, int r, int c, boolean[][] visited, fina
 
 257\. Binary Tree Paths (Easy)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-paths/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-paths/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-paths/description/) / [力扣](https://leetcode.cn/problems/binary-tree-paths/description/)
 
 ```text
   1
@@ -868,7 +870,7 @@ private String buildPath(List<Integer> values) {
 
 46\. Permutations (Medium)
 
-[Leetcode](https://leetcode.com/problems/permutations/description/) / [力扣](https://leetcode-cn.com/problems/permutations/description/)
+[Leetcode](https://leetcode.com/problems/permutations/description/) / [力扣](https://leetcode.cn/problems/permutations/description/)
 
 ```text
 [1,2,3] have the following permutations:
@@ -917,7 +919,7 @@ private void backtracking(List<Integer> permuteList, List<List<Integer>> permute
 
 47\. Permutations II (Medium)
 
-[Leetcode](https://leetcode.com/problems/permutations-ii/description/) / [力扣](https://leetcode-cn.com/problems/permutations-ii/description/)
+[Leetcode](https://leetcode.com/problems/permutations-ii/description/) / [力扣](https://leetcode.cn/problems/permutations-ii/description/)
 
 ```text
 [1,1,2] have the following unique permutations:
@@ -968,7 +970,7 @@ private void backtracking(List<Integer> permuteList, List<List<Integer>> permute
 
 77\. Combinations (Medium)
 
-[Leetcode](https://leetcode.com/problems/combinations/description/) / [力扣](https://leetcode-cn.com/problems/combinations/description/)
+[Leetcode](https://leetcode.com/problems/combinations/description/) / [力扣](https://leetcode.cn/problems/combinations/description/)
 
 ```text
 If n = 4 and k = 2, a solution is:
@@ -1009,7 +1011,7 @@ private void backtracking(List<Integer> combineList, List<List<Integer>> combina
 
 39\. Combination Sum (Medium)
 
-[Leetcode](https://leetcode.com/problems/combination-sum/description/) / [力扣](https://leetcode-cn.com/problems/combination-sum/description/)
+[Leetcode](https://leetcode.com/problems/combination-sum/description/) / [力扣](https://leetcode.cn/problems/combination-sum/description/)
 
 ```text
 given candidate set [2, 3, 6, 7] and target 7,
@@ -1047,7 +1049,7 @@ private void backtracking(List<Integer> tempCombination, List<List<Integer>> com
 
 40\. Combination Sum II (Medium)
 
-[Leetcode](https://leetcode.com/problems/combination-sum-ii/description/) / [力扣](https://leetcode-cn.com/problems/combination-sum-ii/description/)
+[Leetcode](https://leetcode.com/problems/combination-sum-ii/description/) / [力扣](https://leetcode.cn/problems/combination-sum-ii/description/)
 
 ```text
 For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,
@@ -1096,7 +1098,7 @@ private void backtracking(List<Integer> tempCombination, List<List<Integer>> com
 
 216\. Combination Sum III (Medium)
 
-[Leetcode](https://leetcode.com/problems/combination-sum-iii/description/) / [力扣](https://leetcode-cn.com/problems/combination-sum-iii/description/)
+[Leetcode](https://leetcode.com/problems/combination-sum-iii/description/) / [力扣](https://leetcode.cn/problems/combination-sum-iii/description/)
 
 ```text
 Input: k = 3, n = 9
@@ -1138,7 +1140,7 @@ private void backtracking(int k, int n, int start,
 
 78\. Subsets (Medium)
 
-[Leetcode](https://leetcode.com/problems/subsets/description/) / [力扣](https://leetcode-cn.com/problems/subsets/description/)
+[Leetcode](https://leetcode.com/problems/subsets/description/) / [力扣](https://leetcode.cn/problems/subsets/description/)
 
 找出集合的所有子集，子集不能重复，[1, 2] 和 [2, 1] 这种子集算重复。
 
@@ -1173,7 +1175,7 @@ private void backtracking(int start, List<Integer> tempSubset, List<List<Integer
 
 90\. Subsets II (Medium)
 
-[Leetcode](https://leetcode.com/problems/subsets-ii/description/) / [力扣](https://leetcode-cn.com/problems/subsets-ii/description/)
+[Leetcode](https://leetcode.com/problems/subsets-ii/description/) / [力扣](https://leetcode.cn/problems/subsets-ii/description/)
 
 ```text
 For example,
@@ -1227,7 +1229,7 @@ private void backtracking(int start, List<Integer> tempSubset, List<List<Integer
 
 131\. Palindrome Partitioning (Medium)
 
-[Leetcode](https://leetcode.com/problems/palindrome-partitioning/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-partitioning/description/)
+[Leetcode](https://leetcode.com/problems/palindrome-partitioning/description/) / [力扣](https://leetcode.cn/problems/palindrome-partitioning/description/)
 
 ```text
 For example, given s = "aab",
@@ -1277,7 +1279,7 @@ private boolean isPalindrome(String s, int begin, int end) {
 
 37\. Sudoku Solver (Hard)
 
-[Leetcode](https://leetcode.com/problems/sudoku-solver/description/) / [力扣](https://leetcode-cn.com/problems/sudoku-solver/description/)
+[Leetcode](https://leetcode.com/problems/sudoku-solver/description/) / [力扣](https://leetcode.cn/problems/sudoku-solver/description/)
 
 <div align="center"> <img src="pics/search-sudoku.png" width="330px"/> </div><br>
 
@@ -1339,7 +1341,7 @@ private int cubeNum(int i, int j) {
 
 51\. N-Queens (Hard)
 
-[Leetcode](https://leetcode.com/problems/n-queens/description/) / [力扣](https://leetcode-cn.com/problems/n-queens/description/)
+[Leetcode](https://leetcode.com/problems/n-queens/description/) / [力扣](https://leetcode.cn/problems/n-queens/description/)
 
 <div align="center"> <img src="pics/search-n-queens.png" width="500px"/> </div><br>
 
@@ -1407,7 +1409,7 @@ private void backtracking(int row) {
 
 22\. Generate Parentheses (Medium)
 
-[Leetcode](https://leetcode.com/problems/generate-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/generate-parentheses/description/)
+[Leetcode](https://leetcode.com/problems/generate-parentheses/description/) / [力扣](https://leetcode.cn/problems/generate-parentheses/description/)
 
 ```text
 Input: n = 3
