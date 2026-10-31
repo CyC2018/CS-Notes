@@ -16,6 +16,7 @@
         * [12. 相同节点值的最大路径长度](#12-相同节点值的最大路径长度)
         * [13. 间隔遍历](#13-间隔遍历)
         * [14. 找出二叉树中第二小的节点](#14-找出二叉树中第二小的节点)
+        * [15. 二叉树中的最大路径和](#15-二叉树中的最大路径和)
     * [层次遍历](#层次遍历)
         * [1. 一棵树每层节点的平均数](#1-一棵树每层节点的平均数)
         * [2. 得到左下角的节点](#2-得到左下角的节点)
@@ -49,7 +50,7 @@
 
 104\. Maximum Depth of Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/) / [力扣](https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/)
 
 ```java
 public int maxDepth(TreeNode root) {
@@ -62,7 +63,7 @@ public int maxDepth(TreeNode root) {
 
 110\. Balanced Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/balanced-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/balanced-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/balanced-binary-tree/description/) / [力扣](https://leetcode.cn/problems/balanced-binary-tree/description/)
 
 ```text
     3
@@ -95,7 +96,7 @@ public int maxDepth(TreeNode root) {
 
 543\. Diameter of Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/diameter-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/diameter-of-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/diameter-of-binary-tree/description/) / [力扣](https://leetcode.cn/problems/diameter-of-binary-tree/description/)
 
 ```text
 Input:
@@ -132,7 +133,7 @@ private int depth(TreeNode root) {
 
 226\. Invert Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/invert-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/invert-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/invert-binary-tree/description/) / [力扣](https://leetcode.cn/problems/invert-binary-tree/description/)
 
 ```java
 public TreeNode invertTree(TreeNode root) {
@@ -148,7 +149,7 @@ public TreeNode invertTree(TreeNode root) {
 
 617\. Merge Two Binary Trees (Easy)
 
-[Leetcode](https://leetcode.com/problems/merge-two-binary-trees/description/) / [力扣](https://leetcode-cn.com/problems/merge-two-binary-trees/description/)
+[Leetcode](https://leetcode.com/problems/merge-two-binary-trees/description/) / [力扣](https://leetcode.cn/problems/merge-two-binary-trees/description/)
 
 ```text
 Input:
@@ -183,7 +184,7 @@ public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 
 112\. Path Sum (Easy)
 
-[Leetcode](https://leetcode.com/problems/path-sum/description/) / [力扣](https://leetcode-cn.com/problems/path-sum/description/)
+[Leetcode](https://leetcode.com/problems/path-sum/description/) / [力扣](https://leetcode.cn/problems/path-sum/description/)
 
 ```text
 Given the below binary tree and sum = 22,
@@ -213,7 +214,7 @@ public boolean hasPathSum(TreeNode root, int sum) {
 
 437\. Path Sum III (Medium)
 
-[Leetcode](https://leetcode.com/problems/path-sum-iii/description/) / [力扣](https://leetcode-cn.com/problems/path-sum-iii/description/)
+[Leetcode](https://leetcode.com/problems/path-sum-iii/description/) / [力扣](https://leetcode.cn/problems/path-sum-iii/description/)
 
 ```text
 root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
@@ -259,7 +260,7 @@ private int pathSumStartWithRoot(TreeNode root, long sum) {
 
 572\. Subtree of Another Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/subtree-of-another-tree/description/) / [力扣](https://leetcode-cn.com/problems/subtree-of-another-tree/description/)
+[Leetcode](https://leetcode.com/problems/subtree-of-another-tree/description/) / [力扣](https://leetcode.cn/problems/subtree-of-another-tree/description/)
 
 ```text
 Given tree s:
@@ -312,7 +313,7 @@ private boolean isSubtreeWithRoot(TreeNode s, TreeNode t) {
 
 101\. Symmetric Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/symmetric-tree/description/) / [力扣](https://leetcode-cn.com/problems/symmetric-tree/description/)
+[Leetcode](https://leetcode.com/problems/symmetric-tree/description/) / [力扣](https://leetcode.cn/problems/symmetric-tree/description/)
 
 ```text
     1
@@ -340,7 +341,7 @@ private boolean isSymmetric(TreeNode t1, TreeNode t2) {
 
 111\. Minimum Depth of Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/) / [力扣](https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/)
 
 树的根节点到叶子节点的最小路径长度。
 
@@ -360,7 +361,7 @@ public int minDepth(TreeNode root) {
 
 404\. Sum of Left Leaves (Easy)
 
-[Leetcode](https://leetcode.com/problems/sum-of-left-leaves/description/) / [力扣](https://leetcode-cn.com/problems/sum-of-left-leaves/description/)
+[Leetcode](https://leetcode.com/problems/sum-of-left-leaves/description/) / [力扣](https://leetcode.cn/problems/sum-of-left-leaves/description/)
 
 ```text
     3
@@ -389,7 +390,7 @@ private boolean isLeaf(TreeNode node){
 
 687\. Longest Univalue Path (Medium)
 
-[Leetcode](https://leetcode.com/problems/longest-univalue-path/) / [力扣](https://leetcode-cn.com/problems/longest-univalue-path/)
+[Leetcode](https://leetcode.com/problems/longest-univalue-path/) / [力扣](https://leetcode.cn/problems/longest-univalue-path/)
 
 ```text
              1
@@ -426,7 +427,7 @@ private int dfs(TreeNode root){
 
 337\. House Robber III (Medium)
 
-[Leetcode](https://leetcode.com/problems/house-robber-iii/description/) / [力扣](https://leetcode-cn.com/problems/house-robber-iii/description/)
+[Leetcode](https://leetcode.com/problems/house-robber-iii/description/) / [力扣](https://leetcode.cn/problems/house-robber-iii/description/)
 
 ```text
      3
@@ -459,7 +460,7 @@ public int rob(TreeNode root) {
 
 671\. Second Minimum Node In a Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/second-minimum-node-in-a-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/) / [力扣](https://leetcode.cn/problems/second-minimum-node-in-a-binary-tree/description/)
 
 ```text
 Input:
@@ -490,6 +491,50 @@ public int findSecondMinimumValue(TreeNode root) {
 }
 ```
 
+### 15. 二叉树中的最大路径和
+
+124\. Binary Tree Maximum Path Sum (Hard)
+
+[Leetcode](https://leetcode.com/problems/binary-tree-maximum-path-sum/) / [力扣](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
+
+```text
+Input:
+       2
+      / \
+    -6   3
+    / \  / \
+   3  1 4   6
+
+Output: 13，路径为 4 -> 3 -> 6
+```
+
+做法与 [两节点的最长路径](#3-两节点的最长路径) 相同：以每个节点为最高点算一次经过它的最大路径，取最大值。不同的有两处：
+
+- 子树的贡献是负数时不如不走，记为 0，例如 -6 这棵子树向上最多贡献 -6 + 3 = -3，所以根节点不接它；
+- 递归返回的只能是向下走一侧的最大和，不能是两侧之和。3 这个节点两侧都接上是 4 + 3 + 6 = 13，但返回给父节点的是 3 + 6 = 9，否则路径会在 3 处分叉。
+
+节点值可能全是负数，max 的初值取 Integer.MIN_VALUE，不能取 0。
+
+```java
+private int max = Integer.MIN_VALUE;
+
+public int maxPathSum(TreeNode root) {
+    gain(root);
+    return max;
+}
+
+// 以 root 为起点向下走一侧的最大路径和
+private int gain(TreeNode root) {
+    if (root == null) return 0;
+    int left = Math.max(gain(root.left), 0);
+    int right = Math.max(gain(root.right), 0);
+    max = Math.max(max, root.val + left + right);
+    return root.val + Math.max(left, right);
+}
+```
+
+每个节点访问一次，时间复杂度 O(N)；递归深度为树的高度，空间复杂度 O(H)。
+
 ## 层次遍历
 
 使用 BFS 进行层次遍历。不需要使用两个队列来分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。按层输出（102 题）和之字形输出的写法见[剑指 Offer 32.2](32.2%20把二叉树打印成多行.md)、[32.3](32.3%20按之字形顺序打印二叉树.md)。
@@ -498,7 +543,7 @@ public int findSecondMinimumValue(TreeNode root) {
 
 637\. Average of Levels in Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/average-of-levels-in-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/average-of-levels-in-binary-tree/description/) / [力扣](https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/)
 
 ```java
 public List<Double> averageOfLevels(TreeNode root) {
@@ -525,7 +570,7 @@ public List<Double> averageOfLevels(TreeNode root) {
 
 513\. Find Bottom Left Tree Value (Medium)
 
-[Leetcode](https://leetcode.com/problems/find-bottom-left-tree-value/description/) / [力扣](https://leetcode-cn.com/problems/find-bottom-left-tree-value/description/)
+[Leetcode](https://leetcode.com/problems/find-bottom-left-tree-value/description/) / [力扣](https://leetcode.cn/problems/find-bottom-left-tree-value/description/)
 
 ```text
 Input:
@@ -613,7 +658,7 @@ void dfs(TreeNode root) {
 
 144\. Binary Tree Preorder Traversal (Easy)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-preorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-preorder-traversal/description/) / [力扣](https://leetcode.cn/problems/binary-tree-preorder-traversal/description/)
 
 ```java
 public List<Integer> preorderTraversal(TreeNode root) {
@@ -635,7 +680,7 @@ public List<Integer> preorderTraversal(TreeNode root) {
 
 145\. Binary Tree Postorder Traversal (Easy)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) / [力扣](https://leetcode.cn/problems/binary-tree-postorder-traversal/description/)
 
 前序遍历为 root -\> left -\> right，后序遍历为 left -\> right -\> root。可以修改前序遍历成为 root -\> right -\> left，那么这个顺序就和后序遍历正好相反。
 
@@ -687,7 +732,7 @@ public List<Integer> postorderTraversal(TreeNode root) {
 
 94\. Binary Tree Inorder Traversal (Easy)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/) / [力扣](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
 
 从 cur 一路向左压栈直到为空，弹出栈顶访问后转向它的右子树。以上面的树为例：
 
@@ -722,7 +767,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
 
 669\. Trim a Binary Search Tree (Medium)
 
-[Leetcode](https://leetcode.com/problems/trim-a-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/trim-a-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/trim-a-binary-search-tree/description/) / [力扣](https://leetcode.cn/problems/trim-a-binary-search-tree/description/)
 
 ```text
 Input:
@@ -766,7 +811,7 @@ public TreeNode trimBST(TreeNode root, int L, int R) {
 
 230\. Kth Smallest Element in a BST (Medium)
 
-[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/) / [力扣](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/description/)
+[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/) / [力扣](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/description/)
 
 
 中序遍历解法：
@@ -812,7 +857,7 @@ private int count(TreeNode node) {
 
 538\. Convert BST to Greater Tree (Medium)
 
-[Leetcode](https://leetcode.com/problems/convert-bst-to-greater-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/description/)
+[Leetcode](https://leetcode.com/problems/convert-bst-to-greater-tree/description/) / [力扣](https://leetcode.cn/problems/convert-bst-to-greater-tree/description/)
 
 ```text
 Input: The root of a Binary Search Tree like this:
@@ -851,7 +896,7 @@ private void traver(TreeNode node) {
 
 235\. Lowest Common Ancestor of a Binary Search Tree (Medium)
 
-[Leetcode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/) / [力扣](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/description/)
 
 ```text
         _______6______
@@ -879,7 +924,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 236\. Lowest Common Ancestor of a Binary Tree (Medium) 
 
-[Leetcode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/) / [力扣](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
 ```text
        _______3______
@@ -912,7 +957,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 108\. Convert Sorted Array to Binary Search Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/) / [力扣](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description/)
 
 取中间的元素作为根，两侧的元素个数最多相差 1，因此树是平衡的。
 
@@ -935,7 +980,7 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 
 109\. Convert Sorted List to Binary Search Tree (Medium)
 
-[Leetcode](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/) / [力扣](https://leetcode.cn/problems/convert-sorted-list-to-binary-search-tree/description/)
 
 ```text
 Given the sorted linked list: [-10,-3,0,5,9],
@@ -980,7 +1025,7 @@ private ListNode preMid(ListNode head) {
 
 653\. Two Sum IV - Input is a BST (Easy)
 
-[Leetcode](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/) / [力扣](https://leetcode-cn.com/problems/two-sum-iv-input-is-a-bst/description/)
+[Leetcode](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/) / [力扣](https://leetcode.cn/problems/two-sum-iv-input-is-a-bst/description/)
 
 ```text
 Input:
@@ -1026,7 +1071,7 @@ private void inOrder(TreeNode root, List<Integer> nums) {
 
 530\. Minimum Absolute Difference in BST (Easy)
 
-[Leetcode](https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/) / [力扣](https://leetcode-cn.com/problems/minimum-absolute-difference-in-bst/description/)
+[Leetcode](https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/) / [力扣](https://leetcode.cn/problems/minimum-absolute-difference-in-bst/description/)
 
 ```text
 Input:
@@ -1066,7 +1111,7 @@ private void inOrder(TreeNode node) {
 
 501\. Find Mode in Binary Search Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/find-mode-in-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/) / [力扣](https://leetcode.cn/problems/find-mode-in-binary-search-tree/description/)
 
 ```text
    1
@@ -1127,7 +1172,7 @@ Trie，又称前缀树或字典树，用于判断字符串是否存在或者是�
 
 208\. Implement Trie (Prefix Tree) (Medium)
 
-[Leetcode](https://leetcode.com/problems/implement-trie-prefix-tree/description/) / [力扣](https://leetcode-cn.com/problems/implement-trie-prefix-tree/description/)
+[Leetcode](https://leetcode.com/problems/implement-trie-prefix-tree/description/) / [力扣](https://leetcode.cn/problems/implement-trie-prefix-tree/description/)
 
 ```java
 class Trie {
@@ -1193,7 +1238,7 @@ class Trie {
 
 677\. Map Sum Pairs (Medium)
 
-[Leetcode](https://leetcode.com/problems/map-sum-pairs/description/) / [力扣](https://leetcode-cn.com/problems/map-sum-pairs/description/)
+[Leetcode](https://leetcode.com/problems/map-sum-pairs/description/) / [力扣](https://leetcode.cn/problems/map-sum-pairs/description/)
 
 ```text
 Input: insert("apple", 3), Output: Null
