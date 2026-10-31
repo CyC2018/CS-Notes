@@ -141,7 +141,8 @@ def copy_referenced_assets(dist, root):
         references.update(referenced_paths(doc.read_text()))
     for relative in sorted(references):
         destination = dist / relative
-        if destination.is_file() or Path(str(destination) + '.md').is_file() or destination.suffix == '.md':
+        # 目录链接（例如 /learn/）由目录下的 index.html 提供
+        if destination.is_file() or (destination / 'index.html').is_file() or Path(str(destination) + '.md').is_file() or destination.suffix == '.md':
             continue
         source = root / relative
         if not source.resolve().is_relative_to(root.resolve()) or not source.is_file():
