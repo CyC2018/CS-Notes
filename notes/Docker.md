@@ -328,14 +328,14 @@ readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Servic
 
 ### Pod 的创建过程
 
-K8s 的各组件不直接互相调用，而是都通过 API Server 协作：每个组件监听（watch）自己关心的对象，发现实际状态与期望不一致就采取行动，再把结果写回 API Server。以订单服务中被调度到节点 d1-agent 的一个 Pod 为例：
+K8s 的各组件不直接互相调用，而是都通过 API Server 协作：每个组件监听（watch）自己关心的对象，发现实际状态与期望不一致就采取行动，再把结果写回 API Server。以订单服务中被调度到节点 k3s-agent 的一个 Pod 为例：
 
 <div align="center"> <img src="pics/k8s-pod-create.png" width="860px"/> </div><br>
 
 1. kubectl 把 Deployment 发给 API Server，API Server 完成认证、鉴权和准入检查后写入 etcd；
 2. 控制器管理器中的 Deployment 控制器发现新的 Deployment，创建 ReplicaSet；ReplicaSet 控制器发现副本数不足，创建 3 个 Pod 对象，这时的 Pod 还没有指定节点；
-3. 调度器发现未调度的 Pod，先过滤掉不满足条件的节点（资源不足、有不能容忍的污点等），再给剩下的节点打分，选出 d1-agent 写入 Pod 的 nodeName；
-4. d1-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先启动一个 pause 容器持有网络命名空间，再调用 CNI 插件为它配置网卡、分配 IP 10.42.1.5；Pod 声明了存储卷时，还会通过 CSI 插件把卷挂载到节点上；
+3. 调度器发现未调度的 Pod，先过滤掉不满足条件的节点（资源不足、有不能容忍的污点等），再给剩下的节点打分，选出 k3s-agent 写入 Pod 的 nodeName；
+4. k3s-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先启动一个 pause 容器持有网络命名空间，再调用 CNI 插件为它配置网卡、分配 IP 10.42.1.5；Pod 声明了存储卷时，还会通过 CSI 插件把卷挂载到节点上；
 5. kubelet 拉取镜像（这里镜像已在节点上），创建并启动容器；
 6. kubelet 执行探针，就绪探针通过后把 Pod 的状态更新为 Ready；
 7. EndpointSlice 控制器把 10.42.1.5:8080 加入 order-service 的后端，各节点的 kube-proxy 随之更新转发规则。
@@ -389,13 +389,13 @@ Ingress 只是规则，真正处理请求的是 Ingress 控制器，例如 Traef
 
 需要注意的是，Ingress 控制器通常不经过 Service 的虚拟 IP，而是从 EndpointSlice 取得 Pod 的地址后直接转发给 Pod（Traefik 的默认行为），Service 在这里只用来找到后端。Ingress API 已经冻结，不再增加新功能，新功能加在它的后继 Gateway API 中。
 
-Pod 之间的通信由 CNI 插件实现。K8s 的网络模型要求每个 Pod 有集群内唯一的 IP，任意两个 Pod 不经过 NAT 就能直接通信。k3s 默认的 Flannel 给每个节点分配一个网段（实验中 d1-server 上的 Pod 是 10.42.0.x，d1-agent 上的是 10.42.1.x），跨节点的包用 VXLAN 封装后经节点之间的网络发送。
+Pod 之间的通信由 CNI 插件实现。K8s 的网络模型要求每个 Pod 有集群内唯一的 IP，任意两个 Pod 不经过 NAT 就能直接通信。k3s 默认的 Flannel 给每个节点分配一个网段（实验中 k3s-server 上的 Pod 是 10.42.0.x，k3s-agent 上的是 10.42.1.x），跨节点的包用 VXLAN 封装后经节点之间的网络发送。
 
 ### Pod 异常状态的排查
 
 Pod 的阶段（phase）只有 Pending、Running、Succeeded、Failed、Unknown 五种，kubectl get pods 的 STATUS 一栏显示得更细。常见的异常状态（k3s 实测，见[附录 A8](#a8-pod-的异常状态)）：
 
-- Pending：Pod 还没有调度到节点上。describe 的事件中有 FailedScheduling 时是调度失败，例如申请 20 个 CPU 时为 0/2 nodes are available: 2 Insufficient cpu；两个节点都有污点 dedicated=db:NoSchedule、Pod 没有对应的容忍时为 2 node(s) had untolerated taint；Pod 使用的 PVC 没有绑定到存储卷时也会停在这里；
+- Pending：Pod 已被集群接受，但还有容器没有创建并运行起来，包括等待调度和拉取镜像的时间。describe 的事件中有 FailedScheduling 时是调度失败，例如申请 20 个 CPU 时为 0/2 nodes are available: 2 Insufficient cpu；两个节点都有污点 dedicated=db:NoSchedule、Pod 没有对应的容忍时为 2 node(s) had untolerated taint；Pod 使用的 PVC 没有绑定到存储卷时也会停在这里；
 - ImagePullBackOff：拉取镜像失败，常见原因是镜像名或标签写错、私有仓库没有配置凭证（imagePullSecrets）、节点访问不了镜像仓库，kubelet 在 ErrImagePull 和 ImagePullBackOff 之间反复重试；
 - CrashLoopBackOff：容器启动后反复退出，kubelet 每次重启前的等待时间按 10 秒、20 秒、40 秒翻倍，最长 5 分钟。kubectl logs --previous 查看上一次退出前的日志，例如把 server.port 写成 abc 时，日志中是 APPLICATION FAILED TO START 和具体的配置错误，退出码 1；
 - OOMKilled：容器超过内存上限被内核杀掉，退出码 137，之后同样进入 CrashLoopBackOff。例如内存上限 256 MiB，JVM 堆却设为 300 MB 并在启动时全部占用，Java 应用的堆和堆外内存加起来要小于 limits；
@@ -403,7 +403,7 @@ Pod 的阶段（phase）只有 Pending、Running、Succeeded、Failed、Unknown 
 
 排查的顺序通常是：kubectl get pods -o wide 看状态、重启次数和所在节点；kubectl describe pod 看事件；kubectl logs 看应用日志，容器重启过的加 --previous；kubectl exec 进入容器检查配置和网络；kubectl top pod 看资源占用（需要 metrics-server）。
 
-节点 NotReady 指控制平面一段时间没有收到节点上 kubelet 的心跳，这个时间由 node-monitor-grace-period 决定（v1.31 默认 40 秒，v1.32 起 50 秒）。停掉工作节点 d1-agent 后 32 秒，它变为 NotReady（kubelet 约每 10 秒续约一次心跳，宽限期从最后一次心跳算起，所以比 40 秒短），Conditions 中是 Kubelet stopped posting node status，并被加上 node.kubernetes.io/unreachable 污点；上面的 Pod 同时被标记为未就绪，从 Service 的后端中摘除。Pod 默认容忍这个污点 300 秒，又过了约 5 分钟才被驱逐，Deployment 在 d1-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
+节点 NotReady 指控制平面一段时间没有收到节点上 kubelet 的心跳，这个时间由 node-monitor-grace-period 决定（v1.31 默认 40 秒，v1.32 起 50 秒）。停掉工作节点 k3s-agent 后 32 秒，它变为 NotReady（kubelet 约每 10 秒续约一次心跳，宽限期从最后一次心跳算起，所以比 40 秒短），Conditions 中是 Kubelet stopped posting node status，并被加上 node.kubernetes.io/unreachable 污点；上面的 Pod 同时被标记为未就绪，从 Service 的后端中摘除。Pod 默认容忍这个污点 300 秒，又过了约 5 分钟才被驱逐，Deployment 在 k3s-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
 
 排查 NotReady 时先用 kubectl describe node 看 Conditions：
 
@@ -601,16 +601,16 @@ $ docker inspect -f '{{.Name}} started {{.State.StartedAt}}' shop-mysql-1 shop-o
 
 ### A5 部署、自愈与滚动升级
 
-两个节点的 k3s v1.31.4：server 节点 d1-server（控制平面兼工作节点）和 agent 节点 d1-agent 各运行在一个 Docker 特权容器中，容器内不能再用 OverlayFS，containerd 使用 native 快照（--snapshotter native）。订单服务的 1.0、1.1 两个镜像用 docker save 导出后导入两个节点的 containerd。
+两个节点的 k3s v1.31.4：server 节点 k3s-server（控制平面兼工作节点）和 agent 节点 k3s-agent 各运行在一个 Docker 特权容器中，容器内不能再用 OverlayFS，containerd 使用 native 快照（--snapshotter native）。订单服务的 1.0、1.1 两个镜像用 docker save 导出后导入两个节点的 containerd。
 
 ```text
 $ kubectl apply -f order.yaml
 all ready after 21.1 s
 $ kubectl get pods -o wide
 NAME                             READY   STATUS    RESTARTS   AGE   IP          NODE
-order-service-5ccc589fd8-b76g2   1/1     Running   0          20s   10.42.1.5   d1-agent
-order-service-5ccc589fd8-vb2lx   1/1     Running   0          20s   10.42.1.4   d1-agent
-order-service-5ccc589fd8-vz9hj   1/1     Running   0          20s   10.42.0.8   d1-server
+order-service-5ccc589fd8-b76g2   1/1     Running   0          20s   10.42.1.5   k3s-agent
+order-service-5ccc589fd8-vb2lx   1/1     Running   0          20s   10.42.1.4   k3s-agent
+order-service-5ccc589fd8-vz9hj   1/1     Running   0          20s   10.42.0.8   k3s-server
 $ kubectl get svc order-service
 NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 order-service   ClusterIP   10.43.210.38   <none>        80/TCP    21s
@@ -628,7 +628,7 @@ $ kubectl delete pod/order-service-5ccc589fd8-b76g2
 new Pod object created after 0.34 s
 3/3 ready again after 11.2 s
 NAME                             READY   STATUS    RESTARTS   AGE     IP          NODE
-order-service-5ccc589fd8-494s9   1/1     Running   0          11s     10.42.0.9   d1-server
+order-service-5ccc589fd8-494s9   1/1     Running   0          11s     10.42.0.9   k3s-server
 ...
 NAME                  ADDRESSTYPE   PORTS   ENDPOINTS
 order-service-m2pjv   IPv4          8080    10.42.1.4,10.42.0.8,10.42.0.9
@@ -651,7 +651,7 @@ $ kubectl get events（Deployment 与 ReplicaSet 的事件，节选）
 2026-10-28T10:21:40Z   ReplicaSet   SuccessfulCreate    replicaset-controller   Created pod: order-service-5ccc589fd8-b76g2
 $ kubectl get events --field-selector involvedObject.name=order-service-5ccc589fd8-b76g2
 TIME                   REASON      FROM      MESSAGE
-<nil>                  Scheduled   <none>    Successfully assigned default/order-service-5ccc589fd8-b76g2 to d1-agent
+<nil>                  Scheduled   <none>    Successfully assigned default/order-service-5ccc589fd8-b76g2 to k3s-agent
 2026-10-28T10:21:40Z   Pulled      kubelet   Container image "order-service:1.0" already present on machine
 2026-10-28T10:21:51Z   Created     kubelet   Created container app
 2026-10-28T10:21:51Z   Started     kubelet   Started container app
@@ -687,7 +687,7 @@ mnt mnt:[4026534203]     mnt mnt:[4026534206]
 
 ### A7 Service 与 Ingress
 
-在 d1-agent 上查看 kube-proxy 写入的规则（节选）：
+在 k3s-agent 上查看 kube-proxy 写入的规则（节选）：
 
 ```text
 $ iptables-save -t nat | grep default/order-service
@@ -698,7 +698,7 @@ $ iptables-save -t nat | grep default/order-service
 -A KUBE-SEP-CRY6GKLRKVOMXZX4 -p tcp -m comment --comment "default/order-service" -m tcp -j DNAT --to-destination 10.42.0.8:8080
 ```
 
-正文中的 Ingress，k3s 自带的 Traefik 2.11 处理，在 d1-server 上访问节点 IP 的 80 端口：
+正文中的 Ingress，k3s 自带的 Traefik 2.11 处理，在 k3s-server 上访问节点 IP 的 80 端口：
 
 ```text
 $ kubectl get ingress shop
@@ -718,7 +718,7 @@ $ wget --header "Host: other.example.com" http://172.19.0.2/orders/1024
 $ kubectl patch svc order-service -p '{"spec":{"type":"NodePort"}}'
 NAME            TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 order-service   NodePort   10.43.210.38   <none>        80:31887/TCP   103s
-$ wget -qO- http://172.19.0.3:31887/orders/1024   （在 d1-server 上访问 d1-agent 的 NodePort）
+$ wget -qO- http://172.19.0.3:31887/orders/1024   （在 k3s-server 上访问 k3s-agent 的 NodePort）
 {"status":"SHIPPED","id":1024,"host":"order-service-5ccc589fd8-b76g2"}
 ```
 
@@ -770,39 +770,39 @@ Failed to convert to type java.lang.Integer
 oom-demo 在第一次被杀之前 kubectl get pods 显示的状态是 OOMKilled。给两个节点都加上污点后创建 Pod：
 
 ```text
-$ kubectl taint nodes d1-server d1-agent dedicated=db:NoSchedule
+$ kubectl taint nodes k3s-server k3s-agent dedicated=db:NoSchedule
 $ kubectl run -n lab taint-demo --image=order-service:1.0
   Warning  FailedScheduling  5s  default-scheduler  0/2 nodes are available: 2 node(s) had untolerated taint {dedicated: db}. ...
-$ kubectl taint nodes d1-server d1-agent dedicated=db:NoSchedule-
-（8 秒后 taint-demo 在 d1-server 上 Running）
+$ kubectl taint nodes k3s-server k3s-agent dedicated=db:NoSchedule-
+（8 秒后 taint-demo 在 k3s-server 上 Running）
 ```
 
 ### A9 节点 NotReady
 
-用 docker stop 停掉 d1-agent 所在的容器，相当于节点宕机：
+用 docker stop 停掉 k3s-agent 所在的容器，相当于节点宕机：
 
 ```text
-10:28:55 $ docker stop d1-k3s-agent
-10:29:28 d1-agent NotReady after 32 s
+10:28:55 $ docker stop k3s-agent
+10:29:28 k3s-agent NotReady after 32 s
   Type             Status    LastTransitionTime                Reason              Message
   MemoryPressure   Unknown   Wed, 28 Oct 2026 18:29:27 +0800   NodeStatusUnknown   Kubelet stopped posting node status.
   DiskPressure     Unknown   Wed, 28 Oct 2026 18:29:27 +0800   NodeStatusUnknown   Kubelet stopped posting node status.
   PIDPressure      Unknown   Wed, 28 Oct 2026 18:29:27 +0800   NodeStatusUnknown   Kubelet stopped posting node status.
   Ready            Unknown   Wed, 28 Oct 2026 18:29:27 +0800   NodeStatusUnknown   Kubelet stopped posting node status.
 Taints:             node.kubernetes.io/unreachable:NoSchedule
-10:34:33 pods on d1-agent marked for deletion after 337 s
+10:34:33 pods on k3s-agent marked for deletion after 337 s
 NAME                             READY   STATUS        IP           NODE
-order-service-5ccc589fd8-24sqr   1/1     Terminating   10.42.1.8    d1-agent
-order-service-5ccc589fd8-2f56l   1/1     Terminating   10.42.1.9    d1-agent
-order-service-5ccc589fd8-2vrx4   1/1     Running       10.42.0.11   d1-server
-order-service-5ccc589fd8-4gzps   1/1     Running       10.42.0.17   d1-server
-order-service-5ccc589fd8-gzsbv   1/1     Running       10.42.0.16   d1-server
+order-service-5ccc589fd8-24sqr   1/1     Terminating   10.42.1.8    k3s-agent
+order-service-5ccc589fd8-2f56l   1/1     Terminating   10.42.1.9    k3s-agent
+order-service-5ccc589fd8-2vrx4   1/1     Running       10.42.0.11   k3s-server
+order-service-5ccc589fd8-4gzps   1/1     Running       10.42.0.17   k3s-server
+order-service-5ccc589fd8-gzsbv   1/1     Running       10.42.0.16   k3s-server
 $ kubectl get pod -o jsonpath='{.items[0].spec.tolerations}'
 [{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":300},
  {"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":300}]
 ```
 
-节点失联后，Pod 无法确认已经停止，一直显示 Terminating。恢复 d1-agent、重新部署后再停一次，每 4 秒查看 EndpointSlice 中各地址的 ready：
+节点失联后，Pod 无法确认已经停止，一直显示 Terminating。恢复 k3s-agent、重新部署后再停一次，每 4 秒查看 EndpointSlice 中各地址的 ready：
 
 ```text
 +33s node=Ready endpoints: 10.42.0.19=true 10.42.1.14=true 10.42.1.13=true
