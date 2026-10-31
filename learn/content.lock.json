@@ -1,0 +1,3647 @@
+{
+ "days": {
+  "java-01": {
+   "questions": [
+    "380a188f36",
+    "8c543dbbcb",
+    "7649a66405"
+   ],
+   "route": "java",
+   "sig": "fbb7a6f2f4",
+   "stage": "Java 基础",
+   "status": "active",
+   "title": "数据类型与 String"
+  },
+  "java-02": {
+   "questions": [
+    "d85d93a06e",
+    "2af89296be"
+   ],
+   "route": "java",
+   "sig": "999e7b369a",
+   "stage": "Java 基础",
+   "status": "active",
+   "title": "常量池与运算"
+  },
+  "java-03": {
+   "questions": [
+    "ed40759232",
+    "1535c683ad",
+    "a47f889523"
+   ],
+   "route": "java",
+   "sig": "d42f2e52e7",
+   "stage": "Java 基础",
+   "status": "active",
+   "title": "关键字与 Object 的方法"
+  },
+  "java-04": {
+   "questions": [
+    "518704a7fc",
+    "cf1562e438",
+    "731153a537"
+   ],
+   "route": "java",
+   "sig": "9fb87602fb",
+   "stage": "Java 基础",
+   "status": "active",
+   "title": "继承与多态"
+  },
+  "java-05": {
+   "questions": [
+    "a7e52d0151",
+    "15b9ac4352",
+    "61d62633f1"
+   ],
+   "route": "java",
+   "sig": "2bc7a709af",
+   "stage": "Java 基础",
+   "status": "active",
+   "title": "反射、异常、泛型与新特性"
+  },
+  "java-06": {
+   "questions": [
+    "875d608421",
+    "a85a26685e",
+    "3cde3d237b"
+   ],
+   "route": "java",
+   "sig": "b6c4723d21",
+   "stage": "Java 容器",
+   "status": "active",
+   "title": "集合与 List"
+  },
+  "java-07": {
+   "questions": [
+    "54392ab875",
+    "393777a7d3",
+    "2de7600ab9"
+   ],
+   "route": "java",
+   "sig": "127e5d6fef",
+   "stage": "Java 容器",
+   "status": "active",
+   "title": "HashMap"
+  },
+  "java-08": {
+   "questions": [
+    "0679b458cf",
+    "8e70e9576a",
+    "7e5379ca96"
+   ],
+   "route": "java",
+   "sig": "a038b6f320",
+   "stage": "Java 容器",
+   "status": "active",
+   "title": "ConcurrentHashMap 与 LinkedHashMap"
+  },
+  "java-09": {
+   "questions": [
+    "bcb8868d08",
+    "ef0a1e3f79",
+    "154ba456f2"
+   ],
+   "route": "java",
+   "sig": "6abe05001b",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "线程与线程池"
+  },
+  "java-10": {
+   "questions": [
+    "1c0bbdffef",
+    "79b04fb5b0",
+    "f3cbce1b55"
+   ],
+   "route": "java",
+   "sig": "f29a28c96d",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "中断与互斥同步"
+  },
+  "java-11": {
+   "questions": [
+    "bcd73345b9",
+    "b50334ebd5",
+    "fb5644c7bf"
+   ],
+   "route": "java",
+   "sig": "69d86009ce",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "线程协作与线程状态"
+  },
+  "java-12": {
+   "questions": [
+    "bb799ba354",
+    "5efd34dc3a",
+    "0a5b56bc23"
+   ],
+   "route": "java",
+   "sig": "7208abc17a",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "J.U.C 的常用组件"
+  },
+  "java-13": {
+   "questions": [
+    "454c7daf16",
+    "bde7a7dfbe",
+    "e2b985d29c"
+   ],
+   "route": "java",
+   "sig": "0664d8544b",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "Java 内存模型与 volatile"
+  },
+  "java-14": {
+   "questions": [
+    "4383694e3e",
+    "36367df7c4",
+    "e326fb1c48"
+   ],
+   "route": "java",
+   "sig": "4faac9d338",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "线程安全与 CAS"
+  },
+  "java-15": {
+   "questions": [
+    "97c02eae0a",
+    "d5ef30f656",
+    "3896059e83"
+   ],
+   "route": "java",
+   "sig": "64c6db5ed9",
+   "stage": "Java 并发",
+   "status": "active",
+   "title": "ThreadLocal 与锁优化"
+  },
+  "java-16": {
+   "questions": [
+    "d175c9b0a1",
+    "d30a0abfb5",
+    "a806a94773"
+   ],
+   "route": "java",
+   "sig": "8179b551b2",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "运行时数据区域"
+  },
+  "java-17": {
+   "questions": [
+    "152f56d6c4",
+    "d4c6da97dc",
+    "71ab53cab0"
+   ],
+   "route": "java",
+   "sig": "71c6e96394",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "对象存活与垃圾收集算法"
+  },
+  "java-18": {
+   "questions": [
+    "7796810063",
+    "b432826e95",
+    "347baa0bbd"
+   ],
+   "route": "java",
+   "sig": "51793d06cc",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "垃圾收集器"
+  },
+  "java-19": {
+   "questions": [
+    "1df5ce34bc",
+    "f9317cc094",
+    "01d822171f"
+   ],
+   "route": "java",
+   "sig": "a688f7aba8",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "三色标记与内存分配"
+  },
+  "java-20": {
+   "questions": [
+    "3011568278",
+    "15d74500a9",
+    "6159fb310f"
+   ],
+   "route": "java",
+   "sig": "9a5a5c658b",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "类加载机制"
+  },
+  "java-21": {
+   "questions": [
+    "75d8147fc6",
+    "f806988135",
+    "d82af70a7a"
+   ],
+   "route": "java",
+   "sig": "96984118f8",
+   "stage": "Java 虚拟机",
+   "status": "active",
+   "title": "线上问题排查"
+  },
+  "java-22": {
+   "questions": [
+    "68acba4c85",
+    "e93ce780bc",
+    "fc65cb524a"
+   ],
+   "route": "java",
+   "sig": "9f4404f0d9",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "事务、并发一致性与锁"
+  },
+  "java-23": {
+   "questions": [
+    "48101acfd2",
+    "a1c4bbe5c6",
+    "47712a7a5f"
+   ],
+   "route": "java",
+   "sig": "b840538d9f",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "隔离级别与 MVCC"
+  },
+  "java-24": {
+   "questions": [
+    "59a27f0b68",
+    "76eb545f8c",
+    "52c9969ca3"
+   ],
+   "route": "java",
+   "sig": "b335016f18",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "Next-Key Lock 与死锁"
+  },
+  "java-25": {
+   "questions": [
+    "4391e4bcee",
+    "91de874283",
+    "f311870155"
+   ],
+   "route": "java",
+   "sig": "2638e86add",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "B+ 树与索引的类型"
+  },
+  "java-26": {
+   "questions": [
+    "56455baece",
+    "16787de94b",
+    "80d3fed1b5"
+   ],
+   "route": "java",
+   "sig": "aaa9a44152",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "索引的使用"
+  },
+  "java-27": {
+   "questions": [
+    "b9fdebae51",
+    "c0ce068130",
+    "fddac344d2"
+   ],
+   "route": "java",
+   "sig": "6af43022ca",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "查询性能优化"
+  },
+  "java-28": {
+   "questions": [
+    "f399525472",
+    "394e2ef8d2",
+    "fd1182bd45"
+   ],
+   "route": "java",
+   "sig": "a310b8d5cd",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "存储引擎、切分与复制"
+  },
+  "java-29": {
+   "questions": [
+    "a79dbaa169",
+    "1528bcdda2",
+    "21184e47ef"
+   ],
+   "route": "java",
+   "sig": "7a40e52189",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "日志"
+  },
+  "java-30": {
+   "questions": [
+    "0aad3661f4",
+    "d977db9dde",
+    "535132ab86"
+   ],
+   "route": "java",
+   "sig": "5afc6efca0",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "Redis 的数据类型"
+  },
+  "java-31": {
+   "questions": [
+    "babcc095aa",
+    "2081fb3147",
+    "a96d51b500"
+   ],
+   "route": "java",
+   "sig": "02311b9d62",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "使用场景与底层结构"
+  },
+  "java-32": {
+   "questions": [
+    "af9254f7f2",
+    "fb32f47b96",
+    "4489ec0668"
+   ],
+   "route": "java",
+   "sig": "b369769ba9",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "过期、淘汰、持久化与事务"
+  },
+  "java-33": {
+   "questions": [
+    "be8cf2c3e0",
+    "ab0c96ab4a",
+    "9de3a8a2c2"
+   ],
+   "route": "java",
+   "sig": "2acf2d18a4",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "线程模型、复制与集群"
+  },
+  "java-34": {
+   "questions": [
+    "c79e20122e",
+    "4978768999",
+    "57ed7e67f6"
+   ],
+   "route": "java",
+   "sig": "d9e1a3616b",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "缓存的位置与三种问题"
+  },
+  "java-35": {
+   "questions": [
+    "218297315a",
+    "6ee29f4ce5",
+    "082e65c58c"
+   ],
+   "route": "java",
+   "sig": "d47c240757",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "缓存一致性与一致性哈希"
+  },
+  "java-36": {
+   "questions": [
+    "1d67fbd177",
+    "87aaeeaa89",
+    "b21b2cd3d2"
+   ],
+   "route": "java",
+   "sig": "77c2164ad9",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "TCP 的连接管理"
+  },
+  "java-37": {
+   "questions": [
+    "0214655d6c",
+    "221ffa2522",
+    "d45f6f5a22"
+   ],
+   "route": "java",
+   "sig": "ca41cb00a8",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "可靠传输与拥塞控制"
+  },
+  "java-38": {
+   "questions": [
+    "f79e6d406d",
+    "699cec5d70",
+    "fd090d3343"
+   ],
+   "route": "java",
+   "sig": "63ce9fe4cd",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "HTTP 基础"
+  },
+  "java-39": {
+   "questions": [
+    "72afd7353e",
+    "3b0c37d0ee",
+    "f9d6fbbf46"
+   ],
+   "route": "java",
+   "sig": "4ef74f7447",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "连接管理与 Cookie"
+  },
+  "java-40": {
+   "questions": [
+    "f308884a22",
+    "4e79ae834e",
+    "710b3551d1"
+   ],
+   "route": "java",
+   "sig": "39dc79c3c1",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "缓存、WebSocket 与跨域"
+  },
+  "java-41": {
+   "questions": [
+    "a3c215dfb9",
+    "29246511a6",
+    "6dbf8f2ba2"
+   ],
+   "route": "java",
+   "sig": "e9b030d100",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "HTTPS"
+  },
+  "java-42": {
+   "questions": [
+    "eb8b8fb51f",
+    "6236dc8524",
+    "271db04da7"
+   ],
+   "route": "java",
+   "sig": "1a7871d767",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "HTTP 的版本、GET 与 POST、DNS"
+  },
+  "java-43": {
+   "questions": [
+    "dd70642b39",
+    "a4e729949e",
+    "7ce5cde1cd"
+   ],
+   "route": "java",
+   "sig": "6563f58ac8",
+   "stage": "计算机网络",
+   "status": "active",
+   "title": "从输入 URL 到显示页面"
+  },
+  "java-44": {
+   "questions": [
+    "ea588f5661",
+    "7ec003a5dd",
+    "0ac347cf06"
+   ],
+   "route": "java",
+   "sig": "0c596cf628",
+   "stage": "操作系统",
+   "status": "active",
+   "title": "进程与线程"
+  },
+  "java-45": {
+   "questions": [
+    "5cfaefbdbb",
+    "28fb95c127",
+    "94fc7c8234"
+   ],
+   "route": "java",
+   "sig": "ae085852e5",
+   "stage": "操作系统",
+   "status": "active",
+   "title": "系统调用、进程同步与通信"
+  },
+  "java-46": {
+   "questions": [
+    "64f1daf686",
+    "b129be802f",
+    "8d674478d1"
+   ],
+   "route": "java",
+   "sig": "1b9213d938",
+   "stage": "操作系统",
+   "status": "active",
+   "title": "死锁"
+  },
+  "java-47": {
+   "questions": [
+    "62d04c530a",
+    "752067dae4",
+    "80afd5ae0b"
+   ],
+   "route": "java",
+   "sig": "8c96a15e75",
+   "stage": "操作系统",
+   "status": "active",
+   "title": "内存管理"
+  },
+  "java-48": {
+   "questions": [
+    "a9201474fc",
+    "7ef8c8b5a2",
+    "20c2e1e5be"
+   ],
+   "route": "java",
+   "sig": "00d1f75e0b",
+   "stage": "操作系统",
+   "status": "active",
+   "title": "I/O 多路复用"
+  },
+  "java-49": {
+   "questions": [
+    "3f287e23ea",
+    "e4be6236bb",
+    "25bf570498"
+   ],
+   "route": "java",
+   "sig": "59da29c1f9",
+   "stage": "Spring 与设计模式",
+   "status": "active",
+   "title": "IoC 与 Bean"
+  },
+  "java-50": {
+   "questions": [
+    "2d35e2a6e9",
+    "7d1a93e400",
+    "eab615f7b3"
+   ],
+   "route": "java",
+   "sig": "c8d70664df",
+   "stage": "Spring 与设计模式",
+   "status": "active",
+   "title": "AOP 与事务"
+  },
+  "java-51": {
+   "questions": [
+    "30520434c8",
+    "da147d6f3a",
+    "a61b813949"
+   ],
+   "route": "java",
+   "sig": "440c855487",
+   "stage": "Spring 与设计模式",
+   "status": "active",
+   "title": "Spring Boot、Spring MVC 与 MyBatis"
+  },
+  "java-52": {
+   "questions": [
+    "1a5bcb758d",
+    "100d141107",
+    "18a112ceaf"
+   ],
+   "route": "java",
+   "sig": "6eb9107734",
+   "stage": "Spring 与设计模式",
+   "status": "active",
+   "title": "设计模式"
+  },
+  "java-53": {
+   "questions": [
+    "874987f0de",
+    "283fe326d9",
+    "f76f14f53c"
+   ],
+   "route": "java",
+   "sig": "71334cf903",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "微服务"
+  },
+  "java-54": {
+   "questions": [
+    "4c736dfa3f",
+    "7040328bec",
+    "86472abfac"
+   ],
+   "route": "java",
+   "sig": "dcd58ad57b",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "分布式锁"
+  },
+  "java-55": {
+   "questions": [
+    "d707267199",
+    "3eda6c30d3",
+    "e2b9c83f1c"
+   ],
+   "route": "java",
+   "sig": "de34216b56",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "分布式事务与 CAP"
+  },
+  "java-56": {
+   "questions": [
+    "d97306ed39",
+    "57e6bf391b",
+    "a9fdb0e73d"
+   ],
+   "route": "java",
+   "sig": "9c0c92eda6",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "RPC、分布式 ID 与幂等"
+  },
+  "java-57": {
+   "questions": [
+    "a21036a9de",
+    "b6e89f7079",
+    "3362091f47"
+   ],
+   "route": "java",
+   "sig": "330dcd9b4f",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "消息队列的作用与可靠性"
+  },
+  "java-58": {
+   "questions": [
+    "0e366e4baa",
+    "d3574a433d",
+    "2309010a02"
+   ],
+   "route": "java",
+   "sig": "066b4100b7",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "顺序、积压与延迟消息"
+  },
+  "java-59": {
+   "questions": [
+    "17a016b327",
+    "e554283074",
+    "b06acac358"
+   ],
+   "route": "java",
+   "sig": "eeedb47fdc",
+   "stage": "分布式与消息队列",
+   "status": "active",
+   "title": "Kafka"
+  },
+  "java-60": {
+   "questions": [
+    "302564cde9",
+    "fa62f2e19c",
+    "d47bb94d7b"
+   ],
+   "route": "java",
+   "sig": "6319016bb7",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "性能与可用性"
+  },
+  "java-61": {
+   "questions": [
+    "4baf13900d",
+    "7032e684b1",
+    "f5bc9de8b8"
+   ],
+   "route": "java",
+   "sig": "b3c5607e14",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "秒杀与抢红包"
+  },
+  "java-62": {
+   "questions": [
+    "488c66ff9c",
+    "85d1c43400",
+    "857dd1fbdb"
+   ],
+   "route": "java",
+   "sig": "b8fd27960b",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "海量数据、短链与 Feed 流"
+  },
+  "java-63": {
+   "questions": [
+    "6d49cb17be",
+    "b1361d5a9a",
+    "bf51732677"
+   ],
+   "route": "java",
+   "sig": "decc93632e",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "高并发系统的设计"
+  },
+  "java-64": {
+   "questions": [
+    "f38768f09b",
+    "b3dc5cbe84",
+    "89a386e6ca"
+   ],
+   "route": "java",
+   "sig": "7fdda12d7a",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "Docker"
+  },
+  "java-65": {
+   "questions": [
+    "9dde8d6033",
+    "5f403638bf",
+    "c8485a2dab"
+   ],
+   "route": "java",
+   "sig": "c5f573017a",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "Kubernetes"
+  },
+  "java-66": {
+   "questions": [
+    "cd627f049d",
+    "b813e96d80",
+    "34f42af76f"
+   ],
+   "route": "java",
+   "sig": "bfe3bf196a",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "系统设计题的思路与即时通讯"
+  },
+  "java-67": {
+   "questions": [
+    "c93bb3c65b",
+    "e1c4dd69ef",
+    "2c37283a5c"
+   ],
+   "route": "java",
+   "sig": "6ed51dc735",
+   "stage": "系统设计",
+   "status": "active",
+   "title": "订单与支付"
+  },
+  "java-68": {
+   "questions": [
+    "16e0b97125",
+    "ec06220d69",
+    "2c02de7f11"
+   ],
+   "route": "java",
+   "sig": "49bc06a543",
+   "stage": "大模型应用",
+   "status": "active",
+   "title": "RAG 与 Agent"
+  },
+  "java-69": {
+   "questions": [
+    "efe411f83c",
+    "c5494b65a3",
+    "904bc79056"
+   ],
+   "route": "java",
+   "sig": "3d4ec02919",
+   "stage": "大模型应用",
+   "status": "active",
+   "title": "MCP、Skills 与 AI 编程助手"
+  },
+  "llm-01": {
+   "questions": [
+    "cff796edde",
+    "98a89cafcd",
+    "aeb37c713b"
+   ],
+   "route": "llm",
+   "sig": "81ace0c3e4",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "Token 与 Transformer"
+  },
+  "llm-02": {
+   "questions": [
+    "128dcc61a9",
+    "0b76f3a00d",
+    "479c864f58"
+   ],
+   "route": "llm",
+   "sig": "bb9e8fd086",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "注意力机制"
+  },
+  "llm-03": {
+   "questions": [
+    "e4952a889a",
+    "493fe133cc",
+    "beeadc9d28"
+   ],
+   "route": "llm",
+   "sig": "1f17c0dd24",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "生成、KV Cache 与采样"
+  },
+  "llm-04": {
+   "questions": [
+    "e2bec394b4",
+    "f319983c2c",
+    "e628ba7bc1"
+   ],
+   "route": "llm",
+   "sig": "19969e06c1",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "训练过程"
+  },
+  "llm-05": {
+   "questions": [
+    "c4e5f8bc1a",
+    "f2ed00f34c",
+    "fa683c8ea1"
+   ],
+   "route": "llm",
+   "sig": "0650f10589",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "微调与量化"
+  },
+  "llm-06": {
+   "questions": [
+    "e90dd83642",
+    "8a7213cfde",
+    "3d4ae89337"
+   ],
+   "route": "llm",
+   "sig": "355a1a9ef7",
+   "stage": "大模型基础",
+   "status": "active",
+   "title": "幻觉与推理模型"
+  },
+  "llm-07": {
+   "questions": [
+    "8c4d592987",
+    "888d45b3b3",
+    "92dc236853"
+   ],
+   "route": "llm",
+   "sig": "cf9fcea4a9",
+   "stage": "提示词与上下文",
+   "status": "active",
+   "title": "提示词与结构化输出"
+  },
+  "llm-08": {
+   "questions": [
+    "63f07a4386",
+    "0a3efb066b",
+    "23a4be74d7"
+   ],
+   "route": "llm",
+   "sig": "77a4054a33",
+   "stage": "提示词与上下文",
+   "status": "active",
+   "title": "上下文工程"
+  },
+  "llm-09": {
+   "questions": [
+    "03016da606",
+    "45bf4a5b4d",
+    "4ff0d2d0d0"
+   ],
+   "route": "llm",
+   "sig": "697f70f997",
+   "stage": "检索增强生成",
+   "status": "active",
+   "title": "RAG 的流程、文档解析与切片"
+  },
+  "llm-10": {
+   "questions": [
+    "b9bc59a83b",
+    "f2d13da1ee",
+    "da52b096ec"
+   ],
+   "route": "llm",
+   "sig": "2d7f462d49",
+   "stage": "检索增强生成",
+   "status": "active",
+   "title": "Embedding 与向量索引"
+  },
+  "llm-11": {
+   "questions": [
+    "e9083e85a7",
+    "91d75f1bb2",
+    "c82b36ba2a"
+   ],
+   "route": "llm",
+   "sig": "aa9d7e0cf5",
+   "stage": "检索增强生成",
+   "status": "active",
+   "title": "向量数据库、混合检索与重排"
+  },
+  "llm-12": {
+   "questions": [
+    "1cb0108be7",
+    "6d00dbcd74",
+    "80e07271f2"
+   ],
+   "route": "llm",
+   "sig": "f092e64977",
+   "stage": "检索增强生成",
+   "status": "active",
+   "title": "Top-K 与查询改写"
+  },
+  "llm-13": {
+   "questions": [
+    "a53acc431d",
+    "a7f4a61121",
+    "b5c9ebc9ee"
+   ],
+   "route": "llm",
+   "sig": "7e7af62853",
+   "stage": "检索增强生成",
+   "status": "active",
+   "title": "RAG 的评测与扩展"
+  },
+  "llm-14": {
+   "questions": [
+    "513b0767e9",
+    "a2d1d91ef7",
+    "c226c6df57"
+   ],
+   "route": "llm",
+   "sig": "0a16a4cfab",
+   "stage": "Agent",
+   "status": "active",
+   "title": "Agent 与工具调用"
+  },
+  "llm-15": {
+   "questions": [
+    "c9434cba34",
+    "a645db12eb",
+    "1cd94a5fd7"
+   ],
+   "route": "llm",
+   "sig": "14048899f3",
+   "stage": "Agent",
+   "status": "active",
+   "title": "意图识别与规划"
+  },
+  "llm-16": {
+   "questions": [
+    "bc38dbf743",
+    "5b6919dab0",
+    "4bf4ba1fb0"
+   ],
+   "route": "llm",
+   "sig": "de47d8b380",
+   "stage": "Agent",
+   "status": "active",
+   "title": "记忆与多轮对话"
+  },
+  "llm-17": {
+   "questions": [
+    "d0cadbf383",
+    "676b456ee1"
+   ],
+   "route": "llm",
+   "sig": "4b80a829b6",
+   "stage": "Agent",
+   "status": "active",
+   "title": "MCP 与 Skills"
+  },
+  "llm-18": {
+   "questions": [
+    "634ab6d850",
+    "72f9842f42",
+    "4ec5716b53"
+   ],
+   "route": "llm",
+   "sig": "99f0739a24",
+   "stage": "Agent",
+   "status": "active",
+   "title": "多 Agent 与 Harness"
+  },
+  "llm-19": {
+   "questions": [
+    "bdc1af9732",
+    "bfcd308f00",
+    "bbc2863617"
+   ],
+   "route": "llm",
+   "sig": "6f37433fcb",
+   "stage": "Agent",
+   "status": "active",
+   "title": "开发框架、可靠性与评测"
+  },
+  "llm-20": {
+   "questions": [
+    "e36c204678",
+    "e8de3674b2",
+    "100f1b6f0b"
+   ],
+   "route": "llm",
+   "sig": "346ac5093e",
+   "stage": "工程实践",
+   "status": "active",
+   "title": "流式输出、成本与部署"
+  },
+  "llm-21": {
+   "questions": [
+    "52aa24db2a",
+    "1313e1319a",
+    "9f8d77ff45"
+   ],
+   "route": "llm",
+   "sig": "1ef0a754bf",
+   "stage": "工程实践",
+   "status": "active",
+   "title": "稳定性与安全"
+  },
+  "sprint-01": {
+   "questions": [
+    "56d0a4ee0e",
+    "0679b458cf",
+    "9c0c516330"
+   ],
+   "route": "sprint",
+   "sig": "7c00e65e35",
+   "stage": "Java",
+   "status": "active",
+   "title": "集合"
+  },
+  "sprint-02": {
+   "questions": [
+    "e4941b7494",
+    "f3cbce1b55",
+    "14a8b66241"
+   ],
+   "route": "sprint",
+   "sig": "437c9782af",
+   "stage": "Java",
+   "status": "active",
+   "title": "线程池、锁与 volatile"
+  },
+  "sprint-03": {
+   "questions": [
+    "36367df7c4",
+    "efa6604d75",
+    "97c02eae0a"
+   ],
+   "route": "sprint",
+   "sig": "0208298a44",
+   "stage": "Java",
+   "status": "active",
+   "title": "CAS、锁升级与 ThreadLocal"
+  },
+  "sprint-04": {
+   "questions": [
+    "b5eb99096c",
+    "b432826e95",
+    "75d8147fc6"
+   ],
+   "route": "sprint",
+   "sig": "14e300ab57",
+   "stage": "Java",
+   "status": "active",
+   "title": "JVM"
+  },
+  "sprint-05": {
+   "questions": [
+    "bc787d309a",
+    "76647ed961",
+    "d560ae1052"
+   ],
+   "route": "sprint",
+   "sig": "59d9d1a94e",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "索引"
+  },
+  "sprint-06": {
+   "questions": [
+    "9a4ab4e114",
+    "955ea8cac8",
+    "59a27f0b68"
+   ],
+   "route": "sprint",
+   "sig": "5bf91b50c1",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "事务、MVCC 与锁"
+  },
+  "sprint-07": {
+   "questions": [
+    "b9fdebae51",
+    "a5d2df43ec",
+    "394e2ef8d2"
+   ],
+   "route": "sprint",
+   "sig": "147d845c87",
+   "stage": "MySQL",
+   "status": "active",
+   "title": "SQL 优化、日志与分库分表"
+  },
+  "sprint-08": {
+   "questions": [
+    "4f74d11814",
+    "fb32f47b96",
+    "a0f17ec6e9"
+   ],
+   "route": "sprint",
+   "sig": "b10a65d9e0",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "Redis"
+  },
+  "sprint-09": {
+   "questions": [
+    "c79e20122e",
+    "218297315a",
+    "c7974bfd54"
+   ],
+   "route": "sprint",
+   "sig": "42c1273538",
+   "stage": "Redis 与缓存",
+   "status": "active",
+   "title": "缓存问题与 Redis 集群"
+  },
+  "sprint-10": {
+   "questions": [
+    "f87401d466",
+    "2eacd733a9",
+    "a3c215dfb9"
+   ],
+   "route": "sprint",
+   "sig": "05ef6623f8",
+   "stage": "网络与操作系统",
+   "status": "active",
+   "title": "TCP 与 HTTPS"
+  },
+  "sprint-11": {
+   "questions": [
+    "1c3ffb95a4",
+    "d2c8cce9c3",
+    "a9201474fc"
+   ],
+   "route": "sprint",
+   "sig": "dcec70f902",
+   "stage": "网络与操作系统",
+   "status": "active",
+   "title": "进程、死锁与 I/O 多路复用"
+  },
+  "sprint-12": {
+   "questions": [
+    "2d35e2a6e9",
+    "e6469eab7d",
+    "a79be5580a"
+   ],
+   "route": "sprint",
+   "sig": "d6b2df2bd0",
+   "stage": "框架、分布式与大模型",
+   "status": "active",
+   "title": "Spring 与设计模式"
+  },
+  "sprint-13": {
+   "questions": [
+    "8325776328",
+    "747ba7232d",
+    "4fad9621d5"
+   ],
+   "route": "sprint",
+   "sig": "ead905739d",
+   "stage": "框架、分布式与大模型",
+   "status": "active",
+   "title": "分布式锁、消息队列与秒杀"
+  },
+  "sprint-14": {
+   "questions": [
+    "a03e2ca327",
+    "f62bbcd15d",
+    "485504eb0f"
+   ],
+   "route": "sprint",
+   "sig": "bef1d7ba3e",
+   "stage": "框架、分布式与大模型",
+   "status": "active",
+   "title": "大模型应用"
+  }
+ },
+ "history": [],
+ "manual": {
+  "map": {},
+  "separate": []
+ },
+ "questions": {
+  "01d822171f": {
+   "days": [
+    "java-19"
+   ],
+   "points": "调用 System.gc()，规范上只是建议，HotSpot 默认会执行一次 Full GC，-XX:+DisableExplicitGC 可以禁用；老年代空间不足，例如大对象、长期存活的对象不断进入，或者空间分配担保失败，G1 中是混合回收来不及释放、复制时找不到空闲 Region，或 Humongous 对象找不到连续的 Region；JDK 7 及以前永久代不足，JDK 8 起元空间达到阈值（日志原因为 Metadata GC Threshold）时 Serial 和 ",
+   "status": "active",
+   "text": "Full GC 在什么情况下触发？"
+  },
+  "0214655d6c": {
+   "days": [
+    "java-37"
+   ],
+   "points": "检验和：出错的报文段直接丢弃；序号和累积确认：去重、排序，SACK 告诉发送方收到了哪些区间；重传：超时重传（RTO 按 RTT 动态计算、超时后翻倍），或收到 3 个重复确认时快重传；滑动窗口、流量控制和拥塞控制让发送速率不超过接收方和网络的能力。",
+   "status": "active",
+   "text": "TCP 怎样保证可靠传输？"
+  },
+  "03016da606": {
+   "days": [
+    "llm-09"
+   ],
+   "points": "离线：解析文档、切片，用 Embedding 模型转为向量存入向量数据库，同时建立关键词索引；在线：改写问题，向量和关键词两路召回，合并后重排，把最相关的几段和问题放进提示词，生成带引用的回答；提示词中给切片编号，要求每个结论标注来源，资料中没有答案时如实回答没找到。",
+   "status": "active",
+   "text": "RAG 的完整流程是怎样的？"
+  },
+  "0679b458cf": {
+   "days": [
+    "java-08",
+    "sprint-01"
+   ],
+   "points": "JDK 1.7 用分段锁，Segment 继承 ReentrantLock，默认 16 个，最多 16 个线程同时写，并发度创建后不能改；JDK 1.8 去掉 Segment，用 Node 数组加链表或红黑树，空桶用 CAS 插入，非空桶用 synchronized 锁住头节点，锁粒度缩小到桶；get 不加锁，靠 volatile 读到最新值。",
+   "status": "active",
+   "text": "ConcurrentHashMap 怎样保证线程安全？JDK 1.7 和 1.8 有什么区别？"
+  },
+  "082e65c58c": {
+   "days": [
+    "java-35"
+   ],
+   "points": "取模分布在节点数变化时几乎所有键都要迁移，一致性哈希把节点和键放在哈希环上，键存到顺时针第一个节点，增删节点只影响相邻节点，4 个节点扩到 5 个约 18% 的键迁移；节点少时分布不均（最多 44.7%、最少 9.0%），每个节点放 150 个虚拟节点后占比在 22.8%～27.0%。",
+   "status": "active",
+   "text": "一致性哈希解决了什么问题？虚拟节点有什么用？"
+  },
+  "0a3efb066b": {
+   "days": [
+    "llm-08"
+   ],
+   "points": "方法有截断（只留最近几轮，丢失早期内容）、摘要（多一次调用，可能漏掉或改写细节）、清理旧的工具结果（风险最小）和外置到文件，工具调用和结果要成对删除；常组合成“系统提示词 + 摘要 + 最近几轮原文 + 当前问题”；时机按 Token 数而不是轮数，约 70% 时在后台生成摘要，到上限时必须先压缩。",
+   "status": "active",
+   "text": "对话历史太长时怎样压缩？什么时候压缩？"
+  },
+  "0a5b56bc23": {
+   "days": [
+    "java-12"
+   ],
+   "points": "用有界的 ArrayBlockingQueue 作为共享缓冲区；生产者调用 put()，队列满时阻塞；消费者调用 take()，队列空时阻塞，不需要自己写 wait()/notify()。",
+   "status": "active",
+   "text": "怎样用 BlockingQueue 实现生产者消费者？"
+  },
+  "0aad3661f4": {
+   "days": [
+    "java-30"
+   ],
+   "points": "STRING 缓存对象、计数器、分布式锁，LIST 按插入顺序两端读写，例如最新 N 条消息、简单的消息队列；SET 去重和求交集、并集，例如标签、共同好友，HASH 保存对象的多个字段，例如用户信息、购物车；ZSET 按分值排序和范围查找，例如排行榜、按时间排序的 Feed；BITMAP、HyperLogLog 用于签到和 UV 统计，GEO 用于附近的门店，Stream 用于带消费者组的消息。",
+   "status": "active",
+   "text": "Redis 有哪些数据类型？分别用在什么场景？"
+  },
+  "0ac347cf06": {
+   "days": [
+    "java-44"
+   ],
+   "points": "协程在用户态由运行时调度，Go 和 Java 虚拟线程把大量协程映射到少量线程上（M:N），Python asyncio 则在一个线程的事件循环中执行，切换不陷入内核、内存占用小，可以大量创建，但同一线程上的协程不能并行；虚拟线程是 JVM 实现的有栈协程，由 ForkJoinPool 的平台线程（默认等于 CPU 核数）执行，阻塞 I/O 时卸载，栈帧以栈块对象存入堆，就绪后再挂载到某个平台线程继续执行；JDK 21 中在 synchronized 内阻塞无法卸载，JDK ",
+   "status": "active",
+   "text": "协程和线程有什么区别？Java 的虚拟线程是怎样实现的？"
+  },
+  "0b76f3a00d": {
+   "days": [
+    "llm-02"
+   ],
+   "points": "单头注意力中每个 Token 只有一组权重，只能按一种标准挑选信息；多头把 Q、K、V 切成 h 份分别计算，拼接后乘 W<sub>O</sub>，不同的头可以关注指代、相邻词等不同关系；每头维度为 d / h，计算量与单头基本相同。",
+   "status": "active",
+   "text": "多头注意力有什么作用？"
+  },
+  "0e366e4baa": {
+   "days": [
+    "java-58"
+   ],
+   "points": "消息队列只保证单个队列（Kafka 的分区）内有序；发送端按业务 Key（如订单号）把同一业务的消息发到同一个队列；接收端一个队列只由一个线程顺序消费，Kafka 中一个分区只分给组内一个消费者，RabbitMQ 用单个消费者或单活跃消费者；生产者重试可能让后发的消息先写入，Kafka 默认开启的幂等生产者用序号避免了这种乱序；分区数改变后同一 key 可能落到别的分区，要预先规划分区数。",
+   "status": "active",
+   "text": "怎样保证消息按顺序消费？"
+  },
+  "100d141107": {
+   "days": [
+    "java-52"
+   ],
+   "points": "例如下单校验用责任链：参数、限购、黑名单、库存各写一个 OrderValidator 实现类，用 @Order 排序，OrderService 注入 List 依次调用，不通过就抛异常；新增校验只需再写一个实现类，OrderService 不用改；类似地，运费和支付渠道用策略加工厂，支付成功后的通知用观察者。",
+   "status": "active",
+   "text": "项目中用过哪些设计模式？举一个例子。"
+  },
+  "100f1b6f0b": {
+   "days": [
+    "llm-20"
+   ],
+   "points": "早期系统按最大长度为每个请求预留连续的显存，真正存放 KV Cache 的只有 20.4%～38.2%；PagedAttention 借鉴操作系统的分页，把 KV Cache 切成固定大小的块（vLLM 默认 16 个 Token）按需分配，用块表记录位置，只浪费最后一块的空余；同样 7 GB 显存按 8K 预留只能服务 16 个请求，请求平均只用到 2K Token 时按块分配可服务 64 个；延迟相近时吞吐是 FasterTransformer、Orca 的 2～4 倍。",
+   "status": "active",
+   "text": "PagedAttention 解决了什么问题？"
+  },
+  "128dcc61a9": {
+   "days": [
+    "llm-02"
+   ],
+   "points": "公式为 softmax(QK<sup>T</sup> / √d) V：Q 与各 K 点积得到分数，softmax 成权重后对 V 加权求和；分量独立、均值 0、方差 1 时点积的方差为 d，维度大时 softmax 几乎集中到一个 Token 上，梯度接近 0；除以 √d 使方差恢复为 1。",
+   "status": "active",
+   "text": "注意力的计算公式是什么？为什么要除以 √d？"
+  },
+  "1313e1319a": {
+   "days": [
+    "llm-21"
+   ],
+   "points": "还没输出任何内容时直接重试，用户感知不到；已输出部分文字时，把已输出的部分作为 assistant 消息的开头请求续写（如 DeepSeek 的对话前缀续写），不支持就丢弃重新生成并通知前端清空；工具调用的参数只输出了一半时不能执行，丢弃后重新请求。",
+   "status": "active",
+   "text": "流式输出中途断开怎么办？"
+  },
+  "14a8b66241": {
+   "days": [
+    "sprint-02"
+   ],
+   "points": "保证可见性：写入后其它线程读取时立即可见；保证有序性：volatile 写之前、volatile 读之后的读写不会被重排序越过它，可用来发布数据（如双重校验锁单例）；不保证 count++ 这类复合操作的原子性，要用锁或原子类。",
+   "status": "active",
+   "text": "volatile 能保证什么，不能保证什么？"
+  },
+  "1528bcdda2": {
+   "days": [
+    "java-29"
+   ],
+   "points": "事务要同时写 redo log 和 binlog，只写成功一个就崩溃会让主从不一致，例如 redo log 写了而 binlog 没写，主库保留修改，从库却收不到；两阶段提交：先写 redo log 并刷盘进入 prepare 状态，再写 binlog 并刷盘（带 Xid），最后在 redo log 中标记提交；崩溃恢复时 prepare 状态的事务在 binlog 中找到 Xid 就提交，否则回滚。",
+   "status": "active",
+   "text": "为什么需要两阶段提交？"
+  },
+  "152f56d6c4": {
+   "days": [
+    "java-17"
+   ],
+   "points": "引用计数无法处理循环引用，JVM 使用可达性分析：从 GC Roots 出发搜索，不可达的对象可以被回收；GC Roots 包括虚拟机栈中的参数和局部变量、JNI 引用的对象、类静态属性和常量引用的对象、被 synchronized 持有的锁对象和还没有结束的线程。",
+   "status": "active",
+   "text": "怎样判断一个对象可以被回收？哪些对象可以作为 GC Roots？"
+  },
+  "1535c683ad": {
+   "days": [
+    "java-03"
+   ],
+   "points": "约定是等价的两个对象哈希值必须相同；HashMap、HashSet 先用 hashCode() 确定桶并比较哈希值，相等才调用 equals()；只重写 equals() 时两个等价对象的哈希值通常不同，会被当成两个键存入。",
+   "status": "active",
+   "text": "重写 equals() 时为什么必须重写 hashCode()？"
+  },
+  "154ba456f2": {
+   "days": [
+    "java-09"
+   ],
+   "points": "AbortPolicy（默认）抛出 RejectedExecutionException，CallerRunsPolicy 由提交任务的线程自己执行，DiscardPolicy 直接丢弃，DiscardOldestPolicy 丢弃队列中最早的任务再提交；不能丢且提交方能处理失败时用 Abort，能接受变慢时用 CallerRuns，Netty 的 I/O 线程这类不能阻塞的线程除外；允许丢失的统计上报用 Discard，只关心最新数据时用 DiscardOldest；线程池",
+   "status": "active",
+   "text": "线程池有哪些拒绝策略？怎样选择？"
+  },
+  "15b9ac4352": {
+   "days": [
+    "java-05"
+   ],
+   "points": "会执行，finally 在离开 try 语句之前执行；返回值在执行 finally 之前已经保存，返回基本类型时 finally 修改变量不影响返回值，返回引用时能看到对对象的修改；finally 中的 return 会覆盖返回值并吞掉异常；调用 System.exit()、kill -9 或 JVM 崩溃时 finally 不执行。",
+   "status": "active",
+   "text": "try 和 catch 中有 return 时，finally 还会执行吗？返回值是什么？"
+  },
+  "15d74500a9": {
+   "days": [
+    "java-20"
+   ],
+   "points": "类加载器先把加载请求交给父加载器，父加载器无法完成时才自己加载；好处是基础类统一，例如自己写的 java.lang.Object 不会替换启动类加载器加载的那个，程序中所有的 Object 都是同一个类；父加载器已经加载过的类不会重复加载，避免同一个类出现两个互不相等的 Class 对象。",
+   "status": "active",
+   "text": "什么是双亲委派模型？为什么需要它？"
+  },
+  "16787de94b": {
+   "days": [
+    "java-26"
+   ],
+   "points": "没有从联合索引的最左列开始，或者依赖联合索引中范围条件之后的列缩小扫描范围（范围条件带等号时例外）；对索引列使用函数（例如 DATE(create_time)），或者发生隐式类型转换（例如字符串列与数字比较）；LIKE 以 % 开头，OR 的一侧没有索引；匹配的行太多，优化器估算全表扫描更快，常见于 !=、NOT IN 和大范围的条件；这些是普通索引上的常见情况，只查索引中的列时可能改为扫描整个索引，缺少最左列时 8.0.13 起可能用跳跃扫描，对表达式建函数索引后函数条件也",
+   "status": "active",
+   "text": "哪些情况下索引会失效？"
+  },
+  "16e0b97125": {
+   "days": [
+    "java-68"
+   ],
+   "points": "离线阶段解析文档、切成小段，用 Embedding 模型把每段转为向量存入向量数据库，同时建立关键词索引；在线阶段先改写问题，向量检索和关键词检索同时召回候选，合并后重排，把最相关的几段资料和问题一起放进提示词，生成带引用的回答；能减少幻觉，是因为模型从凭记忆回答变为根据给定的资料回答，每个结论都能按编号核对；但资料没找到或找错时模型仍会编造，所以要用重排分数和相似度阈值判断有没有答案，没有时改写问题再检索、向用户追问，或者如实回答没找到。",
+   "status": "active",
+   "text": "RAG 的完整流程是什么？它为什么能减少幻觉？"
+  },
+  "17a016b327": {
+   "days": [
+    "java-59"
+   ],
+   "points": "顺序写和页缓存：消息只追加到日志末尾，写入页缓存即可，不要求每条消息刷盘，确认条件仍由 acks 决定，可靠性靠多副本；批量：同一分区的消息攒成批次传输、写入和复制，关闭批量后吞吐从每秒约 6 万条降到约 6600 条；零拷贝：broker 用 sendfile 把日志直接发到 Socket；分区并行：多个分区分布在不同 broker 上。",
+   "status": "active",
+   "text": "Kafka 为什么吞吐量高？"
+  },
+  "18a112ceaf": {
+   "days": [
+    "java-52"
+   ],
+   "points": "工厂（BeanFactory、FactoryBean）和单例（默认的 singleton 作用域）；代理：AOP 的 JdkDynamicAopProxy、CglibAopProxy；模板方法：JdbcTemplate、TransactionTemplate；还有观察者（ApplicationEvent、@EventListener）、适配器（HandlerAdapter）、责任链（拦截器链）和策略（InstantiationStrategy）。",
+   "status": "active",
+   "text": "Spring 中用到了哪些设计模式？"
+  },
+  "1a5bcb758d": {
+   "days": [
+    "java-52"
+   ],
+   "points": "写法有懒汉式（线程不安全）、饿汉式、方法加 synchronized、双重校验锁、静态内部类、枚举（还能防反射和反序列化）；new Singleton() 分为分配内存、初始化、赋值给引用三步，可能被重排序为先赋值再初始化，另一个线程在外层判空时就会拿到未初始化的对象，volatile 禁止这种重排序。",
+   "status": "active",
+   "text": "单例模式有哪几种写法？双重检查锁为什么要加 volatile？"
+  },
+  "1c0bbdffef": {
+   "days": [
+    "java-10"
+   ],
+   "points": "靠协作：其它线程设置 volatile 停止标记或调用 interrupt()，由线程自己检查后在合适的位置结束；线程在 sleep()、wait()、join() 中时 interrupt() 使其抛出 InterruptedException，捕获后是否结束由代码决定，只设停止标记唤醒不了它；循环中没有这类调用时，用 interrupted() 检查中断标记后退出；interrupt() 不能中断等待 synchronized 锁的阻塞，平台线程阻塞在传统 I/O 上时通",
+   "status": "active",
+   "text": "怎样停止一个正在运行的线程？"
+  },
+  "1c3ffb95a4": {
+   "days": [
+    "sprint-11"
+   ],
+   "points": "进程是资源分配的基本单位，线程是调度的基本单位，线程共享进程的资源，创建和切换开销小，能直接读写共享数据，进程间要用 IPC；进程互相隔离，而一个线程访问非法内存触发段错误时，整个进程都会被终止；协程是在用户态由运行时调度的轻量级线程，切换不陷入内核、内存占用小，大量协程映射到少量线程上，适合 I/O 密集任务，同一线程上的协程不能并行。",
+   "status": "active",
+   "text": "进程、线程和协程有什么区别？"
+  },
+  "1cb0108be7": {
+   "days": [
+    "llm-12"
+   ],
+   "points": "召回的 K 是每路交给重排的候选数（如 50），在评测集上取召回率不再明显上升的位置，有重排时可以取大些；放进提示词的 K 是重排后保留的数量（如 3～5），太大增加成本、混入无关或旧版本资料，太小答不全，按端到端正确率和上下文预算确定。",
+   "status": "active",
+   "text": "召回的 Top-K 和放进提示词的 Top-K 怎么定？"
+  },
+  "1cd94a5fd7": {
+   "days": [
+    "llm-15"
+   ],
+   "points": "类别定义互斥并写明边界，输出限制为枚举值，不在列表中的按“其它”处理；分层：规则只处理“转人工”、带订单号这类精确率高的情况，其余交给模型；置信度低时反问澄清或转人工，阈值在验证集上扫一遍再定，分错代价高的类别（如退款）单独设更高的阈值；多轮对话结合最近几轮；用评测集按类别看精确率、召回率和混淆矩阵，修改后回归。",
+   "status": "active",
+   "text": "怎样保证意图识别和路由准确？"
+  },
+  "1d67fbd177": {
+   "days": [
+    "java-36"
+   ],
+   "points": "客户端发 SYN（序号 x），服务器回 SYN+ACK（序号 y、确认号 x+1），客户端回 ACK（确认号 y+1），双方进入 ESTABLISHED；双方的初始序号都要得到对方确认，两次握手时服务器的序号得不到确认；第三次握手还能让客户端对滞留的旧连接请求回 RST，避免服务器多打开一个连接。",
+   "status": "active",
+   "text": "三次握手的过程是怎样的？为什么不是两次？"
+  },
+  "1df5ce34bc": {
+   "days": [
+    "java-19"
+   ],
+   "points": "并发标记时，用户线程让已经是黑色的对象引用了白色对象，同时删除了从灰色对象到它的所有引用，这个白色对象不会再被访问，标记结束后被当成垃圾回收；CMS 用增量更新，写入引用时写屏障把卡标记为脏，重新标记时重新扫描；G1 用原始快照（SATB），删除或覆盖引用前写屏障记录旧值并当作存活。",
+   "status": "active",
+   "text": "三色标记中的漏标是怎样发生的？CMS 和 G1 分别怎样解决？"
+  },
+  "2081fb3147": {
+   "days": [
+    "java-31"
+   ],
+   "points": "跳表在有序链表上加多层索引，每个节点以 1/4 的概率升一层，查找、插入、删除的期望复杂度都是 O(logN)；与平衡树相比，插入删除只改前驱指针，不需要旋转，范围查询找到起点后沿底层链表遍历，实现也更简单；数据在内存中，不需要 B+ 树那样减少磁盘 I/O；每个指针记录跨度，ZRANK 也是 O(logN)。",
+   "status": "active",
+   "text": "ZSET 的底层为什么用跳表？"
+  },
+  "20c2e1e5be": {
+   "days": [
+    "java-48"
+   ],
+   "points": "BIO 对应阻塞式 I/O，线程阻塞在 read 上，每个连接要一个线程；NIO 对应 I/O 复用，Channel 设为非阻塞，一个线程在 Selector.select() 上等待多个连接中任意一个就绪（Linux 上用 epoll 实现）；AIO 对应异步 I/O 的编程方式，数据复制到应用的缓冲区后才通知应用，但 Linux 上的 JDK 实际用 epoll 加线程池实现；BIO、NIO 在复制数据时仍会阻塞，属于同步 I/O。",
+   "status": "active",
+   "text": "BIO、NIO 和 AIO 有什么区别？"
+  },
+  "21184e47ef": {
+   "days": [
+    "java-29"
+   ],
+   "points": "以 UPDATE orders SET status = 3 WHERE id = 1024 为例：按主键找到这一行，页不在缓冲池就先读入，并加 X 锁；旧值写入 undo log，修改缓冲池中的数据页并生成 redo log 放入 redo log buffer，执行器把修改写入 binlog cache；提交时按两阶段提交把 redo log 和 binlog 刷盘，释放锁并返回；脏页之后由后台线程写回磁盘。",
+   "status": "active",
+   "text": "一条 UPDATE 语句执行时，三种日志是怎样写的？"
+  },
+  "218297315a": {
+   "days": [
+    "java-35",
+    "sprint-09"
+   ],
+   "points": "用 Cache Aside：读未命中时查数据库并写回缓存，写时先更新数据库（事务提交之后）再删除缓存；删除而不是更新缓存，避免并发写到达缓存的顺序与数据库不同；删除失败或慢读写回旧值时仍会不一致，用过期时间兜底，加上延迟双删、消息队列重试或订阅 binlog 删除；只能最终一致，余额、库存直接读写数据库。",
+   "status": "active",
+   "text": "怎样保证缓存与数据库的一致性？"
+  },
+  "221ffa2522": {
+   "days": [
+    "java-37"
+   ],
+   "points": "流量控制保护接收方：接收方在确认报文的窗口字段中通告缓冲区剩余空间，为 0 时发送方停止发送；拥塞控制保护整个网络：发送方维护拥塞窗口 cwnd，用慢开始、拥塞避免、快重传、快恢复调节；实际发送窗口取 cwnd 和接收窗口中的较小值。",
+   "status": "active",
+   "text": "拥塞控制和流量控制有什么区别？"
+  },
+  "2309010a02": {
+   "days": [
+    "java-58"
+   ],
+   "points": "下单时发一条 30 分钟后投递的延迟消息，到期后消费者用条件更新取消订单（WHERE status = 'UNPAID'），重复或晚到的消息不会取消已支付的订单，要求高的业务再用低频扫描兜底；用户已付款、回调还没到时本地仍是待支付，所以取消前要先向支付平台关单，平台返回已支付就按支付成功处理；RocketMQ 4.x 有 30m 延迟级别，5.x 可指定任意时间，RabbitMQ 用 TTL 加死信队列；也可以用 Redis 有序集合，分值为到期时间，后台线程取到期成员，多实",
+   "status": "active",
+   "text": "怎样实现订单 30 分钟未支付自动取消？"
+  },
+  "23a4be74d7": {
+   "days": [
+    "llm-08"
+   ],
+   "points": "订单号、金额、地址等由代码从工具参数和结果中提取单独保存，承诺通过工具写进记录；摘要分项输出、编号和金额照原文抄写，“已办理”只写有工具结果确认的操作，新摘要在旧摘要的基础上合并；用关键事实覆盖和探针问题检查，实测 3B 的结构化摘要保留 9.7 条事实，普通摘要只有 4.3 条（共 14 条）。",
+   "status": "active",
+   "text": "压缩后怎样保证关键事实不丢失？"
+  },
+  "25bf570498": {
+   "days": [
+    "java-49"
+   ],
+   "points": "不一定：Spring 不做同步，是否安全取决于有没有可变的成员变量；只持有其它 Bean 引用的 Controller、Service 是安全的，把请求数据存进成员变量就会互相覆盖；数据放在局部变量中，必须共享时用 AtomicInteger 等线程安全的类，每个线程各自的数据放在 ThreadLocal 中。",
+   "status": "active",
+   "text": "单例 Bean 是线程安全的吗？"
+  },
+  "271db04da7": {
+   "days": [
+    "java-42"
+   ],
+   "points": "先查浏览器缓存、系统缓存和 hosts，未命中则向本地 DNS 服务器递归查询；本地 DNS 服务器依次迭代询问根服务器、顶级域服务器，它们只返回下一级服务器的地址，最后由权威服务器返回 IP；各级结果按 TTL 缓存；一般用 UDP 53 端口，响应超过 UDP 报文的长度上限（不用 EDNS 时为 512 字节）被截断，或做全量区域传送（AXFR）时用 TCP。",
+   "status": "active",
+   "text": "DNS 的解析过程是怎样的？"
+  },
+  "283fe326d9": {
+   "days": [
+    "java-53"
+   ],
+   "points": "已经运行的服务还能调用，实例列表缓存在本地；新启动的服务默认注册失败直接退出，关闭 fail-fast 能启动，但没有实例列表，调用报 No servers available；所以不会立刻影响线上调用，但无法扩容和发布，生产环境要集群部署。",
+   "status": "active",
+   "text": "注册中心宕机后，服务之间还能调用吗？"
+  },
+  "28fb95c127": {
+   "days": [
+    "java-45"
+   ],
+   "points": "管道：单向，一般用于父子或兄弟这类有共同祖先的进程，FIFO（命名管道）去掉了这个限制；消息队列：独立于读写进程存在，可按类型接收；共享内存：同一物理页映射到多个进程，不用复制，最快，要配合信号量同步；套接字：可用于不同机器之间。",
+   "status": "active",
+   "text": "进程间通信有哪些方式？"
+  },
+  "29246511a6": {
+   "days": [
+    "java-41"
+   ],
+   "points": "对称加密快，但无法安全地把密钥交给对方；非对称加密的公钥可以公开传输（是否属于对方要靠证书验证），但运算慢（RSA-2048 私钥解密不到 0.4 MB/s，AES-128-GCM 加密约 6 GB/s）；所以用非对称方式协商或传输会话密钥，再用对称加密传输数据；现在大多用 ECDHE 协商会话密钥，证书的密钥只用于签名，TLS 1.3 已删除 RSA 密钥交换。",
+   "status": "active",
+   "text": "HTTPS 为什么同时使用对称加密和非对称加密？"
+  },
+  "2af89296be": {
+   "days": [
+    "java-02"
+   ],
+   "points": "值传递；传入对象时复制的是对象的地址，方法中修改对象的字段会影响原对象；方法中让形参指向新对象，方法外的引用不变。",
+   "status": "active",
+   "text": "Java 是值传递还是引用传递？"
+  },
+  "2c02de7f11": {
+   "days": [
+    "java-68"
+   ],
+   "points": "工作流的步骤和顺序由代码事先写好，可预测、成本可控，适合步骤固定的业务；Agent 的下一步由模型临时决定，适合事先确定不了步骤的开放任务，代价是成本更高、错误会逐步累积，每步成功率 95% 时连续 10 步都成功只有约 60%；判断标准是步骤和步骤之间的转移规则能否事先写清；实际系统常把两者组合：先用意图路由分流，退款这类涉及资金、步骤固定的流程写成工作流，开放的咨询交给 Agent。",
+   "status": "active",
+   "text": "什么时候用工作流，什么时候用 Agent？"
+  },
+  "2c37283a5c": {
+   "days": [
+    "java-67"
+   ],
+   "points": "按账户 ID 从小到大加锁，两个方向的转账都先锁 id 小的行，就不会互相等待（实验中每 480 笔的死锁从约 70～100 次降为 0），只有涉及同一账户的转账在这一行的锁上排队，不是串行化；余额判断写在条件中：UPDATE account SET balance = balance - 100 WHERE id = 1 AND balance >= 100，影响 0 行说明余额不足、回滚，先读出余额在应用中算好再写回会互相覆盖；客户端生成的请求号作主键，死锁回滚或超时重试",
+   "status": "active",
+   "text": "A 给 B 转账的同时 B 给 A 转账，怎样避免死锁，又不让余额扣成负数？"
+  },
+  "2d35e2a6e9": {
+   "days": [
+    "java-50",
+    "sprint-12"
+   ],
+   "points": "Spring AOP 基于动态代理：容器中保存代理对象，调用时先执行切面逻辑，再调用原始对象的方法；JDK 动态代理要求目标类实现接口，代理类继承 Proxy 并实现同样的接口，只能代理接口方法；CGLIB 生成目标类的子类、重写方法，无法代理 final 类，以及 final、static 和 private 方法；Spring Boot 默认用 CGLIB。",
+   "status": "active",
+   "text": "AOP 的原理是什么？JDK 动态代理和 CGLIB 有什么区别？"
+  },
+  "2de7600ab9": {
+   "days": [
+    "java-07"
+   ],
+   "points": "两个线程同时向同一个空桶插入，后写的覆盖先写的，size++ 也不是原子操作，8 个线程各插 10 万个键 size 远少于 80 万；JDK 1.7 并发扩容时头插法可能让链表成环，get 死循环；JDK 1.8 改为尾插法，但仍会丢数据，转红黑树时还可能破坏树结构；多线程用 ConcurrentHashMap。",
+   "status": "active",
+   "text": "HashMap 为什么线程不安全？"
+  },
+  "2eacd733a9": {
+   "days": [
+    "sprint-10"
+   ],
+   "points": "UDP 无连接、尽最大努力交付、面向报文、没有拥塞控制、首部 8 字节，延迟低，支持一对多；TCP 面向连接、可靠交付、面向字节流、有流量控制和拥塞控制，只能点对点；TCP 靠检验和、序号和累积确认（去重、排序）、超时重传和快重传（3 个重复确认，配合 SACK 只重传缺失的段），以及滑动窗口、流量控制、拥塞控制保证可靠。",
+   "status": "active",
+   "text": "TCP 和 UDP 有什么区别？TCP 怎样保证可靠传输？"
+  },
+  "3011568278": {
+   "days": [
+    "java-20"
+   ],
+   "points": "加载：按全限定名取得字节流，转换为方法区的运行时结构，生成 Class 对象；验证字节流符合规范、不危害虚拟机；准备：为类变量分配内存并设为零值（基本类型或 String、用常量表达式初始化的 static final 常量不经 \\<clinit>() 直接取 ConstantValue 的值，《深入理解 Java 虚拟机》把这一步归在准备阶段，JVMS SE 21 写在初始化过程中）；解析：把常量池中的符号引用替换为直接引用；初始化：执行 \\<clinit>()，即类变量赋",
+   "status": "active",
+   "text": "类加载的过程是怎样的？"
+  },
+  "302564cde9": {
+   "days": [
+    "java-60"
+   ],
+   "points": "固定窗口：每个窗口一个计数器，最简单，但窗口边界处最多放行 2 倍；滑动窗口：统计往前一个窗口内的请求，精确，但每个请求存一条记录；漏桶：排队后按固定速率处理，最平滑，突发要等待，适合保护处理能力固定的下游；令牌桶：按固定速率放令牌，允许不超过桶容量的突发，Guava RateLimiter 按这种方式实现，它还让当前请求先通过、把欠下的等待算到下一个请求上。",
+   "status": "active",
+   "text": "常用的限流算法有哪些？分别有什么特点？"
+  },
+  "30520434c8": {
+   "days": [
+    "java-51"
+   ],
+   "points": "@SpringBootApplication 包含 @EnableAutoConfiguration；启动时读取各 jar 中 META-INF/spring/...AutoConfiguration.imports（2.7 之前为 spring.factories）列出的自动配置类；大多数自动配置类带 @ConditionalOnClass、@ConditionalOnMissingBean 等条件注解，条件满足才生效；自动配置在用户的 Bean 注册之后处理，用户定义的 ",
+   "status": "active",
+   "text": "Spring Boot 的自动配置是怎样实现的？"
+  },
+  "3362091f47": {
+   "days": [
+    "java-57"
+   ],
+   "points": "处理完才确认，崩溃后会重复投递，所以消费逻辑要幂等：用业务唯一标识（订单号加事件类型，不用消息 ID）作去重键，在同一个本地事务中先写去重表再执行业务，主键冲突就直接确认；有状态的业务用条件更新（WHERE status = 'UNPAID'）；Kafka 的恰好一次不能代替业务幂等。",
+   "status": "active",
+   "text": "怎样避免重复消费？"
+  },
+  "347baa0bbd": {
+   "days": [
+    "java-18"
+   ],
+   "points": "把堆分成大小相等的 Region，每个 Region 可以单独回收；记录每个 Region 的回收耗时和能回收的空间，维护优先列表，优先回收价值最大的 Region；每次混合回收挑选的老年代 Region 数量受 MaxGCPauseMillis（默认 200 ms）限制；靠调整新生代大小满足目标，所以不要用 -Xmn 固定新生代。",
+   "status": "active",
+   "text": "G1 怎样控制停顿时间？"
+  },
+  "34f42af76f": {
+   "days": [
+    "java-66"
+   ],
+   "points": "TCP 连接由四元组区分，服务端所有连接共用一个监听端口，65535 不是服务端的上限，端口数只限制发起连接的一方（同一个源 IP 到同一个目的地址约 2.8 万个）；服务端的瓶颈是文件描述符（调大 ulimit -n）、内存（实测每个空闲连接约 5 KB，10 万个约 500 MB）以及消息量带来的 CPU 和带宽；用 epoll 一个线程就能管理 10 万个连接，再配合应用层心跳及时清理已经断开的连接。",
+   "status": "active",
+   "text": "一台服务器能支撑多少个长连接？瓶颈在哪里？"
+  },
+  "36367df7c4": {
+   "days": [
+    "java-14",
+    "sprint-03"
+   ],
+   "points": "CAS 有内存地址 V、预期值 A、新值 B 三个操作数，V 等于 A 时才更新为 B，由处理器指令（x86 上带 lock 前缀的 cmpxchg）保证原子性，失败时不阻塞线程、只返回 false，由调用方决定重试还是放弃，incrementAndGet() 等方法在内部循环重试；ABA 指值从 A 改为 B 又改回 A，CAS 误以为没变，会让无锁栈这类结构出错；用 AtomicStampedReference 给引用加版本号，每次修改加 1，持有旧版本号的 CAS 会失",
+   "status": "active",
+   "text": "CAS 的原理是什么？ABA 问题怎么解决？"
+  },
+  "380a188f36": {
+   "days": [
+    "java-01"
+   ],
+   "points": "可变性：String 不可变，StringBuffer 和 StringBuilder 可变；线程安全：String 因不可变而线程安全，StringBuffer 的方法用 synchronized 同步，StringBuilder 不加锁，单线程拼接时用它；循环中拼接字符串应在循环外建一个 StringBuilder 调用 append()，用 + 每次都会创建新对象并复制内容。",
+   "status": "active",
+   "text": "String、StringBuffer 和 StringBuilder 有什么区别？"
+  },
+  "3896059e83": {
+   "days": [
+    "java-15"
+   ],
+   "points": "JDK 21 中依次为无锁（Mark Word 末尾 01）、轻量级锁（CAS 换成 Lock Record 指针，末尾 00）、重量级锁（其它线程持有锁时 CAS 失败，膨胀为 ObjectMonitor，末尾 10，先自适应自旋，抢不到再阻塞）；偏向锁 JDK 15 起默认禁用、之后被移除；空闲的 ObjectMonitor 会被回收，对象头恢复为无锁，所以“只能升级不能降级”不准确。",
+   "status": "active",
+   "text": "说一下 synchronized 的锁升级过程。"
+  },
+  "393777a7d3": {
+   "days": [
+    "java-07"
+   ],
+   "points": "插入后 size 大于 threshold（capacity × 0.75）时容量翻倍，默认 16 时放入第 13 个键后变为 32；扩容时按 hash & oldCap 是否为 0 把节点分到 j 和 j + oldCap 两个位置，保持相对顺序；容量是 2 的幂时，hash & (capacity - 1) 只保留 hash 的低位，hash 非负时与 hash % capacity 相同（hash 为负时 % 可能得到负数，与运算仍是合法下标），位运算比取模快，扩容也只",
+   "status": "active",
+   "text": "HashMap 是怎样扩容的？为什么容量是 2 的幂？"
+  },
+  "394e2ef8d2": {
+   "days": [
+    "java-28",
+    "sprint-07"
+   ],
+   "points": "跨分片的事务要用分布式事务，跨分片的连接要拆成单表查询在应用中连接；不能再用自增主键，改用雪花算法等分布式 ID；不带分片键的查询要查所有分片，可以用基因法、映射表或按另一个维度再存一份，跨分片的深分页改用游标分页；增加分片要迁移数据，常用双写迁移。",
+   "status": "active",
+   "text": "分库分表之后会遇到哪些问题？"
+  },
+  "3b0c37d0ee": {
+   "days": [
+    "java-39"
+   ],
+   "points": "Cookie 是保存在浏览器、每次请求自动携带的小块数据（约 4 KB）；Session 把状态存在服务器（如 Redis），Cookie 只带 Session ID，删除 Session 就能让用户下线，集群要共享；Token（如 JWT）把状态放在带签名的令牌中，服务无需保存会话就能验证，但过期前无法主动失效，常用短期访问令牌加刷新令牌，需要立即失效时把令牌 ID 放入 Redis 黑名单，这又回到了在服务器保存状态。",
+   "status": "active",
+   "text": "Cookie、Session 和 Token 有什么区别？"
+  },
+  "3cde3d237b": {
+   "days": [
+    "java-06"
+   ],
+   "points": "线程安全的 List 有 Vector、Collections.synchronizedList() 和 CopyOnWriteArrayList；CopyOnWriteArrayList 写操作加锁并在复制的新数组上进行，写完再替换原数组，读不加锁；适合读多写少的场景，缺点是写时内存约翻倍，写入期间读到的可能是旧数组，迭代器也看不到创建后的修改。",
+   "status": "active",
+   "text": "线程安全的 List 有哪些？CopyOnWriteArrayList 适合什么场景？"
+  },
+  "3d4ae89337": {
+   "days": [
+    "llm-06"
+   ],
+   "points": "编造参数，例如用户没给订单号就自己编一个去查；编造或误读工具结果，例如接口超时仍说“正在运输中”、把 updated_at 当成送达时间；声称做了没做的事，例如没调用退款工具却说已退款；应对要靠工具和代码：结果字段写清楚、校验参数来源、用代码核对关键信息。",
+   "status": "active",
+   "text": "Agent 调用工具时会出现哪些幻觉？"
+  },
+  "3eda6c30d3": {
+   "days": [
+    "java-55"
+   ],
+   "points": "TCC 由业务实现 Try（预留资源，如冻结库存）、Confirm、Cancel，不长期持有数据库锁，适合一致性要求较高、能改造出三个接口的资源操作，如库存、资金；本地消息表把消息和业务数据写在同一个本地事务中，再投递给对方幂等执行，失败只能重试，适合能接受最终一致的后续操作，如下单后发券、加积分。",
+   "status": "active",
+   "text": "TCC 和本地消息表分别适合什么场景？"
+  },
+  "3f287e23ea": {
+   "days": [
+    "java-49"
+   ],
+   "points": "实例化（反射调用构造函数）→ 属性填充 → Aware 回调 → BeanPostProcessor 的 before 方法 → 初始化（@PostConstruct、afterPropertiesSet()、init-method）→ BeanPostProcessor 的 after 方法，AOP 在这里替换为代理；容器关闭时依次调用 @PreDestroy、destroy()、destroy-method。",
+   "status": "active",
+   "text": "Bean 的生命周期是怎样的？"
+  },
+  "4383694e3e": {
+   "days": [
+    "java-14"
+   ],
+   "points": "多个线程不管以何种方式访问一个类，调用方不需要额外同步都能表现正确；根源是多个线程读写共享的可变数据；做法：不可变对象，互斥同步（synchronized、ReentrantLock），非阻塞同步（CAS、原子类），无同步方案（栈封闭、ThreadLocal）。",
+   "status": "active",
+   "text": "什么是线程安全？怎样保证线程安全？"
+  },
+  "4391e4bcee": {
+   "days": [
+    "java-25"
+   ],
+   "points": "数据在磁盘上，要让读磁盘的次数最少；红黑树是二叉树，200 万行约 21 层，B+ 树的一个节点是 16 KB 的页，有几百上千个子节点，200 万行只有 3 层；B 树每个节点都存数据，B+ 树只有叶子存数据，内部节点能放下更多 key，叶子用指针相连，便于范围查询，每次查找都走到叶子，I/O 次数稳定；哈希索引只支持等值查找，不能用于排序和范围查询。",
+   "status": "active",
+   "text": "MySQL 为什么用 B+ 树做索引，而不用 B 树、红黑树或哈希表？"
+  },
+  "4489ec0668": {
+   "days": [
+    "java-32"
+   ],
+   "points": "Redis 用一个线程执行命令，执行脚本期间不处理其它客户端的命令，整个脚本就像一条命令，可以根据前一条命令的结果决定后续操作，例如先 GET 再判断是否 INCR；这里的原子性是不被打断，不是出错回滚，中途出错时已执行的写命令不会回滚。",
+   "status": "active",
+   "text": "Lua 脚本为什么能保证原子性？"
+  },
+  "454c7daf16": {
+   "days": [
+    "java-13"
+   ],
+   "points": "volatile 保证可见性（写入对之后读取的线程立即可见）和有序性（volatile 写之前的读写不会被重排序到写之后，volatile 读之后的读写不会被重排序到读之前）；单次读写是原子的，long、double 也不会被拆成两次，但不保证 i++ 这类复合操作的原子性：i++ 是读取、加 1、写回三步，两个线程可能读到同一个旧值，各自加 1 后写回，只增加了 1；读-改-写操作要用锁或原子类。",
+   "status": "active",
+   "text": "volatile 能保证什么？为什么 volatile 修饰的 i++ 仍然不安全？"
+  },
+  "45bf4a5b4d": {
+   "days": [
+    "llm-09"
+   ],
+   "points": "按标题、段落等结构切，表格和代码块保持完整，相邻切片保留重叠，切片带上标题路径；一节超过上限时递归切分，按空行、换行、句号、逗号由粗到细尝试，LangChain 默认的分隔符没有中文标点，要补上；没有标题的长文本可以语义切分，在相邻两句相似度明显下降处切开；也可以用小切片检索、返回所在的完整段落（父子切片）；大小没有通用最优值，以 Embedding 模型的最大长度为上限，事实类问题用小切片，最后在评测集上比较召回率。",
+   "status": "active",
+   "text": "有哪些切片策略？切片大小怎么确定？"
+  },
+  "47712a7a5f": {
+   "days": [
+    "java-23"
+   ],
+   "points": "快照读是普通 SELECT，读 MVCC 快照，不加锁；当前读是 INSERT、UPDATE、DELETE 和 SELECT ... FOR SHARE / FOR UPDATE，读最新版本并加锁；可重复读下同一事务混用时，快照读看不到快照建立后其它事务提交的新行，当前读却能看到并修改它们，修改后本事务的快照读也能看到这些行。",
+   "status": "active",
+   "text": "快照读和当前读有什么区别？"
+  },
+  "479c864f58": {
+   "days": [
+    "llm-02"
+   ],
+   "points": "标准注意力的计算量为 O(n<sup>2</sup>d)，n × n 的分数矩阵占 O(n<sup>2</sup>) 显存，长上下文时显存读写成为瓶颈；FlashAttention 分块在 GPU 片上缓存中计算，分数矩阵不写回显存，用在线 softmax 逐块累积；结果在数学上与标准注意力相同，不是近似，省的是显存读写而不是计算量。",
+   "status": "active",
+   "text": "FlashAttention 解决了什么问题？"
+  },
+  "48101acfd2": {
+   "days": [
+    "java-23"
+   ],
+   "points": "未提交读三种问题都可能出现；提交读避免脏读；可重复读再避免不可重复读，InnoDB 用 MVCC 和 Next-Key Lock 在很大程度上也避免了幻读，是 MySQL 的默认级别；可串行化三种都能避免，InnoDB 在显式事务中把普通 SELECT 变成 FOR SHARE，读写互相阻塞，并发度最低。",
+   "status": "active",
+   "text": "四种隔离级别分别解决了哪些问题？"
+  },
+  "485504eb0f": {
+   "days": [
+    "sprint-14"
+   ],
+   "points": "Function Calling 是模型侧的能力，模型根据工具描述给出函数名和参数；MCP 是应用与外部工具、数据之间的协议，统一工具的发现（tools/list）和调用（tools/call），工具实现一次服务端就能被所有支持 MCP 的应用使用；两者配合：主机把 MCP 工具转成工具定义交给模型，再通过 MCP 执行模型给出的调用。",
+   "status": "active",
+   "text": "MCP 和 Function Calling 有什么区别？"
+  },
+  "488c66ff9c": {
+   "days": [
+    "java-62"
+   ],
+   "points": "按 hash(url) % 100 切成 100 个约 1 GB 的小文件，相同的 URL 一定在同一个文件中；逐个文件用 HashMap 统计次数，用小顶堆取出前 10 个；再用小顶堆从 100 × 10 个候选中选出全局前 10 个；某个文件中不同的 URL 仍然太多、HashMap 放不下时，换哈希函数对它再切分。",
+   "status": "active",
+   "text": "100 GB 的日志中每行是一个 URL，内存只有 4 GB，怎样找出出现次数最多的 10 个？"
+  },
+  "493fe133cc": {
+   "days": [
+    "llm-03"
+   ],
+   "points": "MHA 中每个查询头都有自己的 K、V；GQA 让多个查询头共享一组 K、V，Qwen2.5-7B 的 28 个查询头共享 4 组，每个 Token 缓存 56 KB，MHA 要 392 KB；MQA 中所有查询头共享一组，缓存最小，但效果下降更明显；GQA 减少的是缓存和解码每步读取的数据量，计算量基本不变，每个查询头仍有自己的 Q，所以效果接近 MHA。",
+   "status": "active",
+   "text": "MHA、MQA 和 GQA 有什么区别？"
+  },
+  "4978768999": {
+   "days": [
+    "java-34"
+   ],
+   "points": "先查本地缓存（Caffeine），未命中查 Redis，再未命中查数据库并逐级回填；本地读取约 21 纳秒、Redis 约 68 微秒，热点放本地还能分散单个 Redis 节点的压力；更新后删 Redis，并广播消息删除各实例的本地缓存，本地再设约 30 秒过期兜底；只放读多写少、能接受短暂不一致的数据。",
+   "status": "active",
+   "text": "本地缓存和 Redis 怎样配合使用？"
+  },
+  "4baf13900d": {
+   "days": [
+    "java-61"
+   ],
+   "points": "让“判断库存”和“扣减库存”成为一个整体；悲观锁 FOR UPDATE 正确，但锁持有到事务提交，其它请求排队；乐观锁同时读到同一版本的请求只有一个成功，有库存也会失败（150 人抢 100 件，重试 3 次也只卖出 48～57 件），适合冲突少的场景；条件更新 WHERE stock > 0 不需重试，但同一行更新仍串行，所以先用 Redis 挡住大部分请求，条件更新作为最后防线。",
+   "status": "active",
+   "text": "秒杀系统怎样防止超卖？悲观锁、乐观锁和条件更新各有什么问题？"
+  },
+  "4bf4ba1fb0": {
+   "days": [
+    "llm-16"
+   ],
+   "points": "完整历史在上下文中时模型一般能理解指代，问题出在检索、压缩和多个候选；检索前结合最近几轮和任务状态改写成完整的问题，例如“它什么时候发货”改为“订单 1026 什么时候发货”；任务状态记录当前和提到过的订单，有多个候选时追问而不是猜。",
+   "status": "active",
+   "text": "多轮对话中的指代和省略怎样处理？"
+  },
+  "4c736dfa3f": {
+   "days": [
+    "java-54"
+   ],
+   "points": "用 SET lock_key unique_value NX PX 30000 加锁，键不存在才成功，并同时设置过期时间；释放时用 Lua 脚本先比较 value 再删除，避免误删别人的锁；分成 SETNX 和 EXPIRE 两条命令时，执行完 SETNX 后进程崩溃，锁就永远不会过期。",
+   "status": "active",
+   "text": "用 Redis 怎样实现分布式锁？为什么加锁和设置过期时间要用一条命令？"
+  },
+  "4e79ae834e": {
+   "days": [
+    "java-40"
+   ],
+   "points": "HTTP 是请求-响应模式，服务器不能主动发消息；WebSocket 由一次 HTTP 升级（101）而来，之后在同一个 TCP 连接上全双工传输帧；SSE 是 text/event-stream 的普通 HTTP 响应，只能服务器推送，浏览器的 EventSource 断线后自动重连（它只能发 GET，用 fetch 读取响应流时要自己重连）；只需服务器推送（如大模型逐字输出）用 SSE，双方都要随时发消息（聊天）用 WebSocket。",
+   "status": "active",
+   "text": "WebSocket 和 HTTP 有什么区别？什么时候用 SSE？"
+  },
+  "4ec5716b53": {
+   "days": [
+    "llm-18"
+   ],
+   "points": "第一次会话只做准备：把需求拆成带测试步骤和 passes 字段的 JSON 功能清单，写好启动脚本并提交到 git；之后每次会话先读进度文件和 git log、做冒烟测试，只实现一个未通过的功能，端到端测试通过才把 passes 改为 true，再提交并更新进度；只允许修改 passes，防止 Agent 删掉测试来“完成”任务。",
+   "status": "active",
+   "text": "长任务怎样在多次会话之间交接？"
+  },
+  "4f74d11814": {
+   "days": [
+    "sprint-08"
+   ],
+   "points": "STRING、LIST、SET、HASH、ZSET 五种，另有 BITMAP、HyperLogLog、GEO、Stream；ZSET 成员多时用跳表，在有序链表上加多层索引，以 1/4 的概率升层，查找和插入删除期望 O(logN)；相比平衡树，插入删除只改前驱指针、不需要旋转，范围查询沿底层链表遍历，实现简单；数据都在内存中，不需要 B+ 树那样减少磁盘 I/O。",
+   "status": "active",
+   "text": "Redis 有哪些数据类型？ZSET 的底层为什么用跳表？"
+  },
+  "4fad9621d5": {
+   "days": [
+    "sprint-13"
+   ],
+   "points": "超卖源于判断库存和扣减库存不是原子操作；数据库中可用悲观锁 SELECT ... FOR UPDATE、乐观锁版本号或条件更新 UPDATE ... SET stock = stock - 1 WHERE stock > 0；实测 1000 个用户抢 100 件，先查再扣多卖了 34～62 件，悲观锁和条件更新都恰好卖出 100 件；乐观锁不会超卖，但冲突多时会少卖，150 个用户抢、重试 3 次也只卖出 48～57 件；条件更新不需要重试、最常用；秒杀时先用 Redis 的",
+   "status": "active",
+   "text": "秒杀系统怎样防止超卖？"
+  },
+  "4ff0d2d0d0": {
+   "days": [
+    "llm-09"
+   ],
+   "points": "PDF 只记录“在某坐标画某字”，没有段落和表格，直接读文本层会混入页眉页脚、句子在折行处断开；扫描件要先 OCR，表格可能被逐列输出；用版面分析识别标题、正文、表格和阅读顺序，表格转为 Markdown，按行切分时每行带上表头；跨页的表格在列数、列宽一致且中间没有新标题时拼成一张，去掉重复的表头。",
+   "status": "active",
+   "text": "PDF 为什么难解析？表格怎么处理？"
+  },
+  "513b0767e9": {
+   "days": [
+    "llm-14"
+   ],
+   "points": "模型负责理解任务、决定下一步；工具用于获取信息和执行操作，记忆保存对话历史和用户偏好，规划把复杂任务拆成步骤；控制循环是应用代码中反复调用模型、执行工具的循环，并负责限制步数、校验参数和权限；模型只输出文本，执行都由应用完成。",
+   "status": "active",
+   "text": "Agent 由哪些部分组成？"
+  },
+  "518704a7fc": {
+   "days": [
+    "java-04"
+   ],
+   "points": "设计上抽象类是 IS-A 关系，接口是 LIKE-A 关系，只提供方法契约；一个类可以实现多个接口，只能继承一个抽象类；接口的字段只能是 static final，成员默认 public，抽象类没有这些限制；相关类共享代码、需要非 public 成员或非常量字段时用抽象类，让不相关的类具备同一行为（例如 Comparable）时用接口，多数情况接口优先。",
+   "status": "active",
+   "text": "抽象类和接口有什么区别？分别用在什么场景？"
+  },
+  "52aa24db2a": {
+   "days": [
+    "llm-21"
+   ],
+   "points": "非流式请求的总超时要大于 TTFT + 最大输出 Token 数 × TPOT，例如 1000 个 Token、30 毫秒时要 30 多秒；流式请求分别设首 Token 超时、间隔超时和总时长上限，心跳不算内容；429、5xx、超时可以重试，400、401 直接失败，按指数退避加随机抖动、遵守 Retry-After，次数设上限且只在一层重试。",
+   "status": "active",
+   "text": "调用模型接口时怎样设置超时和重试？"
+  },
+  "52c9969ca3": {
+   "days": [
+    "java-24"
+   ],
+   "points": "常见原因：两个事务按相反的顺序更新同一组行，或者“先查有没有，没有再插入”时拿到了同一个间隙锁，插入意向锁与对方的间隙锁冲突；InnoDB 检测到死锁后回滚其中一个事务，应用要重试；排查：看 SHOW ENGINE INNODB STATUS 的 LATEST DETECTED DEADLOCK，打开 innodb_print_all_deadlocks 记录每次死锁，锁等待时查 performance_schema.data_locks 和 data_lock_waits；",
+   "status": "active",
+   "text": "遇到过 MySQL 死锁吗？怎样排查？"
+  },
+  "535132ab86": {
+   "days": [
+    "java-30"
+   ],
+   "points": "用位图：每天一个键 active:{日期}，offset 为用户的连续序号，签到时 SETBIT 为 1，1 亿用户每天 12.5 MB、一年约 4.6 GB；BITCOUNT 统计当天的人数，BITOP 求多天的交集和并集；也可以每人每月一个键 sign:{用户 ID}:{年月}，便于查一个人的签到，但大量小键的开销大，每人每年一个键时 1 亿用户约 15 GB；用户 ID 稀疏时先转换为连续的序号。",
+   "status": "active",
+   "text": "一亿用户每天的签到状态怎样存储？"
+  },
+  "54392ab875": {
+   "days": [
+    "java-07"
+   ],
+   "points": "用 hash() 计算哈希值，table 为空时先 resize() 创建数组；用 (n - 1) & hash 求桶下标，桶为空直接放入；头节点是 TreeNode 就在红黑树中插入，否则遍历链表，键相同则替换旧值，否则接到链表尾部，已有 8 个节点时调用 treeifyBin()；size 大于 threshold 时扩容。",
+   "status": "active",
+   "text": "HashMap 的 put() 过程是怎样的？"
+  },
+  "56455baece": {
+   "days": [
+    "java-26"
+   ],
+   "points": "联合索引先按第一列排序，第一列相同再按第二列，所以条件要从最左列开始连续使用才能用索引定位，与 WHERE 中的书写顺序无关；(a, b, c) 只用到 a 和 c 时能走索引，但只用 a 定位，c 在定位到的范围内逐条判断，借助索引下推可以在索引上过滤，减少回表。",
+   "status": "active",
+   "text": "什么是最左前缀原则？联合索引 (a, b, c) 只用到 a 和 c 时能走索引吗？"
+  },
+  "56d0a4ee0e": {
+   "days": [
+    "sprint-01"
+   ],
+   "points": "JDK 1.8：table 为空先 resize()，用 (n - 1) & hash 定位桶，空桶直接放入；否则头节点是 TreeNode 就在红黑树中查找或插入，是链表就逐个比较，键相同就替换旧值，找不到就接在链表尾部；插入后 size 大于 threshold（容量 × 0.75，默认 12）时扩容为 2 倍；接上前链表已有 8 个节点时，数组长度小于 64 只扩容，否则转成红黑树。",
+   "status": "active",
+   "text": "HashMap 的 put() 过程是怎样的？什么时候扩容、什么时候转成红黑树？"
+  },
+  "57e6bf391b": {
+   "days": [
+    "java-56"
+   ],
+   "points": "64 位依次为 1 位符号位、41 位毫秒时间戳、10 位机器 ID、12 位序号，同一毫秒内序号递增，4096 个用完就等到下一毫秒；时钟回拨几毫秒时等时钟追上（Leaf 在 5 ms 以内等待两倍的差值），较大时报错并摘除实例；lastTime 只在内存中，重启后发现不了回拨，要把时间持久化，例如 Leaf 每 3 秒把本机时间写入 ZooKeeper，启动时本机时间比记录的还早就不启动；机器 ID 在启动时从 ZooKeeper、数据库等领取。",
+   "status": "active",
+   "text": "雪花算法是怎样生成 ID 的？时钟回拨怎么办？"
+  },
+  "57ed7e67f6": {
+   "days": [
+    "java-34"
+   ],
+   "points": "用 k 个哈希函数把 Key 映射到位数组的 k 个位置并置 1，查询时有一位为 0 就一定不存在，全为 1 则可能存在；误判是因为这些位可能都被其它 Key 置为 1；每个 Key 占 10 位、k = 7 时误判率约 0.82%，插入数超过预期后迅速上升，且不能删除元素。",
+   "status": "active",
+   "text": "布隆过滤器的原理是什么？为什么会误判？"
+  },
+  "59a27f0b68": {
+   "days": [
+    "java-24",
+    "sprint-06"
+   ],
+   "points": "快照读靠 MVCC：可重复读复用同一个 ReadView，看不到其它事务新插入的行；当前读靠 Next-Key Lock：锁住扫描到的记录和记录之间的间隙，其它事务无法在范围内插入；同一事务中快照读和当前读混用时仍会出现幻读。",
+   "status": "active",
+   "text": "InnoDB 在可重复读级别下怎样避免幻读？"
+  },
+  "5b6919dab0": {
+   "days": [
+    "llm-16"
+   ],
+   "points": "写入前检索相似的旧记忆，由模型选择 ADD、UPDATE、DELETE 或 NOOP（Mem0 论文的做法，开源版后来改为只新增），用户 ID、时间等字段由代码填写；冲突时用户本次说的优先，亲口说的优先于推断，同一来源以新的为准，只对这一次有效的说法不覆盖，仍无法判断就问用户；旧记忆标记失效而不物理删除，并按时间衰减排序、定期清理。",
+   "status": "active",
+   "text": "长期记忆中的信息过时或冲突时怎样处理？"
+  },
+  "5cfaefbdbb": {
+   "days": [
+    "java-45"
+   ],
+   "points": "内核运行在特权级 0（内核态），应用运行在 3 级（用户态），特权指令只能在内核态执行，用户态也只能访问本进程的用户空间，以保护内核和其它进程；系统调用（如读写文件、创建进程）、异常（如缺页）和外中断会从用户态进入内核态；一次系统调用约 165 ns，是普通函数调用的近 180 倍，但不一定发生上下文切换。",
+   "status": "active",
+   "text": "什么是用户态和内核态？什么时候会切换？"
+  },
+  "5efd34dc3a": {
+   "days": [
+    "java-12"
+   ],
+   "points": "Future 只能用 get() 阻塞等待结果，多个任务有依赖时要自己写等待逻辑；CompletableFuture 可以注册回调，用 thenApply、thenCompose 串联，用 thenCombine 合并，用 exceptionally、handle 处理异常；带 Async 的方法不传线程池时在 ForkJoinPool.commonPool() 中执行（并行度小于 2 时每个任务新建一个线程），阻塞的 I/O 任务应传入自己的线程池。",
+   "status": "active",
+   "text": "CompletableFuture 解决了 Future 的什么问题？"
+  },
+  "5f403638bf": {
+   "days": [
+    "java-65"
+   ],
+   "points": "Service 工作在传输层，用标签选出一组 Pod，提供固定的虚拟 IP 和域名，由 kube-proxy 写成 iptables 或 IPVS 规则转发，有 ClusterIP、NodePort、LoadBalancer 等类型；Ingress 是 HTTP 路由规则，按域名和路径把请求分给不同的 Service，由 Ingress 控制器执行，多个 HTTP 服务共用一个入口。",
+   "status": "active",
+   "text": "Service 和 Ingress 有什么区别？"
+  },
+  "6159fb310f": {
+   "days": [
+    "java-20"
+   ],
+   "points": "重写 loadClass()，先自己加载、找不到再交给父加载器；例子：JDBC 的 DriverManager 由平台类加载器加载，通过 ServiceLoader 用线程上下文类加载器加载 classpath 上的驱动；Tomcat 每个应用的 WebappClassLoader 先在本应用中查找，不同应用可以用同一个库的不同版本；热部署用新的类加载器加载修改后的类。",
+   "status": "active",
+   "text": "怎样打破双亲委派？有哪些实际的例子？"
+  },
+  "61d62633f1": {
+   "days": [
+    "java-05"
+   ],
+   "points": "泛型只在编译时检查类型，编译后类型参数替换为上界（没有上界时为 Object），取出元素处由编译器插入强制类型转换；运行时 List\\<String> 和 List\\<Integer> 是同一个类，所以类型参数不能是基本类型，不能 new T() 或用 instanceof List\\<String>；类、字段、方法声明上的泛型信息保存在 Signature 属性中，可以通过反射读取。",
+   "status": "active",
+   "text": "什么是泛型擦除？"
+  },
+  "6236dc8524": {
+   "days": [
+    "java-42"
+   ],
+   "points": "语义：GET 获取资源，POST 传输实体主体；GET 安全且幂等，POST 会改变服务器状态，不幂等；参数放在哪里只是惯例，GET 参数通常在 URL 中（要编码，长度受浏览器和服务器的限制，例如 Nginx 默认请求行不超过 8 KB），POST 在主体中，但抓包同样能看到，并不更安全；GET 响应可缓存，POST 多数不可缓存。",
+   "status": "active",
+   "text": "GET 和 POST 有什么区别？"
+  },
+  "62d04c530a": {
+   "days": [
+    "java-47"
+   ],
+   "points": "虚拟内存让每个进程看到独立、连续的地址空间，程序使用虚拟地址，由硬件和操作系统按页翻译成物理地址；它让程序可以比物理内存大（只把用到的页放在内存中），隔离各进程并按页设置权限，简化加载（物理内存不必连续），还能让多个进程共享同一物理页。",
+   "status": "active",
+   "text": "什么是虚拟内存？为什么需要它？"
+  },
+  "634ab6d850": {
+   "days": [
+    "llm-18"
+   ],
+   "points": "子任务互相独立、需要读大量资料或反复试错时值得拆，需要隔离权限时也可以拆，好处是隔离上下文，子 Agent 只返回精简的结论；代价是 Token 消耗成倍增加（Anthropic 的数据中多 Agent 系统约为普通对话的 15 倍），只传摘要会丢失细节；依赖紧密的任务和对延迟、成本敏感的在线请求用单个 Agent；协作方式有主管分派（子 Agent 包装成工具、可并行）、流水线（固定顺序）、讨论（互看答案后投票或裁决）和转交（把控制权和上下文交给另一个 Agent，由它直接",
+   "status": "active",
+   "text": "什么时候需要多个 Agent？有哪些协作方式？"
+  },
+  "63f07a4386": {
+   "days": [
+    "llm-08"
+   ],
+   "points": "提示词工程关注怎样写好指令，尤其是系统提示词；上下文工程决定每次调用前把哪些内容、按什么顺序放进窗口，包括规则、工具定义、检索资料、对话历史和记忆；Agent 每一步都有新的工具结果，每次调用前都要重新挑选和压缩。",
+   "status": "active",
+   "text": "上下文工程和提示词工程有什么区别？"
+  },
+  "64f1daf686": {
+   "days": [
+    "java-46"
+   ],
+   "points": "互斥：资源要么已分配给一个进程，要么可用；占有和等待：已持有资源的进程还能请求新资源；不可抢占：资源只能由持有者显式释放；环路等待：多个进程形成环，每个都在等下一个持有的资源。",
+   "status": "active",
+   "text": "死锁的四个必要条件是什么？"
+  },
+  "676b456ee1": {
+   "days": [
+    "llm-17"
+   ],
+   "points": "Tool 是可调用的函数，提供查询订单这类原子能力；MCP 是连接工具和数据的协议，解决工具怎么接入；Skill 是包含 SKILL.md、脚本和资料的文件夹，提供完成某类任务的步骤和规范，执行时仍要调用工具，平时只加载名称和描述（约 100 个 Token），需要时才读取正文。",
+   "status": "active",
+   "text": "Skill 和 MCP、Tool 有什么区别？"
+  },
+  "68acba4c85": {
+   "days": [
+    "java-22"
+   ],
+   "points": "原子性：要么全部成功，要么全部回滚，InnoDB 用 undo log 记录修改前的值来回滚；一致性：事务前后满足约束和业务规则，由另外三者和主键、唯一索引等约束共同保证，业务规则还要应用自己维护；隔离性：未提交的修改对其它事务不可见，写操作加锁，普通读用 MVCC 读快照；持久性：提交后不丢失，先写 redo log，提交时刷盘，崩溃后重放。",
+   "status": "active",
+   "text": "ACID 分别是什么？InnoDB 怎样保证它们？"
+  },
+  "699cec5d70": {
+   "days": [
+    "java-38"
+   ],
+   "points": "301 永久重定向，没有缓存指令时默认可被浏览器缓存，适合域名迁移；302 临时重定向，默认不缓存；304 表示条件请求（If-None-Match、If-Modified-Since）的资源没有变化，不带响应体；502 是网关从上游收到无效响应（后端出错或不可达），504 是网关等待上游超时（后端太慢）。",
+   "status": "active",
+   "text": "301、302、304、502、504 分别表示什么？"
+  },
+  "6d00dbcd74": {
+   "days": [
+    "llm-12"
+   ],
+   "points": "向量相似度的绝对值很难定阈值：实测阈值 0.50 时无答案的问题放行 40%，0.60 时有答案的问题误拒 10%；所以只用较低的阈值过滤明显无关的结果，有没有答案靠重排分数和“资料不足时回答不知道”的提示词判断；阈值在评测集上确定，换模型后重新确定。",
+   "status": "active",
+   "text": "相似度阈值怎么设置？"
+  },
+  "6d49cb17be": {
+   "days": [
+    "java-63"
+   ],
+   "points": "先把日流量换算成高峰时的 QPS：日 PV 6 亿平均约 6944 QPS，高峰一小时占 6% 时这一小时平均约 1 万 QPS，大促按 10 倍设计为 10 万，小时内的秒级突发还要留余量；机器数 = 峰值 QPS ÷（单实例拐点 QPS × 目标利用率），再按可用区取整，一个可用区故障时其余实例仍要低于拐点；存储按每天的增量乘以保存时间估算，例如日下单 1200 万、一年约 44 亿行，分库分表主要由数据量决定。",
+   "status": "active",
+   "text": "设计一个系统前，怎样估算需要的机器和存储？"
+  },
+  "6dbf8f2ba2": {
+   "days": [
+    "java-41"
+   ],
+   "points": "CA 用私钥对证书内容（域名、公钥、有效期等）的哈希值签名，客户端用上一级证书的公钥验证，内容改一个字节就会失败；沿证书链逐级验证，顶端必须是预装在系统或浏览器中的根证书，根证书自签名，是信任的起点；还要检查有效期、吊销状态和域名是否在证书的 Subject Alternative Name 中。",
+   "status": "active",
+   "text": "证书是怎样验证的？根证书有什么用？"
+  },
+  "6ee29f4ce5": {
+   "days": [
+    "java-35"
+   ],
+   "points": "大 Key 是值很大的键（几 MB 的字符串、几十万元素的集合），会阻塞单线程、占带宽、造成数据倾斜，用 --bigkeys 发现，拆成小键，删除用 UNLINK、分批用 HSCAN 读；热 Key 是访问量远高于其它的键，请求集中到一个节点，淘汰策略为 LFU 时用 --hotkeys 发现，否则在客户端或代理中统计，用本地缓存或复制成多个键分散读取。",
+   "status": "active",
+   "text": "什么是大 Key 和热 Key？怎样处理？"
+  },
+  "7032e684b1": {
+   "days": [
+    "java-61"
+   ],
+   "points": "以数据库的库存和订单为准，Redis 库存只是闸门，允许暂时少卖，数据库条件更新始终保留；发送消息明确失败时执行反向脚本回补，发送超时（消息可能已送达）或应用宕机交给对账，也可以用事务消息；订单因业务原因失败时回补 Redis，异常失败靠消息重试，唯一索引防止重复建单；回补先 SREM 已购集合、返回 1 才加库存，允许再次抢购时还要核对请求 ID；Redis 主从切换丢失扣减时由数据库兜底，因数据库库存不足失败的请求，确认这个用户没有订单后只移出已购集合、不加回库存；活动后",
+   "status": "active",
+   "text": "Redis 预扣库存成功、订单却创建失败，怎样保证两边一致？"
+  },
+  "7040328bec": {
+   "days": [
+    "java-54"
+   ],
+   "points": "过期时间取正常耗时的几倍，难以估计时由后台线程续期，例如 Redisson 看门狗：lock() 不指定过期时间时先设 30 秒，每 10 秒检查一次，锁仍是自己的就重置为 30 秒，进程崩溃后最多 30 秒释放；锁内操作都要设超时，否则卡住的线程会被一直续期；GC 暂停时仍可能两个客户端同时持锁，要用递增的栅栏令牌拒绝旧写入。",
+   "status": "active",
+   "text": "锁过期了业务还没执行完怎么办？"
+  },
+  "710b3551d1": {
+   "days": [
+    "java-40"
+   ],
+   "points": "同源指协议、域名、端口都相同，浏览器禁止脚本读取其它源的响应（简单请求仍会发出并在服务器上执行）；常用 CORS：服务器返回 Access-Control-Allow-Origin，非简单请求先发 OPTIONS 预检，带 Cookie 时不能用 *；也可以用同源的反向代理转发；JSONP 只支持 GET，已被 CORS 取代。",
+   "status": "active",
+   "text": "什么是跨域？怎样解决？"
+  },
+  "71ab53cab0": {
+   "days": [
+    "java-17"
+   ],
+   "points": "可达性分析要遍历对象之间的引用，用户线程同时修改引用可能漏掉存活的对象；复制和整理算法还要移动对象、修改指向它的引用；用户线程运行到安全点才暂停，CMS、G1 把耗时最长的标记改为并发执行来缩短停顿。",
+   "status": "active",
+   "text": "垃圾收集为什么要 Stop The World？"
+  },
+  "72afd7353e": {
+   "days": [
+    "java-39"
+   ],
+   "points": "长连接指一个 TCP 连接上进行多次 HTTP 通信，省去每次建连的开销；HTTP/1.1 默认长连接，要断开时发送 Connection: close，之前的版本要用 Connection: Keep-Alive；服务器在连接空闲一段时间后关闭它（Nginx 默认 75 秒），这和 TCP 的保活探测不是一回事；同一连接上的请求按顺序收发，流水线因队头阻塞未被浏览器启用，HTTP/2 用多路复用解决。",
+   "status": "active",
+   "text": "什么是长连接？HTTP/1.1 怎样复用连接？"
+  },
+  "72f9842f42": {
+   "days": [
+    "llm-18"
+   ],
+   "points": "Harness 指模型之外的所有代码、配置和执行逻辑；组成包括 Agent 循环与停止条件、上下文组装与压缩、工具与权限、记忆与状态交接、子 Agent、钩子与校验、评测与可观测，MCP 和 Skill 也属于它；核心是动手前的引导（规范、文档、Skill）和动手后的反馈（编译、测试、lint、模型审查）。",
+   "status": "active",
+   "text": "什么是 Agent Harness？由哪些部分组成？"
+  },
+  "731153a537": {
+   "days": [
+    "java-04"
+   ],
+   "points": "运行时多态需要继承或实现接口、重写和向上转型；通过类类型的引用调用编译成 invokevirtual 加符号引用，通过接口类型的引用调用用 invokeinterface，运行时按对象的实际类型选择方法，称为动态分派；HotSpot 为每个类维护虚方法表（vtable），按固定槽位取方法入口，接口调用用 itable；重载在编译时按静态类型确定，称为静态分派。",
+   "status": "active",
+   "text": "多态是怎么实现的？"
+  },
+  "747ba7232d": {
+   "days": [
+    "sprint-13"
+   ],
+   "points": "不丢：发送端收到确认才算成功（如 Kafka acks=all 加重试），可用与业务同事务的本地消息表；存储端持久化加多副本，消费端处理完再提交偏移量或 ack；不重复：处理完才确认意味着可能重复投递，消费要幂等，用订单号加事件类型这类业务键写去重表并与业务同事务，或用状态做条件更新；消息队列的恰好一次代替不了业务幂等。",
+   "status": "active",
+   "text": "怎样保证消息不丢失、不重复消费？"
+  },
+  "752067dae4": {
+   "days": [
+    "java-47"
+   ],
+   "points": "OPT 换出最长时间不再访问的页，缺页最少但无法实现，只作对照；LRU 换出最近最久未使用的页，维护链表代价高；FIFO 换出最先进入的页，可能换出常用页，第二次机会和时钟算法用访问位 R 改进它，NRU 按 R、M 位分类换出；同一序列 3 个物理块时 OPT、LRU、FIFO 分别缺页 9、12、15 次。",
+   "status": "active",
+   "text": "有哪些页面置换算法？"
+  },
+  "75d8147fc6": {
+   "days": [
+    "java-21",
+    "sprint-04"
+   ],
+   "points": "先看错误信息判断是哪块内存：Java heap space、GC overhead limit exceeded、Metaspace、direct buffer memory、unable to create native thread；元空间、直接内存、线程创建失败分别检查类的生成与卸载、堆外内存的释放、线程数和容器的限制，不能靠增大堆解决；Java heap space 时，启动时加 -XX:+HeapDumpOnOutOfMemoryError 保存堆转储，或用 jcm",
+   "status": "active",
+   "text": "线上出现 OOM 怎样排查？"
+  },
+  "7649a66405": {
+   "days": [
+    "java-01"
+   ],
+   "points": "127 时为 true，128 时为 false；自动装箱调用 Integer.valueOf()，值在缓存池范围 -128～127 内时返回 IntegerCache 中的同一个对象，超出范围时 new 一个新对象；启动参数 -XX:AutoBoxCacheMax 可以调大上界。",
+   "status": "active",
+   "text": "Integer a = 127, b = 127 时 a == b 的结果是什么？换成 128 呢？"
+  },
+  "76647ed961": {
+   "days": [
+    "sprint-05"
+   ],
+   "points": "聚簇索引：InnoDB 主键索引的叶子节点保存整行数据，一张表只有一个；二级索引的叶子保存索引列和主键值，查其它列时先拿到主键，再到聚簇索引查出整行，这就是回表；覆盖索引指索引中已包含查询需要的全部列（含主键），不需要回表，Extra 为 Using index。",
+   "status": "active",
+   "text": "什么是聚簇索引、回表和覆盖索引？"
+  },
+  "76eb545f8c": {
+   "days": [
+    "java-24"
+   ],
+   "points": "间隙锁锁住索引记录之间的开区间，不包含记录本身，只阻止插入，间隙锁之间互不冲突；Next-Key Lock 是记录锁加前面的间隙，为前开后闭区间，例如 c 有 10、11、13、20 时为 (10, 11]、(11, 13] 等；c 为普通索引时 c = 11 FOR UPDATE 锁住 (10, 11] 和 (11, 13)，唯一索引并且记录存在时只锁这一条记录。",
+   "status": "active",
+   "text": "间隙锁锁住的是什么范围？"
+  },
+  "7796810063": {
+   "days": [
+    "java-18"
+   ],
+   "points": "Serial 单线程、简单高效，适合单核和小内存，只有 1 个处理器时 JDK 21 仍默认用它；Parallel Scavenge 加 Parallel Old 以吞吐量为目标，适合后台计算；CMS 并发收集老年代，停顿短，但有碎片和浮动垃圾，JDK 14 已移除；G1 是 JDK 9 起的默认收集器，按 Region 回收、停顿可预测，适合大内存的在线服务，ZGC 的停顿通常不超过 1 毫秒，但要给堆留出余量。",
+   "status": "active",
+   "text": "有哪些垃圾收集器？各自适合什么场景？"
+  },
+  "79b04fb5b0": {
+   "days": [
+    "java-10"
+   ],
+   "points": "shutdown() 后不再接受新任务，已提交的任务继续执行完，本身不阻塞，需要等待时调用 awaitTermination()；shutdownNow() 相当于对每个线程调用 interrupt()，并返回队列中还没有执行的任务。",
+   "status": "active",
+   "text": "shutdown() 和 shutdownNow() 有什么区别？"
+  },
+  "7ce5cde1cd": {
+   "days": [
+    "java-43"
+   ],
+   "points": "使用参数化查询（PreparedStatement、MyBatis 的 #{}），SQL 结构先确定，参数只当作数据；表名、列名、ORDER BY 字段不能用占位符，用白名单校验；数据库账号只授予最小权限。",
+   "status": "active",
+   "text": "怎样防止 SQL 注入？"
+  },
+  "7d1a93e400": {
+   "days": [
+    "java-50"
+   ],
+   "points": "带 @Transactional 的 Bean 被代理，调用时 TransactionInterceptor 读取事务属性；事务管理器从连接池取连接、setAutoCommit(false)，绑定到当前线程的 ThreadLocal，JdbcTemplate、MyBatis 优先使用这个连接，所以方法中的 SQL 都在同一个事务里；方法正常返回则提交，抛出符合规则的异常则回滚，最后恢复连接设置并归还。",
+   "status": "active",
+   "text": "Spring 事务的原理是什么？为什么加了 @Transactional 就有事务了？"
+  },
+  "7e5379ca96": {
+   "days": [
+    "java-08"
+   ],
+   "points": "继承 LinkedHashMap，构造时把 accessOrder 设为 true，每次访问把节点移到链表尾部，链表头部就是最久未使用的节点；重写 removeEldestEntry()，size() 超过容量时返回 true，插入后移除头部节点。",
+   "status": "active",
+   "text": "怎样用 LinkedHashMap 实现 LRU 缓存？"
+  },
+  "7ec003a5dd": {
+   "days": [
+    "java-44"
+   ],
+   "points": "保存当前线程的寄存器、程序计数器、栈指针，恢复另一个线程的值；切换到另一个进程还要切换页表，TLB 和 CPU 缓存中原来的映射和数据大多用不上、要重新加载（有 PCID 时 TLB 不必全部清空），这部分间接开销通常更大，工作集很小时两者几乎没有差别；实测一次切换约 1.1 微秒（其中还包含一次 write 和一次 read）。",
+   "status": "active",
+   "text": "上下文切换有哪些开销？"
+  },
+  "7ef8c8b5a2": {
+   "days": [
+    "java-48"
+   ],
+   "points": "LT（默认）只要描述符仍可读，每次 epoll_wait 都会报告；ET 只在有新数据到达时报告一次，必须用非阻塞描述符并循环读到 EAGAIN，否则剩下的数据不会再触发事件，连接停住；ET 减少了重复通知，但要防止一个连接长时间占住线程。",
+   "status": "active",
+   "text": "epoll 的水平触发和边缘触发有什么区别？"
+  },
+  "80afd5ae0b": {
+   "days": [
+    "java-47"
+   ],
+   "points": "分页对程序员透明，分段要显式划分；分页是一维地址空间，分段是二维的；页大小固定，段大小可变；分页为了实现虚拟内存，分段为了按逻辑划分程序和数据、便于共享和保护；分页没有外部碎片，但每个段或区域的最后一页可能用不满，形成内部碎片，分段会留下大小不一的空闲块，形成外部碎片（x86-64 的 Linux 只用分页）。",
+   "status": "active",
+   "text": "分页和分段有什么区别？"
+  },
+  "80d3fed1b5": {
+   "days": [
+    "java-26"
+   ],
+   "points": "给经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中并且区分度高的列建索引，状态这类区分度低的列单独建索引作用不大，但总是查询占比很少的值时索引仍然有效；多个条件常一起出现时建联合索引，等值列在前、排序列其次、范围列最后；尽量让高频查询用上覆盖索引；索引不是越多越好，有 (a, b) 时 (a) 是冗余的，主键用较短的自增整数。",
+   "status": "active",
+   "text": "建索引有哪些原则？"
+  },
+  "80e07271f2": {
+   "days": [
+    "llm-12"
+   ],
+   "points": "原始问题常不适合直接检索：有指代（“那 ConcurrentHashMap 呢”）时结合历史补全；问题太短时用 HyDE 先生成假设的回答再检索；多个子问题拆开分别检索再合并，RAG-Fusion 改写成多个查询后用 RRF 合并；代价是多一次模型调用。",
+   "status": "active",
+   "text": "为什么要改写用户的查询？有哪些方法？"
+  },
+  "8325776328": {
+   "days": [
+    "sprint-13"
+   ],
+   "points": "用 SET lock_key unique_value NX PX 30000 一条命令加锁并设置过期时间；释放时用 Lua 脚本比较 value 是自己的才删除，避免误删别人的锁；业务超时锁会提前释放，需要续期，Redisson 的看门狗每 10 秒把过期时间重置为 30 秒，并用哈希计数支持可重入；主从是异步复制，切换时锁可能丢失；这种情况和续期失败都会让两个客户端同时持锁，正确性要求高时用栅栏令牌或数据库的唯一约束、条件更新兜底。",
+   "status": "active",
+   "text": "用 Redis 怎样实现分布式锁？有哪些问题？"
+  },
+  "857dd1fbdb": {
+   "days": [
+    "java-62"
+   ],
+   "points": "拉模式（读扩散）发帖只写一次，读时合并所有关注者的发件箱，关注越多读越慢；推模式（写扩散）发帖写入每个粉丝的收件箱，读很快，但粉丝越多写越多（1000 万粉丝单节点约 50 秒）；实际推拉结合：普通用户推，大 V 由粉丝读时拉取合并，只推给活跃粉丝，收件箱只保留最近若干条。",
+   "status": "active",
+   "text": "Feed 流用推模式还是拉模式？"
+  },
+  "85d1c43400": {
+   "days": [
+    "java-62"
+   ],
+   "points": "301 永久跳转，没有缓存指令时也可能被浏览器缓存，之后不再请求短链服务，已缓存的跳转无法撤回；302 临时跳转，默认不缓存，统计点击时再加 Cache-Control: private, no-store；需要统计点击、修改目标地址或设置有效期时用 302，只想减轻服务端压力时用 301。",
+   "status": "active",
+   "text": "短链跳转用 301 还是 302？"
+  },
+  "86472abfac": {
+   "days": [
+    "java-54"
+   ],
+   "points": "数据库：实现简单，性能低；Redis：性能最高，适合高并发，但主从切换、进程暂停时可能两个客户端同时持锁；ZooKeeper：写入要同步到多数节点，性能较低但更可靠，还能提供栅栏令牌，适合一致性要求高、并发不大的场景。",
+   "status": "active",
+   "text": "数据库、Redis、ZooKeeper 三种实现怎样选择？"
+  },
+  "874987f0de": {
+   "days": [
+    "java-53"
+   ],
+   "points": "注册与配置：Nacos，或 Eureka 加 Spring Cloud Config；负载均衡和调用：Spring Cloud LoadBalancer、OpenFeign；网关和熔断：Spring Cloud Gateway、Resilience4j 或 Sentinel；分布式事务和链路追踪：Seata、Micrometer Tracing。",
+   "status": "active",
+   "text": "Spring Cloud 有哪些常用组件？"
+  },
+  "875d608421": {
+   "days": [
+    "java-06"
+   ],
+   "points": "ArrayList 基于动态数组，支持随机访问，插入删除要移动元素；LinkedList 基于双向链表，插入删除只改指针，但要先遍历到插入位置；10 万个元素中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒，只有头部插入 LinkedList 明显更快；多数场景用 ArrayList，头尾频繁增删用 ArrayDeque 或 LinkedList。",
+   "status": "active",
+   "text": "ArrayList 和 LinkedList 有什么区别？分别用在什么场景？"
+  },
+  "87aaeeaa89": {
+   "days": [
+    "java-36"
+   ],
+   "points": "保证最后一个 ACK 能到达：ACK 丢失时对方会重传 FIN，2MSL 正好覆盖 ACK 的 1 MSL 加重传 FIN 的 1 MSL；让本连接的旧报文都从网络中消失，不干扰同一四元组的新连接；Linux 中固定为 60 秒。",
+   "status": "active",
+   "text": "为什么 TIME_WAIT 要等待 2MSL？"
+  },
+  "888d45b3b3": {
+   "days": [
+    "llm-07"
+   ],
+   "points": "优先用约束解码：每生成一个 Token 前按 Schema 屏蔽会让输出不合法的 Token；JSON 模式只保证是合法 JSON，不保证字段；不支持时先修复（去掉代码块标记、截取首个 { 到末个 }），再用 JSON Schema 校验，失败时带着具体错误重试 1～2 次，仍失败就返回默认值或转人工。",
+   "status": "active",
+   "text": "怎样让模型稳定地输出合法的 JSON？"
+  },
+  "89a386e6ca": {
+   "days": [
+    "java-64"
+   ],
+   "points": "容器跟随 1 号进程，主进程结束容器就退出；用 docker ps -a 看退出码，docker logs 看报错（如 MySQL 没设 MYSQL_ROOT_PASSWORD），docker inspect 看是否 OOMKilled；常见原因还有启动命令把服务放到后台（nginx 没加 daemon off）、缺少依赖库或 CPU 架构不一致。",
+   "status": "active",
+   "text": "容器启动后马上退出，怎样排查？"
+  },
+  "8a7213cfde": {
+   "days": [
+    "llm-06"
+   ],
+   "points": "检测：有资料时把回答拆成结论逐条检查依据，引文和数字用代码核对；RAG 答错时先看正确的资料是否在提示词中，区分检索和生成的问题；没有资料时多次采样比较，编造的内容往往每次不同；缓解：用 RAG 提供资料并允许回答不知道，降低温度、要求引用，用程序或另一个模型校验，展示来源、高风险结果人工确认。",
+   "status": "active",
+   "text": "怎样检测和缓解幻觉？"
+  },
+  "8c4d592987": {
+   "days": [
+    "llm-07"
+   ],
+   "points": "身份、规则和输出格式放在系统消息中，写清任务、约束、输出格式和示例；要求具体，例如“不超过 100 字”而不是“简洁一些”；说明信息不足时怎么处理，否则模型倾向编造；用少样本示例说明格式，多步推理让模型先写步骤（CoT）；改动在评测集上比较，每条运行多次，从失败的样例入手补规则或示例。",
+   "status": "active",
+   "text": "怎样写好一个提示词？"
+  },
+  "8c543dbbcb": {
+   "days": [
+    "java-01"
+   ],
+   "points": "哈希值不变，只需计算一次，适合做 HashMap 的键；String Pool 中多个引用共享同一个对象，只有不可变才能这样共享；作为网络连接等参数时不会被中途改掉；不可变的对象天然线程安全。",
+   "status": "active",
+   "text": "String 为什么设计成不可变的？"
+  },
+  "8d674478d1": {
+   "days": [
+    "java-46"
+   ],
+   "points": "用阻塞式的锁时，死锁线程几乎不耗 CPU（例如等待 synchronized 的线程处于 BLOCKED），现象是 CPU 低而请求全部卡住；用 jstack 或 jcmd \\<pid> Thread.print 打印线程栈，末尾会报告 Found one Java-level deadlock，列出各线程等待的锁和持有者；程序中也可以定时调用 ThreadMXBean.findDeadlockedThreads() 检测并告警，但它检测不到包含虚拟线程的死锁环和 Semap",
+   "status": "active",
+   "text": "线上的 Java 程序发生死锁，怎样定位？"
+  },
+  "8e70e9576a": {
+   "days": [
+    "java-08"
+   ],
+   "points": "元素个数达到 sizeCtl（容量的 0.75 倍）时创建 2 倍的新数组，多个线程用 CAS 修改 transferIndex 领取至少 16 个桶从后往前迁移，迁移完的桶放入 ForwardingNode，put 遇到它会先尝试帮忙迁移，再到新数组中插入；元素个数分散在 baseCount 和多个 CounterCell 中，size() 不加锁求和，期间其它线程可能在增减，所以只是估计值。",
+   "status": "active",
+   "text": "ConcurrentHashMap 是怎样扩容的？size() 为什么不精确？"
+  },
+  "904bc79056": {
+   "days": [
+    "java-69"
+   ],
+   "points": "给出可以验证的目标，例如让某个测试通过，修 bug 时先写一个能复现问题的测试；先让它阅读代码、给出方案，确认后再修改；任务拆小，一次只改一个功能，便于审查；生成的代码同样要做代码审查和测试，测试用例按需求写，由人检查边界；反复纠正的要求写进 CLAUDE.md、AGENTS.md 这类项目约定文件；AI 生成的代码占多大比例不是关键，开发者仍要负责需求、方案、审查和上线的结果，涉及资金和数据安全的修改每一处都要审查。",
+   "status": "active",
+   "text": "你平时怎样用 AI 编程工具？怎样保证生成的代码质量？"
+  },
+  "91d75f1bb2": {
+   "days": [
+    "llm-11"
+   ],
+   "points": "Embedding 模型分别编码问题和文档，文档向量能提前算好，速度快，但细节的对应关系在压成一个向量时丢失；重排模型（交叉编码器）把问题和文档拼在一起编码，每个词之间都能算注意力，更准，但每一对都要重算；所以先快速召回几十条，再重排选出几条；混入 12.5 万条干扰文本时，重排 RRF 的前 50 个候选使 Recall@1 从 0.275 升到 0.700。",
+   "status": "active",
+   "text": "向量检索已经计算了相似度，为什么还要重排？"
+  },
+  "91de874283": {
+   "days": [
+    "java-25"
+   ],
+   "points": "InnoDB 的聚簇索引就是主键索引（没有主键时用第一个非空唯一索引，再没有就用隐藏的行 ID），叶子节点保存整行数据，一张表只有一个；二级索引的叶子节点保存索引列和主键值；通过二级索引查其它列时，先查到主键，再到聚簇索引中查出整行，称为回表；查询的列都在二级索引中时不需要回表（覆盖索引）。",
+   "status": "active",
+   "text": "聚簇索引和二级索引有什么区别？什么是回表？"
+  },
+  "92dc236853": {
+   "days": [
+    "llm-07"
+   ],
+   "points": "不一定，约束解码和 Schema 校验只保证格式；订单是否属于当前用户、退款是否超过实付金额这类业务规则要在代码中校验；还要检查 finish_reason 是否为 length，以及字段类型是否与代码一致。",
+   "status": "active",
+   "text": "输出格式正确，内容就一定正确吗？"
+  },
+  "94fc7c8234": {
+   "days": [
+    "java-45"
+   ],
+   "points": "信号量是整型变量，down（P）在大于 0 时减 1、等于 0 时睡眠，up（V）加 1 并唤醒等待者，两者是原语；取值只有 0、1 的二值信号量可以当作互斥量，进入临界区前 down、离开时 up（但信号量可以由别的进程 up，互斥锁只能由加锁的线程释放）；同步用计数信号量，例如生产者-消费者用 empty、full 计数，且要先 down(empty) 再 down(mutex)，反过来会死锁。",
+   "status": "active",
+   "text": "信号量是怎样实现同步与互斥的？"
+  },
+  "955ea8cac8": {
+   "days": [
+    "sprint-06"
+   ],
+   "points": "修改时旧版本写入 Undo Log，经回滚指针连成版本链；ReadView 记录创建时未提交的事务列表、其中最小的 TRX_ID_MIN 和下一个要分配的 TRX_ID_MAX；版本的 TRX_ID 是自己的或小于 MIN 时可见，大于等于 MAX 或仍在列表中时不可见，就沿版本链找上一个版本；提交读每次快照读都新建 ReadView，可重复读在第一次快照读时创建、整个事务复用。",
+   "status": "active",
+   "text": "MVCC 的原理是什么？"
+  },
+  "97c02eae0a": {
+   "days": [
+    "java-15",
+    "sprint-03"
+   ],
+   "points": "ThreadLocalMap 的 Entry 对 key（ThreadLocal 对象）是弱引用，对 value 是强引用；ThreadLocal 没有其它强引用时 key 在 GC 后变为 null，value 仍被线程的 Map 引用；这样的陈旧条目要等这个线程之后调用 set()、remove() 或 get() 未命中时才可能被清理，不保证及时，static final 的 ThreadLocal 一直强可达，弱引用不起作用；复用线程还会让后一个请求读到前一个请求的数",
+   "status": "active",
+   "text": "ThreadLocal 为什么可能导致内存泄漏？"
+  },
+  "98a89cafcd": {
+   "days": [
+    "llm-01"
+   ],
+   "points": "几乎都在矩阵中：每层的注意力和前馈网络，以及词嵌入和输出层（Qwen2.5-7B 中各约 7%）；Qwen2.5-7B 的前馈网络三个矩阵（3584 → 18944 → 3584）占全部参数的 75%；GQA 使 k_proj、v_proj 只有 q_proj 的七分之一，总计约 76 亿个参数。",
+   "status": "active",
+   "text": "大模型的参数主要分布在哪里？"
+  },
+  "9a4ab4e114": {
+   "days": [
+    "sprint-06"
+   ],
+   "points": "未提交读：三种都可能发生；提交读：解决脏读；可重复读：再解决不可重复读，按 SQL 标准仍可能幻读，InnoDB 用 MVCC 和 Next-Key Locks 在很大程度上避免；可串行化：三种都解决，并发度最低。",
+   "status": "active",
+   "text": "四种隔离级别分别解决了脏读、不可重复读、幻读中的哪些？"
+  },
+  "9c0c516330": {
+   "days": [
+    "sprint-01"
+   ],
+   "points": "ArrayList 基于动态数组，随机访问快，中间插入删除要移动元素，但一次复制一整块连续内存；LinkedList 基于双向链表，插入删除只改指针，但要先 O(N) 遍历到位置；实测 10 万个元素中间插入 1 万次，ArrayList 约 50 ms、LinkedList 约 0.8～1 秒，多数场景用 ArrayList。",
+   "status": "active",
+   "text": "ArrayList 和 LinkedList 有什么区别？"
+  },
+  "9dde8d6033": {
+   "days": [
+    "java-65"
+   ],
+   "points": "各组件都通过 API Server 协作：kubectl 提交 Deployment，API Server 校验后写入 etcd；Deployment 和 ReplicaSet 控制器依次创建 ReplicaSet 和未指定节点的 Pod，调度器过滤、打分后把节点写入 nodeName；该节点的 kubelet 通过 CRI 让 containerd 创建沙箱（pause 容器持有网络命名空间，CNI 分配 IP），拉取镜像并启动容器；就绪探针通过后 Pod 变为 Ready",
+   "status": "active",
+   "text": "创建一个 Pod 时，Kubernetes 内部经过了哪些步骤？"
+  },
+  "9de3a8a2c2": {
+   "days": [
+    "java-33"
+   ],
+   "points": "键空间分为 16384 个哈希槽，CRC16(key) % 16384 计算键所属的槽，每个主节点负责一部分槽；访问了不负责这个槽的节点会收到 MOVED 重定向，客户端缓存槽映射；多键命令要求键在同一个槽，可以用 {} 哈希标签；扩容时按键迁移槽：源节点标记 MIGRATING、目标节点标记 IMPORTING，用 MIGRATE 分批搬键，已迁走的键返回 ASK，客户端先发 ASKING 再访问目标节点，全部迁完后用 CLUSTER SETSLOT 把槽分给新节点。",
+   "status": "active",
+   "text": "Redis Cluster 怎样分配数据？扩容时怎样迁移？"
+  },
+  "9f8d77ff45": {
+   "days": [
+    "llm-21"
+   ],
+   "points": "提示词注入指通过输入的内容改变模型原本的指令，指令也可能藏在网页、文档或工具结果中（间接注入）；指令和资料最终拼成同一个 Token 序列，模型无法可靠区分，提示词只能降低风险，重点是限制后果；外部内容标注为不可信，工具按最小权限提供、在代码中按当前用户校验，高风险操作人工确认；读过不可信内容的任务不给对外发送的工具，前端不自动加载输出中的外部图片，防止数据外泄；输出转义、查询参数化，提示词中不放密钥，记录审计日志。",
+   "status": "active",
+   "text": "怎样防御提示词注入？"
+  },
+  "a03e2ca327": {
+   "days": [
+    "sprint-14"
+   ],
+   "points": "离线：解析文档、切片，用 Embedding 模型转为向量存入向量数据库，同时建立关键词索引；在线：改写问题，向量和关键词两路召回，合并后重排，把最相关的几段和问题放进提示词，生成带引用的回答；每一环都影响最终效果，解析错了或资料没被召回，后面无法弥补。",
+   "status": "active",
+   "text": "RAG 的流程是怎样的？"
+  },
+  "a0f17ec6e9": {
+   "days": [
+    "sprint-08"
+   ],
+   "points": "数据在内存中，一次 GET 只查一次哈希表；单线程执行命令，不加锁、没有线程切换；I/O 多路复用让一个线程处理大量连接，数据少时用 listpack 等紧凑编码；执行命令本身很少成为瓶颈，CPU 时间大部分花在网络读写的系统调用上，实测每条命令的用户态时间约 1 微秒，流水线减少系统调用后吞吐量约为原来的 10 倍。",
+   "status": "active",
+   "text": "Redis 为什么快？"
+  },
+  "a1c4bbe5c6": {
+   "days": [
+    "java-23"
+   ],
+   "points": "每行有隐藏列 DB_TRX_ID（最后修改它的事务 ID）和 DB_ROLL_PTR，旧版本通过回滚指针串在 undo log 中，读不加锁；ReadView 记录创建时未提交的事务列表、其中的最小 ID 和下一个要分配的 ID：版本的 TRX_ID 是自己或小于最小 ID 时可见，大于等于下一个 ID 时不可见，在两者之间则不在列表中才可见；不可见就沿回滚指针找上一个版本；提交读每次快照读都创建新的 ReadView，可重复读整个事务复用第一次快照读时创建的那个。",
+   "status": "active",
+   "text": "MVCC 的原理是什么？ReadView 怎样判断可见性？"
+  },
+  "a21036a9de": {
+   "days": [
+    "java-57"
+   ],
+   "points": "作用：异步处理（注册后发验证邮件）、流量削峰（消费者按处理能力拉取）、应用解耦（支付成功发一条消息，积分、物流、短信各自订阅）；下一步依赖调用结果、被调用方不可用时调用方也应失败，用 RPC，如支付前扣库存；结果可以稍后产生或有多个接收方，用消息队列，如支付后加积分。",
+   "status": "active",
+   "text": "消息队列有什么作用？什么时候用 RPC，什么时候用消息队列？"
+  },
+  "a2d1d91ef7": {
+   "days": [
+    "llm-14"
+   ],
+   "points": "应用在请求中附上工具的名称、用途和参数 JSON Schema，推理服务按对话模板拼进提示词；模型需要时生成特定格式的文本（如 Qwen2.5 包在 tool_call 标签里的 JSON），服务解析成 tool_calls 返回；应用校验后执行，用 tool 消息和 tool_call_id 发回结果；本质仍是生成文本，模型可能调用不存在的工具、写错参数或编造订单号，严格模式只保证参数符合 Schema，所以必须先校验再执行。",
+   "status": "active",
+   "text": "Function Calling 的原理是什么？"
+  },
+  "a3c215dfb9": {
+   "days": [
+    "java-41",
+    "sprint-10"
+   ],
+   "points": "以 TLS 1.2 的 ECDHE 为例：ClientHello 带客户端随机数、密码套件列表和 SNI；服务器回 ServerHello（选定套件、服务器随机数）、证书链和 ServerKeyExchange（ECDHE 公钥及证书私钥的签名）；客户端验证证书和签名后发出自己的 ECDHE 公钥，双方算出预主密钥，结合两个随机数派生会话密钥，再互发 Finished 校验握手未被篡改；TLS 1.2 要 2 个 RTT，TLS 1.3 在 ClientHello 中直接带公",
+   "status": "active",
+   "text": "HTTPS 的握手过程是怎样的？"
+  },
+  "a47f889523": {
+   "days": [
+    "java-03"
+   ],
+   "points": "浅拷贝的引用类型字段与原对象指向同一个对象；深拷贝要把对象图中的可变对象逐层复制，String 这类不可变对象可以共享，例如订单的商品列表要复制列表本身和其中的每个商品；用 clone() 实现时先调用 super.clone()，再为可变的引用字段新建对象并复制内容；clone() 需要实现 Cloneable、处理异常和类型转换，更推荐拷贝构造函数或拷贝工厂。",
+   "status": "active",
+   "text": "浅拷贝和深拷贝有什么区别？怎样实现深拷贝？"
+  },
+  "a4e729949e": {
+   "days": [
+    "java-43"
+   ],
+   "points": "XSS 把恶意脚本注入网页，利用用户对网站的信任，可窃取 Cookie、冒用身份，防范：输出时按上下文转义、富文本白名单过滤、Cookie 设 HttpOnly、CSP 禁止内联脚本；CSRF 诱导浏览器带着登录状态访问目标网站执行操作，利用网站对浏览器的信任，防范：校验随机 Token、SameSite Cookie、检查 Referer 和 Origin、敏感操作要求重新输入密码或短信验证码。",
+   "status": "active",
+   "text": "XSS 和 CSRF 有什么区别？分别怎样防范？"
+  },
+  "a53acc431d": {
+   "days": [
+    "llm-13"
+   ],
+   "points": "检索看 Recall@K（相关切片有多少在前 K 个中）、Precision@K（前 K 个中相关的比例）、MRR（第一个相关结果排名倒数的平均）和 NDCG（分级相关、按排名打折），K 增大时召回率不降、精确率往往下降，放进提示词的切片还要看精确率和端到端正确率；生成看忠实度（结论能否在资料中找到依据）和答案相关性（是否回应了问题），通常由模型裁判拆成小步骤打分，两者要一起看。",
+   "status": "active",
+   "text": "怎样评测一个 RAG 系统？"
+  },
+  "a5d2df43ec": {
+   "days": [
+    "sprint-07"
+   ],
+   "points": "undo log 由 InnoDB 写，记录旧版本，用于回滚和 MVCC；redo log 由 InnoDB 写，记录对数据页的修改，循环写，用于崩溃恢复；binlog 由 Server 层写，记录行修改或语句，追加写，用于主从复制和按时间点恢复；两阶段提交先写 redo log 进入 prepare，再写 binlog，最后 commit，崩溃后 prepare 的事务在 binlog 中有 Xid 就提交、否则回滚，保证主库数据与 binlog 一致，从库才不会不一致。",
+   "status": "active",
+   "text": "redo log、undo log 和 binlog 有什么区别？为什么需要两阶段提交？"
+  },
+  "a61b813949": {
+   "days": [
+    "java-51"
+   ],
+   "points": "#{} 被替换为占位符 ?，参数通过 PreparedStatement 单独传给数据库，不会改变 SQL 结构；${} 把参数直接拼进 SQL，传入 1024 OR 1=1 就让条件恒为真，造成 SQL 注入；${} 只用于表名、列名、ORDER BY 字段，并用白名单校验。",
+   "status": "active",
+   "text": "MyBatis 中 #{} 和 ${} 有什么区别？"
+  },
+  "a645db12eb": {
+   "days": [
+    "llm-15"
+   ],
+   "points": "先规划后执行先一次生成带依赖的步骤列表，按依赖执行、无依赖的步骤并行，失败或结果不符时重规划（次数设上限），进度容易展示和恢复，但计划可能与实际不符；ReAct 每步根据中间结果调整，但每步都要调用一次模型，长任务容易偏离；实际常结合使用，每个步骤内部用 ReAct。",
+   "status": "active",
+   "text": "先规划后执行（Plan-and-Execute）和 ReAct 有什么区别？"
+  },
+  "a79be5580a": {
+   "days": [
+    "sprint-12"
+   ],
+   "points": "单例：线程不安全的懒汉式、饿汉式、方法加锁的懒汉式、双重校验锁（变量要加 volatile）、静态内部类、枚举（可防反射和反序列化）；项目中常见：下单校验用责任链，运费和支付渠道用策略加简单工厂，物流回调用模板方法，支付成功后的通知用观察者，事务和分布式锁用代理（Spring AOP）。",
+   "status": "active",
+   "text": "单例模式有哪几种写法？项目中还用过哪些设计模式？"
+  },
+  "a79dbaa169": {
+   "days": [
+    "java-29"
+   ],
+   "points": "undo log 由 InnoDB 写，记录修改前的旧版本，用于回滚和 MVCC；redo log 由 InnoDB 写，记录对数据页的修改，空间固定、循环写，用于崩溃恢复；binlog 由 Server 层写，记录行的修改或 SQL 语句，追加写，用于主从复制和恢复到指定时间点。",
+   "status": "active",
+   "text": "redo log、undo log 和 binlog 有什么区别？"
+  },
+  "a7e52d0151": {
+   "days": [
+    "java-05"
+   ],
+   "points": "类加载时 JVM 根据 .class 文件创建 Class 对象，反射通过它在运行时取得类的信息，类名可以到运行时才确定；用 Field 读写字段，Method 的 invoke() 调用方法，Constructor 的 newInstance() 创建对象；应用：Spring 创建 Bean 并注入、MyBatis 写入结果字段、JUnit 调用 @Test 方法、JDK 动态代理；缺点是有性能开销（框架会缓存 Method 对象），类名和方法名写成字符串、失去编译期检查，",
+   "status": "active",
+   "text": "反射的原理是什么？有哪些应用场景？"
+  },
+  "a7f4a61121": {
+   "days": [
+    "llm-13"
+   ],
+   "points": "按数据流动的顺序从前往后查：解析、切片、检索、重排、生成，前面的错误后面无法弥补；每步分别看解析结果与原文是否一致、答案是否完整在一个切片中、相关切片在两路检索和重排前后的排名、直接给正确资料能否答对；也可以先做最后一步，区分问题在检索还是生成。",
+   "status": "active",
+   "text": "RAG 回答得不好，按什么顺序排查？"
+  },
+  "a806a94773": {
+   "days": [
+    "java-16"
+   ],
+   "points": "类加载检查，类没有加载或初始化就先完成类加载过程；分配内存：内存规整时用指针碰撞，有碎片时用空闲列表，每个线程先在 Eden 中的 TLAB 里分配以避免加锁；把实例字段初始化为零值，再设置对象头（Mark Word 和类型指针）；执行构造方法。",
+   "status": "active",
+   "text": "对象的创建过程是怎样的？"
+  },
+  "a85a26685e": {
+   "days": [
+    "java-06"
+   ],
+   "points": "添加元素时容量不够就调用 grow()，新容量为 oldCapacity + (oldCapacity >> 1)，约 1.5 倍；无参构造的容量依次为 0、10、15、22、33；扩容用 Arrays.copyOf() 复制整个数组，能预估大小时创建时就指定容量。",
+   "status": "active",
+   "text": "ArrayList 是怎样扩容的？"
+  },
+  "a9201474fc": {
+   "days": [
+    "java-48",
+    "sprint-11"
+   ],
+   "points": "select 每次调用都要把描述符集合复制到内核并逐个检查，开销与描述符数成正比，只能监听编号小于 1024 的描述符；poll 用 pollfd 数组，没有 1024 限制，但同样每次复制和遍历；epoll 用 epoll_ctl 把描述符注册到内核的红黑树中只复制一次，就绪时由回调加入就绪链表，epoll_wait 只返回就绪的事件；监听 1 万个描述符、只有 1 个就绪时，poll 每次约 1.6 ms，epoll_wait 约 0.21 µs，但 epoll 只能在 ",
+   "status": "active",
+   "text": "select、poll 和 epoll 有什么区别？"
+  },
+  "a96d51b500": {
+   "days": [
+    "java-31"
+   ],
+   "points": "字典是拉链法的哈希表，桶数为 2 的幂；键数达到桶数时扩容（有子进程执行 BGSAVE 或 AOF 重写时要达到 4 倍），新表大小为不小于键数加 1 的 2 的幂；采用渐进式 rehash：同时保留新旧两张表，之后每次增删改查顺便迁移一个桶，serverCron 也定期迁移，期间新键只写入新表，查找和删除时两张表都可能要查，迁移完后新表替换旧表。",
+   "status": "active",
+   "text": "Redis 的字典是怎样扩容的？"
+  },
+  "a9fdb0e73d": {
+   "days": [
+    "java-56"
+   ],
+   "points": "先确定幂等键：客户端在确认页生成 request_id，重试都带着它，或用业务唯一标识（如支付交易号）；判断和处理要原子：唯一索引（重复插入报 1062，返回第一次的结果）、状态机条件更新、版本号乐观锁（重试沿用第一次读到的版本号）、Token（DEL 返回 1 才处理，只能挡住重复点击，最终去重仍靠业务唯一约束）；先查再插、分布式锁都不能代替幂等。",
+   "status": "active",
+   "text": "怎样保证接口的幂等？"
+  },
+  "ab0c96ab4a": {
+   "days": [
+    "java-33"
+   ],
+   "points": "主观下线：某个哨兵在 down-after-milliseconds 内没有收到主节点的有效回复；客观下线：认为它下线的哨兵数达到 quorum，再由哨兵投票选出领头哨兵负责故障转移；选新主：排除断线太久的从节点，依次比较优先级（replica-priority 越小越优先）、复制偏移量（越大数据越新）和运行 ID；对选中的从节点执行 REPLICAOF NO ONE，其它从节点改为复制它，旧主节点恢复后成为从节点。",
+   "status": "active",
+   "text": "哨兵怎样发现主节点下线并选出新的主节点？"
+  },
+  "aeb37c713b": {
+   "days": [
+    "llm-01"
+   ],
+   "points": "Token 是分词器切出的文本片段，模型只处理它在词表中的编号，常用字节级 BPE 反复合并最高频的相邻片段；上下文窗口和费用都按 Token 计算；中英文不同，DeepSeek 估算 1 个中文字符约 0.6 个 Token、1 个英文字符约 0.3 个，准确数量以 usage 为准。",
+   "status": "active",
+   "text": "什么是 Token？同样的内容，中文和英文的 Token 数一样吗？"
+  },
+  "af9254f7f2": {
+   "days": [
+    "java-32"
+   ],
+   "points": "惰性删除：访问键时检查，过期就删除并当作不存在；定期删除：每秒 10 次，每次抽 20 个设置了过期时间的键，过期的超过 10% 就继续下一批，每次最多占 25% 的 CPU；内存达到 maxmemory 后按淘汰策略处理，有 volatile 和 allkeys 两个范围的 lru、lfu、random，以及 volatile-ttl 和默认的 noeviction（SET 这类可能增加内存的命令返回 OOM 错误，GET、DEL 照常执行），Redis 4.0 到 7.x",
+   "status": "active",
+   "text": "过期的键怎样删除？内存满了有哪些淘汰策略？"
+  },
+  "b06acac358": {
+   "days": [
+    "java-59"
+   ],
+   "points": "组内每个分区只分配给一个消费者，多出来的消费者分不到分区，只能空闲，例如 3 个分区启动 4 个消费者，其中一个分到 0 个分区；分区数决定了一个组的最大消费并行度；Kafka 4.2 起的共享组没有这个限制，但不保证顺序。",
+   "status": "active",
+   "text": "消费者组中的消费者比分区多时会怎样？"
+  },
+  "b129be802f": {
+   "days": [
+    "java-46"
+   ],
+   "points": "设计时破坏任一必要条件：一次申请全部资源（破坏占有和等待，利用率低）、申请失败就释放已有资源（破坏不可抢占，如 tryLock 超时）、资源编号后按顺序加锁（破坏环路等待）；最常用的是按固定顺序加锁，代价最小，例如转账时总是先锁 id 小的账户。",
+   "status": "active",
+   "text": "怎样避免死锁？实际开发中最常用哪种方法？"
+  },
+  "b1361d5a9a": {
+   "days": [
+    "java-63"
+   ],
+   "points": "先确认流量性质：看来源 IP、User-Agent 和接口分布，区分真实增长、爬虫和重试风暴；先保护再扩容：网关限流、关闭非核心功能、熔断慢依赖；逐层查看 QPS、CPU、连接池、慢 SQL、Redis 延迟，找出瓶颈；扩容无状态的应用实例，事后复盘更新容量模型。",
+   "status": "active",
+   "text": "QPS 突然增长到原来的 10 倍，应该先做什么？"
+  },
+  "b21b2cd3d2": {
+   "days": [
+    "java-36"
+   ],
+   "points": "TIME_WAIT 在主动关闭方，多由短连接引起；发起连接的一方每个 TIME_WAIT 占用本地端口 60 秒，连接同一目标时每秒新建约 470 个连接就会耗尽默认的 28232 个端口（服务器一侧的 TIME_WAIT 共用监听端口，不消耗本地端口），用长连接或连接池、把 tcp_tw_reuse 设为 1（默认值 2 只对回环地址生效）、扩大端口范围解决；CLOSE_WAIT 在被动关闭方，是应用没有调用 close()，多为异常分支没关连接或连接池借出未还，要改代码。",
+   "status": "active",
+   "text": "服务器上出现大量 TIME_WAIT 或 CLOSE_WAIT 是什么原因？"
+  },
+  "b3dc5cbe84": {
+   "days": [
+    "java-64"
+   ],
+   "points": "多阶段构建：编译阶段用 Maven 和 JDK，最终阶段只把 jar 复制到 JRE 镜像，镜像从约 680 MB 降到约 236 MB；用 -alpine、-slim 等小的基础镜像，下载、安装和清理写在同一条 RUN 中；变化少的步骤放前面，先复制 pom.xml 下载依赖再复制源码，改源码后重新构建只需约 6 秒；用 .dockerignore 排除 target、.git。",
+   "status": "active",
+   "text": "怎样写一个体积小、构建快的 Dockerfile？"
+  },
+  "b432826e95": {
+   "days": [
+    "java-18",
+    "sprint-04"
+   ],
+   "points": "回收范围：CMS 只回收老年代，要与 ParNew 配合，G1 用 Region 统一管理新生代和老年代；碎片：CMS 用标记 - 清除，碎片多时只能 Full GC，G1 把存活对象复制到空闲的 Region，普通对象不产生碎片（Humongous 对象需要连续的 Region，可能因找不到连续空间而提前 Full GC）；停顿：CMS 的停顿无法控制，G1 按停顿时间目标挑选要回收的 Region；并发标记：CMS 用增量更新，G1 用原始快照（SATB）。",
+   "status": "active",
+   "text": "CMS 和 G1 有什么区别？"
+  },
+  "b50334ebd5": {
+   "days": [
+    "java-11"
+   ],
+   "points": "NEW 是创建后还没有启动，start() 后进入 RUNNABLE，可能正在运行，也可能在等 CPU；等待进入 synchronized 时为 BLOCKED，拿到锁后回到 RUNNABLE；无参的 wait()、join() 和 park() 进入 WAITING，等其它线程唤醒（被 notify() 唤醒后要先重新竞争锁，这时为 BLOCKED），sleep() 和带超时的 wait()、join() 进入 TIMED_WAITING，时间到自动唤醒；执行完或因异常结束",
+   "status": "active",
+   "text": "线程有哪些状态？状态之间怎样转换？"
+  },
+  "b5c9ebc9ee": {
+   "days": [
+    "llm-13"
+   ],
+   "points": "优先从真实用户问题中抽样，不够时用模型生成再人工改写措辞，避免照抄原文高估向量检索；包含没有答案、需要多个切片和新旧版本冲突的问题，没有答案的问题回答不知道算对、编出答案算错；标注标准答案和所需的原文片段而不是切片 ID，线上的错误回答持续补充进来。",
+   "status": "active",
+   "text": "评测集怎样构建？"
+  },
+  "b5eb99096c": {
+   "days": [
+    "sprint-04"
+   ],
+   "points": "线程私有：程序计数器、Java 虚拟机栈（每个方法一个栈帧，-Xss 设置大小）、本地方法栈；线程共享：堆（几乎所有对象，分新生代和老年代，-Xms、-Xmx 设置）和方法区（类的元信息和运行时常量池，JDK 8 起由本地内存中的元空间实现；字符串常量池和静态变量 JDK 7 起已移到堆中，JIT 编译的代码在单独的代码缓存中）；NIO 还会使用堆外的直接内存；除程序计数器外都可能 OOM，两种栈还可能 StackOverflowError。",
+   "status": "active",
+   "text": "JVM 的内存区域有哪些？"
+  },
+  "b6e89f7079": {
+   "days": [
+    "java-57"
+   ],
+   "points": "发送端：等待确认并重试（Kafka 用 acks=all，检查回调，退出前 flush），要与业务一致时用本地消息表或事务消息；存储端：持久化加多副本（min.insync.replicas，不允许落后副本当选 Leader）；消费端：处理完再提交偏移量或 ack；关键业务再定期对账补发。",
+   "status": "active",
+   "text": "怎样保证消息不丢失？"
+  },
+  "b813e96d80": {
+   "days": [
+    "java-66"
+   ],
+   "points": "不丢、不重：发送方为每条消息生成 msg_id，服务端存储后回复 ACK，超时没收到就用同一个 msg_id 重发，服务端用 (sender_id, msg_id) 唯一索引去重；不乱序：服务端为每个会话分配递增的 seq，接收方按 seq 排序，不按各机器的时间；离线：推送只负责通知，接收方记住连续收齐的最大 seq（例如 58），重连时拉取它之后的消息，收到 61 而本地只到 58 时补拉中间的 59、60；用 INCR 分配 seq 时写入失败会留下补不到的空号，后分配",
+   "status": "active",
+   "text": "聊天消息怎样做到不丢失、不重复、不乱序？离线期间的消息怎样补上？"
+  },
+  "b9bc59a83b": {
+   "days": [
+    "llm-10"
+   ],
+   "points": "分词后输入 Transformer 编码器，每个 Token 得到一个向量，再池化（取 [CLS] 或平均值，与训练时一致）成固定长度的向量并归一化；对比学习使意思相近的文本向量靠近；余弦相似度看方向是否接近，归一化后等于点积、计算更快，排序与欧氏距离等价。",
+   "status": "active",
+   "text": "文本是怎样变成向量的？为什么用余弦相似度？"
+  },
+  "b9fdebae51": {
+   "days": [
+    "java-27",
+    "sprint-07"
+   ],
+   "points": "找出：开启慢查询日志，long_query_time 线上调到 1 秒或更低，对比 Rows_examined 和 Rows_sent，用 mysqldumpslow 或 sys.statement_analysis 按语句归类；分析：用 EXPLAIN 和 EXPLAIN ANALYZE 看执行计划，常见原因有索引失效、回表太多、filesort 和临时表、连接列没有索引、等锁（Lock_time 大）、统计信息不准；修改：建合适的索引或改写语句，再对比执行计划和耗时，例如",
+   "status": "active",
+   "text": "线上出现慢 SQL，怎样排查和优化？"
+  },
+  "babcc095aa": {
+   "days": [
+    "java-31"
+   ],
+   "points": "用 ZSET，成员是用户或文章 ID，分值是分数或点赞数；ZINCRBY 加分，ZREVRANGE key 0 9 WITHSCORES 取前 10 名，ZREVRANK 查名次（从 0 开始），都是 O(logN)；分值相同时按成员名的字典序排，要先达到的排前面可以把时间编进分值；前 10 名是热点键时，可以在本地缓存中保存 1 秒。",
+   "status": "active",
+   "text": "怎样用 Redis 实现排行榜？"
+  },
+  "bb799ba354": {
+   "days": [
+    "java-12"
+   ],
+   "points": "CountDownLatch 让一个或多个线程等待其它线程：countDown() 使计数减 1，减到 0 时唤醒 await() 的线程，计数不能重置；CyclicBarrier 让多个线程互相等待，全部调用 await() 到达后一起继续，计数自动恢复，可以用于下一轮，还可以指定全部到达时执行的 barrierAction。",
+   "status": "active",
+   "text": "CountDownLatch 和 CyclicBarrier 有什么区别？"
+  },
+  "bbc2863617": {
+   "days": [
+    "llm-19"
+   ],
+   "points": "主要检查结果（例如数据库中是否真有一条退款记录），轨迹只检查必须满足的约束，优先用代码检查，开放内容才用模型裁判；指标有任务成功率、工具调用正确率和效率，用 pass^k 衡量稳定性；裁判有位置偏差、长度偏差和自我偏好，缓解靠交换顺序评两次、给出参考、拆成逐项判断的问题、与人工标注核对一致率。",
+   "status": "active",
+   "text": "怎样评测一个 Agent？用模型做裁判有哪些偏差？"
+  },
+  "bc38dbf743": {
+   "days": [
+    "llm-16"
+   ],
+   "points": "短期记忆是当前会话的原始消息（含工具调用和结果）、摘要和任务状态，常以会话 ID 为键存在 Redis，请求时放入“摘要 + 最近几轮 + 任务状态”；长期记忆由后台提取或模型调用 save_memory 写入，只写用户明确说过、以后有用、业务系统查不到的事实；使用时按用户 ID 过滤，按相似度和时间检索最相关的几条。",
+   "status": "active",
+   "text": "Agent 的短期记忆和长期记忆分别怎样实现？"
+  },
+  "bc787d309a": {
+   "days": [
+    "sprint-05"
+   ],
+   "points": "B+ 树的一个节点就是一个 16 KB 的页，有几百上千个子节点，树很矮（200 万行的主键索引 3 层，二叉树约 21 层），一次 I/O 读一个节点，读盘次数少；内部节点只存 key 和指针，比 B 树每页放的 key 更多，每次查找都走到叶子、I/O 次数稳定；叶子按顺序用指针相连，范围查询顺序扫描即可。",
+   "status": "active",
+   "text": "MySQL 为什么用 B+ 树做索引？"
+  },
+  "bcb8868d08": {
+   "days": [
+    "java-09"
+   ],
+   "points": "corePoolSize 核心线程数，maximumPoolSize 最大线程数；keepAliveTime 和 unit：超出核心线程数的线程空闲多久后回收；workQueue 保存等待任务的阻塞队列，threadFactory 创建线程，常用来起名字；handler 拒绝策略，线程数达到最大且队列已满时处理新提交的任务。",
+   "status": "active",
+   "text": "线程池的核心参数有哪些？"
+  },
+  "bcd73345b9": {
+   "days": [
+    "java-11"
+   ],
+   "points": "wait() 是 Object 的方法，sleep() 是 Thread 的静态方法；wait() 会释放锁，sleep() 不会；wait() 只能在同步方法或同步块中调用，否则抛出 IllegalMonitorStateException；不带超时的 wait() 要等 notify()、notifyAll() 唤醒（也可能虚假唤醒），sleep() 到时间自动返回，两者都可以被 interrupt() 打断。",
+   "status": "active",
+   "text": "wait() 和 sleep() 有什么区别？"
+  },
+  "bdc1af9732": {
+   "days": [
+    "llm-19"
+   ],
+   "points": "LangChain 提供模型、工具、检索器等组件和现成的 Agent，早期核心是按固定顺序串起来的链；LangGraph 是更底层的编排运行时，用共享状态、节点和条件边组成状态图，LangChain 1.0 的 create_agent 就运行在它之上；Agent 和业务流程需要循环、分支、暂停等人工确认和从中间恢复，用链表达很别扭，图加 checkpoint 可以直接表达。",
+   "status": "active",
+   "text": "LangChain 和 LangGraph 有什么区别？为什么用图来编排？"
+  },
+  "bde7a7dfbe": {
+   "days": [
+    "java-13"
+   ],
+   "points": "volatile 只修饰变量，保证可见性和有序性，不保证复合操作的原子性，线程不会阻塞；synchronized 修饰方法和代码块，同一时刻只有一个线程执行，同时保证原子性、可见性和有序性，竞争时线程阻塞；状态标志、发布数据用 volatile，单个变量的读-改-写可以用原子类，多个变量一起修改通常用锁。",
+   "status": "active",
+   "text": "volatile 和 synchronized 有什么区别？"
+  },
+  "be8cf2c3e0": {
+   "days": [
+    "java-33"
+   ],
+   "points": "执行命令是单线程的，6.0 起可以开启 I/O 多线程处理网络读写，关闭文件、AOF 刷盘、UNLINK 释放大键由后台线程完成；快的原因：数据在内存中，单线程不用加锁、没有线程切换，I/O 多路复用让一个线程处理大量连接，小数据用紧凑的编码；瓶颈通常在网络，50 个连接逐条 GET 约 16 万次/秒，流水线约 160 万次/秒。",
+   "status": "active",
+   "text": "Redis 是单线程的吗？为什么单线程也这么快？"
+  },
+  "beeadc9d28": {
+   "days": [
+    "llm-03"
+   ],
+   "points": "temperature 把分数除以 T 再 softmax，T < 1 时分布更尖、T > 1 时更平，例如最高概率 0.50 在 T = 0.5 时升到 0.75；top-p 只在累计概率刚达到 p 的高概率 Token 中采样，候选数随分布变化；抽取字段、调用工具用低温度，写作可调高。",
+   "status": "active",
+   "text": "temperature 和 top-p 分别控制什么？"
+  },
+  "bf51732677": {
+   "days": [
+    "java-63"
+   ],
+   "points": "逐步增加并发，记录吞吐量、P99、错误率和 CPU，找到吞吐不再增长、延迟陡升的拐点，重复多次取中位数；环境、数据量和请求参数的分布要接近生产，读写先分开压再混合，大促前做带标记、写影子库的全链路压测；结论要说明哪一层先到拐点、原因是什么，饱和的资源不一定是根因，例如连接池占满可能是 SQL 在等行锁；实例数 = 峰值 QPS ÷（单实例拐点 × 目标利用率），再用 CPU 使用率校准。",
+   "status": "active",
+   "text": "怎样做压测和容量规划？"
+  },
+  "bfcd308f00": {
+   "days": [
+    "llm-19"
+   ],
+   "points": "执行前先按 Schema 校验参数，再做业务校验；超时、限流、5xx 由代码按指数退避重试 2～3 次，不交给模型（实测把超时回传给 7B 模型，10 次都没有重新调用），接口持续失败时熔断；参数错误把错在哪、正确格式是什么回传给模型修正；仍失败就如实回传，由模型换办法或告知用户、转人工，不能编造结果；同时限制步数和预算、检测有没有进展（比较工具名、参数和结果，而不只数调用次数），有副作用的操作要幂等，只对涉及资金、无法撤销或对外可见的操作人工确认（确认太频繁，人会不看内容就",
+   "status": "active",
+   "text": "工具调用失败时怎样容错？"
+  },
+  "c0ce068130": {
+   "days": [
+    "java-27"
+   ],
+   "points": "type（const、eq_ref、ref、range、index、ALL，从好到差）、key 和 possible_keys、key_len（用到了联合索引的前几列）、rows（估算扫描行数）、Extra；Using filesort 表示无法利用索引的顺序，需要额外排序；Using temporary 表示用了临时表，常见于 GROUP BY 的列无法利用索引的顺序，或者 GROUP BY 和 ORDER BY 的列不一致。",
+   "status": "active",
+   "text": "EXPLAIN 主要看哪些字段？Using filesort 和 Using temporary 表示什么？"
+  },
+  "c226c6df57": {
+   "days": [
+    "llm-14"
+   ],
+   "points": "工作流的步骤和顺序由代码事先写好，模型只做其中某些步骤，可预测、成本可控，适合步骤固定的业务；Agent 由模型决定下一步，适合无法事先确定步骤的开放任务，但成本高、错误会累积（每步 95% 时连续 10 步约 60%），所以先尝试单次调用或工作流；判断看步骤和步骤之间的转移规则能否事先写清，写不全才交给 Agent；实际常把两者组合，退款这类固定流程走工作流，商品咨询交给 Agent。",
+   "status": "active",
+   "text": "Agent 和工作流有什么区别？分别适合什么场景？"
+  },
+  "c4e5f8bc1a": {
+   "days": [
+    "llm-05"
+   ],
+   "points": "LoRA 冻结原矩阵 W，只训练小矩阵 B、A，h = Wx + (α / r)·BAx，B 初始化为 0，训练开始时与原模型相同；可训练参数很少（Qwen2.5-7B 全部线性层 r = 16 时占 0.53%），训练后合并进 W，推理无额外开销；QLoRA 再把冻结的权重量化为 4 位 NF4 存储、计算时还原为 BF16，7B 权重从 15.2 GB 降到约 5.5 GB（嵌入层和输出层仍为 BF16）。",
+   "status": "active",
+   "text": "LoRA 的原理是什么？LoRA 和 QLoRA 有什么区别？"
+  },
+  "c5494b65a3": {
+   "days": [
+    "java-69"
+   ],
+   "points": "Skill 是一个包含 SKILL.md、脚本和参考资料的文件夹，教 Agent 完成某一类任务；核心是渐进式加载：平时只把名称和描述放进上下文（每个约 100 Token），模型判断与当前任务相关时才读入正文，正文引用的文档和脚本需要时才读取或执行；工具是可调用的函数，提供原子能力，MCP 解决工具怎样接入，Skill 提供做事的步骤和规范，执行时仍要调用工具；需要接入外部系统、要求权限控制的能力做成 MCP 服务端，组合已有工具的流程和规范写成 Skill。",
+   "status": "active",
+   "text": "Skill 是什么？它和工具、MCP 有什么区别？"
+  },
+  "c7974bfd54": {
+   "days": [
+    "sprint-09"
+   ],
+   "points": "哨兵在主从复制的基础上自动故障转移：认为主节点下线的哨兵数达到 quorum 后确认客观下线，再选出得票过半且不少于 quorum 的领头哨兵，按优先级和复制偏移量选新主并切换，但只有一个主节点写入，容量受单机内存限制；Redis Cluster 把 16384 个槽分到多个主节点，每个主节点有从节点，同时解决容量和高可用；两者都是异步复制，切换时可能丢失少量写入。",
+   "status": "active",
+   "text": "哨兵和 Redis Cluster 分别解决什么问题？"
+  },
+  "c79e20122e": {
+   "days": [
+    "java-34",
+    "sprint-09"
+   ],
+   "points": "穿透：查询缓存和数据库都不存在的数据，用参数校验、布隆过滤器拦截，空值缓存兜底；击穿：单个热点键过期，用互斥锁只让一个请求查库，或逻辑过期返回旧值、后台重建；雪崩：大量键同时过期或缓存宕机，用随机过期时间、主从加哨兵或集群、本地缓存、限流熔断。",
+   "status": "active",
+   "text": "缓存穿透、击穿和雪崩有什么区别？分别怎样解决？"
+  },
+  "c82b36ba2a": {
+   "days": [
+    "llm-11"
+   ],
+   "points": "HNSW 删除一般只做标记、检索时跳过，之后统一清理，更新等于删除加插入；Milvus 的删除在位图中标记，Compaction 时才真正去掉，所以更新要批量进行；文档修改后按文档 ID 和内容哈希找出变化的文档，删除它的全部旧切片再写新切片，只改权限或版本状态时只更新元数据；按切片 ID 幂等写入，并与关系数据库定期对账；更换 Embedding 模型或切片方式时，在新集合中重建索引并评测，再把别名切过去，查询用的模型同时切换。",
+   "status": "active",
+   "text": "向量数据库中的数据怎样更新和删除？"
+  },
+  "c8485a2dab": {
+   "days": [
+    "java-65"
+   ],
+   "points": "容器启动后反复退出，重启等待按 10 秒、20 秒、40 秒翻倍，最长 5 分钟；kubectl describe pod 看事件和退出码，kubectl logs --previous 看上一次退出前的日志（如配置错误）；退出码 137、原因 OOMKilled 时检查内存 limits 与 JVM 堆和堆外内存。",
+   "status": "active",
+   "text": "Pod 一直处于 CrashLoopBackOff 状态，怎样排查？"
+  },
+  "c93bb3c65b": {
+   "days": [
+    "java-67"
+   ],
+   "points": "关单以支付平台为准，分三步：先用条件更新把订单从待支付改为关单中，影响 0 行就按当前状态处理；再调用平台的关单接口，成功或订单已关闭时改为已关闭，在同一个事务中回补库存；关单失败时查单，已支付就按支付成功处理（与回调走同一段代码），订单不存在可以关闭，结果不明保持关单中，由扫描任务稍后重做；只改本地状态的话，用户打开旧的支付页面仍能付款；下单时把同一个截止时间作为 time_expire 传给平台，否则平台默认 7 天内都能支付；回调在关单中到达时仍然有效。",
+   "status": "active",
+   "text": "订单超时未支付要自动关闭，关单时用户恰好付了款，怎样保证两边一致？"
+  },
+  "c9434cba34": {
+   "days": [
+    "llm-15"
+   ],
+   "points": "ReAct 让推理和行动交替：先思考，再调用工具，把真实结果作为观察放回上下文再思考；与思维链相比，事实来自外部而不是模型的记忆，HotpotQA 的分析中思维链失败案例 56% 是编造事实，ReAct 为 0%；适合下一步取决于上一步结果、步数不多的任务，缺点是只能串行、长任务容易偏离目标。",
+   "status": "active",
+   "text": "ReAct 是什么？为什么用它？"
+  },
+  "cd627f049d": {
+   "days": [
+    "java-66"
+   ],
+   "points": "先明确需求：要支持的功能、规模和哪些数据不能出错，例如点赞不能重复计、点赞数允许延迟几秒；再估算高峰时的读写量和存储：日活 2000 万、每人每天点赞 5 次时，高峰小时写约 1700 次/秒、读约 3.3 万次/秒，点赞关系每年约 4 TB；然后定义接口和表，(user_id, video_id) 作主键让重复点赞插入失败；先给出单库事务的简单方案，再按估算找瓶颈逐个改进：热门视频的计数行锁改为 Redis 计数加合并写回，读多加缓存，数据量大按 user_id 分片；最后",
+   "status": "active",
+   "text": "面试中遇到“设计一个点赞系统”这类开放题，应该按什么顺序回答？"
+  },
+  "cf1562e438": {
+   "days": [
+    "java-04"
+   ],
+   "points": "重写发生在子类与父类之间，方法声明相同，访问权限不能更小，返回类型与父类相同或为其子类型（基本类型必须相同），抛出的受检异常只能是父类方法声明的异常或其子类型；重载指一个类中（包括从父类继承来的方法）方法名相同，参数类型、个数、顺序至少一个不同，只有返回值不同不算重载；重载在编译时按参数的静态类型选定，重写在运行时按对象的实际类型选定。",
+   "status": "active",
+   "text": "重载和重写有什么区别？"
+  },
+  "cff796edde": {
+   "days": [
+    "llm-01"
+   ],
+   "points": "目前的大模型基本是只保留解码器的 Decoder-only 结构；Token 经词嵌入变成向量（Qwen2.5-7B 为 3584 维），依次经过几十个相同的层（28 层），每层先用注意力从前文收集信息，再用前馈网络逐位置加工；子层都带残差连接和归一化（多为 Pre-Norm 的 RMSNorm）；最后一个位置经线性层得到 logits，softmax 后得到下一个 Token 的概率。",
+   "status": "active",
+   "text": "Transformer 的结构是怎样的？"
+  },
+  "d0cadbf383": {
+   "days": [
+    "llm-17"
+   ],
+   "points": "MCP 是 AI 应用与外部工具、数据之间的统一协议，工具实现一次服务端就能被所有支持 MCP 的应用使用，消息用 JSON-RPC 2.0，经 stdio 或 Streamable HTTP 传输，tools/list 发现工具、tools/call 调用；Function Calling 是模型侧的能力，模型按工具描述给出调用；两者配合：主机把 MCP 工具转成工具定义交给模型，再通过 MCP 执行模型给出的调用。",
+   "status": "active",
+   "text": "MCP 是什么？MCP 和 Function Calling 有什么区别？"
+  },
+  "d175c9b0a1": {
+   "days": [
+    "java-16"
+   ],
+   "points": "程序计数器、Java 虚拟机栈和本地方法栈是线程私有的，随线程创建和销毁；堆和方法区被所有线程共享，JDK 8 起方法区由本地内存中的元空间实现；另有 NIO 使用的直接内存；除程序计数器外都可能抛出 OutOfMemoryError，两种栈还可能抛出 StackOverflowError。",
+   "status": "active",
+   "text": "JVM 的内存区域有哪些？哪些是线程私有的？"
+  },
+  "d2c8cce9c3": {
+   "days": [
+    "sprint-11"
+   ],
+   "points": "四个条件：互斥、占有和等待、不可抢占、环路等待，同时成立才会死锁；预防就是破坏其中一个，例如一次申请全部资源、申请不到就释放已占有的资源或给锁设过期时间；最常用的是给资源编号、按顺序申请来破坏环路等待，例如转账总是先锁 id 小的账户。",
+   "status": "active",
+   "text": "死锁的必要条件是什么？怎样避免？"
+  },
+  "d30a0abfb5": {
+   "days": [
+    "java-16"
+   ],
+   "points": "栈中是方法调用的栈帧（局部变量、操作数、返回地址），堆中是对象和数组；每个线程有自己的栈，堆被所有线程共享，只有堆中的对象有线程安全问题；栈帧在方法返回时销毁，堆中的对象由垃圾收集器回收；栈大小由 -Xss 设置，太深抛出 StackOverflowError，堆由 -Xms、-Xmx 设置，放不下抛出 OutOfMemoryError。",
+   "status": "active",
+   "text": "堆和栈有什么区别？"
+  },
+  "d3574a433d": {
+   "days": [
+    "java-58"
+   ],
+   "points": "先区分生产突增（峰值后可自然消化）还是消费变慢（下游变慢、反复重试、频繁重平衡），先修复消费变慢的原因，失败消息转入死信队列；扩容消费者（Kafka 普通消费者组、RocketMQ 4.x 中超过分区或队列数的消费者会空闲），或批量写库、线程池并行（同一 key 交给同一线程）；分区不够时转发到分区更多的新主题，不重要的消息降级跳过；积压接近保留时间（Kafka 默认 7 天）前先转存。",
+   "status": "active",
+   "text": "消息大量积压时怎样处理？"
+  },
+  "d45f6f5a22": {
+   "days": [
+    "java-37"
+   ],
+   "points": "TCP 面向字节流，不保留应用写入的边界，一次读取可能读到两条消息拼在一起（粘包）或半条消息（拆包）；原因有按缓冲区现有数据读取、Nagle 合并小数据、超过 MSS 被分段；在应用层约定边界：固定长度、分隔符或长度字段（长度要限制上限）；UDP 面向报文，没有粘包。",
+   "status": "active",
+   "text": "什么是粘包？怎样解决？"
+  },
+  "d47bb94d7b": {
+   "days": [
+    "java-60"
+   ],
+   "points": "QPS 是每秒处理的请求数，衡量吞吐量；TPS 是每秒处理的事务数，一个事务可能包含多次请求或多条 SQL；TP99 是响应时间的 99 分位，即 99% 的请求不超过这个时间，比平均值更能反映慢请求。",
+   "status": "active",
+   "text": "QPS、TPS 和 TP99 分别是什么意思？"
+  },
+  "d4c6da97dc": {
+   "days": [
+    "java-17"
+   ],
+   "points": "从 GC Roots 出发沿强引用可达的对象不会被回收，只是互相强引用、从 GC Roots 不可达的仍会被回收；只被软引用（SoftReference）关联的对象在即将内存溢出前一定被回收，其它时候 HotSpot 按多久没被访问决定是否清除；只被弱引用（WeakReference）关联的对象在下一次回收它所在区域的 GC 时一定被回收，例如 ThreadLocalMap 的 key；虚引用（PhantomReference）不影响对象的存活，get() 总是返回 null",
+   "status": "active",
+   "text": "强引用、软引用、弱引用、虚引用有什么区别？"
+  },
+  "d560ae1052": {
+   "days": [
+    "sprint-05"
+   ],
+   "points": "联合索引先按第一列排序、再按第二列，所以条件要从最左列开始连续使用才能定位，与 WHERE 中的书写顺序无关，范围条件之后的列一般不能再缩小扫描范围（带等号时例外）；常见的无法用索引定位的情况：缺少最左列（8.0.13 起少数情况可跳跃扫描）、对索引列用函数（可建函数索引）、字符串列与数字比较、LIKE 以 % 开头、OR 一侧没有索引；匹配的行太多时，优化器按成本选择全表扫描。",
+   "status": "active",
+   "text": "联合索引的最左前缀是什么？哪些情况下索引会失效？"
+  },
+  "d5ef30f656": {
+   "days": [
+    "java-15"
+   ],
+   "points": "同步块编译为 monitorenter 和 monitorexit，另有异常处理器保证抛出异常时也释放锁，同步方法用 ACC_SYNCHRONIZED 标志；没有竞争时是轻量级锁，用 CAS 把 Mark Word 换成指向栈中 Lock Record 的指针；有竞争时膨胀为 ObjectMonitor，_owner 指向持有锁的线程，_recursions 记录重入次数，抢不到锁的线程进入 _cxq、_EntryList 阻塞，调用 wait() 的线程进入 _WaitSe",
+   "status": "active",
+   "text": "synchronized 的底层是怎样实现的？"
+  },
+  "d707267199": {
+   "days": [
+    "java-55"
+   ],
+   "points": "同步阻塞：参与者准备后一直持有锁，等待协调者的决定；单点问题：协调者在提交阶段故障时，已同意的参与者既不能提交也不能回滚，只能等待；数据不一致：协调者只发出部分 Commit 就崩溃；太过保守：准备阶段任一参与者失败、回复中止或超时，整个事务都要回滚；用数据库的 XA 实现时每个参与者都要支持 XA，Redis、Kafka、RocketMQ 和一般的 HTTP 接口无法直接参与。",
+   "status": "active",
+   "text": "2PC 有什么问题？"
+  },
+  "d82af70a7a": {
+   "days": [
+    "java-21"
+   ],
+   "points": "先明确目标（在线服务看最长停顿，批处理看吞吐量），默认用 G1 并开启 GC 日志观察；-Xms 与 -Xmx 设为相同，-Xmx 要给元空间、线程栈、直接内存等堆外内存留出余量，不能等于容器的内存，按需设置 MaxGCPauseMillis、MaxMetaspaceSize、HeapDumpOnOutOfMemoryError；频繁 Full GC 时用 jstat -gcutil 看老年代使用率，降不下来查泄漏，能降下来就增大堆或调整新生代；GC 问题多数是代码造成的，只",
+   "status": "active",
+   "text": "做过哪些 JVM 调优？"
+  },
+  "d85d93a06e": {
+   "days": [
+    "java-02"
+   ],
+   "points": "String Pool 中还没有 \"abc\" 时创建两个：字面量 \"abc\" 在 String Pool 中（HotSpot 通常在第一次执行对应的 ldc 时创建），另一个是 new 在堆中创建的对象；Pool 中已有 \"abc\" 时只新建堆中的一个；两个对象共享同一个 value 数组。",
+   "status": "active",
+   "text": "new String(\"abc\") 会创建几个对象？"
+  },
+  "d97306ed39": {
+   "days": [
+    "java-56"
+   ],
+   "points": "HTTP 是协议，RPC 是调用方式，RPC 可以基于自定义 TCP 协议（Dubbo）或 HTTP（gRPC 基于 HTTP/2）；内部服务多用 RPC 框架：序列化更紧凑（同样的参数 Protobuf 5 字节、JSON 25 字节）、长连接复用、内置服务治理、按接口生成代码；HTTP + JSON 通用、可读，适合对外接口。",
+   "status": "active",
+   "text": "RPC 和 HTTP 有什么区别？"
+  },
+  "d977db9dde": {
+   "days": [
+    "java-30"
+   ],
+   "points": "数据位置：Redis 全部在内存中，容量受内存限制，MySQL 在磁盘上，缓冲池只缓存热点页；查询：Redis 只能按键访问数据结构，MySQL 用 SQL 按任意条件查询、联表和聚合；事务和持久性：MySQL 满足 ACID，提交后不丢数据，Redis 事务中的命令出错不回滚，开启 AOF everysec 也可能丢失最近 1 秒的写入；通常 MySQL 存业务数据，Redis 作缓存。",
+   "status": "active",
+   "text": "Redis 和 MySQL 有什么区别？"
+  },
+  "da147d6f3a": {
+   "days": [
+    "java-51"
+   ],
+   "points": "DispatcherServlet 统一接收请求，HandlerMapping 找到处理方法和拦截器；依次执行拦截器的 preHandle，返回 false 就停止；HandlerAdapter 转换参数、调用 Controller，再把返回值转换为响应（如 JSON）；倒序执行 postHandle（Controller 抛出异常时跳过）；返回视图名时由 ViewResolver 渲染；最后倒序执行 preHandle 返回 true 的拦截器的 afterCompleti",
+   "status": "active",
+   "text": "Spring MVC 处理一个请求的过程是怎样的？"
+  },
+  "da52b096ec": {
+   "days": [
+    "llm-10"
+   ],
+   "points": "逐个比较时，100 万个 1024 维向量每次查询约 10 亿次乘加，数据量和并发大时太慢；ANN 索引用少量精度换速度，可能漏掉个别真正最近的向量。",
+   "status": "active",
+   "text": "为什么需要近似最近邻检索？"
+  },
+  "dd70642b39": {
+   "days": [
+    "java-43"
+   ],
+   "points": "解析 URL，有未过期的缓存直接使用；DNS 解析得到 IP；TCP 三次握手，HTTPS 再做 TLS 握手；发送 HTTP 请求，经负载均衡或反向代理转给应用服务器，响应是重定向时对新地址重走一遍；浏览器解析 HTML 构建 DOM 树、解析 CSS 构建 CSSOM，合成渲染树后布局、绘制，遇到 CSS、JS、图片另发请求，普通脚本会暂停 HTML 的解析；连接保留一段时间供复用。",
+   "status": "active",
+   "text": "从输入 URL 到页面显示经历了哪些过程？"
+  },
+  "e1c4dd69ef": {
+   "days": [
+    "java-67"
+   ],
+   "points": "先验签，核对商户号、订单号、金额与本地订单一致，并确认交易状态是支付成功，再把三件事放在同一个事务中：以交易号为主键插入去重表，重复的通知报 1062 后回滚；用 UPDATE ... WHERE status IN ('UNPAID', 'CLOSING') 改为已支付，影响 1 行才继续；写入发货消息；重复的通知也要应答成功，否则平台会继续重发；先查状态再更新的写法，同一笔通知并发到达 10 次时会发 10 次货。",
+   "status": "active",
+   "text": "支付回调重复到达或并发到达时，怎样保证只发一次货？"
+  },
+  "e2b985d29c": {
+   "days": [
+    "java-13"
+   ],
+   "points": "Java 内存模型用先行发生关系定义可见性：A 先行发生于 B，A 的结果对 B 可见，不要求 A 在时间上先执行；规则有单一线程、管程锁定（unlock 先于之后对同一锁的 lock）、volatile 变量（写先于之后的读）、线程启动、线程加入、线程中断、对象终结和传递性；例如写 data 后再写 volatile 的 ready，读到 ready 的线程一定能看到 data。",
+   "status": "active",
+   "text": "什么是先行发生（happens-before）原则？"
+  },
+  "e2b9c83f1c": {
+   "days": [
+    "java-55"
+   ],
+   "points": "C 指线性一致性，A 指发给未故障节点的请求都能在有限时间内得到非错误响应，P 指出现网络分区时系统仍能运行；网络不可靠，分区无法避免，所以 P 必须满足，CAP 实际是分区发生时在 C 和 A 之间选择：拒绝请求（CP，如 ZooKeeper）或返回可能过期的数据（AP，如 Eureka）；没有分区时 C 和 A 可以兼得。",
+   "status": "active",
+   "text": "什么是 CAP？为什么分区容忍性必须满足？"
+  },
+  "e2bec394b4": {
+   "days": [
+    "llm-04"
+   ],
+   "points": "预训练：在海量文本上预测下一个 Token，获得语言能力和知识，但只会续写；监督微调：用指令和人工编写的回答训练，学会按对话格式回答、遵循指令；偏好对齐：用“两个回答哪个更好”的数据让回答更有帮助、更安全，这类目标难写标准答案，但比较容易。",
+   "status": "active",
+   "text": "大模型的训练分为哪几个阶段？"
+  },
+  "e326fb1c48": {
+   "days": [
+    "java-14"
+   ],
+   "points": "悲观锁访问前先加锁，例如 synchronized、ReentrantLock、SELECT ... FOR UPDATE；乐观锁不加锁直接操作，提交时检查是否被改过，改过就重试，例如 CAS 和数据库版本号（UPDATE ... WHERE version = 1 影响 0 行时重试）；读多写少、冲突少时用乐观锁，写多、冲突频繁时用悲观锁。",
+   "status": "active",
+   "text": "乐观锁和悲观锁有什么区别？"
+  },
+  "e36c204678": {
+   "days": [
+    "llm-20"
+   ],
+   "points": "接口用 SSE：响应类型为 text/event-stream，连接保持打开，每生成一段内容写一条事件；事件由若干行“字段: 值”组成、以空行结束，data 是内容、id 是编号、event 是类型，冒号开头的行是注释（常作心跳）；OpenAI 兼容接口以 data: [DONE] 结束，断线后 EventSource 带着 Last-Event-ID 重连。",
+   "status": "active",
+   "text": "流式输出是怎样实现的？SSE 的格式是怎样的？"
+  },
+  "e4941b7494": {
+   "days": [
+    "sprint-02"
+   ],
+   "points": "参数有核心线程数、最大线程数、空闲线程的存活时间、任务队列、线程工厂和拒绝策略；提交时线程数小于核心数就新建线程，否则放入队列，队列满且小于最大线程数时新建线程执行当前任务，再不行就执行拒绝策略；例如核心 2、最大 4、队列 2 时第 7 个任务被拒绝；不用 Executors 的 newFixedThreadPool()、newSingleThreadExecutor()、newCachedThreadPool()，它们的队列或线程数没有上限，要直接创建 ThreadPoo",
+   "status": "active",
+   "text": "线程池的核心参数有哪些？提交任务后是怎样执行的？"
+  },
+  "e4952a889a": {
+   "days": [
+    "llm-03"
+   ],
+   "points": "因果掩码下前文 Token 的 K、V 不再变化，缓存起来复用就是 KV Cache；预填充一次算好输入的 K、V，解码每步只为新 Token 计算 Q、K、V，再与缓存做注意力，不再重算前文；代价是显存，Qwen2.5-7B 每个 Token 56 KB，32K Token 约 1.75 GB。",
+   "status": "active",
+   "text": "KV Cache 是什么？为什么能加快生成？"
+  },
+  "e4be6236bb": {
+   "days": [
+    "java-49"
+   ],
+   "points": "只能解决字段或 Setter 注入的单例：A 实例化后把生成提前引用的工厂放入三级缓存，注入 B 时 B 通过工厂拿到 A 的提前引用（放入二级缓存），A 初始化完成后进入一级缓存；需要第三级是因为 A 可能要被 AOP 代理，工厂被调用时才提前创建代理，保证 B 拿到的与容器中最终的对象相同；构造器注入和 prototype 的循环依赖无法解决，Spring Boot 2.6 起默认禁止。",
+   "status": "active",
+   "text": "Spring 怎样解决循环依赖？为什么需要三级缓存？"
+  },
+  "e554283074": {
+   "days": [
+    "java-59"
+   ],
+   "points": "每个分区有一个 Leader 和多个 Follower，与 Leader 保持同步的副本组成 ISR，Leader 故障时从 ISR 中选新 Leader；生产者设 acks=all，ISR 中的副本都写入才确认；配合 min.insync.replicas=2，ISR 不足时拒绝写入，常用 3 副本加这两项配置；幂等生产者用生产者 ID 和序号去掉重试造成的重复。",
+   "status": "active",
+   "text": "Kafka 的副本机制怎样保证可靠性？"
+  },
+  "e628ba7bc1": {
+   "days": [
+    "llm-04"
+   ],
+   "points": "标注员把同一提示词的 4～9 个回答按好坏排序，两两组成偏好对（9 个回答 36 对）；奖励模型输入提示词和回答、输出一个分数，损失为 -log σ(r<sub>w</sub> - r<sub>l</sub>)，使较好回答得分更高，例如分数 1.2 和 0.3 时损失约 0.34。",
+   "status": "active",
+   "text": "RLHF 中的奖励模型是怎样训练的？"
+  },
+  "e6469eab7d": {
+   "days": [
+    "sprint-12"
+   ],
+   "points": "针对字段或 Setter 注入的单例 Bean，用三级缓存提前暴露未初始化完的对象：一级存初始化完成的 Bean，二级存提前暴露的 Bean，三级存生成提前引用的工厂；A 实例化后放入工厂，注入 B 时 B 从工厂拿到 A 的提前引用，A 需要 AOP 代理时工厂提前创建代理，使 B 拿到的就是最终对象；构造器注入和原型 Bean 无法解决，Spring Boot 2.6 起默认禁止循环依赖。",
+   "status": "active",
+   "text": "Spring 怎样解决循环依赖？"
+  },
+  "e8de3674b2": {
+   "days": [
+    "llm-20"
+   ],
+   "points": "前缀缓存降低的是单价：不变的系统提示词和工具定义放最前、工具顺序固定、历史原样追加；减少 Token 的数量：工具先返回摘要或片段，需要时再读全文；设置 max_tokens，输出单价是未命中缓存输入的 4 倍；简单问题交给小模型；历史过长时压缩，但压缩会改变前缀，不宜过于频繁；避免模型反复调用同一个工具。",
+   "status": "active",
+   "text": "怎样降低一次 Agent 任务的 Token 消耗？"
+  },
+  "e9083e85a7": {
+   "days": [
+    "llm-11"
+   ],
+   "points": "向量检索擅长匹配措辞不同的近义内容，但精确匹配不准，E1024 和 E1025 文档的相似度 0.762 与 0.743 几乎分不开；BM25 按词频、逆文档频率和文档长度打分，罕见词 E1024 权重高，两篇得分 1.088 与 0.130；两路同时召回，分数尺度不同，用 RRF 按排名融合；混合不一定比单路好，口语化问题上等权 RRF 的 Recall@3（0.950）低于单独的向量检索（0.975），BM25 的权重要在评测集上确定。",
+   "status": "active",
+   "text": "为什么要把向量检索和关键词检索结合起来？"
+  },
+  "e90dd83642": {
+   "days": [
+    "llm-06"
+   ],
+   "points": "幻觉指生成看似合理、但与事实或给定资料不符的内容，分事实性幻觉和忠实性幻觉；根本原因是训练目标是生成通顺的下一个 Token 而不是核对事实，只按答对比例打分的评测又鼓励猜测；此外还有知识缺失、采样出错后顺着错误生成、上下文过长或资料有噪声。",
+   "status": "active",
+   "text": "什么是大模型的幻觉？为什么会产生？"
+  },
+  "e93ce780bc": {
+   "days": [
+    "java-22"
+   ],
+   "points": "脏读是读到了其它事务还没有提交的数据，对方回滚后读到的就是不存在的值；不可重复读是同一事务两次读同一行结果不同，因为中间有事务修改并提交了这一行；幻读是两次读同一范围时行数变了，因为中间有事务插入了新行。",
+   "status": "active",
+   "text": "脏读、不可重复读和幻读有什么区别？"
+  },
+  "ea588f5661": {
+   "days": [
+    "java-44"
+   ],
+   "points": "进程是资源分配的基本单位，线程是调度的基本单位，同一进程的线程共享地址空间和文件描述符；创建进程的开销远大于线程，切换进程还要切换地址空间，开销更大；线程间直接读写共享数据，进程间要借助 IPC；进程相互隔离，一个线程段错误会终止整个进程。",
+   "status": "active",
+   "text": "进程和线程有什么区别？"
+  },
+  "eab615f7b3": {
+   "days": [
+    "java-50"
+   ],
+   "points": "不经过代理：自调用、对象不是 Spring 管理的；无法代理：CGLIB 无法重写 final、static、private 方法，JDK 动态代理只拦截接口中声明的方法；异常没有传到代理：被捕获后未重新抛出；不符合回滚规则：抛出受检异常而没配 rollbackFor；不在事务连接上：新线程中操作数据库、引擎不支持事务（MyISAM）。",
+   "status": "active",
+   "text": "哪些情况下 @Transactional 会失效？"
+  },
+  "eb8b8fb51f": {
+   "days": [
+    "java-42"
+   ],
+   "points": "二进制分帧：报文拆成 HEADERS 帧和 DATA 帧，一个 TCP 连接承载多个流，帧交错发送，不再需要多个连接；首部压缩：双方维护首部字段表并用 Huffman 编码；服务端推送（Chrome 106 起默认禁用）；TCP 层的队头阻塞仍在，HTTP/3 改用基于 UDP 的 QUIC 解决。",
+   "status": "active",
+   "text": "HTTP/2 相比 HTTP/1.1 有哪些改进？"
+  },
+  "ec06220d69": {
+   "days": [
+    "java-68"
+   ],
+   "points": "普通调用是一问一答，模型根据输入生成文本，不能自行查询数据库或执行操作，外部资料要由应用放进输入；Agent 由模型决定下一步调用哪个工具，应用代码执行后把结果交还模型，如此循环直到任务完成；工具调用的过程：请求中附上工具的名称、用途和参数的 JSON Schema，推理服务按对话模板把它们拼进提示词，模型生成一段特定格式的文本，推理服务解析成 tool_calls 返回，应用执行后用 tool 角色的消息把结果发回；模型始终只输出文本，可能写错参数或编造订单号，所以执行前要",
+   "status": "active",
+   "text": "Agent 和普通的大模型调用有什么区别？模型是怎样调用工具的？"
+  },
+  "ed40759232": {
+   "days": [
+    "java-03"
+   ],
+   "points": "基本类型用 == 比较值，没有 equals()；引用类型的 == 判断两个变量是否引用同一个对象，equals() 判断两个对象是否等价，例如两个 new Integer(1) 用 == 为 false、equals() 为 true。",
+   "status": "active",
+   "text": "== 和 equals() 有什么区别？"
+  },
+  "ef0a1e3f79": {
+   "days": [
+    "java-09"
+   ],
+   "points": "线程数小于核心线程数时新建线程执行，否则放入队列，队列满且线程数小于最大线程数时新建线程执行当前任务，都不满足就执行拒绝策略；先排队是因为线程比排队的任务昂贵：核心线程承担平时的负载，队列缓冲短时高峰；队列也满了说明负载持续超出处理能力，才临时增加线程，高峰过后空闲的线程被回收。",
+   "status": "active",
+   "text": "提交一个任务后，线程池是怎样处理的？为什么先放进队列，队列满了才创建新线程？"
+  },
+  "efa6604d75": {
+   "days": [
+    "sprint-03"
+   ],
+   "points": "无锁（Mark Word 末尾 01）；轻量级锁（00）：线程用 CAS 把 Mark Word 换成指向栈中 Lock Record 的指针，重入只多放一个 Lock Record；重量级锁（10）：其它线程 CAS 失败时膨胀为 ObjectMonitor，先自适应自旋，仍抢不到再阻塞；JDK 15 起默认禁用偏向锁，空闲的 ObjectMonitor 会被回收，对象恢复为无锁。",
+   "status": "active",
+   "text": "synchronized 的锁升级过程是怎样的？"
+  },
+  "efe411f83c": {
+   "days": [
+    "java-69"
+   ],
+   "points": "同一个工具要接入多个 AI 应用时，原本要在每个应用里分别适配；MCP 定义了 AI 应用与外部工具、数据之间的统一接口，工具实现一次服务端就能被所有支持 MCP 的应用使用；三种角色是主机、客户端（一个客户端只连接一个服务端）和服务端，服务端提供工具、资源和提示词模板，本地用 stdio 通信，远程用 Streamable HTTP；Function Calling 是模型一侧的能力，模型根据工具描述给出调用，MCP 是应用与工具之间的协议，解决工具怎样被发现和调用，两者配",
+   "status": "active",
+   "text": "MCP 解决了什么问题？它和 Function Calling 有什么区别？"
+  },
+  "f2d13da1ee": {
+   "days": [
+    "llm-10"
+   ],
+   "points": "把向量组织成多层图，每个向量连接附近的若干向量，层越高向量越少、连线跨度越大，最下层包含全部向量；查询从最上层的入口开始，上面各层只保留一个最近节点，贪心地走向查询，走不动就下降一层，最下层保留 efSearch 个候选扩展邻居，从中取前 K 个，思路类似跳跃表；上层的长连线让查询几步就到目标附近，12.4 万个向量上每次只算约 1300 次距离（暴力检索的 1.1%）；过滤掉大部分向量、大量删除和内存放不下时会变差；M、efConstruction、efSearch 在速度",
+   "status": "active",
+   "text": "HNSW 的原理是什么？"
+  },
+  "f2ed00f34c": {
+   "days": [
+    "llm-05"
+   ],
+   "points": "需要私有资料或经常更新的知识、要给出依据时用 RAG；要固定风格和格式、学会某种专业任务，提示词仍常出错时用微调；只是补少量规则和示例时用提示词；一般先提示词、再 RAG、最后微调，写进参数的知识难更新、无法给出来源。",
+   "status": "active",
+   "text": "什么时候用微调，什么时候用 RAG？"
+  },
+  "f308884a22": {
+   "days": [
+    "java-40"
+   ],
+   "points": "强缓存：在 max-age（或 Expires）规定的有效期内直接使用本地缓存，不发请求；协商缓存：缓存过期或响应带 no-cache 时，带上 If-None-Match 或 If-Modified-Since 向服务器确认，没变化返回 304、只传首部；常见做法是 HTML 用 no-cache，带内容哈希的 JS、CSS 设很长的 max-age。",
+   "status": "active",
+   "text": "强缓存和协商缓存有什么区别？"
+  },
+  "f311870155": {
+   "days": [
+    "java-25"
+   ],
+   "points": "主键索引一张表只有一个，列不能为 NULL，在 InnoDB 中就是聚簇索引；唯一索引的值不能重复，但可以有多个 NULL，普通索引没有唯一约束，两者在 InnoDB 中通常是二级索引；查询速度差别很小，唯一索引等值查询找到一条就停止，普通索引要多读一条；写入时普通索引可以用 change buffer，唯一索引要先读出页检查是否重复。",
+   "status": "active",
+   "text": "主键索引、唯一索引和普通索引有什么区别？"
+  },
+  "f319983c2c": {
+   "days": [
+    "llm-04"
+   ],
+   "points": "PPO 在线生成回答，奖励模型打分、价值模型给出预期，加载 4 个模型、训练 2 个；DPO 不训练奖励模型、不在训练中生成回答，直接用离线偏好对训练，只需策略模型和参考模型，简单稳定；GRPO 去掉价值模型，每题生成一组回答、以组内平均分为预期，适合能用规则判对错的推理训练；PPO 和 GRPO 能探索出训练数据之外的更好回答。",
+   "status": "active",
+   "text": "PPO、DPO 和 GRPO 有什么区别？"
+  },
+  "f38768f09b": {
+   "days": [
+    "java-64"
+   ],
+   "points": "虚拟机模拟硬件并运行完整的操作系统，启动慢，占用大量资源，一台机器只能运行几十个；容器是宿主机上用命名空间隔离、用 cgroup 限制资源的普通进程，启动快，一台机器可运行成千上万个；容器共享宿主机内核，更轻量，但隔离性更弱。",
+   "status": "active",
+   "text": "Docker 和虚拟机有什么区别？"
+  },
+  "f399525472": {
+   "days": [
+    "java-28"
+   ],
+   "points": "InnoDB 支持事务和外键，MyISAM 不支持；MyISAM 只有表锁，InnoDB 还支持行锁；InnoDB 支持在线热备份，MyISAM 崩溃后更容易损坏，恢复也更慢；InnoDB 的主键索引是聚簇索引，MyISAM 的索引都是非聚簇索引，叶子节点保存行的地址。",
+   "status": "active",
+   "text": "InnoDB 和 MyISAM 有什么区别？"
+  },
+  "f3cbce1b55": {
+   "days": [
+    "java-10",
+    "sprint-02"
+   ],
+   "points": "synchronized 由 JVM 实现，ReentrantLock 由 JDK 基于 AQS 实现，性能大致相同；ReentrantLock 支持等待可中断、公平锁和绑定多个 Condition，synchronized 都不支持；ReentrantLock 必须在 finally 中 unlock()，synchronized 由 JVM 保证释放；不需要这些功能时优先用 synchronized，但 JDK 21 的虚拟线程在 synchronized 中阻塞会固定载",
+   "status": "active",
+   "text": "synchronized 和 ReentrantLock 有什么区别？"
+  },
+  "f5bc9de8b8": {
+   "days": [
+    "java-61"
+   ],
+   "points": "金额用整数分表示；二倍均值法：剩余 R 分、还有 k 份时，本份在 1 到 2R ÷ k − 1 分之间均匀随机，最后一份拿走剩余全部，每份至少 1 分；每个位置的期望相同，越靠后波动越大；可以发红包时预先拆好放入 Redis 列表，抢时 LPOP。",
+   "status": "active",
+   "text": "抢红包时金额怎样拆分？"
+  },
+  "f62bbcd15d": {
+   "days": [
+    "sprint-14"
+   ],
+   "points": "组成：模型决定下一步，工具、记忆、规划提供能力，控制循环执行工具并限制步数、校验参数和权限；Function Calling：请求附上工具的名称、用途和参数 JSON Schema，推理服务拼进提示词，模型需要时生成特定格式的文本，服务解析为 tool_calls 返回；应用校验后执行，以 tool 消息和 tool_call_id 发回结果，本质仍是生成文本，必须先校验。",
+   "status": "active",
+   "text": "Agent 由哪些部分组成？Function Calling 的原理是什么？"
+  },
+  "f76f14f53c": {
+   "days": [
+    "java-53"
+   ],
+   "points": "Spring Cloud LoadBalancer 默认轮询，也可以改为随机，两者都不考虑机器差异；启用 NacosLoadBalancer 后优先选同集群的实例，再按权重随机（权重 3:1 时 400 次约为 303:97）；还可以实现 ReactorServiceInstanceLoadBalancer 自定义规则。",
+   "status": "active",
+   "text": "有哪些负载均衡策略？"
+  },
+  "f79e6d406d": {
+   "days": [
+    "java-38"
+   ],
+   "points": "请求报文：请求行（方法、URL、协议版本）、请求首部、空行、请求主体；响应报文：状态行（协议版本、状态码、原因短语）、响应首部、空行、响应主体。",
+   "status": "active",
+   "text": "HTTP 请求报文和响应报文由哪几部分组成？"
+  },
+  "f806988135": {
+   "days": [
+    "java-21"
+   ],
+   "points": "top 找到 CPU 占用高的 Java 进程；top -H -p \\<pid> 找到占用最高的线程 ID；jstack \\<pid> 导出线程栈，按 nid 找到这个线程（JDK 18 前 nid 是十六进制，要先用 printf \"%x\" 转换）；查看它正在执行的代码，常见是死循环或频繁 GC。",
+   "status": "active",
+   "text": "CPU 占用过高怎样定位到具体的代码？"
+  },
+  "f87401d466": {
+   "days": [
+    "sprint-10"
+   ],
+   "points": "握手：A 发 SYN（序号 x），B 回 SYN + ACK（确认号 x + 1、序号 y），A 回 ACK（确认号 y + 1），双方进入 ESTABLISHED，三次是为了让双方的初始序号都得到确认，并防止滞留的旧请求建立连接；挥手：A 发 FIN，B 确认后进入 CLOSE_WAIT 发完数据再发 FIN，A 确认后进入 TIME_WAIT；等 2MSL 一是确保最后的 ACK 能到达（丢失时 B 会重传 FIN），二是让本连接的旧报文从网络中消失。",
+   "status": "active",
+   "text": "三次握手和四次挥手的过程是怎样的？为什么 TIME_WAIT 要等 2MSL？"
+  },
+  "f9317cc094": {
+   "days": [
+    "java-19"
+   ],
+   "points": "经过多次 Minor GC 后年龄达到 MaxTenuringThreshold；动态年龄判定（以 Serial 为例，G1 和 Parallel 的计算方式不同）：Minor GC 结束时从小到大累加 Survivor 中各年龄对象的大小，超过 Survivor 一半时，取这个年龄和 MaxTenuringThreshold 中较小的值作为新阈值，下一次 Minor GC 时大于或等于它的对象晋升；Minor GC 时 Survivor 放不下的存活对象直接进入老年代；大对",
+   "status": "active",
+   "text": "对象在什么情况下进入老年代？"
+  },
+  "f9d6fbbf46": {
+   "days": [
+    "java-39"
+   ],
+   "points": "HttpOnly 禁止 JavaScript 读取，减少 XSS 窃取；Secure 只通过 HTTPS 发送；SameSite 限制跨站请求携带（Strict 都不带，Lax 只允许顶级导航的 GET，None 都带但必须同时设置 Secure），防范 CSRF；Domain、Path 限定发送范围，Expires、Max-Age 控制有效期。",
+   "status": "active",
+   "text": "Cookie 有哪些和安全相关的属性？"
+  },
+  "fa62f2e19c": {
+   "days": [
+    "java-60"
+   ],
+   "points": "限流保护自己，拒绝超出处理能力的请求；熔断针对下游，持续失败时暂停调用，避免线程被拖住、故障扩散；降级决定这时返回什么，如缓存、默认值或关闭非核心功能；熔断器失败率达到阈值时打开，打开一段时间后的下一次调用使其进入半开，放行少量试探请求，失败率低于阈值则关闭，否则重新打开。",
+   "status": "active",
+   "text": "限流、熔断和降级有什么区别？熔断器怎样从打开恢复到关闭？"
+  },
+  "fa683c8ea1": {
+   "days": [
+    "llm-05"
+   ],
+   "points": "模型在新数据上训练后原有能力明显下降，例如只用客服对话微调后写代码变差，1B～7B 模型的实验中模型越大越严重；缓解：混入通用指令数据，用 LoRA、较小的学习率和较少的轮数并早停，训练前后都在通用评测集上评测。",
+   "status": "active",
+   "text": "什么是灾难性遗忘？怎样缓解？"
+  },
+  "fb32f47b96": {
+   "days": [
+    "java-32",
+    "sprint-08"
+   ],
+   "points": "RDB 由 fork 出的子进程把某一时刻的全部数据写入紧凑的二进制文件，适合备份、恢复快，但会丢失最后一次快照之后的数据，可能有几分钟；AOF 把写命令追加到文件，everysec 时约丢 1 秒，文件更大，需要定期重写；开启 AOF 后，Redis 5.0 起默认使用混合持久化，重写生成的基础文件用 RDB 格式；数据重要时两种都开启，重启时用 AOF 恢复。",
+   "status": "active",
+   "text": "RDB 和 AOF 有什么区别？"
+  },
+  "fb5644c7bf": {
+   "days": [
+    "java-11"
+   ],
+   "points": "用共享变量记录轮到哪个线程，没轮到的线程 wait()，轮到的线程打印后改变轮次并 notifyAll()；等待条件用 while 而不是 if，被唤醒时要重新检查是否轮到自己；也可以用两个 Semaphore 传递许可，第一个初始为 1、第二个为 0，打印后释放对方的许可。",
+   "status": "active",
+   "text": "两个线程交替打印 1～100 怎样实现？"
+  },
+  "fc65cb524a": {
+   "days": [
+    "java-22"
+   ],
+   "points": "全局读锁（FLUSH TABLES WITH READ LOCK）；表级的表锁、元数据锁（MDL）、意向锁和自增锁；行级的记录锁、间隙锁、Next-Key Lock 和插入意向锁，加在索引上；意向锁 IS、IX 是表锁，加行锁前先加，要锁整张表时只需检查表上有没有意向锁，不必逐行检查。",
+   "status": "active",
+   "text": "MySQL 中有哪些锁？意向锁有什么用？"
+  },
+  "fd090d3343": {
+   "days": [
+    "java-38"
+   ],
+   "points": "PUT 创建或完全替换目标资源；PATCH 只对资源做部分修改。",
+   "status": "active",
+   "text": "PUT 和 PATCH 有什么区别？"
+  },
+  "fd1182bd45": {
+   "days": [
+    "java-28"
+   ],
+   "points": "主库把修改写入 binlog，由 binlog dump 线程发给从库；从库的 I/O 线程写入中继日志，SQL 线程读取并重放，8.0.27 起默认 4 个工作线程并行重放；读写分离的问题是默认异步复制带来的复制延迟，刚写完就读从库可能读到旧数据；写后的读和实时性要求高的读走主库，或者写入后记下 GTID，读从库前用 WAIT_FOR_EXECUTED_GTID_SET 等从库执行完，再在新开始的事务或快照中读取，超时就改读主库；监控延迟，延迟过大的从库暂停分配读请求；半同",
+   "status": "active",
+   "text": "主从复制的过程是怎样的？读写分离有什么问题？"
+  },
+  "fddac344d2": {
+   "days": [
+    "java-27"
+   ],
+   "points": "LIMIT 1000000, 10 要先找出前 1000010 行再丢弃前 100 万行，走二级索引要回表上百万次，优化器改为全表扫描加排序，200 万行约 1.5 秒；延迟关联先在覆盖索引上查出这一页的主键，只回表 10 次，约 81 ms；游标分页记住上一页最后一行的排序值和主键，从它之后取 10 行，约 0.2 ms，但不能跳页；也可以限制翻页深度。",
+   "status": "active",
+   "text": "深分页为什么慢？怎样优化？"
+  }
+ },
+ "routes": {
+  "java": {
+   "status": "active",
+   "title": "Java 后端"
+  },
+  "llm": {
+   "status": "active",
+   "title": "大模型应用开发"
+  },
+  "sprint": {
+   "status": "active",
+   "title": "面试冲刺"
+  }
+ },
+ "version": 1
+}

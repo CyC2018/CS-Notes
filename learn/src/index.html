@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CS-Notes 学习：先做一轮自评定级，按水平和时间排出学习计划，用题卡间隔复习。">
+  <meta name="theme-color" content="#f6f6f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111114" media="(prefers-color-scheme: dark)">
+  <title>CS-Notes 学习</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CS-Notes 学习">
+  <meta property="og:title" content="CS-Notes 学习：先测水平，再按天学，记到面试那天">
+  <meta property="og:description" content="面试中的真实问题，自评定级、每日计划、间隔复习。免费、无需注册，记录只保存在自己的浏览器中。">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- og:url 和 og:image 需要绝对地址，构建时指定 --site-url 后写入 -->
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="app.css">
+  <!-- 配色方案在“设置”和“学习记录”页切换，存在 localStorage；地址中的 ?skin=paper 也可以切换（空值恢复默认）。放在样式表后、正文前执行，避免先闪一下默认配色 -->
+  <script>try{var k=new URLSearchParams(location.search).get('skin');if(k!==null){if(k)localStorage.setItem('cs-learn-skin',k);else localStorage.removeItem('cs-learn-skin');}document.documentElement.dataset.skin=localStorage.getItem('cs-learn-skin')||'';}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="#/"><svg class="logo" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="currentColor"/><rect x="3.4" y="3.9" width="17.2" height="16.2" rx="1.7" fill="#fff"/><path d="M5.8 8.1h7.4M5.8 11.4h5.6M5.8 14.6h4.4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.2" stroke-linecap="round"/><path d="M13.6 15.2l1.6 1.4 3.2-3.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>CS-Notes <em>学习</em></span></a>
+      <nav aria-label="主导航">
+        <a href="#/" data-nav="home">今天</a>
+        <a href="#/plan" data-nav="plan">计划</a>
+        <a href="#/review" data-nav="review">复习<span class="badge" id="due-badge" hidden></span></a>
+        <a href="#/bank" data-nav="bank">题库</a>
+        <a href="#/progress" data-nav="progress">进度</a>
+      </nav>
+      <div class="top-end">
+        <a class="streak-chip" id="streak-chip" href="#/progress" hidden></a>
+        <a class="notes-link" href="/">笔记</a>
+      </div>
+    </div>
+  </header>
+  <main id="main" tabindex="-1"><p class="loading">正在载入…</p></main>
+  <footer class="foot">
+    <p class="foot-brand">CS-Notes 学习</p>
+    <p><a href="/">CS-Notes 笔记</a> · <a href="#/data">导出和导入记录</a> · <a href="#/privacy">数据与隐私</a> · <a href="https://github.com/CyC2018/CS-Notes/issues/new?title=%E5%AD%A6%E4%B9%A0%E7%AB%99%E5%8F%8D%E9%A6%88%EF%BC%9A" rel="noopener" target="_blank">反馈建议</a> · <a href="https://github.com/CyC2018/CS-Notes" rel="noopener" target="_blank">GitHub</a></p>
+    <p>不需要账号，不收集个人信息，学习记录只保存在当前浏览器中。内容来自 CS-Notes，采用 CC BY-NC-SA 4.0 协议。</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript 使用学习站，或直接阅读 <a href="https://github.com/CyC2018/CS-Notes">CS-Notes</a>。</p></noscript>
+  <script src="core.js"></script>
+  <script src="qr.js"></script>
+  <script src="app.js" data-src="data.json"></script>
+</body>
+</html>
