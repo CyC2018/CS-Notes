@@ -247,10 +247,10 @@ def build(optimize=True):
                       + json.dumps(learn_report['pending'], ensure_ascii=False), file=sys.stderr)
         learn_topics = {}
         if learn_report is not None:
-            # 每篇笔记在学习站中有几道题（题目的原文链接指向这篇笔记），文章末尾据此提示“读完练一练”
+            # 每篇笔记在学习站中的题（题目的原文链接指向这篇笔记），文章末尾据此提示“读完练一练”，并按读者的记录写出练过几道
             for question in json.loads((dist / 'learn' / 'data.json').read_text())['questions'].values():
                 for note in {link['note'] for link in question['links'] if link.get('note')}:
-                    learn_topics[note] = learn_topics.get(note, 0) + 1
+                    learn_topics.setdefault(note, []).append(question['id'])
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
