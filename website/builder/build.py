@@ -245,12 +245,19 @@ def build(optimize=True):
             if learn_report['pending']:
                 print(prefix + '学习站：内容与 learn/content.lock.json 不一致，请在本机运行 python3 learn/maintain.py 查看并写入：'
                       + json.dumps(learn_report['pending'], ensure_ascii=False), file=sys.stderr)
-        learn_topics = {}
+        learn_topics, learn_sections = {}, {}
         if learn_report is not None:
             # 每篇笔记在学习站中的题（题目的原文链接指向这篇笔记），文章末尾据此提示“读完练一练”，并按读者的记录写出练过几道
             for question in json.loads((dist / 'learn' / 'data.json').read_text())['questions'].values():
                 for note in {link['note'] for link in question['links'] if link.get('note')}:
                     learn_topics.setdefault(note, []).append(question['id'])
+                # 小节标题下的“面试题”：笔记 → 小节锚点 → [题号, 题目, 热度]
+                for link in question['links']:
+                    if link.get('note') and '?id=' in link['href']:
+                        anchor = urllib.parse.unquote(link['href'].split('?id=', 1)[1])
+                        entries = learn_sections.setdefault(link['note'], {}).setdefault(anchor, [])
+                        if all(entry[0] != question['id'] for entry in entries):
+                            entries.append([question['id'], question['text'], question['heat']])
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
@@ -261,7 +268,8 @@ def build(optimize=True):
             'window.CS_NOTES_LEGACY_ROUTES = ' + json.dumps(legacy, ensure_ascii=False, separators=(',', ':')) + ';\n'
             'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n'
             'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n'
-            'window.CS_NOTES_LEARN_TOPICS = ' + json.dumps(learn_topics, ensure_ascii=False, separators=(',', ':')) + ';\n')
+            'window.CS_NOTES_LEARN_TOPICS = ' + json.dumps(learn_topics, ensure_ascii=False, separators=(',', ':')) + ';\n'
+            'window.CS_NOTES_LEARN_SECTIONS = ' + json.dumps(learn_sections, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
         learn = [*LEARN_BUILD.parent.glob('*.py'), *(LEARN_BUILD.parent / 'src').rglob('*')] if LEARN_BUILD.is_file() else []
         for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*'), *learn]):

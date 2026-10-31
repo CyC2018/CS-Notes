@@ -225,6 +225,31 @@
     banner.querySelector('.learn-banner-text span').textContent = (due ? '今天有 ' + due + ' 道题到了该复习的时候，' : '') + '已经学完 ' + done + ' 天' + (due ? '' : '，接着学下一天');
     banner.querySelector('.learn-banner-go').textContent = '继续';
   }
+  // 小节标题下列出这一节的面试题（显示第一道的题目和题数），点进去只练这一节；练过的显示已练或到期
+  function sectionQuestions(vm, section) {
+    var match = decode(vm.route.path).match(/^\/notes\/(.+)$/), note = match && match[1];
+    var sections = note && (window.CS_NOTES_LEARN_SECTIONS || {})[note];
+    if (!section || !sections || section.querySelector('.learn-q')) return;
+    var record = learnRecord(), today = localDay();
+    Object.keys(sections).forEach(function (anchor) {
+      var heading = document.getElementById(anchor), list = sections[anchor];
+      if (!heading || !section.contains(heading) || !/^H[2-6]$/.test(heading.tagName)) return;
+      var tried = record ? list.filter(function (q) { return record.cards[q[0]]; }) : [];
+      var due = tried.filter(function (q) { var c = record.cards[q[0]]; return c.due && c.due <= today; }).length;
+      var link = document.createElement('a');
+      link.className = 'learn-q' + (due ? ' due' : '');
+      link.href = '/learn/#/mock/' + encodeURIComponent(note + '@' + anchor);
+      var label = document.createElement('span'), text = document.createElement('span'), go = document.createElement('span');
+      label.className = 'learn-q-label';
+      label.textContent = list.some(function (q) { return q[2] > 1; }) ? '面试最常问' : '面试题';
+      text.className = 'learn-q-text';
+      text.textContent = list[0][1];
+      go.className = 'learn-q-go';
+      go.textContent = due ? '到期复习' : tried.length === list.length ? '已练 · 再练' : list.length > 1 ? '练 ' + list.length + ' 道' : '练一练';
+      link.appendChild(label); link.appendChild(text); link.appendChild(go);
+      heading.insertAdjacentElement('afterend', link);
+    });
+  }
   function practiceCallout(vm, section) {
     var match = decode(vm.route.path).match(/^\/notes\/(.+)$/), note = match && match[1];
     var ids = note && (window.CS_NOTES_LEARN_TOPICS || {})[note];
@@ -277,6 +302,7 @@
         articleToc(vm);
         learnCallout(vm, document.querySelector('.markdown-section'));
         practiceCallout(vm, document.querySelector('.markdown-section'));
+        sectionQuestions(vm, document.querySelector('.markdown-section'));
         learnBanner(document.querySelector('.markdown-section'));
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
