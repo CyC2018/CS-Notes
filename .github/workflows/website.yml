@@ -28,11 +28,23 @@ jobs:
   website:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    env:
+      # 学习站的代码在私有仓库，用只读的部署密钥检出；别人提的 PR 拿不到密钥，只构建笔记部分
+      HAS_LEARN: ${{ secrets.LEARN_DEPLOY_KEY != '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.ref || 'master' }}
+          persist-credentials: false
+      - name: 检出学习站
+        if: env.HAS_LEARN == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: CyC2018/CS-Notes-learn
+          path: learn
+          fetch-depth: 1
+          ssh-key: ${{ secrets.LEARN_DEPLOY_KEY }}
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
@@ -60,11 +72,24 @@ jobs:
           python website/deploy/test_package_site.py
           node website/builder/test_search.cjs
           npm test --prefix website/deploy
+      - name: 检查学习站
+        if: hashFiles('learn/build.py') != ''
+        run: |
+          node learn/tests/core.test.cjs website/dist/learn/data.json
+          python learn/tests/test_content.py
+      - name: 检查学习站的内容对照
+        # 只提醒不阻塞：路线改了但没有运行 learn/maintain.py --write 时，读者的记录仍然保留，只是更新记录没有日期
+        if: hashFiles('learn/build.py') != ''
+        continue-on-error: true
+        run: python learn/maintain.py
       - name: 发布网页和图片并校验正式域名
         if: github.repository == 'CyC2018/CS-Notes' && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         env:
           EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
-        run: node website/deploy/deploy.mjs
+        run: |
+          # 发布会覆盖整站：没有带上学习站时停止，避免 /learn/ 被撤下
+          test -f website/dist/learn/index.html || { echo '::error::没有检出学习站（检查 LEARN_DEPLOY_KEY），停止发布'; exit 1; }
+          node website/deploy/deploy.mjs
       - name: 保留小型版本报告
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

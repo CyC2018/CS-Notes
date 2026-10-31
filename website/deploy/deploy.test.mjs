@@ -21,13 +21,14 @@ async function saveManifest(directory, files, sourceCommit = 'source') {
 }
 
 async function fixture(t, { notes = ['notes/MySQL.md', 'notes/大模型应用.md',
-  'notes/Java 基础.md', 'notes/66. 构建乘积数组.md'], images = true } = {}) {
+  'notes/Java 基础.md', 'notes/66. 构建乘积数组.md'], images = true, learn = false } = {}) {
   const root = await mkdtemp(join(tmpdir(), 'cs-notes-deploy-'));
   const directory = join(root, 'dist');
   t.after(() => rm(root, { recursive: true, force: true }));
   const files = new Map(['index.html', 'build-info.json', 'README.md', 'site.css', 'site.js',
     'search.js', 'search-paths.js', 'search-index-example.json', 'image-variants.json', ...notes,
-    ...(images ? ['notes/pics/example.png', 'optimized/example.webp'] : [])]
+    ...(images ? ['notes/pics/example.png', 'optimized/example.webp'] : []),
+    ...(learn ? ['learn/index.html', 'learn/data.json', 'learn/app.js', 'learn/sw.js'] : [])]
     .map(path => [path, Buffer.from(`validated contents: ${path}`)]));
   for (const [path, data] of files) {
     await mkdir(resolve(directory, path, '..'), { recursive: true });
@@ -184,4 +185,19 @@ test('已有旧发布包时，上传的 ZIP 必须包含当前清单', async t =
     }),
   });
   assert.equal(report.result, 'deployed');
+});
+
+test('学习站：校验入口、数据和离线缓存脚本，目录地址 /learn/ 要返回入口页', async t => {
+  const { directory, files } = await fixture(t, { learn: true });
+  const serve = (learnDirectory) => async url => {
+    const path = decodeURIComponent(url.pathname.slice(1));
+    if (path === 'learn/') return new Response(learnDirectory);
+    return new Response(files.get(path));
+  };
+  const report = await deploySite({ directory, attempts: 1, getClient: () => assert.fail('无变化时不应读取发布凭据'),
+    fetcher: serve(files.get('learn/index.html')) });
+  assert.equal(report.verifiedFiles, 19);
+  // 托管服务把 /learn/ 回退成网站首页时，校验要失败
+  await assert.rejects(deploySite({ directory, attempts: 1, sleep: async () => {}, getClient: () => assert.fail('无变化时不应读取发布凭据'),
+    fetcher: serve(files.get('index.html')) }), /learn/);
 });
