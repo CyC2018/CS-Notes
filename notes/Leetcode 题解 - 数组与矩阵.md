@@ -23,7 +23,7 @@
 
 283\. Move Zeroes (Easy)
 
-[Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/move-zeroes/description/)
+[Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [力扣](https://leetcode.cn/problems/move-zeroes/description/)
 
 ```text
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
@@ -47,7 +47,7 @@ public void moveZeroes(int[] nums) {
 
 566\. Reshape the Matrix (Easy)
 
-[Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [力扣](https://leetcode-cn.com/problems/reshape-the-matrix/description/)
+[Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [力扣](https://leetcode.cn/problems/reshape-the-matrix/description/)
 
 ```text
 Input:
@@ -85,7 +85,7 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 
 485\. Max Consecutive Ones (Easy)
 
-[Leetcode](https://leetcode.com/problems/max-consecutive-ones/description/) / [力扣](https://leetcode-cn.com/problems/max-consecutive-ones/description/)
+[Leetcode](https://leetcode.com/problems/max-consecutive-ones/description/) / [力扣](https://leetcode.cn/problems/max-consecutive-ones/description/)
 
 ```java
 public int findMaxConsecutiveOnes(int[] nums) {
@@ -102,7 +102,7 @@ public int findMaxConsecutiveOnes(int[] nums) {
 
 240\. Search a 2D Matrix II (Medium)
 
-[Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
+[Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode.cn/problems/search-a-2d-matrix-ii/description/)
 
 ```text
 Input:
@@ -141,7 +141,7 @@ public boolean searchMatrix(int[][] matrix, int target) {
 
 378\. Kth Smallest Element in a Sorted Matrix (Medium)
 
-[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/) / [力扣](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)
+[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/) / [力扣](https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/description/)
 
 ```text
 matrix = [
@@ -154,7 +154,7 @@ k = 8,
 return 13.
 ```
 
-解题参考：[Share my thoughts and Clean Java Code](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
+解题参考：[Share my thoughts and Clean Java Code](https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173)
 
 二分查找解法：在 [matrix[0][0], matrix[m - 1][n - 1]] 这个值域上二分，统计矩阵中不大于 mid 的元素个数 cnt。cnt < k 说明第 k 小的数比 mid 大，否则不大于 mid。循环结束时 lo 是使 cnt >= k 的最小值，这个值一定是矩阵中的元素。
 
@@ -209,7 +209,7 @@ class Tuple implements Comparable<Tuple> {
 
 645\. Set Mismatch (Easy)
 
-[Leetcode](https://leetcode.com/problems/set-mismatch/description/) / [力扣](https://leetcode-cn.com/problems/set-mismatch/description/)
+[Leetcode](https://leetcode.com/problems/set-mismatch/description/) / [力扣](https://leetcode.cn/problems/set-mismatch/description/)
 
 ```text
 Input: nums = [1,2,2,4]
@@ -246,7 +246,7 @@ private void swap(int[] nums, int i, int j) {
 
 287\. Find the Duplicate Number (Medium)
 
-[Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [力扣](https://leetcode-cn.com/problems/find-the-duplicate-number/description/)
+[Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [力扣](https://leetcode.cn/problems/find-the-duplicate-number/description/)
 
 要求不能修改数组，也不能使用额外的空间。
 
@@ -292,7 +292,7 @@ public int findDuplicate(int[] nums) {
 
 667\. Beautiful Arrangement II (Medium)
 
-[Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [力扣](https://leetcode-cn.com/problems/beautiful-arrangement-ii/description/)
+[Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [力扣](https://leetcode.cn/problems/beautiful-arrangement-ii/description/)
 
 ```text
 Input: n = 3, k = 2
@@ -322,7 +322,7 @@ public int[] constructArray(int n, int k) {
 
 697\. Degree of an Array (Easy)
 
-[Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [力扣](https://leetcode-cn.com/problems/degree-of-an-array/description/)
+[Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [力扣](https://leetcode.cn/problems/degree-of-an-array/description/)
 
 ```text
 Input: [1,2,2,3,1,4,2]
@@ -365,7 +365,7 @@ public int findShortestSubArray(int[] nums) {
 
 766\. Toeplitz Matrix (Easy)
 
-[Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/) / [力扣](https://leetcode-cn.com/problems/toeplitz-matrix/description/)
+[Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/) / [力扣](https://leetcode.cn/problems/toeplitz-matrix/description/)
 
 ```text
 1234
@@ -405,7 +405,7 @@ private boolean check(int[][] matrix, int expectValue, int row, int col) {
 
 565\. Array Nesting (Medium)
 
-[Leetcode](https://leetcode.com/problems/array-nesting/description/) / [力扣](https://leetcode-cn.com/problems/array-nesting/description/)
+[Leetcode](https://leetcode.com/problems/array-nesting/description/) / [力扣](https://leetcode.cn/problems/array-nesting/description/)
 
 ```text
 Input: A = [5,4,0,3,1,6,2]
@@ -443,7 +443,7 @@ public int arrayNesting(int[] nums) {
 
 769\. Max Chunks To Make Sorted (Medium)
 
-[Leetcode](https://leetcode.com/problems/max-chunks-to-make-sorted/description/) / [力扣](https://leetcode-cn.com/problems/max-chunks-to-make-sorted/description/)
+[Leetcode](https://leetcode.com/problems/max-chunks-to-make-sorted/description/) / [力扣](https://leetcode.cn/problems/max-chunks-to-make-sorted/description/)
 
 ```text
 Input: arr = [1,0,2,3,4]
@@ -498,6 +498,8 @@ public int[][] merge(int[][] intervals) {
     return ret.toArray(new int[ret.size()][]);
 }
 ```
+
+时间复杂度为 O(NlogN)，主要花在排序上，排序后只扫描一遍；除结果外，对象数组排序使用的 TimSort 最多需要 O(N) 的辅助空间。
 
 ## 14. 下一个排列
 
