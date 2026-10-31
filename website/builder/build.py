@@ -6,9 +6,12 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import posixpath
 import re
 import shutil
+import subprocess
+import sys
 import tempfile
 import unicodedata
 import urllib.parse
@@ -28,6 +31,9 @@ SOURCE_COMMIT = json.loads(VERSION_FILE.read_text())['commit'] if VERSION_FILE.i
 IMAGE_BY_NAME = {}
 ANCHORS = {}
 SOURCE_IMAGE_HOST = 'cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com'
+# 学习站与笔记网站一起构建，放在 /learn/ 下；题目链接指向同一域名下的笔记
+LEARN_BUILD = BASE.parent / 'learn' / 'build.py'
+SITE_URL = 'https://cyc2018.xyz/'
 IMAGE = re.compile(r'(<img\b[^>]*?\bsrc=["\'])([^"\']+)(["\'])', re.I)
 MD_IMAGE = re.compile(r'(!\[[^\]]*\]\()((?:[^()\s]|\([^()\n]*\))*)(\))')
 MD_LINK = re.compile(r'(?<!!)\[((?:[^\[\]\n]|\[[^\[\]\n]*\])+)\]\(([^\s)]+)\)')
@@ -205,9 +211,14 @@ def build(optimize=True):
             for label, symbol in topics) + '</nav>'
         homepage = re.sub(r'^\| (?:学习路线|算法)[^\n]*\n\|[^\n]*\n\|[^\n]*', cards, homepage, count=1, flags=re.M)
         homepage = homepage.replace('width="200px"', 'class="site-logo" width="200px"', 1)
+        if LEARN_BUILD.is_file():
+            banner = ('<a class="learn-banner" href="/learn/"><span class="learn-banner-text"><b>按计划学习</b>'
+                      '<span>先用面试真题自评定级，跳过已经掌握的内容，按天学、按间隔复习，记到面试那天</span></span>'
+                      '<span class="learn-banner-go">开始</span></a>')
+            homepage = homepage.replace(cards, banner + cards, 1)
         (dist / 'README.md').write_text('# CS-Notes\n\n' + homepage)
         note_paths = ['/' + str(p.relative_to(ROOT).with_suffix('')) for p in sorted((ROOT / 'notes').glob('*.md'))]
-        sidebar = ['- [首页](/)', '']
+        sidebar = ['- [首页](/)', *(["- [学习站：定级与每日计划](/learn/ ':ignore')"] if LEARN_BUILD.is_file() else []), '']
         for line in homepage.splitlines():
             if line.startswith('## '):
                 label = re.sub(r':[a-z0-9_]+:', '', line[3:]).strip()
@@ -220,6 +231,20 @@ def build(optimize=True):
         (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
         (dist / '.nojekyll').touch()
         shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', dist / 'favicon.png')
+        learn_report = None
+        if LEARN_BUILD.is_file():
+            # 学习站的问题（链接到的小节改名、题目和要点对不上）只给警告，不挡住笔记的发布；警告写进构建报告
+            result = subprocess.run([sys.executable, str(LEARN_BUILD), '--source', str(ROOT), '--output', str(dist / 'learn'),
+                                     '--notes-base', '/#/notes/', '--site-url', SITE_URL + 'learn/', '--lenient'],
+                                    check=True, capture_output=True, text=True)
+            learn_report = json.loads(result.stdout.strip().splitlines()[-1])
+            # 在 GitHub Actions 中输出为警告注释，显示在运行结果的摘要里
+            prefix = '::warning::' if os.environ.get('GITHUB_ACTIONS') else ''
+            for warning in learn_report['warnings']:
+                print(prefix + '学习站：' + warning, file=sys.stderr)
+            if learn_report['pending']:
+                print(prefix + '学习站：内容与 learn/content.lock.json 不一致，请在本机运行 python3 learn/maintain.py 查看并写入：'
+                      + json.dumps(learn_report['pending'], ensure_ascii=False), file=sys.stderr)
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
@@ -231,9 +256,10 @@ def build(optimize=True):
             'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n'
             'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
-        for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*')]):
+        learn = [*LEARN_BUILD.parent.glob('*.py'), *(LEARN_BUILD.parent / 'src').rglob('*')] if LEARN_BUILD.is_file() else []
+        for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*'), *learn]):
             if resource.is_file():
-                generator.update(resource.relative_to(BASE).as_posix().encode())
+                generator.update(resource.relative_to(BASE.parent).as_posix().encode())
                 generator.update(resource.read_bytes())
         build_info = {'sourceCommit': SOURCE_COMMIT, 'generatorHash': generator.hexdigest(), 'notes': len(note_paths),
                       'searchIndex': index_name, 'legacyRoutes': len(legacy)}
@@ -247,7 +273,7 @@ def build(optimize=True):
         files = [p for p in dist.rglob('*') if p.is_file()]
         report = {'notes': len(note_paths), 'files': len(files), 'bytes': sum(p.stat().st_size for p in files),
                   'oversized': [str(p.relative_to(dist)) for p in files if p.stat().st_size > 25*1024*1024],
-                  'repositoryImagesUsedForOldUrls': len(reused), 'externalImages': len(unchanged_external), 'search': search_report, 'images': image_report, 'legacyRoutes': len(legacy)}
+                  'learn': learn_report, 'repositoryImagesUsedForOldUrls': len(reused), 'externalImages': len(unchanged_external), 'search': search_report, 'images': image_report, 'legacyRoutes': len(legacy)}
         if report['oversized'] or len(files) > 20000:
             raise ValueError('Static hosting quota exceeded')
         validation = check(ROOT, dist)
