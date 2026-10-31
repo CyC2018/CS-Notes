@@ -230,6 +230,8 @@ def build(optimize=True):
         (dist / '_sidebar.md').write_text('\n'.join(sidebar) + '\n')
         (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
         (dist / '.nojekyll').touch()
+        # 允许收录；学习站每道题的页面列在它的站点地图中（笔记页面在 # 之后，没有单独的地址）
+        (dist / 'robots.txt').write_text('User-agent: *\nAllow: /\n' + (f'Sitemap: {SITE_URL}learn/sitemap.xml\n' if LEARN_BUILD.is_file() else ''))
         shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', dist / 'favicon.png')
         learn_report = None
         if LEARN_BUILD.is_file():
