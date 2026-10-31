@@ -48,6 +48,12 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .learn-banner-go { flex: none; padding: 7px 18px; border-radius: 8px; background: var(--theme-color); color: #fff; font-weight: 600; font-size: 15px; }
 .learn-callout { display: block; }
 .learn-practice { margin-top: 36px; }
+.learn-q { display: flex; align-items: center; gap: 8px; margin: -6px 0 16px; padding: 7px 12px; border: 1px solid #e3e6e4; border-radius: 8px; background: #fafbfa; color: inherit; font-size: 14px; line-height: 1.5; text-decoration: none !important; }
+.learn-q:hover, .learn-q:focus-visible { border-color: var(--theme-color); background: #eef7f2; }
+.learn-q-label { flex: none; padding: 1px 7px; border-radius: 5px; background: #e3f2ea; color: var(--theme-color); font-size: 12px; font-weight: 600; }
+.learn-q-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #34495e; }
+.learn-q-go { flex: none; color: var(--theme-color); font-weight: 600; }
+.learn-q.due .learn-q-go { color: #c2410c; }
 @media (min-width: 769px) { .content { padding-top: 12px; } .article-toc { display: none; } }
 .page-toc-block { margin: 0 0 18px; padding: 0 0 14px 18px; border-bottom: 1px solid #e2e3dc; }
 .page-toc-title { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #34495e; }
