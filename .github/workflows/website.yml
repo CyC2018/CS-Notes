@@ -12,6 +12,7 @@ on:
       - 'assets/**'
       - 'docs/_media/**'
       - 'website/**'
+      - 'learn/**'
   schedule:
     # UTC; Beijing time 09:17 and 21:17.
     - cron: '17 1,13 * * *'
@@ -59,7 +60,13 @@ jobs:
           python website/builder/test_site_assets.py
           python website/deploy/test_package_site.py
           node website/builder/test_search.cjs
+          node learn/tests/core.test.cjs website/dist/learn/data.json
+          python learn/tests/test_content.py
           npm test --prefix website/deploy
+      - name: 检查学习站的内容对照
+        # 只提醒不阻塞：路线改了但没有运行 learn/maintain.py --write 时，读者的记录仍然保留，只是更新记录没有日期
+        continue-on-error: true
+        run: python learn/maintain.py
       - name: 发布网页和图片并校验正式域名
         if: github.repository == 'CyC2018/CS-Notes' && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         env:
