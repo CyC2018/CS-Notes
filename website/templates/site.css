@@ -40,6 +40,13 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .article-toc { border: 1px solid #dfe3da; border-radius: 7px; padding: 12px 18px; margin: 20px 0 28px; background: #fafbf8; }
 .article-toc summary { color: #369b72; font-weight: 600; cursor: pointer; min-height: 24px; }
 .article-toc > ul { margin-bottom: 0; }
+.learn-banner, .learn-callout { display: flex; align-items: center; gap: 16px; margin: 18px 0; padding: 16px 18px; border: 1px solid #e3e6e4; border-left: 4px solid var(--theme-color); border-radius: 10px; background: #fafbfa; color: inherit; text-decoration: none !important; }
+.learn-banner:hover, .learn-banner:focus-visible, .learn-callout:hover, .learn-callout:focus-visible { border-color: var(--theme-color); background: #eef7f2; }
+.learn-banner-text { flex: 1; min-width: 0; }
+.learn-banner b, .learn-callout b { display: block; color: var(--theme-color); font-size: 16px; }
+.learn-banner-text span, .learn-callout span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.6; opacity: .85; }
+.learn-banner-go { flex: none; padding: 7px 18px; border-radius: 8px; background: var(--theme-color); color: #fff; font-weight: 600; font-size: 15px; }
+.learn-callout { display: block; }
 @media (min-width: 769px) { .content { padding-top: 12px; } .article-toc { display: none; } }
 .page-toc-block { margin: 0 0 18px; padding: 0 0 14px 18px; border-bottom: 1px solid #e2e3dc; }
 .page-toc-title { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #34495e; }
