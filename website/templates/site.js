@@ -57,6 +57,17 @@
     if (toggle) { toggle.setAttribute('aria-label', '打开或收起目录'); toggle.title = '目录'; }
     var corner = document.querySelector('.github-corner');
     if (corner) corner.setAttribute('aria-label', '在 GitHub 上查看源码');
+    // 角标放进导航地标，读屏软件按地标浏览时不会漏掉它
+    if (corner && !corner.closest('nav, header, aside, main, footer')) {
+      var nav = document.createElement('nav');
+      nav.setAttribute('aria-label', '源码仓库');
+      corner.parentNode.insertBefore(nav, corner);
+      nav.appendChild(corner);
+    }
+    // 比页面宽的代码块和表格需要横向滚动，加入 Tab 顺序后可以用方向键滚动
+    document.querySelectorAll('.markdown-section pre > code, .markdown-section table').forEach(function (box) {
+      if (box.scrollWidth > box.clientWidth) box.tabIndex = 0;
+    });
   }
   function skipLink() {
     if (document.querySelector('.skip-link')) return;
