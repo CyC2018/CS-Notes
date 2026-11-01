@@ -51,6 +51,27 @@
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost')) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
   }
+  // Docsify 生成的目录按钮和 GitHub 角标是英文名称，读屏软件读成 Menu、View source on GitHub
+  function nameControls() {
+    var toggle = document.querySelector('.sidebar-toggle');
+    if (toggle) { toggle.setAttribute('aria-label', '打开或收起目录'); toggle.title = '目录'; }
+    var corner = document.querySelector('.github-corner');
+    if (corner) corner.setAttribute('aria-label', '在 GitHub 上查看源码');
+  }
+  function skipLink() {
+    if (document.querySelector('.skip-link')) return;
+    var skip = document.createElement('button');
+    skip.type = 'button';
+    skip.className = 'skip-link';
+    skip.textContent = '跳到正文';
+    skip.addEventListener('click', function () {
+      var section = document.querySelector('.markdown-section');
+      if (!section) return;
+      section.setAttribute('tabindex', '-1');
+      section.focus();
+    });
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
   function preserveLegacyLinks() {
     var hash = location.hash;
     var legacy = (window.CS_NOTES_LEGACY_ROUTES || {})[decode(location.pathname)];
@@ -359,6 +380,8 @@
         return document.body.innerHTML + '<footer class="site-footer"><a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">CyC2018 · CS-Notes</a><span> · </span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备19071404号-1</a></footer>';
       });
       hook.doneEach(function () {
+        nameControls();
+        skipLink();
         offlineNote(document.querySelector('.markdown-section'));
         var heading = document.querySelector('.markdown-section h1, .markdown-section h2');
         document.title = (vm.route.path === '/' || !heading ? 'CS-Notes' : heading.textContent.trim() + ' · CS-Notes') + ' · CyC2018';
