@@ -1,5 +1,5 @@
 <div align="center">
-    <p><a href="https://cyc2018.xyz">个人网站在线阅读</a> · <a href="https://my.feishu.cn/wiki/NrECwvPu2iwdXek3EtkcoiV7noc">飞书知识库在线阅读</a></p>
+    <p><a href="https://cyc2018.xyz">网站在线阅读</a> · <a href="https://my.feishu.cn/wiki/NrECwvPu2iwdXek3EtkcoiV7noc">飞书知识库在线阅读</a></p>
     <a href="https://gitstar-ranking.com/repositories"> <img src="https://badgen.net/badge/Rank/13?icon=github&color=4ab8a1"></a>
     <a href="https://github.com/CyC2018/CS-Notes"> <img src="https://badgen.net/github/stars/CyC2018/CS-Notes?icon=github&color=4ab8a1"></a>
     <a href="https://github.com/CyC2018/CS-Notes"> <img src="https://badgen.net/github/forks/CyC2018/CS-Notes?icon=github&color=4ab8a1"></a>
@@ -29,7 +29,7 @@
 - [大模型应用开发](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20大模型应用开发.md)：准备 RAG、Agent 方向的岗位，从 Transformer 的原理学到 Agent 和工程实践；
 - [面试冲刺](https://github.com/CyC2018/CS-Notes/blob/master/notes/学习路线%20-%20面试冲刺.md)：两三周后就要面试时，每天复习 3 个最常考的知识点。
 
-不按路线学习时，可以直接读下面的笔记。笔记中带 🔥🔥 的小节是面试中最常问的内容，带 🔥 的也常被问到。
+不按路线学习时，可以直接读下面的笔记。
 
 ## :pencil2: 算法
 
@@ -123,7 +123,7 @@ Logo：[logomakr](https://logomakr.com/)
 <a href="https://github.com/crossoverJie">
     <img src="https://avatars1.githubusercontent.com/u/15684156?s=400&v=4" width="50px">
 </a> 
-<a href="https://github.com/jy03078584">
+<a href="https://github.com/xiangmingzhe0928">
     <img src="https://avatars2.githubusercontent.com/u/7719370?s=400&v=4" width="50px">
 </a>
 <a href="https://github.com/kwongtailau">
