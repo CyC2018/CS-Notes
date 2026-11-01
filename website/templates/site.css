@@ -114,3 +114,6 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 /* 首页贡献者头像：链接按图片大小计算点击区域 */
 .markdown-section > a:has(> img) { display: inline-block; margin: 2px; }
 .markdown-section > a > img[src*="avatars"] { aspect-ratio: 1; }
+
+/* 离线提示 */
+.markdown-section .offline-note { margin: 0 0 18px; padding: 8px 12px; border-radius: 6px; background: #eaf3ee; color: #34495e; font-size: 14px; }
