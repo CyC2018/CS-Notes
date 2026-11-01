@@ -410,6 +410,13 @@
     relativePath: false,
     copyCode: { buttonText: '复制', errorText: '复制失败', successText: '已复制' },
     plugins: [function (hook, vm) {
+      // 托管平台对不存在的文件返回首页的 HTML（状态码 200），这时不当成笔记显示，改为显示“页面暂未找到”
+      hook.beforeEach(function (content, next) {
+        if (!/^\s*<!doctype html/i.test(content)) return next(content);
+        fetch('/_404.txt').then(function (response) { return response.ok ? response.text() : ''; }).catch(function () { return ''; }).then(function (text) {
+          next(text && !/^\s*<!doctype html/i.test(text) ? text : '# 页面暂未找到\n\n[返回首页](/)');
+        });
+      });
       hook.afterEach(function (content) {
         var document = new DOMParser().parseFromString(content, 'text/html');
         configureImages(document, vm.route.path === '/');
