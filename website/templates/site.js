@@ -42,6 +42,35 @@
     });
   }
   // 离线时提示显示的是缓存的版本；sw.js 缓存读过的文章，离线时也能打开
+  // 链接中的小节找不到时（标题改过名或编号变了），按去掉编号和标点后的文字找唯一对应的小节
+  function sectionKey(id) {
+    return decode(id).toLowerCase().replace(/^(?:[a-z]?\d+(?:[.-]\d+)*|[一二三四五六七八九十]+)[、.\-\s]*/, '').replace(/[^a-z0-9㐀-鿿]/g, '');
+  }
+  function sectionById(id) {
+    if (!id) return null;
+    var exact = document.getElementById(id), key = sectionKey(id);
+    if (exact || key.length < 2) return exact;
+    var heads = Array.from(document.querySelectorAll('.markdown-section :is(h1, h2, h3, h4, h5)[id]'));
+    var same = heads.filter(function (h) { return sectionKey(h.id) === key; });
+    if (same.length === 1) return same[0];
+    var near = heads.filter(function (h) { var k = sectionKey(h.id); return k.indexOf(key) !== -1 || (k.length >= 4 && key.indexOf(k) !== -1); });
+    return near.length === 1 ? near[0] : null;
+  }
+  function missingSection(vm, section) {
+    var id = vm.route.query.id;
+    if (!section || !id || sectionById(id) || section.querySelector('.missing-note')) return;
+    var note = document.createElement('p');
+    note.className = 'offline-note missing-note';
+    note.setAttribute('role', 'status');
+    note.textContent = '没有找到链接中的小节“' + decode(id).replace(/-/g, ' ') + '”，标题可能改过，可以从目录中查找。';
+    var heading = section.querySelector('h1');
+    if (heading) heading.after(note); else section.prepend(note);
+  }
+  // 同一篇文章内换小节时 Docsify 不重新渲染，说明要去掉
+  window.addEventListener('hashchange', function () {
+    var stale = document.querySelector('.missing-note');
+    if (stale) stale.remove();
+  });
   function offlineNote(section) {
     if (!section || section.querySelector('.offline-note')) return;
     // sw.js 给没缓存过的文章返回的说明页：Docsify 会把它记在内存里，联网后要刷新页面才能重新下载
@@ -934,7 +963,7 @@
     if (type === 'traverse' || type === 'reload') {
       var y = history.state && history.state.csNotesY;
       setTimeout(function () {
-        var saved = vm.route.query.id && document.getElementById(vm.route.query.id);
+        var saved = sectionById(vm.route.query.id);
         if (typeof y === 'number') window.scrollTo(0, y);
         else if (saved) saved.scrollIntoView();
         else window.scrollTo(0, 0);
@@ -942,11 +971,14 @@
       return;
     }
     if (!type) {
-      if (vm.route.query.id) pinTarget(document.getElementById(vm.route.query.id), 0, 600, false);
+      // 小节改过名时 Docsify 找不到原来的 id，不会滚动，这里滚到对应的小节
+      var renamed = vm.route.query.id && !document.getElementById(vm.route.query.id) && sectionById(vm.route.query.id);
+      if (renamed) setTimeout(function () { renamed.scrollIntoView(); }, 0);
+      if (vm.route.query.id) pinTarget(sectionById(vm.route.query.id), 0, 600, false);
       return;
     }
     setTimeout(function () {
-      var id = vm.route.query.id, target = id && document.getElementById(id);
+      var id = vm.route.query.id, target = sectionById(id);
       if (target) {
         if (Math.abs(target.getBoundingClientRect().top) > 120) target.scrollIntoView();
         pinTarget(target, 0, 550, true);
@@ -960,7 +992,7 @@
     var type = lastNavigation, hash = location.hash, path = decode(hash.split('?')[0].slice(1));
     if (!type && path === decode(lastPath || '')) {
       var plain = new URLSearchParams(hash.split('?').slice(1).join('?')).get('id');
-      if (plain) pinTarget(document.getElementById(plain), 0, 600, false);
+      if (plain) pinTarget(sectionById(plain), 0, 600, false);
     }
     if (!type || path !== decode(lastPath || '')) return;
     if (type === 'traverse') {
@@ -976,7 +1008,7 @@
     setTimeout(function () {
       lastNavigation = null;
       navigating = false;
-      var target = id && document.getElementById(id);
+      var target = sectionById(id);
       if (!target) return;
       // 在地址栏中改 ?id= 时 Docsify 不滚动，偏差大时直接跳；点链接时它已滚到附近，只做平滑的小校正
       var off = target.getBoundingClientRect().top - 20;
@@ -1030,6 +1062,7 @@
       hook.doneEach(function () {
         nameControls();
         offlineNote(document.querySelector('.markdown-section'));
+        missingSection(vm, document.querySelector('.markdown-section'));
         // 没有一级标题的文章（设计模式各篇从“## 5. 中介者”开始）用文件名，书签和标签页上更好认
         var heading = document.querySelector('.markdown-section h1');
         var name = heading ? heading.textContent.trim() : (/^\/notes\//.test(vm.route.path) ? decode(vm.route.path.split('/').pop()) : '');
