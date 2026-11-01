@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { deploySite, PROJECT } from './deploy.mjs';
+import { deploySite, isTransient, PROJECT } from './deploy.mjs';
 const executeFile = promisify(execFile);
 
 async function saveManifest(directory, files, sourceCommit = 'source') {
@@ -83,6 +83,35 @@ test('新版本只向固定项目发布 dist，等候 Success 后重试正式域
   assert.equal(report.result, 'deployed');
   assert.equal(report.deploymentId, 'deployment-test');
   assert.equal(retries, 1);
+});
+
+test('腾讯云接口的网络错误重试，令牌和权限错误不重试', async t => {
+  const { directory, files } = await fixture(t);
+  let published = false, gets = 0, deploys = 0;
+  const waits = [];
+  const report = await deploySite({ directory, attempts: 1, sleep: async ms => { waits.push(ms); },
+    fetcher: async url => published ? new Response(files.get(decodeURIComponent(url.pathname.slice(1)))) : new Response('{}'),
+    getClient: async () => ({
+      projects: { get: async () => { if (++gets === 1) throw new TypeError('fetch failed'); return PROJECT; } },
+      deployments: { deploy: async () => {
+        if (++deploys === 1) throw new Error('Request timed out after 30s');
+        published = true;
+        return { status: 'Success', deploymentId: 'retried' };
+      } },
+    }),
+  });
+  assert.equal(report.deploymentId, 'retried');
+  assert.deepEqual([gets, deploys], [2, 2]);
+  assert.deepEqual(waits, [15_000, 15_000]);
+
+  const denied = Object.assign(new Error('The token is invalid'), { name: 'AuthFailureError', code: 'AuthFailure' });
+  let calls = 0;
+  await assert.rejects(deploySite({ directory, sleep: async () => assert.fail('权限错误不应重试'), fetcher: async () => new Response('{}'),
+    getClient: async () => ({ projects: { get: async () => { calls++; throw denied; } }, deployments: { deploy: () => assert.fail('不应上传') } }),
+  }), /token is invalid/);
+  assert.equal(calls, 1);
+  assert.equal(isTransient(Object.assign(new TypeError('fetch failed'), { cause: { code: 'ECONNRESET' } })), true);
+  assert.equal(isTransient(new Error('腾讯云部署未成功：Failed')), false);
 });
 
 test('项目身份不符时拒绝发布', async t => {
