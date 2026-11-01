@@ -3,6 +3,18 @@
     try { return decodeURIComponent(value); } catch (error) { return value; }
   }
   function encodedRoute(path) { return path.split('/').map(encodeURIComponent).join('/'); }
+  // 图片前面的正文不到 1200 字（文首目录不算）时，大概率在首屏内
+  function nearTop(img, root) {
+    var block = img, chars = 0;
+    while (block.parentElement && block.parentElement !== root && block.parentElement.tagName !== 'BODY') block = block.parentElement;
+    for (var node = block.previousElementSibling; node; node = node.previousElementSibling) {
+      var links = node.querySelectorAll('a');
+      if (/^(UL|DETAILS)$/.test(node.tagName) && links.length > 5 &&
+          Array.from(links).every(function (link) { return (link.getAttribute('href') || '').indexOf('?id=') !== -1; })) continue;
+      chars += node.textContent.length;
+    }
+    return chars < 1200;
+  }
   function configureImages(root, homepage) {
     if (!root) return;
     var first = root.querySelector('img');
@@ -11,8 +23,10 @@
         img.loading = 'eager';
         img.setAttribute('fetchpriority', 'high');
       } else if (!img.hasAttribute('loading')) {
-        // 文章的第一张图常在首屏内，延迟加载会推迟最大内容绘制，直接加载
-        img.loading = !homepage && img === first ? 'eager' : 'lazy';
+        // 文章的第一张图在开头附近时常在首屏内，延迟加载会推迟最大内容绘制，直接加载并提高下载优先级
+        var top = !homepage && img === first && nearTop(img, root);
+        img.loading = top ? 'eager' : 'lazy';
+        if (top) img.setAttribute('fetchpriority', 'high');
       }
       img.decoding = 'async';
       // 笔记中的配图大多没写说明，读屏软件只能读出文件名；用所在小节的标题作为说明
