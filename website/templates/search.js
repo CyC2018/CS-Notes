@@ -12,11 +12,15 @@
     prepared = [];
     index.documents.forEach(function (doc) {
       var page = normalize(doc.title);
-      doc.sections.forEach(function (section) {
+      doc.sections.forEach(function (section, i) {
+        // 文章开头没有正文的部分与一级标题重复，不单独作为结果
+        if (i === 0 && !section.text && doc.sections.length > 1 && normalize(doc.sections[1].title) === page) return;
         var heading = normalize(section.title);
         var body = normalize(section.text);
+        // 学习路线只是阅读导读，附录是实验过程，排在讲解正文之后
+        var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0);
         prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
-          pageTitle: doc.title, path: doc.path, section: section });
+          lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
       });
     });
     preparedIndexes.set(index, prepared);
@@ -32,27 +36,168 @@
     return count;
   }
 
-  function search(index, query, limit) {
-    var normalizedQuery = normalize(query);
-    var terms = normalizedQuery.slice(0, 120).split(' ').filter(Boolean);
-    if (!terms.length) return [];
-    var results = [];
-    prepareIndex(index).forEach(function (entry) {
-      if (!terms.every(function (term) { return entry.text.includes(term); })) return;
-      var score = terms.reduce(function (sum, term) {
-        return sum + (entry.heading.includes(term) ? 40 : 0) + (entry.page.includes(term) ? 15 : 0) +
-          occurrences(entry.body, term);
-      }, 0);
-      if (entry.heading === normalizedQuery) score += 100;
-      var section = entry.section;
-      results.push({ page: entry.pageTitle, path: entry.path, title: section.title || entry.pageTitle,
-        id: section.id, text: section.text, score: score });
+  // 英文词在标题中单独出现时才算完整命中，避免 RAG 命中 Storage
+  function wholeWord(text, term) {
+    if (!/^[a-z0-9]+$/.test(term)) return true;
+    return new RegExp('(^|[^a-z0-9])' + term + '($|[^a-z0-9])').test(text);
+  }
+
+  // 中英文连写时在两者之间切开，例如“hashmap扩容”按“hashmap”和“扩容”搜索
+  var CJK = /[㐀-鿿豈-﫿]/;
+  function splitTerms(query) {
+    var terms = [];
+    joinMixed(query).split(' ').forEach(function (word) {
+      (word.match(/[㐀-鿿豈-﫿]+|[^㐀-鿿豈-﫿]+/g) || []).forEach(function (part) {
+        if (part && terms.indexOf(part) === -1) terms.push(part);
+      });
     });
-    return results.sort(function (a, b) { return b.score - a.score; }).slice(0, limit || 20);
+    return terms;
+  }
+
+  // 笔记中统一了术语（垃圾收集、I/O、哈希、新生代……），读者常用的另一种说法也要能搜到
+  var SYNONYMS = [
+    ['垃圾收集', '垃圾回收'], ['i/o', 'io'], ['哈希', '散列', 'hash'], ['新生代', '年轻代'], ['重排序', '指令重排'],
+    ['首部', '头部'], ['幻读', '幻影读'], ['脏读', '读脏数据'], ['b+tree', 'b+树', 'b+ 树'], ['多路复用', 'i/o 复用', '复用'],
+    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm']
+  ];
+  // 中英文混写的术语（“b+ 树”“i/o 复用”）在切词前换成一个整体，否则会被切成“b+”和“树”两个词分别匹配
+  var MIXED = [];
+  SYNONYMS.forEach(function (group) {
+    var whole = group.filter(function (word) { return !/ /.test(word) && !(CJK.test(word) && /[a-z]/.test(word)); })[0];
+    if (!whole) return;
+    group.forEach(function (word) {
+      if (word === whole || !(CJK.test(word) && /[a-z]/.test(word))) return;
+      var pattern = word.replace(/ /g, '').split('').map(function (c) { return c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join(' ?');
+      MIXED.push([new RegExp(pattern, 'g'), whole]);
+    });
+  });
+  function joinMixed(query) {
+    MIXED.forEach(function (item) { query = query.replace(item[0], item[1]); });
+    return query;
+  }
+  // 词中含有另一种说法时也替换，例如“散列冲突”同时按“哈希冲突”搜索
+  function alternatives(term) {
+    var result = [term];
+    SYNONYMS.forEach(function (group) {
+      group.forEach(function (word) {
+        if (term.indexOf(word) === -1) return;
+        group.forEach(function (other) {
+          var variant = term.split(word).join(other);
+          if (result.indexOf(variant) === -1) result.push(variant);
+        });
+      });
+    });
+    return result;
+  }
+  function firstHit(text, choices) {
+    for (var i = 0; i < choices.length; i++) if (text.includes(choices[i])) return choices[i];
+    return null;
+  }
+
+  function score(entry, groups, normalizedQuery) {
+    var total = 0;
+    for (var i = 0; i < groups.length; i++) {
+      var term = firstHit(entry.text, groups[i]);
+      if (!term) return null;
+      // 小节标题正好是搜索词时最相关，例如“死锁的必要条件”中的“必要条件”；标题用的是另一种说法时也算（搜 MVCC，标题是“多版本并发控制”）
+      var head = firstHit(entry.heading, groups[i]) || term;
+      total += (entry.heading === head ? 30 : 0) + (entry.heading.includes(head) ? (wholeWord(entry.heading, head) ? 40 : 25) : 0) +
+        (entry.page.includes(term) ? 15 : 0) + (entry.lead.includes(term) ? 10 : 0) + occurrences(entry.body, term);
+    }
+    var phrase = groups.length > 1 && normalizedQuery ? normalizedQuery.replace(/ /g, '') : '';
+    if (phrase) total += (entry.flatHeading.includes(phrase) ? 25 : 0) + (entry.flatBody.includes(phrase) ? 10 : 0);
+    return total - entry.penalty + (entry.heading === normalizedQuery ? 100 : 0);
+  }
+
+  // 整句的问法：先去掉“什么是”“为什么”这类词再搜（“什么是幂等”按“幂等”搜）
+  var QUESTION = /什么是|是什么|为什么要|为什么|为啥|怎么样|怎么|如何|有哪些|哪些|有什么|区别是|作用是|原理是|的区别|区别|对比|比较|异同|和|与|跟|及|吗|呢|么|的|了|？|\?/g;
+  function stripQuestion(query) {
+    // 去掉后剩下的单个汉字或单个字母没有意义（“和为 S”去掉“和”只剩“为”和“s”），这时不用去掉后的版本
+    var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return term.length > 1; });
+    return terms.length ? terms.join(' ') : '';
+  }
+  // 仍然没有结果时按相邻两个字的词组匹配，至少命中七成；原文中连续出现的长片段（“四个条件”）额外加分
+  function bigrams(terms) {
+    var pairs = [];
+    terms.forEach(function (term) {
+      if (!CJK.test(term)) return;
+      for (var i = 0; i + 1 < term.length; i++) {
+        var pair = term.slice(i, i + 2);
+        if (pairs.indexOf(pair) === -1) pairs.push(pair);
+      }
+    });
+    return pairs;
+  }
+  function fuzzyScore(entry, pairs, segments) {
+    var hit = 0, total = 0;
+    pairs.forEach(function (pair) {
+      if (!entry.text.includes(pair)) return;
+      hit++;
+      total += (entry.heading.includes(pair) ? 12 : 0) + (entry.page.includes(pair) ? 4 : 0) + Math.min(occurrences(entry.body, pair), 3);
+    });
+    if (hit < Math.max(2, Math.ceil(pairs.length * .7))) return null;
+    segments.forEach(function (segment) {
+      if (segment.length > 2 && entry.text.includes(segment)) total += segment.length * 6;
+    });
+    return total + hit * 5 - entry.penalty;
+  }
+
+  function search(index, query, limit) {
+    var normalizedQuery = normalize(query).slice(0, 120);
+    if (!normalizedQuery) return [];
+    var entries = prepareIndex(index), results = [], fuzzy = false, used = [];
+    var seen = {};
+    function collect(scoreOf) {
+      entries.forEach(function (entry) {
+        var value = scoreOf(entry);
+        if (value === null) return;
+        var section = entry.section, key = entry.path + '?' + section.id;
+        if (seen[key]) { seen[key].score = Math.max(seen[key].score, value); return; }
+        seen[key] = { page: entry.pageTitle, path: entry.path, title: section.title || entry.pageTitle,
+          id: section.id, text: section.text, score: value, penalty: entry.penalty };
+        results.push(seen[key]);
+      });
+    }
+    function exact(text) {
+      var terms = splitTerms(text);
+      if (!terms.length) return;
+      var groups = terms.map(alternatives);
+      used = used.concat([].concat.apply([], groups));
+      collect(function (entry) { return score(entry, groups, text); });
+    }
+    exact(normalizedQuery);
+    // 去掉问法后的结果合并进来：“死锁的必要条件”原文只出现在学习路线中，正文的小节标题是“必要条件”
+    var stripped = stripQuestion(normalizedQuery);
+    if (stripped && stripped !== normalizedQuery) exact(stripped);
+    if (!results.length) {
+      var terms = splitTerms(stripped || normalizedQuery);
+      var pairs = bigrams(terms.map(function (term) { return alternatives(term)[0]; }));
+      var ascii = terms.filter(function (term) { return !CJK.test(term); }).map(alternatives);
+      if (pairs.length >= 2) {
+        fuzzy = true;
+        used = pairs.concat([].concat.apply([], ascii));
+        collect(function (entry) {
+          if (ascii.some(function (group) { return !firstHit(entry.text, group); })) return null;
+          return fuzzyScore(entry, pairs, terms);
+        });
+      }
+      // 只剩英文词时（“HashMap和Hashtable的区别”中的“区别”找不到同一节），只按英文词搜
+      if (!results.length && ascii.length && ascii.length < terms.length) {
+        fuzzy = true;
+        used = [].concat.apply([], ascii);
+        collect(function (entry) { return score(entry, ascii, ''); });
+      }
+    }
+    results.sort(function (a, b) { return b.score - a.score || a.penalty - b.penalty; });
+    var shown = results.slice(0, limit || 20);
+    shown.total = results.length;
+    shown.fuzzy = fuzzy;
+    shown.terms = used;
+    return shown;
   }
 
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { search: search, normalize: normalize };
+    module.exports = { search: search, normalize: normalize, highlight: highlight, snippet: snippet };
     return;
   }
 
@@ -126,14 +271,16 @@
       status.textContent = '正在搜索…';
       loadIndex().then(function (index) {
         if (request !== sequence) return;
-        var results = search(index, query), terms = normalize(query).split(' ').filter(Boolean);
-        status.textContent = results.length ? '找到 ' + results.length + ' 个相关章节' : '没有找到相关内容，可以换个说法或减少关键词';
-        lastTerms = terms;
+        var results = search(index, query);
+        status.textContent = !results.length ? '没有找到相关内容，可以换个说法或减少关键词' :
+          (results.fuzzy ? '没有完全匹配的内容，以下是相近的章节' :
+            results.total > results.length ? '找到 ' + results.total + ' 个相关章节，显示前 ' + results.length + ' 个' : '找到 ' + results.length + ' 个相关章节');
+        lastTerms = results.terms;
         panel.innerHTML = results.map(function (result, i) {
           var url = '/#' + result.path.split('/').map(encodeURIComponent).join('/') +
             (result.id ? '?id=' + encodeURIComponent(result.id) : '');
-          return '<a class="matching-post" id="search-result-' + i + '" role="option" aria-selected="false" tabindex="-1" href="' + escapeHtml(url) + '"><strong>' + highlight(result.title, terms) +
-            '</strong><small>' + escapeHtml(result.page) + '</small><p>' + highlight(snippet(result.text, terms), terms) + '</p></a>';
+          return '<a class="matching-post" id="search-result-' + i + '" role="option" aria-selected="false" tabindex="-1" href="' + escapeHtml(url) + '"><strong>' + highlight(result.title, results.terms) +
+            '</strong><small>' + escapeHtml(result.page) + '</small><p>' + highlight(snippet(result.text, results.terms), results.terms) + '</p></a>';
         }).join('');
         markCurrent();
       }).catch(function () {
