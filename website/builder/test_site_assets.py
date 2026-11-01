@@ -6,7 +6,7 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from site_assets import heading_slug, optimize_images, referenced_paths, search_document
+from site_assets import add_image_sizes, heading_slug, optimize_images, referenced_paths, search_document
 from build import github_slug, hot_spans, strip_hot
 
 
@@ -66,6 +66,22 @@ class SearchIndexTests(unittest.TestCase):
                 self.assertEqual(report['converted'], 2)
                 outputs.append((dist / 'image-variants.json').read_bytes())
             self.assertEqual(outputs[0], outputs[1])
+
+
+    def test_image_sizes_keep_aspect_ratio(self):
+        from PIL import Image
+        with tempfile.TemporaryDirectory() as directory:
+            dist = Path(directory)
+            (dist / 'pics').mkdir()
+            Image.new('RGB', (1520, 600)).save(dist / 'pics' / 'a.png')
+            (dist / 'a.md').write_text('<img src="/pics/a.png" width="760px"/>\n<img src="/pics/a.png">\n'
+                                       '<img src="/pics/a.png" width="10" height="9"/>\n<img src="https://x/y.png"/>\n'
+                                       '```html\n<img src="/pics/a.png"/>\n```\n')
+            self.assertEqual(add_image_sizes(dist), 2)
+            self.assertEqual((dist / 'a.md').read_text(),
+                             '<img src="/pics/a.png" width="760px" height="300"/>\n<img src="/pics/a.png" width="1520" height="600">\n'
+                             '<img src="/pics/a.png" width="10" height="9"/>\n<img src="https://x/y.png"/>\n'
+                             '```html\n<img src="/pics/a.png"/>\n```\n')
 
 
 if __name__ == '__main__':
