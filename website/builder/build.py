@@ -213,6 +213,32 @@ def section_tree(dist, sidebar):
     return tree
 
 
+def write_app_icons(dist, logo):
+    """主屏幕图标和网页应用清单：用站点标志生成；有底色的图标给 iOS 和 maskable 用，标志在中间的安全区内。"""
+    from PIL import Image
+    with Image.open(logo) as image:
+        mark = image.convert('RGBA')
+    mark = mark.crop(mark.getchannel('A').getbbox())
+    icons = dist / 'icons'
+    icons.mkdir(exist_ok=True)
+    for name, size, scale, background in [('icon-180.png', 180, .84, '#ffffff'), ('icon-192.png', 192, 1, None),
+                                          ('icon-512.png', 512, 1, None), ('maskable-512.png', 512, .76, '#ffffff')]:
+        canvas = Image.new('RGBA', (size, size), background or (0, 0, 0, 0))
+        side = round(size * scale)
+        resized = mark.resize((side, round(side * mark.height / mark.width)), Image.LANCZOS)
+        canvas.alpha_composite(resized, ((size - resized.width) // 2, (size - resized.height) // 2))
+        canvas.save(icons / name, optimize=True)
+    manifest = {
+        'name': 'CS-Notes', 'short_name': 'CS-Notes', 'lang': 'zh-CN',
+        'description': '技术面试必备的计算机基础知识，涵盖算法、操作系统、计算机网络、数据库、Java 与系统设计。',
+        'start_url': '/', 'scope': '/', 'display': 'standalone', 'background_color': '#f3f2ee', 'theme_color': '#f3f2ee',
+        'icons': [{'src': '/icons/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
+                  {'src': '/icons/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},
+                  {'src': '/icons/maskable-512.png', 'sizes': '512x512', 'type': 'image/png', 'purpose': 'maskable'}],
+    }
+    (dist / 'manifest.webmanifest').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
+
+
 def build(optimize=True):
     global IMAGE_BY_NAME, ANCHORS
     IMAGE_BY_NAME = repository_images()
@@ -274,6 +300,7 @@ def build(optimize=True):
         # 允许收录；学习站每道题的页面列在它的站点地图中（笔记页面在 # 之后，没有单独的地址）
         (dist / 'robots.txt').write_text('User-agent: *\nAllow: /\n' + (f'Sitemap: {SITE_URL}learn/sitemap.xml\n' if LEARN_BUILD.is_file() else ''))
         shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', dist / 'favicon.png')
+        write_app_icons(dist, ROOT / 'docs/_media/LogoMakr_1J56bI.png')
         learn_report = None
         if LEARN_BUILD.is_file():
             # 学习站的问题（链接到的小节改名、题目和要点对不上）只给警告，不挡住笔记的发布；警告写进构建报告
