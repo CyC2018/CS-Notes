@@ -1,5 +1,9 @@
-:root { --theme-color: #369b72; }
+:root { --theme-color: #2a7a5a; }
 body, .sidebar, .sidebar-toggle { background: #f3f2ee; }
+/* 载入提示：vue.css 的 div#app { margin: 40vh auto } 会穿透到 body，载入完成时整页从屏幕中间跳到顶部 */
+div#app { display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; color: #718078; font-size: 14px; letter-spacing: .04em; }
+/* 载入完成前 body 不能滚动，出现滚动条时页面会左移；预留滚动条的位置 */
+html { scrollbar-gutter: stable; }
 body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
 .app-name { font-weight: 650 !important; letter-spacing: .02em; }
 .sidebar { padding-top: 24px; border-right: 1px solid #e2e3dc; }
@@ -26,25 +30,25 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .site-footer a { color: inherit; font-weight: 400; }
 .topic-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
 .topic-grid a { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px 8px; border: 1px solid #dfe3da; border-radius: 7px; background: #fafbf8; text-decoration: none; font-size: 14px; white-space: nowrap; }
-.topic-grid a:hover, .topic-grid a:focus-visible { background: #e8f1e9; border-color: #369b72; }
+.topic-grid a:hover, .topic-grid a:focus-visible { background: #e8f1e9; border-color: #2a7a5a; }
 .site-search { padding: 8px 15px; }
 .site-search input { box-sizing: border-box; width: 100%; min-height: 42px; padding: 10px; border: 1px solid #dfe3da; color: #34495e; font-size: 15px; }
-.site-search input:focus { outline: 2px solid #369b72; outline-offset: 1px; }
+.site-search input:focus { outline: 2px solid #2a7a5a; outline-offset: 1px; }
 .search-status { color: #718078; font-size: 12px; margin: 7px 0; }
 .search-status:empty { display: none; }
 .site-search .matching-post { display: block; padding: 12px 0; border-bottom: 1px solid #dde3d8; text-decoration: none; }
 .matching-post strong, .matching-post small { display: block; }
-.matching-post strong { color: #369b72; font-size: 14px; }
+.matching-post strong { color: #2a7a5a; font-size: 14px; }
 .matching-post small { color: #718078; margin: 5px 0; font-size: 12px; }
 .matching-post p { color: #34495e; margin: 4px 0; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
 .article-toc { border: 1px solid #dfe3da; border-radius: 7px; padding: 12px 18px; margin: 20px 0 28px; background: #fafbf8; }
-.article-toc summary { color: #369b72; font-weight: 600; cursor: pointer; min-height: 24px; }
+.article-toc summary { color: #2a7a5a; font-weight: 600; cursor: pointer; min-height: 24px; }
 .article-toc > ul { margin-bottom: 0; }
 .learn-banner, .learn-callout { display: flex; align-items: center; gap: 16px; margin: 18px 0; padding: 16px 18px; border: 1px solid #e3e6e4; border-left: 4px solid var(--theme-color); border-radius: 10px; background: #fafbfa; color: inherit; text-decoration: none !important; }
 .learn-banner:hover, .learn-banner:focus-visible, .learn-callout:hover, .learn-callout:focus-visible { border-color: var(--theme-color); background: #eef7f2; }
 .learn-banner-text { flex: 1; min-width: 0; }
 .learn-banner b, .learn-callout b { display: block; color: var(--theme-color); font-size: 16px; }
-.learn-banner-text span, .learn-callout span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.6; opacity: .85; }
+.learn-banner-text span, .learn-callout span { display: block; margin-top: 2px; font-size: 14px; line-height: 1.6; color: #34495e; }
 .learn-banner-go { flex: none; padding: 7px 18px; border-radius: 8px; background: var(--theme-color); color: #fff; font-weight: 600; font-size: 15px; }
 .learn-callout { display: block; }
 .learn-practice { margin-top: 36px; }
@@ -90,5 +94,23 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 /* 步骤动图的播放器 */
 .anim-bar { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 6px 0 4px; }
 .anim-bar button { min-height: 30px; padding: 2px 12px; border: 1px solid #dfe3da; border-radius: 6px; background: #fafbf8; color: #34495e; font: inherit; font-size: 13px; cursor: pointer; }
-.anim-bar button:hover, .anim-bar button:focus-visible { border-color: #369b72; color: #369b72; }
+.anim-bar button:hover, .anim-bar button:focus-visible { border-color: #2a7a5a; color: #2a7a5a; }
 .anim-count { min-width: 44px; color: #718078; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* 代码高亮：在 #f8f8f8 底上对比度不低于 4.5:1 */
+.markdown-section code { color: #9a3f2a; }
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: #646e69; }
+.token.keyword, .token.function { color: #a3501b; }
+.token.string, .token.attr-value { color: #2a7a52; }
+.token.number, .token.boolean { color: #9b5a14; }
+.token.namespace { opacity: 1; color: #58635d; }
+.token.tag, .token.attr-name, .token.variable, .token.placeholder { color: #2d6b9a; }
+.token.important { color: #a8401c; }
+.token.entity, .token.control, .token.directive, .token.unit { color: #17788a; }
+.token.selector { color: #5a52a3; }
+.token.property { color: #7f6212; }
+.token.atrule, .token.regex, .token.statement, .token.url { color: #17788a; }
+.learn-q-label { background: #e7f1eb; }
+/* 首页贡献者头像：链接按图片大小计算点击区域 */
+.markdown-section > a:has(> img) { display: inline-block; margin: 2px; }
+.markdown-section > a > img[src*="avatars"] { aspect-ratio: 1; }

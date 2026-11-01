@@ -30,8 +30,10 @@ assert result.returncode == 0, result.stderr
 assert digest(OUTPUT / 'asset-manifest.json') == first_manifest, '相同输入的两次构建不一致'
 
 report = json.loads((BASE / 'dist-report.json').read_text())
-url, image = next((url, path) for url, path in report['imageReplacements'].items()
-    if path.startswith('/notes/pics/') and path.endswith('.png'))
+# 优先选 PNG；笔记的旧外链图片都已重画为本地 PNG 时，剩下的多是 GIF，用同类型的图片替换
+candidates = [(url, path) for url, path in report['imageReplacements'].items() if path.startswith('/notes/pics/')]
+url, image = next((item for item in candidates if item[1].endswith('.png')), candidates[0])
+suffix = Path(image).suffix
 image_name = unquote(image).lstrip('/')
 note = next(path for path in (SOURCE / 'notes').glob('*.md') if url in path.read_text())
 note_name = note.relative_to(SOURCE)
@@ -44,7 +46,7 @@ with tempfile.TemporaryDirectory(prefix='.update-check-', dir=BASE) as temp:
     shutil.copytree(SOURCE, source)
     with (source / note_name).open('a') as handle:
         handle.write('\n\n## 本地验证更新\n\n本地同步验证示例词：这是未上传的更新测试。\n')
-    replacement = next(path for path in (SOURCE / 'notes/pics').glob('*.png') if digest(path) != original_image)
+    replacement = next(path for path in (SOURCE / 'notes/pics').glob('*' + suffix) if digest(path) != original_image)
     shutil.copyfile(replacement, source / image_name)
     shutil.copyfile(replacement, source / 'notes/pics/local-validation-new.png')
     (source / 'notes/本地新增验证.md').write_text('# 本地新增验证\n\n仅在测试副本中生成。\n\n![新图片](pics/local-validation-new.png)\n')

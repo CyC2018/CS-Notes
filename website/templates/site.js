@@ -5,14 +5,29 @@
   function encodedRoute(path) { return path.split('/').map(encodeURIComponent).join('/'); }
   function configureImages(root, homepage) {
     if (!root) return;
+    var first = root.querySelector('img');
     root.querySelectorAll('img').forEach(function (img) {
       if (homepage && img.classList.contains('site-logo')) {
         img.loading = 'eager';
         img.setAttribute('fetchpriority', 'high');
       } else if (!img.hasAttribute('loading')) {
-        img.loading = 'lazy';
+        // 文章的第一张图常在首屏内，延迟加载会推迟最大内容绘制，直接加载
+        img.loading = !homepage && img === first ? 'eager' : 'lazy';
       }
       img.decoding = 'async';
+      // 笔记中的配图大多没写说明，读屏软件只能读出文件名；用所在小节的标题作为说明
+      if (!img.hasAttribute('alt')) {
+        var heading = null;
+        for (var node = img; node && node !== root && !heading; node = node.previousElementSibling || node.parentElement) {
+          if (/^H[1-6]$/.test(node.tagName) && node !== img) heading = node;
+        }
+        var title = heading ? heading.textContent.replace(/[#¶]/g, '').trim() : '';
+        img.alt = title ? title + (/[!-~]$/.test(title) ? ' ' : '') + '的配图' : '配图';
+      }
+    });
+    // 复制代码插件写的 aria-hidden="hidden" 不是有效值；插件的按钮在本插件之后才加上
+    setTimeout(function () {
+      root.querySelectorAll('.docsify-copy-code-button [aria-hidden="hidden"]').forEach(function (node) { node.setAttribute('aria-hidden', 'true'); });
     });
   }
   function preserveLegacyLinks() {
@@ -258,7 +273,7 @@
     if (!section || !sections || section.querySelector('.learn-q')) return;
     var record = learnRecord(), today = localDay();
     Object.keys(sections).forEach(function (anchor) {
-      var heading = document.getElementById(anchor), list = sections[anchor];
+      var heading = (section.ownerDocument || document).getElementById(anchor), list = sections[anchor];
       if (!heading || !section.contains(heading) || !/^H[2-6]$/.test(heading.tagName)) return;
       var tried = record ? list.filter(function (q) { return record.cards[q[0]]; }) : [];
       var due = tried.filter(function (q) { var c = record.cards[q[0]]; return c.due && c.due <= today; }).length;
@@ -318,6 +333,7 @@
           list.replaceWith(details);
           details.appendChild(list);
         }
+        sectionQuestions(vm, document.body);
         return document.body.innerHTML + '<footer class="site-footer"><a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">CyC2018 · CS-Notes</a><span> · </span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备19071404号-1</a></footer>';
       });
       hook.doneEach(function () {
