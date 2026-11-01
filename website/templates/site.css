@@ -148,3 +148,16 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 .markdown-section :not(pre) > code { overflow-wrap: anywhere; }
 .site-footer a { display: inline-block; padding: 5px 2px; }
 .markdown-section details:not(.article-toc) > summary { padding: 5px 0; cursor: pointer; }
+
+/* 搜索：快捷键提示、键盘选中的结果、标出的搜索词、跳转到的小节标题短暂高亮 */
+.site-search { position: relative; }
+.site-search .search-key { position: absolute; right: 24px; top: 19px; padding: 1px 6px; border: 1px solid #dfe3da; border-radius: 4px; background: #fafbf8; color: #5f6d66; font: 11px/1.6 "SFMono-Regular", Consolas, monospace; pointer-events: none; }
+.site-search input:focus ~ .search-key, .site-search input:not(:placeholder-shown) ~ .search-key { display: none; }
+@media (hover: none) { .site-search .search-key { display: none; } }
+.site-search .matching-post[aria-selected="true"], .site-search .matching-post:hover { margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 6px; background: #fafbf8; }
+.site-search .matching-post[aria-selected="true"] { box-shadow: inset 2px 0 0 #2a7a5a; }
+.site-search .matching-post[aria-current] { margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 6px; background: #eaf3ee; }
+.matching-post mark, .markdown-section mark.search-hit { background: #e6e3fa; color: inherit; border-radius: 2px; padding: 0 1px; }
+.matching-post strong mark { color: #2c3e50; }
+@keyframes jump-flash { from { background: #eaf3ee; } to { background: transparent; } }
+.markdown-section .jump-target { animation: jump-flash 1.8s ease-out; border-radius: 4px; }
