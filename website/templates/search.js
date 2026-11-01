@@ -211,6 +211,7 @@
   }
 
   var HIT_SKIP = /^(PRE|CODE|SCRIPT|STYLE|MARK|BUTTON|SVG)$/;
+  var shownPath = null;
   function clearHits() {
     document.querySelectorAll('mark.search-hit').forEach(function (mark) {
       mark.replaceWith(document.createTextNode(mark.textContent));
@@ -221,7 +222,8 @@
     try { saved = JSON.parse(sessionStorage.getItem('cs-notes-search-hit')); } catch (error) { return; }
     if (!saved || Date.now() - saved.time > 30000) return;
     var hash = decodeURIComponent(location.hash), href = decodeURIComponent(saved.href.replace(/^\//, ''));
-    if (hash !== href) return;
+    // 换了文章时，新文章渲染出来之前页面上还是旧文章，等 doneEach 再标
+    if (hash !== href || hash.split('?')[0] !== shownPath) return;
     sessionStorage.removeItem('cs-notes-search-hit');
     clearHits();
     var id = new URLSearchParams(href.split('?').slice(1).join('?')).get('id');
@@ -267,6 +269,9 @@
   window.$docsify.plugins.push(function (hook) {
     hook.mounted(mountSearch);
     hook.doneEach(mountSearch);
-    hook.doneEach(function () { setTimeout(markHits, 0); });
+    hook.doneEach(function () {
+      shownPath = decodeURIComponent(location.hash.split('?')[0]);
+      setTimeout(markHits, 0);
+    });
   });
 })();
