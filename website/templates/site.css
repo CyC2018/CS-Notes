@@ -117,3 +117,29 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 
 /* 离线提示 */
 .markdown-section .offline-note { margin: 0 0 18px; padding: 8px 12px; border-radius: 6px; background: #eaf3ee; color: #34495e; font-size: 14px; }
+
+/* 键盘操作：焦点清晰可见；第一个可聚焦的是“跳到正文”，不用先按过侧边栏的上百个链接 */
+:focus-visible { outline: 2px solid var(--theme-color); outline-offset: 2px; border-radius: 3px; }
+.sidebar-toggle:focus-visible { outline: 2px solid var(--theme-color); outline-offset: -2px; }
+.skip-link { position: fixed; left: 12px; top: -48px; z-index: 50; padding: 8px 14px; border: 0; border-radius: 6px; background: var(--theme-color); color: #fff; font: inherit; font-size: 14px; cursor: pointer; }
+.skip-link:focus { top: 12px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+/* 打印：只保留正文，占满纸张宽度 */
+@media print {
+  .sidebar, .sidebar-toggle, .github-corner, .anim-bar, .docsify-copy-code-button, .site-footer, .skip-link { display: none !important; }
+  .content { position: static; left: 0 !important; padding: 0; }
+  .markdown-section { max-width: none; padding: 0; }
+  .markdown-section pre, .markdown-section img { break-inside: avoid; }
+  .article-toc { display: none; }
+}
+
+/* 打印：去掉学习站的入口和题目提示，代码自动换行不被截断，标题不落在页尾 */
+@media print {
+  body, .markdown-section pre, .markdown-section code { background: #fff !important; }
+  .learn-q, .learn-callout, .learn-banner, .offline-note { display: none !important; }
+  .markdown-section pre, .markdown-section pre > code { white-space: pre-wrap !important; overflow-wrap: anywhere; }
+  .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 { break-after: avoid; }
+  .markdown-section table { display: table; }
+  .markdown-section tr { break-inside: avoid; }
+}
