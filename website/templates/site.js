@@ -760,6 +760,17 @@
     });
   }
 
+  // 侧边栏中读完的文章后面标 ✓
+  function markRead() {
+    var all = storage(PROGRESS_KEY) || {};
+    document.querySelectorAll('.sidebar-nav a[href^="#/"]').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (href.indexOf('?') !== -1) return;
+      var done = !!(all[decode(href.slice(1))] || {}).done;
+      link.classList.toggle('read', done);
+      if (done) link.setAttribute('aria-description', '已读完'); else link.removeAttribute('aria-description');
+    });
+  }
   // 记住每篇文章读到的小节：再次打开时提示继续阅读，首页给出最近读过的文章
   var stopProgress = null;
   function readingProgress(vm, section) {
@@ -780,6 +791,16 @@
       link.href = '#' + encodedRoute(last) + (saved[last].id ? '?id=' + encodeURIComponent(saved[last].id) : '');
       link.textContent = saved[last].page + (saved[last].heading ? ' · ' + saved[last].heading : '');
       recent.appendChild(link);
+      var finished = Object.keys(saved).filter(function (key) { return saved[key].done; }).length;
+      if (finished) {
+        recent.insertAdjacentHTML('beforeend', '<span class="read-count">已读完 ' + finished + ' 篇</span><button type="button" class="clear-read">清除阅读记录</button>');
+        recent.querySelector('.clear-read').addEventListener('click', function () {
+          if (!window.confirm('清除全部阅读记录？侧边栏的已读标记、上次阅读的位置都会清除。')) return;
+          try { localStorage.removeItem(PROGRESS_KEY); } catch (error) {}
+          recent.remove();
+          markRead();
+        });
+      }
       grid.after(recent);
       return;
     }
@@ -788,7 +809,9 @@
     var page = ((section.querySelector('h1') || {}).textContent || path.split('/').pop()).trim();
     var record = saved[path];
     var target = record && record.id && document.getElementById(record.id);
-    if (!vm.route.query.id && target && heads.indexOf(target) > 1) {
+    var tail = heads.filter(function (h) { return h.tagName === 'H2' && /^(附录|参考资料)/.test(headingText(h)); })[0];
+    var finishedHere = record && record.done && tail && target && (target === tail || tail.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING);
+    if (!vm.route.query.id && target && heads.indexOf(target) > 1 && !finishedHere) {
       var toast = document.createElement('div');
       toast.className = 'resume-toast';
       toast.setAttribute('role', 'status');
@@ -811,21 +834,32 @@
       setTimeout(function () { toast.remove(); }, 12000);
     }
     var lastId = null, timer = null;
+    // 读完：读到附录或参考资料（或文末），并且读过的二级小节不少于一半；只跳到文末不算
+    var parts = heads.filter(function (h) { return h.tagName === 'H2'; });
+    var body = parts.filter(function (h) { return !tail || h.compareDocumentPosition(tail) & Node.DOCUMENT_POSITION_FOLLOWING; });
+    var seen = (record && record.seen || []).slice(), done = !!(record && record.done);
     function save() {
-      var current = null;
+      var current = null, part = null;
       for (var i = 0; i < heads.length; i++) {
         if (heads[i].getBoundingClientRect().top > 90) break;
         current = heads[i];
+        if (current.tagName === 'H2') part = current;
       }
       var id = current ? current.id : null;
-      if (id === lastId) return;
+      var changed = id !== lastId;
+      if (part && body.indexOf(part) !== -1 && seen.indexOf(part.id) === -1) { seen.push(part.id); changed = true; }
+      var end = (tail && tail.getBoundingClientRect().top < window.innerHeight * .6) ||
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 400;
+      if (!done && end && seen.length >= Math.max(1, Math.ceil(body.length / 2))) { done = true; changed = true; }
+      if (!changed) return;
       lastId = id;
       var all = storage(PROGRESS_KEY) || {};
-      all[path] = { page: page, id: id, heading: current ? headingText(current) : '', time: Date.now() };
-      // 只保留最近的 100 篇
-      Object.keys(all).sort(function (a, b) { return all[b].time - all[a].time; }).slice(100)
+      all[path] = { page: page, id: id, heading: current ? headingText(current) : '', time: Date.now(), seen: seen, done: done };
+      // 只保留最近的 300 篇
+      Object.keys(all).sort(function (a, b) { return all[b].time - all[a].time; }).slice(300)
         .forEach(function (key) { delete all[key]; });
       storage(PROGRESS_KEY, all);
+      if (done) markRead();
     }
     function onScroll() { clearTimeout(timer); timer = setTimeout(save, 400); }
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -1017,6 +1051,7 @@
         learnBanner(section);
         dailyQuestion(section);
         if (section) readingProgress(vm, section);
+        markRead();
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
