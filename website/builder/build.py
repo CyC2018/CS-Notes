@@ -189,7 +189,7 @@ def build(optimize=True):
         dist = Path(temporary) / 'dist'
         dist.mkdir()
         shutil.copytree(SITE / 'vendor', dist / 'vendor')
-        for name in ('index.html', 'site.css', 'site.js', 'search.js'):
+        for name in ('index.html', 'site.css', 'site.js', 'search.js', 'edgeone.json'):
             shutil.copyfile(SITE / name, dist / name)
         for path in sources():
             target = dist / path.relative_to(ROOT)
@@ -282,10 +282,11 @@ def build(optimize=True):
                       'searchIndex': index_name, 'legacyRoutes': len(legacy)}
         (dist / 'build-info.json').write_text(json.dumps(build_info, indent=2) + '\n')
         entry = (dist / 'index.html').read_text()
-        for name in ('site.css', 'site.js', 'search.js', 'search-paths.js'):
-            digest = hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12]
-            entry = entry.replace('/' + name + '"', '/' + name + '?v=' + digest + '"')
+        entry = bundle_entry(dist, entry)
         (dist / 'index.html').write_text(entry)
+        shell = ['/', '/_sidebar.md', '/README.md'] + re.findall(r'(?:src|href)="(/(?:app|vendor|style)-[0-9a-f]{16}\.(?:js|css))"', entry)
+        worker = (SITE / 'sw.js').read_text().replace('__SHELL__', json.dumps(shell))
+        (dist / 'sw.js').write_text(worker.replace('__BUILD__', hashlib.sha256(json.dumps(shell).encode()).hexdigest()[:12]))
         write_manifest(dist, build_info)
         files = [p for p in dist.rglob('*') if p.is_file()]
         report = {'notes': len(note_paths), 'files': len(files), 'bytes': sum(p.stat().st_size for p in files),
@@ -308,6 +309,32 @@ def build(optimize=True):
     report.update({'sourceCommit': SOURCE_COMMIT, 'imageReplacements': reused, 'externalImageUrls': unchanged_external})
     DIST.with_name(DIST.name + '-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({k: v for k, v in report.items() if k not in ('imageReplacements', 'externalImageUrls')}, ensure_ascii=False, indent=2))
+
+
+SCRIPT_TAG = re.compile(r'^  <script src="/([^"]+)" defer></script>\n', re.M)
+STYLE_TAG = re.compile(r'^  <link rel="stylesheet" href="/([^"]+)">\n', re.M)
+
+
+def bundle_entry(dist, entry):
+    """入口页的脚本按原顺序合成本站脚本和依赖库两个文件，样式合成一个；文件名带内容哈希。"""
+    def write(names, prefix, suffix, separator):
+        parts = [re.sub(r'^//# sourceMappingURL=.*$', '', (dist / name).read_text(), flags=re.M).rstrip() for name in names]
+        data = separator.join(parts) + '\n'
+        name = f'{prefix}-{hashlib.sha256(data.encode()).hexdigest()[:16]}{suffix}'
+        (dist / name).write_text(data)
+        return name
+    scripts, styles = SCRIPT_TAG.findall(entry), STYLE_TAG.findall(entry)
+    own = [name for name in scripts if not name.startswith('vendor/')]
+    vendor = [name for name in scripts if name.startswith('vendor/')]
+    # 本站脚本要先执行（site.js 定义 $docsify 配置，依赖库中的插件往里面添加）
+    if scripts != own + vendor:
+        raise ValueError('入口页的脚本顺序应为本站脚本在前、依赖库在后')
+    tags = ''.join(f'  <script src="/{write(group, prefix, ".js", chr(10) + ";" + chr(10))}" defer></script>\n'
+                   for group, prefix in ((own, 'app'), (vendor, 'vendor')) if group)
+    style = f'  <link rel="stylesheet" href="/{write(styles, "style", ".css", chr(10))}">\n'
+    entry = SCRIPT_TAG.sub('', entry)
+    entry = STYLE_TAG.sub(lambda match: style if match[1] == styles[0] else '', entry)
+    return entry.replace('</body>', tags + '</body>', 1)
 
 
 if __name__ == '__main__':
