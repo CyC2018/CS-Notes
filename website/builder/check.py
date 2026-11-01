@@ -4,6 +4,8 @@ import hashlib
 import json
 import re
 from pathlib import Path
+
+from site_assets import VERBATIM
 from urllib.parse import unquote, urlsplit
 
 BASE = Path(__file__).resolve().parents[1]
@@ -23,7 +25,7 @@ def check(source, output):
             errors.append('文件清单校验失败：' + name)
     references = 0
     for document in output.rglob('*.md'):
-        content = re.sub(r'```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->', '', document.read_text())
+        content = VERBATIM.sub('', document.read_text())
         for match in re.finditer(r'''\]\((/[^\s)]+)\)|(?:src|href)=["'](/[^"']+)''', content):
             url = match[1] or match[2]
             if url.startswith(('/#', '//')):
