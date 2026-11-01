@@ -223,6 +223,47 @@ def optimize_images(dist, cache):
             'deliveryBytes': sum(v['deliveryBytes'] for v in mapping.values()), 'pixelIdentical': True}
 
 
+def add_image_sizes(dist):
+    """给站内图片补上 height（按 width 和原图比例计算），浏览器在图片加载前就能留出位置，跳转到小节时不会被延迟加载的图片推开。"""
+    from PIL import Image
+    tag = re.compile(r'<img\b[^>]*>', re.I)
+    sizes, added = {}, 0
+
+    def size(url):
+        path = dist / urllib.parse.unquote(urllib.parse.urlsplit(url).path).lstrip('/')
+        if url not in sizes:
+            try:
+                with Image.open(path) as image:
+                    sizes[url] = image.size
+            except (OSError, ValueError):
+                sizes[url] = None
+        return sizes[url]
+
+    def replace(match):
+        nonlocal added
+        img = match[0]
+        if re.search(r'\bheight\s*=', img, re.I):
+            return img
+        src = re.search(r'\bsrc=["\']([^"\']+)["\']', img, re.I)
+        if not src or not src[1].startswith('/') or src[1].startswith('//'):
+            return img
+        dimensions = size(html.unescape(src[1]))
+        if not dimensions or not dimensions[0]:
+            return img
+        width = re.search(r'\bwidth=["\']?(\d+(?:\.\d+)?)(?:px)?["\']?', img, re.I)
+        shown = float(width[1]) if width else dimensions[0]
+        height = round(shown * dimensions[1] / dimensions[0])
+        attributes = f' height="{height}"' if width else f' width="{dimensions[0]}" height="{dimensions[1]}"'
+        added += 1
+        return re.sub(r'\s*/?>$', lambda end: attributes + end[0], img, count=1)
+
+    for path in dist.rglob('*.md'):
+        parts = split_verbatim(path.read_text())
+        text = ''.join(part if i % 2 else tag.sub(replace, part) for i, part in enumerate(parts))
+        path.write_text(text)
+    return added
+
+
 def write_manifest(dist, build_info):
     records = []
     for path in sorted(p for p in dist.rglob('*') if p.is_file() and p.name != 'asset-manifest.json'):

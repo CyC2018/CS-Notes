@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="CS-Notes：技术面试必备的计算机基础知识，涵盖算法、操作系统、计算机网络、数据库、Java 与系统设计。">
-  <meta name="theme-color" content="#42b983">
+  <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1d1c" media="(prefers-color-scheme: dark)">
   <title>CS-Notes · CyC2018</title>
   <link rel="icon" href="/favicon.png">
   <script>
@@ -22,6 +23,16 @@
         document.head.appendChild(link);
       });
     })();
+  </script>
+  <script>
+    // 在渲染前确定配色，避免深色模式下先闪一下白色
+    try {
+      var theme = JSON.parse(localStorage.getItem('cs-notes-theme'));
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.dataset.theme = 'dark';
+      var reading = JSON.parse(localStorage.getItem('cs-notes-reading')) || {};
+      if (/^[0-4]$/.test(reading.size)) document.documentElement.dataset.size = reading.size;
+      if (/^(compact|loose)$/.test(reading.leading)) document.documentElement.dataset.leading = reading.leading;
+    } catch (error) {}
   </script>
   <link rel="stylesheet" href="/vendor/vue.css">
   <link rel="stylesheet" href="/site.css">
@@ -41,5 +52,9 @@
   <script src="/vendor/prism-sql.min.js" defer></script>
   <script src="/vendor/prism-python.min.js" defer></script>
   <script src="/vendor/prism-json.min.js" defer></script>
+  <script src="/vendor/prism-http.min.js" defer></script>
+  <script src="/vendor/prism-yaml.min.js" defer></script>
+  <script src="/vendor/prism-lua.min.js" defer></script>
+  <script src="/vendor/prism-docker.min.js" defer></script>
 </body>
 </html>
