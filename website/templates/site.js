@@ -30,6 +30,27 @@
       root.querySelectorAll('.docsify-copy-code-button [aria-hidden="hidden"]').forEach(function (node) { node.setAttribute('aria-hidden', 'true'); });
     });
   }
+  // 离线时提示显示的是缓存的版本；sw.js 缓存读过的文章，离线时也能打开
+  function offlineNote(section) {
+    if (!section || section.querySelector('.offline-note')) return;
+    // sw.js 给没缓存过的文章返回的说明页：Docsify 会把它记在内存里，联网后要刷新页面才能重新下载
+    if (/^当前离线/.test((section.querySelector('h1') || {}).textContent || '')) {
+      var retry = document.createElement('p');
+      retry.innerHTML = '<a href="javascript:location.reload()">重新加载</a>';
+      section.appendChild(retry);
+      window.addEventListener('online', function () { location.reload(); }, { once: true });
+      return;
+    }
+    if (navigator.onLine !== false) return;
+    var note = document.createElement('p');
+    note.className = 'offline-note';
+    note.setAttribute('role', 'status');
+    note.textContent = '当前离线，显示的是这台设备上次缓存的内容。';
+    section.insertBefore(note, section.firstChild);
+  }
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost')) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+  }
   function preserveLegacyLinks() {
     var hash = location.hash;
     var legacy = (window.CS_NOTES_LEGACY_ROUTES || {})[decode(location.pathname)];
@@ -337,6 +358,7 @@
         return document.body.innerHTML + '<footer class="site-footer"><a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">CyC2018 · CS-Notes</a><span> · </span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备19071404号-1</a></footer>';
       });
       hook.doneEach(function () {
+        offlineNote(document.querySelector('.markdown-section'));
         var heading = document.querySelector('.markdown-section h1, .markdown-section h2');
         document.title = (vm.route.path === '/' || !heading ? 'CS-Notes' : heading.textContent.trim() + ' · CS-Notes') + ' · CyC2018';
         configureImages(document.querySelector('.markdown-section'), vm.route.path === '/');
