@@ -7,6 +7,22 @@
   <meta name="theme-color" content="#42b983">
   <title>CS-Notes · CyC2018</title>
   <link rel="icon" href="/favicon.png">
+  <script>
+    // 正文和侧边栏的 Markdown 在 Docsify 载入前就开始下载，Docsify 请求同一地址时直接用下载好的内容
+    (function () {
+      var path = location.hash.replace(/^#/, '').split('?')[0] || '/';
+      var file = path === '/' ? '/README.md' : /^\/notes\/[^.]+$/.test(path) ? path + '.md' : null;
+      [file, '/_sidebar.md'].forEach(function (href) {
+        if (!href) return;
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'fetch';
+        link.crossOrigin = 'anonymous';
+        link.href = href;
+        document.head.appendChild(link);
+      });
+    })();
+  </script>
   <link rel="stylesheet" href="/vendor/vue.css">
   <link rel="stylesheet" href="/site.css">
 </head>
