@@ -144,3 +144,7 @@ body { color: #34495e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
   .markdown-section tr { break-inside: avoid; }
 }
 .markdown-section pre > code[tabindex]:focus-visible, .markdown-section table[tabindex]:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+.article-toc li a { display: inline-block; padding: 3px 0; }
+.markdown-section :not(pre) > code { overflow-wrap: anywhere; }
+.site-footer a { display: inline-block; padding: 5px 2px; }
+.markdown-section details:not(.article-toc) > summary { padding: 5px 0; cursor: pointer; }
