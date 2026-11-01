@@ -18,6 +18,20 @@ IMAGE_SUFFIXES = {'.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.av
 PUNCTUATION = re.compile(r'''[\u2000-\u206f\u2e00-\u2e7f\\'!"#$%&()*+,./:;<=>?@\[\]^`{|}~]''')
 
 
+# 代码块和注释：围栏必须在行首（允许缩进），用同样的字符和至少同样的长度结束。
+# 不能用不锚定的 ```...```：正文中的行内代码 ```` ```json ```` 会被当成代码块的开头，吞掉后面的图片引用。
+VERBATIM = re.compile(r'^[ \t]*(?P<fence>`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*(?P=fence)[`~]*[ \t]*$|<!--[\s\S]*?-->', re.M)
+
+
+def split_verbatim(text):
+    """按代码块和注释切分：奇数下标是原样保留的部分。"""
+    parts, last = [], 0
+    for match in VERBATIM.finditer(text):
+        parts += [text[last:match.start()], match[0]]
+        last = match.end()
+    return parts + [text[last:]]
+
+
 def plain_text(text):
     text = re.sub(r'<!--[\s\S]*?-->', '', text)
     text = re.sub(r'<(?:script|style)\b[^>]*>[\s\S]*?</(?:script|style)>', '', text, flags=re.I)
@@ -125,7 +139,7 @@ def write_search_index(dist, paths):
 
 
 def referenced_paths(content):
-    content = re.sub(r'```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->', '', content)
+    content = VERBATIM.sub('', content)
     for match in re.finditer(r'''\]\((/[^\s)]+)\)|(?:src|href)=["'](/[^"']+)''', content):
         url = match[1] or match[2]
         if url.startswith(('/#', '//')):
@@ -202,7 +216,7 @@ def optimize_images(dist, cache):
         def replace(match):
             before, url, after = (match[1], match[2], match[3]) if match[1] else (match[4], match[5], match[6])
             return before + mapping.get(url, {}).get('path', url) + after
-        parts = re.split(r'(```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->)', path.read_text())
+        parts = split_verbatim(path.read_text())
         path.write_text(''.join(part if i % 2 else image_pattern.sub(replace, part) for i, part in enumerate(parts)))
     (dist / 'image-variants.json').write_text(json.dumps(mapping, ensure_ascii=False, indent=2, sort_keys=True) + '\n')
     return {'converted': len(mapping), 'originalBytes': sum(v['originalBytes'] for v in mapping.values()),
