@@ -78,7 +78,7 @@ Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
 int y = x;         // 拆箱 调用了 x.intValue()
 ```
 
-需要注意的是，对 null 拆箱会抛出 NullPointerException，例如 Map\<String, Integer\> 中没有这个键时，`int n = map.get("order1024");` 就会抛出异常。
+需要注意的是，对 null 拆箱会抛出 NullPointerException，例如 Map\<String, Integer\> 中没有这个键时，`int n = map.get("order1024");` 就会抛出异常。`Integer n = hit ? map.get("order1024") : 0;` 也一样：两个分支的类型分别是 Integer 和 int，条件表达式的类型就是 int，hit 为 true 而 get() 返回 null 时同样要拆箱。
 
 ### 缓存池
 
@@ -124,7 +124,7 @@ System.out.println(m == n); // true
 - Character：0\~127，即 \u0000\~\u007F；
 - Float、Double 没有缓存池。
 
-超出范围时不保证复用对象，默认配置下两个值为 128 的 Integer 用 == 比较为 false，所以比较包装类型的值要用 equals()。
+超出范围时不保证复用对象，默认配置下两个值为 128 的 Integer 用 == 比较为 false，所以比较包装类型的值要用 equals()。需要注意的是，equals() 不做类型转换，Long.valueOf(1).equals(1) 为 false，HashMap\<Long, String\> 调用 get(1) 时参数被装箱为 Integer，与 Long 类型的键不相等，也查不到；Integer 与 int 用 == 比较时，Integer 会拆箱，比较的是数值。
 
 Integer 缓存池的上界可以调整：启动时加上 -XX:AutoBoxCacheMax=1000，IntegerCache 初始化时会读取这个值，之后 Integer.valueOf(128) 也会返回同一个对象。其它包装类型的缓存范围是固定的。
 
@@ -144,7 +144,7 @@ public final class String
 }
 ```
 
-从 Java 9 开始，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码（紧凑字符串，JEP 254）：只包含 Latin-1 字符的字符串每个字符占 1 个字节，coder 为 0；含有中文等其它字符时按 UTF-16 存储，每个 char 占 2 个字节，coder 为 1。英文为主的程序中，字符串占用的内存因此减少近一半。
+从 Java 9 开始，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码（紧凑字符串，JEP 254）：只包含 Latin-1 字符的字符串每个字符占 1 个字节，coder 为 0；含有中文等其它字符时按 UTF-16 存储，每个 char 占 2 个字节，coder 为 1。只含 Latin-1 字符时字符数据减半，但仍有 String 对象、数组头和对齐填充的开销，所以短字符串省得少、长字符串接近一半，例如 12 个字符的字符串从 64 字节变为 56 字节，1000 个字符时从 2040 字节变为 1040 字节（JDK 21，与关闭紧凑字符串时对比，见附录 A2）。
 
 ```java
 public final class String
@@ -184,7 +184,19 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 - 可变性：String 不可变，StringBuffer 和 StringBuilder 可变；
 - 线程安全：String 不可变，因此是线程安全的；StringBuffer 的方法使用 synchronized 进行同步，是线程安全的；StringBuilder 不是线程安全的，但没有加锁的开销，单线程中拼接字符串时使用它。
 
-用 + 拼接字符串时，JDK 8 的编译器生成 StringBuilder 的 append() 调用，JDK 9 起改为 invokedynamic（JEP 280）。但在循环中用 + 拼接，每次循环仍会创建一个新的 String 对象并复制之前的内容，应该在循环外创建一个 StringBuilder，在循环中调用 append()。
+用 + 拼接字符串时，JDK 8 的编译器生成 StringBuilder 的 append() 调用，JDK 9 起改为 invokedynamic（JEP 280），JDK 21 运行时先算出总长度、直接填充结果的 byte 数组，不再经过 StringBuilder；用 --release 8 编译的类仍是 StringBuilder 的调用。但在循环中用 + 拼接，每次循环仍会创建一个新的 String 对象并复制之前的内容，例如拼接 10000 次 "x" 共分配约 50 MB，改用 StringBuilder 只分配约 47 KB（JDK 21，见附录 A2）。所以应该在循环外创建一个 StringBuilder，在循环中调用 append()。
+
+只由基本类型或字符串的字面量（不含 null）和常量变量（用常量表达式初始化的 final 基本类型或 String 变量）组成的字符串拼接是编译期常量，编译器直接算出结果放进常量池；有普通变量或方法返回值参与时，每次都在运行时创建新的对象（JLS §15.18.1、§15.29），连 s + "" 也不例外（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）：
+
+```java
+String s = "order1024";
+final String f = "order";
+String v = "order";
+System.out.println(("order" + "1024") == s);   // true
+System.out.println((f + "1024") == s);         // true
+System.out.println((v + "1024") == s);         // false
+System.out.println((s + "") == s);             // false
+```
 
 ### String Pool
 
@@ -214,6 +226,8 @@ System.out.println(s5 == s6);  // true
 Java 6 及以前，String Pool 中的字符串放在永久代，Java 7 起移到了堆中（各区域的划分见 [方法区](Java%20虚拟机.md#方法区)）。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
 
 移到堆中之后，池中没有相等的字符串时，intern() 不再像 Java 6 那样把字符串复制到永久代，而是在池中记录堆中这个对象的引用，所以运行时拼接出的 "order1024" 调用 intern() 返回的就是它自己（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）。
+
+需要注意的是，返回的是不是自己取决于运行时池中是否已经有相等的字符串，不能只按规则推断。JDK 自带的类数据共享（CDS）归档在启动时就放入了 "java"、"11" 等常见字符串，所以在附录的环境中（JDK 21，先编译再运行），new String("1") + new String("1") 调用 intern() 默认返回的不是自己，加 -Xshare:off 关闭 CDS 后才是。
 
 ### new String("abc")
 
@@ -908,9 +922,11 @@ Order cloneDeep() throws CloneNotSupportedException {
 
 逐层 clone 或拷贝构造函数最快，但每层都要手写，新增字段时容易漏掉。序列化后再反序列化不用手写，能处理循环引用，但要求所有类都实现 Serializable，transient 字段不会被复制，而且慢两到三个数量级（JDK 21 粗测，见[附录 A8](#a8-深拷贝的几种方式)）。
 
+数组的 clone() 是 public 的，不抛受检异常，返回值也不用强制转换，但多维数组只复制最外层，例如 int[][] 复制后的每一行仍与原数组共用（JLS §10.7）；new ArrayList<>(list) 和 ArrayList 的 clone() 同样只复制元素的引用（见[附录 A8](#a8-深拷贝的几种方式)）。
+
 #### 4. clone() 的替代方案
 
-使用 clone() 方法来拷贝一个对象既复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+使用 clone() 方法来拷贝一个对象既复杂又有风险，它会抛出异常，并且还需要类型转换。Object.clone() 不调用构造函数，而 final 字段只能在对象初始化时赋值，所以类中有 final 的可变字段（例如 final List）时，不能在 super.clone() 之后给它换一个新对象，这时用拷贝构造函数更合适。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
 
 ```java
 public class CloneConstructorExample {
@@ -1090,14 +1106,15 @@ System.out.println(InterfaceExample.x);
 
 #### 3. 比较
 
-- 从设计层面上看，抽象类提供了一种 IS-A 关系，需要满足里氏替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系；
+- 从设计层面上看，抽象类提供了一种 IS-A 关系，需要满足里氏替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，表示实现类具备某种能力，并不要求两者在概念上是同一类事物（从类型上看，实现类仍是接口的子类型）；
 - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类；
 - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制；
 - 接口的成员默认是 public 的，Java 9 起方法可以是 private 的，但不能是 protected 的；抽象类的成员可以有多种访问权限；
 - 抽象类有构造函数，创建子类对象时会调用；接口没有构造函数；
-- Java 8 起接口可以有静态方法，只能通过接口名调用，不会被实现类继承。
+- Java 8 起接口可以有静态方法，只能通过接口名调用，不会被实现类继承；
+- 只有接口（函数式接口）能作为 Lambda 的目标类型；记录类和枚举不能继承自定义的类，只能实现接口；接口只能继承接口，不能继承抽象类。
 
-一个类实现的两个接口有同名的默认方法时，必须重写该方法，可以用“接口名.super.方法名()”选择一个实现：
+一个类实现的两个接口有签名相同的默认方法时，必须重写该方法，可以用“接口名.super.方法名()”选择一个实现：
 
 ```java
 interface Pay { default String channel() { return "Pay"; } }
@@ -1108,12 +1125,14 @@ class Order implements Pay, Refund {
 }
 ```
 
+有两种情况不必重写：父类已经实现了这个方法时（例如 Order 继承的父类有 public String channel()），以父类的方法为准；一个接口已经覆盖了另一个接口的默认方法时（例如 FastPay extends Pay 并重写了 channel()），以覆盖后的方法为准（JLS §8.4.8）。
+
 #### 4. 使用选择
 
 使用接口：
 
 - 需要让不相关的类都实现一个方法，例如不相关的类都可以实现 Comparable 接口中的 compareTo() 方法；
-- 需要使用多重继承。
+- 需要类型的多重继承，即一个类同时属于多个类型。
 
 使用抽象类：
 
@@ -1121,7 +1140,13 @@ class Order implements Pay, Refund {
 - 需要能控制继承来的成员的访问权限，而不是都为 public；
 - 需要继承非静态和非常量字段。
 
+例如接收多家物流公司的回调，步骤都是验签、幂等检查、处理、应答，只有处理的部分不同，适合写成抽象类：父类固定流程、实现共同的步骤，子类只实现处理的部分（模板方法，见[设计模式中的用法](设计模式%20-%20目录.md#项目中的用法)）。
+
 在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变得很低。
+
+两者也常组合使用：接口定义类型，抽象类提供骨架实现，例如 AbstractList 实现了 List 的大部分方法，实现一个不可修改的列表只需继承它并实现 get() 和 size()。
+
+一个类型只允许固定的几种子类型时，Java 17 起可以用密封接口加记录类，例子见 [Java 各版本的新特性](#java-各版本的新特性)。
 
 
 ### super
@@ -1310,6 +1335,8 @@ public static void main(String[] args) {
 }
 ```
 
+重写与重载的区别：重写发生在子类与父类之间，方法的参数列表必须相同，调用哪个版本在运行时按对象的实际类型决定；重载发生在同一个类中（包括继承来的方法），参数列表必须不同，调用哪个版本在编译时按参数的静态类型决定。例如有 show(Object) 和 show(String) 两个重载方法，`Object x = "a"; show(x);` 调用的是 show(Object)，因为 x 的静态类型是 Object（JDK 21 实测）。
+
 ## 七、反射 🔥
 
 反射指的是在运行时获取类的信息，并操作它的字段、方法和构造函数。要操作的类可以到运行时才加载（见 [类加载过程](Java%20虚拟机.md#类加载过程)），编译时它的 .class 文件甚至可以不存在。
@@ -1354,14 +1381,15 @@ getMethod()、getField() 只能找到 public 成员，包括继承的；getDecla
 - 性能开销：反射调用要检查访问权限、把参数装进 Object 数组，查找 Method 对象的开销更大。JDK 21 上把 Method 对象缓存起来时，每次调用只比直接调用多 2 纳秒左右；每次都用 getMethod() 查找再调用则约 28 纳秒（见[附录 A4](#a4-反射与注解)），所以框架都会缓存 Method 对象；
 - 访问限制：JDK 16 起默认禁止类路径上的代码反射访问 JDK 内部的私有成员，例如在 JDK 21 上对 String 的 value 字段调用 setAccessible(true) 会抛出 InaccessibleObjectException，需要启动时加 --add-opens；
 - 失去编译期检查：类名和方法名写成字符串，写错或改名后到运行时才抛出 ClassNotFoundException、NoSuchMethodException；
-- 破坏封装：反射可以访问私有的字段和方法，依赖这些内部细节的代码在类的实现改变后可能失效。例如调用私有构造函数可以创建出第二个单例对象，见[单例的枚举实现](设计模式%20%20-%20单例.md#6-枚举实现)。
+- 破坏封装：反射可以访问私有的字段和方法，依赖这些内部细节的代码在类的实现改变后可能失效。例如调用私有构造函数可以创建出第二个单例对象，见[单例的枚举实现](设计模式%20%20-%20单例.md#6-枚举实现)；
+- 修改 final 字段：setAccessible(true) 之后，Field.set() 也只能修改非 static、所在类不是 record 或 hidden 类的 final 字段；用常量表达式初始化的基本类型或 String 类型的 final 字段（例如 final int a = 1）是常量变量，直接读取它的代码在编译时就内联了它的值，反射把 a 改为 10 后 getA() 仍返回 1（JDK 21 实测，见[附录 A4](#a4-反射与注解)），JDK 26 起这类修改默认会给出警告，以后的版本计划默认禁止（JEP 500）。
 
 ## 八、异常
 
 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，例如 OutOfMemoryError、StackOverflowError，程序一般不捕获，编译器也不要求捕获或声明。Exception 分为两种：
 
 - 受检异常：例如 IOException、SQLException，需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，否则编译不通过，这类异常通常可以恢复；
-- 非受检异常：RuntimeException 及其子类，是程序运行时错误，例如除 0 会引发 ArithmeticException，访问 null 的成员会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
+- 非受检异常：RuntimeException 及其子类（按 JLS §11.1.1，Error 及其子类也属于非受检异常），是程序运行时错误，例如除 0 会引发 ArithmeticException，访问 null 的成员会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
 
 <div align="center"> <img src="pics/java-exceptions.png" width="760px"/> </div><br>
 
@@ -1410,7 +1438,9 @@ public class Box<T> {
 }
 ```
 
-Java 的泛型通过类型擦除实现：类型参数只在编译时检查，编译后都替换为它的上界（没有声明上界时为 Object），在取出元素的地方由编译器插入强制类型转换。所以 List\<String\> 和 List\<Integer\> 在运行时是同一个类。需要注意的是，类、字段和方法声明中的泛型信息仍然以 Signature 属性保存在 class 文件中，可以通过反射读取（例如 getGenericSuperclass()），被擦除的是对象实例和局部变量上的类型参数：
+Java 的泛型通过类型擦除实现：类型参数只在编译时检查，编译后都替换为它的上界（没有声明上界时为 Object），在取出元素的地方由编译器插入强制类型转换。所以 List\<String\> 和 List\<Integer\> 在运行时是同一个类。这样设计主要是为了兼容已有的代码（JLS §4.7）：java.util 中的集合直接加上泛型，没有用泛型的旧代码不用修改就能继续调用，各个库也可以分别、逐步地改用泛型。
+
+需要注意的是，类、字段和方法声明中的泛型信息仍然以 Signature 属性保存在 class 文件中，可以通过反射读取（例如 getGenericSuperclass()），被擦除的是对象实例和局部变量上的类型参数：
 
 ```java
 List<String> a = new ArrayList<>();
@@ -1613,13 +1643,32 @@ intern() 的返回值：
 ```java
 String a = new String("order") + new String("1024");
 System.out.println("a.intern() == a: " + (a.intern() == a));
-String b = new String("ja") + new String("va");   // 池中已经有 "java"
+String b = new String("ja") + new String("va");   // 池中已经有 "java"（JDK 自带的 CDS 归档中就有）
 System.out.println("b.intern() == b: " + (b.intern() == b));
 ```
 
 ```text
 a.intern() == a: true
 b.intern() == b: false
+```
+
+编译期常量的拼接（正文中的例子，另加一个方法返回值 id() 参与的拼接），以及 new String("1") + new String("1") 的 intern()：
+
+```java
+String x = new String("1") + new String("1");
+System.out.println("x.intern() == x: " + (x.intern() == x));
+```
+
+```text
+$ javac StrTest.java && java StrTest（节选）
+"order" + "1024" == s: true
+final 变量 + "1024" == s: true
+非 final 变量 + "1024" == s: false
+"order" + id() == s: false
+s + "" == s: false
+x.intern() == x: false
+$ java -Xshare:off StrTest（节选）
+x.intern() == x: true
 ```
 
 对 String 使用 switch（正文中 case "a"、case "b" 的例子）编译后的字节码：
@@ -1630,6 +1679,36 @@ $ javap -c SwExpr（节选）
        8: lookupswitch  { // 2
       39: invokevirtual #15                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
       53: invokevirtual #15                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+```
+
+紧凑字符串节省的空间：用 JOL 0.17 统计 "a".repeat(n) 的深大小（String 对象加 byte 数组，压缩指针开启），与 -XX:-CompactStrings 对比：
+
+```java
+String s = "a".repeat(n);
+System.out.println(n + " 个字符: " + GraphLayout.parseInstance(s).totalSize() + " 字节");
+```
+
+```text
+                 1 个字符  12 个字符  100 个字符  1000 个字符
+默认                   48         56         144         1040
+-CompactStrings        48         64         240         2040
+```
+
+a + "-" + b 编译后的字节码，以及循环拼接 10000 次的分配量（ThreadMXBean.getCurrentThreadAllocatedBytes()，取预热后的第 3 轮）：
+
+```java
+static String plus(int n) { String s = ""; for (int i = 0; i < n; i++) s += "x"; return s; }
+static String sb(int n) { StringBuilder b = new StringBuilder(); for (int i = 0; i < n; i++) b.append("x"); return b.toString(); }
+```
+
+```text
+$ javac Cat.java && javap -c Cat（节选）
+       2: invokedynamic #7,  0              // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+$ javac --release 8 -d r8 Cat.java && javap -c r8/Cat.class（节选）
+       0: new           #7                  // class java/lang/StringBuilder
+       8: invokevirtual #10                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+$ java Loop
+n = 10000，+= 分配 50440768 字节，StringBuilder 分配 47880 字节
 ```
 
 ### A3 泛型的类型擦除
@@ -1695,6 +1774,30 @@ round 1: 直接调用 5.60 ns，Method.invoke 8.13 ns，每次 getMethod 再 inv
 round 2: 直接调用 5.90 ns，Method.invoke 8.19 ns，每次 getMethod 再 invoke 30.7 ns
 round 3: 直接调用 5.90 ns，Method.invoke 8.18 ns，每次 getMethod 再 invoke 27.5 ns
 round 4: 直接调用 5.91 ns，Method.invoke 8.15 ns，每次 getMethod 再 invoke 27.6 ns
+```
+
+用反射修改 final 字段：
+
+```java
+static class Order {
+    final int a = 1;                 // 常量变量，读取处被内联
+    final Integer b = 2;             // Integer 类型，b 不是常量变量
+    static final Integer C = 3;
+    int getA() { return a; }
+    Integer getB() { return b; }
+}
+record Point(int x) {}
+
+Field fa = Order.class.getDeclaredField("a"); fa.setAccessible(true); fa.setInt(o, 10);
+Field fb = Order.class.getDeclaredField("b"); fb.setAccessible(true); fb.set(o, 20);
+// 再分别对 static final 的 C 和 record 的 x 调用 set
+```
+
+```text
+a: getA() = 1, 反射读取 = 10
+b: getB() = 20, 反射读取 = 20
+static final: IllegalAccessException
+record: IllegalAccessException
 ```
 
 ### A5 Lambda 与 Stream
@@ -1860,7 +1963,44 @@ super.clone  [宫保鸡丁x2]  共用 List: true
 第 3 轮：逐层 clone 19 ns/次，序列化 6866 ns/次
 ```
 
-耗时为循环 20 万次（序列化 1 万次）的平均值，机器上同时有其它任务，只用来比较数量级。
+耗时为循环 20 万次（序列化 1 万次）的平均值，机器上同时有其它任务，只用来比较数量级；第 1 轮包含解释执行和 JIT 编译的时间，后两轮更接近稳定后的耗时。
+
+数组和 ArrayList 的复制：
+
+```java
+int[][] grid = {{1, 2}, {3, 4}};
+int[][] copy = grid.clone();              // 不用 try/catch，也不用强制转换
+copy[0][0] = 9;
+List<int[]> list = new ArrayList<>(List.of(new int[]{1}));
+List<int[]> l2 = new ArrayList<>(list);
+```
+
+```text
+grid[0][0] = 9，copy[0] == grid[0]: true
+new ArrayList<>(list) 的元素相同: true
+```
+
+final 字段不能在 clone() 中重新赋值：
+
+```java
+class Cart implements Cloneable {
+    private final List<String> items = new ArrayList<>();
+    @Override public Cart clone() {
+        try {
+            Cart c = (Cart) super.clone();
+            c.items = new ArrayList<>(items);
+            return c;
+        } catch (CloneNotSupportedException e) { throw new AssertionError(e); }
+    }
+}
+```
+
+```text
+$ javac FinalClone.java
+FinalClone.java:7: 错误: 无法为 final 变量 items 分配值
+            c.items = new ArrayList<>(items);
+             ^
+```
 
 ### A9 获取 Class 对象
 
@@ -1948,7 +2088,7 @@ BOXED = 100
 Holder 初始化，线程 t0
 ```
 
-读取 MAX 没有触发 Const 的初始化，javap 中 main 对 Const 的 getstatic 只有 BOXED 一条，MAX 已经被替换成常量 100；4 个线程同时访问 Holder，静态语句块只执行了一次。
+读取 MAX 没有触发 Const 的初始化，javap 中 main 对 Const 的 getstatic 只有 BOXED 一条，MAX 已经被替换成常量 100；4 个线程同时访问 Holder，静态语句块只执行了一次，执行它的线程每次运行可能不同。
 
 只在一个分支中给 final 字段赋值时编译报错：
 
@@ -1979,6 +2119,7 @@ Blank.java:1: 错误: 可能尚未初始化变量x
 - [JEP 254: Compact Strings](https://openjdk.org/jeps/254)
 - [JEP 361: Switch Expressions](https://openjdk.org/jeps/361)
 - [JEP 396: Strongly Encapsulate JDK Internals by Default](https://openjdk.org/jeps/396)
+- [JEP 500: Prepare to Make Final Mean Final](https://openjdk.org/jeps/500)
 - [JEP 403: Strongly Encapsulate JDK Internals](https://openjdk.org/jeps/403)
 - [JEP 416: Reimplement Core Reflection with Method Handles](https://openjdk.org/jeps/416)
 - [JEP 421: Deprecate Finalization for Removal](https://openjdk.org/jeps/421)
