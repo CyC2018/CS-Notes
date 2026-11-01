@@ -18,7 +18,7 @@ import urllib.parse
 from collections import Counter
 from pathlib import Path
 
-from site_assets import copy_referenced_assets, heading_slug, optimize_images, write_animations, write_manifest, write_search_index
+from site_assets import VERBATIM, add_image_sizes, copy_referenced_assets, heading_slug, optimize_images, write_animations, write_manifest, write_search_index
 from check import check
 
 BASE = Path(__file__).resolve().parents[1]
@@ -37,8 +37,6 @@ SITE_URL = 'https://cyc2018.xyz/'
 IMAGE = re.compile(r'(<img\b[^>]*?\bsrc=["\'])([^"\']+)(["\'])', re.I)
 MD_IMAGE = re.compile(r'(!\[[^\]]*\]\()((?:[^()\s]|\([^()\n]*\))*)(\))')
 MD_LINK = re.compile(r'(?<!!)\[((?:[^\[\]\n]|\[[^\[\]\n]*\])+)\]\(([^\s)]+)\)')
-# A fence closes only with the same character and at least the same length, so ``` inside a ```` block stays code.
-VERBATIM = re.compile(r'^(?P<fence>`{3,}|~{3,})[^\n]*\n[\s\S]*?^(?P=fence)[`~]*[ \t]*$|<!--[\s\S]*?-->', re.M)
 HTML_LINK = re.compile(r'(<a\b[^>]*?\bhref=["\'])([^"\']+)(["\'])', re.I)
 
 
@@ -51,7 +49,7 @@ def sources():
 def image_urls():
     found = set()
     for path in sources():
-        text = re.sub(r'```[^\n]*\n[\s\S]*?```|<!--[\s\S]*?-->', '', path.read_text())
+        text = VERBATIM.sub('', path.read_text())
         for pattern in (IMAGE, MD_IMAGE):
             for match in pattern.finditer(text):
                 url = html.unescape(match[2].strip())
@@ -177,6 +175,44 @@ def render_markdown(path):
     return ''.join(result + [convert(content[last:])])
 
 
+def stub_redirects(dist):
+    """只剩一个指向其它笔记的链接的旧页面（例如“算法”指向“算法 - 目录”），网站上直接跳转到目标。"""
+    result = {}
+    link = re.compile(r'\[[^\]]*\]\((/notes/[^)\s#?]+)\.md(?:#[^)]*)?\)')
+    for path in sorted((dist / 'notes').glob('*.md')):
+        text = path.read_text().strip()
+        targets = link.findall(text)
+        rest = link.sub('', text)
+        if len(set(targets)) != 1 or len(rest) > 120 or re.search(r'^#|<img|```', text, re.M):
+            continue
+        target = urllib.parse.unquote(targets[0])
+        source = '/notes/' + path.stem
+        if target != source and (dist / (target.lstrip('/') + '.md')).is_file():
+            result[source] = target
+    return result
+
+
+def section_tree(dist, sidebar):
+    """侧边栏中“目录”页按正文链接顺序列出的子文章（不在侧边栏中），网站据此显示所在分类和上一篇、下一篇。"""
+    note = re.compile(r'\]\((/notes/[^)\s#?]+)\.md(?:#[^)]*)?\)')
+    listed = [urllib.parse.unquote(m) for m in note.findall(sidebar)]
+    tree, claimed = {}, set(listed)
+    for parent in listed:
+        if not parent.endswith(' - 目录'):
+            continue
+        text = re.sub(r'<!-- GFM-TOC -->[\s\S]*?<!-- GFM-TOC -->', '', (dist / (parent.lstrip('/') + '.md')).read_text())
+        text = VERBATIM.sub('', text)
+        children = []
+        for match in note.findall(text):
+            child = urllib.parse.unquote(match)
+            if child not in claimed and (dist / (child.lstrip('/') + '.md')).is_file():
+                claimed.add(child)
+                children.append(child)
+        if children:
+            tree[parent] = children
+    return tree
+
+
 def build(optimize=True):
     global IMAGE_BY_NAME, ANCHORS
     IMAGE_BY_NAME = repository_images()
@@ -206,6 +242,9 @@ def build(optimize=True):
         topics = [('学习路线', '🚀'), ('算法', '✏️'), ('操作系统', '💻'), ('网络', '☁️'), ('面向对象', '🎨'),
                   ('数据库', '💾'), ('Java', '☕'), ('系统设计', '💡'), ('工具', '🔧'),
                   ('后记', '📝')]
+        # 卡片按首页中各节的顺序排列，与下面的正文、侧边栏一致；首页中没有的分类不显示
+        order = [m[1].strip() for m in re.finditer(r'^## (.+)$', homepage, re.M)]
+        topics = sorted((t for t in topics if t[0] in order), key=lambda t: order.index(t[0]))
         cards = '<nav class="topic-grid" aria-label="笔记分类">' + ''.join(
             f'<a href="/#/?id={urllib.parse.quote(label.lower())}"><span aria-hidden="true">{symbol}</span>{label}</a>'
             for label, symbol in topics) + '</nav>'
@@ -228,6 +267,8 @@ def build(optimize=True):
             elif line.startswith('- ['):
                 sidebar.append('  ' + re.match(r'- \[[^\]]+\]\([^)]+\)', line).group(0))
         (dist / '_sidebar.md').write_text('\n'.join(sidebar) + '\n')
+        tree = section_tree(dist, '\n'.join(sidebar))
+        stubs = stub_redirects(dist)
         (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
         (dist / '.nojekyll').touch()
         # 允许收录；学习站每道题的页面列在它的站点地图中（笔记页面在 # 之后，没有单独的地址）
@@ -262,6 +303,7 @@ def build(optimize=True):
                             entries.append([question['id'], question['text'], question['heat']])
         copy_referenced_assets(dist, ROOT)
         image_report = optimize_images(dist, CACHE) if optimize else {'converted': 0}
+        image_report['sized'] = add_image_sizes(dist)
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
         animations = write_animations(dist)
         legacy = json.loads((SITE / 'legacy-routes.json').read_text())
@@ -270,6 +312,8 @@ def build(optimize=True):
             'window.CS_NOTES_LEGACY_ROUTES = ' + json.dumps(legacy, ensure_ascii=False, separators=(',', ':')) + ';\n'
             'window.CS_NOTES_SEARCH_INDEX = "/' + index_name + '";\n'
             'window.CS_NOTES_ANIMATIONS = ' + json.dumps(animations, ensure_ascii=False, separators=(',', ':')) + ';\n'
+            'window.CS_NOTES_TREE = ' + json.dumps(tree, ensure_ascii=False, separators=(',', ':')) + ';\n'
+            'window.CS_NOTES_STUBS = ' + json.dumps(stubs, ensure_ascii=False, separators=(',', ':')) + ';\n'
             'window.CS_NOTES_LEARN_TOPICS = ' + json.dumps(learn_topics, ensure_ascii=False, separators=(',', ':')) + ';\n'
             'window.CS_NOTES_LEARN_SECTIONS = ' + json.dumps(learn_sections, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
