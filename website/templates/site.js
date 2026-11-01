@@ -332,9 +332,10 @@
   window.$docsify = {
     name: 'CS-Notes',
     repo: 'https://github.com/CyC2018/CS-Notes',
-    homepage: 'README.md',
+    homepage: 'README.txt',
+    ext: '.txt',
     loadSidebar: true,
-    alias: { '/.*/_sidebar.md': '/_sidebar.md' },
+    alias: { '/.*/_sidebar.txt': '/_sidebar.txt' },
     subMaxLevel: 0,
     auto2top: true,
     notFoundPage: true,

@@ -1,5 +1,0 @@
-{
-  "headers": [
-    { "source": "/*.md", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }] }
-  ]
-}

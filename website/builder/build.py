@@ -189,7 +189,7 @@ def build(optimize=True):
         dist = Path(temporary) / 'dist'
         dist.mkdir()
         shutil.copytree(SITE / 'vendor', dist / 'vendor')
-        for name in ('index.html', 'site.css', 'site.js', 'search.js', 'edgeone.json'):
+        for name in ('index.html', 'site.css', 'site.js', 'search.js'):
             shutil.copyfile(SITE / name, dist / name)
         for path in sources():
             target = dist / path.relative_to(ROOT)
@@ -281,10 +281,14 @@ def build(optimize=True):
         build_info = {'sourceCommit': SOURCE_COMMIT, 'generatorHash': generator.hexdigest(), 'notes': len(note_paths),
                       'searchIndex': index_name, 'legacyRoutes': len(legacy)}
         (dist / 'build-info.json').write_text(json.dumps(build_info, indent=2) + '\n')
+        # 网站读取的是同内容的 .txt：EdgeOne 只压缩 text/plain 等类型，.md 的 text/markdown 不压缩
+        for document in list(dist.rglob('*.md')):
+            if document.relative_to(dist).parts[0] != 'learn':
+                document.with_suffix('.txt').write_bytes(document.read_bytes())
         entry = (dist / 'index.html').read_text()
         entry = bundle_entry(dist, entry)
         (dist / 'index.html').write_text(entry)
-        shell = ['/', '/_sidebar.md', '/README.md'] + re.findall(r'(?:src|href)="(/(?:app|vendor|style)-[0-9a-f]{16}\.(?:js|css))"', entry)
+        shell = ['/', '/_sidebar.txt', '/README.txt'] + re.findall(r'(?:src|href)="(/(?:app|vendor|style)-[0-9a-f]{16}\.(?:js|css))"', entry)
         worker = (SITE / 'sw.js').read_text().replace('__SHELL__', json.dumps(shell))
         (dist / 'sw.js').write_text(worker.replace('__BUILD__', hashlib.sha256(json.dumps(shell).encode()).hexdigest()[:12]))
         write_manifest(dist, build_info)

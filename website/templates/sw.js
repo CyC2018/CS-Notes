@@ -30,7 +30,7 @@ function put(name, request, response) {
   caches.open(name).then(function (cache) { return cache.put(request, copy); }).then(function () { if (LIMITS[name]) return trim(name); });
 }
 function offlinePage(path) {
-  var title = decodeURIComponent(path.split('/').pop().replace(/\.md$/, ''));
+  var title = decodeURIComponent(path.split('/').pop().replace(/\.(md|txt)$/, ''));
   return new Response('# 当前离线\n\n《' + title + '》还没有在这台设备上打开过，联网后再试。已经读过的文章离线时也能打开。\n',
     { status: 200, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-CS-Notes-Offline': '1' } });
 }
@@ -61,8 +61,8 @@ self.addEventListener('fetch', function (event) {
     if (path === '/' || path === '/index.html') event.respondWith(networkFirst(new Request('/'), STATIC, 3000, null));
   } else if (/^\/(app|vendor|style)-[0-9a-f]{16}\.(js|css)$|^\/search-index-[0-9a-f]+\.json$|^\/optimized\//.test(path)) {
     event.respondWith(cacheFirst(request, /^\/optimized\//.test(path) ? IMAGES : STATIC));
-  } else if (/\.md$/.test(path)) {
-    event.respondWith(networkFirst(request, PAGES, 3000, path === '/_sidebar.md' ? null : function () { return offlinePage(path); }));
+  } else if (/\.(md|txt)$/.test(path)) {
+    event.respondWith(networkFirst(request, PAGES, 3000, /^\/_sidebar\.(md|txt)$/.test(path) ? null : function () { return offlinePage(path); }));
   } else if (/\.(png|jpe?g|gif|svg|webp)$/.test(path)) {
     event.respondWith(networkFirst(request, IMAGES, 3000, null));
   }
