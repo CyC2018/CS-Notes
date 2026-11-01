@@ -259,6 +259,42 @@
     stopSpy = function () { window.removeEventListener('scroll', onScroll); };
     update();
   }
+  // 带 ?id= 跳转时，Docsify 按跳转那一刻的位置滚动；途经的图片随后才加载、把正文撑高，目标标题会落到视口下方。
+  // 跳转后的几秒内正文高度一变就重新对齐目标标题，读者自己滚动、点击或按键后停止；前进、后退时不对齐，保留浏览器恢复的位置
+  var stopPin = null, shownPath = null, traversing = false;
+  if (window.navigation) navigation.addEventListener('navigate', function (event) { traversing = event.navigationType === 'traverse'; });
+  function pinTarget(id) {
+    if (stopPin) stopPin();
+    var target = id && document.getElementById(id), section = document.querySelector('.markdown-section');
+    if (traversing || !target || !section || !window.ResizeObserver) return;
+    var started = Date.now(), observer, timer, STOP = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+    function align() {
+      if (Date.now() - started > 8000 || !target.isConnected) return stop();
+      var off = Math.round(target.getBoundingClientRect().top);
+      if (Math.abs(off) > 2) window.scrollBy(0, off);
+    }
+    function stop() {
+      clearTimeout(timer);
+      if (observer) observer.disconnect();
+      STOP.forEach(function (type) { window.removeEventListener(type, stop, true); });
+      window.removeEventListener('hashchange', stop);
+      stopPin = null;
+    }
+    STOP.forEach(function (type) { window.addEventListener(type, stop, true); });
+    window.addEventListener('hashchange', stop);
+    // Docsify 的滚动动画约 500ms，结束后再开始对齐
+    timer = setTimeout(function () {
+      align();
+      observer = new ResizeObserver(align);
+      observer.observe(section);
+    }, 550);
+    stopPin = stop;
+  }
+  // 同一篇文章内只改 ?id= 时 Docsify 不重新渲染，在这里对齐；换了文章的在 doneEach 中对齐
+  window.addEventListener('hashchange', function () {
+    var parts = location.hash.slice(1).split('?');
+    if (decode(parts[0]) === shownPath) pinTarget(new URLSearchParams(parts.slice(1).join('?')).get('id'));
+  });
   preserveLegacyLinks();
   window.addEventListener('hashchange', preserveLegacyLinks);
   // 学习路线的文章开头提示可以在学习站中按这条路线定级、排计划
@@ -407,6 +443,8 @@
         document.querySelectorAll('.article-toc').forEach(function (toc) {
           toc.open = window.matchMedia('(min-width: 769px)').matches;
         });
+        shownPath = decode(vm.route.path);
+        pinTarget(vm.route.query.id);
       });
     }]
   };
