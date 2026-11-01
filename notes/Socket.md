@@ -101,7 +101,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 非阻塞式 I/O、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
-Java 中的 BIO 对应阻塞式 I/O；NIO 用 [Selector](Java%20IO.md#选择器) 实现 I/O 复用，Linux 上基于 epoll；AIO（NIO.2 的异步通道）对应异步 I/O 的编程方式，但 Linux 上的 JDK 实际用 epoll 加线程池实现。
+Java 中的 BIO 对应阻塞式 I/O；NIO 用 [Selector](Java%20IO.md#选择器) 实现 I/O 复用，Linux 上基于 epoll；AIO（NIO.2 的异步通道）对应异步 I/O 的编程方式，但 Linux 上的 JDK 中，异步套接字通道实际用 epoll 加线程池实现，异步文件通道则由线程池执行阻塞的读写。
 
 <div align="center"> <img src="pics/io-compare.png" width="760px"/> </div><br>
 
@@ -215,7 +215,7 @@ epoll 实例在内核中是 struct eventpoll，其中有两个结构（Linux 6.1
 - 红黑树 rbr 保存所有注册的描述符（兴趣列表），插入、查找和删除都是 O(log n)；
 - 就绪链表 rdllist 保存已经就绪的描述符，追加和取出都是 O(1)。
 
-epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待队列上挂一个回调 ep_poll_callback。之后描述符变为可读，内核调用回调，把它加入就绪链表，应用不需要做任何事。epoll_wait 只检查就绪链表：链表为空就阻塞；否则把其中的事件（最多 maxevents 个）复制到用户空间。
+epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待队列上挂一个回调 ep_poll_callback。之后描述符变为可读，内核调用回调，把它加入就绪链表，应用不需要做任何事。以 TCP 套接字为例，阻塞在 read() 上的线程也挂在同一个等待队列上，没有使用 EPOLLEXCLUSIVE 时两者都是非独占的等待项。数据到达时内核（sock_def_readable）唤醒这个队列：阻塞 read() 的那一项直接唤醒线程，epoll 的那一项执行 ep_poll_callback，所以“阻塞的 read() 怎样被唤醒”和“epoll 怎样知道描述符就绪”是同一套机制（Linux 6.12 源码）。epoll_wait 只检查就绪链表：链表为空就阻塞；否则把其中的事件（最多 maxevents 个）复制到用户空间。
 
 需要注意的是，常见的“epoll 用 mmap 与用户空间共享就绪链表”的说法并不成立：epoll_wait 返回前，内核把每个就绪事件逐个写入调用方传入的 events 数组（ep_send_events 中的 epoll_put_uevent）。epoll 省下的是每次复制和检查全部描述符的开销，就绪事件本身仍要复制。
 
@@ -228,6 +228,8 @@ epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待�
 - epoll_wait 只返回就绪的事件，应用不需要遍历全部描述符。
 
 红黑树用于快速定位。epoll_ctl 的 MOD 和 DEL 操作只给出描述符编号，内核需要找到对应的节点，链表只能顺序查找，时间是 O(n)，而树可以保证 O(log n)。就绪链表只做追加和取出，用链表即可。
+
+不用哈希表也有历史原因：Linux 2.6.8 之前 epoll 用的就是哈希表，按 epoll_create 的 size 参数预先分配，最多约 1 MB，与实际注册了多少描述符无关，反复调用 epoll_create 并传入很大的 size 就能耗尽内存。改为红黑树后不再预分配，内存与注册的描述符数成正比（Linux 2.6.8 中这项修改的提交说明），epoll_create 的 size 参数从此被忽略，只要求大于 0。
 
 epoll 没有 select 的 1024 限制，实际上限取决于三个因素：
 
@@ -248,7 +250,7 @@ epoll 有两种触发模式：水平触发（level-triggered, LT）和边缘触�
 
 LT 是默认模式，语义与 poll 相同（epoll(7)）。epoll_wait 返回描述符后，内核会把它放回就绪链表，下一次调用时再检查一次。因此应用没有读完数据，下一次 epoll_wait 还会返回它。LT 模式下，描述符可以是阻塞的，也可以是非阻塞的。
 
-关注写事件要按需进行。发送缓冲区通常是可写的，如果一直关注 EPOLLOUT，每次 epoll_wait 都会立即返回。应用只在 write 返回 EAGAIN（发送缓冲区已满）时注册 EPOLLOUT，数据发完后用 EPOLL_CTL_MOD 取消。
+关注写事件要按需进行。发送缓冲区通常是可写的，如果一直关注 EPOLLOUT，每次 epoll_wait 都会立即返回。write 返回正数只表示这么多字节复制进了内核的发送缓冲区，非阻塞套接字上可能少于请求的长度，没写完的部分要由应用自己保存。所以应用只在数据没写完（只写了一部分或者返回 EAGAIN）时注册 EPOLLOUT，等可写时接着写，数据发完后用 EPOLL_CTL_MOD 取消。
 
 #### 2. ET 模式
 
@@ -263,7 +265,7 @@ ET 减少了重复通知，但要求应用一次把数据处理完。下面的�
 
 表中的过程与实测一致（Linux 6.10，见[附录 A2](#a2-lt-与-et-的读取过程)）。
 
-ET 模式下，描述符必须是非阻塞的，并且每次事件都要读到 EAGAIN（epoll(7)）。EAGAIN 表示缓冲区已经空了，这时才能回到 epoll_wait。如果描述符是阻塞的，最后一次 read 在缓冲区为空时会一直等待，整个事件循环停在这里，其它描述符也得不到处理。下面是伪代码：
+ET 模式下应使用非阻塞的描述符，并且每次事件都要读到 EAGAIN，这是 epoll(7) 建议的用法。EAGAIN 表示缓冲区已经空了，这时才能回到 epoll_wait。如果描述符是阻塞的，最后一次 read 在缓冲区为空时会一直等待，整个事件循环停在这里，其它描述符也得不到处理。下面是伪代码：
 
 ```c
 /* 伪代码：ET 模式下处理一个可读事件 */
@@ -289,7 +291,7 @@ ET 还可能造成饥饿：如果某个连接的数据源源不断，循环读�
 
 EPOLLONESHOT 可以与 ET 一起使用：描述符触发一次事件后会被禁用，直到用 EPOLL_CTL_MOD 重新启用。多个线程处理同一个连接时，可以避免两个线程同时处理该描述符的事件（epoll_ctl(2)）。
 
-两种模式的取舍：LT 写起来简单，没读完的数据下次还会通知，Redis 和 JDK 的 Selector 都用 LT；ET 减少了重复唤醒，但每次事件都必须读到 EAGAIN，适合 Netty 原生 epoll 传输、Go 运行时这类把读循环统一封装好的框架，见[应用场景](#应用场景)。
+两种模式的取舍：LT 写起来简单，没读完的数据下次还会通知，Redis 和 JDK 的 Selector 都用 LT；ET 减少了重复唤醒，但每次事件都必须读到 EAGAIN，适合 Go 运行时这类把读循环统一封装好的运行时或框架，见[应用场景](#应用场景)。
 
 ### 应用场景
 
@@ -309,13 +311,17 @@ epoll 只能在 Linux 上使用，适合同时监听大量描述符、且多数�
 
 Reactor 模式（反应器模式）把事件循环和事件处理分开：线程通过 epoll 等待事件，就绪后调用对应的处理函数，处理函数不能长时间阻塞。Redis 的文件事件处理器基于 Reactor 模式，事件循环在主线程中运行，在 Linux 上封装 epoll，注册时只使用 EPOLLIN 和 EPOLLOUT，即水平触发，见 [Redis](Redis.md#十事件)。多路复用让一个线程同时处理多个连接，因此单线程的 Redis 也能处理大量连接；命令仍由主线程逐个执行。
 
-Netty 的 NioEventLoop 基于 Java NIO 的 Selector，在 Linux 上由 JDK 的 epoll 实现，注册时不使用 EPOLLET，因此是水平触发（OpenJDK 的 EPoll 类）。Netty 的原生 epoll 传输（io.netty.channel.epoll）则使用 EPOLLET。Selector 的用法见 [Java IO](Java%20IO.md#选择器)。
+Netty 的 NioEventLoop 基于 Java NIO 的 Selector，在 Linux 上由 JDK 的 epoll 实现，注册时不使用 EPOLLET，因此是水平触发（OpenJDK 的 EPoll 类）。Netty 4.1 的原生 epoll 传输（io.netty.channel.epoll）默认使用 EPOLLET，4.2 起只用水平触发。Selector 的用法见 [Java IO](Java%20IO.md#选择器)。
 
 多线程 Reactor 中，主 Reactor 通常只注册监听套接字，负责 accept；新连接按轮询或哈希分配给某个子 Reactor，由该子 Reactor 的 epoll 注册并处理读写。一个连接的描述符只注册到一个 epoll 实例中，读写都由同一个线程完成，连接的状态不需要加锁。Netty 的 BossGroup 与 WorkerGroup 就是这种主从结构。
 
+一个 EventLoop 线程要处理很多连接，所以默认在 EventLoop 上执行的 Handler 要避免阻塞操作，否则同一个 EventLoop 上其它连接的事件也要等待；WorkerGroup 的线程数默认只有 CPU 核数的 2 倍（Netty 4.1）。耗时的业务交给单独的线程池执行，或者添加 Handler 时用 addLast(EventExecutorGroup, ...) 指定执行它的线程组。
+
 <div align="center"> <img src="pics/socket-reactor.png" width="760px"/> </div><br>
 
-如果多个线程的 epoll 同时监听同一个监听套接字，一个新连接会唤醒所有等待的线程，这称为惊群（thundering herd）。EPOLLEXCLUSIVE（Linux 4.5 起）让内核只唤醒其中的一个或部分等待者；SO_REUSEPORT（Linux 3.9 起）让每个线程绑定各自的监听套接字，由内核把新连接分配给其中一个（epoll_ctl(2)、socket(7)）。
+如果多个线程各自创建 epoll 实例，同时监听同一个监听套接字，一个新连接会唤醒所有等待的线程，这称为惊群（thundering herd）。多个线程直接阻塞在同一个监听套接字的 accept() 上时是独占等待，一个新连接通常只唤醒一个线程；共享同一个 epoll 实例时 epoll_wait 也是独占等待，但 LT 模式下返回事件后会再唤醒一个等待者，仍可能有多余的唤醒。EPOLLEXCLUSIVE（Linux 4.5 起）让内核只唤醒其中的一个或部分等待者；SO_REUSEPORT（Linux 3.9 起）让每个线程绑定各自的监听套接字，由内核把新连接分配给其中一个（epoll_ctl(2)、socket(7)）。
+
+需要注意的是，SO_REUSEPORT 默认按连接四元组的哈希分配，不根据线程的忙闲重新分配，某个线程阻塞时，分给它的连接要等它处理。关闭其中一个监听套接字时，它上面握手中的请求和 accept 队列中的连接默认会被中止；Linux 5.14 起可以开启 net.ipv4.tcp_migrate_req（默认 0），尝试把它们迁移到同一组中仍在监听的套接字，两边的套接字选项要一致。
 
 Proactor 模式与 Reactor 不同：Reactor 通知描述符已经就绪，由应用执行读写；Proactor 由内核执行 I/O，完成后通知应用，例如 Windows 的 IOCP。Linux 上的 epoll 属于 Reactor。
 
@@ -434,7 +440,9 @@ poll: sock2 可读
 - [select(2) — Linux manual page](https://man7.org/linux/man-pages/man2/select.2.html)
 - [poll(2) — Linux manual page](https://man7.org/linux/man-pages/man2/poll.2.html)
 - [epoll(7) — Linux manual page](https://man7.org/linux/man-pages/man7/epoll.7.html)
+- [epoll_create(2) — Linux manual page](https://man7.org/linux/man-pages/man2/epoll_create.2.html)
 - [epoll_ctl(2) — Linux manual page](https://man7.org/linux/man-pages/man2/epoll_ctl.2.html)
+- [epoll: replace the file lookup hash with rbtrees（Linux 历史仓库提交 3ca54916）](https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/?id=3ca54916fdaa607846637b058d4fabe45393821d)
 - [epoll_wait(2) — Linux manual page](https://man7.org/linux/man-pages/man2/epoll_wait.2.html)
 - [aio(7) — Linux manual page](https://man7.org/linux/man-pages/man7/aio.7.html)
 - [io_uring_setup(2) — Linux manual page](https://man7.org/linux/man-pages/man2/io_uring_setup.2.html)
@@ -443,6 +451,7 @@ poll: sock2 可读
 - [Linux 6.12 fs/eventpoll.c](https://github.com/torvalds/linux/blob/v6.12/fs/eventpoll.c)、[fs/select.c](https://github.com/torvalds/linux/blob/v6.12/fs/select.c)
 - [Redis 7.4.1 src/ae_epoll.c](https://github.com/redis/redis/blob/7.4.1/src/ae_epoll.c)
 - [Netty 4.1 AbstractEpollChannel](https://github.com/netty/netty/blob/4.1/transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollChannel.java)
+- [Netty #14031: Remove edge-triggered support for epoll](https://github.com/netty/netty/pull/14031)
 - [Go runtime netpoll_epoll.go](https://github.com/golang/go/blob/master/src/runtime/netpoll_epoll.go)
 - [OpenJDK EPoll.java](https://github.com/openjdk/jdk/blob/master/src/java.base/linux/classes/sun/nio/ch/EPoll.java)
 - [Boost application performance using asynchronous I/O](https://developer.ibm.com/articles/l-async/)

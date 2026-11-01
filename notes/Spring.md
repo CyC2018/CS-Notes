@@ -70,7 +70,9 @@ public class OrderService {
 
 @Service 等派生注解本身标注了 @Component（称为元注解），所以自定义的注解标上 @Component 也能声明 Bean。
 
-依赖注入有构造器注入、Setter 注入和字段注入（把 @Autowired 加在字段上）三种方式。Spring 官方推荐构造器注入：依赖可以声明为 final，对象创建出来就是完整可用的，缺少依赖时启动就会失败。
+依赖注入有构造器注入、Setter 注入和字段注入（把 @Autowired 加在字段上）三种方式。Spring 文档通常推荐构造器注入：依赖可以声明为 final，对象创建出来就是完整可用的；字段注入的对象脱离容器直接 new 出来时不会被注入，私有字段在测试中通常要借助容器或反射赋值。可选的依赖用 Setter 注入。
+
+类中只有一个构造器时可以省略 @Autowired；有多个构造器时，在要用的那个上标 @Autowired，其它构造器不能再标；都没有标时，Spring 使用无参构造器（如果有）。
 
 @Autowired 和 @Resource 都能注入依赖，区别在于查找的顺序：
 
@@ -126,6 +128,8 @@ public class OrderService {
 11 destroy-method
 ```
 
+需要注意的是，@PostConstruct 等初始化方法在容器创建单例的锁内执行，官方文档建议只用来校验配置、准备数据结构，避免在其中访问其它 Bean，否则可能在初始化时死锁。预热缓存、启动后台任务这类耗时的工作可以移到之后的回调中：非懒加载的单例都初始化完后，refresh() 依次调用 SmartInitializingSingleton 的 afterSingletonsInstantiated()、自动启动的 SmartLifecycle 的 start()，再发布 ContextRefreshedEvent（Spring 6.2）。
+
 容器启动时，AbstractApplicationContext 的 refresh() 分两步创建 Bean。第一步解析配置：扫描 @Component，解析 @Bean 方法和自动配置类，把每个 Bean 的类名、作用域、依赖等信息保存为 BeanDefinition，这时还没有创建任何对象。这一步由 ConfigurationClassPostProcessor 完成，它是一个 BeanFactoryPostProcessor，这类扩展点在创建对象之前读取或修改 BeanDefinition；BeanPostProcessor 则在之后处理创建出来的每个 Bean（上面的第 4、6 步），可以返回代理替换原来的对象。
 
 第二步在 finishBeanFactoryInitialization() 中，按 BeanDefinition 依次创建所有非懒加载的单例，创建过程依靠反射。在一个 Bean 的构造函数和带 @Autowired 的 Setter 方法中打印调用栈，按调用顺序整理如下（Spring Boot 3.3 实测，见[附录 A3](#a3-bean-创建的调用栈)，最后一行 initializeBean 来自源码）：
@@ -176,6 +180,8 @@ public class CounterController {
 - 二级缓存 earlySingletonObjects：提前暴露的、还没有初始化完成的 Bean；
 - 三级缓存 singletonFactories：用于生成提前引用的工厂。
 
+以 A、B 互相依赖为例：A 实例化后把自己的工厂放入三级缓存，填充属性时创建 B；B 需要 A 时调用 A 的工厂，得到 A 的提前引用并移入二级缓存；B 完成初始化后放入一级缓存，A 再拿到 B 完成初始化。
+
 <div align="center"> <img src="pics/spring-circular.png" width="720px"/> </div><br>
 
 需要三级缓存而不是两级，是因为 A 可能需要被 AOP 代理，而代理正常是在初始化的最后一步才创建的。如果只有两级，A 实例化后就要决定提前暴露什么：暴露原始对象，B 拿到的与最终放入容器的代理不是同一个；暴露代理，则不管有没有循环依赖都要提前创建代理。三级缓存中的工厂只在 B 来取 A 时才调用（图中第 ③ 步），A 需要代理就由它提前创建，没有循环依赖时不会被调用；结果移入二级缓存，A 同时被 B、C 依赖时工厂只调用一次。
@@ -191,7 +197,7 @@ public class CounterController {
 
 构造器注入的循环依赖可以在其中一个参数上加 @Lazy 解开：Spring 先注入一个延迟解析的代理，第一次调用它的方法时才从容器中取出真正的 Bean。
 
-需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败，设置 spring.main.allow-circular-references=true 才能恢复。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系，例如把互相调用的逻辑抽到新的 Bean C 中。
+需要注意的是，Spring Boot 2.6 起默认禁止循环依赖，出现时直接启动失败。设置 spring.main.allow-circular-references=true 可以恢复，Boot 的错误提示把它称为最后的手段；也可以在其中一侧用 @Lazy 注入或用 ObjectProvider 延迟获取，默认配置下就能启动。这是 Spring Boot 的默认设置，直接使用 Spring Framework 的容器时仍然默认允许。循环依赖通常说明职责划分有问题，更好的做法是调整依赖关系，例如把互相调用的逻辑抽到新的 Bean C 中。
 
 ## 二、AOP 🔥🔥
 
@@ -204,7 +210,7 @@ public class CounterController {
 - JDK 动态代理：目标类实现了接口时可以使用，代理类实现同样的接口，只能代理接口中的方法；
 - CGLIB：在运行时生成目标类的子类，通过重写方法来代理，因此 final 类，以及 final、static 和 private 方法无法被代理。
 
-Spring Framework 在目标类实现了接口时默认使用 JDK 动态代理；Spring Boot 默认使用 CGLIB，可以通过 spring.aop.proxy-target-class 修改。
+Spring Framework 在目标类实现了接口时默认使用 JDK 动态代理；Spring Boot 从 2.0 起默认使用 CGLIB，可以通过 spring.aop.proxy-target-class 修改。Boot 这样做是为了减少类型转换的问题：JDK 代理只实现接口，一个实现了接口的 Bean 被别处按实现类注入时，会因为代理的类型不匹配而启动失败（BeanNotOfRequiredTypeException）。目标本身是 JDK 代理（例如 MyBatis 的 Mapper）时，生成的仍是 JDK 代理。
 
 动态代理在运行时生成代理类，不必像[静态代理](设计模式%20-%20代理.md)那样为每个接口手写，同一段增强逻辑可以复用到不同的类上。JDK 动态代理的原理可以用下面的代码说明，切面逻辑写在 InvocationHandler 中：
 
@@ -317,7 +323,7 @@ AOP 的几个术语可以和上面的分布式锁切面对应起来：
 
 Spring AOP 与 AspectJ 的区别：Spring AOP 在运行时生成代理，只能拦截 Spring Bean 的方法调用，自调用不会被拦截；AspectJ 在编译时或类加载时修改字节码（称为织入），能拦截构造函数、字段访问和自调用，但需要专门的编译器或 Java Agent。Spring 只借用了 AspectJ 的注解和切点表达式的解析，织入仍然靠代理，所以用 @Aspect 写的切面也是 Spring AOP。
 
-需要注意的是，@Transactional 不依赖 AspectJ。去掉 spring-boot-starter-aop 后，容器中的自动代理创建器变为 InfrastructureAdvisorAutoProxyCreator，它只处理事务这类框架内置的通知，事务仍然生效（见[附录 A5](#a5-事务与数据库连接)）。
+需要注意的是，@Transactional 不依赖 AspectJ。去掉 spring-boot-starter-aop（Spring Boot 4 起改名为 spring-boot-starter-aspectj）后，容器中的自动代理创建器变为 InfrastructureAdvisorAutoProxyCreator，它只处理事务这类框架内置的通知，事务仍然生效（见[附录 A5](#a5-事务与数据库连接)）。
 
 ### 自调用
 
@@ -338,7 +344,7 @@ public class OrderService {
 }
 ```
 
-这是 @Transactional、@Async、@Cacheable 等注解失效最常见的原因。解决方法是把被调用的方法移到另一个 Bean 中，或者注入自身的代理，通过代理调用。
+这是 @Transactional、@Async、@Cacheable 等注解失效最常见的原因。解决方法是把被调用的方法移到另一个 Bean 中，或者注入自身的代理，通过代理调用。Spring Boot 2.6 起直接用 @Autowired 注入自身也算循环依赖，默认启动失败，要加 @Lazy 或改用 ObjectProvider。
 
 outer() 本身有事务时，自调用的 inner() 即使声明了 REQUIRES_NEW 也不会开启新事务，外层回滚时一起回滚（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）。
 
@@ -350,7 +356,7 @@ outer() 本身有事务时，自调用的 inner() 即使声明了 REQUIRES_NEW �
 
 @Transactional 同样基于 AOP 实现：代理在方法执行前开启事务，方法正常返回时提交，抛出异常时回滚。
 
-需要注意的是，默认只有 RuntimeException 和 Error 会触发回滚，受检异常（例如 IOException）不会回滚，需要通过 rollbackFor 指定。
+需要注意的是，默认只有 RuntimeException 和 Error 会触发回滚，受检异常（例如 IOException）不会回滚，需要通过 rollbackFor 指定。Spring 6.2 起（Spring Boot 3.4 起）也可以用 @EnableTransactionManagement(rollbackOn = ALL_EXCEPTIONS) 把默认规则改为所有异常都回滚，官方文档建议不依赖受检异常提交事务的项目这样设置；方法上指定的 rollbackFor、noRollbackFor 仍然优先。
 
 除了声明式事务，还可以用 TransactionTemplate 编程式地使用事务，事务的范围就是传入的回调：
 
@@ -397,6 +403,8 @@ REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。RE
 
 需要注意的是，连接在整个事务方法执行期间都被占用。方法中有调用外部接口这类耗时的操作时，连接会被长时间占用，并发高时连接池很快耗尽，所以事务方法中只放必须在事务中完成的数据库操作。
 
+使用 HikariCP 时，连接池耗尽后获取连接最多等待 connectionTimeout（默认 30 秒），期间有连接归还就返回，超时仍未取得才抛出 SQLTransientConnectionException。排查连接一直不归还的代码时，可以设置 leakDetectionThreshold，连接借出超过这个时间就在日志中打印借出处的调用栈，它只报告、不回收连接。
+
 ### 传播行为
 
 传播行为指的是一个事务方法调用另一个事务方法时，事务如何传递。常用的有以下三种：
@@ -425,15 +433,17 @@ REQUIRED 有一个常见的问题：内层方法（另一个 Bean 的事务方�
 
 Spring Boot 在 Spring 的基础上提供了自动配置和 starter：starter 把一组常用的依赖打包在一起，例如 spring-boot-starter-web 引入了 Spring MVC、内嵌的 Tomcat 和 JSON 库；自动配置则根据引入的依赖自动创建所需的 Bean，不需要手动配置就能启动一个 Web 应用。
 
+Spring Boot 4 起，原来的 spring-boot-autoconfigure 拆成了按技术划分的小模块，每种技术都有自己的 starter。以前只加第三方依赖就能生效的部分自动配置，现在还需要对应的 Spring Boot 模块，通常通过 starter 引入，例如迁移指南要求把原来的 Flyway 依赖换成 spring-boot-starter-flyway。
+
 Spring Boot 并不是新的框架，容器、AOP、事务仍然是 Spring 提供的。除了 starter 和自动配置，它还能把应用连同内嵌的服务器打包成一个 jar，用 java -jar 直接运行，不再需要把 war 包部署到单独安装的 Tomcat 中。
 
 自动配置的过程：
 
 1. 启动类上的 @SpringBootApplication 组合了三个注解：@SpringBootConfiguration（相当于 @Configuration，启动类中也可以定义 @Bean）、@ComponentScan（扫描启动类所在的包及其子包）和 @EnableAutoConfiguration（开启自动配置）；
-2. @EnableAutoConfiguration 通过 @Import 引入 AutoConfigurationImportSelector，它读取所有 jar 包中的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件，得到自动配置类的列表，Spring Boot 2.7 之前写在 META-INF/spring.factories 中。思路与 Java 的 SPI 相同，区别在于读到的类不直接实例化，而是作为配置类交给容器解析；
+2. @EnableAutoConfiguration 通过 @Import 引入 AutoConfigurationImportSelector，它读取所有 jar 包中的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件，得到自动配置类的列表。Spring Boot 2.7 之前写在 META-INF/spring.factories 中，2.7 两处都读，3.0 起不再读 spring.factories 中 EnableAutoConfiguration 键下的类，只写在那里的自动配置类不会加载，启动时也不报错（Spring Boot 3.5 实测）；spring.factories 的其它键（例如 ApplicationListener）仍然有效。思路与 Java 的 SPI 相同，区别在于读到的类不直接实例化，而是作为配置类交给容器解析；
 3. 自动配置类大多带有条件注解，条件满足时才生效。例如 @ConditionalOnClass 要求类路径上存在某个类，@ConditionalOnMissingBean 要求用户没有定义同类型的 Bean，@ConditionalOnProperty 根据配置项决定。
 
-例如引入 spring-boot-starter-jdbc 和数据库驱动后，数据源的自动配置类就会生效，按配置文件中的地址创建一个 DataSource；如果用户自己定义了 DataSource，由于 @ConditionalOnMissingBean，自动配置不再创建。因此用户的配置总是优先于自动配置。
+例如引入 spring-boot-starter-jdbc 和数据库驱动后，数据源的自动配置类就会生效，按配置文件中的地址创建一个 DataSource；如果用户自己定义了 DataSource，由于 @ConditionalOnMissingBean，自动配置不再创建。因此带 @ConditionalOnMissingBean 的自动配置会让位于用户自己定义的 Bean。
 
 启动时加上 --debug 会打印条件评估报告，列出每个自动配置类生效或跳过的原因，例如只引入 spring-boot-starter-web 时，152 个中只有 22 个生效（Spring Boot 3.3 实测，见[附录 A7](#a7-spring-boot-的启动过程)）。
 
@@ -484,7 +494,7 @@ public record SmsProperties(String sign) {}
 2. 准备环境：把命令行参数、系统属性、环境变量和 application.properties（或 application.yml）合并到 Environment 中，之后 @Value 和 @ConfigurationProperties 都从这里取值；
 3. 创建并准备容器：按应用类型创建 AnnotationConfigServletWebServerApplicationContext，执行各个 ApplicationContextInitializer（这时容器中只有 5 个内部组件的 BeanDefinition），再把启动类注册为 BeanDefinition；
 4. 刷新容器：执行 Spring 容器的 refresh()，Bean 都在这一步创建，见 [Bean 的生命周期](#bean-的生命周期)。与 Spring Boot 有关的有三处，见下文；
-5. 执行 Runner：依次调用容器中的 ApplicationRunner 和 CommandLineRunner，然后发布 ApplicationReadyEvent，run() 返回。
+5. 执行 Runner：调用容器中的 ApplicationRunner 和 CommandLineRunner，两种 Runner 放在一起排序，要按顺序执行时用 @Order 或 Ordered 指定，没有指定时先后不固定（Spring Boot 3.5），然后发布 ApplicationReadyEvent，run() 返回。
 
 refresh() 中与 Spring Boot 有关的三处：
 
@@ -509,9 +519,9 @@ Spring MVC 是 Spring Framework 中基于 Servlet 的 Web 模块，按模型-视
 1. 通过 HandlerMapping 找到处理这个请求的方法（Handler），以及要经过的拦截器，组成 HandlerExecutionChain，找不到时返回 404；
 2. 依次执行拦截器的 preHandle，任何一个返回 false 就不再继续，Controller 不会被调用；
 3. 通过 HandlerAdapter 调用 Controller 的方法，调用前把请求参数转换为方法参数，调用后把返回值转换为响应，例如用 Jackson 把对象写成 JSON；
-4. 倒序执行拦截器的 postHandle，Controller 抛出异常时跳过这一步；
+4. 倒序执行拦截器的 postHandle，Controller 抛出异常时跳过这一步；@RestController 的返回值在第 3 步已经写进响应，postHandle 拿到的 ModelAndView 为 null，Spring 6.x 中响应此时已经提交，再加首部不会生效，要修改 JSON 响应时用 ResponseBodyAdvice；
 5. 返回的是视图名时，由 ViewResolver 找到视图并渲染；@RestController 直接把返回值写入响应体，没有这一步；
-6. 倒序执行 preHandle 已经返回 true 的拦截器的 afterCompletion，即使前面发生了异常也会执行，常用于清理资源，返回 false 的拦截器则要在返回前自己清理（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）。
+6. 倒序执行 preHandle 已经返回 true 的拦截器的 afterCompletion，即使前面发生了异常也会执行（异常已被 @ExceptionHandler 处理时，参数 ex 为 null），常用于清理资源，返回 false 的拦截器则要在返回前自己清理（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）。
 
 HandlerMapping 按路径和 HTTP 方法等条件匹配 @GetMapping 等注解的方法，多个都匹配时选最具体的，例如 /orders/latest 优先于 /orders/{id}；路径匹配而方法不匹配时返回 405。处理器还可以是实现 Controller 等接口的类，DispatcherServlet 为每种处理器找到支持它的 HandlerAdapter 来调用。
 
@@ -646,7 +656,11 @@ public void on(OrderPaidEvent e) { ... }               // 积分服务、短信�
 [main] 发布方收到异常：短信网关超时
 ```
 
-两个监听方法都在 main 线程中执行；短信服务先执行并抛出异常后，积分服务的监听方法没有被调用，异常还传回了订单服务。监听方法之间的顺序默认不确定，可以用 @Order 指定；不希望互相影响时，加上 @Async（配置类要加 @EnableAsync）让监听方法在线程池中异步执行，或者用 @TransactionalEventListener 在订单的事务提交之后再处理。后者在发布时没有事务就不会执行（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）；执行时原事务已经提交，监听方法中写数据库要调用另一个 Bean 中 REQUIRES_NEW 的事务方法。
+两个监听方法都在 main 线程中执行；短信服务先执行并抛出异常后，积分服务的监听方法没有被调用，异常还传回了订单服务。监听方法之间的顺序默认不确定，可以用 @Order 指定；不希望互相影响时，加上 @Async（配置类要加 @EnableAsync）让监听方法在线程池中异步执行，或者用 @TransactionalEventListener 在订单的事务提交之后再处理。后者在发布时没有事务就不会执行（Spring 6.1 实测，见[附录 A9](#a9-事务的传播与事件监听)）。
+
+默认在提交之后（AFTER_COMMIT）同步执行的监听方法中，事务资源可能还绑定在当前线程上，这时调用 REQUIRED 的事务方法会加入这个已经提交的事务，之后不会再提交。所以需要事务性的写入时，要通过代理开启 REQUIRES_NEW 的事务，例如调用另一个 Bean 中 REQUIRES_NEW 的方法，或者直接在监听方法上标 @Transactional(propagation = REQUIRES_NEW)。
+
+Spring 6.1 起注册监听器时会检查：监听方法上的 @Transactional 只能是 REQUIRES_NEW 或 NOT_SUPPORTED（后者不开启事务），标成默认的 REQUIRED 通常会导致启动失败；6.2 起也检查所在类上的注解，6.2.10 起 BEFORE_COMMIT 阶段的监听方法不受这个限制。
 
 ## 附录：实测
 

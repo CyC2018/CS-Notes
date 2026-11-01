@@ -125,13 +125,13 @@ java -Xms1M -Xmx2M HackTheJava
 
 ### 方法区
 
-用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+用于存放已被加载的类的结构信息，例如运行时常量池、字段和方法的数据、方法的字节码。静态变量和即时编译器编译后的代码放在哪里随 JDK 版本而变，见本节最后一段。
 
 和堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。
 
 对这块区域进行垃圾收集的主要目标是对常量池的回收和对类的卸载，但是一般比较难实现。
 
-JDK 1.8 之前，HotSpot 虚拟机用永久代实现方法区，和堆一样进行垃圾收集。但永久代的上限要在启动时用 -XX:MaxPermSize 设定，加载多少类很难事先估准，设小了就会抛出 OutOfMemoryError: PermGen space。为了更容易管理方法区，同时与没有永久代的 JRockit 虚拟机合并，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，不属于 Java 堆。元空间默认只受本地内存限制，可以用 -XX:MaxMetaspaceSize 设置上限，超过时抛出 OutOfMemoryError: Metaspace。
+JDK 1.8 之前，HotSpot 虚拟机用永久代实现方法区，和堆一样进行垃圾收集。但永久代的上限要在启动时用 -XX:MaxPermSize 设定，加载多少类很难事先估准，设小了就会抛出 OutOfMemoryError: PermGen space。为了更容易管理方法区，同时与没有永久代的 JRockit 虚拟机合并，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，不属于 Java 堆。元空间默认只受本地内存限制，可以用 -XX:MaxMetaspaceSize 设置上限，超过时抛出 OutOfMemoryError: Metaspace。开启压缩类指针（64 位 JVM 默认开启）时，每个类的类结构还放在元空间中单独的压缩类空间里，它的上限默认 1 GB（-XX:CompressedClassSpaceSize），超出时抛出 OutOfMemoryError: Compressed class space。
 
 方法区是 JVM 规范中的概念，永久代与元空间都是它的实现。JDK 1.7 已经把字符串常量池和类的静态变量从永久代移到了堆中，所以元空间中存放的是类的元信息和运行时常量池；JIT 编译后的代码则在单独的代码缓存（Code Cache）中。例如 static final String NAME = "cs"：字符串 "cs" 和静态变量 NAME 都在堆中，元空间中是字段名、类型这些元数据。
 
@@ -165,7 +165,11 @@ void pay(long orderId) {
 
 方法返回后，栈帧中的 amount 和 order 立即消失；Order 对象如果没有被其它地方引用，会在之后的 GC 中被回收。操作系统中[进程地址空间](计算机操作系统%20-%20内存管理.md#分页与分段的比较)的栈和堆也是类似的划分：栈由编译器生成的代码自动分配和释放，函数返回时局部变量就被释放，不会泄漏；堆由程序调用 malloc、free 管理，申请后忘记 free 就是内存泄漏。
 
-需要注意的是，对象不一定都要在堆中分配。JIT 编译时会做逃逸分析，如果能证明一个对象不会离开创建它的方法（没有被返回、没有赋给字段、没有传给其它线程），C2 编译器可以把它拆成几个局部变量，这称为标量替换，堆中不再分配这个对象；这不是把整个对象搬到栈上。例如在循环中创建 2 亿个只在方法内部使用的 Point 对象，默认没有发生 GC，耗时约 130 ms；加上 -XX:-DoEscapeAnalysis 关闭逃逸分析后，发生了 13 次 GC，耗时约 335 ms（JDK 21 实测，见[附录 A2](#a2-逃逸分析)）。
+对象不一定都要在堆中分配。JIT 编译时会做逃逸分析，如果能证明一个对象不会离开创建它的方法（没有被返回，没有存入静态字段或会逃逸的对象，也没有作为参数传给未被内联的方法），C2 编译器可以把它拆成几个局部变量，这称为标量替换，堆中不再分配这个对象。
+
+HotSpot 并不做栈上分配，不会把整个对象搬到栈上；逃逸分析也只在 C2 编译时进行，方法被 C2 编译之前，这些对象照样在堆中分配。
+
+例如在循环中创建 2 亿个只在方法内部使用的 Point 对象，默认没有发生 GC，耗时约 130 ms；加上 -XX:-DoEscapeAnalysis 关闭逃逸分析后，发生了 13 次 GC，耗时约 335 ms（JDK 21 实测，见[附录 A2](#a2-逃逸分析)）。
 
 ### 对象的创建与内存布局
 
@@ -246,11 +250,11 @@ public class Test {
 
 Java 虚拟机使用该算法来判断对象是否可被回收。
 
-GC Roots 是堆外指向堆中对象的引用，程序不经过其它对象就能直接访问到它们，GC 无法判断这些引用以后还会不会被使用，只能认为它们引用的对象都存活。GC Roots 一般包含以下内容：
+GC Roots 是可达性分析的起点，程序不经过其它对象就能直接访问到它们，GC 无法判断这些引用以后还会不会被使用，只能认为它们引用的对象都存活。GC Roots 一般包含以下内容：
 
 - 虚拟机栈中局部变量表中引用的对象，即正在执行的方法的参数和局部变量；
 - 本地方法栈中 JNI 中引用的对象；
-- 方法区中类静态属性引用的对象，类没有被卸载时，程序随时可以通过类名访问它们；
+- 类的静态变量引用的对象（HotSpot 从 JDK 7 起把静态变量和 Class 对象一起放在堆中），类没有被卸载时，程序随时可以通过类名访问它们；
 - 方法区中的常量引用的对象；
 - 被 synchronized 持有的锁对象、已经启动且没有结束的线程，以及虚拟机内部的引用，例如系统类加载器、常驻的异常对象。
 
@@ -319,7 +323,7 @@ obj = null;
 
 ThreadLocal 就用到了弱引用。每个线程的 ThreadLocalMap 中，Entry 继承自 WeakReference，key（ThreadLocal 对象）是弱引用，value 是强引用。如果 key 是强引用，业务代码不再使用某个 ThreadLocal 后，它仍然被线程的 Map 引用着，线程池中的线程一直存活，这个 ThreadLocal 对象和它的 value 都无法回收。
 
-key 改为弱引用后，ThreadLocal 对象在下一次 GC 时被回收，Entry 的 key 变为 null。之后这个线程再调用任意 ThreadLocal 的 set()、get()、remove() 时，会顺带清除遇到的一部分 key 为 null 的 Entry，value 才能被回收。在此之前 value 一直被强引用，所以用完之后仍然要调用 remove()，见 [线程本地存储](Java%20并发.md#2-线程本地存储thread-local-storage)。
+key 改为弱引用后，ThreadLocal 对象在 GC 处理到它所在的区域时被回收，Entry 的 key 变为 null。之后这个线程的某些 set()、get()、remove() 会顺带清除遇到的一部分 key 为 null 的 Entry，value 才能被回收。在此之前 value 一直被强引用，所以用完之后仍然要调用 remove()；哪些操作会顺带清理见 [线程本地存储](Java%20并发.md#2-线程本地存储thread-local-storage)。
 
 例如向 ThreadLocal 放入一个 10 MB 的数组，再把 ThreadLocal 变量置为 null：GC 之后 Entry 的 key 变为 null，value 还在；当前线程再通过其它 ThreadLocal 调用 set()，第 2 次调用之后这个 Entry 才被清除（JDK 21 实测，见[附录 A5](#a5-threadlocalmap-的弱引用)）。
 
@@ -462,7 +466,7 @@ JDK 8 及以前，它是 Server 场景下首选的新生代收集器，除了性
 
 <div align="center"> <img src="pics/gc-cms.png" width="760px"/> </div><br>
 
-CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。它是老年代收集器，新生代一般配合 ParNew。
+CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。它是老年代收集器，新生代一般配合 ParNew。JDK 9 起被标为废弃（JEP 291），JDK 14 移除（JEP 363）。
 
 分为以下四个流程：
 
@@ -479,7 +483,7 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。它
 
 #### 7. G1 收集器
 
-G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。JDK 9 起 G1 成为默认的垃圾收集器，CMS 在 JDK 14 中被移除。
+G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。JDK 9 起 G1 成为默认的垃圾收集器。
 
 堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
@@ -501,10 +505,12 @@ Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、
 
 如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：
 
-- 初始标记：老年代的占用超过阈值（-XX:InitiatingHeapOccupancyPercent，初始为 45%，之后 G1 根据标记所需的时间自适应调整）时，在下一次新生代回收中顺带完成（Concurrent Start），标记 GC Roots 直接关联的对象，需要停顿；
+- 初始标记：老年代（包括 Humongous 对象）的占用超过阈值时（-XX:InitiatingHeapOccupancyPercent，初始为堆的 45%；积累几次标记的数据后，G1 按预测的标记时长、老年代的增长速度和预留的空间自适应调整），在下一次新生代回收中顺带完成（Concurrent Start），标记 GC Roots 直接关联的对象，需要停顿；
 - 并发标记：与用户线程同时运行，找出老年代中所有存活的对象，期间新生代回收照常进行；
 - 最终标记（Remark）：短暂停顿，处理并发标记期间用户线程修改引用留下的记录，完成标记，再处理软、弱引用并卸载不再使用的类，直接回收完全空的 Region；
-- 清理与混合回收：清理（Cleanup）停顿根据各 Region 的回收价值决定是否进入回收阶段；之后的多次混合回收（Mixed）除了新生代，再挑选一部分垃圾最多的老年代 Region，把其中存活的对象复制出去，每次回收的数量受停顿时间目标（MaxGCPauseMillis，默认 200 ms）限制。
+- 清理与混合回收：清理（Cleanup）停顿根据各 Region 的回收价值决定是否进入回收阶段；之后的多次混合回收（Mixed）除了新生代，再按回收效率（可回收的空间 ÷ 预测的耗时）挑选一部分老年代 Region，把其中存活的对象复制出去，每次回收的数量受停顿时间目标（MaxGCPauseMillis，默认 200 ms）限制。
+
+需要注意的是，45% 触发的是并发标记，不是混合回收。标记结束后，存活对象超过 85% 的 Region 不作为候选，效率最低、可回收空间合计不超过堆的 5%（G1HeapWastePercent）的 Region 也被放弃；剩下的候选最多分 8 次混合回收处理完（G1MixedGCCountTarget），候选用完混合回收就结束（JDK 21 源码）。
 
 例如一个 128 MB 堆的程序，GC 日志中一个完整的周期依次是 Pause Young (Concurrent Start)、并发标记、Pause Remark、Pause Cleanup、Pause Young (Prepare Mixed) 和 Pause Young (Mixed)。整个标记周期从开始到 Cleanup 约 13.5 ms，期间还穿插了 4 次普通的新生代回收；Remark 和 Cleanup 的停顿分别只有约 0.1 ms 和 0.03 ms（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
 
@@ -587,7 +593,16 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 - Mixed GC：只有 G1 有，并发标记结束后，在回收新生代的同时挑选一部分老年代 Region 一起回收，见 [G1 收集器](#7-g1-收集器)；
 - Full GC：回收整个堆和元空间，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多，触发条件见 [Full GC 的触发条件](#full-gc-的触发条件)。
 
-G1 的日志中三者分别记为 Pause Young (Normal)、Pause Young (Mixed) 和 Pause Full。Major GC 的含义不统一，有的资料指只回收老年代（例如 CMS 的老年代回收），有的等同于 Full GC。
+G1 的日志中三者分别记为 Pause Young (Normal)、Pause Young (Mixed) 和 Pause Full，例如（取自[附录 A3](#a3-不同收集器的停顿)、[附录 A4](#a4-堆大小对-g1-的影响)）：
+
+```text
+[0.020s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 24M->6M(128M) 0.937ms
+[0.127s][info][gc] GC(50) Pause Full (G1 Compaction Pause) 71M->27M(72M) 3.721ms
+```
+
+频繁出现 Pause Full 时的排查见 [JVM 调优](#jvm-调优)。
+
+Major GC 的含义不统一，有的资料指只回收老年代（例如 CMS 的老年代回收），有的等同于 Full GC。
 
 ### 内存分配策略
 
@@ -647,7 +662,7 @@ G1 的日志中三者分别记为 Pause Young (Normal)、Pause Young (Mixed) 和
 
 #### 4. JDK 1.7 及以前的永久代空间不足
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据。
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，其中存放类的元信息和运行时常量池；JDK 1.6 及以前，字符串常量池和类的静态变量也在永久代中，JDK 1.7 起移到了堆中。
 
 当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。
 
@@ -984,7 +999,7 @@ OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有
 以上几类要按各自的原因检查，下面是最常见的 Java heap space 的排查步骤：
 
 1. 启动参数加上 -XX:+HeapDumpOnOutOfMemoryError，发生内存溢出时自动保存堆转储，用 -XX:HeapDumpPath 指定保存位置。它只对虚拟机报告的溢出（例如 Java heap space、Metaspace）生效，并且只转储第一次，直接内存和线程数的溢出不会生成堆转储；进程还在运行时，可以用 `jcmd <pid> GC.heap_dump <文件名>` 手动导出；
-2. 用 Eclipse MAT 等工具打开堆转储，按 Retained Heap（对象被回收后能一起释放的内存）排序找到占用最多的对象，查看它们到 GC Roots 的引用链，确定是谁持有了这些对象；
+2. 用 Eclipse MAT 等工具打开堆转储，按 Retained Heap（对象被回收后能一起释放的内存）排序找到占用最多的对象，查看它们到 [GC Roots](#2-可达性分析算法) 的引用链，确定是谁持有了这些对象；
 3. 引用链指向不应该存活的对象（例如上面的静态集合）就是内存泄漏，需要修改代码；否则说明确实需要这么多内存，应该增大堆或者减少一次加载的数据量。
 
 需要注意的是，堆转储的大小与堆中对象的占用相当，要给 HeapDumpPath 所在的磁盘留出空间，并且这个目录要事先存在，否则不会生成文件（JDK 21 实测，见[附录 A17](#a17-堆转储目录不存在)）。
@@ -1031,7 +1046,7 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 | -Xss | 每个线程的栈大小 |
 | -XX:MaxMetaspaceSize | 元空间的上限，默认不限制 |
 | -Xmn、-XX:MaxTenuringThreshold | 新生代的大小、晋升老年代的年龄阈值（默认 15），见 [长期存活的对象进入老年代](#3-长期存活的对象进入老年代)；G1 不要用 -Xmn 固定新生代 |
-| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起默认 G1 |
+| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起默认 G1；JDK 21 中分代 ZGC 还要加 -XX:+ZGenerational，JDK 23 起默认分代 |
 | -XX:MaxGCPauseMillis | G1 的停顿时间目标，默认 200 ms |
 | -Xlog:gc*:file=gc.log | 输出 GC 日志（JDK 9 起；JDK 8 使用 -XX:+PrintGCDetails -Xloggc:gc.log） |
 | -XX:+HeapDumpOnOutOfMemoryError | 内存溢出时保存堆转储 |
@@ -1048,6 +1063,8 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 堆设多大，先看 Full GC 之后堆的占用，这是长期存活的数据量，堆要在它之上留出余量，余量越小 GC 越频繁；定下初值后压测，看停顿和 GC 时间的占比是否达标。-Xmx 也不能等于容器的内存，进程还有元空间、线程栈、直接内存、代码缓存和 GC 自己的数据结构，例如 4 GB 堆的 G1 进程，GC 的数据结构就提交了约 135 MB（JDK 21 实测，见[附录 A21](#a21-堆以外的内存)）。
 
 容器中，JVM 默认开启 -XX:+UseContainerSupport（JDK 10 起；cgroup v2 需要 JDK 15、11.0.16 或 8u372 起），把容器的内存限制当作物理内存，按 MaxRAMPercentage 算出最大堆，例如限制 1 GiB 时为 256 MiB。内存不到约 250 MiB 时改为取一半（MinRAMPercentage，默认 50%），调 MaxRAMPercentage 不起作用（JDK 21 实测，见[附录 A22](#a22-容器中的默认堆)）。
+
+处理器数取 CPU 配额向上取整的值与 CPU 亲和性允许的处理器数中较小的一个，不看 CPU requests；只设 requests 不设 limits 时，JVM 看到的是 CPU 亲和性允许的处理器数，通常就是节点的全部核数，GC 线程数、JIT 编译线程数和 ForkJoinPool 公共池的并行度的默认值都按它确定，可以用 -XX:ActiveProcessorCount 指定。这些默认值大多在 JVM 初始化时确定，运行中调整 Pod 的 CPU 不会重新计算，要重启 JVM（JDK 21 源码）。
 
 常见做法是不写 -Xmx，用 MaxRAMPercentage 按比例设堆，但比例不能太高。例如限制 1 GiB、比例 75% 时堆最大 768 MiB，堆外只剩 256 MiB，要放下元空间、线程栈、代码缓存、GC 数据结构和直接内存；直接内存没有设上限时可以和堆一样大。例如堆用到 700 MiB、ByteBuffer.allocateDirect 申请的直接内存 300 MiB，再加上约 100 MiB 的其它堆外内存，合计约 1.1 GiB，堆还没到上限，进程已经超过了限制。这时 JVM 不会抛出 OutOfMemoryError，而是被内核的 OOM Killer 杀掉（退出码 137，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)）。所以要用 -XX:MaxDirectMemorySize 给 NIO 的直接缓冲区设上限，压测时加 -XX:NativeMemoryTracking=summary，用 `jcmd <pid> VM.native_memory summary` 看各部分的占用（输出见[附录 A21](#a21-堆以外的内存)），再定堆的比例。
 
@@ -1224,7 +1241,7 @@ GC 之后：      Entry 还在，key=null，value 还被引用
 
 ### A6 默认的收集器与 G1 的 Region 大小
 
-本机有 10 个处理器，-XX:ActiveProcessorCount=1 让 JVM 认为只有 1 个处理器：
+测试机器（Apple M1 Pro）有 10 个处理器，-XX:ActiveProcessorCount=1 让 JVM 认为只有 1 个处理器：
 
 ```text
 $ java -XX:+PrintFlagsFinal -version | grep -E "Use(Serial|Parallel|G1|Z)GC " | awk '$4=="true"{print $2}'
