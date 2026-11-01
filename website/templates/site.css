@@ -334,3 +334,16 @@ html { scrollbar-gutter: stable; }
 .token.namespace { opacity: 1; color: var(--muted); }
 .article-toc li a { display: inline-block; padding: 3px 0; }
 .markdown-section :not(pre) > code { overflow-wrap: anywhere; }
+
+/* sidebar-scrim：手机上打开目录时，底部按钮条用页面底色，正文盖一层淡的遮罩 */
+@media (max-width: 768px) {
+  body.close .sidebar-toggle { background-color: var(--bg); box-shadow: 0 -1px 0 var(--border); }
+  .content::after { content: ""; position: fixed; inset: 0; z-index: 25; background: rgba(20, 24, 23, .32); opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+  body.close .content::after { opacity: 1; pointer-events: auto; }
+}
+
+/* 读完的文章：侧边栏标 ✓，首页写已读完几篇 */
+.sidebar-nav a.read::after { content: "✓"; content: "✓" / ""; margin-left: 6px; color: var(--theme-color); font-size: 12px; font-weight: 600; }
+.markdown-section .recent-read .read-count { margin-left: 12px; }
+.markdown-section .recent-read .clear-read { margin-left: 8px; padding: 2px 4px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.markdown-section .recent-read .clear-read:hover { color: var(--theme-color); }
