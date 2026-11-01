@@ -45,6 +45,12 @@ class SearchIndexTests(unittest.TestCase):
         content = '<!-- <img src="/secret.png"> -->\n```html\n<img src="/example.png">\n```\n<img src="/notes/pics/actual.png">\n[正文](/notes/示例.md)\n'
         self.assertEqual(set(referenced_paths(content)), {'notes/pics/actual.png', 'notes/示例.md'})
 
+    def test_inline_triple_backticks_do_not_hide_later_images(self):
+        # 正文中的行内代码 ```` ```json ```` 不是代码块，后面的图片仍要发布
+        content = ('例如包在 ```` ```json ```` 代码块里。\n\n<img src="/notes/pics/a.png"/>\n\n'
+                   '- 列表\n\n  ```text\n  <img src="/notes/pics/in-code.png"/>\n  ```\n\n<img src="/notes/pics/b.png"/>\n')
+        self.assertEqual(set(referenced_paths(content)), {'notes/pics/a.png', 'notes/pics/b.png'})
+
     def test_image_manifest_stable_across_file_creation_order(self):
         from PIL import Image
         with tempfile.TemporaryDirectory() as directory:
