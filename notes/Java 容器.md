@@ -27,6 +27,7 @@
         * [A8 CopyOnWriteArrayList 的迭代器](#a8-copyonwritearraylist-的迭代器)
         * [A9 HashMap 的可变键与遍历删除](#a9-hashmap-的可变键与遍历删除)
         * [A10 ConcurrentHashMap 的组合操作](#a10-concurrenthashmap-的组合操作)
+        * [A11 HashMap 每个条目的内存](#a11-hashmap-每个条目的内存)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -106,13 +107,13 @@ public static <T> List<T> asList(T... a)
 
 ```java
 Integer[] arr = {1, 2, 3};
-List list = Arrays.asList(arr);
+List<Integer> list = Arrays.asList(arr);
 ```
 
 也可以使用以下方式调用 asList()：
 
 ```java
-List list = Arrays.asList(1, 2, 3);
+List<Integer> list = Arrays.asList(1, 2, 3);
 ```
 
 asList() 返回的是数组的一个视图，而不是一个新的 ArrayList，使用时需要注意（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）：
@@ -149,9 +150,11 @@ private static final int DEFAULT_CAPACITY = 10;
 
 #### 2. 扩容
 
-添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，即 oldCapacity+oldCapacity/2。其中 oldCapacity >> 1 需要取整，所以新容量大约是旧容量的 1.5 倍（oldCapacity 为偶数就是 1.5 倍，为奇数就是 1.5 倍减 0.5）。例如依次添加元素时，容量的变化为 0、10、15、22、33（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。JDK 21 的 grow() 改为调用 ArraysSupport.newLength() 计算新容量，增长的规则相同。
+以 JDK 8 的源码为例，添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，即 oldCapacity+oldCapacity/2。其中 oldCapacity >> 1 需要取整，所以新容量大约是旧容量的 1.5 倍（oldCapacity 为偶数就是 1.5 倍，为奇数就是 1.5 倍减 0.5）。例如依次添加元素时，容量的变化为 0、10、15、22、33（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。JDK 21 的 grow() 改为调用 ArraysSupport.newLength() 计算新容量，增长的规则相同。
 
 扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
+
+以下是 JDK 8 的源码：
 
 ```java
 public boolean add(E e) {
@@ -261,7 +264,7 @@ ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。Array
 - 数组支持随机访问，get(i) 是 O(1)，但插入删除的代价很高，需要移动大量元素；
 - 链表不支持随机访问，get(i) 要从离 i 较近的一端逐个遍历，是 O(N)，但插入删除只需要改变指针。
 
-需要注意的是，链表在中间插入或删除前要先遍历到这个位置，这一步也是 O(N) 的，而且要逐个访问分散在内存中的节点，只有已经拿到节点时（例如用迭代器遍历到它），改指针才是 O(1)；数组移动元素用的是 System.arraycopy()，一次复制一整块连续内存。例如在 10 万个元素的中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒；只有在头部插入时 LinkedList 才明显更快（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。
+需要注意的是，链表在中间插入或删除前要先遍历到这个位置，这一步也是 O(N) 的，而且要逐个访问分散在内存中的节点，只有已经拿到节点时（例如用 ListIterator 遍历到这个位置，再通过迭代器插入或删除），改指针才是 O(1)；数组移动元素用的是 System.arraycopy()，一次复制一整块连续内存。例如在 10 万个元素的中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒；在头部插入时 LinkedList 明显更快（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。
 
 内存上，ArrayList 每个元素只占数组中的一个引用（压缩指针下 4 字节，扩容留下的空位另算），LinkedList 每个元素还要一个 24 字节的 Node 对象（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。所以大多数场景下应该使用 ArrayList，需要在头尾频繁插入删除时使用 ArrayDeque 或 LinkedList。
 
@@ -531,6 +534,8 @@ transient int modCount;
 
 装载因子取 0.75 是时间和空间的折中：调大可以少占内存，但链表变长，查找变慢；调小则扩容更频繁，空着的桶更多。装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布，约 98.6% 的桶只有 0～2 个节点，见[链表转红黑树](#8-链表转红黑树)。
 
+HashMap 的空间开销也要考虑。例如一个 HashMap\<String, Long\> 放入 100 万个键值对，键是 12 个 ASCII 字符的字符串，每个条目连同键和值约占 120 字节：键 56 字节、Long 24 字节、Node 32 字节、桶数组约 8 字节，约为有效数据（12 字节字符加 8 字节的 long）的 6 倍（JDK 21 实测，见[附录 A11](#a11-hashmap-每个条目的内存)）。用 HashMap 做本地缓存时，要按键和值的实际大小这样估算，并给扩容留出余量。
+
 能预估键的数量时，应该在创建时指定容量，避免多次扩容。需要注意的是，构造函数的参数是容量而不是键数：new HashMap<>(1000) 的容量为 1024、threshold 为 768，放入 1000 个键时仍会扩容一次；JDK 19 起的 HashMap.newHashMap(1000) 按装载因子换算出容量 2048，不再扩容（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
 
 扩容由 resize() 完成：容量变为原来的两倍，threshold 随之变为新容量乘以装载因子，创建新数组，再把旧数组中的节点逐个桶迁移到新数组中，因此这一步是很费时的。
@@ -562,7 +567,7 @@ HashMap 构造函数允许传入的容量不是 2 的 n 次方，tableSizeFor() 
 
 红黑树转回链表的阈值是 6 而不是 8，两个阈值之间留出余量，避免节点数在 8 附近增减时反复转换。需要注意的是，6 只用于扩容时拆分树：拆分后的节点数不超过 6 就转回链表。删除节点时按树的形状判断，根节点缺少左子节点或右子节点，或者根的左子节点没有左子节点时，转回链表，例如上面的例子再放入第 12 个键，然后逐个删除，剩 3 个键时才转回链表。
 
-选择红黑树而不是 AVL 树，是因为红黑树只要求大致平衡，插入和删除时需要的旋转更少，适合桶中元素不断增删的场景；代价是红黑树的高度比 AVL 树稍高，查找时多比较的次数很少。B+ 树为磁盘设计，用很大的节点减少读取磁盘的次数，不适合内存中只有几个节点的桶。
+源码注释没有说明为什么选红黑树而不选 AVL 树，树化桶的平衡代码与 TreeMap 一样改编自《算法导论》中的红黑树。两者相比，插入时最多都只旋转 2 次；删除时红黑树最多旋转 3 次，AVL 树可能要沿着路径旋转多次。红黑树只要求大致平衡，高度上界比 AVL 树高，但节点少时差别不大，例如 10 个节点时两者的高度上界分别约为 6 层和 4 层。B+ 树为磁盘设计，用很大的节点减少读取磁盘的次数，不适合内存中只有几个节点的桶。
 
 #### 9. 与 Hashtable 的比较
 
@@ -578,6 +583,8 @@ Hashtable 是 JDK 1.0 的遗留类，需要线程安全时使用 ConcurrentHashM
 #### 10. 线程安全
 
 HashMap 不是线程安全的。数据放好并安全发布（例如赋给 final 字段）之后只读，多个线程并发访问没有问题；只要有一个线程在写就会出问题，例如两个线程同时向同一个空桶插入，都判断桶为空，后写入的会覆盖先写入的；size++ 也不是原子操作。用 8 个线程各插入 10 万个不同的键，HashMap 的 size 每次都不同，例如 111068、323870，远少于 80 万；同样的操作 ConcurrentHashMap 每次都是 800000（JDK 21 实测，见[附录 A2](#a2-hashmap-的并发写入)）。
+
+只有一个线程写、其它线程只读也不安全。resize() 先把 table 指向新数组，再逐个桶把节点迁过去，读线程在这期间查已经存在的键，可能落到还没迁入的新桶上，返回 null。例如键 0 事先放入，一个线程再放入 1～199999，另一个线程反复 get(0)，10 轮中每轮都有几次到一百多次返回 null，写完后再读都正常（JDK 21 实测，见[附录 A2](#a2-hashmap-的并发写入)）。
 
 JDK 1.7 的问题更严重：扩容时把节点逐个插入新链表的头部，顺序会反转，两个线程同时扩容时链表可能形成环，之后在这个桶上的 get 会陷入死循环。例如桶中为 B → A，线程 1 读到 e = B、next = A 后暂停；线程 2 完成扩容，新链表反转为 A → B，A.next 指向了 B；线程 1 继续时依次放入 B、A，又沿 A.next 取回 B 再放入一次，把 B.next 设为 A，B 和 A 互相指向（按 JDK 7 的 transfer() 模拟，见[附录 A6](#a6-jdk-17-hashmap-扩容成环的模拟)）。
 
@@ -606,7 +613,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 #### 2. size 操作
 
-元素个数保存在 baseCount 和一组 CounterCell 中：没有竞争时用 CAS 更新 baseCount，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同。求和时不加锁，其它线程可能正在增减，所以并发修改时返回的是一个估计值。
+元素个数保存在 baseCount 和一组 CounterCell 中：没有竞争时用 CAS 更新 baseCount，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同。求和时不加锁，其它线程可能正在增减，所以并发修改时返回的是一个估计值。元素个数可能超过 int 的范围，JDK 8 起建议用返回 long 的 mappingCount()，它同样是估计值。
 
 #### 3. JDK 1.8 的改动
 
@@ -897,6 +904,35 @@ run 0: size=263620 stuckThreads=4
   putter-4 at java.base/java.util.HashMap$TreeNode.treeify(HashMap.java:2107) / java.base/java.util.HashMap$TreeNode.split(HashMap.java:2339)
 ```
 
+一个线程写、一个线程读（Apple M1 Pro，JDK 21.0.13）：键 0 事先放入，写线程放入 1～199999，读线程在写线程结束前反复 get(0)，统计返回 null 的次数：
+
+```java
+Map<Integer, Integer> map = new HashMap<>();
+map.put(0, 0);
+long[] nulls = new long[1], reads = new long[1];
+Thread writer = new Thread(() -> {
+    for (int i = 1; i < 200_000; i++) map.put(i, i);
+});
+Thread reader = new Thread(() -> {
+    while (writer.isAlive()) {
+        if (map.get(0) == null) nulls[0]++;
+        reads[0]++;
+    }
+});
+writer.start(); reader.start();   // 先启动写线程，读线程才会进入循环
+writer.join(); reader.join();
+```
+
+```text
+第 1 轮：get(0) 2764724 次，返回 null 19 次，写完后 get(0) = 0
+第 2 轮：get(0) 322215 次，返回 null 48 次，写完后 get(0) = 0
+第 3 轮：get(0) 3665665 次，返回 null 137 次，写完后 get(0) = 0
+……
+第 10 轮：get(0) 2844579 次，返回 null 3 次，写完后 get(0) = 0
+```
+
+10 轮返回 null 的次数为 3～153 次。
+
 ### A3 ArrayList 的并发写入
 
 8 个线程各向同一个 ArrayList 添加 10 万个元素，捕获 add() 抛出的异常，结束后统计 size 和 null 元素的个数，共 30 轮：
@@ -1128,6 +1164,45 @@ m.computeIfAbsent("a", k -> m.computeIfAbsent("a", x -> 1));  // 映射函数中
 get+put count=696658 merge count=800000
 recursive: java.lang.IllegalStateException: Recursive update
 ```
+
+### A11 HashMap 每个条目的内存
+
+JDK 21.0.13（默认开启压缩指针和压缩类指针，对象头 12 字节），Apple M1 Pro，-Xmx2g。每一步之后多次 System.gc()，用 totalMemory - freeMemory 的差值除以条目数：
+
+```java
+import java.util.*;
+
+public class HmMem {
+    static long used() {
+        for (int i = 0; i < 5; i++) System.gc();
+        Runtime r = Runtime.getRuntime();
+        return r.totalMemory() - r.freeMemory();
+    }
+    public static void main(String[] args) {
+        int n = 1_000_000;
+        String[] keys = new String[n];
+        Long[] vals = new Long[n];
+        long base = used();
+        for (int i = 0; i < n; i++) keys[i] = String.format("user:%07d", i);       // 12 个字符
+        long afterKeys = used();
+        for (int i = 0; i < n; i++) vals[i] = 1_000_000_000L + i;                    // 不在 Long 缓存范围内
+        long afterVals = used();
+        Map<String, Long> map = new HashMap<>();
+        for (int i = 0; i < n; i++) map.put(keys[i], vals[i]);
+        long afterMap = used();
+        System.out.printf("键 %.1f 字节/个，Long %.1f 字节/个，HashMap 结构 %.1f 字节/条，合计 %.1f 字节/条%n",
+                (afterKeys - base) / (double) n, (afterVals - afterKeys) / (double) n,
+                (afterMap - afterVals) / (double) n, (afterMap - base) / (double) n);
+        System.out.println(map.size() + " " + keys.length + " " + vals.length);
+    }
+}
+```
+
+```text
+键 56.1 字节/个，Long 24.0 字节/个，HashMap 结构 41.5 字节/条，合计 121.6 字节/条
+```
+
+运行 3 次结果相同。按对象布局计算（8 字节对齐）：String 对象 24 字节，键只有 ASCII 字符时每个字符占 1 字节（Compact Strings），内部的 byte[] 为 16 + 12 = 28、对齐到 32 字节；Long 为 12 + 8 = 20、对齐到 24 字节；Node 为 12 + 4（hash）+ 3 × 4（三个引用）= 28、对齐到 32 字节；100 万个条目时数组扩到 2²¹ 个桶，每个引用 4 字节，平均每条约 8.4 字节。理论合计约 120.4 字节，实测的 121.6 是堆用量的差值，包含少量其它对象。
 
 ## 参考资料
 
