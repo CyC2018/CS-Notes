@@ -244,6 +244,8 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 ### 2XX 成功
 
 - 200 OK：请求成功；
+- 201 Created：请求成功并创建了新的资源，例如 POST 创建订单后返回，通常用 Location 首部给出新资源的地址；
+- 202 Accepted：请求已经被接受，但还没有处理完，最终可能成功也可能失败，常用于导出报表这类异步任务，响应中最好说明当前的处理状态，并给出查询状态的方式；
 - 204 No Content：请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用；
 - 206 Partial Content：表示客户端进行了范围请求，响应报文包含由 Content-Range 指定范围的实体内容。
 
@@ -251,19 +253,19 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 
 - 301 Moved Permanently：永久性重定向；
 - 302 Found：临时性重定向；
-- 303 See Other：和 302 有着相同的功能，但是 303 明确要求客户端应该采用 GET 方法获取资源；
+- 303 See Other：让客户端用 GET（原请求是 HEAD 时仍用 HEAD）去获取 Location 指向的另一个资源，常用于表单 POST 提交后跳到结果页，刷新时不会重复提交；
 - 304 Not Modified：GET 或 HEAD 请求带有 If-None-Match 或 If-Modified-Since，资源没有变化时返回 304，不带响应体（If-Match、If-Unmodified-Since 条件不满足时返回的是 412 Precondition Failed）；
 - 307 Temporary Redirect：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法；
 - 308 Permanent Redirect：永久重定向，与 301 的含义类似，但不允许改变请求方法。
 
 301 和 302 的区别也体现在缓存上：没有缓存指令时，301 默认可以缓存，浏览器之后直接跳到新地址（Edge 156 实测，见[附录 A13](#a13-301-与-302-的缓存)），搜索引擎也会改为收录新地址，适合域名迁移；302 默认不缓存，每次都先访问旧地址，适合登录后跳回原页面这类临时跳转。
 
-需要注意的是，RFC 9110 出于历史原因允许用户代理在 301、302 重定向时把 POST 方法改成 GET 方法，大多数浏览器也是这么做的。如果不希望方法被改变，应该使用 307 或者 308。
+需要注意的是，RFC 9110 出于历史原因允许用户代理在 301、302 重定向时把 POST 方法改成 GET 方法，大多数浏览器也是这么做的，但只改 POST，PUT、DELETE 保持不变；303 则把 GET、HEAD 以外的方法都改为 GET。如果不希望方法被改变，应该使用 307 或者 308。
 
 ### 4XX 客户端错误
 
 - 400 Bad Request：请求报文中存在语法错误；
-- 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败；
+- 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。响应必须带 WWW-Authenticate 首部说明认证方式，例如令牌过期时返回 WWW-Authenticate: Bearer error="invalid_token"；
 - 403 Forbidden：服务器理解请求但拒绝执行，例如已登录的普通用户访问管理接口，凭证有效但权限不够（401 是没有认证或者认证失败）；
 - 404 Not Found：服务器上没有找到请求的资源；
 - 429 Too Many Requests：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
@@ -271,11 +273,11 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 ### 5XX 服务器错误
 
 - 500 Internal Server Error：服务器正在执行请求时发生错误；
-- 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到了无效的响应，例如 Nginx 连不上后端，或者后端在返回响应之前断开了连接；
-- 503 Service Unavailable：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求；
-- 504 Gateway Timeout：作为网关或代理的服务器没有及时收到上游服务器的响应，例如 Nginx 等待后端的时间超过了 proxy_read_timeout（默认 60 秒）。
+- 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到了无效的响应，例如后端的端口拒绝连接（Connection refused）、返回的响应首部无效，或者后端在返回完整的响应首部之前断开了连接；
+- 503 Service Unavailable：服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。Nginx 的 limit_req 限流默认也返回 503，可以用 limit_req_status 改为 429；
+- 504 Gateway Timeout：作为网关或代理的服务器没有及时收到上游服务器的响应，例如 Nginx 连接后端的时间超过了 proxy_connect_timeout，或者读取后端的响应首部时，连续没有收到数据的时间超过了 proxy_read_timeout（两者默认都是 60 秒）。响应首部已经转发给客户端之后再超时，网关只能断开连接，不会再返回 504。
 
-502 和 504 都说明问题出在网关后面的服务上：502 是后端出错或者不可达，504 是后端太慢，排查时先看网关的错误日志，再看对应时间后端的日志和耗时。
+502 和 504 都说明网关访问后端时失败，原因可能在后端服务、网络或网关的配置：502 是连接被拒绝或收到了无效的响应，504 是连接或读取后端超时；后端正常返回的 500 原样传给客户端，不会变成 502。排查时先看网关的错误日志，再看对应时间后端的日志和耗时。
 
 ## 四、HTTP 首部
 
@@ -358,7 +360,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 
 #### 1. 短连接与长连接
 
-当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问的 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大：每个连接都要先经过 [三次握手](计算机网络%20-%20传输层.md#tcp-的三次握手)，主动关闭的一方还要在 [TIME_WAIT](计算机网络%20-%20传输层.md#大量-time_wait-与-close_wait) 中保留连接（Linux 为 60 秒），频繁访问时会耗尽本地端口。
+当浏览器访问一个包含多张图片的 HTML 页面时，除了请求访问的 HTML 页面资源，还会请求图片资源。如果每进行一次 HTTP 通信就要新建一个 TCP 连接，那么开销会很大：每个连接都要先经过 [三次握手](计算机网络%20-%20传输层.md#tcp-的三次握手)，主动关闭的一方还要在 [TIME_WAIT](计算机网络%20-%20传输层.md#大量-time_wait-与-close_wait) 中保留连接（Linux 为 60 秒），由客户端主动关闭时，频繁新建连接访问同一个服务器，可能耗尽本地的临时端口。
 
 长连接只需要建立一次 TCP 连接就能进行多次 HTTP 通信。
 
@@ -383,7 +385,7 @@ Cookie 曾经是浏览器中唯一的本地存储手段。现在只在本地使�
 
 Cookie 与 Web Storage 的区别：
 
-- Cookie 每次请求都会自动携带，单个大小约 4 KB（RFC 6265 要求浏览器至少支持 4096 字节），可以用 HttpOnly 禁止脚本读取；
+- Cookie 每次请求都会自动携带，单个大小约 4 KB（RFC 6265 建议浏览器至少支持 4096 字节），可以用 HttpOnly 禁止脚本读取；
 - localStorage 和 sessionStorage 不随请求发送，只能由脚本读写，每个源各约 5 MB；localStorage 一直保存到被删除，sessionStorage 按标签页隔离，关闭标签页就被清除。
 
 #### 1. 用途
@@ -416,7 +418,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 #### 3. 分类
 
 - 会话期 Cookie：没有指定过期时间，浏览器关闭之后一般会被删除（启用了会话恢复的浏览器可能保留）；
-- 持久性 Cookie：指定过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
+- 持久性 Cookie：指定过期时间（Expires）或有效期（Max-Age）之后就成为了持久性的 Cookie。两者同时出现时以 Max-Age 为准，Max-Age=0 表示立即删除这个 Cookie。
 
 ```http
 Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
@@ -452,7 +454,7 @@ Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 
 #### 7. Secure
 
-标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
+标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性：Secure 只保证 Cookie 不在明文连接中发送，不保证它不被篡改，例如同一父域名下的其它子域名可以写入同名的 Cookie，让服务器读到被替换的值。
 
 SameSite 属性控制跨站请求是否携带 Cookie，取值有 Strict、Lax 和 None，None 表示跨站请求也携带，必须同时设置 Secure。它用于防范跨站请求伪造，见 [设置 Cookie 的 SameSite 属性](攻击技术.md#3-设置-cookie-的-samesite-属性)。
 
@@ -516,9 +518,17 @@ JWT 与 Session 的区别：
 
 <div align="center"> <img src="pics/jwt-refresh-timeline.png" width="760px"/> </div><br>
 
-需要立即失效时，可以把令牌的 ID 放入 Redis 黑名单，过期时间设为令牌的剩余有效期，但这又回到了在服务器保存状态。
+需要立即失效时，可以把令牌的 ID 放入 Redis 黑名单，过期时间设为令牌的剩余有效期，但这又回到了在服务器保存状态。黑名单适合让单个令牌失效；改密码、“退出所有设备”要让一个用户的全部令牌失效，常见的做法是在令牌中带一个版本号，服务器为每个用户记录当前版本，改密码时加一，校验时版本对不上就拒绝，代价是每次请求都要查一次这个版本（可以放在缓存中）。
 
-令牌在浏览器中的存放位置：放在 localStorage 中，页面上的任何脚本都能读取，一旦存在 XSS 漏洞，令牌就会被盗走；放在 HttpOnly 的 Cookie 中，脚本读不到，但浏览器会自动携带 Cookie，需要防范 [跨站请求伪造](攻击技术.md#二跨站请求伪造)。
+刷新令牌有效期长，被盗后的危害更大。常用的做法是刷新令牌轮换：每次刷新都发一个新的刷新令牌，旧的作废，服务器记下它们属于同一组。被盗的令牌和合法的令牌先后来刷新时，必然有一方用的是已经作废的令牌，服务器发现后撤销这一组中仍然有效的刷新令牌，攻击者和合法的客户端都不能再刷新，合法客户端要重新获取授权（RFC 9700）；已经签发的访问令牌不会因此失效，没有黑名单时要等到过期。客户端要把并发的刷新请求串行化，否则自己的两个请求拿同一个刷新令牌去换，也会被当成被盗。
+
+令牌在浏览器中的存放位置：放在 localStorage 中，页面上的任何脚本都能读取，一旦存在 XSS 漏洞，令牌就会被盗走；放在 HttpOnly 的 Cookie 中，脚本读不到，但浏览器会自动携带 Cookie，需要防范 [跨站请求伪造](攻击技术.md#二跨站请求伪造)。放在 Authorization 首部中的令牌由页面脚本显式添加，浏览器不会自动带上，所以不受 CSRF 影响，代价是令牌对脚本可见，仍怕 XSS。
+
+需要注意的是，任何存放位置都无法阻止已经在页面中执行的恶意脚本冒用用户的身份发出请求，它即使读不到 HttpOnly Cookie，也可以直接从页面发请求，所以关键是不让恶意脚本在页面中执行，例如防范 XSS、不加载被篡改的第三方脚本。
+
+令牌只放在内存中，可以把暴露范围限制在当前页面，代价是刷新页面后就丢失，要重新获取。
+
+要求更高时可以采用面向前端的后端（Backend for Frontend, BFF）模式：令牌只保存在后端，浏览器只持有会话 Cookie，由后端代为调用接口。RFC 10017 对业务应用和处理个人数据的应用强烈推荐这种做法。
 
 需要注意的是，服务器验证时要固定使用的签名算法，不能接受头部中 alg 为 none 的令牌；HMAC 的密钥要随机生成，长度不少于 256 位。签名也不能防止窃听和重放，令牌被截获后，在过期前任何人都能拿它冒充用户，所以必须通过 HTTPS 传输；签名只证明令牌是服务器签发的，服务器仍要检查令牌中的用户是否有权访问所请求的资源。
 
@@ -572,7 +582,9 @@ OAuth 2.0 本身只负责授权，访问令牌表示“可以读取昵称”，�
 2. 已登录的手机 App 扫码后，带着手机自己的令牌把二维码 ID 发给服务器，状态变为“已扫码”，电脑上显示“请在手机上确认”；
 3. 用户在手机上点击确认，服务器为电脑签发一个新的令牌，状态变为“已确认”，电脑轮询拿到令牌后完成登录。
 
-需要注意的是，电脑拿到的是新签发的令牌，而不是手机的令牌；二维码 ID 有效期很短，确认这一步要求用户在手机上手动点击，防止别人把二维码发给用户诱导扫码。
+需要注意的是，电脑拿到的是新签发的令牌，而不是手机的令牌；二维码 ID 有效期很短。确认这一步要求用户在手机上手动点击，避免扫一下就登录。
+
+手动确认防不住诱导扫码：攻击者把自己电脑上的二维码发给用户，用户被说服后照样会确认，令牌就发给了攻击者的电脑。所以确认页还要显示发起登录的设备和地点，提醒用户确认电脑就在自己面前，这也只能降低风险。RFC 8628（设备授权）对远程钓鱼给出的也是这类建议。
 
 ### 缓存
 
@@ -616,7 +628,7 @@ private 指令规定了将资源作为私有缓存，只能被单独用户使用
 Cache-Control: private
 ```
 
-public 指令规定了将资源作为公共缓存，可以被多个用户使用，一般存储在代理服务器中。
+public 指令明确表示响应可以被缓存，例如允许共享缓存保存带 Authorization 首部的请求的响应；响应本来就可以缓存时不需要加 public。
 
 ```http
 Cache-Control: public
@@ -626,7 +638,7 @@ Cache-Control: public
 
 max-age 指令出现在响应报文中，表示响应在多少秒内是新鲜的，例如 max-age=600 表示缓存 10 分钟之内可以直接使用。
 
-max-age 指令出现在请求报文中，表示客户端只接受已缓存时间不超过这个秒数的响应，例如刷新页面时浏览器发送 max-age=0，要求缓存先向服务器确认；强制刷新时发送的则是 no-cache。
+max-age 指令出现在请求报文中，表示客户端希望得到已缓存时间不超过这个秒数的响应（请求中的指令只是建议，缓存可以不遵守），例如刷新页面时浏览器发送 max-age=0，要求缓存先向服务器确认；强制刷新时发送的则是 no-cache。
 
 ```http
 Cache-Control: max-age=31536000
@@ -638,16 +650,17 @@ Expires 首部字段也可以用于告知缓存服务器该资源什么时候会
 Expires: Wed, 04 Jul 2012 08:26:05 GMT
 ```
 
+- CDN 等共享缓存优先看 s-maxage，其次是 max-age 和 Expires，都没有时才按启发式估算；
 - 响应中同时有 max-age 和 Expires 时，HTTP/1.1 的缓存以 max-age 为准，忽略 Expires；
 - 只支持 HTTP/1.0 的缓存不认识 max-age，只看 Expires。
 
-Expires 是一个绝对时间，客户端和服务器的时钟不一致时会算错，max-age 是相对的秒数，没有这个问题。
+Expires 是一个绝对时间，直接与本地时钟比较的话，客户端和服务器的时钟不一致时会算错，所以 RFC 9111 规定用 Expires 减去响应中的 Date 计算有效期，两个时间都来自服务器。max-age 直接给出有效期，计算时不需要比较两个日期，但判断响应是否仍然新鲜还要算出它已经存放了多久，其中用到本地收到响应的时间，仍可能受时钟偏差影响。
 
 响应经过 CDN 等代理缓存时，代理会在 Age 首部中写明它已经存放了多少秒，新鲜期要扣掉这部分。例如浏览器收到 max-age=600、Age=540 的响应，只能再直接使用约 60 秒，而不是重新计时 600 秒。
 
 #### 4. 缓存验证
 
-需要先了解 ETag 首部字段的含义，它是服务器为资源的某个版本生成的标识，资源的内容变化时 ETag 随之改变。同一个 URL 按内容协商返回不同的版本（例如中文和英文页面）时，每个版本也有各自的 ETag。
+需要先了解 ETag 首部字段的含义，它是服务器为资源的某个版本生成的标识，资源的内容变化时强 ETag 随之改变。同一个 URL 按内容协商返回不同的版本（例如中文和英文页面）时，每个版本也有各自的 ETag。
 
 ```http
 ETag: "82e22293907ce725faf67773957acd12"
@@ -658,6 +671,8 @@ ETag: "82e22293907ce725faf67773957acd12"
 ```http
 If-None-Match: "82e22293907ce725faf67773957acd12"
 ```
+
+ETag 前面带 W/ 的是弱 ETag，内容不同但被服务器视为等价的版本可以共用同一个弱 ETag。If-None-Match 按弱比较判断，W/"1" 与 "1" 视为一致。
 
 Last-Modified 首部字段也可以用于缓存验证，它包含在源服务器发送的响应报文中，指示源服务器对资源的最后修改时间。但是它是一种弱校验器：时间只精确到秒，同一秒内的多次修改区分不出来；文件被重新生成而内容没变时，修改时间也会变，导致不必要的重新下载。所以它通常作为 ETag 的备用方案。
 
@@ -853,7 +868,7 @@ WebSocket 是基于 TCP 的应用层协议。帧头中有区分文本、二进�
 
 客户端发出的帧必须用 4 字节的随机掩码与数据逐字节异或，防止中间的代理把精心构造的数据当作 HTTP 请求，从而污染缓存。例如客户端发送文本 hello 的帧共 11 字节：81 85 两个字节、4 字节的掩码和 5 字节掩码后的数据；服务器发送同样的消息只需要 7 字节。
 
-需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。WebSocket 断开后不会自动重连，客户端要自己按逐渐增大的间隔重连，并补拉断线期间的消息，见 [心跳与重连](系统设计基础.md#心跳与重连)。
+需要注意的是，长时间没有数据时，中间的代理或 NAT 可能会断开空闲的连接，所以通常定时发送 Ping 帧，对方回复 Pong 帧，以此保活并发现已经断开的连接。浏览器收到 Ping 会自动回复 Pong，但网页中的 JavaScript 不能主动发送 Ping，所以网页端一般由服务端发 Ping，或者在应用层发心跳消息。WebSocket 断开后不会自动重连，客户端要自己按逐渐增大的间隔重连，并补拉断线期间的消息，见 [心跳与重连](系统设计基础.md#心跳与重连)。
 
 SSE（Server-Sent Events）是另一种服务器推送方式：它是一个普通的 HTTP 响应（HTTP/1.1 和 HTTP/2 下同样基于 TCP），Content-Type 为 text/event-stream，没有 Content-Length，服务器不断地往响应中写入 UTF-8 文本事件（二进制要先编码），每条事件以空行结束，只能由服务器发给客户端。例如推送订单 1024 的状态（curl 实测，见[附录 A6](#a6-sse-推送与断线重连)）：
 
@@ -918,7 +933,9 @@ Access-Control-Allow-Headers: content-type
 Access-Control-Max-Age: 600
 ```
 
-Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间相同的请求不再预检。跨域请求默认不携带 Cookie，前端设置 credentials: 'include' 后，服务器还要返回 Access-Control-Allow-Credentials: true，并且 Access-Control-Allow-Origin 不能是 *，必须写明具体的源。
+Access-Control-Max-Age 表示预检结果可以缓存的秒数，期间同一个源以相同的凭证模式访问同一个 URL，方法和首部都在已允许的范围内时，不再预检。不返回时按 5 秒；浏览器还有上限，设置得更大也只缓存这么久，按 2026 年 10 月的源码，Chromium 为 2 小时、Firefox 为 24 小时、Safari 使用的 WebKit 为 10 分钟。
+
+跨域请求默认不携带 Cookie，前端设置 credentials: 'include' 后，服务器还要返回 Access-Control-Allow-Credentials: true，并且 Access-Control-Allow-Origin 不能是 *，必须写明具体的源；Access-Control-Allow-Methods、Access-Control-Allow-Headers 的 * 这时也不再表示全部允许。两个源属于不同的站点时（例如 shop.com 和 api.pay.com），Cookie 还要设置 SameSite=None 和 Secure 才会被携带，默认拦截第三方 Cookie 的浏览器（例如 Safari）中仍然不携带（见 [Cookie 的 Secure 与 SameSite](#7-secure)）。
 
 用两个端口模拟两个源验证（Edge 156 实测，见[附录 A3](#a3-跨域)）：服务器不返回 Access-Control-Allow-Origin 时，fetch 失败，但服务器的日志显示请求已经执行了；预检请求没有允许 PUT 时，浏览器不再发送 PUT；携带 Cookie 而服务器返回 * 时，fetch 同样失败。
 
@@ -1065,7 +1082,7 @@ DH 本身无法防止中间人：攻击者可以把 A、B 换成自己的公钥�
 
 TLS 1.2 还支持 RSA 密钥交换：客户端生成 48 字节的随机预主密钥，用服务器证书中的 RSA 公钥加密后发给服务器（例子中加密后为 256 字节），只有持有私钥的服务器能解密。常说的“三个随机数”指的就是这种方式中的客户端随机数、服务器随机数和预主密钥。前两个以明文传输，作用是让每次连接的会话密钥都不同，攻击者即使重放录下的握手报文，算出的密钥也和原来不一样；需要保密的只有预主密钥。
 
-RSA 密钥交换没有前向安全：攻击者录下通信，日后拿到服务器的私钥，就能解密录下的预主密钥，进而解密全部通信。ECDHE 的私钥在握手后就丢弃，证书私钥只用来签名，泄露后也无法还原以前的会话密钥。因此 TLS 1.3 删除了 RSA 密钥交换，完整握手只能使用 (EC)DHE 这类前向安全的方式。
+RSA 密钥交换没有前向安全：攻击者录下通信，日后拿到服务器的私钥，就能解密录下的预主密钥，进而解密全部通信。ECDHE 的私钥在握手后就丢弃，证书私钥只用来签名，泄露后也无法还原以前的会话密钥。因此 TLS 1.3 删除了 RSA 密钥交换，完整握手只能使用 (EC)DHE 这类前向安全的方式；2026 年 7 月发布的 RFC 10015 进一步要求 TLS 1.2 的客户端不再提供、服务器不再选择 RSA 密钥交换的密码套件。
 
 #### 3. Finished 与会话恢复
 
@@ -1120,8 +1137,8 @@ HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了�
 
 HTTP/1.x 实现简单是以牺牲性能为代价的：
 
-- 一个连接上同一时刻只能等待一个响应，浏览器只能对同一个域名打开多个连接来并发，通常最多 6 个，资源多的页面中其余请求只能排队；
-- 首部是不压缩的文本，每个请求都重复发送相同的 User-Agent、Cookie，从而导致不必要的网络流量；
+- 不使用流水线时，一个连接上同一时刻只能等待一个响应，浏览器只能对同一个域名打开多个连接来并发，通常最多 6 个，资源多的页面中其余请求只能排队，HTTP/2 的解决办法见[二进制分帧层](#二进制分帧层)；
+- 首部是不压缩的文本，每个请求都重复发送相同的 User-Agent、Cookie，从而导致不必要的网络流量，见[首部压缩](#首部压缩)；
 - 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下。
 
 ### 二进制分帧层
@@ -1144,11 +1161,11 @@ HTTP/2.0 将报文分成 HEADERS 帧和 DATA 帧，它们都是二进制格式�
 
 ### 服务端推送
 
-HTTP/2.0 在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
+HTTP/2.0 允许服务端在客户端请求一个资源时，把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求 page.html 页面，服务端就把 script.js 和 style.css 等与之相关的资源一起发给客户端。
 
 <div align="center"> <img src="pics/h2-push.png" width="720px"/> </div><br>
 
-需要注意的是，Chrome 106 起默认禁用了服务端推送，其它基于 Chromium 的浏览器也随之跟进。
+需要注意的是，Chrome 106 起默认禁用了服务端推送，其它基于 Chromium 的浏览器也随之跟进，Firefox 132（2024 年 10 月）也移除了这个功能。需要提前加载资源时，常用 103 Early Hints 或者 preload 提示浏览器，由浏览器决定是否请求。
 
 ### 首部压缩
 
@@ -1166,9 +1183,13 @@ HTTP/2 在一个 TCP 连接上复用多个流，但 TCP 只保证整个字节流
 
 HTTP/3 改为基于 UDP 的 QUIC 协议：
 
-- 每个流单独保证顺序，一个流丢包不影响其它流；
+- 每个流单独保证顺序，一个包丢失时，只有包中带有数据的流会因缺数据而暂停交付，其它流照常交付；
 - QUIC 内置了 TLS 1.3，传输层握手和加密握手合并，新连接 1 个 RTT 后就能发送请求，恢复之前的会话时可以 [0-RTT](#3-finished-与会话恢复)；
 - 连接用连接 ID 标识，而不是 IP 地址和端口，手机从 Wi-Fi 切换到移动网络时连接不用重建。
+
+需要注意的是，QUIC 并没有消除全部的队头阻塞：同一个流内仍要按顺序交付；首部压缩 QPACK 引用了解码端还没有收到的动态表条目时，这个流也要等待（RFC 9000 §2.2，RFC 9204 §2.1.2）。此外，连接级的流量控制额度用完时，这个方向上所有的流都不能再发送新数据（RFC 9000 §4.1）。
+
+连接迁移时，客户端从新地址继续发包，通常换用服务器事先发给它的另一个连接 ID，避免旁观者通过相同的连接 ID 关联新旧路径；服务器先用 PATH_CHALLENGE 和 PATH_RESPONSE 帧验证新地址，验证完成前发往这个地址的数据不超过从它收到的 3 倍。迁移只能由客户端在握手确认之后发起（RFC 9000 §8、§9）。
 
 <div align="center"> <img src="pics/http3-quic.png" width="760px"/> </div><br>
 
@@ -1245,7 +1266,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
 DELETE /idX/delete HTTP/1.1   -> Returns 404
 ```
 
-幂等决定了请求失败后能不能放心地重试：客户端没收到响应时，重发 PUT、DELETE 不会多出数据，重发 POST 可能会重复下单。让 POST 也能安全重试的做法见 [幂等](分布式.md#九幂等)。
+幂等决定了请求失败后能不能放心地重试：客户端没收到响应时，重发 PUT、DELETE 不会多出数据，重发 POST 可能会重复下单。代理和网关也按方法决定能否重试，例如 Nginx 默认不会把已经发给一台后端的 POST、PATCH 再转给下一台，PUT、DELETE 在出错或超时时则可能被重试，所以这两个方法的实现必须真的幂等。让 POST 也能安全重试的做法见 [幂等](分布式.md#九幂等)。
 
 ### 可缓存
 
@@ -1697,6 +1718,7 @@ AES-128-GCM    6280411.97k
 - [RFC 6749: The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
 - [RFC 7636: Proof Key for Code Exchange (PKCE)](https://www.rfc-editor.org/rfc/rfc7636)
 - [RFC 9700: Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700)
+- [RFC 8628: OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628)
 - [OWASP: JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)
 - [OWASP: HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html)
 - 上野宣. 图解 HTTP [M]. 人民邮电出版社, 2014.
@@ -1727,6 +1749,8 @@ AES-128-GCM    6280411.97k
 - [RFC 7541: HPACK: Header Compression for HTTP/2](https://www.rfc-editor.org/rfc/rfc7541)
 - [RFC 9114: HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
 - [RFC 9000: QUIC](https://www.rfc-editor.org/rfc/rfc9000)
+- [RFC 9204: QPACK: Field Compression for HTTP/3](https://www.rfc-editor.org/rfc/rfc9204)
+- [RFC 10017: OAuth 2.0 for Browser-Based Applications](https://www.rfc-editor.org/rfc/rfc10017)
 - [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)
 - [WHATWG HTML: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
 - [MDN: EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
@@ -1743,5 +1767,6 @@ AES-128-GCM    6280411.97k
 - [RFC 9110：4.2.1 http URI Scheme](https://www.rfc-editor.org/rfc/rfc9110#section-4.2.1)
 - [RFC 9110：9 Methods](https://www.rfc-editor.org/rfc/rfc9110#section-9)
 - [RFC 5246: The Transport Layer Security (TLS) Protocol Version 1.2](https://www.rfc-editor.org/rfc/rfc5246)
+- [RFC 10015: Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015)
 - [RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://www.rfc-editor.org/rfc/rfc5280)
 - [RFC 6066: Transport Layer Security (TLS) Extensions: Extension Definitions](https://www.rfc-editor.org/rfc/rfc6066)
