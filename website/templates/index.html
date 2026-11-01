@@ -11,8 +11,8 @@
     // 正文和侧边栏的 Markdown 在 Docsify 载入前就开始下载，Docsify 请求同一地址时直接用下载好的内容
     (function () {
       var path = location.hash.replace(/^#/, '').split('?')[0] || '/';
-      var file = path === '/' ? '/README.md' : /^\/notes\/[^.]+$/.test(path) ? path + '.md' : null;
-      [file, '/_sidebar.md'].forEach(function (href) {
+      var file = path === '/' ? '/README.txt' : /^\/notes\/[^.]+$/.test(path) ? path + '.txt' : null;
+      [file, '/_sidebar.txt'].forEach(function (href) {
         if (!href) return;
         var link = document.createElement('link');
         link.rel = 'preload';
