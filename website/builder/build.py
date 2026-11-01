@@ -221,7 +221,7 @@ def write_app_icons(dist, logo):
     mark = mark.crop(mark.getchannel('A').getbbox())
     icons = dist / 'icons'
     icons.mkdir(exist_ok=True)
-    for name, size, scale, background in [('icon-180.png', 180, .84, '#ffffff'), ('icon-192.png', 192, 1, None),
+    for name, size, scale, background in [('favicon-32.png', 32, 1, None), ('icon-180.png', 180, .84, '#ffffff'), ('icon-192.png', 192, 1, None),
                                           ('icon-512.png', 512, 1, None), ('maskable-512.png', 512, .76, '#ffffff')]:
         canvas = Image.new('RGBA', (size, size), background or (0, 0, 0, 0))
         side = round(size * scale)
