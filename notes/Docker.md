@@ -324,7 +324,9 @@ kubectl scale 是手动扩缩容。按负载自动调整用水平 Pod 自动扩�
 
 readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Service 的后端列表，避免把请求转发给还没启动完成的实例。livenessProbe 是存活探针：连续失败 3 次（默认值）时 kubelet 重启容器，用于发现进程还在、但已经不能工作的情况，例如死锁。Spring Boot 的 Actuator 在 K8s 中自动提供 /actuator/health/readiness 和 /actuator/health/liveness 两个端点。启动很慢的应用还要配置启动探针（startupProbe）：它通过之前另外两种探针都不执行，避免存活探针在启动阶段连续失败、容器被反复重启。
 
-删除 Pod（缩容、滚动升级）时，控制平面把它从 Service 的后端中摘除，同时 kubelet 向容器的 1 号进程发送 SIGTERM，30 秒（terminationGracePeriodSeconds 的默认值）后进程还没退出就发送 SIGKILL。应用收到 SIGTERM 后应停止接收新请求、处理完已有请求再退出，Spring Boot 3.4 起默认开启这种优雅停机。摘除后端需要一点时间才能传到每个节点，所以常用 preStop 钩子先等待几秒（例如 sleep 5），再让应用开始停止。
+删除 Pod（缩容、滚动升级）时，控制平面把它从 Service 的后端中摘除，同时 kubelet 开始停止容器：有 preStop 钩子时先执行钩子，再向容器的 1 号进程发送 SIGTERM，从开始停止算起 30 秒（terminationGracePeriodSeconds 的默认值，包括 preStop 的时间）后进程还没退出就发送 SIGKILL。应用收到 SIGTERM 后应停止接收新请求、处理完已有请求再退出，Spring Boot 3.4 起默认开启这种优雅停机。摘除后端需要一点时间才能传到每个节点，所以常用 preStop 钩子先等待几秒（例如 sleep 5），再让应用开始停止。
+
+摘除后端不会断开已经建立的长连接，WebSocket 服务要在收到 SIGTERM 后主动发送关闭帧（例如关闭码 1001），让客户端重连到新的 Pod。
 
 ### Pod 的创建过程
 
@@ -347,13 +349,17 @@ YAML 中的 resources 声明了 Pod 需要的资源：
 - requests 是调度的依据，调度器只把 Pod 放到剩余可分配资源不少于 requests 的节点上，CPU 紧张时也按 requests 的比例分配 CPU 时间；
 - limits 是运行时的上限，由 kubelet 写入容器的 cgroup。订单服务的 limits 是 1 个 CPU 和 512 MiB，容器中的 cpu.max 为 100000 100000，memory.max 为 536870912（见[附录 A6](#a6-pod-的创建资源限制与共享的命名空间)）。
 
-超过 CPU 上限的进程被限流，变慢但不会被杀；超过内存上限的进程被内核杀掉，状态为 OOMKilled。
+超过 CPU 上限的进程被限流，变慢但不会被杀：每个周期（默认 100 ms）内用完配额后，容器中所有线程都要暂停到下一个周期。所以按分钟统计的平均 CPU 使用率不高时，短时的突发仍可能被限流，例如 limits 为 1 核时，4 个线程在 4 个 CPU 上同时运行，约 25 ms 就用完了这个周期的配额。被限流的次数可以看 cgroup 的 cpu.stat 中的 nr_throttled。
+
+超过内存上限的进程被内核杀掉，状态为 OOMKilled。
 
 ### Service 与 Ingress
 
 Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中就绪 Pod 的地址，每个节点上的 kube-proxy 把它们写成 iptables 或 IPVS 规则。
 
 订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的新连接，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。选中之后，这个连接后续的包都发往同一个 Pod。iptables 模式下，虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中；IPVS 模式则会把它绑定到每个节点的虚拟网卡 kube-ipvs0 上。
+
+短连接每次新建连接时都会重新选择 Pod。gRPC 这类复用 HTTP/2 长连接的调用则不同，同一条连接上的请求都落在同一个 Pod，新扩容的 Pod 也分不到已有连接上的请求。解决办法是用 headless Service（clusterIP 设为 None，DNS 直接返回各个 Pod 的 IP），客户端拿到多个地址后配置 round_robin 等按请求选择的策略（gRPC 默认的 pick_first 只用第一个连上的地址），并在扩缩容后重新解析 DNS 更新地址列表；或者交给按请求转发的 L7 代理。
 
 Service 按访问范围分为几种类型：
 
