@@ -12,6 +12,24 @@ export const PROJECT = { projectId: 'makers-s7dxi8u5vidy', name: 'cs-notes' };
 export const ORIGIN = 'https://cyc2018.xyz';
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
+// 腾讯云接口偶尔网络超时或连接失败，这类错误重试；令牌、权限等接口返回的错误不重试
+export function isTransient(error) {
+  const text = [error?.message, error?.code, error?.cause?.code, error?.cause?.message].filter(Boolean).join(' ');
+  return /fetch failed|timed out|ETIMEDOUT|ECONNRESET|ECONNREFUSED|EAI_AGAIN|ENOTFOUND|UND_ERR|socket hang up/i.test(text);
+}
+
+async function retrying(label, task, sleep, attempts = 3) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await task();
+    } catch (error) {
+      if (attempt >= attempts || !isTransient(error)) throw error;
+      console.log(`${label}遇到网络错误，${attempt * 15} 秒后重试（第 ${attempt} 次）`);
+      await sleep(attempt * 15_000);
+    }
+  }
+}
+
 async function download(origin, path, revision, fetcher) {
   const url = new URL(path.split('/').map(encodeURIComponent).join('/'), origin + '/');
   url.searchParams.set('release', revision);
@@ -100,15 +118,15 @@ export async function deploySite({ directory, archive = resolve(directory, '../.
     // Always bind the upload to this validated dist; a cached ZIP may belong to an older build.
     await packageRelease(directory, archive);
     const makers = await getClient();
-    const project = await makers.projects.get({ projectId: PROJECT.projectId });
+    const project = await retrying('读取腾讯云项目', () => makers.projects.get({ projectId: PROJECT.projectId }), sleep);
     if (project.projectId !== PROJECT.projectId || project.name !== PROJECT.name) {
       throw new Error('腾讯云项目标识与预期不一致，已停止发布。');
     }
-    deployment = await makers.deployments.deploy({
+    deployment = await retrying('上传和部署', () => makers.deployments.deploy({
       projectId: PROJECT.projectId, artifact: { archive: resolve(archive) },
       env: 'Production', wait: true, timeout: 600, pollInterval: 5,
       onStatusChange: ({ deployment }) => console.log(`腾讯云部署状态：${deployment.status}`),
-    });
+    }), sleep);
     if (deployment.status !== 'Success') {
       throw new Error(`腾讯云部署未成功：${deployment.status}`);
     }
