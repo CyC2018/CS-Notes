@@ -19,7 +19,7 @@
     * [四、互斥同步](#四互斥同步)
         * [synchronized](#synchronized)
         * [ReentrantLock](#reentrantlock)
-        * [比较](#比较)
+        * [比较](#比较) 🔥
         * [使用选择](#使用选择)
         * [Java 中的锁](#java-中的锁) 🔥
     * [五、线程之间的协作](#五线程之间的协作)
@@ -47,9 +47,9 @@
     * [十、Java 内存模型](#十java-内存模型)
         * [主内存与工作内存](#主内存与工作内存)
         * [内存间交互操作](#内存间交互操作)
-        * [内存模型三大特性](#内存模型三大特性) 🔥🔥
+        * [内存模型三大特性](#内存模型三大特性)
         * [先行发生原则](#先行发生原则)
-        * [volatile](#volatile)
+        * [volatile](#volatile) 🔥🔥
     * [十一、线程安全](#十一线程安全) 🔥🔥
         * [不可变](#不可变)
         * [互斥同步](#互斥同步)
@@ -59,9 +59,9 @@
         * [自旋锁](#自旋锁)
         * [锁消除](#锁消除)
         * [锁粗化](#锁粗化)
-        * [轻量级锁](#轻量级锁) 🔥
+        * [轻量级锁](#轻量级锁)
         * [偏向锁](#偏向锁)
-        * [锁升级的过程](#锁升级的过程)
+        * [锁升级的过程](#锁升级的过程) 🔥
     * [十三、多线程开发良好的实践](#十三多线程开发良好的实践)
     * [附录：实测](#附录实测)
         * [A1 三种锁在读多写少时的耗时](#a1-三种锁在读多写少时的耗时)
@@ -92,6 +92,7 @@
         * [A26 CompletableFuture 的回调线程与异常](#a26-completablefuture-的回调线程与异常)
         * [A27 traceId 随任务传递](#a27-traceid-随任务传递)
         * [A28 字符串字面量作锁](#a28-字符串字面量作锁)
+        * [A29 线程池中等待自己的子任务](#a29-线程池中等待自己的子任务)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -377,7 +378,11 @@ Spring Boot 3.2 起设置 spring.threads.virtual.enabled=true（JDK 21 及以上
 
 JDK 自带的阻塞队列都不能修改容量，ThreadPoolExecutor 也不能替换队列。队列长度要可调时，开源的动态线程池（例如 Hippo4j、DynamicTp）复制一份 LinkedBlockingQueue 并把容量改为可修改，也可以新建一个线程池替换旧的。
 
+用 Spring 的 ThreadPoolTaskExecutor 时，setCorePoolSize()、setMaxPoolSize()、setKeepAliveSeconds() 会转给底层的线程池，setQueueCapacity() 只在初始化时生效。Spring Boot 自动配置的执行器默认核心线程 8 个、队列容量为 Integer.MAX_VALUE，队列几乎不会满，最大线程数也就不起作用，要按需要配置 spring.task.execution.pool.queue-capacity。
+
 不同业务最好使用各自的线程池（线程池隔离），例如导出报表变慢时只占满自己的线程，不影响下单。
+
+任务中也不要同步等待提交到同一个线程池的子任务。例如只有 2 个线程的线程池同时执行 2 个父任务，每个父任务再提交一个子任务并调用 get() 等待：2 个线程都在等，子任务只能排在队列中，4 个任务都无法完成，这称为线程饥饿死锁（JDK 21 实测，见[附录 A29](#a29-线程池中等待自己的子任务)）。父子任务要使用不同的线程池，或者用 thenCompose() 这类回调组合，不阻塞线程。
 
 线程池的队列在内存中，进程崩溃时队列中和正在执行的任务都会丢失。不能丢的任务要先写入数据库或消息队列，执行完再标记完成，重启后重新执行未完成的，因此任务要幂等。
 
@@ -730,7 +735,7 @@ public static void main(String[] args) {
 ```
 
 
-### 比较
+### 比较 🔥
 
 #### 1. 锁的实现
 
@@ -1632,7 +1637,7 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 - lock：取得一个对象关联的锁，使它被一条线程独占；
 - unlock：释放这把锁，释放后其它线程才可以取得它。
 
-### 内存模型三大特性 🔥🔥
+### 内存模型三大特性
 
 #### 1. 原子性
 
@@ -1773,7 +1778,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 此外，java.util.concurrent 的包文档还规定了一批先行发生关系，例如提交任务到线程池之前的操作先行发生于任务开始执行，Future 代表的计算先行发生于其它线程从 get() 取得结果之后的操作。
 
-### volatile
+### volatile 🔥🔥
 
 volatile 修饰的变量有两项保证：
 
@@ -1977,7 +1982,7 @@ UPDATE product SET stock = stock - 1, version = version + 1 WHERE id = 1 AND ver
 
 - 读多写少、冲突少时用乐观锁，没有加锁和阻塞的开销；
 - 写多、冲突频繁时用悲观锁，否则乐观锁会不断失败重试，反而浪费 CPU；
-- 读取和提交之间隔着用户操作时用乐观锁，例如打开编辑页面几分钟后才保存，版本号随页面返回、保存时再比较；
+- 读取和提交之间隔着用户操作时用乐观锁，例如打开编辑页面几分钟后才保存，版本号随页面返回、保存时再比较，版本不一致时不能自动重试，否则会覆盖别人刚保存的修改，应提示用户刷新后重新修改；
 - 一次 CAS 只能更新一个变量，一条带版本号的 UPDATE 只保护这一行，涉及多个资源时仍然要加锁或使用事务。
 
 秒杀这类同一行冲突激烈的扣库存，用版本号时有库存也会大量失败，更适合把判断写进条件（`WHERE stock > 0`），见[防止超卖的几种做法](系统设计基础.md#防止超卖的几种做法)。
@@ -2167,6 +2172,8 @@ pool.execute(wrap(() -> log.info("traceId={} 发送短信", TRACE_ID.get())));
 
 需要注意的是，只有被包装的任务才带着上下文。CompletableFuture 中没有指定线程池的 thenRunAsync() 这类方法在 ForkJoinPool.commonPool() 中执行，没有被包装，这一步的上下文会丢失（附录中读到的是 null），用 TTL 时还可能读到之前某个请求的值；挂上 TTL 的 Java Agent 后，公共池中的任务也能正确传递。
 
+JDK 24 起公共池的线程创建时不再继承 InheritableThreadLocal，不包装任务、只换成 TTL 时读到的是 null，上下文同样丢失。
+
 #### 3. 可重入代码（Reentrant Code）
 
 这种代码也叫做纯代码（Pure Code），可以在代码执行的任何时刻中断它，转而去执行另外一段代码（包括递归调用它本身），而在控制权返回后，原来的程序不会出现任何错误。
@@ -2221,7 +2228,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到有这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
 
-### 轻量级锁 🔥
+### 轻量级锁
 
 JDK 1.6 引入了偏向锁，加上此前已有的轻量级锁，锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasable）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。
 
@@ -2253,7 +2260,7 @@ JDK 1.6 引入了偏向锁，加上此前已有的轻量级锁，锁拥有了四
 
 需要注意的是，偏向锁在 JDK 15 中被默认禁用并废弃（JEP 374），JDK 18 起相关参数已不再生效。
 
-### 锁升级的过程
+### 锁升级的过程 🔥
 
 synchronized 设计锁升级，是因为重量级锁的代价在阻塞和唤醒：抢不到锁的线程要通过系统调用挂起、再被唤醒，涉及用户态与内核态的切换和上下文切换。而大部分锁在同一时刻只有一个线程使用，一次 [CAS](#1-cas) 就能加锁，没有必要付出这个代价。所以 JVM 先用代价低的实现，出现竞争后再换成代价高的实现。JDK 21 中锁的状态依次为：
 
@@ -3455,6 +3462,29 @@ waited 449 ms
 ```
 
 警告只针对第 5 行的 synchronized (LOCK_I)，第 6 行的 synchronized (LOCK_S) 没有警告。
+
+### A29 线程池中等待自己的子任务
+
+macOS 15，Apple M1 Pro，JDK 21.0.13。父任务把子任务提交到同一个 2 个线程的线程池，再同步等待子任务的结果；对照组的子任务提交到另一个线程池：
+
+```java
+ExecutorService pool = Executors.newFixedThreadPool(2);
+CountDownLatch bothStarted = new CountDownLatch(2);    // 保证两个父任务都已占住线程
+Callable<String> parent = () -> {
+    bothStarted.countDown(); bothStarted.await();
+    Future<String> child = pool.submit(() -> "child");   // 子任务提交到同一个线程池
+    return "parent+" + child.get();                        // 同步等待子任务
+};
+Future<String> p1 = pool.submit(parent), p2 = pool.submit(parent);
+p1.get(3, TimeUnit.SECONDS);                               // 超时后打印活跃线程数和队列长度
+```
+
+```text
+3 秒后仍未完成：活跃线程 2，队列中 2 个任务
+父子任务分开的线程池：parent+child parent+child
+```
+
+运行 3 次结果相同。
 
 ## 参考资料
 

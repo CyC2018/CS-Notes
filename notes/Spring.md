@@ -40,6 +40,7 @@
         * [A12 MyBatis 的结果映射、重载与二级缓存](#a12-mybatis-的结果映射重载与二级缓存)
         * [A13 注解声明 Bean 与集合注入](#a13-注解声明-bean-与集合注入)
         * [A14 Spring MVC 的映射与参数解析](#a14-spring-mvc-的映射与参数解析)
+        * [A15 @Async 的代理类型](#a15-async-的代理类型)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -66,6 +67,8 @@ public class OrderService {
 - 对象只依赖接口，替换实现、在测试中注入模拟对象都不需要修改代码；
 - 对象的创建、作用域和生命周期由容器统一管理，事务、缓存这类功能也是容器在创建对象时织入的。
 
+Spring 的容器用两个接口表示：BeanFactory 是根接口，负责创建、装配和获取 Bean，单独使用普通的 BeanFactory 时默认用到才创建；平时使用的 ApplicationContext 继承了它，增加了自动注册 BeanPostProcessor、发布事件、国际化等功能，启动时就创建全部非懒加载的单例。官方文档建议没有特别的理由时都使用 ApplicationContext。
+
 容器通过注解知道要创建哪些对象：类上标注 @Component 或者它的派生注解 @Service、@Repository、@Controller，启动时由组件扫描发现；第三方库中的类无法修改源码，就在 @Configuration 类中写一个返回该对象的方法，并标注 @Bean。
 
 @Service 等派生注解本身标注了 @Component（称为元注解），所以自定义的注解标上 @Component 也能声明 Bean。
@@ -79,7 +82,7 @@ public class OrderService {
 - @Autowired 是 Spring 的注解，先按类型查找，找到多个时依次看 @Primary、字段名或参数名、@Priority（Spring 6.1 及以前 @Priority 先于名称），仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称；
 - @Resource 是 Jakarta EE（原 JSR-250）的注解，指定了 name 时按名称查找，否则先按字段名查找，找不到再按类型查找。它只能用在字段和 Setter 上，不能用在构造器上。
 
-例如容器中有两个 PayService 类型的 Bean，名称分别是 alipay 和 wechat：
+Bean 的名称默认是 @Bean 的方法名，或者 @Component 类的类名首字母小写（类名前两个字母都大写时保持原样，例如 URLService），也可以在注解中指定。例如容器中有两个 PayService 类型的 Bean，名称分别是 alipay 和 wechat：
 
 ```java
 @Resource PayService wechat;      // 注入名称为 wechat 的 Bean
@@ -211,6 +214,8 @@ public class CounterController {
 - CGLIB：在运行时生成目标类的子类，通过重写方法来代理，因此 final 类，以及 final、static 和 private 方法无法被代理。
 
 Spring Framework 在目标类实现了接口时默认使用 JDK 动态代理；Spring Boot 从 2.0 起默认使用 CGLIB，可以通过 spring.aop.proxy-target-class 修改。Boot 这样做是为了减少类型转换的问题：JDK 代理只实现接口，一个实现了接口的 Bean 被别处按实现类注入时，会因为代理的类型不匹配而启动失败（BeanNotOfRequiredTypeException）。目标本身是 JDK 代理（例如 MyBatis 的 Mapper）时，生成的仍是 JDK 代理。
+
+需要注意的是，只标了 @Async 的 Bean，代理由 @EnableAsync 单独创建，不受这个配置影响：Spring Boot 3 中实现了接口的这类 Bean 仍是 JDK 代理，按实现类注入同样会启动失败，要设置 @EnableAsync(proxyTargetClass = true)（Spring Boot 3.5 实测，见[附录 A15](#a15-async-的代理类型)）。Spring Boot 4 起它也跟随 spring.aop.proxy-target-class。
 
 动态代理在运行时生成代理类，不必像[静态代理](设计模式%20-%20代理.md)那样为每个接口手写，同一段增强逻辑可以复用到不同的类上。JDK 动态代理的原理可以用下面的代码说明，切面逻辑写在 InvocationHandler 中：
 
@@ -1248,6 +1253,29 @@ GET /orders/abc            400  preHandle -> OrderController#get，之后 Method
 POST /orders（JSON）       200  {"id":1024,"userId":1001}
 POST /orders（text/plain） 415  Content-Type 'text/plain;charset=UTF-8' is not supported
 ```
+
+### A15 @Async 的代理类型
+
+Spring Boot 3.5.16、JDK 21，默认配置（spring.aop.proxy-target-class 为 true）。AsyncServiceImpl 实现了接口 AsyncService，方法上标了 @Async，配置类上标 @EnableAsync，先启动一次打印各个 Bean 的代理类型，再另外启动一次，在另一个 Bean 中按实现类注入它：
+
+```java
+public interface AsyncService { void run(); }
+@Service("asyncService") public static class AsyncServiceImpl implements AsyncService {
+    @Async public void run() { }
+}
+@Autowired AsyncServiceImpl asyncService;   // 按实现类注入
+```
+
+```text
+@EnableAsync
+asyncService       JDK    targetClass=false jdk.proxy2.$Proxy56 advisors=[AsyncAnnotationAdvisor]
+STARTUP FAILED: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'asyncService' is expected to be of type 'demo.Services$AsyncServiceImpl' but was actually of type 'jdk.proxy2.$Proxy56'
+
+@EnableAsync(proxyTargetClass = true)
+asyncService       CGLIB  targetClass=true  demo.Services$AsyncServiceImpl$$SpringCGLIB$$0 advisors=[AsyncAnnotationAdvisor]
+```
+
+同一个应用中，@Transactional、@Cacheable 的 Bean 都是 CGLIB 代理。换成 Spring Boot 4.0.9、不改配置时，@Async 的 Bean 也是 CGLIB 代理。
 
 ## 参考资料
 

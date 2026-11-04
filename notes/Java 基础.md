@@ -223,7 +223,7 @@ String s6 = "bbb";
 System.out.println(s5 == s6);  // true
 ```
 
-Java 6 及以前，String Pool 中的字符串放在永久代，Java 7 起移到了堆中（各区域的划分见 [方法区](Java%20虚拟机.md#方法区)）。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+Java 6 及以前，String Pool 中的字符串放在永久代，Java 7 起移到了堆中（各区域的划分见 [方法区](Java%20虚拟机.md#方法区)）。永久代的大小有上限，大量调用 intern() 的程序容易出现 OutOfMemoryError: PermGen space；移到堆中也是逐步去掉永久代的一步，Java 8 用元空间取代了永久代。
 
 移到堆中之后，池中没有相等的字符串时，intern() 不再像 Java 6 那样把字符串复制到永久代，而是在池中记录堆中这个对象的引用，所以运行时拼接出的 "order1024" 调用 intern() 返回的就是它自己（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）。
 
@@ -743,6 +743,8 @@ public int hashCode() {
 ```
 
 实际编写时可以直接调用 Objects.hash(x, y, z)，它按同样的方式计算，只是初始值为 1。
+
+JDK 中常见类型的 hashCode() 也很简单：Integer 直接返回值本身，Long 返回高 32 位与低 32 位的异或，String 按 s[0]×31^(n−1) + s[1]×31^(n−2) + … + s[n−1] 计算，算出后保存在 hash 字段中。
 
 没有覆盖时，Object 的 hashCode() 并不是对象的内存地址。HotSpot 在第一次调用时用当前线程的 xorshift 随机数生成器得到一个 31 位的值，写入对象头的 Mark Word（见 [对象的创建与内存布局](Java%20虚拟机.md#对象的创建与内存布局)），之后对象即使被 GC 移动，哈希值也不变。生成方式由 -XX:hashCode 选择，JDK 21 的默认值为 5，即上面的随机数方案，改为 2 时所有对象的哈希值都是 1（见[附录 A7](#a7-hashcode-的生成与比较顺序)）。
 
@@ -1386,7 +1388,7 @@ getMethod()、getField() 只能找到 public 成员，包括继承的；getDecla
 
 ## 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，例如 OutOfMemoryError、StackOverflowError，程序一般不捕获，编译器也不要求捕获或声明。Exception 分为两种：
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 表示严重的问题，例如 OutOfMemoryError、StackOverflowError，它也是 Throwable 的子类，语法上可以捕获，但 Javadoc 说明一般的应用不应尝试捕获它，编译器也不要求捕获或声明。Exception 分为两种：
 
 - 受检异常：例如 IOException、SQLException，需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，否则编译不通过，这类异常通常可以恢复；
 - 非受检异常：RuntimeException 及其子类（按 JLS §11.1.1，Error 及其子类也属于非受检异常），是程序运行时错误，例如除 0 会引发 ArithmeticException，访问 null 的成员会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
@@ -1400,7 +1402,7 @@ try、catch、finally 的执行顺序和返回值有以下规则（JDK 21 实测
 - try 中发生异常时，跳过 try 中剩下的语句，执行匹配的 catch，再执行 finally；catch 中有 return 时，先计算返回值，执行完 finally 再返回；
 - 返回值在执行 finally 之前就已经保存：返回基本类型时，finally 修改这个变量不影响返回值；返回引用时保存的是引用，finally 修改它指向的对象，调用方能看到修改；
 - finally 中的 return 会覆盖 try、catch 中的返回值，还会吞掉 try 中抛出的异常，用 -Xlint:finally 编译时会给出警告，不应该这样写；
-- finally 不执行的情况：执行到 finally 之前调用了 System.exit()、进程被 kill -9 或 JVM 崩溃；JVM 退出时仍在运行的守护线程也不会执行 finally。
+- finally 不执行的情况：执行到 finally 之前调用了 System.exit()、进程被 kill -9 或 JVM 崩溃。JVM 因 System.exit() 或 kill（SIGTERM）退出时，先运行关闭钩子，钩子运行完 JVM 就终止，其它仍在运行的线程不论是否为守护线程，都不保证执行到 finally；最后一个非守护线程结束、JVM 正常退出时，仍在运行的守护线程同样不保证执行到 finally（JDK 21 实测，见[附录 A6](#a6-finally-的执行顺序与返回值)）。
 
 ```java
 static int primitive() {
@@ -1895,6 +1897,19 @@ $ javap -c -p Fin（primitive() 节选）
 ```
 
 System.exit(0) 之后的 finally 没有输出。字节码中，0～7 是正常返回的路径：x = 1 存入槽 0，返回值复制到槽 1，执行 finally 中的 x = 2，再返回槽 1 中的 1；8～12 是发生异常时的路径，其中 9～10 是同一段 finally 代码的另一份副本。
+
+其它线程中的 finally：主线程启动一个非守护线程和一个守护线程，两者都 sleep 60 秒并带有 finally，再注册一个打印“关闭钩子”的关闭钩子，然后分别调用 System.exit(0) 和用 kill 发送 SIGTERM：
+
+```text
+$ java F exit
+调用 System.exit(0)
+关闭钩子
+$ java F & sleep 1.5; kill $!
+main 结束，等待 kill
+关闭钩子
+```
+
+两个线程的 finally 都没有执行。
 
 ### A7 hashCode 的生成与比较顺序
 
