@@ -628,7 +628,11 @@ Major GC 的含义不统一，有的资料指只回收老年代（例如 CMS 的
 
 #### 4. 动态对象年龄判定
 
-虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代。以 Serial 为例，每次 Minor GC 结束时，从年龄最小的对象开始累加 Survivor 中各个年龄对象的大小，当累加到某个年龄时总和超过了 Survivor 空间的一半，就取这个年龄和 MaxTenuringThreshold 中较小的值作为新的晋升阈值，下一次 Minor GC 时年龄大于或等于该值的对象直接进入老年代。这是为了在 Survivor 快要放不下时让较老的对象先晋升，给刚出生的对象留出空间。G1 和 Parallel 的阈值也会动态调整，计算方式不同。
+虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代。以 Serial 为例，每次 Minor GC 结束时，从年龄最小的对象开始累加 Survivor 中各个年龄对象的大小，当累加到某个年龄时总和超过了 Survivor 空间的一半，就取这个年龄和 MaxTenuringThreshold 中较小的值作为新的晋升阈值，下一次 Minor GC 时年龄大于或等于该值的对象直接进入老年代。这是为了在 Survivor 快要放不下时让较老的对象先晋升，给刚出生的对象留出空间。
+
+G1 用同样的累加方法，只是比较的是按新生代的目标大小算出的 Survivor 容量乘以 TargetSurvivorRatio（默认 50%）。
+
+Parallel 默认开启自适应调节，综合 Minor GC 与 Full GC 各自的时间开销，以及 Survivor 的空间压力（发生溢出，或者算出的目标大小超过上限），逐次增减阈值，计算方式不同。
 
 例如 Survivor 为 4 MB，一半是 2 MB，每次 Minor GC 都有约 768 KB 的对象存活下来。第 3 次 Minor GC 后年龄 1、2、3 的对象累加到 2.3 MB，阈值从 15 变为 3，之后每次 Minor GC 都把年龄为 3 的对象移到老年代，Survivor 中再也没有年龄 4 的对象（JDK 21 实测，见[附录 A16](#a16-动态对象年龄判定)）。
 
@@ -1110,9 +1114,10 @@ CPU 和负载都不高、接口却变慢时，线程多半在等待。多导出�
 
 - BLOCKED，停在同一把 synchronized 锁上：找到持有这把锁的线程在做什么；
 - TIMED_WAITING (parking)，停在 HikariPool.getConnection 这类获取连接的方法中：连接池已经耗尽，要找的是拿着连接不还或执行太慢的线程，原因在数据库一侧时扩大连接池没有用；
-- RUNNABLE，停在 socket 读取上（例如 MySQL 驱动的 ReadAheadInputStream.read）：在等数据库或下游服务返回，状态是 RUNNABLE 却不占 CPU。
+- RUNNABLE，停在 socket 读取上（例如 MySQL 驱动的 ReadAheadInputStream.read）：在等数据库或下游服务返回，状态是 RUNNABLE 却不占 CPU；
+- WAITING 或 TIMED_WAITING (parking)，停在 ThreadPoolExecutor.getTask 中队列的 take 或 poll 上：这是线程池中没有任务可做的空闲线程，属于正常现象，排查时先排除。
 
-连接池耗尽时常常是后两种同时出现：少数线程拿着连接、在数据库中等待行锁，其余线程在等连接（JDK 21、HikariCP 5.1 实测，见[附录 A23](#a23-等待连接池时的线程栈)）。数据库一侧找到持有锁的源头事务的方法见[慢查询的定位与优化](MySQL.md#2-分析原因)。
+连接池耗尽时常常是等连接和 socket 读取这两种同时出现：少数线程拿着连接、在数据库中等待行锁，其余线程在等连接（JDK 21、HikariCP 5.1 实测，见[附录 A23](#a23-等待连接池时的线程栈)）。数据库一侧找到持有锁的源头事务的方法见[慢查询的定位与优化](MySQL.md#2-分析原因)。
 
 ### 死锁
 
