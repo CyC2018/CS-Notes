@@ -772,7 +772,7 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 <summary>参考要点</summary>
 
 1. 白色是还没访问到的对象，标记结束时仍为白色的就是垃圾，灰色是已访问但引用的对象还没检查完，黑色是引用都已检查过；从 GC Roots 开始把对象置灰，不断取出灰色对象扫描它的引用，直到没有灰色对象；漏标：并发标记时，用户线程让已经是黑色的对象引用了白色对象，同时删除了从灰色对象到它的所有引用，这个白色对象不会再被访问，标记结束后被当成垃圾回收；CMS 用增量更新，写入引用时写屏障把卡标记为脏，重新标记时重新扫描；G1 用原始快照（SATB），删除或覆盖引用前写屏障记录旧值并当作存活。
-2. 经过多次 Minor GC 后年龄达到 MaxTenuringThreshold；动态年龄判定（以 Serial 为例，G1 和 Parallel 的计算方式不同）：Minor GC 结束时从小到大累加 Survivor 中各年龄对象的大小，超过 Survivor 一半时，取这个年龄和 MaxTenuringThreshold 中较小的值作为新阈值，下一次 Minor GC 时大于或等于它的对象晋升；Minor GC 时 Survivor 放不下的存活对象直接进入老年代；大对象直接进入老年代（Serial 的 PretenureSizeThreshold，G1 中超过 Region 一半的 Humongous 对象）。
+2. 经过多次 Minor GC 后年龄达到 MaxTenuringThreshold；动态年龄判定（以 Serial 为例；G1 的累加方法相同、比较的 Survivor 容量不同，Parallel 按自适应策略调整）：Minor GC 结束时从小到大累加 Survivor 中各年龄对象的大小，超过 Survivor 一半时，取这个年龄和 MaxTenuringThreshold 中较小的值作为新阈值，下一次 Minor GC 时大于或等于它的对象晋升；Minor GC 时 Survivor 放不下的存活对象直接进入老年代；大对象直接进入老年代（Serial 的 PretenureSizeThreshold，G1 中超过 Region 一半的 Humongous 对象）。
 3. 调用 System.gc()，规范上只是建议，HotSpot 默认会执行一次 Full GC，-XX:+DisableExplicitGC 可以禁用；老年代空间不足，例如大对象、长期存活的对象不断进入，或者空间分配担保失败，G1 中是混合回收来不及释放、复制时找不到空闲 Region，或 Humongous 对象找不到连续的 Region；JDK 7 及以前永久代不足，JDK 8 起元空间达到阈值（日志原因为 Metadata GC Threshold）时 Serial 和 Parallel 进行 Full GC，G1 先扩大元空间并启动并发标记卸载类，扩大失败才 Full GC；CMS 发生 Concurrent Mode Failure。
 
 </details>
@@ -1953,7 +1953,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 动手：阅读[附录 A2](消息队列.md#a2-重复消费)，说出消费者在哪一步被杀死导致了重复扣款，再按[接收端的可靠性](消息队列.md#接收端的可靠性)一节的方法设计去重。
 
-预期：消费者完成 3 笔扣款后、自动提交偏移量（默认每 5 秒）之前被 kill -9，组的偏移量仍为空，约 45 秒后重启的消费者又收到这 3 条消息、重复扣款，去重方法是在同一个本地事务中先插入去重表（键如 order:1024:pay）再扣款，重复消息报 1062 后回滚并直接确认。
+预期：消费者完成 3 笔扣款后、自动提交偏移量之前被 kill -9，组还没有提交过偏移量；auto.offset.reset 为 earliest 时，重启的消费者又收到这 3 条消息、重复扣款，默认的 latest 则从末尾开始，这 3 条不会再被自动读到；去重方法是在同一个本地事务中先插入去重表（键如 order:1024:pay）再扣款，重复消息报 1062 后回滚并直接确认。
 
 算法（动态规划，中等）：[322. 零钱兑换](https://leetcode.cn/problems/coin-change/)，题解见[找零钱的最少硬币数](Leetcode%20题解%20-%20动态规划.md#4-找零钱的最少硬币数)。
 
