@@ -42,7 +42,7 @@
 
 #### 1. Set
 
-- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)；
+- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的平均时间复杂度为 O(1)，TreeSet 最坏也是 O(logN)；
 - HashSet：基于哈希表实现，内部就是一个 HashMap，元素作为键、值是同一个占位对象，所以去重靠键的 hashCode() 和 equals()。支持快速查找，但不支持有序性操作，也不保证遍历的顺序；
 - LinkedHashSet：具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。
 
@@ -68,7 +68,7 @@
 
 上面的 ArrayList、LinkedList、HashMap 等常用容器都不是线程安全的。需要在多个线程之间共享时，线程安全的容器主要有以下三类：
 
-- 同步容器：Vector、Hashtable，以及用 Collections.synchronizedList()、synchronizedMap() 包装出来的容器，所有方法共用一把锁，同一时刻只有一个线程能访问，遍历这类组合操作仍要在外面加锁（见 [ArrayList 的替代方案](#4-替代方案)）；
+- 同步容器：Vector、Hashtable，以及用 Collections.synchronizedList()、synchronizedMap() 包装出来的容器，所有方法共用一把锁，同一时刻只有一个线程能访问，但遍历、先 containsKey() 再 put() 这类组合操作仍要在外面加锁，或者改用 putIfAbsent() 这类原子方法（见 [ArrayList 的替代方案](#4-替代方案)）；
 - 写时复制容器：CopyOnWriteArrayList、CopyOnWriteArraySet，写操作复制整个数组，读操作不加锁，适合读多写少的场景；
 - 并发容器：ConcurrentHashMap、ConcurrentSkipListMap（按键排序）、ConcurrentLinkedQueue，以及 ArrayBlockingQueue 等阻塞队列（见 [BlockingQueue](Java%20并发.md#blockingqueue)），用 CAS 和更细粒度的锁让多个线程同时访问。
 
@@ -152,7 +152,7 @@ private static final int DEFAULT_CAPACITY = 10;
 
 以 JDK 8 的源码为例，添加元素时使用 ensureCapacityInternal() 方法来保证容量足够，如果不够时，需要使用 grow() 方法进行扩容，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，即 oldCapacity+oldCapacity/2。其中 oldCapacity >> 1 需要取整，所以新容量大约是旧容量的 1.5 倍（oldCapacity 为偶数就是 1.5 倍，为奇数就是 1.5 倍减 0.5）。例如依次添加元素时，容量的变化为 0、10、15、22、33（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。JDK 21 的 grow() 改为调用 ArraysSupport.newLength() 计算新容量，增长的规则相同。
 
-扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
+扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，这个操作代价很高，因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。由于每次扩容为 1.5 倍，复制的元素总数与元素个数成正比，在尾部 add() 的均摊时间仍是 O(1)（Javadoc 中的 amortized constant time），均摊分析见[算法分析](算法%20-%20算法分析.md#5-均摊分析)。
 
 以下是 JDK 8 的源码：
 
