@@ -41,6 +41,8 @@ python3 website/builder/verify_updates.py
 
 verify_updates.py 在临时副本中修改文章、替换配图、新增文章与图片，检查搜索索引更新，并模拟缺图、链接校验失败。测试结束自动清理副本，原始快照不改动。
 
+修改剑指 Offer 题解的代码后，可在本机运行 `python3 website/builder/snippets.py`，用 javac 编译以题号开头的笔记（如 notes/3. 数组中重复的数字.md）中的 java 代码块。每个代码块都自动导入 java.util.*；只有方法的代码块放进生成的类中编译，已经声明类的代码块不再包装；同一篇笔记的代码块一起编译，笔记没有自己定义时补上 ListNode、TreeNode 和 RandomListNode。错误按“notes/文件名:行号: javac 信息”输出，最后给出错误总数。只编译不运行，没有安装 javac 时直接跳过；结果仅供参考，不影响构建和发布。
+
 页面模板保留手机分类导航、折叠目录、搜索和旧文章入口兼容；固定版本的浏览器依赖及许可证保存在 templates/vendor 中。
 
 阅读辅助都在 templates/site.js 中：深色模式（跟随系统，可手动切换）、字号和行距、阅读进度、回到顶部、标题的复制链接、上一篇和下一篇、继续上次阅读的小节。阅读位置、配色和字号只保存在访客浏览器的 localStorage 中，不上传。目录页（“… - 目录”）下的子文章不在侧边栏中，构建时按目录页正文的链接顺序写入 search-paths.js 的 CS_NOTES_TREE，用于侧边栏定位和上一篇、下一篇。构建时给站内图片补上按原图比例计算的 height，图片加载前就留出位置。
