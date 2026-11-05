@@ -85,6 +85,8 @@ body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.95 -ap
 a { color: var(--theme); text-underline-offset: 3px; }
 .top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; border-bottom: 1px solid var(--border); background: var(--bg); }
 .top .brand { color: var(--heading); font-weight: 700; text-decoration: none; }
+.top .all { margin-left: 14px; color: var(--muted); font-size: 14px; text-decoration: none; }
+.groups { columns: 2 240px; column-gap: 32px; }.groups section { break-inside: avoid; margin: 0 0 20px; }.groups h2 { margin: 0 0 6px; font-size: 1.05rem; border: 0; }.groups ul { margin: 0; padding-left: 20px; line-height: 1.9; }
 .open { display: inline-block; padding: 4px 12px; border: 1px solid var(--theme); border-radius: 6px; font-size: 14px; text-decoration: none; }
 main { max-width: 900px; margin: 0 auto; padding: 28px 24px 64px; }
 h1, h2, h3, h4, h5, h6 { color: var(--heading); line-height: 1.4; scroll-margin-top: 64px; }
@@ -130,7 +132,7 @@ ${stub ? `  <meta http-equiv="refresh" content="0; url=/notes/${escapeHtml(route
   <style>${STYLE}</style>
 </head>
 <body>
-  <header class="top"><a class="brand" href="/">CS-Notes</a><a class="open" href="${escapeHtml(reader)}">在阅读器中打开</a></header>
+  <header class="top"><span><a class="brand" href="/">CS-Notes</a><a class="all" href="/notes/">全部笔记</a></span><a class="open" href="${escapeHtml(reader)}">在阅读器中打开</a></header>
   <main>
     <article>
 ${html}
@@ -143,6 +145,25 @@ ${html}
 `;
 }
 
+// 全部笔记的目录页（notes/index.html）：按侧边栏的分组列出，搜索引擎从首页的 noscript 链接进来后能找到每一篇
+function indexPage(dist, site) {
+  const sidebar = fs.readFileSync(path.join(dist, '_sidebar.md'), 'utf8');
+  const groups = [];
+  for (const line of sidebar.split('\n')) {
+    const head = line.match(/^- \*\*(.+)\*\*$/);
+    if (head) { groups.push({ title: head[1], items: [] }); continue; }
+    const item = line.match(/^\s+- \[([^\]]+)\]\(\/notes\/([^)]+)\.md\)/);
+    if (item && groups.length) groups[groups.length - 1].items.push([item[1], item[2]]);
+  }
+  const body = '<h1>全部笔记</h1>\n<div class="groups">' + groups.filter(g => g.items.length).map(g => '<section><h2>' + escapeHtml(g.title) + '</h2><ul>' +
+    g.items.map(([text, file]) => `<li><a href="/notes/${escapeHtml(file)}.html">${escapeHtml(text)}</a></li>`).join('') + '</ul></section>').join('\n') + '</div>';
+  const html = page({ html: body, title: '全部笔记', description: 'CS-Notes 全部笔记：算法、操作系统、计算机网络、数据库、Java、系统设计、大模型应用等。' }, '', site, null)
+    .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${site}notes/">`).replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${site}notes/">`)
+    .replace(/<a class="open" href="[^"]*">在阅读器中打开<\/a>/, '<a class="open" href="/">在阅读器中打开</a>').replace(/<p class="reader">[\s\S]*?<\/p>/, '');
+  fs.writeFileSync(path.join(dist, 'notes', 'index.html'), html);
+  return site + 'notes/';
+}
+
 function build(dist, site, stubs) {
   const dir = path.join(dist, 'notes');
   const names = fs.readdirSync(dir).filter(f => f.endsWith('.md')).map(f => f.slice(0, -3)).sort();
@@ -153,7 +174,7 @@ function build(dist, site, stubs) {
     fs.writeFileSync(path.join(dir, name + '.html'), page(rendered, name, site, stub));
     if (!stub) urls.push(site + 'notes/' + route(name) + '.html');
   }
-  return urls;
+  return [indexPage(dist, site)].concat(urls);
 }
 
 module.exports = { render, slugger, build };

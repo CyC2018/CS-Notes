@@ -98,10 +98,12 @@ class SearchIndexTests(unittest.TestCase):
                 ''.join(f'## {t}\n\n内容\n\n' for t in titles[1:]) + '<a href="/notes/%E5%8F%A6.md">HTML 链接</a>\n\n```java\n# 不是标题\n```\n'
             (dist / 'notes' / '示例.md').write_text(body)
             (dist / 'notes' / '算法.md').write_text('见 [算法 - 目录](/notes/算法 - 目录.md)\n')
+            (dist / '_sidebar.md').write_text('- [首页](/)\n\n- **示例分组**\n  - [示例](/notes/%E7%A4%BA%E4%BE%8B.md)\n')
             (dist / 'stubs.json').write_text(json.dumps({'/notes/算法': '/notes/算法 - 目录'}, ensure_ascii=False))
             urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), 'https://example.com/', str(dist / 'stubs.json')],
                                              check=True, capture_output=True, text=True).stdout)
-            self.assertEqual(urls, ['https://example.com/notes/%E7%A4%BA%E4%BE%8B.html'])
+            self.assertEqual(urls, ['https://example.com/notes/', 'https://example.com/notes/%E7%A4%BA%E4%BE%8B.html'])
+            self.assertIn('<a href="/notes/%E7%A4%BA%E4%BE%8B.html">示例</a>', (dist / 'notes' / 'index.html').read_text())
             page = (dist / 'notes' / '示例.html').read_text()
             counts = collections.Counter()
             expected = [heading_slug(t, counts) for t in titles]
