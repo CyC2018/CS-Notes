@@ -53,7 +53,9 @@ verify_updates.py 在临时副本中修改文章、替换配图、新增文章�
 
 首页学习站横幅下面是“今日面试题”：每天按日期从面试最常问的题中换一道，链接到这道题在学习站中的页面。
 
-构建时在根目录写入 robots.txt，指向学习站的站点地图（learn/sitemap.xml，列出每道题的静态页面）。
+每篇笔记另外生成一个静态页面（notes/<名字>.html，builder/static_notes.cjs）：网站本身的地址在 # 之后，搜索引擎只收录得到首页，静态页面是渲染好的正文，没有脚本，标题的 id 与网站一致（按 Docsify 的规则），站内链接指向其它笔记的静态页面，页面上有回到阅读器的链接；只剩一个链接的旧页面跳到目标页。Markdown 用 marked 1.2.9 渲染（和 Docsify 4.13.1 依赖的版本相同，文件及许可证在 builder/vendor 中），构建时需要 Node.js。
+
+构建时在根目录写入站点地图 sitemap.xml（首页和这些静态页面）和 robots.txt，robots.txt 同时指向学习站的站点地图（learn/sitemap.xml，列出每道题的静态页面）。
 
 ## 自动更新与发布
 
