@@ -37,7 +37,9 @@ def check(source, output):
             if name not in files and name + '.md' not in files and name.rstrip('/') + '/index.html' not in files:
                 errors.append('缺失引用：' + name)
     for name in re.findall(r'(?:src|href)="(/[^"#]+)"', (output / 'index.html').read_text()):
-        if name.split('?')[0].lstrip('/') not in files:
+        path = name.split('?')[0].lstrip('/')
+        # 目录地址（/notes/）由其中的 index.html 提供
+        if path not in files and not (path.endswith('/') and path + 'index.html' in files):
             errors.append('缺失页面资源：' + name)
     forbidden = [name for name in files if set(Path(name).parts) & {
         '.git', '.cache', 'node_modules', 'builder', 'templates', 'upstream', 'remote',
