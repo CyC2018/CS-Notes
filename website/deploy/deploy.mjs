@@ -103,15 +103,39 @@ export async function verifyPublished(manifestBytes, { fetcher = fetch, origin =
   return paths.length + 1;
 }
 
+// 这次新增或内容变了的页面（笔记的静态页面、学习站每道题的页面），按 IndexNow 提交给必应等搜索引擎；
+// 验证文件是构建写在根目录的 <32 位十六进制>.txt。提交失败不影响发布，只写进报告
+export function changedPages(manifest, previous) {
+  const before = new Map(((previous && previous.files) || []).map(file => [file.path, file.sha256]));
+  return manifest.files.filter(file => /^(notes\/[^/]+\.html|notes\/index\.html|learn\/q\/[^/]+\.html)$/.test(file.path) && before.get(file.path) !== file.sha256)
+    .map(file => ORIGIN + '/' + file.path.replace(/index\.html$/, '').split('/').map(encodeURIComponent).join('/'));
+}
+export async function submitIndexNow(directory, manifest, previous, fetcher) {
+  const keyFile = manifest.files.find(file => /^[0-9a-f]{32}\.txt$/.test(file.path));
+  const urls = changedPages(manifest, previous).slice(0, 10000);
+  if (!keyFile || !urls.length) return { submitted: 0 };
+  const key = keyFile.path.slice(0, 32);
+  try {
+    const response = await fetcher('https://api.indexnow.org/IndexNow', {
+      method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, signal: AbortSignal.timeout(30_000),
+      body: JSON.stringify({ host: new URL(ORIGIN).host, key, keyLocation: `${ORIGIN}/${key}.txt`, urlList: urls }),
+    });
+    return { submitted: urls.length, status: response.status };
+  } catch (error) {
+    return { submitted: 0, error: error instanceof Error ? error.message : '提交失败' };
+  }
+}
+
 export async function deploySite({ directory, archive = resolve(directory, '../.cache/site-release.zip'), getClient, fetcher = fetch,
   sleep = ms => new Promise(done => setTimeout(done, ms)), attempts = 12 }) {
   const manifestBytes = await readFile(resolve(directory, 'asset-manifest.json'));
   const manifest = JSON.parse(manifestBytes);
   verificationPaths(manifest); // Reject local defects before any credential or production mutation.
-  let unchanged = false;
+  let unchanged = false, previous = null;
   try {
     const remote = await download(ORIGIN, 'asset-manifest.json', sha256(manifestBytes), fetcher);
     unchanged = sha256(remote) === sha256(manifestBytes);
+    previous = JSON.parse(remote);
   } catch { /* A missing manifest should trigger a new deployment, never a false skip. */ }
   let deployment;
   if (!unchanged) {
@@ -141,7 +165,8 @@ export async function deploySite({ directory, archive = resolve(directory, '../.
       await sleep(20_000);
     }
   }
-  return { projectId: PROJECT.projectId, origin: ORIGIN,
+  const indexNow = unchanged ? null : await submitIndexNow(directory, manifest, previous, fetcher);
+  return { projectId: PROJECT.projectId, origin: ORIGIN, ...(indexNow ? { indexNow } : {}),
     sourceCommit: manifest.sourceCommit, generatorHash: manifest.generatorHash,
     manifestSha256: sha256(manifestBytes),
     result: unchanged ? 'unchanged' : 'deployed',
