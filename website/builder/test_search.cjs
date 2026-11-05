@@ -68,6 +68,21 @@ assert.equal(search(generic, 'synchronized 原理')[0].id, 'sync', '“原理”
 assert.equal(search(generic, 'spring aop')[0].id, 'aop', '文章名中的词出现在小节标题里少加分');
 assert.equal(search(generic, 'rag 是什么')[0].id, 'rag', 'RAG 与检索增强生成互通，去掉编号后正好是搜索词的小节在前');
 assert.equal(search(generic, '进程和线程的区别')[0].id, 'both', '多个词时，只匹配其中一个词的小节不算正好匹配');
+const golden = { documents: [
+  { title: '设计模式 - 单例', path: '/notes/单例', sections: [{ title: '单例（Singleton）', id: 'single', text: '确保一个类只有一个实例' }] },
+  { title: '攻击技术', path: '/notes/攻击', sections: [{ title: '一、跨站脚本攻击', id: 'xss', text: '攻击者把脚本注入页面' }] },
+  { title: '数据库', path: '/notes/库', sections: [
+    { title: '四、隔离级别', id: 'level', text: '未提交读、提交读、可重复读、可串行化' },
+    { title: '参考资料', id: 'refs', text: '事务隔离级别 的文档' },
+  ] },
+  { title: '容器 - 进阶', path: '/notes/容器 - 进阶', sections: [{ title: 'ConcurrentHashMap', id: 'deep', text: 'ConcurrentHashMap 的源码' }] },
+  { title: '容器', path: '/notes/容器', sections: [{ title: 'ConcurrentHashMap', id: 'main', text: 'ConcurrentHashMap 的源码' }] },
+] };
+assert.equal(search(golden, '单例模式')[0].id, 'single', '“单例模式”也按“单例”搜');
+assert.equal(search(golden, 'XSS')[0].id, 'xss', 'XSS 与跨站脚本互通');
+assert.equal(search(golden, '事务隔离级别')[0].id, 'level', '完全匹配的只有参考资料时，相近的小节排在前面');
+assert(!search(golden, '事务隔离级别').fuzzy, '有完全匹配的结果时不提示“没有完全匹配”');
+assert.equal(search(golden, 'concurrenthashmap')[0].id, 'main', '主笔记排在进阶篇之前');
 const sample = { documents: [{ title: '数据库', path: '/notes/示例', sections: [
   { title: '事务', id: '事务', text: '一致性 '.repeat(20) },
   { title: '一致性', id: '一致性', text: 'SQL 与数据库' },

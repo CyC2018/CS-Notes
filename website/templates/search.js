@@ -18,7 +18,7 @@
         var heading = normalize(section.title);
         var body = normalize(section.text);
         // 学习路线只是阅读导读，附录是实验过程，排在讲解正文之后
-        var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0);
+        var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0) + (/ - 进阶$/.test(doc.title) ? 8 : 0) + (heading === '参考资料' ? 30 : 0);
         prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
           pageParts: page.split(' - ').map(function (x) { return x.trim(); }), bare: heading.replace(/^(?:[一二三四五六七八九十]+、|[a-z]?\d+(?:\.\d+)*\.?\s)\s*/, ''), lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
       });
@@ -58,7 +58,7 @@
   var SYNONYMS = [
     ['垃圾收集', '垃圾回收'], ['i/o', 'io'], ['哈希', '散列', 'hash'], ['新生代', '年轻代'], ['重排序', '指令重排'],
     ['首部', '头部'], ['幻读', '幻影读'], ['脏读', '读脏数据'], ['b+tree', 'b+树', 'b+ 树'], ['多路复用', 'i/o 复用', '复用'],
-    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm'], ['检索增强生成', 'rag'], ['集群', 'cluster']
+    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm'], ['检索增强生成', 'rag'], ['集群', 'cluster'], ['跨站脚本', 'xss'], ['跨站请求伪造', 'csrf'], ['运行时数据区域', '内存区域', '内存结构']
   ];
   // 中英文混写的术语（“b+ 树”“i/o 复用”）在切词前换成一个整体，否则会被切成“b+”和“树”两个词分别匹配
   var MIXED = [];
@@ -78,6 +78,8 @@
   // 词中含有另一种说法时也替换，例如“散列冲突”同时按“哈希冲突”搜索
   function alternatives(term) {
     var result = [term];
+    // “单例模式”“观察者模式”：正文常只写“单例”“观察者”
+    if (/^[㐀-鿿]{2,}模式$/.test(term) && term !== '设计模式') result.push(term.slice(0, -2));
     SYNONYMS.forEach(function (group) {
       group.forEach(function (word) {
         if (term.indexOf(word) === -1) return;
@@ -119,7 +121,7 @@
     var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return term.length > 1; });
     return terms.length ? terms.join(' ') : '';
   }
-  var GENERIC = /(底层)?(原理|机制|实现方式|实现|作用|流程|过程|优缺点|应用场景|使用场景|场景|特点|详解|介绍|用法)/g;
+  var GENERIC = /(底层)?(原理|机制|实现方式|实现|作用|流程|过程|优缺点|应用场景|使用场景|场景|特点|详解|介绍|用法|理论)/g;
   function stripGeneric(query) {
     var terms = splitTerms(query.replace(GENERIC, ' ')).filter(function (term) { return term.length > 1; });
     return terms.length ? terms.join(' ') : '';
@@ -136,14 +138,14 @@
     });
     return pairs;
   }
-  function fuzzyScore(entry, pairs, segments) {
+  function fuzzyScore(entry, pairs, segments, ratio) {
     var hit = 0, total = 0;
     pairs.forEach(function (pair) {
       if (!entry.text.includes(pair)) return;
       hit++;
       total += (entry.heading.includes(pair) ? 12 : 0) + (entry.page.includes(pair) ? 4 : 0) + Math.min(occurrences(entry.body, pair), 3);
     });
-    if (hit < Math.max(2, Math.ceil(pairs.length * .7))) return null;
+    if (hit < Math.max(2, Math.ceil(pairs.length * (ratio || .7)))) return null;
     segments.forEach(function (segment) {
       if (segment.length > 2 && entry.text.includes(segment)) total += segment.length * 6;
     });
@@ -180,16 +182,19 @@
     // “原理”“机制”这类泛泛的词正文中不一定出现（“synchronized 原理”），去掉后再搜一次；结果比带着这些词命中的少一个词的分
     var core = stripGeneric(stripped || normalizedQuery);
     if (core && core !== normalizedQuery && core !== stripped) exact(core);
-    if (!results.length) {
+    if (results.length < 3) {
+      var exactCount = results.length;
       var terms = splitTerms(stripped || normalizedQuery);
       var pairs = bigrams(terms.map(function (term) { return alternatives(term)[0]; }));
       var ascii = terms.filter(function (term) { return !CJK.test(term); }).map(alternatives);
       if (pairs.length >= 2) {
-        fuzzy = true;
-        used = pairs.concat([].concat.apply([], ascii));
+        // 已有完全匹配的结果时，相近的只是补在后面，不提示“没有完全匹配”
+        fuzzy = !exactCount;
+        used = (exactCount ? used : []).concat(pairs, [].concat.apply([], ascii));
         collect(function (entry) {
           if (ascii.some(function (group) { return !firstHit(entry.text, group); })) return null;
-          return fuzzyScore(entry, pairs, terms);
+          // 补在完全匹配之后时放宽到六成：“事务隔离级别”中的“务隔”在正文中不一定连着出现
+          return fuzzyScore(entry, pairs, terms, exactCount ? .6 : .7);
         });
       }
       // 只剩英文词时（“HashMap和Hashtable的区别”中的“区别”找不到同一节），只按英文词搜
