@@ -20,7 +20,7 @@
         // 学习路线只是阅读导读，附录是实验过程，排在讲解正文之后
         var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0);
         prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
-          lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
+          pageParts: page.split(' - ').map(function (x) { return x.trim(); }), bare: heading.replace(/^(?:[一二三四五六七八九十]+、|[a-z]?\d+(?:\.\d+)*\.?\s)\s*/, ''), lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
       });
     });
     preparedIndexes.set(index, prepared);
@@ -58,7 +58,7 @@
   var SYNONYMS = [
     ['垃圾收集', '垃圾回收'], ['i/o', 'io'], ['哈希', '散列', 'hash'], ['新生代', '年轻代'], ['重排序', '指令重排'],
     ['首部', '头部'], ['幻读', '幻影读'], ['脏读', '读脏数据'], ['b+tree', 'b+树', 'b+ 树'], ['多路复用', 'i/o 复用', '复用'],
-    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm']
+    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm'], ['检索增强生成', 'rag'], ['集群', 'cluster']
   ];
   // 中英文混写的术语（“b+ 树”“i/o 复用”）在切词前换成一个整体，否则会被切成“b+”和“树”两个词分别匹配
   var MIXED = [];
@@ -101,7 +101,10 @@
       if (!term) return null;
       // 小节标题正好是搜索词时最相关，例如“死锁的必要条件”中的“必要条件”；标题用的是另一种说法时也算（搜 MVCC，标题是“多版本并发控制”）
       var head = firstHit(entry.heading, groups[i]) || term;
-      total += (entry.heading === head ? 30 : 0) + (entry.heading.includes(head) ? (wholeWord(entry.heading, head) ? 40 : 25) : 0) +
+      // 多个词时，就是文章名（或“ - ”分开的一段）的词只说明是哪篇文章，出现在小节标题中少加分（“spring aop”中的 spring）
+      var headBonus = groups.length > 1 && entry.pageParts.indexOf(head) !== -1 ? 10 : wholeWord(entry.heading, head) ? 40 : 25;
+      // 小节标题正好是搜索词时最相关；只有一个词时去掉编号（“三、”“2.”）再比
+      total += (entry.heading === head || (groups.length === 1 && entry.bare === head) ? 30 : 0) + (entry.heading.includes(head) ? headBonus : 0) +
         (entry.page.includes(term) ? 15 : 0) + (entry.lead.includes(term) ? 10 : 0) + occurrences(entry.body, term);
     }
     var phrase = groups.length > 1 && normalizedQuery ? normalizedQuery.replace(/ /g, '') : '';
@@ -114,6 +117,11 @@
   function stripQuestion(query) {
     // 去掉后剩下的单个汉字或单个字母没有意义（“和为 S”去掉“和”只剩“为”和“s”），这时不用去掉后的版本
     var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return term.length > 1; });
+    return terms.length ? terms.join(' ') : '';
+  }
+  var GENERIC = /(底层)?(原理|机制|实现方式|实现|作用|流程|过程|优缺点|应用场景|使用场景|场景|特点|详解|介绍|用法)/g;
+  function stripGeneric(query) {
+    var terms = splitTerms(query.replace(GENERIC, ' ')).filter(function (term) { return term.length > 1; });
     return terms.length ? terms.join(' ') : '';
   }
   // 仍然没有结果时按相邻两个字的词组匹配，至少命中七成；原文中连续出现的长片段（“四个条件”）额外加分
@@ -169,6 +177,9 @@
     // 去掉问法后的结果合并进来：“死锁的必要条件”原文只出现在学习路线中，正文的小节标题是“必要条件”
     var stripped = stripQuestion(normalizedQuery);
     if (stripped && stripped !== normalizedQuery) exact(stripped);
+    // “原理”“机制”这类泛泛的词正文中不一定出现（“synchronized 原理”），去掉后再搜一次；结果比带着这些词命中的少一个词的分
+    var core = stripGeneric(stripped || normalizedQuery);
+    if (core && core !== normalizedQuery && core !== stripped) exact(core);
     if (!results.length) {
       var terms = splitTerms(stripped || normalizedQuery);
       var pairs = bigrams(terms.map(function (term) { return alternatives(term)[0]; }));

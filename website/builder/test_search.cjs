@@ -48,6 +48,26 @@ assert.equal(search(phrasing, '和为 S').length, 1, '没有正文的开头部�
 assert.equal(search(phrasing, '什么是').length, 0, '只有问法时没有结果');
 assert.equal(highlight('a<b 的 TCP 与 tcp', 'tcp'), 'a&lt;b 的 <mark>TCP</mark> 与 <mark>tcp</mark>', '搜索词高亮不区分大小写，其余文字转义');
 assert.equal(highlight('&amp; (x)', 'amp (x)'), '&amp;<mark>amp</mark>; <mark>(x)</mark>', '高亮先切分再转义，正则字符按字面匹配');
+const generic = { documents: [
+  { title: '学习路线 - 示例', path: '/notes/学习路线 - 示例', sections: [{ title: '第 3 天：锁', id: 'day', text: '阅读 synchronized 的原理' }] },
+  { title: 'Spring', path: '/notes/Spring', sections: [
+    { title: '七、Spring 中的设计模式', id: 'pattern', text: 'AOP 用到了代理模式' },
+    { title: '二、AOP', id: 'aop', text: 'Spring AOP 在运行时为 Bean 生成代理' },
+  ] },
+  { title: '并发', path: '/notes/并发', sections: [{ title: 'synchronized', id: 'sync', text: 'JVM 用监视器锁实现' }] },
+  { title: '大模型', path: '/notes/大模型', sections: [
+    { title: '长上下文与 Agentic RAG', id: 'agentic', text: 'RAG 的变体' },
+    { title: '三、检索增强生成', id: 'rag', text: '先检索再生成' },
+  ] },
+  { title: '进程管理', path: '/notes/进程管理', sections: [
+    { title: '进程与线程', id: 'both', text: '进程是资源分配的单位，线程是调度的单位' },
+    { title: '2. 线程', id: 'thread', text: '线程共享进程的资源' },
+  ] },
+] };
+assert.equal(search(generic, 'synchronized 原理')[0].id, 'sync', '“原理”这类泛泛的词正文中没有时，去掉后再搜');
+assert.equal(search(generic, 'spring aop')[0].id, 'aop', '文章名中的词出现在小节标题里少加分');
+assert.equal(search(generic, 'rag 是什么')[0].id, 'rag', 'RAG 与检索增强生成互通，去掉编号后正好是搜索词的小节在前');
+assert.equal(search(generic, '进程和线程的区别')[0].id, 'both', '多个词时，只匹配其中一个词的小节不算正好匹配');
 const sample = { documents: [{ title: '数据库', path: '/notes/示例', sections: [
   { title: '事务', id: '事务', text: '一致性 '.repeat(20) },
   { title: '一致性', id: '一致性', text: 'SQL 与数据库' },
