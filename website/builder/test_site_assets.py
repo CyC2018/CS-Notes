@@ -100,7 +100,8 @@ class SearchIndexTests(unittest.TestCase):
             (dist / 'notes' / '算法.md').write_text('见 [算法 - 目录](/notes/算法 - 目录.md)\n')
             (dist / '_sidebar.md').write_text('- [首页](/)\n\n- **示例分组**\n  - [示例](/notes/%E7%A4%BA%E4%BE%8B.md)\n')
             (dist / 'stubs.json').write_text(json.dumps({'/notes/算法': '/notes/算法 - 目录'}, ensure_ascii=False))
-            urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), 'https://example.com/', str(dist / 'stubs.json')],
+            (dist / 'sections.json').write_text(json.dumps({'示例': {'_1-爬楼梯': [['q1', '怎样爬楼梯？', 2]]}}, ensure_ascii=False))
+            urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), 'https://example.com/', str(dist / 'stubs.json'), str(dist / 'sections.json')],
                                              check=True, capture_output=True, text=True).stdout)
             self.assertEqual(urls, ['https://example.com/notes/', 'https://example.com/notes/%E7%A4%BA%E4%BE%8B.html'])
             self.assertIn('<a href="/notes/%E7%A4%BA%E4%BE%8B.html">示例</a>', (dist / 'notes' / 'index.html').read_text())
@@ -114,6 +115,7 @@ class SearchIndexTests(unittest.TestCase):
             self.assertIn('<meta name="description" content="正文第一段，见 另一篇。">', page)
             self.assertIn('href="/#/notes/%E7%A4%BA%E4%BE%8B"', page)
             self.assertNotIn('<script', page)
+            self.assertIn('<h2 id="_1-爬楼梯">1. 爬楼梯</h2>\n<aside class="qs"><b>面试题</b><ul><li><a href="/learn/q/q1.html">怎样爬楼梯？</a>', page)
             stub = (dist / 'notes' / '算法.html').read_text()
             self.assertIn('url=/notes/%E7%AE%97%E6%B3%95%20-%20%E7%9B%AE%E5%BD%95.html', stub)
 
