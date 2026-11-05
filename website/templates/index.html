@@ -32,6 +32,17 @@
         link.href = href;
         document.head.appendChild(link);
       });
+      // 文章开头附近的第一张配图同时开始下载（地址由构建写入）
+      var images = window.CS_NOTES_FIRST_IMAGES = {}/*FIRST_IMAGES*/, image = null;
+      try { image = images[decodeURIComponent(path)]; } catch (error) {}
+      if (image) {
+        var hint = document.createElement('link');
+        hint.rel = 'preload';
+        hint.as = 'image';
+        hint.href = image;
+        hint.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(hint);
+      }
     })();
   </script>
   <script>
