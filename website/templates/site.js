@@ -123,12 +123,19 @@
       if (box.scrollWidth > box.clientWidth) box.tabIndex = 0;
     });
   }
+  // Docsify 给数字开头的标题 id 前面加下划线；GitHub 的写法（0-1-背包）直接交给 Docsify 会让它查找时抛出异常
+  function docsifyId(id) { return /^\d/.test(id) ? '_' + id : id; }
   function preserveLegacyLinks() {
     var hash = location.hash;
     var legacy = (window.CS_NOTES_LEGACY_ROUTES || {})[decode(location.pathname)];
     if (legacy) {
-      var heading = hash && !hash.startsWith('#/') ? '?id=' + encodeURIComponent(decode(hash.slice(1))) : '';
+      var heading = hash && !hash.startsWith('#/') ? '?id=' + encodeURIComponent(docsifyId(decode(hash.slice(1)))) : '';
       location.replace('/#' + encodedRoute(legacy) + heading);
+      return;
+    }
+    var digit = hash.match(/^(#\/[^?]*\?(?:.*&)?id=)(\d[^&]*)(.*)$/);
+    if (digit) {
+      location.replace(digit[1] + '_' + digit[2] + digit[3]);
       return;
     }
     // 只剩一个链接的旧页面（例如“算法”）直接换成它指向的笔记，不留在中间页
