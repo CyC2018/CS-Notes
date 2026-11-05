@@ -239,6 +239,21 @@ def write_app_icons(dist, logo):
     (dist / 'manifest.webmanifest').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
 
 
+def first_images(dist):
+    """每篇文章开头附近（前面的正文不到 1200 字，文首目录不算）的第一张站内配图，入口页据此预加载；与 site.js 的 nearTop 一致。GIF 在网站上换成逐帧播放器，不预加载。"""
+    result = {}
+    for path in sorted((dist / 'notes').glob('*.md')):
+        text = re.sub(r'<!-- GFM-TOC -->[\s\S]*?<!-- GFM-TOC -->', '', path.read_text())
+        text = VERBATIM.sub('', text)
+        match = re.search(r'<img\b[^>]*\bsrc=["\'](/[^"\']+)["\']', text)
+        if not match or match[1].startswith('//') or match[1].lower().endswith('.gif'):
+            continue
+        before = re.sub(r'<[^>]+>|\]\([^)]*\)|^#+ ', '', text[:match.start()], flags=re.M)
+        if len(re.sub(r'\s+', '', before)) < 1200:
+            result['/notes/' + path.stem] = match[1]
+    return result
+
+
 def build(optimize=True):
     global IMAGE_BY_NAME, ANCHORS
     IMAGE_BY_NAME = repository_images()
@@ -367,6 +382,7 @@ def build(optimize=True):
             if document.relative_to(dist).parts[0] != 'learn':
                 document.with_suffix('.txt').write_bytes(document.read_bytes())
         entry = (dist / 'index.html').read_text()
+        entry = entry.replace('{}/*FIRST_IMAGES*/', json.dumps(first_images(dist), ensure_ascii=False, separators=(',', ':')))
         entry = bundle_entry(dist, entry)
         (dist / 'index.html').write_text(entry)
         shell = ['/', '/_sidebar.txt', '/README.txt'] + re.findall(r'(?:src|href)="(/(?:app|vendor|style)-[0-9a-f]{16}\.(?:js|css))"', entry)
