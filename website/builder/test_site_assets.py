@@ -1,4 +1,6 @@
 """Regression checks for generated search anchors and asset collection."""
+import re
+import json
 import sys
 import tempfile
 import unittest
@@ -82,6 +84,36 @@ class SearchIndexTests(unittest.TestCase):
                              '<img src="/pics/a.png" width="760px" height="300"/>\n<img src="/pics/a.png" width="1520" height="600">\n'
                              '<img src="/pics/a.png" width="10" height="9"/>\n<img src="https://x/y.png"/>\n'
                              '```html\n<img src="/pics/a.png"/>\n```\n')
+
+
+    def test_static_note_pages(self):
+        # 静态页面的标题 id 与网站（Docsify）一致，站内链接换成静态页面，文首目录折叠，只剩一个链接的旧页面跳到目标
+        import collections, subprocess
+        with tempfile.TemporaryDirectory() as directory:
+            dist = Path(directory)
+            (dist / 'notes').mkdir()
+            titles = ['示例', '1. 爬楼梯', 'HashMap 的 `put()`', '"引号"', '示例', 'A1 实测']
+            toc = '\n'.join(f'* [{t}](#x{i})' for i, t in enumerate(titles))
+            body = f'# {titles[0]}\n<!-- GFM-TOC -->\n{toc}\n<!-- GFM-TOC -->\n\n正文第一段，见 [另一篇](/notes/%E5%8F%A6.md#_1-%E7%88%AC%E6%A5%BC%E6%A2%AF)。\n\n' + \
+                ''.join(f'## {t}\n\n内容\n\n' for t in titles[1:]) + '<a href="/notes/%E5%8F%A6.md">HTML 链接</a>\n\n```java\n# 不是标题\n```\n'
+            (dist / 'notes' / '示例.md').write_text(body)
+            (dist / 'notes' / '算法.md').write_text('见 [算法 - 目录](/notes/算法 - 目录.md)\n')
+            (dist / 'stubs.json').write_text(json.dumps({'/notes/算法': '/notes/算法 - 目录'}, ensure_ascii=False))
+            urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), 'https://example.com/', str(dist / 'stubs.json')],
+                                             check=True, capture_output=True, text=True).stdout)
+            self.assertEqual(urls, ['https://example.com/notes/%E7%A4%BA%E4%BE%8B.html'])
+            page = (dist / 'notes' / '示例.html').read_text()
+            counts = collections.Counter()
+            expected = [heading_slug(t, counts) for t in titles]
+            self.assertEqual(re.findall(r'<h[1-6] id="([^"]*)"', page), expected)
+            self.assertIn('href="/notes/%E5%8F%A6.html#_1-%E7%88%AC%E6%A5%BC%E6%A2%AF"', page)
+            self.assertIn('href="/notes/%E5%8F%A6.html"', page)
+            self.assertIn('<details class="toc"><summary>本文目录</summary>', page)
+            self.assertIn('<meta name="description" content="正文第一段，见 另一篇。">', page)
+            self.assertIn('href="/#/notes/%E7%A4%BA%E4%BE%8B"', page)
+            self.assertNotIn('<script', page)
+            stub = (dist / 'notes' / '算法.html').read_text()
+            self.assertIn('url=/notes/%E7%AE%97%E6%B3%95%20-%20%E7%9B%AE%E5%BD%95.html', stub)
 
 
 if __name__ == '__main__':
