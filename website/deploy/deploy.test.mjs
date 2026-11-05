@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { deploySite, isTransient, PROJECT } from './deploy.mjs';
+import { changedPages, deploySite, isTransient, PROJECT } from './deploy.mjs';
 const executeFile = promisify(execFile);
 
 async function saveManifest(directory, files, sourceCommit = 'source') {
@@ -112,6 +112,31 @@ test('腾讯云接口的网络错误重试，令牌和权限错误不重试', as
   assert.equal(calls, 1);
   assert.equal(isTransient(Object.assign(new TypeError('fetch failed'), { cause: { code: 'ECONNRESET' } })), true);
   assert.equal(isTransient(new Error('腾讯云部署未成功：Failed')), false);
+});
+
+test('IndexNow：只提交新增或改动的静态页面，失败不影响发布', async t => {
+  const files = [{ path: 'notes/Java 容器.html', sha256: 'b' }, { path: 'notes/MySQL.html', sha256: 'same' }, { path: 'notes/index.html', sha256: 'n' },
+    { path: 'learn/q/abc.html', sha256: 'q' }, { path: 'notes/Java 容器.md', sha256: 'm' }, { path: '0123456789abcdef0123456789abcdef.txt', sha256: 'k' }];
+  const previous = { files: [{ path: 'notes/Java 容器.html', sha256: 'a' }, { path: 'notes/MySQL.html', sha256: 'same' }, { path: 'notes/index.html', sha256: 'n' }] };
+  assert.deepEqual(changedPages({ files }, previous), ['https://cyc2018.xyz/notes/Java%20%E5%AE%B9%E5%99%A8.html', 'https://cyc2018.xyz/learn/q/abc.html']);
+  const { directory, files: built } = await fixture(t);
+  built.set('notes/new.html', Buffer.from('new page'));
+  built.set('0123456789abcdef0123456789abcdef.txt', Buffer.from('0123456789abcdef0123456789abcdef'));
+  for (const [path, data] of built) await writeFile(join(directory, path), data);
+  await saveManifest(directory, built);
+  let published = false, sent = null;
+  const report = await deploySite({ directory, attempts: 1, sleep: async () => {},
+    fetcher: async (url, init) => {
+      if (String(url).startsWith('https://api.indexnow.org/')) { sent = JSON.parse(init.body); throw new TypeError('fetch failed'); }
+      return published ? new Response(built.get(decodeURIComponent(url.pathname.slice(1)))) : new Response('{}');
+    },
+    getClient: async () => ({ projects: { get: async () => PROJECT }, deployments: { deploy: async () => { published = true; return { status: 'Success', deploymentId: 'd' }; } } }),
+  });
+  assert.equal(report.result, 'deployed');
+  assert.deepEqual(sent.urlList, ['https://cyc2018.xyz/notes/new.html']);
+  assert.equal(sent.key, '0123456789abcdef0123456789abcdef');
+  assert.equal(report.indexNow.submitted, 0);
+  assert.match(report.indexNow.error, /fetch failed/);
 });
 
 test('项目身份不符时拒绝发布', async t => {
