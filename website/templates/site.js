@@ -5,6 +5,11 @@
   function encodedRoute(path) { return path.split('/').map(encodeURIComponent).join('/'); }
   // 图片前面的正文不到 1200 字（文首目录不算）时，大概率在首屏内
   function nearTop(img, root) {
+    var images = window.CS_NOTES_FIRST_IMAGES;
+    if (images) {
+      var route = decode((location.hash.replace(/^#/, '').split('?')[0]) || '');
+      return images[route] === img.getAttribute('src');
+    }
     var block = img, chars = 0;
     while (block.parentElement && block.parentElement !== root && block.parentElement.tagName !== 'BODY') block = block.parentElement;
     for (var node = block.previousElementSibling; node; node = node.previousElementSibling) {
