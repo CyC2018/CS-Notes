@@ -44,10 +44,18 @@ function foldToc(html) {
   if (links.length < 6 || !links.every(a => a.startsWith('<a href="#'))) return html;
   return html.slice(0, start) + '<details class="toc"><summary>本文目录</summary>\n' + list + '</details>' + html.slice(end);
 }
-function render(markdown, name) {
+// 学习站中原文链接指向这一节的面试题，列在小节标题下面，链接到每道题的页面
+function questionsHtml(list) {
+  return '<aside class="qs"><b>面试题</b><ul>' + list.map(([id, text, heat]) =>
+    `<li><a href="/learn/q/${encodeURIComponent(id)}.html">${escapeHtml(text)}</a>${heat > 1 ? '<span class="hot-2"></span>' : heat ? '<span class="hot-1"></span>' : ''}</li>`).join('') + '</ul></aside>\n';
+}
+function render(markdown, name, questions) {
   const slug = slugger();
   const renderer = new marked.Renderer();
-  renderer.heading = (text, level) => `<h${level} id="${slug(text)}">${text}</h${level}>\n`;
+  renderer.heading = (text, level) => {
+    const id = slug(text);
+    return `<h${level} id="${id}">${text}</h${level}>\n` + (questions && questions[id] && level > 1 ? questionsHtml(questions[id]) : '');
+  };
   // 站内笔记的链接（/notes/X.md#小节）改为静态页面；其它链接不变，外链在新窗口打开
   renderer.link = (href, title, text) => {
     let url = href || '';
@@ -102,6 +110,7 @@ td, th { padding: 6px 12px; border: 1px solid var(--border); }
 blockquote { margin: 1em 0; padding: 2px 16px; border-left: 4px solid var(--theme); background: var(--soft); }
 .toc { margin: 0 0 28px; padding: 6px 18px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); }.toc summary { color: var(--theme); font-weight: 600; cursor: pointer; padding: 6px 0; }.toc a { text-decoration: none; }.toc ul { margin: 4px 0; line-height: 1.75; }
 .hot-1::after { content: " 🔥"; } .hot-2::after { content: " 🔥🔥"; }
+.qs { margin: -4px 0 16px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); font-size: 14.5px; }.qs b { color: var(--theme); font-size: 13px; }.qs ul { margin: 2px 0 0; padding-left: 18px; line-height: 1.8; }.qs a { text-decoration: none; }
 .reader { margin: 40px 0 0; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); font-size: 15px; }
 footer { padding: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; text-align: center; }
 footer a { color: inherit; }
@@ -164,13 +173,14 @@ function indexPage(dist, site) {
   return site + 'notes/';
 }
 
-function build(dist, site, stubs) {
+function build(dist, site, stubs, sections) {
+  sections = sections || {};
   const dir = path.join(dist, 'notes');
   const names = fs.readdirSync(dir).filter(f => f.endsWith('.md')).map(f => f.slice(0, -3)).sort();
   const urls = [];
   for (const name of names) {
     const stub = stubs['/notes/' + name] && stubs['/notes/' + name].replace(/^\/notes\//, '');
-    const rendered = render(fs.readFileSync(path.join(dir, name + '.md'), 'utf8'), name);
+    const rendered = render(fs.readFileSync(path.join(dir, name + '.md'), 'utf8'), name, sections[name]);
     fs.writeFileSync(path.join(dir, name + '.html'), page(rendered, name, site, stub));
     if (!stub) urls.push(site + 'notes/' + route(name) + '.html');
   }
@@ -180,7 +190,8 @@ function build(dist, site, stubs) {
 module.exports = { render, slugger, build };
 
 if (require.main === module) {
-  const [dist, site, stubsFile] = process.argv.slice(2);
+  const [dist, site, stubsFile, sectionsFile] = process.argv.slice(2);
   const stubs = stubsFile ? JSON.parse(fs.readFileSync(stubsFile, 'utf8')) : {};
-  process.stdout.write(JSON.stringify(build(dist, site, stubs)));
+  const sections = sectionsFile ? JSON.parse(fs.readFileSync(sectionsFile, 'utf8')) : {};
+  process.stdout.write(JSON.stringify(build(dist, site, stubs, sections)));
 }

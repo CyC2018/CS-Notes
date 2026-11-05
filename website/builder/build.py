@@ -352,7 +352,9 @@ def build(optimize=True):
         stubs_file = CACHE / 'stubs.json'
         stubs_file.parent.mkdir(parents=True, exist_ok=True)
         stubs_file.write_text(json.dumps(stubs, ensure_ascii=False))
-        static_urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), SITE_URL, str(stubs_file)],
+        sections_file = CACHE / 'learn-sections.json'
+        sections_file.write_text(json.dumps(learn_sections, ensure_ascii=False))
+        static_urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), SITE_URL, str(stubs_file), str(sections_file)],
                                                 check=True, capture_output=True, text=True).stdout)
         # IndexNow 的验证文件：向必应等搜索引擎提交新地址时，用它证明网站归属（内容就是文件名中的密钥，公开的）
         (dist / '55327585d023607ab2aea4353f71eaeb.txt').write_text('55327585d023607ab2aea4353f71eaeb')
