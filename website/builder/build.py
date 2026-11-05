@@ -298,7 +298,7 @@ def build(optimize=True):
         (dist / '_404.md').write_text('# 页面暂未找到\n\n请从目录或搜索查找笔记。\n\n[返回首页](/)\n')
         (dist / '.nojekyll').touch()
         # 允许收录；学习站每道题的页面列在它的站点地图中（笔记页面在 # 之后，没有单独的地址）
-        (dist / 'robots.txt').write_text('User-agent: *\nAllow: /\n' + (f'Sitemap: {SITE_URL}learn/sitemap.xml\n' if LEARN_BUILD.is_file() else ''))
+        (dist / 'robots.txt').write_text('User-agent: *\nAllow: /\n' + f'Sitemap: {SITE_URL}sitemap.xml\n' + (f'Sitemap: {SITE_URL}learn/sitemap.xml\n' if LEARN_BUILD.is_file() else ''))
         shutil.copyfile(ROOT / 'docs/_media/LogoMakr_1J56bI.png', dist / 'favicon.png')
         write_app_icons(dist, ROOT / 'docs/_media/LogoMakr_1J56bI.png')
         learn_report = None
@@ -333,6 +333,14 @@ def build(optimize=True):
         image_report['sized'] = add_image_sizes(dist)
         index_name, search_report = write_search_index(dist, sorted((dist / 'notes').glob('*.md')))
         animations = write_animations(dist)
+        # 每篇笔记的静态页面（notes/<名字>.html，搜索引擎收录用）和站点地图；配图已经换成优化后的地址、补上高度
+        stubs_file = CACHE / 'stubs.json'
+        stubs_file.parent.mkdir(parents=True, exist_ok=True)
+        stubs_file.write_text(json.dumps(stubs, ensure_ascii=False))
+        static_urls = json.loads(subprocess.run(['node', str(Path(__file__).parent / 'static_notes.cjs'), str(dist), SITE_URL, str(stubs_file)],
+                                                check=True, capture_output=True, text=True).stdout)
+        (dist / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+                                          ''.join(f'  <url><loc>{html.escape(url)}</loc></url>\n' for url in [SITE_URL] + static_urls) + '</urlset>\n')
         legacy = json.loads((SITE / 'legacy-routes.json').read_text())
         (dist / 'search-paths.js').write_text(
             'window.CS_NOTES_PATHS = ' + json.dumps(note_paths, ensure_ascii=False) + ';\n'
@@ -345,12 +353,12 @@ def build(optimize=True):
             'window.CS_NOTES_LEARN_SECTIONS = ' + json.dumps(learn_sections, ensure_ascii=False, separators=(',', ':')) + ';\n')
         generator = hashlib.sha256()
         learn = [*LEARN_BUILD.parent.glob('*.py'), *(LEARN_BUILD.parent / 'src').rglob('*')] if LEARN_BUILD.is_file() else []
-        for resource in sorted([*Path(__file__).parent.glob('*.py'), *SITE.rglob('*'), *learn]):
+        for resource in sorted([*Path(__file__).parent.glob('*.py'), *Path(__file__).parent.glob('*.cjs'), *(Path(__file__).parent / 'vendor').rglob('*'), *SITE.rglob('*'), *learn]):
             if resource.is_file():
                 generator.update(resource.relative_to(BASE.parent).as_posix().encode())
                 generator.update(resource.read_bytes())
         build_info = {'sourceCommit': SOURCE_COMMIT, 'generatorHash': generator.hexdigest(), 'notes': len(note_paths),
-                      'searchIndex': index_name, 'legacyRoutes': len(legacy)}
+                      'searchIndex': index_name, 'legacyRoutes': len(legacy), 'staticPages': len(static_urls)}
         (dist / 'build-info.json').write_text(json.dumps(build_info, indent=2) + '\n')
         # 网站读取的是同内容的 .txt：EdgeOne 只压缩 text/plain 等类型，.md 的 text/markdown 不压缩
         for document in list(dist.rglob('*.md')):
