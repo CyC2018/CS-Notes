@@ -83,6 +83,17 @@ assert.equal(search(golden, 'XSS')[0].id, 'xss', 'XSS 与跨站脚本互通');
 assert.equal(search(golden, '事务隔离级别')[0].id, 'level', '完全匹配的只有参考资料时，相近的小节排在前面');
 assert(!search(golden, '事务隔离级别').fuzzy, '有完全匹配的结果时不提示“没有完全匹配”');
 assert.equal(search(golden, 'concurrenthashmap')[0].id, 'main', '主笔记排在进阶篇之前');
+const natural = { documents: [
+  { title: 'MySQL', path: '/notes/MySQL', sections: [
+    { title: '索引失效', id: 'invalid', text: '对索引列做运算、函数或隐式类型转换时用不上索引' },
+    { title: '索引的优点', id: 'good', text: '减少扫描的行数' },
+    { title: '主从复制', id: 'repl', text: 'binlog 线程把日志发给从库' },
+  ] },
+  { title: '操作系统', path: '/notes/操作系统', sections: [{ title: '5. 协程', id: 'co', text: '用户态的轻量线程' }] },
+] };
+assert.equal(search(natural, '什么情况索引会失效？')[0].id, 'invalid', '整句的问法按词组的相关度找到小节');
+assert.equal(search(natural, '平时是怎么用协程的')[0].id, 'co', '问法中的“平时”“用”这类词不影响');
+assert.equal(search(natural, '主从复制')[0].id, 'repl', '短的搜索词仍按完整匹配排序');
 const sample = { documents: [{ title: '数据库', path: '/notes/示例', sections: [
   { title: '事务', id: '事务', text: '一致性 '.repeat(20) },
   { title: '一致性', id: '一致性', text: 'SQL 与数据库' },
