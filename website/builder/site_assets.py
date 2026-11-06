@@ -122,7 +122,7 @@ def search_document(path, content):
         if heading:
             finish()
             raw_title = heading[2]
-            current = {'title': plain_text(raw_title), 'id': heading_slug(raw_title, counts), 'text': ''}
+            current = {'title': plain_text(raw_title), 'id': heading_slug(raw_title, counts), 'level': len(heading[1]), 'text': ''}
         elif not re.match(r'^\s*[-*+]\s+\[[^]]+\]\(#[^)]*\)\s*(?:<span class="hot[^"]*"></span>)?\s*$', line):
             lines.append(line)
     finish()
