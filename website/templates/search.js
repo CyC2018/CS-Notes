@@ -12,8 +12,12 @@
     if (prepared) return prepared;
     prepared = [];
     index.documents.forEach(function (doc) {
-      var page = normalize(doc.title);
+      var page = normalize(doc.title), parents = [];
       doc.sections.forEach(function (section, i) {
+        // 上级小节的标题：“双亲委派模型”下的“2. 好处”，搜“双亲委派的好处”时要能找到
+        while (parents.length && parents[parents.length - 1].level >= section.level) parents.pop();
+        var parent = parents.length ? parents[parents.length - 1].heading : '';
+        if (section.level > 1) parents.push({ level: section.level, heading: normalize(section.title) });
         // 文章开头没有正文的部分与一级标题重复，不单独作为结果
         if (i === 0 && !section.text && doc.sections.length > 1 && normalize(doc.sections[1].title) === page) return;
         var heading = normalize(section.title);
@@ -21,7 +25,7 @@
         // 学习路线只是阅读导读，附录是实验过程，排在讲解正文之后
         var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0) + (/ - 进阶$/.test(doc.title) ? 8 : 0) + (heading === '参考资料' ? 30 : 0);
         var bare = heading.replace(/^(?:[一二三四五六七八九十]+、|[a-z]?\d+(?:\.\d+)*\.?\s)\s*/, '');
-        prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
+        prepared.push({ page: page, heading: heading, parent: parent, body: body, text: heading + ' ' + parent + ' ' + page + ' ' + body,
           pageParts: page.split(' - ').map(function (x) { return x.trim(); }), bare: bare, core: bare.replace(/(模型|原理|机制)$/, '').trim(), lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
       });
     });
@@ -207,7 +211,7 @@
         got += weights[i];
         var head = entry.heading.includes(hit);
         if (head) inHead++;
-        value += weights[i] * ((head ? 3 : 0) + (entry.page.includes(hit) ? 1 : 0) + Math.min(occurrences(entry.body, hit), 3) * .4);
+        value += weights[i] * ((head ? 3 : entry.parent.includes(hit) ? 1.5 : 0) + (entry.page.includes(hit) ? 1 : 0) + Math.min(occurrences(entry.body, hit), 3) * .4);
       });
       // 门槛按面经问题的开发集选定：命中的信息量不到 15% 的不算，标题中一个都没有命中的要到 40%
       if (got < total * .15 || (!inHead && got < total * .4)) return;
