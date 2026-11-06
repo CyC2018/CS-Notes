@@ -122,6 +122,17 @@ const camel = { documents: [
 ] };
 assert.equal(search(camel, 'SpringCloudAlibaba')[0].id, 'sc', '驼峰连写按拆开的写法也能搜到');
 assert.equal(search(camel, 'LRUCache')[0].id, 'lru', '连续大写后接单词时在单词前拆开');
+const parent = { documents: [
+  { title: 'Java 虚拟机', path: '/notes/Java 虚拟机', sections: [
+    { title: '双亲委派模型', id: 'pdm', level: 3, text: '应用程序是由三种类加载器互相配合从而实现类加载' },
+    { title: '1. 工作过程', id: 'work', level: 4, text: '一个类加载器首先将类加载请求转发到父类加载器' },
+    { title: '2. 好处', id: 'good', level: 4, text: '使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而使得基础类得到统一' },
+    { title: '三、类加载器分类', id: 'kind', level: 3, text: '启动类加载器、扩展类加载器、应用程序类加载器' },
+    { title: '4. 好处与代价', id: 'cost', level: 4, text: '自定义类加载器的好处是可以隔离不同版本的类' },
+  ] },
+] };
+const parentIds = search(parent, '双亲委派机制的好处').map(r => r.id);
+assert.ok(parentIds.indexOf('good') !== -1 && parentIds.indexOf('good') < parentIds.indexOf('cost'), '小节标题只写“好处”时，按上级标题也能搜到');
 const guide = { documents: [
   { title: '学习路线 - 示例', path: '/notes/学习路线 - 示例', sections: [{ title: '第 25 天：B+ 树与索引的类型', id: 'day', text: '自测：MySQL 的 B+Tree 为什么适合范围查询？' }] },
   { title: 'MySQL', path: '/notes/MySQL', sections: [
