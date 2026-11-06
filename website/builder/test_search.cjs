@@ -116,6 +116,12 @@ const skiplist = { documents: [
   { title: 'MySQL', path: '/notes/MySQL', sections: [{ title: '参数', id: 'param', text: '设置缓冲池大小' }] },
 ] };
 assert.equal(search(skiplist, '跳表的层高怎么设置')[0].id, 'skip', '整句里的“跳表”也能匹配标题“跳跃表”');
+const camel = { documents: [
+  { title: '微服务', path: '/notes/微服务', sections: [{ title: '二、Spring Cloud', id: 'sc', text: 'Spring Cloud Alibaba 提供 Nacos、Sentinel 等组件' }] },
+  { title: '缓存', path: '/notes/缓存', sections: [{ title: '七、LRU', id: 'lru', text: '下面是基于 LinkedHashMap 实现的 LRU Cache' }] },
+] };
+assert.equal(search(camel, 'SpringCloudAlibaba')[0].id, 'sc', '驼峰连写按拆开的写法也能搜到');
+assert.equal(search(camel, 'LRUCache')[0].id, 'lru', '连续大写后接单词时在单词前拆开');
 const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
   { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
   { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },
