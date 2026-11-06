@@ -60,7 +60,8 @@
   var SYNONYMS = [
     ['垃圾收集', '垃圾回收'], ['i/o', 'io'], ['哈希', '散列', 'hash'], ['新生代', '年轻代'], ['重排序', '指令重排'],
     ['首部', '头部'], ['幻读', '幻影读'], ['脏读', '读脏数据'], ['b+tree', 'b+树', 'b+ 树'], ['多路复用', 'i/o 复用', '复用'],
-    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm'], ['检索增强生成', 'rag'], ['集群', 'cluster'], ['跨站脚本', 'xss'], ['跨站请求伪造', 'csrf'], ['运行时数据区域', '内存区域', '内存结构']
+    ['多版本并发控制', 'mvcc'], ['java 虚拟机', 'jvm'], ['检索增强生成', 'rag'], ['集群', 'cluster'], ['跨站脚本', 'xss'], ['跨站请求伪造', 'csrf'], ['运行时数据区域', '内存区域', '内存结构'],
+    ['跳跃表', '跳表'], ['j.u.c', 'juc'], ['左外连接', '左连接', 'left join'], ['右外连接', '右连接', 'right join'], ['循环', 'loop']
   ];
   // 中英文混写的术语（“b+ 树”“i/o 复用”）在切词前换成一个整体，否则会被切成“b+”和“树”两个词分别匹配
   var MIXED = [];
@@ -117,7 +118,9 @@
   }
 
   // 整句的问法：先去掉“什么是”“为什么”这类词再搜（“什么是幂等”按“幂等”搜）
-  var QUESTION = /什么是|是什么|为什么要|为什么|为啥|怎么样|怎么|如何|有哪些|哪些|有什么|区别是|作用是|原理是|的区别|区别|对比|比较|异同|和|与|跟|及|吗|呢|么|的|了|？|\?/g;
+  var QUESTION = /简单讲讲|讲一讲|讲讲|说一说|说说|说下|聊聊|谈谈|了解过|了解|知道|什么是|是什么|为什么要|为什么|为啥|怎么样|怎么|如何|有哪些|哪些|有什么|区别是|作用是|原理是|的区别|区别|对比|比较|异同|和|与|跟|及|吗|呢|么|的|了|？|\?/g;
+  // 只去掉问句的开头和结尾，保留“和”“的区别”：“堆和栈的区别是什么”中的“堆”“栈”单独去搜没有意义，标题正是“堆和栈的区别”
+  var ASKING = /^(?:简单讲讲|讲一讲|讲讲|说一说|说说|说下|聊聊|谈谈|了解过|了解|知道|什么是)|(?:是什么|是怎样|是啥|吗|呢|么|？|\?)+$/g;
   function stripQuestion(query) {
     // 去掉后剩下的单个汉字或单个字母没有意义（“和为 S”去掉“和”只剩“为”和“s”），这时不用去掉后的版本
     var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return term.length > 1; });
@@ -230,6 +233,8 @@
     // 去掉问法后的结果合并进来：“死锁的必要条件”原文只出现在学习路线中，正文的小节标题是“必要条件”
     var stripped = stripQuestion(normalizedQuery);
     if (stripped && stripped !== normalizedQuery) exact(stripped);
+    var asked = normalize(normalizedQuery.replace(ASKING, ''));
+    if (asked && asked !== normalizedQuery && asked !== stripped && splitTerms(asked).length === 1) exact(asked);
     // “原理”“机制”这类泛泛的词正文中不一定出现（“synchronized 原理”），去掉后再搜一次；结果比带着这些词命中的少一个词的分
     var core = stripGeneric(stripped || normalizedQuery);
     if (core && core !== normalizedQuery && core !== stripped) exact(core);
