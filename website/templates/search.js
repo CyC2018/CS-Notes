@@ -20,8 +20,9 @@
         var body = normalize(section.text);
         // 学习路线只是阅读导读，附录是实验过程，排在讲解正文之后
         var penalty = (/^学习路线/.test(doc.title) ? 45 : 0) + (/^a\d+ /.test(heading) ? 40 : 0) + (/ - 进阶$/.test(doc.title) ? 8 : 0) + (heading === '参考资料' ? 30 : 0);
+        var bare = heading.replace(/^(?:[一二三四五六七八九十]+、|[a-z]?\d+(?:\.\d+)*\.?\s)\s*/, '');
         prepared.push({ page: page, heading: heading, body: body, text: heading + ' ' + page + ' ' + body,
-          pageParts: page.split(' - ').map(function (x) { return x.trim(); }), bare: heading.replace(/^(?:[一二三四五六七八九十]+、|[a-z]?\d+(?:\.\d+)*\.?\s)\s*/, ''), lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
+          pageParts: page.split(' - ').map(function (x) { return x.trim(); }), bare: bare, core: bare.replace(/(模型|原理|机制)$/, '').trim(), lead: body.slice(0, 120), flatHeading: heading.replace(/ /g, ''), flatBody: body.replace(/ /g, ''), penalty: penalty, pageTitle: doc.title, path: doc.path, section: section });
       });
     });
     preparedIndexes.set(index, prepared);
@@ -106,8 +107,8 @@
       var head = firstHit(entry.heading, groups[i]) || term;
       // 多个词时，就是文章名（或“ - ”分开的一段）的词只说明是哪篇文章，出现在小节标题中少加分（“spring aop”中的 spring）
       var headBonus = groups.length > 1 && entry.pageParts.indexOf(head) !== -1 ? 10 : wholeWord(entry.heading, head) ? 40 : 25;
-      // 小节标题正好是搜索词时最相关；只有一个词时去掉编号（“三、”“2.”）再比
-      total += (entry.heading === head || (groups.length === 1 && entry.bare === head) ? 30 : 0) + (entry.heading.includes(head) ? headBonus : 0) +
+      // 小节标题正好是搜索词时最相关；只有一个词时去掉编号（“三、”“2.”）和结尾的“模型”“原理”“机制”再比
+      total += (entry.heading === head || (groups.length === 1 && (entry.bare === head || entry.core === head)) ? 30 : 0) + (entry.heading.includes(head) ? headBonus : 0) +
         (entry.page.includes(term) ? 15 : 0) + (entry.lead.includes(term) ? 10 : 0) + occurrences(entry.body, term);
     }
     var phrase = groups.length > 1 && normalizedQuery ? normalizedQuery.replace(/ /g, '') : '';
