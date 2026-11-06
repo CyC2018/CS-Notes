@@ -122,6 +122,15 @@ const camel = { documents: [
 ] };
 assert.equal(search(camel, 'SpringCloudAlibaba')[0].id, 'sc', '驼峰连写按拆开的写法也能搜到');
 assert.equal(search(camel, 'LRUCache')[0].id, 'lru', '连续大写后接单词时在单词前拆开');
+const guide = { documents: [
+  { title: '学习路线 - 示例', path: '/notes/学习路线 - 示例', sections: [{ title: '第 25 天：B+ 树与索引的类型', id: 'day', text: '自测：MySQL 的 B+Tree 为什么适合范围查询？' }] },
+  { title: 'MySQL', path: '/notes/MySQL', sections: [
+    { title: '1. B+Tree 索引', id: 'btree', text: 'B+Tree 索引是有序的，除了查询，还可以用于排序和分组' },
+    { title: '2. 哈希索引', id: 'hash', text: '哈希索引只能精确查找' },
+  ] },
+] };
+assert.equal(search(guide, 'MySQL 的 B+Tree 索引为什么适合范围查询？')[0].id, 'btree', '整句提问时讲解正文排在写进原句的导读之前');
+assert.equal(search(guide, '第 25 天')[0].id, 'day', '学习路线仍能搜到');
 const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
   { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
   { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },

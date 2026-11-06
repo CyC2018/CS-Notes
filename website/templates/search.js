@@ -277,7 +277,8 @@
     var core = stripped || normalizedQuery, rel = relevance(entries, core), fused = {}, K = 1;
     var sentence = (core.match(/[㐀-鿿豈-﫿]/g) || []).length >= 7 || splitTerms(core).length >= 3;
     var exactWeight = sentence ? 1 : 100;
-    results.forEach(function (r, i) { fused[r.path + '?' + r.id] = exactWeight / (K + i + 1); });
+    // 整句时学习路线的导读、附录实验这类降权的小节在完全匹配的排序中也打折：导读常把问题原句写进去，会排到讲解正文前面
+    results.forEach(function (r, i) { fused[r.path + '?' + r.id] = exactWeight / (K + i + 1) * (sentence && r.penalty ? .2 : 1); });
     rel.forEach(function (x, i) {
       var entry = x.entry, key = entry.path + '?' + entry.section.id;
       if (!seen[key]) {
