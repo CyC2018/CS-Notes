@@ -2,7 +2,8 @@
   'use strict';
 
   function normalize(value) {
-    return String(value).normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+    // HTTP 的版本号统一成笔记中的写法：“HTTP2.0”“http 2”都按“http/2.0”“http/2”搜
+    return String(value).normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim().replace(/\bhttp ?\/? ?([123](?:\.\d)?)(?![\d.])/g, 'http/$1');
   }
 
   var preparedIndexes = new WeakMap();
@@ -153,15 +154,19 @@
   }
 
   // 相关度：词组越少见越重要（IDF），出现在小节标题中权重最大
-  var dfCache = new WeakMap();
+  var dfCache = new WeakMap(), FUNCTION_CHARS = /[的是了吗呢么在和与及或也都就而吧啊呀这那你我他它们个些把被让给对从到会能要还]/;
   function relevance(entries, text) {
     var units = [];
     normalize(text.replace(QUESTION, ' ')).split(' ').forEach(function (word) {
       (word.match(/[㐀-鿿豈-﫿]+|[^㐀-鿿豈-﫿]+/g) || []).forEach(function (part) {
         if (CJK.test(part)) {
-          for (var i = 0; i + 1 < part.length; i++) units.push([part.slice(i, i + 2)]);
-        } else if (part.replace(/[^a-z0-9]/g, '').length >= 2) {
-          units.push(alternatives(part));
+          for (var i = 0; i + 1 < part.length; i++) if (!FUNCTION_CHARS.test(part.slice(i, i + 2))) units.push([part.slice(i, i + 2)]);
+        } else {
+          // 英文和数字按词切开，标点（“、”“，”）不算词的一部分：“http/1.0、2.0”是两个词
+          (part.match(/[a-z0-9][a-z0-9+#./_-]*/g) || []).forEach(function (token) {
+            token = token.replace(/[./_-]+$/, '');
+            if (token.replace(/[^a-z0-9]/g, '').length >= 2) units.push(alternatives(token));
+          });
         }
       });
     });
@@ -252,7 +257,7 @@
     results.sort(function (a, b) { return b.score - a.score || a.penalty - b.penalty; });
     // 整句的问法（去掉问法后还有 7 个以上汉字，或 3 个以上的词）和相关度排序做倒数排名融合：两边都靠前的排在最前；
     // 短的搜索词保持原来的排序，相关度中的结果补在后面
-    var core = stripped || normalizedQuery, rel = relevance(entries, core), fused = {}, K = 8;
+    var core = stripped || normalizedQuery, rel = relevance(entries, core), fused = {}, K = 1;
     var sentence = (core.match(/[㐀-鿿豈-﫿]/g) || []).length >= 7 || splitTerms(core).length >= 3;
     var exactWeight = sentence ? 1 : 100;
     results.forEach(function (r, i) { fused[r.path + '?' + r.id] = exactWeight / (K + i + 1); });
