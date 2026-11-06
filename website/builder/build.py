@@ -30,6 +30,7 @@ VERSION_FILE = BASE / 'source-version.json'
 SOURCE_COMMIT = json.loads(VERSION_FILE.read_text())['commit'] if VERSION_FILE.is_file() else 'unknown'
 IMAGE_BY_NAME = {}
 ANCHORS = {}
+MISSING_ANCHORS = {}
 SOURCE_IMAGE_HOST = 'cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com'
 # 学习站与笔记网站一起构建，放在 /learn/ 下；题目链接指向同一域名下的笔记
 LEARN_BUILD = BASE.parent / 'learn' / 'build.py'
@@ -128,7 +129,11 @@ def local_target(url, source, html_link=False):
     elif parsed.netloc:
         return url
     elif not path and url.startswith('#') and len(url) > 1:
-        return '#' + site_anchor(source.relative_to(ROOT).as_posix(), url[1:])
+        note, fragment = source.relative_to(ROOT).as_posix(), urllib.parse.unquote(url[1:])
+        anchors = ANCHORS.get(note, {})
+        if fragment not in anchors and fragment not in anchors.values():
+            MISSING_ANCHORS.setdefault((note, fragment), None)
+        return '#' + site_anchor(note, url[1:])
     elif not path or url.startswith(('#', 'mailto:', 'data:', '//')):
         return url
     elif not path.startswith('/'):
@@ -258,6 +263,7 @@ def build(optimize=True):
     global IMAGE_BY_NAME, ANCHORS
     IMAGE_BY_NAME = repository_images()
     ANCHORS = {p.relative_to(ROOT).as_posix(): anchor_map(p) for p in sources()}
+    MISSING_ANCHORS.clear()
     external = image_urls()
     replacements = {url: local_target(url, ROOT / 'README.md') for url in external}
     reused = {url: path for url, path in replacements.items() if path.startswith('/')}
@@ -412,6 +418,10 @@ def build(optimize=True):
     report.update({'sourceCommit': SOURCE_COMMIT, 'imageReplacements': reused, 'externalImageUrls': unchanged_external})
     DIST.with_name(DIST.name + '-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({k: v for k, v in report.items() if k not in ('imageReplacements', 'externalImageUrls')}, ensure_ascii=False, indent=2))
+    # 文内目录链接指向的标题已改名或删除：只给警告，不挡住发布；在 GitHub Actions 中标在对应文件上
+    for note, anchor in MISSING_ANCHORS:
+        prefix = f'::warning file={note}::' if os.environ.get('GITHUB_ACTIONS') else note + '：'
+        print(f'{prefix}目录链接 #{anchor} 找不到对应标题', file=sys.stderr)
 
 
 SCRIPT_TAG = re.compile(r'^  <script src="/([^"]+)" defer></script>\n', re.M)
