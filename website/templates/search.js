@@ -164,7 +164,7 @@
     normalize(text.replace(QUESTION, ' ')).split(' ').forEach(function (word) {
       (word.match(/[㐀-鿿豈-﫿]+|[^㐀-鿿豈-﫿]+/g) || []).forEach(function (part) {
         if (CJK.test(part)) {
-          for (var i = 0; i + 1 < part.length; i++) if (!FUNCTION_CHARS.test(part.slice(i, i + 2))) units.push([part.slice(i, i + 2)]);
+          for (var i = 0; i + 1 < part.length; i++) if (!FUNCTION_CHARS.test(part.slice(i, i + 2))) units.push(alternatives(part.slice(i, i + 2)));
         } else {
           // 英文和数字按词切开，标点（“、”“，”）不算词的一部分：“http/1.0、2.0”是两个词
           (part.match(/[a-z0-9][a-z0-9+#./_-]*/g) || []).forEach(function (token) {
