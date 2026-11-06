@@ -152,6 +152,51 @@
     return total + hit * 5 - entry.penalty;
   }
 
+  // 相关度：词组越少见越重要（IDF），出现在小节标题中权重最大
+  var dfCache = new WeakMap();
+  function relevance(entries, text) {
+    var units = [];
+    normalize(text.replace(QUESTION, ' ')).split(' ').forEach(function (word) {
+      (word.match(/[㐀-鿿豈-﫿]+|[^㐀-鿿豈-﫿]+/g) || []).forEach(function (part) {
+        if (CJK.test(part)) {
+          for (var i = 0; i + 1 < part.length; i++) units.push([part.slice(i, i + 2)]);
+        } else if (part.replace(/[^a-z0-9]/g, '').length >= 2) {
+          units.push(alternatives(part));
+        }
+      });
+    });
+    var cache = dfCache.get(entries) || {};
+    dfCache.set(entries, cache);
+    var n = entries.length, weights = [], total = 0;
+    units = units.filter(function (unit, i) { return units.findIndex(function (u) { return u[0] === unit[0]; }) === i; });
+    units.forEach(function (unit) {
+      var key = unit.join('|');
+      if (!(key in cache)) cache[key] = entries.filter(function (entry) { return firstHit(entry.text, unit); }).length;
+      var df = cache[key];
+      var w = df ? Math.log(1 + n / df) : 0;
+      weights.push(w);
+      total += w;
+    });
+    if (!total) return [];
+    var scored = [];
+    entries.forEach(function (entry) {
+      var got = 0, value = 0, inHead = 0;
+      units.forEach(function (unit, i) {
+        if (!weights[i]) return;
+        var hit = firstHit(entry.text, unit);
+        if (!hit) return;
+        got += weights[i];
+        var head = entry.heading.includes(hit);
+        if (head) inHead++;
+        value += weights[i] * ((head ? 3 : 0) + (entry.page.includes(hit) ? 1 : 0) + Math.min(occurrences(entry.body, hit), 3) * .4);
+      });
+      // 门槛按面经问题的开发集选定：命中的信息量不到 15% 的不算，标题中一个都没有命中的要到 40%
+      if (got < total * .15 || (!inHead && got < total * .4)) return;
+      scored.push({ entry: entry, score: value * (got / total) * (entry.penalty ? .4 : 1) });
+    });
+    return scored.sort(function (a, b) { return b.score - a.score; }).slice(0, 40);
+  }
+
   function search(index, query, limit) {
     var normalizedQuery = normalize(query).slice(0, 120);
     if (!normalizedQuery) return [];
@@ -205,6 +250,23 @@
       }
     }
     results.sort(function (a, b) { return b.score - a.score || a.penalty - b.penalty; });
+    // 整句的问法（去掉问法后还有 7 个以上汉字，或 3 个以上的词）和相关度排序做倒数排名融合：两边都靠前的排在最前；
+    // 短的搜索词保持原来的排序，相关度中的结果补在后面
+    var core = stripped || normalizedQuery, rel = relevance(entries, core), fused = {}, K = 8;
+    var sentence = (core.match(/[㐀-鿿豈-﫿]/g) || []).length >= 7 || splitTerms(core).length >= 3;
+    var exactWeight = sentence ? 1 : 100;
+    results.forEach(function (r, i) { fused[r.path + '?' + r.id] = exactWeight / (K + i + 1); });
+    rel.forEach(function (x, i) {
+      var entry = x.entry, key = entry.path + '?' + entry.section.id;
+      if (!seen[key]) {
+        seen[key] = { page: entry.pageTitle, path: entry.path, title: entry.section.title || entry.pageTitle,
+          id: entry.section.id, text: entry.section.text, score: 0, penalty: entry.penalty };
+        results.push(seen[key]);
+      }
+      fused[key] = (fused[key] || 0) + 1 / (K + i + 1);
+    });
+    if (rel.length && !results.some(function (r) { return r.score > 0; })) fuzzy = true;
+    results.sort(function (a, b) { return fused[b.path + '?' + b.id] - fused[a.path + '?' + a.id] || b.score - a.score; });
     var shown = results.slice(0, limit || 20);
     shown.total = results.length;
     shown.fuzzy = fuzzy;
