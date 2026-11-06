@@ -42,6 +42,7 @@ class SearchIndexTests(unittest.TestCase):
         sections = [s for s in doc['sections'] if s['id'] == 'tcp-拥塞控制']
         self.assertEqual(len(sections), 1)
         self.assertEqual(sections[0]['text'], '慢开始')
+        self.assertEqual(sections[0]['level'], 2)
 
     def test_comments_and_example_asset_urls_are_not_published(self):
         content = '<!-- <img src="/secret.png"> -->\n```html\n<img src="/example.png">\n```\n<img src="/notes/pics/actual.png">\n[正文](/notes/示例.md)\n'
