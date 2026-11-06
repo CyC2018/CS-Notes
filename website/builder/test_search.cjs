@@ -94,6 +94,18 @@ const natural = { documents: [
 assert.equal(search(natural, '什么情况索引会失效？')[0].id, 'invalid', '整句的问法按词组的相关度找到小节');
 assert.equal(search(natural, '平时是怎么用协程的')[0].id, 'co', '问法中的“平时”“用”这类词不影响');
 assert.equal(search(natural, '主从复制')[0].id, 'repl', '短的搜索词仍按完整匹配排序');
+const asking = { documents: [
+  { title: 'Java 虚拟机', path: '/notes/Java 虚拟机', sections: [
+    { title: '堆', id: 'heap', text: '所有对象都在这里分配内存，是垃圾收集的主要区域' },
+    { title: '虚拟机栈', id: 'stack', text: '每个 Java 方法在执行的同时会创建一个栈帧' },
+    { title: '堆和栈的区别', id: 'diff', text: '堆存放对象，线程共享；栈存放局部变量，线程私有' },
+  ] },
+  { title: 'Java 并发', path: '/notes/Java 并发', sections: [{ title: '七、J.U.C - AQS', id: 'aqs', text: 'java.util.concurrent 大大提高了并发性能' }] },
+  { title: '算法', path: '/notes/算法', sections: [{ title: '跳表', id: 'skip', text: '多层有序链表' }] },
+] };
+assert.equal(search(asking, '堆和栈的区别是什么？')[0].id, 'diff', '去掉问句的开头结尾后正好是小节标题');
+assert.equal(search(asking, '了解juc吗？')[0].id, 'aqs', 'JUC 与 J.U.C 互通');
+assert.equal(search(asking, '跳跃表')[0].id, 'skip', '跳跃表与跳表互通');
 const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
   { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
   { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },
