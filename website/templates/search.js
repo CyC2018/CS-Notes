@@ -79,8 +79,18 @@
     return query;
   }
   // 词中含有另一种说法时也替换，例如“散列冲突”同时按“哈希冲突”搜索
+  // 驼峰连写的英文（SpringCloudAlibaba、LRUCache）在笔记中常分开写，每次搜索时从原文算出拆开的写法
+  var camelForms = {};
+  function camelSplit(query) {
+    camelForms = {};
+    (String(query).normalize('NFKC').match(/[A-Za-z][A-Za-z0-9]*/g) || []).forEach(function (word) {
+      var split = word.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+      if (split !== word) camelForms[word.toLowerCase()] = split.toLowerCase();
+    });
+  }
   function alternatives(term) {
     var result = [term];
+    if (camelForms[term]) result.push(camelForms[term]);
     // “单例模式”“观察者模式”：正文常只写“单例”“观察者”
     if (/^[㐀-鿿]{2,}模式$/.test(term) && term !== '设计模式') result.push(term.slice(0, -2));
     SYNONYMS.forEach(function (group) {
@@ -209,6 +219,7 @@
   function search(index, query, limit) {
     var normalizedQuery = normalize(query).slice(0, 120);
     if (!normalizedQuery) return [];
+    camelSplit(query);
     var entries = prepareIndex(index), results = [], fuzzy = false, used = [];
     var seen = {};
     function collect(scoreOf) {
