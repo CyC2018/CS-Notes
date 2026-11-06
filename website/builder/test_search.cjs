@@ -106,6 +106,16 @@ const asking = { documents: [
 assert.equal(search(asking, '堆和栈的区别是什么？')[0].id, 'diff', '去掉问句的开头结尾后正好是小节标题');
 assert.equal(search(asking, '了解juc吗？')[0].id, 'aqs', 'JUC 与 J.U.C 互通');
 assert.equal(search(asking, '跳跃表')[0].id, 'skip', '跳跃表与跳表互通');
+const skiplist = { documents: [
+  { title: 'Redis', path: '/notes/Redis', sections: [{ title: '跳跃表', id: 'skip', text: '有序集合的底层实现之一，插入时随机决定节点的层数' }] },
+  { title: '攻击技术', path: '/notes/攻击技术', sections: [
+    { title: '设置 Cookie 为 HttpOnly', id: 'cookie', text: '设置后脚本无法读取 Cookie' },
+    { title: '设置 Cookie 的 SameSite 属性', id: 'samesite', text: '设置为 Strict 时跨站请求不携带 Cookie' },
+  ] },
+  { title: 'Linux', path: '/notes/Linux', sections: [{ title: '环境变量', id: 'env', text: '在配置文件中设置' }] },
+  { title: 'MySQL', path: '/notes/MySQL', sections: [{ title: '参数', id: 'param', text: '设置缓冲池大小' }] },
+] };
+assert.equal(search(skiplist, '跳表的层高怎么设置')[0].id, 'skip', '整句里的“跳表”也能匹配标题“跳跃表”');
 const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
   { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
   { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },
