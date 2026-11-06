@@ -94,6 +94,14 @@ const natural = { documents: [
 assert.equal(search(natural, '什么情况索引会失效？')[0].id, 'invalid', '整句的问法按词组的相关度找到小节');
 assert.equal(search(natural, '平时是怎么用协程的')[0].id, 'co', '问法中的“平时”“用”这类词不影响');
 assert.equal(search(natural, '主从复制')[0].id, 'repl', '短的搜索词仍按完整匹配排序');
+const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
+  { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
+  { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },
+  { title: '一、基础概念', id: 'base', text: '请求和响应' },
+] }] };
+assert.equal(search(versions, 'HTTP2.0 有哪些优势？')[0].id, 'h2', '“HTTP2.0”按笔记中的写法“HTTP/2.0”搜');
+assert.equal(search(versions, 'http2')[0].id, 'h2');
+assert(search(versions, 'HTTP1.1、2.0 的区别').slice(0, 2).some(r => r.id === 'h11'), '顿号分开的版本号是两个词');
 const sample = { documents: [{ title: '数据库', path: '/notes/示例', sections: [
   { title: '事务', id: '事务', text: '一致性 '.repeat(20) },
   { title: '一致性', id: '一致性', text: 'SQL 与数据库' },
