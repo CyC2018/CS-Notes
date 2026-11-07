@@ -121,5 +121,60 @@ class SearchIndexTests(unittest.TestCase):
             self.assertIn('url=/notes/%E7%AE%97%E6%B3%95%20-%20%E7%9B%AE%E5%BD%95.html', stub)
 
 
+class MissingAnchorTests(unittest.TestCase):
+    # 文内目录链接指向不存在的标题时记下来，构建结束后给警告
+    NOTE = 'notes/示例.md'
+
+    def setUp(self):
+        from unittest import mock
+        import build
+        self.build = build
+        anchors = {self.NOTE: {'1-爬楼梯': '_1-爬楼梯', 'tcp-拥塞控制': 'tcp-拥塞控制'}}
+        self.missing = {}
+        for name, value in (('ANCHORS', anchors), ('MISSING_ANCHORS', self.missing)):
+            patcher = mock.patch.object(build, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.source = build.ROOT / self.NOTE
+
+    def target(self, url):
+        return self.build.local_target(url, self.source)
+
+    def test_known_github_anchor_is_not_reported(self):
+        self.assertEqual(self.target('#1-爬楼梯'), '#_1-爬楼梯')
+        self.assertEqual(self.missing, {})
+
+    def test_known_docsify_anchor_is_not_reported(self):
+        self.assertEqual(self.target('#_1-爬楼梯'), '#_1-爬楼梯')
+        self.assertEqual(self.missing, {})
+
+    def test_percent_encoded_anchor_is_decoded_before_lookup(self):
+        self.assertEqual(self.target('#tcp-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6'), '#tcp-拥塞控制')
+        self.assertEqual(self.missing, {})
+
+    def test_missing_anchor_is_recorded_and_link_kept(self):
+        self.assertEqual(self.target('#已删除的标题'), '#已删除的标题')
+        self.assertEqual(list(self.missing), [(self.NOTE, '已删除的标题')])
+
+    def test_missing_encoded_anchor_is_recorded_decoded(self):
+        self.target('#%E6%97%A7%E6%A0%87%E9%A2%98')
+        self.assertEqual(list(self.missing), [(self.NOTE, '旧标题')])
+
+    def test_repeated_missing_anchor_recorded_once_in_order(self):
+        for url in ('#b', '#a', '#b'):
+            self.target(url)
+        self.assertEqual(list(self.missing), [(self.NOTE, 'b'), (self.NOTE, 'a')])
+
+    def test_note_without_anchor_map_reports_every_fragment(self):
+        other = self.build.ROOT / 'notes' / '另.md'
+        self.build.local_target('#x', other)
+        self.assertEqual(list(self.missing), [('notes/另.md', 'x')])
+
+    def test_non_fragment_links_are_not_checked(self):
+        for url in ('#', 'https://example.com/#nope', 'mailto:a@b.c', '/notes/另.md#nope'):
+            self.target(url)
+        self.assertEqual(self.missing, {})
+
+
 if __name__ == '__main__':
     unittest.main()
