@@ -149,7 +149,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked,
 
 ```text
 4, [[1,0],[2,0],[3,1],[3,2]]
-There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
+There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3].
 ```
 
 使用 DFS 来实现拓扑排序：在一个节点的所有后继都访问完之后，再把它放入后序遍历的结果，也就是 postOrder.push(curNode) 所在的位置。
