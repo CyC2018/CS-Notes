@@ -137,8 +137,11 @@
   var ASKING = /^(?:简单讲讲|讲一讲|讲讲|说一说|说说|说下|聊聊|谈谈|了解过|了解|知道|什么是)|(?:是什么|是怎样|是啥|吗|呢|么|？|\?)+$/g;
   function stripQuestion(query) {
     // 去掉后剩下的单个汉字或单个字母没有意义（“和为 S”去掉“和”只剩“为”和“s”），这时不用去掉后的版本
-    var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return term.length > 1; });
-    return terms.length ? terms.join(' ') : '';
+    // 单个汉字只在旁边还有更长的词时保留：“java锁”去掉问法后的“锁”有意义，虚词（“是”）不算
+    var terms = splitTerms(normalize(query.replace(QUESTION, ' '))).filter(function (term) { return !FUNCTION_CHARS.test(term) || term.length > 1; });
+    if (!terms.some(function (term) { return term.length > 1; })) return '';
+    terms = terms.filter(function (term) { return term.length > 1 || CJK.test(term); });
+    return terms.join(' ');
   }
   var GENERIC = /(底层)?(原理|机制|实现方式|实现|作用|流程|过程|优缺点|应用场景|使用场景|场景|特点|详解|介绍|用法|理论)/g;
   function stripGeneric(query) {
@@ -221,6 +224,8 @@
   }
 
   function search(index, query, limit) {
+    // 面经里常带题号（“16  了解协程吗？”“1，了解数据库事务吗”），题号不是搜索词
+    query = String(query).replace(/^\s*\d{1,3}(?:[.、，,:：)）]|\s{2,})\s*/, '');
     var normalizedQuery = normalize(query).slice(0, 120);
     if (!normalizedQuery) return [];
     camelSplit(query);
@@ -279,7 +284,9 @@
     // 整句的问法（去掉问法后还有 7 个以上汉字，或 3 个以上的词）和相关度排序做倒数排名融合：两边都靠前的排在最前；
     // 短的搜索词保持原来的排序，相关度中的结果补在后面
     var core = stripped || normalizedQuery, rel = relevance(entries, core), fused = {}, K = 1;
-    var sentence = (core.match(/[㐀-鿿豈-﫿]/g) || []).length >= 7 || splitTerms(core).length >= 3;
+    // 带问法的句子（“TCP是怎么保证可靠传输的？”）去掉问法后剩得少，也按句子处理，不让学习路线里原样引用的问句压住正文
+    var cjk = (core.match(/[㐀-鿿豈-﫿]/g) || []).length;
+    var sentence = cjk >= (stripped && stripped !== normalizedQuery ? 5 : 7) || splitTerms(core).length >= 3;
     var exactWeight = sentence ? 1 : 100;
     // 整句时学习路线的导读、附录实验这类降权的小节在完全匹配的排序中也打折：导读常把问题原句写进去，会排到讲解正文前面
     results.forEach(function (r, i) { fused[r.path + '?' + r.id] = exactWeight / (K + i + 1) * (sentence && r.penalty ? .2 : 1); });
