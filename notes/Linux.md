@@ -80,9 +80,9 @@
 为了便于理解，本文从常用操作和概念开始讲起。虽然已经尽量做到简化，但是涉及到的内容还是有点多。在面试中，Linux 知识点相对于网络和操作系统等知识点而言不是那么重要，只需要重点掌握一些原理和命令即可。为了方便大家准备面试，在此先将一些比较重要的知识点列出来：
 
 - 能简单使用 cat，grep，cut 等命令进行一些操作；
-- 文件系统相关的原理，inode 和 block 等概念，数据恢复；
+- 文件系统相关的原理，inode 和 block 等概念；
 - 硬链接与软链接；
-- 进程管理相关，僵尸进程与孤儿进程，SIGCHLD 。
+- 进程管理相关，僵尸进程与孤儿进程，SIGCHLD。
 
 ## 一、常用操作以及概念
 
@@ -176,7 +176,7 @@ CentOS Linux 已于 2024 年 6 月停止维护，原来用 CentOS 的服务器�
 
 - 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
 - 编辑模式（Insert mode）：按下 “i” 等按键之后进入，可以对文本进行编辑；
-- 指令列模式（Bottom-line mode）：按下 “:” 按键之后进入，用于保存退出等操作。
+- 指令列模式（Command-line mode）：按下 “:” 按键之后进入，用于保存退出等操作。
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
@@ -191,7 +191,7 @@ CentOS Linux 已于 2024 年 6 月停止维护，原来用 CentOS 的服务器�
 
 ### GNU
 
-GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议（GNU General Public License），包含了以下内容：
+GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件主要以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议（GNU General Public License），包含了以下内容：
 
 - 以任何目的运行此程序的自由；
 - 再复制的自由；
@@ -254,7 +254,7 @@ Linux 也把分区当成文件，分区文件的命名方式为：磁盘文件�
 
 扇区是磁盘的最小存储单位，旧磁盘的扇区大小通常为 512 bytes，而较新的磁盘支持 4 KB。GPT 用逻辑区块地址（Logical Block Address, LBA）给区块编号，区块的大小由磁盘决定，下面以最常见的 512 bytes 为例。
 
-GPT 的第 1 个区块（LBA 0）是保护性 MBR，它把整块磁盘登记为一个类型特殊的分区，只认识 MBR 的旧工具不会把磁盘当成空盘误改；紧接着是 33 个区块记录分区信息，最后的 33 个区块是它们的备份。这 33 个区块中第一个是 GPT 表头，记录了分区表本身的位置与大小、备份的位置，以及分区表的校验码（CRC32），操作系统根据校验码判断 GPT 是否损坏，损坏时用备份恢复。
+GPT 的第 1 个区块（LBA 0）是保护性 MBR，它把整块磁盘登记为一个类型特殊的分区，只认识 MBR 的旧工具不会把磁盘当成空盘误改；紧接着是 33 个区块记录分区信息，最后的 33 个区块是它们的备份。这 33 个区块中第一个是 GPT 表头，记录了分区表本身的位置与大小、备份的位置，以及分区表的校验码（CRC32），固件和分区工具（例如 gdisk）根据校验码判断 GPT 是否损坏，主表损坏时可以用备份恢复。
 
 GPT 没有扩展分区概念，都是主分区。每个分区项占 128 bytes，一个区块放 4 项，记录分区项的 32 个区块共 4 * 32 = 128 项，因此默认最多 128 个分区。
 
@@ -399,7 +399,7 @@ ext3/ext4 文件系统引入了日志（journal）：修改元数据之前，先
 
 - d：目录
 - -：文件
-- l：链接文件
+- l：符号链接（实体链接显示为 -）
 
 9 位的文件权限字段中，每 3 个为一组，共 3 组，每一组分别代表对文件拥有者、所属群组以及其它人的文件权限。一组权限中的 3 位分别为 r、w、x 权限，表示可读、可写、可执行。
 
@@ -603,7 +603,7 @@ $ cat [-AbEnTv] filename
 
 #### 4. less
 
-和 more 类似，但是多了一个向前翻页的功能。
+和 more 类似，但是可以自由地向前翻页（more 读取管道时不能向前翻页）。
 
 #### 5. head
 
@@ -620,7 +620,7 @@ $ head [-n number] filename
 
 #### 7. od
 
-以字符或者十六进制的形式显示二进制文件。
+以八进制（默认）、十六进制或者字符的形式显示二进制文件。
 
 ### 指令与文件搜索
 
@@ -681,7 +681,7 @@ example: find . -name "shadow*"
 -gid n
 -user name
 -group name
--nouser ：搜索拥有者不存在 /etc/passwd 的文件
+-nouser ：搜索拥有者不存在于 /etc/passwd 的文件
 -nogroup：搜索所属群组不存在于 /etc/group 的文件
 ```
 
@@ -718,7 +718,7 @@ Linux 底下有很多压缩文件名，常见的如下：
 
 #### 1. gzip
 
-gzip 是 Linux 使用最广的压缩指令，可以解开 compress、zip 与 gzip 所压缩的文件。
+gzip 是 Linux 使用最广的压缩指令，可以解开 compress、zip 与 gzip 所压缩的文件，其中 zip 文件只有在只包含一个用 Deflate 方法压缩的文件时才能解开。
 
 经过 gzip 压缩过，源文件就不存在了。
 
@@ -816,7 +816,7 @@ $ echo ${x}
 
 可以使用 \`指令\` 或者 \$(指令) 的方式将指令的执行结果赋值给变量。例如 version=\$(uname -r)，则 version 的值为 4.15.0-22-generic。
 
-可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 而产生的子 Bash。
+可以使用 export 命令将自定义变量转成环境变量，环境变量可以在子程序中使用，所谓子程序就是由当前 Bash 启动的程序，例如子 Bash。
 
 Bash 的变量可以声明为数组和整数数字。注意数字类型没有浮点数。如果不进行声明，默认是字符串类型。变量的声明使用 declare 命令：
 
@@ -849,9 +849,9 @@ $ echo ${array[1]}
 
 | 名称 | 代码 | 运算符 |
 | :---: | :---: | :---:|
-| 标准输入 (stdin)  | 0 | \< 或 \<\< |
-| 标准输出 (stdout) | 1 | &gt; 或 \>\> |
-| 标准错误输出 (stderr) | 2 | 2\> 或 2\>\> |
+| 标准输入（stdin） | 0 | \< 或 \<\< |
+| 标准输出（stdout） | 1 | &gt; 或 \>\> |
+| 标准错误输出（stderr） | 2 | 2\> 或 2\>\> |
 
 对于输出，一个箭头表示以覆盖的方式重定向，两个箭头表示以追加的方式重定向；输入的 \<\< 表示从后面的几行读入内容，直到遇到指定的结束字符串。
 
@@ -985,7 +985,7 @@ $ tr [-ds] SET1 ...
 $ last | tr '[a-z]' '[A-Z]'
 ```
 
-col 将 tab 字符转为空格字符。
+col 默认会把连续的空格尽量换成 tab，加上 -x 时则把 tab 转为空格。
 
 ```text
 $ col [-xb]
@@ -1031,7 +1031,7 @@ $ split [-bl] file PREFIX
 
 ### grep
 
-g/re/p（globally search a regular expression and print)，使用正则表示式进行全局查找并打印。
+g/re/p（globally search a regular expression and print），使用正则表达式进行全局查找并打印。
 
 ```text
 $ grep [-acinv] [--color=auto] 搜寻字符串 filename
@@ -1049,8 +1049,8 @@ $ grep -n 'the' regular_express.txt
 8:I can't finish the test.
 12:the symbol '*' is represented as start.
 15:You are the best is mean you are the no. 1.
-16:The world Happy is the same with "glad".
-18:google is the best tools for search keyword
+16:The world <Happy> is the same with "glad".
+18:google is the best tools for search keyword.
 ```
 
 示例：正则表达式 a{m,n} 用来匹配字符 a m\~n 次，这里需要将 { 和 } 进行转义，因为 grep 默认使用基础正则表达式（BRE），其中的 { 和 } 需要转义才表示重复次数。
@@ -1076,7 +1076,7 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，\$0 表示一整行。
 
-示例：取出最近五个登录用户的用户名和 IP。首先用 last -n 5 取出用最近五个登录用户的所有信息，可以看到用户名和 IP 分别在第 1 列和第 3 列，用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
+示例：取出最近五条登录记录的用户名和 IP。首先用 last -n 5 取出最近五条登录记录，可以看到用户名和 IP 分别在第 1 列和第 3 列，用 \$1 和 \$3 就能取出这两个字段，然后用 print 进行打印。
 
 ```text
 $ last -n 5
@@ -1109,6 +1109,7 @@ $ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
 daemon 2
+.....(以下省略).....
 ```
 
 awk 变量：
@@ -1207,7 +1208,7 @@ SIGTERM 可以被进程捕获，进程收到后可以先保存数据、关闭连
 | D | uninterruptible sleep (usually I/O)<br>不可中断阻塞，通常为 I/O 阻塞。 |
 | S | interruptible sleep (waiting for an event to complete) <br> 可中断阻塞，此时进程正在等待某个事件完成。|
 | Z | zombie (terminated but not reaped by its parent)<br>僵死，进程已经终止但是尚未被其父进程获取信息。|
-| T | stopped (either by a job control signal or because it is being traced) <br> 停止，进程可能被作业控制信号暂停，也可能正在被追踪。|
+| T | stopped by job control signal <br> 停止，进程被作业控制信号暂停；被调试器追踪而停止时显示为小写的 t。|
 <br>
 
 <div align="center"> <img src="pics/linux-process-states.png" width="760px"/> </div><br>
@@ -1376,7 +1377,7 @@ $ awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3   # 访问�
 
 ## 参考资料
 
-- 鸟哥. 鸟哥的 Linux 私房菜：基础篇 第三版 [M]. 2009.
+- 鸟哥. 鸟哥的 Linux 私房菜：基础学习篇（第三版）[M]. 人民邮电出版社, 2010.
 - [Linux 之守护进程、僵死进程与孤儿进程](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [What is the difference between a symbolic link and a hard link?](https://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link)
 - [Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)
