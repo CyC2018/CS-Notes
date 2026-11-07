@@ -121,7 +121,7 @@ select 的函数原型如下：
 int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 ```
 
-select 等待 readfds、writefds 和 exceptfds 三个集合中的描述符就绪。timeout 为 NULL 时一直阻塞，为 0 时立即返回。返回值大于 0 表示就绪的描述符个数，0 表示超时，-1 表示出错。
+select 等待 readfds、writefds 和 exceptfds 三个集合中的描述符就绪。timeout 为 NULL 时一直阻塞，指向的 timeval 中 tv_sec 和 tv_usec 都为 0 时立即返回。返回值大于 0 表示三个集合中仍被置位的总数，同一个描述符既可读又可写时计两次；0 表示超时，-1 表示出错。
 
 fd_set 是位图，第 n 位表示描述符 n 是否在集合中。FD_SETSIZE 在 Linux 中为 1024，因此 select 只能监听编号小于 1024 的描述符（[select(2)](https://man7.org/linux/man-pages/man2/select.2.html)）。
 
@@ -248,7 +248,7 @@ epoll 有两种触发模式：水平触发（level-triggered, LT）和边缘触�
 
 #### 1. LT 模式
 
-LT 是默认模式，语义与 poll 相同（epoll(7)）。epoll_wait 返回描述符后，内核会把它放回就绪链表，下一次调用时再检查一次。因此应用没有读完数据，下一次 epoll_wait 还会返回它。LT 模式下，描述符可以是阻塞的，也可以是非阻塞的。
+LT 是默认模式，语义与 poll 相同（epoll(7)）。epoll_wait 返回描述符后，内核会把它放回就绪链表，下一次调用时再检查一次。因此应用没有读完数据，下一次 epoll_wait 还会返回它。LT 模式下描述符也可以是阻塞的，但 select(2) 的手册指出内核可能把套接字误报为可读（例如到达的数据因校验和错误被丢弃），之后阻塞的 read 会卡住整个事件循环，所以通常仍设为非阻塞。
 
 关注写事件要按需进行。发送缓冲区通常是可写的，如果一直关注 EPOLLOUT，每次 epoll_wait 都会立即返回。write 返回正数只表示这么多字节复制进了内核的发送缓冲区，非阻塞套接字上可能少于请求的长度，没写完的部分要由应用自己保存。所以应用只在数据没写完（只写了一部分或者返回 EAGAIN）时注册 EPOLLOUT，等可写时接着写，数据发完后用 EPOLL_CTL_MOD 取消。
 
@@ -436,7 +436,7 @@ poll: sock2 可读
 
 ## 参考资料
 
-- Stevens W R, Fenner B, Rudoff A M. UNIX network programming[M]. Addison-Wesley Professional, 2004.
+- Stevens W R, Fenner B, Rudoff A M. UNIX network programming [M]. Addison-Wesley Professional, 2004.
 - [select(2) — Linux manual page](https://man7.org/linux/man-pages/man2/select.2.html)
 - [poll(2) — Linux manual page](https://man7.org/linux/man-pages/man2/poll.2.html)
 - [epoll(7) — Linux manual page](https://man7.org/linux/man-pages/man7/epoll.7.html)
