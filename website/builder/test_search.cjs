@@ -142,6 +142,19 @@ const guide = { documents: [
 ] };
 assert.equal(search(guide, 'MySQL 的 B+Tree 索引为什么适合范围查询？')[0].id, 'btree', '整句提问时讲解正文排在写进原句的导读之前');
 assert.equal(search(guide, '第 25 天')[0].id, 'day', '学习路线仍能搜到');
+const short = { documents: [
+  { title: '学习路线 - 示例', path: '/notes/学习路线 - 示例', sections: [{ title: '第 37 天：可靠传输', id: 'day', text: '自测：TCP 是怎么保证可靠传输的？' }] },
+  { title: 'Java 基础', path: '/notes/Java 基础', sections: [{ title: 'Java 与 C++ 的区别', id: 'cpp', text: 'Java 是纯粹的面向对象语言' }] },
+  { title: 'Java 并发', path: '/notes/Java 并发', sections: [{ title: 'Java 中的锁', id: 'lock', text: 'synchronized 和 ReentrantLock' }] },
+  { title: '传输层', path: '/notes/传输层', sections: [{ title: 'TCP 可靠传输', id: 'tcp', text: 'TCP 用序号、确认和超时重传恢复丢失的报文段' }] },
+  { title: '进程管理', path: '/notes/进程管理', sections: [
+    { title: '5. 协程', id: 'co', text: '协程是用户态的轻量级线程' },
+    { title: '16. 线程', id: 'th', text: '线程是独立调度的基本单位' },
+  ] },
+] };
+assert.equal(search(short, '说下Java锁有哪些？')[0].id, 'lock', '去掉问法后剩下的单字“锁”仍算搜索词');
+assert.equal(search(short, 'TCP是怎么保证可靠传输的？')[0].id, 'tcp', '去掉问法后剩得少的问句也按整句处理');
+assert.equal(search(short, '16  了解协程吗？')[0].id, 'co', '面经开头的题号不算搜索词');
 const versions = { documents: [{ title: 'HTTP', path: '/notes/HTTP', sections: [
   { title: '八、HTTP/2.0', id: 'h2', text: '二进制分帧、多路复用、首部压缩' },
   { title: '七、HTTP/1.1 新特性', id: 'h11', text: '默认长连接' },
