@@ -86,7 +86,7 @@ $ echo $$
 1
 ```
 
-内存上限是 64 MB，CPU 每 100 ms 最多使用 50 ms，即半个 CPU；容器里的 shell 的进程号是 1。在容器中不断申请内存，超过 64 MB 时进程被内核杀掉，退出码为 137（128 + SIGKILL 的 9）。
+内存上限是 64 MiB，CPU 每 100 ms 最多使用 50 ms，即半个 CPU；容器里的 shell 的进程号是 1。在容器中不断申请内存，用满 64 MiB 又无法回收时触发 OOM，进程被内核杀掉，退出码为 137（128 + SIGKILL 的 9）。需要注意的是，只设 --memory 时，宿主机有交换区的情况下容器还能再使用最多 64 MiB 的交换区，内存用满后先换出，交换区也用满才会被杀；把 --memory-swap 设为与 --memory 相同的值可以禁止容器使用交换区。
 
 因为所有容器共享宿主机的内核，所以容器比虚拟机轻量，但隔离性也更弱：内核漏洞可能让容器中的进程影响宿主机。
 
@@ -212,7 +212,7 @@ Docker 默认使用 bridge 网络：每个容器得到一个私有 IP，通过�
 
 #### 3. Docker Compose
 
-多个容器一起部署时，用 Docker Compose 把上面的参数写进一个 YAML 文件，docker compose up -d 一次启动全部容器。Compose 自动创建一个网络，服务名就是容器的主机名：
+多个容器一起部署时，用 Docker Compose 把上面的参数写进一个 YAML 文件，docker compose up -d 一次启动全部容器。Compose 自动创建一个网络，同一网络中的容器可以用服务名互相访问：
 
 ```yaml
 services:
@@ -308,12 +308,12 @@ spec:
 - Pod：K8s 调度的最小单位，包含一个或几个容器，每个 Pod 有自己的 IP，重建后 IP 会变。同一个 Pod 中的容器共享网络、IPC 和 UTS 命名空间，可以用 localhost 互相访问、主机名相同，也可以挂载同一个存储卷，但默认不共享 PID 命名空间（见[附录 A6](#a6-pod-的创建资源限制与共享的命名空间)）；
 - Deployment：管理一组相同的 Pod，负责保持副本数、扩缩容和滚动升级；
 - Service：为一组 Pod 提供固定的虚拟 IP 和域名，把请求负载均衡到其中就绪的 Pod 上；
-- 控制平面：API Server 接收所有请求，etcd 保存集群状态，调度器决定 Pod 放在哪个节点，控制器管理器运行各种控制器；每个节点上的 kubelet 负责启动和检查本节点的容器。
+- 控制平面与节点组件：API Server 接收所有请求，etcd 保存集群状态，调度器决定 Pod 放在哪个节点，控制器管理器运行各种控制器；每个节点上运行 kubelet、kube-proxy 和容器运行时（例如 containerd），kubelet 负责启动和检查本节点的容器，kube-proxy 维护 Service 的转发规则。
 
 在两个节点的 K8s 集群（k3s v1.31.4）上实际操作的结果如下（见[附录 A5](#a5-部署自愈与滚动升级)）：
 
 - kubectl apply 之后约 21 秒，3 个 Pod 全部就绪，分布在两个节点上，Service 得到虚拟 IP 10.43.210.38，在集群内用 http://order-service 就能访问，请求被分到不同的 Pod；
-- 删除一个 Pod，Deployment 创建的 ReplicaSet 发现副本数少于 3，0.3 秒内创建了新的 Pod，约 11 秒后新 Pod 启动完成并通过就绪检查，恢复为 3/3，新 Pod 的 IP 与原来不同，Service 自动更新了后端列表；
+- 删除一个 Pod，Deployment 创建的 ReplicaSet 发现副本数少于 3，约 0.3 秒后创建了新的 Pod，约 11 秒后新 Pod 启动完成并通过就绪检查，恢复为 3/3，新 Pod 的 IP 与原来不同，Service 自动更新了后端列表；
 - kubectl scale 修改副本数；kubectl set image 把镜像改为 order-service:1.1 后，Deployment 创建新的 ReplicaSet，逐个用新版本的 Pod 替换旧的，约 33 秒完成滚动升级，期间一直有就绪的 Pod 在提供服务，需要时可以用 kubectl rollout undo 回滚。
 
 滚动升级的节奏由 maxSurge（最多比副本数多出几个 Pod）和 maxUnavailable（最多允许几个 Pod 不可用）控制，默认都是 25%。3 个副本时两者分别为 1 和 0，所以控制器每次先多起一个新 Pod，等它通过就绪检查后才删掉一个旧 Pod：
@@ -337,7 +337,7 @@ K8s 的各组件不直接互相调用，而是都通过 API Server 协作：每�
 1. kubectl 把 Deployment 发给 API Server，API Server 完成认证、鉴权和准入检查后写入 etcd；
 2. 控制器管理器中的 Deployment 控制器发现新的 Deployment，创建 ReplicaSet；ReplicaSet 控制器发现副本数不足，创建 3 个 Pod 对象，这时的 Pod 还没有指定节点；
 3. 调度器发现未调度的 Pod，先过滤掉不满足条件的节点（资源不足、有不能容忍的污点等），再给剩下的节点打分，选出 k3s-agent 写入 Pod 的 nodeName；
-4. k3s-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先启动一个 pause 容器持有网络命名空间，再调用 CNI 插件为它配置网卡、分配 IP 10.42.1.5；Pod 声明了存储卷时，还会通过 CSI 插件把卷挂载到节点上；
+4. k3s-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先新建网络命名空间，调用 CNI 插件在其中配置网卡、分配 IP 10.42.1.5，再启动 pause 容器持有这个命名空间，Pod 中的其它容器之后都加入它；Pod 声明了存储卷时，还会通过 CSI 插件把卷挂载到节点上；
 5. kubelet 拉取镜像（这里镜像已在节点上），创建并启动容器；
 6. kubelet 执行探针，就绪探针通过后把 Pod 的状态更新为 Ready；
 7. EndpointSlice 控制器把 10.42.1.5:8080 加入 order-service 的后端，各节点的 kube-proxy 随之更新转发规则。
@@ -355,7 +355,7 @@ YAML 中的 resources 声明了 Pod 需要的资源：
 
 ### Service 与 Ingress
 
-Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中就绪 Pod 的地址，每个节点上的 kube-proxy 把它们写成 iptables 或 IPVS 规则。
+Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中就绪 Pod 的地址，每个节点上的 kube-proxy 把它们写成 iptables 或 IPVS 规则（默认 iptables；v1.33 起 nftables 模式正式可用，IPVS 模式 v1.35 起被弃用）。
 
 订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的新连接，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。选中之后，这个连接后续的包都发往同一个 Pod。iptables 模式下，虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中；IPVS 模式则会把它绑定到每个节点的虚拟网卡 kube-ipvs0 上。
 
@@ -404,7 +404,7 @@ Pod 的阶段（phase）只有 Pending、Running、Succeeded、Failed、Unknown 
 - Pending：Pod 已被集群接受，但还有容器没有创建并运行起来，包括等待调度和拉取镜像的时间。describe 的事件中有 FailedScheduling 时是调度失败，例如申请 20 个 CPU 时为 0/2 nodes are available: 2 Insufficient cpu；两个节点都有污点 dedicated=db:NoSchedule、Pod 没有对应的容忍时为 2 node(s) had untolerated taint；Pod 使用的 PVC 没有绑定到存储卷时也会停在这里；
 - ImagePullBackOff：拉取镜像失败，常见原因是镜像名或标签写错、私有仓库没有配置凭证（imagePullSecrets）、节点访问不了镜像仓库，kubelet 在 ErrImagePull 和 ImagePullBackOff 之间反复重试；
 - CrashLoopBackOff：容器启动后反复退出，kubelet 每次重启前的等待时间按 10 秒、20 秒、40 秒翻倍，最长 5 分钟。kubectl logs --previous 查看上一次退出前的日志，例如把 server.port 写成 abc 时，日志中是 APPLICATION FAILED TO START 和具体的配置错误，退出码 1；
-- OOMKilled：容器超过内存上限被内核杀掉，退出码 137，之后同样进入 CrashLoopBackOff。例如内存上限 256 MiB，JVM 堆却设为 300 MB 并在启动时全部占用，Java 应用的堆和堆外内存加起来要小于 limits；
+- OOMKilled：容器超过内存上限被内核杀掉，退出码 137，之后同样进入 CrashLoopBackOff。例如内存上限 256 MiB，JVM 堆却设为 300 MiB（-Xmx300m）并在启动时全部占用，Java 应用的堆和堆外内存加起来要小于 limits；
 - Running 但 READY 为 0/1：进程在运行，但就绪探针不通过，Pod 不会收到 Service 转发的请求，例如探针路径写成不存在的 /ready 时，事件中是 Readiness probe failed: HTTP probe failed with statuscode: 404。
 
 排查的顺序通常是：kubectl get pods -o wide 看状态、重启次数和所在节点；kubectl describe pod 看事件；kubectl logs 看应用日志，容器重启过的加 --previous；kubectl exec 进入容器检查配置和网络；kubectl top pod 看资源占用（需要 metrics-server）。
@@ -773,14 +773,14 @@ Invalid value 'abc' for configuration property 'server.port' (originating from '
 Failed to convert to type java.lang.Integer
 ```
 
-oom-demo 在第一次被杀之前 kubectl get pods 显示的状态是 OOMKilled。给两个节点都加上污点后创建 Pod：
+约 100 秒时（已重启 4 次）kubectl get pods 中 oom-demo 的状态是 OOMKilled、crash-demo 是 Error，这是容器刚退出、还没进入退避等待时显示的退出原因。给两个节点都加上污点后创建 Pod：
 
 ```text
 $ kubectl taint nodes k3s-server k3s-agent dedicated=db:NoSchedule
 $ kubectl run -n lab taint-demo --image=order-service:1.0
   Warning  FailedScheduling  5s  default-scheduler  0/2 nodes are available: 2 node(s) had untolerated taint {dedicated: db}. ...
 $ kubectl taint nodes k3s-server k3s-agent dedicated=db:NoSchedule-
-（8 秒后 taint-demo 在 k3s-server 上 Running）
+（去掉污点后，taint-demo 被调度到 k3s-server，AGE 13s 时为 Running）
 ```
 
 ### A9 节点 NotReady
@@ -789,6 +789,7 @@ $ kubectl taint nodes k3s-server k3s-agent dedicated=db:NoSchedule-
 
 ```text
 10:28:55 $ docker stop k3s-agent
+10:28:56 stopped
 10:29:28 k3s-agent NotReady after 32 s
   Type             Status    LastTransitionTime                Reason              Message
   MemoryPressure   Unknown   Wed, 28 Oct 2026 18:29:27 +0800   NodeStatusUnknown   Kubelet stopped posting node status.
@@ -819,7 +820,7 @@ $ kubectl get pod -o jsonpath='{.items[0].spec.tolerations}'
 
 - [Docker 入门教程](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 - [Docker container vs Virtual machine](http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php)
-- [How to Create Docker Container using Dockerfile](https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
+- [How to Create Docker Container using Dockerfile](https://web.archive.org/web/20210120071340/https://linoxide.com/linux-how-to/dockerfile-create-docker-container/)
 - [理解 Docker（2）：Docker 镜像](http://www.cnblogs.com/sammyliu/p/5877964.html)
 - [为什么要使用 Docker？](https://yeasy.gitbook.io/docker_practice/introduction/why)
 - [What is Docker](https://www.docker.com/what-docker)
@@ -839,7 +840,7 @@ $ kubectl get pod -o jsonpath='{.items[0].spec.tolerations}'
 - [Kubernetes 文档：Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - [Ingress NGINX Retirement: What You Need to Know](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
 - [Kubernetes 文档：Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
-- [Kubernetes 文档：Liveness, Readiness, and Startup Probes](https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/)
+- [Kubernetes 文档：Liveness, Readiness, and Startup Probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/)
 - [Kubernetes 文档：Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 - [Kubernetes 文档：Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
 - [Kubernetes 文档：Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
