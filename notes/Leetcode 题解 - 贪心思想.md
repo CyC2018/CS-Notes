@@ -34,14 +34,14 @@ Output: 2
 1. 给一个孩子的饼干应当尽量小并且又能满足该孩子，这样大饼干才能拿来给满足度比较大的孩子。
 2. 因为满足度最小的孩子最容易得到满足，所以先满足满足度最小的孩子。
 
-局部最优的选择不一定得到全局最优，需要证明。可以用交换论证：设某个最优方案给满足度最小的孩子分配了饼干 n，贪心选的是能满足这个孩子的最小饼干 m，m 不大于 n。
+局部最优的选择不一定得到全局最优，需要证明。可以用交换论证：设某个最优方案给满足度最小的孩子分配了饼干 n（没有饼干能满足这个孩子时，谁都满足不了，答案为 0；最优方案没有满足他时，把任一被满足的孩子的饼干改给他，满足的孩子数不变），贪心选的是能满足这个孩子的最小饼干 m，m 不大于 n。
 
 - 如果 m 没有被最优方案使用，把 n 换成 m，满足的孩子数不变；
 - 如果 m 分给了另一个孩子，两人交换饼干，那个孩子拿到的 n 不小于 m，仍然能被满足。
 
 交换后的方案仍然最优，并且第一步与贪心相同。对剩下的孩子和饼干重复这个过程，最优方案可以逐步变成贪心方案，因此贪心方案也是最优的。
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"/> </div><br>
 
 ```java
 public int findContentChildren(int[] grid, int[] size) {
@@ -148,7 +148,7 @@ public int findMinArrowShots(int[][] points) {
 
 ## 4. 根据身高和序号重组队列
 
-406\. Queue Reconstruction by Height(Medium)
+406\. Queue Reconstruction by Height (Medium)
 
 [Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode.cn/problems/queue-reconstruction-by-height/description/)
 
@@ -315,7 +315,7 @@ Output: True
 Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 ```
 
-题目描述：判断一个数组是否能只修改一个数就成为非递减数组。
+题目描述：判断一个数组能否最多修改一个数就成为非递减数组。
 
 在出现 nums[i] \< nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且不影响后续的操作。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。
 
