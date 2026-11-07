@@ -1,7 +1,7 @@
 # Git
 <!-- GFM-TOC -->
 * [Git](#git)
-    * [集中式与分布式](#集中式与分布式) 🔥
+    * [集中式与分布式](#集中式与分布式)
     * [中心服务器](#中心服务器)
     * [工作流](#工作流)
     * [分支实现](#分支实现)
@@ -10,12 +10,12 @@
     * [储藏（Stashing）](#储藏stashing)
     * [SSH 传输设置](#ssh-传输设置)
     * [.gitignore 文件](#gitignore-文件)
-    * [Git 命令一览](#git-命令一览)
+    * [Git 命令一览](#git-命令一览) 🔥
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
 
-## 集中式与分布式 🔥
+## 集中式与分布式
 
 Git 属于分布式版本控制系统，而 SVN 属于集中式。
 
@@ -156,7 +156,7 @@ target/
 
 不需要全部自己编写，可以到 [https://github.com/github/gitignore](https://github.com/github/gitignore) 中进行查询。
 
-## Git 命令一览
+## Git 命令一览 🔥
 
 | 用途 | 命令 |
 | --- | --- |
