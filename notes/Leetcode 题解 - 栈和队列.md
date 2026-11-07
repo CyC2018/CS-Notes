@@ -242,7 +242,7 @@ public int[] nextGreaterElements(int[] nums) {
         while (!pre.isEmpty() && nums[pre.peek()] < num) {
             next[pre.pop()] = num;
         }
-        if (i < n){
+        if (i < n) {
             pre.push(i);
         }
     }
