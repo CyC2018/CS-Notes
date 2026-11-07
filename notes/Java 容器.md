@@ -63,14 +63,14 @@
 
 - TreeMap：基于红黑树实现；
 - HashMap：基于哈希表实现；
-- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，需要线程安全时应该使用 ConcurrentHashMap。ConcurrentHashMap 的效率更高，因为它不会锁住整个表：JDK 1.7 使用分段锁，JDK 1.8 只锁住一个桶；
+- Hashtable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 Hashtable 不会导致数据不一致。它是遗留类，需要线程安全时应该使用 ConcurrentHashMap。ConcurrentHashMap 的效率更高，因为它不会锁住整个表：JDK 1.7 使用分段锁，JDK 1.8 只锁住一个桶（见 [ConcurrentHashMap](#concurrenthashmap)）；
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
 上面的 ArrayList、LinkedList、HashMap 等常用容器都不是线程安全的。需要在多个线程之间共享时，线程安全的容器主要有以下三类：
 
 - 同步容器：Vector、Hashtable，以及用 Collections.synchronizedList()、synchronizedMap() 包装出来的容器，所有方法共用一把锁，同一时刻只有一个线程能访问，但遍历、先 containsKey() 再 put() 这类组合操作仍要在外面加锁，或者改用 putIfAbsent() 这类原子方法（见 [ArrayList 的替代方案](#4-替代方案)）；
 - 写时复制容器：CopyOnWriteArrayList、CopyOnWriteArraySet，写操作复制整个数组，读操作不加锁，适合读多写少的场景；
-- 并发容器：ConcurrentHashMap、ConcurrentSkipListMap（按键排序）、ConcurrentLinkedQueue，以及 ArrayBlockingQueue 等阻塞队列（见 [BlockingQueue](Java%20并发.md#blockingqueue)），用 CAS 和更细粒度的锁让多个线程同时访问。
+- 并发容器：ConcurrentHashMap、ConcurrentSkipListMap（按键排序）、ConcurrentLinkedQueue，用 [CAS](Java%20并发.md#1-cas) 和更细粒度的锁让多个线程同时访问；阻塞队列（见 [BlockingQueue](Java%20并发.md#blockingqueue)）提供的是阻塞等待的语义，例如 ArrayBlockingQueue 和 LinkedBlockingQueue 分别用一把、两把锁，在队列满时 put 等待、空时 take 等待。
 
 只在一个线程中使用的容器，例如方法中的局部变量，不需要线程安全，直接使用 ArrayList、HashMap，没有加锁的开销。
 
@@ -83,7 +83,7 @@
 
 Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
-从 JDK 1.5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。
+从 JDK 1.5 起可以使用 foreach 循环（增强 for 语句）来遍历实现了 Iterable 接口的聚合对象。
 
 ```java
 List<String> list = new ArrayList<>();
@@ -140,7 +140,7 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-数组的默认大小为 10。用无参构造函数创建时，elementData 先指向一个长度为 0 的共享空数组，第一次添加元素时才分配长度为 10 的数组。
+数组的默认大小为 10。用无参构造函数创建时，存放元素的数组 elementData 先指向一个长度为 0 的共享空数组，第一次添加元素时才分配长度为 10 的数组。
 
 ```java
 private static final int DEFAULT_CAPACITY = 10;
@@ -217,7 +217,7 @@ modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。代码参考[进阶：序列化](Java%20容器%20-%20进阶.md#序列化)中的 writeObject() 方法。
 
-最常见的情况是在 foreach 循环中删除元素。foreach 编译后使用迭代器，list.remove() 改变了 modCount，迭代器下一次调用 next() 时就会抛出异常。需要注意的是，fail-fast 只是尽力检测：hasNext() 只比较游标和 size，modCount 要到 next() 中才检查，例如遍历 [a, b, c] 时删除 b，游标和 size 都是 2，循环直接结束，不抛异常，c 也没有被遍历到（见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。应该使用迭代器自己的 remove()，或者 removeIf()。HashMap 等其它容器的迭代器同样是 fail-fast 的，遍历时删除键用 map.entrySet().removeIf() 或迭代器的 remove()：
+最常见的情况是在 foreach 循环中删除元素。foreach 编译后使用迭代器，list.remove() 改变了 modCount，迭代器下一次调用 next() 时就会抛出异常。需要注意的是，fail-fast 只是尽力检测：hasNext() 只比较游标和 size，modCount 要到 next() 中才检查，例如遍历 [a, b, c] 时删除 b，游标（下一个要返回的元素下标）和 size 都是 2，循环直接结束，不抛异常，c 也没有被遍历到（见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。应该使用迭代器自己的 remove()，或者 removeIf()。HashMap 等其它容器的迭代器同样是 fail-fast 的，遍历时删除键用 map.entrySet().removeIf() 或迭代器的 remove()：
 
 ```java
 for (String s : list) {
@@ -266,7 +266,7 @@ ArrayList 基于动态数组实现，LinkedList 基于双向链表实现。Array
 
 需要注意的是，链表在中间插入或删除前要先遍历到这个位置，这一步也是 O(N) 的，而且要逐个访问分散在内存中的节点，只有已经拿到节点时（例如用 ListIterator 遍历到这个位置，再通过迭代器插入或删除），改指针才是 O(1)；数组移动元素用的是 System.arraycopy()，一次复制一整块连续内存。例如在 10 万个元素的中间插入 1 万次，ArrayList 约 50 ms，LinkedList 约 0.8～1 秒；在头部插入时 LinkedList 明显更快（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。
 
-内存上，ArrayList 每个元素只占数组中的一个引用（压缩指针下 4 字节，扩容留下的空位另算），LinkedList 每个元素还要一个 24 字节的 Node 对象（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。所以大多数场景下应该使用 ArrayList，需要在头尾频繁插入删除时使用 ArrayDeque 或 LinkedList。
+内存上，ArrayList 每个元素只占数组中的一个引用（[压缩指针](Java%20虚拟机.md#对象的创建与内存布局)下 4 字节，扩容留下的空位另算），LinkedList 每个元素对应一个 24 字节的 Node 对象（含 item、prev、next 三个引用）（JDK 21 实测，见[附录 A1](#a1-arraylist-的扩容与常见陷阱)）。所以大多数场景下应该使用 ArrayList，需要在头尾频繁插入删除时使用 ArrayDeque 或 LinkedList。两者都不是线程安全的，多个线程同时写入时的问题和替代做法见[替代方案](#4-替代方案)。
 
 ### Vector
 
@@ -399,9 +399,9 @@ CopyOnWriteArrayList 的读操作不加锁，也不会被写操作阻塞，适�
 
 - 节点类由 Entry 改为 Node，链表过长时转为红黑树，见[链表转红黑树](#8-链表转红黑树)，JDK 1.7 始终使用链表；
 - 新的键值对插入链表尾部，JDK 1.7 插入链表头部；
-- 计算哈希值时只做一次扰动，JDK 1.7 做了四次移位和异或；
+- 计算哈希值时只做一次扰动（把 hashCode 的高位异或到低位，见[计算哈希值](#41-计算哈希值)），JDK 1.7 做了四次移位和异或；
 - 扩容时按哈希值新增的那一位把链表拆成两条，保持节点原来的顺序，见[扩容-重新计算桶下标](#6-扩容-重新计算桶下标)，JDK 1.7 逐个重新计算桶下标并插入新链表的头部，顺序会反转；
-- 扩容的时机：JDK 1.8 在插入后 size 大于 threshold 时扩容，JDK 1.7 在插入前 size 大于等于 threshold 并且目标桶不为空时扩容。
+- 扩容的时机：JDK 1.8 在插入后 size 大于 threshold（扩容阈值，见[扩容-基本原理](#5-扩容-基本原理)）时扩容，JDK 1.7 在插入前 size 大于等于 threshold 并且目标桶不为空时扩容。
 
 #### 1. 存储结构
 
@@ -448,7 +448,7 @@ map.put("K3", "V3");
 - 开放定址法：冲突时按固定的规则在数组中寻找下一个空位，例如线性探测依次检查下一个位置。JDK 中的 ThreadLocalMap 和 IdentityHashMap 使用线性探测；
 - 再哈希法：冲突时换一个哈希函数重新计算位置。
 
-开放定址法的元素都存放在数组中，没有链表节点的开销，但装载因子必须较低，否则探测序列会很长；删除时也不能直接把位置置空，否则会截断其它元素的探测序列，ThreadLocalMap 删除元素后要把后面同一段中的元素重新放置。HashMap 采用拉链法，装载因子可以达到 0.75，删除只需修改链表，冲突严重时还可以把链表转为红黑树。
+开放定址法的元素都存放在数组中，没有链表节点的开销，但装载因子（元素个数与数组长度之比）必须较低，否则探测序列会很长；删除时也不能直接把位置置空，否则会截断其它元素的探测序列，ThreadLocalMap 删除元素后要把后面同一段中的元素重新放置，线性探测的插入、删除过程见[线性探测法](算法%20-%20符号表.md#3-线性探测法)。HashMap 采用拉链法，装载因子可以达到 0.75，删除只需修改链表，冲突严重时还可以把链表转为红黑树。
 
 #### 3. put 操作
 
@@ -457,7 +457,7 @@ put() 调用 putVal()，过程如下，右侧用前面的 K1、K2、K3 各走一
 <div align="center"> <img src="pics/hashmap-put.png" width="760px"/> </div><br>
 
 1. 用 hash() 计算哈希值，键为 null 时哈希值为 0，所以 null 键总是放在 0 号桶；table 为空时先调用 resize() 创建数组，数组到第一次 put 时才分配；
-2. 用 (n - 1) & hash 计算桶下标，桶为空时直接放入新节点；
+2. 用 (n - 1) & hash 计算桶下标（相当于对数组长度取模，见[确定桶下标](#4-确定桶下标)），桶为空时直接放入新节点；
 3. 桶不为空时，头节点是 TreeNode 就在红黑树中查找或插入，否则遍历链表，找到相同的键就用新值替换旧值并返回旧值，找不到就把新节点接在链表尾部，接上之前链表已有 8 个节点时调用 treeifyBin()，见[链表转红黑树](#8-链表转红黑树)；
 4. 新增了节点时 size 加 1，大于 threshold 就调用 resize() 扩容，见[扩容-基本原理](#5-扩容-基本原理)。
 
@@ -510,7 +510,7 @@ capacity - 1 : 00001111     15
 | capacity | table 的容量大小，默认为 16。需要注意的是 capacity 必须保证为 2 的 n 次方。|
 | size | 键值对数量。 |
 | threshold | size 的临界值，插入后 size 大于 threshold 时扩容。 |
-| loadFactor | 装载因子，threshold = (int)(capacity * loadFactor)。比较的是键值对个数 size，不是非空桶的个数。 |
+| loadFactor | 装载因子，threshold 约为 capacity * loadFactor（扩容时通常直接翻倍），默认情况下正好是容量的 3/4。比较的是键值对个数 size，不是非空桶的个数。 |
 
 ```java
 static final int DEFAULT_INITIAL_CAPACITY = 16;
@@ -532,13 +532,13 @@ transient int modCount;
 
 例如默认容量 16、装载因子 0.75 时 threshold 为 12，放入第 13 个键后容量变为 32，放入第 25 个键后变为 64（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
 
-装载因子取 0.75 是时间和空间的折中：调大可以少占内存，但链表变长，查找变慢；调小则扩容更频繁，空着的桶更多。装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布，约 98.6% 的桶只有 0～2 个节点，见[链表转红黑树](#8-链表转红黑树)。
+装载因子取 0.75 是时间和空间的折中：调大可以少占内存，但链表变长，查找变慢；调小则扩容更频繁，空着的桶更多。装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布（源码注释按默认扩容策略下每个桶的平均节点数粗略取 0.5），约 98.6% 的桶只有 0～2 个节点，见[链表转红黑树](#8-链表转红黑树)。
 
 HashMap 的空间开销也要考虑。例如一个 HashMap\<String, Long\> 放入 100 万个键值对，键是 12 个 ASCII 字符的字符串，每个条目连同键和值约占 120 字节：键 56 字节、Long 24 字节、Node 32 字节、桶数组约 8 字节，约为有效数据（12 字节字符加 8 字节的 long）的 6 倍（JDK 21 实测，见[附录 A11](#a11-hashmap-每个条目的内存)）。用 HashMap 做本地缓存时，要按键和值的实际大小这样估算，并给扩容留出余量。
 
-能预估键的数量时，应该在创建时指定容量，避免多次扩容。需要注意的是，构造函数的参数是容量而不是键数：new HashMap<>(1000) 的容量为 1024、threshold 为 768，放入 1000 个键时仍会扩容一次；JDK 19 起的 HashMap.newHashMap(1000) 按装载因子换算出容量 2048，不再扩容（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
+能预估键的数量时，应该在创建时指定容量，避免多次扩容。需要注意的是，构造函数的参数是容量而不是键数：new HashMap<>(1000) 的容量向上取为 2 的幂 1024（见[计算数组容量](#7-计算数组容量)）、threshold 为 768，放入 1000 个键时仍会扩容一次；JDK 19 起的 HashMap.newHashMap(1000) 按装载因子换算出容量 2048（1000 / 0.75 向上取整为 1334，再取为 2 的幂），不再扩容（JDK 21 实测，见[附录 A5](#a5-hashmap-的扩容时机与-hashtable)）。
 
-扩容由 resize() 完成：容量变为原来的两倍，threshold 随之变为新容量乘以装载因子，创建新数组，再把旧数组中的节点逐个桶迁移到新数组中，因此这一步是很费时的。
+扩容由 resize() 完成：容量变为原来的两倍，threshold 通常也直接翻倍，约为新容量乘以装载因子，创建新数组，再把旧数组中的节点逐个桶迁移到新数组中，因此这一步是很费时的。
 
 #### 6. 扩容-重新计算桶下标
 
@@ -561,13 +561,13 @@ HashMap 构造函数允许传入的容量不是 2 的 n 次方，tableSizeFor() 
 
 从 JDK 1.8 开始，向一个桶中添加元素时，如果链表中已经有 8 个节点（TREEIFY_THRESHOLD），会先检查数组长度：小于 64（MIN_TREEIFY_CAPACITY）时只进行扩容，否则把链表转换为红黑树。例如所有键的 hashCode() 都相同时，放入第 9 个键时容量从 16 扩为 32，第 10 个键时扩为 64，第 11 个键时才转为红黑树（JDK 21 实测，见[附录 A4](#a4-hashmap-链表转红黑树)）。数组较小时，冲突多半是桶太少造成的，扩容就能把链表拆开，所以先扩容。
 
-引入红黑树是为了限制最坏情况：hashCode() 分布很差，或者被人故意构造成相同的值时，大量键落在同一个桶中，在链表中查找退化为 O(N)，红黑树则为 O(logN)。需要注意的是，红黑树按哈希值和 compareTo() 决定查找方向，哈希值相同又没有实现 Comparable 的键无法比较，查找仍会退化为 O(N)（JDK 21 实测，见[附录 A4](#a4-hashmap-链表转红黑树)）。
+引入红黑树是为了限制最坏情况：hashCode() 分布很差，或者被人故意构造成相同的值时，大量键落在同一个桶中，在链表中查找退化为 O(N)，[红黑树](算法%20-%20符号表.md#红黑树)则为 O(logN)。需要注意的是，红黑树按哈希值和 compareTo() 决定查找方向，哈希值相同又没有实现 Comparable 的键无法比较，查找仍会退化为 O(N)（JDK 21 实测，见[附录 A4](#a4-hashmap-链表转红黑树)）。
 
-阈值取 8，是因为 hashCode() 足够随机时，一个桶中很难积累 8 个节点：装载因子为 0.75 时，桶中的节点数近似服从参数为 0.5 的泊松分布，一个桶中恰好有 8 个节点的概率约为 0.00000006（计算见[附录 A4](#a4-hashmap-链表转红黑树)）。TreeNode 的大小约为普通节点的两倍，正常情况下用不到它，也就不必付出这部分内存。
+阈值取 8，是因为 hashCode() 足够随机时，一个桶中很难积累 8 个节点：按源码注释的估计，桶中的节点数近似服从参数为 0.5 的泊松分布，一个桶中恰好有 8 个节点的概率约为 0.00000006（计算见[附录 A4](#a4-hashmap-链表转红黑树)）。TreeNode 的大小约为普通节点的两倍，正常情况下用不到它，也就不必付出这部分内存。
 
-红黑树转回链表的阈值是 6 而不是 8，两个阈值之间留出余量，避免节点数在 8 附近增减时反复转换。需要注意的是，6 只用于扩容时拆分树：拆分后的节点数不超过 6 就转回链表。删除节点时按树的形状判断，根节点缺少左子节点或右子节点，或者根的左子节点没有左子节点时，转回链表，例如上面的例子再放入第 12 个键，然后逐个删除，剩 3 个键时才转回链表。
+红黑树转回链表的阈值是 6 而不是 8，两个阈值之间留出余量，避免节点数在 8 附近增减时反复转换。需要注意的是，6 只用于扩容时拆分树：拆分后的节点数不超过 6 就转回链表。用 map.remove() 删除节点时按树的形状判断（迭代器的 remove() 不做这项判断），根节点缺少左子节点或右子节点，或者根的左子节点没有左子节点时，转回链表，例如上面的例子再放入第 12 个键，然后从最后放入的键开始逐个删除，剩 3 个键时才转回链表。
 
-源码注释没有说明为什么选红黑树而不选 AVL 树，树化桶的平衡代码与 TreeMap 一样改编自《算法导论》中的红黑树。两者相比，插入时最多都只旋转 2 次；删除时红黑树最多旋转 3 次，AVL 树可能要沿着路径旋转多次。红黑树只要求大致平衡，高度上界比 AVL 树高，但节点少时差别不大，例如 10 个节点时两者的高度上界分别约为 6 层和 4 层。B+ 树为磁盘设计，用很大的节点减少读取磁盘的次数，不适合内存中只有几个节点的桶。
+源码注释没有说明为什么选红黑树而不选 AVL 树，树化桶的平衡代码与 TreeMap 一样改编自《算法导论》中的红黑树。两者相比，插入时最多都只旋转 2 次；删除时红黑树最多旋转 3 次，AVL 树可能要沿着路径旋转多次。红黑树只要求大致平衡，高度上界比 AVL 树高，但节点少时差别不大，例如 10 个节点时红黑树最多 5 层，AVL 树最多 4 层。B+ 树为磁盘设计，用很大的节点减少读取磁盘的次数，不适合内存中只有几个节点的桶。
 
 #### 9. 与 Hashtable 的比较
 
@@ -582,7 +582,7 @@ Hashtable 是 JDK 1.0 的遗留类，需要线程安全时使用 ConcurrentHashM
 
 #### 10. 线程安全
 
-HashMap 不是线程安全的。数据放好并安全发布（例如赋给 final 字段）之后只读，多个线程并发访问没有问题；只要有一个线程在写就会出问题，例如两个线程同时向同一个空桶插入，都判断桶为空，后写入的会覆盖先写入的；size++ 也不是原子操作。用 8 个线程各插入 10 万个不同的键，HashMap 的 size 每次都不同，例如 111068、323870，远少于 80 万；同样的操作 ConcurrentHashMap 每次都是 800000（JDK 21 实测，见[附录 A2](#a2-hashmap-的并发写入)）。
+HashMap 不是线程安全的。数据放好并安全发布（例如赋给 final 字段，见[可见性](Java%20并发.md#2-可见性)）之后只读，多个线程并发访问没有问题；只要有一个线程在写就会出问题，例如两个线程同时向同一个空桶插入，都判断桶为空，后写入的会覆盖先写入的；size++ 也不是原子操作。用 8 个线程各插入 10 万个不同的键，HashMap 的 size 每次都不同，例如 111068、323870，远少于 80 万；同样的操作 ConcurrentHashMap 每次都是 800000（JDK 21 实测，见[附录 A2](#a2-hashmap-的并发写入)）。
 
 只有一个线程写、其它线程只读也不安全。resize() 先把 table 指向新数组，再逐个桶把节点迁过去，读线程在这期间查已经存在的键，可能落到还没迁入的新桶上，返回 null。例如键 0 事先放入，一个线程再放入 1～199999，另一个线程反复 get(0)，10 轮中每轮都有几次到一百多次返回 null，写完后再读都正常（JDK 21 实测，见[附录 A2](#a2-hashmap-的并发写入)）。
 
@@ -594,11 +594,11 @@ JDK 1.8 改为尾插法，扩容时保持链表原来的顺序，不会再因为
 
 ### ConcurrentHashMap 🔥🔥
 
-以下以 JDK 1.8 为主，JDK 21 与 JDK 1.8 相同；JDK 1.7 的分段锁以及两者的区别见[JDK 1.8 的改动](#3-jdk-18-的改动)。
+以下以 JDK 1.8 为主，JDK 21 的结构和流程与 JDK 1.8 相同；JDK 1.7 的分段锁以及两者的区别见[JDK 1.8 的改动](#3-jdk-18-的改动)。
 
 #### 1. 存储结构
 
-ConcurrentHashMap 和 HashMap 一样使用 Node 数组加链表（或红黑树），区别在于并发控制：往空桶中放入节点时用 CAS，修改非空的桶时锁住它的头节点，锁的粒度是单个桶。
+ConcurrentHashMap 和 HashMap 一样使用 Node 数组加链表（或红黑树），区别在于并发控制：往空桶中放入节点时用 [CAS](Java%20并发.md#1-cas)，修改非空的桶时锁住它的头节点，锁的粒度是单个桶。
 
 ```java
 transient volatile Node<K,V>[] table;
@@ -613,7 +613,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 #### 2. size 操作
 
-元素个数保存在 baseCount 和一组 CounterCell 中：没有竞争时用 CAS 更新 baseCount，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 LongAdder 的思路相同。求和时不加锁，其它线程可能正在增减，所以并发修改时返回的是一个估计值。元素个数可能超过 int 的范围，JDK 8 起建议用返回 long 的 mappingCount()，它同样是估计值。
+元素个数保存在 baseCount 和一组 CounterCell 中：没有竞争时用 CAS 更新 baseCount，竞争激烈时不同线程更新不同的 CounterCell，size() 把它们加起来，与 [LongAdder](Java%20并发.md#2-atomicinteger) 的思路相同。求和时不加锁，其它线程可能正在增减，所以并发修改时返回的是一个估计值。元素个数可能超过 int 的范围，JDK 8 起建议用返回 long 的 mappingCount()，它同样是估计值。
 
 #### 3. JDK 1.8 的改动
 
@@ -625,7 +625,7 @@ JDK 1.8 去掉了 Segment，锁的粒度缩小到每个桶。put 的过程如下
 
 1. 用 spread() 计算哈希值，把 hashCode 的高 16 位异或到低 16 位，让高位也参与决定桶下标；
 2. 如果桶是空的，用 CAS 把新节点放进去，不加锁。CAS 失败说明有其它线程刚刚放入了节点，重新循环；
-3. 如果桶的头节点是 ForwardingNode（哈希值为 MOVED），说明这个桶已经迁移到新数组，当前线程先尝试帮忙迁移（还有没被领取的桶时），再到新数组中插入；
+3. 如果桶的头节点是 ForwardingNode（哈希值为 MOVED），说明这个桶已经迁移到新数组（扩容的过程见下文），当前线程先尝试帮忙迁移（还有没被领取的桶时），再到新数组中插入；
 4. 否则用 synchronized 锁住桶的头节点，在链表或红黑树中插入或更新，链表中已有 8 个节点时再插入会转为红黑树，数组长度小于 64 时则只扩容；
 5. 最后更新元素个数。
 
@@ -635,16 +635,16 @@ JDK 1.8 去掉了 Segment，锁的粒度缩小到每个桶。put 的过程如下
 
 需要注意的是，迁移线程也要锁住旧桶的头节点，扩容期间 put 可能要等这个桶迁移完，或者先帮忙迁移一段，耗时会变长。
 
-get 不加锁：数组元素通过 Unsafe 的 volatile 方式读取，节点的 val 和 next 都是 volatile，能读到其它线程写入的最新值。
+get 不加锁：数组元素通过 Unsafe 以 volatile 方式读取（JDK 9 起改为 acquire 方式，与写入数组元素时的 CAS 或 release 写配合，同样能读到完整初始化的节点），节点的 val 和 next 都是 volatile，能读到其它线程已经完成的写入。
 
-去掉 Segment 是因为 JDK 1.7 的并发度在创建时由 concurrencyLevel 确定，之后不能改变，默认的 16 个 Segment 最多允许 16 个线程同时写。JDK 1.8 锁住的是单个桶，并发度随扩容增大，键的哈希值随机时，两个线程更新不同的键争用同一把锁的概率约为 1 / (8 × 元素个数)；而且最常见的往空桶中插入只用一次 CAS，不需要加锁。
+去掉 Segment 是因为 JDK 1.7 的并发度在创建时由 concurrencyLevel 确定，之后不能改变，默认的 16 个 Segment 最多允许 16 个线程同时写。JDK 1.8 锁住的是单个桶，并发度随扩容增大，按源码注释的估计，键的哈希值随机时，两个线程更新不同的键争用同一把锁的概率约为 1 / (8 × 元素个数)；而且最常见的往空桶中插入只用一次 CAS，不需要加锁。
 
 用 synchronized 锁住头节点，而不是给每个桶配一个 ReentrantLock，是为了不给每个桶多分配一个锁对象，用已有的头节点作为锁最省空间。加锁之后还要检查头节点是否仍是原来的节点，因为它可能已经被删除，或者这个桶已经被迁移。
 
 扩容的过程：
 
 1. 元素个数达到 sizeCtl（容量的 0.75 倍）时，一个线程创建 2 倍大小的新数组，开始迁移；
-2. 迁移从数组末尾向前进行，每个线程用 CAS 修改 transferIndex，领取一段还没有迁移的桶，每段至少 16 个，不同线程领到的范围不会重叠。例如容量 64 时，第一个线程把 transferIndex 从 64 改为 48，领到 48～63 号桶，第二个线程再改为 32，领到 32～47 号桶；
+2. 迁移从数组末尾向前进行，每个线程用 CAS 修改 transferIndex，领取一段还没有迁移的桶，步长至少 16 个（剩余的桶不足一个步长时全部领取），不同线程领到的范围不会重叠。例如容量 64、有多个 CPU 时，第一个线程把 transferIndex 从 64 改为 48，领到 48～63 号桶，第二个线程再改为 32，领到 32～47 号桶；
 3. 迁移一个桶时锁住它的头节点，按 hash & n 把节点分到新数组的 i 和 i + n 两个位置，分组的规则与 HashMap 相同，然后在旧桶中放入 ForwardingNode；
 4. 所有桶迁移完后，table 指向新数组，sizeCtl 更新为新容量的 0.75 倍。
 
@@ -655,9 +655,9 @@ get 不加锁：数组元素通过 Unsafe 的 volatile 方式读取，节点的 
 - 计数：JDK 1.7 的 size() 先不加锁累加各 Segment 的 count，相邻两轮各 Segment 的 modCount 之和相同就返回，3 次仍不稳定再锁住所有 Segment（见[进阶：size 操作](Java%20容器%20-%20进阶.md#size-操作)）；JDK 1.8 见[size 操作](#2-size-操作)；
 - 扩容：JDK 1.7 中每个 Segment 在自己的锁内各自扩容；JDK 1.8 中多个线程可以一起迁移整个数组，过程见上文。
 
-需要注意的是，ConcurrentHashMap 的键和值都不能为 null。HashMap 中 get 返回 null 时，可以再用 containsKey 判断是键不存在还是值为 null；在并发环境下，这两次调用之间其它线程可能修改了数据，结果无法确定，所以干脆不允许 null。另外，get、put 这类针对单个键的操作各自是原子的，组合起来就不是了。例如 8 个线程各执行 10 万次 put(k, getOrDefault(k, 0) + 1)，get 和 put 之间其它线程可能已经写入，最后只有 696658；改用 merge(k, 1, Integer::sum) 每次都是 800000（JDK 21 实测，见[附录 A10](#a10-concurrenthashmap-的组合操作)）。
+需要注意的是，ConcurrentHashMap 的键和值都不能为 null。HashMap 中 get 返回 null 时，可以再用 containsKey 判断是键不存在还是值为 null；在并发环境下，这两次调用之间其它线程可能修改了数据，结果无法确定，所以干脆不允许 null。另外，get、put 这类针对单个键的操作各自是原子的，组合起来就不是了。例如 8 个线程各执行 10 万次 put(k, getOrDefault(k, 0) + 1)，get 和 put 之间其它线程可能已经写入，可能丢失更新，结果取决于线程的交错，5 次运行在 9.4 万到 27.8 万之间；改用 merge(k, 1, Integer::sum) 每次都是 800000（JDK 21 实测，见[附录 A10](#a10-concurrenthashmap-的组合操作)）。
 
-putIfAbsent、computeIfAbsent、compute、merge 把对一个键的判断和修改合成一次原子操作，例如 computeIfAbsent 在键不存在时只调用一次映射函数，同时调用的其它线程拿到同一个值，常用于懒初始化；函数返回 null、抛出异常或映射被移除后，下次调用会重新计算。映射函数在桶的锁内执行，所以要短，也不能修改这个 map，否则可能抛出 IllegalStateException（Recursive update）。同时修改多个键（例如在两个账户之间转账）时，仍要自己加锁。
+putIfAbsent、computeIfAbsent、compute、merge 把对一个键的判断和修改合成一次原子操作，例如 computeIfAbsent 在键不存在时只调用一次映射函数，同时调用的其它线程拿到同一个值，常用于懒初始化；函数返回 null、抛出异常或映射被移除后，下次调用会重新计算。映射函数在桶的锁内执行，所以要短，也不能修改这个 map，否则 JDK 9 起可能抛出 IllegalStateException（Recursive update），JDK 8 中可能陷入死循环。同时修改多个键（例如在两个账户之间转账）时，仍要自己加锁。
 
 ### LinkedHashMap
 
@@ -668,6 +668,8 @@ putIfAbsent、computeIfAbsent、compute、merge 把对一个键的判断和修�
 ```java
 public class LinkedHashMap<K,V> extends HashMap<K,V> implements Map<K,V>
 ```
+
+JDK 21 起改为实现 SequencedMap（它继承自 Map），新增了 putFirst()、putLast() 等方法，[afterNodeAccess()](#afternodeaccess) 也多了 putFirst() 时把节点移到头部的分支；下文的源码取自 JDK 1.8。
 
 内部维护了一个双向链表，用来维护插入顺序或者 LRU 顺序。
 
@@ -683,7 +685,7 @@ transient LinkedHashMap.Entry<K,V> head;
 transient LinkedHashMap.Entry<K,V> tail;
 ```
 
-accessOrder 决定了顺序，默认为 false，此时维护的是插入顺序。
+accessOrder 决定了顺序，默认为 false，此时维护的是插入顺序；为 true 时维护访问顺序（LRU 顺序）。
 
 ```java
 final boolean accessOrder;
@@ -796,13 +798,13 @@ public static void main(String[] args) {
 
 面试中常要求不用 LinkedHashMap，自己用 HashMap 加双向链表实现，见[缓存 · LRU](缓存.md#七lru)。
 
-需要注意的是，accessOrder 为 true 时 get 也会移动节点，属于结构性修改，多个线程只调用 get 也会弄坏链表，而且不抛出异常：size 不变，沿链表却走不到一部分键，这些键再也不会被淘汰（JDK 21 实测，见[附录 A7](#a7-访问顺序-linkedhashmap-的并发-get)）。多线程使用时要用 Collections.synchronizedMap() 包装或者自己加锁。
+需要注意的是，accessOrder 为 true 时 get 也会移动节点，属于结构性修改，多个线程只调用 get 也会弄坏链表，而且不抛出异常：size 不变，沿链表却走不到一部分键，用作 LRU 缓存时淘汰还会停止，map 不断增长（JDK 21 实测，见[附录 A7](#a7-访问顺序-linkedhashmap-的并发-get)）。多线程使用时要用 Collections.synchronizedMap() 包装或者自己加锁。
 
 ### WeakHashMap
 
 #### 存储结构
 
-WeakHashMap 的 Entry 继承自 WeakReference，键被 WeakReference 关联，没有其它强引用时，键在之后的垃圾收集中被回收，对应的 Entry 随后从 Map 中清除。需要注意的是，值不能强引用键，否则键永远不会被回收，条目也不会被清除。
+WeakHashMap 的 Entry 继承自 WeakReference（见[弱引用](Java%20虚拟机.md#3-弱引用)），键被 WeakReference 关联，没有其它强引用时，键在之后的垃圾收集中被回收，对应的 Entry 随后从 Map 中清除。需要注意的是，值不能强引用键，否则键永远不会被回收，条目也不会被清除。
 
 WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存对象，由 JVM 对这部分缓存进行回收。
 
@@ -962,7 +964,7 @@ synchronizedList: size=800000
 
 ### A4 HashMap 链表转红黑树
 
-Key 的 hashCode() 都返回 42，并实现了 Comparable。每次放入或删除后，用反射查看数组的长度和 42 号桶中头节点的类型，运行时需要加上 --add-opens java.base/java.util=ALL-UNNAMED：
+Key 的 hashCode() 都返回 42，并实现了 Comparable。每次放入或删除后，用反射查看数组的长度和这些键所在桶（下标为 42 & (容量 - 1)，容量 16、32 时为 10 号桶，64 时为 42 号桶）中头节点的类型，运行时需要加上 --add-opens java.base/java.util=ALL-UNNAMED：
 
 ```java
 record Key(int id) implements Comparable<Key> {
@@ -1112,6 +1114,25 @@ round 9: size=100，按链表遍历到 18 个不同的键，get 抛异常 0 次
 synchronizedMap: size=100，链表中的键 100
 ```
 
+再把它换成容量为 100 的 LRU 缓存，同样并发 get 之后，单线程放入 1000 个新键，共 10 轮：
+
+```java
+Map<Integer, Integer> m = new LinkedHashMap<>(16, 0.75f, true) {
+    @Override protected boolean removeEldestEntry(Map.Entry<Integer, Integer> e) { return size() > 100; }
+};
+// 放入 0～99，8 个线程并发 get 并用 join() 等待全部结束，同上
+for (int i = 1000; i < 2000; i++) m.put(i, i);
+```
+
+```text
+不做并发 get：size=100
+round 0: size=1099
+……
+round 9: size=1099
+```
+
+不做并发 get 时每放入一个新键淘汰一个；做过并发 get 的 10 轮 size 都是 1099，1000 次放入只淘汰了 1 个键，不抛异常。
+
 ### A8 CopyOnWriteArrayList 的迭代器
 
 ```java
@@ -1152,18 +1173,49 @@ entrySet().removeIf(value >= 2)：{a=1}
 
 ### A10 ConcurrentHashMap 的组合操作
 
-8 个线程同时对同一个键计数，每个线程 10 万次：
+JDK 21.0.13，Apple M1 Pro。8 个线程同时对同一个键计数，每个线程 10 万次，运行 5 轮：
 
 ```java
-c1.put("k", c1.getOrDefault("k", 0) + 1);   // 先读再写
-c2.merge("k", 1, Integer::sum);             // 一次完成
-m.computeIfAbsent("a", k -> m.computeIfAbsent("a", x -> 1));  // 映射函数中修改同一个 map
+import java.util.concurrent.*;
+
+public class ChmCount {
+    public static void main(String[] args) throws Exception {
+        for (int round = 0; round < 5; round++) {
+            ConcurrentHashMap<String, Integer> c1 = new ConcurrentHashMap<>(), c2 = new ConcurrentHashMap<>();
+            Thread[] ts = new Thread[8];
+            for (int t = 0; t < 8; t++) {           // 先读再写
+                ts[t] = new Thread(() -> { for (int i = 0; i < 100_000; i++) c1.put("k", c1.getOrDefault("k", 0) + 1); });
+                ts[t].start();
+            }
+            for (Thread t : ts) t.join();
+            for (int t = 0; t < 8; t++) {           // 一次完成
+                ts[t] = new Thread(() -> { for (int i = 0; i < 100_000; i++) c2.merge("k", 1, Integer::sum); });
+                ts[t].start();
+            }
+            for (Thread t : ts) t.join();
+            System.out.println("get+put count=" + c1.get("k") + " merge count=" + c2.get("k"));
+        }
+        ConcurrentHashMap<String, Integer> m = new ConcurrentHashMap<>();
+        try {                                       // 映射函数中修改同一个 map
+            m.computeIfAbsent("a", k -> m.computeIfAbsent("a", x -> 1));
+            System.out.println("recursive: ok " + m);
+        } catch (Throwable e) {
+            System.out.println("recursive: " + e);
+        }
+    }
+}
 ```
 
 ```text
-get+put count=696658 merge count=800000
+get+put count=173410 merge count=800000
+get+put count=94232 merge count=800000
+get+put count=157160 merge count=800000
+get+put count=278316 merge count=800000
+get+put count=114853 merge count=800000
 recursive: java.lang.IllegalStateException: Recursive update
 ```
+
+先读再写可能丢失更新，具体结果取决于线程的交错，换一台机器或者换一种循环写法，数字可能相差很大。
 
 ### A11 HashMap 每个条目的内存
 

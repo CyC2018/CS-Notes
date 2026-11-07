@@ -2,6 +2,11 @@
 <!-- GFM-TOC -->
 * [Leetcode 题解 - 位运算](#leetcode-题解---位运算)
     * [0. 原理](#0-原理)
+        * [基本原理](#基本原理)
+        * [位与运算技巧](#位与运算技巧)
+        * [移位运算](#移位运算)
+        * [mask 计算](#mask-计算)
+        * [Java 中的位操作](#java-中的位操作)
     * [1. 统计两个数的二进制表示有多少位不同](#1-统计两个数的二进制表示有多少位不同)
     * [2. 数组中唯一一个不重复的元素](#2-数组中唯一一个不重复的元素)
     * [3. 找出数组中缺失的那个数](#3-找出数组中缺失的那个数)
@@ -238,7 +243,7 @@ diff &= -diff 取出 diff 最右侧的 1，按这一位是否为 1 把数组分�
 public int[] singleNumber(int[] nums) {
     int diff = 0;
     for (int num : nums) diff ^= num;
-    diff &= -diff;  // 得到最右一位
+    diff &= -diff;  // 得到最右侧的 1
     int[] ret = new int[2];
     for (int num : nums) {
         if ((num & diff) == 0) ret[0] ^= num;

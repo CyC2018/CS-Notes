@@ -45,12 +45,12 @@
         * [完整性保护](#完整性保护)
         * [HTTPS 的缺点](#https-的缺点)
     * [七、HTTP/1.1 新特性](#七http11-新特性)
-    * [八、HTTP/2.0](#八http20)
+    * [八、HTTP/2.0](#八http20) 🔥
         * [HTTP/1.x 缺陷](#http1x-缺陷)
         * [二进制分帧层](#二进制分帧层)
         * [服务端推送](#服务端推送)
         * [首部压缩](#首部压缩)
-        * [HTTP/3](#http3) 🔥
+        * [HTTP/3](#http3)
     * [九、GET 和 POST 比较](#九get-和-post-比较)
         * [作用](#作用)
         * [参数](#参数)
@@ -85,7 +85,7 @@
 
 请求报文结构：
 
-- 第一行是包含了请求方法、URL、协议版本；
+- 第一行是请求行，包含请求方法、URL、协议版本，GET、POST 等请求直接发给服务器时 URL 只写路径和查询参数（例如 GET / HTTP/1.1），发给代理时才写完整的 URL（CONNECT 写主机名和端口，针对整个服务器的 OPTIONS 写 *），下面的示例就是发给代理的；
 - 接下来的多行都是请求首部 Header，每个首部都有一个首部名称，以及对应的值；
 - 一个空行用来分隔首部和内容主体 Body；
 - 最后是请求的内容主体，GET 请求通常没有主体，POST 请求的表单数据、JSON 放在这里。
@@ -174,7 +174,7 @@ PUT 用于创建或者替换目标资源，例如上传文件。它自身不带�
 PUT /new.html HTTP/1.1
 Host: example.com
 Content-type: text/html
-Content-length: 16
+Content-length: 15
 
 <p>New File</p>
 ```
@@ -209,7 +209,7 @@ OPTIONS 用于查询指定的 URL 能够支持的方法。
 
 ### CONNECT
 
-CONNECT 要求在与代理服务器通信时建立隧道，使用 SSL（Secure Sockets Layer，安全套接层）和 TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。
+CONNECT 请求代理服务器与目标主机的指定端口建立一条隧道，建立成功后代理只把两端的数据原样转发。通过代理访问 HTTPS 网站时使用它：客户端与目标服务器在隧道中直接进行 TLS（Transport Layer Security，传输层安全）握手和加密通信，代理读不到 HTTP 报文的内容。
 
 ```http
 CONNECT www.example.com:443 HTTP/1.1
@@ -219,7 +219,7 @@ CONNECT www.example.com:443 HTTP/1.1
 
 ### TRACE
 
-TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
+TRACE 用于回环测试：最终收到请求的服务器把收到的请求报文作为响应主体返回给客户端，客户端可以从中看到请求经过了哪些代理（Via 首部）、被改动了哪些内容。
 
 发送请求时，在 Max-Forwards 首部字段中填入数值，每经过一个服务器就会减 1，当数值为 0 时就停止传输。
 
@@ -236,6 +236,8 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 | 3XX | Redirection（重定向状态码） | 需要进行附加操作以完成请求 |
 | 4XX | Client Error（客户端错误状态码） | 服务器无法处理请求 |
 | 5XX | Server Error（服务器错误状态码） | 服务器处理请求出错 |
+
+状态码可以扩展，客户端不必认识每一个，但必须按第一位数字判断类别，遇到不认识的状态码时按该类的 x00 处理，例如不认识 429 的旧客户端会把它当作 400。
 
 ### 1XX 信息
 
@@ -254,7 +256,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 - 301 Moved Permanently：永久性重定向；
 - 302 Found：临时性重定向；
 - 303 See Other：让客户端用 GET（原请求是 HEAD 时仍用 HEAD）去获取 Location 指向的另一个资源，常用于表单 POST 提交后跳到结果页，刷新时不会重复提交；
-- 304 Not Modified：GET 或 HEAD 请求带有 If-None-Match 或 If-Modified-Since，资源没有变化时返回 304，不带响应体（If-Match、If-Unmodified-Since 条件不满足时返回的是 412 Precondition Failed）；
+- 304 Not Modified：GET 或 HEAD 请求带有 If-None-Match 或 If-Modified-Since，资源没有变化时返回 304，不带响应体（If-Match、If-Unmodified-Since 条件不满足时返回的是 412 Precondition Failed），判断用到的首部见[缓存验证](#4-缓存验证)；
 - 307 Temporary Redirect：临时重定向，与 302 的含义类似，但是 307 要求浏览器不会把重定向请求的 POST 方法改成 GET 方法；
 - 308 Permanent Redirect：永久重定向，与 301 的含义类似，但不允许改变请求方法。
 
@@ -265,7 +267,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 ### 4XX 客户端错误
 
 - 400 Bad Request：请求报文中存在语法错误；
-- 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。响应必须带 WWW-Authenticate 首部说明认证方式，例如令牌过期时返回 WWW-Authenticate: Bearer error="invalid_token"；
+- 401 Unauthorized：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证），如果请求中已经带了认证信息，则表示认证失败，响应必须带 WWW-Authenticate 首部说明认证方式，例如令牌过期时返回 WWW-Authenticate: Bearer error="invalid_token"；
 - 403 Forbidden：服务器理解请求但拒绝执行，例如已登录的普通用户访问管理接口，凭证有效但权限不够（401 是没有认证或者认证失败）；
 - 404 Not Found：服务器上没有找到请求的资源；
 - 429 Too Many Requests：请求太频繁，被限流，可以在 Retry-After 首部中告诉客户端多久之后再试。
@@ -283,7 +285,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 
 有 4 种类型的首部字段：通用首部字段、请求首部字段、响应首部字段和实体首部字段。
 
-各种首部字段及其含义如下（不需要全记，仅供查阅）。这是《图解 HTTP》按 RFC 2616 的分类，RFC 9110 不再区分实体首部，表中的 Content-MD5、Warning 已被废弃：
+各种首部字段及其含义如下（不需要全记，仅供查阅）。这是《图解 HTTP》按 RFC 2616 的分类，RFC 9110 不再区分实体首部；表中的 Content-MD5 已被删除，Warning 已被废弃，Pragma 和 Accept-Charset 也不再推荐使用：
 
 ### 通用首部字段
 
@@ -328,7 +330,7 @@ TRACE 用于追踪路径，服务器会将通信路径返回给客户端。
 | 首部字段名 | 说明 |
 | :--: | :--: |
 | Accept-Ranges | 是否接受字节范围请求 |
-| Age | 响应在缓存中已经存放的秒数 |
+| Age | 响应自源服务器生成或验证以来经过的秒数（估计值） |
 | ETag | 资源的匹配信息 |
 | Location | 令客户端重定向至指定 URI |
 | Proxy-Authenticate | 代理服务器对客户端的认证信息 |
@@ -421,7 +423,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 - 持久性 Cookie：指定过期时间（Expires）或有效期（Max-Age）之后就成为了持久性的 Cookie。两者同时出现时以 Max-Age 为准，Max-Age=0 表示立即删除这个 Cookie。
 
 ```http
-Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2037 07:28:00 GMT;
 ```
 
 #### 4. 作用域
@@ -446,10 +448,10 @@ console.log(document.cookie);
 
 #### 6. HttpOnly
 
-标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击（XSS）常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
+标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击（XSS）常常使用 JavaScript 的 `document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以防止 XSS 偷走 Cookie，但注入的脚本仍然可以以用户的身份发送请求，见 [设置 Cookie 为 HttpOnly](攻击技术.md#1-设置-cookie-为-httponly)。
 
 ```http
-Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2037 07:28:00 GMT; Secure; HttpOnly
 ```
 
 #### 7. Secure
@@ -490,7 +492,7 @@ Session ID 相当于用户的登录凭证，拿到它就能冒充用户，所以
 
 #### 11. JWT
 
-JSON Web Token（JWT）是一种自带签名的令牌。用户登录成功后，服务器把用户 ID、过期时间等信息签名后生成 JWT 返回给客户端，客户端之后在请求的 Authorization 首部中携带它。服务器验证签名，就能确认令牌是自己签发的、内容没有被修改，不需要像 Session 那样在服务器保存会话。
+JSON Web Token（JWT）是一种自带签名的令牌。用户登录成功后，服务器把用户 ID、过期时间等信息签名后生成 JWT 返回给客户端，客户端之后在请求的 Authorization 首部中携带它。服务器验证签名并检查是否已过期，就能确认令牌是自己签发的、内容没有被修改且仍在有效期内，不需要像 Session 那样在服务器保存会话。
 
 JWT 由三部分组成，用 . 连接：
 
@@ -568,7 +570,7 @@ grant_type=authorization_code&code=8XNe0QukdUBz_2wmZ34JLA
 几个参数的作用：
 
 - code：授权码，经过浏览器传给笔记网站，规范建议最长 10 分钟有效，并且只能使用一次。同一个授权码第二次换令牌时，返回 400 {"error": "invalid_grant"}；
-- code_verifier 和 code_challenge（PKCE）：笔记网站先生成一个随机串 code_verifier，把它的 SHA-256 摘要 code_challenge 放在第一步的地址中，换令牌时再提交原文，授权服务器核对两者是否对应。攻击者即使截获了授权码，没有 code_verifier 也换不到令牌，同样返回 invalid_grant；
+- code_verifier 和 code_challenge（PKCE）：笔记网站先生成一个随机串 code_verifier，把它的 SHA-256 摘要 code_challenge 放在第 ② 步跳转的地址中，换令牌时再提交原文，授权服务器核对两者是否对应，攻击者即使截获了授权码，没有 code_verifier 也换不到令牌，同样返回 invalid_grant；
 - state：笔记网站生成的随机值，回调时检查是否与发出的一致，防止攻击者用自己账号的授权码构造回调地址，让用户登录到攻击者的账号上，这是一种 [CSRF](攻击技术.md#二跨站请求伪造)；
 - access_token：访问令牌，由笔记网站的后端直接向授权服务器换取，不经过浏览器。
 
@@ -741,7 +743,7 @@ Vary: Accept-Language
 
 内容编码将实体主体进行压缩，从而减少传输的数据量。
 
-常用的内容编码有 gzip、deflate 和 br（Brotli），identity 表示不压缩。较新的浏览器还支持 zstd，例如 Edge 156 发出的请求中带的是 Accept-Encoding: gzip, deflate, br, zstd（见[附录 A5](#a5-xmlhttprequest-发送-post)）。
+常用的内容编码有 gzip、deflate 和 br（Brotli），identity 表示不压缩。较新的浏览器还支持 zstd，例如 Edge 156 访问 127.0.0.1 时请求中带的是 Accept-Encoding: gzip, deflate, br, zstd（见[附录 A5](#a5-xmlhttprequest-发送-post)）。Chromium 只在 HTTPS 和 localhost 上声明 br 和 zstd，访问普通的 HTTP 网站时只带 gzip, deflate。
 
 浏览器发送 Accept-Encoding 首部，其中包含有它所支持的压缩算法，以及各自的优先级。服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并且发送 Content-Encoding 首部来告知浏览器它选择了哪一种算法。由于响应的内容取决于请求中的 Accept-Encoding，响应报文的 Vary 首部字段要包含 Accept-Encoding，否则缓存服务器可能把压缩过的内容返回给不支持该算法的客户端。
 
@@ -780,8 +782,8 @@ Accept-Ranges: bytes
 #### 3. 响应状态码
 
 - 在请求成功的情况下，服务器会返回 206 Partial Content 状态码；
-- 在请求的范围越界的情况下，服务器会返回 416 Range Not Satisfiable 状态码；
-- 在不支持范围请求的情况下，服务器会返回 200 OK 状态码。
+- 只请求一个字节范围、且没有被条件请求（例如 If-None-Match 命中时返回 304）先行处理时，起点大于等于资源长度（例如长度为 100 时 bytes=100-）会返回 416 Range Not Satisfiable 状态码，只是终点超出时把范围截到资源末尾，仍返回 206；
+- 在不支持范围请求或者忽略 Range 的情况下，服务器会返回 200 OK 状态码和完整的内容。
 
 ### 分块传输编码
 
@@ -791,7 +793,7 @@ Chunked Transfer Encoding，可以把数据分割成多块，让浏览器逐步�
 
 一份报文主体内可含有多种类型的实体同时发送，每个部分之间用 boundary 字段定义的分隔符进行分隔，每个部分都可以有首部字段。
 
-例如，上传多个表单时可以使用如下方式：
+例如，提交一个包含文本字段和文件的表单时，每个字段放在一个部分中：
 
 ```http
 Content-Type: multipart/form-data; boundary=AaB03x
@@ -834,11 +836,11 @@ HTTP/1.1 使用虚拟主机技术，使得一台服务器拥有多个域名，�
 
 #### 2. 网关
 
-与代理服务器不同的是，网关服务器会将 HTTP 转化为其它协议进行通信，从而请求其它非 HTTP 服务器的服务。
+网关对客户端来说就是源服务器，它把收到的请求转发给后面的一台或多台服务器，RFC 9110 中网关是反向代理的另一个名称。网关与后面的服务器之间可以使用 HTTP，也可以使用其它协议。
 
 #### 3. 隧道
 
-使用 SSL 等加密手段，在客户端和服务器之间建立一条安全的通信线路。
+隧道在两个连接之间原样转发数据，不解析也不修改报文，本身不加密，例如通过代理访问 HTTPS 网站时用 [CONNECT](#connect) 建立的隧道。
 
 ### WebSocket 🔥🔥
 
@@ -1037,7 +1039,9 @@ TLS 1.3 的套件名称只包含后两项，例如访问 www.jd.com 时为 TLS_A
 
 证书在有效期内也可能被提前吊销，例如私钥泄露。查询方式有两种，证书中可以写明相应的地址（baidu.com 的证书两者都有，见[附录 A9](#a9-证书验证)）：证书吊销列表（Certificate Revocation List, CRL）是 CA 定期发布的全部被吊销证书的序列号；在线证书状态协议（Online Certificate Status Protocol, OCSP）只查询这一张证书。每次连接都去问 CA 既慢又暴露用户的访问记录，所以服务器可以在握手时附带 CA 签过名的 OCSP 响应，称为 OCSP Stapling；浏览器也大多改为定期下载厂商汇总的吊销列表。
 
-中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。用 curl 模拟这两种情况（见[附录 A9](#a9-证书验证)），分别报告证书中的域名与访问的域名不匹配（no alternative certificate subject name matches target host name）和证书不受信任（self-signed certificate）。
+中间人截获了连接也无法冒充服务器：直接转发服务器的证书，它没有对应的私钥，无法完成握手；换成自己的证书，又拿不到 CA 为这个域名签发的证书，验证会失败。
+
+用 curl 模拟换成自己的证书的情况，证书签发给其它域名时报告域名不匹配，证书不是受信任的 CA 签发的时报告证书不受信任（见[附录 A9](#a9-证书验证)）。
 
 Charles、Fiddler 等抓包工具能解密 HTTPS，是因为用户手动把它们的根证书加入了信任列表，工具再为访问的每个域名临时签发证书。App 可以在代码中只信任指定的证书或公钥，称为证书固定（Certificate Pinning），这时加入根证书也无法抓包。
 
@@ -1080,7 +1084,7 @@ B^a mod 29 = 14^9 mod 29 = 3            A^b mod 29 = 19^13 mod 29 = 3
 
 DH 本身无法防止中间人：攻击者可以把 A、B 换成自己的公钥，分别与客户端和服务器各完成一次密钥交换。所以服务器要用证书私钥对自己的 ECDHE 公钥签名，客户端验证签名后才使用它。
 
-TLS 1.2 还支持 RSA 密钥交换：客户端生成 48 字节的随机预主密钥，用服务器证书中的 RSA 公钥加密后发给服务器（例子中加密后为 256 字节），只有持有私钥的服务器能解密。常说的“三个随机数”指的就是这种方式中的客户端随机数、服务器随机数和预主密钥。前两个以明文传输，作用是让每次连接的会话密钥都不同，攻击者即使重放录下的握手报文，算出的密钥也和原来不一样；需要保密的只有预主密钥。
+TLS 1.2 还支持 RSA 密钥交换：客户端生成 48 字节的预主密钥（2 字节的版本号加 46 字节随机数），用服务器证书中的 RSA 公钥加密后发给服务器（例子中加密后为 256 字节），只有持有私钥的服务器能解密。常说的“三个随机数”指的就是这种方式中的客户端随机数、服务器随机数和预主密钥。前两个以明文传输，作用是让每次连接的会话密钥都不同，攻击者即使重放录下的握手报文，算出的密钥也和原来不一样；需要保密的只有预主密钥。
 
 RSA 密钥交换没有前向安全：攻击者录下通信，日后拿到服务器的私钥，就能解密录下的预主密钥，进而解密全部通信。ECDHE 的私钥在握手后就丢弃，证书私钥只用来签名，泄露后也无法还原以前的会话密钥。因此 TLS 1.3 删除了 RSA 密钥交换，完整握手只能使用 (EC)DHE 这类前向安全的方式；2026 年 7 月发布的 RFC 10015 进一步要求 TLS 1.2 的客户端不再提供、服务器不再选择 RSA 密钥交换的密码套件。
 
@@ -1090,7 +1094,7 @@ Chrome 131、OpenSSL 3.5 起，TLS 1.3 握手默认提供 X25519MLKEM768，它�
 
 Finished 报文的内容是用主密钥对此前全部握手报文的哈希值计算出的校验值（TLS 1.2 中为 12 字节）。握手的前几个报文是明文，攻击者可以篡改，例如删掉 ClientHello 中安全的密码套件，迫使双方使用弱算法，称为降级攻击。双方各自根据自己收发的报文计算校验值，报文被改过，两边的结果就对不上，握手失败。
 
-完整的握手要验证证书和签名，开销较大。客户端再次连接同一个服务器时可以恢复会话：服务器在握手后发给客户端一个会话票据（即上面 TLS 1.2 握手中的 NewSessionTicket），客户端下次连接时带上它，双方直接由之前协商的密钥派生出新的会话密钥，不再验证证书。
+完整的握手要验证证书和签名，开销较大。客户端再次连接同一个服务器时可以恢复会话：服务器在握手的最后发给客户端一个会话票据（即上面 TLS 1.2 握手中的 NewSessionTicket），客户端下次连接时带上它，双方直接由之前协商的密钥派生出新的会话密钥，不再验证证书。
 
 TLS 1.3 恢复会话时通常还会再做一次 ECDHE，即使票据对应的密钥泄露，握手之后的应用数据密钥也算不出来；只用票据派生密钥则没有前向安全。
 
@@ -1111,7 +1115,7 @@ TLS 1.2 的第 3 步需要 2 个 RTT。连接建立以后，同一个连接上�
 
 SSL 提供报文摘要功能来进行完整性保护。
 
-HTTP 也提供了 MD5 报文摘要功能，但不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。
+HTTP/1.1 曾用 Content-MD5 首部携带报文的 MD5 摘要（RFC 7231 已删除这个首部），但它不安全。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。
 
 HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了握手协商出的会话密钥（HMAC，或者 AES-GCM 等算法自带的认证标签）。攻击者没有这个密钥，篡改报文之后无法算出正确的摘要，接收方校验失败就会断开连接。
 
@@ -1131,9 +1135,10 @@ HTTPS 的报文摘要功能之所以安全，是因为计算摘要时用到了�
 - 请求必须带 Host 首部，从而支持虚拟主机；
 - 新增状态码 100 Continue；
 - 支持分块传输编码；
+- 支持[范围请求](#范围请求)，可以断点续传；
 - 新增缓存处理指令 max-age 和条件请求 If-None-Match。
 
-## 八、HTTP/2.0
+## 八、HTTP/2.0 🔥
 
 ### HTTP/1.x 缺陷
 
@@ -1179,7 +1184,7 @@ HTTP/2.0 的首部压缩称为 HPACK，客户端和服务器各自维护两张�
 
 <div align="center"> <img src="pics/hpack.png" width="760px"/> </div><br>
 
-### HTTP/3 🔥
+### HTTP/3
 
 HTTP/2 在一个 TCP 连接上复用多个流，但 TCP 只保证整个字节流按序到达：一个报文段丢失时，后面已经到达的数据也要等它重传，所有的流都被阻塞，称为队头阻塞。
 
@@ -1211,7 +1216,7 @@ GET 用于获取资源，而 POST 用于传输实体主体。
 
 GET 和 POST 的请求都能使用额外的参数，但是 GET 的参数是以查询字符串出现在 URL 中，而 POST 的参数存储在实体主体中。不能因为 POST 参数存储在实体主体中就认为它的安全性更高，因为照样可以通过一些抓包工具（Fiddler）查看。
 
-因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。POST 请求体的编码由 Content-Type 决定，例如表单同样按这种方式编码，JSON 则直接用 UTF-8。
+因为 URL 只支持 ASCII 码，因此 GET 的参数中如果存在中文等字符就需要先进行编码。例如 `中文` 会转换为 `%E4%B8%AD%E6%96%87`，而空格会转换为 `%20`。表单采用 application/x-www-form-urlencoded 编码时（GET 提交的表单和 POST 的默认方式），规则相同，只是空格写成 `+`；POST 请求体的编码由 Content-Type 决定，JSON 则直接用 UTF-8。
 
 参数放在哪里只是惯例：POST 也可以同时带查询参数，例如 POST /orders?dryRun=true；GET 的请求体在规范中没有定义含义，有的服务器和代理会忽略或者拒绝，不应该依赖。
 
@@ -1225,6 +1230,7 @@ GET /test/demo_form.asp?name1=value1&name2=value2 HTTP/1.1
 POST /test/demo_form.asp HTTP/1.1
 Host: w3schools.com
 Content-Type: application/x-www-form-urlencoded
+Content-Length: 25
 
 name1=value1&name2=value2
 ```
@@ -1282,7 +1288,7 @@ DELETE /idX/delete HTTP/1.1   -> Returns 404
 
 XMLHttpRequest 是浏览器提供的 API，用于在不刷新页面的情况下向服务器发送请求，是 AJAX 的基础，现在更常用的是 fetch()。
 
-网上流传一种说法：XMLHttpRequest 发送 POST 时，会先发送首部，再单独发送请求体，GET 则一次发完。HTTP 规范中没有这样的规定，这只是个别浏览器早期的实现细节，不能作为 GET 和 POST 的区别。用 Edge 记录网络日志，通过 XMLHttpRequest 发送一个带 21 字节请求体的 POST 请求，首部和请求体是在同一次 socket 写入中发出的，共 723 字节（Edge 156 实测，见[附录 A5](#a5-xmlhttprequest-发送-post)）。
+网上流传一种说法：XMLHttpRequest 发送 POST 时，会先发送首部，再单独发送请求体，GET 则一次发完。HTTP 规范中没有这样的规定，这是早期浏览器的实现细节（2009 年的一次测试中，IE、Safari、Chrome 等都分两个包发送，只有 Firefox 一次发完），不能作为 GET 和 POST 的区别。用 Edge 记录网络日志，通过 XMLHttpRequest 发送一个带 21 字节请求体的 POST 请求，首部和请求体是在同一次 socket 写入中发出的，共 723 字节（Edge 156 实测，见[附录 A5](#a5-xmlhttprequest-发送-post)）。
 
 ## 附录：实测
 
@@ -1310,7 +1316,7 @@ if not c or c["exp"] < time.time() or c["redirect_uri"] != q.get("redirect_uri")
 
 ### A2 强缓存与协商缓存
 
-页面引用 a.js 和 b.js，服务器对它们的响应首部分别为 Cache-Control: max-age=600、ETag: "a-v1" 和 Cache-Control: no-cache、ETag: "b-v1"，收到的 If-None-Match 与 ETag 相同时返回 304。用 Edge 打开页面两次，服务器的日志：
+页面本身返回 Cache-Control: no-store，引用的 a.js 和 b.js 的响应首部分别为 Cache-Control: max-age=600、ETag: "a-v1" 和 Cache-Control: no-cache、ETag: "b-v1"，收到的 If-None-Match 与 ETag 相同时返回 304。用 Edge 打开页面两次，服务器的日志：
 
 ```text
 /        无条件请求                        -> 200
@@ -1322,7 +1328,7 @@ if not c or c["exp"] < time.time() or c["redirect_uri"] != q.get("redirect_uri")
 /favicon.ico 无条件请求                        -> 200
 ```
 
-另一个页面引用 style.css、logo.png 和 app.js，响应首部都带 Cache-Control: max-age=3600。用 Edge 156 的开发者协议打开页面后，依次普通刷新（Page.reload）和强制刷新（Page.reload，ignoreCache 为 true），服务器收到的请求：
+另一个页面带 Last-Modified，它引用的 style.css、logo.png 和 app.js 的响应首部都带 Cache-Control: max-age=3600。用 Edge 156 的开发者协议打开页面后，依次普通刷新（Page.reload）和强制刷新（Page.reload，ignoreCache 为 true），服务器收到的请求：
 
 ```text
 普通刷新  /           Cache-Control: max-age=0, If-Modified-Since   -> 304
@@ -1357,7 +1363,7 @@ API GET /star {'Origin': 'http://127.0.0.1:8001'}
 
 ### A4 TLS 握手
 
-openssl 为 macOS 自带的 LibreSSL 3.3.6：
+openssl 为 macOS 自带的 LibreSSL 3.3.6。LibreSSL 的 -msg 输出把 ClientHello 和 ServerHello 都标为 TLS 1.3，实际协商的版本以 Protocol 一行为准：
 
 ```text
 $ openssl s_client -connect www.baidu.com:443 -servername www.baidu.com -tls1_2 -msg
@@ -1494,13 +1500,14 @@ IP 127.0.0.1.35942 > 127.0.0.1.8080: Flags [P.], seq 1:182, ack 1, length 181: H
 POST /login HTTP/1.1
 Host: shop.example:8080
 User-Agent: curl/8.5.0
+Accept: */*
 Content-Length: 26
 Content-Type: application/x-www-form-urlencoded
 
 user=alice&password=123456
 ```
 
-HTTPS（协商出的版本为 TLS 1.3）的报文中，可读的字符串只有客户端第一个报文（ClientHello，517 字节）中的域名：
+HTTPS（协商出的版本为 TLS 1.3）的报文中，可读的字符串只有客户端第一个报文（ClientHello，517 字节）中的域名和 ALPN 的协议名（h2、http/1.1）：
 
 ```text
 IP 127.0.0.1.59008 > 127.0.0.1.8443: Flags [P.], seq 1:518, ack 1, length 517
@@ -1644,9 +1651,11 @@ www.jd.com     TLSv1.3 / AEAD-AES256-GCM-SHA384
 macOS 上的 Python 3.13（2026-10-30）。用 ALPN 协商 h2 后发送连接前言和一个空的 SETTINGS 帧，解析服务器发来的第一个 SETTINGS 帧（RFC 9113 第 6.5 节）：
 
 ```python
-import socket, ssl, struct
+import socket, ssl, struct, sys
+host = sys.argv[1] if len(sys.argv) > 1 else "www.example.com"
 ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem"); ctx.set_alpn_protocols(["h2"])
 s = ctx.wrap_socket(socket.create_connection((host, 443)), server_hostname=host)
+print("==", host, "ALPN", s.selected_alpn_protocol())
 s.sendall(b"PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n" + b"\x00\x00\x00\x04\x00\x00\x00\x00\x00")
 def recv_exact(n):                       # recv() 可能只返回一部分，读满 n 字节为止
     buf = b""
@@ -1661,8 +1670,10 @@ while True:
     body = recv_exact(length)
     if ftype == 4 and not head[4] & 1:   # 类型 4 为 SETTINGS，跳过 ACK
         break
+names = {3: "MAX_CONCURRENT_STREAMS", 4: "INITIAL_WINDOW_SIZE", 5: "MAX_FRAME_SIZE"}
 for i in range(0, length, 6):
-    print(struct.unpack(">HI", body[i:i + 6]))   # (参数编号, 值)，编号 3 为 MAX_CONCURRENT_STREAMS
+    k, v = struct.unpack(">HI", body[i:i + 6])   # (参数编号, 值)
+    print(" ", names.get(k, k), "=", v)
 ```
 
 ```text
@@ -1678,7 +1689,7 @@ for i in range(0, length, 6):
 
 ### A13 301 与 302 的缓存
 
-服务器把 /p301、/p302 分别重定向到 /new，重定向响应中没有 Cache-Control：
+macOS 上的 Microsoft Edge 156、Python 3.13。服务器把 /p301、/p302 分别重定向到 /new，重定向响应中没有 Cache-Control：
 
 ```python
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -1738,7 +1749,7 @@ AES-128-GCM    6280411.97k
 - 上野宣. 图解 HTTP [M]. 人民邮电出版社, 2014.
 - [High Performance Browser Networking: HTTP/2](https://hpbn.co/http2/)
 - [MDN : HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
-- [MDN : Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+- [MDN: Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)
 - [Difference between file URI and URL in java](https://web.archive.org/web/20191216080403/http://java2db.com:80/java-io/how-to-get-and-the-difference-between-file-uri-and-url-in-java)
 - [浅谈 HTTP 中 Get 与 Post 的区别](https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html)
 - [Are http:// and www really necessary?](https://www.webdancers.com/are-http-and-www-necesary/)
@@ -1748,7 +1759,7 @@ AES-128-GCM    6280411.97k
 - [Proxy server](https://en.wikipedia.org/wiki/Proxy_server)
 - [What Is This HTTPS/SSL Thing And Why Should You Care?](https://www.x-cart.com/blog/what-is-https-and-ssl.html)
 - [Sun Directory Server Enterprise Edition 7.0 Reference - Key Encryption](https://docs.oracle.com/cd/E19424-01/820-4811/6ng8i26bn/index.html)
-- [An Introduction to Mutual SSL Authentication](https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
+- [An Introduction to Mutual SSL Authentication](https://web.archive.org/web/20250814231648/https://www.codeproject.com/Articles/326574/An-Introduction-to-Mutual-SSL-Authentication)
 - [The Difference Between URLs and URIs](https://danielmiessler.com/study/url-uri/)
 - [Cookie 与 Session 的区别](https://juejin.im/entry/5766c29d6be3ff006a31b84e#comment)
 - [COOKIE 和 SESSION 有什么区别](https://www.zhihu.com/question/19786827)
@@ -1769,7 +1780,7 @@ AES-128-GCM    6280411.97k
 - [WHATWG HTML: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
 - [MDN: EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
 - [MDN: Storage quotas and eviction criteria](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
-- [MDN: Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+- [MDN: Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy)
 - [OWASP: Pinning Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html)
 - [RFC 8439: ChaCha20 and Poly1305 for IETF Protocols](https://www.rfc-editor.org/rfc/rfc8439)
 - [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110)
@@ -1782,5 +1793,6 @@ AES-128-GCM    6280411.97k
 - [RFC 9110：9 Methods](https://www.rfc-editor.org/rfc/rfc9110#section-9)
 - [RFC 5246: The Transport Layer Security (TLS) Protocol Version 1.2](https://www.rfc-editor.org/rfc/rfc5246)
 - [RFC 10015: Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015)
+- [RFC 7568: Deprecating Secure Sockets Layer Version 3.0](https://www.rfc-editor.org/rfc/rfc7568)
 - [RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://www.rfc-editor.org/rfc/rfc5280)
 - [RFC 6066: Transport Layer Security (TLS) Extensions: Extension Definitions](https://www.rfc-editor.org/rfc/rfc6066)

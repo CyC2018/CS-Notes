@@ -101,11 +101,11 @@ Java I/O 使用了装饰者模式来实现。以 InputStream 为例，
 
 - InputStream 是抽象组件；
 - FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作；
-- FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
+- FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能。例如 BufferedInputStream 为 FileInputStream 提供缓冲的功能。
 
 <div align="center"> <img src="pics/io-decorator.png" width="760px"/> </div><br>
 
-实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
+实例化一个具有缓冲功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
 ```java
 FileInputStream fileInputStream = new FileInputStream(filePath);
@@ -190,7 +190,7 @@ public static void readFileContent(String filePath) throws IOException {
 public static void main(String[] args) throws IOException, ClassNotFoundException {
 
     A a1 = new A(123, "abc");
-    String objectFile = "file/a1";
+    String objectFile = "a1.ser";
 
     try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile))) {
         objectOutputStream.writeObject(a1);
@@ -262,7 +262,7 @@ public static void main(String[] args) throws IOException {
     /* 字符流 */
     InputStreamReader isr = new InputStreamReader(is, "utf-8");
 
-    /* 提供缓存功能，关闭 br 时会依次关闭 isr 和 is */
+    /* 提供缓冲功能，关闭 br 时会依次关闭 isr 和 is */
     try (BufferedReader br = new BufferedReader(isr)) {
         String line;
         while ((line = br.readLine()) != null) {
@@ -307,7 +307,7 @@ java.io 与 NIO 有部分实现是共用的，例如 JDK 13 起 Socket 改用 NI
 
 通道 Channel 是对原 I/O 包中的流的模拟，可以通过它读取和写入数据。
 
-通道与流的不同之处在于，流只能在一个方向上移动（一个流必须是 InputStream 或者 OutputStream 的子类），而通道是双向的，可以用于读、写或者同时用于读写。
+通道与流的不同之处在于，流只能在一个方向上移动（一个流必须是 InputStream 或者 OutputStream 的子类），而 SocketChannel 这类通道是双向的，可以用于读、写或者同时用于读写。
 
 通道包括以下类型：
 
@@ -598,6 +598,7 @@ NIO 与普通 I/O 的区别主要有以下两点：
 - [Java SE 21 API: java.nio](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)
 - [The Java Tutorials: Basic I/O](https://docs.oracle.com/javase/tutorial/essential/io/)
 - [JEP 353: Reimplement the Legacy Socket API](https://openjdk.org/jeps/353)
+- [JEP 400: UTF-8 by Default](https://openjdk.org/jeps/400)
 - [Java SE 21 API: MappedByteBuffer](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/MappedByteBuffer.html)
 - NIO 入门（IBM developerWorks 中文站，已下线）
 - [Java NIO Tutorial](https://jenkov.com/tutorials/java-nio/index.html)

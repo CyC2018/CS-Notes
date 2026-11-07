@@ -73,16 +73,16 @@ IF
 CREATE TABLE World ( NAME VARCHAR ( 255 ), continent VARCHAR ( 255 ), area INT, population INT, gdp INT );
 INSERT INTO World ( NAME, continent, area, population, gdp )
 VALUES
-    ( 'Afghanistan', 'Asia', '652230', '25500100', '203430000' ),
-    ( 'Albania', 'Europe', '28748', '2831741', '129600000' ),
-    ( 'Algeria', 'Africa', '2381741', '37100000', '1886810000' ),
-    ( 'Andorra', 'Europe', '468', '78115', '37120000' ),
-    ( 'Angola', 'Africa', '1246700', '20609294', '1009900000' );
+    ( 'Afghanistan', 'Asia', '652230', '25500100', '20343000' ),
+    ( 'Albania', 'Europe', '28748', '2831741', '12960000' ),
+    ( 'Algeria', 'Africa', '2381741', '37100000', '188681000' ),
+    ( 'Andorra', 'Europe', '468', '78115', '3712000' ),
+    ( 'Angola', 'Africa', '1246700', '20609294', '100990000' );
 ```
 
 ## 627. Swap Salary
 
-https://leetcode.com/problems/swap-salary/description/
+https://leetcode.com/problems/swap-sex-of-employees/description/
 
 ### Description
 
@@ -208,7 +208,7 @@ VALUES
 
 ## 596. Classes More Than 5 Students
 
-https://leetcode.com/problems/classes-more-than-5-students/description/
+https://leetcode.com/problems/classes-with-at-least-5-students/description/
 
 ### Description
 
@@ -340,13 +340,13 @@ https://leetcode.com/problems/delete-duplicate-emails/description/
 邮件地址表：
 
 ```text
-+----+---------+
-| Id | Email   |
-+----+---------+
++----+------------------+
+| Id | Email            |
++----+------------------+
 | 1  | john@example.com |
-| 2  | bob@example.com |
+| 2  | bob@example.com  |
 | 3  | john@example.com |
-+----+---------+
++----+------------------+
 ```
 
 删除重复的邮件地址：
@@ -986,7 +986,7 @@ https://leetcode.com/problems/consecutive-numbers/description/
 +----+-----+
 ```
 
-查找连续出现三次的数字。
+查找至少连续出现三次的数字。
 
 ```text
 +-----------------+

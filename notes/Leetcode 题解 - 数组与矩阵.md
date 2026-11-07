@@ -248,7 +248,7 @@ private void swap(int[] nums, int i, int j) {
 
 [Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [力扣](https://leetcode.cn/problems/find-the-duplicate-number/description/)
 
-要求不能修改数组，也不能使用额外的空间。
+要求不能修改数组，只能使用常数级的额外空间。
 
 二分查找解法：对值域 [1, n] 二分，统计数组中不大于 mid 的元素个数 cnt。重复的数大于 mid 时，1 \~ mid 中每个数最多出现一次，cnt 不超过 mid；重复的数不大于 mid 时，大于 mid 的每个数最多出现一次，这类元素最多 n - mid 个，数组共 n + 1 个元素，cnt 至少为 mid + 1。因此 cnt > mid 说明重复的数在 [1, mid] 中，否则在 [mid + 1, n] 中。例如 [1, 3, 4, 2, 2] 中 mid = 2 时 cnt = 3，重复的数不大于 2。时间复杂度为 O(NlogN)。
 
@@ -302,7 +302,7 @@ Explanation: The [1, 3, 2] has three different positive integers ranging from 1 
 
 题目描述：数组元素为 1\~n 的整数，要求构建数组，使得相邻元素的差值不相同的个数为 k。
 
-让前 k+1 个元素构建出 k 个不相同的差值，序列为：1 k+1 2 k 3 k-1 ... k/2 k/2+1，相邻差值依次为 k、k-1、……、1。之后的元素按 k+2、k+3、……、n 递增排列，内部的差值都是 1；前一段的最后一个元素在 k/2 附近，与 k+2 的差值不超过 k，也已经出现过，因此不会产生新的差值。例如 n = 5、k = 3 时得到 [1, 4, 2, 3, 5]，差值为 3、2、1、2，衔接处 3 → 5 的差值 2 已经出现过。
+让前 k+1 个元素构建出 k 个不相同的差值：从 1 开始，交替取 1 \~ k+1 中剩下的最大值和最小值，序列为 1 k+1 2 k 3 k-1 ……，例如 k = 4 时为 1 5 2 4 3，相邻差值依次为 k、k-1、……、1。之后的元素按 k+2、k+3、……、n 递增排列，内部的差值都是 1；前一段的最后一个元素在 k/2 附近，与 k+2 的差值不超过 k，也已经出现过，因此不会产生新的差值。例如 n = 5、k = 3 时得到 [1, 4, 2, 3, 5]，差值为 3、2、1、2，衔接处 3 → 5 的差值 2 已经出现过。
 
 ```java
 public int[] constructArray(int n, int k) {

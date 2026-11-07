@@ -140,8 +140,8 @@
 | [23](#第-23-天隔离级别与-mvcc) | 隔离级别与 MVCC | 数据库系统原理：隔离级别～多版本并发控制 | 146. LRU 缓存 |
 | [24](#第-24-天next-key-lock-与死锁) | Next-Key Lock 与死锁 | 数据库系统原理：Next-Key Locks；计算机操作系统 - 死锁：MySQL 死锁 | 20. 有效的括号 |
 | [25](#第-25-天b-树与索引的类型) | B+ 树与索引的类型 | MySQL：B+ Tree 原理～索引的优点 | 232. 用栈实现队列 |
-| [26](#第-26-天索引的使用) | 索引的使用 | MySQL：索引的使用条件～索引失效 | 155. 最小栈 |
-| [27](#第-27-天查询性能优化) | 查询性能优化 | MySQL：查询性能优化 | 394. 字符串解码 |
+| [26](#第-26-天索引的使用) | 索引的使用 | MySQL：索引的使用条件～索引失效 | 394. 字符串解码 |
+| [27](#第-27-天查询性能优化) | 查询性能优化 | MySQL：查询性能优化 | 155. 最小栈 |
 | [28](#第-28-天存储引擎切分与复制) | 存储引擎、切分与复制 | MySQL：存储引擎～MySQL 复制 | 739. 每日温度 |
 | [29](#第-29-天日志) | 日志 | MySQL：MySQL 的日志 | 704. 二分查找 |
 |  | **Redis 与缓存** |  |  |
@@ -172,25 +172,25 @@
 | [51](#第-51-天spring-bootspring-mvc-与-mybatis) | Spring Boot、Spring MVC 与 MyBatis | Spring：Spring Boot 自动配置～Spring 中的设计模式 | 121. 买卖股票的最佳时机 |
 | [52](#第-52-天设计模式) | 设计模式 | 设计模式 - 目录：设计模式前言；设计模式  - 单例：单例（Singleton）；设计模式 - 策略：策略（Strategy）；面向对象思想：设计原则 | 70. 爬楼梯 |
 |  | **分布式与消息队列** |  |  |
-| [53](#第-53-天微服务) | 微服务 | 微服务：从单体到微服务～网关 | 53. 最大子数组和 |
+| [53](#第-53-天微服务) | 微服务 | 微服务：从单体到微服务～网关；集群：负载均衡算法 | 53. 最大子数组和 |
 | [54](#第-54-天分布式锁) | 分布式锁 | 分布式：分布式锁 | 5. 最长回文子串 |
 | [55](#第-55-天分布式事务与-cap) | 分布式事务与 CAP | 分布式：分布式事务～BASE | 300. 最长递增子序列 |
-| [56](#第-56-天rpc分布式-id-与幂等) | RPC、分布式 ID 与幂等 | 分布式：RPC～幂等 | 1143. 最长公共子序列 |
-| [57](#第-57-天消息队列的作用与可靠性) | 消息队列的作用与可靠性 | 消息队列：消息模型～消息队列的可靠性 | 322. 零钱兑换 |
-| [58](#第-58-天顺序积压与延迟消息) | 顺序、积压与延迟消息 | 消息队列：顺序性～延迟消息与死信队列 | 64. 最小路径和 |
-| [59](#第-59-天kafka) | Kafka | 消息队列：Kafka | 62. 不同路径 |
+| [56](#第-56-天rpc分布式-id-与幂等) | RPC、分布式 ID 与幂等 | 分布式：RPC～幂等 | 72. 编辑距离 |
+| [57](#第-57-天消息队列的作用与可靠性) | 消息队列的作用与可靠性 | 消息队列：消息模型～接收端的可靠性 | 1143. 最长公共子序列 |
+| [58](#第-58-天顺序积压与延迟消息) | 顺序、积压与延迟消息 | 消息队列：顺序性～延迟消息与死信队列 | 322. 零钱兑换 |
+| [59](#第-59-天kafka) | Kafka | 消息队列：Kafka | 64. 最小路径和 |
 |  | **系统设计** |  |  |
-| [60](#第-60-天性能与可用性) | 性能与可用性 | 系统设计基础：性能～安全性 | 198. 打家劫舍 |
-| [61](#第-61-天秒杀与抢红包) | 秒杀与抢红包 | 系统设计基础：秒杀系统 | 42. 接雨水 |
-| [62](#第-62-天海量数据短链与-feed-流) | 海量数据、短链与 Feed 流 | 系统设计基础：海量数据处理～Feed 流 | 239. 滑动窗口最大值 |
-| [63](#第-63-天高并发系统的设计) | 高并发系统的设计 | 系统设计基础：高并发系统的设计 | 76. 最小覆盖子串 |
-| [64](#第-64-天docker) | Docker | Docker：解决的问题～镜像与容器 | 25. K 个一组翻转链表 |
-| [65](#第-65-天kubernetes) | Kubernetes | Docker：Kubernetes | 23. 合并 K 个升序链表 |
-| [66](#第-66-天系统设计题的思路与即时通讯) | 系统设计题的思路与即时通讯 | 系统设计基础：系统设计题的思路～即时通讯 | 32. 最长有效括号 |
+| [60](#第-60-天性能与可用性) | 性能与可用性 | 系统设计基础：性能～安全性 | 62. 不同路径 |
+| [61](#第-61-天秒杀与抢红包) | 秒杀与抢红包 | 系统设计基础：秒杀系统 | 198. 打家劫舍 |
+| [62](#第-62-天海量数据短链与-feed-流) | 海量数据、短链与 Feed 流 | 系统设计基础：海量数据处理～Feed 流 | 42. 接雨水 |
+| [63](#第-63-天高并发系统的设计) | 高并发系统的设计 | 系统设计基础：高并发系统的设计 | 239. 滑动窗口最大值 |
+| [64](#第-64-天docker) | Docker | Docker：解决的问题～镜像与容器 | 76. 最小覆盖子串 |
+| [65](#第-65-天kubernetes) | Kubernetes | Docker：Kubernetes | 25. K 个一组翻转链表 |
+| [66](#第-66-天系统设计题的思路与即时通讯) | 系统设计题的思路与即时通讯 | 系统设计基础：系统设计题的思路～即时通讯 | 23. 合并 K 个升序链表 |
 | [67](#第-67-天订单与支付) | 订单与支付 | 系统设计基础：订单与支付 | 4. 寻找两个正序数组的中位数 |
 |  | **大模型应用** |  |  |
 | [68](#第-68-天rag-与-agent) | RAG 与 Agent | 大模型应用：RAG 的流程；大模型应用：Agent 是什么～Agent 与工作流 | 124. 二叉树中的最大路径和 |
-| [69](#第-69-天mcpskills-与-ai-编程助手) | MCP、Skills 与 AI 编程助手 | 大模型应用：MCP～Skills；大模型应用：AI 编程助手 | 72. 编辑距离 |
+| [69](#第-69-天mcpskills-与-ai-编程助手) | MCP、Skills 与 AI 编程助手 | 大模型应用：MCP～Skills；大模型应用：AI 编程助手 | 32. 最长有效括号 |
 
 ## 四、Java 基础
 
@@ -295,7 +295,7 @@ static 一节的初始化顺序可以对照代码自己推一遍。equals() 和 
 <summary>参考要点</summary>
 
 1. 设计上抽象类是 IS-A 关系，接口是 LIKE-A 关系，只提供方法契约（实现类在类型上仍是接口的子类型）；一个类可以实现多个接口，只能继承一个抽象类；接口的字段只能是 static final，成员默认 public，抽象类没有这些限制；相关类共享代码、需要非 public 成员或非常量字段时用抽象类，让不相关的类具备同一行为（例如 Comparable）时用接口，多数情况接口优先。
-2. 重写发生在子类与父类之间，方法声明相同，访问权限不能更小，返回类型与父类相同或为其子类型（基本类型必须相同），抛出的受检异常只能是父类方法声明的异常或其子类型；重载指一个类中（包括从父类继承来的方法）方法名相同，参数类型、个数、顺序至少一个不同，只有返回值不同不算重载；重载在编译时按参数的静态类型选定，重写在运行时按对象的实际类型选定。
+2. 重写发生在子类与父类之间，方法名和参数类型相同，访问权限不能更小，返回类型与父类相同或为其子类型（基本类型必须相同），抛出的受检异常只能是父类方法声明的异常或其子类型；重载指一个类中（包括从父类继承来的方法）方法名相同，参数类型、个数、顺序至少一个不同，只有返回值不同不算重载；重载在编译时按参数的静态类型选定，重写在运行时按对象的实际类型选定。
 3. 运行时多态需要继承或实现接口、重写和向上转型；通过类类型的引用调用编译成 invokevirtual 加符号引用，通过接口类型的引用调用用 invokeinterface，运行时按对象的实际类型选择方法，称为动态分派；HotSpot 为每个类维护虚方法表（vtable），按固定槽位取方法入口，接口调用用 itable；重载在编译时按静态类型确定，称为静态分派。
 
 </details>
@@ -325,7 +325,7 @@ static 一节的初始化顺序可以对照代码自己推一遍。equals() 和 
 
 1. 类加载时 JVM 根据 .class 文件创建 Class 对象，反射通过它在运行时取得类的信息，类名可以到运行时才确定；用 Field 读写字段，Method 的 invoke() 调用方法，Constructor 的 newInstance() 创建对象；应用：Spring 创建 Bean 并注入、MyBatis 写入结果字段、JUnit 调用 @Test 方法、JDK 动态代理；缺点是有性能开销（框架会缓存 Method 对象），类名和方法名写成字符串、失去编译期检查，JDK 16 起默认不能反射访问 JDK 内部的私有成员，会破坏封装。
 2. 会执行，finally 在离开 try 语句之前执行；返回值在执行 finally 之前已经保存，返回基本类型时 finally 修改变量不影响返回值，返回引用时能看到对对象的修改；finally 中的 return 会覆盖返回值并吞掉异常；调用 System.exit()、kill -9 或 JVM 崩溃时 finally 不执行。
-3. 泛型只在编译时检查类型，编译后类型参数替换为上界（没有上界时为 Object），取出元素处由编译器插入强制类型转换；运行时 List\<String> 和 List\<Integer> 是同一个类，所以类型参数不能是基本类型，不能 new T() 或用 instanceof List\<String>；类、字段、方法声明上的泛型信息保存在 Signature 属性中，可以通过反射读取。
+3. 泛型只在编译时检查类型，编译后类型参数替换为上界（没有上界时为 Object），取出元素处由编译器插入强制类型转换；运行时 List\<String> 和 List\<Integer> 是同一个类，所以类型参数不能是基本类型，不能 new T()，也不能用 instanceof List\<String> 判断一个 Object 是不是字符串列表；类、字段、方法声明上的泛型信息保存在 Signature 属性中，可以通过反射读取。
 
 </details>
 
@@ -374,7 +374,7 @@ static 一节的初始化顺序可以对照代码自己推一遍。equals() 和 
 
 动手：运行[附录 A1](Java%20容器.md#a1-arraylist-的扩容与常见陷阱)和[附录 A3](Java%20容器.md#a3-arraylist-的并发写入)的代码，观察扩容时数组长度的变化，以及并发写入时丢失的元素。
 
-预期：容量依次变为 0、10、15、22、33；8 个线程各添加 10 万个元素后 size 每轮不同（15 万～58 万），多数轮次出现 null，偶尔抛出 ArrayIndexOutOfBoundsException，synchronizedList 每次都是 800000。
+预期：容量依次变为 0、10、15、22、33；8 个线程各添加 10 万个元素后 size 每轮不同（附录中 30 轮为 15 万～58 万），多数轮次出现 null，偶尔抛出 ArrayIndexOutOfBoundsException，synchronizedList 每次都是 800000。
 
 算法（双指针，简单）：[88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)，题解见[归并两个有序数组](Leetcode%20题解%20-%20双指针.md#5-归并两个有序数组)。
 
@@ -403,7 +403,7 @@ HashMap 是 Java 面试中问得最多的容器。按存储结构、put、桶下
 
 动手：运行[附录 A4](Java%20容器.md#a4-hashmap-链表转红黑树)的代码，观察桶中节点在什么时候从链表变成红黑树，又在什么时候变回来。
 
-预期：所有键哈希相同时，放入第 9 个键容量扩为 32、第 10 个扩为 64，第 11 个才转为 TreeNode；逐个删除到剩 3 个键时转回链表；扩容拆分后每个桶不超过 6 个节点也转回链表。
+预期：所有键哈希相同时，放入第 9 个键容量扩为 32、第 10 个扩为 64，第 11 个才转为 TreeNode；从最后放入的键开始逐个删除，剩 3 个键时转回链表；扩容拆分后每个桶不超过 6 个节点也转回链表。
 
 算法（双指针，中等）：[15. 三数之和](https://leetcode.cn/problems/3sum/)，题解见[三数之和](Leetcode%20题解%20-%20双指针.md#8-三数之和)。
 
@@ -424,15 +424,15 @@ ConcurrentHashMap 重点比较 JDK 1.7 的分段锁和 1.8 的桶级锁，再看
 <details>
 <summary>参考要点</summary>
 
-1. JDK 1.7 用分段锁，Segment 继承 ReentrantLock，默认 16 个，最多 16 个线程同时写，并发度创建后不能改；JDK 1.8 去掉 Segment，用 Node 数组加链表或红黑树，空桶用 CAS 插入，非空桶用 synchronized 锁住头节点，锁粒度缩小到桶；get 不加锁，靠 volatile 读到最新值。
-2. 元素个数达到 sizeCtl（容量的 0.75 倍）时创建 2 倍的新数组，多个线程用 CAS 修改 transferIndex 领取至少 16 个桶从后往前迁移，迁移完的桶放入 ForwardingNode，put 遇到它会先尝试帮忙迁移，再到新数组中插入；元素个数分散在 baseCount 和多个 CounterCell 中，size() 不加锁求和，期间其它线程可能在增减，所以只是估计值。
+1. JDK 1.7 用分段锁，Segment 继承 ReentrantLock，默认 16 个，最多 16 个线程同时写，并发度创建后不能改；JDK 1.8 去掉 Segment，用 Node 数组加链表或红黑树，空桶用 CAS 插入，非空桶用 synchronized 锁住头节点，锁粒度缩小到桶；get 不加锁，靠 volatile 读到其它线程已完成的写入。
+2. 元素个数达到 sizeCtl（容量的 0.75 倍）时创建 2 倍的新数组，多个线程用 CAS 修改 transferIndex 领取一段桶（步长至少 16）从后往前迁移，迁移完的桶放入 ForwardingNode，put 遇到它会先尝试帮忙迁移，再到新数组中插入；元素个数分散在 baseCount 和多个 CounterCell 中，size() 不加锁求和，期间其它线程可能在增减，所以只是估计值。
 3. 继承 LinkedHashMap，构造时把 accessOrder 设为 true，每次访问把节点移到链表尾部，链表头部就是最久未使用的节点；重写 removeEldestEntry()，size() 超过容量时返回 true，插入后移除头部节点。
 
 </details>
 
 动手：运行[附录 A2](Java%20容器.md#a2-hashmap-的并发写入)的代码，再把 HashMap 换成 ConcurrentHashMap 运行一次，对比 size 的结果。
 
-预期：HashMap 的 size 每次不同（例如 111068、323870），远少于 80 万，还可能抛出 ClassCastException 或线程卡在 treeify() 中；ConcurrentHashMap 每次都是 800000。
+预期：HashMap 的 size 每次不同（例如 111068、323870），远少于 80 万，还可能有线程抛出 ClassCastException 或卡在 treeify() 中，用 submit() 提交时异常保存在 Future 中，调用 get() 才能看到，线程卡住时程序不会退出；ConcurrentHashMap 每次都是 800000。
 
 算法（双指针，中等）：[11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/)。
 
@@ -498,7 +498,7 @@ ConcurrentHashMap 重点比较 JDK 1.7 的分段锁和 1.8 的桶级锁，再看
 
 1. 靠协作：其它线程设置 volatile 停止标记或调用 interrupt()，由线程自己检查后在合适的位置结束；线程在 sleep()、wait()、join() 中时 interrupt() 使其抛出 InterruptedException，捕获后是否结束由代码决定，只设停止标记唤醒不了它；循环中没有这类调用时，用 interrupted() 检查中断标记后退出；interrupt() 不能中断等待 synchronized 锁的阻塞，平台线程阻塞在传统 I/O 上时通常也不响应；Thread.stop() 可能留下修改了一半的数据，JDK 20 起直接抛出 UnsupportedOperationException；线程池中可以用 Future 的 cancel(true) 中断单个任务。
 2. shutdown() 后不再接受新任务，已提交的任务继续执行完，本身不阻塞，需要等待时调用 awaitTermination()；shutdownNow() 相当于对每个线程调用 interrupt()，并返回队列中还没有执行的任务。
-3. synchronized 由 JVM 实现，ReentrantLock 由 JDK 基于 AQS 实现，性能大致相同；ReentrantLock 支持等待可中断、公平锁和绑定多个 Condition，synchronized 都不支持；ReentrantLock 必须在 finally 中 unlock()，synchronized 由 JVM 保证释放；不需要这些功能时优先用 synchronized，但 JDK 21 的虚拟线程在 synchronized 中阻塞会固定载体线程，包住 I/O 的临界区改用 ReentrantLock（JDK 24 起基本不再固定）。
+3. synchronized 由 JVM 实现，ReentrantLock 由 JDK 基于 AQS 实现，性能差距随竞争程度变化，一般不作为选择的依据；ReentrantLock 支持等待可中断、公平锁和绑定多个 Condition，synchronized 都不支持；ReentrantLock 必须在 finally 中 unlock()，synchronized 由 JVM 保证释放；不需要这些功能时优先用 synchronized，但 JDK 21 的虚拟线程在 synchronized 中阻塞会固定载体线程，包住 I/O 的临界区改用 ReentrantLock（JDK 24 起基本不再固定）。
 
 </details>
 
@@ -525,7 +525,7 @@ wait() 和 notify() 必须在 synchronized 中调用，读时想一想为什么�
 <details>
 <summary>参考要点</summary>
 
-1. wait() 是 Object 的方法，sleep() 是 Thread 的静态方法；wait() 释放调用对象的锁（同时持有的其它锁不释放），sleep() 不释放任何锁；wait() 只能在同步方法或同步块中调用，否则抛出 IllegalMonitorStateException；不带超时的 wait() 要等 notify()、notifyAll() 唤醒（也可能虚假唤醒），sleep() 到时间自动返回，两者都可以被 interrupt() 打断。
+1. wait() 是 Object 的方法，sleep() 是 Thread 的静态方法；wait() 释放调用对象的锁（同时持有的其它锁不释放），sleep() 不释放任何锁；wait() 只能在持有该对象锁的同步方法或同步块中调用，否则抛出 IllegalMonitorStateException；不带超时的 wait() 要等 notify()、notifyAll() 唤醒（也可能虚假唤醒），sleep() 到时间自动返回，两者都可以被 interrupt() 打断。
 2. NEW 是创建后还没有启动，start() 后进入 RUNNABLE，可能正在运行，也可能在等 CPU；等待进入 synchronized 时为 BLOCKED，拿到锁后回到 RUNNABLE；无参的 wait()、join() 和 park() 进入 WAITING，等其它线程唤醒（被 notify() 唤醒后要先重新竞争锁，这时为 BLOCKED），sleep() 和带超时的 wait()、join() 进入 TIMED_WAITING，时间到自动唤醒；执行完或因异常结束为 TERMINATED，等待 ReentrantLock 的线程是 WAITING 而不是 BLOCKED。
 3. 用共享变量记录轮到哪个线程，没轮到的线程 wait()，轮到的线程打印后改变轮次并 notifyAll()；等待条件用 while 而不是 if，被唤醒时要重新检查是否轮到自己；也可以用两个 Semaphore 传递许可，第一个初始为 1、第二个为 0，打印后释放对方的许可。
 
@@ -555,7 +555,7 @@ AQS 一节先看 state 和等待队列怎样实现 ReentrantLock 的加锁、重
 <summary>参考要点</summary>
 
 1. CountDownLatch 让一个或多个线程等待其它线程：countDown() 使计数减 1，减到 0 时唤醒 await() 的线程，计数不能重置；CyclicBarrier 让多个线程互相等待，全部调用 await() 到达后一起继续，计数自动恢复，可以用于下一轮，还可以指定全部到达时执行的 barrierAction。
-2. Future 只能用 get() 阻塞等待结果，多个任务有依赖时要自己写等待逻辑；CompletableFuture 可以注册回调，用 thenApply、thenCompose 串联，用 thenCombine 合并，用 exceptionally、handle 处理异常；带 Async 的方法不传线程池时在 ForkJoinPool.commonPool() 中执行（并行度小于 2 时每个任务新建一个线程），阻塞的 I/O 任务应传入自己的线程池。
+2. Future 只能用 get() 阻塞等待结果，多个任务有依赖时要自己写等待逻辑；CompletableFuture 可以注册回调，用 thenApply、thenCompose 串联，用 thenCombine 合并，用 exceptionally、handle 处理异常；带 Async 的方法不传线程池时在 ForkJoinPool.commonPool() 中执行（JDK 21 中并行度小于 2 时每个任务新建一个线程，JDK 25 起不再这样），阻塞的 I/O 任务应传入自己的线程池。
 3. 用有界的 ArrayBlockingQueue 作为共享缓冲区；生产者调用 put()，队列满时阻塞；消费者调用 take()，队列空时阻塞，不需要自己写 wait()/notify()。
 
 </details>
@@ -613,7 +613,7 @@ AQS 一节先看 state 和等待队列怎样实现 ReentrantLock 的加锁、重
 <summary>参考要点</summary>
 
 1. 多个线程不管以何种方式访问一个类，调用方不需要额外同步都能表现正确；根源是多个线程读写共享的可变数据；做法：不可变对象，互斥同步（synchronized、ReentrantLock），非阻塞同步（CAS、原子类），无同步方案（栈封闭、ThreadLocal）。
-2. CAS 有内存地址 V、预期值 A、新值 B 三个操作数，V 等于 A 时才更新为 B，由处理器指令（x86 上带 lock 前缀的 cmpxchg）保证原子性，失败时不阻塞线程、只返回 false，由调用方决定重试还是放弃，incrementAndGet() 的 Java 层实现在内部循环重试，即时编译后通常是一条原子加法指令，不需要重试；ABA 指值从 A 改为 B 又改回 A，CAS 误以为没变，会让无锁栈这类结构出错；用 AtomicStampedReference 给引用加版本号，每次修改加 1，持有旧版本号的 CAS 会失败。
+2. CAS 有内存地址 V、预期值 A、新值 B 三个操作数，V 等于 A 时才更新为 B，由处理器指令（x86 上带 lock 前缀的 cmpxchg）保证原子性，失败时不阻塞线程、只返回 false，由调用方决定重试还是放弃，incrementAndGet() 的 Java 层实现在内部循环重试，即时编译后通常是一条原子加法指令，不需要重试；ABA 指值从 A 改为 B 又改回 A，CAS 误以为没变，会让无锁栈这类结构出错；用 AtomicStampedReference 给引用加版本号，每次修改时由调用方传入加 1 后的版本号，持有旧版本号的 CAS 会失败。
 3. 悲观锁访问前先加锁，例如 synchronized、ReentrantLock、SELECT ... FOR UPDATE；乐观锁不加锁直接操作，提交时检查是否被改过，改过就重试，例如 CAS 和数据库版本号（UPDATE ... WHERE version = 1 影响 0 行时重试）；读多写少、冲突少时用乐观锁，写多、冲突频繁时用悲观锁。
 
 </details>
@@ -649,7 +649,7 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 
 动手：运行[附录 A1](Java%20并发.md#a1-三种锁在读多写少时的耗时)的代码，比较 ReentrantLock、ReentrantReadWriteLock 和 StampedLock 在读多写少时的耗时。
 
-预期：读多写少时独占锁（附录中为 ReentrantLock）约 370～440 ms，ReentrantReadWriteLock 约 140～170 ms，StampedLock 乐观读约 50～70 ms；持有读锁时获取写锁失败，写锁可以降级为读锁。
+预期：读多写少时独占锁（附录中为 ReentrantLock）约 370～440 ms，ReentrantReadWriteLock 约 139～168 ms，StampedLock 乐观读约 50～70 ms；持有读锁时获取写锁失败，写锁可以降级为读锁。
 
 算法（链表，简单）：[160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)，题解见[找出两个链表的交点](Leetcode%20题解%20-%20链表.md#1-找出两个链表的交点)。
 
@@ -694,7 +694,7 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 
 预期：默认开启逃逸分析时 2 亿个 Point 没有触发 GC，约 130 ms；加上 -XX:-DoEscapeAnalysis 后发生 13 次 GC，约 335 ms。
 
-算法（链表，中等）：[92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)。
+算法（链表，中等）：[92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)，同类题见[链表反转](Leetcode%20题解%20-%20链表.md#2-链表反转)。
 
 明天：第 17 天，对象存活与垃圾收集算法（Java 虚拟机：垃圾收集～Stop The World）。
 
@@ -750,7 +750,7 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 
 动手：按[附录 A3](Java%20虚拟机.md#a3-不同收集器的停顿)的方法，用 -Xlog:gc 分别运行 Serial、Parallel 和 G1，比较停顿时间。
 
-预期：128 MB 堆下 Serial 停顿 39 次、共 90.4 ms、最长 9.14 ms，Parallel 75 次、共 96.8 ms、最长 5.16 ms，G1 84 次、共 40.0 ms、最长 2.01 ms 且没有 Full GC；G1 停顿次数多但每次最短。
+预期：128 MB 堆下 Serial 停顿 39 次、共 90.4 ms、最长 9.14 ms，Parallel 75 次、共 96.8 ms、最长 5.16 ms，G1 84 次、共 40.0 ms、最长 2.01 ms（次数每次运行略有不同，偶尔出现 Full GC）；G1 停顿次数多但每次最短。
 
 算法（链表，中等）：[19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)，题解见[删除链表的倒数第 n 个节点](Leetcode%20题解%20-%20链表.md#5-删除链表的倒数第-n-个节点)。
 
@@ -829,7 +829,7 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 <details>
 <summary>参考要点</summary>
 
-1. 先看错误信息判断是哪块内存：Java heap space、GC overhead limit exceeded、Metaspace、direct buffer memory、unable to create native thread；元空间、直接内存、线程创建失败分别检查类的生成与卸载、堆外内存的释放、线程数和容器的限制，不能靠增大堆解决；Java heap space 时，启动时加 -XX:+HeapDumpOnOutOfMemoryError 保存堆转储，或用 jcmd \<pid> GC.heap_dump 导出；用 MAT 按 Retained Heap 排序，查看大对象到 GC Roots 的引用链；引用链不该存在就是内存泄漏，改代码，否则增大堆或减少一次加载的数据。
+1. 先看错误信息判断是哪块内存：Java heap space、GC overhead limit exceeded、Metaspace、direct buffer memory、unable to create native thread；元空间、直接内存、线程创建失败分别检查类的生成与卸载、堆外内存的释放、线程数和容器的限制；元空间和线程创建失败增大堆解决不了，直接内存没有设置 MaxDirectMemorySize 时上限与最大堆相同，增大堆会同时提高这个上限，但堆外内存没有释放时只能推迟溢出，要先区分是泄漏还是容量不够；Java heap space 时，启动时加 -XX:+HeapDumpOnOutOfMemoryError 保存堆转储，或用 jcmd \<pid> GC.heap_dump 导出；用 MAT 按 Retained Heap 排序，查看大对象到 GC Roots 的引用链；引用链不该存在就是内存泄漏，改代码，否则增大堆或减少一次加载的数据。
 2. top 找到 CPU 占用高的 Java 进程；top -H -p \<pid> 找到占用最高的线程 ID；jstack \<pid> 导出线程栈，按 nid 找到这个线程（JDK 18 前 nid 是十六进制，要先用 printf "%x" 转换）；查看它正在执行的代码，常见是死循环或频繁 GC。
 3. 先明确目标（在线服务看最长停顿，批处理看吞吐量），默认用 G1 并开启 GC 日志观察；-Xms 与 -Xmx 设为相同，-Xmx 要给元空间、线程栈、直接内存等堆外内存留出余量，不能等于容器的内存，按需设置 MaxGCPauseMillis、MaxMetaspaceSize、HeapDumpOnOutOfMemoryError；频繁 Full GC 时用 jstat -gcutil 看老年代使用率，降不下来查泄漏，能降下来就增大堆或调整新生代；GC 问题多数是代码造成的，只调参数解决不了。
 
@@ -866,15 +866,15 @@ ThreadLocal 重点看它的数据结构、内存泄漏的原因，以及线程�
 
 自测：
 
-1. ACID 分别是什么？InnoDB 怎样保证它们？（见[事务](数据库系统原理.md#一事务)）
+1. ACID 分别是什么？InnoDB 怎样保证它们？（见[ACID](数据库系统原理.md#acid)）
 2. 脏读、不可重复读和幻读有什么区别？（见[并发一致性问题](数据库系统原理.md#二并发一致性问题)）
-3. MySQL 中有哪些锁？意向锁有什么用？（见[MySQL 中的锁](数据库系统原理.md#mysql-中的锁)、[封锁类型](数据库系统原理.md#封锁类型)）
+3. MySQL 中有哪些锁？意向锁有什么用？（见[MySQL 中的锁](数据库系统原理.md#mysql-中的锁)、[意向锁](数据库系统原理.md#2-意向锁)）
 
 <details>
 <summary>参考要点</summary>
 
-1. 原子性：要么全部成功，要么全部回滚，InnoDB 用 undo log 记录修改前的值来回滚；一致性：事务前后满足约束和业务规则，由另外三者和主键、唯一索引等约束共同保证，业务规则还要应用自己维护；隔离性：未提交的修改对其它事务不可见，写操作加锁，普通读用 MVCC 读快照；持久性：提交后不丢失，先写 redo log，提交时刷盘，崩溃后重放。
-2. 脏读是读到了其它事务还没有提交的数据，对方回滚后读到的就是不存在的值；不可重复读是同一事务两次读同一行结果不同，因为中间有事务修改并提交了这一行；幻读是两次读同一范围时行数变了，因为中间有事务插入了新行。
+1. 原子性：要么全部成功，要么全部回滚，InnoDB 用 undo log 记录撤销每次修改所需的信息（插入记主键，更新和删除记旧版本）来回滚；一致性：事务前后满足约束和业务规则，由另外三者和主键、唯一索引等约束共同保证，业务规则还要应用自己维护；隔离性：未提交的修改对其它事务不可见，写操作加锁，普通读用 MVCC 读快照；持久性：提交后不丢失，先写 redo log，默认配置下提交时刷盘，崩溃后重放。
+2. 脏读是读到了其它事务还没有提交的数据，对方回滚后读到的就是不存在的值；不可重复读是同一事务两次读同一行结果不同，因为中间有事务修改或删除了这一行并提交；幻读是两次读同一范围时多出了新的行，因为中间有事务插入了新行。
 3. 全局读锁（FLUSH TABLES WITH READ LOCK）；表级的表锁、元数据锁（MDL）、意向锁和自增锁；行级的记录锁、间隙锁、Next-Key Lock 和插入意向锁，加在索引上；意向锁 IS、IX 是表锁，加行锁前先加，要锁整张表时只需检查表上有没有意向锁，不必逐行检查。
 
 </details>
@@ -925,7 +925,7 @@ Next-Key Lock 是 InnoDB 在可重复读下防止幻读的方法，加锁范围�
 自测：
 
 1. InnoDB 在可重复读级别下怎样避免幻读？（见[Next-Key Locks](数据库系统原理.md#六next-key-locks)）
-2. 间隙锁锁住的是什么范围？（见[Gap Locks](数据库系统原理.md#gap-locks)）
+2. 间隙锁锁住的是什么范围？（见[Gap Locks](数据库系统原理.md#gap-locks)、[Next-Key Locks](数据库系统原理.md#next-key-locks)）
 3. 遇到过 MySQL 死锁吗？怎样排查？（见[MySQL 死锁](计算机操作系统%20-%20死锁.md#2-mysql-死锁)）
 
 <details>
@@ -968,7 +968,7 @@ Next-Key Lock 是 InnoDB 在可重复读下防止幻读的方法，加锁范围�
 
 动手：按[附录 A1](MySQL.md#a1-主键索引的高度)的方法，查出一张 200 万行的表主键索引的高度。
 
-预期：根页 PAGE_LEVEL 为 2，主键索引共 3 层；根页有 27 条记录，指向 27 个中间页，叶子页约 2.4 万个，每页约 80 行。
+预期：根页 PAGE_LEVEL 为 2，主键索引共 3 层；根页有 27 条记录，指向 27 个中间页，逐层读取各页的记录数，叶子页共约 2.15 万个，平均每页约 93 行。
 
 算法（栈和队列，简单）：[232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/)，题解见[用栈实现队列](Leetcode%20题解%20-%20栈和队列.md#1-用栈实现队列)。
 
@@ -984,22 +984,22 @@ Next-Key Lock 是 InnoDB 在可重复读下防止幻读的方法，加锁范围�
 
 1. 什么是最左前缀原则？联合索引 (a, b, c) 只用到 a 和 c 时能走索引吗？（见[多列索引](MySQL.md#2-多列索引)）
 2. 哪些情况下索引会失效？（见[索引失效](MySQL.md#索引失效)）
-3. 建索引有哪些原则？（见[索引的使用条件](MySQL.md#索引的使用条件)）
+3. 建索引有哪些原则？（见[索引的使用条件](MySQL.md#索引的使用条件)、[索引列的顺序](MySQL.md#3-索引列的顺序)）
 
 <details>
 <summary>参考要点</summary>
 
 1. 联合索引先按第一列排序，第一列相同再按第二列，所以条件要从最左列开始连续使用才能用索引定位，与 WHERE 中的书写顺序无关；(a, b, c) 只用到 a 和 c 时能走索引，但只用 a 定位，c 在定位到的范围内逐条判断，借助索引下推可以在索引上过滤，减少回表。
 2. 没有从联合索引的最左列开始，或者依赖联合索引中范围条件之后的列缩小扫描范围（范围条件带等号时例外）；对索引列使用函数（例如 DATE(create_time)），或者发生隐式类型转换（例如字符串列与数字比较）；LIKE 以 % 开头，OR 的一侧没有索引；匹配的行太多，优化器估算全表扫描更快，常见于 !=、NOT IN 和大范围的条件；这些是普通索引上的常见情况，只查索引中的列时可能改为扫描整个索引，缺少最左列时 8.0.13 起可能用跳跃扫描，对表达式建函数索引后函数条件也能走索引。
-3. 给经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中并且区分度高的列建索引，状态这类区分度低的列单独建索引作用不大，但总是查询占比很少的值时索引仍然有效；多个条件常一起出现时建联合索引，等值列在前、排序列其次、范围列最后；尽量让高频查询用上覆盖索引；索引不是越多越好，有 (a, b) 时 (a) 是冗余的，主键用较短的自增整数。
+3. 给经常出现在 WHERE、JOIN、ORDER BY、GROUP BY 中并且区分度高的列建索引，状态这类区分度低的列单独建索引作用不大，但总是查询占比很少的值时索引仍然有效；多个条件常一起出现时建联合索引，等值列在前、排序列其次、范围列最后；尽量让高频查询用上覆盖索引；索引不是越多越好，有 (a, b) 时普通索引 (a) 一般是冗余的（依赖 (a, id) 顺序排序的查询除外），主键用较短的自增整数。
 
 </details>
 
-动手：按[附录 A6](MySQL.md#a6-联合索引的扫描范围)的表结构，自己写几条会让联合索引失效的查询，用 EXPLAIN 验证。
+动手：按[附录](MySQL.md#附录实测)开头的 orders 表结构和[附录 A6](MySQL.md#a6-联合索引的扫描范围)的数据分布，自己写几条会让联合索引失效的查询，用 EXPLAIN 验证。
 
 预期：写出的失效查询 EXPLAIN 中 type 为 ALL 或 key_len 变短，改写后 type 变为 ref 或 range；key_len 与用到的列对应：只用 user_id 为 4，加上 status 为 5，三列都用上为 10。
 
-算法（栈和队列，简单）：[155. 最小栈](https://leetcode.cn/problems/min-stack/)，题解见[最小值栈](Leetcode%20题解%20-%20栈和队列.md#3-最小值栈)。
+算法（栈和队列，中等）：[394. 字符串解码](https://leetcode.cn/problems/decode-string/)，题解见[字符串解码](Leetcode%20题解%20-%20栈和队列.md#7-字符串解码)。
 
 明天：第 27 天，查询性能优化（MySQL：查询性能优化）。
 
@@ -1018,17 +1018,17 @@ Next-Key Lock 是 InnoDB 在可重复读下防止幻读的方法，加锁范围�
 <details>
 <summary>参考要点</summary>
 
-1. 找出：开启慢查询日志，long_query_time 线上常调到 1 秒左右（更小的值只在线上短时间使用），对比 Rows_examined 和 Rows_sent，用 mysqldumpslow 或 sys.statement_analysis 按语句归类；分析：用 EXPLAIN 和 EXPLAIN ANALYZE 看执行计划，常见原因有索引失效、回表太多、filesort 和临时表、连接列没有索引、等锁（Lock_time 大）、统计信息不准；修改：建合适的索引或改写语句，再对比执行计划和耗时，例如加覆盖索引后从 237 ms 降到 20 ms。
+1. 找出：开启慢查询日志，long_query_time 线上常调到 1 秒左右（更小的值只在线上短时间使用），对比 Rows_examined 和 Rows_sent，用 mysqldumpslow 或 sys.statement_analysis 按语句归类；分析：用 EXPLAIN 和 EXPLAIN ANALYZE 看执行计划，常见原因有索引失效、回表太多、filesort 和临时表、连接列没有索引、等锁（等行锁时 Lock_time 大，等元数据锁只体现在 Query_time 上）、统计信息不准；修改：建合适的索引或改写语句，再对比执行计划和耗时，例如加覆盖索引后从 237 ms 降到 20 ms。
 2. type（const、eq_ref、ref、range、index、ALL，从好到差）、key 和 possible_keys、key_len（用到了联合索引的前几列）、rows（估算扫描行数）、Extra；Using filesort 表示无法利用索引的顺序，需要额外排序；Using temporary 表示用了临时表，常见于 GROUP BY 的列无法利用索引的顺序，或者 GROUP BY 和 ORDER BY 的列不一致。
 3. LIMIT 1000000, 10 要先找出前 1000010 行再丢弃前 100 万行，走二级索引要回表上百万次，优化器改为全表扫描加排序，200 万行约 1.5 秒；延迟关联先在覆盖索引上查出这一页的主键，只回表 10 次，约 81 ms；游标分页记住上一页最后一行的排序值和主键，从它之后取 10 行，约 0.2 ms，但不能跳页；也可以限制翻页深度。
 
 </details>
 
-动手：在一张 100 万行以上的表上（可以用脚本批量插入），按[附录 A5](MySQL.md#a5-深分页的耗时)的方法比较 LIMIT 1000000, 10、延迟关联和游标分页三种写法的耗时。
+动手：在一张 200 万行的表上（可以用脚本批量插入），按[附录 A5](MySQL.md#a5-深分页的耗时)的方法比较 LIMIT 1000000, 10、延迟关联和游标分页三种写法的耗时。
 
 预期：200 万行的表上 LIMIT 1000000, 10 约 1.5 秒（全表扫描加排序），延迟关联约 80 ms，游标分页不到 1 ms，三种写法返回的 10 行相同。
 
-算法（栈和队列，中等）：[394. 字符串解码](https://leetcode.cn/problems/decode-string/)，题解见[字符串解码](Leetcode%20题解%20-%20栈和队列.md#7-字符串解码)。
+算法（栈和队列，中等）：[155. 最小栈](https://leetcode.cn/problems/min-stack/)，题解见[最小值栈](Leetcode%20题解%20-%20栈和队列.md#3-最小值栈)。
 
 明天：第 28 天，存储引擎、切分与复制（MySQL：存储引擎～MySQL 复制）。
 
@@ -1072,7 +1072,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 <details>
 <summary>参考要点</summary>
 
-1. undo log 由 InnoDB 写，记录修改前的旧版本，用于回滚和 MVCC；redo log 由 InnoDB 写，记录对数据页的修改，空间固定、循环写，用于崩溃恢复；binlog 由 Server 层写，记录行的修改或 SQL 语句，追加写，用于主从复制和恢复到指定时间点。
+1. undo log 由 InnoDB 写，记录撤销修改所需的信息（插入记主键，更新、删除记旧值），用于回滚和 MVCC；redo log 由 InnoDB 写，记录对数据页的修改，空间固定、循环写，用于崩溃恢复；binlog 由 Server 层写，记录行的修改或 SQL 语句，追加写，用于主从复制和恢复到指定时间点。
 2. 事务要同时写 redo log 和 binlog，只写成功一个就崩溃会让主从不一致，例如 redo log 写了而 binlog 没写，主库保留修改，从库却收不到；两阶段提交：先写 redo log 并刷盘进入 prepare 状态，再写 binlog 并刷盘（带 Xid），最后在 redo log 中标记提交；崩溃恢复时 prepare 状态的事务在 binlog 中找到 Xid 就提交，否则回滚。
 3. 以 UPDATE orders SET status = 3 WHERE id = 1024 为例：按主键找到这一行，页不在缓冲池就先读入，并加 X 锁；旧值写入 undo log，修改缓冲池中的数据页并生成 redo log 放入 redo log buffer，执行器把修改写入 binlog cache；提交时按两阶段提交把 redo log 和 binlog 刷盘，释放锁并返回；脏页之后由后台线程写回磁盘。
 
@@ -1092,7 +1092,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 1. 先找原因：从慢查询日志中找到这条语句，对比 Rows_examined 和 Rows_sent，用 EXPLAIN 和 EXPLAIN ANALYZE 查看是否走了索引、是否有 Using filesort 和大量回表。
 2. 建联合索引 (user_id, create_time)：等值条件的 user_id 在前，排序的 create_time 在后，WHERE user_id = ? ORDER BY create_time DESC LIMIT 10 直接倒序扫描索引，不需要 filesort，只读 10 行。
 3. 只查需要的列，必要时把这些列加入索引成为覆盖索引；翻页用游标分页，不用大偏移量的 LIMIT。
-4. 单表行数本身不是瓶颈（3 层 B+ 树约能放 6000 万行，每行约 1 KB 时约 1100 万行），只是读压力大时先用读写分离和缓存。
+4. 单表行数本身不是瓶颈（3 层 B+ 树约能放 7300 万行，每行约 1 KB 时约 1100 万行），只是读压力大时先用读写分离和缓存。
 5. 写入量或数据量超出单机能力时按 user_id 分库分表，按用户查询只访问一个分片，同时处理分布式 ID、不带分片键的查询（基因法、映射表）和数据迁移。
 
 </details>
@@ -1117,7 +1117,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 <summary>参考要点</summary>
 
 1. STRING 缓存对象、计数器、分布式锁，LIST 按插入顺序两端读写，例如最新 N 条消息、简单的消息队列；SET 去重和求交集、并集，例如标签、共同好友，HASH 保存对象的多个字段，例如用户信息、购物车；ZSET 按分值排序和范围查找，例如排行榜、按时间排序的 Feed；BITMAP、HyperLogLog 用于签到和 UV 统计，GEO 用于附近的门店，Stream 用于带消费者组的消息。
-2. 数据位置：Redis 全部在内存中，容量受内存限制，MySQL 在磁盘上，缓冲池只缓存热点页；查询：Redis 只能按键访问数据结构，MySQL 用 SQL 按任意条件查询、联表和聚合；事务和持久性：MySQL 满足 ACID，提交后不丢数据，Redis 事务中的命令出错不回滚，开启 AOF everysec 也可能丢失最近 1 秒的写入；通常 MySQL 存业务数据，Redis 作缓存。
+2. 数据位置：Redis 全部在内存中，容量受内存限制，MySQL 在磁盘上，缓冲池只缓存热点页；查询：Redis 只能按键访问数据结构，MySQL 用 SQL 按任意条件查询、联表和聚合；事务和持久性：MySQL 满足 ACID，默认配置下提交后不丢数据，Redis 事务中的命令出错不回滚，开启 AOF everysec 也可能丢失最近 1 秒的写入；通常 MySQL 存业务数据，Redis 作缓存。
 3. 用位图：每天一个键 active:{日期}，offset 为用户的连续序号，签到时 SETBIT 为 1，1 亿用户每天 12.5 MB、一年约 4.6 GB；BITCOUNT 统计当天的人数，BITOP 求多天的交集和并集；也可以每人每月一个键 sign:{用户 ID}:{年月}，便于查一个人的签到，但大量小键的开销大，每人每年一个键时 1 亿用户约 15 GB；用户 ID 稀疏时先转换为连续的序号。
 
 </details>
@@ -1203,7 +1203,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 <details>
 <summary>参考要点</summary>
 
-1. 执行命令是单线程的，6.0 起可以开启 I/O 多线程处理网络读写，关闭文件、AOF 刷盘、UNLINK 释放大键由后台线程完成；快的原因：数据在内存中，单线程不用加锁、没有线程切换，I/O 多路复用让一个线程处理大量连接，小数据用紧凑的编码；瓶颈通常在网络，50 个连接逐条 GET 约 16 万次/秒，流水线约 160 万次/秒。
+1. 执行命令是单线程的，6.0 起可以开启 I/O 多线程处理网络读写，关闭文件、AOF 刷盘（everysec 时）、UNLINK 释放大键由后台线程完成；快的原因：数据在内存中，单线程不用加锁、没有线程切换，I/O 多路复用让一个线程处理大量连接，小数据用紧凑的编码；瓶颈通常在网络，50 个连接逐条 GET 约 16 万次/秒，流水线约 160 万次/秒。
 2. 主观下线：某个哨兵在 down-after-milliseconds 内没有收到主节点的有效回复；客观下线：认为它下线的哨兵数达到 quorum，再由哨兵投票选出领头哨兵负责故障转移；选新主：排除断线太久的从节点，依次比较优先级（replica-priority 越小越优先）、复制偏移量（越大数据越新）和运行 ID；对选中的从节点执行 REPLICAOF NO ONE，其它从节点改为复制它，旧主节点恢复后成为从节点。
 3. 键空间分为 16384 个哈希槽，CRC16(key) % 16384 计算键所属的槽，每个主节点负责一部分槽；访问了不负责这个槽的节点会收到 MOVED 重定向，客户端缓存槽映射；多键命令要求键在同一个槽，可以用 {} 哈希标签；扩容时按键迁移槽：源节点标记 MIGRATING、目标节点标记 IMPORTING，用 MIGRATE 分批搬键，已迁走的键返回 ASK，客户端先发 ASKING 再访问目标节点，全部迁完后用 CLUSTER SETSLOT 把槽分给新节点。
 
@@ -1310,9 +1310,9 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 
 </details>
 
-动手：用 tcpdump 或 Wireshark 抓一次 curl http://example.com 的数据包，找出三次握手和四次挥手的报文，记下每个报文的序号和确认号。
+动手：用 sudo tcpdump -nn -S "tcp port 80"（-S 显示原始序号）或 Wireshark 抓一次 curl http://example.com 的数据包，找出三次握手和四次挥手的报文，记下每个报文的序号和确认号。
 
-预期：握手为 SYN（seq=x）、SYN+ACK（seq=y，ack=x+1）、ACK（ack=y+1）三个报文，挥手为双方各一个 FIN 及其 ACK，被动关闭方立即 close() 时 ACK 与 FIN 合并，只看到三个报文。
+预期：握手为 SYN（seq=x）、SYN+ACK（seq=y，ack=x+1）、ACK（ack=y+1）三个报文，挥手为双方各一个 FIN 及其 ACK，被动关闭方收到 FIN 后很快调用 close() 时，确认可能与它的 FIN 合并，这时只看到三个报文；不加 -S 时 tcpdump 显示相对序号（例如 ack 1）。
 
 算法（二叉树，简单）：[101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/)，题解见[树的对称](Leetcode%20题解%20-%20树.md#9-树的对称)。
 
@@ -1339,7 +1339,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 
 </details>
 
-动手：在 Linux 上按[附录 A1](计算机网络%20-%20传输层.md#a1-tcp-与-udp-发送位置更新)的方法给回环网卡加上时延和丢包（tc qdisc add dev lo root netem delay 25ms loss 1%），用 python3 -m http.server 8000 提供一个几百 MB 的文件，再用 curl 从 127.0.0.1:8000 下载；下载时反复执行 ss -ti sport = :8000，查看服务器一侧（发送方）连接的 cwnd、rtt 和 retrans，对照[TCP 拥塞控制](计算机网络%20-%20传输层.md#tcp-拥塞控制)一节解释 cwnd 的变化。
+动手：在 Linux 上按[附录 A1](计算机网络%20-%20传输层.md#a1-tcp-与-udp-发送位置更新)的方法给回环网卡加上时延和丢包（tc qdisc add dev lo root netem delay 25ms loss 1%，在 Docker 容器中做时启动容器要加 --cap-add=NET_ADMIN；做完用 tc qdisc del dev lo root 删除，否则本机走回环的连接都会一直带着时延和丢包），用 python3 -m http.server 8000 提供一个几百 MB 的文件，再用 curl 从 127.0.0.1:8000 下载；下载时反复执行 ss -ti sport = :8000，查看服务器一侧（发送方）连接的 cwnd、rtt 和 retrans，对照[TCP 拥塞控制](计算机网络%20-%20传输层.md#tcp-拥塞控制)一节解释 cwnd 的变化。
 
 预期：服务器一侧的 rtt 约 50 ms，cwnd 从初始值（约 10 个报文段）开始迅速增大，之后增长放缓；retrans 增加（出现丢包）时 cwnd 随之减小再重新增长；客户端一侧主要在接收数据，它的 cwnd 不反映下载方向的拥塞控制。
 
@@ -1370,7 +1370,7 @@ redo log、undo log 和 binlog 分别用于崩溃恢复、回滚和复制。最�
 
 动手：用 curl -v 访问一个网站，指出请求行、请求首部、状态行和响应首部，再用 curl -I 只获取响应首部。
 
-预期：curl -v 中以 > 开头的是请求行（GET / HTTP/1.1）和请求首部，以 < 开头的是状态行（HTTP/1.1 200 OK）和响应首部，curl -I 只输出状态行和响应首部，没有响应体。
+预期：curl -v 中以 > 开头的是请求行（GET / HTTP/1.1）和请求首部，以 < 开头的是状态行（HTTP/1.1 200 OK）和响应首部，curl -I 只输出状态行和响应首部，没有响应体；访问 HTTPS 网站时 curl 默认优先使用 HTTP/2，显示为 GET / HTTP/2 和 HTTP/2 200，没有原因短语，加 --http1.1 可以看到 HTTP/1.1 的格式。
 
 算法（二叉树，简单）：[543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)，题解见[两节点的最长路径](Leetcode%20题解%20-%20树.md#3-两节点的最长路径)。
 
@@ -1479,14 +1479,14 @@ HTTP/2 和 HTTP/3 分别解决了 HTTP/1.1 的哪些问题是常见的追问。G
 <summary>参考要点</summary>
 
 1. 二进制分帧：报文拆成 HEADERS 帧和 DATA 帧，一个 TCP 连接承载多个流，帧交错发送，不再需要多个连接；首部压缩：双方维护首部字段表并用 Huffman 编码；服务端推送（Chrome 106 起默认禁用，Firefox 132 已移除，常用 103 Early Hints 或 preload 代替）；TCP 层的队头阻塞仍在，HTTP/3 改用基于 UDP 的 QUIC，丢包时只有包中带有数据的流暂停交付。
-2. 语义：GET 获取资源，POST 传输实体主体；GET 安全且幂等，POST 会改变服务器状态，不幂等；参数放在哪里只是惯例，GET 参数通常在 URL 中（要编码，长度受浏览器和服务器的限制，例如 Nginx 默认请求行不超过 8 KB），POST 在主体中，但抓包同样能看到，并不更安全；GET 响应可缓存，POST 多数不可缓存。
+2. 语义：GET 获取资源，POST 传输实体主体；GET 安全且幂等，POST 不安全（可能改变服务器状态），也不幂等；参数放在哪里只是惯例，GET 参数通常在 URL 中（要编码，长度受浏览器和服务器的限制，例如 Nginx 默认请求行不超过 8 KB），POST 在主体中，但抓包同样能看到，并不更安全；GET 响应可缓存，POST 多数不可缓存。
 3. 先查浏览器缓存、系统缓存和 hosts，未命中则向本地 DNS 服务器递归查询；本地 DNS 服务器依次迭代询问根服务器、顶级域服务器，它们只返回下一级服务器的地址，最后由权威服务器返回 IP；各级结果按 TTL 缓存；一般用 UDP 53 端口，响应超过 UDP 报文的长度上限（不用 EDNS 时为 512 字节）被截断，或做全量区域传送（AXFR）时用 TCP。
 
 </details>
 
 动手：用 dig +trace 查询一个域名，对照[域名系统](计算机网络%20-%20应用层.md#域名系统)一节说出每一级服务器返回了什么。
 
-预期：依次看到根服务器返回顶级域（如 com）服务器的 NS 记录，顶级域服务器返回该域名权威服务器的 NS 记录，权威服务器返回最终的 A 记录（或先返回 CNAME），每条记录都带 TTL。
+预期：依次看到根服务器返回顶级域（如 com）服务器的 NS 记录，顶级域服务器返回该域名权威服务器的 NS 记录，权威服务器返回 A 记录或 CNAME，每条记录都带 TTL；返回 CNAME 时 dig +trace 到此为止，要再查询 CNAME 指向的域名才能得到 IP。
 
 算法（二叉树，中等）：[199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)。
 
@@ -1549,11 +1549,11 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 
 1. 进程是资源分配的基本单位，线程是调度的基本单位，同一进程的线程共享地址空间和文件描述符；创建进程的开销远大于线程，切换进程还要切换地址空间，开销更大；线程间直接读写共享数据，进程间要借助 IPC；进程相互隔离，一个线程段错误会终止整个进程。
 2. 保存当前线程的寄存器、程序计数器、栈指针，恢复另一个线程的值；切换到另一个进程还要切换页表，没有 PCID、ASID 这类标记时要清空 TLB 中的大部分表项；切换后 TLB 和缓存的未命中会增加执行时间，增加多少取决于硬件和访问的数据量，数据量很小时两者几乎没有差别；实测一次切换约 1.1 微秒（其中还包含一次 write 和一次 read）。
-3. 协程在用户态由运行时调度，Go 和 Java 虚拟线程把大量协程映射到少量线程上（M:N），Python asyncio 则在一个线程的事件循环中执行，切换不陷入内核、内存占用小，可以大量创建，但同一线程上的协程不能并行；虚拟线程是 JVM 实现的有栈协程，由 ForkJoinPool 的平台线程（默认等于 CPU 核数）执行，阻塞 I/O 时卸载，栈帧以栈块对象存入堆，就绪后再挂载到某个平台线程继续执行；JDK 21 中在 synchronized 内阻塞无法卸载，JDK 24 起基本消除。
+3. 协程在用户态由运行时调度，Go 和 Java 虚拟线程把大量协程映射到少量线程上（M:N），Python asyncio 则在一个线程的事件循环中执行，切换不陷入内核、内存占用小，可以大量创建，但同一线程上的协程不能并行；虚拟线程是 JVM 实现的有栈协程，由 ForkJoinPool 的平台线程（默认等于 CPU 核数）执行，网络 I/O 等大多数阻塞操作时卸载（许多文件系统操作例外），栈帧以栈块对象存入堆，就绪后再挂载到某个平台线程继续执行；JDK 21 中在 synchronized 内阻塞无法卸载，JDK 24 起基本消除。
 
 </details>
 
-动手：运行[附录 A2](计算机操作系统%20-%20进程管理.md#a2-平台线程与虚拟线程的开销)的代码，比较创建 1 万个平台线程和虚拟线程的耗时与内存。
+动手：阅读[附录 A2](计算机操作系统%20-%20进程管理.md#a2-平台线程与虚拟线程的开销)的代码和运行结果，比较创建 1 万个平台线程和虚拟线程的耗时与内存，说明虚拟线程的堆增加量为什么反而更大。有 Linux 环境（例如 Docker 中的 Ubuntu 容器）时可以补全代码自己运行，RSS 从 /proc/self/status 的 VmRSS 读取；macOS 限制了每个进程的线程数，1 万个平台线程会创建失败。
 
 预期：1 万个平台线程启动约 1.4 秒、RSS 增加约 290 MB，1 万个虚拟线程约 30 毫秒、RSS 增加约 40 MB（堆中每个约 2 KB），100 万个虚拟线程约 0.5 秒、堆增加约 690 MB。
 
@@ -1582,7 +1582,7 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 
 </details>
 
-动手：运行[附录 A1](计算机操作系统%20-%20概述.md#a1-普通函数调用与系统调用的耗时)的代码，比较普通函数调用和系统调用的耗时。
+动手：阅读[附录 A1](计算机操作系统%20-%20概述.md#a1-普通函数调用与系统调用的耗时)的代码和运行结果，比较普通函数调用和系统调用的耗时，说明 glibc 的 getppid 与直接陷入为什么只差约 2 ns，经 vDSO 的 clock_gettime 为什么快得多。有 Linux 环境时可以补全计时代码自己运行；附录的汇编是 arm64 的 svc 指令，在 x86-64 上要改用 syscall 指令，系统调用号放在 rax 中（getppid 是 110），返回值也在 rax 中，原代码从 x0 取返回值的部分要一起改，并把 rcx、r11 写进 clobber 列表（syscall 指令会覆盖这两个寄存器）。
 
 预期：普通函数调用约 1 ns，glibc 的 getppid() 约 167 ns、直接陷入约 165 ns，系统调用约为函数调用的近 180 倍，经 vDSO 的 clock_gettime 约 18 ns，绕过 vDSO 约 202 ns。
 
@@ -1621,7 +1621,7 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 
 ### 第 47 天：内存管理
 
-虚拟内存让每个进程有独立的地址空间。分页的地址转换和页面置换算法是重点，LRU 在缓存中还会再出现。
+虚拟内存让每个进程有独立的地址空间。分页的地址转换和页面置换算法是重点。LRU 与第 35 天手写的 LRU 缓存是同一种淘汰策略。
 
 阅读：《计算机操作系统 - 内存管理》从[虚拟内存](计算机操作系统%20-%20内存管理.md#虚拟内存)读到[分页与分段的比较](计算机操作系统%20-%20内存管理.md#分页与分段的比较)。
 
@@ -1635,14 +1635,14 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 <summary>参考要点</summary>
 
 1. 虚拟内存让每个进程看到独立、连续的地址空间，程序使用虚拟地址，由硬件和操作系统按页翻译成物理地址；它让程序可以比物理内存大（只把用到的页放在内存中），隔离各进程并按页设置权限，简化加载（物理内存不必连续），还能让多个进程共享同一物理页。
-2. OPT 换出最长时间不再访问的页，缺页最少但无法实现，只作对照；LRU 换出最近最久未使用的页，维护链表代价高；FIFO 换出最先进入的页，可能换出常用页，第二次机会和时钟算法用访问位 R 改进它，NRU 按 R、M 位分类换出；同一序列 3 个物理块时 OPT、LRU、FIFO 分别缺页 9、12、15 次。
+2. OPT 换出最长时间不再访问的页，缺页最少但无法实现，只作对照；LRU 换出最近最久未使用的页，维护链表代价高；FIFO 换出最先进入的页，可能换出常用页，第二次机会和时钟算法用访问位 R 改进它，NRU 按 R、M 位分类换出；同一序列 3 个页框时 OPT、LRU、FIFO 分别缺页 9、12、15 次。
 3. 分页对程序员透明，分段要显式划分；分页是一维地址空间，分段是二维的；页大小固定，段大小可变；分页为了实现虚拟内存，分段为了按逻辑划分程序和数据、便于共享和保护；分页没有外部碎片，但每个段或区域的最后一页可能用不满，形成内部碎片，分段会留下大小不一的空闲块，形成外部碎片（x86-64 的 Linux 只用分页）。
 
 </details>
 
 动手：运行[附录 A3](计算机操作系统%20-%20内存管理.md#a3-进程的地址空间布局)的代码，查看 /proc/\<pid>/maps 中代码段、堆和栈的位置。
 
-预期：maps 中 r-xp 的可执行文件区域是代码段，之后 rw-p 的是数据段和 BSS，[heap] 紧随其后，1 MB 的 malloc 和共享库在中间的映射区，[stack] 在最高处，再运行一次起始地址都变，上下顺序不变。
+预期：maps 中 r-xp 的可执行文件区域是代码段，之后 rw-p 的是数据段和 BSS，[heap] 在其后的较高地址（中间隔着随机大小的空隙），1 MB 的 malloc 和共享库在中间的映射区，[stack] 在最高处，再运行一次起始地址都变，上下顺序不变。
 
 算法（回溯与搜索，中等）：[93. 复原 IP 地址](https://leetcode.cn/problems/restore-ip-addresses/)，题解见[IP 地址划分](Leetcode%20题解%20-%20搜索.md#2-ip-地址划分)。
 
@@ -1669,7 +1669,7 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 
 </details>
 
-动手：运行[附录 A2](Socket.md#a2-lt-与-et-的读取过程)的代码，观察水平触发和边缘触发下每次 epoll_wait 返回后读到的数据。
+动手：阅读[附录 A2](Socket.md#a2-lt-与-et-的读取过程)的代码和运行结果，说明水平触发和边缘触发下每次 epoll_wait 返回后读到的数据有什么不同，边缘触发每次只读一次时剩下的 1976 字节为什么再也没有通知；有 Linux 环境（例如 Docker 中的 Ubuntu 容器）时可以补全代码自己运行。
 
 预期：LT 下 3 次 epoll_wait 依次读到 1024、1024、952 字节后第 4 次超时，ET 每次只读一次时第 2 次 epoll_wait 就超时、剩 1976 字节，ET 循环读时一次事件内读完 1024、1024、952 字节后返回 EAGAIN。
 
@@ -1681,7 +1681,7 @@ Web 页面请求过程把前几天的内容串了起来。攻击技术中 XSS、
 <summary>答题思路</summary>
 
 1. 每连接一个线程：10 万个线程各要独立的栈（x64 默认预留 1 MB，实际也有约 30 KB），内存达数 GB，创建慢，还受线程数上限限制。
-2. 大部分连接空闲，线程频繁阻塞和唤醒，CPU 时间大量花在上下文切换上。
+2. 线程数远多于 CPU 核数，连接上一有数据就要唤醒对应的线程、处理完又阻塞，线程过多、频繁阻塞时 CPU 会把相当一部分时间花在上下文切换上。
 3. epoll：少量线程（如 Netty 的主从 Reactor）用 epoll_wait 等待，描述符只注册一次，每次只返回就绪的连接，开销与连接总数无关；要调大文件描述符上限，事件处理中不能长时间阻塞。
 4. 虚拟线程：保留每连接一个线程的同步写法，阻塞 I/O 时从平台线程卸载，每个只在堆中占约 2 KB，少量平台线程就能承载 10 万个连接；JDK 21 中避免在 synchronized 内阻塞，限制并发用信号量。
 
@@ -1712,7 +1712,7 @@ IoC 一节先说明为什么需要容器。Bean 的生命周期要能对照调�
 
 </details>
 
-动手：按[附录 A3](Spring.md#a3-bean-创建的调用栈)的方法，在一个 Bean 的构造方法和 setter 方法中分别打印调用栈，找出 createBeanInstance 和 populateBean 的位置，说明实例化和属性注入的先后。
+动手：按[附录 A3](Spring.md#a3-bean-创建的调用栈)的方法，在一个 Bean 的构造方法和带 @Autowired 的 setter 方法中分别打印调用栈，找出 createBeanInstance 和 populateBean 的位置，说明实例化和属性注入的先后。
 
 预期：构造函数的栈中 doCreateBean 调用 createBeanInstance、经 Constructor.newInstance 反射创建对象，Setter 的栈中 doCreateBean 调用 populateBean、经 postProcessProperties 和 Method.invoke 注入，构造函数先打印，即先实例化再注入。
 
@@ -1766,13 +1766,13 @@ AOP 基于动态代理，自调用时切面不生效的原因也在这里。事�
 
 1. @SpringBootApplication 包含 @EnableAutoConfiguration；启动时读取各 jar 中 META-INF/spring/...AutoConfiguration.imports（2.7 之前为 spring.factories，3.0 起不再读其中的自动配置类）列出的自动配置类；大多数自动配置类带 @ConditionalOnClass、@ConditionalOnMissingBean 等条件注解，条件满足才生效；自动配置在用户的 Bean 注册之后处理，带 @ConditionalOnMissingBean 的自动配置让位于用户定义的 Bean。
 2. DispatcherServlet 统一接收请求，HandlerMapping 找到处理方法和拦截器；依次执行拦截器的 preHandle，返回 false 就停止；HandlerAdapter 转换参数、调用 Controller，再把返回值转换为响应（如 JSON）；倒序执行 postHandle（Controller 抛出异常时跳过）；返回视图名时由 ViewResolver 渲染；最后倒序执行 preHandle 返回 true 的拦截器的 afterCompletion，异常时也执行。
-3. #{} 被替换为占位符 ?，参数通过 PreparedStatement 单独传给数据库，不会改变 SQL 结构；${} 把参数直接拼进 SQL，传入 1024 OR 1=1 就让条件恒为真，造成 SQL 注入；${} 只用于表名、列名、ORDER BY 字段，并用白名单校验。
+3. #{} 被替换为占位符 ?，参数通过 PreparedStatement 设置，由驱动转义后放入语句或单独发送给数据库（MySQL 驱动默认是前者），不会改变 SQL 结构；${} 把参数直接拼进 SQL，传入 1024 OR 1=1 就让条件恒为真，造成 SQL 注入；${} 只用于表名、列名、ORDER BY 字段，并用白名单校验。
 
 </details>
 
 动手：新建一个 Spring Boot 3 项目，启动时加上 --debug，在条件评估报告中找到 DataSourceAutoConfiguration 生效或不生效的原因。
 
-预期：CONDITIONS EVALUATION REPORT 中，没有 JDBC 相关依赖时 DataSourceAutoConfiguration 在 Negative matches 中，原因是 @ConditionalOnClass 找不到所需的类，引入 spring-boot-starter-jdbc 和数据库驱动后出现在 Positive matches 中。
+预期：CONDITIONS EVALUATION REPORT 中，没有 JDBC 相关依赖时 DataSourceAutoConfiguration 在 Negative matches 中，原因是 @ConditionalOnClass 找不到所需的类，引入 spring-boot-starter-jdbc 和数据库驱动后出现在 Positive matches 中；用 H2 时不需要其它配置，用 MySQL 驱动时还要配置 spring.datasource.url，否则报告打印后启动失败。
 
 算法（动态规划，简单）：[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)，题解见[买卖股票最大的收益](Leetcode%20题解%20-%20贪心思想.md#5-买卖股票最大的收益)。
 
@@ -1786,7 +1786,7 @@ AOP 基于动态代理，自调用时切面不生效的原因也在这里。事�
 
 自测：
 
-1. 单例模式有哪几种写法？双重检查锁为什么要加 volatile？（见[实现](设计模式%20%20-%20单例.md#实现)）
+1. 单例模式有哪几种写法？双重检查锁为什么要加 volatile？（见[单例的实现](设计模式%20%20-%20单例.md#实现)）
 2. 项目中用过哪些设计模式？举一个例子。（见[项目中的用法](设计模式%20-%20目录.md#项目中的用法)）
 3. Spring 中用到了哪些设计模式？（见[Spring 中的设计模式](Spring.md#七spring-中的设计模式)）
 
@@ -1818,28 +1818,28 @@ AOP 基于动态代理，自调用时切面不生效的原因也在这里。事�
 
 </details>
 
-明天：第 53 天，微服务（微服务：从单体到微服务～网关）。
+明天：第 53 天，微服务（微服务：从单体到微服务～网关；集群：负载均衡算法）。
 
 ## 十三、分布式与消息队列
 
 ### 第 53 天：微服务
 
-按拆分、组件、注册中心、服务调用、网关的顺序读。服务调用一节回答了实例下线和注册中心宕机时会发生什么。
+按拆分、组件、注册中心、服务调用、网关的顺序读。服务调用一节回答了实例下线和注册中心宕机时会发生什么。几种常见的负载均衡算法在《集群》中，读完服务调用一节后对照着读。
 
-阅读：《微服务》从[从单体到微服务](微服务.md#一从单体到微服务)读到[网关](微服务.md#五网关)。选读：[配置中心](微服务.md#六配置中心)、[链路追踪](微服务.md#八链路追踪)、[负载均衡](集群.md#一负载均衡)。
+阅读：《微服务》从[从单体到微服务](微服务.md#一从单体到微服务)读到[网关](微服务.md#五网关)；《集群》的[负载均衡算法](集群.md#负载均衡算法)。选读：[配置中心](微服务.md#六配置中心)、[链路追踪](微服务.md#八链路追踪)、[转发实现](集群.md#转发实现)。
 
 自测：
 
 1. Spring Cloud 有哪些常用组件？（见[组件](微服务.md#组件)）
 2. 注册中心宕机后，服务之间还能调用吗？（见[注册中心宕机](微服务.md#注册中心宕机)）
-3. 有哪些负载均衡策略？（见[负载均衡策略](微服务.md#负载均衡策略)）
+3. 有哪些负载均衡策略？（见[负载均衡算法](集群.md#负载均衡算法)、[负载均衡策略](微服务.md#负载均衡策略)）
 
 <details>
 <summary>参考要点</summary>
 
 1. 注册与配置：Nacos，或 Eureka 加 Spring Cloud Config；负载均衡和调用：Spring Cloud LoadBalancer、OpenFeign；网关和熔断：Spring Cloud Gateway、Resilience4j 或 Sentinel；分布式事务和链路追踪：Seata、Micrometer Tracing。
 2. 已经运行的服务还能调用，实例列表缓存在本地；新启动的服务默认注册失败直接退出，关闭 fail-fast 能启动，但没有实例列表，调用报 No servers available；所以不会立刻影响线上调用，但无法扩容和发布，生产环境要集群部署。
-3. Spring Cloud LoadBalancer 默认轮询，也可以改为随机，两者都不考虑机器差异；启用 NacosLoadBalancer 后优先选同集群的实例，再按权重随机（权重 3:1 时 400 次约为 303:97）；还可以实现 ReactorServiceInstanceLoadBalancer 自定义规则。
+3. 常见算法有轮询、加权轮询、随机、源地址哈希（按事先配置的规则分配）和最少连接、加权最少连接（按实时连接数选择），轮询和随机适合性能相近的服务器，源地址哈希能让同一 IP 落到同一台服务器；Spring Cloud LoadBalancer 默认轮询，也可以改为随机，两者都不考虑机器差异；启用 NacosLoadBalancer 后优先选同集群的实例，再按权重随机（权重 3:1 时 400 次约为 303:97）；还可以实现 ReactorServiceInstanceLoadBalancer 自定义规则。
 
 </details>
 
@@ -1924,17 +1924,17 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 动手：按[附录 A4](分布式.md#a4-重复提交与唯一索引)的步骤，用唯一索引拦住重复提交的订单。
 
-预期：每轮 10 个线程并发提交同一个 request_id，先查后插的写法每轮创建 2～3 个订单，直接 INSERT 依靠唯一索引时每轮只创建 1 个，其余 9 次报错 1062。
+预期：每轮 10 个线程并发提交同一个 request_id，先查后插的写法每轮都创建了不止 1 个订单（个数随线程的交错变化，附录中为 2～3 个），直接 INSERT 依靠唯一索引时每轮只创建 1 个，其余 9 次报错 1062。
 
-算法（动态规划，中等）：[1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)，题解见[最长公共子序列](Leetcode%20题解%20-%20动态规划.md#1-最长公共子序列)。
+算法（动态规划，中等）：[72. 编辑距离](https://leetcode.cn/problems/edit-distance/)，题解见[编辑距离](Leetcode%20题解%20-%20动态规划.md#2-编辑距离)。
 
-明天：第 57 天，消息队列的作用与可靠性（消息队列：消息模型～消息队列的可靠性）。
+明天：第 57 天，消息队列的作用与可靠性（消息队列：消息模型～接收端的可靠性）。
 
 ### 第 57 天：消息队列的作用与可靠性
 
 先看消息队列用来做什么，以及它和 RPC 调用怎样选择。可靠性要分发送端、队列和接收端三段来看。
 
-阅读：《消息队列》从[消息模型](消息队列.md#一消息模型)读到[消息队列的可靠性](消息队列.md#三可靠性)。
+阅读：《消息队列》从[消息模型](消息队列.md#一消息模型)读到[接收端的可靠性](消息队列.md#接收端的可靠性)。
 
 自测：
 
@@ -1951,11 +1951,11 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 </details>
 
-动手：阅读[附录 A2](消息队列.md#a2-重复消费)，说出消费者在哪一步被杀死导致了重复扣款，再按[接收端的可靠性](消息队列.md#接收端的可靠性)一节的方法设计去重。
+动手：阅读[附录 A2](消息队列.md#a2-重复消费)，说出消费者在哪一步被杀死导致了重复扣款（auto.offset.reset 的作用见[副本与可靠性](消息队列.md#副本与可靠性)一节），再按[接收端的可靠性](消息队列.md#接收端的可靠性)一节的方法设计去重。
 
 预期：消费者完成 3 笔扣款后、自动提交偏移量之前被 kill -9，组还没有提交过偏移量；auto.offset.reset 为 earliest 时，重启的消费者又收到这 3 条消息、重复扣款，默认的 latest 则从末尾开始，这 3 条不会再被自动读到；去重方法是在同一个本地事务中先插入去重表（键如 order:1024:pay）再扣款，重复消息报 1062 后回滚并直接确认。
 
-算法（动态规划，中等）：[322. 零钱兑换](https://leetcode.cn/problems/coin-change/)，题解见[找零钱的最少硬币数](Leetcode%20题解%20-%20动态规划.md#4-找零钱的最少硬币数)。
+算法（动态规划，中等）：[1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)，题解见[最长公共子序列](Leetcode%20题解%20-%20动态规划.md#1-最长公共子序列)。
 
 明天：第 58 天，顺序、积压与延迟消息（消息队列：顺序性～延迟消息与死信队列）。
 
@@ -1984,7 +1984,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 预期：分区 0、1、2 分别积压 9237、9577、8186 条，LAG = LOG-END-OFFSET - CURRENT-OFFSET（日志末尾偏移量减去组已提交的偏移量），例如 11186 - 3000 = 8186。
 
-算法（动态规划，中等）：[64. 最小路径和](https://leetcode.cn/problems/minimum-path-sum/)，题解见[矩阵的最小路径和](Leetcode%20题解%20-%20动态规划.md#1-矩阵的最小路径和)。
+算法（动态规划，中等）：[322. 零钱兑换](https://leetcode.cn/problems/coin-change/)，题解见[找零钱的最少硬币数](Leetcode%20题解%20-%20动态规划.md#4-找零钱的最少硬币数)。
 
 明天：第 59 天，Kafka（消息队列：Kafka）。
 
@@ -2005,7 +2005,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 1. 顺序写和页缓存：消息只追加到日志末尾，写入页缓存即可，不要求每条消息刷盘，确认条件仍由 acks 决定，可靠性靠多副本；批量：同一分区的消息攒成批次传输、写入和复制，关闭批量后吞吐从每秒约 6 万条降到约 6600 条；零拷贝：broker 用 sendfile 把日志直接发到 Socket；分区并行：多个分区分布在不同 broker 上。
 2. 每个分区有一个 Leader 和多个 Follower，与 Leader 保持同步的副本组成 ISR，Leader 故障时从 ISR 中选新 Leader；生产者设 acks=all，ISR 中的副本都写入才确认；配合 min.insync.replicas=2，ISR 不足时拒绝写入，常用 3 副本加这两项配置；幂等生产者用生产者 ID 和序号去掉重试造成的重复。
-3. 组内每个分区只分配给一个消费者，多出来的消费者分不到分区，只能空闲，例如 3 个分区启动 4 个消费者，其中一个分到 0 个分区；分区数决定了一个组的最大消费并行度；Kafka 4.2 起的共享组没有这个限制，但不保证顺序。
+3. 组内每个分区只分配给一个消费者，多出来的消费者分不到分区，只能空闲，例如 3 个分区启动 4 个消费者，其中一个分到 0 个分区；分区数决定了一个组的最大消费并行度；Kafka 4.2 起正式可用的共享组没有这个限制，但不保证顺序。
 
 </details>
 
@@ -2013,7 +2013,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 预期：默认配置（批量）每秒约 5.7 万～6.8 万条、平均延迟 21～54 ms；batch.size=0、linger.ms=0 关闭批量后每秒只有约 6500～6800 条，平均延迟升到约 1.4 秒；原因是每条消息单独成为一个批次，网络请求、写日志和副本复制的次数大幅增加，发不出去的请求在生产者端排队，所以吞吐下降的同时延迟也升高。
 
-算法（动态规划，中等）：[62. 不同路径](https://leetcode.cn/problems/unique-paths/)，题解见[矩阵的总路径数](Leetcode%20题解%20-%20动态规划.md#2-矩阵的总路径数)。
+算法（动态规划，中等）：[64. 最小路径和](https://leetcode.cn/problems/minimum-path-sum/)，题解见[矩阵的最小路径和](Leetcode%20题解%20-%20动态规划.md#1-矩阵的最小路径和)。
 
 综合题：下单后需要扣库存、发优惠券、发短信：哪些步骤放在同一个事务中，哪些通过消息队列异步完成？消息丢失或重复时分别会怎样？（见[异步处理](消息队列.md#异步处理)、[本地消息表](分布式.md#本地消息表)、[幂等](分布式.md#九幂等)）
 
@@ -2057,7 +2057,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 预期：新建后连续 acquire() 第 1 次不等待、之后每次等待约 0.2 秒，空闲 2 秒后前 6 次都不等待、第 7 次等待约 0.2 秒，令牌不足时 tryAcquire() 立即返回 false。
 
-算法（动态规划，中等）：[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)，题解见[强盗抢劫](Leetcode%20题解%20-%20动态规划.md#2-强盗抢劫)。
+算法（动态规划，中等）：[62. 不同路径](https://leetcode.cn/problems/unique-paths/)，题解见[矩阵的总路径数](Leetcode%20题解%20-%20动态规划.md#2-矩阵的总路径数)。
 
 明天：第 61 天，秒杀与抢红包（系统设计基础：秒杀系统）。
 
@@ -2084,9 +2084,9 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 动手：按[附录 A1](系统设计基础.md#a1-秒杀)的方法，分别用 Lua 脚本和先 GET 再 DECR 的写法并发扣减 100 件库存，核对成功次数是否超过 100、剩余库存是否变为负数。
 
-预期：Lua 脚本成功 100、库存不足 1800、重复购买 100、剩余库存 0，没有超卖；先 GET 再 DECR 时成功 106～114 次、剩余库存 -6～-14，出现超卖。
+预期：Lua 脚本成功 100、库存不足 1800、重复购买 100、剩余库存 0，没有超卖；先 GET 再 DECR 时成功的次数超过 100（附录 A1 的 3 次为 106～114）、剩余库存为负数，出现超卖。
 
-算法（双指针，困难）：[42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)，题解见[接雨水](Leetcode%20题解%20-%20双指针.md#9-接雨水)。
+算法（动态规划，中等）：[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)，题解见[强盗抢劫](Leetcode%20题解%20-%20动态规划.md#2-强盗抢劫)。
 
 明天：第 62 天，海量数据、短链与 Feed 流（系统设计基础：海量数据处理～Feed 流）。
 
@@ -2115,7 +2115,7 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 预期：301 的响应被浏览器缓存，第二次访问 /a 时浏览器直接请求 /target，服务器只收到一次 /a，而 302 的 /b 两次都到达服务器，所以 301 会漏掉后续点击，需要统计点击量时用 302。
 
-算法（滑动窗口，困难）：[239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)，题解见[剑指 Offer 59](59.%20滑动窗口的最大值.md)。
+算法（双指针，困难）：[42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)，题解见[接雨水](Leetcode%20题解%20-%20双指针.md#9-接雨水)。
 
 明天：第 63 天，高并发系统的设计（系统设计基础：高并发系统的设计）。
 
@@ -2140,7 +2140,11 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 </details>
 
-算法（滑动窗口，困难）：[76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)，题解见[最小覆盖子串](Leetcode%20题解%20-%20双指针.md#10-最小覆盖子串)。
+动手：按[附录 A7](系统设计基础.md#a7-redis-get-的并发扫描)的命令，用 redis-benchmark 把连接数从 1 逐步增加到 1000，记录每一档的吞吐量和 P99，找出拐点。
+
+预期：连接数增加到 50 左右后吞吐量基本不再增长（附录中约 12.5 万 QPS），P99 却继续上升（附录中 50 个连接时 0.56 ms、1000 个连接时 16.0 ms），拐点约在 50 个连接；具体数字随机器变化。
+
+算法（滑动窗口，困难）：[239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)，题解见[剑指 Offer 59](59.%20滑动窗口的最大值.md)。
 
 明天：第 64 天，Docker（Docker：解决的问题～镜像与容器）。
 
@@ -2167,9 +2171,9 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 动手：为一个 Spring Boot 项目写多阶段构建的 Dockerfile，对比单阶段和多阶段构建的镜像大小。
 
-预期：多阶段构建的镜像只含 JRE 和 jar，约 236 MB，在 Maven 镜像中单阶段构建并运行的镜像约 680 MB，多出了 JDK、Maven 和下载的依赖。
+预期：多阶段构建的镜像只含 JRE 和 jar，单阶段构建的镜像多出了 JDK、Maven 和下载的依赖，大小约为前者的 3 倍；附录 A1 的订单服务按 docker history 各层之和分别约 236 MB 和 680 MB，具体数字随项目的依赖变化。
 
-算法（链表，困难）：[25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)，题解见[K 个一组翻转链表](Leetcode%20题解%20-%20链表.md#11-k-个一组翻转链表)。
+算法（滑动窗口，困难）：[76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)，题解见[最小覆盖子串](Leetcode%20题解%20-%20双指针.md#10-最小覆盖子串)。
 
 明天：第 65 天，Kubernetes（Docker：Kubernetes）。
 
@@ -2188,13 +2192,17 @@ Kubernetes 重点看 Pod 的创建过程、Service 和 Ingress 的作用，以�
 <details>
 <summary>参考要点</summary>
 
-1. 各组件都通过 API Server 协作：kubectl 提交 Deployment，API Server 校验后写入 etcd；Deployment 和 ReplicaSet 控制器依次创建 ReplicaSet 和未指定节点的 Pod，调度器过滤、打分后把节点写入 nodeName；该节点的 kubelet 通过 CRI 让 containerd 创建沙箱（pause 容器持有网络命名空间，CNI 分配 IP），拉取镜像并启动容器；就绪探针通过后 Pod 变为 Ready，被加入 Service 的后端，kube-proxy 更新转发规则。
+1. 各组件都通过 API Server 协作：kubectl 提交 Deployment，API Server 校验后写入 etcd；Deployment 和 ReplicaSet 控制器依次创建 ReplicaSet 和未指定节点的 Pod，调度器过滤、打分后把节点写入 nodeName；该节点的 kubelet 通过 CRI 让 containerd 创建沙箱（新建网络命名空间，CNI 在其中分配 IP，再启动 pause 容器持有它），拉取镜像并启动容器；就绪探针通过后 Pod 变为 Ready，被加入 Service 的后端，kube-proxy 更新转发规则。
 2. Service 工作在传输层，用标签选出一组 Pod，提供固定的虚拟 IP 和域名，由 kube-proxy 写成 iptables 或 IPVS 规则转发，有 ClusterIP、NodePort、LoadBalancer 等类型；Ingress 是 HTTP 路由规则，按域名和路径把请求分给不同的 Service，由 Ingress 控制器执行，多个 HTTP 服务共用一个入口。
 3. 容器启动后反复退出，重启等待按 10 秒、20 秒、40 秒翻倍，最长 5 分钟；kubectl describe pod 看事件和退出码，kubectl logs --previous 看上一次退出前的日志（如配置错误）；退出码 137、原因 OOMKilled 时检查内存 limits 与 JVM 堆和堆外内存。
 
 </details>
 
-算法（链表，困难）：[23. 合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)，题解见[合并 K 个有序链表](Leetcode%20题解%20-%20链表.md#13-合并-k-个有序链表)。
+动手：阅读[附录 A8](Docker.md#a8-pod-的异常状态)的输出，说明 5 个故意出错的 Pod 各停在什么状态，分别从哪条命令的输出中找到原因。
+
+预期：pending-demo 停在 Pending，describe 的事件是 FailedScheduling、2 Insufficient cpu；pull-demo 为 ImagePullBackOff，事件中有 ErrImagePull；crash-demo 为 CrashLoopBackOff，上一次退出码 1，logs --previous 中是 server.port 的值 abc 无法转换为整数；oom-demo 为 CrashLoopBackOff，上一次的状态是 OOMKilled、退出码 137；notready-demo 为 Running 但 READY 是 0/1，事件中就绪探针返回 404。
+
+算法（链表，困难）：[25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)，题解见[K 个一组翻转链表](Leetcode%20题解%20-%20链表.md#11-k-个一组翻转链表)。
 
 明天：第 66 天，系统设计题的思路与即时通讯（系统设计基础：系统设计题的思路～即时通讯）。
 
@@ -2215,7 +2223,7 @@ Kubernetes 重点看 Pod 的创建过程、Service 和 Ingress 的作用，以�
 
 1. 先明确需求：要支持的功能、规模和哪些数据不能出错，例如点赞不能重复计、点赞数允许延迟几秒；再估算高峰时的读写量和存储：日活 2000 万、每人每天点赞 5 次时，高峰小时写约 1700 次/秒、读约 3.3 万次/秒，点赞关系每年约 4 TB；然后定义接口和表，(user_id, video_id) 作主键让重复点赞插入失败；先给出单库事务的简单方案，再按估算找瓶颈逐个改进：热门视频的计数行锁改为 Redis 计数加合并写回，读多加缓存，数据量大按 user_id 分片；最后说明哪些数据准确、哪些最终一致，以及 Redis 宕机时怎么办；追问流量再涨 10 倍时，回到估算重新算每一层的量，看哪一层先超过上限。
 2. 不丢、不重：发送方为每条消息生成 msg_id，服务端存储后回复 ACK，超时没收到就用同一个 msg_id 重发，服务端用 (sender_id, msg_id) 唯一索引去重；不乱序：服务端为每个会话分配递增的 seq，接收方按 seq 排序，不按各机器的时间；离线：推送只负责通知，接收方记住连续收齐的最大 seq（例如 58），重连时拉取它之后的消息，收到 61 而本地只到 58 时补拉中间的 59、60；用 INCR 分配 seq 时写入失败会留下补不到的空号，后分配的也可能先写入，要求序号连续时在一个事务中把会话的最大序号加 1 并插入消息。
-3. TCP 连接由四元组区分，服务端所有连接共用一个监听端口，65535 不是服务端的上限，端口数只限制发起连接的一方（同一个源 IP 到同一个目的地址约 2.8 万个）；服务端的瓶颈是文件描述符（调大 ulimit -n）、内存（实测每个空闲连接约 5 KB，10 万个约 500 MB）以及消息量带来的 CPU 和带宽；用 epoll 一个线程就能管理 10 万个连接，再配合应用层心跳及时清理已经断开的连接。
+3. TCP 连接由四元组区分，服务端所有连接共用一个监听端口，65535 不是服务端的上限，端口数只限制发起连接的一方（同一个源 IP 到同一个目的地址和端口约 2.8 万个）；服务端的瓶颈是文件描述符（调大 ulimit -n）、内存（实测每个空闲连接约 5 KB，10 万个约 500 MB）以及消息量带来的 CPU 和带宽；用 epoll 一个线程就能管理 10 万个连接，再配合应用层心跳及时清理已经断开的连接。
 
 </details>
 
@@ -2223,7 +2231,7 @@ Kubernetes 重点看 Pod 的创建过程、Service 和 Ingress 的作用，以�
 
 预期：第二次 INSERT 报错 ERROR 1062 Duplicate entry '...' for key 'video_like.PRIMARY'；INSERT IGNORE 不报错，影响 0 行；EXPLAIN 中 type 为 ref，按 user_id 等值查找，扫描的行数约等于这个用户点过赞的视频数。
 
-算法（栈和队列，困难）：[32. 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)，题解见[最长有效括号](Leetcode%20题解%20-%20动态规划.md#3-最长有效括号)。
+算法（链表，困难）：[23. 合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)，题解见[合并 K 个有序链表](Leetcode%20题解%20-%20链表.md#13-合并-k-个有序链表)。
 
 明天：第 67 天，订单与支付（系统设计基础：订单与支付）。
 
@@ -2325,7 +2333,7 @@ MCP 和 Skills 常被拿来和工具调用比较：工具是模型能调用的�
 
 预期：工具抛出 ToolError 时，错误信息作为 isError 为 true 的结果返回给模型，例如“Error executing tool get_order: 订单 9999 不存在，请向用户确认订单号”，模型可以据此向用户确认；换成普通的 ValueError 后，模型只收到 Error executing tool get_order，具体内容只在服务端的日志中；参数不符合 Schema 时（例如 order_id 传成数字 1024、缺少参数或参数名写错），SDK 先按 Schema 校验并返回 validation error，isError 为 true，工具函数不会执行。
 
-算法（动态规划，困难）：[72. 编辑距离](https://leetcode.cn/problems/edit-distance/)，题解见[编辑距离](Leetcode%20题解%20-%20动态规划.md#2-编辑距离)。
+算法（动态规划，困难）：[32. 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)，题解见[最长有效括号](Leetcode%20题解%20-%20动态规划.md#3-最长有效括号)。
 
 综合题：要在订单系统中加一个客服助手，既能回答“订单到哪了”，也能办理退款，你会怎样设计？哪些事情交给模型，哪些必须由代码控制？（见[设计一个客服 Agent](大模型应用.md#设计一个客服-agent)、[Agent 与工作流](大模型应用.md#agent-与工作流)、[支付回调与重复支付](系统设计基础.md#支付回调与重复支付)）
 
