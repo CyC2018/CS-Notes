@@ -73,7 +73,7 @@ public int maxDepth(TreeNode root) {
    15   7
 ```
 
-平衡树指的是每个节点的左右子树高度差都小于等于 1。
+本题的平衡树（height-balanced）指的是每个节点的左右子树高度差都小于等于 1，与 AVL 树的条件相同；红黑树只保证大致平衡，不一定满足这个条件。
 
 ```java
 private boolean result = true;
@@ -234,7 +234,7 @@ Return 3. The paths that sum to 8 are:
 3. -3 -> 11
 ```
 
-路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。
+路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须向下，只能从父节点走到子节点。
 
 对每个节点各统计一次以它开头的路径，每个节点会被它的每个祖先各访问一次，平衡树中时间复杂度为 O(NlogN)，退化成链时为 O(N²)。节点值可达 10^9，sum 一路相减可能溢出 int，因此用 long。
 
@@ -343,7 +343,7 @@ private boolean isSymmetric(TreeNode t1, TreeNode t2) {
 
 [Leetcode](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/) / [力扣](https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/)
 
-树的根节点到叶子节点的最小路径长度。
+根节点到最近叶子节点的最短路径上的节点数。
 
 需要注意的是，只有一侧子树为空时不能取 min，因为这个节点不是叶子，路径只能走另一侧。
 
