@@ -73,7 +73,7 @@ private void writeObject(java.io.ObjectOutputStream s)
 }
 ```
 
-序列化时需要使用 ObjectOutputStream 的 writeObject() 将对象转换为字节流并输出。对象的类定义了私有的 writeObject() 时，ObjectOutputStream 通过反射调用它，由它代替默认的序列化过程；ArrayList 的 writeObject() 先用 defaultWriteObject() 写出 size 等非 transient 字段，再逐个写出元素。反序列化使用的是 ObjectInputStream 的 readObject() 方法，原理类似。
+序列化时需要使用 ObjectOutputStream 的 writeObject() 将对象转换为字节流并输出。对象的类定义了私有的 writeObject() 时，ObjectOutputStream 通过反射调用它，由它代替默认的序列化过程；ArrayList 的 writeObject() 先用 defaultWriteObject() 写出唯一的非 transient 实例字段 size，再逐个写出元素。反序列化使用的是 ObjectInputStream 的 readObject() 方法，原理类似。
 
 ```java
 ArrayList list = new ArrayList();
@@ -89,7 +89,7 @@ oos.writeObject(list);
 
 HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它可以自动地将传入的容量转换为 2 的 n 次方。
 
-先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
+这里需要构造一个掩码：保留最高位的 1，并把它以下的各位都置为 1。例如从 10010000 得到 11111111，令 mask 的初值为 10010000，可以使用以下方法：
 
 ```text
 mask |= mask >> 1    11011000
@@ -104,7 +104,7 @@ num     10010000
 mask+1 100000000
 ```
 
-以下是 HashMap 中计算数组容量的代码：
+以下是 HashMap 中计算数组容量的代码，int 有 32 位，所以还要再移 8 位和 16 位：
 
 ```java
 static final int tableSizeFor(int cap) {
@@ -144,7 +144,7 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-put() 先在桶中查找相同的键，找不到再调用 addEntry() 插入。键为 null 时由 putForNullKey() 放在第 0 个桶：
+用无参或指定容量的构造函数创建时，table 还是空数组，threshold 中暂存的是初始容量；put() 发现 table 还没有初始化时，由 inflateTable() 把它向上取为 2 的 n 次方并创建数组。put() 先在桶中查找相同的键，找不到再调用 addEntry() 插入。键为 null 时由 putForNullKey() 放在第 0 个桶：
 
 ```java
 public V put(K key, V value) {
@@ -210,7 +210,7 @@ void createEntry(int hash, K key, V value, int bucketIndex) {
 }
 ```
 
-hash() 对 hashCode 做四次移位和异或。hashSeed 默认为 0，只有设置了 jdk.map.althashing.threshold、并且容量达到这个值时才启用替代哈希，这时 String 键改用 sun.misc.Hashing.stringHash32()。indexFor() 用与运算代替取模：
+hash() 对 hashCode 做四次移位和异或，让高位也参与决定桶下标，原因见[确定桶下标](Java%20容器.md#4-确定桶下标)。hashSeed 默认为 0，只有设置了 jdk.map.althashing.threshold、并且容量达到这个值时才启用替代哈希，这时 String 键改用 sun.misc.Hashing.stringHash32()。indexFor() 用与运算代替取模：
 
 ```java
 final int hash(Object k) {
@@ -405,7 +405,7 @@ ConcurrentCache 采取的是分代缓存：
 - 新放入的对象放在 eden 中，eden 使用 ConcurrentHashMap 实现，强引用其中的对象，不会被回收；
 - eden 满了以后，其中的对象整批移入 longterm，longterm 使用 WeakHashMap 实现，键没有其它强引用时会被垃圾收集器回收；
 - 当调用 get() 方法时，会先从 eden 区获取，如果没有找到的话再到 longterm 获取，当从 longterm 获取到就把对象放入 eden 中，从而保证经常被访问的节点不容易被回收；
-- 当调用 put() 方法时，如果 eden 的大小达到了 size，就将 eden 中的所有对象都放入 longterm 中，再清空 eden。
+- eden 是否已满在调用 put() 时检查：eden 中的对象个数达到构造时传入的 size，就把它们全部放入 longterm，再清空 eden。
 
 WeakHashMap 不是线程安全的，eden 是 ConcurrentHashMap 并不能保护它，所以访问 longterm 时都要用 synchronized (longterm) 加锁。以下代码取自 Tomcat 9 的 org.apache.el.util.ConcurrentCache，省略了注释：
 
