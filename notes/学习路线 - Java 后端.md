@@ -2053,9 +2053,9 @@ RPC 一节对比了它和 HTTP 的取舍。雪花算法要注意时钟回拨；�
 
 </details>
 
-动手：运行[附录 A14](系统设计基础.md#a14-guava-的-ratelimiter)的代码，比较 acquire() 和 tryAcquire() 在令牌不足时的行为。
+动手：运行[附录 A14](系统设计基础.md#a14-guava-的-ratelimiter)的代码，比较 acquire() 和 tryAcquire() 什么时候等待、什么时候拒绝。
 
-预期：新建后连续 acquire() 第 1 次不等待、之后每次等待约 0.2 秒，空闲 2 秒后前 6 次都不等待、第 7 次等待约 0.2 秒，令牌不足时 tryAcquire() 立即返回 false。
+预期：新建后连续 acquire() 第 1 次不等待、之后每次等待约 0.2 秒，空闲 2 秒后前 6 次都不等待、第 7 次等待约 0.2 秒，第 7 次 acquire() 预支的等待还没过去，紧接着的 tryAcquire() 立即返回 false。
 
 算法（动态规划，中等）：[62. 不同路径](https://leetcode.cn/problems/unique-paths/)，题解见[矩阵的总路径数](Leetcode%20题解%20-%20动态规划.md#2-矩阵的总路径数)。
 

@@ -44,6 +44,7 @@
         * [A16 Bean 的生命周期回调](#a16-bean-的生命周期回调)
         * [A17 事件监听方法抛出异常](#a17-事件监听方法抛出异常)
         * [A18 只写在 spring.factories 中的自动配置类](#a18-只写在-springfactories-中的自动配置类)
+        * [A19 事务超时](#a19-事务超时)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -82,7 +83,7 @@ Spring 的容器用两个接口表示：BeanFactory 是根接口，负责创建�
 
 @Autowired 和 @Resource 都能注入依赖，区别在于查找的顺序：
 
-- @Autowired 是 Spring 的注解，先按类型查找，找到多个时依次看 @Primary、字段名或参数名、@Priority（Spring 6.1 及以前 @Priority 先于名称），仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称；
+- @Autowired 是 Spring 的注解，先按类型查找，找到多个时依次看 @Primary、字段名或参数名、@Priority（Spring 6.1 及以前 @Priority 先于名称），仍然无法确定就报错，可以用 @Qualifier 指定 Bean 的名称。Spring 6.1 起，按构造器或方法的参数名匹配要求编译时开启 -parameters，Spring Boot 的 Maven parent 和 Gradle 插件默认配置了这个选项；没有开启、又不能按其它规则确定唯一的候选时，注入失败，按字段名匹配不受影响（Spring 6.2 实测）；
 - @Resource 是 Jakarta EE（原 JSR-250）的注解，指定了 name 时按名称查找，否则先按字段名查找，找不到再按类型查找。它只能用在字段和 Setter 上，不能用在构造器上。
 
 Bean 的名称默认是 @Bean 的方法名，或者 @Component 类的类名首字母小写（类名前两个字母都大写时保持原样，例如 URLService），也可以在注解中指定。例如容器中有两个 PayService 类型的 Bean，名称分别是 alipay 和 wechat：
@@ -420,6 +421,12 @@ REQUIRED 的内层方法加入了外层的事务，用的是同一个连接。RE
 
 使用 HikariCP 时，连接池耗尽后获取连接最多等待 connectionTimeout（默认 30 秒），期间有连接归还就返回，超时仍未取得才抛出 SQLTransientConnectionException。排查连接一直不归还的代码时，可以设置 leakDetectionThreshold，连接借出超过这个时间就在日志中打印借出处的调用栈，它只报告、不回收连接。
 
+事务属性中的超时（@Transactional(timeout = 2)）不是到点就中断方法的定时器。开启事务时记下截止时间，之后执行 SQL 时检查：截止时间已过就抛出 TransactionTimedOutException 并回滚；还没到就把剩余的秒数设为这条语句的查询超时（JDBC 的 setQueryTimeout），MyBatis 配置了更短的语句超时时取较小的一个。Java 代码和调用外部接口同样消耗事务的剩余时间，但不会被中断，外部调用仍要单独设置超时。
+
+例如超时为 2 秒：先在 Java 中耗时 3 秒再执行 SQL，事务回滚；先执行 SQL 再在 Java 中耗时 3 秒、之后没有 SQL，事务正常提交；执行 SELECT SLEEP(5) 时，语句约 2 秒被驱动取消（Spring 6.2 实测，见[附录 A19](#a19-事务超时)）。
+
+需要注意的是，语句被取消抛出的 QueryTimeoutException 本身不会把事务标记为只能回滚：附录的例子在事务方法中直接捕获它、之后不再执行 SQL，之前的修改照常提交。超时也只对新开启的事务生效，加入外层事务的方法上设置的超时不起作用。
+
 ### 传播行为
 
 传播行为指的是一个事务方法调用另一个事务方法时，事务如何传递。常用的有以下三种：
@@ -585,6 +592,16 @@ List<Order> byUserUnsafe(@Param("userId") String userId);
 
 第一条语句的结构没有变，整个字符串只是一个参数值，仍然只返回用户 1024 的订单：user_id 是整数列，MySQL 把字符串和数字作为浮点数比较，'1024 OR 1=1' 被截断成 1024 并产生一个警告；第二条语句的条件恒为真，返回了其他用户的订单（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）。${} 只用于表名、列名、ORDER BY 的字段这类不能使用占位符的地方，并且要用白名单校验参数。
 
+例如按用户选择的列排序时，写成 ORDER BY #{sort} 会变成 ORDER BY ?，传入的 amount 只是一个字符串常量，语句不报错，结果也没有排序；改成 ORDER BY ${sort} 能排序，但参数可以是任意表达式，例如传入 (CASE WHEN (SELECT LEFT(amount,1) FROM orders WHERE user_id=1024)='9' THEN amount ELSE id END)，按结果的顺序就能判断用户 1024 的订单金额是否以 9 开头，逐位猜出数据。白名单可以直接写在 SQL 中，只输出固定的列名（见[附录 A10](#a10-mybatis-的参数与拦截器的回调)）：
+
+```xml
+ORDER BY
+<choose>
+    <when test="sort == 'amount'">amount</when>
+    <otherwise>id</otherwise>
+</choose>
+```
+
 ### Mapper 接口为什么不需要实现类
 
 MyBatis 在启动时为每个 Mapper 接口注册一个代理工厂 MapperProxyFactory，获取 Mapper 时由它创建 JDK 动态代理；Spring 中注入的就是这个代理，它怎样放进容器见本节最后一段。例如上面的 OrderMapper 注入的对象类型是 jdk.proxy2.$Proxy63，调用处理器是 MapperProxy。调用接口方法时，MapperProxy 按“接口全名 + 方法名”找到对应的 SQL，绑定参数后交给 SqlSession（MyBatis 中执行 SQL、提交和回滚所用的会话对象）执行，再把结果映射成返回类型。
@@ -636,8 +653,10 @@ List<Order> byStatuses(@Param("userId") Integer userId, @Param("statuses") List<
 
 ### 缓存
 
-- 一级缓存：默认开启，作用范围是一个 SqlSession，同一个会话中相同的查询只执行一次，执行增删改或提交后清空。与 Spring 集成时，不在事务中的每次调用都会使用新的 SqlSession，一级缓存基本不起作用；
+- 一级缓存：默认开启，作用范围是一个 SqlSession，同一个会话中相同的查询只执行一次，执行增删改或提交后清空。命中时返回的是同一个对象，修改它会影响这个会话之后查到的结果。与 Spring 集成时，不在事务中的每次调用都会使用新的 SqlSession，一级缓存基本不起作用；
 - 二级缓存：作用范围是一个 Mapper 的命名空间（Mapper XML 中 namespace 的值，即 Mapper 接口的全名），多个会话共享，在 Mapper XML 中加 `<cache/>` 或在接口上加 @CacheNamespace 开启，结果对象要实现 Serializable。查询结果在会话提交后才写入（只有查询的会话关闭时也会写入；执行过增删改的会话回滚时丢弃），同一命名空间的增删改提交后清空（MyBatis 3.5.14 实测，见[附录 A12](#a12-mybatis-的结果映射重载与二级缓存)）。缓存在单个应用的内存中，多个实例之间不一致，实际项目中很少使用，通常用 Redis 等缓存代替。
+
+对开启了二级缓存的普通查询（没有传入 ResultHandler，也没有设置 useCache=false），先查二级缓存，未命中再查一级缓存和数据库。这是因为负责二级缓存的 CachingExecutor 包在执行 SQL 的 Executor 外面，一级缓存在里面的 Executor 中（MyBatis 3.5 源码）。
 
 ## 七、Spring 中的设计模式
 
@@ -1124,6 +1143,18 @@ Spring Boot 3.3.5、MyBatis-Spring 3.0、MySQL 8.0.44、JDK 21，Apple M1 Pro。
 <==        Row: 3, 3, 3
 ```
 
+按用户选择的列排序（MyBatis 3.5.14，不使用 Spring）：orders 表有三行，(id, user_id, amount) 依次为 (1, 1001, 300)、(2, 1024, 950)、(3, 1002, 100)，查询 SELECT id FROM orders ORDER BY …，连续运行两次结果相同：
+
+```text
+#{sort}  sort=amount  -> [1, 2, 3]    # 没有排序
+${sort}  sort=amount  -> [3, 1, 2]
+${sort}  sort=id      -> [1, 2, 3]
+${sort}  猜第一位是 9 -> [3, 1, 2]    # 按 amount 排序，说明猜对了
+${sort}  猜第一位是 5 -> [1, 2, 3]    # 按 id 排序
+choose   sort=amount  -> [3, 1, 2]
+choose   猜第一位是 9 -> [1, 2, 3]    # 不认识的值按 id 排序
+```
+
 同一类应用中按名称获取 Mapper（Spring Boot 3.3.5、mybatis-spring 3.0.3，代理类的编号随应用变化）：
 
 ```text
@@ -1512,6 +1543,32 @@ exit=0
 [listener] spring.factories 中的 ApplicationListener 已加载
 [result] fromFactories 存在=false
 exit=0
+```
+
+### A19 事务超时
+
+Spring 6.2.19、MyBatis 3.5.14（MyBatis-Spring 3.0.3）、HikariCP 6.3.3、MySQL Connector/J 9.4.0、MySQL 8.0.44、JDK 21，Apple M1 Pro。表 t(id, v) 中 id = 1 的行 v 为 0，事务管理器为 DataSourceTransactionManager，用 TransactionTemplate.setTimeout(2) 执行（@Transactional(timeout = 2) 同样经过事务管理器）。T2 提交后、T7 开始前都在事务外把 v 重置为 0：
+
+```java
+tt.executeWithoutResult(s -> { sleep(3000); jdbc.update("UPDATE t SET v=11 WHERE id=1"); });         // T1
+tt.executeWithoutResult(s -> { jdbc.update("UPDATE t SET v=22 WHERE id=1"); sleep(3000); });         // T2
+tt.executeWithoutResult(s -> { jdbc.update("UPDATE t SET v=33 WHERE id=1");
+                               jdbc.queryForObject("SELECT SLEEP(5)", Integer.class); });            // T3
+tt.executeWithoutResult(s -> { jdbc.update("UPDATE t SET v=77 WHERE id=1");
+                               try { jdbc.queryForObject("SELECT SLEEP(5)", Integer.class); }
+                               catch (QueryTimeoutException e) { } });                               // T7
+```
+
+T4 在事务中用 MyBatis 先把 v 改为 44，再执行 SELECT SLEEP(5)；T5、T6 设置 MyBatis 的 defaultStatementTimeout 为 1 秒，T5 在事务外执行 SELECT SLEEP(3)，T6 在超时为 2 秒的事务中执行 SELECT SLEEP(5)。连续运行两次结果相同，下面是第一次：
+
+```text
+T1 3027ms TransactionTimedOutException: Transaction timed out: deadline was ...       v=0
+T2 3012ms 提交                                                                        v=22
+T3 2034ms QueryTimeoutException <- MySQLTimeoutException                              v=0
+T4 2175ms QueryTimeoutException <- MySQLTimeoutException（MyBatis）                   v=0
+T5 1005ms QueryTimeoutException（事务外，defaultStatementTimeout=1）
+T6 1003ms QueryTimeoutException（事务剩余 2 秒，defaultStatementTimeout=1，取较小者）
+T7 2010ms 捕获 QueryTimeoutException，rollbackOnly=false，2015ms 提交                 v=77
 ```
 
 ## 参考资料
