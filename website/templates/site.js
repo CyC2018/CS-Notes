@@ -704,9 +704,15 @@
     meta.className = 'article-meta';
     var source = 'https://github.com/CyC2018/CS-Notes/blob/master' + encodedRoute(decode(vm.route.path)) + '.md';
     var parent = treeParent(decode(vm.route.path));
+    // 报告错误时按 CONTRIBUTING.md 预填文件名、页面地址和需要写明的几项
+    var path = decode(vm.route.path);
+    var issue = 'https://github.com/CyC2018/CS-Notes/issues/new?title=' + encodeURIComponent('[纠错] ' + path.split('/').pop()) +
+      '&body=' + encodeURIComponent('文件：' + path.slice(1) + '.md\n页面：' + location.origin + '/#' + encodedRoute(path) +
+        '\n\n## 原文\n\n\n## 问题与修改建议\n\n\n## 依据\n\n');
     meta.innerHTML = (parent ? '<a class="meta-category" href="' + routeHref(parent) + '"></a>' : '') +
       '<span>约 ' + text.length.toLocaleString('zh-CN') + ' 字，阅读约 ' + minutes + ' 分钟</span>' +
-      '<a href="' + source + '" target="_blank" rel="noopener">在 GitHub 上查看</a>';
+      '<a href="' + source + '" target="_blank" rel="noopener">在 GitHub 上查看</a>' +
+      '<a href="' + issue + '" target="_blank" rel="noopener">报告错误</a>';
     if (parent) meta.querySelector('.meta-category').textContent = categoryName(parent);
     var heading = section.querySelector('h1');
     if (heading) heading.after(meta); else section.insertBefore(meta, section.firstChild);
