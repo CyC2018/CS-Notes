@@ -20,6 +20,7 @@
         * [日期和时间处理](#日期和时间处理)
         * [数值处理](#数值处理)
     * [十三、分组](#十三分组)
+        * [窗口函数](#窗口函数)
     * [十四、子查询](#十四子查询)
     * [十五、连接](#十五连接)
         * [内连接](#内连接)
@@ -34,6 +35,8 @@
     * [二十一、事务管理](#二十一事务管理)
     * [二十二、字符集](#二十二字符集)
     * [二十三、权限管理](#二十三权限管理)
+    * [附录：实测](#附录实测)
+        * [A1 窗口函数](#a1-窗口函数)
     * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -413,6 +416,86 @@ HAVING num >= 2;
 - 除了汇总字段外，SELECT 语句中的每一字段都必须在 GROUP BY 子句中给出；
 - NULL 的行会单独分为一组；
 - 有些 DBMS 不允许按大文本类型的列分组，MySQL 中 VARCHAR 和 TEXT 列都可以分组。
+
+### 窗口函数
+
+窗口函数指的是对每一行，用和它相关的一组行计算一个值，例如这一行在所属用户的订单中排第几、到这一行为止的累计金额。它和汇总函数的区别是不合并行：GROUP BY 把一组行合并成一行，窗口函数保留每一行，只是多出一列计算结果。MySQL 从 8.0 开始支持。
+
+以下面的订单表为例：
+
+```text
+order_id  user_id  amount  created_at
+1024      1001      59.90  2026-11-01 10:00:00
+1025      1001     199.00  2026-11-03 09:30:00
+1027      1002      88.00  2026-11-02 14:00:00
+1029      1003      45.50  2026-11-04 08:45:00
+1031      1001     199.00  2026-11-05 20:15:00
+1033      1002     120.00  2026-11-06 18:20:00
+1040      1001      35.00  2026-11-08 12:00:00
+```
+
+要查每个用户最近的一笔订单，GROUP BY user_id 只能求出 MAX(created_at)，再把 order_id 这类列放进 SELECT 会报 1055 错误，因为一组中有多行，不知道取哪一行的值。窗口函数先给每个用户的订单按时间编号，再取编号为 1 的行：
+
+```sql
+SELECT order_id, user_id, amount, created_at
+FROM (
+  SELECT o.*,
+         ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC) AS rn
+  FROM orders o
+) t
+WHERE rn = 1;
+```
+
+结果为 1040、1033、1029 三笔订单。OVER 子句定义窗口：
+
+- PARTITION BY：按哪些列分区，函数在每个分区内单独计算，省略时整个结果是一个分区；
+- ORDER BY：分区内的排序，决定编号的顺序和累计的方向。
+
+需要注意的是，窗口函数只能写在 SELECT 列表和 ORDER BY 中，因为它在 WHERE、GROUP BY 和 HAVING 之后才计算。直接写 WHERE ROW_NUMBER() OVER (...) = 1 会报 3593 错误，在 WHERE 中引用别名 rn 也会报 1054 错误，所以要像上面那样套一层子查询，或者写成 WITH t AS (...) SELECT ... FROM t WHERE rn = 1。
+
+排名常用三个函数，区别在于值相同（并列）时怎么编号。用户 1001 的订单按金额从高到低：
+
+```text
+order_id  amount  ROW_NUMBER  RANK  DENSE_RANK
+1025      199.00           1     1           1
+1031      199.00           2     1           1
+1024       59.90           3     3           2
+1040       35.00           4     4           3
+```
+
+- ROW_NUMBER：每行编号都不同，并列的两行谁先谁后不确定，要在 ORDER BY 中加上主键这样的唯一列才能确定；
+- RANK：并列的行编号相同，后面跳过被占用的名次，所以没有第 2 名；
+- DENSE_RANK：并列的行编号相同，后面的名次连续。
+
+“每组取前 N 个”按题意选择函数：取每个用户金额最高的 2 笔订单，用 ROW_NUMBER 时用户 1001 只返回 1025 和 1031；按金额的前 2 名取，并列的都要，用 DENSE_RANK 时还会返回第 2 名 1024，共 3 笔。
+
+SUM、COUNT、AVG 这类汇总函数加上 OVER 也可以作为窗口函数，常用于累计值和占比；LAG 和 LEAD 取分区中前一行和后一行的值，常用于计算间隔：
+
+```sql
+SELECT order_id, user_id, amount,
+       SUM(amount)     OVER (PARTITION BY user_id ORDER BY created_at) AS running_total,
+       LAG(created_at) OVER (PARTITION BY user_id ORDER BY created_at) AS prev_time
+FROM orders;
+```
+
+用户 1001 四笔订单的 running_total 依次为 59.90、258.90、457.90、492.90，第一笔的 prev_time 为 NULL。OVER 中没有 ORDER BY 时，SUM 计算的是整个分区的合计，每行都是 492.90。
+
+需要注意的是，有 ORDER BY 时，默认的计算范围是从分区开头到当前行，并且包括与当前行排序值相同的行。按 amount 排序累加时，两笔 199.00 的订单得到相同的累计值 492.90，而不是 293.90 和 492.90；需要严格逐行累计时，写成 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW（见[附录 A1](#a1-窗口函数)）。
+
+MySQL 5.7 没有窗口函数，“每个用户金额最高的 2 笔”可以用相关子查询，统计同一用户中金额比当前订单高的订单数，少于 2 的保留，结果与 RANK 取前 2 名相同。这种写法对每一行都要再查一次同一用户的订单，数据量大时很慢：10 万笔订单、1000 个用户、建有 (user_id, amount) 索引，求每个用户的前 3 名，相关子查询用了 1.6～1.8 s，RANK 约 0.05 s（MySQL 8.0 实测，见[附录 A1](#a1-窗口函数)）。
+
+一条 SELECT 语句在逻辑上按以下顺序处理，这个顺序解释了上面几处限制：
+
+1. FROM 和 JOIN：确定参与查询的行；
+2. WHERE：过滤行，这时还没有分组，也没有计算 SELECT 中的别名；
+3. GROUP BY：分组；
+4. HAVING：过滤分组；
+5. 窗口函数：在剩下的行上计算；
+6. SELECT 列表、DISTINCT；
+7. ORDER BY；
+8. LIMIT。
+
+WHERE 中不能用汇总函数、窗口函数和 SELECT 中的别名，都是因为它执行得早。MySQL 允许在 GROUP BY、HAVING 和 ORDER BY 中引用 SELECT 中的别名，这是对标准 SQL 的扩展。需要注意的是，这是逻辑上的顺序，优化器实际执行时可以调整，例如条件下推、使用索引避免排序，只要结果相同。
 
 ## 十四、子查询
 
@@ -796,6 +879,48 @@ MySQL 8.0 移除了 Password() 函数，直接指定新密码即可。
 SET PASSWORD FOR myuser = 'new_password';
 ```
 
+## 附录：实测
+
+### A1 窗口函数
+
+MySQL 8.0.44，sql_mode 为默认值（含 ONLY_FULL_GROUP_BY），orders 表的数据见[窗口函数](#窗口函数)。
+
+```text
+mysql> SELECT user_id, order_id, MAX(created_at) FROM orders GROUP BY user_id;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated
+column 'win_demo.orders.order_id' which is not functionally dependent on columns in GROUP BY clause
+
+mysql> SELECT order_id FROM orders
+    ->  WHERE ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC) = 1;
+ERROR 3593 (HY000): You cannot use the window function 'row_number' in this context.
+mysql> SELECT order_id, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC) AS rn
+    ->   FROM orders WHERE rn = 1;
+ERROR 1054 (42S22): Unknown column 'rn' in 'where clause'
+
+每个用户金额前 2 笔，ROW_NUMBER：1025, 1031 | 1033, 1027 | 1029
+每个用户金额前 2 名，DENSE_RANK：1025, 1031, 1024 | 1033, 1027 | 1029
+相关子查询（金额比自己高的少于 2 笔）：1025, 1031 | 1033, 1027 | 1029
+
+用户 1001 按 amount 累加：
+order_id  amount  默认范围（RANGE）  ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+1040       35.00              35.00              35.00
+1024       59.90              94.90              94.90
+1025      199.00             492.90             293.90
+1031      199.00             492.90             492.90
+```
+
+耗时：用递归 CTE 生成 10 万笔订单，user_id 取 1000 个值，建 (user_id, amount) 索引，求每个用户金额前 3 名（两种写法都返回 3000 行），SHOW PROFILES 取两次：
+
+```text
+相关子查询  1.781 s, 1.552 s
+RANK()      0.053 s, 0.052 s（删除索引后 0.062 s）
+```
+
 ## 参考资料
 
 - Ben Forta. SQL 必知必会 [M]. 人民邮电出版社, 2013.
+- [MySQL 8.0 Reference Manual: Window Function Concepts and Syntax](https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html)
+- [MySQL 8.0 Reference Manual: Window Function Descriptions](https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html)
+- [MySQL 8.0 Reference Manual: Window Function Frame Specification](https://dev.mysql.com/doc/refman/8.0/en/window-functions-frames.html)
+- [MySQL 8.0 Reference Manual: MySQL Handling of GROUP BY](https://dev.mysql.com/doc/refman/8.0/en/group-by-handling.html)
+- [MySQL 8.0 Reference Manual: Problems with Column Aliases](https://dev.mysql.com/doc/refman/8.0/en/problems-with-alias.html)
