@@ -68,7 +68,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 
 它可以让单个进程具有处理多个 I/O 事件的能力。又被称为 Event Driven I/O，即事件驱动 I/O。
 
-如果一个 Web 服务器没有 I/O 复用，那么每一个 Socket 连接都需要创建一个线程去处理。如果同时有几万个连接，那么就需要创建相同数量的线程。相比于多进程和多线程技术，I/O 复用不需要进程线程创建和切换的开销，系统开销更小。
+如果一个 Web 服务器用阻塞 I/O、又没有 I/O 复用，通常要为每一个 Socket 连接创建一个线程去处理。如果同时有几万个连接，那么就需要创建相同数量的线程。相比于多进程和多线程技术，I/O 复用不需要为每个连接创建进程或线程，也省去了大量线程之间切换的开销，系统开销更小。
 
 <div align="center"> <img src="pics/io-multiplex.png" width="760px"/> </div><br>
 
@@ -182,15 +182,15 @@ if (n > 0) {
 
 #### 2. 速度
 
-select 和 poll 每次调用都要做三件事（Linux 6.12 的 fs/select.c，do_select 与 do_poll）：
+select 和 poll 每次调用都要做这些事（Linux 6.12 的 fs/select.c，do_select 与 do_poll）：
 
 - 把描述符集合从用户空间复制到内核；
-- 对描述符逐个调用 poll 方法检查是否就绪，在找到就绪的描述符之前，把等待项挂到每个描述符的等待队列上；
-- 返回前把等待项从所有等待队列上摘下，再把结果返回给用户空间。
+- 对描述符逐个调用 poll 方法检查是否就绪，需要等待时（超时不为 0），在找到就绪的描述符之前，还要把等待项挂到每个描述符的等待队列上；
+- 返回前把挂上的等待项从等待队列上摘下，再把结果返回给用户空间。
 
 这些工作的开销与描述符数量 n 成正比，与就绪的数量无关。返回后，应用还要遍历 n 个描述符，才能找出就绪的那一个。以 10000 个描述符为例，poll 每次复制 10000 个 8 字节的 pollfd，约 78 KiB。
 
-实测结果与此一致（Linux 6.10，见[附录 A1](#a1-每次调用的耗时)）：只有 1 个描述符就绪时，监听 1000 个描述符的 select 和 poll 每次调用都约 34 µs，poll 监听 1 万个约 1.6 ms、10 万个约 22 ms；epoll_wait 无论注册了多少个描述符，每次调用都约 0.21 µs。
+实测结果与此一致（Linux 6.10，超时为 0，测的是复制和逐个检查的开销，见[附录 A1](#a1-每次调用的耗时)）：只有 1 个描述符就绪时，监听 1000 个描述符的 select 和 poll 每次调用都约 34 µs，poll 监听 1 万个约 1.6 ms、10 万个约 22 ms；epoll_wait 无论注册了多少个描述符，每次调用都约 0.21 µs。
 
 <div align="center"> <img src="pics/epoll-select-call.png" width="720px"/> </div><br>
 
@@ -215,7 +215,9 @@ epoll 实例在内核中是 struct eventpoll，其中有两个结构（Linux 6.1
 - 红黑树 rbr 保存所有注册的描述符（兴趣列表），插入、查找和删除都是 O(log n)；
 - 就绪链表 rdllist 保存已经就绪的描述符，追加和取出都是 O(1)。
 
-epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待队列上挂一个回调 ep_poll_callback。之后描述符变为可读，内核调用回调，把它加入就绪链表，应用不需要做任何事。以 TCP 套接字为例，阻塞在 read() 上的线程也挂在同一个等待队列上，没有使用 EPOLLEXCLUSIVE 时两者都是非独占的等待项。数据到达时内核（sock_def_readable）唤醒这个队列：阻塞 read() 的那一项直接唤醒线程，epoll 的那一项执行 ep_poll_callback，所以“阻塞的 read() 怎样被唤醒”和“epoll 怎样知道描述符就绪”是同一套机制（Linux 6.12 源码）。epoll_wait 只检查就绪链表：链表为空就阻塞；否则把其中的事件（最多 maxevents 个）复制到用户空间。
+epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待队列上挂一个回调 ep_poll_callback。之后描述符变为可读，内核调用回调，把它加入就绪链表，应用不需要做任何事。epoll_wait 只从就绪链表中取出候选项，复查后将仍然就绪的事件（最多 maxevents 个）复制到用户空间；如果没有可返回的事件，则按 timeout 参数等待（timeout 为 0 时立即返回 0）。
+
+以 TCP 套接字为例，阻塞在 read() 上的线程也挂在同一个等待队列上，没有使用 EPOLLEXCLUSIVE 时两者都是非独占的等待项。数据到达时内核（sock_def_readable）唤醒这个队列：阻塞 read() 的那一项直接唤醒线程，epoll 的那一项执行 ep_poll_callback，所以“阻塞的 read() 怎样被唤醒”和“epoll 怎样知道描述符就绪”是同一套机制（Linux 6.12 源码）。
 
 需要注意的是，常见的“epoll 用 mmap 与用户空间共享就绪链表”的说法并不成立：epoll_wait 返回前，内核把每个就绪事件逐个写入调用方传入的 events 数组（ep_send_events 中的 epoll_put_uevent）。epoll 省下的是每次复制和检查全部描述符的开销，就绪事件本身仍要复制。
 
@@ -234,8 +236,8 @@ epoll_ctl 在 EPOLL_CTL_ADD 时把描述符插入红黑树，并在它的等待�
 epoll 没有 select 的 1024 限制，实际上限取决于三个因素：
 
 - 进程的文件描述符上限 RLIMIT_NOFILE，即 ulimit -n，很多系统的默认软限制较小，需要调大；
-- 每个用户能注册的描述符总数 max_user_watches，默认值为可用低端内存的 4% 除以每个注册项的成本（epoll(7)），16 GiB 内存的机器上估算约为 430 万；
-- 内存：每个注册项在 64 位内核中约占 160 字节，100 万个注册约占 150 MiB 内核内存，还不包括套接字本身的缓冲区。
+- 每个用户能注册的描述符总数 max_user_watches，默认值为可用低端内存的 4% 除以每个注册项的成本（epoll(7)），按 16 GiB 低端内存估算，采用手册的约 160 字节时约为 430 万，采用两个结构体实际的 184 字节时约为 370 万（Ubuntu 24.04 的 6.8 内核，amd64）；
+- 内存：按上述内核中两个结构体的大小估算，100 万个注册约占 175 MiB 内核内存，还没有计入 slab 分配时的对齐等开销，也不包括套接字本身的缓冲区。
 
 使用 epoll 时还有两点需要注意：
 
@@ -244,7 +246,7 @@ epoll 没有 select 的 1024 限制，实际上限取决于三个因素：
 
 ### 工作模式
 
-epoll 有两种触发模式：水平触发（level-triggered, LT）和边缘触发（edge-triggered, ET）。LT 只要描述符仍然可读，每次 epoll_wait 都会报告它；ET 只在有新数据到达时报告一次。
+epoll 有两种触发模式：水平触发（level-triggered, LT）和边缘触发（edge-triggered, ET）。LT 只要描述符仍然可读，每次 epoll_wait 都会报告它；ET 不会因为缓冲区中还有没读完的数据而重复报告，新数据到达、对端关闭或出错等情况会触发报告，注册或修改关注项时也会检查一次当前是否就绪。
 
 #### 1. LT 模式
 
@@ -282,6 +284,9 @@ for (;;) {
     if (errno == EAGAIN) {              /* 缓冲区已空，回到 epoll_wait */
         break;
     }
+    if (errno == EINTR) {               /* 被信号打断，重新读 */
+        continue;
+    }
     close_connection(fd);               /* 其它错误 */
     break;
 }
@@ -307,7 +312,7 @@ poll 没有 1024 的限制，在平台支持且描述符数量不多时可以代
 
 epoll 只能在 Linux 上使用，适合同时监听大量描述符、且多数是长连接的服务器。描述符只有几十、几百个时，select 和 poll 的开销很小，监听 100 个描述符的 poll 每次约 3 µs（见[附录 A1](#a1-每次调用的耗时)），epoll 的优势不明显。
 
-如果描述符的状态变化很频繁、每次活跃的时间很短，epoll 的收益会被抵消：兴趣列表保存在内核中，每次修改都要一次 epoll_ctl 系统调用。
+如果连接频繁建立和关闭，或者应用频繁修改关注的事件，维护兴趣列表的开销会增加，可能削弱 epoll 的收益：兴趣列表保存在内核中，显式地增删改关注项都要调用 epoll_ctl；描述符本身变为就绪不需要调用 epoll_ctl。
 
 Reactor 模式（反应器模式）把事件循环和事件处理分开：线程通过 epoll 等待事件，就绪后调用对应的处理函数，处理函数不能长时间阻塞。Redis 的文件事件处理器基于 Reactor 模式，事件循环在主线程中运行，在 Linux 上封装 epoll，注册时只使用 EPOLLIN 和 EPOLLOUT，即水平触发，见 [Redis](Redis.md#十事件)。多路复用让一个线程同时处理多个连接，因此单线程的 Redis 也能处理大量连接；命令仍由主线程逐个执行。
 
@@ -319,7 +324,9 @@ Netty 的 NioEventLoop 基于 Java NIO 的 Selector，在 Linux 上由 JDK 的 e
 
 <div align="center"> <img src="pics/socket-reactor.png" width="760px"/> </div><br>
 
-如果多个线程各自创建 epoll 实例，同时监听同一个监听套接字，一个新连接会唤醒所有等待的线程，这称为惊群（thundering herd）。多个线程直接阻塞在同一个监听套接字的 accept() 上时是独占等待，一个新连接通常只唤醒一个线程；共享同一个 epoll 实例时 epoll_wait 也是独占等待，但 LT 模式下返回事件后会再唤醒一个等待者，仍可能有多余的唤醒。EPOLLEXCLUSIVE（Linux 4.5 起）让内核只唤醒其中的一个或部分等待者；SO_REUSEPORT（Linux 3.9 起）让每个线程绑定各自的监听套接字，由内核把新连接分配给其中一个（epoll_ctl(2)、socket(7)）。
+如果多个线程各自创建 epoll 实例，默认未使用 EPOLLEXCLUSIVE 地同时监听同一个监听套接字，一个新连接会唤醒所有等待的线程，这称为惊群（thundering herd）。多个线程直接阻塞在同一个监听套接字的 accept() 上时是独占等待，一个新连接通常只唤醒一个线程；共享同一个 epoll 实例时 epoll_wait 也是独占等待，但 LT 模式下返回事件后会再唤醒一个等待者，仍可能有多余的唤醒。
+
+缓解这类惊群可以用 EPOLLEXCLUSIVE（Linux 4.5 起），减少多个 epoll 实例的重复唤醒（内核唤醒其中一个或部分独占等待者）；也可以用 SO_REUSEPORT（Linux 3.9 起），让每个线程绑定各自的监听套接字，由内核把新连接分配给其中一个（epoll_ctl(2)、socket(7)）。
 
 需要注意的是，SO_REUSEPORT 默认按连接四元组的哈希分配，不根据线程的忙闲重新分配，某个线程阻塞时，分给它的连接要等它处理。关闭其中一个监听套接字时，它上面握手中的请求和 accept 队列中的连接默认会被中止；Linux 5.14 起可以开启 net.ipv4.tcp_migrate_req（默认 0），尝试把它们迁移到同一组中仍在监听的套接字，两边的套接字选项要一致。
 
