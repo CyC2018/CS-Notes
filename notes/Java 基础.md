@@ -58,6 +58,8 @@
 
 ### 基本类型
 
+8 种基本类型及其位数（bit）：
+
 - byte/8
 - char/16
 - short/16
@@ -71,7 +73,9 @@ boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是�
 
 ### 包装类型
 
-基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
+基本类型都有对应的包装类型，例如 int 对应 Integer。集合和泛型只能使用引用类型（List\<Integer\> 不能写成 List\<int\>），需要用 null 表示“没有值”时（例如数据库中可以为空的字段）也要用包装类型。代价是每个值都是一个对象，一个 Integer 对象占 16 字节，int 只占 4 字节（JDK 21，见[附录 A1](#a1-包装类型的缓存池)）。
+
+基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。
 
 ```java
 Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
@@ -96,7 +100,7 @@ Integer k = Integer.valueOf(123);
 System.out.println(z == k);   // true
 ```
 
-需要注意的是，new Integer(123) 从 JDK 9 起已经废弃，JDK 16 起标记为将要删除（JDK 25 起改回普通的废弃，不再计划删除），编译时会给出警告，应该使用 Integer.valueOf(123)。
+需要注意的是，new Integer(123) 从 JDK 9 起已经废弃，编译时会给出警告，应该使用 Integer.valueOf(123)。JDK 16 起它还被标记为将要删除，JDK 25 起又改回普通的废弃，不再计划删除。
 
 valueOf() 先判断值是否在缓存池的范围内，在的话直接返回缓存中的对象。
 
@@ -124,7 +128,9 @@ System.out.println(m == n); // true
 - Character：0\~127，即 \u0000\~\u007F；
 - Float、Double 没有缓存池。
 
-超出范围时不保证复用对象，默认配置下两个值为 128 的 Integer 用 == 比较为 false，所以比较包装类型的值要用 equals()。需要注意的是，equals() 不做类型转换，Long.valueOf(1).equals(1) 为 false，HashMap\<Long, String\> 调用 get(1) 时参数被装箱为 Integer，与 Long 类型的键不相等，也查不到；Integer 与 int 用 == 比较时，Integer 会拆箱，比较的是数值。
+超出范围时不保证复用对象，默认配置下两个值为 128 的 Integer 用 == 比较为 false，所以比较包装类型的值要用 equals()。Integer 与 int 用 == 比较时，Integer 会先拆箱，比较的是数值。
+
+需要注意的是，equals() 不做类型转换：Long.valueOf(1).equals(1) 为 false；HashMap\<Long, String\> 调用 get(1) 时参数被装箱为 Integer，与 Long 类型的键不相等，也查不到。
 
 Integer 缓存池的上界可以调整：启动时加上 -XX:AutoBoxCacheMax=1000，IntegerCache 初始化时会读取这个值，之后 Integer.valueOf(128) 也会返回同一个对象。其它包装类型的缓存范围是固定的。
 
@@ -144,7 +150,9 @@ public final class String
 }
 ```
 
-从 Java 9 开始，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码（紧凑字符串，JEP 254）：只包含 Latin-1 字符的字符串每个字符占 1 个字节，coder 为 0；含有中文等其它字符时按 UTF-16 存储，每个 char 占 2 个字节，coder 为 1。只含 Latin-1 字符时字符数据减半，但仍有 String 对象、数组头和对齐填充的开销（见[对象的内存布局](Java%20虚拟机.md#对象的创建与内存布局)），所以短字符串省得少、长字符串接近一半，例如 12 个字符的字符串从 64 字节变为 56 字节，1000 个字符时从 2040 字节变为 1040 字节（JDK 21，与关闭紧凑字符串时对比，见附录 A2）。
+从 Java 9 开始，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码（紧凑字符串，JEP 254）：只包含 Latin-1 字符的字符串每个字符占 1 个字节，coder 为 0；含有中文等其它字符时按 UTF-16 存储，每个 char 占 2 个字节，coder 为 1。
+
+只含 Latin-1 字符时字符数据减半，但 String 对象本身、数组头和对齐填充仍占空间（见[对象的内存布局](Java%20虚拟机.md#对象的创建与内存布局)），所以短字符串省得少、长字符串接近一半。例如 12 个字符的字符串从 64 字节变为 56 字节，1000 个字符时从 2040 字节变为 1040 字节（JDK 21，与关闭紧凑字符串时对比，见[附录 A2](#a2-字符串的存储)）。
 
 ```java
 public final class String
@@ -177,16 +185,18 @@ String 经常作为参数，不可变可以保证参数在使用过程中不被�
 
 #### 4. 线程安全
 
-String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
+String 对象创建后不会再改变，多个线程共享同一个 String 时不需要加锁。
 
 ### String, StringBuffer and StringBuilder
 
 - 可变性：String 不可变，StringBuffer 和 StringBuilder 可变；
 - 线程安全：String 不可变，因此是线程安全的；StringBuffer 的方法使用 [synchronized](Java%20并发.md#synchronized) 进行同步，是线程安全的；StringBuilder 不是线程安全的，但没有加锁的开销，单线程中拼接字符串时使用它。
 
-用 + 拼接字符串时，JDK 8 的编译器生成 StringBuilder 的 append() 调用，JDK 9 起改为 invokedynamic（JEP 280），JDK 21 运行时先算出总长度、直接填充结果的 byte 数组，不再经过 StringBuilder；用 --release 8 编译的类仍是 StringBuilder 的调用。但在循环中用 + 拼接，每次循环仍会创建一个新的 String 对象并复制之前的内容，例如拼接 10000 次 "x" 共分配约 50 MB（第 i 次复制 i 个字节，合计 1 + 2 + … + 10000 ≈ 5000 万字节），改用 StringBuilder 只分配约 47 KB（JDK 21，见附录 A2）。所以应该在循环外创建一个 StringBuilder，在循环中调用 append()。
+用 + 拼接字符串时，JDK 8 的编译器生成 StringBuilder 的 append() 调用；JDK 9 起改为 invokedynamic（JEP 280），JDK 21 运行时先算出总长度、直接填充结果的 byte 数组，不再经过 StringBuilder。用 --release 8 编译的类仍是 StringBuilder 的调用。
 
-只由基本类型或字符串的字面量（不含 null）和常量变量（用常量表达式初始化的 final 基本类型或 String 变量）组成的字符串拼接是编译期常量，编译器直接算出结果，运行时和字面量一样进入 [String Pool](#string-pool)；有普通变量或方法返回值参与时，每次都在运行时创建新的对象（JLS §15.18.1、§15.29），连 s + "" 也不例外（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）：
+无论编译成 StringBuilder 还是 invokedynamic，都只作用于单个表达式。在循环中用 + 拼接，每次循环仍会创建一个新的 String 对象并复制之前的内容，例如拼接 10000 次 "x" 共分配约 50 MB（第 i 次复制 i 个字节，合计 1 + 2 + … + 10000 ≈ 5000 万字节），改用 StringBuilder 只分配约 47 KB（JDK 21，见[附录 A2](#a2-字符串的存储)）。所以应该在循环外创建一个 StringBuilder，在循环中调用 append()。
+
+拼接的各部分都是编译期常量时，整个表达式也是常量，编译器直接算出结果，运行时和字面量一样进入 [String Pool](#string-pool)。编译期常量包括字面量（不含 null）和常量变量，后者指用常量表达式初始化的 final 基本类型或 String 变量。有普通变量或方法返回值参与时，每次都在运行时创建新的对象，连 s + "" 也不例外（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）：
 
 ```java
 String s = "order1024";
@@ -200,7 +210,7 @@ System.out.println((s + "") == s);             // false
 
 ### String Pool
 
-字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程将字符串添加到 String Pool 中。
+字符串常量池（String Pool）用来让内容相同的字符串共享同一个对象。字符串字面量会自动放入池中，运行时也可以使用 String 的 intern() 方法把字符串添加到池中。
 
 当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就把这个字符串加入 String Pool，并返回它的引用。
 
@@ -215,7 +225,7 @@ String s4 = s2.intern();
 System.out.println(s3 == s4);           // true
 ```
 
-如果是采用 "bbb" 这种字面量的形式创建字符串，会自动地将字符串放入 String Pool 中。
+内容相同的字面量引用的是池中同一个对象：
 
 ```java
 String s5 = "bbb";
@@ -227,11 +237,11 @@ Java 6 及以前，String Pool 中的字符串放在永久代，Java 7 起移到
 
 移到堆中之后，池中没有相等的字符串时，intern() 不再像 Java 6 那样把字符串复制到永久代，而是在池中记录堆中这个对象的引用，所以运行时拼接出的 "order1024" 调用 intern() 返回的就是它自己（JDK 21 实测，见[附录 A2](#a2-字符串的存储)）。
 
-需要注意的是，返回的是不是自己取决于运行时池中是否已经有相等的字符串，不能只按规则推断。JDK 自带的类数据共享（CDS）归档在启动时就放入了 "java"、"11" 等常见字符串，所以在附录的环境中（JDK 21，先编译再运行），new String("1") + new String("1") 调用 intern() 默认返回的不是自己，加 -Xshare:off 关闭 CDS 后才是。
+需要注意的是，intern() 返回的是不是自己，取决于运行时池中是否已经有相等的字符串。例如 JDK 自带的类数据共享（Class Data Sharing, CDS）归档在启动时就放入了 "java"、"11" 等常见字符串，所以在附录的环境中（JDK 21，先编译再运行），new String("1") + new String("1") 调用 intern() 默认返回的不是自己，加 -Xshare:off 关闭 CDS 后才是。
 
 ### new String("abc")
 
-使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。
+使用这种方式最多创建两个字符串对象：String Pool 中还没有 "abc" 时创建两个，已经有了就只在堆中创建一个。
 
 - "abc" 属于字符串字面量，编译时记录在 class 文件的常量池中，HotSpot 通常在运行时第一次执行到对应的 ldc 指令时才解析它（见 [解析](Java%20虚拟机.md#4-解析)），在 String Pool 中创建这个字符串对象，之后再执行就直接复用；
 - 而使用 new 的方式会在堆中创建一个字符串对象。
@@ -273,7 +283,7 @@ Constant pool:
 
 在 class 文件的常量池中，#10 存储字符串字面量 "abc"，#9 是 String 类型的常量，它指向 #10；运行时解析 #9 得到的就是 String Pool 中的字符串对象。在 main 方法中，0: 行使用 new #7 在堆中创建一个字符串对象，并且使用 ldc #9 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
-以下是 JDK 21 中 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组，即 [String Pool 的需要](#2-string-pool-的需要) 一节配图中的 s3。
+以下是 JDK 21 中 String(String) 构造函数的源码：它不复制 value 数组，新对象和参数共用同一个数组，即 [String Pool 的需要](#2-string-pool-的需要) 一节配图中的 s3。
 
 ```java
 public String(String original) {
@@ -288,9 +298,9 @@ public String(String original) {
 
 ### 参数传递
 
-Java 的参数是以值传递的形式传入方法中，而不是引用传递。
+Java 的参数是以值传递的形式传入方法中，而不是引用传递。两者的区别在于：值传递把实参的值复制给形参，方法中给形参赋新值不影响调用方的变量；引用传递的形参是调用方变量的别名（例如 C++ 的引用参数），给形参赋值就是给调用方的变量赋值。
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
+以下代码中 Dog dog 的 dog 是一个引用，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
 
 ```java
 public class Dog {
@@ -331,7 +341,7 @@ class PassByValueExample {
 }
 ```
 
-但是在方法中将指针引用了其它对象，那么此时方法里和方法外的两个指针指向了不同的对象，在一个指针改变其所指向对象的内容对另一个指针所指向的对象没有影响。
+但如果在方法中让形参引用另一个对象，方法内外的两个引用就指向不同的对象，之后通过形参做的修改不会影响方法外的对象。
 
 ```java
 public class PassByValueExample {
@@ -356,6 +366,8 @@ public class PassByValueExample {
 
 <div align="center"> <img src="pics/java-pass-by-value.png" width="760px"/> </div><br>
 
+传入 String 也一样：方法中执行 `s = s + "1024";` 只是让形参指向新的字符串，调用方的变量不变。要把结果带回调用方，可以返回新的字符串，或者传入 StringBuilder 这类可变对象。
+
 ### float 与 double
 
 double 转 float 属于窄化基本类型转换（也常称向下转型），可能损失精度或范围，赋值时需要显式强制转换。整数常量赋值中的隐式窄化见[隐式类型转换](#隐式类型转换)。
@@ -372,16 +384,18 @@ double 转 float 属于窄化基本类型转换（也常称向下转型），可
 float f = 1.1f;
 ```
 
+float 和 double 都是二进制浮点数，0.1 这类十进制小数只能存近似值，0.1 + 0.2 的结果是 0.30000000000000004。金额这类要求精确的计算用 BigDecimal，它把数记成整数和小数位数（0.1 记为 1 和 1 位小数）。需要注意的是，new BigDecimal(0.1) 得到的仍是近似值，应该写成 new BigDecimal("0.1")。
+
 ### 隐式类型转换
 
-s1 + 1 的结果是 int 类型（short 与 int 相加时，short 先提升为 int），不能隐式地向下转型为 short。short s1 = 1 能编译通过，是因为 1 是常量且在 short 的范围内，编译器允许这种赋值。
+short s1 = 1 能编译通过，是因为 1 是常量且在 short 的范围内，编译器允许这种赋值。但 s1 = s1 + 1 不能编译：short 与 int 相加时，short 先提升为 int，结果是 int 类型，不能隐式地向下转型为 short。
 
 ```java
 short s1 = 1;
 // s1 = s1 + 1;
 ```
 
-但是使用 += 或者 ++ 运算符会执行隐式类型转换。
+使用 += 或者 ++ 运算符则会执行隐式类型转换。
 
 ```java
 s1 += 1;
@@ -394,9 +408,11 @@ s1++;
 s1 = (short) (s1 + 1);
 ```
 
+因此 += 不会报错，但可能溢出：s1 为 32767 时执行 s1 += 1 得到 -32768。
+
 ### switch
 
-从 Java 7 开始，可以在 switch 条件判断语句中使用 String 对象。
+case 后面写常量时，switch 的条件可以是 char、byte、short、int 及其包装类型和枚举，从 Java 7 开始也可以是 String。
 
 ```java
 String s = "a";
@@ -410,7 +426,7 @@ switch (s) {
 }
 ```
 
-switch 不支持 long、float、double，这是因为 switch 编译后的 tableswitch 和 lookupswitch 指令只能按 int 值跳转。对 String 使用 switch 时，编译器先按 hashCode() 跳转，再用 equals() 比较（JDK 21 javap 实测，见[附录 A2](#a2-字符串的存储)）。
+switch 不支持 long、float、double，这是因为 switch 编译后的 tableswitch 和 lookupswitch 指令只能按 int 值跳转。对 String 使用 switch 时，编译器先按 hashCode() 跳转，再用 equals() 比较（JDK 21 javap 实测，见[附录 A2](#a2-字符串的存储)）。条件的值为 null 时会抛出 NullPointerException，Java 21 起可以写 case null 分支处理。
 
 ```java
 // long x = 111;
@@ -434,8 +450,7 @@ int days = switch (month) {
 };
 ```
 
-Java 21 起 switch 还可以按类型匹配，见 [Java 各版本的新特性](#java-各版本的新特性)。
-
+Java 21 起 switch 还可以按类型匹配，这时条件可以是任意引用类型，见 [Java 各版本的新特性](#java-各版本的新特性)。
 
 ## 四、关键字 🔥
 
@@ -455,7 +470,9 @@ final A y = new A();
 y.a = 1;
 ```
 
-final 字段只能赋值一次，实例字段要在构造函数结束前赋值。用常量表达式初始化的基本类型或 String 类型的 static final 字段是编译时常量，值直接写进使用它的类，读取它不会触发所在类的[初始化](Java%20虚拟机.md#类初始化时机)（JDK 21 实测，见[附录 A11](#a11-final-与-static-的初始化)）。
+final 字段只能赋值一次；未在声明时初始化的 final 实例字段，要在构造函数正常结束前完成赋值。
+
+用常量表达式初始化的基本类型或 String 类型的 static final 字段是编译时常量，值直接写进使用它的类，读取它不会触发所在类的[初始化](Java%20虚拟机.md#类初始化时机)（JDK 21 实测，见[附录 A11](#a11-final-与-static-的初始化)）。
 
 #### 2. 方法
 
@@ -473,8 +490,10 @@ final 与 finally、finalize() 只是名字相近，区别见 [异常](#八异�
 
 #### 1. 静态变量
 
-- 静态变量：又称为类变量，属于类而不属于某个实例，类所有的实例都共享静态变量，可以直接通过类名来访问它，静态变量在内存中只存在一份，JDK 7 起随 Class 对象放在堆中（分配内存和赋初始值的时机见[准备](Java%20虚拟机.md#3-准备)），通常一直存在到程序结束；
+- 静态变量：又称为类变量，属于类而不属于某个实例，在内存中只有一份，类的所有实例共享它，可以直接通过类名访问；
 - 实例变量：每创建一个实例就会产生一个实例变量，它与该实例同生共死。
+
+JDK 7 起，静态变量随 Class 对象放在堆中（分配内存和赋初始值的时机见[准备](Java%20虚拟机.md#3-准备)），通常一直存在到程序结束。
 
 ```java
 public class A {
@@ -523,7 +542,7 @@ public class A {
 
 静态语句块在类初始化时运行一次，类在第一次被主动使用（例如 new 对象、调用静态方法）时初始化，见 [类初始化时机](Java%20虚拟机.md#类初始化时机)。
 
-虚拟机保证类初始化只由一个线程执行，[静态内部类实现的单例](设计模式%20%20-%20单例.md#5-静态内部类实现)就利用了这一点；初始化之后再修改静态变量仍然需要同步。
+虚拟机保证类初始化只由一个线程执行（JDK 21 实测，见[附录 A11](#a11-final-与-static-的初始化)），[静态内部类实现的单例](设计模式%20%20-%20单例.md#5-静态内部类实现)就利用了这一点；初始化之后再修改静态变量仍然需要同步。
 
 ```java
 public class A {
@@ -544,7 +563,8 @@ public class A {
 
 #### 4. 静态内部类
 
-非静态内部类依赖于外部类的实例：需要先创建外部类实例，才能用这个实例去创建非静态内部类，静态内部类不需要。
+- 非静态成员内部类：每个对象都关联一个外部类对象（创建时指定，在内部类中用 OuterClass.this 引用），所以能直接访问外部类的实例变量和实例方法，但必须先有外部类对象，才能创建内部类对象；
+- 静态内部类：对象不关联外部类对象，可以直接创建，但不能直接访问外部类的实例变量和实例方法。
 
 ```java
 public class OuterClass {
@@ -563,8 +583,6 @@ public class OuterClass {
     }
 }
 ```
-
-静态内部类没有外部类的实例，不能直接访问外部类的实例变量和实例方法。
 
 #### 5. 静态导包
 
@@ -658,7 +676,7 @@ public final void wait() throws InterruptedException
 #### 2. 等价与相等
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法；
-- 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+- 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。Object 默认的 equals() 就是 this == obj，类没有重写时，两个字段完全相同的对象 equals() 也返回 false。
 
 ```java
 Integer x = new Integer(1);
@@ -669,10 +687,12 @@ System.out.println(x == y);      // false
 
 #### 3. 实现
 
+以下面的 EqualExample 为例，实现 equals() 的常见步骤如下（需要支持不同实现类之间比较相等时，例如 List 的不同实现，第二步改为用 instanceof 检查接口类型）：
+
 - 检查是否为同一个对象的引用，如果是直接返回 true；
-- 检查是否是同一个类型，如果不是，直接返回 false；
+- 检查参数是否为 null 或与当前对象的运行时类不同，若是则直接返回 false；
 - 将 Object 对象进行转型；
-- 判断每个关键域是否相等。
+- 判断每个关键字段是否相等。
 
 ```java
 public class EqualExample {
@@ -705,11 +725,9 @@ public class EqualExample {
 
 hashCode() 返回哈希值，而 equals() 是用来判断两个对象是否等价。Object 规定等价的两个对象哈希值必须相同，但是哈希值相同的两个对象不一定等价，这是因为哈希值只有 32 位，不同的对象可能计算出相同的哈希值，例如 "Aa" 和 "BB" 的哈希值都是 2112（见[附录 A2](#a2-字符串的存储)）。
 
-在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象哈希值也相等。
+重写 equals() 时要同时重写 hashCode()，并且只用参与 equals() 比较的字段计算哈希值，保证等价的两个对象哈希值也相等。HashSet、HashMap 等集合用哈希值确定对象的存储位置，不满足这一点时，集合可能把等价的对象当成不同的元素。
 
-HashSet 和 HashMap 等集合类使用了 hashCode() 方法来计算对象应该存储的位置，因此要将对象添加到这些集合类中，重写了 equals() 的类也要重写 hashCode()，并且只用参与 equals() 比较的字段计算哈希值。
-
-下面的代码中，新建了两个等价的对象，并将它们添加到 HashSet 中。期望的结果是把这两个对象当成一样的，只在集合中添加一个对象。但是 EqualExample 没有重写 hashCode() 方法，使用的是 Object 的实现，两个对象的哈希值通常不同，最终导致集合添加了两个等价的对象。
+下面的代码新建了两个等价的对象并加入 HashSet，期望集合把它们当成同一个元素，只保留一个。但 EqualExample 没有重写 hashCode()，用的是 Object 的实现，两个对象的身份哈希值通常不同（例如附录 A7 这次运行中两者哈希值不同），集合最终保存了两个等价的对象。
 
 ```java
 EqualExample e1 = new EqualExample(1, 1, 1);
@@ -718,16 +736,18 @@ System.out.println(e1.equals(e2)); // true
 HashSet<EqualExample> set = new HashSet<>();
 set.add(e1);
 set.add(e2);
-System.out.println(set.size());   // 2
+System.out.println(set.size());   // 2（两者哈希值不同时）
 ```
 
-这是因为 HashMap 查找键时先用 hashCode() 确定桶下标（HashMap 内部是一个数组，每个位置称为一个桶，见 [HashMap 的存储结构](Java%20容器.md#1-存储结构)），在桶中先比较哈希值，哈希值相等时才用 == 或 equals() 判断。e1 和 e2 的哈希值不同，多半落在不同的桶中，即使落在同一个桶，也会因为哈希值不同而被跳过，equals() 根本没有机会被调用（JDK 21 实测，见[附录 A7](#a7-hashcode-的生成与比较顺序)）。HashSet 内部就是一个 HashMap，元素作为键存放。
+HashSet 内部用一个 HashMap 存放元素，元素作为键。HashMap 查找键时先用 hashCode() 确定桶下标（HashMap 内部是一个数组，每个位置称为一个桶，见 [HashMap 的存储结构](Java%20容器.md#1-存储结构)），在桶中先比较哈希值，哈希值相等时才用 == 或 equals() 判断。
 
-重写 hashCode() 后，两个对象落在同一个桶中，equals() 才有机会被调用：
+当 e1 和 e2 的哈希值不同时，多半落在不同的桶中；即使落在同一个桶，也会因为哈希值不同而被跳过，equals() 根本没有机会被调用（JDK 21 实测，见[附录 A7](#a7-hashcode-的生成与比较顺序)）。重写 hashCode() 后，两个等价对象落在同一个桶中且哈希值相等，equals() 才有机会被调用：
 
 <div align="center"> <img src="pics/java-hashset-equals.png" width="760px"/> </div><br>
 
-理想的哈希函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的哈希值上。这就要求哈希函数把参与 equals() 比较的域都考虑进来。可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。
+反过来，只重写 hashCode() 而沿用 Object.equals() 也不行：即使两个不同实例的哈希值相等，Object 的 equals() 比较的仍是引用，HashSet 中仍然会保留两个对象。
+
+理想的哈希函数应当具有均匀性，即不相等的对象应当均匀分布到所有可能的哈希值上。这就要求哈希函数把参与 equals() 比较的字段都考虑进来。可以将每个字段都当成 R 进制的某一位，然后组成一个 R 进制的整数。
 
 R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位，最左边的位丢失。并且一个数与 31 相乘可以转换成移位和减法：`31*x == (x<<5)-x`，虚拟机可以自动进行这个优化。
 
@@ -746,7 +766,9 @@ public int hashCode() {
 
 JDK 中常见类型的 hashCode() 也很简单：Integer 直接返回值本身，Long 返回高 32 位与低 32 位的异或，String 按 s[0]×31^(n−1) + s[1]×31^(n−2) + … + s[n−1] 计算，算出后保存在 hash 字段中。
 
-没有覆盖时，Object 的 hashCode() 并不是对象的内存地址。HotSpot 在第一次调用时用当前线程的 xorshift 随机数生成器得到一个 31 位的值，写入对象头的 Mark Word（见 [对象的创建与内存布局](Java%20虚拟机.md#对象的创建与内存布局)），之后对象即使被 GC 移动，哈希值也不变。生成方式由 -XX:hashCode 选择，JDK 21 的默认值为 5，即上面的随机数方案，改为 2 时所有对象的哈希值都是 1（见[附录 A7](#a7-hashcode-的生成与比较顺序)）。
+没有重写时，Object 的 hashCode() 返回由 JVM 生成的身份哈希值，默认并不使用对象的内存地址。64 位 JDK 21 的 HotSpot 默认在第一次调用时用当前线程的 xorshift 随机数生成器得到一个 31 位的值，通常保存在对象头的 Mark Word 中（见 [对象的创建与内存布局](Java%20虚拟机.md#对象的创建与内存布局)），对象处于重量级锁膨胀状态时也可能保存在 ObjectMonitor 的 displaced Mark Word 中；一经确定，之后对象即使被 GC 移动，身份哈希值也不变。
+
+生成方式由实验参数 -XX:hashCode 选择，JDK 21 的默认值为 5，即上面的随机数方案；改为 2 时所有对象由 JVM 生成的身份哈希值都为 1（见[附录 A7](#a7-hashcode-的生成与比较顺序)）。
 
 ### toString()
 
@@ -776,7 +798,7 @@ ToStringExample@4554617c
 
 #### 1. Cloneable
 
-clone() 是 Object 的 protected 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法（protected 的访问规则见[访问权限](#访问权限)）。
+clone() 是 Object 的 protected 方法。一个类和它的父类都没有把 clone() 重写为 public 时，其它类只有满足 protected 的访问条件（见[访问权限](#访问权限)）才能直接调用该类实例的 clone() 方法。
 
 ```java
 public class CloneExample {
@@ -799,7 +821,7 @@ public class CloneExample {
 
     @Override
     public CloneExample clone() throws CloneNotSupportedException {
-        return (CloneExample)super.clone();
+        return (CloneExample) super.clone();
     }
 }
 ```
@@ -819,7 +841,7 @@ java.lang.CloneNotSupportedException: CloneExample
 
 以上抛出了 CloneNotSupportedException，这是因为 CloneExample 没有实现 Cloneable 接口。
 
-需要注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+Cloneable 是一个没有任何方法的标记接口，clone() 并不定义在其中。Object 的 clone() 被调用（例如 super.clone()）时检查对象的类是否实现了 Cloneable，没有实现就抛出 CloneNotSupportedException。加上 implements Cloneable 后就能正常拷贝：
 
 ```java
 public class CloneExample implements Cloneable {
@@ -827,8 +849,8 @@ public class CloneExample implements Cloneable {
     private int b;
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public CloneExample clone() throws CloneNotSupportedException {
+        return (CloneExample) super.clone();
     }
 }
 ```
@@ -878,7 +900,7 @@ System.out.println(e2.get(2)); // 222
 
 #### 3. 深拷贝
 
-拷贝对象和原始对象的引用类型引用不同对象。
+深拷贝把引用类型的字段指向的对象也复制一份，拷贝对象和原始对象的引用类型字段引用不同的对象。
 
 ```java
 public class DeepCloneExample implements Cloneable {
@@ -922,13 +944,18 @@ Order cloneDeep() throws CloneNotSupportedException {
 }
 ```
 
-逐层 clone 或拷贝构造函数最快，但每层都要手写，新增字段时容易漏掉。序列化后再反序列化不用手写，能处理循环引用，但要求所有类都实现 Serializable，transient 字段不会被复制，而且慢两到三个数量级（JDK 21 粗测，见[附录 A8](#a8-深拷贝的几种方式)）。
+逐层 clone 或拷贝构造函数通常开销较小（见[附录 A8](#a8-深拷贝的几种方式)的粗测），但每层都要手写，新增字段时容易漏掉。
 
-数组的 clone() 是 public 的，不抛受检异常，返回值也不用强制转换，但多维数组只复制最外层，例如 int[][] 复制后的每一行仍与原数组共用（JLS §10.7）；new ArrayList<>(list) 和 ArrayList 的 clone() 同样只复制元素的引用（见[附录 A8](#a8-深拷贝的几种方式)）。
+序列化后再反序列化也能复制被序列化的对象图，不用逐层手写，且能处理普通对象之间的循环引用。但实际写入流的对象都必须支持序列化（实现 Serializable 等），transient 字段以及未实现 Serializable 的父类字段默认不会被复制（在 writeObject()、readObject() 中自行保存恢复的除外，例如 ArrayList 的元素），并且第一个不可序列化的父类必须具有对子类可访问的无参构造函数；此外枚举常量和定义了 readResolve() 返回已有对象的类反序列化时不一定产生新实例。性能上也比手写深拷贝慢两到三个数量级（JDK 21 粗测，见[附录 A8](#a8-深拷贝的几种方式)）。
+
+数组的 clone() 是 public 的，不抛受检异常，返回值也不用强制转换，但多维数组只复制最外层，例如 int[][] 复制后的每一行仍与原数组共用。new ArrayList<>(list) 和 ArrayList 的 clone() 同样只复制元素的引用（见[附录 A8](#a8-深拷贝的几种方式)）。
 
 #### 4. clone() 的替代方案
 
-使用 clone() 方法来拷贝一个对象既复杂又有风险，它会抛出异常，并且还需要类型转换。Object.clone() 不调用构造函数，而 final 字段只能在对象初始化时赋值，所以类中有 final 的可变字段（例如 final List）时，不能在 super.clone() 之后给它换一个新对象，这时用拷贝构造函数更合适。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+clone() 用起来麻烦，也有做不到的情况，一般用拷贝构造函数或拷贝工厂（作用与拷贝构造函数相同的静态方法）代替：
+
+- 要实现 Cloneable 接口，需要对外公开时要把 clone() 重写为 public，调用 super.clone() 时还要处理受检异常 CloneNotSupportedException 和类型转换（重写方法可用协变返回类型，并在内部处理异常，避免影响调用方）；
+- Object.clone() 不调用构造函数，而 final 字段只能在对象初始化时赋值，所以类中有 final 的可变字段（例如 final List）时，不能在 super.clone() 之后给它换一个新对象（见[附录 A8](#a8-深拷贝的几种方式)）。
 
 ```java
 public class CloneConstructorExample {
@@ -956,7 +983,7 @@ System.out.println(e2.get(2)); // 2
 
 ### 访问权限
 
-Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见。
+Java 中有三个访问权限修饰符：private、protected 以及 public；对于类及通常的类成员，不加访问修饰符表示包级可见，接口成员默认是 public。
 
 可以对类或类中的成员（字段和方法）加上访问修饰符。
 
@@ -965,7 +992,7 @@ Java 中有三个访问权限修饰符：private、protected 以及 public，如
 
 protected 用于修饰成员，在包外只对子类可见，并且包外的子类访问实例字段和实例方法时只能通过自身类型（或其子类）的引用，不能通过父类类型的引用，静态成员没有这个限制。顶级类不能用 protected 修饰。
 
-四种访问级别的可见范围（JDK 21 编译验证，见[附录 A10](#a10-protected-的访问范围)）：
+四种访问级别的可见范围（前提是所属类型本身可访问；跨模块访问还需满足 Java 9 模块系统的可读性与包导出条件，JDK 21 编译验证，见[附录 A10](#a10-protected-的访问范围)）：
 
 ```text
               同一个类   同一个包   不同包的子类   其它包
@@ -975,9 +1002,11 @@ protected        是         是           是          否
 private          是         否           否          否
 ```
 
+表中的“同一个类”对 private 来说是同一个顶级类：嵌套类之间、嵌套类与外部类之间可以互相访问 private 成员。
+
 设计良好的模块会隐藏所有的实现细节，把它的 API 与它的实现清晰地隔离开来。模块之间只通过它们的 API 进行通信，一个模块不需要知道其他模块的内部工作情况，这个概念被称为信息隐藏或封装。因此访问权限应当尽可能地使每个类或者成员不被外界访问。
 
-如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例去代替，也就是确保满足里氏替换原则。
+如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是语言层面对类型兼容的要求，对应里氏替换原则在访问权限上的约束（行为本身是否满足里氏替换仍取决于实现）。
 
 公有类的实例字段不应该是公有的，常量可以用 public static final 字段公开（例如 Integer.MAX_VALUE）。字段公有的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。例如下面的例子中，AccessExample 拥有 id 公有字段，如果在某个时刻想要改为使用 int 存储 id 字段，那么就需要修改所有的客户端代码。
 
@@ -1066,7 +1095,7 @@ ac2.func1();
 
 接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，不能有任何方法实现。
 
-从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类，让它们都实现新增的方法。
+从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果接口新增抽象方法，原本没有对应实现的具体实现类在重新编译时都必须补充实现（已编译的旧类不重编译虽不破坏二进制兼容，但调用缺失方法会抛出 AbstractMethodError）；默认方法降低了接口演进的成本。
 
 接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 protected。在 Java 8 及之前也不允许定义为 private，从 Java 9 开始，允许将方法定义为 private，这样就能定义某些复用的代码又不会把方法暴露出去。
 
@@ -1113,10 +1142,10 @@ System.out.println(InterfaceExample.x);
 - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制；
 - 接口的成员默认是 public 的，Java 9 起方法可以是 private 的，但不能是 protected 的；抽象类的成员可以有多种访问权限；
 - 抽象类有构造函数，创建子类对象时会调用；接口没有构造函数；
-- Java 8 起接口可以有静态方法，只能通过接口名调用，不会被实现类继承；
+- Java 8 起接口可以有静态方法，不会被实现类继承，通常通过接口名调用（接口内可直接调用，其它类也可静态导入）；
 - 只有接口（函数式接口，与记录类一起见 [Java 各版本的新特性](#java-各版本的新特性)）能作为 Lambda 的目标类型；记录类和枚举不能继承自定义的类，只能实现接口；接口只能继承接口，不能继承抽象类。
 
-一个类实现的两个接口有签名相同的默认方法时，必须重写该方法，可以用“接口名.super.方法名()”选择一个实现：
+一个类继承了两个存在冲突的默认方法，且无法通过父类方法优先或更具体的接口方法消除冲突时，必须重写该方法，可以用“接口名.super.方法名()”选择一个允许调用的默认实现：
 
 ```java
 interface Pay { default String channel() { return "Pay"; } }
@@ -1205,12 +1234,12 @@ SuperExtendExample.func()
 
 #### 1. 重写（Override）
 
-存在于继承体系中，指子类重新定义父类中允许被重写的实例方法，通常是方法名和参数类型相同；父类的 private、final 方法不能被重写。
+存在于继承体系中，指子类重新定义父类中允许被重写的实例方法：签名须是被重写方法在父类型中的子签名（考虑泛型替换与类型擦除，普通非泛型方法表现为方法名和参数类型相同）；父类的 private、final 方法不能被重写。
 
-为了满足里氏替换原则，重写有以下三个限制：
+作为语言层面的兼容性要求（对应里氏替换原则的签名约束，不能代替行为上的保证），重写有以下三个限制：
 
 - 子类方法的访问权限必须大于等于父类方法；
-- 子类方法的返回类型必须是父类方法返回类型或为其子类型，基本类型则必须相同；
+- 子类方法的返回类型必须与父类方法返回类型兼容（基本类型必须相同，引用类型通常为原类型或其子类型，即协变返回类型）；
 - 子类方法抛出的[受检异常](#八异常)必须是父类方法抛出的异常类型或为其子类型。
 
 上面三个限制无论是否加注解，编译器都会检查。@Override 注解让编译器检查这个方法确实重写了父类的方法，例如方法名或参数类型写错时，没有注解就会悄悄地变成一个新方法。
@@ -1241,7 +1270,7 @@ class SubClass extends SuperClass {
 
 调用一个方法分为两步：
 
-- 编译时，按变量声明的类型（静态类型）找到可以调用的方法，包括从父类继承来的方法，在其中选择参数类型最匹配的一个，参数没有完全匹配的方法时，把参数转型为父类再找；
+- 编译时，按接收者的静态类型确定候选方法（包括从父类继承的方法），依次按严格调用、允许装箱拆箱的宽松调用和可变参数调用筛选适用方法，再根据最具体方法选择规则确定调用目标；若最终仍存在歧义（例如两个参数类型互不具有子类型关系的重载方法均适用），则会编译报错；
 - 运行时，按对象的实际类型，如果子类重写了编译时选定的方法，就调用子类的版本。
 
 下面的代码中，ba 的静态类型是 A，运行时的对象是 B，ba.show(b) 的两步如下图；ba.show(d) 在编译时选定 show(C obj)，B 没有重写它，所以调用的是 A.show(C)。
@@ -1337,7 +1366,7 @@ public static void main(String[] args) {
 }
 ```
 
-重写与重载的区别：重写发生在子类与父类之间，方法的参数列表必须相同，调用哪个版本在运行时按对象的实际类型决定；重载发生在同一个类中（包括继承来的方法），参数列表必须不同，调用哪个版本在编译时按参数的静态类型决定。例如有 show(Object) 和 show(String) 两个重载方法，`Object x = "a"; show(x);` 调用的是 show(Object)，因为 x 的静态类型是 Object（JDK 21 实测）。
+重写与重载的区别：重写发生在子类与父类之间，子类方法须满足父类方法的子签名规则（非泛型方法参数列表相同），调用哪个版本在运行时按对象的实际类型决定；重载发生在同一个类中（包括继承来的方法），参数列表必须不同，调用哪个版本在编译时按静态类型和重载决议规则决定。例如有 show(Object) 和 show(String) 两个重载方法，`Object x = "a"; show(x);` 调用的是 show(Object)，因为 x 的静态类型是 Object（JDK 21 实测）。
 
 ## 七、反射 🔥
 
@@ -1345,7 +1374,7 @@ public static void main(String[] args) {
 
 每个类都有一个 Class 对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件保存着类的字节码，类加载时 JVM 根据它创建对应的 Class 对象。
 
-获取 Class 对象有三种方式：Order.class、order.getClass()、Class.forName("Order")，得到的是同一个对象。其中 forName 默认会初始化这个类，执行它的静态语句块，Order.class 不会（JDK 21 实测，见[附录 A9](#a9-获取-class-对象)）。
+获取 Class 对象有三种方式：Order.class、order.getClass()、Class.forName("Order")，order 的实际类型就是 Order 时，得到的是同一个对象（getClass() 返回的是实际类型）。其中 forName 默认会初始化这个类，执行它的静态语句块，Order.class 不会（JDK 21 实测，见[附录 A9](#a9-获取-class-对象)）。
 
 Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect 类库主要包含了以下三个类：
 
@@ -1353,7 +1382,7 @@ Class 和 java.lang.reflect 一起对反射提供了支持，java.lang.reflect �
 - Method：可以使用 invoke() 方法调用与 Method 对象关联的方法；
 - Constructor：可以用 Constructor 的 newInstance() 创建新的对象。
 
-假设 Order 提供公有构造函数 Order(long id) 和公有方法 pay(int amount)，后者修改私有字段 status 并返回支付结果。只知道类名时，可以通过反射创建对象、调用方法并读取私有字段：
+假设 Order 提供公有构造函数 Order(long id) 和公有方法 pay(int amount)，后者修改私有字段 status 并返回支付结果（假设调用者与 Order 位于同一模块，或所在包已开放）。只知道类名时，可以通过反射创建对象、调用方法并读取私有字段：
 
 ```java
 Class<?> clazz = Class.forName("Order");
@@ -1368,7 +1397,7 @@ System.out.println(status.get(order));         // PAID
 
 getMethod()、getField() 只能找到 public 成员，包括继承的；getDeclaredMethod()、getDeclaredField() 能找到本类声明的全部成员，包括私有的，但不含继承的（JDK 21 实测，见[附录 A4](#a4-反射与注解)）。
 
-一次反射调用经过的步骤如下图；JDK 17 及之前的 MethodAccessor 不用方法句柄，先用本地方法调用，超过 15 次后再生成一个直接调用目标方法的类。
+一次反射调用经过的步骤如下图：JDK 18 起通过 JEP 416 改用方法句柄（Method Handle）实现核心反射，JDK 21 的常规 Method.invoke() 路径使用 DirectMethodHandleAccessor，不再使用旧版的 15 次 inflation 阈值和动态生成访问器类机制；JDK 17 及之前默认先通过本地方法调用，超过 15 次后再生成直接调用目标方法的类。
 
 <div align="center"> <img src="pics/java-reflect-invoke.png" width="760px"/> </div><br>
 
@@ -1381,21 +1410,21 @@ getMethod()、getField() 只能找到 public 成员，包括继承的；getDecla
 反射的缺点：
 
 - 性能开销：反射调用要检查访问权限、把参数装进 Object 数组，查找 Method 对象的开销更大。JDK 21 上把 Method 对象缓存起来时，每次调用只比直接调用多 2 纳秒左右；每次都用 getMethod() 查找再调用则约 28 纳秒（见[附录 A4](#a4-反射与注解)），所以框架都会缓存 Method 对象；
-- 访问限制：JDK 16 起默认禁止类路径上的代码反射访问 JDK 内部的私有成员，例如在 JDK 21 上对 String 的 value 字段调用 setAccessible(true) 会抛出 InaccessibleObjectException，需要启动时加 --add-opens；
+- 访问限制：JDK 16 起默认禁止类路径上的代码反射访问 JDK 内部的私有成员，例如在 JDK 21 上对 String 的 value 字段调用 setAccessible(true) 会抛出 InaccessibleObjectException，需要启动时加 --add-opens；对应用自定义的命名模块同样适用，跨模块深度反射私有成员要求目标包通过 opens 或 --add-opens 开放，仅 exports 不够；
 - 失去编译期检查：类名和方法名写成字符串，写错或改名后到运行时才抛出 ClassNotFoundException、NoSuchMethodException；
 - 破坏封装：反射可以访问私有的字段和方法，依赖这些内部细节的代码在类的实现改变后可能失效。例如调用私有构造函数可以创建出第二个单例对象，见[单例的枚举实现](设计模式%20%20-%20单例.md#6-枚举实现)；
 - 修改 final 字段：setAccessible(true) 之后，Field.set() 也只能修改非 static、所在类不是 record 或隐藏类（hidden class，例如 Lambda 的实现类）的 final 字段；用常量表达式初始化的基本类型或 String 类型的 final 字段（例如 final int a = 1）是常量变量，直接读取它的代码在编译时就内联了它的值，反射把 a 改为 10 后 getA() 仍返回 1（JDK 21 实测，见[附录 A4](#a4-反射与注解)），JDK 26 起这类修改默认会给出警告，以后的版本计划默认禁止（JEP 500）。
 
 ## 八、异常
 
-Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。其中 Error 表示严重的问题，例如 OutOfMemoryError、StackOverflowError，它也是 Throwable 的子类，语法上可以捕获，但 Javadoc 说明一般的应用不应尝试捕获它，编译器也不要求捕获或声明。Exception 分为两种：
+Throwable 是所有可抛出类型的基类，最常用的两个直接子类是 Error 和 Exception（Throwable 本身也可直接抛出或继承）。按 JLS §11.1.1，RuntimeException 及其子类、Error 及其子类属于非受检异常，其余 Throwable 类型（包括 Throwable 本身与非 RuntimeException 的 Exception 子类）属于受检异常。其中 Error 表示严重问题，例如 OutOfMemoryError、StackOverflowError，语法上可以捕获，但 Javadoc 说明一般应用不应尝试捕获，编译器也不要求捕获或声明。日常常按 Exception 进一步区分两类：
 
 - 受检异常：例如 IOException、SQLException，需要用 try...catch... 语句捕获并进行处理，或者用 throws 声明抛出，否则编译不通过，这类异常通常可以恢复；
-- 非受检异常：RuntimeException 及其子类（按 JLS §11.1.1，Error 及其子类也属于非受检异常），是程序运行时错误，例如整数除以 0 会引发 ArithmeticException（浮点数除以 0 得到 Infinity 或 NaN，不抛异常），访问 null 的成员会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
+- 非受检异常：RuntimeException 及其子类（连同上述 Error 及其子类均属非受检异常），是程序运行时错误，例如整数除以 0 会引发 ArithmeticException（浮点数除以 0 得到 Infinity 或 NaN，不抛异常），通过 null 访问实例字段或调用实例方法会引发 NullPointerException。编译器不强制处理这类异常，通常应该修改代码来避免，而不是捕获之后恢复。
 
 <div align="center"> <img src="pics/java-exceptions.png" width="760px"/> </div><br>
 
-finally 块无论是否发生异常、try 或 catch 中是否执行了 return，都会在离开 try 语句之前执行，通常用来释放锁、关闭资源。finally 与 final、finalize() 只是名字相近：final 是修饰符，见 [final](#final)；finalize() 是 Object 的方法，对象被回收前可能被调用，JDK 9 起已经废弃，见 [finalize()](Java%20虚拟机.md#4-finalize)。
+finally 块无论是否发生异常、try 或 catch 中是否执行了 return，都会在离开 try 语句之前执行，通常用来释放锁、关闭资源。实现了 AutoCloseable 的资源更常用 try-with-resources 自动关闭，close() 按声明的相反顺序调用；try 中已经抛出异常时，close() 抛出的异常附加在原异常上，用 getSuppressed() 取出，不会覆盖原异常。finally 与 final、finalize() 只是名字相近：final 是修饰符，见 [final](#final)；finalize() 是 Object 的方法，对象被回收前可能被调用，JDK 9 起已经废弃，见 [finalize()](Java%20虚拟机.md#4-finalize)。
 
 try、catch、finally 的执行顺序和返回值有以下规则（JDK 21 实测，见[附录 A6](#a6-finally-的执行顺序与返回值)）：
 
@@ -1442,7 +1471,7 @@ public class Box<T> {
 
 Java 的泛型通过类型擦除实现：类型参数只在编译时检查，编译后都替换为它的上界擦除后的类型（有多个上界时取第一个，例如 \<T extends Number\> 擦除为 Number，没有声明上界时为 Object），在取出元素的地方由编译器插入强制类型转换。所以 List\<String\> 和 List\<Integer\> 在运行时是同一个类。这样设计主要是为了兼容已有的代码（JLS §4.7）：java.util 中的集合直接加上泛型，没有用泛型的旧代码不用修改就能继续调用，各个库也可以分别、逐步地改用泛型。
 
-需要注意的是，类、字段和方法声明中的泛型信息仍然以 Signature 属性保存在 class 文件中，可以通过反射读取（例如 getGenericSuperclass()），被擦除的是对象实例和局部变量上的类型参数：
+需要注意的是，类、字段和方法声明中的泛型信息以 Signature 属性保存在 class 文件中，可以通过反射读取（例如 getGenericSuperclass()）；对象实例在运行时不保留类型参数，局部变量的类型参数也不会用于运行时检查（仅在编译带调试信息时可能写入 LocalVariableTypeTable 属性供调试器使用）：
 
 ```java
 List<String> a = new ArrayList<>();
@@ -1505,7 +1534,7 @@ System.out.println(limit.value());   // 100
 | 版本 | 与上一个长期支持版本相比的主要新特性 |
 | --- | --- |
 | Java 8（2014） | Lambda 表达式、Stream、Optional、新的日期时间 API（java.time）、接口默认方法；永久代被[元空间](Java%20虚拟机.md#方法区)取代 |
-| Java 11（2018） | 模块系统（Java 9 引入）、var 用于 Lambda 参数（var 本身在 Java 10 引入）、[G1](Java%20虚拟机.md#7-g1-收集器) 成为默认的垃圾收集器（Java 9 引入）、标准化的 HttpClient、String 新增 isBlank、strip、repeat 等方法 |
+| Java 11（2018） | 模块系统（Java 9 引入）、var 用于 Lambda 参数（var 本身在 Java 10 引入）、[G1](Java%20虚拟机.md#7-g1-收集器) 成为服务器级机器上默认的垃圾收集器（Java 9 引入）、标准化的 HttpClient、String 新增 isBlank、strip、repeat 等方法 |
 | Java 17（2021） | 记录类（record）、密封类（sealed）、文本块、instanceof 模式匹配、新的 switch 表达式 |
 | Java 21（2023） | 虚拟线程、switch 模式匹配、记录模式、有序集合接口 SequencedCollection |
 | Java 25（2025） | 作用域值（ScopedValue）、紧凑源文件与实例 main 方法、灵活的构造函数体；虚拟线程在 synchronized 中阻塞时基本不再固定在平台线程上（JDK 24 起） |
@@ -1520,7 +1549,7 @@ record Square(double side) implements Shape {}
 static double area(Shape s) {
     return switch (s) {                          // switch 模式匹配，编译器检查是否覆盖了所有子类
         case Circle c -> Math.PI * c.r() * c.r();
-        case Square(double side) -> side * side; // 记录模式，直接取出字段
+        case Square(double side) -> side * side; // 记录模式，通过访问器方法取出组件值
     };
 }
 
@@ -1532,7 +1561,7 @@ var upper = List.of("redis", "mysql", "kafka", "java").stream()
 Thread.ofVirtual().start(() -> System.out.println(Thread.currentThread().isVirtual())).join();  // true
 ```
 
-虚拟线程是 JVM 实现的协程，由 JVM 调度到平台线程（通常与操作系统线程一一对应）上执行。执行网络 I/O、BlockingQueue.take() 等大多数阻塞操作时，虚拟线程会从平台线程上卸载（许多文件系统操作例外），让平台线程去执行其它虚拟线程，适合大量请求都在等待 I/O 的场景，对 CPU 密集的任务没有帮助，见[协程](计算机操作系统%20-%20进程管理.md#5-协程)。
+虚拟线程是 JVM 实现的协程，由 JVM 调度到平台线程（通常与操作系统线程一一对应）上执行。执行网络 I/O、BlockingQueue.take() 等大多数阻塞操作时，虚拟线程通常会从平台线程上卸载，让平台线程去执行其它虚拟线程（许多文件系统操作例外）。JDK 21～23 中，在 synchronized 块或方法内阻塞，以及因 native 方法或外部函数调用发生 pinning 时，虚拟线程也无法卸载（JDK 24 起通过 JEP 491 消除了 synchronized 导致的绝大多数 pinning）。它适合大量请求都在等待 I/O 的场景，对 CPU 密集的任务没有帮助，见[协程](计算机操作系统%20-%20进程管理.md#5-协程)。
 
 Lambda 表达式的值是一个函数式接口的实例，可以代替只为实现一个方法而写的匿名内部类。函数式接口指的是没有声明为 sealed、逻辑上只有一个抽象方法的接口（与 Object 的 public 方法签名相同的方法不算，例如 Comparator 中的 equals），例如 Runnable、Comparator 和 java.util.function 包中的 Predicate、Function，标上 @FunctionalInterface 时编译器会检查这一点。例如 filter 的参数类型是 Predicate，`w -> w.length() == 5` 就是它的 test() 方法的实现。
 
@@ -1548,15 +1577,15 @@ groups.stream().map(List::size).toList();          // [2, 1]
 groups.stream().flatMap(List::stream).toList();    // [redis, mysql, kafka]
 ```
 
-Stream 是惰性求值的：filter、map 等中间操作只是记录下来，遇到 collect、findFirst 等终止操作才开始执行，并且每个元素依次走完整条流水线（sorted 要先收齐全部元素，是例外）。求 upper 的例子改为 findFirst() 时，只处理了第一个元素 redis 就返回了，后面的 mysql、kafka、java 都没有被处理。
+Stream 是惰性求值的：filter、map 等中间操作只是记录下来，遇到 collect、findFirst 等终止操作才触发求值。对于无状态中间操作组成的顺序流，元素通常逐个走完整条流水线；有状态操作（例如 sorted）、并行流和短路操作可能改变执行方式，且在不影响结果时 JDK 也可以省略中间操作（例如已知大小来源的流执行 map 后直接 count() 时可不执行 map）。求 upper 的例子改为 findFirst() 时，只处理了第一个元素 redis 就返回了，后面的 mysql、kafka、java 都没有被处理。
 
 ### Java 与 C++ 的区别
 
-- Java 的代码都写在类中，除了基本类型之外，所有的对象都继承自 java.lang.Object；C++ 为了兼容 C，既支持面向对象也支持面向过程；
+- Java 的方法实现写在类或接口中，除了基本类型之外，所有的对象都继承自 java.lang.Object；C++ 为了兼容 C，既支持面向对象也支持面向过程；
 - Java 通过虚拟机从而实现跨平台特性，但是 C++ 依赖于特定的平台；
 - Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针；
-- Java 支持自动垃圾收集，而 C++ 需要手动释放内存；
-- Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承；
+- Java 主要通过垃圾收集器自动回收对象内存；C++ 没有内置垃圾收集器，通常借助对象生命周期、RAII 和智能指针管理资源，也支持显式分配和释放内存；
+- Java 不支持类的多重继承，但支持实现多个接口以及接口的多重继承；C++ 支持类的多重继承；
 - Java 不支持操作符重载，虽然可以对两个 String 对象执行加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以；
 - Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
 
@@ -1566,8 +1595,8 @@ Stream 是惰性求值的：filter、map 等中间操作只是记录下来，遇
 | --- | --- | --- | --- |
 | 执行方式 | 编译为字节码，由 JVM 解释执行，热点代码由即时编译器（Just-In-Time, JIT）编译为机器码 | 直接编译为机器码，生成一个可执行文件，启动快 | 编译为字节码，由解释器执行，3.13 起有实验性的 JIT |
 | 类型检查 | 静态类型，编译时检查 | 静态类型，编译时检查 | 动态类型，运行时才发现类型错误 |
-| 并发 | 线程对应操作系统线程，JDK 21 起有[虚拟线程](计算机操作系统%20-%20进程管理.md#5-协程) | goroutine 由运行时调度到少量线程上，用 channel 通信 | 有全局解释器锁（GIL），同一时刻只有一个线程执行 Python 代码，CPU 密集型任务要用多进程；3.13 起提供去掉 GIL 的版本，3.14 起正式支持，但不是默认版本 |
-| 内存回收 | 分代的[垃圾收集器](Java%20虚拟机.md#垃圾收集器)，可以选择 G1、ZGC 等 | 与程序并发执行的标记清除，不移动对象 | 以引用计数为主，计数为 0 时立即释放，再用垃圾收集器处理循环引用 |
+| 并发 | 线程对应操作系统线程，JDK 21 起有[虚拟线程](计算机操作系统%20-%20进程管理.md#5-协程) | goroutine 由运行时调度到少量线程上，用 channel 通信 | 默认构建有全局解释器锁（GIL），同一解释器内同一时刻通常只有一个线程执行 Python 字节码，纯 Python 的 CPU 密集型任务常用多进程并行（3.14 起也可使用 InterpreterPoolExecutor，原生扩展释放 GIL 后也可并行）；3.13 起提供自由线程构建，3.14 起正式支持，但尚非默认构建 |
+| 内存回收 | [垃圾收集器](Java%20虚拟机.md#垃圾收集器)，服务器级机器上默认是分代的 G1，也可以选择 ZGC 等 | 与程序并发执行的标记清除，不移动对象 | 以引用计数为主，计数为 0 时立即释放，再用垃圾收集器处理循环引用 |
 | 错误处理 | 异常 | 函数返回 error 值，由调用方检查 | 异常 |
 
 ### JRE or JDK
@@ -1617,6 +1646,20 @@ Double 1.0: false
 new Integer(123) == new Integer(123): false
 $ java -XX:AutoBoxCacheMax=1000 Cache
 Integer 127: true，128: true
+```
+
+一个 Integer 对象的大小，用 JOL 0.17 读取（默认配置，类型指针压缩为 4 字节）：
+
+```java
+System.out.println(ClassLayout.parseInstance(Integer.valueOf(1024)).toPrintable());
+```
+
+```text
+OFF  SZ   TYPE DESCRIPTION               VALUE
+  0   8        (object header: mark)     0x0000000000000001 (non-biasable; age: 0)
+  8   4        (object header: class)    0x00025fd8
+ 12   4    int Integer.value             1024
+Instance size: 16 bytes
 ```
 
 ### A2 字符串的存储
@@ -2057,6 +2100,7 @@ package p;
 public class A { protected int x = 1; }
 
 package q;
+import p.A;
 public class Sub extends A {
     void ok() { System.out.println(x); Sub s = new Sub(); System.out.println(s.x); }
     void bad(A other) { System.out.println(other.x); }
