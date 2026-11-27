@@ -33,7 +33,7 @@ Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程�
 
 ### 占用资源
 
-虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU 资源，一台机器只能开启几十个虚拟机。
+虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU 资源，一台机器通常只能开启几十个虚拟机（Firecracker 这类轻量虚拟机除外）。
 
 容器只是宿主机上隔离运行的进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以运行成千上万个容器。
 
@@ -73,7 +73,7 @@ Docker 轻量级的特点使得它很适合用于部署、维护、组合微服�
 
 容器就是宿主机上的普通进程，Docker 用 Linux 内核的两个机制把它和其它进程隔开：
 
-- 命名空间（Namespace）负责隔离“能看到什么”：PID 命名空间让容器中的第一个进程以为自己是 1 号进程；网络命名空间让容器有自己的网卡、IP 和端口；挂载命名空间让容器有自己的根文件系统；UTS 命名空间让容器有自己的主机名；
+- 命名空间（Namespace）负责隔离“能看到什么”：PID 命名空间让容器中的第一个进程以为自己是 1 号进程；网络命名空间让容器有自己的网卡、IP 和端口；挂载命名空间让容器有自己的挂载视图，运行时再用 pivot_root 把镜像的目录切换为容器的根目录；UTS 命名空间让容器有自己的主机名；
 - 控制组（cgroup）负责限制“能用多少”：限制 CPU、内存、磁盘 I/O 等资源。
 
 例如用 docker run --memory 64m --cpus 0.5 启动一个容器，在容器中查看：
@@ -86,7 +86,7 @@ $ echo $$
 1
 ```
 
-内存上限是 64 MiB，CPU 每 100 ms 最多使用 50 ms，即半个 CPU；容器里的 shell 的进程号是 1。在容器中不断申请内存，用满 64 MiB 又无法回收时触发 OOM，进程被内核杀掉，退出码为 137（128 + SIGKILL 的 9）。需要注意的是，只设 --memory 时，宿主机有交换区的情况下容器还能再使用最多 64 MiB 的交换区，内存用满后先换出，交换区也用满才会被杀；把 --memory-swap 设为与 --memory 相同的值可以禁止容器使用交换区。
+内存上限是 64 MiB，CPU 每 100 ms 最多使用 50 ms，即半个 CPU；容器里的 shell 的进程号是 1。在容器中不断申请内存，用满 64 MiB 又无法回收时触发 OOM，进程被内核杀掉，退出码为 137（128 + SIGKILL 的 9）。需要注意的是，只设 --memory 时，宿主机有交换区的情况下容器还能再使用最多 64 MiB 的交换区，内存用满后可以先换出一部分，但无法回收足够的内存时仍会触发 OOM，并不要求交换区先用满；把 --memory-swap 设为与 --memory 相同的值可以禁止容器使用交换区。
 
 因为所有容器共享宿主机的内核，所以容器比虚拟机轻量，但隔离性也更弱：内核漏洞可能让容器中的进程影响宿主机。
 
@@ -144,7 +144,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 #### 1. 构建缓存
 
-构建时 Docker 逐条检查指令：指令本身和它用到的文件（COPY 按文件内容计算校验和）都与上次相同，就直接复用上次构建的层。某一层失效后，它之后的所有层都要重新构建。
+构建时 Docker 逐条检查指令：指令本身和它用到的文件（COPY 按文件的内容和权限等元数据计算校验和，不计修改时间）都与上次相同，就直接复用上次构建的层。某一层失效后，它之后的所有层都要重新构建。
 
 所以变化少的步骤要放在前面。上面的 Dockerfile 先只复制 pom.xml 并下载依赖，再复制源码，只改源码时下载依赖的那一层仍然命中缓存。
 
@@ -173,7 +173,9 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ENTRYPOINT 和 CMD 应写成 JSON 数组的 exec 形式。写成 shell 形式（例如 ENTRYPOINT java -jar app.jar）时，命令由 /bin/sh -c 启动，Shell 成为 1 号进程时不会把 docker stop 发出的 SIGTERM（两种信号的区别见 [Linux - kill](Linux.md#5-kill)）转发给 Java，Docker 等待 10 秒后改用 SIGKILL 强制结束，应用来不及优雅停止。
 
-例如 ENTRYPOINT java -jar app.jar; echo "order-service exited" 的容器停止用了 10.3 秒，退出码 137；exec 形式只用 0.7 秒，退出码 143，日志中有 Spring Boot 的 Graceful shutdown complete（见[附录 A2](#a2-exec-形式与-shell-形式)）。需要注意的是，Alpine 的 sh（BusyBox）会用 -c 中的最后一条命令替换自己，java 在最后时仍然是 1 号进程；基于 Ubuntu 的镜像中 sh 是 dash，只有一条命令时也不替换。因此不论用哪种基础镜像，都应写成 exec 形式。
+例如 ENTRYPOINT java -jar app.jar; echo "order-service exited" 的容器停止用了 10.3 秒，退出码 137；exec 形式只用 0.7 秒，退出码 143，日志中有 Spring Boot 的 Graceful shutdown complete（见[附录 A2](#a2-exec-形式与-shell-形式)）。
+
+需要注意的是，基础镜像的 shell 行为并不一致：附录 A2 中，Alpine 的 /bin/sh（BusyBox）在满足优化条件时会用 -c 中的最后一条命令替换自己（例如仅执行 java 或末尾执行 java 时 java 仍是 1 号进程，但如果外层注册了退出 trap 等情况则不会替换）；而 Ubuntu 24.04 的 /bin/sh（dash）在实测中即使只有一条命令也不会替换。因此不论用哪种基础镜像，都应写成 exec 形式。
 
 ### 运行容器：端口、数据卷与网络
 
@@ -183,7 +185,7 @@ docker run -d --name order -p 8080:8080 order-service:1.0
 
 -d 表示在后台运行，--name 给容器命名，-p 宿主机端口:容器端口 把宿主机 8080 端口收到的连接转发到容器的 8080 端口。
 
-每个容器有自己的网络命名空间，两个容器都监听 8080 不会冲突，冲突的是宿主机端口。再用 -p 8080:8080 启动第二个容器时报错 Bind for 0.0.0.0:8080 failed: port is already allocated，改用 -p 8081:8080 即可（见[附录 A4](#a4-端口数据卷网络与-compose)）。同样，宿主机上已有 MySQL 占用 3306 时，容器中的 MySQL 可以映射为 -p 3307:3306；端口被哪个进程占用可以用 ss -lntp 或 lsof -i :3306 查看（见 [Linux - 端口与磁盘](Linux.md#端口与磁盘)）。
+每个容器有自己的网络命名空间，两个容器都监听 8080 不会冲突，冲突的是宿主机端口。再用 -p 8080:8080 启动第二个容器时报错 Bind for 0.0.0.0:8080 failed: port is already allocated，启动失败的容器仍以 Created 状态存在、占着这个名字，先 docker rm 删掉它，再改用 -p 8081:8080 即可（见[附录 A4](#a4-端口数据卷网络与-compose)）。同样，宿主机上已有 MySQL 占用 3306 时，容器中的 MySQL 可以映射为 -p 3307:3306；端口被哪个进程占用可以用 ss -lntp 或 lsof -i :3306 查看（见 [Linux - 端口与磁盘](Linux.md#端口与磁盘)）。
 
 #### 1. 数据卷
 
@@ -306,7 +308,7 @@ spec:
 其中的几个概念：
 
 - Pod：K8s 调度的最小单位，包含一个或几个容器，每个 Pod 有自己的 IP，重建后 IP 会变。同一个 Pod 中的容器共享网络、IPC 和 UTS 命名空间，可以用 localhost 互相访问、主机名相同，也可以挂载同一个存储卷，但默认不共享 PID 命名空间（见[附录 A6](#a6-pod-的创建资源限制与共享的命名空间)）；
-- Deployment：管理一组相同的 Pod，负责保持副本数、扩缩容和滚动升级；
+- Deployment：管理一组相同的 Pod，负责保持副本数、扩缩容和滚动升级；数据库这类每个实例要有固定名字和自己的存储卷的服务用 StatefulSet，它给 Pod 固定的编号（如 mysql-0、mysql-1）和对应的存储卷，按顺序创建，但主从复制、选主仍要由应用或 Operator 实现；
 - Service：为一组 Pod 提供固定的虚拟 IP 和域名，把请求负载均衡到其中就绪的 Pod 上；
 - 控制平面与节点组件：API Server 接收所有请求，etcd 保存集群状态，调度器决定 Pod 放在哪个节点，控制器管理器运行各种控制器；每个节点上运行 kubelet、kube-proxy 和容器运行时（例如 containerd），kubelet 负责启动和检查本节点的容器，kube-proxy 维护 Service 的转发规则。
 
@@ -320,27 +322,37 @@ spec:
 
 <div align="center"> <img src="pics/k8s-rolling-update.png" width="800px"/> </div><br>
 
-kubectl scale 是手动扩缩容。按负载自动调整用水平 Pod 自动扩缩器（HorizontalPodAutoscaler, HPA）：它默认每 15 秒从 metrics-server 取一次各 Pod 的资源用量，按 期望副本数 = ⌈当前副本数 × 当前值 / 目标值⌉ 修改 Deployment 的 replicas。CPU 使用率是相对 requests 计算的，例如目标为 60%，3 个 Pod 平均用了 requests 250m 中的 225m（90%），副本数调为 ⌈3 × 90 / 60⌉ = 5。缩容时取最近 5 分钟内建议值中最大的一个，负载短暂回落不会立即缩容。没有设置 requests 的容器算不出使用率，HPA 不会按这个指标扩缩。
+kubectl scale 是手动扩缩容。按负载自动调整用水平 Pod 自动扩缩器（HorizontalPodAutoscaler, HPA）：它默认每 15 秒评估一次各 Pod 的指标（CPU、内存等资源指标通常由 metrics-server 提供），按基础公式 `期望副本数 = ⌈当前副本数 × 当前值 / 目标值⌉` 计算该指标的建议副本数；当 `当前值 / 目标值` 与 1 的偏差在默认容差（0.1）以内时，该指标通常不产生扩缩容建议，最终副本数还受其它指标、minReplicas、maxReplicas 和扩缩容策略约束。CPU 使用率是相对 requests 计算的，例如目标为 60%，3 个 Pod 平均用了 requests 250m 中的 225m（90%），该指标给出的建议副本数为 ⌈3 × 90 / 60⌉ = 5。
 
-readinessProbe 是就绪探针：Pod 启动后要通过检查才会加入 Service 的后端列表，避免把请求转发给还没启动完成的实例。livenessProbe 是存活探针：连续失败 3 次（默认值）时 kubelet 重启容器，用于发现进程还在、但已经不能工作的情况，例如死锁。Spring Boot 的 Actuator 在 K8s 中自动提供 /actuator/health/readiness 和 /actuator/health/liveness 两个端点。启动很慢的应用还要配置启动探针（startupProbe）：它通过之前另外两种探针都不执行，避免存活探针在启动阶段连续失败、容器被反复重启。
+缩容时 HPA 默认取最近 5 分钟内建议值中最大的一个，负载短暂回落不会立即缩容。没有设置 requests 的容器算不出使用率，HPA 不会按这个指标扩缩。
 
-删除 Pod（缩容、滚动升级）时，控制平面把它从 Service 的后端中摘除，同时 kubelet 开始停止容器：有 preStop 钩子时先执行钩子，再向容器的 1 号进程发送 SIGTERM，从开始停止算起 30 秒（terminationGracePeriodSeconds 的默认值，包括 preStop 的时间）后进程还没退出就发送 SIGKILL。应用收到 SIGTERM 后应停止接收新请求、处理完已有请求再退出，Spring Boot 3.4 起默认开启这种优雅停机。摘除后端需要一点时间才能传到每个节点，所以常用 preStop 钩子先等待几秒（例如 sleep 5），再让应用开始停止。
+K8s 提供三种探针检查容器状态：
 
-摘除后端不会断开已经建立的长连接，WebSocket 服务要在收到 SIGTERM 后主动发送关闭帧（例如关闭码 1001），让客户端重连到新的 Pod。
+- readinessProbe（就绪探针）：检查容器是否已经准备好接收请求，Pod 未就绪时，默认 Service 不会把常规新流量转发给它；
+- livenessProbe（存活探针）：连续失败达到 failureThreshold（默认 3 次）时 kubelet 终止容器，并按 restartPolicy 决定是否重启，用于发现进程还在、但已经不能工作的情况，例如死锁；
+- startupProbe（启动探针）：用于启动很慢的应用，它通过之前另外两种探针都不执行，避免存活探针在启动阶段连续失败、容器被反复重启。
+
+Spring Boot 的 Actuator 在 K8s 中自动提供 /actuator/health/readiness 和 /actuator/health/liveness 两个端点。
+
+正常删除 Pod（缩容、滚动升级）时，对于默认配置的 Service（未开启 publishNotReadyAddresses），控制平面在 EndpointSlice 中将其标记为终止中、未就绪（常规新流量通常会绕开它），同时 kubelet 开始停止容器：容器仍在运行且宽限期不为 0 时先执行已配置的 preStop 钩子，再由容器运行时向容器的 1 号进程发送停止信号（默认 SIGTERM，也可受镜像 STOPSIGNAL 影响）；终止宽限期（terminationGracePeriodSeconds，默认 30 秒，包含 preStop 的时间；若 preStop 到期仍未结束，kubelet 可请求一次额外的 2 秒宽限）耗尽后进程还没退出就发送 SIGKILL 强制结束。
+
+转发规则更新需要一点时间才能传到每个节点，所以常用 preStop 钩子先等待几秒（例如 sleep 5），为规则传播留出时间，再让应用开始停止。应用收到 SIGTERM 后应停止接收新请求、处理完已有请求再退出，Spring Boot 3.4 起默认开启这种优雅停机。
+
+更新转发规则不会断开已经建立的长连接，WebSocket 服务要在收到 SIGTERM 后主动发送关闭帧（例如关闭码 1001），让客户端重连到新的 Pod。
 
 ### Pod 的创建过程
 
-K8s 的各组件不直接互相调用，而是都通过 API Server 协作：每个组件监听（watch）自己关心的对象，发现实际状态与期望不一致就采取行动，再把结果写回 API Server。以订单服务中被调度到节点 k3s-agent 的一个 Pod 为例：
+K8s 的控制器、调度器和 kubelet 不直接互相调用，而是都通过 API Server 协作：每个组件监听（watch）自己关心的对象，发现实际状态与期望不一致就采取行动，再把结果写回 API Server。以订单服务中被调度到节点 k3s-agent 的一个 Pod 为例：
 
 <div align="center"> <img src="pics/k8s-pod-create.png" width="860px"/> </div><br>
 
 1. kubectl 把 Deployment 发给 API Server，API Server 完成认证、鉴权和准入检查后写入 etcd；
 2. 控制器管理器中的 Deployment 控制器发现新的 Deployment，创建 ReplicaSet；ReplicaSet 控制器发现副本数不足，创建 3 个 Pod 对象，这时的 Pod 还没有指定节点；
 3. 调度器发现未调度的 Pod，先过滤掉不满足条件的节点（资源不足、有不能容忍的污点等），再给剩下的节点打分，选出 k3s-agent 写入 Pod 的 nodeName；
-4. k3s-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先新建网络命名空间，调用 CNI 插件在其中配置网卡、分配 IP 10.42.1.5，再启动 pause 容器持有这个命名空间，Pod 中的其它容器之后都加入它；Pod 声明了存储卷时，还会通过 CSI 插件把卷挂载到节点上；
+4. k3s-agent 上的 kubelet 发现分配给自己的 Pod，通过容器运行时接口（Container Runtime Interface, CRI）让 containerd 创建 Pod 沙箱：先新建网络命名空间，调用 CNI 插件在其中配置网卡、分配 IP 10.42.1.5，再启动 pause 容器持有这个命名空间，Pod 中的其它容器之后都加入它。Pod 声明了存储卷时，kubelet 在创建沙箱之前先等卷准备好，卷由对应的卷插件挂载，例如 CSI 驱动；
 5. kubelet 拉取镜像（这里镜像已在节点上），创建并启动容器；
 6. kubelet 执行探针，就绪探针通过后把 Pod 的状态更新为 Ready；
-7. EndpointSlice 控制器把 10.42.1.5:8080 加入 order-service 的后端，各节点的 kube-proxy 随之更新转发规则。
+7. EndpointSlice 控制器把 order-service 中 10.42.1.5:8080 这个地址标为就绪（Pod 分到 IP 后地址就已经在其中，只是未就绪），各节点的 kube-proxy 随之把它加入转发规则。
 
 从提交到这个 Pod 就绪用了 21 秒：创建对象和调度约 1 秒，创建容器 11 秒，Spring Boot 启动和就绪探针 9 秒（见[附录 A6](#a6-pod-的创建资源限制与共享的命名空间)）。创建容器较慢是因为实验中的节点运行在 Docker 容器里，containerd 只能用逐个复制文件的 native 快照准备根文件系统。kubectl describe pod 末尾的 Events 按顺序记录了 Scheduled、Pulled、Created、Started 等事件，Pod 起不来时先看这里。
 
@@ -351,21 +363,25 @@ YAML 中的 resources 声明了 Pod 需要的资源：
 
 超过 CPU 上限的进程被限流，变慢但不会被杀：每个周期（默认 100 ms）内用完配额后，容器中所有线程都要暂停到下一个周期。所以按分钟统计的平均 CPU 使用率不高时，短时的突发仍可能被限流，例如 limits 为 1 核时，4 个线程在 4 个 CPU 上同时运行，约 25 ms 就用完了这个周期的配额。被限流的次数可以看 cgroup 的 cpu.stat 中的 nr_throttled。
 
-超过内存上限的进程被内核杀掉，状态为 OOMKilled。
+内存用量达到上限、又回收不出空间时，进程被内核杀掉，状态为 OOMKilled。
 
 ### Service 与 Ingress
 
-Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中就绪 Pod 的地址，每个节点上的 kube-proxy 把它们写成 iptables 或 IPVS 规则（默认 iptables；v1.33 起 nftables 模式正式可用，IPVS 模式 v1.35 起被弃用）。
+Pod 的 IP 会变，调用方不能直接写 Pod 的 IP。Service 用标签选出一组 Pod，提供一个固定的虚拟 IP（ClusterIP）和域名 order-service（完整域名 order-service.default.svc.cluster.local）。EndpointSlice 控制器维护其中 Pod 的地址和是否就绪，每个节点上的 kube-proxy 把就绪的地址写成 iptables 或 IPVS 规则（默认 iptables；v1.33 起 nftables 模式正式可用，IPVS 模式 v1.35 起被弃用）。
 
-订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的新连接，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。选中之后，这个连接后续的包都发往同一个 Pod。iptables 模式下，虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中；IPVS 模式则会把它绑定到每个节点的虚拟网卡 kube-ipvs0 上。
+订单服务所在的节点上，与 order-service 相关的 iptables 规则是：发往 10.43.210.38:80 的新连接，以 1/3 的概率 DNAT 到 10.42.0.8:8080，剩下的以 1/2 的概率 DNAT 到 10.42.1.4:8080，其余 DNAT 到 10.42.1.5:8080，三个 Pod 被选中的概率相同（见[附录 A7](#a7-service-与-ingress)）。选中之后，这个连接后续的包都发往同一个 Pod。
 
-短连接每次新建连接时都会重新选择 Pod。gRPC 这类复用 HTTP/2 长连接的调用则不同，同一条连接上的请求都落在同一个 Pod，新扩容的 Pod 也分不到已有连接上的请求。解决办法是用 headless Service（clusterIP 设为 None，DNS 直接返回各个 Pod 的 IP），客户端拿到多个地址后配置 round_robin 等按请求选择的策略（gRPC 默认的 pick_first 只用第一个连上的地址），并在扩缩容后重新解析 DNS 更新地址列表；或者交给按请求转发的 L7 代理。
+iptables 模式下，虚拟 IP 没有绑定在任何网卡上，只存在于每个节点的转发规则中；IPVS 模式则会把它绑定到每个节点的虚拟网卡 kube-ipvs0 上。
+
+短连接每次新建连接时都会重新选择 Pod；gRPC 这类复用 HTTP/2 长连接的调用则不同，同一条连接上的请求都落在同一个 Pod，新扩容的 Pod 也分不到已有连接上的请求。
+
+解决办法是用 headless Service（clusterIP 设为 None，DNS 直接返回各个 Pod 的 IP），客户端拿到多个地址后配置 round_robin 等按请求选择的策略（gRPC 默认的 pick_first 只用第一个连上的地址），并在扩缩容后重新解析 DNS 更新地址列表；或者交给按请求转发的 L7 代理。
 
 Service 按访问范围分为几种类型：
 
 - ClusterIP：默认类型，只能在集群内访问；
 - NodePort：在 ClusterIP 的基础上，在每个节点上打开同一个端口（默认范围 30000～32767），访问任一节点的这个端口都会转发到后端的 Pod，例如订单服务被分配了 31887 端口；
-- LoadBalancer：在 NodePort 的基础上，由云厂商创建一个外部负载均衡器，把流量转发到各节点；
+- LoadBalancer：通常在 NodePort 的基础上，由云厂商创建一个外部负载均衡器，把流量转发到各节点（有的实现可以直接转发到 Pod）；
 - ExternalName：把服务名映射为一个外部域名（DNS 的 CNAME 记录），不做转发。
 
 Service 工作在传输层，只认 IP 和端口。对外提供多个 HTTP 服务时，每个服务一个 LoadBalancer 成本高，也不能按域名和路径分发，这时用 Ingress。Ingress 是一组 HTTP 路由规则，例如把 shop.example.com/orders 转发到 order-service：
@@ -393,7 +409,7 @@ Ingress 只是规则，真正处理请求的是 Ingress 控制器，例如 Traef
 
 <div align="center"> <img src="pics/k8s-traffic.png" width="800px"/> </div><br>
 
-需要注意的是，Ingress 控制器通常不经过 Service 的虚拟 IP，而是从 EndpointSlice 取得 Pod 的地址后直接转发给 Pod（Traefik 的默认行为），Service 在这里只用来找到后端。Ingress API 已经冻结，不再增加新功能，新功能加在它的后继 Gateway API 中。
+需要注意的是，Ingress 控制器通常不经过 Service 的虚拟 IP，而是从 Endpoints 取得 Pod 的地址后直接转发给 Pod（Traefik 2.11 的默认行为），Service 在这里只用来找到后端。Ingress API 已经冻结，不再增加新功能，新功能加在它的后继 Gateway API 中。
 
 Pod 之间的通信由 CNI 插件实现。K8s 的网络模型要求每个 Pod 有集群内唯一的 IP，任意两个 Pod 不经过 NAT 就能直接通信。k3s 默认的 Flannel 给每个节点分配一个网段（实验中 k3s-server 上的 Pod 是 10.42.0.x，k3s-agent 上的是 10.42.1.x），跨节点的包用 VXLAN 封装后经节点之间的网络发送。
 
@@ -404,12 +420,14 @@ Pod 的阶段（phase）只有 Pending、Running、Succeeded、Failed、Unknown 
 - Pending：Pod 已被集群接受，但还有容器没有创建并运行起来，包括等待调度和拉取镜像的时间。describe 的事件中有 FailedScheduling 时是调度失败，例如申请 20 个 CPU 时为 0/2 nodes are available: 2 Insufficient cpu；两个节点都有污点 dedicated=db:NoSchedule、Pod 没有对应的容忍时为 2 node(s) had untolerated taint；Pod 使用的 PVC 没有绑定到存储卷时也会停在这里；
 - ImagePullBackOff：拉取镜像失败，常见原因是镜像名或标签写错、私有仓库没有配置凭证（imagePullSecrets）、节点访问不了镜像仓库，kubelet 在 ErrImagePull 和 ImagePullBackOff 之间反复重试；
 - CrashLoopBackOff：容器启动后反复退出，kubelet 每次重启前的等待时间按 10 秒、20 秒、40 秒翻倍，最长 5 分钟。kubectl logs --previous 查看上一次退出前的日志，例如把 server.port 写成 abc 时，日志中是 APPLICATION FAILED TO START 和具体的配置错误，退出码 1；
-- OOMKilled：容器超过内存上限被内核杀掉，退出码 137，之后同样进入 CrashLoopBackOff。例如内存上限 256 MiB，JVM 堆却设为 300 MiB（-Xmx300m）并在启动时全部占用，Java 应用的堆和堆外内存加起来要小于 limits；
+- OOMKilled：容器内存用量达到上限、又回收不出空间时被内核杀掉，退出码 137，反复被杀时同样进入 CrashLoopBackOff。例如内存上限 256 MiB，JVM 堆却设为 300 MiB（-Xmx300m）并在启动时全部占用，Java 应用的堆和堆外内存加起来要小于 limits；
 - Running 但 READY 为 0/1：进程在运行，但就绪探针不通过，Pod 不会收到 Service 转发的请求，例如探针路径写成不存在的 /ready 时，事件中是 Readiness probe failed: HTTP probe failed with statuscode: 404。
 
 排查的顺序通常是：kubectl get pods -o wide 看状态、重启次数和所在节点；kubectl describe pod 看事件；kubectl logs 看应用日志，容器重启过的加 --previous；kubectl exec 进入容器检查配置和网络；kubectl top pod 看资源占用（需要 metrics-server）。
 
-节点 NotReady 指控制平面一段时间没有收到节点上 kubelet 的心跳，这个时间由 node-monitor-grace-period 决定（v1.31 默认 40 秒，v1.32 起 50 秒）。停掉工作节点 k3s-agent 后 32 秒，它变为 NotReady（kubelet 约每 10 秒续约一次心跳，宽限期从最后一次心跳算起，所以比 40 秒短），Conditions 中是 Kubelet stopped posting node status，并被加上 node.kubernetes.io/unreachable 污点；上面的 Pod 同时被标记为未就绪，从 Service 的后端中摘除。Pod 默认容忍这个污点 300 秒，又过了约 5 分钟才被驱逐，Deployment 在 k3s-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
+节点显示 NotReady 对应 Conditions 中 Ready 为 False（节点组件不健康）或 Unknown（节点失联）。若是失联，控制平面超过 node-monitor-grace-period（v1.31 默认 40 秒，v1.32 起 50 秒）没收到 kubelet 心跳后将其标为 NotReady。
+
+例如停掉工作节点 k3s-agent 后 32 秒，它变为 NotReady（kubelet 约每 10 秒续约一次心跳，宽限期从最后一次心跳算起，所以比 40 秒短），Conditions 中是 Kubelet stopped posting node status，此时节点上观测到 node.kubernetes.io/unreachable:NoSchedule 污点阻止新调度；节点失联后其上的 Pod 也会被标记为未就绪，另一次实验中节点状态及 EndpointSlice 的 ready 状态均在停机后 33～37 秒之间变为未就绪。普通 Pod 默认容忍同键的 NoExecute 污点 300 秒，第一次实验中失联节点上的 Pod 在停机后 337 秒被标记删除，Deployment 在 k3s-server 上补足了副本（见[附录 A9](#a9-节点-notready)）。
 
 排查 NotReady 时先用 kubectl describe node 看 Conditions：
 
@@ -512,7 +530,7 @@ stop took 12.69 s
 ExitCode=137
 ```
 
-用 docker run order-service:1.0 --server.port=9090 启动：
+用 docker run -d --name order9090 -p 9090:9090 order-service:1.0 --server.port=9090 启动：
 
 ```text
 $ docker exec order9090 ps -o pid,args
@@ -562,6 +580,8 @@ NAME      CPU %     MEM USAGE / LIMIT     NET I/O         PIDS
 order     0.24%     162.2MiB / 7.654GiB   1.72kB / 725B   43
 order2    0.33%     153.3MiB / 7.654GiB   1.47kB / 683B   43
 ```
+
+端口冲突时 order2 已经创建，docker ps -a 中显示为 Created，名字仍被占用，用同一个名字重新启动之前要先 docker rm order2，上面的输出省略了这一步。
 
 MySQL 8.0：
 
