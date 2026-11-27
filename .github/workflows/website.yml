@@ -4,6 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - '.github/workflows/website.yml'
       - 'README.md'
@@ -26,6 +27,7 @@ concurrency:
 
 jobs:
   website:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
