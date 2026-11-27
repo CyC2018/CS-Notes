@@ -132,7 +132,9 @@ java -Xms1M -Xmx2M HackTheJava
 
 对这块区域进行垃圾收集的主要目标是对常量池的回收和对类的卸载，见 [方法区的回收](#3-方法区的回收)。
 
-JDK 1.8 之前，HotSpot 虚拟机用永久代实现方法区，和堆一样进行垃圾收集。但永久代的上限要在启动时用 -XX:MaxPermSize 设定，加载多少类很难事先估准，设小了就会抛出 OutOfMemoryError: PermGen space。为了更容易管理方法区，同时与没有永久代的 JRockit 虚拟机合并，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，不属于 Java 堆。元空间默认只受本地内存限制，可以用 -XX:MaxMetaspaceSize 设置上限，超过时抛出 OutOfMemoryError: Metaspace。开启压缩类指针（64 位 JVM 默认开启，原理见 [对象的创建与内存布局](#对象的创建与内存布局)）时，每个类的类结构还放在元空间中单独的压缩类空间里，它的上限默认 1 GB（-XX:CompressedClassSpaceSize），超出时抛出 OutOfMemoryError: Compressed class space。
+JDK 1.8 之前，HotSpot 虚拟机用永久代实现方法区，和堆一样进行垃圾收集。但永久代的上限要在启动时用 -XX:MaxPermSize 设定，加载多少类很难事先估准，设小了就会抛出 OutOfMemoryError: PermGen space。为了更容易管理方法区，同时与没有永久代的 JRockit 虚拟机合并，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，不属于 Java 堆。
+
+元空间默认没有显式总体上限，受本地内存和容器限制，可以用 -XX:MaxMetaspaceSize 限制可提交的大小，回收后仍无法满足分配时抛出 OutOfMemoryError: Metaspace。开启压缩类指针（64 位 HotSpot 通常默认开启，原理见 [对象的创建与内存布局](#对象的创建与内存布局)）时，类的元数据（Klass）放在元空间中单独的压缩类空间里，默认预留 1 GB 地址空间（-XX:CompressedClassSpaceSize），超出时抛出 OutOfMemoryError: Compressed class space。
 
 方法区是 JVM 规范中的概念，永久代与元空间都是它的实现。JDK 1.7 已经把字符串常量池和类的静态变量从永久代移到了堆中，所以元空间中存放的是类的元信息和运行时常量池；JIT 编译后的代码则在单独的代码缓存（Code Cache）中。例如 static final String NAME = "cs"：字符串 "cs" 和静态变量 NAME 都在堆中，元空间中是字段名、类型这些元数据。
 
@@ -142,19 +144,19 @@ JDK 1.8 之前，HotSpot 虚拟机用永久代实现方法区，和堆一样进�
 
 Class 文件中的常量池（编译器生成的字面量和符号引用）会在类加载后被放入这个区域。
 
-除了在编译期生成的常量，还允许在运行期间放入新的常量。需要注意的是，JDK 7 起字符串常量池已经移到堆中，String 类的 intern() 操作的是堆中的字符串常量池，见 [String Pool](Java%20基础.md#string-pool)。
+运行时常量池中的符号引用和动态常量可以在运行期间解析或求值。需要注意的是，JDK 7 起字符串常量池已经移到堆中，String 类的 intern() 操作的是堆中的字符串常量池，见 [String Pool](Java%20基础.md#string-pool)。
 
 ### 直接内存
 
 在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。这是因为用堆中的 ByteBuffer 写通道时，NIO 要先把数据复制到一块临时的直接内存再交给操作系统，读通道时则先读入临时的直接内存再复制到堆中，DirectByteBuffer 省掉了这次复制。
 
-直接内存不属于 JVM 规范定义的运行时数据区域，但同样会耗尽：它的上限由 -XX:MaxDirectMemorySize 设置，没有设置时与最大堆相同，超出时抛出 OutOfMemoryError，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)。堆外内存不由 GC 直接回收，DirectByteBuffer 对象被回收后，由它关联的 Cleaner（一种 [虚引用](#4-虚引用)）释放对应的堆外内存。
+直接内存不属于 JVM 规范定义的运行时数据区域，但同样会耗尽：通过 ByteBuffer.allocateDirect 等纳入 NIO 直接缓冲区额度管理的分配，其累计容量上限由 -XX:MaxDirectMemorySize 设置（未设置时默认与最大堆相同），超出时抛出 OutOfMemoryError，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)。堆外内存不由 GC 直接回收，DirectByteBuffer 对象成为虚可达后，由它关联的 Cleaner（基于 [虚引用](#4-虚引用)）触发释放对应的堆外内存。
 
 ### 堆和栈的区别
 
 - 存放的内容：虚拟机栈中是方法调用的栈帧，保存局部变量、操作数和返回地址；堆中是对象和数组，JDK 7 起静态变量和字符串常量池也在堆中；
-- 共享范围：每个线程有自己的栈，其它线程访问不到；堆被所有线程共享，所以只有堆中的对象才存在线程安全问题；
-- 生命周期：栈帧在方法调用时创建、返回时销毁，不需要垃圾收集；堆中的对象由垃圾收集器回收；
+- 共享范围：每个线程有自己的栈，其它线程访问不到；堆被所有线程共享，所以线程安全问题出在堆中这类共享的数据上；
+- 生命周期：栈帧在方法调用时创建、返回时销毁，不需要垃圾收集（虚拟线程卸载时复制到堆中的栈帧除外）；堆中的对象由垃圾收集器回收；
 - 大小和异常：栈的大小由 -Xss 设置，调用层次太深时抛出 StackOverflowError；堆的大小由 -Xms、-Xmx 设置，放不下时抛出 OutOfMemoryError。
 
 ```java
@@ -182,7 +184,7 @@ HotSpot 并不做栈上分配，不会把整个对象搬到栈上；逃逸分析
 4. 设置对象头：写入 Mark Word 和指向类元数据的类型指针；
 5. 执行构造函数：按照代码给字段赋值。
 
-对象在堆中由对象头、实例数据和对齐填充三部分组成。用 JOL（OpenJDK 提供的对象布局分析工具）在 JDK 21 上查看（64 位，默认开启压缩指针，原理见本节最后一段），其中 Order 依次声明了 boolean paid、int userId、long id 和 String note 四个字段：
+对象在堆中由对象头、实例数据和对齐填充三部分组成。用 JOL（OpenJDK 提供的对象布局分析工具）在 JDK 21 上查看（64 位，默认开启压缩指针，原理见下文关于压缩指针的说明），其中 Order 依次声明了 boolean paid、int userId、long id 和 String note 四个字段：
 
 ```text
 java.lang.Object
@@ -210,13 +212,17 @@ Instance size: 32 bytes
 
 以上是 JDK 21 的布局。JDK 27 起默认使用紧凑对象头（JEP 534）：压缩后的类型指针放进 Mark Word 的高 22 位，对象头只有 8 字节，new Object() 也只占 8 字节，可以用 -XX:-UseCompactObjectHeaders 关闭。
 
-在 JDK 21 中关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩指针用 32 位存放对象地址，因为对象按 8 字节对齐，地址的低 3 位总是 0，可以省略，所以最多能表示 2<sup>32</sup> × 8 = 32 GB 的堆。最大堆接近 32 GB 时，对象引用的压缩自动关闭，所有引用都变成 8 字节（JDK 21 默认的 G1 中 -Xmx32736m 时 UseCompressedOops 为 true，-Xmx32737m 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GB 的原因。JDK 27 起类型指针总是压缩，-XX:-UseCompressedClassPointers 会被忽略。
+在 JDK 21 中关闭压缩指针（-XX:-UseCompressedOops -XX:-UseCompressedClassPointers）后，类型指针和 note 引用都变成 8 字节，Order 从 32 字节变成 40 字节。压缩对象引用用 32 位编码表示堆中的对象引用（解码时按编码模式移位并加上堆基地址），默认对象按 8 字节对齐，地址低 3 位总是 0，可以省略，因此默认对齐下理论寻址范围最大为 2<sup>32</sup> × 8 = 32 GiB（用 -XX:ObjectAlignmentInBytes 调大对齐粒度可扩展该范围）。
+
+对于支持压缩对象引用的垃圾收集器（如默认的 G1，ZGC 不使用该机制），默认对齐下最大堆接近 32 GiB 时，对象引用的压缩自动关闭，堆中的普通对象引用恢复为 8 字节（JDK 21 默认的 G1 中 -Xmx32736m 时 UseCompressedOops 为 true，-Xmx32737m 时为 false，类型指针的压缩不受影响），这是堆的大小通常小于 32 GiB 的原因。JDK 27 起类型指针总是压缩，-XX:-UseCompressedClassPointers 会被忽略并输出警告。
 
 ## 二、垃圾收集 🔥🔥
 
-垃圾收集主要是针对堆和方法区进行。程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后就会消失，因此不需要对这三个区域进行垃圾收集。
+垃圾收集主要是针对堆和方法区进行。程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后就会消失，因此不需要对这三个区域进行垃圾收集（虚拟线程卸载时，栈帧以栈块对象保存在堆中，由垃圾收集器管理）。
 
-垃圾收集要回答三个问题：哪些对象可以回收、怎么回收、什么时候回收。HotSpot 用可达性分析找出从 GC Roots 出发不可达的对象；按存活时间把堆分成新生代和老年代，分别用复制和标记 - 整理等算法；Eden 满时进行 Minor GC，老年代空间不足时进行 Full GC 或者并发的老年代回收，见 [三、内存分配与回收策略](#三内存分配与回收策略)。例如处理一次请求时创建的临时对象，请求结束后就不可达，下一次 Minor GC 随 Eden 一起清空；缓存中的对象熬过多次 Minor GC，被复制到老年代，之后只在回收老年代时才检查它。
+垃圾收集要回答三个问题：哪些对象可以回收、怎么回收、什么时候回收。以传统分代收集器为例，HotSpot 用可达性分析找出从 GC Roots 出发不可达的对象；按存活时间把堆分成新生代和老年代，分别用复制和标记 - 整理等算法；通常在新生代分配空间不足时进行 Minor GC，老年代空间不足时进行 Full GC 或者并发的老年代回收，见 [三、内存分配与回收策略](#三内存分配与回收策略)。
+
+例如处理一次请求时创建的临时对象，请求结束后就不可达，下一次 Minor GC 随 Eden 一起清空；缓存中的对象熬过多次 Minor GC，被复制到老年代，晋升后的普通对象通常在老年代回收时才被回收（G1 对部分符合条件的 Humongous 对象可在 Young GC 中提前回收）。
 
 ### 判断一个对象是否可被回收
 
@@ -255,8 +261,8 @@ GC Roots 是可达性分析的起点，程序不经过其它对象就能直接�
 
 - 虚拟机栈中局部变量表中引用的对象，即正在执行的方法的参数和局部变量；
 - 本地方法栈中 JNI（Java Native Interface，Java 代码与本地方法互相调用的接口）引用的对象；
-- 类的静态变量引用的对象（HotSpot 从 JDK 7 起把静态变量和 Class 对象一起放在堆中），类没有被卸载时，程序随时可以通过类名访问它们；
-- 方法区中的常量引用的对象；
+- 存活类的静态变量引用的对象（HotSpot 从 JDK 7 起把静态变量和 Class 对象一起放在堆中），类没有被卸载时，程序随时可以通过类名访问它们；
+- 存活类的运行时常量池中的相关对象引用；
 - 被 synchronized 持有的锁对象、已经启动且没有结束的线程，以及虚拟机内部的引用，例如系统类加载器、常驻的异常对象。
 
 <div align="center"> <img src="pics/jvm-gc-roots.png" width="760px"/> </div><br>
@@ -270,7 +276,7 @@ GC Roots 是可达性分析的起点，程序不经过其它对象就能直接�
 
 为了避免内存溢出，在大量使用反射和动态代理的场景都需要虚拟机具备类卸载功能。
 
-类的卸载条件很多，需要满足以下三个条件，并且满足了条件也不一定会被卸载：
+对于普通类，卸载需要满足以下三个条件，并且满足了条件也不一定会被卸载（JDK 15 起，通过 MethodHandles.Lookup.defineHiddenClass 定义且未指定 STRONG 的隐藏类，可以在其定义类加载器仍存活时卸载）：
 
 - 该类所有的实例都已经被回收，此时堆中不存在该类的任何实例；
 - 加载该类的 ClassLoader 已经不可达，可以被回收，所以 [启动类加载器](#类加载器分类) 加载的类不会被卸载；
@@ -278,7 +284,7 @@ GC Roots 是可达性分析的起点，程序不经过其它对象就能直接�
 
 #### 4. finalize()
 
-类似 C++ 的析构函数，用于关闭外部资源。但是 try-finally 等方式可以做得更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。finalize() 从 JDK 9 起已经废弃，JDK 18 起标记为将要删除，需要在对象被回收后清理资源时可以使用 java.lang.ref.Cleaner。
+类似 C++ 的析构函数，用于关闭外部资源。但是 try-finally 等方式可以做得更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。finalize() 从 JDK 9 起已经废弃，JDK 18 起标记为将要删除，需要在对象成为虚可达后清理资源时可以使用 java.lang.ref.Cleaner。
 
 当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会再调用该方法。
 
@@ -300,7 +306,7 @@ Object obj = new Object();
 
 #### 2. 软引用
 
-内存不足、即将抛出 OutOfMemoryError 之前，只被软引用关联的对象一定会被回收；其它时候由 GC 决定，并不是内存够用就一定保留。HotSpot 按最近一次访问的时间淘汰：一个软引用超过“最大堆中空闲的 MB 数 × 1 秒”没有被 get() 访问，就会在 GC 时被清除，例如空闲 250 MB 时约 4 分钟，每 MB 对应的时间由 -XX:SoftRefLRUPolicyMSPerMB 设置（JDK 21 实测，见[附录 A13](#a13-软引用的清除时机)）。所以用软引用做缓存时，内存充足也可能被清掉。
+内存不足、即将抛出 OutOfMemoryError 之前，虚拟机保证清除指向软可达对象的软引用，使其具备回收条件；其它时候由 GC 决定，并不是内存够用就一定保留。HotSpot 默认服务器模式（C2）在 GC 处理软可达对象的软引用时，按最近一次访问时间评估是否清除：默认保留时间阈值为“最大堆容量减去上次 GC 记录的堆占用量”后每 MB 对应 1 秒（由 -XX:SoftRefLRUPolicyMSPerMB 设置），例如余量约 250 MB 时约 4 分钟，超过该时间未被访问的软引用将成为清除候选（JDK 21 实测，见[附录 A13](#a13-软引用的清除时机)）。所以用软引用做缓存时，内存充足也可能被清掉。
 
 使用 SoftReference 类来创建软引用。
 
@@ -312,7 +318,7 @@ obj = null;  // 使对象只被软引用关联
 
 #### 3. 弱引用
 
-只被弱引用关联的对象一定会被回收，它只能存活到下一次回收它所在区域的垃圾收集之前。
+GC 判定对象仅剩弱引用关联（弱可达）时，会清除对应的弱引用，对象随即具备回收条件，通常活不过下一次处理其所在区域的垃圾收集。
 
 使用 WeakReference 类来创建弱引用。
 
@@ -324,7 +330,7 @@ obj = null;
 
 [ThreadLocal](Java%20并发.md#2-线程本地存储thread-local-storage) 就用到了弱引用。每个线程的 ThreadLocalMap 中，Entry 继承自 WeakReference，key（ThreadLocal 对象）是弱引用，value 是强引用。如果 key 是强引用，业务代码不再使用某个 ThreadLocal 后，它仍然被线程的 Map 引用着，线程池中的线程一直存活，这个 ThreadLocal 对象和它的 value 都无法回收。
 
-key 改为弱引用后，ThreadLocal 对象在 GC 处理到它所在的区域时被回收，Entry 的 key 变为 null。之后这个线程的某些 set()、get()、remove() 会顺带清除遇到的一部分 key 为 null 的 Entry，value 才能被回收。在此之前 value 一直被强引用，所以用完之后仍然要调用 remove()；哪些操作会顺带清理见 [线程本地存储](Java%20并发.md#2-线程本地存储thread-local-storage)。
+key 改为弱引用后，ThreadLocal 对象在 GC 处理到它所在的区域时变为不可达，Entry 的弱引用被清除、key 变为 null。之后这个线程的某些 set()、get()、remove() 会顺带清除遇到的一部分 key 为 null 的 Entry，value 才能被回收。在此之前 value 一直被强引用，所以用完之后仍然要调用 remove()；哪些操作会顺带清理见 [线程本地存储](Java%20并发.md#2-线程本地存储thread-local-storage)。
 
 例如向 ThreadLocal 放入一个 10 MB 的数组，再把 ThreadLocal 变量置为 null：GC 之后 Entry 的 key 变为 null，value 还在；当前线程再通过其它 ThreadLocal 调用 set()，第 2 次调用之后这个 Entry 才被清除（JDK 21 实测，见[附录 A5](#a5-threadlocalmap-的弱引用)）。
 
@@ -334,7 +340,7 @@ key 改为弱引用后，ThreadLocal 对象在 GC 处理到它所在的区域时
 
 又称为幽灵引用或者幻影引用，一个对象是否有虚引用的存在，不会对其生存时间造成影响，也无法通过虚引用得到一个对象。
 
-为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。虚引用需要和引用队列（ReferenceQueue）配合使用，对象被回收时虚引用会被加入队列，程序通过检查队列得知回收的发生。虚引用的 get() 方法总是返回 null。
+为一个对象设置虚引用的唯一目的是在对象成为虚可达时收到通知。虚引用需要和引用队列（ReferenceQueue）配合使用，GC 判定对象成为虚可达时，会在当时或稍后把虚引用加入队列，程序通过检查队列执行清理动作，例如 Cleaner 据此释放堆外内存。虚引用的 get() 方法总是返回 null。
 
 使用 PhantomReference 来创建虚引用。
 
@@ -401,7 +407,9 @@ G1 的两代都是把存活的对象复制到空闲的 Region，见 [G1 收集�
 
 垃圾收集时暂停所有用户线程，称为 Stop The World（STW）。这是因为可达性分析要遍历对象之间的引用，用户线程同时修改引用，就可能漏掉存活的对象；复制和整理算法还要移动对象、修改指向它的引用，期间不能让用户线程访问这些对象。
 
-用户线程要运行到安全点（safepoint）才能暂停，在安全点上 JIT 记录了栈中哪些位置是对象引用，GC 才能准确地找到 GC Roots。JIT 在方法返回和循环的回跳处插入检查（方法调用处也记录了引用的位置，线程可以在那里停下），需要暂停时 JVM 设置一个标志，各线程运行到最近的检查点时挂起。所以一次停顿包括等待所有线程到达安全点和在安全点上执行 GC 两段时间，例如 G1 的一次新生代回收中，前者约 5 微秒，后者约 1.9 毫秒（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
+正在执行 Java 代码的用户线程通常通过安全点（safepoint）轮询进入安全状态，在安全点上 JIT 记录了栈中哪些位置是对象引用，GC 才能准确地找到 GC Roots。JIT 在方法返回和循环的回跳处插入检查（方法调用处也记录了引用的位置，线程可以在那里停下），需要暂停时 JVM 设置一个标志，正在执行 Java 代码的线程运行到最近的检查点时挂起；已经阻塞或在执行本地方法的线程本就处于安全状态（后者在返回 Java 执行时受约束），不必再跑到轮询点。
+
+所以一次安全点停顿包括等待线程到达安全点、清理（Cleanup）和执行 GC 操作等阶段，例如 G1 的一次新生代回收中，同步等待约 5 微秒，GC 执行约 1.9 毫秒（JDK 21 实测，见[附录 A9](#a9-g1-的标记周期与安全点)）。
 
 STW 无法完全消除，但可以缩短：CMS、G1 把耗时最长的标记与用户线程并发执行，ZGC 连复制对象也并发进行，停顿中只剩少量时间有界的工作（JDK 16 起线程栈也改为并发扫描）。并发标记带来的问题见 [三色标记](#三色标记)。
 
@@ -494,7 +502,9 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 <div align="center"> <img src="pics/gc-g1-regions.png" width="740px"/> </div><br>
 
--XX:G1HeapRegionSize 设置的是每个 Region 的大小，取值为 2 的幂，范围为 1 MB～512 MB（JDK 17 及以前最大为 32 MB）；Region 的数量由堆的大小决定。没有指定时，JVM 用最大堆除以 2048，向上取到 2 的幂，并限制在 1 MB～32 MB 之间，最大堆在 2 GB～64 GB 之间时 Region 有 1024～2048 个，最大堆是 2 的幂时正好 2048 个。例如 -Xmx4g 时 Region 为 2 MB，-Xmx16g 时为 8 MB，-Xmx64g 时为 32 MB（JDK 21 实测，见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。
+-XX:G1HeapRegionSize 设置的是每个 Region 的大小，取值为 2 的幂，范围为 1 MB～512 MB（JDK 17 及以前最大为 32 MB）；Region 的数量由堆的大小决定。
+
+没有指定时，JVM 用最大堆除以 2048，向上取到 2 的幂，并限制在 1 MB～32 MB 之间，最大堆在 2 GB～64 GB 之间时 Region 有 1024～2048 个，最大堆是 2 的幂时正好 2048 个。例如 -Xmx4g 时 Region 为 2 MB，-Xmx16g 时为 8 MB，-Xmx64g 时为 32 MB（JDK 21 实测，见[附录 A6](#a6-默认的收集器与-g1-的-region-大小)）。
 
 Region 不区分固定的用途，一个 Region 回收后可以再作为 Eden、Survivor 或老年代使用；大小超过 Region 一半的对象是 Humongous 对象，直接分配在一组连续的 Region 中，见 [大对象直接进入老年代](#2-大对象直接进入老年代)。
 
@@ -590,9 +600,9 @@ CMS 和 G1 的并发标记与用户线程同时运行。标记过程用三种颜
 
 ### Minor GC 和 Full GC
 
-- Minor GC（也称 Young GC）：回收新生代，Eden 满时触发。因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快；
+- Minor GC（也称 Young GC）：回收新生代，通常在新生代分配空间不足时触发。因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快；
 - Mixed GC：只有 G1 有，并发标记结束后，在回收新生代的同时挑选一部分老年代 Region 一起回收，见 [G1 收集器](#7-g1-收集器)；
-- Full GC：回收整个堆和元空间，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多，触发条件见 [Full GC 的触发条件](#full-gc-的触发条件)。
+- Full GC：回收整个堆，并在启用类卸载时回收满足条件的类元数据。老年代对象存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多，触发条件见 [Full GC 的触发条件](#full-gc-的触发条件)。
 
 G1 的日志中三者分别记为 Pause Young (Normal)、Pause Young (Mixed) 和 Pause Full，例如（取自[附录 A3](#a3-不同收集器的停顿)、[附录 A4](#a4-堆大小对-g1-的影响)）：
 
@@ -617,7 +627,7 @@ Major GC 的含义不统一，有的资料指只回收老年代（例如 CMS 的
 
 经常出现大对象会提前触发垃圾收集以获取足够的连续空间分配给大对象。
 
--XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。该参数只对 Serial 和 ParNew 收集器有效（JDK 21 中 ParNew 已移除，只剩 Serial）。G1 中大小超过 Region 一半的对象称为 Humongous 对象，直接分配在老年代的连续 Region 中。
+-XX:PretenureSizeThreshold 在 Serial 中默认为 0（不启用大小限制）；设置为正数后，达到该阈值且不走 TLAB 分配路径的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。该参数只对 Serial 和 ParNew 收集器有效（JDK 21 中 ParNew 已移除，只剩 Serial）。G1 中大小超过 Region 一半的对象称为 Humongous 对象，直接分配在老年代的连续 Region 中。
 
 #### 3. 长期存活的对象进入老年代
 
@@ -629,9 +639,9 @@ Major GC 的含义不统一，有的资料指只回收老年代（例如 CMS 的
 
 #### 4. 动态对象年龄判定
 
-虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代。以 Serial 为例，每次 Minor GC 结束时，从年龄最小的对象开始累加 Survivor 中各个年龄对象的大小，当累加到某个年龄时总和超过了 Survivor 空间的一半，就取这个年龄和 MaxTenuringThreshold 中较小的值作为新的晋升阈值，下一次 Minor GC 时年龄大于或等于该值的对象直接进入老年代。这是为了在 Survivor 快要放不下时让较老的对象先晋升，给刚出生的对象留出空间。
+虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代。以 Serial 为例，每次 Minor GC 结束时，从年龄最小的对象开始累加 Survivor 中各个年龄对象的大小，当累加到某个年龄时总和超过了 Survivor 容量乘以 TargetSurvivorRatio（默认 50%）得到的目标容量，就取这个年龄和 MaxTenuringThreshold 中较小的值作为新的晋升阈值，下一次 Minor GC 时年龄大于或等于该值的对象直接进入老年代。这是为了在 Survivor 快要放不下时让较老的对象先晋升，给刚出生的对象留出空间。
 
-G1 用同样的累加方法，只是比较的是按新生代的目标大小算出的 Survivor 容量乘以 TargetSurvivorRatio（默认 50%）。
+G1 用同样的累加方法和 TargetSurvivorRatio，只是比较的 Survivor 容量按新生代的目标大小算出。
 
 Parallel 默认开启自适应调节，综合 Minor GC 与 Full GC 各自的时间开销，以及 Survivor 的空间压力（发生溢出，或者算出的目标大小超过上限），逐次增减阈值，计算方式不同。
 
@@ -639,17 +649,19 @@ Parallel 默认开启自适应调节，综合 Minor GC 与 Full GC 各自的时�
 
 #### 5. 空间分配担保
 
-这一步针对 Serial 和 Parallel。在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的。这是因为最坏的情况是新生代的对象全部存活，Survivor 放不下的都要进入老年代。
+这一步针对 Serial 和 Parallel，两种收集器都会先检查 Survivor 的 To Space 是否为空。以 Serial 为例，在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于或等于新生代所有对象总空间，条件成立时 Minor GC 可以确认是安全的。这是因为最坏的情况是新生代的对象全部存活，Survivor 放不下的都要进入老年代。
 
-如果不成立，虚拟机会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于就进行 Minor GC，否则进行 Full GC。以上是 Serial 的判断方式，Parallel 取历次晋升平均值（加上余量）与新生代已用空间中的较小值，小于老年代扩容到上限后的剩余空间时才进行 Minor GC（JDK 21 源码）。JDK 6 Update 24 之前还需要 HandlePromotionFailure 参数允许担保失败才会冒险进行 Minor GC，之后该参数不再起作用。G1 没有这一步，复制时找不到空闲的 Region 就是 Evacuation Failure，见 [Full GC 的触发条件](#full-gc-的触发条件)。
+如果不成立，Serial 会继续检查老年代最大可用的连续空间是否大于或等于历次新生代 GC 晋升到老年代总字节数的带余量平均值，满足就进行 Minor GC，否则进行 Full GC。
+
+Parallel 则取该带余量历史平均值与新生代已用空间中的较小值，小于老年代剩余空间时才尝试进行 Minor GC（JDK 21 至 21.0.3 比较当前已提交空间中的剩余空间，21.0.4 起计入老年代潜在的扩容空间）。JDK 6 Update 24 之前还需要 HandlePromotionFailure 参数允许担保失败才会冒险进行 Minor GC，之后该参数不再起作用。G1 没有这一步，复制时找不到空闲的 Region 就是 Evacuation Failure，见 [Full GC 的触发条件](#full-gc-的触发条件)。
 
 ### Full GC 的触发条件
 
-对于 Minor GC，其触发条件非常简单，当 Eden 空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
+传统分代收集器中，Minor GC 通常在新生代分配空间不足时触发。Full GC 则相对复杂，常见条件如下：
 
 #### 1. 调用 System.gc()
 
-规范只把它定义为建议虚拟机执行垃圾收集，HotSpot 默认会执行一次 Full GC，G1 的日志中为 Pause Full (System.gc())，加上 -XX:+DisableExplicitGC 后不再起作用。不建议使用这种方式，而是让虚拟机管理内存。
+规范只把它定义为建议虚拟机执行垃圾收集。Serial、Parallel 和默认配置的 G1 会执行一次 Full GC，G1 的日志中为 Pause Full (System.gc())（ZGC 可执行并发 GC 周期，G1 开启 -XX:+ExplicitGCInvokesConcurrent 时也会改走并发回收）；加上 -XX:+DisableExplicitGC 后调用会被忽略。不建议使用这种方式，而是让虚拟机管理内存。
 
 需要注意的是，直接内存达到上限时，JDK 会调用 System.gc() 回收不再使用的 DirectByteBuffer，禁用后可能直接内存溢出：上限为 64 MB 时循环申请 1 MB 并丢弃，默认能完成 2000 次，加上 -XX:+DisableExplicitGC 后第 65 次就抛出了 OutOfMemoryError（JDK 21 实测，见[附录 A14](#a14-systemgc-与直接内存)）。
 
@@ -657,7 +669,9 @@ Parallel 默认开启自适应调节，综合 Minor GC 与 Full GC 各自的时�
 
 老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等。
 
-为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代。晋升年龄 -XX:MaxTenuringThreshold 默认的 15 已经是对象头能记录的最大年龄（设为 16 表示不按年龄晋升）；调小它会让对象更早进入老年代，反而加重老年代的压力。需要注意的是，使用 G1 时不要用 -Xmn 固定新生代的大小，因为 G1 正是靠调整新生代的大小来满足停顿时间目标的。
+为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代；但使用 G1 时不要用 -Xmn 固定新生代的大小，因为 G1 正是靠调整新生代的大小来满足停顿时间目标的。
+
+晋升年龄 -XX:MaxTenuringThreshold 默认的 15 已经是对象头能记录的最大年龄（设为 16 时年龄达不到上限，但动态年龄判定仍会调低实际的阈值，对象照样按年龄晋升）；调小它会让对象更早进入老年代，反而加重老年代的压力。
 
 使用 G1 时，老年代空间不足的 Full GC 常见于两种情况：混合回收来不及释放老年代，复制存活对象时找不到空闲的 Region（日志中先出现 Evacuation Failure，随后是 Pause Full (G1 Compaction Pause)，见[附录 A12](#a12-泄漏时-gc-之后的占用)）；Humongous 对象找不到足够的连续 Region。这时 G1 在停顿中用多线程的标记 - 整理压缩整个堆，比一次混合回收慢得多。
 
@@ -669,11 +683,11 @@ Parallel 默认开启自适应调节，综合 Minor GC 与 Full GC 各自的时�
 
 在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，其中存放类的元信息和运行时常量池；JDK 1.6 及以前，字符串常量池和类的静态变量也在永久代中，JDK 1.7 起移到了堆中。
 
-当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。
+当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 并开启类卸载的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。
 
-为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间，或使用 CMS GC 并开启 -XX:+CMSClassUnloadingEnabled（JDK 7 中默认关闭）。
 
-JDK 8 起方法区改用元空间实现，元空间的占用达到阈值（初始值由 -XX:MetaspaceSize 设置）时也会触发 GC，日志中的原因为 Metadata GC Threshold：Serial 和 Parallel 会进行 Full GC；G1 先扩大元空间，并启动并发标记周期卸载不再使用的类，扩大也失败时才 Full GC（JDK 21 实测，见[附录 A15](#a15-元空间触发的-gc)）。
+JDK 8 起方法区改用元空间实现，元空间的占用达到阈值（初始值由 -XX:MetaspaceSize 设置）时也会触发 GC，日志中的原因为 Metadata GC Threshold：Serial 和 Parallel 会进行 Full GC；G1 启动并发标记周期卸载不再使用的类，同时扩大元空间满足当前的分配，扩大也失败时才 Full GC（JDK 21 实测，见[附录 A15](#a15-元空间触发的-gc)）。
 
 #### 5. Concurrent Mode Failure
 
@@ -753,7 +767,7 @@ public static final int value = 123;
 
 初始化阶段才真正开始执行类中定义的 Java 程序代码。初始化阶段是虚拟机执行类构造器 &lt;clinit\>() 方法的过程。在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。
 
-&lt;clinit\>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
+&lt;clinit\>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块中不能直接用变量名读取定义在它之后的类变量，只能给它赋值。例如以下代码：
 
 ```java
 public class Test {
@@ -765,7 +779,7 @@ public class Test {
 }
 ```
 
-虚拟机会保证子类的 &lt;clinit\>() 执行之前，父类的 &lt;clinit\>() 已经执行完毕，所以父类中定义的静态语句块的执行要优先于子类。例如以下代码：
+正常非递归初始化过程中，虚拟机会保证子类的 &lt;clinit\>() 执行之前，父类的 &lt;clinit\>() 已经执行完毕，所以父类中定义的静态语句块的执行要优先于子类。例如以下代码：
 
 ```java
 static class Parent {
@@ -786,9 +800,11 @@ public static void main(String[] args) {
 
 加上实例变量、普通语句块和构造函数之后的完整执行顺序见 [初始化顺序](Java%20基础.md#6-初始化顺序)。
 
-接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt;clinit\>() 方法。但接口与类不同的是，执行接口的 &lt;clinit\>() 方法不需要先执行父接口的 &lt;clinit\>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时一般也不会执行接口的 &lt;clinit\>() 方法，例外见 [主动引用](#1-主动引用) 的最后一条。
+接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样，有需要执行的初始化代码时也会生成 &lt;clinit\>() 方法。但接口与类不同的是，执行接口的 &lt;clinit\>() 方法不需要先执行父接口的 &lt;clinit\>() 方法；父接口只在自身满足主动初始化条件（例如使用其非常量静态字段、调用其静态方法等）时才初始化。另外，接口的实现类在初始化时一般也不会执行接口的 &lt;clinit\>() 方法，例外见 [主动引用](#1-主动引用) 的最后一条。
 
-虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。更隐蔽的是两个类的 &lt;clinit\>() 互相用到对方、又被两个线程同时初始化时，两个线程会永久等待，jstack 中它们的状态是 RUNNABLE，显示 waiting on the Class initialization monitor，不会报告死锁（JDK 21 实测）。
+虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。&lt;clinit\>() 抛出异常（Error 以外）时，首次触发初始化通常得到 ExceptionInInitializerError，之后在同一个类加载器下再次触发该类初始化时不会重新执行，直接抛出 NoClassDefFoundError（JDK 21 实测）。
+
+如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。更隐蔽的是两个线程分别负责初始化两个类，且两者的 &lt;clinit\>() 又互相触发对方尚未完成的初始化时，两个线程会永久等待，在 HotSpot 中 jstack 显示它们的状态为 RUNNABLE（waiting on the Class initialization monitor），常规死锁检测不会报告死锁（JDK 21 实测）。
 
 ### 类初始化时机
 
@@ -796,8 +812,8 @@ public static void main(String[] args) {
 
 虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列六种情况必须对类进行初始化（加载、验证、准备都会随之发生）：
 
-- 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候；
-- 调用 Class.forName("Order")，或者使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化，而 Order.class 和 Class.forName("Order", false, loader) 只取得 Class 对象，不会触发，见 [反射](Java%20基础.md#七反射)；
+- 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。在 Java 代码中，最常见生成这 4 条指令的场景是使用 new 实例化对象、读写类的静态字段以及调用类的静态方法（源码引用编译期常量时由编译器直接内联，不生成 getstatic 指令，因此不触发初始化）；
+- 调用 Class.forName("Order")，或者通过 java.lang.reflect 包执行会触发初始化的反射操作（例如反射实例化、读写静态字段或调用静态方法；仅查询类、方法或字段元数据不会触发）；而 Order.class 和 Class.forName("Order", false, loader) 也只取得 Class 对象，不会触发初始化，见 [反射](Java%20基础.md#七反射)；
 - 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化；
 - 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
 - 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic、REF_putStatic、REF_invokeStatic、REF_newInvokeSpecial 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则在第一次调用它时需要先触发其初始化；
@@ -829,7 +845,7 @@ System.out.println(ConstClass.HELLOWORLD);
 
 两个类相等，需要类本身相等，并且使用同一个类加载器进行加载。这是因为每一个类加载器都拥有一个独立的类名称空间。
 
-类加载器不同时，即使来自同一个 Class 文件，也是两个不同的类：Class 对象的 equals()、instanceof 等类型判断都不成立，强制转换会抛出 ClassCastException。例如 [打破双亲委派](#4-打破双亲委派) 中两个加载器分别加载的 Greeter。
+由不同的类加载器定义时（委派给父加载器、由父加载器定义的仍是同一个类），即使来自同一个 Class 文件，也是两个不同的类：Class 对象的 equals()、instanceof 等类型判断都不成立，强制转换会抛出 ClassCastException。例如 [打破双亲委派](#4-打破双亲委派) 中两个加载器分别加载的 Greeter。
 
 ### 类加载器分类
 
@@ -986,14 +1002,16 @@ public class FileSystemClassLoader extends ClassLoader {
 OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有：
 
 - Java heap space：堆中无法再分配对象，可能是堆设置得太小，也可能是内存泄漏；
-- GC overhead limit exceeded：GC 占用了约 98% 的时间，却只回收了不到 2% 的堆，说明存活的对象几乎占满了堆。JDK 21 中只有 Parallel 收集器会报这个错误，G1 和 Serial 报 Java heap space；JDK 26 起各收集器都只报 Java heap space；
+- GC overhead limit exceeded：JDK 21 Parallel 收集器在 GC 时间占比和回收后空闲空间连续达到开销超限条件（默认时间阈值 98%、空闲空间阈值 2%）时抛出该异常，G1 和 Serial 报 Java heap space；JDK 26 起统一报告为 Java heap space，但仍保留 GC 开销超限保护机制；
 - Metaspace：加载的类太多，元空间超过了 MaxMetaspaceSize，常见于运行时动态生成大量的类，例如 CGLIB 生成代理类、Groovy 脚本每次执行都编译出新类，以及热部署时旧的类加载器仍被引用，它加载的类无法卸载；
-- Cannot reserve ... bytes of direct buffer memory：NIO 的直接内存超过了 -XX:MaxDirectMemorySize，没有设置时上限与最大堆相同，常见于 Netty 等框架申请的堆外内存没有释放；
+- Cannot reserve ... bytes of direct buffer memory：纳入 NIO 直接缓冲区额度管理的分配超过了 -XX:MaxDirectMemorySize（未设置时默认与最大堆相同），常见于 Netty 等框架通过该机制申请的堆外内存没有释放；
 - unable to create native thread：线程数达到了进程或容器的上限，或者没有内存分配线程栈，不能靠增大堆解决。例如把容器的进程数限制为 500，堆几乎是空的，创建了 474 个线程之后就抛出了这个错误，增大 -Xmx 解决不了（JDK 21 实测，见[附录 A10](#a10-直接内存与线程数的溢出)）。
 
-例如每次都创建一个新的类加载器重新定义 Plugin 类，并把得到的 Class 对象保存在列表中，-XX:MaxMetaspaceSize=16m 时定义了约 2600 个类后抛出 OutOfMemoryError: Metaspace；不保存 Class 对象时，10 万次定义中有约 9.8 万个类被卸载，没有溢出（JDK 21 实测，见[附录 A8](#a8-元空间溢出)）。类只有在它的类加载器不可达、可以被回收后才能卸载，见 [方法区的回收](#3-方法区的回收)。
+例如每次都创建一个新的类加载器重新定义 Plugin 类，并把得到的 Class 对象保存在列表中，-XX:MaxMetaspaceSize=16m 时定义了约 2600 个类后抛出 OutOfMemoryError: Metaspace；不保存 Class 对象时，10 万次定义中有约 9.8 万个类被卸载，没有溢出（JDK 21 实测，见[附录 A8](#a8-元空间溢出)）。普通类只有在它的类加载器不可达、可以被回收后才能卸载（未指定 STRONG 的隐藏类除外），见 [方法区的回收](#3-方法区的回收)。
 
-内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收，堆内存持续增长，最终导致内存溢出。内存溢出则是申请内存时空间不够这个结果，内存泄漏是原因之一，另一个常见原因是正常需要的内存就超过了上限，例如一次查询加载了上百万行数据，或者无界队列中堆积了大量任务（见 [ThreadPoolExecutor](Java%20并发.md#threadpoolexecutor)），要改为分批处理、给队列设上限。内存泄漏的常见原因：
+内存泄漏指的是对象已经不再使用，但仍然被引用着，GC 无法回收；这样的对象不断累积时，堆内存持续增长，最终导致内存溢出。
+
+内存溢出则是申请内存时空间不够这个结果，内存泄漏只是原因之一，另一个常见原因是正常需要的内存就超过了上限，例如一次查询加载了上百万行数据，或者无界队列中堆积了大量任务（见 [ThreadPoolExecutor](Java%20并发.md#threadpoolexecutor)），要改为分批处理、给队列设上限。内存泄漏的常见原因：
 
 - 静态集合只添加不清理，例如用 static Map 做缓存却没有淘汰策略；
 - 线程池中的线程使用 ThreadLocal 后没有调用 remove()，线程一直存活，值也一直无法被回收，见 [弱引用](#3-弱引用)；
@@ -1011,7 +1029,7 @@ OutOfMemoryError 的详细信息指明了是哪一块内存不足，常见的有
 
 如果进程突然消失，日志中既没有 OutOfMemoryError 也没有堆转储，通常是堆加上堆外内存超过了容器或机器的内存，进程被操作系统的 OOM Killer 用 SIGKILL 杀掉（退出码 137），JVM 来不及抛出异常或保存堆转储，用 dmesg 或 docker inspect 确认，见 [Pod 异常状态的排查](Docker.md#pod-异常状态的排查)。
 
-例如下面的程序不断向静态列表中添加 1 MB 的数组，静态变量引用的对象属于 GC Roots，这些数组都无法被回收：
+例如下面的程序不断向静态列表中添加 1 MB 的数组，这些数组通过仍然存活的 Leak 类的静态字段保持强可达，因此无法被回收：
 
 ```java
 public class Leak {
@@ -1032,9 +1050,9 @@ Dumping heap to java_pid24607.hprof ...
 Heap dump file created [19154891 bytes in 0.007 secs]
 ```
 
-线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd \<pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索；它会先进行一次 Full GC，只统计存活的对象，对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
+线上的泄漏通常很慢，还没有发生内存溢出，只是每次 GC 后堆的占用越来越高。这时可以每隔一段时间用 jcmd \<pid> GC.class_histogram 统计一次各个类的实例数和字节数，持续增长的类就是线索；默认不带 -all 参数时会先尝试触发一次收集（Serial、Parallel 和默认配置的 G1 通常为 STW Full GC，其它收集器路径不同）以尽量排除不可达对象（若收集因 GC Locker 等原因被跳过，统计结果仍可能包含未回收对象），对线上服务有影响。例如一个用 HashMap 做缓存、从不删除的程序，相隔 20 秒的两次统计中，Session 对象从约 8.2 万个增长到约 25.0 万个，HashMap$Node 同步增长，说明某个 HashMap 只增不减，再导出堆转储找到持有它的对象（JDK 21 实测，见[附录 A11](#a11-堆直方图)）。
 
-判断是不是泄漏，要看每次 GC 之后堆的占用。例如把附录 A11 的程序和一个只保留最近 1 万个 Session 的版本都用 128 MB 的堆运行：前者 GC 后的占用总体持续上升，最后几次 Full GC 后仍有 115～127 MB，28 秒时抛出 OutOfMemoryError；后者每次 GC 后都回到约 8 MB（JDK 21 实测，见[附录 A12](#a12-泄漏时-gc-之后的占用)）。
+排查是否泄漏时，要在相近业务负载下观察完整 GC 后的存活对象占用量是否持续增长，并结合堆转储和引用链确认。例如把附录 A11 的程序和一个只保留最近 1 万个 Session 的版本都用 128 MB 的堆运行：前者 GC 后的占用总体持续上升，最后几次 Full GC 后仍有 115～127 MB，28 秒时抛出 OutOfMemoryError；后者每次 GC 后都回到约 8 MB（JDK 21 实测，见[附录 A12](#a12-泄漏时-gc-之后的占用)）。
 
 <div align="center"> <img src="pics/jvm-leak-curve.png" width="760px"/> </div><br>
 
@@ -1047,11 +1065,11 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 | 参数 | 作用 |
 | --- | --- |
 | -Xms、-Xmx | 堆的初始大小和最大值，线上通常设为相同，避免运行中扩容和收缩 |
-| -XX:MaxRAMPercentage | 不指定 -Xmx 时，最大堆占物理内存（容器中为容器的内存限制）的比例，默认 25% |
+| -XX:MaxRAMPercentage | 未指定 -Xmx 时，结合有效可用内存（受物理内存、容器限制、MaxRAM 等约束）与 ergonomics 策略确定最大堆的比例，默认 25% |
 | -Xss | 每个线程的栈大小 |
 | -XX:MaxMetaspaceSize | 元空间的上限，默认不限制 |
 | -Xmn、-XX:MaxTenuringThreshold | 新生代的大小、晋升老年代的年龄阈值（默认 15），见 [长期存活的对象进入老年代](#3-长期存活的对象进入老年代)；G1 不要用 -Xmn 固定新生代，原因见 [老年代空间不足](#2-老年代空间不足) |
-| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起默认 G1；JDK 21 中分代 ZGC 还要加 -XX:+ZGenerational，JDK 23 起默认分代 |
+| -XX:+UseG1GC、-XX:+UseZGC | 选择垃圾收集器，JDK 9 起服务器级机器默认 G1，JDK 27 起所有环境默认 G1；JDK 21 中分代 ZGC 还要加 -XX:+ZGenerational，JDK 23 起默认分代 |
 | -XX:MaxGCPauseMillis | G1 的停顿时间目标，默认 200 ms |
 | -Xlog:gc*:file=gc.log | 输出 GC 日志（JDK 9 起；JDK 8 使用 -XX:+PrintGCDetails -Xloggc:gc.log） |
 | -XX:+HeapDumpOnOutOfMemoryError | 内存溢出时保存堆转储 |
@@ -1069,27 +1087,35 @@ Heap dump file created [19154891 bytes in 0.007 secs]
 
 堆设多大，先看 Full GC 之后堆的占用，这是长期存活的数据量，堆要在它之上留出余量，余量越小 GC 越频繁；定下初值后压测，看停顿和 GC 时间的占比是否达标。-Xmx 也不能等于容器的内存，进程还有元空间、线程栈、直接内存、代码缓存和 GC 自己的数据结构，例如 4 GB 堆的 G1 进程，GC 的数据结构就提交了约 135 MB（JDK 21 实测，见[附录 A21](#a21-堆以外的内存)）。
 
-容器中，JVM 默认开启 -XX:+UseContainerSupport（JDK 10 起；[cgroup](Docker.md#五实现原理) v2 需要 JDK 15、11.0.16 或 8u372 起），把容器的内存限制当作物理内存，按 MaxRAMPercentage 算出最大堆，例如限制 1 GiB 时为 256 MiB。内存不到约 250 MiB 时改为取一半（MinRAMPercentage，默认 50%），调 MaxRAMPercentage 不起作用（JDK 21 实测，见[附录 A22](#a22-容器中的默认堆)）。
+容器中，JVM 默认开启 -XX:+UseContainerSupport（JDK 10 起；[cgroup](Docker.md#五实现原理) v2 需要 JDK 15、11.0.16 或 8u372 起），未显式设置 -Xmx 时结合有效可用内存（受物理内存、容器限制及 MaxRAM 等约束）、MaxRAMPercentage 和 ergonomics 策略算出最大堆，例如限制 1 GiB 时为 256 MiB。内存不到约 250 MiB 时改为取一半（MinRAMPercentage，默认 50%），调 MaxRAMPercentage 不起作用（JDK 21 实测，见[附录 A22](#a22-容器中的默认堆)）。
 
-处理器数取 CPU 配额向上取整的值与 CPU 亲和性允许的处理器数中较小的一个，不看 CPU requests（requests 与 limits 的区别见 [Pod 的创建过程](Docker.md#pod-的创建过程)）；只设 requests 不设 limits 时，JVM 看到的是 CPU 亲和性允许的处理器数，通常就是节点的全部核数，GC 线程数、JIT 编译线程数和 ForkJoinPool 公共池的并行度的默认值都按它确定，可以用 -XX:ActiveProcessorCount 指定。这些默认值大多在 JVM 初始化时确定，运行中调整 Pod 的 CPU 不会重新计算，要重启 JVM（JDK 21 源码）。
+处理器数取 CPU 配额向上取整的值与 CPU 亲和性允许的处理器数中较小的一个，不看 CPU requests（requests 与 limits 的区别见 [Pod 的创建过程](Docker.md#pod-的创建过程)）；只设 requests 不设 limits 时，JVM 看到的是 CPU 亲和性允许的处理器数，通常就是节点的全部核数，GC 线程数、JIT 编译线程数和 ForkJoinPool 公共池的并行度的默认值都按它确定，可以用 -XX:ActiveProcessorCount 指定。
 
-常见做法是不写 -Xmx，用 MaxRAMPercentage 按比例设堆，但比例不能太高。例如限制 1 GiB、比例 75% 时堆最大 768 MiB，堆外只剩 256 MiB，要放下元空间、线程栈、代码缓存、GC 数据结构和直接内存；直接内存没有设上限时可以和堆一样大。例如堆用到 700 MiB、ByteBuffer.allocateDirect 申请的直接内存 300 MiB，再加上约 100 MiB 的其它堆外内存，合计约 1.1 GiB，堆还没到上限，进程已经超过了限制。这时 JVM 不会抛出 OutOfMemoryError，而是被内核的 OOM Killer 杀掉（退出码 137，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)）。所以要用 -XX:MaxDirectMemorySize 给 NIO 的直接缓冲区设上限，压测时加 -XX:NativeMemoryTracking=summary，用 `jcmd <pid> VM.native_memory summary` 看各部分的占用（输出见[附录 A21](#a21-堆以外的内存)），再定堆的比例。
+这些默认值大多在 JVM 初始化时确定，运行中调整 Pod 的 CPU 不会重新计算，要重启 JVM（JDK 21 源码）。
 
-判断 GC 是不是瓶颈，看停顿时间占运行时间的比例和最长停顿。jstat -gcutil \<pid> 5000 每 5 秒输出一次，GCT 列是累计的停顿秒数，两次之差除以间隔就是这段时间的占比。-Xlog:gc 日志中以 Pause 开头的行记录一次停顿，例如 Pause Young (Normal) (G1 Evacuation Pause) 24M->1M(64M) 0.542ms 依次是回收的类型、原因、回收前后堆的占用、堆的大小和停顿时长；Concurrent 开头的行是并发执行的耗时，不计入停顿。例如 64 MB 的堆中老年代已用 92%，5 秒内新生代回收了 1403 次，20% 的时间都在停顿（JDK 21 实测，见[附录 A19](#a19-gc-时间的占比)）。
+常见做法是不写 -Xmx，用 MaxRAMPercentage 按比例设堆，但比例不能太高。例如限制 1 GiB、比例 75% 时堆最大 768 MiB，堆外只剩 256 MiB，要放下元空间、线程栈、代码缓存、GC 数据结构和直接内存；NIO 直接缓冲区没有设上限时默认上限与最大堆相同（但不覆盖 JNI、元空间等其它堆外内存）。
+
+例如堆用到 700 MiB、ByteBuffer.allocateDirect 申请的直接内存 300 MiB，再加上约 100 MiB 的其它堆外内存，合计约 1.1 GiB，堆还没到上限，容器 cgroup 的内存用量已经达到限制且无法通过回收满足分配，这时往往来不及触发 Java 的 OutOfMemoryError 就被内核的 OOM Killer 杀掉（常见表现为 OOMKilled、退出码 137，见 [内存溢出与内存泄漏](#内存溢出与内存泄漏)）。
+
+所以要用 -XX:MaxDirectMemorySize 给 NIO 的直接缓冲区设上限，压测时加 -XX:NativeMemoryTracking=summary，用 `jcmd <pid> VM.native_memory summary` 查看各部分占用（输出见[附录 A21](#a21-堆以外的内存)）。需要注意的是，NMT 不覆盖第三方本地代码等全部本地内存，reserved/committed 也不等于实际驻留内存，确定堆比例时还须结合进程 RSS 和容器 cgroup 内存用量。
+
+判断 GC 是不是瓶颈，看停顿时间占运行时间的比例和最长停顿。jstat -gcutil \<pid> 5000 每 5 秒输出一次，GCT 列是累计的停顿秒数，两次之差除以间隔就是这段时间的占比。例如 64 MB 的堆中老年代已用 92%，5 秒内新生代回收了 1403 次，20% 的时间都在停顿（JDK 21 实测，见[附录 A19](#a19-gc-时间的占比)）。
+
+-Xlog:gc 日志中以 Pause 开头的行记录一次停顿，例如 Pause Young (Normal) (G1 Evacuation Pause) 24M->1M(64M) 0.542ms 依次是回收的类型、原因、回收前后堆的占用、堆的大小和停顿时长；Concurrent 开头的行是并发执行的耗时，不计入停顿。
 
 线上频繁 Full GC 的排查思路：
 
 1. 先看 GC 日志中每次 Full GC 括号里的原因：老年代不够（例如 G1 Compaction Pause、Allocation Failure）、元空间不够（Metadata GC Threshold），还是 System.gc()；
 2. 用 jstat -gcutil 观察老年代使用率（O 列）和 Full GC 次数（FGC 列）；
 3. Full GC 之后老年代使用率仍然很高，并且越来越高，说明对象一直无法回收，导出堆转储查找内存泄漏；
-4. Full GC 之后老年代能降下来，说明堆对于正常的负载偏小，或者有大对象、大量对象过早进入老年代，可以增大堆、调整新生代大小，或者从代码上减少一次创建的数据量；
+4. Full GC 之后老年代能降下来，应结合触发原因排查是否堆偏小，或者有大对象、大量对象过早进入老年代，可以增大堆、调整新生代大小，或者从代码上减少一次创建的数据量；
 5. 老年代使用率不高却频繁 Full GC，按第 1 步的原因处理：元空间不够时检查是否在动态生成大量的类，System.gc() 则找出调用它的代码，或者检查直接内存的用量（直接内存达到上限时 JDK 会调用它）。
 
 ### CPU 占用过高 🔥
 
 1. 用 top 找到 CPU 占用高的 Java 进程；
 2. 用 top -H -p \<pid> 查看这个进程中每个线程的 CPU 占用，记下占用最高的线程 ID（输出示例见 [Linux - CPU 占用高](Linux.md#cpu-占用高)）；
-3. 用 jstack \<pid> 或者 jcmd \<pid> Thread.print 导出所有线程的调用栈，按线程 ID 找到 nid 与它相同的线程（换算方法见下文）；
+3. 用 jstack \<pid> 或者 jcmd \<pid> Thread.print 导出平台线程的调用栈，按线程 ID 找到 nid 与它相同的线程（换算方法见下文）；
 4. 查看这个线程正在执行的代码，隔几秒再导出两三次，确认它一直停在同一段代码中。
 
 需要重启恢复服务时，先导出线程栈再重启，重启后现场就丢失了。
@@ -1124,7 +1150,7 @@ CPU 和负载都不高、接口却变慢时，线程多半在等待。多导出�
 
 ### 死锁
 
-jstack 会自动检测死锁，在输出的末尾给出互相等待的线程，以及每个线程持有和等待的锁：
+jstack 会自动检测平台线程之间由对象监视器或受支持的 ownable synchronizer 形成的死锁（不完整覆盖涉及虚拟线程的死锁），在输出的末尾给出互相等待的线程，以及每个线程持有和等待的锁：
 
 ```text
 Found one Java-level deadlock:
@@ -1266,7 +1292,7 @@ $ jcmd <pid> VM.flags | tr ' ' '\n' | grep -E "Use.*GC"
 -XX:+UseG1GC
 ```
 
-不同最大堆下的 G1HeapRegionSize（字节）：
+不同最大堆下的 G1HeapRegionSize（字节，命令中加上 -XX:+UseG1GC，默认收集器不是 G1 的机器也能复现）：
 
 ```text
 -Xmx128m: 1048576
@@ -1274,12 +1300,12 @@ $ jcmd <pid> VM.flags | tr ' ' '\n' | grep -E "Use.*GC"
 -Xmx4g:   2097152
 -Xmx16g:  8388608
 -Xmx64g:  33554432
-$ java -Xmx1g -XX:G1HeapRegionSize=64m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
+$ java -XX:+UseG1GC -Xmx1g -XX:G1HeapRegionSize=64m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
    size_t G1HeapRegionSize                         = 67108864                                  {product} {command line}
-$ java -Xmx1g -XX:G1HeapRegionSize=3m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
+$ java -XX:+UseG1GC -Xmx1g -XX:G1HeapRegionSize=3m -XX:+PrintFlagsFinal -version | grep -w G1HeapRegionSize
    size_t G1HeapRegionSize                         = 4194304                                   {product} {command line, ergonomic}
-$ java -Xmx4g -Xlog:gc+init -version
-[0.005s][info][gc,init] Heap Region Size: 2M
+$ java -XX:+UseG1GC -Xmx4g -Xlog:gc+init -version
+[0.004s][info][gc,init] Heap Region Size: 2M
 ```
 
 指定 3m 时向上取为 4 MB。
